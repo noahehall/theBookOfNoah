@@ -8,6 +8,8 @@ need to start
 	passport profile object: http://passportjs.org/docs/profile
 	two forms one submit: http://stackoverflow.com/questions/547821/two-submit-buttons-in-one-form
 	add additional fields to passport local strategy:  http://stackoverflow.com/questions/11784233/using-passportjs-how-does-one-pass-additional-form-fields-to-the-local-authenti
+  node cluster
+    http://rowanmanning.com/posts/node-cluster-and-express/
 - testing
   - chai
     expect(obj).to.have.property('foo')”
