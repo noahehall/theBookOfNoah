@@ -16,6 +16,14 @@
       - https://www.youtube.com/watch?utm_campaign=Fullstack%2BReact&utm_medium=email&utm_source=Fullstack_React_37&v=aV1271hd9ew
       - https://github.com/acdlite/recompose
       - https://hashnode.com/post/the-one-thing-that-no-one-properly-explains-about-react-why-virtual-dom-cisczhfj41bmssp53mvfwmgrq?utm_campaign=Fullstack+React
+    + project 5
+      - https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+      - https://developers.google.com/web/tools/lighthouse/
+      - https://jakearchibald.com/2014/offline-cookbook/
+      - https://developers.google.com/web/progressive-web-apps/
+      - https://github.com/GoogleChrome/lighthouse
+      - http://node-machine.org/machinepacks
+
     + project 3
       - http://webaim.org/standards/wcag/checklist
       - https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex
