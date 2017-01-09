@@ -1,3 +1,9 @@
+# NEXT UP
+  - https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
+  - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms_in_HTML#Constraint_Validation_API
+  - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/My_first_HTML_form
+  - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/Sending_and_retrieving_form_data
+  
 # NEED to finish
   - https://classroom.udacity.com/nanodegrees/nd802/parts/8021345403/modules/550593026975460/lessons/5972243496/concepts/61045985370923
   - MUST FUCKING DO
@@ -114,7 +120,6 @@
     	- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label
     	- https://www.tjvantoll.com/2013/04/15/list-of-pseudo-elements-to-style-form-controls/#input_date
     	- http://www.wufoo.com/html5/
-    	- https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity
 
 # TIPS AND TRICKS AND BEST PRACTICES
 ## Best Practices
@@ -344,8 +349,6 @@
         + aria-pressed: indicated if the state of this button/interactive element is pressed|clicked
         + aria-hidden: element is hidden
         + aria-expanded: element is open
-
-
 ### Accessibility Styles
   + importing styles:
     - style via aria attributes with attribute selectors: https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors
@@ -365,7 +368,6 @@
     - contrast ratio: body text and images have a high contrast with background color
       + http://webaim.org/resources/contrastchecker/
     - dont convey info with color and contrast alone, always provide additional help text
-
 ## TRICKS
   - check if someVar is an Array (or anything, e.g. Number, or Object)
       `if(someVar && Array === todoItems.constructor)``
@@ -388,7 +390,33 @@
 	- links
     - [creating amazing forms](https://developers.google.com/web/fundamentals/design-and-ui/input/?hl=en)
     - [Location Example](http://www.html5rocks.com/en/tutorials/geolocation/trip_meter/)
+    - [mdn forms guide](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms)
+    - [mdn sending form data](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/Sending_and_retrieving_form_data)
+  - background
+    + HTML Forms are one of the main points of interaction between a user and a web site or application.
+### validation
+    - [constraint validation](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation)
+    - types of form constraints:
+      1. intrinsic: basic validation provided by setting the `type=blah` attribute, e.g. email
+      2. basic: setting validation related attributes
+        + `pattern|min|max|required|step|maxlength`
+    - triggering constraint validation process: happens either at the form level, or the input level
+      1. invoke checkValidity() method on an input/select element
+      2. invoke checkValidity() method on the form element ( statically validating the constraints.)
+      3. submitting the form ( interactively validating the constraints.)
+      4. trigger JavaScript on some form field event (like onchange) to calculate whether the constraint is violated
+        - use the method `field.setCustomValidity()` to set the result of the validation:
+          + empty string: constraint is satisfied
+          + non empty string: there is an error and this string is the error message to display to the user.
+#### [validity states](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState)
+  - The ValidityState interface represents the validity states that an element can be in, with respect to constraint validation. Together, they help explain why an element's value fails to validate, if it's not valid.
+  - used like this: `someInput.validity.someProperty`
+  + validity properties:
 
+### validation styling via css pseudo classes
+  - `:required`
+  - `:valid`
+  - `:invalid`
 ### Form Examples
   - label with datalist
     ```
