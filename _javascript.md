@@ -3,7 +3,7 @@
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms_in_HTML#Constraint_Validation_API
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/My_first_HTML_form
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/Sending_and_retrieving_form_data
-  
+
 # NEED to finish
   - https://classroom.udacity.com/nanodegrees/nd802/parts/8021345403/modules/550593026975460/lessons/5972243496/concepts/61045985370923
   - MUST FUCKING DO
@@ -436,6 +436,17 @@
   - web sockets: a persistent connection to a server
   - sourcemaps: tell the browser to convert line and column offsets 'for' exceptions thrown in the bundle file back into the offsets and filenames of the original sources.
   - transpilation: ES6 > Babel > ES5
+  - metaprogrammaning: all about the underlying mechanics of the language, rather than “high level” data modelling or business logic. If programming can be described as “making programs”, metaprogramming could be described as “making programs making programs”
+    + Code Generation, aka eval & friends -
+    + Reflection - finding out about and adjusting the structure and semantics of your application
+      + Functions:
+        - Function#name
+        - Function#length
+        - Function#bind
+        - Function#call
+        - Function#apply.
+      + Object.getOwnProperties (As an aside,
+    + Introspection: Reflection tools that don’t alter code, but instead gather information about it are often called
 
 # promises and asynchronous code
   - aynchronous: statements occur in multiple timelines, in an unknown order irregardless of how they are defined in code
@@ -1075,7 +1086,6 @@
   prototypical inheritance:
 
 # [ES6](https://github.com/lukehoban/es6features)
-
 ## Strings
   ```
     "abcde".includes("cd") // true
@@ -1155,6 +1165,37 @@
       }
     ```
 ### Arrow functions:
+## metaprogramming:
+### Symbols:
+  + reflection within implementation - you sprinkle them on your existing classes and objects to change the behaviour.
+  + use cases:
+    - not iterable over
+    - not fetched using the already existing Reflection tools
+    - guaranteed not to conflict with other properties in the object!
+    - If you create a symbol (var mysym = Symbol()) it creates a completely new value inside the JavaScript engine.
+      + If you don’t have the reference for the Symbol, you just can’t use it.
+      + This also means two symbols will never equal the same value, even if they have the same description.
+    - Symbol.for(). This method creates a Symbol in a “global Symbol registry”. Small aside: this registry is also cross-realm, meaning a Symbol from an iframe or service worker will be the same as one generated from your existing frame:
+  + code:
+    - create a symbol:
+      `const blah = Symbol();`
+      `const blah1 = Symbol('with a description for console logging')`
+    - symbols as object properties
+      ```
+        const blah = Symbol('used as object key');
+        const object = {};
+        object[blah] = 'Something else';
+        **note**
+          object.blah === 'undefined' // doesnt work
+          object[blah] === 'Something else'; // only work sif you have reference to the symbol
+
+      ```
+    - see an object's symbols: `Object.getOwnPropertySymbols:`
+
+### Reflect
+  + all about Reflection through introspection - used to discover very low level information about your code.
+### Proxy:
+  + Reflection through intercession - wrapping objects and intercepting their behaviours through traps.
 ## Classes:
     - function declarations are hoisted, classes are not
     - creating

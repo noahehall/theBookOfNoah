@@ -214,3 +214,96 @@
   - IAM
   - management tools (opsworks it uses chef)
   - messaging: SNS, SQS, SES
+
+# Study guide
+## notes
+- not all services are available in all regions, so choose your regions wisely
+- IAM operates in the global region
+- EC2: a virtual machine
+
+## IAM: identity access management
+### places
+  - [signin](https://YOUR-ACCOUNT-ALIAS.signin.aws.amazon.com/console)
+  - [aws signin endpoint for saml](https://signin.aws.amazon.com/saml)
+  - Dashboard: where you see highlevel IAM settings
+### background:
+  - manage users and their access to the AWS console
+    + centralized controlled to AWS account
+    + shared access to AWS account
+    + granular permissions
+    + identity federation: including active directory, facebook, linkedin, etc
+    + multifactor authentication
+    + temporary access for users/devices/services
+### TERMINOLOGY
+  - users: end users, i.e. people
+  - Groups: a collection of users under one set of permissions
+  - Roles: create roles and assign them to users and/or AWS resources
+    1. create a role
+    2. assign to a resource
+  - Policies: a document that defines one/more permissions that are associated with users, groups, and roles
+  - Identity Providers:
+  - Account settings
+  - Credential report
+  - Encryption Keys
+  - root account: the email addy you use to signup for aws
+    + never login to the root account, even create yourself a new user with the permissions you need
+  - SAML: secure assertive markup language, provides a cookie that is set in the browser
+  - [web identity federation](https://web-identity-federation-playground.s3.amazonaws.com/index.html): authenticating with AWS via applications like facebook, linkedin, google, etc.
+  - ARN: amazon resource name
+### users
+  - access types:
+    + programmatic: CLI/application access
+    + management console: the GUI
+    + security credentils: provides programmatic access via an access key and secret key
+      - cannot be used to log into console
+      - you only get these once, make sure to download them or you'll have to regenerate them
+    + name and pass: used to login to console
+      - cannot be used for programmatic access
+### Policies
+  - is a json object containing a version and a statement
+    + statement has effect and allow
+    - IAM policy: i.e. your password policy
+#### major Policies
+  - administrator access: same access as root account
+  - system administrator: level below administrator
+### roles
+  - allow one AWS service to interact with another
+  - Service Roles: specifically for aws resources
+  - cross-account access: allows one aws account to interact with another
+  - identity provider access: for linkedin/facebook/etc to interact with aws resources
+  - roles can only be give to EC2 instancs when the EC2 is created
+    + you can only change the permissinos associated with the role
+### active directory federation
+  1. browse to some URL (e.g. blah.com/signon.aspx)
+  2. user is authenticated against some active directory
+  3. user receives cookie that is stored in the browser
+  4. browser posts the cooki to AWS signon endpoint for SAML (signin.aws.amazon.com/saml)
+  5. user receives signin URL and is redirected to the console
+  6. from the user perspective, it happens transparently, he starts at internal signon url and ends up at the AWS management console without ever supplying any AWS credentials
+
+## EC2: elastic compute cloud
+  - the backbone of AWS, its basically a virtual machine
+
+
+######## KNOWN STUDY questions
+  1. can you authenticate with active directory?
+    - yes, but only with SAML
+  2. do you authenticate with active directory first, or do you get temp security credntial first and then authenticate with active directory
+    - you authenticate with active directory first, then you receive the temp security credential
+    1. navigate to ADFS web server
+    2. user signin with their credentials
+    3. the browser posts the SAML assertion to AWS SAML endpoint for SAML and the AssumeRoleWithSAML api request is used to requet temporary security credentials
+    4. the user is then able to access the AWS console
+  3. can you authenticate with applications like google, facebook, etc. ?
+    - yes, via web identity federation
+  4. how do you authenticate via web identity federation ?
+    1. sign into facebook/etc via web identity federation console to receive token from facebook
+    2. api call is made via AssumeRoleWithWebIDentity and you receive temp security credentials from AWS
+    3. you can now access AWS resources with your token
+  5. what does ARN stand for?
+    - amazon resource name
+  6. can you change the role of an EC2 instance?
+    - roles can only be give to EC2 instancs when the EC2 is created
+      + you can only change the permissinos associated with the role
+  7. what is the name of the API call to request temp security credentials from the AWS platform when federating with active directory?
+    - assume role with saml
