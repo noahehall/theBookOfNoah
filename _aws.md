@@ -281,11 +281,110 @@
   5. user receives signin URL and is redirected to the console
   6. from the user perspective, it happens transparently, he starts at internal signon url and ends up at the AWS management console without ever supplying any AWS credentials
 
-## EC2: elastic compute cloud
+## EC2: [elastic compute cloud](https://aws.amazon.com/documentation/ec2/)
   - the backbone of AWS, its basically a virtual machine
+  - web service that provides resizeable compute capacity in the cloud
+  - reduces the tie require dto obtain and boot new server instances to minutes
+  - allows to quickly scale capacity (up/down) as your computing requirements change
+## [links](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html):
+  - [historical spot prices](https://ec2price.com/)
+  - [setting up with amazon ec2](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/get-set-up-for-amazon-ec2.html)
+  - [getting started with ec2 linux](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html)
+  - [using amazon ec2 via aws cli](http://docs.aws.amazon.com/cli/latest/userguide/cli-using-ec2.html)
+  - [instances and amis](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instances-and-amis.html)
+  - [regions and availability zones](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)
+  - [instance types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)
 
-
+  - [tagging](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html)
+  - [ec2 console](https://console.aws.amazon.com/ec2/.)
+## pricing models:
+  - on demand: fixed rate, by the hour
+    + useful during peak seasons
+  - reserve: for 1 / 3 terms, capacity reservation, discounted on the hourly charge for an instance
+    + useful for minimum state
+  - spot: bid whateve ryou want for instance capacity
+    + this is where you can get the most savings
+    + the spot can be pulled at any time, amazon will only give you 1 hour before terminating the instance if the market price rises above your spot price
+## TERMINOLOGY
+  - instances: virtual computing environments
+    + EBS backed instance: an EC2 instance whose root volume is EBS
+  - Instance types: specific configurations of CPU, memory, storage, and networking capacity
+  - instance store volumes: for temporary data thats deleted when you stop/terminate an isntance
+  - Amazon EBS volumes: elastic block stores: persistant storage
+  - regions and availability zones: physical locations for your ec2 instances and EBS volumes
+  - key pairs: securely login (ssh) with public and private keys
+    + amazon stores public key
+    + you store private key
+  - AMI: amazon machine images; preconfigured templates that package the bits you need for a server (e.g. operating system, additional software, etc)
+  - security groups: a firewall: enables you to specify protocols, ports, and source IP ranges that can reach your instance
+  - Elastic IP addresses: static IPv4 addresses for dynamic cloud computing
+  - tags: metadata that you can create and assign to your amazon resources
+  - VPCs: virtual private clouds: virtual networks you create that are logically isolated from the rest of the AWS cloud, and can optionally be connected to your own network
+  - IOPS: input/output per second
+    + a way of measuring how fast a disk is from a read and write perspective
+    + more IOPS > better
+## instance types
+  - T2: lowest cost, general purpuse
+    + use case: web servers/small dbs
+  - M4: general purpose
+    + use case: application servers
+  - M3: general purpose
+    + use case: application servers
+  - C4: compute optimized
+    + cuu intensive apps/dbs
+  - C3: compute optimized
+    + use case: cpu intensive apps/dbs
+  - R3: memory optimized
+    + use case: memory intensive apps/dbs
+  - G2: graphics/general purpose gpu
+    + use case:
+      - video encoding
+      - machine learning
+      - 3D application streaming
+  - I2: high speed storage
+    + use case:
+      - nosql dbs
+      - data warehousing
+      - etc
+  - D2: dense storage
+    - use case
+      - fileservers
+      - date warehousing
+      - hadoop
+  - when to use which EC2 instance type
+    - remember this acronym: DIRT MCG
+      + D for density
+      + I for IOPS
+      + R for RAM
+      + T for cheap general purpose (i.e. T2 Micro)
+      + M for main choice for general purpose apps
+      + C for compute
+      + G for graphics
+## EBS: Elastic Block storage
+  - storage volumes that can be associated with EC2 instances
+    + can create a file system
+    + can run a database
+    + or use the storage for anything you would normally use a block device
+  - place EBS in a specific availability zone
+    + can be automatically replicated to protect you from failure of a single component
+  - cannot be attached to more than 1 EC2 at a single time
+  - think of EC2 as a computer, and EBS as a harddrive
+### EBS Volume (i.e. storage) types
+  - GP2: general purpose SSD
+    + designed for 99.99% availability
+    + ratio of 3 IOPS per GP with 10k IOPS
+    + ability to burst to 3k IOPS for short periods for volumes under 1Gib
+  - IO1: Provisioned IOPS SSD
+    + designed for I/O intensive apps
+    + large relational/NoSQL dbs
+    + if you need more than 10K IOPS
+  - Magnetic (standard)
+    + oldschool disks, (think old laptops/comps)
+    + lowest cost per GB of all EBS types
+    + whenever data is accessed infrequently
+    + good for fileservers
 ######## KNOWN STUDY questions
+# IAM
   1. can you authenticate with active directory?
     - yes, but only with SAML
   2. do you authenticate with active directory first, or do you get temp security credntial first and then authenticate with active directory
@@ -307,3 +406,35 @@
       + you can only change the permissinos associated with the role
   7. what is the name of the API call to request temp security credentials from the AWS platform when federating with active directory?
     - assume role with saml
+
+# EC2
+  1. based on some scenario, which ec2 pricing model should you use?
+    - spot instances always the cheapest
+      - if spot instance is removed by amazon, you wont be charged for partial hour of usage
+      - if you terminate, you will be charged
+    - if you cant afford any down time, go for on demand
+    - on demand: perfect for test/dev envs, supplementing reserve instances during spikes,
+      + users that want low cost and flexibility without any up front cost / long term commitment
+      + applications with short term, spiky, or unpredictable workloads that cannot be interrupted
+      + applications that are being developed/tested on an amazon ec2 for the first time
+    - reserved isntances:
+      + apps with steady state/predictable useage
+        - if you know exactly what you'll need for the next 12 months, always do reserved
+      + apps that required reserved capacity
+      + users who are able to make upfront payments to reduce their total/long-term computing costs
+    - spots:
+      + apps that have flexible start/end times
+      + apps that are only feasible at very low prices
+      + users with urgent computing needs for large amounts of additional capacity
+        - if you only need it for a short period of time
+  2. What are the 3 types of EBS and when would you use each
+    - General purpose SSD (up to 10k iops)
+      + **TODO**
+    - provisioned IOPS SSD: (more than 10k IOPS)
+      + **TODO**
+    - magnetic: cheap, infrequently accessed storage
+      + **TODO**
+  3. how many EC2 instances can 1 EBS volume be mounted to at the same time
+    - ONE!!! DUH
+  4. How can you connect a single storage volume to more than 1 EC2 at the same time ?
+    - use EFS
