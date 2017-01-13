@@ -204,9 +204,10 @@
 ### Simple Email service
   - send and receive emails using AWS
 
-# cli
+# aws javascript cli
 ## links
   - [node sdk](https://aws.amazon.com/sdk-for-node-js/)
+  - [developer guide](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/welcome.html)
 ## best practices
 ## background
   - aws SERVICE COMMAND
@@ -279,7 +280,6 @@
       - cannot be used for programmatic access
 ### groups
   - can have up to 10 policies attached
-
 ### Policies
   - is a json object containing a version and a statement
     + statement has effect and allow
@@ -407,6 +407,75 @@
     + lowest cost per GB of all EBS types
     + whenever data is accessed infrequently
     + good for fileservers
+## elastic load balancers
+### elb listeners
+  - a process that checks for connection requests to your load balancer
+    + client to load balancer: protocol and port for connections to front-end clients to load balancer
+    + load balancer to back-end instance: a protocol and port for connections to back-end instance to load balancer
+    + supported ELB protocols: http, https, TCP, SSL
+    + ELB supports all ports with EC2 VPC (1-65535)
+      + ELB classics only support: 25, 80, 443, 465, 587, 1024-65535
+
+## S3
+  - safe place to store files
+  - only for object based storage
+  - the data is spread across multiple devices and facilities to withstand failure
+### basics
+  - object based storage, i.e. allows you to upload files
+  - files can be from 0-5tb
+  - unlimited storage capacity (of course they charge you)
+  - files are stored in buckets (i.e. folder)
+  - universal name space: i.e. bucket names must be global (all users bucket names must be unique)
+  - bucket names are always in the form: `https://s3-REGION.amazonaws.com/BUCKETNAME`
+  - has SLA of 99.99% availability guarantee availability and information durability (i.e you wont lose the any files)
+  - lifecycle management (move through different storage tiers after certain time period)
+  - supports versioning
+  - supports encryption (several ways)
+  - secure data using access control lists and/or bucket policies
+### price structure
+  - storage costs
+  - requests costs
+  - storage management pricing (adding tags to objects)
+  - data transfer pricing (data in is free, moving data around s3 costs)
+  - transfer acceleration:
+### tiered storage
+  + S3 standard: 99.999999.. (11 9s)% durability, sotred in multiple places
+    - fault tolerance 2 s3s
+  + S3 IA- infrequently accessed) for data that is accesses less frequenty, but requires rapidaccess when needed
+    - cheaper than s3
+    - fault tolerance 2 s3s
+    - minimum object size 128kb
+    - retrieval fee: per gb retrieved
+  + Reduced redundancy storage: designe dfor 99.99% durability (not 11 9s)
+    - cheaper than standard
+    - good for replaceable files
+    - fault tolerance: 1 s3
+  + glacier (not really s3): very cheap, used only for archivl
+    - takes 3-5 hours to restore from glacier
+    - low cost: 0.01 per gb per month
+    - minimum storage duration: 90 days
+    - no sla
+## sto
+### TERMINOLOGY
+  - object based storage: objects are things like videos, documents, photos, etc
+    - flat files: objects to be stored
+  - block based storage: things like operating systems
+  - bucket: a folder
+### data consistency model:
+  - new objects: read after write consistency:
+    + if you create a new object, you will be able to read that object right away and receive the data
+  - updates (put/delete) objects): eventual consistency for overwrite puts and deletes (takes time to propagate)
+    + if you update an object, and try to read from it immediately after (couple ms), you may get the old data or the new data
+## S3 objects
+  - all s3 objects have:
+    1. key: the name of the object
+    2. value: the data and is made up of a sequence of bytes
+    3. version ID: important for versioning
+    4. metadata: data about the data you are storing
+      - e.g. the date created/updated/etc
+    5. subresources:
+      1. access control lists: permissions, who can access this object. fine grained permissions on objects, or buckets
+      2. torrent: S3 supports bit torrent protocol
 ## tips and tricks
 ### using ssh (pem file) to connect to EC2
   1. create ec2 and associate it wiht a pem file
@@ -432,9 +501,34 @@
         git clone https://github.com/acloudguru/s3
       ```
 
+
+## VPC
+### basics
+  - VPC: virtual private cloud: i.e. its just a datacenter
+    + a virtual network environment isolated from the other AWS infrastructure
+    +
+  - are in a region, and can be in multiple availability zones in a single region
+  - use security groups and network access control lists for security
+### TERMINOLOGY
+  - public facing subnet: has internet access (e.g. for webservers)
+  - private facing subnet: no internet access (e.g. for databases)
 # USEFUL links
   - [installing aws cli](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
+
+
 ######## KNOWN STUDY questions
+# exam
+  - 80 minutes
+  - 55 questions
+  - $150
+  - conducted online at an approved place
+  - register at webassessor.com
+  
+# AWS
+  1. which servers are free?
+    - usually orchestration services, e.g.: cloudformation, elastic beanstalk, autoscaling, opworks
+    - however the resources they create & use are NOT FREE
+
 # IAM
   1. can you authenticate with active directory?
     - yes, but only with SAML
@@ -457,6 +551,19 @@
       + you can only change the permissinos associated with the role
   7. what is the name of the API call to request temp security credentials from the AWS platform when federating with active directory?
     - assume role with saml
+
+# sdk
+  1. [what SDKs are currently available?](https://aws.amazon.com/tools)
+    - android, browser, ios, java, .net, node, php, python, ruby, go, c++, aws mobile sdk, aws iot device sdk
+  2. what is the default region for sdks who have them?
+    - US-EAST-1
+  3. which SDKs have default regions?
+    - java
+  4. which SDKs do not have default regions?
+    - node
+  5. if you dont set a default region, what will be used?
+    - US-EAST-1
+
 
 # EC2
   1. based on some scenario, which ec2 pricing model should you use?
@@ -496,3 +603,21 @@
     - returns list of api endponts, see below for example
   7. how do you get EC2 public ip address?
     - via cli `curl http://169.254.169.254/latest/meta-data/public-ipv4`
+  8. are elastic load balancers free?
+    - no, you are charged by hour per GB of usage
+  9. what protocols can you use when setting up an elastic load balancer for EC2?
+    - http & https
+    - tcp & ssl
+  10. what are some common http codes?
+    - 200: request success
+    - 3xx: request was redirected
+    - 4xx: client error (e.g. 404 not found, i.e. somethings wrong with code in browser)
+    - 5xx: server error (i.e.something is wrong with server config/code)
+  11. how to enable encryption at rest using EC2 and elastick block store?
+    - configure encryption when creating the EBS volume
+
+# S3
+  1. what is the syntax for bucket URLs ?
+    - `https://s3-REGION-NAME.amazonaws.com/BUCKET-NAME`
+  2. what status code will be returned on successful file uploads to buckets?
+    - http 200

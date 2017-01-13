@@ -31,7 +31,7 @@ need to file
 			get a folders path:
 					click and drag into terminal. dope!
 
-		install on ec2
+		install on ec2 (centos)
 			https://codeforgeek.com/2015/05/setup-node-development-environment-amazon-ec2/
 			yum install -y gcc-c++ make
 				sudo yum install openssl-devel
@@ -96,7 +96,7 @@ need to file
 			# 4. Entry: Month of the year when the process will be started [1-12]
 			# 5. Entry: Weekday when the process will be started [0-6] [0 is Sunday]
 			#
-			# all x min = */x
+			# `all x min = */x`
 
 customize your environment
 	bash initialization for login
