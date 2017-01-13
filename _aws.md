@@ -204,6 +204,25 @@
 ### Simple Email service
   - send and receive emails using AWS
 
+# cli
+## links
+  - [node sdk](https://aws.amazon.com/sdk-for-node-js/)
+## best practices
+## background
+  - aws SERVICE COMMAND
+    + `aws s3 ls`
+  - aws configure #setup your user credentials
+    + also located at `~/.aws`
+      - contains config and credentials files for you to edit manually
+## s3
+  - make bucket: `aws s3 mb s3://YOURBUCKETNAME`
+  - list all buckets: `aws s3 ls`
+
+# AWS best practices
+  - never store your credentials on any resource or in any code
+    + instead use roles for managing access
+    + you can confirm no user credentials by:
+      1.  `ls ~/.aws` if the folder is not empty, that means you added user credentials
 
 # developer exam
   - global infrastructure
@@ -214,12 +233,11 @@
   - IAM
   - management tools (opsworks it uses chef)
   - messaging: SNS, SQS, SES
-
 # Study guide
 ## notes
-- not all services are available in all regions, so choose your regions wisely
-- IAM operates in the global region
-- EC2: a virtual machine
+  - not all services are available in all regions, so choose your regions wisely
+  - IAM operates in the global region
+  - EC2: a virtual machine
 
 ## IAM: identity access management
 ### places
@@ -259,6 +277,9 @@
       - you only get these once, make sure to download them or you'll have to regenerate them
     + name and pass: used to login to console
       - cannot be used for programmatic access
+### groups
+  - can have up to 10 policies attached
+
 ### Policies
   - is a json object containing a version and a statement
     + statement has effect and allow
@@ -269,6 +290,8 @@
 ### roles
   - allow one AWS service to interact with another
   - Service Roles: specifically for aws resources
+    + can only be associated with EC2 resources when you create the EC2
+    + if you create a role that provides s3 access > assign it to an EC2 when you create the EC2 > you will be able to automatically access the S3 without supplying credentials
   - cross-account access: allows one aws account to interact with another
   - identity provider access: for linkedin/facebook/etc to interact with aws resources
   - roles can only be give to EC2 instancs when the EC2 is created
@@ -383,6 +406,17 @@
     + lowest cost per GB of all EBS types
     + whenever data is accessed infrequently
     + good for fileservers
+## using ssh (pem file) to connect to EC2
+  1. create ec2 and associate it wiht a pem file
+  2. get public ip of ec2
+  3. ensure the pem file has correct permissions
+    - `chmod 400 udemy.pem`
+  4. ssh into server
+    -`ssh -i 'udemy.pem' ubuntu@SERVER_PUBLIC_IP`
+    - each param can be any order
+
+# USEFUL links
+  - [installing aws cli](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 ######## KNOWN STUDY questions
 # IAM
   1. can you authenticate with active directory?
@@ -438,3 +472,5 @@
     - ONE!!! DUH
   4. How can you connect a single storage volume to more than 1 EC2 at the same time ?
     - use EFS
+  5. Should you use user credentials to access EC2?
+    - no - the best way to manage access is via roles
