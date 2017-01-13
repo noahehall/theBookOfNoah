@@ -317,6 +317,7 @@
   - [instances and amis](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instances-and-amis.html)
   - [regions and availability zones](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)
   - [instance types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)
+  - [instance metadata](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html)
 
   - [tagging](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html)
   - [ec2 console](https://console.aws.amazon.com/ec2/.)
@@ -406,7 +407,8 @@
     + lowest cost per GB of all EBS types
     + whenever data is accessed infrequently
     + good for fileservers
-## using ssh (pem file) to connect to EC2
+## tips and tricks
+### using ssh (pem file) to connect to EC2
   1. create ec2 and associate it wiht a pem file
   2. get public ip of ec2
   3. ensure the pem file has correct permissions
@@ -414,6 +416,21 @@
   4. ssh into server
     -`ssh -i 'udemy.pem' ubuntu@SERVER_PUBLIC_IP`
     - each param can be any order
+### specify startup bsh scripts
+  - scripts that run when you launch an instance
+    1. create an instance
+    2. on 'configure instance details' page, click 'advanced details link'
+    3. insert your bash script, e.g.
+      ```
+        #!/bin/bash
+        yum update -y
+        yum install httpd24 php56 git -y
+        service httpd start
+        chkconfig httpd on
+        cd /var/www/html
+        echo "<?php phpinfo();?>" > test.php
+        git clone https://github.com/acloudguru/s3
+      ```
 
 # USEFUL links
   - [installing aws cli](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
@@ -474,3 +491,8 @@
     - use EFS
   5. Should you use user credentials to access EC2?
     - no - the best way to manage access is via roles
+  6. how do you get EC2 instance metadata?
+    - via cli `sudo curl http://169.254.169.254/latest/meta-data/`
+    - returns list of api endponts, see below for example
+  7. how do you get EC2 public ip address?
+    - via cli `curl http://169.254.169.254/latest/meta-data/public-ipv4`

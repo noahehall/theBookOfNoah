@@ -9,14 +9,18 @@ bookmark:
 		view system info
 			http://www.tecmint.com/commands-to-collect-system-and-hardware-information-in-linux/?utm_source=feedburner&utm_medium=email&utm_campaign=Feed%3A+tecmint+%28Tecmint%3A+Linux+Howto%27s+Guide%29
 
-[linux on mac](http://www.macworld.co.uk/how-to/mac/how-install-linux-on-mac-3637265/):
-  1. use virutalization Software
-    - VirtualBox
-    - parallels (costs)
-    - VMware
-    - Boot Camp
-  2. dual-boot OS X and Linux
-  3. [replace macos](http://www.macworld.co.uk/how-to/mac/how-install-linux-on-mac-3637265/)
+# NEW: need to file
+## ubuntu
+	- store web content in /var/www
+## links
+	[linux on mac](http://www.macworld.co.uk/how-to/mac/how-install-linux-on-mac-3637265/):
+	  1. use virutalization Software
+	    - VirtualBox
+	    - parallels (costs)
+	    - VMware
+	    - Boot Camp
+	  2. dual-boot OS X and Linux
+	  3. [replace macos](http://www.macworld.co.uk/how-to/mac/how-install-linux-on-mac-3637265/)
 
 need to file
     Add your Node.js start script to the file you edited for port redirection, /etc/rc.local. That will run your Node.js launch script when the system starts.
