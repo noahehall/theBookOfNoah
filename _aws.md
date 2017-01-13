@@ -205,6 +205,8 @@
   - send and receive emails using AWS
 
 # cli
+## links
+  - [node sdk](https://aws.amazon.com/sdk-for-node-js/)
 ## best practices
 ## background
   - aws SERVICE COMMAND
