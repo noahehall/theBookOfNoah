@@ -204,6 +204,26 @@
 ### Simple Email service
   - send and receive emails using AWS
 
+# aws javascript cli
+## links
+  - [node sdk](https://aws.amazon.com/sdk-for-node-js/)
+  - [developer guide](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/welcome.html)
+## best practices
+## background
+  - aws SERVICE COMMAND
+    + `aws s3 ls`
+  - aws configure #setup your user credentials
+    + also located at `~/.aws`
+      - contains config and credentials files for you to edit manually
+## s3
+  - make bucket: `aws s3 mb s3://YOURBUCKETNAME`
+  - list all buckets: `aws s3 ls`
+
+# AWS best practices
+  - never store your credentials on any resource or in any code
+    + instead use roles for managing access
+    + you can confirm no user credentials by:
+      1.  `ls ~/.aws` if the folder is not empty, that means you added user credentials
 
 # developer exam
   - global infrastructure
@@ -214,12 +234,11 @@
   - IAM
   - management tools (opsworks it uses chef)
   - messaging: SNS, SQS, SES
-
 # Study guide
 ## notes
-- not all services are available in all regions, so choose your regions wisely
-- IAM operates in the global region
-- EC2: a virtual machine
+  - not all services are available in all regions, so choose your regions wisely
+  - IAM operates in the global region
+  - EC2: a virtual machine
 
 ## IAM: identity access management
 ### places
@@ -259,6 +278,8 @@
       - you only get these once, make sure to download them or you'll have to regenerate them
     + name and pass: used to login to console
       - cannot be used for programmatic access
+### groups
+  - can have up to 10 policies attached
 ### Policies
   - is a json object containing a version and a statement
     + statement has effect and allow
@@ -269,6 +290,8 @@
 ### roles
   - allow one AWS service to interact with another
   - Service Roles: specifically for aws resources
+    + can only be associated with EC2 resources when you create the EC2
+    + if you create a role that provides s3 access > assign it to an EC2 when you create the EC2 > you will be able to automatically access the S3 without supplying credentials
   - cross-account access: allows one aws account to interact with another
   - identity provider access: for linkedin/facebook/etc to interact with aws resources
   - roles can only be give to EC2 instancs when the EC2 is created
@@ -294,6 +317,7 @@
   - [instances and amis](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instances-and-amis.html)
   - [regions and availability zones](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)
   - [instance types](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)
+  - [instance metadata](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html)
 
   - [tagging](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html)
   - [ec2 console](https://console.aws.amazon.com/ec2/.)
@@ -383,7 +407,128 @@
     + lowest cost per GB of all EBS types
     + whenever data is accessed infrequently
     + good for fileservers
+## elastic load balancers
+### elb listeners
+  - a process that checks for connection requests to your load balancer
+    + client to load balancer: protocol and port for connections to front-end clients to load balancer
+    + load balancer to back-end instance: a protocol and port for connections to back-end instance to load balancer
+    + supported ELB protocols: http, https, TCP, SSL
+    + ELB supports all ports with EC2 VPC (1-65535)
+      + ELB classics only support: 25, 80, 443, 465, 587, 1024-65535
+
+## S3
+  - safe place to store files
+  - only for object based storage
+  - the data is spread across multiple devices and facilities to withstand failure
+### basics
+  - object based storage, i.e. allows you to upload files
+  - files can be from 0-5tb
+  - unlimited storage capacity (of course they charge you)
+  - files are stored in buckets (i.e. folder)
+  - universal name space: i.e. bucket names must be global (all users bucket names must be unique)
+  - bucket names are always in the form: `https://s3-REGION.amazonaws.com/BUCKETNAME`
+  - has SLA of 99.99% availability guarantee availability and information durability (i.e you wont lose the any files)
+  - lifecycle management (move through different storage tiers after certain time period)
+  - supports versioning
+  - supports encryption (several ways)
+  - secure data using access control lists and/or bucket policies
+### price structure
+  - storage costs
+  - requests costs
+  - storage management pricing (adding tags to objects)
+  - data transfer pricing (data in is free, moving data around s3 costs)
+  - transfer acceleration:
+### tiered storage
+  + S3 standard: 99.999999.. (11 9s)% durability, sotred in multiple places
+    - fault tolerance 2 s3s
+  + S3 IA- infrequently accessed) for data that is accesses less frequenty, but requires rapidaccess when needed
+    - cheaper than s3
+    - fault tolerance 2 s3s
+    - minimum object size 128kb
+    - retrieval fee: per gb retrieved
+  + Reduced redundancy storage: designe dfor 99.99% durability (not 11 9s)
+    - cheaper than standard
+    - good for replaceable files
+    - fault tolerance: 1 s3
+  + glacier (not really s3): very cheap, used only for archivl
+    - takes 3-5 hours to restore from glacier
+    - low cost: 0.01 per gb per month
+    - minimum storage duration: 90 days
+    - no sla
+## sto
+### TERMINOLOGY
+  - object based storage: objects are things like videos, documents, photos, etc
+    - flat files: objects to be stored
+  - block based storage: things like operating systems
+  - bucket: a folder
+### data consistency model:
+  - new objects: read after write consistency:
+    + if you create a new object, you will be able to read that object right away and receive the data
+  - updates (put/delete) objects): eventual consistency for overwrite puts and deletes (takes time to propagate)
+    + if you update an object, and try to read from it immediately after (couple ms), you may get the old data or the new data
+## S3 objects
+  - all s3 objects have:
+    1. key: the name of the object
+    2. value: the data and is made up of a sequence of bytes
+    3. version ID: important for versioning
+    4. metadata: data about the data you are storing
+      - e.g. the date created/updated/etc
+    5. subresources:
+      1. access control lists: permissions, who can access this object. fine grained permissions on objects, or buckets
+      2. torrent: S3 supports bit torrent protocol
+## tips and tricks
+### using ssh (pem file) to connect to EC2
+  1. create ec2 and associate it wiht a pem file
+  2. get public ip of ec2
+  3. ensure the pem file has correct permissions
+    - `chmod 400 udemy.pem`
+  4. ssh into server
+    -`ssh -i 'udemy.pem' ubuntu@SERVER_PUBLIC_IP`
+    - each param can be any order
+### specify startup bsh scripts
+  - scripts that run when you launch an instance
+    1. create an instance
+    2. on 'configure instance details' page, click 'advanced details link'
+    3. insert your bash script, e.g.
+      ```
+        #!/bin/bash
+        yum update -y
+        yum install httpd24 php56 git -y
+        service httpd start
+        chkconfig httpd on
+        cd /var/www/html
+        echo "<?php phpinfo();?>" > test.php
+        git clone https://github.com/acloudguru/s3
+      ```
+
+
+## VPC
+### basics
+  - VPC: virtual private cloud: i.e. its just a datacenter
+    + a virtual network environment isolated from the other AWS infrastructure
+    +
+  - are in a region, and can be in multiple availability zones in a single region
+  - use security groups and network access control lists for security
+### TERMINOLOGY
+  - public facing subnet: has internet access (e.g. for webservers)
+  - private facing subnet: no internet access (e.g. for databases)
+# USEFUL links
+  - [installing aws cli](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
+
+
 ######## KNOWN STUDY questions
+# exam
+  - 80 minutes
+  - 55 questions
+  - $150
+  - conducted online at an approved place
+  - register at webassessor.com
+  
+# AWS
+  1. which servers are free?
+    - usually orchestration services, e.g.: cloudformation, elastic beanstalk, autoscaling, opworks
+    - however the resources they create & use are NOT FREE
+
 # IAM
   1. can you authenticate with active directory?
     - yes, but only with SAML
@@ -406,6 +551,19 @@
       + you can only change the permissinos associated with the role
   7. what is the name of the API call to request temp security credentials from the AWS platform when federating with active directory?
     - assume role with saml
+
+# sdk
+  1. [what SDKs are currently available?](https://aws.amazon.com/tools)
+    - android, browser, ios, java, .net, node, php, python, ruby, go, c++, aws mobile sdk, aws iot device sdk
+  2. what is the default region for sdks who have them?
+    - US-EAST-1
+  3. which SDKs have default regions?
+    - java
+  4. which SDKs do not have default regions?
+    - node
+  5. if you dont set a default region, what will be used?
+    - US-EAST-1
+
 
 # EC2
   1. based on some scenario, which ec2 pricing model should you use?
@@ -438,3 +596,28 @@
     - ONE!!! DUH
   4. How can you connect a single storage volume to more than 1 EC2 at the same time ?
     - use EFS
+  5. Should you use user credentials to access EC2?
+    - no - the best way to manage access is via roles
+  6. how do you get EC2 instance metadata?
+    - via cli `sudo curl http://169.254.169.254/latest/meta-data/`
+    - returns list of api endponts, see below for example
+  7. how do you get EC2 public ip address?
+    - via cli `curl http://169.254.169.254/latest/meta-data/public-ipv4`
+  8. are elastic load balancers free?
+    - no, you are charged by hour per GB of usage
+  9. what protocols can you use when setting up an elastic load balancer for EC2?
+    - http & https
+    - tcp & ssl
+  10. what are some common http codes?
+    - 200: request success
+    - 3xx: request was redirected
+    - 4xx: client error (e.g. 404 not found, i.e. somethings wrong with code in browser)
+    - 5xx: server error (i.e.something is wrong with server config/code)
+  11. how to enable encryption at rest using EC2 and elastick block store?
+    - configure encryption when creating the EBS volume
+
+# S3
+  1. what is the syntax for bucket URLs ?
+    - `https://s3-REGION-NAME.amazonaws.com/BUCKET-NAME`
+  2. what status code will be returned on successful file uploads to buckets?
+    - http 200

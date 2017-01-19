@@ -82,7 +82,7 @@
     1.never sourcemaps, especially inline source maps. if you want to include sourcemaps in production, use a tool like exorist
 
 # npm: node package manager
-	install via NVM
+	install via [NVM](https://github.com/creationix/nvm)
 	`npmjs.org/packages` //all public npm modules
 ## workflows: installing modules
 		`npm install --save-dev redux@3.5.2` //always use the @ to get a specific version, no auto updating!
