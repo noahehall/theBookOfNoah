@@ -84,7 +84,6 @@
 # npm: node package manager
 	install via NVM
 	`npmjs.org/packages` //all public npm modules
-
 ## workflows: installing modules
 		`npm install --save-dev redux@3.5.2` //always use the @ to get a specific version, no auto updating!
 
@@ -99,7 +98,6 @@
 		`npm install -g PROJECTNAME`
 			install a module globally, available to all projects
 			allows you to use it via command line
-
 ## workflows: uninstalling modules
 		A. manually
 			1.delete the module key & value from PROJECTNAME/package.jsonp
@@ -110,7 +108,6 @@
 		C`.$npm uninstall --save moduleName` //removes the folder AND UPDATED package.json
 		D.`$npm uninstall -g moduleName`
 		D.`$npm prune` //remove folders that are not in your package.json file BUT ARE IN YOUR node_modules folder
-
 ## workflows:update modules
 		1. edit package.json
 			to force modules to update to the latest version
@@ -118,10 +115,8 @@
 				`"modulename": "*"`
 		2. `$npm update`
 			updates modules to the version listed
-
 ## workflows: reinstall all modules
 		1. `npm install`
-
 ## workflows: listing installed apps
 		1.  `$npm list `//all packages installed in this app
 		2.  `$npm -g list` //displays all packages install globally
@@ -129,7 +124,6 @@
 		4.  `$npm outdated` //shows all outdated packages
 		5.  `$npm update` //updated all outdated packages
 		6. `npm help`: display the help section
-
 ## NPM packages: https://www.youtube.com/watch?v=sELoj6e1ffM
   - library of reusable code with a defined 'interface'
   - how require finds modules:
@@ -149,26 +143,27 @@
     - instancing/caching is based on file paths
     - this means variables local to the module are shared to all other codes that require it
 
-### path
+# [yarn](https://yarnpkg.com/en/docs/)
+  - npm prune vs yarn install: https://github.com/yarnpkg/yarn/issues/696
+  - [install directions](https://yarnpkg.com/en/docs/install)
+  - [usage directions](https://yarnpkg.com/en/docs/usage)
+# Node Modules
+## path
   var path = require('path');
 
   getting file name from path
     var name = path.basename('./boom/bam/beep.zip') //beep.zip
-### nodejs forever
+## nodejs forever
 	background
 		so that you can run nodejs forever on your remote server
 		without having to keep your CLI open
 
 	workflows: keep your app running forever
 		1. $sudo forever start app.js
-
-### express
-
-
-### exorcist: https://github.com/thlorenz/exorcist
+## express
+## exorcist: https://github.com/thlorenz/exorcist
   //Externalizes the source map found inside a stream to an external .js.map file
-
-### bluebird: promise module: NEED TO DO
+## bluebird: promise module: NEED TO DO
 	example 1 creating a promise:
 		create blue-promise.js
 		```
@@ -188,16 +183,15 @@
 					console.error("unable to read file"); //try data3.json (doesn't exist)
 			});
 ```
-### immutable js:
+## immutable js:
   Immutable data cannot be changed once created, leading to much simpler application development, no defensive copying, and enabling advanced memoization and change detection techniques with simple logic. Persistent data presents a mutative API which does not update the data in-place, but instead always yields new updated data.
   Immutable.js provides many Persistent Immutable data structures including: List, Stack, Map, OrderedMap, Set, OrderedSet and Record.
-### Lodash makes JavaScript easier by taking the hassle out of working with arrays,
+## Lodash makes JavaScript easier by taking the hassle out of working with arrays,
   numbers, objects, strings, etc. Lodash’s modular methods are great for:
   Iterating arrays, objects, & strings
   Manipulating & testing values
   Creating composite functions
-
-### Mongoose: NEED TO DO
+## Mongoose: NEED TO DO
 	background
 		http://mongoosejs.com/docs/connections.html
 		object modeling 'for' our MongoDB database.
@@ -209,24 +203,19 @@
 		2. connect to mongodb
 			A.mongoose.connect(uri, options);
 			B.mongoose.connect('mongodb://localhost/myapp');
-
-### Passport: NEED TO DO
+## Passport: NEED TO DO
 	background
 		handles authentication & authorization
 	methods:
 		-passport.authenticate: use when first signing up/logging in a user
 		-passport.authorize: 'for' users who are already logged in and want to connect another account
-
-### Connect-flash: NEED TO DO
+## Connect-flash: NEED TO DO
 	allows 'for' passing session flashdata messages.
-
-### Bcrypt-nodejs: NEED TO DO
+## Bcrypt-nodejs: NEED TO DO
  gives us the ability to hash strings, e.g. passwords
-
-### nodemon: NEED TO DO
+## nodemon: NEED TO DO
 	Auto Refreshing: By default, node doesn’t automatically refresh our server every time we change files. To do that we’ll use nodemon. Just install with: npm install -g nodemon and use with: nodemon server.js.
-
-### bower: NEED TO DO
+## bower: NEED TO DO
 	its an NPM 'for' the frontend
 	while NPM has nested dependencies
 	Bower has a flat dependency
@@ -242,13 +231,11 @@
 	install bower apps
 			bower install APPNAME --save grunt
 					bootstrap, fontawesome, jquery, handlebars, bower install jquery-ui
-
-### handlebars: NEED TO DO
+## handlebars: NEED TO DO
 
 	handlebars need file
 		-The first and last steps of iteration are noted via the @first and @last variables when iterating over an array. When iterating over an object only the @first is available.
-
-### express-handlebars
+## express-handlebars
 
 		main-layout: views/layouts/main.handlebars
 			-HTML page wrapper which can be reused for different views of hte app
@@ -264,9 +251,7 @@
 				app.get('/', function (req, res, next) {
 					res.render('home', {layout: false}); #specify there isnt a layout
 				});
-
-
-#### notes:
+## notes:
 		data: your content - anything not in a handlebars expression
 		paths: how you inject content into templates,
 			{{my.thing}}
@@ -353,9 +338,7 @@
 				</script>
 
 			</body>`
-
-
-### sinopia:
+## sinopia:
 	background
 		private registry
 		cache to speed up npm installs
@@ -378,10 +361,9 @@
     walkthrough: https://stapp.space/private-npm-registry-with-fallback/
 		walkthrough: https://www.npmjs.com/package/react-native-cli
     walkthrough: https://blog.dylants.com/2014/05/10/creating-a-private-npm-registry-with-sinopia/
+## dotenv: Loads environment variables from .env for nodejs projects.
 
-### dotenv: Loads environment variables from .env for nodejs projects.
-
-### momentjs
+## momentjs
 http://momentjs.com/docs/
 	npm install moment --save
 	const moment = require('moment');

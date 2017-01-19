@@ -6,9 +6,9 @@ application breakdown
        - Story N
         - Scenario N
 
-
 # Software Development process
 ## [flowchart symbols](https://www.smartdraw.com/flowchart/flowchart-symbols.htm)
+  - [more flowchart symbols](http://www.aivosto.com/vbtips/flowchart-symbols.html)
   - [how to make a flow chart](https://www.smartdraw.com/flowchart/how-to-make-a-flowchart.htm)
   - start end: oval
   - arrows: relationships between representative shapes
