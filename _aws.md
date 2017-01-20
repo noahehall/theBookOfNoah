@@ -531,7 +531,6 @@
   2. edge location checks if the asset has been cached at that particular edge location
   3. if yes, it returns it, if not, it retrieves it, caches it, and returns it to the user
     + it caches it for the duration of the TTL
-
 ### create a distribution terms
   - oring domain name: prepopulated with all AWS resources, or you can insert a domain name
   - origin path: adding subfolders within the origin
@@ -583,7 +582,6 @@
     + distinct url: BUCKETNAME.s3-accerlate.amazonaws.com
     + user upload to cloudfront edge location > cloudfront sends to s3
   - s3 bucket > properties > transfer acceleration
-
 ## Cross Origin Resource Sharing (cors)
   - allows one javascript in one s3 bucket to reference code in another s3 bucket
   - add the static website URL from one bucket into the index.html of another bucket
@@ -591,6 +589,39 @@
     + bucket containing file to share > permissions > access control list > cors configuration > insert the static website url your bucket that will be requesting this file
     + you can have anything in a bucket, across different regions, and share them with any s3 bucket
 
+## databases
+  - RDS: managed relational database service
+  - DynamoDB: managed nosql database service
+  - Elasticache: in memory caching engine
+  - Redshift: Data warehousing service
+  - DMS: managed database migration service
+### what are relational databases
+  - think of a traditional spreadsheet:
+    + database: the filename of the spreadsheet
+    + tables: the different worksheet
+    + rows: each row in a worksheet is a record with values for each column
+    + fields (columns): each column in the worksheet, it is required to have the same type of data for each row
+  - relational database types on RDS
+    + SQL server
+    + oracle
+    + Mysql server
+    + postgressql
+    + aurora
+    + Mariadb
+  - non relationship database types
+    + couchdb
+    + mongodb
+    + cloudant
+    + only one on AWS in DynamoDB
+  - Describe NoSQL databases
+    + are document oriented databases, think of JSON
+      - collection = table
+      - document = row
+      - key value pairs = fields (columns and their values)
+      - embedded datastructures: a key whose value is a a hash/array
+  - database warehousing
+    + used to pull in very large and complex data sets
+    + used by management to do queries on data (e.g. current performance vs targets)
 
 ## tips and tricks
 ### using ssh (pem file) to connect to EC2
@@ -680,8 +711,6 @@
     - node
   5. if you dont set a default region, what will be used?
     - US-EAST-1
-
-
 
 # EC2
   1. based on some scenario, which ec2 pricing model should you use?
@@ -833,7 +862,6 @@
   29. what is the largest size file you can transfer to S3 using a put operation?
     - 5gb, after that you must use multipart upload
 
-
 # cloudfront
   1. what is an edge location ?
     - the location where content will be cached
@@ -860,3 +888,15 @@
     - no it costs each time
   11. can you upload or download from cloudfront ?
     - you can do both
+
+# databases
+  0. RDS and DynamoDB come up a lot in the exam! read the FAQs!
+    - [RDS faq](https://aws.amazon.com/rds/faqs/)
+    - [dynamodb faq](https://aws.amazon.com/dynamodb/faqs/)
+  1. what type of relational database are on RDS
+    + SQL server
+    + oracle
+    + Mysql server
+    + postgressql
+    + aurora
+    + Mariadb
