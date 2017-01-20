@@ -696,7 +696,16 @@
   - steps:
     1. create a role: dynamodb db full access privs
     2. create an ec2 in the correct region and assign the role from #1
-    3. 
+    3. he loves to run these php scripts, add instructs for js
+#### dynamodb indexes and streams
+  - primary keys:
+    + single attribute: i.e. unique id:
+      - partition/hash key: composed of one attribute: e.g. user id
+      - composite: think user id + date
+        + partition key + sort/arrange key (hash & range) composed of two attributes
+  - global secondary index:
+  - local secondary index:
+  - streams:
 
 ## tips and tricks
 ### using ssh (pem file) to connect to EC2
