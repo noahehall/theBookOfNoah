@@ -56,6 +56,8 @@
 ## admin
   - sudo service redis-server start|stop|restart
   - redis-server /usr/local/etc/redis.conf #start
+    - Config file    : /etc/redis/6379.conf
+
   - redis-cli #connect to client
   - redis-cli monitor #see all logs in real time in a new shell
     + redis-server /usr/local/etc/redis.conf

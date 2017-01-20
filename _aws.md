@@ -437,7 +437,10 @@
   - requests costs
   - storage management pricing (adding tags to objects)
   - data transfer pricing (data in is free, moving data around s3 costs)
-  - transfer acceleration:
+  - transfer acceleration: enables fast, easy, secure transfore of files over long distances between end users and s3 buckets
+    + uses cloudfronts globally distributed edge locations.
+    + data is transfered over an optimized network path
+    + users upload data to EDGE locations, and amazon handles saving that data into your actual buckets
 ### tiered storage
   + S3 standard: 99.999999.. (11 9s)% durability, sotred in multiple places
     - fault tolerance 2 s3s
@@ -446,16 +449,18 @@
     - fault tolerance 2 s3s
     - minimum object size 128kb
     - retrieval fee: per gb retrieved
+    - first byte latency: milliseconds
   + Reduced redundancy storage: designe dfor 99.99% durability (not 11 9s)
     - cheaper than standard
     - good for replaceable files
     - fault tolerance: 1 s3
+    - first byte latency: milliseconds
   + glacier (not really s3): very cheap, used only for archivl
     - takes 3-5 hours to restore from glacier
     - low cost: 0.01 per gb per month
     - minimum storage duration: 90 days
     - no sla
-## sto
+    - first byte latency: minutes/hours
 ### TERMINOLOGY
   - object based storage: objects are things like videos, documents, photos, etc
     - flat files: objects to be stored
@@ -466,7 +471,7 @@
     + if you create a new object, you will be able to read that object right away and receive the data
   - updates (put/delete) objects): eventual consistency for overwrite puts and deletes (takes time to propagate)
     + if you update an object, and try to read from it immediately after (couple ms), you may get the old data or the new data
-## S3 objects
+### S3 objects
   - all s3 objects have:
     1. key: the name of the object
     2. value: the data and is made up of a sequence of bytes
@@ -476,6 +481,117 @@
     5. subresources:
       1. access control lists: permissions, who can access this object. fine grained permissions on objects, or buckets
       2. torrent: S3 supports bit torrent protocol
+### S3 static website
+  1. create bucket and open properties
+  2. enable static website hosting
+  3. set index.html and error.html as the files
+  4. set permission 'open/download'for everyone on both files
+### S3 set versioning on bucket
+  - once bucket is turned on, it cannot be removed (but it can be disabled)
+  - delete a file
+  - go into old console (in s3 hmepage)
+  - delete the file with the delete marker
+  - go back to new console (if you want to)
+### S3 lifecycle management
+  - manage storage costs by controlling the lifecycle of your buckets/files
+  - create rules to transfer your files to infrequent access storage class or glacier
+  + transitions for current versions
+    - transition to standard infrequent storage classics
+      + you specify how many days after object creation date
+    - transition to glacier
+      + specify how man days after object creation
+    - expire objects
+      + set the current version to a previous version after X days
+  + action on previous versions
+    - transition to infrequent access storage class X days after object has been a previous version
+  + archive to glacier
+    - transition to glacier X days after object has been a previous version
+  + permanently delete
+    - X days after object has been a previous version
+
+
+## cloudfront
+  - can be used to deliver your entire website,
+  - optimized to work with other amazon web services
+  -
+### Terminology
+  - web distribution: used for websites
+  - RTMP distribution: used for media streaming (e.g. adobe flash)
+  - CDN: content delivery network:
+    + system of distributed servers that deliver assets based on the geographical location of the user
+  - edge location: the location where content will be cached
+    + distinct from AWS region/availability zones
+  - origin: the origin of all files that theCDN will destribute
+    + S3 bucket, EC2 instance, Elastic load balancer, Route53
+      + usually an S3 bucket/ec2 instance/elastic load balancer with ec2 instances behind it
+      + wherever the origin files are
+  - distribution: the name given to the CDN which consists of a collection of edge locations
+### edge location workflow
+  1. user makes request to an edge location distribution URL
+  2. edge location checks if the asset has been cached at that particular edge location
+  3. if yes, it returns it, if not, it retrieves it, caches it, and returns it to the user
+    + it caches it for the duration of the TTL
+
+### create a distribution terms
+  - oring domain name: prepopulated with all AWS resources, or you can insert a domain name
+  - origin path: adding subfolders within the origin
+  - origin id: give it anything
+  - restrict bucket access: to stop users frm using S3
+    + requires origin access identity:
+      - creates a new user for cloudfront to access S3
+  - Grant read permissions on bucket: automatically updates bucket policy
+  - origin custom headers: add headers
+  - path pattern: if you have assets in different paths, e.g. /videos and /images
+  - viewer protocol policy: http/https, redirect http to https, or https only
+    + best to do http to https
+  - allowed http methods: specify what clients can do
+    + you can post to cloudfront, and amazon will manage uploading it to your s3
+  - forward headers: leave at default
+  - object caching: click customize to modify TTLs
+  - Minimum, default and maximum TTL in seconds: the minimum time to live, how long do assets exist in edge locations
+    + default ttl: determines how long assets will be cached, and thus when your edge locations will be updated
+    + you have to consider the rate of change for your files
+    + modify TTLs usually require you to clear the cache, and that costs
+  - restrict viewer access (use signed urls/cookies): if you want to restrict content to a certain audience, e.g. only users who have paid for a service can access a certain url
+  - AWS WAF Web ACL: web application firewall, a layer 7 protection.
+    + operates at the application layer, prevents sequel injection and Cross site scripting
+  - alternate domain names:
+  - ssl certs:
+### created distribution terms
+  - distribution id
+  - domain names
+  - certs
+### created distribution configuration
+#### origins
+  - a single distribution can have multiple origins/s3 buckets/ec2 instances/ load balancers
+  - click a distribution > click the origins tab
+#### behaviors
+  - modify how the distribution acts based on certain criteria
+  - you can have multiple behaviors per distribution
+#### error pages
+  - custom error code / error pages
+#### restrictions
+  - geo restriction based on white / black lists for countries
+#### invalidations
+  - remove objects from cloudfront edge locations to force cloudfront to rehydrate the cache
+  - it does costs money
+#### tags
+  - you can add tags to the distribution
+### s3 transfer acceleration
+  - utilizes cloudfront edge network to accelerate uploads to s3
+    + instead of uploading directly to s3 bucket, you use a distinct URL to upload directly to an edge location, which will auto transfer that file to s3
+    + distinct url: BUCKETNAME.s3-accerlate.amazonaws.com
+    + user upload to cloudfront edge location > cloudfront sends to s3
+  - s3 bucket > properties > transfer acceleration
+
+## Cross Origin Resource Sharing (cors)
+  - allows one javascript in one s3 bucket to reference code in another s3 bucket
+  - add the static website URL from one bucket into the index.html of another bucket
+  - create a CORS file
+    + bucket containing file to share > permissions > access control list > cors configuration > insert the static website url your bucket that will be requesting this file
+    + you can have anything in a bucket, across different regions, and share them with any s3 bucket
+
+
 ## tips and tricks
 ### using ssh (pem file) to connect to EC2
   1. create ec2 and associate it wiht a pem file
@@ -523,7 +639,7 @@
   - $150
   - conducted online at an approved place
   - register at webassessor.com
-  
+
 # AWS
   1. which servers are free?
     - usually orchestration services, e.g.: cloudformation, elastic beanstalk, autoscaling, opworks
@@ -551,6 +667,7 @@
       + you can only change the permissinos associated with the role
   7. what is the name of the API call to request temp security credentials from the AWS platform when federating with active directory?
     - assume role with saml
+  8. [read the iam faq](https://aws.amazon.com/iam/faqs/)
 
 # sdk
   1. [what SDKs are currently available?](https://aws.amazon.com/tools)
@@ -563,6 +680,7 @@
     - node
   5. if you dont set a default region, what will be used?
     - US-EAST-1
+
 
 
 # EC2
@@ -615,9 +733,130 @@
     - 5xx: server error (i.e.something is wrong with server config/code)
   11. how to enable encryption at rest using EC2 and elastick block store?
     - configure encryption when creating the EBS volume
+  12. [read the ec2 faq](https://aws.amazon.com/ec2/faqs/)
 
 # S3
   1. what is the syntax for bucket URLs ?
     - `https://s3-REGION-NAME.amazonaws.com/BUCKET-NAME`
   2. what status code will be returned on successful file uploads to buckets?
     - http 200
+  3. how should you store your files in S3?
+    - add a salt to the beginning of the file name so that the objects are stored evenly across S3, instead of grouped together
+      + especially for file names that are similar
+  4. what kind of storage is S3 ?
+    - S3 is object based storage (i.e upload files)
+  5. What size files can S3 hold ?
+    - from 0 bytes to 5 TB
+  6. how much storage is available on S3 ?
+    - unlimited storage
+  7. where are files stored in S3 ?
+    - in buckets (i.e. files)
+  8. What kind of name space is S3 bucket names ?
+    - S3 bucket names are universal (i.e. global) namepace, i.e. names must be unique globally across all aws users and must be lowercased
+  9. what kind of consistency is for PUTS of new objects?
+    - read after write consistency for PUTS
+    - immediately available
+  10. what kind of consistency for overwrite puts and deletes?
+    - eventual consistency
+    - takes time to propagate (not immediate)
+  11. what kind of storage classes/tiers are available
+    - S3 (standard): durable, immediately available, frequently accessed
+    - S3 IA: durable, immediately available, infrequently accessed)
+      + must be >= 128kb and 30 days after creation date
+    - S3 reduced redundancy storage: data that is easily reproducible, e.g. thumbnails
+    - Glacier: archival data,  3-5 hours before accessing
+      + must be 30 days after S3 IA date
+  12. what makes up an S3 object?
+    - key (name)
+    - value (data)
+    - version ID
+    - metadata
+    - subresources:
+      - ACL: access contorl list
+      - torrent
+  13. what is the format for s3 urls?
+    - your.bucket.name.s3-website-REGION.amazonaws.com
+  13. [read the S3 FAW](https://aws.amazon.com/s3/faqs/)
+  14. can you remove versioning from a bucket after you enable it?
+    - once bucket is turned on, it cannot be removed (but it can be disabled)
+  15. what is versioning?
+    - stores all versions of an object, even deleted ones
+  16. how do add security to S3 versioning
+    - setup versioning's MFA delete capability
+  17. can lifecycle management be used with versioning?
+    - yes
+  18. can lifecycle be applied to current or previous versions?
+    - both
+  19. what actions can be done with lifecycle management?
+    - transition to infrequent access storage class?
+      + at lest 128kb and 30 days after creation date
+    - archive to storage class
+      + 30 days after IA, if relevant
+    - permanently delete
+  20. what types of encryption are available?
+    - in transit: ssl/tls, have to use https,
+    - at rest
+      + server side encription using S3 managed keys: SSE-S3
+        -each object is encrypted with a unique employing strong multifactor encryption with a master key that regular rotates
+      + aws key management service: managed keys: SSE-KMS,
+      + server side encryption with customer provided keys: SSE-C
+        - you manage the keys, and AWS manages the encryption when writing to disk, decryption when reading from disk
+    - client side encryption
+      + you encrypt data yourself on the client side and uploading to S3 and its saved as encrypted data
+  21. what types of storage gateways available on S3?
+    - file gateway: for flat files, sotred directly on S3
+    - volume gateway:
+      + stored volumes: entire dataset is stored on site and is backed up asynchronously backed up to s3 (block based storage)
+      + cached volumes: entire data set is stored on s3 and the most frequenlty accessed data is cached on site
+    - gateway virtual tape library (VTL)
+      + used for backup and uses popular backup apps like netbackup, backup exec, etc
+  22. What types of snowball exists?
+    - pure storage, various types of sizes
+    - snowball edge: storage + compute capabilities, you can run lambda functions
+    - snowmobile: 100PT worth of storage
+  23. what is snowball?
+    - import and export to s3
+  24. who benefits most from S3 transfer acceleration?
+    - people in far away locations
+  25. what characteristics exist from S3 static websites
+    - only static content (no php/.net)
+    - serverless
+  26. what is cors?
+    - cross origin resource Sharing
+    - when you have assets in multiple origins/domains
+    - need to enable cors on the resources buckdt and state the URL for the origin that will be calling the bucket
+  27. what are the bucket urls?
+    - static hosting: bucketname.s3-website.REGION.amazonaws.com
+    - s3 bucket: s3.REGION.amazonaws.com/bucketname
+  28. if you encrypt a bucket on s3, what enryption do aws use?
+    - advanced encryption standard (AES) 256
+  29. what is the largest size file you can transfer to S3 using a put operation?
+    - 5gb, after that you must use multipart upload
+
+
+# cloudfront
+  1. what is an edge location ?
+    - the location where content will be cached
+  2. what is the origin?
+    - origin of all files that the CDN will distribute
+    - an s3 bucket, ec2 instance, elastic load balancer, or route53, or not on AWS
+  3. what is a distribution
+    - the name given to the CDN which consists of a collection of edge locations
+  4. what are the types of distributions
+    - web distribution: for websites
+    - RTMP: used for media streaming
+  5. Can you read or write to edge lcoations?
+    - you can read or write
+  6. how long are objects cached?
+    - for the life of the TTL (time to live)
+    - you set it on objects
+  7. Will you be charged for clearing cached objects?
+    - yes
+  8. how do you set TTLs ?
+    - its all based on the rate of change for your files
+  9. how are you going to secure cloudfront/s3 to certain users
+    - use restrict viewer access and choose presigned urls/cookies
+  10. are invalidations free ?
+    - no it costs each time
+  11. can you upload or download from cloudfront ?
+    - you can do both
