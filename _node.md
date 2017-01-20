@@ -84,6 +84,7 @@
 # npm: node package manager
 	install via [NVM](https://github.com/creationix/nvm)
 	`npmjs.org/packages` //all public npm modules
+  - list all peer dependencies of a module `npm info "eslint-config-airbnb@latest" peerDependencies`
 ## workflows: installing modules
 		`npm install --save-dev redux@3.5.2` //always use the @ to get a specific version, no auto updating!
 
@@ -147,6 +148,18 @@
   - npm prune vs yarn install: https://github.com/yarnpkg/yarn/issues/696
   - [install directions](https://yarnpkg.com/en/docs/install)
   - [usage directions](https://yarnpkg.com/en/docs/usage)
+  - [yarn workflow](https://yarnpkg.com/en/docs/yarn-workflow)
+  - [yarn cli](https://yarnpkg.com/en/docs/cli/)
+
+# semver
+  - http://semver.org/
+# node dependencies
+## peer dependencies
+  - what is it? if you install module X, be sure that it's alongside module Y" We call this relationship a peer dependency.
+  - when to use
+    + Both your project and some module you are using depend on the same other module.
+    + The three modules have to talk to each other.
+
 # Node Modules
 ## path
   var path = require('path');
@@ -362,7 +375,6 @@
 		walkthrough: https://www.npmjs.com/package/react-native-cli
     walkthrough: https://blog.dylants.com/2014/05/10/creating-a-private-npm-registry-with-sinopia/
 ## dotenv: Loads environment variables from .env for nodejs projects.
-
 ## momentjs
 http://momentjs.com/docs/
 	npm install moment --save
@@ -472,3 +484,5 @@ http://momentjs.com/docs/
   streams:
     i/o is done at start at end, but never in between
     each step is output into the next step, without saving files
+## webpack 2.2
+  - https://webpack.js.org/get-started/
