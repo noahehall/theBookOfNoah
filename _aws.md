@@ -701,6 +701,7 @@
   - primary keys:
     + single attribute: i.e. unique id:
       - partition/hash key: composed of one attribute: e.g. user id
+        + dynamodb uses the partiition key's value as input to an internal hash unction
       - composite: think user id + date
         + partition key + sort/arrange key (hash & range) composed of two attributes
   - global secondary index:
