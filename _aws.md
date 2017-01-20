@@ -595,7 +595,7 @@
   - Elasticache: in memory caching engine
   - Redshift: Data warehousing service
   - DMS: managed database migration service
-### what are relational databases
+### relational databases
   - think of a traditional spreadsheet:
     + database: the filename of the spreadsheet
     + tables: the different worksheet
@@ -608,6 +608,7 @@
     + postgressql
     + aurora
     + Mariadb
+### non relational databases
   - non relationship database types
     + couchdb
     + mongodb
@@ -619,9 +620,83 @@
       - document = row
       - key value pairs = fields (columns and their values)
       - embedded datastructures: a key whose value is a a hash/array
-  - database warehousing
+### database warehousing
+  - purpose
+    + mainly for business intelligence (but i can totally see this for nlp)
     + used to pull in very large and complex data sets
     + used by management to do queries on data (e.g. current performance vs targets)
+    + uses different type of architecture both from a database perspective and infrastructure layer perspective
+  - types of transactions:
+    + online transaction processing: OLTP:
+      - i want to see a specific row
+      - i want specific data from a set of rows
+    + online analytics processing: OLAP:
+      - I want to analyzie a set of rows
+      - I want to compare and run calculations on data within a set of rows
+      - you will usually copy your relational database to a data warehousing infrastructure so you can run your analysis separate from your production db
+### elasticache
+  - webservice that makes it easy to deploy, operate, and scale an in0memory cache in the cloud
+  - types of caches available
+    + redis
+    + memcached
+      - caches the most frequently accessed data
+### database migration services
+  - allows you to migrate your production database to AWS
+  - AWS manages all the complexities of the migration process like data type transformation, compression, parralell transfer
+  - ensure data changes to the source db that occur during the migration process are automaticaly replicated to the target
+  - AWS schema conversion tool: automatically converts the source db schema to a format compatible with the target db
+    + take a proprierity database architecture (e.g. oracle) and convert it to an open source db (e.g. mysql)
+### Dynamodb
+  - fast and flexible nosql db service support both document (eg mongo) and key-value (eg redis) data models.
+  - stored on SSD and spread across 3 geographically distinct data centers
+    + data is written in one location, and then replicated to the other two data centers
+  - data consistency models
+    1. eventual consisten reads (Default)
+      + consistency across all copies of data is usually reached within a second
+      + repeating a read after a short time should return the updated data (best read performance)
+    2. strongly consistent reads:
+      + a strongly consistent read returns a result that reflects all writes that received a successful response prior to the read
+    3. which to use?
+      - if your app can wait for up to a second, use eventual consistent reads
+      - if your app needs it now: use strongly consistent reads
+  - great for:
+    + mobile, web, gaming, ad-tech, iot, etc.
+#### basics
+  - data model
+    + tables contain items and attributes
+      - table: collection of items (think worksheet)
+      - items: think a row of data
+      - attributes: think a column of data in a table
+        + you should always list the primary key first
+        + can contain 35 different nests, think address.streetname
+  - pricing
+    + provisioned throughput capacity:
+      - write throughput: 0.0065 per hour for ever 10 units
+        + a write capacity unit can handle 1 write per second
+      - read throughtput: 0.0065 per hour for every 50 units
+
+    - storage:
+      - first 25gb free
+      - after that 0.25 per gb per month
+    - how to calculate costs per month:
+      1. how many writes per second per day && how many units required?
+        - cost per unit * # of units required * hours in a day
+        - (0.0065/10) * # of units required * 24
+      2. how many reads per second per day && how many units required?
+        - cost per unit * # of units required * hours in a day
+        - (0.0065/50) * # of units required * 24
+      3. cost of storage
+        - total storage per month - free storage * cost per gb per month
+        - total storage per month - 25 * .25
+      4. total costs = 30 * 1 + 30 * 2 + 3 + my fee for taking all of these notes
+        - 1 and 2 * 30 to get cost per month
+#### creating a dynamodb table
+  - create tables from an ec2 instance
+  - the instance should have a role that allows it to interact with dynamodb
+  - steps:
+    1. create a role: dynamodb db full access privs
+    2. create an ec2 in the correct region and assign the role from #1
+    3. 
 
 ## tips and tricks
 ### using ssh (pem file) to connect to EC2
@@ -900,3 +975,15 @@
     + postgressql
     + aurora
     + Mariadb
+  2. what is OLTP?
+    + oline transaction processing
+  3. what types of OLTP engines exist?
+    - sql, mysql, postgresql, oracle, aurora, mariadb,
+  4. what type of OLAP engines exist?
+    - redshift
+  5. what type of Nosql engines exist?
+    - dynamodb
+  6. what type of in memory caching (elasticache) engines exist?
+    - memcached, redis
+  7. what is DMS?
+    - database migration services
