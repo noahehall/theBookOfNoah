@@ -745,8 +745,24 @@
       + avoid using scan on a large table with filter that removes many results
       + scans can use up the provisioned throughpt for large table in a single operation
       + design your application to use Scan operations in a way that minimizes impact on your table's request rate
-
-
+#### dynamodb provisioned throughput calculations
+  - you can set a read and write provisioned through put
+  - reads
+    + size of per read rounded to nearest 4kb chunk / 4kb * x # of items = read throughput
+      - rounded up to increments of 4kb in size per read per second
+      - for eventually consistent divide the result by 2
+      - final result must be an integer, so always round up
+    + eventually consistent reads
+      - 2 reads per second
+      - DO divide final answer by 2
+    + strongly consistent reads
+      - 1 kb read per second
+      - DONT divide final answer by 2
+  - writes
+    + all writes are 1 kb per second
+    + # of items * kb size per second
+  - what happens if you exceed your provisioned throughput?
+    + you get a 400 http status code: ProvisionedThroughputExceededException
 
 
 ## tips and tricks
@@ -1058,3 +1074,11 @@
   15. what is a dynamodb scan ?
     - scan operations examines every item in a table
     - returns all data attributes for every item (unless you use ProjectionExpression parameter)
+  16. how do you calculate read provisioned throughput?
+    - size of per read rounded to nearest 4kb chunk / 4kb * x # of items = read throughput
+    - divide final answer by 2 for eventually consistent
+    - final answer must be an integer, so round up
+  17. how do you calculate write provisioned throughput?
+    - # of items * kb size per second
+  18. what happens if you exceed your provisioned throughput?
+    + you get a 400 http status code: ProvisionedThroughputExceededException
