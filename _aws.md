@@ -702,11 +702,52 @@
     + single attribute: i.e. unique id:
       - partition/hash key: composed of one attribute: e.g. user id
         + dynamodb uses the partiition key's value as input to an internal hash unction
-      - composite: think user id + date
-        + partition key + sort/arrange key (hash & range) composed of two attributes
+        + no two items can use the same partition key
+    + composite: think user id + signup date
+      - dynamo db uses the partition key's value as input to an internal hash function, the output from the hash function determines the partition:
+        + the partition is simply the physical locatino in which the data is stored
+      - partition key + sort/arrange key (hash & range) composed of two attributes
+      - allow you to use the partition key multiple times, but **MUST** have different sort keys
+        + all items with the same partition key will be stored together, in sorted order by sort key value
   - global secondary index:
+    + has different partition key and different sort key
+    + can be created at table creation/added after
+    + can have 5 per table
   - local secondary index:
+    + has the same partition key, but different sort key
+    + can only be created when creating a table, and cannot be removed or modified later
+    + can have 5 per table
   - streams:
+    + used to capture any modification to dynamodb tables for up to 24 hours
+    + modifications:
+      - if a new item is added, it captuers a snapshot of the entire item and the items attributes
+      - if item is updated, it captures snapshot of before and after of item and its attributes
+      - if item is deleted, it captures a snapshot of the item and its attributes before it was deleted
+    + you can write lambda functions to operate on the streams, e.g. to replicate data to another region, or generate an email with SES (Simple Email Service)
+#### dynamodb scan vs queries
+  - queries: finds items in a table using only primary key attribute values
+    + must use partition attribute name and a distinct value to search for:
+      - find userid with value 1234
+      - can optionally provide a sort key attribute name and value, and use a comparison operator to refine search results
+        - find userid with value 1234 with posts timestamps > now() - 10 days
+    + queris returns all data attributes for items with the specified primary keys
+      + can use ProjectionExpression param so that the query only returns some of the attributes
+    + results are always sorted by the sort key in ascending order
+      + set ScanIndexForward param to false to sort in descending order
+    + queries by default are eventually consistent but can be changed to strongly consistent
+  - scans: examines every item in the table
+    + returns all data attributes for every item
+      - use ProjectionExpression param to only return some attributres
+  - use query vs scan
+    - query is quicker and more efficient
+      + design your tables in a way that you can use the Query, Get, or BachGetItem APIs
+    - scan always scans entire table
+      + avoid using scan on a large table with filter that removes many results
+      + scans can use up the provisioned throughpt for large table in a single operation
+      + design your application to use Scan operations in a way that minimizes impact on your table's request rate
+
+
+
 
 ## tips and tricks
 ### using ssh (pem file) to connect to EC2
@@ -732,7 +773,6 @@
         echo "<?php phpinfo();?>" > test.php
         git clone https://github.com/acloudguru/s3
       ```
-
 
 ## VPC
 ### basics
@@ -997,3 +1037,24 @@
     - memcached, redis
   7. what is DMS?
     - database migration services
+  8. when can you create a local secondary index?
+    - when you create a table only
+  9. when can you create a global secondary index
+    - when you create a table
+    - after you create a table
+  10. does a local secondary index have a different partition key?
+    - no it has the same partition key, but different sort key
+  11. does a global secondary index have a different partition key?
+    - yes, i has different partition and sort keys
+  12. how do you only return some data attributes on items returned from a dynamodb query?
+    - use the ProjectionExpression parameter
+  13. how do you reverse the default sort on query results?
+    - set ScanIndexForward to false
+  14. what is a dyanmodb query?
+    - finds items in a table using only a primary key attribute value
+    - you must provide a partition key attribute name and a distinct value to search for
+    - results are always sorted by sort key in ascending order (unless you set ScanIndexForward to false)
+    - queries > scan for efficiency
+  15. what is a dynamodb scan ?
+    - scan operations examines every item in a table
+    - returns all data attributes for every item (unless you use ProjectionExpression parameter)
