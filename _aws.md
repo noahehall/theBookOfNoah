@@ -763,6 +763,50 @@
     + # of items * kb size per second
   - what happens if you exceed your provisioned throughput?
     + you get a 400 http status code: ProvisionedThroughputExceededException
+#### web identity providers with dynamodb
+  - you can authenticate users using web identity providers (e.g. facebook, etc), i.e. any nopen-id connect-compatible identity providers
+    + this is setup in the console > dynamodb > click a table > access control tab
+  - use the AssumeRoleWithWebIDentity API
+  - steps
+    1. create a role specifying the policy document for this web identity provider
+      - you can generate the policy document first via console > dynamodb > click a table > access control tab
+    2. have a user identity with their web identity provider (e.g. facebook)
+    3. their identity provider gives them a web identity token
+    4. you hit the AssumeRoleWithWebIDentity request providing their web token, the app id of the provider, and the amazon resource name (ARN) of the role you created in step 1
+    5. it hits the AWS security Token Service and gives you a temporary security credential by default lasting 1 hour that consists of
+      - access key id
+      - secret access key
+      - session token
+      - expiration (time limit, by default 1 hour)
+      - assume role id
+      - SubjectFromWebIdentityToken
+        + this is th uniue ID that appears in an IAM policy variable for this particular identity provider
+#### dynamodb conditional writes
+  - dynamodb is spread over 3 facilities
+  - if 2/more users want to update the same item at the same time?
+    + you set a conditional write based on the last state of the item
+      - if item is 10, both users want to update it
+      - before updating check and ensure it hasnt been updated,
+      - if item is still 10, update
+      - if item is not 10 (updated by someone else), then inform user to refresh
+  - conditional writes are idempotent: you can send the same conditional write request multiple times, but it will have no further effect on the item after the first time dynamodb performs the specified update
+#### atomic counters
+  - where you use the UpdateItem operation to increment/decrement the value of an existing attribute without interfering with other write requests
+  - atomic counters are not idempotent, so remember that everytime you use them its going to have an effect (unlike conditional writes)
+#### batch operations
+  - the BatchGetItem api can retrieve:
+    + up to 1MB of data
+    + contain up to 100 items
+    + can retrieve items from multiple tables in a single request
+
+## VPCs: virtual private cloud
+  - a VPC is a data center located in a specific region
+  - they can span availability zones, but cannot span regions
+  - you provision a logically isolated section of AWS resources in the cloud in a virtual network
+    + complete control over IP address range, subnets, route table configuration, and network gateways, security groups, network access control lists, etc
+  - you can create a Hardware Virtual Private Network (VPN) connection between your corporate data center and your VPC and leverage the AWS cloud as an extension o fyour corporate datacenter
+
+
 
 
 ## tips and tricks
@@ -805,12 +849,13 @@
 
 
 ######## KNOWN STUDY questions
-# exam
+# exam: feb 6 11am
   - 80 minutes
   - 55 questions
   - $150
   - conducted online at an approved place
   - register at webassessor.com
+  - dynamoDB is the **MOST IMPORTANT** exam topic
 
 # AWS
   1. which servers are free?
@@ -1042,9 +1087,11 @@
     + aurora
     + Mariadb
   2. what is OLTP?
-    + oline transaction processing
+    + online transaction processing
   3. what types of OLTP engines exist?
     - sql, mysql, postgresql, oracle, aurora, mariadb,
+  3. what is OLAP ?
+    - online analytics processing
   4. what type of OLAP engines exist?
     - redshift
   5. what type of Nosql engines exist?
@@ -1061,7 +1108,7 @@
   10. does a local secondary index have a different partition key?
     - no it has the same partition key, but different sort key
   11. does a global secondary index have a different partition key?
-    - yes, i has different partition and sort keys
+    - yes, it has different partition and sort keys
   12. how do you only return some data attributes on items returned from a dynamodb query?
     - use the ProjectionExpression parameter
   13. how do you reverse the default sort on query results?
@@ -1082,3 +1129,43 @@
     - # of items * kb size per second
   18. what happens if you exceed your provisioned throughput?
     + you get a 400 http status code: ProvisionedThroughputExceededException
+  19. what are the basic steps for identifying with a web identity provider (e.g facebook)
+    1. user authenticates with web id provider (e.g. facebook)
+    2. they are passed a token by their ID provider
+    3. your code calls AssumeRoleWithWebIDentity API providing the web id providers token and the ARN for the IAM role
+    4. your app can now access Dynamodb from between 15 > 1 hour (default is 1 hour
+  20. when should you use conditional writes vs atomic counters?
+    - if you can have some margin of error, use atomic counters
+    - if you need absolutely accurate information, use conditional writes
+  21. what is dynamodb?
+    - fully managed (no ssh)
+    - stored on ssh spread across 3 distinct data centers
+    - eventual consistency reads within a second (default) is best read performance
+    - strongly concistent reads are those whose results contain all items that have a successfuly response
+    - fast and flexible nosql db service for all types of applications
+  22. what types of primary keys exist?
+    - single attribute: think unique ID
+      + partition key sometimes called hash
+    - composite; think unique id + data range
+      + partition key + sort key
+      + sort key sometimes called range key
+  23. how are partition keys stored?
+    - the partition key value is used as an input ot an internal hash function, and the output from the ash function determiens the partition
+    - the partition determines the physical location where the data is stored
+    - no two items can have the same partition key value (for single attribute primary keys)
+    - two/more items can have the same partition key but different sort key (from composite primate keys)
+  24. what are dynamodb streams?
+    - used to capture modifications to dynamodb tables for upto 24 hours
+      + edits : capture the before and after
+      + deletes: capture the before delete
+    - can be used to trigger lambda functions (e.g. to replicate data, or send emails via SES)
+  25. what are batch operations
+    - can read multiple items using BatchGetItem api
+    - retrieve up to 1 Mb of data
+    - retrieve up to 100 items
+    - retrieve items from multiple tables
+    -
+
+# VPCs
+  1. you must know how to build out a VPC from memory and launch instances into a public and private subnets
+    - i can do that
