@@ -804,7 +804,59 @@
   - they can span availability zones, but cannot span regions
   - you provision a logically isolated section of AWS resources in the cloud in a virtual network
     + complete control over IP address range, subnets, route table configuration, and network gateways, security groups, network access control lists, etc
-  - you can create a Hardware Virtual Private Network (VPN) connection between your corporate data center and your VPC and leverage the AWS cloud as an extension o fyour corporate datacenter
+  - you can create a Hardware Virtual Private Network (VPN) connection between your corporate data center and your VPC and leverage the AWS cloud as an extension o fyour corporate data center
+    + i.e. a hybrid cloud
+  - what can you do with a VPC?
+    - launch instances into a subnet of your choosing
+    - assign custom IP address ranges in each subnet
+    - configure route tables between subnets
+    - create internet gateways and attach it to a VPC
+    - better security control over your AWS resources
+    - create instance security groups
+  - network diagram
+    + region
+      - VPC : define ip address range (e.g. 10.0.0.0/16), always use /16 network for
+        + public and private Subnets (SN) containing instances and security groups
+          - Network ACL: your second line of defense after your security groups
+            + Route tables
+              - Router
+                + Internet Gateway and Virtual Private Gateways
+### TERMINOLOGY
+  - private address ranges: defined in document RFC 1918 for use around the world
+    + 10.0.0.0 - 10.255.255.255 (10/8 prefix)
+      - usually for enterprises
+    + 172.16.0.0 - 172.31.255.255 (172.16/12 prefix)
+    + 192.168.0.0 - 192.168.255.255 (192.168/16 prefix)
+      - usually for home networking
+  - internet gateway: how you connect your VPC to the internet (and vice versa)
+    + you can only have one internet gateway per VPC
+  - virtual private gateway: terminate your VPN connections
+  - Subnets: can be public / private
+    + set them up like this for easibility
+      - 10.0.1.0, 10.0.2.0, etc., always incrementing the 10.0.#.0
+    + are mapped directly to an availability zone
+    + public: internet accessible, e.g. web servers, bastion hosts / jumpbox,
+    + private: no internet access: databases, app servers, etc.
+  - security groups: can span Subnets and availability zones
+    + are stateful, if you give http access out, that means http access in
+  - network access control lists (ACL): can span subnets and availability zones
+    + are stateless: if you give http access in, you have manually allow http access out
+  - route table: defines wether a subnet is public/private
+    - can span subnets and availability zones
+  - default VPC: are automatically available in every region around the world with no configuration so you can immediately deploy
+    + they are all public subnets
+    + each EC2 instance will have a public and private ip address
+    + if you delete the default VPC the only way to get it back is to contact AWs
+  - custom VPC: you create it from scratch
+  - VPC peering: connect one VPC to another via a direct network routing using private IP addresses
+    + instances behave as if they were on the same private network
+    + you can peer VPCs with other AWS accounts
+    + are always in a star configuration
+      - 1 central VPC peers with 4 others
+      - there are NO TRANSITIVE PEERING
+
+
+
 
 
 
@@ -1169,3 +1221,14 @@
 # VPCs
   1. you must know how to build out a VPC from memory and launch instances into a public and private subnets
     - i can do that
+  2. how many availability zones can be mapped to a single subnet
+    - it is a 1 to 1 mapping, i.e. a subnet cannot span availability zones
+  3. how many internet gateways can you map to a VPC?
+    - it is 1 to 1 mapping, only one internet gateway per VPC
+  4. can you do transitive peering with VPCs?
+    - NO! peering is always in a star configuration (1 central VPC peers with other VPCs)
+    - you cannot talk to one VPC via another (transitive)
+    - you have to set up the links individually
+  5. what is a VPC?
+    - a logical datacenter within AWS
+    - consists of ing
