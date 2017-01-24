@@ -1,5 +1,7 @@
-https://hpbn.co/primer-on-latency-and-bandwidth/#speed-of-light-and-propagation-latency
-# High Performance Browser Networking
+# boomshakala
+  - [Analyzing performance](http://w3c.github.io/navigation-timing/#introduction)
+  - [understanding performance](https://developers.google.com/web/fundamentals/performance/)
+# [High Performance Browser Networking](https://hpbn.co/primer-on-latency-and-bandwidth/#speed-of-light-and-propagation-latency)
   - WPO: web performance optimization (WPO) industry
   - Need For Speed:
     + Faster sites lead to better user engagement.
