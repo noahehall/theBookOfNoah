@@ -702,11 +702,164 @@
     + single attribute: i.e. unique id:
       - partition/hash key: composed of one attribute: e.g. user id
         + dynamodb uses the partiition key's value as input to an internal hash unction
-      - composite: think user id + date
-        + partition key + sort/arrange key (hash & range) composed of two attributes
+        + no two items can use the same partition key
+    + composite: think user id + signup date
+      - dynamo db uses the partition key's value as input to an internal hash function, the output from the hash function determines the partition:
+        + the partition is simply the physical locatino in which the data is stored
+      - partition key + sort/arrange key (hash & range) composed of two attributes
+      - allow you to use the partition key multiple times, but **MUST** have different sort keys
+        + all items with the same partition key will be stored together, in sorted order by sort key value
   - global secondary index:
+    + has different partition key and different sort key
+    + can be created at table creation/added after
+    + can have 5 per table
   - local secondary index:
+    + has the same partition key, but different sort key
+    + can only be created when creating a table, and cannot be removed or modified later
+    + can have 5 per table
   - streams:
+    + used to capture any modification to dynamodb tables for up to 24 hours
+    + modifications:
+      - if a new item is added, it captuers a snapshot of the entire item and the items attributes
+      - if item is updated, it captures snapshot of before and after of item and its attributes
+      - if item is deleted, it captures a snapshot of the item and its attributes before it was deleted
+    + you can write lambda functions to operate on the streams, e.g. to replicate data to another region, or generate an email with SES (Simple Email Service)
+#### dynamodb scan vs queries
+  - queries: finds items in a table using only primary key attribute values
+    + must use partition attribute name and a distinct value to search for:
+      - find userid with value 1234
+      - can optionally provide a sort key attribute name and value, and use a comparison operator to refine search results
+        - find userid with value 1234 with posts timestamps > now() - 10 days
+    + queris returns all data attributes for items with the specified primary keys
+      + can use ProjectionExpression param so that the query only returns some of the attributes
+    + results are always sorted by the sort key in ascending order
+      + set ScanIndexForward param to false to sort in descending order
+    + queries by default are eventually consistent but can be changed to strongly consistent
+  - scans: examines every item in the table
+    + returns all data attributes for every item
+      - use ProjectionExpression param to only return some attributres
+  - use query vs scan
+    - query is quicker and more efficient
+      + design your tables in a way that you can use the Query, Get, or BachGetItem APIs
+    - scan always scans entire table
+      + avoid using scan on a large table with filter that removes many results
+      + scans can use up the provisioned throughpt for large table in a single operation
+      + design your application to use Scan operations in a way that minimizes impact on your table's request rate
+#### dynamodb provisioned throughput calculations
+  - you can set a read and write provisioned through put
+  - reads
+    + size of per read rounded to nearest 4kb chunk / 4kb * x # of items = read throughput
+      - rounded up to increments of 4kb in size per read per second
+      - for eventually consistent divide the result by 2
+      - final result must be an integer, so always round up
+    + eventually consistent reads
+      - 2 reads per second
+      - DO divide final answer by 2
+    + strongly consistent reads
+      - 1 kb read per second
+      - DONT divide final answer by 2
+  - writes
+    + all writes are 1 kb per second
+    + # of items * kb size per second
+  - what happens if you exceed your provisioned throughput?
+    + you get a 400 http status code: ProvisionedThroughputExceededException
+#### web identity providers with dynamodb
+  - you can authenticate users using web identity providers (e.g. facebook, etc), i.e. any nopen-id connect-compatible identity providers
+    + this is setup in the console > dynamodb > click a table > access control tab
+  - use the AssumeRoleWithWebIDentity API
+  - steps
+    1. create a role specifying the policy document for this web identity provider
+      - you can generate the policy document first via console > dynamodb > click a table > access control tab
+    2. have a user identity with their web identity provider (e.g. facebook)
+    3. their identity provider gives them a web identity token
+    4. you hit the AssumeRoleWithWebIDentity request providing their web token, the app id of the provider, and the amazon resource name (ARN) of the role you created in step 1
+    5. it hits the AWS security Token Service and gives you a temporary security credential by default lasting 1 hour that consists of
+      - access key id
+      - secret access key
+      - session token
+      - expiration (time limit, by default 1 hour)
+      - assume role id
+      - SubjectFromWebIdentityToken
+        + this is th uniue ID that appears in an IAM policy variable for this particular identity provider
+#### dynamodb conditional writes
+  - dynamodb is spread over 3 facilities
+  - if 2/more users want to update the same item at the same time?
+    + you set a conditional write based on the last state of the item
+      - if item is 10, both users want to update it
+      - before updating check and ensure it hasnt been updated,
+      - if item is still 10, update
+      - if item is not 10 (updated by someone else), then inform user to refresh
+  - conditional writes are idempotent: you can send the same conditional write request multiple times, but it will have no further effect on the item after the first time dynamodb performs the specified update
+#### atomic counters
+  - where you use the UpdateItem operation to increment/decrement the value of an existing attribute without interfering with other write requests
+  - atomic counters are not idempotent, so remember that everytime you use them its going to have an effect (unlike conditional writes)
+#### batch operations
+  - the BatchGetItem api can retrieve:
+    + up to 1MB of data
+    + contain up to 100 items
+    + can retrieve items from multiple tables in a single request
+
+## VPCs: virtual private cloud
+  - a VPC is a data center located in a specific region
+  - they can span availability zones, but cannot span regions
+  - you provision a logically isolated section of AWS resources in the cloud in a virtual network
+    + complete control over IP address range, subnets, route table configuration, and network gateways, security groups, network access control lists, etc
+  - you can create a Hardware Virtual Private Network (VPN) connection between your corporate data center and your VPC and leverage the AWS cloud as an extension o fyour corporate data center
+    + i.e. a hybrid cloud
+  - what can you do with a VPC?
+    - launch instances into a subnet of your choosing
+    - assign custom IP address ranges in each subnet
+    - configure route tables between subnets
+    - create internet gateways and attach it to a VPC
+    - better security control over your AWS resources
+    - create instance security groups
+  - network diagram
+    + region
+      - VPC : define ip address range (e.g. 10.0.0.0/16), always use /16 network for
+        + public and private Subnets (SN) containing instances and security groups
+          - Network ACL: your second line of defense after your security groups
+            + Route tables
+              - Router
+                + Internet Gateway and Virtual Private Gateways
+### TERMINOLOGY
+  - private address ranges: defined in document RFC 1918 for use around the world
+    + 10.0.0.0 - 10.255.255.255 (10/8 prefix)
+      - usually for enterprises
+    + 172.16.0.0 - 172.31.255.255 (172.16/12 prefix)
+    + 192.168.0.0 - 192.168.255.255 (192.168/16 prefix)
+      - usually for home networking
+  - internet gateway: how you connect your VPC to the internet (and vice versa)
+    + you can only have one internet gateway per VPC
+  - virtual private gateway: terminate your VPN connections
+  - Subnets: can be public / private
+    + set them up like this for easibility
+      - 10.0.1.0, 10.0.2.0, etc., always incrementing the 10.0.#.0
+    + are mapped directly to an availability zone
+    + public: internet accessible, e.g. web servers, bastion hosts / jumpbox,
+    + private: no internet access: databases, app servers, etc.
+  - security groups: can span Subnets and availability zones
+    + are stateful, if you give http access out, that means http access in
+  - network access control lists (ACL): can span subnets and availability zones
+    + are stateless: if you give http access in, you have manually allow http access out
+  - route table: defines wether a subnet is public/private
+    - can span subnets and availability zones
+  - default VPC: are automatically available in every region around the world with no configuration so you can immediately deploy
+    + they are all public subnets
+    + each EC2 instance will have a public and private ip address
+    + if you delete the default VPC the only way to get it back is to contact AWs
+  - custom VPC: you create it from scratch
+  - VPC peering: connect one VPC to another via a direct network routing using private IP addresses
+    + instances behave as if they were on the same private network
+    + you can peer VPCs with other AWS accounts
+    + are always in a star configuration
+      - 1 central VPC peers with 4 others
+      - there are NO TRANSITIVE PEERING
+
+
+
+
+
+
 
 ## tips and tricks
 ### using ssh (pem file) to connect to EC2
@@ -733,7 +886,6 @@
         git clone https://github.com/acloudguru/s3
       ```
 
-
 ## VPC
 ### basics
   - VPC: virtual private cloud: i.e. its just a datacenter
@@ -749,12 +901,13 @@
 
 
 ######## KNOWN STUDY questions
-# exam
+# exam: feb 6 11am
   - 80 minutes
   - 55 questions
   - $150
   - conducted online at an approved place
   - register at webassessor.com
+  - dynamoDB is the **MOST IMPORTANT** exam topic
 
 # AWS
   1. which servers are free?
@@ -986,9 +1139,11 @@
     + aurora
     + Mariadb
   2. what is OLTP?
-    + oline transaction processing
+    + online transaction processing
   3. what types of OLTP engines exist?
     - sql, mysql, postgresql, oracle, aurora, mariadb,
+  3. what is OLAP ?
+    - online analytics processing
   4. what type of OLAP engines exist?
     - redshift
   5. what type of Nosql engines exist?
@@ -997,3 +1152,83 @@
     - memcached, redis
   7. what is DMS?
     - database migration services
+  8. when can you create a local secondary index?
+    - when you create a table only
+  9. when can you create a global secondary index
+    - when you create a table
+    - after you create a table
+  10. does a local secondary index have a different partition key?
+    - no it has the same partition key, but different sort key
+  11. does a global secondary index have a different partition key?
+    - yes, it has different partition and sort keys
+  12. how do you only return some data attributes on items returned from a dynamodb query?
+    - use the ProjectionExpression parameter
+  13. how do you reverse the default sort on query results?
+    - set ScanIndexForward to false
+  14. what is a dyanmodb query?
+    - finds items in a table using only a primary key attribute value
+    - you must provide a partition key attribute name and a distinct value to search for
+    - results are always sorted by sort key in ascending order (unless you set ScanIndexForward to false)
+    - queries > scan for efficiency
+  15. what is a dynamodb scan ?
+    - scan operations examines every item in a table
+    - returns all data attributes for every item (unless you use ProjectionExpression parameter)
+  16. how do you calculate read provisioned throughput?
+    - size of per read rounded to nearest 4kb chunk / 4kb * x # of items = read throughput
+    - divide final answer by 2 for eventually consistent
+    - final answer must be an integer, so round up
+  17. how do you calculate write provisioned throughput?
+    - # of items * kb size per second
+  18. what happens if you exceed your provisioned throughput?
+    + you get a 400 http status code: ProvisionedThroughputExceededException
+  19. what are the basic steps for identifying with a web identity provider (e.g facebook)
+    1. user authenticates with web id provider (e.g. facebook)
+    2. they are passed a token by their ID provider
+    3. your code calls AssumeRoleWithWebIDentity API providing the web id providers token and the ARN for the IAM role
+    4. your app can now access Dynamodb from between 15 > 1 hour (default is 1 hour
+  20. when should you use conditional writes vs atomic counters?
+    - if you can have some margin of error, use atomic counters
+    - if you need absolutely accurate information, use conditional writes
+  21. what is dynamodb?
+    - fully managed (no ssh)
+    - stored on ssh spread across 3 distinct data centers
+    - eventual consistency reads within a second (default) is best read performance
+    - strongly concistent reads are those whose results contain all items that have a successfuly response
+    - fast and flexible nosql db service for all types of applications
+  22. what types of primary keys exist?
+    - single attribute: think unique ID
+      + partition key sometimes called hash
+    - composite; think unique id + data range
+      + partition key + sort key
+      + sort key sometimes called range key
+  23. how are partition keys stored?
+    - the partition key value is used as an input ot an internal hash function, and the output from the ash function determiens the partition
+    - the partition determines the physical location where the data is stored
+    - no two items can have the same partition key value (for single attribute primary keys)
+    - two/more items can have the same partition key but different sort key (from composite primate keys)
+  24. what are dynamodb streams?
+    - used to capture modifications to dynamodb tables for upto 24 hours
+      + edits : capture the before and after
+      + deletes: capture the before delete
+    - can be used to trigger lambda functions (e.g. to replicate data, or send emails via SES)
+  25. what are batch operations
+    - can read multiple items using BatchGetItem api
+    - retrieve up to 1 Mb of data
+    - retrieve up to 100 items
+    - retrieve items from multiple tables
+    -
+
+# VPCs
+  1. you must know how to build out a VPC from memory and launch instances into a public and private subnets
+    - i can do that
+  2. how many availability zones can be mapped to a single subnet
+    - it is a 1 to 1 mapping, i.e. a subnet cannot span availability zones
+  3. how many internet gateways can you map to a VPC?
+    - it is 1 to 1 mapping, only one internet gateway per VPC
+  4. can you do transitive peering with VPCs?
+    - NO! peering is always in a star configuration (1 central VPC peers with other VPCs)
+    - you cannot talk to one VPC via another (transitive)
+    - you have to set up the links individually
+  5. what is a VPC?
+    - a logical datacenter within AWS
+    - consists of ing
