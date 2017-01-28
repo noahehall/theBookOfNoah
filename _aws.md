@@ -800,7 +800,6 @@
     + contain up to 100 items
     + can retrieve items from multiple tables in a single request
 
-
 ## VPCs: virtual private cloud
   - a VPC is a data center located in a specific region
     + you access your VPC via an Internet Gateway or a Virtual Private Gateway
@@ -937,6 +936,36 @@
     4. open an ephemeral port as the last rule
       - public facing instances port: 01024-65535
       - type: custom tcp rule
+
+
+## Elastic Beanstalk:
+  - free service to manage web apps
+  - but you pay for any resources it uses
+### creating elastic beanstalk web app
+  1. launch / create environment
+    - default environmen = launch, you edit it after its created
+  2. environment tier: web app / worker
+  3. configuration: e.g. nodejs, php, etc
+  4. environment type: single instance / load balancing + auto scaling
+  5. batch size: deploy a % of fleet or # instances at a time
+  6. additional resources: add an RDS instance and/or specify a VPC
+  7. set instance type, key pair
+  8. add email address to receive notifications
+  9. add health check url: the file to check, to determine if the application is up and running
+  10. rolling updates: how changes to the environment instances are propagated
+  11. cross zone load balancing: enable load balancing against multiple availability zones
+  12. connection draining:
+  13. instance profile:
+  14. root volume and size: e.g. SSd 8gb
+
+## Cloud formation
+  - allows you to create scripts to deploy infrastructure
+  - you deploy cloud formation in stacks:
+    1. new stack: create from scratch
+    2. cloud former: use your existing aws resources
+### creating a new stack
+  1. pick a template thats based on your tech stack
+  2. run through the screens and setup your options for each layer in your stack
 
 ### TERMINOLOGY
   - private address ranges: defined in document RFC 1918 for use around the world
@@ -1439,3 +1468,10 @@
     - 5
   42. how many internet gateways can be associated with a VPC?
     - 1
+
+# Elastic Beanstalk
+  1. is elastic beanstalk free ?
+    - yes! but you pay for any resources it uses
+  2. what platforms come preconfigured when setting up elastic beanstalk?
+    - nodejs, php, python, ruby, tomcat, .net, java, go docker
+  3.
