@@ -856,6 +856,22 @@
         1. destination: 0.0.0.0/0 (all traffic)
         2. target: choose an internet gateway
       + private:
+        1. destination: leave blank, by default its associated with your main route table
+        2. target: leave blank
+  7. launch ec2s into your public and private subnets
+    1. public: make sure to create/associate public security group (needs http/https)
+    2. private:
+      - make sure to specify CIDR block of your public subnet so your subnet can access it on (e.g. mysql is port 3306, and your public subnet needs to be able access it)
+      - update your SSH access on the security to only allow the CIDR block of your public subnet
+      - allow ICMP traffic from your public subnet CIDR on your security group: this allows you to ping any private instances associatedd with this security group
+  8. ensure you can connect to public and ping your private ec2
+    - ssh i 'your pem file' ubuntu@some-public-ip
+    - ping some-private-ip
+  9. copy your pem file into your public ec2 so you can access your private ec2 server
+    1. nano somekeyname.pem
+    2. chmod 0600 somekeyname.pem
+    3. test it
+      - ssh ubuntu@your-private-ip -i somekeyname.pem
 ### TERMINOLOGY
   - private address ranges: defined in document RFC 1918 for use around the world
     + 10.0.0.0 - 10.255.255.255 (16/8 prefix)
