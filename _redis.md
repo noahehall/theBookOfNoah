@@ -17,10 +17,18 @@
     + replication
     + master and slaves
     + security
-
   - get redis info: brew info redis
   - test if redis is running: redis-cli ping
   - start redis with a specific config file: ./redis-server /path/to/redis.conf
+# [ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-redis-on-ubuntu-16-04)
+  - **note**: you dont need to specify a password for starting the service
+  1. follow steps above to install redis
+  2. follow steps above to create redis daemon user
+  3. start redis `sudo systemctl start redis`
+  4. login `redis-cli -a your-pass`
+  5. restart check `sudo chmod 770 /var/lib/redis`
+  6. if you so choose, enable redis to start at boot: `sudo systemctl enable redis`
+  7. [follow these steps to secure redis](https://www.digitalocean.com/community/tutorials/how-to-secure-your-redis-installation-on-ubuntu-14-04)
 ## Links
   - [install and config on mac](https://medium.com/@petehouston/install-and-config-redis-on-mac-os-x-via-homebrew-eb8df9a4f298#.hogmtg3ct)
 # vocab

@@ -12,6 +12,12 @@ bookmark:
 # NEW: need to file
 ## ubuntu
 	- store web content in /var/www
+	- create user, group, and directory for user that will run some daemon application
+		+ redis example:
+			1. sudo adduser --system --group --no-create-home redis
+			2. sudo mkdir /var/lib/redis
+			3. sudo chown redis:redis /var/lib/redis
+			4. sudo chmod 770 /var/lib/redis
 ## links
 	[linux on mac](http://www.macworld.co.uk/how-to/mac/how-install-linux-on-mac-3637265/):
 	  1. use virutalization Software
