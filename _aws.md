@@ -963,9 +963,17 @@
   - you deploy cloud formation in stacks:
     1. new stack: create from scratch
     2. cloud former: use your existing aws resources
+  - Cloudformation is free, but you pay for the resources it creates
 ### creating a new stack
   1. pick a template thats based on your tech stack
   2. run through the screens and setup your options for each layer in your stack
+  3. add an SNS topic to receive notication when the stack has been created
+  4. setup rollback on failure: if somethings do you rollback everything? leave it as is? etc
+
+## simple workflow service
+  - web service that coordinates work across distributed application components
+    + design media processing, back ends, business process workflows, analytics pipelines, etc., as a set of tasks
+  - tasks: invocations of various processing steps in an application which can be performed by executable code, web service calls, human actions, and scripts
 
 ### TERMINOLOGY
   - private address ranges: defined in document RFC 1918 for use around the world
@@ -1474,4 +1482,15 @@
     - yes! but you pay for any resources it uses
   2. what platforms come preconfigured when setting up elastic beanstalk?
     - nodejs, php, python, ruby, tomcat, .net, java, go docker
-  3.
+# cloud formation
+  1. is cloud formation free?
+    - YES! but you have to pay for the resources it uses
+  2. what is the default scripting launguage for cloudformation ?
+    - it is a JSON file containing:
+      + db name, key pair, ec2 info, outputs, etc
+  3. what can you output ?
+    - you can ouput the DNS name of a resource and programmatically using the function get attribute
+  4. what is the fn::GetAtt?
+    - it allows you to programmatically get resource information when creating resources with a cloud formation script/template
+  5. what is the default rollback behavior?
+    - on error it will rollback automatically and delete all of the resources it created
