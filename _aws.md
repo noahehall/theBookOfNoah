@@ -1,3 +1,5 @@
+# https://dictionary.udemy.com/aws-certified-developer-associate/learn/v4/t/lecture/2802242
+
 # Everything you need to know to become AWS certified
   - [test exams](https://www.webassessor.com/wa.do?page=publicHome&branding=AMAZON)
   - [aws developer associate](https://aws.amazon.com/certification/certified-developer-associate/)
@@ -799,12 +801,14 @@
     + contain up to 100 items
     + can retrieve items from multiple tables in a single request
 
+
 ## VPCs: virtual private cloud
   - a VPC is a data center located in a specific region
+    + you access your VPC via an Internet Gateway or a Virtual Private Gateway
   - they can span availability zones, but cannot span regions
   - you provision a logically isolated section of AWS resources in the cloud in a virtual network
     + complete control over IP address range, subnets, route table configuration, and network gateways, security groups, network access control lists, etc
-  - you can create a Hardware Virtual Private Network (VPN) connection between your corporate data center and your VPC and leverage the AWS cloud as an extension o fyour corporate data center
+  - you can create a Hardware Virtual Private Network (VPN) connection between your corporate data center and your VPC and leverage the AWS cloud as an extension of your corporate data center
     + i.e. a hybrid cloud
   - what can you do with a VPC?
     - launch instances into a subnet of your choosing
@@ -813,14 +817,24 @@
     - create internet gateways and attach it to a VPC
     - better security control over your AWS resources
     - create instance security groups
-  - network diagram
+  - network diagram: read backward s
     + region
       - VPC : define ip address range (e.g. 10.0.0.0/16), always use /16 network for
+        + your resources that are connected to your subnets
         + public and private Subnets (SN) containing instances and security groups
-          - Network ACL: your second line of defense after your security groups
-            + Route tables
-              - Router
-                + Internet Gateway and Virtual Private Gateways
+          - Security groups: last line of defense before hitting your public and private subnets
+          - Network ACL: protect your subnets; your second line of defense after your security groups, send valid requests to your security groups
+            + Route tables: decide where your VPG and IG requests go
+              - Router: routes your gateway requests
+                + Internet Gateway and Virtual Private Gateways access your VPC
+### building a VPC from scratch
+  - NEVER USE THE WIZARD OR BE LAME FOR LIFE
+  1. VPC > your VPCs > create VPC
+    - give it a name
+    - CIDR (pronounced cyder) Block: classless interdomain routing
+      + specify what your IP address range is
+      + usually 10.0.0.0/16
+    - Tenancy: weather or not you are going to deploy it on shared/dedicated hardware
 ### TERMINOLOGY
   - private address ranges: defined in document RFC 1918 for use around the world
     + 10.0.0.0 - 10.255.255.255 (10/8 prefix)
@@ -831,7 +845,9 @@
   - internet gateway: how you connect your VPC to the internet (and vice versa)
     + you can only have one internet gateway per VPC
   - virtual private gateway: terminate your VPN connections
-  - Subnets: can be public / private
+  - Subnets: can be public / private: 1 to 1 mapping to a availability zone
+    + public facing subnet: has internet access (e.g. for webservers)
+    + private facing subnet: no internet access (e.g. for databases)
     + set them up like this for easibility
       - 10.0.1.0, 10.0.2.0, etc., always incrementing the 10.0.#.0
     + are mapped directly to an availability zone
@@ -839,21 +855,24 @@
     + private: no internet access: databases, app servers, etc.
   - security groups: can span Subnets and availability zones
     + are stateful, if you give http access out, that means http access in
-  - network access control lists (ACL): can span subnets and availability zones
+  - subnet network access control lists (ACL): can span subnets and availability zones
     + are stateless: if you give http access in, you have manually allow http access out
   - route table: defines wether a subnet is public/private
     - can span subnets and availability zones
   - default VPC: are automatically available in every region around the world with no configuration so you can immediately deploy
-    + they are all public subnets
+    + they are all public (internet accessible) subnets
     + each EC2 instance will have a public and private ip address
-    + if you delete the default VPC the only way to get it back is to contact AWs
+    + if you delete the default VPC the only way to get it back is to contact AWS
   - custom VPC: you create it from scratch
   - VPC peering: connect one VPC to another via a direct network routing using private IP addresses
+    + i.e. using private ip addresses: means it does not need to go back out into the internet to connect
     + instances behave as if they were on the same private network
     + you can peer VPCs with other AWS accounts
     + are always in a star configuration
       - 1 central VPC peers with 4 others
       - there are NO TRANSITIVE PEERING
+        + i.e. you cannot talk to one VPC through another VPC
+        + you have to link VPCs directly
 
 
 
@@ -885,17 +904,6 @@
         echo "<?php phpinfo();?>" > test.php
         git clone https://github.com/acloudguru/s3
       ```
-
-## VPC
-### basics
-  - VPC: virtual private cloud: i.e. its just a datacenter
-    + a virtual network environment isolated from the other AWS infrastructure
-    +
-  - are in a region, and can be in multiple availability zones in a single region
-  - use security groups and network access control lists for security
-### TERMINOLOGY
-  - public facing subnet: has internet access (e.g. for webservers)
-  - private facing subnet: no internet access (e.g. for databases)
 # USEFUL links
   - [installing aws cli](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 
@@ -1219,10 +1227,11 @@
     -
 
 # VPCs
-  1. you must know how to build out a VPC from memory and launch instances into a public and private subnets
+  1. you must know how to build out a VPC from memory and launch instances into public and private subnets ?
     - i can do that
   2. how many availability zones can be mapped to a single subnet
     - it is a 1 to 1 mapping, i.e. a subnet cannot span availability zones
+    - 1 subnet = 1 availability zone
   3. how many internet gateways can you map to a VPC?
     - it is 1 to 1 mapping, only one internet gateway per VPC
   4. can you do transitive peering with VPCs?
@@ -1231,4 +1240,8 @@
     - you have to set up the links individually
   5. what is a VPC?
     - a logical datacenter within AWS
-    - consists of ing
+    - consists of internet gateways, virtual private gateways, route tables, network access control lists, subnets, and security groups
+  6. are security groups stateful or stateless ?
+    - stateful
+  7. are network access control lists stateful or stateless?
+    - stateless

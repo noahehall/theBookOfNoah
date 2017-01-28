@@ -347,3 +347,8 @@
         3. Make exceptions for essential time-sensitive content: If you have content that is time-sensitive, make an exception to the above rules so that the out-dated content is not served in critical situations. For instance, if your site has a shopping cart, it should reflect the items in the cart immediately. Depending on the nature of the content, the no-cache or no-store options can be set in the Cache-Control header to achieve this.
         4. Set long freshness times for supporting content: generally appropriate for items like images and CSS that are pulled in to render the HTML page requested by the user. Setting extended freshness times, combined with fingerprinting, allows caches to store these resources for long periods of time.
         5. Set short freshness times for parent content: In order to make the above scheme work, the containing item must have relatively short freshness times or may not be cached at all. This is typically the HTML page that calls in the other assisting content. The HTML itself will be downloaded frequently, allowing it to respond to changes rapidly. The supporting content can then be cached aggressively.
+
+## CDN
+  - content delivery network: system of distributed servers that deliver assets to a user based on geographic locations of the user, the origin of the assets, and a content delivery server
+    + the closer the CDN server to the user geographically, the faster the content will be dleivered to the user.
+    s
