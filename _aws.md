@@ -509,7 +509,6 @@
   + permanently delete
     - X days after object has been a previous version
 
-
 ## cloudfront
   - can be used to deliver your entire website,
   - optimized to work with other amazon web services
@@ -855,12 +854,6 @@
       - 1 central VPC peers with 4 others
       - there are NO TRANSITIVE PEERING
 
-
-
-
-
-
-
 ## tips and tricks
 ### using ssh (pem file) to connect to EC2
   1. create ec2 and associate it wiht a pem file
@@ -898,7 +891,6 @@
   - private facing subnet: no internet access (e.g. for databases)
 # USEFUL links
   - [installing aws cli](http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
-
 
 ######## KNOWN STUDY questions
 # exam: feb 6 11am
