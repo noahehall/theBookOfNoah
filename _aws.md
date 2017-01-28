@@ -834,9 +834,31 @@
       + specify what your IP address range is
       + usually 10.0.0.0/16
     - Tenancy: weather or not you are going to deploy it on shared/dedicated hardware
+  2. subnets > create subnets: create two for the public and private route tables you'll create later
+    - name tag: use the address range + availability zone as the name + if you know it will be public/private
+      + e.g.: 10.0.#.0 - AVAIL-ZONE - public/private
+    - associate it with a VPC
+    - pick VPC CIDRs: 10.0.#.0/24
+    - pick avilability zone
+    - pick IPv4 CIDR Block
+    - pick IPv6 CIDR block
+    - for your public subnet after you create it
+      + select it > click 'subnet actions' > enable auto-assign public ip
+        - now every time you deploy an EC2 instance into this subnet it will automatically receive a public IP
+  3. create public and private internet gateways
+    - attach it to a VPC
+  4. update your main route table
+    - you should make sure it is private, then leave it alone and create new ones
+  5. create a two route tables (private + public) and associate them with your route tables
+    - name: e.g. VPC-NAME-public/private
+    - edit routes
+      + public:
+        1. destination: 0.0.0.0/0 (all traffic)
+        2. target: choose an internet gateway
+      + private:
 ### TERMINOLOGY
   - private address ranges: defined in document RFC 1918 for use around the world
-    + 10.0.0.0 - 10.255.255.255 (10/8 prefix)
+    + 10.0.0.0 - 10.255.255.255 (16/8 prefix)
       - usually for enterprises
     + 172.16.0.0 - 172.31.255.255 (172.16/12 prefix)
     + 192.168.0.0 - 192.168.255.255 (192.168/16 prefix)
@@ -856,8 +878,9 @@
     + are stateful, if you give http access out, that means http access in
   - subnet network access control lists (ACL): can span subnets and availability zones
     + are stateless: if you give http access in, you have manually allow http access out
-  - route table: defines wether a subnet is public/private
-    - can span subnets and availability zones
+  - route table: specifies how packets are forwarded between the subnets within a VPC, the internet, and a VPN connection
+    + defines wether a subnet is public/private
+    + can span subnets and availability zones
   - default VPC: are automatically available in every region around the world with no configuration so you can immediately deploy
     + they are all public (internet accessible) subnets
     + each EC2 instance will have a public and private ip address
@@ -1237,3 +1260,13 @@
     - stateful
   7. are network access control lists stateful or stateless?
     - stateless
+  8. when you create a VPC - what resources are/not autoamtically created?
+    - yes: main route table, network ACL, default security group,
+    - not: subnets, interget gateways,
+  9. when you create a subnet, how many ip addresses does AWS reserve by default?
+    - 3 : not counting the dot 0s or 255s
+      + router: 10.0.0.1
+      + dns services: 10.0.0.2
+      + for future use: 10.0.0.3
+  10. can you boost your internet speeds by attaching multiple internet gateways to a VPC
+    - no: you cannot attach multiple internet gateways to a VPC
