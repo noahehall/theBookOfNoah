@@ -417,7 +417,7 @@
     + supported ELB protocols: http, https, TCP, SSL
     + ELB supports all ports with EC2 VPC (1-65535)
       + ELB classics only support: 25, 80, 443, 465, 587, 1024-65535
-
+  - load balancers should be connected to two public subnets for high availability
 ## S3
   - safe place to store files
   - only for object based storage
@@ -872,7 +872,7 @@
     2. chmod 0600 somekeyname.pem
     3. test it
       - ssh ubuntu@your-private-ip -i somekeyname.pem
-## NAT
+### NAT
   - NAT: network address translation:
     + [NAT gateway vs NAT Instance](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-comparison.html)
     + NAT instance: an ec2 instance that acts as a gateway to the internet for a machine without internet access
@@ -899,6 +899,45 @@
         - destination: 0.0.0.0/0
         - target: your new nat gatway
       5. test your private instances can access the net
+### Network Access Control Lists
+  - NAT vs Bastion servers
+    1. bastion host: (i.e. jumpbox) allows you to ssh/rdp into your bastion, and then initiate a private connection over a private network into your private ec2 instances
+      - create 1 bastion that you use to ssh and access private instances, without having to create a NAT
+      - its simply a public server that can connect to private servers
+    2. NAT: used to route internet traffic to ec2 instances in private subnets
+  - Network ACLs vs Security groups
+    0. both can span subnets and availability zones
+    1. Defense layer
+      - security group: instance level, 1st line of defense
+      - ACL: subnet level, 2nd line of defense
+    2. rule types
+      - sg: allow rules only
+      - acl: allow/deny rules
+    3. state
+      - sg: stateful, return traffic auto allowed
+        + i.e., if you open up port 80 in, then port 80 is automatically allowed out
+      - acl: stateless, return traffic must be specifically allowed
+    4. processing rules
+      - sg: evaluate all rules before deciding whether to allow traffic
+      - acl: process rules in number order and use the first match
+    5. domain
+      - sg: only applies to associated instances
+      - acl: applies to all instances in associated subnet
+  - Network ACLs
+    + can span availability zones and
+  - Create a Network ACL
+    1. vpc > Network ACLs > create
+      - name: whatever
+      - VPC: whatever
+    2.  associate it with a subnet
+      - subnet associations > edit > save
+    3. create your inbound & outbound rules
+      + always create new rules in increments of 100 (i.e. 100, 200, etc)
+      + use `0.0.0.0/0` as the destination for the internet
+    4. open an ephemeral port as the last rule
+      - public facing instances port: 01024-65535
+      - type: custom tcp rule
+
 ### TERMINOLOGY
   - private address ranges: defined in document RFC 1918 for use around the world
     + 10.0.0.0 - 10.255.255.255 (16/8 prefix)
@@ -938,7 +977,7 @@
       - there are NO TRANSITIVE PEERING
         + i.e. you cannot talk to one VPC through another VPC
         + you have to link VPCs directly
-
+  - ephemeral ports: An ephemeral port is a short-lived transport protocol port for Internet Protocol (IP) communications allocated automatically from a predefined range by the IP stack software.
   -
 ## tips and tricks
 ### using ssh (pem file) to connect to EC2
@@ -1287,7 +1326,6 @@
 
 # VPCs
   1. you must know how to build out a VPC from memory and launch instances into public and private subnets ?
-    - i can do that
   2. how many availability zones can be mapped to a single subnet
     - it is a 1 to 1 mapping, i.e. a subnet cannot span availability zones
     - 1 subnet = 1 availability zone
@@ -1349,3 +1387,55 @@
     - YES! update your VPCs main route table
       1. destination: 0.0.0.0/0
       2. target: your NAT gateway
+  24. can a subnet be associated with more than one Network ACL ?
+    - NO! only one, it is 1 to 1
+  25. how are rules evaluated in Network ACLs?
+    - rules are evaluated in number order
+    - rule 1 has precedence over rule 2
+  26. do you have to create a Network ACL when you create a VPC ?
+    - NO! a Network ACL is created by default allowing all inbound and inbound traffic on all ports
+  27. do custom Network ACLs allow all inbound/outbound traffic by default?
+    - NO! it denys everything by default
+  28. do subnets have to be associated with a network ACL ?
+    - YES! by default its the default Network ACL, but you can change it
+  29. can you associate Network ACLs with multiple subnets?
+    - YES! but you can only associate one subnet with one Network ACL
+  30. are network ACLs stateful / stateless ?
+    - stateless: you have to specify inbound and outbound rules separately
+  31. can Network ACLs allow / deny traffic
+    - it can allow or deny
+  32. can you block IPs with network ACLs or security groups?
+    - network acls: YES!
+    - security groups: NO! there is no way to deny traffic
+  33. how do you make a bastion server highly available?
+    - create multiple subnets (at least 2)
+  34. can you build out a VPC from memory?
+    - public subnet?
+    - private subnet?
+    - net instance ?
+    - nat gateway ?
+    - bastion host?
+  35. can VPCs span regions?
+    - NO!
+  36. can VPCs span multiple availability zones?
+    - YES!
+  37. what is required for a NAT instance to work?
+    - disable source/destination check on the ec2 instance
+    - be in a public subnet
+    - have an elastic ip
+    - a route out of hte private subnet to the NAT but exist
+  38. how do you create a generally high resilient network?
+    - at least 2 public subnets and 2 priate subnets
+    - each subnet should be in a different availability zone
+  39. how do you create resiliant bastion hosts?
+    - put them behind an autoscaling group with minimum size of 2
+    - use route53 (round robin / health check) to automatically failover
+  40. how do you create resiliant nat instances?
+    - 1 in each public subnet
+    - each with their own public ip
+    - write a script to fail over between the two
+    - or fuck nat instances and use nat gateways
+  41. how many VPCs are allowed per region by default?
+    - 5
+  42. how many internet gateways can be associated with a VPC?
+    - 1
