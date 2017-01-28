@@ -1,7 +1,18 @@
+
+# random at work with youtube in background
+  - functional programming:
+    + is using functions to complete tasks (without relying on objects)
+    + utilizing pure functions (as opposed to functions relying on side effects)
+    + using higher order functions
+    + avoid mutating data (i.e. changing stuff in place)
+      - use persistent datastructures to get around copying huge objects everytime you need to create a new object
+      - e.g. if you have a huge array, but you need to change a single item, you'll have to create a new array (because its immutable)
+
 # boomshakala
   - [Analyzing performance](http://w3c.github.io/navigation-timing/#introduction)
   - [understanding performance](https://developers.google.com/web/fundamentals/performance/)
 # [High Performance Browser Networking](https://hpbn.co/primer-on-latency-and-bandwidth/#speed-of-light-and-propagation-latency)
+
   - WPO: web performance optimization (WPO) industry
   - Need For Speed:
     + Faster sites lead to better user engagement.
