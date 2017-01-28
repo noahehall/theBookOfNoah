@@ -437,7 +437,10 @@
   - requests costs
   - storage management pricing (adding tags to objects)
   - data transfer pricing (data in is free, moving data around s3 costs)
-  - transfer acceleration:
+  - transfer acceleration: enables fast, easy, secure transfore of files over long distances between end users and s3 buckets
+    + uses cloudfronts globally distributed edge locations.
+    + data is transfered over an optimized network path
+    + users upload data to EDGE locations, and amazon handles saving that data into your actual buckets
 ### tiered storage
   + S3 standard: 99.999999.. (11 9s)% durability, sotred in multiple places
     - fault tolerance 2 s3s
@@ -446,16 +449,18 @@
     - fault tolerance 2 s3s
     - minimum object size 128kb
     - retrieval fee: per gb retrieved
+    - first byte latency: milliseconds
   + Reduced redundancy storage: designe dfor 99.99% durability (not 11 9s)
     - cheaper than standard
     - good for replaceable files
     - fault tolerance: 1 s3
+    - first byte latency: milliseconds
   + glacier (not really s3): very cheap, used only for archivl
     - takes 3-5 hours to restore from glacier
     - low cost: 0.01 per gb per month
     - minimum storage duration: 90 days
     - no sla
-## sto
+    - first byte latency: minutes/hours
 ### TERMINOLOGY
   - object based storage: objects are things like videos, documents, photos, etc
     - flat files: objects to be stored
@@ -466,7 +471,7 @@
     + if you create a new object, you will be able to read that object right away and receive the data
   - updates (put/delete) objects): eventual consistency for overwrite puts and deletes (takes time to propagate)
     + if you update an object, and try to read from it immediately after (couple ms), you may get the old data or the new data
-## S3 objects
+### S3 objects
   - all s3 objects have:
     1. key: the name of the object
     2. value: the data and is made up of a sequence of bytes
@@ -476,6 +481,386 @@
     5. subresources:
       1. access control lists: permissions, who can access this object. fine grained permissions on objects, or buckets
       2. torrent: S3 supports bit torrent protocol
+### S3 static website
+  1. create bucket and open properties
+  2. enable static website hosting
+  3. set index.html and error.html as the files
+  4. set permission 'open/download'for everyone on both files
+### S3 set versioning on bucket
+  - once bucket is turned on, it cannot be removed (but it can be disabled)
+  - delete a file
+  - go into old console (in s3 hmepage)
+  - delete the file with the delete marker
+  - go back to new console (if you want to)
+### S3 lifecycle management
+  - manage storage costs by controlling the lifecycle of your buckets/files
+  - create rules to transfer your files to infrequent access storage class or glacier
+  + transitions for current versions
+    - transition to standard infrequent storage classics
+      + you specify how many days after object creation date
+    - transition to glacier
+      + specify how man days after object creation
+    - expire objects
+      + set the current version to a previous version after X days
+  + action on previous versions
+    - transition to infrequent access storage class X days after object has been a previous version
+  + archive to glacier
+    - transition to glacier X days after object has been a previous version
+  + permanently delete
+    - X days after object has been a previous version
+
+
+## cloudfront
+  - can be used to deliver your entire website,
+  - optimized to work with other amazon web services
+  -
+### Terminology
+  - web distribution: used for websites
+  - RTMP distribution: used for media streaming (e.g. adobe flash)
+  - CDN: content delivery network:
+    + system of distributed servers that deliver assets based on the geographical location of the user
+  - edge location: the location where content will be cached
+    + distinct from AWS region/availability zones
+  - origin: the origin of all files that theCDN will destribute
+    + S3 bucket, EC2 instance, Elastic load balancer, Route53
+      + usually an S3 bucket/ec2 instance/elastic load balancer with ec2 instances behind it
+      + wherever the origin files are
+  - distribution: the name given to the CDN which consists of a collection of edge locations
+### edge location workflow
+  1. user makes request to an edge location distribution URL
+  2. edge location checks if the asset has been cached at that particular edge location
+  3. if yes, it returns it, if not, it retrieves it, caches it, and returns it to the user
+    + it caches it for the duration of the TTL
+### create a distribution terms
+  - oring domain name: prepopulated with all AWS resources, or you can insert a domain name
+  - origin path: adding subfolders within the origin
+  - origin id: give it anything
+  - restrict bucket access: to stop users frm using S3
+    + requires origin access identity:
+      - creates a new user for cloudfront to access S3
+  - Grant read permissions on bucket: automatically updates bucket policy
+  - origin custom headers: add headers
+  - path pattern: if you have assets in different paths, e.g. /videos and /images
+  - viewer protocol policy: http/https, redirect http to https, or https only
+    + best to do http to https
+  - allowed http methods: specify what clients can do
+    + you can post to cloudfront, and amazon will manage uploading it to your s3
+  - forward headers: leave at default
+  - object caching: click customize to modify TTLs
+  - Minimum, default and maximum TTL in seconds: the minimum time to live, how long do assets exist in edge locations
+    + default ttl: determines how long assets will be cached, and thus when your edge locations will be updated
+    + you have to consider the rate of change for your files
+    + modify TTLs usually require you to clear the cache, and that costs
+  - restrict viewer access (use signed urls/cookies): if you want to restrict content to a certain audience, e.g. only users who have paid for a service can access a certain url
+  - AWS WAF Web ACL: web application firewall, a layer 7 protection.
+    + operates at the application layer, prevents sequel injection and Cross site scripting
+  - alternate domain names:
+  - ssl certs:
+### created distribution terms
+  - distribution id
+  - domain names
+  - certs
+### created distribution configuration
+#### origins
+  - a single distribution can have multiple origins/s3 buckets/ec2 instances/ load balancers
+  - click a distribution > click the origins tab
+#### behaviors
+  - modify how the distribution acts based on certain criteria
+  - you can have multiple behaviors per distribution
+#### error pages
+  - custom error code / error pages
+#### restrictions
+  - geo restriction based on white / black lists for countries
+#### invalidations
+  - remove objects from cloudfront edge locations to force cloudfront to rehydrate the cache
+  - it does costs money
+#### tags
+  - you can add tags to the distribution
+### s3 transfer acceleration
+  - utilizes cloudfront edge network to accelerate uploads to s3
+    + instead of uploading directly to s3 bucket, you use a distinct URL to upload directly to an edge location, which will auto transfer that file to s3
+    + distinct url: BUCKETNAME.s3-accerlate.amazonaws.com
+    + user upload to cloudfront edge location > cloudfront sends to s3
+  - s3 bucket > properties > transfer acceleration
+## Cross Origin Resource Sharing (cors)
+  - allows one javascript in one s3 bucket to reference code in another s3 bucket
+  - add the static website URL from one bucket into the index.html of another bucket
+  - create a CORS file
+    + bucket containing file to share > permissions > access control list > cors configuration > insert the static website url your bucket that will be requesting this file
+    + you can have anything in a bucket, across different regions, and share them with any s3 bucket
+
+## databases
+  - RDS: managed relational database service
+  - DynamoDB: managed nosql database service
+  - Elasticache: in memory caching engine
+  - Redshift: Data warehousing service
+  - DMS: managed database migration service
+### relational databases
+  - think of a traditional spreadsheet:
+    + database: the filename of the spreadsheet
+    + tables: the different worksheet
+    + rows: each row in a worksheet is a record with values for each column
+    + fields (columns): each column in the worksheet, it is required to have the same type of data for each row
+  - relational database types on RDS
+    + SQL server
+    + oracle
+    + Mysql server
+    + postgressql
+    + aurora
+    + Mariadb
+### non relational databases
+  - non relationship database types
+    + couchdb
+    + mongodb
+    + cloudant
+    + only one on AWS in DynamoDB
+  - Describe NoSQL databases
+    + are document oriented databases, think of JSON
+      - collection = table
+      - document = row
+      - key value pairs = fields (columns and their values)
+      - embedded datastructures: a key whose value is a a hash/array
+### database warehousing
+  - purpose
+    + mainly for business intelligence (but i can totally see this for nlp)
+    + used to pull in very large and complex data sets
+    + used by management to do queries on data (e.g. current performance vs targets)
+    + uses different type of architecture both from a database perspective and infrastructure layer perspective
+  - types of transactions:
+    + online transaction processing: OLTP:
+      - i want to see a specific row
+      - i want specific data from a set of rows
+    + online analytics processing: OLAP:
+      - I want to analyzie a set of rows
+      - I want to compare and run calculations on data within a set of rows
+      - you will usually copy your relational database to a data warehousing infrastructure so you can run your analysis separate from your production db
+### elasticache
+  - webservice that makes it easy to deploy, operate, and scale an in0memory cache in the cloud
+  - types of caches available
+    + redis
+    + memcached
+      - caches the most frequently accessed data
+### database migration services
+  - allows you to migrate your production database to AWS
+  - AWS manages all the complexities of the migration process like data type transformation, compression, parralell transfer
+  - ensure data changes to the source db that occur during the migration process are automaticaly replicated to the target
+  - AWS schema conversion tool: automatically converts the source db schema to a format compatible with the target db
+    + take a proprierity database architecture (e.g. oracle) and convert it to an open source db (e.g. mysql)
+### Dynamodb
+  - fast and flexible nosql db service support both document (eg mongo) and key-value (eg redis) data models.
+  - stored on SSD and spread across 3 geographically distinct data centers
+    + data is written in one location, and then replicated to the other two data centers
+  - data consistency models
+    1. eventual consisten reads (Default)
+      + consistency across all copies of data is usually reached within a second
+      + repeating a read after a short time should return the updated data (best read performance)
+    2. strongly consistent reads:
+      + a strongly consistent read returns a result that reflects all writes that received a successful response prior to the read
+    3. which to use?
+      - if your app can wait for up to a second, use eventual consistent reads
+      - if your app needs it now: use strongly consistent reads
+  - great for:
+    + mobile, web, gaming, ad-tech, iot, etc.
+#### basics
+  - data model
+    + tables contain items and attributes
+      - table: collection of items (think worksheet)
+      - items: think a row of data
+      - attributes: think a column of data in a table
+        + you should always list the primary key first
+        + can contain 35 different nests, think address.streetname
+  - pricing
+    + provisioned throughput capacity:
+      - write throughput: 0.0065 per hour for ever 10 units
+        + a write capacity unit can handle 1 write per second
+      - read throughtput: 0.0065 per hour for every 50 units
+
+    - storage:
+      - first 25gb free
+      - after that 0.25 per gb per month
+    - how to calculate costs per month:
+      1. how many writes per second per day && how many units required?
+        - cost per unit * # of units required * hours in a day
+        - (0.0065/10) * # of units required * 24
+      2. how many reads per second per day && how many units required?
+        - cost per unit * # of units required * hours in a day
+        - (0.0065/50) * # of units required * 24
+      3. cost of storage
+        - total storage per month - free storage * cost per gb per month
+        - total storage per month - 25 * .25
+      4. total costs = 30 * 1 + 30 * 2 + 3 + my fee for taking all of these notes
+        - 1 and 2 * 30 to get cost per month
+#### creating a dynamodb table
+  - create tables from an ec2 instance
+  - the instance should have a role that allows it to interact with dynamodb
+  - steps:
+    1. create a role: dynamodb db full access privs
+    2. create an ec2 in the correct region and assign the role from #1
+    3. he loves to run these php scripts, add instructs for js
+#### dynamodb indexes and streams
+  - primary keys:
+    + single attribute: i.e. unique id:
+      - partition/hash key: composed of one attribute: e.g. user id
+        + dynamodb uses the partiition key's value as input to an internal hash unction
+        + no two items can use the same partition key
+    + composite: think user id + signup date
+      - dynamo db uses the partition key's value as input to an internal hash function, the output from the hash function determines the partition:
+        + the partition is simply the physical locatino in which the data is stored
+      - partition key + sort/arrange key (hash & range) composed of two attributes
+      - allow you to use the partition key multiple times, but **MUST** have different sort keys
+        + all items with the same partition key will be stored together, in sorted order by sort key value
+  - global secondary index:
+    + has different partition key and different sort key
+    + can be created at table creation/added after
+    + can have 5 per table
+  - local secondary index:
+    + has the same partition key, but different sort key
+    + can only be created when creating a table, and cannot be removed or modified later
+    + can have 5 per table
+  - streams:
+    + used to capture any modification to dynamodb tables for up to 24 hours
+    + modifications:
+      - if a new item is added, it captuers a snapshot of the entire item and the items attributes
+      - if item is updated, it captures snapshot of before and after of item and its attributes
+      - if item is deleted, it captures a snapshot of the item and its attributes before it was deleted
+    + you can write lambda functions to operate on the streams, e.g. to replicate data to another region, or generate an email with SES (Simple Email Service)
+#### dynamodb scan vs queries
+  - queries: finds items in a table using only primary key attribute values
+    + must use partition attribute name and a distinct value to search for:
+      - find userid with value 1234
+      - can optionally provide a sort key attribute name and value, and use a comparison operator to refine search results
+        - find userid with value 1234 with posts timestamps > now() - 10 days
+    + queris returns all data attributes for items with the specified primary keys
+      + can use ProjectionExpression param so that the query only returns some of the attributes
+    + results are always sorted by the sort key in ascending order
+      + set ScanIndexForward param to false to sort in descending order
+    + queries by default are eventually consistent but can be changed to strongly consistent
+  - scans: examines every item in the table
+    + returns all data attributes for every item
+      - use ProjectionExpression param to only return some attributres
+  - use query vs scan
+    - query is quicker and more efficient
+      + design your tables in a way that you can use the Query, Get, or BachGetItem APIs
+    - scan always scans entire table
+      + avoid using scan on a large table with filter that removes many results
+      + scans can use up the provisioned throughpt for large table in a single operation
+      + design your application to use Scan operations in a way that minimizes impact on your table's request rate
+#### dynamodb provisioned throughput calculations
+  - you can set a read and write provisioned through put
+  - reads
+    + size of per read rounded to nearest 4kb chunk / 4kb * x # of items = read throughput
+      - rounded up to increments of 4kb in size per read per second
+      - for eventually consistent divide the result by 2
+      - final result must be an integer, so always round up
+    + eventually consistent reads
+      - 2 reads per second
+      - DO divide final answer by 2
+    + strongly consistent reads
+      - 1 kb read per second
+      - DONT divide final answer by 2
+  - writes
+    + all writes are 1 kb per second
+    + # of items * kb size per second
+  - what happens if you exceed your provisioned throughput?
+    + you get a 400 http status code: ProvisionedThroughputExceededException
+#### web identity providers with dynamodb
+  - you can authenticate users using web identity providers (e.g. facebook, etc), i.e. any nopen-id connect-compatible identity providers
+    + this is setup in the console > dynamodb > click a table > access control tab
+  - use the AssumeRoleWithWebIDentity API
+  - steps
+    1. create a role specifying the policy document for this web identity provider
+      - you can generate the policy document first via console > dynamodb > click a table > access control tab
+    2. have a user identity with their web identity provider (e.g. facebook)
+    3. their identity provider gives them a web identity token
+    4. you hit the AssumeRoleWithWebIDentity request providing their web token, the app id of the provider, and the amazon resource name (ARN) of the role you created in step 1
+    5. it hits the AWS security Token Service and gives you a temporary security credential by default lasting 1 hour that consists of
+      - access key id
+      - secret access key
+      - session token
+      - expiration (time limit, by default 1 hour)
+      - assume role id
+      - SubjectFromWebIdentityToken
+        + this is th uniue ID that appears in an IAM policy variable for this particular identity provider
+#### dynamodb conditional writes
+  - dynamodb is spread over 3 facilities
+  - if 2/more users want to update the same item at the same time?
+    + you set a conditional write based on the last state of the item
+      - if item is 10, both users want to update it
+      - before updating check and ensure it hasnt been updated,
+      - if item is still 10, update
+      - if item is not 10 (updated by someone else), then inform user to refresh
+  - conditional writes are idempotent: you can send the same conditional write request multiple times, but it will have no further effect on the item after the first time dynamodb performs the specified update
+#### atomic counters
+  - where you use the UpdateItem operation to increment/decrement the value of an existing attribute without interfering with other write requests
+  - atomic counters are not idempotent, so remember that everytime you use them its going to have an effect (unlike conditional writes)
+#### batch operations
+  - the BatchGetItem api can retrieve:
+    + up to 1MB of data
+    + contain up to 100 items
+    + can retrieve items from multiple tables in a single request
+
+## VPCs: virtual private cloud
+  - a VPC is a data center located in a specific region
+  - they can span availability zones, but cannot span regions
+  - you provision a logically isolated section of AWS resources in the cloud in a virtual network
+    + complete control over IP address range, subnets, route table configuration, and network gateways, security groups, network access control lists, etc
+  - you can create a Hardware Virtual Private Network (VPN) connection between your corporate data center and your VPC and leverage the AWS cloud as an extension o fyour corporate data center
+    + i.e. a hybrid cloud
+  - what can you do with a VPC?
+    - launch instances into a subnet of your choosing
+    - assign custom IP address ranges in each subnet
+    - configure route tables between subnets
+    - create internet gateways and attach it to a VPC
+    - better security control over your AWS resources
+    - create instance security groups
+  - network diagram
+    + region
+      - VPC : define ip address range (e.g. 10.0.0.0/16), always use /16 network for
+        + public and private Subnets (SN) containing instances and security groups
+          - Network ACL: your second line of defense after your security groups
+            + Route tables
+              - Router
+                + Internet Gateway and Virtual Private Gateways
+### TERMINOLOGY
+  - private address ranges: defined in document RFC 1918 for use around the world
+    + 10.0.0.0 - 10.255.255.255 (10/8 prefix)
+      - usually for enterprises
+    + 172.16.0.0 - 172.31.255.255 (172.16/12 prefix)
+    + 192.168.0.0 - 192.168.255.255 (192.168/16 prefix)
+      - usually for home networking
+  - internet gateway: how you connect your VPC to the internet (and vice versa)
+    + you can only have one internet gateway per VPC
+  - virtual private gateway: terminate your VPN connections
+  - Subnets: can be public / private
+    + set them up like this for easibility
+      - 10.0.1.0, 10.0.2.0, etc., always incrementing the 10.0.#.0
+    + are mapped directly to an availability zone
+    + public: internet accessible, e.g. web servers, bastion hosts / jumpbox,
+    + private: no internet access: databases, app servers, etc.
+  - security groups: can span Subnets and availability zones
+    + are stateful, if you give http access out, that means http access in
+  - network access control lists (ACL): can span subnets and availability zones
+    + are stateless: if you give http access in, you have manually allow http access out
+  - route table: defines wether a subnet is public/private
+    - can span subnets and availability zones
+  - default VPC: are automatically available in every region around the world with no configuration so you can immediately deploy
+    + they are all public subnets
+    + each EC2 instance will have a public and private ip address
+    + if you delete the default VPC the only way to get it back is to contact AWs
+  - custom VPC: you create it from scratch
+  - VPC peering: connect one VPC to another via a direct network routing using private IP addresses
+    + instances behave as if they were on the same private network
+    + you can peer VPCs with other AWS accounts
+    + are always in a star configuration
+      - 1 central VPC peers with 4 others
+      - there are NO TRANSITIVE PEERING
+
+
+
+
+
+
+
 ## tips and tricks
 ### using ssh (pem file) to connect to EC2
   1. create ec2 and associate it wiht a pem file
@@ -501,7 +886,6 @@
         git clone https://github.com/acloudguru/s3
       ```
 
-
 ## VPC
 ### basics
   - VPC: virtual private cloud: i.e. its just a datacenter
@@ -517,13 +901,14 @@
 
 
 ######## KNOWN STUDY questions
-# exam
+# exam: feb 6 11am
   - 80 minutes
   - 55 questions
   - $150
   - conducted online at an approved place
   - register at webassessor.com
-  
+  - dynamoDB is the **MOST IMPORTANT** exam topic
+
 # AWS
   1. which servers are free?
     - usually orchestration services, e.g.: cloudformation, elastic beanstalk, autoscaling, opworks
@@ -551,6 +936,7 @@
       + you can only change the permissinos associated with the role
   7. what is the name of the API call to request temp security credentials from the AWS platform when federating with active directory?
     - assume role with saml
+  8. [read the iam faq](https://aws.amazon.com/iam/faqs/)
 
 # sdk
   1. [what SDKs are currently available?](https://aws.amazon.com/tools)
@@ -563,7 +949,6 @@
     - node
   5. if you dont set a default region, what will be used?
     - US-EAST-1
-
 
 # EC2
   1. based on some scenario, which ec2 pricing model should you use?
@@ -615,9 +1000,235 @@
     - 5xx: server error (i.e.something is wrong with server config/code)
   11. how to enable encryption at rest using EC2 and elastick block store?
     - configure encryption when creating the EBS volume
+  12. [read the ec2 faq](https://aws.amazon.com/ec2/faqs/)
 
 # S3
   1. what is the syntax for bucket URLs ?
     - `https://s3-REGION-NAME.amazonaws.com/BUCKET-NAME`
   2. what status code will be returned on successful file uploads to buckets?
     - http 200
+  3. how should you store your files in S3?
+    - add a salt to the beginning of the file name so that the objects are stored evenly across S3, instead of grouped together
+      + especially for file names that are similar
+  4. what kind of storage is S3 ?
+    - S3 is object based storage (i.e upload files)
+  5. What size files can S3 hold ?
+    - from 0 bytes to 5 TB
+  6. how much storage is available on S3 ?
+    - unlimited storage
+  7. where are files stored in S3 ?
+    - in buckets (i.e. files)
+  8. What kind of name space is S3 bucket names ?
+    - S3 bucket names are universal (i.e. global) namepace, i.e. names must be unique globally across all aws users and must be lowercased
+  9. what kind of consistency is for PUTS of new objects?
+    - read after write consistency for PUTS
+    - immediately available
+  10. what kind of consistency for overwrite puts and deletes?
+    - eventual consistency
+    - takes time to propagate (not immediate)
+  11. what kind of storage classes/tiers are available
+    - S3 (standard): durable, immediately available, frequently accessed
+    - S3 IA: durable, immediately available, infrequently accessed)
+      + must be >= 128kb and 30 days after creation date
+    - S3 reduced redundancy storage: data that is easily reproducible, e.g. thumbnails
+    - Glacier: archival data,  3-5 hours before accessing
+      + must be 30 days after S3 IA date
+  12. what makes up an S3 object?
+    - key (name)
+    - value (data)
+    - version ID
+    - metadata
+    - subresources:
+      - ACL: access contorl list
+      - torrent
+  13. what is the format for s3 urls?
+    - your.bucket.name.s3-website-REGION.amazonaws.com
+  13. [read the S3 FAW](https://aws.amazon.com/s3/faqs/)
+  14. can you remove versioning from a bucket after you enable it?
+    - once bucket is turned on, it cannot be removed (but it can be disabled)
+  15. what is versioning?
+    - stores all versions of an object, even deleted ones
+  16. how do add security to S3 versioning
+    - setup versioning's MFA delete capability
+  17. can lifecycle management be used with versioning?
+    - yes
+  18. can lifecycle be applied to current or previous versions?
+    - both
+  19. what actions can be done with lifecycle management?
+    - transition to infrequent access storage class?
+      + at lest 128kb and 30 days after creation date
+    - archive to storage class
+      + 30 days after IA, if relevant
+    - permanently delete
+  20. what types of encryption are available?
+    - in transit: ssl/tls, have to use https,
+    - at rest
+      + server side encription using S3 managed keys: SSE-S3
+        -each object is encrypted with a unique employing strong multifactor encryption with a master key that regular rotates
+      + aws key management service: managed keys: SSE-KMS,
+      + server side encryption with customer provided keys: SSE-C
+        - you manage the keys, and AWS manages the encryption when writing to disk, decryption when reading from disk
+    - client side encryption
+      + you encrypt data yourself on the client side and uploading to S3 and its saved as encrypted data
+  21. what types of storage gateways available on S3?
+    - file gateway: for flat files, sotred directly on S3
+    - volume gateway:
+      + stored volumes: entire dataset is stored on site and is backed up asynchronously backed up to s3 (block based storage)
+      + cached volumes: entire data set is stored on s3 and the most frequenlty accessed data is cached on site
+    - gateway virtual tape library (VTL)
+      + used for backup and uses popular backup apps like netbackup, backup exec, etc
+  22. What types of snowball exists?
+    - pure storage, various types of sizes
+    - snowball edge: storage + compute capabilities, you can run lambda functions
+    - snowmobile: 100PT worth of storage
+  23. what is snowball?
+    - import and export to s3
+  24. who benefits most from S3 transfer acceleration?
+    - people in far away locations
+  25. what characteristics exist from S3 static websites
+    - only static content (no php/.net)
+    - serverless
+  26. what is cors?
+    - cross origin resource Sharing
+    - when you have assets in multiple origins/domains
+    - need to enable cors on the resources buckdt and state the URL for the origin that will be calling the bucket
+  27. what are the bucket urls?
+    - static hosting: bucketname.s3-website.REGION.amazonaws.com
+    - s3 bucket: s3.REGION.amazonaws.com/bucketname
+  28. if you encrypt a bucket on s3, what enryption do aws use?
+    - advanced encryption standard (AES) 256
+  29. what is the largest size file you can transfer to S3 using a put operation?
+    - 5gb, after that you must use multipart upload
+
+# cloudfront
+  1. what is an edge location ?
+    - the location where content will be cached
+  2. what is the origin?
+    - origin of all files that the CDN will distribute
+    - an s3 bucket, ec2 instance, elastic load balancer, or route53, or not on AWS
+  3. what is a distribution
+    - the name given to the CDN which consists of a collection of edge locations
+  4. what are the types of distributions
+    - web distribution: for websites
+    - RTMP: used for media streaming
+  5. Can you read or write to edge lcoations?
+    - you can read or write
+  6. how long are objects cached?
+    - for the life of the TTL (time to live)
+    - you set it on objects
+  7. Will you be charged for clearing cached objects?
+    - yes
+  8. how do you set TTLs ?
+    - its all based on the rate of change for your files
+  9. how are you going to secure cloudfront/s3 to certain users
+    - use restrict viewer access and choose presigned urls/cookies
+  10. are invalidations free ?
+    - no it costs each time
+  11. can you upload or download from cloudfront ?
+    - you can do both
+
+# databases
+  0. RDS and DynamoDB come up a lot in the exam! read the FAQs!
+    - [RDS faq](https://aws.amazon.com/rds/faqs/)
+    - [dynamodb faq](https://aws.amazon.com/dynamodb/faqs/)
+  1. what type of relational database are on RDS
+    + SQL server
+    + oracle
+    + Mysql server
+    + postgressql
+    + aurora
+    + Mariadb
+  2. what is OLTP?
+    + online transaction processing
+  3. what types of OLTP engines exist?
+    - sql, mysql, postgresql, oracle, aurora, mariadb,
+  3. what is OLAP ?
+    - online analytics processing
+  4. what type of OLAP engines exist?
+    - redshift
+  5. what type of Nosql engines exist?
+    - dynamodb
+  6. what type of in memory caching (elasticache) engines exist?
+    - memcached, redis
+  7. what is DMS?
+    - database migration services
+  8. when can you create a local secondary index?
+    - when you create a table only
+  9. when can you create a global secondary index
+    - when you create a table
+    - after you create a table
+  10. does a local secondary index have a different partition key?
+    - no it has the same partition key, but different sort key
+  11. does a global secondary index have a different partition key?
+    - yes, it has different partition and sort keys
+  12. how do you only return some data attributes on items returned from a dynamodb query?
+    - use the ProjectionExpression parameter
+  13. how do you reverse the default sort on query results?
+    - set ScanIndexForward to false
+  14. what is a dyanmodb query?
+    - finds items in a table using only a primary key attribute value
+    - you must provide a partition key attribute name and a distinct value to search for
+    - results are always sorted by sort key in ascending order (unless you set ScanIndexForward to false)
+    - queries > scan for efficiency
+  15. what is a dynamodb scan ?
+    - scan operations examines every item in a table
+    - returns all data attributes for every item (unless you use ProjectionExpression parameter)
+  16. how do you calculate read provisioned throughput?
+    - size of per read rounded to nearest 4kb chunk / 4kb * x # of items = read throughput
+    - divide final answer by 2 for eventually consistent
+    - final answer must be an integer, so round up
+  17. how do you calculate write provisioned throughput?
+    - # of items * kb size per second
+  18. what happens if you exceed your provisioned throughput?
+    + you get a 400 http status code: ProvisionedThroughputExceededException
+  19. what are the basic steps for identifying with a web identity provider (e.g facebook)
+    1. user authenticates with web id provider (e.g. facebook)
+    2. they are passed a token by their ID provider
+    3. your code calls AssumeRoleWithWebIDentity API providing the web id providers token and the ARN for the IAM role
+    4. your app can now access Dynamodb from between 15 > 1 hour (default is 1 hour
+  20. when should you use conditional writes vs atomic counters?
+    - if you can have some margin of error, use atomic counters
+    - if you need absolutely accurate information, use conditional writes
+  21. what is dynamodb?
+    - fully managed (no ssh)
+    - stored on ssh spread across 3 distinct data centers
+    - eventual consistency reads within a second (default) is best read performance
+    - strongly concistent reads are those whose results contain all items that have a successfuly response
+    - fast and flexible nosql db service for all types of applications
+  22. what types of primary keys exist?
+    - single attribute: think unique ID
+      + partition key sometimes called hash
+    - composite; think unique id + data range
+      + partition key + sort key
+      + sort key sometimes called range key
+  23. how are partition keys stored?
+    - the partition key value is used as an input ot an internal hash function, and the output from the ash function determiens the partition
+    - the partition determines the physical location where the data is stored
+    - no two items can have the same partition key value (for single attribute primary keys)
+    - two/more items can have the same partition key but different sort key (from composite primate keys)
+  24. what are dynamodb streams?
+    - used to capture modifications to dynamodb tables for upto 24 hours
+      + edits : capture the before and after
+      + deletes: capture the before delete
+    - can be used to trigger lambda functions (e.g. to replicate data, or send emails via SES)
+  25. what are batch operations
+    - can read multiple items using BatchGetItem api
+    - retrieve up to 1 Mb of data
+    - retrieve up to 100 items
+    - retrieve items from multiple tables
+    -
+
+# VPCs
+  1. you must know how to build out a VPC from memory and launch instances into a public and private subnets
+    - i can do that
+  2. how many availability zones can be mapped to a single subnet
+    - it is a 1 to 1 mapping, i.e. a subnet cannot span availability zones
+  3. how many internet gateways can you map to a VPC?
+    - it is 1 to 1 mapping, only one internet gateway per VPC
+  4. can you do transitive peering with VPCs?
+    - NO! peering is always in a star configuration (1 central VPC peers with other VPCs)
+    - you cannot talk to one VPC via another (transitive)
+    - you have to set up the links individually
+  5. what is a VPC?
+    - a logical datacenter within AWS
+    - consists of ing

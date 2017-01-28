@@ -6,6 +6,12 @@ application breakdown
        - Story N
         - Scenario N
 
+
+# link node ubuntu nvm
+`n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local`
+# install redis ubuntu
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-redis-on-ubuntu-16-04
+
 # Software Development process
 ## [flowchart symbols](https://www.smartdraw.com/flowchart/flowchart-symbols.htm)
   - [more flowchart symbols](http://www.aivosto.com/vbtips/flowchart-symbols.html)
