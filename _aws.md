@@ -868,10 +868,37 @@
     - ssh i 'your pem file' ubuntu@some-public-ip
     - ping some-private-ip
   9. copy your pem file into your public ec2 so you can access your private ec2 server
-    1. nano somekeyname.pem
+    1. nano somekeyname.pem and paste in contents of your pem file then save
     2. chmod 0600 somekeyname.pem
     3. test it
       - ssh ubuntu@your-private-ip -i somekeyname.pem
+## NAT
+  - NAT: network address translation:
+    + [NAT gateway vs NAT Instance](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-nat-comparison.html)
+    + NAT instance: an ec2 instance that acts as a gateway to the internet for a machine without internet access
+      1. launch an ec2 > choose community AMI > search for NAT, choose amazon
+      2. deploy it in your VPC and put it in your public subnet
+      3. add a security and the normal stuff
+      4. when it launches > click it > actions menu > networking > enable source/destination check
+        - any EC2 instance must be the source/destination of traffic it sends/receives
+        - disable it, because you want to modify it so you can connect it to your private instances
+        - enable https in the security group attached to your NAT
+      5. create a route from your private subnet out through the nat instance to the internet
+        - VPC > route table > main route table > add new route
+          1. destination : 0.0.0.0/0
+          2. target: your NAT instance
+      6. test your internet access
+        1. login to your public ec2
+        2. ssh into your private ec2
+        3. try to update it
+    + NAT gateway: released in 2016, make it easier and better to use in production because it automatically scales, AWS manages your security, etc
+      1. VPCs > internet gateways > create nat gateway
+      2. always deploy your NAT gateways into a public subnet
+      3. give it an elastic ip
+      4. update your VPCs main route table and include a new route
+        - destination: 0.0.0.0/0
+        - target: your new nat gatway
+      5. test your private instances can access the net
 ### TERMINOLOGY
   - private address ranges: defined in document RFC 1918 for use around the world
     + 10.0.0.0 - 10.255.255.255 (16/8 prefix)
@@ -912,6 +939,7 @@
         + i.e. you cannot talk to one VPC through another VPC
         + you have to link VPCs directly
 
+  -
 ## tips and tricks
 ### using ssh (pem file) to connect to EC2
   1. create ec2 and associate it wiht a pem file
@@ -1286,3 +1314,38 @@
       + for future use: 10.0.0.3
   10. can you boost your internet speeds by attaching multiple internet gateways to a VPC
     - no: you cannot attach multiple internet gateways to a VPC
+  11. do you have to disable the source destination check network configuration for NAT instances?
+    - yes. because you need to set it up manually in your VPC route table to route traffic to private instances
+  12. how do you manage a surge in traffic to your NAT instances (i.e. too much traffic)
+    - you scale it up to support larger network requests
+    - increase instance size
+    - change instance type
+  13. should NAT instances be in a public or private subnet?
+    - public! because they are used to provide internet access to private ec2 resources
+  14. how do you connect a private subnet to the internet via a NAT instance?
+    - create a route out of the private subnet to the NAT instance via the VPCs main route table
+  15. does a NAT instance require a public ip?
+    - YES! how else will it talk to the net?
+  16. how much traffic does a NAT instance support?
+    - it depends on the instance size and type
+  17. how do you create high availability for NAT instances?
+    - autoscaling groups
+    - multiple subnets in different availability zones (always 1 to 1)
+    - create a script to automate failover
+  18. do NAT instances require a security group?
+    - YES! always
+  19. should you use a NAT instance / NAT gateway for enterprise?
+    - NAT gateways definitely preferred
+  20. What management services does AWS provide for NAT gateways?
+    - auto scale up to 10Gbps
+    - no need to patch (i.e. update/upgrade)
+    - auto assigned public ip
+    - AWS manages security (no need to associate security group)
+  21. do NAT gateways require security groups?
+    - no - AWS manages security
+  22. do you have to disable source/destination checks for NAT gateways ?
+    - NO! only for NAT instances
+  23. do you have to update your route tables when creating a NAT gateway?
+    - YES! update your VPCs main route table
+      1. destination: 0.0.0.0/0
+      2. target: your NAT gateway

@@ -1,6 +1,9 @@
 # class: https://www.youtube.com/watch?v=HtSuA80QTyo&list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb
   37 minutes
 
+# next up
+  - [data structures and algorithms in js](https://mgechev.github.io/javascript-algorithms/data-structures_avl-tree.js.html)
+  
 ## Design and analysis of algorithms
   + is all about designing and analyzing algorithms for a given problem in terms of time (performance) and memory (Ram/disk) & communication (i/o) (resource usage)
   + efficient procedures for solving problems with large inputs
@@ -23,7 +26,7 @@
 ## Algorithms:
   - dynamic programming
   - trees
-  
+
 ## DATA Structures
   - Trees: good for scheduling and sorting
     + binary search trees
