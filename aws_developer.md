@@ -1,4 +1,4 @@
-# https://dictionary.udemy.com/aws-certified-developer-associate/learn/v4/t/lecture/2802242
+[aws certification hp](https://aws.amazon.com/certification/certification-prep/)
 
 # Everything you need to know to become AWS certified
   - [test exams](https://www.webassessor.com/wa.do?page=publicHome&branding=AMAZON)
