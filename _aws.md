@@ -994,13 +994,19 @@
   - web service providing access to a message queue that can be used to store messages while waiting for a computer to process them
     + a distributed queue system that enables web service applications to quickly queue messages that one component in the app generates to be consumed by aother component
     + used to decouple components of an application so they run independently
+    + ensures delivery of each message **at least once**
+    + supports multiple readers and writers interacting with the same queue
+    + a single queue can be used simultaneously by many distributed application components
   - Messages: any component of a distributed application store messages in a fail safe queue
     + you can retrieve the messages programmaticaly using the Amazon SQS API
   - Queue: temporary repository for messages that are awaiting processing
     + acts as a buffer between the component producing and saving data, and the component receiving the data for processing
     + the queue resolves issues that arise if:
-      - the producer is producing work faster than the consumer can process it, o
-      - the producer/consumer are only intermittenly connected to the network
+      - autoscaling: the producer is producing work faster than the consumer can process it, o
+      - failover: the producer/consumer are only intermittenly connected to the network
+  - tradeoffs:
+    1. does not gaurantee FIFO delivery of messages; as long as all messages are delivered, the order is not important
+      - if message order is requireed, sequencing information can be placed within each message so the app can reorder messages when the queue returns them
 
 
 ### TERMINOLOGY
