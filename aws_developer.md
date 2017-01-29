@@ -6,9 +6,9 @@
 # AWS Global Infrastructure
 ## Regions, availability zones, edge locations
   - a place in the world where AWS resources exist
-    + 14 Regions
+    + 14 Regions: e.g. N. California/  N. Virginia
       - a geographical area consisting of 2/more availability zones
-    + 38 availability zones
+    + 38 availability zones: e.g. us-west-1b, us-west-1c
       - a single/multiple data centers
     + 66 edge locations: a CDN for cloudfront
       - CDN: a way to cache files media objects (js, html, videos, soundfiles, etc) in the cloud
@@ -206,11 +206,14 @@
 ### Simple Email service
   - send and receive emails using AWS
 
+
+
+
+###### study guide ########
 # aws javascript cli
 ## links
   - [node sdk](https://aws.amazon.com/sdk-for-node-js/)
   - [developer guide](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/welcome.html)
-## best practices
 ## background
   - aws SERVICE COMMAND
     + `aws s3 ls`
@@ -227,22 +230,8 @@
     + you can confirm no user credentials by:
       1.  `ls ~/.aws` if the folder is not empty, that means you added user credentials
 
-# developer exam
-  - global infrastructure
-  - networking and content Delivery
-  - compute
-  - databases (dybnamo)
-  - storage (s3)
-  - IAM
-  - management tools (opsworks it uses chef)
-  - messaging: SNS, SQS, SES
-# Study guide
-## notes
-  - not all services are available in all regions, so choose your regions wisely
-  - IAM operates in the global region
-  - EC2: a virtual machine
 
-## IAM: identity access management
+# IAM: identity access management
 ### places
   - [signin](https://YOUR-ACCOUNT-ALIAS.signin.aws.amazon.com/console)
   - [aws signin endpoint for saml](https://signin.aws.amazon.com/saml)
@@ -275,7 +264,7 @@
   - access types:
     + programmatic: CLI/application access
     + management console: the GUI
-    + security credentils: provides programmatic access via an access key and secret key
+    + security credentials: provides programmatic access via an access key and secret key
       - cannot be used to log into console
       - you only get these once, make sure to download them or you'll have to regenerate them
     + name and pass: used to login to console
@@ -285,7 +274,7 @@
 ### Policies
   - is a json object containing a version and a statement
     + statement has effect and allow
-    - IAM policy: i.e. your password policy
+    - IAM policy: i.e. your security policy
 #### major Policies
   - administrator access: same access as root account
   - system administrator: level below administrator
@@ -293,11 +282,10 @@
   - allow one AWS service to interact with another
   - Service Roles: specifically for aws resources
     + can only be associated with EC2 resources when you create the EC2
+    + you can only change the permissions associated with the role
     + if you create a role that provides s3 access > assign it to an EC2 when you create the EC2 > you will be able to automatically access the S3 without supplying credentials
   - cross-account access: allows one aws account to interact with another
   - identity provider access: for linkedin/facebook/etc to interact with aws resources
-  - roles can only be give to EC2 instancs when the EC2 is created
-    + you can only change the permissinos associated with the role
 ### active directory federation
   1. browse to some URL (e.g. blah.com/signon.aspx)
   2. user is authenticated against some active directory
@@ -306,10 +294,10 @@
   5. user receives signin URL and is redirected to the console
   6. from the user perspective, it happens transparently, he starts at internal signon url and ends up at the AWS management console without ever supplying any AWS credentials
 
-## EC2: [elastic compute cloud](https://aws.amazon.com/documentation/ec2/)
+# EC2: [elastic compute cloud](https://aws.amazon.com/documentation/ec2/)
   - the backbone of AWS, its basically a virtual machine
   - web service that provides resizeable compute capacity in the cloud
-  - reduces the tie require dto obtain and boot new server instances to minutes
+  - reduces the time required to obtain and boot new server instances to minutes
   - allows to quickly scale capacity (up/down) as your computing requirements change
 ## [links](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html):
   - [historical spot prices](https://ec2price.com/)
@@ -357,7 +345,7 @@
   - M3: general purpose
     + use case: application servers
   - C4: compute optimized
-    + cuu intensive apps/dbs
+    + cpu intensive apps/dbs
   - C3: compute optimized
     + use case: cpu intensive apps/dbs
   - R3: memory optimized
@@ -844,7 +832,7 @@
     - for your public subnet after you create it
       + select it > click 'subnet actions' > enable auto-assign public ip
         - now every time you deploy an EC2 instance into this subnet it will automatically receive a public IP
-  3. create public and private internet gateways
+  3. create internet gateways
     - attach it to a VPC
   4. update your main route table
     - you should make sure it is private, then leave it alone and create new ones
@@ -1697,3 +1685,19 @@
     - infrastructure service:
     - container service: operating system and application level
     - abstracted service: everything except the client side encryption and customer data
+
+
+# other notes for developer exam
+  - global infrastructure
+  - networking and content Delivery
+  - compute
+  - databases (dybnamo)
+  - storage (s3)
+  - IAM
+  - management tools (opsworks it uses chef)
+  - messaging: SNS, SQS, SES
+# Study guide
+## notes
+  - not all services are available in all regions, so choose your regions wisely
+  - IAM operates in the global region
+  - EC2: a virtual machine
