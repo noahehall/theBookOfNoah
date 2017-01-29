@@ -974,6 +974,34 @@
   - web service that coordinates work across distributed application components
     + design media processing, back ends, business process workflows, analytics pipelines, etc., as a set of tasks
   - tasks: invocations of various processing steps in an application which can be performed by executable code, web service calls, human actions, and scripts
+    + example: customer order start > verify order > charge card > ship order, update customer records > end
+      - each step is backed by a worker/decider, e.g., web service call, human action, script, etc
+      - worker: programs that interact with Amazon SWF to get tasks, process received tasks, and return results
+      - decider: programs that controls the coordination of tasks, i.e. ordering, concurrency, and scheduling according to the application logic
+      - workers and deciders: run on EC2/machines behind firewalls
+        + deciders get consisten view into progress of tasks and to initiate new tasks
+        + SWF stores tasks, assigns them to workers when they are ready, and monitors their progress
+        + SWF ensures that tasks are assigned only once and is never duplicated
+        + SWF maintains application state durably
+        + workers and deciders never keep track of execution state and run independently
+  - SWF domains: isolate a set of activity types, workflow executions, and task lists.
+    + register a domain by using the AWS console or using the RegisterDomain action in amazon SWF API
+    + parameters are specified in JSON format
+      - name, description, and workflowExecutionRetentionPeriod (in days)
+  - execution state: e.g. which steps have completed, which ones are running, etc.
+
+## Simple Queue Service: SQS
+  - web service providing access to a message queue that can be used to store messages while waiting for a computer to process them
+    + a distributed queue system that enables web service applications to quickly queue messages that one component in the app generates to be consumed by aother component
+    + used to decouple components of an application so they run independently
+  - Messages: any component of a distributed application store messages in a fail safe queue
+    + you can retrieve the messages programmaticaly using the Amazon SQS API
+  - Queue: temporary repository for messages that are awaiting processing
+    + acts as a buffer between the component producing and saving data, and the component receiving the data for processing
+    + the queue resolves issues that arise if:
+      - the producer is producing work faster than the consumer can process it, o
+      - the producer/consumer are only intermittenly connected to the network
+
 
 ### TERMINOLOGY
   - private address ranges: defined in document RFC 1918 for use around the world
@@ -1482,6 +1510,7 @@
     - yes! but you pay for any resources it uses
   2. what platforms come preconfigured when setting up elastic beanstalk?
     - nodejs, php, python, ruby, tomcat, .net, java, go docker
+
 # cloud formation
   1. is cloud formation free?
     - YES! but you have to pay for the resources it uses
@@ -1494,3 +1523,26 @@
     - it allows you to programmatically get resource information when creating resources with a cloud formation script/template
   5. what is the default rollback behavior?
     - on error it will rollback automatically and delete all of the resources it created
+
+# Simple Workflow Service: SWF
+  1. what is the main difference between SWF and SQS tasks
+    - SWF:
+      + tasks are only assigned once and never duplicated
+      + task-oriented API
+      + tasks are tracked at the application level
+    - SQS:
+      + tasks can be assigned multiple times and duplicated if tasks are not completed in a certain time limit,
+      + message-oriented API
+      + you have to implement your own application level message tracking, especially if your application uses multiple queues
+  2. what is the difference between SWF and SQS workflow lengths?
+    - SWF: up to 1 year
+    - SQS: up to 12 hours
+  3. what is the maximum time a workflow can exist?
+    - 1 year and the value is always measured in seconds
+  4. when would you use SWF vs SQS?
+    - human interaction? use SWF
+    - shorter (sub 12 hour) ? use SQS
+
+# Simple Queue System: SQS
+  1. how large can messages be?
+    - 256kb
