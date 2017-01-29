@@ -1017,7 +1017,43 @@
     + can push to China with Baidu Cloud Push
   - Pub Sub paradigm: notifications are delivered to clients using a 'push' mechanism
     + fuck polling
-  -
+  - messages:
+    + all messages are stored redundantly across multiple availability zones
+  - topics: access point for endpoints/recipients to subscribe to identical copies of the same notification
+    + each topic can deliver to multiple endpoints (recipients), e.g. ios, android, and SMS
+    + SNS automatically formats cpoies of each message
+  - benefits:
+    1. instantaneous pushes (no pulling)
+    2. simple APIs
+    3. messages delivered over multiple transport protocols
+    4. pay as you go model with no up front costs
+    5. web based management (console) with point and click interface
+### create a topic
+  - SNS > create topic
+    + topics are subjects, and you add subscriptions to each topic
+    + anything you publish to a topic will be pushed to your subscriptions
+  - create subscription: specify the endpoints
+    + https, http, email, email + json, amazon sqs, application
+    + email: any emails you add as subscriptions will require teh email to confirm they want to receive the email
+  - set TTL on any messages:
+    + if the message is undelivered when the TTL expires, then the message is removed
+
+## Shared Responsibility models
+  - infrastructure services: e.g. EC2, EBS, VPC, etc. run on top of the AWS global infrastructure
+    + AWS responsible for:
+      - endpoints, global infrastructure, physically securing data centers (e.g. cameras, fences, etc), foundation services (compute, networking, etc), hardware
+    + customers responsible for:
+      - customer data, platform/application management, operating system, network/firewall configuration, IAMs
+  - container services: RDS, elastic map reduce, etc., any managed service
+    + AWS responsible for:
+      - operating system & network configuration, platform & application management, AWS IAMs
+    + customers responsible for:
+      - customer data, client side data encryption and data integrity authentication, network traffic protection,  firewall configuration, customer IAMs
+  - abstracted services: S3, dynamoDB, lambda, etc,
+    + aws responsible for:
+      - platform and application management, operating system, network and firewall configuration, etc
+    + customer responsible for:
+      - customer data, client side data encryption, data authentication, data integrity
 
 ### TERMINOLOGY
   - private address ranges: defined in document RFC 1918 for use around the world
@@ -1095,6 +1131,7 @@
   - conducted online at an approved place
   - register at webassessor.com
   - dynamoDB is the **MOST IMPORTANT** exam topic
+  - [study notes from discussion forum](https://acloud.guru/forums/aws-certified-developer-associate/discussion/-KUdI5f2LNbi4wvK7v4I/how_to_pass_aws_certified_deve)
 
 # AWS
   1. which servers are free?
@@ -1615,3 +1652,48 @@
   1. when should you use SNS/SQS ?
     - SNS: when you need to push messages
     - SQS: when you need to pull messages
+  2. what is the difference between SNS and SQS
+    - both messaging services in AWS
+    - SNS - push
+    - SQS = polls
+  3. what is SQS pricing ?
+    - based on delivery mechanism + total requests
+    - .50 per 1 mill SNS requests
+    - .06 per 100k notification deliveries over http
+    - .75 per 100 notification deliveries over SMS
+    - 2.00 per 100 notification deliveries over email
+  4. what data format is SNS?
+    - JSON
+  5. can you add any email as a subscriber to a topic?
+    - Yes! but they must confirm they want to receive the email
+  6. how long do subscriptions last without confirmation ?
+    - recipients have 3 days to subscribe
+  7. what type of protocols can be used with Topic Subscriptions?
+    + http, https, email, email + json, SQS, SMS text message, application
+  8. when do you use SNS?
+    - whenever you need PUSH messaging
+    - if you ever see 'push', pick SNS
+  9. can you customize each message based on the protocol?
+    - Yes!
+
+# shared responsibility models
+  1. what is shared responsibility models?
+    - based on the type of service, who is responsible for which part of the infrastructure layer
+  2. what are the shared responsibility models?
+    - in order from greatest to least responsibility from the customer perspective
+      + infrastructure services: e.g. EC2
+      + container services: e.g. RDS
+      + abstracted services: e.g. S3
+  3. what are all the layers (from top to bottom) in the shared responsibility models:
+    - customer data
+    - client side data encryption, dta integrity authentication
+    - server side encryption
+    - network traffic protection
+    - platform and application management
+    - operating system, network, and firewall configuration
+    - configuration services: compute, storage, databases, Networking
+    - aws global infrastructure: regions, availability zones, edge locations
+  4. what is amazon responsible for in each of the 3 models?
+    - infrastructure service:
+    - container service: operating system and application level
+    - abstracted service: everything except the client side encryption and customer data

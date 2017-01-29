@@ -8,9 +8,18 @@ eventually:
   https://scotch.io/tutorials/getting-started-with-docker
 everything you need:https://docs.docker.com/engine/userguide/
 
+# next up
+  - [docker user guide](https://docs.docker.com/engine/userguide/)
 # Links:
   - [docker hub to find docker images](https://hub.docker.com/?utm_source=getting_started_guide&utm_medium=embedded_MacOSX&utm_campaign=find_whalesay)
   - [docker ubuntu](https://docs.docker.com/engine/installation/linux/ubuntu/)
+  - [manage docker as non-root user](https://docs.docker.com/engine/installation/linux/linux-postinstall/)
+
+# quickies
+  - start docker on boot ` sudo systemctl enable docker`
+  - disable docker on boot `sudo systemctl disable docker`
+  - restart docker daemon `sudo service docker restart`
+  - pull an image `docker pull hello-world`
 
 VM vs Containers
   -VM: virtual machine
