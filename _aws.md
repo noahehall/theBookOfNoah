@@ -1004,6 +1004,7 @@
     + the queue resolves issues that arise if:
       - autoscaling: the producer is producing work faster than the consumer can process it, o
       - failover: the producer/consumer are only intermittenly connected to the network
+  - autoscaling: SQS can autoscaling if the queue gets beyond a certain size
   - tradeoffs:
     1. does not gaurantee FIFO delivery of messages; as long as all messages are delivered, the order is not important
       - if message order is requireed, sequencing information can be placed within each message so the app can reorder messages when the queue returns them
@@ -1550,5 +1551,53 @@
     - shorter (sub 12 hour) ? use SQS
 
 # Simple Queue System: SQS
-  1. how large can messages be?
-    - 256kb
+  1. how many and large can messages be?
+    - a single message can be 256kb
+    - there can be 1 to 10 messages per request up to 256kb
+    - a request can return a payload up to 256kb
+  2. what is the general flow of SQS?
+    - a compponent (e.g. web service) posts messages to queue with a specific Visibility Timeout Clock
+    - asynchronously pull task messages from queue
+    - process task messages
+    - write 'task complete' message to another queue and deletes original message from queue
+      - this must happen during the visibility timeout period else another processer will pull the task message (assume its a failure)
+    - delete the original task message
+    - check for more task messages in the worker queue
+  3. do you push or pull messages from the queue?
+    - pull!
+  4. how do EC2 instances retrieve messages from SQS?
+    - polls SQS
+  5. what is a task message Visibility Timeout Clock?
+    - task message be visible for a default 30 seconds after some processer component retrieves it
+    - this is the max time a processer has to complete processing the message before it returns to the queue
+  6. how should you design your system to  use SQS?
+    - so that processong a message more than once does not create any errors or inconsistencies
+  7. how are SQS task messages bille ?
+    - each 64kb of message is billed as 1 requesst
+      + i.e. a single API call with 256kb payload will be billed as four requests
+    - first 1 mill are free
+    - .50c per 1 mill SQS request per month
+  8. what service uses the term 'decouple' ?
+    - SQS! always pick SQS if they say 'decouple' ;)
+  9. how many times can a task message be delivered?
+    - multiple times, in any order
+  10. how would you manage task message priority ?
+    - create multiple queues, and check each queue in the order you desire
+  11. what is the max Visibility Time Out for a task message ?
+    - 12 hours
+  12. how do you extend the Visibility Time out
+    - use the ChangeMessageVisibility action to specify a new timeout value
+    - SQS restarts the timeout period using the new value
+  13. what is SQS Long Polling?
+    - polls the QUEUE and doesnt end the connection until a message arrives in the queue
+  14. what is the maximum Long Poll Time Out?
+    - 20 seconds
+  15. what is SQS short polling?
+    - polls the queue and returns immediately, with/without a message
+  16. polling in tight loops burns CPU cycles and encures fees, how do you stop this?
+    - setup Long Polling any only poll the task message queue ever 20 seconds
+  17. what is fanning out?
+    - a way to distribute SNS messages to multiple queues
+    - where multiple SQS queue are subscribed to an SNS topic
+    - when a message is sent tot he SNS topic, the message will be fanne out to the SQS queues
+      + i.e. SNS will deliver the message to all SQS queues that are subscribed to the topic
