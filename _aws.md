@@ -1009,6 +1009,15 @@
     1. does not gaurantee FIFO delivery of messages; as long as all messages are delivered, the order is not important
       - if message order is requireed, sequencing information can be placed within each message so the app can reorder messages when the queue returns them
 
+## Simple Notification Service: SNS
+  - web service to setup,operate, and send cloud notifications, email, sms text message from the cloud to any  HTTTP endpoint, Amazon SQS, etc
+    + publish messages from an application and immediately deliver them to subscribers/other applications
+    + uses PUSH instead of PULL (lik sqs)
+    + messages can be pushed to apple, google, fire os, and window and android services,
+    + can push to China with Baidu Cloud Push
+  - Pub Sub paradigm: notifications are delivered to clients using a 'push' mechanism
+    + fuck polling
+  -
 
 ### TERMINOLOGY
   - private address ranges: defined in document RFC 1918 for use around the world
@@ -1572,7 +1581,7 @@
     - this is the max time a processer has to complete processing the message before it returns to the queue
   6. how should you design your system to  use SQS?
     - so that processong a message more than once does not create any errors or inconsistencies
-  7. how are SQS task messages bille ?
+  7. how are SQS task messages billed ?
     - each 64kb of message is billed as 1 requesst
       + i.e. a single API call with 256kb payload will be billed as four requests
     - first 1 mill are free
@@ -1601,3 +1610,8 @@
     - where multiple SQS queue are subscribed to an SNS topic
     - when a message is sent tot he SNS topic, the message will be fanne out to the SQS queues
       + i.e. SNS will deliver the message to all SQS queues that are subscribed to the topic
+
+# Simple Notification Service: SNS
+  1. when should you use SNS/SQS ?
+    - SNS: when you need to push messages
+    - SQS: when you need to pull messages
