@@ -294,6 +294,8 @@
   5. user receives signin URL and is redirected to the console
   6. from the user perspective, it happens transparently, he starts at internal signon url and ends up at the AWS management console without ever supplying any AWS credentials
 
+
+
 # EC2: [elastic compute cloud](https://aws.amazon.com/documentation/ec2/)
   - the backbone of AWS, its basically a virtual machine
   - web service that provides resizeable compute capacity in the cloud
@@ -374,6 +376,8 @@
       + M for main choice for general purpose apps
       + C for compute
       + G for graphics
+
+
 ## EBS: Elastic Block storage
   - storage volumes that can be associated with EC2 instances
     + can create a file system
@@ -397,6 +401,8 @@
     + lowest cost per GB of all EBS types
     + whenever data is accessed infrequently
     + good for fileservers
+
+
 ## elastic load balancers
 ### elb listeners
   - a process that checks for connection requests to your load balancer
@@ -406,6 +412,8 @@
     + ELB supports all ports with EC2 VPC (1-65535)
       + ELB classics only support: 25, 80, 443, 465, 587, 1024-65535
   - load balancers should be connected to two public subnets for high availability
+
+
 ## S3
   - safe place to store files
   - only for object based storage
