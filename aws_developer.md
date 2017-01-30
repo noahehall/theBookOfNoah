@@ -6,9 +6,10 @@
 # AWS Global Infrastructure
 ## Regions, availability zones, edge locations
   - a place in the world where AWS resources exist
-    + 14 Regions: e.g. N. California/  N. Virginia
+    + 14 Regions: e.g. N. California/  N. Virginia,
+      - or can also be called: s-west-1b, us-west-1c
       - a geographical area consisting of 2/more availability zones
-    + 38 availability zones: e.g. us-west-1b, us-west-1c
+    + 38 availability zones:
       - a single/multiple data centers
     + 66 edge locations: a CDN for cloudfront
       - CDN: a way to cache files media objects (js, html, videos, soundfiles, etc) in the cloud
