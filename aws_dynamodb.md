@@ -2,6 +2,23 @@
   - [provisioned throughput](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ProvisionedThroughput.html)
   - [partitions and data distribution](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.Partitions.html)
   - [sql vs nosql](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.html)
+  - [limits in dynamodb](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html#limits-attributes)
+  - [signing aws requests](http://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html)
+
+
+# next up
+  - [creating indexes](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.Indexes.html)
+    + keep clicking next
+    - querying and scanning an index
+    - modifying data in a table
+    - deleting data from a table
+    - removing a table
+  - [setting up dynamodb](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html)
+  - [using the cli](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.CLI.html)
+  - [programming with dynamodb a d aws sdks](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Programming.html)
+  - [aws javascript sdk](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/)
+  - [improving data access with secondary indexes](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SecondaryIndexes.html)
+  - [nodejs and dynmoab](http://docs.aws.amazon.com/amazondynamodb/latest/gettingstartedguide/GettingStarted.NodeJs.html)
 
 
 
@@ -104,6 +121,12 @@
       }
     ```
   2. DescribeTable: returns info about a table, e.g. primary key schema, throughput settings, index information, etc
+    - returns a json object contain the table schema
+    ```
+      {
+          TableName : "Music"
+      }
+    ```
   3. ListTables: returns the naes of all of your tables in a list
   4. UpdateTable: modifies the settings of a table/indexes, creates/remove new indexes on a table, modify stream settings for a table
   5. DeleteTable: removes a table and all of its dependent objects from dynamodb
@@ -112,12 +135,44 @@
   - Creating data
     1. PutItem: writes a single item to a table
       - primary key attributes required
+      ```
+        {
+            TableName: "Music",
+            Item: {
+                "Artist":"No One You Know",
+                "SongTitle":"Call Me Today",
+                "AlbumTitle":"Somewhat Famous",
+                "Year": 2015,
+                "Price": 2.14,
+                "Genre": "Country",
+                "Tags": {
+                    "Composers": [
+                          "Smith",
+                          "Jones",
+                          "Davis"
+                    ],
+                    "LengthInSeconds": 214
+                }
+            }
+        }
+      ```
     2. BatchWriteItem: writes up to 25 items on a table
       - more efficient than doing PutItem multiple times (that would require multiple round trips)
       - can also be used for deleting  multiple items in one/more tables
   - Reading data
     1. GetItem: retrieve a single item from a table;
       - primary key required
+      ```
+        {
+            TableName: "Music",
+            Key: {
+                "Artist": "No One You Know",
+                "SongTitle": "Call Me Today"
+            }
+            # add this to get only specific attributes
+            "ProjectionExpression": "AlbumTitle, Year, Price"
+        }
+      ```
     2. BatchGetItem: retrieve up to 100 items from one/more tables
       - more efficient than GetItem multiple times
     3. Query: retrieves all items that have a specific partition key
@@ -125,9 +180,50 @@
       - can retrieve entire items/subset of attributes
       - you can apply condition(s) to the sort key values
         + can also be used on indexes that have partition + sort keys
+        ```
+          {
+              TableName: "Music",
+              # return a single song by primary key
+                KeyConditionExpression: "Artist = :a and SongTitle = :t",
+                ExpressionAttributeValues: {
+                    ":a": "No One You Know",
+                    ":t": "Call Me Today"
+                }
+              # return all songs by an Artist
+                KeyConditionExpression: "Artist = :a",
+                ExpressionAttributeValues: {
+                    ":a": "No One You Know"
+                }
+              # return all songs by an artist matching first part of title
+                KeyConditionExpression: "Artist = :a and begins_with(SongTitle, :t)",
+                ExpressionAttributeValues: {
+                    ":a": "No One You Know",
+                    ":t": "Call"
+                }
+              # return all songs by an artist, with a particular word in the title, but only if the price is less than 1
+                KeyConditionExpression: "Artist = :a and contains(SongTitle, :t)",
+                FilterExpression: "price < :p",
+                ExpressionAttributeValues: {
+                    ":a": "No One You Know",
+                    ":t": "Today",
+                    ":p": 1.00
+                }
+          }
+        ```
     4. Scan: retrieves all items in the specified table/index
       - can retrieve entire items/subset of their attributes
       - can apply filtering condition
+      - FilterExpression: discard items you do not want to appear in the results
+        + is applied after the entire table is scanned, but before th results are returned to you
+          - you are still charged the entire scan, so dont use this shit
+      ```
+      // Return all of the data in the table
+        {
+            TableName:  "Music",
+            # return all of the values for artist and title
+            ProjectionExpression: "Artist, Title"
+        }
+      ```
   - Updating Data
     1. UpdateItem: modifies (add/modify/remove) one/more attributes in an item
       - must specify primary key
