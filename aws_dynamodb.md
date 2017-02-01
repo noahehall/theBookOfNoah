@@ -85,7 +85,15 @@
   2. DescribeStream: returns info about a stream,, e.g. its ARN (amazon resource name)
   3. GetShardIterator: returns a Shard Iterator, which is a data structure that your app uses to retrieve the records from the stream
   4. GetRecords: retrieves one/more stream records using a given shard iterator
-### CRUD
-  - in order to read data from a table you must provide a primary key, or a secondary indexes if you've created indexes
+
+## naming rules
+  - all names must be encoded using UTF-8
+  - names are case sensitive
+  - table names + indexes
+    1. betwee 3 and 255 chars
+    2. `a-z, A-Z, 0-9, _, -, .`
+  - attribute names: between 1-255 chars
+## data types
+  - 
 ### commands
   - list tables: `aws dynamodb list-tables --endpoint-url http://localhost:8000`
