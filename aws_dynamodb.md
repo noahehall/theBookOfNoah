@@ -118,10 +118,23 @@
       - either true/false
     5. null: `NULL`
       - an attribute with an unknown or undefined state
-  - document types: complex structures with neted attributes, e.g. a JSDON document
-    1. list
-    2. map
+  - document types: complex structures with nested attributes, e.g. a JSDON document
+    + up to 32 levels deep
+    + attribute values cannot be an empty string or empty set
+    1. list: `["hello", "noah", 1]`
+      - similar to a JSON array
+    2. map: i.e. a json object
+      - unordered collection of name-value pairs
   - set types: multiple scalar values
+    - all of the elements within a set must be of the same type.
+    - of course, all elements must be unique
+    - order of elements are not preserved
+    - examples
+      ```
+        ["Black", "Green" ,"Red"]
+        [42.2, -19, 7.5, 3.14]
+        ["U3Vubnk=", "UmFpbnk=", "U25vd3k="]
+      ```
     1. string set
     2. number set
     3. binary set
