@@ -94,6 +94,36 @@
     2. `a-z, A-Z, 0-9, _, -, .`
   - attribute names: between 1-255 chars
 ## data types
-  - 
+  - when you creeate a table/seconday index, you must specify the names and data types of each primary key attribute (partition and sort key)
+    + primary key attributes must be defined as type string, number, or binary
+    + other than the primary key attributes, you do not need to define any attributes/data types at table creation time
+  - an item has a max size of 400kb
+  - scalar types: represent exactly one value
+    1. number: `300`
+      - can be position, negative, or zero
+      - up to 38 digits precision
+      - are variable length: leading and trailing zeroes are trimmed
+    2. string: `"Noah"`
+      - UTF-8 binary encoding
+      - length > 0
+      - if you define a primary key attribute as a string type attribute
+        1. simple primary key: max length of partition key: 2048 bytes
+        2. composite primary key: max length of sort key: is 1024 bytes
+    3. binary: `dGhpcyB0ZXh0IGlzIGJhc2U2NC1lbmNvZGVk`
+      - can store compressed text, encrypte data, or images
+      - treats each byte of the binary data as unsigned when comparing binary values
+      - primary key binary attributes follow same max size limits as strings
+      - your app must encode binary values in base64-encoded format before sending to dynamodb
+    4. boolean: `true`
+      - either true/false
+    5. null: `NULL`
+      - an attribute with an unknown or undefined state
+  - document types: complex structures with neted attributes, e.g. a JSDON document
+    1. list
+    2. map
+  - set types: multiple scalar values
+    1. string set
+    2. number set
+    3. binary set
 ### commands
   - list tables: `aws dynamodb list-tables --endpoint-url http://localhost:8000`
