@@ -1,3 +1,10 @@
+# skipped
+  - [provisioned throughput](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ProvisionedThroughput.html)
+  - [partitions and data distribution](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.Partitions.html)
+  - [sql vs nosql](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.html)
+
+
+
 # dynamodb
   - [getting started guide](http://docs.aws.amazon.com/amazondynamodb/latest/gettingstartedguide/quick-intro.html)
   - [how dynamodb works](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.html)
@@ -17,6 +24,13 @@
       - dynamodb by default uses eventually consisten reads
       - read operations (e.g. GetITem, Query, Scan) contain a 'ConsistentRead' parameter
         + set ConsistentRead to true to enforce strongly consistent reads
+## [acessing the db](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SQLtoNoSQL.Accessing.html)
+  - before your app can access dynamodb
+    1. must be authenticated: ensure that the app is allowed to use the db
+      - every request must be accompanied by a cryptographic signature which authenticates the request
+    2. must be authorized: specify what actions the app is permitted to perform
+      - handled by IAM (identity access management)
+
 ## architecture
   - tables: collection of data, e.g. People table, or Cars table
     + table requirements:
@@ -55,6 +69,40 @@
 ### control plane
   - let you create and manage tables, indexes, streams, an dother objects that are dependent on tables
   1. CreateTable: creates a new table/one/more secondary indexes, and enable streams for the table
+    - TableName: name of table
+    - KeySchema: attributes that are used for the primary key
+    - AttributeDefinitinos: data types for the key schema attributes
+    - ProvisionedThroughput: number of reads and writes per second for this table
+    -
+    ```
+      {
+          TableName : "Music",
+          KeySchema: [       
+              {
+                  AttributeName: "Artist",
+                  KeyType: "HASH", //Partition key
+              },
+              {
+                  AttributeName: "SongTitle",
+                  KeyType: "RANGE" //Sort key
+              }
+          ],
+          AttributeDefinitions: [
+              {
+                  AttributeName: "Artist",
+                  AttributeType: "S"
+              },
+              {
+                  AttributeName: "SongTitle",
+                  AttributeType: "S"
+              }
+          ],
+          ProvisionedThroughput: {       
+              ReadCapacityUnits: 1,
+              WriteCapacityUnits: 1
+          }
+      }
+    ```
   2. DescribeTable: returns info about a table, e.g. primary key schema, throughput settings, index information, etc
   3. ListTables: returns the naes of all of your tables in a list
   4. UpdateTable: modifies the settings of a table/indexes, creates/remove new indexes on a table, modify stream settings for a table
