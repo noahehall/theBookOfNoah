@@ -6,6 +6,17 @@
   - [nodejs and dynamodb](http://docs.aws.amazon.com/amazondynamodb/latest/gettingstartedguide/GettingStarted.NodeJs.html)
   - [aws javascript sdk](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/)
   - [improving data access with secondary indexes](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SecondaryIndexes.html)
+## basics
+  - dynamodb tables in different regions are considered different tables
+    - i.e. a single DB cannot span multiple regions
+  - dynamodb tables can be replicated across multiple availability zones in a single region
+    + when you write data to a table and receive an HTTP 200 response, all copies of the data are updated in all availability zones
+  - read consistency: there are two types of reads available
+    1. eventually consistent reads: reading from a table right after writing to it may return some stale data, i.e. it is 'eventually consistent'
+    2. strongly consistent reads: when you read from a table right after writing to it, all the data will be up to date - containing all writes that were successful before the read, i.e. 'strongly consistent'
+      - dynamodb by default uses eventually consisten reads
+      - read operations (e.g. GetITem, Query, Scan) contain a 'ConsistentRead' parameter
+        + set ConsistentRead to true to enforce strongly consistent reads
 ## architecture
   - tables: collection of data, e.g. People table, or Cars table
     + table requirements:
