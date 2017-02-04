@@ -1127,13 +1127,26 @@
   1. which services are free?
     - usually orchestration services, e.g.: cloudformation, elastic beanstalk, autoscaling, opworks
     - however the resources they create & use are NOT FREE
+  2. what does ARN stand for?
+    - amazon resource name
+
+
 
 # IAM
+  0. what should you know about IAM?
+    1. what is IAM
+    2. about IAM users
+    3. about IAM Role
+    4. about permissions
+    5. about policies
+    6. about temporary security credentials
+    7. about identity federation
+    8. about MFA
   0. what is IAM?
     - use AWS IAM to securely control individual and group access to your AWS resources.
   1. can you authenticate with active directory?
     - yes, but only with SAML
-  2. do you authenticate with active directory first, or do you get temp security credntial first and then authenticate with active directory
+  2. do you authenticate with active directory first, or do you get temp security credentials first and then authenticate with active directory
     - you authenticate with active directory first, then you receive the temp security credential
     1. navigate to ADFS web server
     2. user signin with their credentials
@@ -1145,20 +1158,30 @@
     1. sign into facebook/etc via web identity federation console to receive token from facebook
     2. api call is made via AssumeRoleWithWebIDentity and you receive temp security credentials from AWS
     3. you can now access AWS resources with your token
-  5. what does ARN stand for?
-    - amazon resource name
+  4. what is identity federation ?
+    - external identities are granted secure access to resources in your AWS account without having to create IAM users
+    - external identities: microsoft active directory, amazon cognitio,facebook, google, i.e. any OpenID Connect compatible provider
+  4. what are federated users?
+    - users you manage outside of AWS in your corproate directory, but to whom yo ugrant access to your AWS account using temporary security credentials
+  5. what is an IAM role?
+    - IAM entity that defines a set of permission for making AWS service requests
+    - IAM user, applications, and AWS services can assume these roles
   6. can you change the role of an EC2 instance?
     - roles can only be give to EC2 instancs when the EC2 is created
       + you can only change the permissinos associated with the role
+  6. howmany roles can an EC2 instance have?
+    - one
   7. what is the name of the API call to request temp security credentials from the AWS platform when federating with active directory?
     - assume role with saml
-  8. hat kinds of security credentials can IAM users have?
+  8. what kinds of security credentials can IAM users have?
     - a combination of:
     1. AWS access key
     2. ssh key
     3. password for web app logins
     4. MFA device
-  9.
+  9. how do you assume an IAM role?
+    - by calling the AWS STS (security token service) AssumeRole API
+    - these APIs return a set of temp security credentials that apps can use to sign requests to AWS service APIs
   10. how do you give permissions to users?
     - To grant permissions, you create policy documents that you attach to users, groups, or other entities
   11. what are federated users?
@@ -1173,6 +1196,7 @@
       + only purpose is to make it easier to manage user permissions
     - groups cannot belong to other groups
     - groups do not have security credentials and cannot access web services directly
+    - roles do not belong to groups
   15. Policies: a document that defines one/more permissions that are associated with users, groups, and roles
   16. How are IAM users managed?
     - create, delete, list IAM users.
@@ -1193,6 +1217,9 @@
     - you test resource tag in the *Condition* element of the policy document
   21. what are temporary security credentials?
     - commonly used in federation scenarios, lets users make requests by calling AWS STS APIs like *AssumeRole* or *GetFederationToken*
+    - consist of aws access key, secret access key, and security token
+    - commonly referred to as tokens
+    - enable employees and applications to securely access AWS service APIs without need to create an AWS identity
   22. what is AssumeRole ?
     - returns a set of temp security crednetials (access key, secret access key, security token) that can be used to access AWS resources
     - typically used for cross-account access or federation
@@ -1217,7 +1244,27 @@
     - no, SSH keys must be assigned to EC2 instances on creation, and all users must use that same SSH key to login
   32. can I define a password policy for a user's password?
     - yes: min length, atleast one number, automatic expiration, prevent reuse, password reset on next login
-  33. 
+  33. what is the difference between an IAM Role and IAM user?
+    - user: has long term credentials
+    - role: has no credentials
+  35. how many policies can you attach to an IAM role?
+    - as many as you want, but the total size cannot exceed:
+    - inline policies:
+      1. user policy: ~2k characters
+      2. role policy: ~10k characters
+      3. group policy: ~5k characters
+    - managed policies:
+      1. up to 10 managed policies for users/roles/groups
+      2. max size: ~5m
+  36. what are inline policies?
+    - policies that you reate and manage, and are embedded directly into a single user, group, or role
+  37. what are managed policies?
+    - standalone policies that you can attach to multiple users, groups, and roles
+    - do not apply to resources (only users, groups and roles)
+  38. how many IAM roles can you create?
+    - initially 250, then you need to request more
+  39. what is the IAM policy simulator?
+    - tool to help you understand, test, and validate the effects of your access control policies?
 
 
 
