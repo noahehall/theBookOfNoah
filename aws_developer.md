@@ -231,7 +231,6 @@
     + you can confirm no user credentials by:
       1.  `ls ~/.aws` if the folder is not empty, that means you added user credentials
 
-
 # IAM: identity access management
 ### places
   - [signin](https://YOUR-ACCOUNT-ALIAS.signin.aws.amazon.com/console)
@@ -288,8 +287,6 @@
   4. browser posts the cooki to AWS signon endpoint for SAML (signin.aws.amazon.com/saml)
   5. user receives signin URL and is redirected to the console
   6. from the user perspective, it happens transparently, he starts at internal signon url and ends up at the AWS management console without ever supplying any AWS credentials
-
-
 
 # EC2: [elastic compute cloud](https://aws.amazon.com/documentation/ec2/)
   - the backbone of AWS, its basically a virtual machine
@@ -791,20 +788,6 @@
     + can retrieve items from multiple tables in a single request
 
 ## VPCs: virtual private cloud
-  - a VPC is a data center located in a specific region
-    + you access your VPC via an Internet Gateway or a Virtual Private Gateway
-  - they can span availability zones, but cannot span regions
-  - you provision a logically isolated section of AWS resources in the cloud in a virtual network
-    + complete control over IP address range, subnets, route table configuration, and network gateways, security groups, network access control lists, etc
-  - you can create a Hardware Virtual Private Network (VPN) connection between your corporate data center and your VPC and leverage the AWS cloud as an extension of your corporate data center
-    + i.e. a hybrid cloud
-  - what can you do with a VPC?
-    - launch instances into a subnet of your choosing
-    - assign custom IP address ranges in each subnet
-    - configure route tables between subnets
-    - create internet gateways and attach it to a VPC
-    - better security control over your AWS resources
-    - create instance security groups
   - network diagram: read backward s
     + region
       - VPC : define ip address range (e.g. 10.0.0.0/16), always use /16 network for
@@ -816,7 +799,7 @@
               - Router: routes your gateway requests
                 + Internet Gateway and Virtual Private Gateways access your VPC
 ### building a VPC from scratch
-  - NEVER USE THE WIZARD OR BE LAME FOR LIFE
+  - *NEVER USE THE WIZARD OR BE LAME FOR LIFE*
   1. VPC > your VPCs > create VPC
     - give it a name
     - CIDR (pronounced cyder) Block: classless interdomain routing
@@ -926,7 +909,6 @@
     4. open an ephemeral port as the last rule
       - public facing instances port: 01024-65535
       - type: custom tcp rule
-
 
 ## Elastic Beanstalk:
   - free service to manage web apps
@@ -1131,8 +1113,12 @@
     - amazon resource name
   3. are all services provided in all regions?
     - no, so choose your regions wisely
-
-
+  4. what are regions?
+    - different areas of the world, e.g. EU Ireland (eu-west-1) containing resource not connected to other regions
+  5. what are availability zones?
+    - isolated locations inside of a region to protect against failures in other availability zones within the region
+    - e.g. us-east-1b, us-east-1c, us-east-1c
+      + notice the change in the last letter
 
 # IAM
   0. what should you know about IAM?
@@ -1277,9 +1263,27 @@
     5. about virtual private gateways
     6. abour routers
     7. about peering connections
-    8. you must know how to build out a VPC from memory and launch instances into public and private subnets ?
-  1. what is a VPC?
-    -
+    8. you must know how to build out a VPC from memory and launch instances into public and private subnets
+    9. about VPNs
+    10. about IP addressing
+    11. about routing and routing topology
+    12. about security and filtering
+    13. about EC2s relationship to VPC
+  0. what is a VPC?
+    - a logical datacenter within AWS located in a specific region
+    - consists of internet gateways, virtual private gateways, route tables, network access control lists, subnets, and security groups
+      + you access your VPC via an Internet Gateway or a Virtual Private Gateway
+    - they can span availability zones, but cannot span regions
+      + complete control over IP address range, subnets, route table configuration, and network gateways, security groups, network access control lists, etc
+    - you can create a Hardware Virtual Private Network (VPN) connection between your corporate data center and your VPC and leverage the AWS cloud as an extension of your corporate data center
+      + i.e. a hybrid cloud
+  1. what can you do with a VPC?
+    - launch instances into a subnet of your choosing
+    - assign custom IP address ranges in each subnet
+    - configure route tables between subnets
+    - create internet gateways and attach it to a VPC
+    - better security control over your AWS resources
+    - create instance security groups
   2. how many availability zones can be mapped to a single subnet
     - it is a 1 to 1 mapping, i.e. a subnet cannot span availability zones
     - 1 subnet = 1 availability zone
@@ -1289,14 +1293,13 @@
     - NO! peering is always in a star configuration (1 central VPC peers with other VPCs)
     - you cannot talk to one VPC via another (transitive)
     - you have to set up the links individually
-  5. what is a VPC?
-    - a logical datacenter within AWS
-    - consists of internet gateways, virtual private gateways, route tables, network access control lists, subnets, and security groups
+  5. what is a peering connection ?
+    - enables you to route traffic via private IP addresses between two peered VPCs
   6. are security groups stateful or stateless ?
-    - stateful
+    - stateful: what comes in and go out automatically
   7. are network access control lists stateful or stateless?
-    - stateless
-  8. when you create a VPC - what resources are/not autoamtically created?
+    - stateless: what comes in can not go out automatically (you have to allow outbound on the same port)
+  8. when you create a VPC - what resources are/not automatically created?
     - yes: main route table, network ACL, default security group,
     - not: subnets, interget gateways,
   9. when you create a subnet, how many ip addresses does AWS reserve by default?
@@ -1360,7 +1363,7 @@
     - it can allow or deny
   32. can you block IPs with network ACLs or security groups?
     - network acls: YES!
-    - security groups: NO! there is no way to deny traffic
+    - security groups: NO! there is no way to deny traffic to a specific IP, you can only allow/deny ports
   33. how do you make a bastion server highly available?
     - create multiple subnets (at least 2)
   34. can you build out a VPC from memory?
@@ -1377,14 +1380,14 @@
     - disable source/destination check on the ec2 instance
     - be in a public subnet
     - have an elastic ip
-    - a route out of hte private subnet to the NAT but exist
+    - a route out of the private subnet to the NAT but exist
   38. how do you create a generally high resilient network?
     - at least 2 public subnets and 2 priate subnets
     - each subnet should be in a different availability zone
   39. how do you create resiliant bastion hosts?
     - put them behind an autoscaling group with minimum size of 2
     - use route53 (round robin / health check) to automatically failover
-  40. how do you create resiliant nat instances?
+  40. how do you create resiliant NAT instances?
     - 1 in each public subnet
     - each with their own public ip
     - write a script to fail over between the two
@@ -1393,6 +1396,48 @@
     - 5
   42. how many internet gateways can be associated with a VPC?
     - 1
+  43. what is a subnet?
+    - segment of a VPC's ip address range where you can place groups of isolated resources
+  44. what is an internet gateway?
+    - Amazon VPC side of a connection to the public internet
+    - enables EC2 instances in the VPC to directly access the internet
+    - are horziontally scaled, redundant, and highly available with no bandwidth constraints
+  45. what is a NAT gateway?
+    - managed Network Address Translation (NAT) service for your resources in a private subnet to access the internet
+  46. what is a Hardware VPN connection?
+    - a hardware-based VPN connection between your amazon VPC and your datacenter, home network, or co-location facility
+  47. what are Virtual Private gateways
+    - the Amazon side of a VPN connection
+  48. what are customer gateways ?
+    - your side of a vpn connection
+  49. what are the components of a VPN?
+    - customer gateway, Router, virutal private gateway, hardware VPN connection
+  50. what is a VPC endpoint?
+    - enables S3 and DynamoDB access from within your VPC without usin ganinternet gateway or NAT
+    - allows you to control the access using VPC endpoint policies
+  51. what is an Egress-only Internet Gateway:
+    - a stateful gateway to provide egress only access for IPv6 trafic from teh VPC to the Internet
+  51. what are the four network architectures you can use when creating a VPC?
+    1. VPC with a single public subnet
+    2. VPC with public and private subnets
+    3. VPC with public and private subnets with hardware VPC access
+    4. VPC with private subnet only and hardware VPN access
+  52. what are the connectivity options for a VPC?
+    1. the internet via an internet gateway
+    2. Hardware VPN connection via a virtual private gateway
+    3. both Internet gateway and virtual private gateway
+    4. other AWS services, e.g. internet gateway, NAT, virtual private gateway, or VPC endpoints
+    5. other VPC via VPC peering connections
+  53. how do EC2 instances in a VPC access the internet?
+    - public: public ip addresses, elastic IP addresses,
+    - private: route traffic hrough a NAT gateway/instance, these instances use the public IP of the NAT gateway/instance to traverse the internet
+    - VPCs with hardware VPN/direct connction: route traffic through virtual private gateway
+  54. how does a hardware VPN connection work with amazon VPC?
+    - hardware VPN connection connects your VPC to your datacenter
+    - AWS supports IPsec VPN connections
+  55. what is IPsec?
+    - protocol suite for securing internet protocol (IP) communications by authenticating and encryptin geach IP packet or data stream.
+
 
 # EC2
   1. based on some scenario, which ec2 pricing model should you use?
