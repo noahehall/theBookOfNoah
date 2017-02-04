@@ -1301,7 +1301,7 @@
     - stateless: what comes in can not go out automatically (you have to allow outbound on the same port)
   8. when you create a VPC - what resources are/not automatically created?
     - yes: main route table, network ACL, default security group,
-    - not: subnets, interget gateways,
+    - not: subnets, internet gateways,
   9. when you create a subnet, how many ip addresses does AWS reserve by default?
     - 3 : not counting the dot 0s or 255s
       + router: 10.0.0.1
@@ -1366,12 +1366,6 @@
     - security groups: NO! there is no way to deny traffic to a specific IP, you can only allow/deny ports
   33. how do you make a bastion server highly available?
     - create multiple subnets (at least 2)
-  34. can you build out a VPC from memory?
-    - public subnet?
-    - private subnet?
-    - net instance ?
-    - nat gateway ?
-    - bastion host?
   35. can VPCs span regions?
     - NO!
   36. can VPCs span multiple availability zones?
@@ -1380,7 +1374,7 @@
     - disable source/destination check on the ec2 instance
     - be in a public subnet
     - have an elastic ip
-    - a route out of the private subnet to the NAT but exist
+    - a route out of the private subnet to the NAT must exist
   38. how do you create a generally high resilient network?
     - at least 2 public subnets and 2 priate subnets
     - each subnet should be in a different availability zone
@@ -1464,13 +1458,49 @@
   61. can I assign multiple public and private IPs to an instance?
     - public: yes, but it must be associated with a unique private ip address on the instance
     - private: yes, but only secondary private addresses
+  62. what does a VPC router do?
+    - enables EC2 instances within subnets to communicate with EC2 instances in other subnets within the same VPC
+    - enables subnets, internet gateways, and virtual priate gateways to communicate with each other
+  63. how do you secure EC2 instances within a VPC?
+    - security groups: control which ports are permitted in and out of the EC2 instance
+    - network access control lists: control which ip addresses are permitted in and out of the subnet
+  64. can EC2 instances in one VPC/region communicate with another in a different VPC/region?
+    - yes, only via public ips
+  65. what is an elastic network interface?
+    - a virtual network interface that you can attach to an instance in a VPC
+    - includes the following atributes:
+      1. a primary private IPv4 address
+      2. secondary private IPv4 addresses
+      3. one Elastic IP address (IPv4) per private IPv4 address
+      4. one public IPv4 address
+      5. IPv6 addresses
+      6. security groups
+      7. one MAC address
+      8. source/destination check flag
+  66. can i attach a network interface in one VPC to an instanc ein another VPC?
+    - no, the network interface must be in the same VPC and availability zone
+
 # EC2
+  0. what should you know about EC2s?
+    1. about EC2s
+    2. about security
+    3. about Elastic IP
+    4. about availability zones
+    5. about networking
+    6. about EBS
+    7. about cloudwatch
+    8. about autoscaling
+    9. about elastic load balancing
+    10. about reserved instances
+    11. about spot instances
+    12. about instance types
+    13. about VM import/export
   1. based on some scenario, which ec2 pricing model should you use?
     - spot instances always the cheapest
       - if spot instance is removed by amazon, you wont be charged for partial hour of usage
       - if you terminate, you will be charged
     - if you cant afford any down time, go for on demand
-    - on demand: perfect for test/dev envs, supplementing reserve instances during spikes,
+      - on demand: perfect for test/dev envs, supplementing reserve instances during spikes,
       + users that want low cost and flexibility without any up front cost / long term commitment
       + applications with short term, spiky, or unpredictable workloads that cannot be interrupted
       + applications that are being developed/tested on an amazon ec2 for the first time
@@ -1495,7 +1525,7 @@
     - ONE!!! DUH
   4. How can you connect a single storage volume to more than 1 EC2 at the same time ?
     - use EFS
-  5. Should you use user credentials to access EC2?
+  5. Should you use user credentials to access EC2 from other resources?
     - no - the best way to manage access is via roles
   6. how do you get EC2 instance metadata?
     - via cli `sudo curl http://169.254.169.254/latest/meta-data/`
@@ -1515,6 +1545,99 @@
   11. how to enable encryption at rest using EC2 and elastick block store?
     - configure encryption when creating the EBS volume
   12. [read the ec2 faq](https://aws.amazon.com/ec2/faqs/)
+
+
+
+# databases
+  0. RDS and DynamoDB come up a lot in the exam! read the FAQs!
+    - [RDS faq](https://aws.amazon.com/rds/faqs/)
+    - [dynamodb faq](https://aws.amazon.com/dynamodb/faqs/)
+  1. what type of relational database are on RDS
+    + SQL server
+    + oracle
+    + Mysql server
+    + postgressql
+    + aurora
+    + Mariadb
+  2. what is OLTP?
+    + online transaction processing
+  3. what types of OLTP engines exist?
+    - sql, mysql, postgresql, oracle, aurora, mariadb,
+  3. what is OLAP ?
+    - online analytics processing
+  4. what type of OLAP engines exist?
+    - redshift
+  5. what type of Nosql engines exist?
+    - dynamodb
+  6. what type of in memory caching (elasticache) engines exist?
+    - memcached, redis
+  7. what is DMS?
+    - database migration services
+  8. when can you create a local secondary index?
+    - when you create a table only
+  9. when can you create a global secondary index
+    - when you create a table
+    - after you create a table
+  10. does a local secondary index have a different partition key?
+    - no it has the same partition key, but different sort key
+  11. does a global secondary index have a different partition key?
+    - yes, it has different partition and sort keys
+  12. how do you only return some data attributes on items returned from a dynamodb query?
+    - use the ProjectionExpression parameter
+  13. how do you reverse the default sort on query results?
+    - set ScanIndexForward to false
+  14. what is a dyanmodb query?
+    - finds items in a table using only a primary key attribute value
+    - you must provide a partition key attribute name and a distinct value to search for
+    - results are always sorted by sort key in ascending order (unless you set ScanIndexForward to false)
+    - queries > scan for efficiency
+  15. what is a dynamodb scan ?
+    - scan operations examines every item in a table
+    - returns all data attributes for every item (unless you use ProjectionExpression parameter)
+  16. how do you calculate read provisioned throughput?
+    - size of per read rounded to nearest 4kb chunk / 4kb * x # of items = read throughput
+    - divide final answer by 2 for eventually consistent
+    - final answer must be an integer, so round up
+  17. how do you calculate write provisioned throughput?
+    - # of items * kb size per second
+  18. what happens if you exceed your provisioned throughput?
+    + you get a 400 http status code: ProvisionedThroughputExceededException
+  19. what are the basic steps for identifying with a web identity provider (e.g facebook)
+    1. user authenticates with web id provider (e.g. facebook)
+    2. they are passed a token by their ID provider
+    3. your code calls AssumeRoleWithWebIDentity API providing the web id providers token and the ARN for the IAM role
+    4. your app can now access Dynamodb from between 15 > 1 hour (default is 1 hour
+  20. when should you use conditional writes vs atomic counters?
+    - if you can have some margin of error, use atomic counters
+    - if you need absolutely accurate information, use conditional writes
+  21. what is dynamodb?
+    - fully managed (no ssh)
+    - stored on ssh spread across 3 distinct data centers
+    - eventual consistency reads within a second (default) is best read performance
+    - strongly concistent reads are those whose results contain all items that have a successfuly response
+    - fast and flexible nosql db service for all types of applications
+  22. what types of primary keys exist?
+    - single attribute: think unique ID
+      + partition key sometimes called hash
+    - composite; think unique id + data range
+      + partition key + sort key
+      + sort key sometimes called range key
+  23. how are partition keys stored?
+    - the partition key value is used as an input ot an internal hash function, and the output from the ash function determiens the partition
+    - the partition determines the physical location where the data is stored
+    - no two items can have the same partition key value (for single attribute primary keys)
+    - two/more items can have the same partition key but different sort key (from composite primate keys)
+  24. what are dynamodb streams?
+    - used to capture modifications to dynamodb tables for upto 24 hours
+      + edits : capture the before and after
+      + deletes: capture the before delete
+    - can be used to trigger lambda functions (e.g. to replicate data, or send emails via SES)
+  25. what are batch operations
+    - can read multiple items using BatchGetItem api
+    - retrieve up to 1 Mb of data
+    - retrieve up to 100 items
+    - retrieve items from multiple tables
+    -
 
 # S3
   1. what is the syntax for bucket URLs ?
@@ -1613,97 +1736,6 @@
     - advanced encryption standard (AES) 256
   29. what is the largest size file you can transfer to S3 using a put operation?
     - 5gb, after that you must use multipart upload
-
-# databases
-  0. RDS and DynamoDB come up a lot in the exam! read the FAQs!
-    - [RDS faq](https://aws.amazon.com/rds/faqs/)
-    - [dynamodb faq](https://aws.amazon.com/dynamodb/faqs/)
-  1. what type of relational database are on RDS
-    + SQL server
-    + oracle
-    + Mysql server
-    + postgressql
-    + aurora
-    + Mariadb
-  2. what is OLTP?
-    + online transaction processing
-  3. what types of OLTP engines exist?
-    - sql, mysql, postgresql, oracle, aurora, mariadb,
-  3. what is OLAP ?
-    - online analytics processing
-  4. what type of OLAP engines exist?
-    - redshift
-  5. what type of Nosql engines exist?
-    - dynamodb
-  6. what type of in memory caching (elasticache) engines exist?
-    - memcached, redis
-  7. what is DMS?
-    - database migration services
-  8. when can you create a local secondary index?
-    - when you create a table only
-  9. when can you create a global secondary index
-    - when you create a table
-    - after you create a table
-  10. does a local secondary index have a different partition key?
-    - no it has the same partition key, but different sort key
-  11. does a global secondary index have a different partition key?
-    - yes, it has different partition and sort keys
-  12. how do you only return some data attributes on items returned from a dynamodb query?
-    - use the ProjectionExpression parameter
-  13. how do you reverse the default sort on query results?
-    - set ScanIndexForward to false
-  14. what is a dyanmodb query?
-    - finds items in a table using only a primary key attribute value
-    - you must provide a partition key attribute name and a distinct value to search for
-    - results are always sorted by sort key in ascending order (unless you set ScanIndexForward to false)
-    - queries > scan for efficiency
-  15. what is a dynamodb scan ?
-    - scan operations examines every item in a table
-    - returns all data attributes for every item (unless you use ProjectionExpression parameter)
-  16. how do you calculate read provisioned throughput?
-    - size of per read rounded to nearest 4kb chunk / 4kb * x # of items = read throughput
-    - divide final answer by 2 for eventually consistent
-    - final answer must be an integer, so round up
-  17. how do you calculate write provisioned throughput?
-    - # of items * kb size per second
-  18. what happens if you exceed your provisioned throughput?
-    + you get a 400 http status code: ProvisionedThroughputExceededException
-  19. what are the basic steps for identifying with a web identity provider (e.g facebook)
-    1. user authenticates with web id provider (e.g. facebook)
-    2. they are passed a token by their ID provider
-    3. your code calls AssumeRoleWithWebIDentity API providing the web id providers token and the ARN for the IAM role
-    4. your app can now access Dynamodb from between 15 > 1 hour (default is 1 hour
-  20. when should you use conditional writes vs atomic counters?
-    - if you can have some margin of error, use atomic counters
-    - if you need absolutely accurate information, use conditional writes
-  21. what is dynamodb?
-    - fully managed (no ssh)
-    - stored on ssh spread across 3 distinct data centers
-    - eventual consistency reads within a second (default) is best read performance
-    - strongly concistent reads are those whose results contain all items that have a successfuly response
-    - fast and flexible nosql db service for all types of applications
-  22. what types of primary keys exist?
-    - single attribute: think unique ID
-      + partition key sometimes called hash
-    - composite; think unique id + data range
-      + partition key + sort key
-      + sort key sometimes called range key
-  23. how are partition keys stored?
-    - the partition key value is used as an input ot an internal hash function, and the output from the ash function determiens the partition
-    - the partition determines the physical location where the data is stored
-    - no two items can have the same partition key value (for single attribute primary keys)
-    - two/more items can have the same partition key but different sort key (from composite primate keys)
-  24. what are dynamodb streams?
-    - used to capture modifications to dynamodb tables for upto 24 hours
-      + edits : capture the before and after
-      + deletes: capture the before delete
-    - can be used to trigger lambda functions (e.g. to replicate data, or send emails via SES)
-  25. what are batch operations
-    - can read multiple items using BatchGetItem api
-    - retrieve up to 1 Mb of data
-    - retrieve up to 100 items
-    - retrieve items from multiple tables
-    -
 
 # Elastic Beanstalk
   1. is elastic beanstalk free ?

@@ -1,3 +1,5 @@
+# links
+	- [make your linux faster](http://www.makeuseof.com/tag/linux-in-overdrive-how-to-get-every-drop-of-performance-out-of-your-system/)
 bookmark:
 	lynda
 		http://www.lynda.com/Mac-OS-X-tutorials/cut-Cutting-select-text-portions/78546/83682-4.html?autoplay=true
