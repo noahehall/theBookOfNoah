@@ -1152,11 +1152,13 @@
       + you can only change the permissinos associated with the role
   7. what is the name of the API call to request temp security credentials from the AWS platform when federating with active directory?
     - assume role with saml
-  9. whats the general flow of IAM?
-    - create users and groups and assign them permissions to access your AWS resources.
-    - You can use the IAM console (for web-based access),
-    - the AWS Command Line Interface (CLI, for command line access),
-    - the API or SDKs (for programmatic access).
+  8. what kinds of security credentials can IAM users have?
+    - a combination of:
+    1. AWS access key
+    2. ssh key
+    3. password for web app logins
+    4. MFA device
+  9.
   10. how do you give permissions to users?
     - To grant permissions, you create policy documents that you attach to users, groups, or other entities
   11. what are federated users?
@@ -1168,7 +1170,15 @@
     - create roles and assign them to users and/or AWS resources
   14. what are Groups?
     - a collection of users under one set of permissions
+      + only purpose is to make it easier to manage user permissions
+    - groups cannot belong to other groups
+    - groups do not have security credentials and cannot access web services directly
   15. Policies: a document that defines one/more permissions that are associated with users, groups, and roles
+  16. How are IAM users managed?
+    - create, delete, list IAM users.
+    - manage group membership
+    - manage user security credentials
+    - assign permissions
 
 
 # sdk
