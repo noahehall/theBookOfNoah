@@ -1194,10 +1194,33 @@
   21. what are temporary security credentials?
     - commonly used in federation scenarios, lets users make requests by calling AWS STS APIs like *AssumeRole* or *GetFederationToken*
   22. what is AssumeRole ?
+    - returns a set of temp security crednetials (access key, secret access key, security token) that can be used to access AWS resources
+    - typically used for cross-account access or federation
   23. what is GetFederationToken ?
+  24. what is AssumeRoleWithSAML ?
+    - set of temp security credentials for users who have been authenticated via a SAML authentication response.
+  25. what is AssumeRoleWithWebIDentity ?
+    - a set of temp security credentials for users who have been authenticated in a mobile/web application with a web identity provider (e.g. amazon cognito, facebook, google, any OpenID Connect provider)
+  26. what is GetFederationToken ?
+    - set of temp security credentials for a federated user
+    - must be called by using the long-term AWS security credentials of an IAM user
+  27. what is GetSessionToken ?
+    - set of temp credentials for an AWS account/IAM user
+    - typically for using MFA to protect programmatic calls to specific AWS APIs
+  28. what is AWS STS
+    - Amazon Security Token Service: create and provide trusted users with temporary security credentials that can control access to your AWS resources
+  29. what are the different STS APIs?
+    - AssumeRole, AssumeRoleWithSAML, AssumeRoleWithWebIDentity, GetFederationToken, GetSessionToken
+  30. can you define users regionally?
+    - no
+  31. can IAM users have individual EC2 SSH keys?
+    - no, SSH keys must be assigned to EC2 instances on creation, and all users must use that same SSH key to login
+  32. can I define a password policy for a user's password?
+    - yes: min length, atleast one number, automatic expiration, prevent reuse, password reset on next login
+  33. 
 
 
-   
+
 # sdk
   1. [what SDKs are currently available?](https://aws.amazon.com/tools)
     - android, browser, ios, java, .net, node, php, python, ruby, go, c++, aws mobile sdk, aws iot device sdk
