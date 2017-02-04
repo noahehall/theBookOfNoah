@@ -1129,6 +1129,8 @@
     - however the resources they create & use are NOT FREE
   2. what does ARN stand for?
     - amazon resource name
+  3. are all services provided in all regions?
+    - no, so choose your regions wisely
 
 
 
@@ -1265,20 +1267,6 @@
     - initially 250, then you need to request more
   39. what is the IAM policy simulator?
     - tool to help you understand, test, and validate the effects of your access control policies?
-
-
-
-# sdk
-  1. [what SDKs are currently available?](https://aws.amazon.com/tools)
-    - android, browser, ios, java, .net, node, php, python, ruby, go, c++, aws mobile sdk, aws iot device sdk
-  2. what is the default region for sdks who have them?
-    - US-EAST-1
-  3. which SDKs have default regions?
-    - java
-  4. which SDKs do not have default regions?
-    - node
-  5. if you dont set a default region, what will be used?
-    - US-EAST-1
 
 # EC2
   1. based on some scenario, which ec2 pricing model should you use?
@@ -1429,33 +1417,6 @@
     - advanced encryption standard (AES) 256
   29. what is the largest size file you can transfer to S3 using a put operation?
     - 5gb, after that you must use multipart upload
-
-# cloudfront
-  1. what is an edge location ?
-    - the location where content will be cached
-  2. what is the origin?
-    - origin of all files that the CDN will distribute
-    - an s3 bucket, ec2 instance, elastic load balancer, or route53, or not on AWS
-  3. what is a distribution
-    - the name given to the CDN which consists of a collection of edge locations
-  4. what are the types of distributions
-    - web distribution: for websites
-    - RTMP: used for media streaming
-  5. Can you read or write to edge lcoations?
-    - you can read or write
-  6. how long are objects cached?
-    - for the life of the TTL (time to live)
-    - you set it on objects
-  7. Will you be charged for clearing cached objects?
-    - yes
-  8. how do you set TTLs ?
-    - its all based on the rate of change for your files
-  9. how are you going to secure cloudfront/s3 to certain users
-    - use restrict viewer access and choose presigned urls/cookies
-  10. are invalidations free ?
-    - no it costs each time
-  11. can you upload or download from cloudfront ?
-    - you can do both
 
 # databases
   0. RDS and DynamoDB come up a lot in the exam! read the FAQs!
@@ -1670,6 +1631,45 @@
   2. what platforms come preconfigured when setting up elastic beanstalk?
     - nodejs, php, python, ruby, tomcat, .net, java, go docker
 
+# sdk
+  1. [what SDKs are currently available?](https://aws.amazon.com/tools)
+    - android, browser, ios, java, .net, node, php, python, ruby, go, c++, aws mobile sdk, aws iot device sdk
+  2. what is the default region for sdks who have them?
+    - US-EAST-1
+  3. which SDKs have default regions?
+    - java
+  4. which SDKs do not have default regions?
+    - node
+  5. if you dont set a default region, what will be used?
+    - US-EAST-1
+
+# cloudfront
+  1. what is an edge location ?
+    - the location where content will be cached
+  2. what is the origin?
+    - origin of all files that the CDN will distribute
+    - an s3 bucket, ec2 instance, elastic load balancer, or route53, or not on AWS
+  3. what is a distribution
+    - the name given to the CDN which consists of a collection of edge locations
+  4. what are the types of distributions
+    - web distribution: for websites
+    - RTMP: used for media streaming
+  5. Can you read or write to edge lcoations?
+    - you can read or write
+  6. how long are objects cached?
+    - for the life of the TTL (time to live)
+    - you set it on objects
+  7. Will you be charged for clearing cached objects?
+    - yes
+  8. how do you set TTLs ?
+    - its all based on the rate of change for your files
+  9. how are you going to secure cloudfront/s3 to certain users
+    - use restrict viewer access and choose presigned urls/cookies
+  10. are invalidations free ?
+    - no it costs each time
+  11. can you upload or download from cloudfront ?
+    - you can do both
+
 # cloud formation
   1. is cloud formation free?
     - YES! but you have to pay for the resources it uses
@@ -1702,87 +1702,7 @@
     - human interaction? use SWF
     - shorter (sub 12 hour) ? use SQS
 
-# Simple Queue System: SQS
-  1. how many and large can messages be?
-    - a single message can be 256kb
-    - there can be 1 to 10 messages per request up to 256kb
-    - a request can return a payload up to 256kb
-  2. what is the general flow of SQS?
-    - a compponent (e.g. web service) posts messages to queue with a specific Visibility Timeout Clock
-    - asynchronously pull task messages from queue
-    - process task messages
-    - write 'task complete' message to another queue and deletes original message from queue
-      - this must happen during the visibility timeout period else another processer will pull the task message (assume its a failure)
-    - delete the original task message
-    - check for more task messages in the worker queue
-  3. do you push or pull messages from the queue?
-    - pull!
-  4. how do EC2 instances retrieve messages from SQS?
-    - polls SQS
-  5. what is a task message Visibility Timeout Clock?
-    - task message be visible for a default 30 seconds after some processer component retrieves it
-    - this is the max time a processer has to complete processing the message before it returns to the queue
-  6. how should you design your system to  use SQS?
-    - so that processong a message more than once does not create any errors or inconsistencies
-  7. how are SQS task messages billed ?
-    - each 64kb of message is billed as 1 requesst
-      + i.e. a single API call with 256kb payload will be billed as four requests
-    - first 1 mill are free
-    - .50c per 1 mill SQS request per month
-  8. what service uses the term 'decouple' ?
-    - SQS! always pick SQS if they say 'decouple' ;)
-  9. how many times can a task message be delivered?
-    - multiple times, in any order
-  10. how would you manage task message priority ?
-    - create multiple queues, and check each queue in the order you desire
-  11. what is the max Visibility Time Out for a task message ?
-    - 12 hours
-  12. how do you extend the Visibility Time out
-    - use the ChangeMessageVisibility action to specify a new timeout value
-    - SQS restarts the timeout period using the new value
-  13. what is SQS Long Polling?
-    - polls the QUEUE and doesnt end the connection until a message arrives in the queue
-  14. what is the maximum Long Poll Time Out?
-    - 20 seconds
-  15. what is SQS short polling?
-    - polls the queue and returns immediately, with/without a message
-  16. polling in tight loops burns CPU cycles and encures fees, how do you stop this?
-    - setup Long Polling any only poll the task message queue ever 20 seconds
-  17. what is fanning out?
-    - a way to distribute SNS messages to multiple queues
-    - where multiple SQS queue are subscribed to an SNS topic
-    - when a message is sent tot he SNS topic, the message will be fanne out to the SQS queues
-      + i.e. SNS will deliver the message to all SQS queues that are subscribed to the topic
-
-# Simple Notification Service: SNS
-  1. when should you use SNS/SQS ?
-    - SNS: when you need to push messages
-    - SQS: when you need to pull messages
-  2. what is the difference between SNS and SQS
-    - both messaging services in AWS
-    - SNS - push
-    - SQS = polls
-  3. what is SQS pricing ?
-    - based on delivery mechanism + total requests
-    - .50 per 1 mill SNS requests
-    - .06 per 100k notification deliveries over http
-    - .75 per 100 notification deliveries over SMS
-    - 2.00 per 100 notification deliveries over email
-  4. what data format is SNS?
-    - JSON
-  5. can you add any email as a subscriber to a topic?
-    - Yes! but they must confirm they want to receive the email
-  6. how long do subscriptions last without confirmation ?
-    - recipients have 3 days to subscribe
-  7. what type of protocols can be used with Topic Subscriptions?
-    + http, https, email, email + json, SQS, SMS text message, application
-  8. when do you use SNS?
-    - whenever you need PUSH messaging
-    - if you ever see 'push', pick SNS
-  9. can you customize each message based on the protocol?
-    - Yes!
-
-# shared responsibility models
+# Shared responsibility models
   1. what is shared responsibility models?
     - based on the type of service, who is responsible for which part of the infrastructure layer
   2. what are the shared responsibility models?
@@ -1804,7 +1724,6 @@
     - container service: operating system and application level
     - abstracted service: everything except the client side encryption and customer data
 
-
 # other notes for developer exam
   - global infrastructure
   - networking and content Delivery
@@ -1814,8 +1733,3 @@
   - IAM
   - management tools (opsworks it uses chef)
   - messaging: SNS, SQS, SES
-# Study guide
-## notes
-  - not all services are available in all regions, so choose your regions wisely
-  - IAM operates in the global region
-  - EC2: a virtual machine
