@@ -1437,8 +1437,33 @@
     - AWS supports IPsec VPN connections
   55. what is IPsec?
     - protocol suite for securing internet protocol (IP) communications by authenticating and encryptin geach IP packet or data stream.
-
-
+  56. how do you assign IP address ranges to VPCs?
+    - via a single CIDR (classless internet domain routing) IP address block when creating a VPC
+    - a VPC can be assigned at most one IP address range at any given time
+    - multiple VPCs can have overlapping IP address ranges but its not recommended
+      + doing so will prohibit you from connecting these VPCs to a common home network via a hardware vpn connection
+  57. can i change a VPC's size (i.e. IP address range) ?
+    - no, you must terminate and create a new one
+  58. whats the minimum size of a subnet?
+    - IPv4: blah/28, i.e. 14 ip addresses
+    - IPv6: fixed at blah/64
+  59. can I use all the IP addresses that I assign to a subnet?
+    - no, amazon reserves the first 4 and the last one of every subnet for IP networking purposes
+  60. how do you assign private IP addresses to EC2 instances within a VPC?
+    - when you launch an EC2 within a vpc, you can specify the primary IP address
+    - if you do not specify, amazon autoamtically assigns it one from the IP address range you assign to the subnet
+    - you can assign a secondary private IP address when you:
+      1. create an EC2 instance within the VPC, when you create
+      2. create an elastic network interface
+      3. any time after the instance has been launched
+  60. can you assign any IP address to an instance?
+    - only when it is:
+      1. part of the associated subnet's IP address range
+      2. not reserved by amazon for IP networking purposes
+      3. not currently assigned to another interface
+  61. can I assign multiple public and private IPs to an instance?
+    - public: yes, but it must be associated with a unique private ip address on the instance
+    - private: yes, but only secondary private addresses
 # EC2
   1. based on some scenario, which ec2 pricing model should you use?
     - spot instances always the cheapest
