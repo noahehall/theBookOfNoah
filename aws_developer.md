@@ -1152,7 +1152,7 @@
       + you can only change the permissinos associated with the role
   7. what is the name of the API call to request temp security credentials from the AWS platform when federating with active directory?
     - assume role with saml
-  8. what kinds of security credentials can IAM users have?
+  8. hat kinds of security credentials can IAM users have?
     - a combination of:
     1. AWS access key
     2. ssh key
@@ -1179,8 +1179,25 @@
     - manage group membership
     - manage user security credentials
     - assign permissions
+  17. what are action level permissions ?
+    - describe the specific action/actions that are/not permitted in a policy document
+    - if a service dos not support actin-level permisions, policies for the service use * in the action element
+  18. what are resource level permissions?
+    - specifies the object(s) that the policy document statement covers using its ARN (amazon resource name)
+    - use * in the resource element if the the resource API does not support resource-level permissions
+  19. what are resource-based permissions?
+    - specify who can access a resource by including a *Principal* element in the policy document
+    - attach policies to a service's resource in addition to IAM user, gorups, and roles
+  20. what are tag-based pemrissions?
+    - specify conditions for when a permission is/not permitted based on the tags assigned to a resource
+    - you test resource tag in the *Condition* element of the policy document
+  21. what are temporary security credentials?
+    - commonly used in federation scenarios, lets users make requests by calling AWS STS APIs like *AssumeRole* or *GetFederationToken*
+  22. what is AssumeRole ?
+  23. what is GetFederationToken ?
 
 
+   
 # sdk
   1. [what SDKs are currently available?](https://aws.amazon.com/tools)
     - android, browser, ios, java, .net, node, php, python, ruby, go, c++, aws mobile sdk, aws iot device sdk
