@@ -1268,6 +1268,132 @@
   39. what is the IAM policy simulator?
     - tool to help you understand, test, and validate the effects of your access control policies?
 
+# VPCs
+  0. what should you know about VPCs?
+    1. what is VPC?
+    2. about subnets
+    3. about internet gateways
+    4. about NAT gateways
+    5. about virtual private gateways
+    6. abour routers
+    7. about peering connections
+    8. you must know how to build out a VPC from memory and launch instances into public and private subnets ?
+  1. what is a VPC?
+    -
+  2. how many availability zones can be mapped to a single subnet
+    - it is a 1 to 1 mapping, i.e. a subnet cannot span availability zones
+    - 1 subnet = 1 availability zone
+  3. how many internet gateways can you map to a VPC?
+    - it is 1 to 1 mapping, only one internet gateway per VPC
+  4. can you do transitive peering with VPCs?
+    - NO! peering is always in a star configuration (1 central VPC peers with other VPCs)
+    - you cannot talk to one VPC via another (transitive)
+    - you have to set up the links individually
+  5. what is a VPC?
+    - a logical datacenter within AWS
+    - consists of internet gateways, virtual private gateways, route tables, network access control lists, subnets, and security groups
+  6. are security groups stateful or stateless ?
+    - stateful
+  7. are network access control lists stateful or stateless?
+    - stateless
+  8. when you create a VPC - what resources are/not autoamtically created?
+    - yes: main route table, network ACL, default security group,
+    - not: subnets, interget gateways,
+  9. when you create a subnet, how many ip addresses does AWS reserve by default?
+    - 3 : not counting the dot 0s or 255s
+      + router: 10.0.0.1
+      + dns services: 10.0.0.2
+      + for future use: 10.0.0.3
+  10. can you boost your internet speeds by attaching multiple internet gateways to a VPC
+    - no: you cannot attach multiple internet gateways to a VPC
+  11. do you have to disable the source destination check network configuration for NAT instances?
+    - yes. because you need to set it up manually in your VPC route table to route traffic to private instances
+  12. how do you manage a surge in traffic to your NAT instances (i.e. too much traffic)
+    - you scale it up to support larger network requests
+    - increase instance size
+    - change instance type
+  13. should NAT instances be in a public or private subnet?
+    - public! because they are used to provide internet access to private ec2 resources
+  14. how do you connect a private subnet to the internet via a NAT instance?
+    - create a route out of the private subnet to the NAT instance via the VPCs main route table
+  15. does a NAT instance require a public ip?
+    - YES! how else will it talk to the net?
+  16. how much traffic does a NAT instance support?
+    - it depends on the instance size and type
+  17. how do you create high availability for NAT instances?
+    - autoscaling groups
+    - multiple subnets in different availability zones (always 1 to 1)
+    - create a script to automate failover
+  18. do NAT instances require a security group?
+    - YES! always
+  19. should you use a NAT instance / NAT gateway for enterprise?
+    - NAT gateways definitely preferred
+  20. What management services does AWS provide for NAT gateways?
+    - auto scale up to 10Gbps
+    - no need to patch (i.e. update/upgrade)
+    - auto assigned public ip
+    - AWS manages security (no need to associate security group)
+  21. do NAT gateways require security groups?
+    - no - AWS manages security
+  22. do you have to disable source/destination checks for NAT gateways ?
+    - NO! only for NAT instances
+  23. do you have to update your route tables when creating a NAT gateway?
+    - YES! update your VPCs main route table
+      1. destination: 0.0.0.0/0
+      2. target: your NAT gateway
+  24. can a subnet be associated with more than one Network ACL ?
+    - NO! only one, it is 1 to 1
+  25. how are rules evaluated in Network ACLs?
+    - rules are evaluated in number order
+    - rule 1 has precedence over rule 2
+  26. do you have to create a Network ACL when you create a VPC ?
+    - NO! a Network ACL is created by default allowing all inbound and inbound traffic on all ports
+  27. do custom Network ACLs allow all inbound/outbound traffic by default?
+    - NO! it denys everything by default
+  28. do subnets have to be associated with a network ACL ?
+    - YES! by default its the default Network ACL, but you can change it
+  29. can you associate Network ACLs with multiple subnets?
+    - YES! but you can only associate one subnet with one Network ACL
+  30. are network ACLs stateful / stateless ?
+    - stateless: you have to specify inbound and outbound rules separately
+  31. can Network ACLs allow / deny traffic
+    - it can allow or deny
+  32. can you block IPs with network ACLs or security groups?
+    - network acls: YES!
+    - security groups: NO! there is no way to deny traffic
+  33. how do you make a bastion server highly available?
+    - create multiple subnets (at least 2)
+  34. can you build out a VPC from memory?
+    - public subnet?
+    - private subnet?
+    - net instance ?
+    - nat gateway ?
+    - bastion host?
+  35. can VPCs span regions?
+    - NO!
+  36. can VPCs span multiple availability zones?
+    - YES!
+  37. what is required for a NAT instance to work?
+    - disable source/destination check on the ec2 instance
+    - be in a public subnet
+    - have an elastic ip
+    - a route out of hte private subnet to the NAT but exist
+  38. how do you create a generally high resilient network?
+    - at least 2 public subnets and 2 priate subnets
+    - each subnet should be in a different availability zone
+  39. how do you create resiliant bastion hosts?
+    - put them behind an autoscaling group with minimum size of 2
+    - use route53 (round robin / health check) to automatically failover
+  40. how do you create resiliant nat instances?
+    - 1 in each public subnet
+    - each with their own public ip
+    - write a script to fail over between the two
+    - or fuck nat instances and use nat gateways
+  41. how many VPCs are allowed per region by default?
+    - 5
+  42. how many internet gateways can be associated with a VPC?
+    - 1
+
 # EC2
   1. based on some scenario, which ec2 pricing model should you use?
     - spot instances always the cheapest
@@ -1508,122 +1634,6 @@
     - retrieve up to 100 items
     - retrieve items from multiple tables
     -
-
-# VPCs
-  1. you must know how to build out a VPC from memory and launch instances into public and private subnets ?
-  2. how many availability zones can be mapped to a single subnet
-    - it is a 1 to 1 mapping, i.e. a subnet cannot span availability zones
-    - 1 subnet = 1 availability zone
-  3. how many internet gateways can you map to a VPC?
-    - it is 1 to 1 mapping, only one internet gateway per VPC
-  4. can you do transitive peering with VPCs?
-    - NO! peering is always in a star configuration (1 central VPC peers with other VPCs)
-    - you cannot talk to one VPC via another (transitive)
-    - you have to set up the links individually
-  5. what is a VPC?
-    - a logical datacenter within AWS
-    - consists of internet gateways, virtual private gateways, route tables, network access control lists, subnets, and security groups
-  6. are security groups stateful or stateless ?
-    - stateful
-  7. are network access control lists stateful or stateless?
-    - stateless
-  8. when you create a VPC - what resources are/not autoamtically created?
-    - yes: main route table, network ACL, default security group,
-    - not: subnets, interget gateways,
-  9. when you create a subnet, how many ip addresses does AWS reserve by default?
-    - 3 : not counting the dot 0s or 255s
-      + router: 10.0.0.1
-      + dns services: 10.0.0.2
-      + for future use: 10.0.0.3
-  10. can you boost your internet speeds by attaching multiple internet gateways to a VPC
-    - no: you cannot attach multiple internet gateways to a VPC
-  11. do you have to disable the source destination check network configuration for NAT instances?
-    - yes. because you need to set it up manually in your VPC route table to route traffic to private instances
-  12. how do you manage a surge in traffic to your NAT instances (i.e. too much traffic)
-    - you scale it up to support larger network requests
-    - increase instance size
-    - change instance type
-  13. should NAT instances be in a public or private subnet?
-    - public! because they are used to provide internet access to private ec2 resources
-  14. how do you connect a private subnet to the internet via a NAT instance?
-    - create a route out of the private subnet to the NAT instance via the VPCs main route table
-  15. does a NAT instance require a public ip?
-    - YES! how else will it talk to the net?
-  16. how much traffic does a NAT instance support?
-    - it depends on the instance size and type
-  17. how do you create high availability for NAT instances?
-    - autoscaling groups
-    - multiple subnets in different availability zones (always 1 to 1)
-    - create a script to automate failover
-  18. do NAT instances require a security group?
-    - YES! always
-  19. should you use a NAT instance / NAT gateway for enterprise?
-    - NAT gateways definitely preferred
-  20. What management services does AWS provide for NAT gateways?
-    - auto scale up to 10Gbps
-    - no need to patch (i.e. update/upgrade)
-    - auto assigned public ip
-    - AWS manages security (no need to associate security group)
-  21. do NAT gateways require security groups?
-    - no - AWS manages security
-  22. do you have to disable source/destination checks for NAT gateways ?
-    - NO! only for NAT instances
-  23. do you have to update your route tables when creating a NAT gateway?
-    - YES! update your VPCs main route table
-      1. destination: 0.0.0.0/0
-      2. target: your NAT gateway
-  24. can a subnet be associated with more than one Network ACL ?
-    - NO! only one, it is 1 to 1
-  25. how are rules evaluated in Network ACLs?
-    - rules are evaluated in number order
-    - rule 1 has precedence over rule 2
-  26. do you have to create a Network ACL when you create a VPC ?
-    - NO! a Network ACL is created by default allowing all inbound and inbound traffic on all ports
-  27. do custom Network ACLs allow all inbound/outbound traffic by default?
-    - NO! it denys everything by default
-  28. do subnets have to be associated with a network ACL ?
-    - YES! by default its the default Network ACL, but you can change it
-  29. can you associate Network ACLs with multiple subnets?
-    - YES! but you can only associate one subnet with one Network ACL
-  30. are network ACLs stateful / stateless ?
-    - stateless: you have to specify inbound and outbound rules separately
-  31. can Network ACLs allow / deny traffic
-    - it can allow or deny
-  32. can you block IPs with network ACLs or security groups?
-    - network acls: YES!
-    - security groups: NO! there is no way to deny traffic
-  33. how do you make a bastion server highly available?
-    - create multiple subnets (at least 2)
-  34. can you build out a VPC from memory?
-    - public subnet?
-    - private subnet?
-    - net instance ?
-    - nat gateway ?
-    - bastion host?
-  35. can VPCs span regions?
-    - NO!
-  36. can VPCs span multiple availability zones?
-    - YES!
-  37. what is required for a NAT instance to work?
-    - disable source/destination check on the ec2 instance
-    - be in a public subnet
-    - have an elastic ip
-    - a route out of hte private subnet to the NAT but exist
-  38. how do you create a generally high resilient network?
-    - at least 2 public subnets and 2 priate subnets
-    - each subnet should be in a different availability zone
-  39. how do you create resiliant bastion hosts?
-    - put them behind an autoscaling group with minimum size of 2
-    - use route53 (round robin / health check) to automatically failover
-  40. how do you create resiliant nat instances?
-    - 1 in each public subnet
-    - each with their own public ip
-    - write a script to fail over between the two
-    - or fuck nat instances and use nat gateways
-  41. how many VPCs are allowed per region by default?
-    - 5
-  42. how many internet gateways can be associated with a VPC?
-    - 1
 
 # Elastic Beanstalk
   1. is elastic beanstalk free ?
