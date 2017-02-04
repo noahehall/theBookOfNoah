@@ -249,6 +249,7 @@
     2. `a-z, A-Z, 0-9, _, -, .`
   - attribute names: between 1-255 chars
 ## data types
+  - [attribute type values](http://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_AttributeValue.html)
   - when you creeate a table/seconday index, you must specify the names and data types of each primary key attribute (partition and sort key)
     + primary key attributes must be defined as type string, number, or binary
     + other than the primary key attributes, you do not need to define any attributes/data types at table creation time

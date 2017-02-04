@@ -3,7 +3,8 @@
 
 # next up
   - [data structures and algorithms in js](https://mgechev.github.io/javascript-algorithms/data-structures_avl-tree.js.html)
-  
+  - [quora list](https://www.quora.com/How-do-I-start-learning-or-strengthen-my-knowledge-of-data-structures-and-algorithms/answers/20773316?ref=fb_page)
+
 ## Design and analysis of algorithms
   + is all about designing and analyzing algorithms for a given problem in terms of time (performance) and memory (Ram/disk) & communication (i/o) (resource usage)
   + efficient procedures for solving problems with large inputs

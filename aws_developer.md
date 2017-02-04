@@ -246,12 +246,6 @@
     + multifactor authentication
     + temporary access for users/devices/services
 ### TERMINOLOGY
-  - users: end users, i.e. people
-  - Groups: a collection of users under one set of permissions
-  - Roles: create roles and assign them to users and/or AWS resources
-    1. create a role
-    2. assign to a resource
-  - Policies: a document that defines one/more permissions that are associated with users, groups, and roles
   - Identity Providers:
   - Account settings
   - Credential report
@@ -413,7 +407,6 @@
     + ELB supports all ports with EC2 VPC (1-65535)
       + ELB classics only support: 25, 80, 443, 465, 587, 1024-65535
   - load balancers should be connected to two public subnets for high availability
-
 
 ## S3
   - safe place to store files
@@ -1131,11 +1124,13 @@
   - [study notes from discussion forum](https://acloud.guru/forums/aws-certified-developer-associate/discussion/-KUdI5f2LNbi4wvK7v4I/how_to_pass_aws_certified_deve)
 
 # AWS
-  1. which servers are free?
+  1. which services are free?
     - usually orchestration services, e.g.: cloudformation, elastic beanstalk, autoscaling, opworks
     - however the resources they create & use are NOT FREE
 
 # IAM
+  0. what is IAM?
+    - use AWS IAM to securely control individual and group access to your AWS resources.
   1. can you authenticate with active directory?
     - yes, but only with SAML
   2. do you authenticate with active directory first, or do you get temp security credntial first and then authenticate with active directory
@@ -1157,7 +1152,24 @@
       + you can only change the permissinos associated with the role
   7. what is the name of the API call to request temp security credentials from the AWS platform when federating with active directory?
     - assume role with saml
-  8. [read the iam faq](https://aws.amazon.com/iam/faqs/)
+  9. whats the general flow of IAM?
+    - create users and groups and assign them permissions to access your AWS resources.
+    - You can use the IAM console (for web-based access),
+    - the AWS Command Line Interface (CLI, for command line access),
+    - the API or SDKs (for programmatic access).
+  10. how do you give permissions to users?
+    - To grant permissions, you create policy documents that you attach to users, groups, or other entities
+  11. what are federated users?
+    -  security credentials with configurable expirations for users who you manage in your corporate directory, allowing you to provide your employees and applications secure access to resources in your AWS account without creating an IAM user account for them.
+  12. what is a user?
+    - a unique identity recognized by AWS services and applications. Similar to a login user in an operating system like Windows or UNIX,
+    - can be an individual, system, or application requiring access to AWS services.
+  13. what is a role?
+    - create roles and assign them to users and/or AWS resources
+  14. what are Groups?
+    - a collection of users under one set of permissions
+  15. Policies: a document that defines one/more permissions that are associated with users, groups, and roles
+
 
 # sdk
   1. [what SDKs are currently available?](https://aws.amazon.com/tools)
