@@ -1726,7 +1726,7 @@
     - if you can have some margin of error, use atomic counters
     - if you need absolutely accurate information, use conditional writes
   21. what are atomic updates
-    - increment/decrement a numeric attribute, add/remote to sets/lists/maps
+    - increment/decrement a numeric attribute, add/remove to sets/lists/maps
   22. what types of primary keys exist?
     - single attribute: think unique ID
       + partition key sometimes called hash
@@ -1828,6 +1828,16 @@
     - alternately permit everything in concert with a deny policy
   49. how do you prevent users from adding invalid data to a table?
     - use FGAC to specify which items can be changed
+  50. how will you be charged?
+    - provisioned read-throughput
+    - provisioned write-throughput
+    - indexed data storage
+  52. how do you calculate throughput
+    - write capacity
+    - read capacity
+
+
+
 # rds
 
 
