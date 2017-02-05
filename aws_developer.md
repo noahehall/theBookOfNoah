@@ -1664,7 +1664,30 @@
     9. about cross-region replication
     10. about triggers
     11. about streams
-    12. 
+    12. about taggig
+  1. what is dynamodb?
+    - nosql db providing fast and predictable performance with seamless scalability
+    - the prime reason to use is for the managed service and performance
+    - prime reason not to use is the limited querying capabilities
+    - managed service:
+      1. automatically partitions and re-partitions your data
+      2. provisions additional server capacity
+      3. syncrhonously replicates data across three facilities in an AWS region (high availability and durability)
+  2. what is read consistency?
+    - the manner and timing in which the successful write/updat of an item is reflected in subsequent read operation of that same item
+  3. what are eventual consistency reads?
+    - reads that are accurate within a second (default) of writing an item is best read performance and maximizes your read throughput
+  4. what are strongly consistent reads?
+    - are those reads whose results contain all items that have a successfully response prior to the read
+  5. what kind of query functionality does dynamodb support?
+    - supports get/put operations using a primary-key, global and local secondary indexes
+  6. does dynamodb support conditional operations?
+    - ConditionExpression: used to setup the conditional
+      + boolean functions: ATRIBUTE_EXIST, CONTAINS, BEGINS_WITH
+      + comparison operators: =, <>, BETWEEN, IN
+      + logical operators: NOT, AND, OR
+  7. does dynamodb support expressions for key conditions, partition, and partition-sort keys?
+    -Yes, see the KeyConditionExpression parameter
   8. when can you create a local secondary index?
     - when you create a table only
   9. when can you create a global secondary index
@@ -1702,12 +1725,8 @@
   20. when should you use conditional writes vs atomic counters?
     - if you can have some margin of error, use atomic counters
     - if you need absolutely accurate information, use conditional writes
-  21. what is dynamodb?
-    - fully managed (no ssh)
-    - stored on ssh spread across 3 distinct data centers
-    - eventual consistency reads within a second (default) is best read performance
-    - strongly concistent reads are those whose results contain all items that have a successfuly response
-    - fast and flexible nosql db service for all types of applications
+  21. what are atomic updates
+    - increment/decrement a numeric attribute, add/remote to sets/lists/maps
   22. what types of primary keys exist?
     - single attribute: think unique ID
       + partition key sometimes called hash
@@ -1715,7 +1734,7 @@
       + partition key + sort key
       + sort key sometimes called range key
   23. how are partition keys stored?
-    - the partition key value is used as an input ot an internal hash function, and the output from the ash function determiens the partition
+    - the partition key value is used as an input to an internal hash function, and the output from the ash function determiens the partition
     - the partition determines the physical location where the data is stored
     - no two items can have the same partition key value (for single attribute primary keys)
     - two/more items can have the same partition key but different sort key (from composite primate keys)
@@ -1729,7 +1748,45 @@
     - retrieve up to 1 Mb of data
     - retrieve up to 100 items
     - retrieve items from multiple tables
-    -
+  26. when should you use dynamodb vs rds
+    - rds: if you need to join tables/complex transactions
+    - dynamodb: performance, scalability
+  27. what is the dynamodb data model?
+    - table:
+      + collection of items, e.g. People containing person items
+    - items:
+      + collection of attributes, e.g. Noah containing details,
+      + composed of a primary/composite key
+      + cannot exceed 400kb
+    - attributes:
+      + collection of values, e.g. specific details about noah
+  28. what are the available APIs
+    - CreateTable, UpdateTable, DeleteTable, DescribeTable, ListTables, PutItem, BatchWriteiTem, UpdateItem, DeleteItem, GetItem, BatchGetItem, Query, Scan
+  29. how does the Scan operation work?
+    - once the aggregate size of items scanned for a given Scan API request exceeds a 1mb limit, the givne request will terminate and fetched results will be returned with a LastEvaluatedKey (to continue the scan in a subsequent operation)
+  30. how many read capacity units does a scan operation consume?
+    - number of bytes fetched rounded to the nearest 4kb, divided by 4kb
+    - scanning a table with strongly consistent reads consumes twice the read as eventually consistent (dont divide by 4)
+  31. what data types are supported?
+    - scalar: number, string, binary, boolean
+    - collection: set (number, string, binary), List, Map
+    - other: null
+  32. what data structures are supported?
+    - key-value and document
+  33. what is a key value store?
+    - database supporting storing, querying and updating collections of objects that are identified using a key and values that contain the actual content being stored
+  34. what is a document store?
+    - database providing support for storing, querying and updating items in a document format (e.g. json, xml, html)
+  35. does dynamodb have a json datatype?
+    - no, but you can use  the SDK to automatically map json to the dynamodb map
+  36. how would you query JSON data in dynamodb?
+    - create a global/local secondary index on any top level json element (not on nested elements)
+  37. how would you retrieve a specific nested element from a JSON item?
+    - when using GetItem, BatchGetItem, query, or scap APIs, you can define a ProjectionExpression to determine which attributes should be retrieved
+  38. can you update a specific element within a deeply nested json item?
+    - yes
+  39. what is the document sdk?
+    - datatypes wrapper for javascript that allows easy interoperability between js and dynamodb datatypes.
 
 # rds
 
