@@ -331,43 +331,6 @@
   - IOPS: input/output per second
     + a way of measuring how fast a disk is from a read and write perspective
     + more IOPS > better
-## instance types
-  - T2: lowest cost, general purpuse
-    + use case: web servers/small dbs
-  - M4: general purpose
-    + use case: application servers
-  - M3: general purpose
-    + use case: application servers
-  - C4: compute optimized
-    + cpu intensive apps/dbs
-  - C3: compute optimized
-    + use case: cpu intensive apps/dbs
-  - R3: memory optimized
-    + use case: memory intensive apps/dbs
-  - G2: graphics/general purpose gpu
-    + use case:
-      - video encoding
-      - machine learning
-      - 3D application streaming
-  - I2: high speed storage
-    + use case:
-      - nosql dbs
-      - data warehousing
-      - etc
-  - D2: dense storage
-    - use case
-      - fileservers
-      - date warehousing
-      - hadoop
-  - when to use which EC2 instance type
-    - remember this acronym: DIRT MCG
-      + D for density
-      + I for IOPS
-      + R for RAM
-      + T for cheap general purpose (i.e. T2 Micro)
-      + M for main choice for general purpose apps
-      + C for compute
-      + G for graphics
 
 
 ## EBS: Elastic Block storage
@@ -1119,6 +1082,7 @@
     - isolated locations inside of a region to protect against failures in other availability zones within the region
     - e.g. us-east-1b, us-east-1c, us-east-1c
       + notice the change in the last letter
+    -
 
 # IAM
   0. what should you know about IAM?
@@ -1485,16 +1449,14 @@
     1. about EC2s
     2. about security
     3. about Elastic IP
-    4. about availability zones
     5. about networking
     6. about EBS
     7. about cloudwatch
     8. about autoscaling
     9. about elastic load balancing
-    10. about reserved instances
-    11. about spot instances
-    12. about instance types
-    13. about VM import/export
+    10. instance billing types (i.e. ondemand, spot, reserved)
+    11. about instance types
+    12. about VM import/export
   1. based on some scenario, which ec2 pricing model should you use?
     - spot instances always the cheapest
       - if spot instance is removed by amazon, you wont be charged for partial hour of usage
@@ -1516,11 +1478,11 @@
         - if you only need it for a short period of time
   2. What are the 3 types of EBS and when would you use each
     - General purpose SSD (up to 10k iops)
-      + **TODO**
+      + 99.999% availability, great for boot volumes, small/medium databases, dev/test environments
     - provisioned IOPS SSD: (more than 10k IOPS)
-      + **TODO**
+      + designed for i/o intensive applications, e.g. large relational/nosql databases
     - magnetic: cheap, infrequently accessed storage
-      + **TODO**
+      + lowest cost, infrequently accessed data
   3. how many EC2 instances can 1 EBS volume be mounted to at the same time
     - ONE!!! DUH
   4. How can you connect a single storage volume to more than 1 EC2 at the same time ?
@@ -1544,9 +1506,88 @@
     - 5xx: server error (i.e.something is wrong with server config/code)
   11. how to enable encryption at rest using EC2 and elastick block store?
     - configure encryption when creating the EBS volume
-  12. [read the ec2 faq](https://aws.amazon.com/ec2/faqs/)
-
-
+  12. what is Amazon elastic compute (ec2) cloud ?
+    - web service providing resizable copmute capacity in the cloud - designed to make web-scale copmuting easier for developers
+  13. what are some useful APIs for programmatically managing your EC2 instances?
+    - RunInstances: launch an AMI on an instance
+    - DescribeInstances: check on the status of an instance
+    - TerminateInstances: umm i have no idea what TerminateInstances might do
+    - StopInstances: release the compute resource but preserve the dta on the EBS boot partition
+    - StartInstances: restart a stopped instance  
+  14. EBS boot vs local instance for storage
+    - local storage is part of the EC2 instance, and exists for the life of the instance, behind the scenes it is an S3 bucket
+    - EBS boot is distinct from the EC2 instance, and can be attached to any single instance at a given time
+  15. what is an AMI ?
+    - amazon machine image; packaged environment including all the necessary bits to setup and boot an instance
+    - are your unit of deployment, can be composed of building blocks; one configured as a web server, another for app server, another for database, etc
+  16. how are you billed for EC2?
+    - pricing is per instance-hour, partial hours are billed as full hours
+    - for two instances that transfer data, billed for data out AND data in
+  17. what are the 5 EC2 instance types?
+    1. General purpose:
+      - suitable for general purpose applications
+      - M3, M4: fixed performance
+      - T2: burtable performance
+    2. Compute optimized:
+      - more cpu resources than memory (ram)
+      - compute-intensive applications and high perofmrance computing (HPC) workloads
+      - C3, C4
+    3. Memory optimized
+      - more memory (ram) than cpu
+      - memory-intensive applications, e.g. database and caching
+      - R3, R4
+    4. GPU:
+      - P2: parallel processing capabilities via NVIDIA Tesla GPUs
+      - G2: 3D graphics  for applications using OpenGL and DirectX
+      - G2
+    5. Storage Optimized
+      - I2: low latency i/o capacity using SSD-based local instance storage for i/o intensive applications
+      - D2: high storage density and sequential i/o performance for data warehousing, Hadoop, and other data-intensive applicatinos
+  17. when do you use which instance type?
+    - T2: lowest cost, general purpuse
+      + use case: web servers/small dbs
+    - M4: general purpose
+      + use case: application servers
+    - M3: general purpose
+      + use case: application servers
+    - C4: compute optimized
+      + cpu intensive apps/dbs
+    - C3: compute optimized
+      + use case: cpu intensive apps/dbs
+    - R3: memory optimized
+      + use case: memory intensive apps/dbs
+    - G2: graphics/general purpose gpu
+      + use case:
+        - video encoding
+        - machine learning
+        - 3D application streaming
+    - I2: high speed storage
+      + use case:
+        - nosql dbs
+        - data warehousing
+        - etc
+    - D2: dense storage
+      - use case
+        - fileservers
+        - date warehousing
+        - hadoop
+    - when to use which EC2 instance type
+      - remember this acronym: DIRT MCG
+        + D for density
+        + I for IOPS
+        + R for RAM
+        + T for cheap general purpose (i.e. T2 Micro)
+        + M for main choice for general purpose apps
+        + C for compute
+        + G for graphics
+  18. when should you use a public IP vs an elastic IP?
+    - when changing the IP of a resource does not matter
+  19. when should you use enhanced networking?
+    - if your applications benefit from high packet-per-second performance and/or low latency networking
+  20. when should you use EBS vs EC2 local storage
+    - temporary data: use local instance
+    - permanent data: use EBS
+  21. what t
 
 # databases
   0. RDS and DynamoDB come up a lot in the exam! read the FAQs!
