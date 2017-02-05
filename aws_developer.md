@@ -1823,7 +1823,17 @@
     - provisioned read-throughput
     - provisioned write-throughput
     - indexed data storage
-
+  51. are you charged per item or % of item for throughput calculations
+    - you are charged for the entire size of the item even if you only return a portion
+  52. what is cross-region replication?
+    - maintain identical copies (i.e replicas) of a table in one/more regions
+  53. what cross-region replication modes are supported?
+    - one master table and multiple replica tables
+  54. what is a trigger?
+    - execute custom actions based on item-level updates on a table
+    - useful for: sending notifications, updating an aggregate table, syncing to other data sources
+  55. what is a stream?
+    - time-ordered sequence of item-level changes made to data in a table in the last 24 hours
 
 
 # rds
