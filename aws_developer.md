@@ -1672,7 +1672,7 @@
     - managed service:
       1. automatically partitions and re-partitions your data
       2. provisions additional server capacity
-      3. syncrhonously replicates data across three facilities in an AWS region (high availability and durability)
+      3. synchronously replicates data across three facilities in an AWS region (high availability and durability)
   2. what is read consistency?
     - the manner and timing in which the successful write/updat of an item is reflected in subsequent read operation of that same item
   3. what are eventual consistency reads?
@@ -1687,7 +1687,7 @@
       + comparison operators: =, <>, BETWEEN, IN
       + logical operators: NOT, AND, OR
   7. does dynamodb support expressions for key conditions, partition, and partition-sort keys?
-    -Yes, see the KeyConditionExpression parameter
+    - Yes, via KeyConditionExpression parameter
   8. when can you create a local secondary index?
     - when you create a table only
   9. when can you create a global secondary index
@@ -1786,8 +1786,48 @@
   38. can you update a specific element within a deeply nested json item?
     - yes
   39. what is the document sdk?
-    - datatypes wrapper for javascript that allows easy interoperability between js and dynamodb datatypes.
-
+    - datatypes wrapper for javascript that allows easy interoperability between js and dynamodb datatypes
+  40. is there a storage limit?
+    - no: dyanamob will automatically spread your data over multiple machines as your storage grows
+  41. is there a throughput limit?
+    - no, update the throughput setting via AWS console or UpdateTable API
+  42. how does dynamodb achieve high uptime and durability?
+    - by syncrhonously replicating data across three facilities in a given region
+  43. what are secondary indexes?
+    - are alternate keys that can be used for querying data from db
+      + a duplicate table is created that is auto synced to the base table
+      + projected (copied) attributes can be specified, or all attributes will be copied
+    - global: contain a partition/partition + sort keys that can be different from the table's primary key
+      + 5 max per table
+      + can be defined as a non-unique attribute
+      + support eventual consistency only
+      + provisioned throughput is handled separately from the base table
+      + only supports Query and Scan API
+      + created via the console/UpdateTable API with the GlobalSecondaryIndexes parm
+      + set, list, and map types cannot be used as sort keys
+    - local: has the same partition key but different sort key
+      + mainly for querying a subset of primary key data by a different value enabling easier filtering
+      + must be created when you create the table
+      + supports both strong and eventually consistent reads
+      + supports the Query API
+      + supports up to 20 projected attributes
+      + consumes the provisioned capacity of the base table
+  44. when should you use global secondary indexes?
+    - tracking relationships between attributes that have a lot of different values
+  45. what are item collections?
+    - any group of items that have the same partition key
+  46. what is the size limit of an item?
+    - 10gb
+  47. what is Fine-Grained Access Control (FGAC) ?
+    - table owner specifies who (caller) can access which items/attributes of the table and perform what actions (read/write)
+    - used in concert with ADS IAM
+    1. application requests security token that authorizes the app to access specific items in a table
+    2. incoming credentials are evalauted by dynamodb against IAM to authenticate request and determine which capabilies are permitted
+  48. how do you prevent users from accessing specific attributes?
+    - follow the principle of least privilege
+    - alternately permit everything in concert with a deny policy
+  49. how do you prevent users from adding invalid data to a table?
+    - use FGAC to specify which items can be changed
 # rds
 
 
