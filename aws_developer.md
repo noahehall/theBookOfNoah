@@ -1650,6 +1650,21 @@
     - memcached, redis
   7. what is DMS?
     - database migration services
+
+# dynamodb
+  0. what should you know about dynamodb?
+    1. about dynamodb
+    2. about data models and APIs
+    3. about scalability, availability & durability
+    4. about global secondary indexes
+    5. about local secondary indexes
+    6. about security and control
+    7. about pricing
+    8. about reserved capacity
+    9. about cross-region replication
+    10. about triggers
+    11. about streams
+    12. 
   8. when can you create a local secondary index?
     - when you create a table only
   9. when can you create a global secondary index
@@ -1715,6 +1730,9 @@
     - retrieve up to 100 items
     - retrieve items from multiple tables
     -
+
+# rds
+
 
 # S3
   1. what is the syntax for bucket URLs ?
