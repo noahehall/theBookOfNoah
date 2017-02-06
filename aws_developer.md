@@ -1070,6 +1070,7 @@
       - Message can contain upto 256KB of text, billed at 64KB chunks
       - Even though there is one message of 256Kb its basically 4 request for billing since (4 * 64KB)
       - Visibility timeout by default is 30 Seconds up to 12 hour maximum (ChangeMessageVisibility) / maximum visibility
+      - Visibility timeout expires that means there is a failure somewhere since that message was polled but not processed and hence not deleted so other some other process will poll the message again and visibility timeout starts again.
       - Maximum long polling timeout 20 seconds
   - SNS
     1. billing
@@ -1095,12 +1096,14 @@
       - S3 RRS(Reduced Redundant Storage)- Durability (99.99%), Availability (99.99 %) - less durability (data that can easily be regenerated - e.g thumbnails) - cheapest of all s3, less fault tolerant then the other two since you are willing to loose the data, reproducible data
       - Glacier - for archival only (3 to 5 hours restore time)
     3. buckets
-      -  link: https://s3-eu-west-1.amazonaws.com/ankittest <— https
+      - link: https://s3-eu-west-1.amazonaws.com/ankittest <— https
+      - Static website hosting: http://ankittestsite.s3-website-eu-west-1.amazonaws.com <— http (has to be for static hosting), you can turn it into SSL / https with cloudfront though
     4. versioning
       - once enable you cannot disable versioning / although it can be suspend it , if you want to turn it off delete the bucket and recreate (version id)
       - Once you delete the delete marker, you can get the file back that you have deleted while versioning on
       - every version is stored separately in the bucket for each version / might not be a good choice for cost perspective for large media files., multiple updates use case also not ideal for versioning.
       - Versioning’s MFA Delete Capability can be used to provide additional layer of security.
+      - Cross Region Replication - (requires versioning enabled on source and destination buckets)
     5. server side encryption
       - SSE: S3 Server Side Encryption with S3 managed keys, (amazon AES 256 handled for you) - click on the object and encrypt
       - SSE: KMS - AWS Key management services , managed keys - additional charges / audit trail of keys, amazon manage keys
@@ -1114,6 +1117,18 @@
       - Import / Export Snowball
         1. Import to S3
         2. Export to S3
+    8. transfer acceleration
+      - Utilize local edge locations to upload content to S3 - incur extra cost
+  - VPC
+    1. mapping
+      - Can span multiple AZ, but can’t span multiple regions
+      - One Subnet == one AZ, you can have security group spanning multiple AZ, ACL’s span across AZ (assign sg and ACL to two different subnets)
+      - 1 subnet can have 1 routetable
+    2. defaults
+      - When you create Custom VPC it creates default security group, default network ACL and default route table., it doesn’t create default Subnet
+      - when you create internet gateway, by default its detached, attach it to VPC then, only 1 IGW per VPC
+    3. flowlogs
+      - to capture all the traffic information into logs - logs everything (create IAM role and create cloud watch log group - and log stream)
 
 # AWS
   1. which services are free?
