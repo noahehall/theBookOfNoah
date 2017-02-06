@@ -2210,6 +2210,11 @@
     - by default 200, you can request more though
 
 # Simple Workflow Service: SWF
+  0. what should you know about SWF?
+    1. about SWF
+    2. workers and deciders
+    3. SWF functionality
+    4.
   1. what is the main difference between SWF and SQS tasks
     - SWF:
       + tasks are only assigned once and never duplicated
@@ -2227,8 +2232,41 @@
   4. when would you use SWF vs SQS?
     - human interaction? use SWF
     - shorter (sub 12 hour) ? use SQS
+  5. what is SWF?
+    - service for coordinating work across distributed application components
+    - manages execution dependencies, scheduling and concurrency in accordance with the logical flow of the application
+    - useful for: media processing, backends, business process workflows, analytics pipelines
+    - use cases:
+      1. video encoding using S3 and EC2
+      2. processing large product catalogs using Amazon Mechanical Turk
+      3. migrating components from datacenter to the cloud
+  6. what are tasks?
+    - represent invocatinos of various processing steps n an application which can be performed by executable code, web service calls, human actions, and scripts
+  7. what is the AWS Flow Framework?
+    - helps developers use asynchronous programming int he development of their applications
+    - its an SDK, a programming framework for developing SWF based applications
+  8. what are workers?
+    - programs that interact with SWF to get tasks, process them, and return their results
+    - implements an application processing step
+  9. what are deciders?
+    - a program that coordinates application execution across workers, i.e. their ordering, concurrency and scheduling according to the application logic
+    - handles decision tasks for when a workflow execution has transitions such as an activity task completing/timing out
+  10. what is registration?
+    - one-time step for each workflow and acitivity
+    - provide timeout values and task distribution parameters
+  11. what are domains?
+    - logical containers for application resources that are created at the AWS account level
+    - each application resource, e.g. workflow/activity type and execution belong to exactly one domain
+    - can be created for dev, test, and production environmentss
+  12. what is a decision task?
+    - contains information on the inputs, outputs, and current state of previously initiated activity tasks
+
 
 # Simple Queue Service (SQS)
+  1. what is SQS?
+    - hosted queues for storing messages while they travel between appliations/microservices
+
+
 
 # Simple Notification Service (SNS)
 
