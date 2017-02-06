@@ -2157,8 +2157,122 @@
   12. how much does elastic beanstalk cost?
     - nothing, but you pay for the resources it uses
 
+# cloud formation
+  0. what you should know about cloudformation
+    1. about cloudformation
+    2. billing
+    3. limits and restrictions
+    4. regions and endpoints
+  1. is cloud formation free?
+    - YES! but you have to pay for the resources it uses
+  2. what is the default scripting launguage for cloudformation ?
+    - it is a JSON file containing:
+      + db name, key pair, ec2 info, outputs, etc
+  3. what can you output ?
+    - you can ouput the DNS name of a resource and programmatically using the function get attribute
+  4. what is the fn::GetAtt?
+    - it allows you to programmatically get resource information when creating resources with a cloud formation script/template
+  5. what is the default rollback behavior?
+    - on error it will rollback automatically and delete all of the resources it created
+  6. what is cloudformation?
+    - easy way to create a collection of related AWS resources and provision them in an orderly and predictable fashion
+  7. how is cloudformation different from elastic beanstalk?
+    - beanstalk: deploy and run apps, integrated with developer tools
+    - cloudformation: provisioning mechamisn for a broad range of AWS resources supporting the infrasture needs of different types of applicatons
+  8. what is a cloudformation template?
+    - A json/yaml format describing all the AWS resources you need to deploy your apps
+    - contains:
+      - list of template params: values supplied at stack creation time
+      - list of output values: e.g. complete url to a web application
+      - list of data tables: e.g. AMI names
+      - list of aws resources and their configuration values
+      - template file format version number
+  10. what is a cloudformation stack?
+    - the set of AWS resources that are created and managed as a single unit when cloudformation instantiates a template
+  11. whats the cloudformation workflow?
+    1. give the stack a new name
+    2. select/create template
+    3. specify any params/configuration
+    4. create and deploy
+  12. can you manage individual AWS resources part of a cloudformation stack?
+    -  yes, you regain full control of all elmenets of your infrastructure
+  13. can you install software at stack creation time?
+    - yes, via a set of application bootstrapping scripts that enable you to install packages, files, and services on your ec2 instances
+  14. can you use cloudformationwith chef/puppet?
+    - yes
+  15. can stack creation wait for your app to start up?
+    - yes, through a 'WaitCondition' resource that acts as a barrier, blocking the creation of other resources until a completion signal is received from an external resource (e.g. your app, or management system)
+  16. can you update a stack after it's created?
+    - yes, you can modify/update the resources in an existing stack in a controlled and predictable way
+  17. how much does cloudformation cost?
+    - free, but you pay for the services
+  18. how many stacks can yo have?
+    - by default 200, you can request more though
 
+# Simple Workflow Service: SWF
+  1. what is the main difference between SWF and SQS tasks
+    - SWF:
+      + tasks are only assigned once and never duplicated
+      + task-oriented API
+      + tasks are tracked at the application level
+    - SQS:
+      + tasks can be assigned multiple times and duplicated if tasks are not completed in a certain time limit,
+      + message-oriented API
+      + you have to implement your own application level message tracking, especially if your application uses multiple queues
+  2. what is the difference between SWF and SQS workflow lengths?
+    - SWF: up to 1 year
+    - SQS: up to 12 hours
+  3. what is the maximum time a workflow can exist?
+    - 1 year and the value is always measured in seconds
+  4. when would you use SWF vs SQS?
+    - human interaction? use SWF
+    - shorter (sub 12 hour) ? use SQS
 
+# Simple Queue Service (SQS)
+
+# Simple Notification Service (SNS)
+
+# sdk
+  1. [what SDKs are currently available?](https://aws.amazon.com/tools)
+    - android, browser, ios, java, .net, node, php, python, ruby, go, c++, aws mobile sdk, aws iot device sdk
+  2. what is the default region for sdks who have them?
+    - US-EAST-1
+  3. which SDKs have default regions?
+    - java
+  4. which SDKs do not have default regions?
+    - node
+  5. if you dont set a default region, what will be used?
+    - US-EAST-1
+
+# Shared responsibility models
+  1. what is shared responsibility models?
+    - based on the type of service, who is responsible for which part of the infrastructure layer
+  2. what are the shared responsibility models?
+    - in order from greatest to least responsibility from the customer perspective
+      + infrastructure services: e.g. EC2
+      + container services: e.g. RDS
+      + abstracted services: e.g. S3
+  3. what are all the layers (from top to bottom) in the shared responsibility models:
+    - customer data
+    - client side data encryption, dta integrity authentication
+    - server side encryption
+    - network traffic protection
+    - platform and application management
+    - operating system, network, and firewall configuration
+    - configuration services: compute, storage, databases, Networking
+    - aws global infrastructure: regions, availability zones, edge locations
+  4. what is amazon responsible for in each of the 3 models?
+    - infrastructure service:
+    - container service: operating system and application level
+    - abstracted service: everything except the client side encryption and customer data
+
+# other notes for developer exam
+  - It is possible to transfer a reserved instance from one Availability Zone to another.
+    - yes
+  - You have an EC2 instance which needs to find out both its private IP address and its public IP address. To do this you need to;
+    - retrieve instance metadata from 169.254.169.254/latest-metadata
+  - where can you retrieve instance metadata (user or instance)
+    - 169.254.169.254
 
 # cloudfront
   1. what is an edge location ?
@@ -2186,77 +2300,3 @@
     - no it costs each time
   11. can you upload or download from cloudfront ?
     - you can do both
-
-# cloud formation
-  1. is cloud formation free?
-    - YES! but you have to pay for the resources it uses
-  2. what is the default scripting launguage for cloudformation ?
-    - it is a JSON file containing:
-      + db name, key pair, ec2 info, outputs, etc
-  3. what can you output ?
-    - you can ouput the DNS name of a resource and programmatically using the function get attribute
-  4. what is the fn::GetAtt?
-    - it allows you to programmatically get resource information when creating resources with a cloud formation script/template
-  5. what is the default rollback behavior?
-    - on error it will rollback automatically and delete all of the resources it created
-
-# Simple Workflow Service: SWF
-  1. what is the main difference between SWF and SQS tasks
-    - SWF:
-      + tasks are only assigned once and never duplicated
-      + task-oriented API
-      + tasks are tracked at the application level
-    - SQS:
-      + tasks can be assigned multiple times and duplicated if tasks are not completed in a certain time limit,
-      + message-oriented API
-      + you have to implement your own application level message tracking, especially if your application uses multiple queues
-  2. what is the difference between SWF and SQS workflow lengths?
-    - SWF: up to 1 year
-    - SQS: up to 12 hours
-  3. what is the maximum time a workflow can exist?
-    - 1 year and the value is always measured in seconds
-  4. when would you use SWF vs SQS?
-    - human interaction? use SWF
-    - shorter (sub 12 hour) ? use SQS
-
-# Shared responsibility models
-  1. what is shared responsibility models?
-    - based on the type of service, who is responsible for which part of the infrastructure layer
-  2. what are the shared responsibility models?
-    - in order from greatest to least responsibility from the customer perspective
-      + infrastructure services: e.g. EC2
-      + container services: e.g. RDS
-      + abstracted services: e.g. S3
-  3. what are all the layers (from top to bottom) in the shared responsibility models:
-    - customer data
-    - client side data encryption, dta integrity authentication
-    - server side encryption
-    - network traffic protection
-    - platform and application management
-    - operating system, network, and firewall configuration
-    - configuration services: compute, storage, databases, Networking
-    - aws global infrastructure: regions, availability zones, edge locations
-  4. what is amazon responsible for in each of the 3 models?
-    - infrastructure service:
-    - container service: operating system and application level
-    - abstracted service: everything except the client side encryption and customer data
-
-# sdk
-  1. [what SDKs are currently available?](https://aws.amazon.com/tools)
-    - android, browser, ios, java, .net, node, php, python, ruby, go, c++, aws mobile sdk, aws iot device sdk
-  2. what is the default region for sdks who have them?
-    - US-EAST-1
-  3. which SDKs have default regions?
-    - java
-  4. which SDKs do not have default regions?
-    - node
-  5. if you dont set a default region, what will be used?
-    - US-EAST-1
-
-# other notes for developer exam
-  - It is possible to transfer a reserved instance from one Availability Zone to another.
-    - yes
-  - You have an EC2 instance which needs to find out both its private IP address and its public IP address. To do this you need to;
-    - retrieve instance metadata from 169.254.169.254/latest-metadata
-  - where can you retrieve instance metadata (user or instance)
-    - 169.254.169.254
