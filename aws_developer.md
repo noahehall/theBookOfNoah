@@ -2458,7 +2458,6 @@
     - if you ever see 'push', pick SNS
   9. can you customize each message based on the protocol?
     - Yes!
-
 # sdk
   1. [what SDKs are currently available?](https://aws.amazon.com/tools)
     - android, browser, ios, java, .net, node, php, python, ruby, go, c++, aws mobile sdk, aws iot device sdk
