@@ -2263,8 +2263,59 @@
 
 
 # Simple Queue Service (SQS)
+  0. what should you know about SQS?
+    1. about SQS
+    2. billing
+    3. FIFO queues
+    4. features, functionality, and interfaces
+    5. security and reliability
+    6. compliance
+    7. queue sharing
+    8. service access and regions
   1. what is SQS?
-    - hosted queues for storing messages while they travel between appliations/microservices
+    - message oriented hosted queues for storing messages while they travel between appliations/microservices
+    - useful for
+      1. integration SQS with other SWS services
+      2. create work queues with each message being a task to be completed by a process
+      3. build a microservice architecture and use message queues to connect your microservices
+  2. does SQS provide message ordering?
+    - yes: FIFO queues preserve the exact order in which messages are sent and received
+  3. does SQS guarantee delivery of messages?
+    - standard queues provide at-least-once delivery
+    - FIFI queues provide exactly-once processing
+  4. how much does SQS cost?
+    - costs calculated per request + data transfer charges
+  5. difference between standard queues and FIFO queues?
+    - FIFO: first in first out, exactly once processing
+    - standard: messages are not ordered, and can be processed more than once
+  6. can you convert standard queues into FIFO queues?
+    - no, type of queue must be set at creation
+  7. what are message groups ?
+    - messages are grouped into distinct, ordered 'bundles' within a FIFO queue
+    - for each message group ID, all messages are sent & received in strict order
+  8. what is a visibility timeout?
+    - period of during which SQS prevents other consuming components from receiving and processing a message
+    - the max visibility is 12 hours
+  9. does SQS support message metadata?
+    - yes, up to 10 metadata attributes
+  10. what is SQS long polling?
+    - a way to retrieve messages from SQS queue
+    - while regular short polling returns immediately if the queue is empty, long polling doesn't return until a message arrives/the long poll times out
+    - max long poll timeout is 20 seconds
+  11. how can I fan out identical messages to multiple SQS queues
+    1. use SNS to create a topic
+    2. create and subscribe multiple SQS standard queues to the SNS topic
+    3. whenever a message is sent to the SNS topic, it is distributed/fanned out to all of the SQS message queues
+  12. how long can you keep messages in SQS message queues?
+    - from 1 to 14 days
+    - default is 4 days
+    - messages are automatically deleted
+  13. what kind of data can I include in a message?
+    - can contain up to 256kb of text data
+    - including xml, json, and unformatted text
+  14. what is Queue sharing?
+    - share a queue with naothe AWS user
+    - via policy statements: AddPermission, RemovePermission, SetQueueAttributes, GetQueueAttributes
 
 
 
