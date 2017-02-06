@@ -2316,11 +2316,86 @@
   14. what is Queue sharing?
     - share a queue with naothe AWS user
     - via policy statements: AddPermission, RemovePermission, SetQueueAttributes, GetQueueAttributes
+  15. how many and large can messages be?
+    - a single message can be 256kb
+    - there can be 1 to 10 messages per request up to 256kb
+    - a request can return a payload up to 256kb
+  16. what is the general flow of SQS?
+    - a compponent (e.g. web service) posts messages to queue with a specific Visibility Timeout Clock
+    - asynchronously pull task messages from queue
+    - process task messages
+    - write 'task complete' message to another queue and deletes original message from queue
+      - this must happen during the visibility timeout period else another processer will pull the task message (assume its a failure)
+    - delete the original task message
+    - check for more task messages in the worker queue
+  17. do you push or pull messages from the queue?
+    - pull!
+  18. how do EC2 instances retrieve messages from SQS?
+    - polls SQS
+  19. what is a task message Visibility Timeout Clock?
+    - task message be visible for a default 30 seconds after some processer component retrieves it
+    - this is the max time a processer has to complete processing the message before it returns to the queue
+  20. how should you design your system to  use SQS?
+    - so that processong a message more than once does not create any errors or inconsistencies
+  21. how are SQS task messages billed ?
+    - each 64kb of message is billed as 1 requesst
+      + i.e. a single API call with 256kb payload will be billed as four requests
+    - first 1 mill are free
+    - .50c per 1 mill SQS request per month
+  22. what service uses the term 'decouple' ?
+    - SQS! always pick SQS if they say 'decouple' ;)
+  23. how many times can a task message be delivered?
+    - multiple times, in any order
+  24. how would you manage task message priority ?
+    - create multiple queues, and check each queue in the order you desire
+  25. what is the max Visibility Time Out for a task message ?
+    - 12 hours
+  26. how do you extend the Visibility Time out
+    - use the ChangeMessageVisibility action to specify a new timeout value
+    - SQS restarts the timeout period using the new value
+  27. what is SQS Long Polling?
+    - polls the QUEUE and doesnt end the connection until a message arrives in the queue
+  28. what is the maximum Long Poll Time Out?
+    - 20 seconds
+  29. what is SQS short polling?
+    - polls the queue and returns immediately, with/without a message
+  30. polling in tight loops burns CPU cycles and encures fees, how do you stop this?
+    - setup Long Polling any only poll the task message queue ever 20 seconds
+  31. what is fanning out?
+    - a way to distribute SNS messages to multiple queues
+    - where multiple SQS queue are subscribed to an SNS topic
+    - when a message is sent tot he SNS topic, the message will be fanne out to the SQS queues
+      + i.e. SNS will deliver the message to all SQS queues that are subscribed to the topic
 
 
 
 # Simple Notification Service (SNS)
-
+  1. when should you use SNS/SQS ?
+    - SNS: when you need to push messages
+    - SQS: when you need to pull messages
+  2. what is the difference between SNS and SQS
+    - both messaging services in AWS
+    - SNS - push
+    - SQS = polls
+  3. what is SQS pricing ?
+    - based on delivery mechanism + total requests
+    - .50 per 1 mill SNS requests
+    - .06 per 100k notification deliveries over http
+    - .75 per 100 notification deliveries over SMS
+    - 2.00 per 100 notification deliveries over email
+  4. what data format is SNS?
+    - JSON
+  5. can you add any email as a subscriber to a topic?
+    - Yes! but they must confirm they want to receive the email
+  6. how long do subscriptions last without confirmation ?
+    - recipients have 3 days to subscribe
+  7. what type of protocols can be used with Topic Subscriptions?
+    + http, https, email, email + json, SQS, SMS text message, application
+  8. when do you use SNS?
+    - whenever you need PUSH messaging
+    - if you ever see 'push', pick SNS
+  9. can you customize each message based on the protocol?
+    - Yes!
 # sdk
   1. [what SDKs are currently available?](https://aws.amazon.com/tools)
     - android, browser, ios, java, .net, node, php, python, ruby, go, c++, aws mobile sdk, aws iot device sdk
