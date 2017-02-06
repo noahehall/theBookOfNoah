@@ -1050,6 +1050,71 @@
   - dynamoDB is the **MOST IMPORTANT** exam topic
   - [study notes from discussion forum](https://acloud.guru/forums/aws-certified-developer-associate/discussion/-KUdI5f2LNbi4wvK7v4I/how_to_pass_aws_certified_deve)
 
+# [MUST KNOW](https://acloud.guru/forums/aws-certified-developer-associate/discussion/-KUdI5f2LNbi4wvK7v4I/how_to_pass_aws_certified_deve)
+  - dynamodb
+    1. provisioned throughput calculations
+      1. read eventually consistent: Size of Read Rounded to nearest 4KB Chunk / 4 KB * no of items ) / 2
+      2. read strongly consistent: Size of Read Rounded to nearest 4KB Chunk / 4 KB * no of items ) / 1
+      3. write: Size of write in KB * no of items
+    2. Query
+      - Query operation finds item in a table using only primary key attribute values , must provide partition attribute name and the value to search for, you can optionally provide a sort key attribute name and value to refine search results
+      - Default Queries are going to be Eventually consistent but can be changed to StronglyConsistent.
+    3. Scan
+      - Scan operation is basically examines every item - e.g. dumping the entire table, by default Scan returns all the data attributes but we could use ProjectionExpression parameter to only return a selected attributes.
+    4. errors
+      - When you exceed your maximum allowed provisioned throughput for a table or one or more global secondary index you will get 400 HTTP Status code - ProvisionedThroughputExceededException
+    5. writes
+      - if data is critical and no margin of error then must use Idempotent conditional write.
+  - SQS
+    1. messages
+      - Message can contain upto 256KB of text, billed at 64KB chunks
+      - Even though there is one message of 256Kb its basically 4 request for billing since (4 * 64KB)
+      - Visibility timeout by default is 30 Seconds up to 12 hour maximum (ChangeMessageVisibility) / maximum visibility
+      - Maximum long polling timeout 20 seconds
+  - SNS
+    1. billing
+      - to HTTP: $0.06 / 100,000 notifications deliveries
+      - to EMAIL: $2 / 100,000 notifications deliveries
+      - to SMS: $0.75 / 100 notifications deliveries
+  - SWF
+    1. tasks
+      - TASK is only assigned ONCE and NEVER DUPLICATED (key difference from SQS where messages can be processed multiple times)
+    2. workflows
+      - Maximum workflow processing time can 1 year (equivalent seconds) - SQS is 12 hours processing time
+  - CloudFormation
+    1. API
+      - Fn::GetAtt - values that you can use to return result for an AWS created resource or used to display in output
+  - S3
+    1. uploads
+      - The total volume of data and number of objects you can store are unlimited. Individual Amazon S3 objects can range in size from 1 byte to 5 terabytes.
+      - You can use a Multipart Upload for objects from 5 MB to 5 TB in size (Exam question, scenario where more than 5GB file needs to be uploaded)
+      - For PUTS of New Objects (Read after Write Consistency), For Overwrite PUTS and DELETE (Eventual Consistency)
+    2. storage tiers/classes
+      - S3 Standard - Durability (11 9s), Availability (99.99 %) - reliable regular for just about everything
+      - S3 IA (Infrequent Access) - Durability (11 9s), Availability (99.9 %) - accessed every 1 month to 6 months or so (infrequent) but rapid access and low retrieval time (few ms)
+      - S3 RRS(Reduced Redundant Storage)- Durability (99.99%), Availability (99.99 %) - less durability (data that can easily be regenerated - e.g thumbnails) - cheapest of all s3, less fault tolerant then the other two since you are willing to loose the data, reproducible data
+      - Glacier - for archival only (3 to 5 hours restore time)
+    3. buckets
+      -  link: https://s3-eu-west-1.amazonaws.com/ankittest <— https
+    4. versioning
+      - once enable you cannot disable versioning / although it can be suspend it , if you want to turn it off delete the bucket and recreate (version id)
+      - Once you delete the delete marker, you can get the file back that you have deleted while versioning on
+      - every version is stored separately in the bucket for each version / might not be a good choice for cost perspective for large media files., multiple updates use case also not ideal for versioning.
+      - Versioning’s MFA Delete Capability can be used to provide additional layer of security.
+    5. server side encryption
+      - SSE: S3 Server Side Encryption with S3 managed keys, (amazon AES 256 handled for you) - click on the object and encrypt
+      - SSE: KMS - AWS Key management services , managed keys - additional charges / audit trail of keys, amazon manage keys
+      - SSE: C - Server side encryption with Customer provided keys - you manage encryption keys
+    6. client side encryption
+      - you encrypt the data on client side and upload to s3
+    7. import/export
+      - Import / Export Disk
+        1. Import to S3, EBS, Glacier
+        2. export from S3
+      - Import / Export Snowball
+        1. Import to S3
+        2. Export to S3
+
 # AWS
   1. which services are free?
     - usually orchestration services, e.g.: cloudformation, elastic beanstalk, autoscaling, opworks
@@ -2261,7 +2326,6 @@
   12. what is a decision task?
     - contains information on the inputs, outputs, and current state of previously initiated activity tasks
 
-
 # Simple Queue Service (SQS)
   0. what should you know about SQS?
     1. about SQS
@@ -2367,8 +2431,6 @@
     - when a message is sent tot he SNS topic, the message will be fanne out to the SQS queues
       + i.e. SNS will deliver the message to all SQS queues that are subscribed to the topic
 
-
-
 # Simple Notification Service (SNS)
   1. when should you use SNS/SQS ?
     - SNS: when you need to push messages
@@ -2396,6 +2458,7 @@
     - if you ever see 'push', pick SNS
   9. can you customize each message based on the protocol?
     - Yes!
+
 # sdk
   1. [what SDKs are currently available?](https://aws.amazon.com/tools)
     - android, browser, ios, java, .net, node, php, python, ruby, go, c++, aws mobile sdk, aws iot device sdk
