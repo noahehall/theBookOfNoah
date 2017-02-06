@@ -1436,7 +1436,6 @@
     - logical entity within a VPC that allows connectivity only to S3
     - routes requests to and responses from S3 back to the VpC
 
-
 # EC2
   0. what should you know about EC2s?
     1. about EC2s
@@ -2123,12 +2122,43 @@
       + uploading to a centralized bucket from eogrpahically dispersed locations
       + regularly transferring  GBs or TBs of data across continents
 
-
 # Elastic Beanstalk
+  0. what should you know about EB?
+    1. about EB
+    2. databases and storage
+    3. security
+    4. managed platform updates
+    5. billing
+    6. support
   1. is elastic beanstalk free ?
     - yes! but you pay for any resources it uses
   2. what platforms come preconfigured when setting up elastic beanstalk?
-    - nodejs, php, python, ruby, tomcat, .net, java, go docker
+    - nodejs, php, python, ruby, tomcat, .net, java, go, docker
+  3. what is elastic beanstalk ?
+    - managed service enabling users to quickly deploy and maangement applications
+    - manages deployment, capacity provisioning, load balancing, auto-scaling and health monitoring.
+  4. what elements of an application do developers control?
+    - operating system, database, storage, ec2 login, availability zones, security, cloudwatch, server setting, server environmental variables, application components (e.g. memory caching), log files
+  5. what cloud resources are available?
+    - most of AWS
+    - amazon linux/windows server 2012 R2 AMI
+  6. can you run multiple versions ofyour application?
+    - yes, 75 applications and 1k versions, 200 environments
+  7. what is required to signup for AWS?
+    - phone number AND email
+  8. how is my data stored in elastic beanstalk?
+    - application and log files are stored in S3
+  9. what database can I use with elastic beanstalk?
+    - RDS, DynamoDB, Microsoft SQL server, oracle, or anything that can run on an EC2
+  10. can i make my application private?
+    - yes, by using Amazon VPC to provision a private, isolated section of your app
+  11. How can I keep the underlying platform environment up to date?
+    - opt-in to having AWS environments automatically updated during a maintenance window you specify
+  12. how much does elastic beanstalk cost?
+    - nothing, but you pay for the resources it uses
+
+
+
 
 # cloudfront
   1. what is an edge location ?
