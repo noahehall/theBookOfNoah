@@ -1064,7 +1064,11 @@
     - isolated locations inside of a region to protect against failures in other availability zones within the region
     - e.g. us-east-1b, us-east-1c, us-east-1c
       + notice the change in the last letter
-    -
+  6. what is IPv4 ?
+    - Internet Protocol version 4 i sthe original 32bit addressing scheme
+    - the continued growth of the net means that all available IPv4 addresses will be utilized over time
+  7. what is IPv6?
+    - the new addressing mechanism designed to overcome the global address limitation
 
 # IAM
   0. what should you know about IAM?
@@ -1425,6 +1429,13 @@
       8. source/destination check flag
   66. can i attach a network interface in one VPC to an instanc ein another VPC?
     - no, the network interface must be in the same VPC and availability zone
+  67. what is a db subnet group?
+    - collection of subnets designated specifically for RDS instances in a VPC
+    - should hve atleast one subnet for every availability zone
+  68. what is a VPC endpoint for S3?
+    - logical entity within a VPC that allows connectivity only to S3
+    - routes requests to and responses from S3 back to the VpC
+
 
 # EC2
   0. what should you know about EC2s?
@@ -1835,11 +1846,102 @@
   55. what is a stream?
     - time-ordered sequence of item-level changes made to data in a table in the last 24 hours
 
-
 # rds
-
+  0. what should you know about RDS?
+    1. about RDS
+    2. about RDS instances
+    3. about billing
+    4. about hardware and scaling
+    5. about security
+    6. about configuration
+    7. about multi-az deployments and read replicas
+    8. about monitoring
+  1. what is RDS ?
+    - managed service for creating, operating, backing up and scaling relational databases in the cloud
+    - amazon aurora, mysql, mariadb, oracle, sql server, postgresql
+  2. what is a DB instance?
+    - a database env in the cloud with compute & storage resources
+    - think an EC2 specifically configured for a database
+    - is accessed via an endpoint that you retrieve from the API or console
+    - can have up to 40 instances by default
+  3. what is enhanced monitoring?
+    - provides you with over 50 cpu, memory, file system, and disk metrics
+    - can be integrated with external tools/dashboards via exported json payloads
+  4. how do you test an existing DB instance before upgrading its version?
+    - creating a DB snapshot > create a new DB instance from the snapshot > initiate a version for the new DB instance
+  5. what is the cost of RDS?
+    - DB instance hours based on the class (micro, m4.large, etc) of the DB instance type
+    - storage per gb per month
+    - i/o requests per month
+    - provisioned iops per month
+    - backup storage
+    - data transfer
+  6. can you modify your DB instance type after creation?
+    - yes, changes are applied during the maintenance window' you set, less you specify 'apply-immediately'
+  7. where is your your data stored?
+    - on EBS volumes for db and logs
+  8. what types of storage are available?
+    1. general purpose ssd storage
+      - suitable for a broad range of db workloads with moderate i/o requirements
+    2. provisioned iops ssd storage
+      - fast, predictable and consistent i/o performance
+      - you specify the iops rate on creaation
+      - optimized for i/o intensive, transactional (oltp) db workloads
+    3. magnetic storage
+      - useful for small db workloads where data is infrequently accessed
+  9. what are automated backups?
+    - enables point in time recovery of your db instance
+    - amazon performs a daily snapshot during the 'preferred backup window' time you specify
+    - stored in s3
+  10. what are db snapshots?
+    - user-initiated backups of your db instance
+    - stored in s3
+  11. what is a backup window?
+    - user-defined period of time during which your db instance is backed up
+  12. can you move a DB instance not in a VPC into a VPC
+    - yes, via the aws console
+  13. can you move a DB instance in a VPC out of the VPC
+    - no,
+  14. what is an RDS master user account?
+     - used within the context of RDS to control access to your DB instances
+     - is distinct from AWS user account
+  15. what are multi-az deployment?
+    - replication designed to increase db availability and guard against outages
+    - AWS automatically creates and manages a 'standby' replicain a different availability zone
+    - available on db creation, or can convert an existing one
+  16. what are read replicas?
+    - replication designed to scale beyond the capacity restraints of a single db instance for read-heavy db workloads
+    - require automatic backups of your db instance with the backup retention period to a value other than 0
+    - can have a max of 5 per source db instance
+    - can be converted to a 'standalone' db instance with write capabilities
+  17. what events would cause RDS to initiate a failover to a replica?
+    - loss of availability in primary availability zone
+    - loss of network connectivity to  primary
+    - compute unit failure on primary
+    - storage failure on primary
+  18. when should you use an RDS read replica?
+    - scaling beyond the compute or i/o capacity of a single db sntance for read-heavy db workloads
+    - serving read traffic while the source db instance is unavailable
+    - business reporting/datawarehousing scenarios
 
 # S3
+  0. what should you know about s3?
+    1. about s3
+    2. billing
+    3. security
+    4. data protection
+    5. s3 standard - infrequent access
+    6. glacier
+    7. event notifications
+    8. static website hosting
+    9. storage management
+    10. s3 inventory
+    11. object tags
+    12. cross-region replication
+    13. s3 transfer acceleration
+    14. s3 and IPv6
+  0. what is S3?
+    - simple storage service for highly scalable, reliable, and low latency data storage
   1. what is the syntax for bucket URLs ?
     - `https://s3-REGION-NAME.amazonaws.com/BUCKET-NAME`
   2. what status code will be returned on successful file uploads to buckets?
@@ -1864,12 +1966,22 @@
     - eventual consistency
     - takes time to propagate (not immediate)
   11. what kind of storage classes/tiers are available
-    - S3 (standard): durable, immediately available, frequently accessed
-    - S3 IA: durable, immediately available, infrequently accessed)
+    - S3 (standard):
+      + 99.99% availability
+      + 99.99999999% durability
+      + durable, immediately available, frequently accessed
+    - S3 IA:
+      + 99.9% availability
+      + 99.99999999% durability
+      + durable, immediately available, infrequently accessed
       + must be >= 128kb and 30 days after creation date
-    - S3 reduced redundancy storage: data that is easily reproducible, e.g. thumbnails
-    - Glacier: archival data,  3-5 hours before accessing
+    - S3 reduced redundancy storage:
+      + data that is easily reproducible, e.g. thumbnails
+    - Glacier:
+      + archival data,  3-5 hours before accessing
       + must be 30 days after S3 IA date
+    - Reduced Redundancy Storage: RRS
+      + reduce costs by storing noncritical, reproducible data at lower levels of redundancy than S3 standard
   12. what makes up an S3 object?
     - key (name)
     - value (data)
@@ -1879,13 +1991,12 @@
       - ACL: access contorl list
       - torrent
   13. what is the format for s3 urls?
-    - your.bucket.name.s3-website-REGION.amazonaws.com
-  13. [read the S3 FAW](https://aws.amazon.com/s3/faqs/)
+    - yourbucketname.s3-website-REGION.amazonaws.com
   14. can you remove versioning from a bucket after you enable it?
     - once bucket is turned on, it cannot be removed (but it can be disabled)
   15. what is versioning?
-    - stores all versions of an object, even deleted ones
-  16. how do add security to S3 versioning
+    - preserve, retrieve and restores all versions of an object, even deleted ones
+  16. how do you add security to S3 versioning
     - setup versioning's MFA delete capability
   17. can lifecycle management be used with versioning?
     - yes
@@ -1908,7 +2019,8 @@
     - client side encryption
       + you encrypt data yourself on the client side and uploading to S3 and its saved as encrypted data
   21. what types of storage gateways available on S3?
-    - file gateway: for flat files, sotred directly on S3
+    - file gateway:
+      + for flat files, stored directly on S3
     - volume gateway:
       + stored volumes: entire dataset is stored on site and is backed up asynchronously backed up to s3 (block based storage)
       + cached volumes: entire data set is stored on s3 and the most frequenlty accessed data is cached on site
@@ -1922,10 +2034,11 @@
     - import and export to s3
   24. who benefits most from S3 transfer acceleration?
     - people in far away locations
-  25. what characteristics exist from S3 static websites
+  25. what characteristics exist for S3 static websites
     - only static content (no php/.net)
+    - useful for websites containing: html, image, video, client-side js
     - serverless
-  26. what is cors?
+  26. what is CORS
     - cross origin resource Sharing
     - when you have assets in multiple origins/domains
     - need to enable cors on the resources buckdt and state the URL for the origin that will be calling the bucket
@@ -1936,6 +2049,80 @@
     - advanced encryption standard (AES) 256
   29. what is the largest size file you can transfer to S3 using a put operation?
     - 5gb, after that you must use multipart upload
+  30. how do you delete multiple objects?
+    - use Multi-Object Delete to send multiple object keys in a single request to speed up your deletes
+  31. how is S3 data organized
+    - as a simple key-based object store
+    - you assign a unique object key that can be later used to retrieve the data
+      + keys can be any string, and constructed to mimic hierarchical attributes
+  32. can S3 data be downloaded via the BitTorrent protocol?
+    - yes, simply at the ?torrent param at the end of your GET request in the REST API
+  33. where is S3 data stored?
+    - specify a region when creating an S3 bucket
+    - within that region your objects are redundantly stored on multiple devices across multiple facilities
+  34. how do you decide which region to store data?
+    - near your customers, data centers, or other AWS resources in order to reduce data access latencies
+    - remote from other operations for geographc redundancy and disaster recovery purposes
+    - enables you to address specific legal and regulatory requirements
+    - reduce storage costs by choosing a lower priced region to save money
+  35. how much does S3 cost?
+    - per gb for storage
+    - network transferred in
+    - network data out
+    - data requests
+    - data retrieval
+  36. how secure is S3?
+    - only the bucket and object owners have access to S3 resources by default
+    - supports user authentication
+    - bucket policies and access control lists
+    - securely up/download via https
+    - data access auditing
+    - data encryption
+  37. how do you get data into S3-IA
+    - directly put them there
+    - set lifecycle policies to transition from standard to IA
+  38. how do you get data into Glacier?
+    - use lifecycle rules to automatically archive sets of s3 object to glacier based on lifetime
+  39. how long does it take to retrieve objects from Glacier?
+    - expedited: 1-5 minutes
+    - standard: 3-5 hours
+    - bulk: 5-12 hours
+  40. how much data can you retrieve for free?
+    - 10gb/month
+  41. what are S3 event notifications?
+    - sent in response to actions (put, post, copy, delete) in S3
+    - are sent via SNS, SQS, or Lambda
+    - useful for integrations with workflows, alerts, or other actions/triggers e.g. to transcode media files when they are uploaded
+  42. does s3 support website redirects?
+    - yes, you can set rules on your bucket to enable automatic redirection
+    - you can also configure a redirect on an individual s3 object
+  43. what is S3 storage class analysis?
+    - you can analyze access patterns and transitiont he right data tothe right storage class
+    - automatically identifies infrequent access patterns to help you transition storage from standard to IA
+    - you use an identified pattern to create lifecycle policy based on the pattern
+  44. what is S3 inventory?
+    - provides a scheduled alternative to S3 synchronous list api
+    - provides a CSV flat-file output of your objects and their corresponding metadata on a daily/weekly basis for an S3 bucket or a shared prefix
+    - can be used as a reaady-made input into a big data job/workflow application instead of the syncrhonous S3 list api
+  45. what are S3 object tags?
+    - key-value pairs applied to S3 objects which can be created, updated, or deleted at anytime during the lifetime of the object
+    - enables you to create IAM policies, setup lifecycle policies, and customize storage metrics (cloudwatch)
+    - useful for S3 object management
+    - costs 0.01/month per 10k tags
+  46. what is lifecycle management?
+    - ability to define the lifecycle of an object with a predefined policy and reduce your cost of storage
+    - as data matures it becomes less critical, less valuable and/or subject to compliance requirements
+  47. what is cross-region replication (CRR)
+    - every object uploaded is replicated to a destination bucket in a different region that you choose
+    - configured at the bucket level
+    - can be used with lifecycle rules on the source and destination buckets
+  48. what is S3 transfer acceleration
+    - enables fast, easy, and secure transfers of files over long distances between your client and amazon s3 bucket
+    - leverages cloudfront's globally distributed Edge Locations
+    - useful if your app is:
+      + uploading to a centralized bucket from eogrpahically dispersed locations
+      + regularly transferring  GBs or TBs of data across continents
+
 
 # Elastic Beanstalk
   1. is elastic beanstalk free ?
@@ -2037,11 +2224,9 @@
     - US-EAST-1
 
 # other notes for developer exam
-  - global infrastructure
-  - networking and content Delivery
-  - compute
-  - databases (dybnamo)
-  - storage (s3)
-  - IAM
-  - management tools (opsworks it uses chef)
-  - messaging: SNS, SQS, SES
+  - It is possible to transfer a reserved instance from one Availability Zone to another.
+    - yes
+  - You have an EC2 instance which needs to find out both its private IP address and its public IP address. To do this you need to;
+    - retrieve instance metadata from 169.254.169.254/latest-metadata
+  - where can you retrieve instance metadata (user or instance)
+    - 169.254.169.254
