@@ -21,13 +21,28 @@
   - correctness
   - simplicity
   - cost (dev time)
-  - stability/robustness
+  - stability/robustness algorithms used to find approximate solutions to optimization problems. Approximation algorithms are often associated with NP-hard problems; since it is unlikely that there can ever be efficient polynomial-time exact algorithms solving NP-hard problems, one settles for polynomial-time sub-optimal solutions
   - features & functionality
   - modularity in design
   - security
   - usability (user-friendliness)
 
+## geometry
+  - convex hull: the smallest convex shape that fully encloses all points (image a scatter chart)
+
+
 ## Algorithms:
+### types
+  1. Naive: an algorithm is said to be naive when it is simple and straightforward but does not exhibit a desirable level of efficiency (usually in terms of time, but also possibly memory) despite finding a correct solution or it does not find an optimal solution to an optimization problem, and better algorithms can be designed and implemented with more careful thought and clever techniques.
+  2. Greedy: solves an optimization problem in a series of steps by making a locally optimal choice at each step. For some problems, a greedy algorithm may produce a global optimum for all instances; we say that such problems may be solved greedily. For other problems, greedy algorithms will produce the correct answer only for some instances. When a greedy algorithm exists for a problem, it is generally the method of choice, because of its efficiency.
+  3. divide and conquer:  is an algorithm design paradigm based on multi-branched recursion. A divide and conquer algorithm works by recursively breaking down a problem into two or more sub-problems of the same or related type, until these become simple enough to be solved directly. The solutions to the sub-problems are then combined to give a solution to the original problem.
+  4. parallel: as opposed to a traditional serial algorithm, is an algorithm which can be executed a piece at a time on many different processing devices, and then combined together again at the end to get the correct result.
+  5. approximation:  algorithms used to find approximate solutions to optimization problems. Approximation algorithms are often associated with NP-hard problems; since it is unlikely that there can ever be efficient polynomial-time exact algorithms solving NP-hard problems, one settles for polynomial-time sub-optimal solutions
+
+### specific
+  - Bentley–Faust–Preparata: BFP: algorithm for approximating a convex hull
+
+### uncategorized
   - dynamic programming
   - trees
 
