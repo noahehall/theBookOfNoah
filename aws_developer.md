@@ -1603,10 +1603,10 @@
     1. General purpose:
       - suitable for general purpose applications
       - M3, M4: fixed performance
-      - T2: burtable performance
+      - T2: burstable performance
     2. Compute optimized:
       - more cpu resources than memory (ram)
-      - compute-intensive applications and high perofmrance computing (HPC) workloads
+      - compute-intensive applications and high performance computing (HPC) workloads
       - C3, C4
     3. Memory optimized
       - more memory (ram) than cpu
@@ -1746,7 +1746,7 @@
       2. provisions additional server capacity
       3. synchronously replicates data across three facilities in an AWS region (high availability and durability)
   2. what is read consistency?
-    - the manner and timing in which the successful write/updat of an item is reflected in subsequent read operation of that same item
+    - the manner and timing in which the successful write/update of an item is reflected in subsequent read operation of that same item
   3. what are eventual consistency reads?
     - reads that are accurate within a second (default) of writing an item is best read performance and maximizes your read throughput
   4. what are strongly consistent reads?
@@ -1783,7 +1783,7 @@
     - returns all data attributes for every item (unless you use ProjectionExpression parameter)
   16. how do you calculate throughput
     - reads
-      + size of per read rounded to nearest 4kb chunk / 4kb * x # of items = read throughput
+      + size of per read rounded up to nearest 4kb chunk / 4kb * # of items = read throughput
         - rounded up to increments of 4kb in size per read per second
         - for eventually consistent divide the result by 2
         - final result must be an integer, so always round up
@@ -1823,7 +1823,7 @@
     - used to capture modifications to dynamodb tables for upto 24 hours
       + edits : capture the before and after
       + deletes: capture the before delete
-    - can be used to trigger lambda functions (e.g. to replicate data, or send emails via SES)
+    - can be used to trigger lambda functions (e.g. to replicate data, or send emails via SNS)
   25. what are batch operations
     - can read multiple items using BatchGetItem api
     - retrieve up to 1 Mb of data
@@ -1986,7 +1986,7 @@
      - is distinct from AWS user account
   15. what are multi-az deployment?
     - replication designed to increase db availability and guard against outages
-    - AWS automatically creates and manages a 'standby' replicain a different availability zone
+    - AWS automatically creates and manages a 'standby' replication a different availability zone
     - available on db creation, or can convert an existing one
   16. what are read replicas?
     - replication designed to scale beyond the capacity restraints of a single db instance for read-heavy db workloads
@@ -1999,7 +1999,7 @@
     - compute unit failure on primary
     - storage failure on primary
   18. when should you use an RDS read replica?
-    - scaling beyond the compute or i/o capacity of a single db sntance for read-heavy db workloads
+    - scaling beyond the compute or i/o capacity of a single db instance for read-heavy db workloads
     - serving read traffic while the source db instance is unavailable
     - business reporting/datawarehousing scenarios
 
@@ -2101,7 +2101,7 @@
     - file gateway:
       + for flat files, stored directly on S3
     - volume gateway:
-      + stored volumes: entire dataset is stored on site and is backed up asynchronously backed up to s3 (block based storage)
+      + stored volumes: entire dataset is stored on site and is asynchronously backed up to s3 (block based storage)
       + cached volumes: entire data set is stored on s3 and the most frequenlty accessed data is cached on site
     - gateway virtual tape library (VTL)
       + used for backup and uses popular backup apps like netbackup, backup exec, etc
