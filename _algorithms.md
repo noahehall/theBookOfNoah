@@ -1,6 +1,6 @@
 # current
   - thinking in aglorithms
-    + page 1
+    + page 18: lower and upper bounds
 # class: https://www.youtube.com/watch?v=HtSuA80QTyo&list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb
   37 minutes
 
@@ -30,18 +30,55 @@
 ## geometry
   - convex hull: the smallest convex shape that fully encloses all points (image a scatter chart)
 
+## Best Practices:
+  1. design of efficient algorithms start by selecting the proper data structures in which to represent the problem
+  2. for many problems, no single optimal algorithm exists. Choosing an algorithm depends on understanding the problem being solved and the underlying probability distribution of the instances likely to be treated, as well as the behavior of the algorithms being considered.
 
-## Algorithms:
+## Terminology
+  - multiplicative constant: an algorithm that performs a computation using integers stored using 64 bits may take twice as long as a similar algorithm coded using integers stored in 32 bits
+    + performance costs that differ by a multiplicative constant are asymptotically equivalent,
+  - asymptotic analysis: considering the performance of algorithms when applied to very very big input datasets.
+
+## Just enough data structures
+  1. Array: contiguous regions of memory indexed by an integer i to enable rapid access to the Ith element. An array is one-dimensional when each element fits into a word in the platform (e.g., an array of integers or Boolean values). Some arrays extend into multiple dimensions, enabling more complex data representations.
+
+## Algorithm Basics
 ### types
   1. Naive: an algorithm is said to be naive when it is simple and straightforward but does not exhibit a desirable level of efficiency (usually in terms of time, but also possibly memory) despite finding a correct solution or it does not find an optimal solution to an optimization problem, and better algorithms can be designed and implemented with more careful thought and clever techniques.
   2. Greedy: solves an optimization problem in a series of steps by making a locally optimal choice at each step. For some problems, a greedy algorithm may produce a global optimum for all instances; we say that such problems may be solved greedily. For other problems, greedy algorithms will produce the correct answer only for some instances. When a greedy algorithm exists for a problem, it is generally the method of choice, because of its efficiency.
   3. divide and conquer:  is an algorithm design paradigm based on multi-branched recursion. A divide and conquer algorithm works by recursively breaking down a problem into two or more sub-problems of the same or related type, until these become simple enough to be solved directly. The solutions to the sub-problems are then combined to give a solution to the original problem.
   4. parallel: as opposed to a traditional serial algorithm, is an algorithm which can be executed a piece at a time on many different processing devices, and then combined together again at the end to get the correct result.
   5. approximation:  algorithms used to find approximate solutions to optimization problems. Approximation algorithms are often associated with NP-hard problems; since it is unlikely that there can ever be efficient polynomial-time exact algorithms solving NP-hard problems, one settles for polynomial-time sub-optimal solutions
+  6. generalization:
 
 ### specific
   - Bentley–Faust–Preparata: BFP: algorithm for approximating a convex hull
+    1. constructs an approximate convex hull by partitioning the points into vertical strips (Bentley et al., 1982). Within each strip, the maximum and minimum points (based on y coordinate) are identified (they are drawn in Figure 1-6 with squares around the points). Together with the leftmost point and the rightmost point in P, these extreme points are stitched together to form the approximate convex hull.
+  - Sequential Search: examines a list of n ≥ 1 distinct elements, one at a time, until a desired value, v, is found.
 
+## Mathematics
+  - all can be used to choose the correct algorithm for a specific problem
+### Size of a Problem Instance
+  - Big O notation: classify the behavior of an algorithm as it solves problem instances of increasing size, n
+    + O(f(n)): where f(n) is comonly a function such as n, n^3, or 2^n
+  - Problem Instance: is a particular input data set given to a program
+    + in most programs, the execution time of a program increases with the size of the input data set
+    + worse case problem instance: an algorithm exhibits its worst runtime behavior
+    + average case: executing an algorithm on random problem instances; an attempt to describe the expectation an average user of the algorithm should have
+    + best case: an algorithm exhibits its best runtime behavior
+  - rate of growth: we describe the behavior of an algorithm by representing the rate of growth of its executing time as a function of the size of the input problem instance. Characterizing an algorithm’s performance in this way is a common abstraction that ignores numerous details.
+    1. The computer on which the program is run, its CPU, data cache, floating-point unit (FPU), and other on-chip features
+    2. The programming language in which the program is written, along with the compiler/interpreter and optimization settings for generated code
+    3. The operating system
+    4. Other processes being run in the background
+      - the assumption with rate of growth functions: changing one of the four above (and others) will change the execution time of the program by a constant factor, and thus can be ignored
+      - to use it:
+        1. analyze the speed of an algorithm(s) to resolve a problem of a set N, and choose the one with the smallest execution time to find the optimal solution
+        2. test the algorithm with best, average, and worst case size problem instances
+
+
+
+################ OLD NOTES ###############
 ### uncategorized
   - dynamic programming
   - trees
