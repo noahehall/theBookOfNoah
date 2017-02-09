@@ -33,6 +33,14 @@
 ## Best Practices:
   1. design of efficient algorithms start by selecting the proper data structures in which to represent the problem
   2. for many problems, no single optimal algorithm exists. Choosing an algorithm depends on understanding the problem being solved and the underlying probability distribution of the instances likely to be treated, as well as the behavior of the algorithms being considered.
+  3. classify an algorithm by determining its class, sometimes you have to subdivide as it might be multiple classifications, always choose the most complex classification when determining the algorithms performance (listed in increasing complexity)
+    0. Constant: `O(l)`
+    1. Logarithmic: `O(log n)`
+    2. Sublinear: `O(n d ) for d < 1`
+    3. Linear: `O(n)`
+    4. Linearithmic: `O(n log n)`
+    5. Quadratic: `O(n 2 )`
+    6. Exponential: `O(2 n )`
 
 ## Terminology
   - multiplicative constant: an algorithm that performs a computation using integers stored using 64 bits may take twice as long as a similar algorithm coded using integers stored in 32 bits
@@ -55,12 +63,10 @@
   - Bentley–Faust–Preparata: BFP: algorithm for approximating a convex hull
     1. constructs an approximate convex hull by partitioning the points into vertical strips (Bentley et al., 1982). Within each strip, the maximum and minimum points (based on y coordinate) are identified (they are drawn in Figure 1-6 with squares around the points). Together with the leftmost point and the rightmost point in P, these extreme points are stitched together to form the approximate convex hull.
   - Sequential Search: examines a list of n ≥ 1 distinct elements, one at a time, until a desired value, v, is found.
-
+  - *guessing algorithm*: start by guessing `n`, is it too low ? double it by half, is to too low ? double it by half, etc., and keep going up/down until find the correct solution
 ## Mathematics
   - all can be used to choose the correct algorithm for a specific problem
 ### Size of a Problem Instance
-  - Big O notation: classify the behavior of an algorithm as it solves problem instances of increasing size, n
-    + O(f(n)): where f(n) is comonly a function such as n, n^3, or 2^n
   - Problem Instance: is a particular input data set given to a program
     + in most programs, the execution time of a program increases with the size of the input data set
     + worse case problem instance: an algorithm exhibits its worst runtime behavior
@@ -75,8 +81,40 @@
       - to use it:
         1. analyze the speed of an algorithm(s) to resolve a problem of a set N, and choose the one with the smallest execution time to find the optimal solution
         2. test the algorithm with best, average, and worst case size problem instances
+#### Big O Notation
+  - Big O notation: classify the behavior of an algorithm as it solves problem instances of increasing size, n
+    + O(f(n)): where f(n) is comonly a function such as n, n^3, or 2^n
+  - Lower (best) and Upper (worst) bounds:
+    - some constant `c > 0` : a different `c` exists for upper and lower bounds
+    - problem instance size `n0` is the point at which each problem instance is 'large enough' to satisfy the formula
+      + a different `n0` exists for bount upper and lower bounds
+    1. worst-case performance / upper bound: the execution time is classified as O(f(n)) and corresponds to the worst-case scenario
+      - is never greater than directly proportiional to the size of the input problem instance, once the size is large enough
+      - O(n) === `t(n) < c*n` for all `n > n0`
+    2. best case performance / lower bound: the execution time of an algorithm is classified as Ω(f(n)) and corresponds to the best-case scenario
+      - is never smaller than directly proportional to the size of the input problem instance
+      - Ω(n) === `t(n) > c*n` for all `n > n0`
+  - complexity theory and `Θ(f(n))`
+    - combines lower and upper bounds to identify an accurate tight bound: when the lower bound is `Ω(f(n))` and the upper bound is also `O(f(n))` for the same classification `f(n)``
 
-
+#### performance families
+  - compare algorithms: by evaluating their performance on problem instances of size `n`
+    + time: used to determine which algorithms scale to solve problems of a nontrivial size by evaluating the running time needed by the algorithm in relation to the size of the provided problem instance
+    + memory: a secondary performance evaluation is to consider how much memory/storage an algorithm needs
+  - you must identify the mot expensive computation within an algorithm to determine its classification
+  - list of evaluation functions in decreasing efficiency
+    0. Constant: `O(l)`
+      - algorithm that provides constant performance, e.g. comparing whether two 32bit numbers `x` and `y` are th same value should have the same performance regardless of the actual values of `x` and `y` up to some fixed size `k`
+      - the problem size (i.e. `x` and `y`) cannot be `> k`
+    1. Logarithmic: `O(log n)`
+      - algorithms that succeed in finding an optimial solution by reducing the size of the problem instance by half each time
+        + *guessing algorithm*: start by guessing `n`, is it too low ? double it by half, is to too low ? double it by half, etc., and keep going up/down until find the correct solution
+        +
+    2. Sublinear: `O(n d ) for d < 1`
+    3. Linear: `O(n)`
+    4. Linearithmic: `O(n log n)`
+    5. Quadratic: `O(n 2 )`
+    6. Exponential: `O(2 n )`
 
 ################ OLD NOTES ###############
 ### uncategorized
