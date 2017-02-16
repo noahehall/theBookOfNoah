@@ -18,6 +18,10 @@
   - iterator functions: apply a function to each element of the datastructure,
 
 # Datastructures
+## When to use what [todo]
+  1. Array
+  2. List
+
 ## terminology
   - [ADT](https://en.wikipedia.org/wiki/Abstract_data_type): abstract data type, an abstract data type (ADT) is a mathematical model for data types where a data type is defined by its behavior (semantics) from the point of view of a user of the data, specifically in terms of possible values, possible operations on data of this type, and the behavior of these operations. This contrasts with data structures, which are concrete representations of data, and are the point of view of an implementer, not a user.
     1. properties: describe the data structure by its available properties, e.g. 'length'
@@ -35,7 +39,7 @@
         2. columnar processing: statistics related to grades across students, e.g. what is the average grade for test1 for all students?
         3. row-wise processing: statistics related to student grades, e.g. what is the average grade for student1 for all tests?
     - Jagged Array: a multi dimensional array with the sub-arrays may have a different number of elements
-    
+
 ## Lists
   - an ordered sequence of data
     +  only useful when you dont have to perform searches or keep them sorted (there are other datastructures better suited)
