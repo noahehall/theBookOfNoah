@@ -35,6 +35,7 @@
         2. columnar processing: statistics related to grades across students, e.g. what is the average grade for test1 for all students?
         3. row-wise processing: statistics related to student grades, e.g. what is the average grade for student1 for all tests?
     - Jagged Array: a multi dimensional array with the sub-arrays may have a different number of elements
+    
 ## Lists
   - an ordered sequence of data
     +  only useful when you dont have to perform searches or keep them sorted (there are other datastructures better suited)
