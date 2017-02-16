@@ -31,22 +31,18 @@
         1. create an array
         2. each element in the array should also be an array
       + processing  
-        - mostly using nested loops
-          1. columnar processing: think of the array holding grades for students, each element is a student array containing N grades per student
-            - outer: moves through rows
-            - inner: moves through columns
-          2. row-wise processing: think of the array holding grades for students, each element is a student array containin gN grades per student
-            - TODO: page 29
-            - outer: moves through columns
-            - inner: moves through rows
+        1. think of the array holding grades for students, each row is a student, and each element in each row is a grade for testN
+        2. columnar processing: statistics related to grades across students, e.g. what is the average grade for test1 for all students?
+        3. row-wise processing: statistics related to student grades, e.g. what is the average grade for student1 for all tests?
     - Jagged Array: a multi dimensional array with the sub-arrays may have a different number of elements
 ## Lists
   - an ordered sequence of data
     +  only useful when you dont have to perform searches or keep them sorted (there are other datastructures better suited)
   - List ADT
-    1. listSize (property) Number of elements in list
+    1. listSize (property) Number of elements in list, is returned when you request list.length
     2. pos (property) Current position in list
-    3. length (property) Returns the number of elements in list
+    3. length (property) Returns the number of elements in list (listSize)
+    4. dataStore (property) all elements in the list
     4. clear (function) Clears all elements from list
     5. toString (function) Returns string representation of list
     6. getElement(function) Returns element at current position
