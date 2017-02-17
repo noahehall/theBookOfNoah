@@ -1,5 +1,7 @@
 # [bookmark](https://github.com/noahehall/ebooks/blob/master/Data%20Structures%20and%20Algorithms%20with%20JavaScript.pdf)
   - page 36 lists
+# TODOs
+  - add 'radix sort' to algorithms, see Queue implementation
 
 # Basics
   - [Math object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)
@@ -62,9 +64,16 @@
     13. next (function) Moves current position forward one element
     14. currPos (function) Returns the current position in list
     15. moveTo (function) Moves the current position to specified position
+### Linked List
+  - pag e73
 ### Stack
   - list like structure where new elements can only be added/removed from the top of the stack, i.e. LIFO
-  - used for expression evaluation and handling function calls
+  - used for:
+    1. expression evaluation and handling function calls
+    2. converting a number from on base to another
+    3. determine whether a given string is a palindrome
+    4. implementing recursive procedures
+
   - basics:
     1. last in first out
     2. only the element at the top of the stack can be accessed
@@ -72,10 +81,13 @@
   - Example Stack ADT
     + properties
       - length: number of elements in stack
-      - top: the current position of the element at the top
+      - top: the current position (can sync with length) of the element at the top
       - empty: boolean
     + behavior
       - push: add element to top of stack and increment top
       - pop: remove and return element to top of stack and decrement top
       - peek: return element at top of stack
       - clear: remove all ements and reset top
+### Queue
+  - start on page 59
+  - skipped radix sort page 67
