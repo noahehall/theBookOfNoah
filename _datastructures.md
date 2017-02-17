@@ -10,7 +10,7 @@
   - [prototypical inheritcance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
   - [exploring es6 classes](http://exploringjs.com/es6/ch_classes.html)
   - [babel class properties](https://babeljs.io/docs/plugins/transform-class-properties/)
-
+  - [es6 in depth](https://hacks.mozilla.org/category/es6-in-depth/)
 
 # function types
   - accessor functions: access elements of the data structure, e.g. searching
@@ -21,6 +21,8 @@
 ## When to use what [todo]
   1. Array
   2. List
+    - regular List:
+    - Stack:
 
 ## terminology
   - [ADT](https://en.wikipedia.org/wiki/Abstract_data_type): abstract data type, an abstract data type (ADT) is a mathematical model for data types where a data type is defined by its behavior (semantics) from the point of view of a user of the data, specifically in terms of possible values, possible operations on data of this type, and the behavior of these operations. This contrasts with data structures, which are concrete representations of data, and are the point of view of an implementer, not a user.
@@ -43,7 +45,7 @@
 ## Lists
   - an ordered sequence of data
     +  only useful when you dont have to perform searches or keep them sorted (there are other datastructures better suited)
-  - List ADT
+  - Example List ADT
     1. listSize (property) Number of elements in list, is returned when you request list.length
     2. pos (property) Current position in list
     3. length (property) Returns the number of elements in list (listSize)
@@ -60,3 +62,20 @@
     13. next (function) Moves current position forward one element
     14. currPos (function) Returns the current position in list
     15. moveTo (function) Moves the current position to specified position
+### Stack
+  - list like structure where new elements can only be added/removed from the top of the stack, i.e. LIFO
+  - used for expression evaluation and handling function calls
+  - basics:
+    1. last in first out
+    2. only the element at the top of the stack can be accessed
+      - to get an element at the bottom of the stack, you have to dispose of all other elements first
+  - Example Stack ADT
+    + properties
+      - length: number of elements in stack
+      - top: the current position of the element at the top
+      - empty: boolean
+    + behavior
+      - push: add element to top of stack and increment top
+      - pop: remove and return element to top of stack and decrement top
+      - peek: return element at top of stack
+      - clear: remove all ements and reset top
