@@ -151,4 +151,29 @@
 
 ## Hash table
   - common technique for storing data in such a way that the data can be inserted and retrieved very quickly
+    1. each data element is stored in a fixed size array based on an associated data element called the key
+    2. to store a piece of data in a hash table, the key is mapped into a number in the range of 0 through the hash table size, using a hash function
+      - idealy the hash function stores each key in its own array element, however because there are al imited number of theoretical array elements in JS, we distribute the keys as evenly as possible among the elements of the array
+    3. the array size should be a prime number
   - performs poorly with operations involving searching (use a binary search tree instead)
+  - collision: when the hash function creates a duplicate key
+    + handling collisions:
+      1. modify the prime/constant on collisions
+        - use this if you're using a dynamically sized array, e.g. a javascript array
+      2. separate chaining: create an array at the hash value, and push the key into the array, thus if two keys generate the same hash value, you can store both keys in the array
+        - use this if the size of the array can be up to half the number of elements to be stored
+      3. linear probing: i.e. open-addressing hashing:
+        - when there is a collision, look to see if the next element of the hash table is empty, if so, use it
+        - use this if the size of the array can be twice the size of the number of elements to be stored
+  - hash function: creates a number based on a key, i.e. key => hash function => hash value: array[hasvalue] = key
+    + hash functions should be determined by the data type of the key
+    + integers
+      1. return the key modulo the size of the array (array size should be prime number)
+    + strings
+      1. sum the ASCII value of the letters in the key, the hash value is then that sum modulo the array size
+  - Hash Table ADT
+    + properties
+    + behavior
+      1. put: add a key and value to the table
+      2. hash function: generates a hash value based on key
+      3. getValue: get the value associated with some key
