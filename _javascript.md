@@ -1,3 +1,59 @@
+# Need to file
+## [Mixin](http://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/)
+  - is really a subclass factory, parameterized by the superclass, which produces mixin applications
+
+### Mixin examples
+  - benefits of approach below:
+    0. the only difference between a mixin and a normal subclass is that a normal class has a fixed superclass, while a mixin definition doesnt (the mixin application does)
+    1. the definition of a class that may be applieed to different super classes.
+    2. mixin application: the application of a mixin definition to a specific superclass, producing a new subclass
+  - implementation features based on es6 classes
+    1. mixins are added to the prototype chain
+    2. mixins are applied without modifying existing objects
+    3. mixins do no magic, and dont define new semantics on top of the core language
+    4. superfoo property access works within mixins and subclasses
+    5. super() calls work in constructors
+    6. mixins are able to extend other mixins
+    7. instanceof works
+    8. mixins donot require library support and can be writtin in a universal style
+    9. subclasses correctly override mixin methods which override superclass methods.
+
+  - definition
+    ``` simple
+      // simple mixin definition
+      let MyMixin = (superclass) => class extends superclass {  
+        foo() {
+          console.log('foo from MyMixin');
+        }
+      };
+
+      // advanced mixin inheritance definition
+      let Mixin2 = (superclass) => class extends Mixin1(superclass) {  
+        /* Add or override methods here */
+      }
+
+      // function composition mixin inheritance
+      let CompoundMixin = (superclass) => Mixin2(Mixin3(superclass));  
+
+      // single subclass definition
+      class MyClass extends MyMixin(MyBaseClass) {  
+        /* ... */
+      }
+
+      // multiple subclass definition
+      class MyClass extends Mixin1(Mixin2(MyBaseClass)) {  
+        /* ... */
+      }
+
+      // instantiation
+      let c = new MyClass();  
+      c.foo(); // prints "foo from MyMixin"  
+    ```
+## classes
+  - classes can be used as an expression as well as a statement
+    1. as an expression it returns a new class each time its evaluated (sort of like a factory)
+  - the extends clause accepts arbitrary expressions that return classes or constructors
+
 # NEXT UP
   - https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms_in_HTML#Constraint_Validation_API

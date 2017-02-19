@@ -13,6 +13,7 @@
   - [exploring es6 classes](http://exploringjs.com/es6/ch_classes.html)
   - [babel class properties](https://babeljs.io/docs/plugins/transform-class-properties/)
   - [es6 in depth](https://hacks.mozilla.org/category/es6-in-depth/)
+  - [class mixins](http://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/)
 
 # function types
   - accessor functions: access elements of the data structure, e.g. searching
@@ -92,6 +93,12 @@
   - Type of list where data are inserted at the end and are removed from the front, i.e. FIFO
     + used to store data in the order in which they occur, as opposed to a stack (the last piece of data entered is the first element used for processing)
   - used for:
-    1. any FIFO processing 
+    1. any FIFO processing
     2. order processes submitting to an operating system
     3. simulation applications that model scenarios e.g. standing in line
+  - Queue ADT
+    + properties
+      - peek: viewing element at the beginning of the queue
+    + behavior
+      - enqueue: pushing an element to the end
+      - dequeue: shifting an element from the beginning
