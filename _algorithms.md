@@ -138,7 +138,7 @@
 
 ## Sorting
 ### [Insertion Sort](https://www.nczonline.net/blog/2012/09/17/computer-science-in-javascript-insertion-sort/)
-
+### [radix sort](https://en.wikipedia.org/wiki/Radix_sort)
 ## Matching
 
 ## RSA Encryption:

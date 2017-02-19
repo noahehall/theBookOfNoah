@@ -66,7 +66,32 @@
     14. currPos (function) Returns the current position in list
     15. moveTo (function) Moves the current position to specified position
 ### Linked List
-  - pag e73
+  - a collection of objects called nodes
+    1. each node is linked to a successor node in the list using an object reference
+      - the reference to another node is a called a *link*
+      - all nodes are referenced by their relationship to other nodes in the linked list
+      - moving through a linked list involves following the links of the list from the beginning node to the end node (not including the header node)
+      - the end of a linked list is indicated by pointing to a *null* node
+  - can be used in almost every situation where a one-dimensional array is used
+    + except when you need random access to the elements, then an array is still required
+  - Linked List ADT
+    + properties
+      1. head: denotes the beginning of the list
+    + behavior
+      1. find: find a specific node
+      2. insert: insert a node at a specific position and updating links
+      3. remove: removing and return a node, and updating links
+      4. display: return all nodes
+      5. findlast: return the last node
+      6. findfirst: find the first node
+      7. find previous: find the previous node
+      8. find next: find the next node
+### Doubly Linked List
+  - same as Linked List, with the additional behavior of traversing the list from last to first
+### Circularly Linked Lists
+  - same as Linked List, with the additional behavior of having its head node's next property point back to itself
+    + thus, every new node initially has its next property pointing to the head of the list,
+      - i.e. the last node in the list will always point back to the head of the list
 ### Stack
   - list like structure where new elements can only be added/removed from the top of the stack, i.e. LIFO
   - used for:
@@ -98,7 +123,32 @@
     3. simulation applications that model scenarios e.g. standing in line
   - Queue ADT
     + properties
-      - peek: viewing element at the beginning of the queue
+      - empty: if the queue is empty
     + behavior
       - enqueue: pushing an element to the end
       - dequeue: shifting an element from the beginning
+      - peek: returns element at front of queue, without removing it from queue
+      - display: returns all elements in queue
+### Priority Queue
+  - a Queue where elements are removed from the queue based on a priority constraint, e.g. an emergency room that prioritizes patients by severity of their needs
+  - Priority Queue ADT
+    + properties
+    + behavior
+      1. dequeue: removes element with the highest priority
+
+## Dictionary
+  - stores *key-value* pairs, e.g. the native javascript Object
+  - Dictionary ADT
+    + properties
+      1. size: number of elements in the dictionary
+    + behavior
+      1. add: add a new key value pair
+      2. find: and return an element by its key
+      3. displayObject: returns the data store as a javascript object
+      4. sortedValues: returns an array of values sorted by key
+      5. remove: an element from the dictionary
+      6. clear: all elements from the dictionary
+
+## Hash table
+  - common technique for storing data in such a way that the data can be inserted and retrieved very quickly
+  - performs poorly with operations involving searching (use a binary search tree instead)
