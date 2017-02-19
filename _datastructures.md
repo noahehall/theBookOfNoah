@@ -89,5 +89,9 @@
       - peek: return element at top of stack
       - clear: remove all ements and reset top
 ### Queue
-  - start on page 59
-  - skipped radix sort page 67
+  - Type of list where data are inserted at the end and are removed from the front, i.e. FIFO
+    + used to store data in the order in which they occur, as opposed to a stack (the last piece of data entered is the first element used for processing)
+  - used for:
+    1. any FIFO processing 
+    2. order processes submitting to an operating system
+    3. simulation applications that model scenarios e.g. standing in line
