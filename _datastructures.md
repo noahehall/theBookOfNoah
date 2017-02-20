@@ -1,5 +1,5 @@
 # [bookmark](https://github.com/noahehall/ebooks/blob/master/Data%20Structures%20and%20Algorithms%20with%20JavaScript.pdf)
-  - page 36 lists
+  - page 131 lists
 # TODOs
   - add 'radix sort' to algorithms, see Queue implementation
 
@@ -177,3 +177,43 @@
       1. put: add a key and value to the table
       2. hash function: generates a hash value based on key
       3. getValue: get the value associated with some key
+
+## Set
+  - collection of unordered unique elements (called members)
+    - empty set: a set with no members
+    - universe: the set of all possible members
+    - subset: a set is a subset of another set if all the members of the subset are inside the other set
+    - two sets are equal if they contain exactly the same members
+  - Set ADT
+    + properties
+    + behavior
+      1. union: a new st is obtained by combining the members of one set with the members of another set
+      2. intersection: a new set is obtained by adding all the members of one set that also existin in a second set
+      3. difference: a new set is obtained by adding all the members of one set except those that also exist in a second set
+      4. all of the native JS set methods
+      5. subset: returns true if set A is a subset of B
+
+## Trees
+  - nonlinear datstructure used to store data in a hierarchical manner
+    + a tree is made up of a set of nodes connected by edges
+    + root node: the top node of a tree
+    + parent node: a node with one/more children
+    + leaf node: a node with 0 children
+    + edge: a connection between two nodes
+    + path: the edges you travel to get from a parent node to a child node
+    + tree traversal: visitin gall the nodes in a tree in some particular order
+    + level: a level in the tree hierarchy, the root node is at level 0
+      - a node at any level is considered the root of that subtree
+    + tree depth: the number of levels in the tree
+    + key: the value of a node
+  - useful for storing:
+    1. files in a file system
+    2. sorted lists of data
+
+### Binary Search Trees
+  - a tree where a parent node can contain no more than 2 child nodes and the left child node is lesser than the parent, and the right child node is greater than the parent
+  - Binary Search Tree ADT
+    + properties
+    + behavior
+      1. add: a new node
+      2. inOrder: return an array of node values in tree order
