@@ -1,6 +1,8 @@
 # nginx
 # links
   - [setting up node with nginx](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04)
+  - [alphabetical nginx variables](http://nginx.org/en/docs/varindex.html)
+  
 # tips and tricks
   - ensure there arent any errors i your nginx config
     - `sudo nginx -t`
