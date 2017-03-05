@@ -1,3 +1,9 @@
+# need to file
+	- http server
+		+ quick module for creating a local server within any directory
+			1. npm install -g http-server
+			2. http-server -p PORT_NUMBER
+				- starts a server on the port number
 # need to finish
 	https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 
