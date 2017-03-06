@@ -5,18 +5,30 @@
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms_in_HTML#Constraint_Validation_API
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/My_first_HTML_form
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/Sending_and_retrieving_form_data
-  - https://developers.google.com/webmasters/googleforwebmasters/
+  - [push notifications](https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web)
+  - [run through all articles](https://developers.google.com/web/updates/2017)
+  - [custom site search view google](https://cse.google.com/cse/)
 
+
+# tools
+  - [google mobile friendly test](https://search.google.com/search-console/mobile-friendly)
+  - [mozilla SSL configuration](https://mozilla.github.io/server-side-tls/ssl-config-generator/)
+  - [github pages](https://pages.github.com/)
+  - [manage all service workers](chrome://inspect/#service-workers)
+  
 # NEED to finish
   - https://classroom.udacity.com/nanodegrees/nd802/parts/8021345403/modules/550593026975460/lessons/5972243496/concepts/61045985370923
   - MUST FUCKING DO
     + https://developers.google.com/web/fundamentals/
+    + https://codelabs.developers.google.com/?cat=Web
   - need to research
     + web workers
     + [watchman](https://facebook.github.io/watchman/docs/install.html
     https://developers.google.com/web/)
 
     + around the web:
+      - [Google Developer Training](https://developers.google.com/training/)
+      - [SEO](https://developers.google.com/webmasters/googleforwebmasters/)
       - https://blog.minio.io/microstorage-for-microservices-70231db026a8#.7h6uid196
       - http://blog.webkid.io/react-ui-libraries/
       - https://www.youtube.com/watch?v=O1YP8QP9gLA&feature=youtu.be
@@ -126,8 +138,7 @@
 # TIPS, TRICKS, BEST PRACTICES
 ## Best Practices
   - generally a good practice to have some throttling when testing sites. It'll help you see your sites performance from your users perspectives.
-  - wrap next level JS in feature detection logic 'for' progressive enhancment
-    if (this.next.level.shit) run it
+  - wrap next level JS in feature detection logic 'for' progressive enhancment `if (this.next.level.shit) run it`
   - javascript doesnt have private methods,  but methods that should be private should be indicated with an underscore in the name if they are only called by a specific object
   - OFFLINE FIRST (all child of window less otherwise stated)
     + online first: we try the network first, if it doesnt, we show some fallback content (or 404 page)
@@ -147,6 +158,11 @@
     1. request > http cache (found?) return page
     2. else > go to internet > retrieve html>
     3. other stuff needed ? > request css & javascript
+  - Search Fields
+    1. auto-completing queries, correct misspellings, suggest related queries
+    2. place filters above search results and always display # of results
+  - Ecommerce
+    1. allow users to purchase as guests
 ## TRICKS
   - check if someVar is an Array (or anything, e.g. Number, or Object)
       `if(someVar && Array === someVar.constructor)``
@@ -182,9 +198,261 @@
       + Object.getOwnProperties (As an aside,
     + Introspection: Reflection tools that don’t alter code, but instead gather information about it are often called
 
-
 # TOPICS
-## HTTP: hypertext transfer protocol:
+## Front end security
+### man in the middle
+### cross site scripting
+### cross origin requests
+## Ecommerce
+  - allow users to purchase as guests
+## SEO
+  - Interstitials may cause a negative impact on search rankings
+
+## Mobile Sites
+### basics
+  - Make calls to action front end center
+  - Make secondary tasks available through menus/below the fold
+  - make common tasks easily available
+  - keep menus short and sweet
+  - fuck scrolling as much as possible
+  - Site search bar should be above the fold, and never in a menu
+  - show as much content as possible without requiring registration
+
+## Responsive Design
+
+## Progressive Web apps
+### Offline Web Apps
+
+### Service Workers
+  - service worker: a script your browser runs in the background and listens for and reacts to arbitrary events
+    + each page the service worker controls, it hijacks all events and allows you to operate on them.
+    + are limited to HTTPS, since intercepting network requests can be super dangerous in the wrong hands
+    1. cant access the DOM directly, but communicates with the pages it controls by responding to messages via the [postMessage](https://www.html5rocks.com/en/tutorials/workers/basics/) interface
+    2. is a programmable network proxy, allowing you to control how network requests from your page are handled
+    3. is terminated when not in use, and restarted when its nexted needed, so never rely on global state within a SW onfetch and onmessage handlers
+    4. has full access to the indexedDB api
+    5. make extensive use of promises
+  - use cases
+    1. adding offline support
+    2. control the cache
+    3. sending push notifications
+      + You could send push notifications from the browser to your users about new posts, even if the client has closed your page, since service workers are in constant communication with your server in background.
+    4. doing background sync with service workers
+    5. Capability reporting
+    6. Client-side Load Balancer
+    7. Differential update of text files
+    8. Support a previous unsupported image format in your browser!
+    9. Save forms information even if theres no internet at the moment: Your application could have a huge form to send information for and, in case the user lost connection, the information could be saved in a Service Worker, even when the user is offline, and be sent to your server when the connection is back.
+    10. Faster page loads: You could cache scripts, images, stylesheets, static pages, etc on a Service Worker on a first page-load and run a faster page loading on subsequent requests. The approach is almost the same if you relate it with browser caching but differs with when talking about requests: browser caching requests are always made and stops only if you already have the information needed and with Service Workers caching, no requests are made to the server.
+    11. for some changes (e.g. minor, or security fixes) you may want to force changes to users
+    12. [push notifications](https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web)
+    13. [background sync](https://developers.google.com/web/updates/2015/12/background-sync)
+  - life CYCLE
+    1. registration step: register a SW in your page's javascript: the browser will then install the SWin the background
+    2. SW Install step: you specify which static assets to cache. if all assets are successfully downloaded and cached, the SW becomes activated
+    3. SW Activated step: handle management of old caches
+      - for all pages within the SW scope, the SW will act as a Proxy or be terminated (to save memory),
+        + this is the 'idle' phase
+#### [window.navigator.serviceWorker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+  - service worker hijaking workflow:
+    1. client loads
+    2. service workers interact with caches
+    3. service workers interact with http caches
+    4. service workers interact with network/internet
+  - network flow: browser requests > service worker > http cache > internet
+  - gotchas
+    - browsers only update service workers on page reload, or if there is a change to the SW (e.g. change cache name)
+      + the new SW will have its only install event so you can use this time to get an updated cache
+  - LIFE CYCLE:
+    1. install:
+      - the browser wont let the SW take control of pages until the install phase is completed
+      - opportunity to get everything you need from the network/internet, and cache them
+    2. waiting:
+    3. activate: when the SW is ready to start working on pages.
+    4. redundant:
+  - process:
+    1. service workers are instantiated via javascript in the window, and can only take control of pages that are LOADED after they are instantiated.
+      - page 1 loads > instantiates sw registration file > makes requests (none are intercepted)
+      - user refreshes (causes new load) > sw still in browser > requests are intercepted
+    2. service worker intercepts all requests and triggers a 'fetch' event for each
+    3. instantiating a new SW can only occur if all pages controlled by the current SW are gone. this ensures only one version of your site exists at any given time
+      - the new SW is in 'waiting' mode until the current SW is gone
+      - only occurs if the page closes, or the user navigates to a page not controlled by the current SW
+    4. users are notified that a new SW is ready by changing the browser hamburger button in the top right (at least on chrome)
+      - when the browser refetches a service worker, it goes through the browser cache for all requests
+      - it is good to set your SW CACHE TIME TO ZERO!!!! this way they are updated as soon as possible
+        -updates to will bypass the browser cache if the SW it has is > than the cache time
+  - DEV TOOLS:
+    1. click the down arrow next to 'top' and select your SW file
+    2. now you can interact with your SW
+      self.registration
+
+    3. you can debug SW same as anything else:
+      sources > click SW file > set breakpoints, etc.
+    4. click the application/resources tab and select the SW option
+  - Basic steps:
+    + registration
+      1. in a script on the page, register a service worker
+      2. the service worker is registered on an origin, and controls a subset of paths (or root, for all paths)
+        navigator.serviceWorker.register....
+    + do stuff!
+      1. intercept network requests/events and do something with them (e.g. store the response in cache)
+        self.addEventListener....
+          caches.open...
+      2. events: install, fetch,
+          event.someMethod()
+      3. caches.open(...)
+          cache.someMethod()
+  - methods
+    + postMessaage(): send messages to/from SW
+    + skipWaiting()
+      - forces the waiting service worker to become the active service worker.
+      - call this when a user hits the refresh button
+  - events
+    + INSTALL: when a browser sets up a SW for the first time, the install event is fired.
+    + ACTIVATE: when a new SW is finished installing and ready to control pages, use this event to delete old caches
+    + FETCH: every browser request triggers a fetch, useful for hijacking/intercepting
+    + MESSAGE: receive/post messages from/to the client (i.e. a page/document)
+#### window.navigator.serviceWorker by MDN tutorial
+ + [url is here](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
+ - step 1 is to register your someWorker.js file
+  1. in your html file, include a registration.js file that registers specific service workers against an origin and path
+    ```
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw-test/sw.js', {scope: '/sw-test/'})
+        .then(function(reg) {
+          // registration worked
+          console.log('Registration succeeded. Scope is ' + reg.scope);
+        }).catch(function(error) {
+          // registration failed
+          console.log('Registration failed with ' + error);
+        });
+      }
+    ```
+#### window.navigator.serviceWorker examples
+  - registering service workers, returns a registration object
+    ```
+      in home.html
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('path/to/your/SW.js', {scope: 'some/path'})
+          // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration
+          // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register
+          .then(function(reg) {
+            // an update or initial install is in progress
+            if(reg.installing) {
+              // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker
+              let sw = reg.installing
+                // grab this sw from the reg object
+              // https://developer.mozilla.org/en-US/docs/Web/API/Client/postMessage
+              sw.postMessage({...}); // send data back to service worker script
+              console.log(sw.state);
+                // returns installing, installed, activating, activated, redundant (thrown away)
+              sw.addEventListener('statechange', function(){
+                // whenever sw.state changes
+                if (this.state === 'installed') //tell user to refresh browser!
+              })
+            } else if(reg.waiting) {
+              // an update is in the pipeline and ready to be activated
+              // tell the user to refresh their content! e.g. by a web socket
+            }
+
+            reg.addEventListener('updatefound', function() {
+              // reg.installing is now the current worker
+              reg.installing.addEventListener('statechange', function(){
+                // whenever sw.state changes
+                if (this.state === 'installed') //tell user to refresh browser!
+              })
+            })
+            console.log('Registration succeeded. Scope is ' + reg.scope);
+                // you can hijack requests so they are never sent to server
+          }).catch(function(error) {
+            // registration failed
+            console.log('Registration failed with ' + error);
+            });
+      }
+    ```
+  - talk to the controlling service worker
+    ```
+      if (navigator.serviceWorker.controller) {
+        //this page was loaded with a service worker
+        const Client = navigator.serviceWorker.controller;
+        Client.postMessage(message); //send message  from page to service worker
+      } else {
+        //this page was NOT loaded with a service worker, but grabbed from the network
+        //so the user already has the latest version (duh, it came from the network)
+      }
+    ```
+  - listen to events for all service workers from client
+    ```
+      navigator.serviceWorker.addEventListener('controllerchange', function() {
+          //the controlling service worker has changed
+        window.location.reload();
+          //reload the page if the user has consented, if not ask for permission
+          //for some changes (e.g. minor, or security fixes) you may want to force changes to users
+      })
+    ```
+  - listen to events for specific service worker in SW file
+    `self.addEventListener('eventName', function(event){...}) //self === service worker`
+  - install event
+    ```
+      self.addEventListener('install', function(event) {
+        event.waitUntil(somePromise);
+          //retrieve files from network and create cache
+          //promise resolve === accept SW continue with install
+          //promise reject === reject SW and discard
+      })
+    ```
+  - fetch event
+    ```
+      self.addEventListener('fetch', function(event) {
+        event.respondWith(responseObjectOrPromise)
+          //intercept and hijack this request
+          //takes a response object or a promise resolving to a response object
+          //see the fetch API 'for' the response object API
+          //https://developer.mozilla.org/en-US/docs/Web/API/Response
+          //return plain string
+          new Response('hello world');
+          //return string with custom header
+          new Response('hello world', {
+            headers: { headerKey: 'header value', ...}
+          })
+          //respond with html
+          new Response("<div class='a-winner-is-me'>boom</a>", {
+            headers: {
+              'Content-Type': 'text/html'
+            }
+          });
+          //hijack specific type of requests
+          if(/\.jpg$/.test(event.request.url)){
+            event.respondWith(
+              fetch('/imgs/dr-evil.gif')
+            );
+          }
+          //respond in event of 404 or offline
+          fetch(event.request).then(function(response){
+            //event.request = original object
+            if (response.status === 404) return new Response('404 not found');
+            //alternatively above you can return a fetch('some/other/thing')
+            return response; //return original response
+          }).catch(function(error){
+            //no connection (offline) or some other error
+            return new Response('uh oh! error/offline');
+          })
+      })
+    ```
+  - message event
+    ```
+      self.addEventListener('message', function(event) {
+        // event.data === whatever sent from Client.postMessage
+      })
+    ```
+
+## Browser Rendering Optimization
+
+## Website Performance Optimization
+
+## Client-Server Communications
+### HTTP: hypertext transfer protocol:
   - hypertext = text with links
   - transfer protocol: rules for moving things across the web
   - clients: asks (requests) servers for resources
@@ -216,54 +484,6 @@
         6.1: internet information services
         6.2: nginx
         6.3: cloudfare
-    ```
-
-## DOM
-	- nodes: represent elements, comments, text, comments, etc. there are 12 node types, most important are element, attribute, and text
-	- checking node types
-    ```
-  		someVar.nodeType
-  			1 = element
-  			2 = attribute
-  			3 = text
-    ```
-	- grabbing elements
-    ```
-  		var myelement = document.GetElementById('idname');
-  			getElementById can be used at any level, not just the document level
-  			e.g. if you grab a UL, you can use getElementsByTagName to grab its child li tags
-  		var myelement = document.getElementsByTagName('p'); //returns an array containing 0/more elements
-    ```
-	- working with attributes
-    ```
-  		myelemen.getAttribute('attributename');
-  		myelement.setAttribute('attributename', 'attributevalue');
-    ```
-	- change html content
-		`document.getElementById("demo").innerHTML = "Hello JavaScript";`
-	- change html styles (CSS)
-		`document.getElementById("demo").style.fontSize = "25px";`
-	- creating element and inserting elements into the DOM
-    ```
-  		var newElement = document.createElement('li');
-  		var newText = document.createTextNode('add this text');
-  		newElement.appendChild(newText);
-  		otherElement.appendChild(newElement);
-    ```
-	- good tricks
-    ```
-  		window.onload = function() {
-  			do stuff once the entire page has loaded
-
-  		}
-    ```
-	- display data to the user
-    ```
-      alert('your message') //give user information
-      prompt('your question') //ask user for information
-      document.write('your html') //rewrite the entire page
-      element.innerHTML = 'Your Text' //add text to an element
-      console.log('your message') //writes tot he console during program execution
     ```
 
 ## Accessibility:
@@ -497,6 +717,7 @@
     3. validation messages should be clear and located next to their errors
     4. inputs should have placeholders
     5. inputs should autocomplete based on users known data
+    6. always realtime validation
 	- links
     - [creating amazing forms](https://developers.google.com/web/fundamentals/design-and-ui/input/?hl=en)
     - [Location Example](http://www.html5rocks.com/en/tutorials/geolocation/trip_meter/)
@@ -669,7 +890,6 @@
     -  Event Default behavior
       - clicking on links, submitting forms, etc.
       `e.preventDefault() //stops the default behavior`
-
 ### [ADD EVENT LISTENERS](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
   ``` add events
     target.addEventListener(type, listener[, options]);
@@ -1124,7 +1344,6 @@
   			};
     ```
 	- AMD format asynchronous module definition
-
 
 ## Classes & [Mixins](http://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/)
   - is really a subclass factory, parameterized by the superclass, which produces mixin applications
@@ -2092,6 +2311,54 @@
 
 # APIs
 ## WINDOW: the lord of the ring
+## DOM
+	- nodes: represent elements, comments, text, comments, etc. there are 12 node types, most important are element, attribute, and text
+	- checking node types
+    ```
+  		someVar.nodeType
+  			1 = element
+  			2 = attribute
+  			3 = text
+    ```
+	- grabbing elements
+    ```
+  		var myelement = document.GetElementById('idname');
+  			getElementById can be used at any level, not just the document level
+  			e.g. if you grab a UL, you can use getElementsByTagName to grab its child li tags
+  		var myelement = document.getElementsByTagName('p'); //returns an array containing 0/more elements
+    ```
+	- working with attributes
+    ```
+  		myelemen.getAttribute('attributename');
+  		myelement.setAttribute('attributename', 'attributevalue');
+    ```
+	- change html content
+		`document.getElementById("demo").innerHTML = "Hello JavaScript";`
+	- change html styles (CSS)
+		`document.getElementById("demo").style.fontSize = "25px";`
+	- creating element and inserting elements into the DOM
+    ```
+  		var newElement = document.createElement('li');
+  		var newText = document.createTextNode('add this text');
+  		newElement.appendChild(newText);
+  		otherElement.appendChild(newElement);
+    ```
+	- good tricks
+    ```
+  		window.onload = function() {
+  			do stuff once the entire page has loaded
+
+  		}
+    ```
+	- display data to the user
+    ```
+      alert('your message') //give user information
+      prompt('your question') //ask user for information
+      document.write('your html') //rewrite the entire page
+      element.innerHTML = 'Your Text' //add text to an element
+      console.log('your message') //writes tot he console during program execution
+    ```
+
 ### [window.fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API):
   - simplified XMLhttpRequest
 ### Fetch examples
@@ -2385,216 +2652,6 @@
 
 ### window.navigator
   - The Navigator interface represents the state and the identity of the user agent. It allows scripts to query it and to register themselves to carry on some activities.
-
-#### [window.navigator.serviceWorker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
-  - service worker: javascript file that sits between you and network requests, listens for and reacts to arbitrary events
-    + each page the service worker controls, it hijacks all events and allows you to operate on them.
-    + are limited to HTTPS, since intercepting network requests can be super dangerous in the wrong hands
-  - service worker hijaking workflow:
-    1. client loads
-    2. service workers interact with caches
-    3. service workers interact with http caches
-    4. service workers interact with network/internet
-  - network flow: browser requests > service worker > http cache > internet
-  - gotchas
-    - browsers only update service workers on page reload, or if there is a change to the SW (e.g. change cache name)
-      + the new SW will have its only install event so you can use this time to get an updated cache
-  - use cases:
-    1. adding offline support
-    2. control the cache
-    3. sending push notifications
-      + You could send push notifications from the browser to your users about new posts, even if the client has closed your page, since service workers are in constant communication with your server in background.
-    4. doing background sync with service workers
-    5. Capability reporting
-    6. Client-side Load Balancer
-    7. Differential update of text files
-    8. Support a previous unsupported image format in your browser!
-    9. Save forms information even if theres no internet at the moment: Your application could have a huge form to send information for and, in case the user lost connection, the information could be saved in a Service Worker, even when the user is offline, and be sent to your server when the connection is back.
-    10. Faster page loads: You could cache scripts, images, stylesheets, static pages, etc on a Service Worker on a first page-load and run a faster page loading on subsequent requests. The approach is almost the same if you relate it with browser caching but differs with when talking about requests: browser caching requests are always made and stops only if you already have the information needed and with Service Workers caching, no requests are made to the server.
-    11. for some changes (e.g. minor, or security fixes) you may want to force changes to users
-  - LIFE CYCLE:
-    1. install:
-      - the browser wont let the SW take control of pages until the install phase is completed
-      - opportunity to get everything you need from the network/internet, and cache them
-    2. waiting:
-    3. activate: when the SW is ready to start working on pages.
-    4. redundant:
-  - process:
-    1. service workers are instantiated via javascript in the window, and can only take control of pages that are LOADED after they are instantiated.
-      - page 1 loads > instantiates sw registration file > makes requests (none are intercepted)
-      - user refreshes (causes new load) > sw still in browser > requests are intercepted
-    2. service worker intercepts all requests and triggers a 'fetch' event for each
-    3. instantiating a new SW can only occur if all pages controlled by the current SW are gone. this ensures only one version of your site exists at any given time
-      - the new SW is in 'waiting' mode until the current SW is gone
-      - only occurs if the page closes, or the user navigates to a page not controlled by the current SW
-    4. users are notified that a new SW is ready by changing the browser hamburger button in the top right (at least on chrome)
-      - when the browser refetches a service worker, it goes through the browser cache for all requests
-      - it is good to set your SW CACHE TIME TO ZERO!!!! this way they are updated as soon as possible
-        -updates to will bypass the browser cache if the SW it has is > than the cache time
-  - DEV TOOLS:
-    1. click the down arrow next to 'top' and select your SW file
-    2. now you can interact with your SW
-      self.registration
-
-    3. you can debug SW same as anything else:
-      sources > click SW file > set breakpoints, etc.
-    4. click the application/resources tab and select the SW option
-  - Basic steps:
-    + registration
-      1. in a script on the page, register a service worker
-      2. the service worker is registered on an origin, and controls a subset of paths (or root, for all paths)
-        navigator.serviceWorker.register....
-    + do stuff!
-      1. intercept network requests/events and do something with them (e.g. store the response in cache)
-        self.addEventListener....
-          caches.open...
-      2. events: install, fetch,
-          event.someMethod()
-      3. caches.open(...)
-          cache.someMethod()
-  - methods
-    + postMessaage(): send messages to/from SW
-    + skipWaiting()
-      - forces the waiting service worker to become the active service worker.
-      - call this when a user hits the refresh button
-  - events
-    + INSTALL: when a browser sets up a SW for the first time, the install event is fired.
-    + ACTIVATE: when a new SW is finished installing and ready to control pages, use this event to delete old caches
-    + FETCH: every browser request triggers a fetch, useful for hijacking/intercepting
-    + MESSAGE: receive/post messages from/to the client (i.e. a page/document)
-#### window.navigator.serviceWorker by MDN tutorial
- + [url is here](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
- - step 1 is to register your someWorker.js file
-  1. in your html file, include a registration.js file that registers specific service workers against an origin and path
-    ```
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw-test/sw.js', {scope: '/sw-test/'})
-        .then(function(reg) {
-          // registration worked
-          console.log('Registration succeeded. Scope is ' + reg.scope);
-        }).catch(function(error) {
-          // registration failed
-          console.log('Registration failed with ' + error);
-        });
-      }
-    ```
-#### window.navigator.serviceWorker examples
-  - registering service workers, returns a registration object
-    ```
-      in home.html
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('path/to/your/SW.js', {scope: 'some/path'})
-          // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration
-          // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register
-          .then(function(reg) {
-            // an update or initial install is in progress
-            if(reg.installing) {
-              // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker
-              let sw = reg.installing
-                // grab this sw from the reg object
-              // https://developer.mozilla.org/en-US/docs/Web/API/Client/postMessage
-              sw.postMessage({...}); // send data back to service worker script
-              console.log(sw.state);
-                // returns installing, installed, activating, activated, redundant (thrown away)
-              sw.addEventListener('statechange', function(){
-                // whenever sw.state changes
-                if (this.state === 'installed') //tell user to refresh browser!
-              })
-            } else if(reg.waiting) {
-              // an update is in the pipeline and ready to be activated
-              // tell the user to refresh their content! e.g. by a web socket
-            }
-
-            reg.addEventListener('updatefound', function() {
-              // reg.installing is now the current worker
-              reg.installing.addEventListener('statechange', function(){
-                // whenever sw.state changes
-                if (this.state === 'installed') //tell user to refresh browser!
-              })
-            })
-            console.log('Registration succeeded. Scope is ' + reg.scope);
-                // you can hijack requests so they are never sent to server
-          }).catch(function(error) {
-            // registration failed
-            console.log('Registration failed with ' + error);
-            });
-      }
-    ```
-  - talk to the controlling service worker
-    ```
-      if (navigator.serviceWorker.controller) {
-        //this page was loaded with a service worker
-        const Client = navigator.serviceWorker.controller;
-        Client.postMessage(message); //send message  from page to service worker
-      } else {
-        //this page was NOT loaded with a service worker, but grabbed from the network
-        //so the user already has the latest version (duh, it came from the network)
-      }
-    ```
-  - listen to events for all service workers from client
-    ```
-      navigator.serviceWorker.addEventListener('controllerchange', function() {
-          //the controlling service worker has changed
-        window.location.reload();
-          //reload the page if the user has consented, if not ask for permission
-          //for some changes (e.g. minor, or security fixes) you may want to force changes to users
-      })
-    ```
-  - listen to events for specific service worker in SW file
-    `self.addEventListener('eventName', function(event){...}) //self === service worker`
-  - install event
-    ```
-      self.addEventListener('install', function(event) {
-        event.waitUntil(somePromise);
-          //retrieve files from network and create cache
-          //promise resolve === accept SW continue with install
-          //promise reject === reject SW and discard
-      })
-    ```
-  - fetch event
-    ```
-      self.addEventListener('fetch', function(event) {
-        event.respondWith(responseObjectOrPromise)
-          //intercept and hijack this request
-          //takes a response object or a promise resolving to a response object
-          //see the fetch API 'for' the response object API
-          //https://developer.mozilla.org/en-US/docs/Web/API/Response
-          //return plain string
-          new Response('hello world');
-          //return string with custom header
-          new Response('hello world', {
-            headers: { headerKey: 'header value', ...}
-          })
-          //respond with html
-          new Response("<div class='a-winner-is-me'>boom</a>", {
-            headers: {
-              'Content-Type': 'text/html'
-            }
-          });
-          //hijack specific type of requests
-          if(/\.jpg$/.test(event.request.url)){
-            event.respondWith(
-              fetch('/imgs/dr-evil.gif')
-            );
-          }
-          //respond in event of 404 or offline
-          fetch(event.request).then(function(response){
-            //event.request = original object
-            if (response.status === 404) return new Response('404 not found');
-            //alternatively above you can return a fetch('some/other/thing')
-            return response; //return original response
-          }).catch(function(error){
-            //no connection (offline) or some other error
-            return new Response('uh oh! error/offline');
-          })
-      })
-    ```
-  - message event
-    ```
-      self.addEventListener('message', function(event) {
-        // event.data === whatever sent from Client.postMessage
-      })
-    ```
 
 ### [window.Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)
   + Web worker: runs separately from the page, isnt visible to the user, cant access the DOM,
