@@ -1,10 +1,21 @@
+# https://developers.google.com/web/fundamentals/getting-started/primers/promises
+
 # Need to file
   - never dev on the local file system when requiring access to external resources as sometimes they wont load
+
 # Roadmap
+  1. google web fundamentals
+  2. topics
+  2. es6 and ES7
+  3. html
+  4. css
+
+## other things to touch
   - [service workers](https://jakearchibald.github.io/isserviceworkerready/index.html)
   - [image src-set for responsiveness](https://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/)
+  - https://jakearchibald.com/2013/progressive-enhancement-is-faster/
 
-  
+
 # NEXT UP
   - https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms_in_HTML#Constraint_Validation_API
@@ -15,7 +26,8 @@
   - [custom site search view google](https://cse.google.com/cse/)
   - [remote debugging](https://jakearchibald.github.io/isserviceworkerready/index.html)
 
-
+# need to research
+  -  feature detection: `if(document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Extensibility','1.1'))`
 # tools
   - [google mobile friendly test](https://search.google.com/search-console/mobile-friendly)
   - [mozilla SSL configuration](https://mozilla.github.io/server-side-tls/ssl-config-generator/)
@@ -205,6 +217,8 @@
     + Introspection: Reflection tools that don’t alter code, but instead gather information about it are often called
 
 # TOPICS
+## Tooling
+## Analytics
 ## Front end security
 ### man in the middle
 ### cross site scripting
@@ -768,7 +782,7 @@
     ```
 
 ## promises and asynchronous code
-  - aynchronous: statements occur in multiple timelines, in an unknown order irregardless of how they are defined in code
+  - asynchronous: statements occur in multiple timelines, in an unknown order irregardless of how they are defined in code
       e.g. network requests, events, threads, timeouts, etc.
   - synchronous: statements happen in order as defined, in a single timeline
   - callbacks: pass one function (cb) to another function, and the cb is invoked when certain conditions are met
@@ -777,6 +791,10 @@
       2. Pyramid of doom / callback hell:
 ### Promises:
   - try catch wrapper around code that will finish at an unpredictable time
+    1. can only succeed/fail once
+    2. cannot switch from success to failure/vice versa
+    3. if a promise has succeeded/failed, and you later add a success/failure callback, the correct callback will be invoked, even though the event took place earlier
+    4. any object with a then method can be used as and integrated with native promises
   - Promise States
     1. fulfilled (resolved): action related to the promise has succeeded
     2. rejected (failure): action related to the promise has failed
@@ -800,29 +818,45 @@
       ```
     4. chaining (value -> promise):
   - Promise Methods
-    1. Promise.Resolve(): create a promise without calling new
+    1. `Promise.Resolve()`: create a promise thats resolves to whatever value you give it
       ```
         var blah = Promise.Resolve();
         blah.then(...);
       ```
-    2. Promise.Reject(): see Promise.Resolve();
-    3. Promise.all([pro1, pro2,...]): takes an array of promises and returns an array of values in the same order as the original promises
+    2. `Promise.Reject()`: see Promise.Resolve();
+    3. `Promise.all([pro1, pro2,...])`: takes an array of promises and returns an array of values in the same order as the original promises
         ```
           Promise.all([...])
             .then(...)
         ```
         - fails fast: will reject as soon as the first promise rejects, without waiting for the remaining promises to settle
-### Promise Examples
+    4. `Promise.race(array)`: make a promise that is settled as soon as any promises in the passed array are resolved/rejected
+  - notes
+    1. each Then is also asynchronous, so you can return a promise from a then, and the next then will only execute when the new promise is settled
+    2. the `.catch()` chain is just sugar for `then(successFunction, errorFunction)`
+    3. promise rejections skip forward to the next then() with a rejection callback or catch chain
+    4. rejections happen when a promise is explicitly rejected, or implicetly if an error is thrown in the constructor callback
+      - thus, its best to do all your promise-related work inside the promise constructor callback, so errors are automatically caught and become rejections
+    5. you can combine generators and promises to write async code that looks like and easy to follow like sync code
 #### Promise constructor:
   ```
-    new Promise((resolve, reject) => {
-      if (true) resolve(value);
-      else reject();
+    // create promise and assign to const
+    const Promised = new Promise((resolve, reject) => {
+      // resolve and reject are callbacks
+      if (true) resolve(successData);
+      else reject(ErrorObject);
       // do some other stuff
       // even if resolve is called first, finish all code inside of this block
-    }).then((value) => { //then is passed whatever was passed to resolve()
-      //success
-    }).catch(rejectFunction) // handles both reject and javascript errors
+    });
+
+    // take action when promise is settled
+    Promised.then(
+      (successData) => {
+        // sucessData = whatever is passed to resolve()
+      }, (errorData) => {
+        // errorData = whatever is passed to reject()
+      }
+    ).catch(rejectFunction) // handles both reject and javascript errors
     .then(someNamedFucntion) // passed a name function that accepts the argument
     .catch(...) // thens and catches *can* come right after each other
     .then(....)
@@ -830,6 +864,13 @@
     .then(resolve, reject) // combine both .then and .catch in one go
   ```
 #### Promise Chaining
+  **Cast a thenable object to a standard promise**
+  ```
+    const cast = Promise.resolve({ then: () => {
+      // this is my thenable object cast to a promise;
+      }})
+    cast.then(...)
+  ```
   **Series: multiple promises run sequentially**
   ```
     var sequence = Promise.resolve(); // create a promise without the new keyword, can also use Promise.reject()
@@ -844,6 +885,130 @@
       sequence.then(...); //each request is fired independently and in parallel
     })
   ```
+  **Each then can transform the value returned from the previous**
+  ```
+    somePromise
+      .then((value) => value++)
+      .then((value) => value++)
+  ```
+### Async
+  - links
+    1. [jake archibald async explanation](https://developers.google.com/web/fundamentals/getting-started/primers/async-functions)
+    - [another jake archibald](https://jakearchibald.com/2014/es7-async-functions/)
+  - basics
+    1. allow you to write promise-based code as if it were syncrhonous, but without blocking the main thread
+    2. Note that `await` may only be used in functions prepended with the `async` keyword
+    3. suspends execution in your context until the promise settles
+    4. `async` Function always returns a Promise
+    5. anything prepended with `await` is passed through Promise.resolve() so you can safely await non-native promises
+  - use cases
+    1. reduce complex promise logic
+    2. convert object/class methods to promises
+      - Class constructors and getters/settings cannot be async.
+    3. easily run multiple async logic in serial/parallel
+    4. easily make requests in parallel but take action in order they were called
+#### examples
+  **async arrow function**
+    ```
+      async ()=> {
+        var data = await makeCall();
+      }
+    ```
+  **async function with try catch**
+    ```
+      async function myFirstAsyncFunction() {
+        try {
+          // execution is suspended in a non-blocking way inside of this block until the promise is resolved or rejected,
+          const fulfilledValue = await promise;
+        }
+        catch (rejectedValue) {
+          // …
+        }
+      }
+    ```
+  **async function used with array map**
+    ```
+      const jsonPromises = urls.map(async url => {
+        const response = await fetch(url);
+        return response.json();
+      });
+    ```
+  **async function as a object method**
+    ```
+      const storage = {
+        async getAvatar(name) {
+          const cache = await caches.open('avatars');
+          return cache.match(`/avatars/${name}.jpg`);
+        }
+      };
+
+      storage.getAvatar('jaffathecake').then(…);
+    ```
+  **async function as a class method**
+    ```
+      class Storage {
+        constructor() {
+          this.cachePromise = caches.open('avatars');
+        }
+        async getAvatar(name) {
+          const cache = await this.cachePromise;
+          return cache.match(`/avatars/${name}.jpg`);
+        }
+      }
+
+      const storage = new Storage();
+      storage.getAvatar('jaffathecake').then(…);
+    ```
+  **A function with multiple await expressions will run each in serial.**
+    ```
+      async ()=> {
+        var data = await makeCall();
+        var data2 = await makeCall2();
+        var data3 = awat makeCall3();
+      }
+    ```
+  **async function ran in parallel**
+    ```
+      async function parallel() {
+        const wait1 = wait(500);
+        const wait2 = wait(500);
+        await wait1;
+        await wait2;
+        return "done!";
+      }
+    ```
+  **request in parallel, process in order**
+  ```
+    async function logInOrder(urls) {
+      // fetch all the URLs in parallel
+      const textPromises = urls.map(async url => {
+        const response = await fetch(url);
+        return response.text();
+      });
+
+      // log them in sequence
+      for (const textPromise of textPromises) {
+        console.log(await textPromise);
+      }
+    }
+  ```
+  **to run a bunch of calls at the same time**
+    ```
+      async function concurrent () {
+        var [r1, r2, r3] = await Promise.all([p1, p2, p3]);
+      }
+    ```
+  **another version of the above**
+    ```
+      const all = Promise.all.bind(Promise);
+      async function concurrent () {
+        var [r1, r2, r3] = await all([p1, p2, p3]);
+      }
+    ```
+## Javascript language
+  - is single threaded: two things cannot run at the same time
+    1. Javascript is in the same queue as painting, updating styles, and handling user actions (e.g. highliting text/interacting with form controls)
+
 
 ## [EVENTS](https://developer.mozilla.org/en-US/docs/Web/Events)
   - Event Registration: telling javascript you want to react to specific events when they happen via an event handler
@@ -1498,6 +1663,10 @@
 		  `@returns {returnType} describes the return value of the function or method. Either type or description can be omitted.`
 		- specify if this function throws any errors
 			`@throws {exceptionType} description: describes an exception that might be thrown during the execution of the function or method. Either type or description can be omitted.`
+
+
+
+
 # JAVASCRIPT
 # ES5:
 ## [prototypical inheritance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
@@ -2135,19 +2304,6 @@
           }
         }
       ```
-## Generators: a function that can be exited, and entered multiple times
-  - yield: exit the function and send a value to the caller, and optionally receive a value back
-  - function.next(): retrieve and send data, executes up to and including the next yield statement
-    + for each yield statement you need to call blah.next()
-    + returns ``{value: 'dataInAndOut', done: true|false}``
-      1. value: data sent out from yield, or data sent in through next(someData);
-      2. done:
-        - false if function is not done, and can be entered again
-        - true: if function is done, and should not be re-entered
-    + you can access the value directly: `bloop.next().value;``
-  - use cases
-    + asynchornous events
-    + timers (e.g. setInterval)
 ### Generators examples
   - send and receive data
     ```
@@ -2277,40 +2433,24 @@
     ```
 ### const: set constant vars that should not be reasigned
   - example: `const name = "noah";`
-## async await
-  - Note that await may only be used in functions marked with the async keyword
-  - suspends execution in your context until the promise settles
-  - an Async Function always returns a Promise
-    ```
-      async ()=> {
-        var data = await makeCall();
-      }
-    ```
-  - A function with multiple await expressions will run each in serial.
-    ```
-      async ()=> {
-        var data = await makeCall();
-        var data2 = await makeCall2();
-        var data3 = awat makeCall3();
-      }
-    ```
-
-  - to run a bunch of calls at the same time
-    ```
-      async function concurrent () {
-        var [r1, r2, r3] = await Promise.all([p1, p2, p3]);
-      }
-    ```
-  - another version of the above
-    ```
-      const all = Promise.all.bind(Promise);
-      async function concurrent () {
-        var [r1, r2, r3] = await all([p1, p2, p3]);
-      }
-    ```
 # ES7: (ES2016)
+## async await
+  - @see #topics Async Promises section above
 ## destructuring:
   `({a, b, ...rest} = {a:1, b:2, c:3, d:4});`
+## Generators: a function that can be exited, and entered multiple times
+  - yield: exit the function and send a value to the caller, and optionally receive a value back
+  - function.next(): retrieve and send data, executes up to and including the next yield statement
+    + for each yield statement you need to call blah.next()
+    + returns ``{value: 'dataInAndOut', done: true|false}``
+      1. value: data sent out from yield, or data sent in through next(someData);
+      2. done:
+        - false if function is not done, and can be entered again
+        - true: if function is done, and should not be re-entered
+    + you can access the value directly: `bloop.next().value;``
+  - use cases
+    + asynchornous events
+    + timers (e.g. setInterval)
 
 
 # APIs
