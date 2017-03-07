@@ -1,12 +1,47 @@
-# nginx
+# next up
+  - [setting up nginx server blocks](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04)
+  - [setup LEMP stack](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04)
 # links
   - [setting up node with nginx](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04)
   - [alphabetical nginx variables](http://nginx.org/en/docs/varindex.html)
-  
+  - [nginx beginners guide](http://nginx.org/en/docs/beginners_guide.html)
+  - [create self signed cert for nginx](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04)
+
 # tips and tricks
   - ensure there arent any errors i your nginx config
     - `sudo nginx -t`
+    - `sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/certs/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt`
+      - create a self signed cert
+# commands
+  - sudo systemctl [stop|start|restart|reload|disable|enable] nginx
+    1. reload: try to reload nginx configuration without dropping connections (restarting)
+    2. disable: dont start at system start
+    3. enable: start at system start
+# locations
+## content
+  - `/var/www/html` default location for actual web content
+## server configuration
+  - `/etc/nginx/` all nginx configuration files
+  - `/etx/nginx/nginx.conf` the main configuration file
+  - `/etc/nginx/sites-available` the directory where per-site *server-blocks* can be stored
+    - config files in this dir will not be used unless they are linked to the *sites-enabled* directory
+  - `/etc/nginx/sites-enabled` directory where enabled per-site *server-blocks* are stored
+  - `/etc/nginx/snippets` directory contains configuration fragments that can be included elsewhere in the nginx configuration
+## logs
+  - `/var/log/nginx/access.log` every request to your webserver is recorded in this log file
+  - `/var/log/nginx/error.log` every nginx error is kept here
 
+
+
+# installing on Ubuntu
+  - based on
+    0. [initial nginx server setup](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)
+    1. [digital ocean setup nginx](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-16-04)
+## initial server setup
+  1. add a non root user
+    `sudo adduser SOME_USERNAME`
+  2. give the non root user sudo priveledges
+    `sudo usermod -aG sudo SOME_USERNAME`
 ## setup reverse proxy for http
     1. modify default sites available
       - `sudo nano /etc/nginx/sites-available/default`

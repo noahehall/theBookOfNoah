@@ -1,5 +1,10 @@
 # Need to file
   - never dev on the local file system when requiring access to external resources as sometimes they wont load
+# Roadmap
+  - [service workers](https://jakearchibald.github.io/isserviceworkerready/index.html)
+  - [image src-set for responsiveness](https://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/)
+
+  
 # NEXT UP
   - https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms_in_HTML#Constraint_Validation_API
@@ -8,6 +13,7 @@
   - [push notifications](https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web)
   - [run through all articles](https://developers.google.com/web/updates/2017)
   - [custom site search view google](https://cse.google.com/cse/)
+  - [remote debugging](https://jakearchibald.github.io/isserviceworkerready/index.html)
 
 
 # tools
@@ -15,7 +21,7 @@
   - [mozilla SSL configuration](https://mozilla.github.io/server-side-tls/ssl-config-generator/)
   - [github pages](https://pages.github.com/)
   - [manage all service workers](chrome://inspect/#service-workers)
-  
+
 # NEED to finish
   - https://classroom.udacity.com/nanodegrees/nd802/parts/8021345403/modules/550593026975460/lessons/5972243496/concepts/61045985370923
   - MUST FUCKING DO
@@ -250,26 +256,13 @@
   - life CYCLE
     1. registration step: register a SW in your page's javascript: the browser will then install the SWin the background
     2. SW Install step: you specify which static assets to cache. if all assets are successfully downloaded and cached, the SW becomes activated
+      - create/open a cache
+      - cache static assets
     3. SW Activated step: handle management of old caches
       - for all pages within the SW scope, the SW will act as a Proxy or be terminated (to save memory),
+      - clear current cache / delete old caches if upgrading to a new version
+      - have the activated service worker take control immediately
         + this is the 'idle' phase
-#### [window.navigator.serviceWorker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
-  - service worker hijaking workflow:
-    1. client loads
-    2. service workers interact with caches
-    3. service workers interact with http caches
-    4. service workers interact with network/internet
-  - network flow: browser requests > service worker > http cache > internet
-  - gotchas
-    - browsers only update service workers on page reload, or if there is a change to the SW (e.g. change cache name)
-      + the new SW will have its only install event so you can use this time to get an updated cache
-  - LIFE CYCLE:
-    1. install:
-      - the browser wont let the SW take control of pages until the install phase is completed
-      - opportunity to get everything you need from the network/internet, and cache them
-    2. waiting:
-    3. activate: when the SW is ready to start working on pages.
-    4. redundant:
   - process:
     1. service workers are instantiated via javascript in the window, and can only take control of pages that are LOADED after they are instantiated.
       - page 1 loads > instantiates sw registration file > makes requests (none are intercepted)
@@ -282,11 +275,22 @@
       - when the browser refetches a service worker, it goes through the browser cache for all requests
       - it is good to set your SW CACHE TIME TO ZERO!!!! this way they are updated as soon as possible
         -updates to will bypass the browser cache if the SW it has is > than the cache time
+#### notes
+  - use indexeddb > window.cache because indexed db has far more support
+#### [window.navigator.serviceWorker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+  - service worker hijaking workflow:
+    1. client loads
+    2. service workers interact with caches
+    3. service workers interact with http caches
+    4. service workers interact with network/internet
+  - network flow: browser requests > service worker > http cache > internet
+  - gotchas
+    - browsers only update service workers on page reload, or if there is a change to the SW (e.g. change cache name)
+      + the new SW will have its only install event so you can use this time to get an updated cache
   - DEV TOOLS:
     1. click the down arrow next to 'top' and select your SW file
     2. now you can interact with your SW
       self.registration
-
     3. you can debug SW same as anything else:
       sources > click SW file > set breakpoints, etc.
     4. click the application/resources tab and select the SW option
@@ -304,7 +308,7 @@
       3. caches.open(...)
           cache.someMethod()
   - methods
-    + postMessaage(): send messages to/from SW
+    + postMessage(): send messages to/from SW
     + skipWaiting()
       - forces the waiting service worker to become the active service worker.
       - call this when a user hits the refresh button
