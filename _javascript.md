@@ -14,7 +14,8 @@
   - [service workers](https://jakearchibald.github.io/isserviceworkerready/index.html)
   - [image src-set for responsiveness](https://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/)
   - https://jakearchibald.com/2013/progressive-enhancement-is-faster/
-
+  - [streams](https://jakearchibald.com/2016/streams-ftw/#streams-the-fetch-api)
+  - [web components in polymer](https://www.polymer-project.org/1.0/blog/es6)
 
 # NEXT UP
   - https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
@@ -217,6 +218,8 @@
     + Introspection: Reflection tools that don’t alter code, but instead gather information about it are often called
 
 # TOPICS
+## WebComponents `@see _html.md`
+## Streams/WebSockets
 ## Tooling
 ## Analytics
 ## Front end security
@@ -907,6 +910,7 @@
       - Class constructors and getters/settings cannot be async.
     3. easily run multiple async logic in serial/parallel
     4. easily make requests in parallel but take action in order they were called
+    5. use them on every promise-returning function! Not only do they make your code tider, but it makes sure that function will always return a promise.
 #### examples
   **async arrow function**
     ```
