@@ -1,10 +1,12 @@
 # bookmark
   - [shadow dom for custom element](https://developers.google.com/web/fundamentals/getting-started/primers/shadowdom)
+    - shadow dom event model
 
 # links
   - [what the heck is a shadow dom](https://glazkov.com/2011/01/14/what-the-heck-is-shadow-dom/)
   - [html template tag](https://www.html5rocks.com/en/tutorials/webcomponents/template/)
   - [html imports](https://www.html5rocks.com/en/tutorials/webcomponents/imports/)
+  - [react with webcomponents example](https://github.com/facebook/react/blob/master/examples/webcomponents/index.html)
 
 
 # DOM
@@ -14,6 +16,8 @@
 
 # Web Components
 ## Shadow dom
+  - use cases
+    1. defining new HTML elements, e.g. a date-picker, that are reusable across applications
   - introduces scoped styles for you to bundle CSS with HTML markup, hide implementation details, and author self-contained components in vanilla js
     1. a tool for building component-based apps
       - isolated DOM: each component's DOM is self-contained (e.g. `document.querySelector()` won't return nodes in the component's shadow DOM)
@@ -66,20 +70,106 @@
   1. Shadow DOM: create a scoped DOM tree thats attached to an element, but separate from the element's other children
   2. Shadow Tree: a secondary DOM tree scoped to its attached element
   3. Shadow Host: the parent element that defines the scope (shadow tree) for a Shadow DOM
-  4. anything you add in the *shadows* becomes local to the hosting element (*shadow host*)
-  5. Shadow Root: a document fragment that gets attached to a shadow host element
+  4. Shadow Root: a document fragment that gets attached to a shadow host element
     - used to encapsulate js, html, and css to its shadow host
+    - open root: outside javascript can interact with the shadow DOM
+    - closed root: outside javascript **CANNOT** interact with the shadow DOM
+  5. anything you add in the *shadows* becomes local to the hosting element (*shadow host*)
   - Shadow DOM components
     1. `<slot>` element
       - placeholders inside your component for `light DOM` content`
       - Slots are a way of creating a "declarative API" for a web component. They mix-in the user's DOM to help render the overall component, thus, composing different DOM trees together.
       - slots can be empty/provide fallback content
         + if the user does not provide `light DOM `content, the slot renders its fallback content
+      - API
+        1. `slotchange` event fires when a slot's distributed node changes, e.g. if a user adds/removes children from the `light DOM`
+          - does not fire when an instance of the component is first initialized
+          ```
+            const slot = this.shadowRoot.querySelector('#slot');
+            slot.addEventListener('slotchange', e => {
+              console.log('light dom children changed!');
+            });
+          ```
+        2. `slot.assignedNodes()` returns the elements associated with a specific `slot` element
+        3. `element.assignedSlot` returns the `slots` associated with this element
     2. distributed nodes: elements that can be rendered inside of a shadow DOM's `<slot>` element
     3. named slots: specific holes in your `shadow DOM` that users reference by name
+  - Shadow DOM Event model
+    1.
 ### Architecture: styling
-  
+  - a web component that uses `shadow DOM` can be styled via:
+    1. main page
+    2. define its own styles
+    3. provide hooks in the form of CSS custom properties
+  - scoped CSS
+    1. css selectors from the outer page do not apply inside your component
+    2. styles defined inside your component do not bleed out, their scoped to the host element
+  - `:host` and `:host(<selector>)` styles
+    1. allows a component to style itself
+      - only works  in the context of a shadow root, so you can't use it outside of the shadow DOM
+    2. rules in the parent page have a higher specificity than `:host` style rules, i.e. parent rules win
+    3. a way for your component to encapsulate behaviors that react to user interaction or state or style internal nodes based on the host.
+  - `:host-context(<selector>)` styles
+    1. matches the component if it or any of its ancestors matches <selector>
+    2.  A common use for this is theming based on a component's surroundings. For example, many people do theming by applying a class to <html> or <body>
+  - `::slotted(<compound-selector>)` styles
+    1. matches nodes that are distributed into a <slot>.
+    2. can only style top level children, no grandchildren
+  - styling from outside the `shadow DOM`
+    1. easiest way is to the the tag name as the selector in your css
+    2. remember, outside styles **ALWAYS** win over styles defined inside the `shadow DOM`
+  - creating style hooks using CSS custom properties
+    1. you create style placeholders for users to override, its just like postcss custom css properties
+      `--some-overridable-style: black`
+
 ### Examples
+#### complete Shadow DOM definition
+  ``` open vs closed shadow roots
+    const div = document.createElement('div');
+    // closed
+      const shadowRoot = div.attachShadow({mode: 'closed'});
+    // open
+      const shadowRoot = div.attachShadow({mode: 'open'});
+  ```
+  ```
+    const shadowRoot = this.attachShadow({mode: 'open'});
+    shadowRoot.innerHTML = `
+      <style>
+        #panels {
+          box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+          background: white;
+          border-radius: 3px;
+          padding: 16px;
+          height: 250px;
+          overflow: auto;
+        }
+        #tabs {
+          display: inline-flex;
+          -webkit-user-select: none;
+          user-select: none;
+        }
+        #tabsSlot::slotted(*) {
+          font: 400 16px/22px 'Roboto';
+          padding: 16px 8px;
+          ...
+        }
+        #tabsSlot::slotted([aria-selected="true"]) {
+          font-weight: 600;
+          background: white;
+          box-shadow: none;
+        }
+        #panelsSlot::slotted([aria-hidden="true"]) {
+          display: none;
+        }
+      </style>
+      <div id="tabs">
+        <slot id="tabsSlot" name="title"></slot>
+      </div>
+      <div id="panels">
+        <slot id="panelsSlot"></slot>
+      </div>
+    `;
+  ```
 #### <slot> definition
   ```
     <!-- slot with fallback content -->
@@ -117,6 +207,107 @@
         <h2 slot="title">Title 3</h2>
         <section>content panel 3</section>
       </fancy-tabs>
+
+  ```
+#### scoped CSS inside shadow DOM definition
+  ```
+    <!-- inline styles -->
+      #shadow-root
+        <style>
+          #panels {
+            box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+            background: white;
+            ...
+          }
+          #tabs {
+            display: inline-flex;
+            ...
+          }
+        </style>
+        ...component definition
+
+    <!-- style sheet, requires chrome 54+ -->
+      <link rel="stylesheet" href="styles.css">
+      ...component definition
+
+    <!-- a component styling itself via `:host` declaration -->
+      <style>
+        :host {
+          opacity: 0.4;
+          will-change: opacity;
+          transition: opacity 300ms ease-in-out;
+        }
+        :host(:hover) {
+          opacity: 1;
+        }
+        :host([disabled]) { /* style when host has disabled attribute. */
+          background: grey;
+          pointer-events: none;
+          opacity: 0.4;
+        }
+        :host(.blue) {
+          color: blue; /* color host when it has class="blue" */
+        }
+        :host(.pink) > #tabs {
+          color: pink; /* color internal #tabs node when host has class="pink". */
+        }
+      </style>
+
+    <!-- styling based on context -->
+      /* context is darktheme */
+        <body class="darktheme">
+          <fancy-tabs>
+            ...
+          </fancy-tabs>
+        </body>
+      /* style based on context */
+        <style>
+          :host-context(.darktheme) {
+            color: white;
+            background: black;
+          }
+        </style>
+
+    <!-- styling distributed nodes -->
+      /* slot definition */
+        <name-badge>
+          <h2>Eric Bidelman</h2>
+          <span class="title">
+            Digital Jedi, <span class="company">Google</span>
+          </span>
+        </name-badge>
+      /* shadow DOM style definition */
+      <style>
+        ::slotted(h2) {
+          margin: 0;
+          font-weight: 300;
+          color: red;
+        }
+        ::slotted(.title) {
+           color: orange;
+        }
+        /* DOESN'T WORK (can only select top-level nodes).
+        ::slotted(.company),
+        ::slotted(.title .company) {
+          text-transform: uppercase;
+        }
+        */
+      </style>
+    <!-- CSS custom properties for placeholder styles -->
+      <!-- main page -->
+        <style>
+        fancy-tabs {
+          margin-bottom: 32px;
+          --fancy-tabs-bg: black;
+        }
+        </style>
+        <fancy-tabs background>...</fancy-tabs>
+      /* inside the shadow dom */
+        :host([background]) {
+          background: var(--fancy-tabs-bg, #9E9E9E);
+          border-radius: 10px;
+          padding: 10px;
+        }
 
   ```
 #### create a shadow dom for a native HTML element
