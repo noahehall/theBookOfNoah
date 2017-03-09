@@ -2,6 +2,16 @@
   - [shadow dom for custom element](https://developers.google.com/web/fundamentals/getting-started/primers/shadowdom)
     - shadow dom event model
 
+# must do
+  - [shadydom polyfill](https://github.com/webcomponents/shadydom)
+  - [shadycss polyfill](https://github.com/webcomponents/shadycss)
+  -
+# next up
+  - [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+  - [css variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables)
+  - [react and web components](https://facebook.github.io/react/docs/web-components.html)
+  - [react and webcomponetns example](https://github.com/facebook/react/blob/master/examples/webcomponents/index.html)
+   - 
 # links
   - [what the heck is a shadow dom](https://glazkov.com/2011/01/14/what-the-heck-is-shadow-dom/)
   - [html template tag](https://www.html5rocks.com/en/tutorials/webcomponents/template/)

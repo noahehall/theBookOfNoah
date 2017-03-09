@@ -218,6 +218,7 @@
     + Introspection: Reflection tools that don’t alter code, but instead gather information about it are often called
 
 # TOPICS
+## AJAX: XMLHttpRequest, Fetch
 ## WebComponents `@see _html.md`
 ## Streams/WebSockets
 ## Tooling
@@ -225,7 +226,25 @@
 ## Front end security
 ### man in the middle
 ### cross site scripting
-### cross origin requests
+### [cross origin resource sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS)
+  - A resource makes a cross-origin HTTP request when it requests a resource from a different domain, or port than the one which the first resource itself serves.
+  - the CORS mechanism gves web servers cross-domain access controls, which enable secure cross-domain transfers
+    - the [CORS protocol](https://fetch.spec.whatwg.org/#http-cors-protocol) can enable cross-site HTTP requests for:
+      1. invocations of XMLHttpRequest/Fetch api
+      2. web fonts
+      3. images/video frames drawn to canvas using drawImage
+      4. stylesheets
+      5. scripts
+    - add HTTP headers that allow web servers to describe the set of origins that are permitted to read
+    - for HTTP methods with server side-effects (e.g. `POST`), the spec mandates that browsers *preflight* the request to retrieve supported methods with an `HTTP OPTIONS` request method, and then upon *approval* from teh server, sending the actual request
+    - servers can notify clients whether crednetials (e.g. cookies) should be sent with requests
+  - TERMINOLOGY
+    1. Simple requests: requests types that don't trigger a `CORS preflight`, i.e. GET, HEAD, POST
+  - server perspective
+    1. set *response.header* `Access-Control-Allow-Origin:` to the domains that can access the server's resources
+      - allow all: `Access-Control-Allow-Origin: *`
+      - allow specific: `Access-Control-Allow-Origin: http://foo.example`
+        + you can programmatically update this permit multiple domains access without using the `*` flag
 ## Ecommerce
   - allow users to purchase as guests
 ## SEO
