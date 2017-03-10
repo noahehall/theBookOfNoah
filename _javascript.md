@@ -11,6 +11,7 @@
   4. css
   5. [timeline tool](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/timeline-tool)
   6. [web font performance](https://www.igvita.com/2014/01/31/optimizing-web-font-rendering-performance/)
+  7.
 
 ## other things to touch
   - [service workers](https://jakearchibald.github.io/isserviceworkerready/index.html)
@@ -18,7 +19,9 @@
   - https://jakearchibald.com/2013/progressive-enhancement-is-faster/
   - [streams](https://jakearchibald.com/2016/streams-ftw/#streams-the-fetch-api)
   - [web components in polymer](https://www.polymer-project.org/1.0/blog/es6)
-
+  - [font face observer](https://github.com/bramstein/fontfaceobserver)
+  - [web font loader](https://github.com/typekit/webfontloader)
+  - [font optimization](https://www.zachleat.com/web/web-font-data-uris/)
 # NEXT UP
   - https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms_in_HTML#Constraint_Validation_API
@@ -32,6 +35,7 @@
 # need to research
   -  feature detection: `if(document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Extensibility','1.1'))`
   - buffers
+  - font loading api
 # tools
   - [google mobile friendly test](https://search.google.com/search-console/mobile-friendly)
   - [mozilla SSL configuration](https://mozilla.github.io/server-side-tls/ssl-config-generator/)
@@ -230,6 +234,8 @@
     1. set the content length header:
       - aggregate the result, convert to buffer, set content-length header, and do a single res.end() call
       - if you dont do this you will get about 50% fewer requests per second
+  - js performance
+    1. string manipulation is costly
 ### browser performance
 #### best practices
   - browser performance steps
@@ -315,7 +321,7 @@
       - enable [delta encoding](https://en.wikipedia.org/wiki/Delta_encoding)
     - vector images: minify
   6. deliver scaled images
-#### web font optimizations
+#### font optimizations
   1. pick the right font
     1. server WOFF 2.0 to browsers that support it
     2. server WOFF to majority of browsers
@@ -325,6 +331,23 @@
     - EOT and TTF require compression
     - WOFF and WOFF2.0 should already be compressed
     - use `zopfli` compression > gzip for fonts to get around 5% more compression
+  3. use `@font-face` in css files
+    - use `format()` to specify different formats that are available
+    - use `unicode-range` to specify which characters you need from the font so that the entire font isnt downloaded
+  4. reduce the font variants used in app to reduce font synthesis
+    - if an exact font match isnt available (e.g. `font-weight: 900`), the browser substitutes the closest match
+    - if no match is found (i.e. the `@font-face` declaration doesnt include an *italic* font), then the browser synthesizes its own font variant
+  5. optimize loading and rendering
+    - font requests are delayed until the render tree is constructed which can result in *delayed text rendering* which is part of the *critcal render path*
+    - use the font loading API for lazy loading
+    - use a standard font on the initial page load to unblock rendering and inject a new style that uses a web font
+    - inline font data (instead of using font api) in all other cases
+      1. the brwoser auto downloads with high priority CSS style sheets with matching media queries because constructing the CCSOM requires them
+      2. inlining font data into CSS style sheets forces the browser to download the font with high priority without waiting for the render tree
+  6. cache fonts for long periods
+    - long max-age expiry
+    - conditional ETag header
+    - cache control policy
 #### measuring performance
   1. RAIL: Response > Animation > Idle > Load
     - user-centric performance model that splits an application life cycle into four distinct steps:
@@ -369,11 +392,24 @@
       4. TTF
       5. SVG font container: not supported by many, dont use it
     - webfont: collection of glyphs, each glyph is a vector shape that describes a letter/symbol
-      1.
-
+    - the race between the first page of page content (after the *Render tree* is built), and the request for the font resource is what creates the 'blank text problem' where the browser might render the page layout but omits any text
+      1. each browser has a different method for handling this issue,
+  5. use HTTP caching
+    - every browser ships with an implementation of http cache
 ##### optimizing content efficiency
 ##### critical rendering path
   - this is what blocks rendering of content
+  1. request HTML document
+    - parse the response
+    - construct DOM
+    - browser discovers CSS, JS, and other resources and dispatches reuests
+  2. request CSS files
+    - browser constructs CSSOM after all of the CSS content is received and combines it with the DOM tree to construct the *render tree*
+  3. get fonts
+    - font requests are dispatched after the *render tree* can tell the browser which font variants are needed to render teh specified text on the page
+  4. first paint
+    - if fonts are not available, the browser may not render any text pixels
+  5. paint text
 ##### rendering performance
 ##### low bandwidth & high latency
 ##### PRPL
