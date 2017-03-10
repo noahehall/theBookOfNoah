@@ -218,6 +218,55 @@
     + Introspection: Reflection tools that don’t alter code, but instead gather information about it are often called
 
 # TOPICS
+## performance
+### best practices
+  - the end goal isnt to make your site perform fast on any device, it is to make users happy
+    1. the majority of time users spend in your site isnt waiting for it to load, but waiting for it to respond t otheir actions
+  - respond to users immediately; acknowledge user input in under 100ms
+    1. applies to most inputs, anything clickable/toggles/animations
+      - does not apply to touch drags/scrolls
+    2. always provide feedback for actions that take longer than 500ms to complete
+  - when animating/scrolling, produce a frame in under 10ms
+  - maximine main thread idle time
+  - keep users engaged; deliver interactive content in under 1000ms
+  - use idle time to complete deferred work
+    1. keep preloaded data to a minimum so that your app loads fast, and use idle time to load remaining data
+### notes
+  - time frames
+    1. 0-16ms: users perceive animations as smoth so long as 60 new frames are rendered ever second; thats 16ms per frame (including the time it takes the browser to paint the new frame to the screen), your ap has 10ms to produce a frame
+    2. -100ms : respond to user action within this time frame and it will feel immediate, else the connection between action and reaction will be broken
+    3. 100-300ms: users experience a slight perceptible delay
+    4. 300 - 100ms: things feel part of a natural and continuous progression of tasks; loading/changing views represents a tasks
+    5. 1000+ms: the user is frustrated and likely to abandon the task
+#### 60 frames per second
+  - 60 frames per second:
+    1. 1000ms budget / 60 fps - 6ms = 10.66ms per frame
+  - browsers need at most 6fps to paint each frame
+  - your code should finish execting in under 10ms
+  - take advantage of the first 100ms time frame to do expensive pre calculation so that you can maximize your chances of hitting 60fps
+  - always produce 60 frames per second, and every frame goes through the following steps
+    1. javascript
+    2. style
+    3. layout
+    4. paint
+    5. composite
+#### animations (including scrolling and touch drags)
+### measuring performance
+  1. RAIL: Response > Animation > Idle > Load
+    - user-centric performance model that splits an application life cycle into four distinct steps:
+      1. Response
+      2. Animation
+      3. Idle
+      4. load
+### optimizing data users download
+  - improving performance process starts with minimizing and optimizing the data that users download
+#### optimizing content efficiency
+#### critical rendering path
+#### rendering performance
+#### low bandwidth & high latency
+#### PRPL
+#### [Chrome DevTools](https://developers.google.com/web/tools/setup/)
+
 ## AJAX: XMLHttpRequest, Fetch
 ## WebComponents `@see _html.md`
 ## Streams/WebSockets
