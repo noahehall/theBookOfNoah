@@ -9,6 +9,8 @@
   2. es6 and ES7
   3. html
   4. css
+  5. [timeline tool](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/timeline-tool)
+  6. [web font performance](https://www.igvita.com/2014/01/31/optimizing-web-font-rendering-performance/)
 
 ## other things to touch
   - [service workers](https://jakearchibald.github.io/isserviceworkerready/index.html)
@@ -29,6 +31,7 @@
 
 # need to research
   -  feature detection: `if(document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Extensibility','1.1'))`
+  - buffers
 # tools
   - [google mobile friendly test](https://search.google.com/search-console/mobile-friendly)
   - [mozilla SSL configuration](https://mozilla.github.io/server-side-tls/ssl-config-generator/)
@@ -219,7 +222,21 @@
 
 # TOPICS
 ## performance
-### best practices
+  - javascript is not run on the CPU, there is a javascript VM that takes your code and runs it on the CPU
+    - it is a black box, you must be sure you've written your code in a way that does not hinder the VM
+### application performance
+  - record a start time, do stuff, record an end time
+  - node performance
+    1. set the content length header:
+      - aggregate the result, convert to buffer, set content-length header, and do a single res.end() call
+      - if you dont do this you will get about 50% fewer requests per second
+### browser performance
+#### best practices
+  - browser performance steps
+    1. understand your users interaction on the page
+    2. measure current app performance
+    3. eliminate unnecessary downloads
+    4. add compression
   - the end goal isnt to make your site perform fast on any device, it is to make users happy
     1. the majority of time users spend in your site isnt waiting for it to load, but waiting for it to respond t otheir actions
   - respond to users immediately; acknowledge user input in under 100ms
@@ -228,17 +245,27 @@
     2. always provide feedback for actions that take longer than 500ms to complete
   - when animating/scrolling, produce a frame in under 10ms
   - maximine main thread idle time
-  - keep users engaged; deliver interactive content in under 1000ms
+  - keep users engaged; deliver content in under 1000ms or users attention will start to wander, and their perception of dealing with the task is broken
+    1.
   - use idle time to complete deferred work
     1. keep preloaded data to a minimum so that your app loads fast, and use idle time to load remaining data
-### notes
+    2. deferred work should be grouped into blocks of about 50ms - should  user begin interacting - then the highest priority is to respect to the user
+      - to allow for <100 ms response, the app must yield control back to main thread every 50ms so that it can execute its pixel pipeline, react to user input, etc.
+  - eliminate/defer uneccesary downloads on app load
+  - ensure each resource has compression, caching, minification, etc.
+    1. inventory your content into content types and determine what content-specific optimizations can be performed
+  - ensure you understand your user behavior on your page
+    1. the frequency in which they interact with each element
+  - GZIP performs best on text-based assets: CSS, javascript, html
+
+#### notes
   - time frames
     1. 0-16ms: users perceive animations as smoth so long as 60 new frames are rendered ever second; thats 16ms per frame (including the time it takes the browser to paint the new frame to the screen), your ap has 10ms to produce a frame
     2. -100ms : respond to user action within this time frame and it will feel immediate, else the connection between action and reaction will be broken
     3. 100-300ms: users experience a slight perceptible delay
     4. 300 - 100ms: things feel part of a natural and continuous progression of tasks; loading/changing views represents a tasks
     5. 1000+ms: the user is frustrated and likely to abandon the task
-#### 60 frames per second
+##### 60 frames per second
   - 60 frames per second:
     1. 1000ms budget / 60 fps - 6ms = 10.66ms per frame
   - browsers need at most 6fps to paint each frame
@@ -250,22 +277,107 @@
     3. layout
     4. paint
     5. composite
-#### animations (including scrolling and touch drags)
-### measuring performance
+##### animations (including scrolling and touch drags)
+##### HTML optimizations
+  1. define as many async tags as possible
+  2. minification and gzip
+##### css optimizations
+  1. reduce the number of css selectors
+##### javascript optimizations
+  1. minimize, mangle, and remove dead code
+#### image optimizations
+  1. images often account for most of the downloaded bytes on a page
+  2. when to use which image type
+    - need animation ? *gif*
+    - can you recreate this image with an SVG ? use *SVG*
+    - need to preserve fine detail, with highest resolution ?
+      - large (256+) color palette ? *png-24*
+        - *png-8*
+    - use *jpg* and experiment with quality settings
+  3. image formats:
+    - Vector graphics: use lines, points, and polygons to represent an image
+    - raster graphics: represent an image by encoding individual values of each pixel within a rectangular grid
+    - WebP: developed by google
+    - JPEG-XR
+  4. understand CSS vs Device pixels and the implications for high-resolution screens:
+    - a single CSS pixel may contain multiple device pixels
+      0. HiDPI:
+      1. the more device pixels per css pixels, the finer the detail of the displayed content on screen (looks sharper)
+      2. image assets require more detail (pixels) in order to take advantage of higher pixel counts
+  5. optimize images by type
+    - raster images:
+      - reduce bit depth
+        1. 8 bits per channel = 256 values per channel (16m colors)
+      - lossy compression:
+        1. eliminates some pixel data
+      - lossless compression:
+        1. compresses the pixel data
+      - enable [delta encoding](https://en.wikipedia.org/wiki/Delta_encoding)
+    - vector images: minify
+  6. deliver scaled images
+#### web font optimizations
+  1. pick the right font
+    1. server WOFF 2.0 to browsers that support it
+    2. server WOFF to majority of browsers
+    3. server TTF to old android (below 4.4)
+    4. server EOT to old IE(<9)
+  2. compress the font
+    - EOT and TTF require compression
+    - WOFF and WOFF2.0 should already be compressed
+    - use `zopfli` compression > gzip for fonts to get around 5% more compression
+#### measuring performance
   1. RAIL: Response > Animation > Idle > Load
     - user-centric performance model that splits an application life cycle into four distinct steps:
       1. Response
+        - input latency from tap to paint < 100ms
+        - e.g. user taps a button (e.g. opening navigation)
       2. Animation
+        - each frame's work (from js to paint) completes < 16ms
+        - scrolling page, drags finger (e.g. to open a menu), sees an Animation
+        - drags: this applies to nly the continuous phase of drags, not to start
       3. Idle
+        - main thread JS work chunked no larger than 50ms
+        - whenever the user isn't interacting with the page
+        - the main thread should still be available enough to handle the next user input
+          1. chunk work in 50ms, then check main thread before doing the next idle task
       4. load
-### optimizing data users download
+        - page considered ready to use in 1000ms
+        - user loads the page and sees the critical path content
+    - use the chrome DevTools Timeline tool to record user actions and check the recorded times against these key rail metrics
+      1. response: input
+#### optimizing data users download
   - improving performance process starts with minimizing and optimizing the data that users download
-#### optimizing content efficiency
-#### critical rendering path
-#### rendering performance
-#### low bandwidth & high latency
-#### PRPL
-#### [Chrome DevTools](https://developers.google.com/web/tools/setup/)
+  1. eliminate unnecessary downloads
+    - inventory your & third party assets
+    - measure the performance of each asset: its value and technical performance
+    - determine if each resource is providing sufficient value relative to performance
+      1. does the resource deliver consistent performance?
+      2. is the resource in the critical path ? does it need to be?
+      3. if the resource fails - does the site file ?
+  2. optimize encoding and transfer size of text-based assets
+    - compression: the process of encoding information using fewer bits
+  3. optimize images
+    - eliminate uneccesary images
+    - leverage CSS3 effects: grandiest, shadows, animations, etc. can be used to produce resolution independent assets
+    - use web fonts instead of encoding text in images
+  4. optimize fonts
+    - unicode fonts can contain thousands of glyphs
+    - five font formats: no single one works on all devices
+      1. WOFF2
+      2. WOFF: widest support but not available on older browsers
+      3. EOT: IE only
+      4. TTF
+      5. SVG font container: not supported by many, dont use it
+    - webfont: collection of glyphs, each glyph is a vector shape that describes a letter/symbol
+      1.
+
+##### optimizing content efficiency
+##### critical rendering path
+  - this is what blocks rendering of content
+##### rendering performance
+##### low bandwidth & high latency
+##### PRPL
+##### [Chrome DevTools](https://developers.google.com/web/tools/setup/)
 
 ## AJAX: XMLHttpRequest, Fetch
 ## WebComponents `@see _html.md`
