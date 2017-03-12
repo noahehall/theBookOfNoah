@@ -292,6 +292,8 @@
     5. loadevent: as a final step in every page load the browser fires an onload event which can trigger additional application logic.
       1. loadeventstart
       2. loadeventend
+  - notes
+    1. propagation latency: network round trips for requesting and receiving resources
 ### application performance
   - record a start time, do stuff, record an end time
   - node performance
@@ -330,7 +332,18 @@
   - The combination of ETag, Cache-Control, and unique URLs allows you to deliver the best of all worlds: long-lived expiration times, control over where the response can be cached, and on-demand updates.
   - optimize the critical rendering path for progressive rendering
   - if not using http2: minimize requests by combining files
-
+  - critical path optimizations
+    1. eliminate render-blocking javascript and css
+    2. optimize javascript user
+    3. prefer async javascript resources
+    4. avoid synchronous server calls
+    5. defer parsing javascript
+    6. avoid long running javascript
+    7. optimize css use
+    8. put css in the document head
+    9. avoid css imports
+    10. inline render-blocking css
+    11.
 #### notes
   - time frames
     1. 0-16ms: users perceive animations as smooth so long as 60 new frames are rendered ever second; thats 16ms per frame (including the time it takes the browser to paint the new frame to the screen), your app has 10ms to produce a frame
@@ -484,6 +497,20 @@
       2. content-length
       3. etag
 ##### critical rendering path
+  - only concerned with html markup, css and javascript
+  - to optimize the CRP, minimize the following three variables
+    1. critical resource: resource that could block intitial rendering of the page
+    2. critical path length: number of roundtrips, or total time required to fetch all of the critical resources
+      - a function of the dependency grapth between the critical resources and their bytesize: some downloads can only be initiated after a previous resources has been processed
+      - the larger the resource the more roundtrips it takesto download
+    3. critical bytes: total number of byte required to get to first render of the page
+      - the sum of the transfer filesizes of all critical resources
+  - steps to optimize the CRP
+    1. analyze and characterize the critical path: the number of resources, bytes, length
+    2. minimize number of critical resources: eleminate them, defer their download, mark them as async, etc
+    3. optimize the number of critical bytes to reduce the download time (i.e. number of round trips)
+    4. optimize the order in which the remaining critical resources are loaded:
+      - download all critical assets as early as possiblet o shorten the critical path length
   - the set of steps browsers must take to convert HTML, CSS and JS into a living, breathing application
     1. optimizing the critical rendering path is the process of minimizing the total amount of time spent performing each step in browser rendering process
     2. render content to screen as quickly as possible
@@ -551,6 +578,22 @@
   - CSS: is treated as a render blockign resource
     1. the browser wont render any processed content until the CSSOM is constructed
 ##### rendering performance
+  - most devices refresh their screens 60x a second
+    1. each of those frames has a budget of 16ms - 10ms = 10ms per frame
+  - jank: when you fail to meet 10ms of your code runtime per frame, the frame rate drops and the content judders on the screen
+  - pixel to screen pipeline
+    1. javascript: e.g. animation, sorting, DOM modifications, css animations/transitions, etc.
+    2. style: figuring out which css rules apply to which elemetns
+    3. layout: how much space and where on the screen each element lives
+    4. paint: drawring out text, colors, images, borders, shadows, etc.: every visual part of the element;
+      - typically involves multiple *layers*
+      1. create a list of draw calls
+      2. filling in pixels
+        - 1 and 2 === *rasterize*
+    5. compositing: taking the multiple layers from the paint process and drawing them to the screen in the correct order so that the page renders correctly
+  - impact of various modification types
+    1. layout property changes: i.e. modification to an element's geometry; width, height, position (e.g. left, top)
+      - JS/CSS > style > layout > paint > composite
 ##### low bandwidth & high latency
 ##### PRPL
 ##### [Chrome DevTools](https://developers.google.com/web/tools/setup/)
