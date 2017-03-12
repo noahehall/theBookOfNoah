@@ -15,6 +15,7 @@
   7. [server configs](https://github.com/h5bp/server-configs)
   8. [cache control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
   9. [master dev tools](http://discover-devtools.codeschool.com/)
+  10. [build better mobile user experience](https://www.thinkwithgoogle.com/topics/create-better-mobile-user-experience.html)
 ## other things to touch
   - [service workers](https://jakearchibald.github.io/isserviceworkerready/index.html)
   - [image src-set for responsiveness](https://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/)
@@ -24,6 +25,8 @@
   - [font face observer](https://github.com/bramstein/fontfaceobserver)
   - [web font loader](https://github.com/typekit/webfontloader)
   - [font optimization](https://www.zachleat.com/web/web-font-data-uris/)
+  - [real user monitoring: RUM](https://en.wikipedia.org/wiki/Real_user_monitoring)
+  - [lighthouse](https://developers.google.com/web/tools/lighthouse/)
 # NEXT UP
   - https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms_in_HTML#Constraint_Validation_API
@@ -273,6 +276,22 @@
     - profilers: measure runtime execution of scripts during life of app
       1. yui profiler, pagespeed, devtools
     - cdns
+# Measuring performance
+  1. lighthouse: identify obvious CRP optimization opportunities
+  2. RUM: real user monitoring: instrument your code with the *navigation timing API* to monitor how your app performs out in the wild
+  - navigation timing API
+    1. domloading: this is the starting timestamp of the entire process, the browser is about to start parsing the first received bytes of the HTML document.
+    2. dominteractive: marks the point when the browser has finished parsing all of the HTML and DOM construction is complete.
+      - marks when DOM is ready.
+    3. domcontentloaded: marks the point when both the DOM is ready and there are no stylesheets that are blocking JavaScript execution - meaning we can now (potentially) construct the render tree.
+      - typically marks when both the DOM and CSSOM are ready.
+      1. domcontentloadeventstart
+      2. domcontentloadedeventend
+    4. domcomplete: all of the processing is complete and all of the resources on the page (images, etc.) have finished downloading - in other words, the loading spinner has stopped spinning.
+      - marks when the page and all of its subresources are ready.
+    5. loadevent: as a final step in every page load the browser fires an onload event which can trigger additional application logic.
+      1. loadeventstart
+      2. loadeventend
 ### application performance
   - record a start time, do stuff, record an end time
   - node performance
@@ -314,7 +333,7 @@
 
 #### notes
   - time frames
-    1. 0-16ms: users perceive animations as smoth so long as 60 new frames are rendered ever second; thats 16ms per frame (including the time it takes the browser to paint the new frame to the screen), your ap has 10ms to produce a frame
+    1. 0-16ms: users perceive animations as smooth so long as 60 new frames are rendered ever second; thats 16ms per frame (including the time it takes the browser to paint the new frame to the screen), your app has 10ms to produce a frame
     2. -100ms : respond to user action within this time frame and it will feel immediate, else the connection between action and reaction will be broken
     3. 100-300ms: users experience a slight perceptible delay
     4. 300 - 100ms: things feel part of a natural and continuous progression of tasks; loading/changing views represents a tasks
@@ -323,8 +342,8 @@
   - 60 frames per second:
     1. 1000ms budget / 60 fps - 6ms = 10.66ms per frame
   - browsers need at most 6fps to paint each frame
-  - your code should finish execting in under 10ms
-  - take advantage of the first 100ms time frame to do expensive pre calculation so that you can maximize your chances of hitting 60fps
+  - your code should finish executing in under 10ms
+  - take advantage of the first 100ms time frame to do expensive pre-calculation so that you can maximize your chances of hitting 60fps
   - always produce 60 frames per second, and every frame goes through the following steps
     1. javascript
     2. style
@@ -337,8 +356,24 @@
   2. minification and gzip
 ##### css optimizations
   1. reduce the number of css selectors
+  2. keep your CSS lean, deliver it quickly as possible, and use media type sand queries to unblock rendering
+    - When declaring your style sheet assets, pay close attention to the media type and queries; they greatly impact critical rendering path performance.
+      ```
+        used on everything
+          <link href="style.css" rel="stylesheet">
+        only on print media type
+          <link href="print.css" rel="stylesheet" media="print">
+        on all media types with specific dimensions
+          <link href="other.css" rel="stylesheet" media="(min-width: 40em)">
+      ```
 ##### javascript optimizations
   1. minimize, mangle, and remove dead code
+  2. make your JavaScript async and eliminate any unnecessary JavaScript from the critical rendering path.
+  3. JavaScript execution blocks on the CSSOM.
+  4. JavaScript blocks DOM construction unless explicitly declared as async.
+  5. executing our inline script blocks DOM construction, which also delays the initial render.
+  6. When the browser encounters a script tag, DOM construction pauses until the script finishes executing.
+    - in the case of an external JavaScript file the browser must pause to wait for the script to be fetched from disk, cache, or a remote server, which can add tens to thousands of milliseconds of delay to the critical rendering path.
 #### image optimizations
   1. images often account for most of the downloaded bytes on a page
   2. when to use which image type
@@ -448,29 +483,73 @@
       1. cache-control
       2. content-length
       3. etag
-##### optimizing content efficiency
 ##### critical rendering path
   - the set of steps browsers must take to convert HTML, CSS and JS into a living, breathing application
-    1. steps: bytes > chars > tokens > nodes > object model
-      -
-    2. html markup > DOM
-    3. CSS markup > CSSOM
-    4.
-  - Optimizing the critical rendering path refers to prioritizing the display of content that relates to the current user action.
-  - progessive rendering: the page is loaded with minimal content at first, and then progressively re-painted as new content is ready
+    1. optimizing the critical rendering path is the process of minimizing the total amount of time spent performing each step in browser rendering process
+    2. render content to screen as quickly as possible
+    3. reduce the amount of time between screen updates after the initial render
+      - i.e. achieve higher refresh rates
+  - browser rendering process
+    1. process html markup and build DOM tree
+    2. process CSS markup and build CSSOM tree
+    3. combine the DOM and CSSOM into a render tree
+    4. run layout on the render tree to compute geometry of each node
+    5. paint the individual nodes to the screen
+  - DOM Tree: captures the properties and relationships of the DOM
+    1. bytes
+    2. chars
+    3. tokens
+    4. nodes
+    5. DOM
+  - CSSOM: CSS object model: tells the browser how the elements in the DOM Tree will look when rendered
+    1. bytes
+    2. chars
+    3. tokens
+    4. nodes
+    5. CSSOM
+  - Render Tree: combines  the CSSOM and DOM trees which i used to compute the layout of each visible element and serves as an input to the paint process that renders the pixels to screen
+    1. contains only the nodes required to render the page
+    2. captures all the visible DOM content on the page and all the CSSOm style information for each node
+    - steps.
+      1. start at root of DOM Tree, travers each visible node
+        - only visible tags (e.g. no `metatags`)
+        - no CSS hidden elements, e.g. (no `display:none` yes `visible:none`)
+      2. for each vsiible node, find the appropriate matcing CSSOM rules and apply them
+      3. render vsiible nodes with conten tand their computed stules
+    - Layout/reflow: is where the browser figures out the geometric information for elements: their size and location in the page.
+      1. computes the exact position and size of each object
+  - Paint/rasterizing: takes in the final render tree and renders pixels to screens
+    1. complex styles take longer, e.g. `drop-shadow` >`color`
+  - Optimizing the critical rendering path refers to
+    1. prioritizing the display of content that relates to the current user action.
+    2. improving the time to first render of web pages
+    3. developing well-performing interactive applications
+  - progressive rendering: the page is loaded with minimal content at first, and then progressively re-painted as new content is ready
     1. significantly improves the time to first render
   - unoptimized rendering: the page is not loaded until all content is ready to be displayed
-  1. request HTML document
-    - parse the response
-    - construct DOM
-    - browser discovers CSS, JS, and other resources and dispatches reuests
-  2. request CSS files
-    - browser constructs CSSOM after all of the CSS content is received and combines it with the DOM tree to construct the *render tree*
-  3. get fonts
-    - font requests are dispatched after the *render tree* can tell the browser which font variants are needed to render teh specified text on the page
-  4. first paint
-    - if fonts are not available, the browser may not render any text pixels
-  5. paint text
+  - technical explanation
+    1. conversion: browser reads raw bytes of HTML and translates them to individual chars based on specified encoding ofthe file (e.g. utf-8)
+    2. tokenizing: browser convers strings of chars into distinct tokens, e.g. `<html>` into an HTML dom node
+    3. lexing: the emitted tokens are converted into *objects* which define their properties and rules
+    4. DOM construction: the HTML markup that defines relationships between tags (e.g. some tags are parents of other tags) - the created objects are linked in a tree data structure that captures this relationship
+    5. the final output of this                              is the document object model
+  - non-technical explanation
+    1. request HTML document
+      - parse the response
+      - construct DOM
+      - browser discovers CSS, JS, and other resources and dispatches requests
+    2. request CSS files
+      - browser constructs CSSOM after all of the CSS content is received and combines it with the DOM tree to construct the *render tree*
+    3. get fonts
+      - font requests are dispatched after the *render tree* can tell the browser which font variants are needed to render teh specified text on the page
+    4. first paint
+      - if fonts are not available, the browser may not render any text pixels
+    5. paint text
+  - to find out how long the CSS processing takes
+    1. record a timeline in DevTools
+    2. look for *Recalculate style* event
+  - CSS: is treated as a render blockign resource
+    1. the browser wont render any processed content until the CSSOM is constructed
 ##### rendering performance
 ##### low bandwidth & high latency
 ##### PRPL

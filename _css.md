@@ -1,7 +1,8 @@
 # links
   - [psuedo classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes)
   - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
-
+# basics
+  - media query: consits of a media type and zero/more expressions that check for the conditions of particular media features
 # quickies
 ## [centering](https://css-tricks.com/centering-css-complete-guide/)
   - horizontal
