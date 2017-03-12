@@ -9,10 +9,12 @@
   2. es6 and ES7
   3. html
   4. css
+  4. [yslow](http://yslow.org/)
   5. [timeline tool](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/timeline-tool)
   6. [web font performance](https://www.igvita.com/2014/01/31/optimizing-web-font-rendering-performance/)
-  7.
-
+  7. [server configs](https://github.com/h5bp/server-configs)
+  8. [cache control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
+  9. [master dev tools](http://discover-devtools.codeschool.com/)
 ## other things to touch
   - [service workers](https://jakearchibald.github.io/isserviceworkerready/index.html)
   - [image src-set for responsiveness](https://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/)
@@ -41,7 +43,8 @@
   - [mozilla SSL configuration](https://mozilla.github.io/server-side-tls/ssl-config-generator/)
   - [github pages](https://pages.github.com/)
   - [manage all service workers](chrome://inspect/#service-workers)
-
+  - [page speed insights](https://developers.google.com/speed/pagespeed/insights/)
+  - [apache/nginx pagespeed optimize tool](https://developers.google.com/speed/pagespeed/module/)
 # NEED to finish
   - https://classroom.udacity.com/nanodegrees/nd802/parts/8021345403/modules/550593026975460/lessons/5972243496/concepts/61045985370923
   - MUST FUCKING DO
@@ -225,9 +228,51 @@
     + Introspection: Reflection tools that don’t alter code, but instead gather information about it are often called
 
 # TOPICS
+## caching
+  - choosing the optimal `Cache-Control` header policy
+    1. response not resusable ? use `no-store`
+    2. browser needs to revalidate the resource each time ? use `no-cache`
+    3. cacheable by intermediate caches?
+      - yes: use `public`
+      - no: use `private`
+    4. maximum cache life time ? set `max-age=#` to # of seconds
+    5. add `Etag` header
+  - add a fingerprint to files in order to extend cache times and invalidate cache responses
+    1. e.g. turn blah.css to blah.timestamp.css
+    2. else embed a blah.css?v=timestamp inside of content
+### headers
+  1. `Etag`: validation token to determine if a file has changed
+    - if a browser has an asset that is expired, it can make a request to the server for the assets ETag
+      1. if the servers etag === browser etag, it will continue to use the browser version from cache
+      2. if they are different, it will send an additional request for the updated resource
+    - the client automatically provides the ETag token in the "If-None-Match" HTTP request header.
+      1. The server checks the token against the current resource. If the token hasn't changed, the server returns a "304 Not Modified" response
+        - which tells the browser that the response it has in cache hasn't changed
+        - updated `Cache-Control` header to be applied to the browser's version of the resource, e.g. to be renewed for another 120 seconds.
+  2. `Cache-Control`: control who can cache the response, under which conditions, and for how long
+    - you can set multiple directives in `Cache-Control`
+      1. `Cache-Control: private, max-age=600`
+    - `Cache-Control: max-age=120`: cache for 120 seconds
+    - `Cache-control: no-cache`: the returned response cant be used to satisfy a subsequent request to the same URL without first checking with the server to see if the response has changed (i.e. via `Etag` header)
+    - `Cache-Control: no-store`: disallows the browser and all intermediate caches from storing any version of the returned response, e.g. for private or personal ifnormation like banking stuff
+    - `Cache-Control: public`: this can be cached
+      1. even if it has http authentication data associated with it
+      2. even if the http response status code isnt normally cacheable
+    - `Cache-Control: private `: the browser can cache it, but not intermediate caches
+      1. this is usually for resources that are meant for a single user
+    - `Cache-Control: max-age=#`: sets the max age for this resource to # in seconds
+
+  3. `Expires`:
 ## performance
   - javascript is not run on the CPU, there is a javascript VM that takes your code and runs it on the CPU
     - it is a black box, you must be sure you've written your code in a way that does not hinder the VM
+  - types of tools
+    - caching
+    - network analyzes: delivery of assets, combining assets, etc
+      1. yslow, pagespeed, devtools
+    - profilers: measure runtime execution of scripts during life of app
+      1. yui profiler, pagespeed, devtools
+    - cdns
 ### application performance
   - record a start time, do stuff, record an end time
   - node performance
@@ -263,6 +308,9 @@
   - ensure you understand your user behavior on your page
     1. the frequency in which they interact with each element
   - GZIP performs best on text-based assets: CSS, javascript, html
+  - The combination of ETag, Cache-Control, and unique URLs allows you to deliver the best of all worlds: long-lived expiration times, control over where the response can be cached, and on-demand updates.
+  - optimize the critical rendering path for progressive rendering
+  - if not using http2: minimize requests by combining files
 
 #### notes
   - time frames
@@ -396,9 +444,22 @@
       1. each browser has a different method for handling this issue,
   5. use HTTP caching
     - every browser ships with an implementation of http cache
+    - add relevant headers: `@see http.md`
+      1. cache-control
+      2. content-length
+      3. etag
 ##### optimizing content efficiency
 ##### critical rendering path
-  - this is what blocks rendering of content
+  - the set of steps browsers must take to convert HTML, CSS and JS into a living, breathing application
+    1. steps: bytes > chars > tokens > nodes > object model
+      -
+    2. html markup > DOM
+    3. CSS markup > CSSOM
+    4.
+  - Optimizing the critical rendering path refers to prioritizing the display of content that relates to the current user action.
+  - progessive rendering: the page is loaded with minimal content at first, and then progressively re-painted as new content is ready
+    1. significantly improves the time to first render
+  - unoptimized rendering: the page is not loaded until all content is ready to be displayed
   1. request HTML document
     - parse the response
     - construct DOM

@@ -26,6 +26,7 @@
   - https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Preflighted_requests
   - https://en.wikipedia.org/wiki/Cross-site_scripting
 # The internet
+  -
 ## The Web
   - is just a small part of the internet
   - is a platform for web developers to publish ideas to the world
@@ -140,11 +141,11 @@
     + is a header that must be contained in every response and tells the browser the size of the body in the response. This way the browser knows how many bytes it can expect to receive after the header section and can show you a meaningful progress bar when downloading a file.
   - Content-Type
     + is also a non-optional header and tells you what type the document has. This way the browser knows which parsing engine to spin up. If it's an image/jpeg, show the image. It’s text/html? Let’s parse it and fire off the necessary, additional HTTP requests. And so on.
-
   - Last-Modified
     + is a header that contains the date when the document was last changed. It turned out that the Last-Modified date is not very reliable when trying to figure out if a document has been changed. Sometimes developers will uploaded all files to the server after fixing something, resetting the Last-Modified date on all files even though the contents only changed on a subset. To accommodate this, most servers also send out an ETag.
   - ETag
     + stands for entity tag, and is a unique identifier that changes solely depending on the content of the file. Most servers actually use a hash function like SHA256 to calculate the ETag.
+      1. enables efficient resource update checks - no data is transferred if the resource has not changed
 
   - Cache-Control
     + is exactly what it sounds like. It allows the server to control how and for how long the client will cache the response it received. Cache-Control is a complex beast and has a lot of built-in features. 99% of the time, you only need the “cacheability“ and the “max-age”.
@@ -243,6 +244,7 @@
     3. doing aggressive caching
 
 # CACHING
+
   - **what is it**
     - temporarily storing content/responses from previous requests, core part of content delivery strategy implemented with http protocol
     - components throughout the delivery path can cache items to speed up subsequent requests, subject to caching policies declared for the content
