@@ -16,6 +16,10 @@
   8. [cache control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
   9. [master dev tools](http://discover-devtools.codeschool.com/)
   10. [build better mobile user experience](https://www.thinkwithgoogle.com/topics/create-better-mobile-user-experience.html)
+  11. [web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+  12. [progress & activity](https://material.io/guidelines/components/progress-activity.html)
+  13. [BEM: Block Element Modifier](https://en.bem.info/)
+  14. [style invalidation in blink](https://docs.google.com/document/d/1vEW86DaeVs4uQzNFI5R-_xS9TcS1Cs_EUsHRSgCHGu8/edit)
 ## other things to touch
   - [service workers](https://jakearchibald.github.io/isserviceworkerready/index.html)
   - [image src-set for responsiveness](https://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/)
@@ -48,6 +52,10 @@
   - [manage all service workers](chrome://inspect/#service-workers)
   - [page speed insights](https://developers.google.com/speed/pagespeed/insights/)
   - [apache/nginx pagespeed optimize tool](https://developers.google.com/speed/pagespeed/module/)
+  - [css triggers](https://csstriggers.com/)
+  - [JIT in action](http://mrale.ph/irhydra/2/)
+  - [FastDOM](https://github.com/wilsonpage/fastdom)
+
 # NEED to finish
   - https://classroom.udacity.com/nanodegrees/nd802/parts/8021345403/modules/550593026975460/lessons/5972243496/concepts/61045985370923
   - MUST FUCKING DO
@@ -368,8 +376,13 @@
   1. define as many async tags as possible
   2. minification and gzip
 ##### css optimizations
-  1. reduce the number of css selectors
-  2. keep your CSS lean, deliver it quickly as possible, and use media type sand queries to unblock rendering
+  1. reduce the number & complexity of css selectors
+    - use specific classes a smuch as possible
+    - avoid parent > child > blah css selectors, pseudo classes, etc.
+  2. reduce the number of elements on which the style calculation must be calculated
+    - typically the more important factor for many style updates
+    - e.g. refrain from changing the Body/HTML tag styles
+  3. keep your CSS lean, deliver it quickly as possible, and use media type sand queries to unblock rendering
     - When declaring your style sheet assets, pay close attention to the media type and queries; they greatly impact critical rendering path performance.
       ```
         used on everything
@@ -379,6 +392,9 @@
         on all media types with specific dimensions
           <link href="other.css" rel="stylesheet" media="(min-width: 40em)">
       ```
+  3. measure your style recalculation costs
+    - devtools > timeline > record your action> find `Recalculation` events, focus on those events that take longer than 60 FPS
+  4. use BEM: block element modifier to structure your CSS classes
 ##### javascript optimizations
   1. minimize, mangle, and remove dead code
   2. make your JavaScript async and eliminate any unnecessary JavaScript from the critical rendering path.
@@ -387,6 +403,45 @@
   5. executing our inline script blocks DOM construction, which also delays the initial render.
   6. When the browser encounters a script tag, DOM construction pauses until the script finishes executing.
     - in the case of an external JavaScript file the browser must pause to wait for the script to be fetched from disk, cache, or a remote server, which can add tens to thousands of milliseconds of delay to the critical rendering path.
+  7. avoid setTimeout/setInterval for visual updates, always use `requestAnimationFrame` instead
+    ```
+      function updateScreen(time) {
+        // Make visual updates here.
+      }
+      requestAnimationFrame(updateScreen);
+    ```
+  8. move long-running Javascript  off the main thread to web workers
+    - you can move pure computation work to web works if it doesn't require DOM access
+    - any data manipulation/traversal (E.g. sorting/searching)
+    ```
+      var dataSortWorker = new Worker("sort-worker.js");
+      dataSortWorker.postMesssage(dataToSort);
+      // The main thread is now free to continue working on other things...
+      dataSortWorker.addEventListener('message', function(evt) {
+         var sortedData = evt.data;
+         // Update data on screen...
+      });
+    ```
+  9. use micro-tasks to make DOM changes over several frames
+    ```
+      var taskList = breakBigTaskIntoMicroTasks(monsterTaskList);
+      requestAnimationFrame(processTaskList);
+      function processTaskList(taskStartTime) {
+        var taskFinishTime;
+        do {
+          // Assume the next task is pushed onto a stack.
+          var nextTask = taskList.pop();
+          // Process nextTask.
+          processTask(nextTask);
+          // Go again if there’s enough time to do the next task.
+          taskFinishTime = window.performance.now();
+        } while (taskFinishTime - taskStartTime < 3);
+        if (taskList.length > 0)
+          requestAnimationFrame(processTaskList);
+      }
+    ```
+  10. use chrome devtools timeline and javascript profile to assess the impact of javasacript
+    - be very wary of micro-optimizations because they won’t typically map to the kind of application you’re building.
 #### image optimizations
   1. images often account for most of the downloaded bytes on a page
   2. when to use which image type
@@ -594,6 +649,18 @@
   - impact of various modification types
     1. layout property changes: i.e. modification to an element's geometry; width, height, position (e.g. left, top)
       - JS/CSS > style > layout > paint > composite
+    2. paint property changes: e.g. background image, text color, shadows, etc., any property that does not affect the layout of the page
+      - JS/CSS > style > paint > composite
+    3. changes not requiring layout/paint:
+      - JS / CSS > style > composite
+  - requestAnimationFrame: any visual modifications need to occur at the start of each frame - the only way to guarantee this is to use the `requestAnimationFrame` api
+  - know your javascript's frame tax: assess how much it costs to run your JS on a frame-by-frame basis, e.g. DevTools JS Profiling
+    1. transitioning
+    2. scrolling
+  - avoid large/complex layouts and layout thrashing
+    
+
+
 ##### low bandwidth & high latency
 ##### PRPL
 ##### [Chrome DevTools](https://developers.google.com/web/tools/setup/)
