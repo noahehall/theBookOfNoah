@@ -31,6 +31,8 @@
   - [font optimization](https://www.zachleat.com/web/web-font-data-uris/)
   - [real user monitoring: RUM](https://en.wikipedia.org/wiki/Real_user_monitoring)
   - [lighthouse](https://developers.google.com/web/tools/lighthouse/)
+  - [create react app1](https://github.com/facebookincubator/create-react-app)
+  - [create react app scripts](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment)
 # NEXT UP
   - https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms_in_HTML#Constraint_Validation_API
@@ -55,6 +57,8 @@
   - [css triggers](https://csstriggers.com/)
   - [JIT in action](http://mrale.ph/irhydra/2/)
   - [FastDOM](https://github.com/wilsonpage/fastdom)
+  - github pages vs surg.sh
+    - gh-pages plugin: This will allow us to publish to the gh-pages branch on GitHub straight from within the terminal:
 
 # NEED to finish
   - https://classroom.udacity.com/nanodegrees/nd802/parts/8021345403/modules/550593026975460/lessons/5972243496/concepts/61045985370923
@@ -442,6 +446,14 @@
     ```
   10. use chrome devtools timeline and javascript profile to assess the impact of javasacript
     - be very wary of micro-optimizations because they won’t typically map to the kind of application you’re building.
+  11. know your javascript's frame tax: assess how much it costs to run your JS on a frame-by-frame basis, e.g. DevTools JS Profiling
+    1. transitioning
+    2. scrolling
+  12. avoid large/complex layouts and layout thrashing
+    - avoid triggering layout/reflow wherever possible
+      1. avoid changes to geometric properties (e.g. width, height, top, etc)
+    - assess layout model performance: flexbox > older fkkkkkmlexbox/float-based layout models
+    - avoid forced synchronous layouts and layout thrashing by reading style values before making style changes
 #### image optimizations
   1. images often account for most of the downloaded bytes on a page
   2. when to use which image type
@@ -639,7 +651,12 @@
   - pixel to screen pipeline
     1. javascript: e.g. animation, sorting, DOM modifications, css animations/transitions, etc.
     2. style: figuring out which css rules apply to which elemetns
-    3. layout: how much space and where on the screen each element lives
+    3. layout/Reflow in firefox: how much space and where on the screen each element lives
+      - each element will have ex/implicit sizing info based on the CSS that was used, the contents of the element or the parent element
+      - Layout cost:
+        1. # of elements that require layout
+        2. complixity of those layouts
+        3.
     4. paint: drawring out text, colors, images, borders, shadows, etc.: every visual part of the element;
       - typically involves multiple *layers*
       1. create a list of draw calls
@@ -654,11 +671,36 @@
     3. changes not requiring layout/paint:
       - JS / CSS > style > composite
   - requestAnimationFrame: any visual modifications need to occur at the start of each frame - the only way to guarantee this is to use the `requestAnimationFrame` api
-  - know your javascript's frame tax: assess how much it costs to run your JS on a frame-by-frame basis, e.g. DevTools JS Profiling
-    1. transitioning
-    2. scrolling
-  - avoid large/complex layouts and layout thrashing
-    
+  - forced synchronous layout: when you force a browser to perform *Layout* before before *Style*
+    1. normal frame process: javascript > style > layout > paint > composite
+    2. forced synchronous layout: javascrcript > Layout > ...
+      ```
+        // Schedule our function to run at the start of the frame.
+          requestAnimationFrame(logBoxHeight);
+        // good
+          function logBoxHeight() {
+            // Gets the height of the box in pixels and logs it out.
+            console.log(box.offsetHeight);
+            // modify style/layout properties
+            box.classList.add('super-big');
+          }
+        // bad
+          function logBoxHeight() {
+            // this changes the style and modfiies its Layout properties
+            box.classList.add('super-big');
+            // Gets the height of the box in pixels
+            // and logs it out.
+            console.log(box.offsetHeight);
+          }
+        // even worse
+          function resizeAllParagraphsToMatchBlockWidth() {
+            // Puts the browser into a read-write-read-write cycle.
+            for (var i = 0; i < paragraphs.length; i++) {
+              paragraphs[i].style.width = box.offsetWidth + 'px';
+            }
+          }
+      ```
+
 
 
 ##### low bandwidth & high latency
