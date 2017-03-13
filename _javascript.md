@@ -452,8 +452,10 @@
   12. avoid large/complex layouts and layout thrashing
     - avoid triggering layout/reflow wherever possible
       1. avoid changes to geometric properties (e.g. width, height, top, etc)
-    - assess layout model performance: flexbox > older fkkkkkmlexbox/float-based layout models
+    - assess layout model performance: flexbox > older flexbox/float-based layout models
     - avoid forced synchronous layouts and layout thrashing by reading style values before making style changes
+    - reduce paitn areas through layer promotino and orchestration of animations
+    - use chrome devtools paint profiler to asses paint complexity and cost; reduce where you can
 #### image optimizations
   1. images often account for most of the downloaded bytes on a page
   2. when to use which image type
@@ -653,12 +655,15 @@
     2. style: figuring out which css rules apply to which elemetns
     3. layout/Reflow in firefox: how much space and where on the screen each element lives
       - each element will have ex/implicit sizing info based on the CSS that was used, the contents of the element or the parent element
+      - triggering layout will always trigger paint
       - Layout cost:
         1. # of elements that require layout
         2. complixity of those layouts
         3.
-    4. paint: drawring out text, colors, images, borders, shadows, etc.: every visual part of the element;
+    4. paint: process of drawing out text, colors, images, borders, shadows, etc. that eventually get composited to the users' screen: every visual part of the element;
       - typically involves multiple *layers*
+      - this is usually the longest running of all all tasks in the *pixel-to-screen* pipeline
+      - changing any property apart from transforms/opacity always triggers paint
       1. create a list of draw calls
       2. filling in pixels
         - 1 and 2 === *rasterize*
@@ -686,7 +691,7 @@
           }
         // bad
           function logBoxHeight() {
-            // this changes the style and modfiies its Layout properties
+            // this changes the style and modifies its Layout properties
             box.classList.add('super-big');
             // Gets the height of the box in pixels
             // and logs it out.
@@ -697,6 +702,15 @@
             // Puts the browser into a read-write-read-write cycle.
             for (var i = 0; i < paragraphs.length; i++) {
               paragraphs[i].style.width = box.offsetWidth + 'px';
+            }
+          }
+        // FIX for the *even worse* case
+          // Read.
+          var width = box.offsetWidth;
+          function resizeAllParagraphsToMatchBlockWidth() {
+            for (var i = 0; i < paragraphs.length; i++) {
+              // Now write.
+              paragraphs[i].style.width = width + 'px';
             }
           }
       ```
