@@ -25,9 +25,9 @@
 ## timeline
   - shows you the amount of time each part of your application is taking up
   - colors:
-    1. yellow: scripting
-    2. rendering: purple
-    3. painting: green
+    1. scripting/javascript: yellow
+    2. rendering/style/layout: purple
+    3. painting/composite: green
 ### rendering performance:
   - FPS: frames per second; the number of images that are drawn on screen per second
     1. html loading

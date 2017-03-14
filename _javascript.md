@@ -230,7 +230,7 @@
   - web sockets: a persistent connection to a server
   - sourcemaps: tell the browser to convert line and column offsets 'for' exceptions thrown in the bundle file back into the offsets and filenames of the original sources.
   - transpilation: ES6 > Babel > ES5
-  - metaprogrammaning: all about the underlying mechanics of the language, rather than “high level” data modelling or business logic. If programming can be described as “making programs”, metaprogramming could be described as “making programs making programs”
+  - metaprogrammaning: all about the underlying mechanics of the language, rather than “high level” data modelling or business logic. If programming can be described as “making programs”, meta-programming could be described as “making programs making programs”
     + Code Generation, aka eval & friends -
     + Reflection - finding out about and adjusting the structure and semantics of your application
       + Functions:
@@ -321,19 +321,18 @@
     2. measure current app performance
     3. eliminate unnecessary downloads
     4. add compression
-  - the end goal isnt to make your site perform fast on any device, it is to make users happy
-    1. the majority of time users spend in your site isnt waiting for it to load, but waiting for it to respond t otheir actions
+  - the end goal isn't to make your site perform fast on any device, it is to make users happy
+    1. the majority of time users spend in your site isnt waiting for it to load, but waiting for it to respond to their actions
   - respond to users immediately; acknowledge user input in under 100ms
     1. applies to most inputs, anything clickable/toggles/animations
       - does not apply to touch drags/scrolls
     2. always provide feedback for actions that take longer than 500ms to complete
   - when animating/scrolling, produce a frame in under 10ms
-  - maximine main thread idle time
+  - maximize main thread idle time
   - keep users engaged; deliver content in under 1000ms or users attention will start to wander, and their perception of dealing with the task is broken
-    1.
   - use idle time to complete deferred work
     1. keep preloaded data to a minimum so that your app loads fast, and use idle time to load remaining data
-    2. deferred work should be grouped into blocks of about 50ms - should  user begin interacting - then the highest priority is to respect to the user
+    2. deferred work should be grouped into blocks of about 50ms - should  user begin interacting - then the highest priority is to respond to the user
       - to allow for <100 ms response, the app must yield control back to main thread every 50ms so that it can execute its pixel pipeline, react to user input, etc.
   - eliminate/defer uneccesary downloads on app load
   - ensure each resource has compression, caching, minification, etc.
@@ -381,12 +380,12 @@
   2. minification and gzip
 ##### css optimizations
   1. reduce the number & complexity of css selectors
-    - use specific classes a smuch as possible
+    - use specific classes as much as possible
     - avoid parent > child > blah css selectors, pseudo classes, etc.
   2. reduce the number of elements on which the style calculation must be calculated
     - typically the more important factor for many style updates
     - e.g. refrain from changing the Body/HTML tag styles
-  3. keep your CSS lean, deliver it quickly as possible, and use media type sand queries to unblock rendering
+  3. keep your CSS lean, deliver it quickly as possible, and use media types and queries to unblock rendering
     - When declaring your style sheet assets, pay close attention to the media type and queries; they greatly impact critical rendering path performance.
       ```
         used on everything
@@ -398,7 +397,8 @@
       ```
   3. measure your style recalculation costs
     - devtools > timeline > record your action> find `Recalculation` events, focus on those events that take longer than 60 FPS
-  4. use BEM: block element modifier to structure your CSS classes
+  4. use BEM (or something similar): block element modifier to structure your CSS classes
+  5. use transform and opacity changes for animations
 ##### javascript optimizations
   1. minimize, mangle, and remove dead code
   2. make your JavaScript async and eliminate any unnecessary JavaScript from the critical rendering path.
@@ -456,6 +456,30 @@
     - avoid forced synchronous layouts and layout thrashing by reading style values before making style changes
     - reduce paitn areas through layer promotino and orchestration of animations
     - use chrome devtools paint profiler to asses paint complexity and cost; reduce where you can
+  13. use devtools to identify paint bottlenecks: rendering > show paint rectangles
+    - chrome will flash teh screen green whenever painting happens
+    - if you see the whole screen flash green, or areas of the screen that you think shouldnt be painted, you should dig alittle further
+    - you can also use the *paint profiler* to get more in-depth information
+  14. promote elements that move/fade to a new layer
+    - reduces the impact and complexity of repainting those elements
+    - be careful, as each layer requires both memory and management
+      - use DevTools to confirm that doing so has given you a performance benefit. Don't promote elements without profiling.
+      - On High DPI screens elements that are fixed position are automatically promoted to their own compositor layer. This is not the case on low DPI devices because the promotion changes text rendering from subpixel to grayscale, and layer promotion needs to be done manually.
+        + only promote to new layer on **low-dpi* devices
+      ```
+        // chrome, opera, firefox
+          .moving-element {
+            will-change: transform;
+          }
+        // safari, mobile safari
+          .moving-element {
+            transform: translateZ(0);
+          }
+      ```
+  15. simplify paint complexity
+    - anything that involves blur (e.g. shadow) costs more than other painting resources
+    - Ask yourself if it’s possible to use a cheaper set of styles or alternative means to get to your end result.
+    - Where you can you always want to avoid paint during animations in particular,
 #### image optimizations
   1. images often account for most of the downloaded bytes on a page
   2. when to use which image type
@@ -668,6 +692,8 @@
       2. filling in pixels
         - 1 and 2 === *rasterize*
     5. compositing: taking the multiple layers from the paint process and drawing them to the screen in the correct order so that the page renders correctly
+      - where the painted parts of the page are put together for displaying on screen.
+      - two key factors in this area that affect page performance: the number of compositor layers that need to be managed, and the properties that you use for animations.
   - impact of various modification types
     1. layout property changes: i.e. modification to an element's geometry; width, height, position (e.g. left, top)
       - JS/CSS > style > layout > paint > composite
@@ -714,7 +740,8 @@
             }
           }
       ```
-
+  - if you trigger Layout you will always trigger Paint: changing the geometry of an element means it pixels need fixing
+  - you will trigger paint if you change any non-geometric properties, e.g. backgrounds, color, shadows
 
 
 ##### low bandwidth & high latency
