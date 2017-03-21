@@ -20,6 +20,7 @@
   12. [progress & activity](https://material.io/guidelines/components/progress-activity.html)
   13. [BEM: Block Element Modifier](https://en.bem.info/)
   14. [style invalidation in blink](https://docs.google.com/document/d/1vEW86DaeVs4uQzNFI5R-_xS9TcS1Cs_EUsHRSgCHGu8/edit)
+  15. [flip principle](https://aerotwist.com/blog/flip-your-animations/)
 ## other things to touch
   - [service workers](https://jakearchibald.github.io/isserviceworkerready/index.html)
   - [image src-set for responsiveness](https://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/)
@@ -80,6 +81,8 @@
       - https://www.youtube.com/watch?utm_campaign=Fullstack%2BReact&utm_medium=email&utm_source=Fullstack_React_37&v=aV1271hd9ew
       - https://github.com/acdlite/recompose
       - https://hashnode.com/post/the-one-thing-that-no-one-properly-explains-about-react-why-virtual-dom-cisczhfj41bmssp53mvfwmgrq?utm_campaign=Fullstack+React
+      - https://en.wikipedia.org/wiki/Comet_(programming)#Hidden_IFrame3
+      - http://jankfree.org/
     + project 5
       - https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
       - https://developers.google.com/web/tools/lighthouse/
@@ -399,6 +402,9 @@
     - devtools > timeline > record your action> find `Recalculation` events, focus on those events that take longer than 60 FPS
   4. use BEM (or something similar): block element modifier to structure your CSS classes
   5. use transform and opacity changes for animations
+    - pixel to screen pipeline: JS > style > composite
+    - The caveat for the use of transforms and opacity is that the element on which you change these properties should be on its own compositor layer.
+  6. investigate implementing the *FLIP Principle* for those animations violating item 5 above
 ##### javascript optimizations
   1. minimize, mangle, and remove dead code
   2. make your JavaScript async and eliminate any unnecessary JavaScript from the critical rendering path.
@@ -742,8 +748,8 @@
       ```
   - if you trigger Layout you will always trigger Paint: changing the geometry of an element means it pixels need fixing
   - you will trigger paint if you change any non-geometric properties, e.g. backgrounds, color, shadows
-
-
+  - To get an understanding of the layers in your application, and why an element has a layer you must enable the Paint profiler in Chrome DevTools’ Timeline:
+  1. When the recording has finished you will be able to click individual frames, which is found between the frames-per-second bars and the details:
 ##### low bandwidth & high latency
 ##### PRPL
 ##### [Chrome DevTools](https://developers.google.com/web/tools/setup/)

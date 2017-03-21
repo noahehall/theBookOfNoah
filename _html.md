@@ -11,7 +11,7 @@
   - [css variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables)
   - [react and web components](https://facebook.github.io/react/docs/web-components.html)
   - [react and webcomponetns example](https://github.com/facebook/react/blob/master/examples/webcomponents/index.html)
-   - 
+   -
 # links
   - [what the heck is a shadow dom](https://glazkov.com/2011/01/14/what-the-heck-is-shadow-dom/)
   - [html template tag](https://www.html5rocks.com/en/tutorials/webcomponents/template/)
@@ -354,3 +354,14 @@
   - a way to create new HTML via a JS API
 
 ## HTML Imports
+
+# iframes
+  - Sandboxing third-party widget/applications
+    1. To prevent malicious developers from stealing identity cookies, Facebook requires third party application to be hosted in IFrames (unless you're using FBML).
+    2. http://www.ccheever.com/blog/?p=10
+  - Display banners
+    1. Most ad networks offer publisher a one line iframe code for developers to drop into their website.
+  - Cross domain communication
+    1. Facebook Connect, for example, allows websites to query Facebook through the use of hidden IFrames.
+  - Comet (bidirectional channel between browser and web server)
+    1. Applications like Gmail Chat, Facebook Chat, Etherpad, and Quora utilizes comet to allow servers to stream data and commands back to the browser without a page refresh. Hidden IFrames is one of the ways used to enable this.

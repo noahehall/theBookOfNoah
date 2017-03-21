@@ -56,7 +56,7 @@
     + Items: group of attributes that are distinct from other items, i.e. a row, records, or tuples
       - attributes: fundamental data element, i.e. a column
         + primary key: two kinds:
-          - dynamodb uses the partition key's value as input to an internal has function, the output from the hash function dtermines the partition where the item is stored
+          - dynamodb uses the partition key's value as input to an internal hash function, the output from the hash function determines the partition where the item is stored
           1. partition/hash key: composed of only one attribute.
             - no two items can have the same partition key
           2. partition/hash and sort/range key: i.e. composite key
@@ -65,12 +65,14 @@
         + secondary indexes: allows you to read data from a table without using the primary key
           - the primary purpose of secondary indexes is to query a table without using the primary key, or by using a different sort key
           - every index belongs to a base table
-          - dynamodb maintains the indexes autoamtically
+          - dynamodb maintains the indexes automatically
             + any CRUD to the base table automatically reciprocates the CRUD to the index table
           - when you create an index, you must specify which attributed will be copied (projected) to the index table
             + at a minimum the primary key(s) will be projected
           1. global secondary index: an index with a partition and sort key that can be different fro those on the table
             - can have a total of 5 per table
+            - [docs](http://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_GlobalSecondaryIndexUpdate.html)
+            - [more docs](http://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html)
           2. local secondary index: an index that has the same partition key as the table, but a different sort key
             - can have a total of 5 per table
   - streams: captures table data modifications events in the order they occur
@@ -127,10 +129,10 @@
           TableName : "Music"
       }
     ```
-  3. ListTables: returns the naes of all of your tables in a list
+  3. ListTables: returns the names of all of your tables in a list
   4. UpdateTable: modifies the settings of a table/indexes, creates/remove new indexes on a table, modify stream settings for a table
   5. DeleteTable: removes a table and all of its dependent objects from dynamodb
-### data plane
+### [data plane](http://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Operations.html)
   - CRUD actions on data in a table, and read data from a secondary index
   - Creating data
     1. PutItem: writes a single item to a table

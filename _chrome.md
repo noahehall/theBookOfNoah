@@ -36,6 +36,8 @@
     4. painting to screen
 # profile
   - CPU profiling: shows you how much CPU time each function in your JS takes
+  - layers panel: To get an understanding of the layers in your application, and why an element has a layer you must enable the Paint profiler in Chrome DevTools’ Timeline > click a frame > click layers sub panel
+    1. Using this view you can track the number of layers you have. If you’re spending a lot time in compositing during performance-critical actions like scrolling or transitions (you should aim for around 4-5ms), you can use the information here to see how many layers you have, why they were created, and from there manage layer counts in your app.
 # memory leaks
   - when an application takes more and more memory to the point it starts slowing things down
   - healthy applications dont continuously grow in memory
