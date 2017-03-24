@@ -35,6 +35,7 @@
   - [create react app1](https://github.com/facebookincubator/create-react-app)
   - [create react app scripts](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment)
 # NEXT UP
+  - https://medium.freecodecamp.com/ivy-league-free-online-courses-a0d7ae675869#.dzefyfnlg
   - https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms_in_HTML#Constraint_Validation_API
   - https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/My_first_HTML_form
@@ -48,6 +49,8 @@
   -  feature detection: `if(document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Extensibility','1.1'))`
   - buffers
   - font loading api
+  - [latency vs bandwidth](https://www.igvita.com/2012/07/19/latency-the-new-web-performance-bottleneck/)
+  - react debounce input handler
 # tools
   - [google mobile friendly test](https://search.google.com/search-console/mobile-friendly)
   - [mozilla SSL configuration](https://mozilla.github.io/server-side-tls/ssl-config-generator/)
@@ -60,6 +63,10 @@
   - [FastDOM](https://github.com/wilsonpage/fastdom)
   - github pages vs surg.sh
     - gh-pages plugin: This will allow us to publish to the gh-pages branch on GitHub straight from within the terminal:
+  - [android emulator](https://developer.android.com/studio/run/emulator.html#netspeed)
+  - [webpage speed test](https://developers.google.com/web/fundamentals/performance/poor-connectivity/)
+  - [free web debugging proxy](http://www.telerik.com/fiddler)
+  - [augmented traffic control](http://facebook.github.io/augmented-traffic-control/)
 
 # NEED to finish
   - https://classroom.udacity.com/nanodegrees/nd802/parts/8021345403/modules/550593026975460/lessons/5972243496/concepts/61045985370923
@@ -365,6 +372,7 @@
     3. 100-300ms: users experience a slight perceptible delay
     4. 300 - 100ms: things feel part of a natural and continuous progression of tasks; loading/changing views represents a tasks
     5. 1000+ms: the user is frustrated and likely to abandon the task
+
 ##### 60 frames per second
   - 60 frames per second:
     1. 1000ms budget / 60 fps - 6ms = 10.66ms per frame
@@ -405,6 +413,40 @@
     - pixel to screen pipeline: JS > style > composite
     - The caveat for the use of transforms and opacity is that the element on which you change these properties should be on its own compositor layer.
   6. investigate implementing the *FLIP Principle* for those animations violating item 5 above
+  7. avoid CSS imports: The CSS import (@import) directive enables one stylesheet to import rules from another stylesheet file. However, avoid these directives because they introduce additional roundtrips into the critical path: the imported CSS resources are discovered only after the CSS stylesheet with the @import rule itself is received and parsed.
+  8. inline render blocking css: For best performance, you may want to consider inlining the critical CSS directly into the HTML document. This eliminates additional roundtrips in the critical path and if done correctly can deliver a "one roundtrip" critical path length where only the HTML is a blocking resource.
+  9. avoid large/complex layouts and layout thrashing
+    - avoid triggering layout/reflow wherever possible
+      1. avoid changes to geometric properties (e.g. width, height, top, etc)
+    - assess layout model performance: flexbox > older flexbox/float-based layout models
+    - avoid forced synchronous layouts and layout thrashing by reading style values before making style changes
+    - reduce paitn areas through layer promotino and orchestration of animations
+    - use chrome devtools paint profiler to asses paint complexity and cost; reduce where you can
+  10. use devtools to identify paint bottlenecks: rendering > show paint rectangles
+    - chrome will flash teh screen green whenever painting happens
+    - if you see the whole screen flash green, or areas of the screen that you think shouldnt be painted, you should dig alittle further
+    - you can also use the *paint profiler* to get more in-depth information
+  11. promote elements that move/fade to a new layer
+    - reduces the impact and complexity of repainting those elements
+    - be careful, as each layer requires both memory and management
+      - use DevTools to confirm that doing so has given you a performance benefit. Don't promote elements without profiling.
+      - On High DPI screens elements that are fixed position are automatically promoted to their own compositor layer. This is not the case on low DPI devices because the promotion changes text rendering from subpixel to grayscale, and layer promotion needs to be done manually.
+        + only promote to new layer on **low-dpi** devices
+      ```
+        // chrome, opera, firefox
+          .moving-element {
+            will-change: transform;
+          }
+        // safari, mobile safari
+          .moving-element {
+            transform: translateZ(0);
+          }
+      ```
+  15. simplify paint complexity: changing any property apart from transforms/opacity always trigger paint
+    - anything that involves blur (e.g. shadow) costs more than other painting resources
+    - paint is often the longest-running of all tasks in the pipeline, and one to avoid if at all possible.
+    - Ask yourself if it’s possible to use a cheaper set of styles or alternative means to get to your end result.
+    - Where you can you always want to avoid paint during animations in particular,
 ##### javascript optimizations
   1. minimize, mangle, and remove dead code
   2. make your JavaScript async and eliminate any unnecessary JavaScript from the critical rendering path.
@@ -455,37 +497,42 @@
   11. know your javascript's frame tax: assess how much it costs to run your JS on a frame-by-frame basis, e.g. DevTools JS Profiling
     1. transitioning
     2. scrolling
-  12. avoid large/complex layouts and layout thrashing
-    - avoid triggering layout/reflow wherever possible
-      1. avoid changes to geometric properties (e.g. width, height, top, etc)
-    - assess layout model performance: flexbox > older flexbox/float-based layout models
-    - avoid forced synchronous layouts and layout thrashing by reading style values before making style changes
-    - reduce paitn areas through layer promotino and orchestration of animations
-    - use chrome devtools paint profiler to asses paint complexity and cost; reduce where you can
-  13. use devtools to identify paint bottlenecks: rendering > show paint rectangles
-    - chrome will flash teh screen green whenever painting happens
-    - if you see the whole screen flash green, or areas of the screen that you think shouldnt be painted, you should dig alittle further
-    - you can also use the *paint profiler* to get more in-depth information
-  14. promote elements that move/fade to a new layer
-    - reduces the impact and complexity of repainting those elements
-    - be careful, as each layer requires both memory and management
-      - use DevTools to confirm that doing so has given you a performance benefit. Don't promote elements without profiling.
-      - On High DPI screens elements that are fixed position are automatically promoted to their own compositor layer. This is not the case on low DPI devices because the promotion changes text rendering from subpixel to grayscale, and layer promotion needs to be done manually.
-        + only promote to new layer on **low-dpi* devices
-      ```
-        // chrome, opera, firefox
-          .moving-element {
-            will-change: transform;
-          }
-        // safari, mobile safari
-          .moving-element {
-            transform: translateZ(0);
-          }
-      ```
-  15. simplify paint complexity
-    - anything that involves blur (e.g. shadow) costs more than other painting resources
-    - Ask yourself if it’s possible to use a cheaper set of styles or alternative means to get to your end result.
-    - Where you can you always want to avoid paint during animations in particular,
+  12. avoid forced synchronous layouts
+    - use requestAnimationFrame to retrieve geometric values (e.g. width) at the beginning of the frame, and modify geometric values (e.g. height) after you've retrieved the values
+  13. avoid layout thrashing: when you make a lot o forced synchronous layout changes in quick succession
+    ``` example of layout thrashing
+      function resizeAllParagraphsToMatchBlockWidth() {
+        // Puts the browser into a read-write-read-write cycle.
+        for (var i = 0; i < paragraphs.length; i++) {
+          // read offsetWidth, the write, then read, (the second read is bad)
+          paragraphs[i].style.width = box.offsetWidth + 'px';
+        }
+      }
+    ```
+    ``` fix the above example
+      // Read
+      var width = box.offsetWidth;
+      function resizeAllParagraphsToMatchBlockWidth() {
+        for (var i = 0; i < paragraphs.length; i++) {
+          // Now write.
+          paragraphs[i].style.width = width + 'px';
+        }
+      }
+    ```
+  13. debounce your input handlers: fixes the issue of having long running input handlers that can block scrolling, and making style changes in input handlers that cause forced syncrhonouse layouts
+    - debounce visual changes to the next requestAnimationFrame callback:
+    ``` example of debounced input handler
+      function onScroll (evt) {
+        // Store the scroll value for laterz.
+        lastScrollY = window.scrollY;
+        // Prevent multiple rAF callbacks.
+        if (scheduledAnimationFrame)
+          return;
+        scheduledAnimationFrame = true;
+        requestAnimationFrame(readAndUpdatePage);
+      }
+      window.addEventListener('scroll', onScroll);
+    ```
 #### image optimizations
   1. images often account for most of the downloaded bytes on a page
   2. when to use which image type
@@ -543,6 +590,8 @@
     - long max-age expiry
     - conditional ETag header
     - cache control policy
+
+
 #### measuring performance
   1. RAIL: Response > Animation > Idle > Load
     - user-centric performance model that splits an application life cycle into four distinct steps:
@@ -680,23 +729,28 @@
   - most devices refresh their screens 60x a second
     1. each of those frames has a budget of 16ms - 10ms = 10ms per frame
   - jank: when you fail to meet 10ms of your code runtime per frame, the frame rate drops and the content judders on the screen
-  - pixel to screen pipeline
+  - pixel pipeline/pixel to screen pipeline
     1. javascript: e.g. animation, sorting, DOM modifications, css animations/transitions, etc.
-    2. style: figuring out which css rules apply to which elemetns
-    3. layout/Reflow in firefox: how much space and where on the screen each element lives
+    2. style: figuring out which css rules apply to which elements based on matching selectors, once rules are knonwn they are applied and the final styles for each element are calculated
+      - changing the dom through adding/removing elements, changing attributes/classes, animations, will cause the browser to recalculate element styles
+      - style calculations process
+        1. create a set of matching selectors: browser figures out which classes, pseudo-selectors and IDs apply to any given element
+        2. take all the style rules from the matching selectors and figure out what final styles the element has
+    3. layout/Reflow in firefox: once the browser knows which rules to apply to an element it can begin to calculate how much space it takes up and where it is on screen
+      - the web's layout model means one element can affect others, e.g. the width of the body can affect its children
       - each element will have ex/implicit sizing info based on the CSS that was used, the contents of the element or the parent element
       - triggering layout will always trigger paint
+        1. any changes to **geometric properties** e.g. width, height, left, top, etc
       - Layout cost:
         1. # of elements that require layout
-        2. complixity of those layouts
-        3.
+        2. complexity of those layouts
     4. paint: process of drawing out text, colors, images, borders, shadows, etc. that eventually get composited to the users' screen: every visual part of the element;
       - typically involves multiple *layers*
       - this is usually the longest running of all all tasks in the *pixel-to-screen* pipeline
       - changing any property apart from transforms/opacity always triggers paint
+      - paint/rasterizing process
       1. create a list of draw calls
       2. filling in pixels
-        - 1 and 2 === *rasterize*
     5. compositing: taking the multiple layers from the paint process and drawing them to the screen in the correct order so that the page renders correctly
       - where the painted parts of the page are put together for displaying on screen.
       - two key factors in this area that affect page performance: the number of compositor layers that need to be managed, and the properties that you use for animations.
@@ -749,8 +803,21 @@
   - if you trigger Layout you will always trigger Paint: changing the geometry of an element means it pixels need fixing
   - you will trigger paint if you change any non-geometric properties, e.g. backgrounds, color, shadows
   - To get an understanding of the layers in your application, and why an element has a layer you must enable the Paint profiler in Chrome DevTools’ Timeline:
-  1. When the recording has finished you will be able to click individual frames, which is found between the frames-per-second bars and the details:
+    1. When the recording has finished you will be able to click individual frames, which is found between the frames-per-second bars and the details:
+  - avoid long running input handlers:
+    + input handlers (e.g. touchstart, touchmove, touchend, etc)
+      - calling preventDefault() in these input handlers will cause the compositor thread to wait until the handler has finished executing
+    + input handlers (e.g. those for scroll/touch) are schedule to run just before any *requestAnimationFrame* callbacks
+      - if you make visual changes in input handlers,  then at the start of the requestAnimationFrame, there will be pending style changes
+      - if you then read visual properties at the start of the requestAnimationFrame callback, you will trigger a forced synchronous layout
+        1. input handlers > js > style > layout > paint> composite
+          - input handler = style write
+          - js = style read
+          - ===== forced synchronous layout
+
 ##### low bandwidth & high latency
+  - emulate networking throttling to ensure adequate performance in a variety of connectivity conditions
+
 ##### PRPL
 ##### [Chrome DevTools](https://developers.google.com/web/tools/setup/)
 
@@ -1340,7 +1407,7 @@
     ```
 
 ## promises and asynchronous code
-  - asynchronous: statements occur in multiple timelines, in an unknown order irregardless of how they are defined in code
+  - a]synchronous: statements occur in multiple timelines, in an unknown order irregardless of how they are defined in code
       e.g. network requests, events, threads, timeouts, etc.
   - synchronous: statements happen in order as defined, in a single timeline
   - callbacks: pass one function (cb) to another function, and the cb is invoked when certain conditions are met
