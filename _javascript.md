@@ -590,8 +590,6 @@
     - long max-age expiry
     - conditional ETag header
     - cache control policy
-
-
 #### measuring performance
   1. RAIL: Response > Animation > Idle > Load
     - user-centric performance model that splits an application life cycle into four distinct steps:
@@ -814,11 +812,26 @@
           - input handler = style write
           - js = style read
           - ===== forced synchronous layout
-
 ##### low bandwidth & high latency
   - emulate networking throttling to ensure adequate performance in a variety of connectivity conditions
-
+  - skipped: check javascript_performance.md for extensive information on this section
 ##### PRPL
+  - PRPL: pattern that takes advantage of modern web platform features to granularly deliver mobile web expieriences more quickly
+    1. PUSH: critical resources for the initial uRL router
+    2. RENDER: initial route
+    3. PRE-CACHE: remaining routes
+    4. LAZY-LOAD: and create remaning routes on demand
+  - benefits of PRPL  
+    1. minimum time to interactive
+    2. maximum caching efficiency, espcially overtime as updates are released
+    3. simplicity of development and deployment
+  - requirements to use PRPL
+    1. single page app
+    2. the main entry pont of the app is served from every valid routes
+      - all resource urls in the entrypoin tneed to be absolute, since it may be served from non-top-level urls
+    3. the app-shell: which includes the top-level applogic, router, etc
+    4. lazy loaded fragments of the app: a fragment can represent the code for a particular view, or other code that can be loaded lazily
+    5.
 ##### [Chrome DevTools](https://developers.google.com/web/tools/setup/)
 
 ## AJAX: XMLHttpRequest, Fetch
@@ -1123,11 +1136,21 @@
       3xx: redirection
       4xx: client error
       5xx: server error
-      6xx: unoficial Codes
+      6xx: unofficial Codes
         6.1: internet information services
         6.2: nginx
         6.3: cloudfare
     ```
+  - [HTTP Request Methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
+    1. GET: retrieve data
+    2. HEAD: asks for a response identical to a GET request but without the response body
+    3. POST: submit data
+    4. PUT: replaces data
+    5. DELETE: delete data
+    6. CONNECT: establishes a tunnel to the server
+    7. OPTIONS: describe the communication options
+    8. TRACE: performs a message loop-back test along the path to the server
+    9. PATCH: used to apply partial modifications
 
 ## Accessibility:
   - Accessible: everyone can access the site's content and use it's functionality functionality
