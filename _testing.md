@@ -1,96 +1,128 @@
-Methodologies:
-  TDD: test driven development
+# links
+- [testing react components](https://medium.freecodecamp.com/the-right-way-to-test-react-components-548a4736ab22)
+- [testing microservices](https://martinfowler.com/articles/microservice-testing/#agenda)
+
+# Methodologies:
+  - TDD: test driven development
     - tests are written before code is developed
-  BDD: behavior driven development:
+  - BDD: behavior driven development:
     - implementing an application by describing its behavior from the perspective of its stakeholders
-    - describes a cycle of interactions with well-defined inputs, resulting int he develiry of working, tested software
-code coverage: tool that determines how much of your code is covered by unit tests. it also shows you what is and isnt being covered
+    - describes a cycle of interactions with well-defined inputs, resulting in the delivery of working, tested software
 
-current tools:
-  cucumber: acceptance testing framework which enables test that are readable by non-programmers
-  gherkin: syntax in which to write cucmber tests
-  mocha: bdd test framework 'for' developers
-  chai: assertion library
+# vocab
+  - code coverage: tool that determines how much of your code is covered by unit tests. it also shows you what is and isnt being covered
+  - contract:  defines the expected behavior of your component and what assumptions are reasonable to have about its usage.
 
-'type' of tests
-  Technology Facing: written and maintained by developers
-    units tests: Unit Tests are functions and classes designed to prove the code performs withing a set of guidelines
-    integration/component tests: tests to check the correct functioning of our system. These tests require an integration environment, instead of using double test as they do the unit tests, and take longer to execute.
-    System/deployment tests:
-  Business Facing
-    functional tests: multiple unit tests working together in order to test a specific functionality
-    acceptance tests:
+# tools:
+  - cucumber: acceptance testing framework which enables test that are readable by non-programmers
+  - gherkin: syntax in which to write cucmber tests
+  - mocha: bdd test framework 'for' developers
+  - chai: assertion library
+
+# 'type' of tests
+  - Technology Facing: written and maintained by developers
+    - units tests: Unit Tests are functions and classes designed to prove the code performs within a set of guidelines
+    - integration tests: collect modules together and test them as a subsystem in order to verify that they collaborate as intended to achieve some larger piece of behaviour.
+      + When writing automated tests of the modules which interact with external components, the goal is to verify that the module can communicate sufficiently rather than to acceptance test the external component.
+      + tests of this type should aim to cover basic success and error paths through the integration module.
+    - contract test: a test at the boundary of an external service verifying that it meets the contract expected by a consuming service
+      + Whenever some consumer couples to the interface of a component to make use of its behaviour, a contract is formed between them. This contract consists of expectations of input and output data structures, side effects and performance and concurrency characteristics.
+    - component tests: limits the scope of the exercised software to a portion of the system under test, manipulating the system through internal code interfaces and using test doubles to isolate the code under test from other components
+      + By instantiating the full microservice in-memory using in-memory test doubles and datastores it is possible to write component tests that do not touch the network whatsoever.
+    - System/deployment tests:
+  - Business Facing
+    - functional tests: multiple unit tests working together in order to test a specific functionality
+    - acceptance tests:
       - an acceptance test is an automated version of a user performing some task in your application.
       - Acceptance tests are the tests of highest level. Generally this kind of tests give us knowledge about how application works from user point of view.
       - ensures that the acceptance criteria 'for' a story are met
       - domains: functionality, capacity, usability, security, modifiability, availability
-      * after incorrect fill of the login form,
-      * where user will be redirected after correct fill the login form.
-  Manual tests:
+      - after incorrect fill of the login form,
+      - where user will be redirected after correct fill the login form.
+    - end to end tests: verifies that a system meets external requirements and achieves its goals, testing the entire system, from end to end,  irrespective of the component architecture in use.
+      + the system is treated as a black box and the tests exercise as much of the fully deployed system as possible, manipulating it through public interfaces such as GUIs and service APIs.
+      + Write as few end-to-end tests as possible
+      + Focus on personas and user journeys
+      + Rely on infrastructure-as-code for repeatability
+      + Make tests data-independent
+  - Manual tests:
+  - domain tests: testing business logic
+  - UI Tests: the task of performing tests on the user 'interface'
+  - blackbox tests: focses on the object state
+  - white box tests: focuses on the objects behavior
+  - mocking: allows you test behavior
+  - smoke test: testing the environment
+  - monitoring tests: testing continuously at regular intervals
+  - regression tests: testing old functionality, to ensure new changes are not breaking existing functionality
 
-  domain tests: testing business logic
-
-  UI Tests: the task of performing tests on the user 'interface'
-
-  blackbox tests: focses on the object state
-
-  white box tests: focuses on the objects behavior
-    -mocking: allows you test behavior
-
-  smoke test: testing the environment
-
-  monitoring tests: testing continuously at regular intervals
-
-  regression tests: testing old functionality, to ensure new changes are not breaking existing functionality
-
--objects: entities that send messages to each other
-  public messages: represented as public functions that others can call
-  private messages: represent private functions that only the object can call on itself
-  --all public and private methods accessible through public methods represent the behavior of an object
-
-test components
-
-  -dummy objects: objects that the System Under Test (SUT) depends on, but are never actually used.
+# test components
+  - objects: entities that send messages to each other
+    - public messages: represented as public functions that others can call
+    - private messages: represent private functions that only the object can call on itself
+    - all public and private methods accessible through public methods represent the behavior of an object
+  - dummy objects: objects that the System Under Test (SUT) depends on, but are never actually used.
     e.g.
-      .argument passed to another object
-      .object returned from one object to be sent to another object
-    .any object that is required to run/test some behavior, but is not actually used (e.g. a required parameter) and must resemble a real object
-  -test stubs: an object to control the indirect input of the tested code. setting up state
-    .Test stubs are functions (spies) with pre-programmed behavior. They support the full test spy API in addition to methods which can be used to alter the stub’s behavior.
-    .Control a method’s behavior from a test to force the code down a specific path. Examples include forcing a method to throw an error in order to test error handling.
-    .When you want to prevent a specific method from being called directly (possibly because it triggers undesired behavior, such as a XMLHttpRequest or similar).
-  -test spies:
-    .A test spy is a function that records arguments, return value, the value of this and exception thrown (if any) 'for' all its calls. A test spy can be an anonymous function or it can wrap an existing function.
-    .a test spy can also spy on existing functions. When doing so, the original function will behave just as normal (including when used as a constructor) but you will have access to data about all calls.
-  -test mocks: style of testing different levels of faking the behavior of an object
-  -test fakes
+    - argument passed to another object
+    - object returned from one object to be sent to another object
+    - any object that is required to run/test some behavior, but is not actually used (e.g. a required parameter) and must resemble a real object
+  - test stubs: an object to control the indirect input of the tested code. setting up state
+    - Test stubs are functions (spies) with pre-programmed behavior. They support the full test spy API in addition to methods which can be used to alter the stub’s behavior.
+    - Control a method’s behavior from a test to force the code down a specific path. Examples include forcing a method to throw an error in order to test error handling.
+    - When you want to prevent a specific method from being called directly (possibly because it triggers undesired behavior, such as a XMLHttpRequest or similar).
+  - test spies:
+    - A test spy is a function that records arguments, return value, the value of this and exception thrown (if any) 'for' all its calls. A test spy can be an anonymous function or it can wrap an existing function.
+    - a test spy can also spy on existing functions. When doing so, the original function will behave just as normal (including when used as a constructor) but you will have access to data about all calls.
+  - test mocks: style of testing different levels of faking the behavior of an object
+  - test fakes
 
-  - test spies
 
-definitions:
-  Specifications: what the program is suppose to do
-    component specfifications: communicate the visual design
+# definitions:
+  - Specifications: what the program is suppose to do
+  - component specifications: communicate the visual design
       executable specifications (test component specifications)
-    value specifications: communicate what value the project provides
+  - value specifications: communicate what value the project provides
       1. capabilities
       2. feature sets: (groups of features)
       3. specific features
       4. scenarios
+  - executable specifications (test value specifications);
+  - visual design
+  - solution design: what you will use to solve the problem
+  - domain model
+  - tests: the specifications executed against actual code
 
-      executable specifications (test value specifications);
-    visual design
-    solution design: what you will use to solve the problem
-    domain model
-
-  tests: the specifications executed against actual code
-
-NEED TO ADD
-  http://webdriver.io/
-
-testing triangle:
+# testing triangle:
   3. End to end tests (tens)
   2. service tests (hundreds)
   1. unit tests (thousands)
+
+# react testing
+  - component contract: expected behavior of the component  
+    + what it renders (maybe nothing)
+    + The props the component receives
+    + The state the component holds (if any)
+    + What the component does when the user interacts with it (via clicking, dragging, keyboard input, etc)
+    + The context the component is rendered in
+    + What the component does when you call methods on its instance (public ref interface)
+    + Side effects that occur as part of the component lifecycle (componentDidMount, componentWillUnmount, etc)
+    + look for ternaries, if statements, and switch statements as our clues. This will help us find variations in its contract.
+    + You can also find some constraints of the contract that are always true:
+  - is it worth testing?
+    + Will the test have to duplicate exactly the application code? This will make it brittle.
+    + Will making assertions in the test duplicate any behavior that is already covered by (and the responsibility of) library code?
+    + From an outsider’s perspective, is this detail important, or is it only an internal concern? Can the effect of this internal detail be described using only the component’s public API?
+  - testing strategy
+    + Find your Component Contract first
+    + Decide which constraints are worth testing and which aren’t
+    + Prop types are not worth testing
+    + Inline styles are usually not worth testing
+    + The components you render and what props you give them are important to test
+    + Don’t test things that are not the concern of your component
+
+
+# NEED TO ADD
+  http://webdriver.io/
+
 
 NOTES ON STRUCTURE
   the features are not mapped to unit tests
@@ -142,7 +174,8 @@ WORKFLOW
   create classes & spec files (i.e. components and there tests)
 
 
-cucumber: Cucumber is a tool 'for' running automated tests written in plain language.
+# cucumber:
+  - Cucumber is a tool 'for' running automated tests written in plain language.
   features: tests/specifications/blah.feature
     in order to do something I want
     as a person
