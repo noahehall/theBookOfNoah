@@ -1,6 +1,12 @@
 # links
 - [testing react components](https://medium.freecodecamp.com/the-right-way-to-test-react-components-548a4736ab22)
 - [testing microservices](https://martinfowler.com/articles/microservice-testing/#agenda)
+- [monkey testing](https://en.wikipedia.org/wiki/Monkey_testing)
+- [fuzzing/fuzz testing](https://en.wikipedia.org/wiki/Fuzzing)
+- [software testing](https://en.wikipedia.org/wiki/Software_testing)
+
+
+
 
 # Methodologies:
   - TDD: test driven development
