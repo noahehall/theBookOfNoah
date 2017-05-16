@@ -4,6 +4,7 @@
 - [monkey testing](https://en.wikipedia.org/wiki/Monkey_testing)
 - [fuzzing/fuzz testing](https://en.wikipedia.org/wiki/Fuzzing)
 - [software testing](https://en.wikipedia.org/wiki/Software_testing)
+- [bunch of definitions](http://xunitpatterns.com/Mocks,%20Fakes,%20Stubs%20and%20Dummies.html)
 
 
 
