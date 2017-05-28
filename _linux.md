@@ -20,6 +20,8 @@ bookmark:
 			2. sudo mkdir /var/lib/redis
 			3. sudo chown redis:redis /var/lib/redis
 			4. sudo chmod 770 /var/lib/redis
+	- [use tmpfs to store files/directories in memory](https://www.howtoforge.com/storing-files-directories-in-memory-with-tmpfs)
+		- another link: https://www.howtoforge.com/tutorial/how-to-install-nginx-and-google-pagespeed-on-ubuntu-16-04/
 ## links
 	[linux on mac](http://www.macworld.co.uk/how-to/mac/how-install-linux-on-mac-3637265/):
 	  1. use virutalization Software
@@ -106,6 +108,23 @@ need to file
 			#
 			# `all x min = */x`
 
+# VI
+## links
+	- [basic commands list](https://www.cs.colostate.edu/helpdocs/vi.html)
+## basic commands
+	- vi filename #open file
+	- :q #exit when there are no changes
+	- :q! #exit without saving changes
+	-	:wq #exit and save
+	- `esc` #finish input to current command
+## text commands
+	- i #insert text at beginning of curser
+	- I #insert at beginning of current line
+	- esc:%s/replace this text/with this text/
+## search for text
+	- /text #find text
+	- n #find next occurrence
+	- N #find prev cocurence
 customize your environment
 	bash initialization for login
 		#only runs on first login

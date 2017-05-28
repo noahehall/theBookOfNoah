@@ -109,3 +109,10 @@ server {
         }
 }
 ```
+
+# pagespeed module
+  - [example pagespeed configs](https://github.com/okdocker/server-configs-nginx/tree/master/pagespeed)
+  - [pagespeed configuration docs](https://modpagespeed.com/doc/configuration)
+  - [use tmpfs to store pagespeed cache](https://www.howtoforge.com/storing-files-directories-in-memory-with-tmpfs)
+  - [linux filesystem hierarchy](http://www.pathname.com/fhs/2.2/fhs-5.5.html)
+  

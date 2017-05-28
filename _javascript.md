@@ -44,7 +44,8 @@
   - [run through all articles](https://developers.google.com/web/updates/2017)
   - [custom site search view google](https://cse.google.com/cse/)
   - [remote debugging](https://jakearchibald.github.io/isserviceworkerready/index.html)
-
+  - [javascript engine](https://www.quora.com/How-does-a-JavaScript-engine-work)
+  - [how browsers work](http://taligarsiel.com/Projects/howbrowserswork1.htm)
 # need to research
   -  feature detection: `if(document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Extensibility','1.1'))`
   - buffers
@@ -67,6 +68,7 @@
   - [webpage speed test](https://developers.google.com/web/fundamentals/performance/poor-connectivity/)
   - [free web debugging proxy](http://www.telerik.com/fiddler)
   - [augmented traffic control](http://facebook.github.io/augmented-traffic-control/)
+  - [javascript AST visualizer](http://resources.jointjs.com/demos/javascript-ast)
 
 # NEED to finish
   - https://classroom.udacity.com/nanodegrees/nd802/parts/8021345403/modules/550593026975460/lessons/5972243496/concepts/61045985370923
@@ -878,6 +880,14 @@
 
 ## Responsive Design
 
+## javascript engine
+  - https://www.quora.com/How-does-a-JavaScript-engine-work
+  - general steps
+    0. source code:
+    1. parser: takes js and generates an abstract syntax tree
+    2. bytecode generator
+    3. interpretor: converts the bytecode into machine code
+
 ## Progressive Web apps
 ### Offline Web Apps
 
@@ -1430,7 +1440,7 @@
     ```
 
 ## promises and asynchronous code
-  - a]synchronous: statements occur in multiple timelines, in an unknown order irregardless of how they are defined in code
+  - asynchronous: statements occur in multiple timelines, in an unknown order irregardless of how they are defined in code
       e.g. network requests, events, threads, timeouts, etc.
   - synchronous: statements happen in order as defined, in a single timeline
   - callbacks: pass one function (cb) to another function, and the cb is invoked when certain conditions are met
@@ -1459,7 +1469,7 @@
     3. catching (value -> recovery):
       + javascript calls the NEXT CATCH in the chain when an error occurs or a promise is rejected
       ```
-        all of the below are the
+        all of the below are the same
         .catch(....)
         .then(undefined, rejectFunc)
         .then(resolve, rejectFunc)
@@ -2907,7 +2917,7 @@
         object[blah] = 'Something else';
         **note**
           object.blah === 'undefined' // doesnt work
-          object[blah] === 'Something else'; // only work sif you have reference to the symbol
+          object[blah] === 'Something else'; // only works if you have reference to the symbol
 
       ```
     - see an object's symbols: `Object.getOwnPropertySymbols:`
