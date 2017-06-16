@@ -16,23 +16,21 @@ rl.on('line', readLine);
 
 let a, b, c, d;
 
+function recurse(n) {
+  return n <= 1
+    ? 1
+    : (recurse(n-1) + recurse(n-2));
+}
+
 function readLine (line) {
   if (line !== "\n") {
-    if (!f.isUndefined(a) && !f.isUndefined(b)) {
+    if (!f.isUndefined(a)) {
       a = b = c = d = undefined;
     }
     if (f.isUndefined(a)) {
-      a = parseInt(line, 10);
-      return a;
+      a = recurse(parseInt(line, 10));
+      return console.log(a);
     }
-    if (!f.isUndefined(a) && f.isUndefined(b)) {
-      c = line.toString().split(' ').map(x => parseInt(x.trim(), 10)).sort(f.compareNumbers);
-      b = c.pop();
-      d = c.pop();
 
-    }
-    if (!f.isUndefined(b) && !f.isUndefined(d)) {
-      console.log(d * b)
-    }
   }
 }

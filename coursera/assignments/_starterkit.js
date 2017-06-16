@@ -23,7 +23,7 @@ function readLine (line) {
     }
     if (f.isUndefined(a)) {
       a = parseInt(line, 10);
-      return a;
+      if (a <=1) return console.log(a);
     }
     if (!f.isUndefined(a) && f.isUndefined(b)) {
       c = line.toString().split(' ').map(x => parseInt(x.trim(), 10)).sort(f.compareNumbers);
