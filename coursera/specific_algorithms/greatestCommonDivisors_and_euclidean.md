@@ -32,10 +32,10 @@
       if b =0:
         return a
       a` <--- the remainder when a/b
-      return euclideanGCD(b,a`)
-  ```
-  ```
-    example
-      gcd(3918848, 1653264)
-
+      return euclideanGCD(b,a%b)
+    /**
+     * each step reduces the size by about af actor of 2
+     * takes about log(ab) steps, each being a single division
+     * GCDs of 100 digit numbers takes about 600 steps
+     *
   ```

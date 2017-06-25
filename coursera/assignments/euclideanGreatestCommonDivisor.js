@@ -31,6 +31,7 @@ function readLine (line) {
       a = parseInt(line, 10);
     } else if (f.isUndefined(b)){
       b = parseInt(line, 10);
+      console.log(a,b)
     }
 
     if (!f.isUndefined(a) && !f.isUndefined(b)) {
