@@ -21,6 +21,7 @@
   13. [BEM: Block Element Modifier](https://en.bem.info/)
   14. [style invalidation in blink](https://docs.google.com/document/d/1vEW86DaeVs4uQzNFI5R-_xS9TcS1Cs_EUsHRSgCHGu8/edit)
   15. [flip principle](https://aerotwist.com/blog/flip-your-animations/)
+  16. [es6 in depth articles](https://hacks.mozilla.org/2015/06/es6-in-depth-collections/)
 ## other things to touch
   - [service workers](https://jakearchibald.github.io/isserviceworkerready/index.html)
   - [image src-set for responsiveness](https://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/)
@@ -2331,8 +2332,11 @@
 ## [prototypical inheritance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
   - prototype: each object has an internal link to another object, its prototype, that provides additional behavior and properties
   - prototype chain: the sequence of linked objects from one object's prototype to another, all the way up until you reach the Null object (which does not have a prototype)
+  ```
+
+  ```
 ### basics
-  - operators
+  - [arithmetic operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Arithmetic_Operators#Exponentiation)
     ```
     	+	Addition	x = y + 2	y = 5	x = 7	Try it »
     	-	Subtraction	x = y - 2	y = 5	x = 3	Try it »
@@ -2815,6 +2819,205 @@
       myRegex.test(myString);
     ```
 
+########################################################
+# [ES2015](https://babeljs.io/docs/plugins/preset-es2015/)
+## [const](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const) keyword
+  ```
+    // Constants are block-scoped, much like variables defined using the let statement. The value of a constant cannot change through re-assignment, and it can't be redeclared.
+    const blah = 'bloom'
+  ```
+## [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+  ```
+    () => {};
+    a => a;
+    blah => ({ blah });
+    // Destructuring within the parameter list is also supported
+    let f = ([a, b] = [1, 2], {x: c} = {x: a + b}) => a + b + c;
+  ```
+## block scoping
+## [classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
+  - [es6 in depth](https://hacks.mozilla.org/2015/07/es6-in-depth-classes/)
+  - An important difference between function declarations and class declarations is that function declarations are hoisted and class declarations are not.
+  ```
+    // Class declarations
+    class Rectangle {
+      constructor(height, width) {
+        // If there is a constructor present in sub-class, it needs to first call super() before using "this".
+        this.height = height;
+        this.width = width;
+      }
+    }
+
+    // Class expressions
+      // unnamed
+      var Rectangle = class {
+        constructor(height, width) {
+          this.height = height;
+          this.width = width;
+        }
+      };
+      // named
+      var Rectangle = class Rectangle {
+        constructor(height, width) {
+          this.height = height;
+          this.width = width;
+        }
+      };
+
+    // Getters/Setters/Statics
+      // getters
+        get area() {
+          return this.calcArea();
+        }
+        // console.log(square.area);
+      // statics
+        static distance(a, b) {
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+
+          return Math.hypot(dx, dy);
+        }
+        // console.log(Point.distance(p1, p2));
+
+    // Subclasses: Extends
+      class Dog extends Animal {
+        speak() {
+          console.log(this.name + ' barks.');
+          // name is set in parent class constructor
+        }
+      }
+      // d.speak(); // Mitzie barks.
+    ```
+  - If you want to inherit from a regular object, you can instead use Object.setPrototypeOf():
+    ```
+        var Animal = {
+          speak() {
+            console.log(this.name + ' makes a noise.');
+          }
+        };
+
+        class Dog {
+          constructor(name) {
+            this.name = name;
+          }
+        }
+
+        Object.setPrototypeOf(Dog.prototype, Animal);// If you do not do this you will get a TypeError when you invoke speak
+
+        var d = new Dog('Mitzie');
+        d.speak(); // Mitzie makes a noise.
+    ```
+  - The super keyword is used to call functions on an object's parent.
+    ```
+      class Cat {
+        constructor(name) {
+          this.name = name;
+        }
+
+        speak() {
+          console.log(this.name + ' makes a noise.');
+        }
+      }
+
+      class Lion extends Cat {
+        speak() {
+          super.speak();
+          console.log(this.name + ' roars.');
+        }
+      }
+
+      var l = new Lion('Fuzzy');
+      l.speak();
+      // Fuzzy makes a noise.
+      // Fuzzy roars.
+    ```
+  - Abstract subclasses or mix-ins are templates for classes. An ECMAScript class can only have a single superclass, so multiple inheritance from tooling classes, for example, is not possible. The functionality must be provided by the superclass.
+    ```
+      // A function with a superclass as input and a subclass extending that superclass as output can be used to implement mix-ins in ECMAScript:
+
+      var calculatorMixin = Base => class extends Base {
+        calc() { }
+      };
+      var randomizerMixin = Base => class extends Base {
+        randomize() { }
+      };
+
+      class Foo { }
+      class Bar extends calculatorMixin(randomizerMixin(Foo)) { }
+    ```
+## [computed properties/object initilizers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer)
+  ```
+    var obj = {
+      ["x" + foo]: "heh",
+      ["y" + bar]: "noo",
+      foo: "foo",
+      bar: "bar"
+    };
+  ```
+## [destructuring](https://hacks.mozilla.org/2015/05/es6-in-depth-destructuring/)
+  - [destructuring assignmnet](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
+
+## [for of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of)
+  ```
+    for (variable of iterable) {
+      statement
+    }
+  ```
+## literals
+  - integer
+    ```
+      var b = 0b11; // binary integer literal
+      var o = 0o7; // octal integer literal
+    ```
+  - unicode
+    ```
+      const u = 'Hello\u{000A}\u{0009}!'; // unicode string literals, newline and tab
+    ```
+## [literals, Grammers, Types](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types)
+## parameters
+  - **TODO** [Destructuring assignment/parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
+    ```
+      var a, b, rest;
+      [a, b] = [10, 20];
+      console.log(a); // 10
+      console.log(b); // 20
+
+      [a, b, ...rest] = [10, 20, 30, 40, 50];
+      console.log(a); // 10
+      console.log(b); // 20
+      console.log(rest); // [30, 40, 50]
+
+      ({a, b} = {a: 10, b: 20});
+      console.log(a); // 10
+      console.log(b); // 20
+
+      // Stage 3 proposal
+      ({a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40});
+
+      var x = [1, 2, 3, 4, 5];
+      var [y, z] = x;
+      console.log(y); // 1
+      console.log(z); // 2
+    ```
+  - Default parameters
+  - **TODO** [Rest parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters)
+    ```
+      function f(a, b, ...theArgs) {
+        // ...
+      }
+    ```
+## function-name
+## modules/commonjs
+## object - super
+## shorthand properties
+## Spread
+## sticky-regex
+## template Strings
+## typeof symbol
+## unicode regex
+## transform regenerator
+
+
 # [ES6](https://github.com/lukehoban/es6features)
 ## Strings
   ```
@@ -2889,6 +3092,7 @@
   - Default Arguments
     `function drawES6Chart({size = 'big', cords = { x: 0, y: 0 }, radius = 25} = {}) {..}`
   - Rest Parameters/: used in function arguments to capture a list of variables from arrays
+    + [read more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters#Destructuring_rest_parameters)
     ```
       function(a, b, ...theArgs) {
         // ...
