@@ -30,7 +30,7 @@
       x^2 + x^3 === samething, cant be simplified
     ```
 # [functions](https://www.khanacademy.org/math/algebra/algebra-functions/evaluating-functions/v/what-is-a-function)
-  - function: something that takes an input, process it, and produce a given output
+  - function: something that takes an input, process it, and produce a single output (i.e. the same input must always produce the same output )
     ```
       # f of x
       f(x) = { x^2 if x === even, else x + 5 }
