@@ -215,5 +215,19 @@ Try different regions of the test space when generating cases for stress testing
         if as f(n)/g(n) approaches O then n approaches infinite, f grows slower than g
     ```
 # algorithm problems
-
-# algorithm types
+# algorithm design techniques
+  - levels of design (in increasing efficiency)
+    1. naive algorithm: take the definition of the problem as the algorithm itself
+      - super slow, but it works as it fits the definition of the problem
+    2.algorithm by way of standard tools/techniques
+    3. optimized algorithm: improve existing algorithm
+    4. magic algorithm: i.e. you create it on your own
+      - usually you can reproduce the thought process that gave you insight into the magic
+      - you ate a bunch of shrooms
+## greedy algorithms
+  - constructing a big object, make one greedy decision after another, without considering the impact of the total object, but only on the next step in what you have to do
+## divide and conquer
+  - have a big problem, break it down into little problems, and put all the answers together to solve the original big problem
+## dynamic programming
+  - got a large problem with some inner related problems, the inner problems solutions depend on each other
+    + you solve each of the inner problems, and use their solutions to figure out the real solution to the big problem
