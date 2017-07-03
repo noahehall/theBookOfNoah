@@ -27,11 +27,11 @@
 # best Practices
   1. dont bruteforce anything, always think
     - if I store the result of this calculation, will future calculations be easier?
-  2. can I reduce the LOC? this will shorten T(n)
-  3. are their any key **lemma*s? intermidiary algorithms that will help you solve your current problem?
+  2. can I reduce the LOC?
+  3. can I remove any embedded loops?
+  4. are their any key **lemma**s?
+    - lemma: intermidiary algorithms that will help you solve your current problem?
     - usually the correct algorithm requires knowing something interesting about the structure of the  problem
-
-# background
 
 # testing
   - A few small manual tests.
@@ -81,7 +81,7 @@ Try different regions of the test space when generating cases for stress testing
     3. the obvious program works
   - moderate problems:
     - shortest path between locations
-    - best pairing items based on configuration
+    - best pairing of items based on configuration
     - measure similarity of documents
     - description of above
       1. not clear how to do
@@ -99,14 +99,16 @@ Try different regions of the test space when generating cases for stress testing
     2. hard to do efficiently
 # algorithm analysis
   - running time: let `T(n)` denote the number of lines of code executed by `someFunction(n)`
-    + good estimate for determining how long it would take a computer that can execute a billion of code each year
+    + estimate for determining how long it would take a computer that can execute a billion of code each year
+    + this is the worst way to guess running time
+  - big O
 
 # computing run times
   - need to know:
     1. speed of computer
     2. system architecture
       - control unit,
-      - airhtmetic logic unit,
+      - arithmetic logic unit,
       - accumulator
       - compiler used for your programing language that turns your code into machine code and what optimizations it uses
       - details of the memory hierarchy
@@ -116,7 +118,7 @@ Try different regions of the test space when generating cases for stress testing
 ## asymptotic notation
   - idea:
     1. measure runtime in a way that ignores constant multiples
-    2. asymptotic runtimes: how does the runtiem scle with input size
+    2. asymptotic runtimes: how does the runtime  scale with input size
       - as the input size gets larger, does the runtime get larger by n, n2, or n3? etc.
         1. the difference between n and n squared affects runtimes greater than any constant multiple will
           - so ignore constant multiples and focus on asymptotic differences
@@ -128,6 +130,7 @@ Try different regions of the test space when generating cases for stress testing
       - if your disk lookups require 3
 ## big-O notation
   - a type of asymptotic notation that allows you to ignore complicated details when figuring out algorithm runtimes
+  - i.e the running time grows at most this much, but it could grow more slowly.
     + if two things are off by some constant multiple, that mulitple can be ignored
   - Big-O says that your algorithm runtime is bounded above some multiple of another thing
   - issues with big o
@@ -142,26 +145,29 @@ Try different regions of the test space when generating cases for stress testing
       3. if 1 and 2 above are true
         - f is bounded above by some constant multiple of g
       3. formal definition
-        f(n) === O(g(n))(f is Big-O of g) or f <= g
-          if there exist constants N and c so that for:
-            all n >= N, f(n) <= c * g(n)
+        - f(n) === O(g(n))
+          + i.e. (f is Big-O of g) or f <= g
+        - if there exist constants N and c so that for all n >= N, f(n) <= c * g(n)
     ```
   - best practices
     1. once you have a solid big-O runtime, you can then look into the finer (constant factors; memory, etc) details to figure out how you can save additional runtime
     2. sometimes big-O fails you on practical applicataions, where very large numbers are never relevant, in that case you need to look at best practice number 1
     3. if you want to make your program fast, you need to make use of another notations and analysis
+    4. big O doesnt tell you about the gritty details of your algorithm
+    5. big O is just the start
 ## common rules
   1. multiplicative/division constants can be removed
     - ` 7n^3 = O(n^3)`
     - `(n^2)/3 = O(n^2)`
+    - root(n) = O(n)
+    - n^100 === O(1.1^n) < n^5 === O(root(2)^n)
   2. if you have two powers of `n`, the one with the larger exponent grows faster (is worse)
     -`n^a < n^b for O <a < b`
-    - `root(n) = O(n)` < `n = O(n^2)`
   3. any polynomial vs exponential, the exponential always grows faster
     - `n^5 = O(root(2)^n)`
     - `n^100 = O(1.1^n)`
-  4. any power of `logn^a < n^b`
-    - `log(n)^3` = O(root(n))``  < `nlogn = O(n^2)`
+  4. any power of log(n) grows slower than any power of n
+    - `(log(n))^3` = `O(root(n))`  < `nlog(n) = O(n^2)`
   5. if you have some sum of terms, smaller terms can be omitted
     - `n^2 + n` = O(n^2)`
     - `2^n + n^9 = O(2^n)`
@@ -178,22 +184,17 @@ Try different regions of the test space when generating cases for stress testing
     -  this is because the loop is `O(n)`, and the embedded operation is `O(n)`, so to do the entire operation its `O(n) * O(n)`
   - calling a function: `O(1)`
 ## calculation examples
-  1. O(n^2)
-    ```
-      3n^2 + 5n + 2 = O(n^2)
-        because if n >= 1
-          3n^2 + 5n + 2 <= 3n^2 + 5n^2 + 2n^
-            because 3n^2 + 5n^2 + 2n^ = 10n^2
-    ```
-  2. O(n)
-    ```
-      n + log2(n) + sin(n) = O(n)
-    ```
-  3. O(nlog(n))
+  - O(n) = n + log2(n) + sin(n)
+    - you dont need to specify the base of the logarithm you use
+    - log(2)n, log(10)n, log(1000)n all differ by some contant multiples
+    - and we always drop the constant multiples
+  - O(2^(n+1)) = 2n
+    - because 2^(n+1) = 2 * 2n
+  - O(n^2) = 3n^2 + 5n + 2
+  - O(n^2) = log(2)n
+  - O(nlog(n)) =  4nlog(2)n + 7
     - log2(n), log3(n), logx(n) differ by constant multiples, dont need to specify the base that is used
-    ```
-      4nlog2(n) + 7 = O(nlog(n))
-    ```
+  - O(n^3) = n^2
 ## other notation
   - if you want to say your algorithm runtime is bounded below some multiple of another thing
     ```
