@@ -1,9 +1,4 @@
-/*
-  - 0, 1, then add the sum of the previous numbers
-  - an algorithm that takes a non-negative integer N and returns the fibonacci number
 
-*/
-//var f = require('./.lib/functions');
 var f = {
   isUndefined: function(x) {
     return typeof x === 'undefined'
