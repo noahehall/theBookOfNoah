@@ -1,6 +1,7 @@
 Order the given functions by increasing growth rate.
 
 - incorrect
+```
   f3(n)=log(4)n
   f2(n)=nlog(2)n
   f7(n)=√n = n^.5
@@ -9,7 +10,7 @@ Order the given functions by increasing growth rate.
   f5(n)=5^(log(2)n) = n^(log(2)5) = n^2.321
   f1(n)=3^n
   f8(n)=2^(2n) = (2^2)^n = 4^n
-
+```
 
 - correct
   f2(n)=n^.3
