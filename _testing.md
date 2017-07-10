@@ -133,7 +133,8 @@
   - use default params as much as possible
   - refrain from private variables
   - ensure instance methods have single responsibility
-  - [in general](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design))
+  - ensure modules have single responsibility
+  - [in general stay solid](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design))
 
 # NEED TO ADD
   http://webdriver.io/
