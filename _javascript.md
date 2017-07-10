@@ -2324,10 +2324,6 @@
 		- specify if this function throws any errors
 			`@throws {exceptionType} description: describes an exception that might be thrown during the execution of the function or method. Either type or description can be omitted.`
 
-
-
-
-# JAVASCRIPT
 # ES5:
 ## [prototypical inheritance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
   - prototype: each object has an internal link to another object, its prototype, that provides additional behavior and properties
@@ -2954,14 +2950,82 @@
       bar: "bar"
     };
   ```
-## [destructuring](https://hacks.mozilla.org/2015/05/es6-in-depth-destructuring/)
-  - [destructuring assignmnet](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
 
+## [for in](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in)
+  - The for...in statement iterates over the enumerable properties of an object, in original insertion order. For each distinct property, statements can be executed.
+  - The for...in loop will iterate over all enumerable properties of an object.
+    + The for...of syntax is specific to collections, rather than all objects. It will iterate in this manner over the elements of any collection that has a [Symbol.iterator] property.
+  ```
+  ```
 ## [for of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of)
   ```
-    for (variable of iterable) {
+    //
+    for (let variable of iterable) {
       statement
     }
+    for (const value of iterable) {
+      console.log(value);
+    }
+
+    // Array, objects, maps, strings, etc
+      let iterable = [10, 20, 30];
+      for (let value of iterable) {
+        value += 1;
+        console.log(value);
+      }
+      // 11
+      // 21
+      // 31
+  ```
+  - closing iterators
+    ```
+      // In for...of loops, abrupt iteration termination can be caused by break, continue, throw or return. In these cases, the iterator is closed.
+        function* foo(){
+          yield 1;
+          yield 2;
+          yield 3;
+        };
+
+        for (let o of foo()) {
+          console.log(o);
+          break; // closes iterator, triggers return
+        }
+    ```
+
+  - generators
+    - Generators should not be re-used, even if the for...of loop is terminated early, for example via the break keyword. Upon exiting a loop, the generator is closed and trying to iterate over it again does not yield any further results.
+    ```
+      // do this
+        function* fibonacci() { // a generator function
+          let [prev, curr] = [1, 1];
+          while (true) {
+            [prev, curr] = [curr, prev + curr];
+            yield curr;
+          }
+        }
+        for (let n of fibonacci()) {
+          console.log(n);
+          // truncate the sequence at 1000
+          if (n >= 1000) {
+            break;
+          }
+        }
+
+      // do not do this
+        var gen = (function *(){
+          yield 1;
+          yield 2;
+          yield 3;
+        })();
+        for (let o of gen) {
+          console.log(o);
+          break;  // Closes iterator
+        }
+
+        // The generator should not be re-used, the following does not make sense!
+        for (let o of gen) {
+          console.log(o); // Never called.
+        }
   ```
 ## literals
   - integer
@@ -2974,7 +3038,8 @@
       const u = 'Hello\u{000A}\u{0009}!'; // unicode string literals, newline and tab
     ```
 ## [literals, Grammers, Types](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types)
-## parameters
+## parameters/destructuring
+  - [destructuring](https://hacks.mozilla.org/2015/05/es6-in-depth-destructuring/)
   - **TODO** [Destructuring assignment/parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
     ```
       var a, b, rest;
@@ -2999,15 +3064,36 @@
       console.log(y); // 1
       console.log(z); // 2
     ```
-  - Default parameters
+  - [Default parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters)
+    - a new object is created each time the function is called.
+    ```
+    function multiply(a, b = 1) {
+      return a * b;
+    }
+
+    // not DOPE
+      // Parameters already encountered are available to later default parameters:
+      function singularAutoPlural(singular, plural = singular + 's',
+                            rallyingCry = plural + ' ATTACK!!!') {
+        return [singular, plural, rallyingCry];
+      }
+
+      //["Gecko","Geckos", "Geckos ATTACK!!!"]
+      singularAutoPlural('Gecko');
+    ```
   - **TODO** [Rest parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters)
     ```
       function f(a, b, ...theArgs) {
         // ...
       }
     ```
-## function-name
-## modules/commonjs
+## [function-name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/name)
+  - The function.name property returns the name of the function.
+    re
+## modules/commonjs/amd
+  - [node modules](https://nodejs.org/docs/latest/api/modules.html)
+  - [modules to commonjs](https://babeljs.io/docs/plugins/transform-es2015-modules-commonjs/)
+
 ## object - super
 ## shorthand properties
 ## Spread
