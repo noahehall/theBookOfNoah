@@ -1,108 +1,5 @@
-
-## Classes & [Mixins](http://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/)
-  - is really a subclass factory, parameterized by the superclass, which produces mixin applications
-### Mixin examples
-  - benefits of approach below:
-    0. the only difference between a mixin and a normal subclass is that a normal class has a fixed superclass, while a mixin definition doesnt (the mixin application does)
-    1. the definition of a class that may be applieed to different super classes.
-    2. mixin application: the application of a mixin definition to a specific superclass, producing a new subclass
-  - implementation features based on es6 classes
-    1. mixins are added to the prototype chain
-    2. mixins are applied without modifying existing objects
-    3. mixins do no magic, and dont define new semantics on top of the core language
-    4. superfoo property access works within mixins and subclasses
-    5. super() calls work in constructors
-    6. mixins are able to extend other mixins
-    7. instanceof works
-    8. mixins donot require library support and can be writtin in a universal style
-    9. subclasses correctly override mixin methods which override superclass methods.
-
-  - definition
-    ``` simple
-      // simple mixin definition
-      let MyMixin = (superclass) => class extends superclass {
-        foo() {
-          console.log('foo from MyMixin');
-        }
-      };
-
-      // advanced mixin inheritance definition
-      let Mixin2 = (superclass) => class extends Mixin1(superclass) {
-        /* Add or override methods here */
-      }
-
-      // function composition mixin inheritance
-      let CompoundMixin = (superclass) => Mixin2(Mixin3(superclass));
-
-      // single subclass definition
-      class MyClass extends MyMixin(MyBaseClass) {
-        /* ... */
-      }
-
-      // multiple subclass definition
-      class MyClass extends Mixin1(Mixin2(MyBaseClass)) {
-        /* ... */
-      }
-
-      // instantiation
-      let c = new MyClass();
-      c.foo(); // prints "foo from MyMixin"
-    ```
-### classes
-  - classes can be used as an expression as well as a statement
-    1. as an expression it returns a new class each time its evaluated (sort of like a factory)
-  - the extends clause accepts arbitrary expressions that return classes or constructors
-### prototypes and constructors and 'class' section
-	-	helps you create formalized objects (i.e. classes)
-	-	its simply a function that creates an object
-	-	new = the constructor operator, creates a new instance of an object
-	-	prototype object allows you to extend functions functionality after its created
-  ```
-  	function ClassConstructor(n) {
-  		this.name = n;
-  	}
-    var instance = new ClassConstructor('fred');
-  ```
-
-	``` use prototype to attach new methods/vars to the constructor
-		ClassConstructor.prototype.blah = function(){
-			console.log('this.name', 'is my name.');
-		}
-  ```
-	- get the original prototype function
-		`Object.getPrototypeOf(someFunctionHere);`
-	```create a class that uses another classes methods (this example uses arrays)
-			var Queue = function() {
-			  this._array = [];
-			};
-			Queue.prototype.enqueue = function(item) {
-			  this._array.push(item);
-			};
-			Queue.prototype.dequeue = function() {
-			  return this._array.shift();
-			};
-			Queue.prototype.size = function() {
-			  return this._array.length; // the size of the queue
-			};
-  ```
-  - delegate prototypes
-    ``` define the prototype
-      let animal = {
-        animalType: 'animal',
-
-        describe () {
-          return `An ${this.animalType}, with ${this.furColor} fur,
-            ${this.legs} legs, and a ${this.tail} tail.`;
-        }
-      };
-      // create an instance
-      let mouse = Object.assign(Object.create(animal), {
-        animalType: 'mouse',
-        furColor: 'brown',
-        legs: 4,
-        tail: 'long, skinny'
-      });
-    ```
+# quick links
+  - [mozzila is doooope](https://developer.mozilla.org/en-US/docs/Web/JavaScript/New_in_JavaScript)
 
 ## [jsdocs](http://www.2ality.com/2011/08/jsdoc-intro.html)
  - takes code with `/** */ `comments and produces HTML documentation 'for' it
@@ -208,16 +105,14 @@
     + `Number("3.14") ` returns 3.14
     + `parseFloat()`	Parses a string and returns a floating point number
     + `parseInt()`	Parses a string and returns an integer
-### quick reference
-#### DOM
-  - timers
+### timers
     ```
     	setTimeout(someFunctionName, milliseconds); //runs someFunctionName ONCE after X milliseconds
     	setInterval(someFunctionName, milliseconds); //runs someFunctionName EVERY X milliseconds
     	clearInterval(intervalHandle) //you must assign setInterval to a variable
     	clearTimeout(timeoutHandle) //you must assign setTimeout to a variable
     ```
-  - setting CSS
+### setting CSS
     ```
     	someelement.style.property = value
     		any property wtih hyphens (e.g. background-color) becomes camel case (e.g. backgroundColor)
@@ -381,6 +276,57 @@
   		Object.setPrototypeOf() Sets the prototype (i.e., the internal [[Prototype]] property)
   		Object.unobserve()  Unobserves changes to an object.
   		Object.values()  Returns an array of a given objects own enumerable values.
+    ```
+### prototypes and constructors and 'class' section
+	-	helps you create formalized objects (i.e. classes)
+	-	its simply a function that creates an object
+	-	new = the constructor operator, creates a new instance of an object
+	-	prototype object allows you to extend functions functionality after its created
+  ```
+  	function ClassConstructor(n) {
+  		this.name = n;
+  	}
+    var instance = new ClassConstructor('fred');
+  ```
+
+	``` use prototype to attach new methods/vars to the constructor
+		ClassConstructor.prototype.blah = function(){
+			console.log('this.name', 'is my name.');
+		}
+  ```
+	- get the original prototype function
+		`Object.getPrototypeOf(someFunctionHere);`
+	```create a class that uses another classes methods (this example uses arrays)
+			var Queue = function() {
+			  this._array = [];
+			};
+			Queue.prototype.enqueue = function(item) {
+			  this._array.push(item);
+			};
+			Queue.prototype.dequeue = function() {
+			  return this._array.shift();
+			};
+			Queue.prototype.size = function() {
+			  return this._array.length; // the size of the queue
+			};
+  ```
+  - delegate prototypes
+    ``` define the prototype
+      let animal = {
+        animalType: 'animal',
+
+        describe () {
+          return `An ${this.animalType}, with ${this.furColor} fur,
+            ${this.legs} legs, and a ${this.tail} tail.`;
+        }
+      };
+      // create an instance
+      let mouse = Object.assign(Object.create(animal), {
+        animalType: 'mouse',
+        furColor: 'brown',
+        legs: 4,
+        tail: 'long, skinny'
+      });
     ```
 #### control
 	- try catch
@@ -1036,7 +982,6 @@
 
       ```
     - see an object's symbols: `Object.getOwnPropertySymbols:`
-
 ### Reflect
   + all about Reflection through introspection - used to discover very low level information about your code.
 ### Proxy:
@@ -1225,3 +1170,58 @@
   - use cases
     + asynchornous events
     + timers (e.g. setInterval)
+
+
+## Classes & [Mixins](http://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/)
+  - is really a subclass factory, parameterized by the superclass, which produces mixin applications
+### Mixin examples
+  - benefits of approach below:
+    0. the only difference between a mixin and a normal subclass is that a normal class has a fixed superclass, while a mixin definition doesnt (the mixin application does)
+    1. the definition of a class that may be applieed to different super classes.
+    2. mixin application: the application of a mixin definition to a specific superclass, producing a new subclass
+  - implementation features based on es6 classes
+    1. mixins are added to the prototype chain
+    2. mixins are applied without modifying existing objects
+    3. mixins do no magic, and dont define new semantics on top of the core language
+    4. superfoo property access works within mixins and subclasses
+    5. super() calls work in constructors
+    6. mixins are able to extend other mixins
+    7. instanceof works
+    8. mixins donot require library support and can be writtin in a universal style
+    9. subclasses correctly override mixin methods which override superclass methods.
+
+  - definition
+    ``` simple
+      // simple mixin definition
+      let MyMixin = (superclass) => class extends superclass {
+        foo() {
+          console.log('foo from MyMixin');
+        }
+      };
+
+      // advanced mixin inheritance definition
+      let Mixin2 = (superclass) => class extends Mixin1(superclass) {
+        /* Add or override methods here */
+      }
+
+      // function composition mixin inheritance
+      let CompoundMixin = (superclass) => Mixin2(Mixin3(superclass));
+
+      // single subclass definition
+      class MyClass extends MyMixin(MyBaseClass) {
+        /* ... */
+      }
+
+      // multiple subclass definition
+      class MyClass extends Mixin1(Mixin2(MyBaseClass)) {
+        /* ... */
+      }
+
+      // instantiation
+      let c = new MyClass();
+      c.foo(); // prints "foo from MyMixin"
+    ```
+### classes
+  - classes can be used as an expression as well as a statement
+    1. as an expression it returns a new class each time its evaluated (sort of like a factory)
+  - the extends clause accepts arbitrary expressions that return classes or constructors
