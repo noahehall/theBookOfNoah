@@ -144,17 +144,10 @@ alias mongosudo='sudo mongod -f /etc/mongod.conf'
 alias mongologin='mongo --port 27017 -u "imsovru" -p "somepassword" --authenticationDatabase "admin"'
 alias mongomod='sudo chown -R mongodb:mongodb /var/lib/mongodb && sudo chown -R mongodb:mongodb /data/db'
 
+# users
+alias listallsystemusers='cut -d: -f1 /etc/passwd'
+alias listallhumanusers='awk -F':' '$2 ~ "\$" {print $1}' /etc/shadow'
+
 #misc
 alias pbcopy='xclip -selection clipboard'
-
-#PBCG
-alias cdpbcg='cd ~/git/pbcg'
-
-#proxy
-alias cdproxy='cd ~/git/proxy'
-
-#unknown
 alias getwifi='sudo iwlist wlp3s0 scan | grep ESSID'
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
