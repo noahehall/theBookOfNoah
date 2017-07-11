@@ -46,7 +46,7 @@
 		- specify if this function throws any errors
 			`@throws {exceptionType} description: describes an exception that might be thrown during the execution of the function or method. Either type or description can be omitted.`
 
-# ES5:
+# ES5 (i.e. <=1.8.5):
 ## [prototypical inheritance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
   - prototype: each object has an internal link to another object, its prototype, that provides additional behavior and properties
   - prototype chain: the sequence of linked objects from one object's prototype to another, all the way up until you reach the Null object (which does not have a prototype)
@@ -106,20 +106,22 @@
     + `parseFloat()`	Parses a string and returns a floating point number
     + `parseInt()`	Parses a string and returns an integer
 ### timers
-    ```
-    	setTimeout(someFunctionName, milliseconds); //runs someFunctionName ONCE after X milliseconds
-    	setInterval(someFunctionName, milliseconds); //runs someFunctionName EVERY X milliseconds
+    ```s
+    	setTimeout(someFunctionName, milliseconds);
+        //runs someFunctionName ONCE after X milliseconds
+    	setInterval(someFunctionName, milliseconds);
+        //runs someFunctionName EVERY X milliseconds
     	clearInterval(intervalHandle) //you must assign setInterval to a variable
     	clearTimeout(timeoutHandle) //you must assign setTimeout to a variable
     ```
 ### setting CSS
-    ```
+    ```s
     	someelement.style.property = value
     		any property wtih hyphens (e.g. background-color) becomes camel case (e.g. backgroundColor)
     		to access the elements class, you have to use somelement.style.className
     ```
 #### Number
-  ```
+  ```s
     Number()	Returns a number, converted from its argument.
     parseFloat()	Parses its argument and returns a floating point number without trailing zeros
       parseFloat((rad / 0.0174533).toFixed(2))
@@ -587,7 +589,110 @@
     ```
 
 ########################################################
-# [ES2015](https://babeljs.io/docs/plugins/preset-es2015/)
+# [ES2015](https://developer.mozilla.org/en-US/docs/Web/JavaScript/New_in_JavaScript/ECMAScript_2015_support_in_Mozilla)
+## standard library
+### loops
+  - for..of: basic iterable loop
+    ```s
+      for (const/let variable of iterable) {
+        statement
+      }
+    ```
+  - arr.entries(): returns a new Array Iterator object that contains the key/value pairs for each index in the array.
+    ```s
+    var a = ['a', 'b', 'c'];
+    var iterator = a.entries();
+
+    // with for..of loop
+      for (let e of iterator) {
+        console.log(e);
+      }
+    // manually
+      console.log(iterator.next().value); // [0, 'a']
+      console.log(iterator.next().value); // [1, 'b']
+      console.log(iterator.next().value); // [2, 'c']
+    ```
+  - arr.keys(): returns a new Array Iterator that contains the keys for each index in the array.
+    ```s
+      var arr = ['a', 'b', 'c'];
+      var iterator = arr.keys();
+
+      console.log(iterator.next()); // { value: 0, done: false }
+      console.log(iterator.next()); // { value: 1, done: false }
+      console.log(iterator.next()); // { value: 2, done: false }
+      console.log(iterator.next()); // { value: undefined, done: true }
+
+      var sparseKeys = Object.keys(arr);
+      var denseKeys = [...arr.keys()];
+      console.log(sparseKeys); // ['0', '2']
+      console.log(denseKeys);  // [0, 1, 2]
+    ```
+### array
+  - Array.from(arrayLike[, mapFn[, thisArg]]): method creates a new Array instance from an array-like or iterable object.
+    ```s
+    Array.from([1, 2, 3], x => x + x);      
+      // [2, 4, 6]
+    ```
+  - Array.of(element0[, element1[, ...[, elementN]]]): creates a new Array instance with a variable number of arguments, regardless of number or type of the arguments.
+    ```s
+      Array.of(7);       // [7]
+        # vs constructor
+      Array(7);          // [ , , , , , , ]
+    ```
+  - arr.fill(value[, start, end]): fills all the elements of an array from a start index to an end index with a static value.
+    ```s
+      [1, 2, 3].fill(4);               // [4, 4, 4]
+      [1, 2, 3].fill(4, 1);            // [1, 4, 4]
+    ```
+  - arr.find(callback[, thisArg]): returns the value of the first element in the array that satisfies the provided testing function. Otherwise undefined is returned.
+    ```s
+      function isBigEnough(element) {
+        return element >= 15;
+      }
+      [12, 5, 8, 130, 44].find(isBigEnough); // 130
+    ```
+  - arr.findIndex(callback[, thisArg]): returns the index of the first element in the array that satisfies the provided testing function. Otherwise -1 is returned.
+    ```s
+      function isBigEnough(element) {
+        return element >= 15;
+      }
+
+      [12, 5, 8, 130, 44].findIndex(isBigEnough); // 3 index
+    ```
+  - arr.copyWithin(target[, start, end]): shallow copies part of an array to another location in the same array and returns it, without modifying its size.
+    ```s
+      ['alpha', 'bravo', 'charlie', 'delta'].copyWithin(2, 0);
+
+      // results in ["alpha", "bravo", "alpha", "bravo"]
+    ```
+  - Array[Symbol.species]: The Array[@@species] accessor property returns the Array constructor.
+    ```s
+      class MyArray extends Array {
+        // Overwrite MyArray species to the parent Array constructor
+        static get [Symbol.species]() { return Array; }
+      }
+    ```
+### map
+  - new Map([iterable]): The Map object holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value.
+  - answer yes to any of the below, and you can justify using a map
+    - Are keys usually unknown until run time? Do you need to look them up dynamically?
+    - Do all values have the same type? Can they be used interchangeably?
+    - Do you need keys that aren't strings?
+    - Are key-value pairs frequently added or removed?
+    - Do you have an arbitrary (easily changing) number of key-value pairs?
+    - Is the collection iterated?
+  - properties
+    - Map.prototype.size
+  - methods
+
+### weakmap
+  - new WeakMap([iterable]): The WeakMap object is a collection of key/value pairs in which the keys are weakly referenced.  The keys must be objects and the values can be arbitrary values.
+### set
+  - new Set([iterable]): The Set object lets you store unique values of any type, whether primitive values or object references.
+### weakset
+  - new WeakSet([iterable]); If an iterable object is passed, all of its elements will be added to the new WeakSet. null is treated as undefined.
+
+
 ## [const](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const) keyword
   ```
     // Constants are block-scoped, much like variables defined using the let statement. The value of a constant cannot change through re-assignment, and it can't be redeclared.
