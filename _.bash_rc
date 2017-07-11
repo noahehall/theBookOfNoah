@@ -20,8 +20,6 @@ case $- in
       *) return;;
 esac
 
-#check ports in use lsof -i tcp:80
-
 #helpers
 alias lessbashrc='less ~/.bashrc'
 alias nanobashrc='nano ~/.bashrc'
