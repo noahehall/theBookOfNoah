@@ -590,8 +590,9 @@
 
 ########################################################
 # [ES2015](https://developer.mozilla.org/en-US/docs/Web/JavaScript/New_in_JavaScript/ECMAScript_2015_support_in_Mozilla)
-## standard library
-### loops
+## operators
+
+## loops
   - for..of: basic iterable loop
     ```s
       for (const/let variable of iterable) {
@@ -627,7 +628,7 @@
       console.log(sparseKeys); // ['0', '2']
       console.log(denseKeys);  // [0, 1, 2]
     ```
-### array
+## array
   - Array.from(arrayLike[, mapFn[, thisArg]]): method creates a new Array instance from an array-like or iterable object.
     ```s
     Array.from([1, 2, 3], x => x + x);      
@@ -672,7 +673,10 @@
         static get [Symbol.species]() { return Array; }
       }
     ```
-### map
+## object
+  - obj.prototype.__proto__: The __proto__ property of Object.prototype is an accessor property (a getter function and a setter function) that exposes the internal [[Prototype]] (either an object or null) of the object through which it is accessed.
+
+## map
   - new Map([iterable]): The Map object holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value.
   - answer yes to any of the below, and you can justify using a map
     - Are keys usually unknown until run time? Do you need to look them up dynamically?
@@ -685,12 +689,24 @@
     - Map.prototype.size
   - methods
 
-### weakmap
+## weakmap
   - new WeakMap([iterable]): The WeakMap object is a collection of key/value pairs in which the keys are weakly referenced.  The keys must be objects and the values can be arbitrary values.
-### set
+## set
   - new Set([iterable]): The Set object lets you store unique values of any type, whether primitive values or object references.
-### weakset
+## weakset
   - new WeakSet([iterable]); If an iterable object is passed, all of its elements will be added to the new WeakSet. null is treated as undefined.
+## Math
+  - skipped
+## number  
+  - Number.isNaN(value): method determines whether the passed value is NaN and its type is Number. It is a more robust version of the original, global isNaN().
+  -  Number.isFinite(value): method determines whether the passed value is a finite number.
+  - Number.isInteger(value): method determines whether the passed value is an integer.
+  - Number.parseInt(string[, radix ]): method parses a string argument and returns an integer of the specified radix or base.
+  - Number.parseFloat(string): method parses a string argument and returns a floating point number. This method behaves identically to the global function parseFloat() and is part of ECMAScript 2015 (its purpose is modularization of globals).
+  -  Number.EPSILON property represents the smallest positive value, ε, that satisfy the equation ε = ωε, where ω is the smallest infinite ordinal.\
+  - Number.MAX_SAFE_INTEGER constant represents the maximum safe integer in JavaScript (253 - 1).
+  -  Number.MIN_SAFE_INTEGER constant represents the minimum safe integer in JavaScript (-(253 - 1)).
+  -  Number.isSafeInteger() method determines whether the provided value is a number that is a safe integer.
 
 
 ## [const](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const) keyword
