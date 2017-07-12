@@ -3,6 +3,13 @@ https://university.mongodb.com/
 http://mongoosejs.com/
 http://www.tutorialspoint.com/mongodb/index.htm
 http://www.tutorialspoint.com/mongodb/mongodb_update_document.htm
+
+# quickies
+	- start: `sudo systemctl start mongodb`
+	- status: `sudo systemctl status mongodb`
+	-
+
+```
 mac specific
 	To have launchd start mongodb now and restart at login:
 		brew services start mongodb
@@ -295,3 +302,4 @@ clie
 						{"by": "tutorials point"},
 						{"title": "MongoDB Overview"}
 				]}).pretty()
+```
