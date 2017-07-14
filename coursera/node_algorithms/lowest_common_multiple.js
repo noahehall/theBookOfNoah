@@ -16,22 +16,14 @@ rl.on('line', readLine);
 
 let a, b, c, d;
 
-let primes = []
-
-function getPrimes(num) {
-  // shamelessly jacked from https://stackoverflow.com/questions/40200089/is-a-number-prime
-  const isPrime = num => {
-    for(let i = 2, s = Math.sqrt(num); i <= s; i++)
-        if(num % i === 0) return false;
-    return num !== 1;
-}
+function euclideanGCD(a,b) {
+  return b === 0
+    ? a
+    : euclideanGCD(b, a%b)
 }
 
 function lcm(a,b) {
-  const thisLcm = false;
-  while (!thisLcm) {
-    if
-  }
+  return a * b / euclideanGCD(a,b);
 }
 
 function readLine (line) {
