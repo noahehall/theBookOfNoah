@@ -4,10 +4,6 @@ http://mongoosejs.com/
 http://www.tutorialspoint.com/mongodb/index.htm
 http://www.tutorialspoint.com/mongodb/mongodb_update_document.htm
 
-# quickies
-	- start: `sudo systemctl start mongodb`
-	- status: `sudo systemctl status mongodb`
-	-
 
 ```
 mac specific

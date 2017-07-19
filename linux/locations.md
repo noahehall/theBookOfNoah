@@ -1,12 +1,20 @@
 # easy to linux forget locations
  - apt-get sources: /etc/apt/sources.list.d
 
-
+## users
+  ```
+    /etc/passwd – User account information.
+    /etc/shadow – Secure account information.
+    /etc/group – Group account information.
+    /etc/gshadow – Secure group account information.
+    /etc/login.defs – Shadow password suite configuration
+  ```
 # app locations
 ## mongodb
   - configuration: `/etc/mongod.conf`
-  - unit file: `/etc/systemd/system/mongodb.service`
+  - unit file: `/etc/systemd/system/mongod.service`
     + if it doesnt exist, create it
+    + configuration file when running mongodb as a service
     ```
       # https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-16-04
       [Unit]
