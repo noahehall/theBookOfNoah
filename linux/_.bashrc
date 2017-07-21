@@ -128,7 +128,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-
 #mongo
 alias mongocheck='ps -aux | grep mongo'
 alias mongoport='netstat -nap | grep 27017'
