@@ -1,6 +1,8 @@
 # easy to linux forget locations
  - apt-get sources: /etc/apt/sources.list.d
 
+## services
+  /etc/services - see which apps are listed as services
 ## users
   ```
     /etc/passwd – User account information.
@@ -9,6 +11,9 @@
     /etc/gshadow – Secure group account information.
     /etc/login.defs – Shadow password suite configuration
   ```
+## networking
+  - /etc/default/ufw - firewallconfiguration
+
 # app locations
 ## mongodb
   - configuration: `/etc/mongod.conf`

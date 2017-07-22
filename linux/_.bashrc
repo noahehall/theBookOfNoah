@@ -3,10 +3,10 @@
 # copy your key if you have pbcopy
 # pbcopy < ~/.ssh/id_rsa.pub
 
-# find your ip address
+# networking
 alias whatsmyip="ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'"
 ## an alternative to the above: curl http://icanhazip.com
-
+alias ufwstatus="sudo ufw status verbose"
 #tips
 #lsof -i :3000 see process on port 3000
 
