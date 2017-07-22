@@ -3,6 +3,7 @@
 
 ## services
   /etc/services - see which apps are listed as services
+  /etc/systemd/system - apps configured to run at startup
 ## users
   ```
     /etc/passwd – User account information.

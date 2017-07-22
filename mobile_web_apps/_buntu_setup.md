@@ -2,10 +2,13 @@
   1. setup non root user with sudo priv
   2. configure ssh key-based authentication
   3. disable password authentication
+  4. install a node app for testing
+  5. install pm2, verify it runs your app and you can access it via the web, and set pm2 to launch on system start
   4. point domain name to your server ip `ip addr show eth0` grab the one that says `inet`
   5. setup firewall (usually ufw) to block everything except 80, 443, and 22 initially and define your default policies
-  2. install openssl `sudo apt-get install libssl-dev`
-  3. install nginx with page speed module `bash <(curl -f -L -sS https://ngxpagespeed.com/install) --nginx-version latest --with-http_ssl_module`
+  6. install openssl `sudo apt-get install libssl-dev`
+  7. install nginx with page speed module `bash <(curl -f -L -sS https://ngxpagespeed.com/install) --nginx-version latest --with-http_ssl_module`
+
 
 # TODOs
   - categorize this shit
