@@ -37,6 +37,7 @@
   - categorize this shit
 
 # Dope ubuntu tutorials to help you with the above steps
+- [nginx init scripts](https://www.nginx.com/resources/wiki/start/topics/examples/initscripts/)
 - [nginx pitfalls and mistakes](https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/)
 - [build ngx_pagespeed from source](https://modpagespeed.com/doc/build_ngx_pagespeed_from_source)
 - [install nginx with pagespeed](https://modpagespeed.com/doc/build_ngx_pagespeed_from_source)

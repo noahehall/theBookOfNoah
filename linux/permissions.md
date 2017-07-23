@@ -1,2 +1,7 @@
 - all files and subdirectories: `sudo chown -R username:group directory`
 - display all the permissions: namei -om /path/to/check
+- change user owner of file: chown root tmpfile
+- change group owner of file: chown :friends tmpfile
+- change group ownership of directory; chgrp group_name file/directory_name
+- see all groups: groups
+- see all groups for a user: groups username

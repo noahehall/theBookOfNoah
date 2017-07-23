@@ -15,3 +15,6 @@ sudo - username cmd # run cmd as user
   #  - says use username variables and profile
   # without - you use the current users variables and profile
 ```
+
+groupadd groupname
+usermod -a -G examplegroup exampleusername #add user to group

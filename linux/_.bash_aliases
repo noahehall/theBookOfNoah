@@ -9,9 +9,9 @@ alias ufwstatus="sudo ufw status verbose"
 #lsof -i :3000 see process on port 3000
 
 #helpers
-alias lessbashrc='less $HOME/git/theBookOfNoah/linux/_.bashrc'
-alias nanobashrc='nano $HOME/git/theBookOfNoah/linux/_.bashrc'
-alias sourcebashrc='source $HOME/git/theBookOfNoah/linux/.bashrc'
+alias lessbashrc='less /git/theBookOfNoah/linux/_.bashrc'
+alias nanobashrc='nano /git/theBookOfNoah/linux/_.bashrc'
+alias sourcebashrc='source /git/theBookOfNoah/linux/.bashrc'
 
 # ssh
 # see your private key
