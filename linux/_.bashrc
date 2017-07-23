@@ -1,15 +1,3 @@
-# see your private key
-# cat ~/.ssh/id_rsa.pub
-# copy your key if you have pbcopy
-# pbcopy < ~/.ssh/id_rsa.pub
-
-# networking
-alias whatsmyip="ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'"
-## an alternative to the above: curl http://icanhazip.com
-alias ufwstatus="sudo ufw status verbose"
-#tips
-#lsof -i :3000 see process on port 3000
-
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -19,11 +7,6 @@ case $- in
     *i*) ;;
       *) return;;
 esac
-
-#helpers
-alias lessbashrc='less ~/.bashrc'
-alias nanobashrc='nano ~/.bashrc'
-alias sourcebashrc='source ~/.bashrc'
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -113,8 +96,8 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f $HOME/git/theBookOfNoah/linux/_.bash_aliases ]; then
+    . $HOME/git/theBookOfNoah/linux/_.bash_aliases
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -127,18 +110,3 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-#mongo
-alias mongocheck='ps -aux | grep mongo'
-alias mongoport='netstat -nap | grep 27017'
-alias mongostart='mongod --auth --port 27017 --dbpath /data/db'
-alias mongosudo='sudo mongod -f /etc/mongod.conf'
-alias mongomod='sudo chown -R mongodb:mongodb /var/lib/mongodb && sudo chown -R mongodb:mongodb /data/db'
-
-# users
-alias listallsystemusers='cut -d: -f1 /etc/passwd'
-alias listallhumanusers='awk -F':' '$2 ~ "\$" {print $1}' /etc/shadow'
-
-#misc
-alias pbcopy='xclip -selection clipboard'
-alias getwifi='sudo iwlist wlp3s0 scan | grep ESSID'

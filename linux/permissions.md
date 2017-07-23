@@ -1,0 +1,2 @@
+- all files and subdirectories: `sudo chown -R username:group directory`
+- display all the permissions: namei -om /path/to/check

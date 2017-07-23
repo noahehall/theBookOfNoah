@@ -62,5 +62,29 @@
     3. launch instance and test
     4. commit changes to new docker image
 
+# service oriented architecture
+  - organize code into services
+  - integration relies heavily on middleware
+## Terminology
+  - ESB: esterprise service bus designed to integrate APIs
+    - contains substantial logic for message routing, schema validation, message translation and busines rules
 # microservices architecture
-  - 
+  - makes web based development more agle and code bases easier to maintain
+  - relies on a messaging middleware similar to an ESB, but the distinction is that there is no logic and is purely used as a transport for messages from one service to another
+  - services can be individually scaled based on its resource requirements
+    - this allows each service to be implemented in the language most suitable for the operations that the service performs
+      - image processing: C++
+      - math/stats: python
+      - CRUD: ruby
+## Terminology
+  - Model-View-Controller (MVC): evolved from the Model 2 design in the java world
+    1. controller classes define methods that are mapped to URL patterns using a class called route.
+    2. Model classes encapsulate the business logic and the data of the core application entities
+    3. views are rendered by controllers  to display and edit the data in the corresponding model classes
+  - Model 2 design
+    1. put application code in java servlets
+    2. data into classes called java beans
+    3. and view logic into java server pages
+  - service discovery: since microservices are often deployed across multiple hosts and scale up/down based on load, service discovery is needed in order for one service to know how ot locate other services
+    - in simple cases a load balancer can be used for this
+    - in many cases a its necessary to use a true distributed configuration service, e.g. apache zookeper

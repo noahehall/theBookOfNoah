@@ -6,7 +6,11 @@
   - [alphabetical nginx variables](http://nginx.org/en/docs/varindex.html)
   - [nginx beginners guide](http://nginx.org/en/docs/beginners_guide.html)
   - [create self signed cert for nginx](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04)
+  - [nginx docs](https://nginx.org/en/docs/beginners_guide.html)
 
+# nginx commands
+  - nginx -s signal
+    - signal can be stop|quit|reload|reopen
 # tips and tricks
   - ensure there arent any errors i your nginx config
     - `sudo nginx -t`
@@ -115,4 +119,3 @@ server {
   - [pagespeed configuration docs](https://modpagespeed.com/doc/configuration)
   - [use tmpfs to store pagespeed cache](https://www.howtoforge.com/storing-files-directories-in-memory-with-tmpfs)
   - [linux filesystem hierarchy](http://www.pathname.com/fhs/2.2/fhs-5.5.html)
-  

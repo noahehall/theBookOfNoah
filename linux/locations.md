@@ -1,9 +1,19 @@
-# easy to linux forget locations
- - apt-get sources: /etc/apt/sources.list.d
+# easy to forgetlinux locations
+ - apt-get custom sources: /etc/apt/sources.list.d/
+  - create a file /some-source-name.list
+  - add and remove your sources here instead of in /etc/apt/sources.list
+ - apt-get default sources: /etc/apt/sources.list
+  - this file may not survive a rebundle, dont edit it
 
 ## services
   /etc/services - see which apps are listed as services
   /etc/systemd/system - apps configured to run at startup
+
+# systems
+  - /etc/bash.bashrc - system wide bashrc
+  - ~/.bashrc - user specific bashrc
+  - /etc/environment contains only variable definitions
+
 ## users
   ```
     /etc/passwd – User account information.
@@ -16,6 +26,8 @@
   - /etc/default/ufw - firewallconfiguration
 
 # app locations
+## nginx
+  - default location: /usr/local/nginx
 ## mongodb
   - configuration: `/etc/mongod.conf`
   - unit file: `/etc/systemd/system/mongod.service`
