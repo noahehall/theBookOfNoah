@@ -1,15 +1,3 @@
-# see your private key
-# cat ~/.ssh/id_rsa.pub
-# copy your key if you have pbcopy
-# pbcopy < ~/.ssh/id_rsa.pub
-
-# find your ip address
-alias whatsmyip="ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'"
-## an alternative to the above: curl http://icanhazip.com
-
-#tips
-#lsof -i :3000 see process on port 3000
-
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -19,11 +7,6 @@ case $- in
     *i*) ;;
       *) return;;
 esac
-
-#helpers
-alias lessbashrc='less ~/.bashrc'
-alias nanobashrc='nano ~/.bashrc'
-alias sourcebashrc='source ~/.bashrc'
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -104,11 +87,6 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -118,8 +96,8 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f /git/theBookOfNoah/linux/_.bash_aliases ]; then
+    . /git/theBookOfNoah/linux/_.bash_aliases
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -132,6 +110,7 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+<<<<<<< HEAD:_.bash_rc
 
 export NVM_DIR="/home/fame/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -154,3 +133,5 @@ alias getwifi='sudo iwlist wlp3s0 scan | grep ESSID'
 
 ## npm
 alias npmglobals='npm list -g --depth=0'
+=======
+>>>>>>> 5fca4f394e04a637ab09411e0b10051116ca133a:linux/_.bashrc

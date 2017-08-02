@@ -51,12 +51,11 @@
     + items on top trigger the items below them
     + left to right is the rendering pipeline
   - right click and save/load a timeline
-  - identiy jank:
+  - identify jank:
     - look in the timeline that anything that is above the 60fps line
     - anything with LONG layouts are janky
   - paint profile
     +
-
 
 # [browser rendering optimization](https://classroom.udacity.com/courses/ud860/lessons/4138328558/concepts/41366985950923#)
   - juddering: i.e. jank, when you scroll/animation is jumpy
@@ -193,4 +192,3 @@
           - large (256+) color palette ? === png-8
         + use JPEG if the above dont matter, make sure to experiment with various quality settings
     4. deliver scaled image assets
-      

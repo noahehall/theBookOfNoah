@@ -6,17 +6,28 @@
   - [alphabetical nginx variables](http://nginx.org/en/docs/varindex.html)
   - [nginx beginners guide](http://nginx.org/en/docs/beginners_guide.html)
   - [create self signed cert for nginx](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04)
+  - [nginx docs](https://nginx.org/en/docs/beginners_guide.html)
+
+
+# nginx commands
+  - nginx -s signal
+    - signal can be stop|quit|reload|reopen
 
 # tips and tricks
   - ensure there arent any errors i your nginx config
     - `sudo nginx -t`
     - `sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/certs/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt`
       - create a self signed cert
+  - get a list of all running nginx processes
+    - `ps -ax | grep nginx`
 # commands
   - sudo systemctl [stop|start|restart|reload|disable|enable] nginx
     1. reload: try to reload nginx configuration without dropping connections (restarting)
     2. disable: dont start at system start
     3. enable: start at system start
+# about
+  -  nginx consists of modules which are controlled by directives specified in the configuration file. Directives are divided into simple directives and block directives. A simple directive consists of the name and parameters separated by spaces and ends with a semicolon (;). A block directive has the same structure as a simple directive, but instead of the semicolon it ends with a set of additional instructions surrounded by braces ({ and }). If a block directive can have other directives inside braces, it is called a context (examples: events, http, server, and location).
+
 # locations
 ## content
   - `/var/www/html` default location for actual web content
@@ -32,6 +43,18 @@
   - `/var/log/nginx/error.log` every nginx error is kept here
 
 
+# server blocks
+  ```s
+    server {
+      location / {
+          root /data/www;
+      }
+
+      location /images/ {
+          root /data;
+      }
+    }
+  ```
 
 # installing on Ubuntu
   - based on
@@ -115,4 +138,3 @@ server {
   - [pagespeed configuration docs](https://modpagespeed.com/doc/configuration)
   - [use tmpfs to store pagespeed cache](https://www.howtoforge.com/storing-files-directories-in-memory-with-tmpfs)
   - [linux filesystem hierarchy](http://www.pathname.com/fhs/2.2/fhs-5.5.html)
-  

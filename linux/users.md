@@ -2,6 +2,7 @@
 ```
 whoami
 adduser new_username
+usermod
 usermod -l new_username old_username
 passwd username #change/set password
 chsh username
@@ -10,5 +11,10 @@ chsh username
 chfn username #change use details, e.g. real name
 userdel username && rm -r /home/username
 su username #login as user
-sudo -u user cmd # run cmd as user
+sudo - username cmd # run cmd as user
+  #  - says use username variables and profile
+  # without - you use the current users variables and profile
 ```
+
+groupadd groupname
+usermod -a -G examplegroup exampleusername #add user to group
