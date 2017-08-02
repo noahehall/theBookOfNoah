@@ -14,7 +14,6 @@
   - type is a string (or a symbol) uniquely identifying a whole class of items in your application.
     +  The types let you specify which drag sources and drop targets are compatible.
     + Types are useful because, as your app grows, you might want to make more things draggable, but you don't necessarily want all the existing drop targets to suddenly start reacting to the new items.
-  - items and types The types let you specify which drag sources and drop targets are compatible.
 
 # monitors
  -  The monitors let you update the props of your components in response to the drag and drop state changes.

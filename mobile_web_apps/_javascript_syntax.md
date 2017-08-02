@@ -266,7 +266,6 @@
   		Object.getOwnPropertyNames() Returns an array containing the names of all of the given objects own enumerable and non-enumerable properties.
   		Object.getOwnPropertySymbols() Returns an array of all symbol properties found directly upon a given object.
   		Object.getPrototypeOf() Returns the prototype of the specified object.
-  		Object.is() Compares if two values are distinguishable (ie. the same)
   		Object.isExtensible() Determines if extending of an object is allowed.
   		Object.isFrozen() Determines if an object was frozen.
   		Object.isSealed() Determines if an object is sealed.
@@ -591,6 +590,21 @@
 ########################################################
 # [ES2015](https://developer.mozilla.org/en-US/docs/Web/JavaScript/New_in_JavaScript/ECMAScript_2015_support_in_Mozilla)
 ## operators
+  - Object.is(value1, value2): method determines whether two values are the same value.
+    - difference with `==`: The == operator applies various coercions to both sides (if they are not the same Type) before testing for equality (resulting in such behavior as "" == false being true), but Object.is doesn't coerce either value.
+    - difference with `===`:  The === operator (and the == operator as well) treats the number values -0 and +0 as equal and treats Number.NaN as not equal to NaN.
+    ```s
+      both undefined
+      both null
+      both true or both false
+      both strings of the same length with the same characters
+      both the same object
+      both numbers and
+        both +0
+        both -0
+        both NaN
+        or both non-zero and both not NaN and both have the same value
+    ```
 
 ## loops
   - for..of: basic iterable loop
@@ -628,6 +642,7 @@
       console.log(sparseKeys); // ['0', '2']
       console.log(denseKeys);  // [0, 1, 2]
     ```
+
 ## array
   - Array.from(arrayLike[, mapFn[, thisArg]]): method creates a new Array instance from an array-like or iterable object.
     ```s
@@ -675,6 +690,14 @@
     ```
 ## object
   - obj.prototype.__proto__: The __proto__ property of Object.prototype is an accessor property (a getter function and a setter function) that exposes the internal [[Prototype]] (either an object or null) of the object through which it is accessed.
+  - Object.setPrototypeOf(obj, prototype);  sets the prototype (i.e., the internal [[Prototype]] property) of a specified object to another object or null.
+    ```s
+      var dict = Object.setPrototypeOf({}, null);
+    ```
+  - Object.assign(target, ...sources): used to copy the values of all enumerable own properties from one or more source objects to a target object. It will return the target object.  only copies enumerable and own properties from a source object to a target object. It uses [[Get]] on the source and [[Set]] on the target, so it will invoke getters and setters.
+  - Object.getOwnPropertySymbols() method returns an array of all symbol properties found directly upon a given object.
+
+
 
 ## map
   - new Map([iterable]): The Map object holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value.
@@ -688,13 +711,53 @@
   - properties
     - Map.prototype.size
   - methods
-
 ## weakmap
   - new WeakMap([iterable]): The WeakMap object is a collection of key/value pairs in which the keys are weakly referenced.  The keys must be objects and the values can be arbitrary values.
+
 ## set
   - new Set([iterable]): The Set object lets you store unique values of any type, whether primitive values or object references.
 ## weakset
   - new WeakSet([iterable]); If an iterable object is passed, all of its elements will be added to the new WeakSet. null is treated as undefined.
+
+## Proxy
+  - var p = new Proxy(target, handler); The Proxy object is used to define custom behavior for fundamental operations (e.g. property lookup, assignment, enumeration, function invocation, etc).
+  - types of proxies:
+    1. No-op forwarding proxy: using a native JavaScript object to which our proxy will forward all operations that are applied to it.
+      ```s
+        var target = {};
+        var p = new Proxy(target, {});
+        p.a = 37; // operation forwarded to the target
+        console.log(target.a); // 37. The operation has been properly forwarded
+      ```
+    2. Validation proxy: easily validate the passed value for an object. This example uses the set handler.
+      ```s
+        let validator = {
+          set: function(obj, prop, value) {
+            if (prop === 'age') {
+              if (!Number.isInteger(value)) {
+                throw new TypeError('The age is not an integer');
+              }
+              if (value > 200) {
+                throw new RangeError('The age seems invalid');
+              }
+            }
+
+            // The default behavior to store the value
+            obj[prop] = value;
+
+            // Indicate success
+            return true;
+          }
+        };
+
+        let person = new Proxy({}, validator);
+
+        person.age = 100;
+        console.log(person.age); // 100
+        person.age = 'young'; // Throws an exception
+        person.age = 300; // Throws an exception
+      ```
+## reflect
 ## Math
   - skipped
 ## number  
