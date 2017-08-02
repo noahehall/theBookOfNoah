@@ -30,7 +30,10 @@
             :PREROUTING ACCEPT [0:0]
             -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
             COMMIT
+        6. confirm compile options
+          nginx -V
       ```
+    8. setup letsencrypt: `sudo certbot certonly --webroot --webroot-path=/usr/local/nginx/html -d plusfame.io -d api.plusfame.io -d www.plusfame.io -d ibm.plusfame.io -d staging.plusfame.io`
 
 
 # TODOs

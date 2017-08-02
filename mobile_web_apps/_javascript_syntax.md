@@ -51,7 +51,9 @@
   - prototype: each object has an internal link to another object, its prototype, that provides additional behavior and properties
   - prototype chain: the sequence of linked objects from one object's prototype to another, all the way up until you reach the Null object (which does not have a prototype)
   ```
-
+  Graph.prototype.addVertex = unction(v) {
+    this.vertices.push(v);
+  }
   ```
 ### basics
   - [arithmetic operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Arithmetic_Operators#Exponentiation)
