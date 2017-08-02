@@ -110,7 +110,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-<<<<<<< HEAD:_.bash_rc
 
 export NVM_DIR="/home/fame/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -133,5 +132,3 @@ alias getwifi='sudo iwlist wlp3s0 scan | grep ESSID'
 
 ## npm
 alias npmglobals='npm list -g --depth=0'
-=======
->>>>>>> 5fca4f394e04a637ab09411e0b10051116ca133a:linux/_.bashrc
