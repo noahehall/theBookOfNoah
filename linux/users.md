@@ -16,5 +16,9 @@ sudo - username cmd # run cmd as user
   # without - you use the current users variables and profile
 ```
 
+# group administration
+- see your groups: `groups`
+- see groups a user belongs to: `groups USERNAME`
 groupadd groupname
 usermod -a -G examplegroup exampleusername #add user to group
+grep 'group_name_here' /etc/group # see all users in group

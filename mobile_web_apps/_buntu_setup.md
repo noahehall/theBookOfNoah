@@ -34,6 +34,12 @@
           nginx -V
       ```
     8. setup letsencrypt: `sudo certbot certonly --webroot --webroot-path=/usr/local/nginx/html -d plusfame.io -d api.plusfame.io -d www.plusfame.io -d ibm.plusfame.io -d staging.plusfame.io`
+    9. Update Diffie-Hellman Parameters: `sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048`
+    10. update your nginx configuration to include your new ssl certs
+      ```s
+      
+      ```
+
 
 
 # TODOs
