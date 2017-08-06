@@ -1,7 +1,17 @@
 # UFW firewall
+  - [configure ufw on ubuntu](https://www.vultr.com/docs/how-to-configure-ufw-firewall-on-ubuntu-14-04)
 ## basics
   - UFW: uncomplicated firewall: interface to iptables
   - iptables:
+# commands
+  - `ufw allow|deny port/optional:protocol`
+    - ufw allow 80/tcp
+  - `ufw status`
+  - `ufw status numbered`: get the number for each rule
+  - `ufw delete [number]`: delete a numbered rule
+  - `ufw disable|reload|enable`
+  - to restart ufw 1. disable 2. enable
+  - `ufw reset`: go back to default settings
 # tips and tricks
   - see which applications have profiles in UFW
     + `sudo ufw app list`
