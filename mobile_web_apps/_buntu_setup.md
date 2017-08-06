@@ -37,7 +37,7 @@
     9. Update Diffie-Hellman Parameters: `sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048`
     10. update your nginx configuration to include your new ssl certs
       ```s
-      
+
       ```
 
 
@@ -58,3 +58,5 @@
 - [common ufw firewall rules](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
 - [introduction to ufw]
 - [setup node app for production](https://www.godaddy.com/help/set-up-nodejs-application-for-production-ubuntu-17352)
+- [nginx http module](http://nginx.org/en/docs/http/ngx_http_core_module.html)
+- [how nginx processes a request](http://nginx.org/en/docs/http/request_processing.html)
