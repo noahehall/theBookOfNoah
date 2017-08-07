@@ -20,7 +20,7 @@
         3. Add /usr/local/nginx/sbin to your PATH variable in /etc/environment.
 
         4. if getting permission denied errors on log file
-          sudo chown -R www-data:www-data /var/log/nginx;
+          sudo chown -R nginx:nginx /var/log/nginx;
           sudo chmod -R 755 /var/log/nginx;
 
         5. map port 80 to 8080 and 443 to 8443 to run nginx as a non root user
