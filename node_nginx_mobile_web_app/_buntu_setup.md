@@ -1,7 +1,7 @@
 # basic steps
   1. setup non root user with sudo priv
   2. configure ssh key-based authentication
-  3. disable password authentication
+  3. disable password authentication and enable ufw with ssh enabled
   4. install a node app for testing
   5. install pm2, verify it runs your app and you can access it via the web, and set pm2 to launch on system start
   4. point domain name to your server ip `ip addr show eth0` grab the one that says `inet`

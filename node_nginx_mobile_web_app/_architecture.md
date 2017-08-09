@@ -10,6 +10,10 @@
   - operational concerns
   - security concerns
   - reusability
+
+# Terminology
+  - distributed application: different pieces of the application are called services
+    - if you imagine a video sharing site, it probably includes a service for storing application data in a database, a service for video transcoding in the background after a user uploads something, a service for the front-end, and so on.
 # principles
   - deployments should be consistent, deploying to dev should be the same as deploying to prod
   - adding resources should be immediately available to other resources in that environment

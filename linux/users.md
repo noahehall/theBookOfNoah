@@ -14,6 +14,7 @@ su username #login as user
 sudo - username cmd # run cmd as user
   #  - says use username variables and profile
   # without - you use the current users variables and profile
+usermod -aG sudo username #add username to sudeors file
 ```
 
 # group administration

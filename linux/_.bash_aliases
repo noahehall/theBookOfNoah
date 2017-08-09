@@ -33,3 +33,6 @@ alias listallhumanusers='awk -F':' '$2 ~ "\$" {print $1}' /etc/shadow'
 #misc
 alias pbcopy='xclip -selection clipboard'
 alias getwifi='sudo iwlist wlp3s0 scan | grep ESSID'
+
+# linux
+alias myubunturelease="lsb_release -cs"
