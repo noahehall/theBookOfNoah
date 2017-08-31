@@ -7,7 +7,8 @@
   - [nginx beginners guide](http://nginx.org/en/docs/beginners_guide.html)
   - [create self signed cert for nginx](https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04)
   - [nginx docs](https://nginx.org/en/docs/beginners_guide.html)
-
+  - [nginx systemd/systemctl file](https://www.nginx.com/resources/wiki/start/topics/examples/systemd/)
+  - [different nginx init scripts](https://www.nginx.com/resources/wiki/start/topics/examples/initscripts/)
 
 # nginx commands
   - nginx -s signal

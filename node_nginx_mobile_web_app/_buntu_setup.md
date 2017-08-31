@@ -1,7 +1,7 @@
 # basic steps
   1. setup non root user with sudo priv
   2. configure ssh key-based authentication
-  3. disable password authentication
+  3. disable password authentication and enable ufw with ssh enabled
   4. install a node app for testing
   5. install pm2, verify it runs your app and you can access it via the web, and set pm2 to launch on system start
   4. point domain name to your server ip `ip addr show eth0` grab the one that says `inet`
@@ -20,7 +20,7 @@
         3. Add /usr/local/nginx/sbin to your PATH variable in /etc/environment.
 
         4. if getting permission denied errors on log file
-          sudo chown -R www-data:www-data /var/log/nginx;
+          sudo chown -R nginx:nginx /var/log/nginx;
           sudo chmod -R 755 /var/log/nginx;
 
         5. map port 80 to 8080 and 443 to 8443 to run nginx as a non root user
@@ -34,6 +34,12 @@
           nginx -V
       ```
     8. setup letsencrypt: `sudo certbot certonly --webroot --webroot-path=/usr/local/nginx/html -d plusfame.io -d api.plusfame.io -d www.plusfame.io -d ibm.plusfame.io -d staging.plusfame.io`
+    9. Update Diffie-Hellman Parameters: `sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048`
+    10. update your nginx configuration to include your new ssl certs
+      ```s
+
+      ```
+
 
 
 # TODOs
@@ -52,3 +58,5 @@
 - [common ufw firewall rules](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
 - [introduction to ufw]
 - [setup node app for production](https://www.godaddy.com/help/set-up-nodejs-application-for-production-ubuntu-17352)
+- [nginx http module](http://nginx.org/en/docs/http/ngx_http_core_module.html)
+- [how nginx processes a request](http://nginx.org/en/docs/http/request_processing.html)

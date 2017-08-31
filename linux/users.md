@@ -14,7 +14,12 @@ su username #login as user
 sudo - username cmd # run cmd as user
   #  - says use username variables and profile
   # without - you use the current users variables and profile
+usermod -aG sudo username #add username to sudeors file
 ```
 
+# group administration
+- see your groups: `groups`
+- see groups a user belongs to: `groups USERNAME`
 groupadd groupname
 usermod -a -G examplegroup exampleusername #add user to group
+grep 'group_name_here' /etc/group # see all users in group
