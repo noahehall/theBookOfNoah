@@ -6,25 +6,25 @@
 - [software testing](https://en.wikipedia.org/wiki/Software_testing)
 - [bunch of definitions](http://xunitpatterns.com/Mocks,%20Fakes,%20Stubs%20and%20Dummies.html)
 
-
-
-
 # Methodologies:
   - TDD: test driven development
     - tests are written before code is developed
   - BDD: behavior driven development:
-    - implementing an application by describing its behavior from the perspective of its stakeholders
+    - implementing an application by describing its behavior from the perspective of its stakeholders in the form of 'it... should...'
     - describes a cycle of interactions with well-defined inputs, resulting in the delivery of working, tested software
 
 # vocab
   - code coverage: tool that determines how much of your code is covered by unit tests. it also shows you what is and isnt being covered
   - contract:  defines the expected behavior of your component and what assumptions are reasonable to have about its usage.
+  - assert: the test will stop at that point and not run any subsequent checks
+  - verify: verify commands will not terminate the test. If your test uses only verify commands you are guaranteed (assuming no unexpected exceptions) the test will run to completion whether the checks find defects or not.
 
 # tools:
   - cucumber: acceptance testing framework which enables test that are readable by non-programmers
   - gherkin: syntax in which to write cucmber tests
   - mocha: bdd test framework 'for' developers
   - chai: assertion library
+  - selenium: browser automated testing
 
 # 'type' of tests
   - Technology Facing: written and maintained by developers
@@ -37,6 +37,10 @@
     - component tests: limits the scope of the exercised software to a portion of the system under test, manipulating the system through internal code interfaces and using test doubles to isolate the code under test from other components
       + By instantiating the full microservice in-memory using in-memory test doubles and datastores it is possible to write component tests that do not touch the network whatsoever.
     - System/deployment tests:
+    - functional tests: tests of a specific function within your application, requiring some type of user input, and returning some type of results.
+      -  Typical tests can be for login, registration to the site, user account operations, account settings changes, complex data retrieval operations, among others. Function tests typically mirror the user-scenarios used to specify the features and design or your application.
+    - content test, is a simple test for the existence of a static, non-changing, UI element. e.g. image, title, etc.
+  - Testing Links: clicking a link and verifying the expected page
   - Business Facing
     - functional tests: multiple unit tests working together in order to test a specific functionality
     - acceptance tests:
@@ -82,7 +86,19 @@
   - test mocks: style of testing different levels of faking the behavior of an object
   - test fakes
 
-
+# [page objects](https://www.thoughtworks.com/insights/blog/using-page-objects-overcome-protractors-shortcomings)
+  - Page Object is a Design Pattern which has become popular in test automation for enhancing test maintenance and reducing code duplication.
+    - A page object is an object-oriented class that serves as an interface to a page of your AUT.
+    - The tests then use the methods of this page object class whenever they need to interact with that page of the UI.
+    - The benefit is that if the UI changes for the page, the tests themselves don’t need to change, only the code within the page object needs to change. Subsequently all changes to support that new UI are located in one place.
+  - benefits
+    1. There is a clean separation between test code and page specific code such as locators (or their use if you’re using a UI Map) and layout.
+    2. There is a single repository for the services or operations offered by the page rather than having these services scattered throughout the tests.
+## good reads
+  - [selenium page objects](http://docs.seleniumhq.org/docs/06_test_design_considerations.jsp#page-object-design-pattern)
+  - [martin fowler page objects](https://martinfowler.com/bliki/PageObject.html)
+  - [domain specific language](https://martinfowler.com/books/dsl.html)
+  -
 # definitions:
   - Specifications: what the program is suppose to do
   - component specifications: communicate the visual design
@@ -139,7 +155,6 @@
 # NEED TO ADD
   http://webdriver.io/
 
-
 NOTES ON STRUCTURE
   the features are not mapped to unit tests
   the features aid in the creation of unit tests
@@ -188,7 +203,6 @@ WORKFLOW
     model your domain and create a domain model with factories, classes, services, and specs
 
   create classes & spec files (i.e. components and there tests)
-
 
 # cucumber:
   - Cucumber is a tool 'for' running automated tests written in plain language.
