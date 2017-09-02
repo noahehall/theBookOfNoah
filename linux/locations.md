@@ -5,6 +5,9 @@
  - apt-get default sources: /etc/apt/sources.list
   - this file may not survive a rebundle, dont edit it
 
+## linux
+  - cat /etc/lsb-release # see your linux distribution info
+  - 
 ## services
   /etc/services - see which apps are listed as services
   /etc/systemd/system - apps configured to run at startup

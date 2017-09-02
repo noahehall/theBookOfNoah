@@ -1,3 +1,6 @@
+if [ -f /git/theBookOfNoah/linux/_.bash_variables ]; then
+    . /git/theBookOfNoah/linux/_.bash_variables
+fi
 # system
 alias numberofcores="cat /proc/cpuinfo | grep processor | wc -l"
 

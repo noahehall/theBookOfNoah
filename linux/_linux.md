@@ -12,6 +12,9 @@ bookmark:
 			http://www.tecmint.com/commands-to-collect-system-and-hardware-information-in-linux/?utm_source=feedburner&utm_medium=email&utm_campaign=Feed%3A+tecmint+%28Tecmint%3A+Linux+Howto%27s+Guide%29
 
 # NEW: need to file
+## bash
+  - run multiple commands: cm1; cm2; etc
+  - 
 ## ubuntu
 	- store web content in /var/www
 	- create user, group, and directory for user that will run some daemon application
