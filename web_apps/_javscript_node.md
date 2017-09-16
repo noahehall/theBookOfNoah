@@ -6,3 +6,7 @@
       - license checking: Yarn comes with a handy license checker, which can become really powerful in case you have to check the licenses of all the modules you depend on.
       - parallel installation: whenever npm or Yarn needs to install a package, it carries out a series of tasks. In npm, these tasks are executed per package and sequentially, meaning it will wait for a package to be fully installed before moving on to the next. Yarn executes these tasks in parallel, increasing performance.
       -
+
+# [request/response]
+  - [server design patterns](http://www.servicedesignpatterns.com/clientserviceinteractions/requestresponse)
+  - 
