@@ -11,8 +11,11 @@
   - [compound statements](https://docs.python.org/3/reference/compound_stmts.html#class)
   - [collections - container datatypes](https://docs.python.org/3/library/collections.html#module-collections)
   - [errors and exceptions](https://docs.python.org/3/tutorial/errors.html)
-
-
+  - [how tos](https://docs.python.org/3.6/howto/index.html)
+  - [3.6 tutorial](https://docs.python.org/3.6/tutorial/index.html)
+  - [import system](https://docs.python.org/3.6/reference/import.html#searching)
+  - [init py](http://mikegrouchy.com/blog/2012/05/be-pythonic-__init__py.html)
+  - [expressions](https://docs.python.org/3.6/reference/expressions.html)
 
 # pip
   - `pip3 install blah`
@@ -60,6 +63,7 @@
   - slicing: extracting parts of an object
   - hashable: An object is hashable if it has a hash value which never changes during its lifetime (it needs a __hash__() method), and can be compared to other objects (it needs an __eq__() method). Hashable objects which compare equal must have the same hash value.
 
+
 # quickies
   - run a python file
     1. must be executable `chmod 755 filename`
@@ -82,24 +86,10 @@
   - functions that are intended to be used internally and not by the consumer should be prefixed with _
   - structures (e.g. def, if, loops, etc) with one line of code can be written on one line
   - variables in python are references to objects
-
-
 ## keywords
   - yield: used inside a function to turn it into a generator function
     - when the function is called, it will return whatever statement is after the yield and pause execution of the function
     - the next time the function is called, it will continue execution starting with the next line after the yield
-
-
-## data types
-  - str: immutable sequence
-  - int: immutable number without decimal
-  - float: immutable number with atleast one decimal
-  - tuple: an immutable list, faster than list
-  - list: a mutable a list
-  - dict: immutable aggregate object
-    - useful for creating associate lists
-  - bool: True/False
-
 
 
 ## operators
@@ -107,6 +97,8 @@
   ```py
     # assignment
       a = 1
+    # unpacking
+      x, y = [1, 2]
 
     # comparisons, identity
       # compare by IDentity, must refer to same object
@@ -173,26 +165,104 @@
 
 
 ## exceptions
+  - [read more](https://docs.python.org/3.6/tutorial/errors.html)
+  - syntax errors: parsing errors that cause exceptions
+  - exceptions: Errors detected during execution
+    - Even if a statement or expression is syntactically correct, it may cause an error when an attempt is made to execute it.
   ```py
     # catch an error
-    try:
-      # potential exception raising code here
-    except IOError as e:
-      # only catch IOErrors here
-      print(e)
-    except Exception as e:
-      # catch all exceptions
-      print(e)
-    else:
-      # optional clause: do this if no errors occur
-    finally:
-      # optional clause: always do whether an exception is raised or not
+      try:
+        # potential exception raising code here
+      except IOError as e:
+        # capture IOError and assign to e
+      except Exception as e:
+        # capture ALL exceptions and assign to e
+      except (RuntimeError, TypeError, NameError):
+        # capture specific types of errors
+      except:
+        # capture ALL exceptions without assigning it to variable
+      else:
+        # optional clause: do this if no errors occur
+      finally:
+        # optional clause: always do whether an exception is raised or not
+        # useful for releasing external resources (such as files or network connections), regardless of whether the use of the resource was successful.
   ```
-### custom exceptions
+### raising exceptions
   ```py
-    # raise an exception
+      try:
+        # raise a general exception
+          raise Exception('OMGError', 'You did something wrong')
+        # raise a specific exception
+          raise NameError('you did it again!')
+      except Exception as e:
+        # arguments that were raised are stored in e.args
+          print(e.args)
+        # unpack args
+          x, y = e.args
+  ```
+### creating reusable exceptions
+  - Exceptions should typically be derived from the Exception class, either directly or indirectly.
+  - When creating a module that can raise several distinct errors, a common practice is to
+    - create a base class for exceptions defined by that module
+    - subclass that to create specific exception classes for different error conditions:
+  ```py
 
   ```
+### Traceback
+  - see [Tracebook](#tracebook) section below
+
+## simple statements
+  - [read more](https://docs.python.org/3.6/reference/simple_stmts.html)
+### expressions
+  - [read more](https://docs.python.org/3.6/reference/expressions.html)
+### assignment
+#### augmented
+#### annotated
+### assert
+### pass
+### del
+### return
+### yield
+### [for raise see exceptions section](#exceptions)
+### break
+### continue
+### import
+  - [read more](https://docs.python.org/3.6/reference/import.html)
+  - packages: A Python module which can contain submodules or recursively, subpackages. Technically, a package is a Python module with an __path__ attribute.
+    - useful To help organize modules and provide a naming hierarchy
+    - think of packages as the directories on a file system and modules as files within directories
+    - t’s important to keep in mind that all packages are modules, but not all modules are packages.
+  - modules: Python has only one type of module object, and all modules are of this type, regardless of whether the module is implemented in Python, C, or something else.
+    - All modules have a name. Subpackage names are separated from their parent package name by dots, akin to Python’s standard attribute access syntax.
+  - regular package: has a directory containing an __init__.py file.
+  - namespace package: A PEP 420 package which serves only as a container for subpackages.
+    - is a composite of various portions, where each portion contributes a subpackage to the parent package.
+    - may have no physical representation
+    - they do
+      - use a custom iterable type which will automatically perform a new search for package portions on the next import attempt within that package if the path of their parent package (or sys.path for a top level package) changes.
+    - do not
+      - use an ordinary list for their __path__ attribute.
+      - have __init__.py file.
+    - portion: A set of files in a single directory (possibly stored in a zip file) that contribute to a namespace package, as defined in PEP 420.
+      - may reside in different locations on the file system Portions may also be found in zip files, on the network, or anywhere else that Python searches during import.
+      -
+  ```py
+    # regular package structure
+    # importing parent.one will implicitly execute parent/__init__.py and parent/one/__init__.py.
+      parent/
+        __init__.py
+        one/
+            __init__.py
+        two/
+            __init__.py
+        three/
+            __init__.py
+
+  ```
+#### future
+### global
+### nonlocal
+
 
 ## variables
   ```py
@@ -207,7 +277,6 @@
     True
     False
   ```
-
 
 
 ## numbers : numeric type
@@ -525,7 +594,22 @@
   - provide a convenient way to implement the iterator protocol.
   - [read more](https://docs.python.org/3/library/stdtypes.html#generator-types)
 
-## conditionals
+## context manager types
+  - [read more](https://docs.python.org/3/library/stdtypes.html#context-manager-types)
+
+## compound statements
+  - [read more](https://docs.python.org/3.6/reference/compound_stmts.html#with)
+### with
+  - allows objects like files to be used in a way that ensures they are always cleaned up promptly and correctly.
+  ```py
+    # After the statement is executed, the file f is always closed, even if a problem was encountered while processing the lines.
+      with open("myfile.txt") as f:
+        for line in f:
+          print(line, end="")
+  ```
+#### async with
+  - is a coroutine
+### conditionals
   ```py
     # conditional execution: if elif else
       if a < b:
@@ -541,9 +625,9 @@
       print('less than' if a < b else 'not less than')
 
   ```
+#### if
 
-
-## loops
+### loops
   ```py
     # while loop: fibonacci
       a, b = 0, 1
@@ -587,7 +671,11 @@
         print('always print this when finished')
 
   ```
-### async for loop
+#### while
+#### for
+#### [see try statement in exceptions section](#exceptions)
+#### async for loop
+  - is a coroutine
   ```py
   async for TARGET in ITER:
     BLOCK
@@ -595,9 +683,8 @@
     BLOCK2
   ```
 
-
-
-## functions
+### functions
+#### custom functions
   - [read more](https://docs.python.org/3/library/stdtypes.html#functions)
   ```py
     # create a function with default immutable value
@@ -620,16 +707,19 @@
       @f2
       def func():pass
   ```
-### Coroutine functions
+
+#### global functions
   ```py
-    # In the body of a coroutine, any await and async identifiers become reserved keywords; await expressions, async for and async with can only be used in coroutine bodies.
-      async def func(param1, param2):
-        do_stuff()
-        await some_coroutine()
+    # get the type of an object
+      type(blah)
+    # get the id of an object
+      id(blah)
+    #
+
   ```
 
 
-## classes
+### classes
   ```py
     # simple class
       class SomeClassName():
@@ -657,6 +747,25 @@
         class Foo: pass
   ```
 
+### coroutines
+#### Coroutine functions
+  ```py
+    # In the body of a coroutine, any await and async identifiers become reserved keywords; await expressions, async for and async with can only be used in coroutine bodies.
+      async def func(param1, param2):
+        do_stuff()
+        await some_coroutine()
+  ```
+
+## [modules](https://docs.python.org/3/library/stdtypes.html#modules)
+
+## [code objects](https://docs.python.org/3/library/stdtypes.html#code-objects)
+## [type objects](https://docs.python.org/3/library/stdtypes.html#type-objects)
+## [null object](https://docs.python.org/3/library/stdtypes.html#the-null-object)
+## [ellipsis object](https://docs.python.org/3/library/stdtypes.html#the-ellipsis-object)
+## [not implemented object](https://docs.python.org/3/library/stdtypes.html#the-notimplemented-object)
+## [special attributes](https://docs.python.org/3/library/stdtypes.html#special-attributes)
+
+
 
 ## io
   ```py
@@ -664,6 +773,7 @@
       print('this string')
     # print to stdout without a new line after the text
       print('this string', end='')
+      print('this string'.strip())
 
   ```
 ### io.StringIO
@@ -692,17 +802,12 @@
 
 
 
-## builtin functions
-  ```py
-    # get the type of an object
-      type(blah)
-    # get the id of an object
-      id(blah)
-
-  ```
 
 
-## regex: re module
+## modules
+  - [all modules](https://docs.python.org/3.6/py-modindex.html)
+### re
+  - module for regex
   ```py
     # all examples require you to import re module
       import re
@@ -718,14 +823,14 @@
     # search and replace: returns the new string whether a replacement occured or not
       re.sub('find|this|Regex', 'replace with this', 'inside of this')
   ```
-### match object methods
+#### match object methods
   ```py
     # match objects are returned from successful re.search
       match = re.search(...)
     # print all the matches
       if match: print(match.group())
   ```
-### re methods
+#### re methods
   ```py
     # ignore case
      pattern = re.compile('regex string', re.I)
@@ -734,18 +839,26 @@
       pattern.sub('insert this', 'into this')
 
   ```
+### Traceback
+  - [read more](https://docs.python.org/3.6/library/traceback.html)
+  - provides a standard interface to extract, format and print stack traces of Python programs.
+  - exactly mimics the behavior of the Python interpreter when it prints a stack trace.
+  - useful when you want to print stack traces under program control, such as in a “wrapper” around the interpreter.
+  - format
+    -  last line of the error message indicates what happened
+      - The string printed as the exception type is the name of the built-in exception that occurred.
+    - contains a stack traceback listing source lines;
+      - however, it will not display lines read from standard input.
+  ```py
+    # type error
+      Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+      TypeError: Can't convert 'int' object to str implicitly
+  ```
 
-## context manager types
-  - [read more](https://docs.python.org/3/library/stdtypes.html#context-manager-types)
 
-## [modules](https://docs.python.org/3/library/stdtypes.html#modules)
 
-## [code objects](https://docs.python.org/3/library/stdtypes.html#code-objects)
-## [type objects](https://docs.python.org/3/library/stdtypes.html#type-objects)
-## [null object](https://docs.python.org/3/library/stdtypes.html#the-null-object)
-## [ellipsis object](https://docs.python.org/3/library/stdtypes.html#the-ellipsis-object)
-## [not implemented object](https://docs.python.org/3/library/stdtypes.html#the-notimplemented-object)
-## [special attributes](https://docs.python.org/3/library/stdtypes.html#special-attributes)
+
 ## actions
   ```py
     # mimic a switch statement
