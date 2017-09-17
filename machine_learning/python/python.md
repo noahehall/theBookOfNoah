@@ -17,6 +17,7 @@
   - [init py](http://mikegrouchy.com/blog/2012/05/be-pythonic-__init__py.html)
   - [expressions](https://docs.python.org/3.6/reference/expressions.html)
   - [control flow tools](https://docs.python.org/3/tutorial/controlflow.html#tut-unpacking-arguments)
+  - [style guide](https://www.python.org/dev/peps/pep-0008/)
 
 # pip
   - `pip3 install blah`
@@ -29,27 +30,6 @@
 # [terminology](https://docs.python.org/3/glossary.html#term-coroutine)
   - iterators: an object containing value(s), that when called, returns the next value
   - generator functions: function that creates an iterator
-  - class: a datatype for reusing code.
-    - the definition that is used to create an object
-  - object: an instance of a class. everything in python is an object, and all objects are first class objects
-    - ID: unique ID for an instance of an object that never changes for the life of the object
-    - Type: identifies the class of the object and cannot change for the life of the object
-    - Value: the content of the object
-  - inheritance: one class inherits properties and methods from another class
-  - polymorphism:  the provision of a single interface to entities of different types.
-    -  A polymorphic type is one whose operations can also be applied to values of some other type, or types.
-      - e.g.
-        - a class 'animal' has method 'bark'
-        - dog extends animal and returns 'woof'
-        - wolf extens animal and returns 'howl'
-        - person extends animal and returns 'i can bark like a dog'
-    - There are several fundamentally different kinds of polymorphism:
-      - [link to wikipedia](https://en.wikipedia.org/wiki/Polymorphism_(computer_science))
-  - Model, View, Controller
-    - MVC for classes:
-      - model: class definitions for classes that extend some base class
-      - view: the class definition for the base class
-      - controller: the instantiation of the classes in the model
   - suite of code: a block of code in python is called a suite
     - suites are defined by a colin after the keyword and indenting the code underneath the keyword
   - first class object:
@@ -696,18 +676,15 @@
 ### functions
   - [function definitions](https://docs.python.org/3/reference/compound_stmts.html#function)
   - [read more](https://docs.python.org/3/library/stdtypes.html#functions)
+  - when a default parameter is a mutable object, such as a list or a dictionary: if the function modifies the object (e.g. by appending an item to a list), the default value is in effect modified.
   ```py
     # create a function with a required argument
     # required arguments must be passed when the function is invoked else exception is raised
       def blah(bloop):
         return 'hello'
 
-    # create a function with optional mutable value
+    # create a function with optional value
       def yourFunctionName(x='default value'):
-        # if you change x it will change the default value
-
-    # create a function with a optional immutable value
-    # None allows you to modify the default variable within the function without modifying the default value
       def whats_on_the_telly(penguin=None):
         if penguin is None:
           penguin = []
@@ -732,12 +709,13 @@
         blah(1,2,'arg1','arg2', kwarg1 = 1, kwarg2 = 2)
 
 
+    # function with a property
+      c.method.__func__.whoami = 'my name is method'
+      c.method.whoami
 
 
-    # decorators
-      @f1(arg)
-      @f2
-      def func():pass
+
+
   ```
 #### generator functions
   - any function that returns an iterator object
@@ -749,6 +727,13 @@
           if n > 1: yield n
           n += 1
 
+  ```
+#### decoration functions
+  - A function returning another function, usually applied as a function transformation using the @wrapper syntax.
+  ```py
+      @f1(arg)
+      @f2
+      def func():pass
   ```
 #### global functions
   ```py
@@ -762,16 +747,44 @@
 
 
 ### classes
+  - class: a datatype for reusing code.
+    - the definition that is used to create an object
+  - object: an instance of a class. everything in python is an object, and all objects are first class objects
+    - ID: unique ID for an instance of an object that never changes for the life of the object
+    - Type: identifies the class of the object and cannot change for the life of the object
+    - Value: the content of the object
+  - inheritance: one class inherits properties and methods from another class
+  - polymorphism:  the provision of a single interface to entities of different types.
+    -  A polymorphic type is one whose operations can also be applied to values of some other type, or types.
+      - e.g.
+        - a class 'animal' has method 'bark'
+        - dog extends animal and returns 'woof'
+        - wolf extens animal and returns 'howl'
+        - person extends animal and returns 'i can bark like a dog'
+    - There are several fundamentally different kinds of polymorphism:
+      - [link to wikipedia](https://en.wikipedia.org/wiki/Polymorphism_(computer_science))
+  - Model, View, Controller
+    - MVC for classes:
+      - model: class definitions for classes that extend some base class
+      - view: the class definition for the base class
+      - controller: the instantiation of the classes in the model
   ```py
     # simple class
       class SomeClassName():
-        def __init__(self, a,b='default value'):
+        def __init__(self):
           # __init__ is the constructor and is called when this class is istantiated
           # self is a reference to the current instance and is the first argument to ALL functions within classes
+        def __init__(self, a,b='default value'):
           # a and b are arguments sent in when the class is istantiated
-          # all instance properties should be declared here
-          self.a = a
-          self.b = b
+          # best practice to to declare all instance properties in the constructor and modify them via methods
+        def __init__(self, **kwargs):
+          # best practice to use kwargs
+          self.a = kwargs.get('a', 'deault value')
+          self.b = kwargs.get('b', 'deault value')
+        def __init__(self, **kwargs):
+          # the simplest but also not that informative
+          # you can access now via self.variables.get('a', 'default value')
+          self.variables = kwargs
         def fibonaci(self):
           while(True):
             yield(self.b)
@@ -779,6 +792,7 @@
         def funcWithMultipleArgs(self, blah, two)
       # instantiate the above class
         blah = SomeClassName(0, 1)
+        blah = SomeClassName(a ='one')
       # create a new class that inherits from the above class
         class OtherClassName(SomeClassName):
           #this class now has all properties and methods of SomeClassName
