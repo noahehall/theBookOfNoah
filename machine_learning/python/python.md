@@ -16,12 +16,15 @@
   - [import system](https://docs.python.org/3.6/reference/import.html#searching)
   - [init py](http://mikegrouchy.com/blog/2012/05/be-pythonic-__init__py.html)
   - [expressions](https://docs.python.org/3.6/reference/expressions.html)
+  - [control flow tools](https://docs.python.org/3/tutorial/controlflow.html#tut-unpacking-arguments)
 
 # pip
   - `pip3 install blah`
   - pip install virtualenv
     - https://virtualenv.pypa.io/en/1.9.X/
-
+# cli
+  - $python|python3
+  - python -c 'import foo; print foo.hello()'
 
 # [terminology](https://docs.python.org/3/glossary.html#term-coroutine)
   - iterators: an object containing value(s), that when called, returns the next value
@@ -97,8 +100,14 @@
   ```py
     # assignment
       a = 1
-    # unpacking
+    # unpacking assignment
       x, y = [1, 2]
+    # unpacking list in function call
+      x = [1,2]
+      blah(*x)
+    # unpacking dict in function call
+      x = {one = 2, two = 1}
+      blah(**x)
 
     # comparisons, identity
       # compare by IDentity, must refer to same object
@@ -610,22 +619,23 @@
 #### async with
   - is a coroutine
 ### conditionals
-  ```py
-    # conditional execution: if elif else
-      if a < b:
-        print('do this')
-      elif a > b:
-        print('do this')
-      else:
-        print('do this')
 
-    # conditional value assignment
-      blah = 'less than' if a < b else 'not less than'
-    # conditional expression
-      print('less than' if a < b else 'not less than')
-
-  ```
 #### if
+```py
+  # conditional execution: if elif else
+    if a < b:
+      print('do this')
+    elif a > b:
+      print('do this')
+    else:
+      print('do this')
+
+  # conditional value assignment
+    blah = 'less than' if a < b else 'not less than'
+  # conditional expression
+    print('less than' if a < b else 'not less than')
+
+```
 
 ### loops
   ```py
@@ -684,30 +694,62 @@
   ```
 
 ### functions
-#### custom functions
+  - [function definitions](https://docs.python.org/3/reference/compound_stmts.html#function)
   - [read more](https://docs.python.org/3/library/stdtypes.html#functions)
   ```py
-    # create a function with default immutable value
-      def yourFunctionName(x='default value'):
-        # your code....
+    # create a function with a required argument
+    # required arguments must be passed when the function is invoked else exception is raised
+      def blah(bloop):
+        return 'hello'
 
-    # create a function with a default immutable value (Best practice)
+    # create a function with optional mutable value
+      def yourFunctionName(x='default value'):
+        # if you change x it will change the default value
+
+    # create a function with a optional immutable value
     # None allows you to modify the default variable within the function without modifying the default value
       def whats_on_the_telly(penguin=None):
         if penguin is None:
           penguin = []
-    # create a generator function
-      def genFunction(n):
-        while(True):
-          if n > 1: yield n
-          n += 1
+
+    # function with a list of optional arguments
+    # you can now invoke the function with an arbitry amount of arguments
+      def blah(*args):
+        # args is a tuple
+
+    # function with key word arguments
+      def blah(**kwargs):
+        # access kwargs
+        kwargs['someKeyWord']
+      # call the function
+        blah(one = 1, yup = 'yes')
+
+
+    # function with named, tuple and keyword arguments
+    # must be defined in this order
+      def blah(one, two, *args, **kwargs):
+      # call the function
+        blah(1,2,'arg1','arg2', kwarg1 = 1, kwarg2 = 2)
+
+
+
 
     # decorators
       @f1(arg)
       @f2
       def func():pass
   ```
+#### generator functions
+  - any function that returns an iterator object
+  - can be used anyplace an iterator is used
+  ```py
+    # create a generator function
+      def genFunction(n):
+        while(True):
+          if n > 1: yield n
+          n += 1
 
+  ```
 #### global functions
   ```py
     # get the type of an object
