@@ -96,10 +96,12 @@
 
 
 ## operators
+  - [operator precedence](https://docs.python.org/3/reference/expressions.html#operator-precedence)
   ```py
     # assignment
       a = 1
 
+    # most
     # comparisons, membership tests identity
       #in, not in
       # compare by IDentity, must refer to same object
@@ -126,6 +128,40 @@
       # x[index], x[index:index], x(arguments...), x.attribute
     # Binding or tuple display, list display, dictionary display, set display
       # (expressions...), [expressions...], {key: value...}, {expressions...}
+      # binding operator: parenthesis whenever they are not a tuple
+
+    # slice operator: extract things from objects
+    # useful for matrixes and anything that has more than 2 dimensions
+    # returns an iterator
+      # get the 27th index
+        list[27]
+      # get index 0 - 9, ranges are not inclusive
+        list[0:10]
+      # get every third(step = 3) member from index 0 - 9
+        list[0:10:3]
+      # overwrite every third member from index 0 - 9
+        list[0:10:3] = (99, 99, 99, 99)
+  ```
+  ```py
+    # operator precedence
+    # better off just using parenthesis (the binding operator)
+      (expressions...), [expressions...], {key: value...}, {expressions...}
+      x[index], x[index:index], x(arguments...), x.attribute
+      await x
+      **
+      +x, -x, ~x
+      *, @, /, //, %
+      +, -
+      <<, >>
+      &
+      ^
+      |
+      in, not in, is, is not, <, <=, >, >=, !=, ==
+      not x
+      and
+      or
+      if - else
+      lambda
   ```
 
 
@@ -264,6 +300,7 @@
 ## list
   ```py
     blah = [1, 2, 3]
+
   ```
 ### list methods
   ```py
@@ -277,11 +314,17 @@
 
 
 
-## iterators
+## iterators and ranges
+  - ranges in python are non inclusive they never include the last argument
   ```py
-    # range to create list of numbers
+    # range to do something X times
       for x in range(10):
         print(x) #prints 0 -> 9
+    # create a list of numbers 0-99
+      list = []
+      list[:] = range(100)
+    # iterate through a list of numbers: 0, 3, 6, 9
+      for i in list[0:10:3]: print(i)
   ```
 
 
@@ -458,6 +501,8 @@
 
   ```
 
+
+# re module: regular expressions
 
 
 ## actions
