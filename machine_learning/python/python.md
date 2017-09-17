@@ -4,6 +4,13 @@
   - [coroutines with async and await async syntax](https://www.python.org/dev/peps/pep-0492/)
   - [decorators](https://docs.python.org/3/glossary.html#term-decorator)
   - [calls](https://docs.python.org/3/reference/expressions.html#calls)
+  - [create multidimensional list](https://docs.python.org/3/faq/programming.html#faq-multidimensional-list)
+  - [python data model](https://docs.python.org/3/reference/datamodel.html#objects)
+
+## MUST DO
+  - [compound statements](https://docs.python.org/3/reference/compound_stmts.html#class)
+  - [collections - container datatypes](https://docs.python.org/3/library/collections.html#module-collections)
+  - [errors and exceptions](https://docs.python.org/3/tutorial/errors.html)
 
 
 
@@ -51,7 +58,7 @@
   - Coroutine function: can be suspended and resumed at many points
   - iterating: stepping through a data structure one value at a time
   - slicing: extracting parts of an object
-
+  - hashable: An object is hashable if it has a hash value which never changes during its lifetime (it needs a __hash__() method), and can be compared to other objects (it needs an __eq__() method). Hashable objects which compare equal must have the same hash value.
 
 # quickies
   - run a python file
@@ -101,9 +108,7 @@
     # assignment
       a = 1
 
-    # most
-    # comparisons, membership tests identity
-      #in, not in
+    # comparisons, identity
       # compare by IDentity, must refer to same object
         x is y
         x is not y
@@ -112,9 +117,11 @@
       # boolean operators
         x == y and x < z
         x == y or x > z
-      # membership tests
-        x not in (a,b,c)
-        x in (a,b,x)
+        not x # if x is false returns true
+
+    # membership tests
+      x not in (a,b,c)
+      x in (a,b,x)
 
     # bitwise
       #|,^,&
@@ -161,7 +168,7 @@
       and
       or
       if - else
-      lambda
+      #lambda
   ```
 
 
@@ -169,18 +176,23 @@
   ```py
     # catch an error
     try:
-      #do this that may contain an error
+      # potential exception raising code here
+    except IOError as e:
+      # only catch IOErrors here
+      print(e)
     except Exception as e:
+      # catch all exceptions
       print(e)
     else:
       # optional clause: do this if no errors occur
     finally:
       # optional clause: always do whether an exception is raised or not
   ```
+### custom exceptions
+  ```py
+    # raise an exception
 
-
-## expressions
-
+  ```
 
 ## variables
   ```py
@@ -197,45 +209,9 @@
   ```
 
 
-## strings
-  ```py
-    # creating strings
-      blah = "string with double quotes"
 
-      blah = 'string with \n escape character'
-
-    # multiline string, the ending backslash in the first line escapes the new line
-      blah = '''\
-      string on
-      multiple lines
-      '''
-    # python3 string interpolation
-      blah = 'insert var a {} between previous brackets'.format(a)
-
-    # python2 string interpolation obsolete dissapearing in python4
-      blah = 'insert var a %s between previous brackets' % n
-
-
-    # use r with regular expressions
-      blah = r'string with no \n escape characters due to the r'.
-
-    # get a char
-      'blah'[3]
-
-  ```
-### string methods
-  ```py
-    'insert var here {}'.format(n)
-    'get index up to but not including end index'[1:4]
-    'get char at index'[1]
-
-    # format strings
-      # prints the binary value of n
-      '{:08b}'.format(n)
-  ```
-
-
-## numbers
+## numbers : numeric type
+### int
   ```py
     # int
       blah = 42
@@ -245,6 +221,12 @@
       blah = int(42.9)
     # convert to floating point
       blah = float(42)
+  ```
+### float
+### complex
+  ```py
+    # a complex number with real part re, imaginary part im. im defaults to zero.
+      complex(re, im)
   ```
 
 
@@ -263,8 +245,20 @@
       divmod(5,3)
   ```
 
-
-## dictionaries
+## mapping types
+  - A mapping object maps hashable values to arbitrary objects
+  - only standard mapping type is dict
+  - values that cant be keys
+    - Values that are not hashable,
+    - values containing lists,
+    - values containing dictionaries
+    - values containing other mutable types (that are compared by value rather than by object identity)
+  - it is unwise to use numbers as keys because
+    - computers store floating-point numbers as approximations
+  - creation
+    - {'jack': 4098, 'sjoerd': 4127}
+    - dict constructor
+### dict : mutable
   ```py
     # create a dictionary with dict class so you dont need quotes for key names
       blah = dict(
@@ -284,49 +278,252 @@
       blah['seven'] = 7
 
   ```
-### dictionary methods
+#### [dictionary methods](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
   ```py
     {}.keys()
     {}.get('key', 'return this if key not in dict')
   ```
+#### [dictionary view objects](https://docs.python.org/3/library/stdtypes.html#dictionary-view-objects)
+  - provide a dynamic view on the dictionary’s entries, which means that when the dictionary changes, the view reflects these changes.
+  - objects returned by
+    - dict.keys()
+    - dict.values()
+    - dict.items()
+  ```py
+    len(view)
+    iter(view)
+    x in view
+  ```
+
+## Sequence Type
+### common operations
+  ```py
+    # Sequences of the same type also support comparisons.
+      # boolean
+        x in s
+        x not in s
+      # concatenation
+        s + t
+        s * 10
+      # inspection
+        len(s)
+      # retrieval
+        # all slice operations work on sequences
+        min(s)
+        max(s)
+        # index of the first occurrence of x in s (at or after index i and before index j)
+          s.index(x,i,j)
+        s.count(x)
+  ```
+### mutable sequence types
+  ```py
+    # common operations
+      x in s
+      x not in s
+      s + t
+      s * n
+      s[i]
+      s[i:j]
+      s[i:j:k]
+      len(s)
+      min(s)
+      max(s)
+      s.index(x[, i[, j]])
+      s.count(x)
+    # mutable operations
+      # assignment
+        s[i] = x
+        s[i:j:k] = t
+        s.append(x)
+        s[len(s):len(s)] = [x] #same as above
+        s.clear()
+        del s[:] #same as above
+        s.copy()
+        s[:] #same as above
+        s.extend(t)
+        s += t #same as above
+        # inserts x into s at the index given by i (same as s[i:i] = [x])
+          s.insert(i, x)
+          s[i:i] = [x] #same as above
+        s.pop([i])
+        s.remove(x)
+        s.reverse()
+  ```
+### strings : immutable
+  - sequences of Unicode code points.
+  - creation
+    - Single quotes: 'allows embedded "double" quotes'
+    - Double quotes: "allows embedded 'single' quotes".
+    - Triple quoted: '''Three single quotes''', """Three double quotes"""
+      - may span multiple lines - all associated whitespace will be included in the string literal.
+    - from other objects using the str constructor.
+  ```py
+    # creating strings
+      blah = "string with double quotes"
+      blah = 'string with \n escape character'
+
+    # multiline string, the ending backslash in the first line escapes the new line
+      blah = '''\
+      string on
+      multiple lines
+      '''
+    # python3 string interpolation
+      blah = 'insert var a {} between previous brackets'.format(a)
+
+    # python2 string interpolation obsolete dissapearing in python4
+      blah = 'insert var a %s between previous brackets' % n
 
 
-## tuples
+    # use r with regular expressions
+      blah = r'string with no \n escape characters due to the r'.
+  ```
+### [string methods](https://docs.python.org/3/library/stdtypes.html#string-methods)
+  - implement all common sequence operations
+  ```py
+    # only really useful listed, see link above
+    ''.capitalize()
+    ''.casefold()
+    ''.count()
+    ''.encode()
+    ''.endswith()
+    ''.expandtabs()
+    ''.find()
+    'insert var here {}'.format(n)
+    ''.format_map
+    ''.index()
+    ''.isdigit()
+    ''.isnumeric()
+    ''.join()
+    ''.lower()
+    ''.partition()
+    'inside this'.replace('this' 'that')
+    ''.rfind()
+    ''.rindex()
+    ''.rpartition()
+    ''.rsplit()
+    ''.rstrip()
+    ''.split()
+    ''.splitlines()
+    ''.startswith()
+    ''.strip()
+    ''.title()
+    ''.upper()
+    # format strings
+      # prints the binary value of n
+      '{:08b}'.format(n)
+  ```
+### tuple : immutable
+  - typically used to store collections of heterogeneous data (such as the 2-tuples produced by the enumerate() built-in)
+  - also used for cases where an immutable sequence of homogeneous data is needed (such as allowing storage in a set or dict instance).
+  - For heterogeneous collections of data where access by name is clearer than access by index, collections.namedtuple() may be a more appropriate choice than a simple tuple object.
+  - creation
+      - it is actually the comma which makes a tuple, not the parentheses.
+    - Using a pair of parentheses to denote the empty tuple: ()
+    - Using a trailing comma for a singleton tuple: a, or (a,)
+    - Separating items with commas: a, b, c or (a, b, c)
+    - Using the tuple() built-in: tuple() or tuple(iterable)
   ```py
     blah = (1, 2, 3)
   ```
-
-
-## list
+#### tuple methods
+  - impelment all of the common sequence operations
+### list : mutable
+  - typically used to store collections of homogeneous items
+  - creation
+    - Using a pair of square brackets to denote the empty list: []
+    - Using square brackets, separating items with commas: [a], [a, b, c]
+    - Using a list comprehension: [x for x in iterable]
+    - Using the type constructor: list() or list(iterable)
+    - Many other operations also produce lists, including the sorted() built-in.
   ```py
     blah = [1, 2, 3]
 
   ```
-### list methods
+#### list methods
+  - implement all common and mutable sequence operations
   ```py
-    [].append(blah)
+    [].sort()
     [].insert(blah)
   ```
-
-
-# set
-
-
-
-
-## iterators and ranges
-  - ranges in python are non inclusive they never include the last argument
+### range : immutable
+  - ranges in python are non inclusive: they never include the last argument
+  - sequence of numbers and is commonly used for looping a specific number of times in for loops.
+  - advantage of the range type over a regular list or tuple
+    - a range object will always take the same (small) amount of memory, no matter the size of the range it represents
+      - it only stores the start, stop and step values
+      - calculates individual items and subranges as needed
   ```py
     # range to do something X times
       for x in range(10):
         print(x) #prints 0 -> 9
+    # from 0 - 9
+      range(0, 10)
+    # from 0 - (-9)
+      range(0, -10, -1)
+    # 0, 3, 6, 9
+      range(0, 10, 3)
     # create a list of numbers 0-99
       list = []
       list[:] = range(100)
+    # same as above
+      list(range(100))
     # iterate through a list of numbers: 0, 3, 6, 9
       for i in list[0:10:3]: print(i)
   ```
+#### range methods
+  - impelment all of the commone sequence operations
+    - EXCEPT concatenition and repetition
+### bytes
+### bytearray
+### memoryview
+## set types
+  ```py
+    # common operations
+    # read about other methods: https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset
+      x in set
+      len(set)
+      for x in set
+  ```
+### set : mutable
+  - unordered collection of distinct hashable objects
+  - has no hash value
+  - cannot be used as either a dictionary key or as an element of another set.
+  - Common uses include
+    - membership testing,
+    - removing duplicates from a sequence,
+    - computing mathematical operations such as intersection, union, difference, and symmetric difference.
+  - creation
+    - {'jack', 'sjoerd'}
+    - set constructor
+#### set methods
+  - sets do not
+    - record element position
+    - order of insertion
+    - indexing
+    - slicing
+    - other sequence-like behavior.
+  ```py
+    s.pop()
+    s.clear()
+    s.discard()
+    s.remove()
+    s.add()
+    s.other
+  ```
+### frozenset : immutable + hashable
+  - can be used as:
+    - a dictionary key
+    - an element of another set.
 
+
+## Iterator types
+  - concept of iteration over containers. This is implemented using two distinct methods; these are used to allow user-defined classes to support iteration.
+  - [read more](https://docs.python.org/3/library/stdtypes.html#iterator-types)
+
+
+## generator type
+  - provide a convenient way to implement the iterator protocol.
+  - [read more](https://docs.python.org/3/library/stdtypes.html#generator-types)
 
 ## conditionals
   ```py
@@ -401,6 +598,7 @@
 
 
 ## functions
+  - [read more](https://docs.python.org/3/library/stdtypes.html#functions)
   ```py
     # create a function with default immutable value
       def yourFunctionName(x='default value'):
@@ -460,7 +658,7 @@
   ```
 
 
-## i/o
+## io
   ```py
     # print to stdout? with a new line after the text
       print('this string')
@@ -468,6 +666,8 @@
       print('this string', end='')
 
   ```
+### io.StringIO
+  - [io.StringIO](https://docs.python.org/3/library/io.html#io.StringIO)
 ### working with files
   ```py
     #reading from files
@@ -502,9 +702,50 @@
   ```
 
 
-# re module: regular expressions
+## regex: re module
+  ```py
+    # all examples require you to import re module
+      import re
 
+    # create a reusable regex pattern and ignore case
+      pattern = re.compile(r'\d\d\d', re.I)
+    # use the pattern
+      if re.search(pattern, 'this blah'): print(True)
 
+    # use a regex literal
+      if re.search('(this|orthis)', 'is in this'): print(True)
+
+    # search and replace: returns the new string whether a replacement occured or not
+      re.sub('find|this|Regex', 'replace with this', 'inside of this')
+  ```
+### match object methods
+  ```py
+    # match objects are returned from successful re.search
+      match = re.search(...)
+    # print all the matches
+      if match: print(match.group())
+  ```
+### re methods
+  ```py
+    # ignore case
+     pattern = re.compile('regex string', re.I)
+
+    # pattern methods
+      pattern.sub('insert this', 'into this')
+
+  ```
+
+## context manager types
+  - [read more](https://docs.python.org/3/library/stdtypes.html#context-manager-types)
+
+## [modules](https://docs.python.org/3/library/stdtypes.html#modules)
+
+## [code objects](https://docs.python.org/3/library/stdtypes.html#code-objects)
+## [type objects](https://docs.python.org/3/library/stdtypes.html#type-objects)
+## [null object](https://docs.python.org/3/library/stdtypes.html#the-null-object)
+## [ellipsis object](https://docs.python.org/3/library/stdtypes.html#the-ellipsis-object)
+## [not implemented object](https://docs.python.org/3/library/stdtypes.html#the-notimplemented-object)
+## [special attributes](https://docs.python.org/3/library/stdtypes.html#special-attributes)
 ## actions
   ```py
     # mimic a switch statement
@@ -515,7 +756,4 @@
       )
       blah = 'not in dict'
       print(choices.get(blah, 'do this if cant get'))
-  ```
-  ```py
-
   ```
