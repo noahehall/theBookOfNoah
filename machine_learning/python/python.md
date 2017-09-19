@@ -196,8 +196,26 @@
   ```py
 
   ```
+### errors
+#### errors: syntax
+  - errors that stop the python parser from executing the code
+  ```py
+    SyntaxError
+    IndentationError
+    AttributeError
+  ```
+#### errors: runtime
+  - errors that occur when the code executed
+  ```py
+
+  ```
+#### errors: logical
+
 ### Traceback
-  - see [Tracebook](#tracebook) section below
+  - see [Tracebook](#tracebook) section in `./modules.md`
+  - tells you:
+    - where it encounted the error
+    - each line of code that was executed
 
 ## simple statements
   - [read more](https://docs.python.org/3.6/reference/simple_stmts.html)
@@ -968,69 +986,8 @@
       BLOCK
   ```
 
-
-
-
-
-## modules
-  - [all modules](https://docs.python.org/3.6/py-modindex.html)
-### re
-  - module for regex
-  ```py
-    # all examples require you to import re module
-      import re
-
-    # create a reusable regex pattern and ignore case
-      pattern = re.compile(r'\d\d\d', re.I)
-    # use the pattern
-      if re.search(pattern, 'this blah'): print(True)
-
-    # use a regex literal
-      if re.search('(this|orthis)', 'is in this'): print(True)
-
-    # search and replace: returns the new string whether a replacement occured or not
-      re.sub('find|this|Regex', 'replace with this', 'inside of this')
-  ```
-#### match object methods
-  ```py
-    # match objects are returned from successful re.search
-      match = re.search(...)
-    # print all the matches
-      if match: print(match.group())
-  ```
-#### re methods
-  ```py
-    # ignore case
-     pattern = re.compile('regex string', re.I)
-
-    # pattern methods
-      pattern.sub('insert this', 'into this')
-
-  ```
-### Traceback
-  - [read more](https://docs.python.org/3.6/library/traceback.html)
-  - provides a standard interface to extract, format and print stack traces of Python programs.
-  - exactly mimics the behavior of the Python interpreter when it prints a stack trace.
-  - useful when you want to print stack traces under program control, such as in a “wrapper” around the interpreter.
-  - format
-    -  last line of the error message indicates what happened
-      - The string printed as the exception type is the name of the built-in exception that occurred.
-    - contains a stack traceback listing source lines;
-      - however, it will not display lines read from standard input.
-  ```py
-    # type error
-      Traceback (most recent call last):
-      File "<stdin>", line 1, in <module>
-      TypeError: Can't convert 'int' object to str implicitly
-  ```
-## sqlite3
-  - comes with python
-  - zero config
-  - fully transactional
-  - self - contained
-  - server less
-
 ## actions
+### random
   ```py
     # mimic a switch statement
     # values could be function calls
@@ -1040,4 +997,17 @@
       )
       blah = 'not in dict'
       print(choices.get(blah, 'do this if cant get'))
+  ```
+### creating modules
+  1. create a dir containing
+    - `__init__.py`
+    - `yourModuleName.py`
+  2. import it into another file
+  3. invoke classes/methods via `moduleName.className|methodName`
+  ```py
+    # example module bloop.py
+      def blah(): print('hello')
+    # example consumer
+      import bloop
+      bloop.blah()
   ```
