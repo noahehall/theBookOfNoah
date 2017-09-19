@@ -18,6 +18,7 @@
   - [expressions](https://docs.python.org/3.6/reference/expressions.html)
   - [control flow tools](https://docs.python.org/3/tutorial/controlflow.html#tut-unpacking-arguments)
   - [style guide](https://www.python.org/dev/peps/pep-0008/)
+  - [data model](https://docs.python.org/3.6/reference/datamodel.html)
 
 # pip
   - `pip3 install blah`
@@ -29,7 +30,6 @@
 
 # [terminology](https://docs.python.org/3/glossary.html#term-coroutine)
   - iterators: an object containing value(s), that when called, returns the next value
-  - generator functions: function that creates an iterator
   - suite of code: a block of code in python is called a suite
     - suites are defined by a colin after the keyword and indenting the code underneath the keyword
   - first class object:
@@ -45,6 +45,7 @@
   - iterating: stepping through a data structure one value at a time
   - slicing: extracting parts of an object
   - hashable: An object is hashable if it has a hash value which never changes during its lifetime (it needs a __hash__() method), and can be compared to other objects (it needs an __eq__() method). Hashable objects which compare equal must have the same hash value.
+
 
 
 # quickies
@@ -69,10 +70,8 @@
   - functions that are intended to be used internally and not by the consumer should be prefixed with _
   - structures (e.g. def, if, loops, etc) with one line of code can be written on one line
   - variables in python are references to objects
-## keywords
-  - yield: used inside a function to turn it into a generator function
-    - when the function is called, it will return whatever statement is after the yield and pause execution of the function
-    - the next time the function is called, it will continue execution starting with the next line after the yield
+
+
 
 
 ## operators
@@ -446,7 +445,10 @@
     ''.endswith()
     ''.expandtabs()
     ''.find()
-    'insert var here {}'.format(n)
+    'insert var here {}'.format(n, n2)
+    'place items by index {n2} {n}'.format(n, n2)
+    'place items by name {b} {blah}'.format(blah = 1, b = 2)
+    'place items by index {n2} {n}'.format(**someDict)
     ''.format_map
     ''.index()
     ''.isdigit()
@@ -471,8 +473,10 @@
       '{:08b}'.format(n)
   ```
 ### tuple : immutable
-  - typically used to store collections of heterogeneous data (such as the 2-tuples produced by the enumerate() built-in)
-  - also used for cases where an immutable sequence of homogeneous data is needed (such as allowing storage in a set or dict instance).
+  - typically used to
+    - store collections of heterogeneous data (such as the 2-tuples produced by the enumerate() built-in)
+    - cases where an immutable sequence of homogeneous data is needed (such as allowing storage in a set or dict instance).
+    - when you need to guard an item from being changed
   - For heterogeneous collections of data where access by name is clearer than access by index, collections.namedtuple() may be a more appropriate choice than a simple tuple object.
   - creation
       - it is actually the comma which makes a tuple, not the parentheses.
@@ -481,7 +485,12 @@
     - Separating items with commas: a, b, c or (a, b, c)
     - Using the tuple() built-in: tuple() or tuple(iterable)
   ```py
-    blah = (1, 2, 3)
+    # with the comma operator
+      blah = 1, 2, 3
+      blah = (1,2,3) #same thing, everyone uses this form
+      blah = 1, # 1 element
+    # with range
+      blah = tuple(range(25))
   ```
 #### tuple methods
   - impelment all of the common sequence operations
@@ -582,6 +591,78 @@
 ## generator type
   - provide a convenient way to implement the iterator protocol.
   - [read more](https://docs.python.org/3/library/stdtypes.html#generator-types)
+  - yield: used inside a function to turn it into a generator function
+    - when the function is called, it will return whatever statement is after the yield and pause execution of the function
+    - the next time the function is called, it will continue execution starting with the next line after the yield
+### generator functions
+- generator functions: function that creates an iterator
+  - any function that can be used in context of an iterable
+  - can be used anyplace an iterator is used
+  ```py
+    # create a generator function
+      def genFunction(n):
+        while(True):
+          if n > 1: yield n
+          n += 1
+
+  ```
+#### generator classes
+  - has a __iter__ method
+  ```py
+    class InclusiveRange:
+        def __init(self, *args):
+            self.step = args[2] if length == 3 else 1
+            self.start = args[0] if length > 1 else 0
+            self.stop = args[0] if length == 1 else args[1]
+
+        def __iter__(self):
+            # the iterator logic
+            while self.start <= .selfstop:
+                yield self.start
+                self.start += self.step
+  ```
+
+## decorators
+  - functions that return other functions in order to modify how the other functino works
+  - useful for
+    - create accessor methods for functions
+### decorator functions
+  - A function returning another function, usually applied as a function transformation using the @wrapper syntax.
+  ```py
+      @f1(arg)
+      @f2
+      def func():pass
+  ```
+### decorator class
+  ```py
+    # builtin decorators for class methods
+      class blah:
+        @property
+        # is now a getter: blah.color
+        def color(self):
+          'description for this func'
+          return self.variables.get('color', 'default value')
+
+        @color.setter
+        # is now a setter: blah.color = 'whatver'
+        def color(self, value):
+          return self.variables.color = value
+
+        @color.deleter
+        # is now a deleter: del blah.color
+        def color(self):
+          del self.variables.color
+
+        @staticmethod
+        def blah():
+          # It can be called either on the class (such as C.f()) or on an instance (such as C().f()).
+
+        @classmethod
+        def f(cls):
+          # A class method receives the class as implicit first argument, just like an instance method receives the instance.
+          # It can be called either on the class (such as C.f()) or on an instance (such as C().f()).
+
+  ```
 
 ## context manager types
   - [read more](https://docs.python.org/3/library/stdtypes.html#context-manager-types)
@@ -717,24 +798,8 @@
 
 
   ```
-#### generator functions
-  - any function that returns an iterator object
-  - can be used anyplace an iterator is used
-  ```py
-    # create a generator function
-      def genFunction(n):
-        while(True):
-          if n > 1: yield n
-          n += 1
 
-  ```
-#### decoration functions
-  - A function returning another function, usually applied as a function transformation using the @wrapper syntax.
-  ```py
-      @f1(arg)
-      @f2
-      def func():pass
-  ```
+
 #### global functions
   ```py
     # get the type of an object
@@ -755,12 +820,17 @@
     - Value: the content of the object
   - inheritance: one class inherits properties and methods from another class
   - polymorphism:  the provision of a single interface to entities of different types.
-    -  A polymorphic type is one whose operations can also be applied to values of some other type, or types.
+    - the practice of using one object of a particular class as if it were another object of another class
+      - both objects should have a common interface
+      -  A polymorphic type is one whose operations can also be applied to values of some other type, or types.
       - e.g.
         - a class 'animal' has method 'bark'
         - dog extends animal and returns 'woof'
         - wolf extens animal and returns 'howl'
         - person extends animal and returns 'i can bark like a dog'
+      - duck typing: if it walks like a duck it is a duck
+        - this is important for polymorphism: python objects dont care about type (its loosely typed)
+        - any object of any class that implements the interface thats expected by any function - can be used by that function
     - There are several fundamentally different kinds of polymorphism:
       - [link to wikipedia](https://en.wikipedia.org/wiki/Polymorphism_(computer_science))
   - Model, View, Controller
@@ -793,17 +863,33 @@
       # instantiate the above class
         blah = SomeClassName(0, 1)
         blah = SomeClassName(a ='one')
+
+
+
       # create a new class that inherits from the above class
         class OtherClassName(SomeClassName):
           #this class now has all properties and methods of SomeClassName
+          def blah(self):
+            # override the baseclass.blah method but call it
+            super.blah()
 
-      # create a decorated class
-        @f1(arg)
-        @f2
-        class Foo: pass
+
+      # polymorphism
+      # each should have the same interface so that you can use them polymorphically
+        dog = Dog()
+        cat = Cat()
+      # since they have the same interface this code should run appropriately
+        for o in (dog, cat):
+          o.bark()
+          o.meow()
+
+
   ```
 
 ### coroutines
+  - A function or method which is defined using async def is called a coroutine function.
+  - always returns a coroutine object.
+  - may contain await expressions, as well as async with and async for statements. See also the Coroutine Objects section.
 #### Coroutine functions
   ```py
     # In the body of a coroutine, any await and async identifiers become reserved keywords; await expressions, async for and async with can only be used in coroutine bodies.
@@ -835,16 +921,42 @@
 ### io.StringIO
   - [io.StringIO](https://docs.python.org/3/library/io.html#io.StringIO)
 ### working with files
+#### open function
   ```py
     #reading from files
       # open returns a file object
         fo = open('path/to/file.txt');
+        fo = open('path/to/file.txt', 'r'); #default read
+        fo = open('path/to/file.txt', 'r+'); # read + write, #rt = text,
+
+      # open +write binary files e.g images
+        fo = open('path/to/file.jpg', 'rb'); #rb = binary
+        new = open('path/to/new.jpg', 'wb'); #wb = binary
+        # write to file with buffer
+          bufferSize = 50000 # size of bytes to read every time
+          buffer = fo.read(bufferSize)
+          while len(buffer):
+            fo.write(buffer)
+            buffer = infile.read(bufferSize)
+
+
+      # write to file
+        fo = open('path/to/new.txt', 'w'); #w write
+        print('this into', file = fo)
+        # write to file with buffer
+          bufferSize = 50000 # size of bytes to read every time
+          buffer = someReallyHugeFile.read(bufferSize)
+          while len(buffer):
+            fo.write(buffer)
+            buffer = infile.read(bufferSize)
+        fo = open('path/to/file.txt', 'a'); #a append
       # file object methods
         # returns an iterator
           fo.readlines()
       # use loop to read everyline in file
       for line in fo.readlines():
         print(line)
+
 
   ```
 
@@ -911,9 +1023,12 @@
       File "<stdin>", line 1, in <module>
       TypeError: Can't convert 'int' object to str implicitly
   ```
-
-
-
+## sqlite3
+  - comes with python
+  - zero config
+  - fully transactional
+  - self - contained
+  - server less
 
 ## actions
   ```py

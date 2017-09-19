@@ -2,23 +2,6 @@
 
 def main():
     print('this is a starter file for python scripts')
-    return BaseClass
-
-class BaseClass():
-    '''\
-    Starter file for creating classes
-    comes with scalable setters and getters
-    '''
-    def __init__(self, **kwargs):
-        self.variables = kwargs
-
-    def getVariable(self, varName):
-        return self.variables.get(varName, None)
-    def setVariable(self, varName, value):
-        self.variables[varName] = value
-
-
-
 
 # this allows you to
 # 0. setup all of your logic inside main
