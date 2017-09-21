@@ -97,7 +97,7 @@
     - projectname: this directory has the same name as the project
       - handler.clj: this is the top namespace for the project
         - i.e. yourprojectname.handler
-  - target: all the files leiningen produced when it built the project
+  - target: all the files leiningen produced when it builds the project
     - yourprojectname.standalone.jar: suitable for shipping to a hosting service containing everything required to run this project
     - yourprojectname.jar: smaller vs of standalone only contains the project code without any of its dependencies
     - classes: all the intermediate files leiningen creates when it compiles your project
@@ -254,6 +254,11 @@
   - immutable
 
   ```clj
+    (hash-map :key value, :key2 value)
+    (assoc  {:key "value"} :key value) #add to an existing map
+    (conj  {:key "value"} [:key value]) #add to an existing map
+
+    (dissoc  {:key "value"} :key) #remove from a map
     {:key "value"}
     {1 42,
     2 43,
@@ -279,13 +284,17 @@
   - add and remove items from the top (number with the highest index)
 
   ```clj
-    [1 2 3 4]
+    (vec (range 5)) # [0 1 2 3 4]
+    (vector 0 1 2 3 4) # [0 1 2 3 4]
+    (conj [1 2 3] 4) # [1 2 3 4]
+    (subvec [1 2 3])
   ```
 
 ## lists
   - like liked-lists in many languages
   - immutable
   - data structures that our code is made
+  - groups from the beginning
 
   ```clj
     (1 2 3 4)
@@ -386,6 +395,9 @@
   ```
 
 ### global functions
+  - mapping:
+  - filtering:
+  - reducing:
   ```clj
     (println (* 2 x))
     (read-string "(string of code)") # reads the string and returns the code but does not run it
@@ -395,7 +407,18 @@
       (eval (read-string "(+ 1 2 3)")) # returns 6
 
     # map function
+    # applies a change to each member of a sequence
+    # is lazy: results are computed as required
       (map applyThisFunctionToThisList [1 2 3])
+
+    # filter
+    # throws out values where the function returns false
+      (filter even? [1 2 3 4])
+
+    # reduce
+    # computes a single answer from a sequence
+    # is not lazy
+      (def someName (reduce + [1 2 3 4])) #returns 10
   ```
 
 ### macros
@@ -422,4 +445,26 @@
     (. OBJECT METHOD_NAME)
     (. "asdf" toUpperCase) # returns "ASDF"
 
+  ```
+
+## sequence manipulation
+  - squence abstraction: can feed any output of one function to the input of another function
+  - lazy sequences: can work on infinite sequences of data since evaluation is postponed until required
+    - [location](./examples/Exercise Files/ch05/src/ch05/core.clj) Files/ch05/src/ch05/core.clj
+    - the code is defined in one place, but the execution occurs elseware
+      - this can cause error traces to be inaccurate
+    - preventing laziness
+      - `(doall ..)` when you want all the data now
+      - `(dorun..)` when you want to run the code
+  ```clj
+    # create laziness with a linked list
+      (lazy-seq
+        (cons this-new-value
+          (code-to-make-the-rest)))
+
+    # create parallel laziness
+    # evaluates functions concurrently
+    # breaks a sequence into chunks and runs the sequences in each chunk in parallel each chunk is run sequently
+      (pmap some_code)
+      ()
   ```
