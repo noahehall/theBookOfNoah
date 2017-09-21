@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ReplState" timestamp="1447449433393">{:repl-history {:ide [], :local [&quot;@a&quot; &quot;@b&quot; &quot;(dosync (commute a dec)\n        (commute b inc))&quot; &quot;[@a @b]&quot; &quot;(swap)&quot; &quot;(swapify)&quot; &quot;(look)&quot;], :remote []}}</component>
+</project>
