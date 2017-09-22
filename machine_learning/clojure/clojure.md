@@ -453,18 +453,17 @@
     - many functions work on sequential data
   - sequences in clojure are lazy by default
     - lazy sequences: can work on infinite sequences of data since evaluation is postponed until required
-      - [location](./examples/Exercise Files/ch05/src/ch05/core.clj) Files/ch05/src/ch05/core.clj
+      - [location](./examples/ExerciseFiles/ch05/src/ch05/core.clj) Files/ch05/src/ch05/core.clj
       - the code is defined in one place, but the execution occurs elseware
         - this can cause error traces to be inaccurate
-      - preventing laziness
-        - `(doall ..)` when you want all the data now
-        - `(dorun..)` when you want to run the code
   ```clojure
     ; cons function: adds a value to the beginning of a sequence
     ; conj function: adds value to a sequence at the most efficient place
       ; vector: at the end
       ; list: at the beginning (linked lists grow from beginning)
     ; create laziness with a linked list
+      ; it will produce a chunk of code that will execute only when read
+      ; when read: will produce 'this new value' and link it to 'code to make the rest'
       (lazy-seq
         (cons this-new-value
           (code-to-make-the-rest)))
@@ -474,4 +473,8 @@
     ; breaks a sequence into chunks and runs the sequences in each chunk in parallel each chunk is run sequently
       (pmap some_code)
       ()
+
+    ;preventing laziness
+      (doall ..) ;when you want all the data now
+      (dorun..) ;when you only care that the code runs
   ```
