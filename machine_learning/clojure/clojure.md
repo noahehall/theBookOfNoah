@@ -1,7 +1,7 @@
 # good links
   - [try clojure](http://www.tryclj.com/)
   - [clojure challenges](http://www.4clojure.com/)
-  -
+  - [best quick reference](https://clojuredocs.org/quickref)
 
 # about
   - is
@@ -244,6 +244,8 @@
 ### keywords
   - preferred over symbols
   ```clojure
+    ; create a keyword
+      :random-key-name
     ; pull keyword a out of the map
     ; prepend a colon infront of the keyword you want to retrieve
       (:a {:a 24, :b 42})
@@ -254,10 +256,9 @@
   - immutable
 
   ```clojure
-    (hash-map :key value, :key2 value)
+    (hash-map :key value, :key2 value) ; create
     (assoc  {:key "value"} :key value) ;add to an existing map
     (conj  {:key "value"} [:key value]) ;add to an existing map
-
     (dissoc  {:key "value"} :key) ;remove from a map
     {:key "value"}
     {1 42,
@@ -270,10 +271,14 @@
   ```
 
 ## sets
-  - only store values
+  - only store values (in random order)
   - immutable
-
   ```clojure
+    (set [1 2 3]) ; returns #{1 2 3}
+    (conj #{1 2 3} 4) ; add 4 to a set
+    (disj #{1 2 3} 2) ; remove 2 from set
+    (contains #{1 2 3} 2) ; boolean if 2 exists in set
+    (#{1 2 3} 2) ; returns 2 if 2 is in set else nil
     #{value1 "value2"}
 
   ```
@@ -286,19 +291,26 @@
   ```clojure
     (vec (range 5)) ; [0 1 2 3 4]
     (vector 0 1 2 3 4) ; [0 1 2 3 4]
-    (conj [1 2 3] 4) ; [1 2 3 4]
-    (subvec [1 2 3])
+    (conj [1 2 3] 4) ; add to a vector
+    (subvec [1 2 3 4 5] 1 3) ; remove and return index 1 up to but not including 3
+    ([1 2 3 4 5] 2) ; retrieve item at index 2, this is calling the vector as a function
+    (get [1 2 3 4 5] 2) ;retrieve item at index 2 else nil
+    (get [1 2 3 4 5] 5 :not-found) ;retrieve item at index 5 else return :not-found
   ```
 
 ## lists
   - like liked-lists in many languages
   - immutable
   - data structures that our code is made
-  - groups from the beginning
-
+  - grow & shrinks from the beginning
   ```clojure
     (1 2 3 4)
+    (list 1 2 3) ; create a list
+    (conj '(1 2 3) 0) ; add 0 to beginning of list
+    (first '(1 2 3)) ; retrieve first item 1
+    (rest '(1 2 3)) ; retrieve rest of items (2 3)
   ```
+
 ## exceptions
   - AirthmeticException
   ```clojure
@@ -382,7 +394,8 @@
         (println argument-list))
 
     ; short form syntax begins with #
-      #(expression %1 %2)
+    ; % === placeholder
+      #(% 3) [*] ; = (* 3)
 
     ; define function addFor that accepts 1 argument
       (defn addFor [arg1]
@@ -395,10 +408,9 @@
   ```
 
 ### global functions
-  - mapping:
-  - filtering:
-  - reducing:
   ```clojure
+    ; need to verify
+    ; pos? even? count
     (println (* 2 x))
     (read-string "(string of code)") ; reads the string and returns the code but does not run it
     (eval your_code) ; the E in repl
@@ -409,7 +421,8 @@
     ; map function
     ; applies a change to each member of a sequence
     ; is lazy: results are computed as required
-      (map applyThisFunctionToThisList [1 2 3])
+      (map / [1 2 3])
+      (map #(% 3) [* + / -])
 
     ; filter
     ; throws out values where the function returns false
@@ -417,8 +430,10 @@
 
     ; reduce
     ; computes a single answer from a sequence
+      ;(fn [answer-thus-far -the-next-value]
+      ;      updated-answer)
     ; is not lazy
-      (def someName (reduce + [1 2 3 4])) ;returns 10
+      (def getTotal (reduce + [1 2 3 4])) ;returns 10
   ```
 
 ### macros
@@ -468,13 +483,26 @@
         (cons this-new-value
           (code-to-make-the-rest)))
 
-    ; create parallel laziness
-    ; evaluates functions concurrently
-    ; breaks a sequence into chunks and runs the sequences in each chunk in parallel each chunk is run sequently
-      (pmap some_code)
-      ()
+    ; create parallel laziness: only useful for big
+      ; evaluates a sequence concurrently
+      ; breaks a sequence into X chunks of Y size
+      ; processes every member inside one chunk in parallel
+      ; iterates the sequence of chunks in order
+      ; without
+        (map #(do (println "generating answer #" %) %)
+              (range 10))
+      ; with
+        (pmap #(do (println "generating answer #" %) %)
+              (range 10))
 
     ;preventing laziness
       (doall ..) ;when you want all the data now
       (dorun..) ;when you only care that the code runs
+  ```
+
+# io
+  ```clojure
+    ; open a file
+    (def lines
+      (line-seq (clojure.java.io/reader "path/to/file.clj")))
   ```
