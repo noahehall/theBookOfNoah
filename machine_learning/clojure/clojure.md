@@ -72,10 +72,10 @@
     6. loads each dep into the project classpath for the java virtual machine so java can find the files
     7. packages up your project
 ### adding a dependency
-    ```clj
-      # leiningen dep format
+    ```clojure
+      ; leiningen dep format
         [org.clojure/core.async "0.2.374"]
-      # maven format
+      ; maven format
         <dependency>
           <groupId>org.clojure</groupId>
           <artifactId>core.async</artifactId>
@@ -148,7 +148,7 @@
 ## namespaces
   - all valus are stored in namespaces
   - namespaces are defined at the top of a file
-  ```clj
+  ```clojure
     (ns someNameSpace)
   ```
 ## values
@@ -173,7 +173,7 @@
   - BigInts: `9999999999N` (must put N)
   - BigDecimals: `0.0000000001M` (must put M)
 
-  ```clj
+  ```clojure
     Long/MAX_VALUE # biggest number
 
   ```
@@ -182,19 +182,19 @@
   - Characters: `\a \b \c \space \tab` (\a is string a)
   - Strings: `"a b c \" d e f"` (\ is the escape char)
 
-  ```clj
+  ```clojure
 
   ```
 
 
 ## operators:
   - come before their operand
-  ```clj
+  ```clojure
     (* 2 x) : 2 * x
     (+ (* 2 x) 1) :(2 * x) + 1
     (/ (+ (* 2 x) 1) 2) : ((2 * x) + 1) / 2
       - returns 9/2
-    (> x 45) # x > 45
+    (> x 45) ; x > 45
 
   ```
 
@@ -212,30 +212,30 @@
       - all lettes and numbers
       - *+!-_`
   -
-  ```clj
-    # declare a symbol that will be given a value elseware
+  ```clojure
+    ; declare a symbol that will be given a value elseware
       (declare SOME_VAR)
 
 
-    # define a symbol
+    ; define a symbol
       (def NAME VALUE)
 
-    # define a symbol that has metadata and evalutes to true
+    ; define a symbol that has metadata and evalutes to true
       (def ^{:true? true} myname
         {:name "Noah"})
-    # define a symbol that has metadata and evalutes to false
+    ; define a symbol that has metadata and evalutes to false
       (def ^{:true? false} myname
         {:name "Noah"})
 
-    # get the metadata for a symbol
+    ; get the metadata for a symbol
       (meta #'VAR_NAME)
 
-    # pull symbol a out of the map
-    # you must quote the symbol you want to retrieve
-    # by prepending it with a single quote
+    ; pull symbol a out of the map
+    ; you must quote the symbol you want to retrieve
+    ; by prepending it with a single quote
       ('a {'a 24, 'b 42})
 
-    # use let to define a series of things
+    ; use let to define a series of things
       (let [varName1 (THIS_S_EXPRESSION)
             varName2 (THIS_OTHER_S_EXPRESSION)
                                       ])
@@ -243,9 +243,9 @@
 
 ### keywords
   - preferred over symbols
-  ```clj
-    # pull keyword a out of the map
-    # prepend a colon infront of the keyword you want to retrieve
+  ```clojure
+    ; pull keyword a out of the map
+    ; prepend a colon infront of the keyword you want to retrieve
       (:a {:a 24, :b 42})
   ```
 
@@ -253,27 +253,27 @@
   - store names and values like hashes
   - immutable
 
-  ```clj
+  ```clojure
     (hash-map :key value, :key2 value)
-    (assoc  {:key "value"} :key value) #add to an existing map
-    (conj  {:key "value"} [:key value]) #add to an existing map
+    (assoc  {:key "value"} :key value) ;add to an existing map
+    (conj  {:key "value"} [:key value]) ;add to an existing map
 
-    (dissoc  {:key "value"} :key) #remove from a map
+    (dissoc  {:key "value"} :key) ;remove from a map
     {:key "value"}
     {1 42,
     2 43,
     "fish" 'gold}
 
-    # define a map and retrieve a value from it by its key
+    ;; define a map and retrieve a value from it by its key
       (def blah {1 42})
-      (blah '1) #returns 42
+      (blah '1) ;returns 42
   ```
 
 ## sets
   - only store values
   - immutable
 
-  ```clj
+  ```clojure
     #{value1 "value2"}
 
   ```
@@ -283,10 +283,10 @@
   - immutable
   - add and remove items from the top (number with the highest index)
 
-  ```clj
-    (vec (range 5)) # [0 1 2 3 4]
-    (vector 0 1 2 3 4) # [0 1 2 3 4]
-    (conj [1 2 3] 4) # [1 2 3 4]
+  ```clojure
+    (vec (range 5)) ; [0 1 2 3 4]
+    (vector 0 1 2 3 4) ; [0 1 2 3 4]
+    (conj [1 2 3] 4) ; [1 2 3 4]
     (subvec [1 2 3])
   ```
 
@@ -296,12 +296,12 @@
   - data structures that our code is made
   - groups from the beginning
 
-  ```clj
+  ```clojure
     (1 2 3 4)
   ```
 ## exceptions
   - AirthmeticException
-  ```clj
+  ```clojure
     (try
       code
       (catch Exception varName2
@@ -311,10 +311,10 @@
   ```
 
 ## math
-  ```clj
-    (quot 5 2) # floor division
-    (rem 5 2) # modulo
-    (double (/ 5 2)) # float division
+  ```clojure
+    (quot 5 2) ; floor division
+    (rem 5 2) ; modulo
+    (double (/ 5 2)) ; float division
   ```
 
 ## expressions
@@ -322,7 +322,7 @@
 ### do
   - takes any number of values and returns the last one
   - all values except the first one are usually print statements
-  ```clj
+  ```clojure
     (do
           value-to-ignore
           value-to-ignore
@@ -334,9 +334,9 @@
   - falsy values:
     - nil
     - false
-  ```clj
-    # you must always have truthy and falsy expressions
-    # because you always have to return something
+  ```clojure
+    ; you must always have truthy and falsy expressions
+    ; because you always have to return something
       (if CONDITION
           value-if-truthy
           value-if-falsy)
@@ -348,8 +348,8 @@
 
 
 ### loop
-  ```clj
-    #
+  ```clojure
+    ;
     (loop [VAR_NAME INITIAL_VALUE]
       code
       (recur NEW_VALUE_FOR_VAR_NAME)
@@ -362,33 +362,33 @@
     - can be stored anywhere
     - can be used anywhere
   - lexical closure: functions that return functions, i.e higher order functions/currying
-  ```clj
-    # literal syntax
+  ```clojure
+    ; literal syntax
       (fn [args]
         "optional doc string for description"
         (expression)
         (expression))
 
-    # a function that takes one or two args
+    ; a function that takes one or two args
       (defn someName
         ([arg1]
           (println x))
         ([arg1 arg2]
           (println (+ x y))))
 
-    # a function that accepts an arbitrary amount of args and stores it in a list
+    ; a function that accepts an arbitrary amount of args and stores it in a list
       (defn someName
         [& argument-list]
         (println argument-list))
 
-    # short form syntax begins with #
+    ; short form syntax begins with #
       #(expression %1 %2)
 
-    # define function addFor that accepts 1 argument
+    ; define function addFor that accepts 1 argument
       (defn addFor [arg1]
         (+ (arg1) 4))
 
-    # return a function from a function
+    ; return a function from a function
       (defn functionOne [arg1]
         (let [thisVarEqual arg1]
           (fn [arg2])))
@@ -398,27 +398,27 @@
   - mapping:
   - filtering:
   - reducing:
-  ```clj
+  ```clojure
     (println (* 2 x))
-    (read-string "(string of code)") # reads the string and returns the code but does not run it
-    (eval your_code) # the E in repl
+    (read-string "(string of code)") ; reads the string and returns the code but does not run it
+    (eval your_code) ; the E in repl
 
-    # read a string and evaluate it
-      (eval (read-string "(+ 1 2 3)")) # returns 6
+    ; read a string and evaluate it
+      (eval (read-string "(+ 1 2 3)")) ; returns 6
 
-    # map function
-    # applies a change to each member of a sequence
-    # is lazy: results are computed as required
+    ; map function
+    ; applies a change to each member of a sequence
+    ; is lazy: results are computed as required
       (map applyThisFunctionToThisList [1 2 3])
 
-    # filter
-    # throws out values where the function returns false
+    ; filter
+    ; throws out values where the function returns false
       (filter even? [1 2 3 4])
 
-    # reduce
-    # computes a single answer from a sequence
-    # is not lazy
-      (def someName (reduce + [1 2 3 4])) #returns 10
+    ; reduce
+    ; computes a single answer from a sequence
+    ; is not lazy
+      (def someName (reduce + [1 2 3 4])) ;returns 10
   ```
 
 ### macros
@@ -427,44 +427,51 @@
   - macro expression: if an expression evaluates to a macro then that macro is evaluated before REPL continues to P
     - this READ -> EVAL loop continues until the expression evaluated does not evaluate to a macro
 
-  ```clj
-    # returns the first macro instead of evaluating it
-    # useful for debugging
+  ```clojure
+    ; returns the first macro instead of evaluating it
+    ; useful for debugging
       (macroexpand-1 '(when true (print "hello")))
   ```
 ## regular expressions
  - start with #: `#"cat"`
-  ```clj
-    # returns the match if found
+  ```clojure
+    ; returns the match if found
     (re-find #"findthis" "inside this")
   ```
 
 ## Java
   - you can call java methods on objects
-  ```clj
+  ```clojure
     (. OBJECT METHOD_NAME)
-    (. "asdf" toUpperCase) # returns "ASDF"
+    (. "asdf" toUpperCase) ; returns "ASDF"
 
   ```
 
 ## sequence manipulation
   - squence abstraction: can feed any output of one function to the input of another function
-  - lazy sequences: can work on infinite sequences of data since evaluation is postponed until required
-    - [location](./examples/Exercise Files/ch05/src/ch05/core.clj) Files/ch05/src/ch05/core.clj
-    - the code is defined in one place, but the execution occurs elseware
-      - this can cause error traces to be inaccurate
-    - preventing laziness
-      - `(doall ..)` when you want all the data now
-      - `(dorun..)` when you want to run the code
-  ```clj
-    # create laziness with a linked list
+    - many data structures can be viewed sequentially
+    - many functions work on sequential data
+  - sequences in clojure are lazy by default
+    - lazy sequences: can work on infinite sequences of data since evaluation is postponed until required
+      - [location](./examples/Exercise Files/ch05/src/ch05/core.clj) Files/ch05/src/ch05/core.clj
+      - the code is defined in one place, but the execution occurs elseware
+        - this can cause error traces to be inaccurate
+      - preventing laziness
+        - `(doall ..)` when you want all the data now
+        - `(dorun..)` when you want to run the code
+  ```clojure
+    ; cons function: adds a value to the beginning of a sequence
+    ; conj function: adds value to a sequence at the most efficient place
+      ; vector: at the end
+      ; list: at the beginning (linked lists grow from beginning)
+    ; create laziness with a linked list
       (lazy-seq
         (cons this-new-value
           (code-to-make-the-rest)))
 
-    # create parallel laziness
-    # evaluates functions concurrently
-    # breaks a sequence into chunks and runs the sequences in each chunk in parallel each chunk is run sequently
+    ; create parallel laziness
+    ; evaluates functions concurrently
+    ; breaks a sequence into chunks and runs the sequences in each chunk in parallel each chunk is run sequently
       (pmap some_code)
       ()
   ```
