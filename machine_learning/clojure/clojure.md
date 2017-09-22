@@ -369,10 +369,10 @@
 
 ## functions:
   - [defn](https://clojuredocs.org/clojure.core/defn)
-  - functions are:
-    - can be defined anywhere
-    - can be stored anywhere
-    - can be used anywhere
+  - functions can be:
+    - defined anywhere
+    - stored anywhere
+    - used anywhere
   - lexical closure: functions that return functions, i.e higher order functions/currying
   ```clojure
     ; literal syntax
@@ -381,12 +381,21 @@
         (expression)
         (expression))
 
-    ; a function that takes one or two args
-      (defn someName
-        ([arg1]
-          (println x))
-        ([arg1 arg2]
-          (println (+ x y))))
+    ; a function that runs different code based on the number of items in the vector its called with
+      ; (someName ["this is arg 1"])
+      ; (someName ["one arg" "two arg"])
+        (defn someName
+          ([arg1]
+            (println arg1))
+          ([arg1 arg2]
+            (println (+ arg1 arg2))))
+    ; function that destructures a hash-map
+      ; (someName {:a 1 :b 2 :c "woops"})
+        (defn someName
+          [{:keys [a b c]}]
+          (println "a is" a)
+          (println "b is" b)
+          (println "c is" c))
 
     ; a function that accepts an arbitrary amount of args and stores it in a list
       (defn someName
@@ -406,7 +415,16 @@
         (let [thisVarEqual arg1]
           (fn [arg2])))
   ```
-
+### argument destructuring
+  - shortcut for giving names to parts of collections
+  - commonly used on maps and sequences
+  ```clojure
+    ; (range 5) === [0 1 2 3 4]
+    ; a && b === 0 1
+    ; the-rest === (2 3 4)
+      (let [ [a b & the-rest] (range 5)]
+          [a b the-rest])
+  ```
 ### global functions
   ```clojure
     ; need to verify
