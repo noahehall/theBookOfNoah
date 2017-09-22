@@ -29,7 +29,6 @@
 
 # terminology
   - simple data: a concept that cannot be broken down; a piece of data that is not made of other data
-
   - evaluate: translate one expression into the next (usually by running it)
   - function: those things they taught you in algebra ha!
   - REPL: interactive program that lets you type and run code; read-eval-print loop
@@ -37,11 +36,6 @@
     - E: evaluate: translates exactonly one data into exactly another data structure
     - Print: print the newly data structure to the screen in the format used by the reader
     - loop: return to the read step
-  - data structures
-    - vectors: arrays
-    - maps: hashes
-    - lists
-    - sets
   - form:  the unit of compilation:
     - everything in clojure is a form
 
@@ -146,10 +140,48 @@
   -
 
 ## namespaces
-  - all valus are stored in namespaces
-  - namespaces are defined at the top of a file
+  - namespaces hold vars
+    - require a root value for all threads
   ```clojure
-    (ns someNameSpace)
+    ; load a namespace into the program
+    ; specify at the top of your file
+    ; the current namespace has access to all namespaces that were previously required
+    ; you should always require the namespaces the current namespace depends on
+    ; circular references are not allowed
+      ; require a namespace without instantiating a symbol for any of its methods
+        (require '[clojure.string]) ; preferred
+        (require 'clojure.string)
+        ; use a function from the namespace
+          (clojure.string/capitalize "hi") ; "Hi"
+      ; require a namespace and instantiate a symbol for one of its methods
+        (require '[clojure.string :refer [capitalize]]) ;preferred
+        ;use a function via its symbol
+        (capitalize "hi") ;"Hi"
+      ; full examples
+        (ns someFile.handler
+          :require  [compojure.core :refer :all] ;get every method from compojure.core
+                    [compojure.route  :as route] ;now use it as route.method
+                    [ring.middleware.defaults :refer [site-defaults]]
+          (:gen-class)) ;gen-class is for AOT compilation
+
+
+  ```
+### vars
+  - vars hold values
+  - types
+    - thread local vars:
+      - variables local to a thread
+      - cannot be passed to different threads
+      - used as traditional values
+  -
+  ```clojure
+    ; intern (add) var a to the current namespace
+      (def a 4) ;a === 4 but its not dynamic so you cant change it with binding below
+      (def ^:dynamic a 4) ;a === 4 and its dynamic so the below works
+    (binding [a 5] ;a === 5
+      (set! a 3) ;a === 3
+      (set! a (+ a 3)) ;a === 6
+      a) ; returns a === 6 for its local scope, a still === 4 in the outer scope
   ```
 ## values
   - can have metadata
@@ -165,6 +197,8 @@
   - compound data: data that is made of other data (not simple)
     - maps, sets
   - identity: a sequence of values that change with time
+
+
 ### numbers
   - integer overflow is
   - Longs: `0 -1 428`
@@ -174,16 +208,21 @@
   - BigDecimals: `0.0000000001M` (must put M)
 
   ```clojure
-    Long/MAX_VALUE # biggest number
+    Long/MAX_VALUE ; biggest number
 
   ```
-
+### math
+  ```clojure
+    (quot 5 2) ; floor division
+    (rem 5 2) ; modulo
+    (double (/ 5 2)) ; float division
+  ```
 ### strings
   - Characters: `\a \b \c \space \tab` (\a is string a)
   - Strings: `"a b c \" d e f"` (\ is the escape char)
 
   ```clojure
-
+    "i am a string"
   ```
 
 
@@ -309,7 +348,61 @@
     (conj '(1 2 3) 0) ; add 0 to beginning of list
     (first '(1 2 3)) ; retrieve first item 1
     (rest '(1 2 3)) ; retrieve rest of items (2 3)
+
+    ; lazily generate a list from 0 to 8
+      (for [x (range 0 9)]
+        x)
   ```
+## reference types for managing state changes: ref atom agent
+  - state changes
+    - synchronous changes: execution of code waits for current process to complete before continuing
+    - coordinated changes: when two identities change together in a consistent way
+    - uncoordinated change: two identities are allowed to change without regard to each other
+  - time: epochal time model
+### ref
+  ```clojure
+    ; coordinated and synchronous
+    ; are changed via tranctions: either all change or they dont
+    ; can run transactions many times:
+      ;if two groups attempt to change the same refs at the same time
+        ; whichever commits first wins
+        ; if they happen at the same time, it will continue to retry
+        ; this is called software transactional memory
+          ; create a ref
+            (def a (ref 1)) ;a === 1
+            (def b (ref 0)) ;b === 0
+          ; decriment a and increment b
+            ;dosync starts a transaction
+            ;commute will only do a commutative actions (things that are safe to do in any order like * or +), other transactions can change its ref and it will retry
+              (dosync (commute a dec)
+                (commute b inc))
+            ;alter will only execute if it is the only who touched its operand in this transaction
+              (dosync (alter a dec)
+                (alter b inc))
+
+  ```
+### atom
+  ```clojure
+    ;uncoordinated and synchronous
+    ;great for storing values you want to change like configuration options
+      (def a (atom 0)) ;a === 0
+      (swap! a inc) ;a === 1
+      (@a) ;retrieve the value of a
+  ```
+### agent
+  ```clojure
+    ; uncoordinated and asynchronous
+    ; send an operation to an agent and it will execute in the future
+    ; its a queue that executes in the order it receives and only executes ieach job once
+    ; any errors are stored in the agent
+      (def a (agent 0)) ; a === 0
+      (send a inc) ; increment a in the queue
+      (send-off a inc) ;increment a in a different long term queue for blocking tasks
+      (@a) retrieve the value of a
+
+
+  ```
+
 
 ## exceptions
   - AirthmeticException
@@ -322,12 +415,7 @@
         code))
   ```
 
-## math
-  ```clojure
-    (quot 5 2) ; floor division
-    (rem 5 2) ; modulo
-    (double (/ 5 2)) ; float division
-  ```
+
 
 ## expressions
   - any expression anywhere can do everything
@@ -361,10 +449,13 @@
 
 ### loop
   ```clojure
-    ;
-    (loop [VAR_NAME INITIAL_VALUE]
-      code
-      (recur NEW_VALUE_FOR_VAR_NAME)
+    ; loop through numbers 0 to 8 and bound each value to var x
+      (doseq [x (range 0 9)]
+        (println x))
+    ; confirm wtf is below
+      (loop [VAR_NAME INITIAL_VALUE]
+        code
+        (recur NEW_VALUE_FOR_VAR_NAME)
   ```
 
 ## functions:
@@ -428,7 +519,7 @@
 ### global functions
   ```clojure
     ; need to verify
-    ; pos? even? count
+    ; pos? even? count do future dotimes rand-int Thread/sleep
     (println (* 2 x))
     (read-string "(string of code)") ; reads the string and returns the code but does not run it
     (eval your_code) ; the E in repl
@@ -464,6 +555,33 @@
     ; returns the first macro instead of evaluating it
     ; useful for debugging
       (macroexpand-1 '(when true (print "hello")))
+
+    ; threading macros beautify nested expressions
+      ; thread-first macro
+        ; instead of this
+          (d (c (b (a 1) 2) 3) 4)
+        ; places each result as the first argument to the next
+          (-> (a 1)
+              (b 2)
+              (c 3)
+              (d 4))
+      ; cond macro
+        ; instead of this
+          (let [t 42]
+            (if (neg? t)
+              :brrr
+              (if (< t 110)
+                :hot
+                (if (< t 80)
+                  :brisk
+                  :warm))))
+        ; remove the if cmd and put return value if the condition is true
+          (let [t 42]
+            (cond
+              (neg? t)  :brr
+              (> t 110) :hot
+              (< t 80)  :brisk
+              :default  :warm))
   ```
 ## regular expressions
  - start with #: `#"cat"`
@@ -521,6 +639,10 @@
 # io
   ```clojure
     ; open a file
-    (def lines
-      (line-seq (clojure.java.io/reader "path/to/file.clj")))
+      (def lines
+        (line-seq (clojure.java.io/reader "path/to/file.clj")))
+    ; write to a file
+      (clojure.java.io/writer filename)
+    ; read a file
+      (slurp "path/to/file.txt")
   ```
