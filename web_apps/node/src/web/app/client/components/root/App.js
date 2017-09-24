@@ -13,7 +13,7 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <div style={styles.app}>
-werdfgs
+werafsgsfddfgs
         </div>
       </BrowserRouter>
     )

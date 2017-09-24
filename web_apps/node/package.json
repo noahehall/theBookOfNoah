@@ -5,11 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/webpack",
     "client": "babel-node config/index.js --type client",
-    "prod": "NODE_ENV=production babel-node config/index.js --type client",
-    "start": "npm run build && npm run devstart",
-    "devserver": "rm -rf ./build && webpack --display-error-details --config index.js"
+    "prod": "NODE_ENV=production babel-node config/index.js --type client"
   },
   "author": "",
   "license": "ISC",
