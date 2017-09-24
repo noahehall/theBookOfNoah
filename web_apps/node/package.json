@@ -4,12 +4,46 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/webpack",
+    "client": "babel-node config/index.js --type client",
+    "prod": "NODE_ENV=production babel-node config/index.js --type client",
+    "start": "npm run build && npm run devstart",
+    "devserver": "rm -rf ./build && webpack --display-error-details --config index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-runtime": "^6.26.0",
     "express": "^4.15.4",
+    "fs-extra": "^4.0.2",
+    "morgan": "^1.8.2",
+    "nconf": "^0.8.4",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-router-dom": "^4.2.2",
+    "winston": "^2.3.1",
     "yarn": "^1.0.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-watch": "^2.0.7",
+    "html-webpack-plugin": "^2.30.1",
+    "react-hot-loader": "next",
+    "start-server-webpack-plugin": "^2.2.0",
+    "webpack": "^3.6.0",
+    "webpack-chain": "^4.3.0",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-dev-server": "^2.8.2",
+    "webpack-hot-middleware": "^2.19.1",
+    "webpack-node-externals": "^1.6.0"
   }
 }

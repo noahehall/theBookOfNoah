@@ -2,6 +2,12 @@
 ## [modules](https://nodejs.org/api/modules.html)
   - importing
     - commonjs: used by node for module loading
+      - each module is surrounded by an IIFE
+        ```javascript
+          (function(console, /*every global is here*/){
+            // your code actually lives here
+          })()
+        ```
     - AMD
   - exporting: add properties to the `exports` object
     ```javascript
@@ -48,3 +54,7 @@
     20. Running JavaScript and CSS Linters: jshint, csslint etc.
     21. Dependencies: handle dependencies on npm and Bower packages, Browserfy etc.
     22. eaisly syncs with deploy process
+
+# env vars
+  - process.env
+    - NODE_ENV
