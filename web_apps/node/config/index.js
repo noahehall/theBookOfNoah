@@ -14,14 +14,17 @@ nconf.use('memory')
 nconf.set('NODE_ENV', nconf.get('NODE_ENV') || 'development')
 nconf.set('port', nconf.get('port') || 8080);
 nconf.set('domain', nconf.get('domain') || 'localhost');
-nconf.set('output', nconf.get('path') || path.resolve(__dirname, '..','build'))
+nconf.set('output', nconf.get('path') || path.resolve(__dirname, '..','build/public/'))
+nconf.set('jspath', nconf.get('jspath') || 'js')
+nconf.set('htmlpath', nconf.get('htmlpath') || 'html')
+nconf.set('imagepath', nconf.get('imagepath') || 'images')
 nconf.set('protocol', nconf.get('protocl') || 'http');
 
 fse.outputJson(
   'config.json',
   nconf.get(),
   function cb(err, data) {
-    if (err) console.error('error',err);
+    if (err) console.error('config/index',err);
     else process(nconf);
   }
 )

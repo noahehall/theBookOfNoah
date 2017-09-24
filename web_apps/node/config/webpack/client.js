@@ -9,6 +9,12 @@ export default function clientConfig(nconf, config) {
   config.when(
     ['development'].includes(env),
     config => {
+      config
+        .entry('client')
+          .add('react-hot-loader/patch')
+          .add('webpack-hot-middleware/client')
+          .end();
+
       config.devtool('eval');
 
       config.plugin('HotModuleReplacementPlugin')
@@ -38,26 +44,34 @@ export default function clientConfig(nconf, config) {
             ]
           }
         ))
+    },
+    config => {
+      config.module.rule('compile')
+        .use('babel')
+        .tap(options => Object.assign(
+          {},
+          options,
+          {
+            "presets": [
+              ["env", {"modules": false}],
+              "stage-1",
+              "react",
+            ],
+            "plugins": [
+              "transform-runtime",
+            ]
+          }
+        ))
     }
   )
 
-
-  const publicPath = nconf.get('protocol')
-      + '://'
-      + nconf.get('domain')
-      + ':'
-      + nconf.get('port') + '/';
-
   config
     .entry('client')
-      .add('react-hot-loader/patch')
-      .add('webpack-hot-middleware/client')
       .add('./web/app/client/components/root/index.js')
       .end()
     .output
       .path(nconf.get('output'))
-      .publicPath(publicPath)
-      .filename('bundle_[name].js')
+      .filename(nconf.get('jspath')+'/bundle_[name].js')
 
 
   config = htmlPlugin(nconf, config);

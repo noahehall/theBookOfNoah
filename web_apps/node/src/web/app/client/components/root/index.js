@@ -3,10 +3,12 @@ import { render } from 'react-dom'
 import App from './App';
 
 function renderApp(THIS_APP = App) {
-  return render(
+  if (typeof document !== 'undefined') return render(
   	<THIS_APP />,
     document.querySelector('#app')
   );
+
+  console.log('hello')
 }
 
 renderApp();
