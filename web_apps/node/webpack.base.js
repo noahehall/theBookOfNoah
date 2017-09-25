@@ -1,12 +1,11 @@
 import path from 'path';
 import Config from 'webpack-chain';
-let config = new Config();
-
-var webpack = require('webpack')
-
-var filepath = path.resolve(__dirname, 'build');
-
+import webpack from 'webpack';
 import clientConfig from './config/webpack/client';
+
+let config = new Config();
+const filepath = path.resolve(__dirname, 'build');
+
 
 export default function webpackBase(nconf) {
   config.context(path.resolve(__dirname, "src"))
@@ -35,6 +34,5 @@ export default function webpackBase(nconf) {
       .options({})
 
 
-  config = clientConfig(nconf, config);
-  return config.toConfig();
+  return clientConfig(nconf, config).toConfig();
 }
