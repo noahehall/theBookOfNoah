@@ -1,10 +1,10 @@
 import path from 'path';
-import Config from 'webpack-chain';
-import webpack from 'webpack';
 import clientConfig from './config/webpack/client';
+import Config from 'webpack-chain';
 
 let config = new Config();
-const filepath = path.resolve(__dirname, 'build');
+
+import webpack from 'webpack';
 
 
 export default function webpackBase(nconf) {

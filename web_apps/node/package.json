@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "babel-node config/index.js --type client",
+    "api": "babel-node config/index.js --type api",
     "prod": "NODE_ENV=production babel-node config/index.js --type client"
   },
   "author": "",

@@ -1,5 +1,44 @@
-continue: https://www.youtube.com/watch?v=yPu6qV5byu4 27 minutes
-research
+
+# [basics]
+## [administration]
+  ```mysql
+    # Start server & login
+      mysql –u yourUserName –p
+    # connect to a database
+      mysql –u username –h hostname database-name
+    # will list all of the databases
+      Show databases;
+    # Quit mysql
+      cmd quit
+  ```
+## [syntax]
+  ```mysql
+    # select syntax
+      SELECT
+        [ALL | DISTINCT | DISTINCTROW ]
+          [HIGH_PRIORITY]
+          [STRAIGHT_JOIN]
+          [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]
+          [SQL_CACHE | SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]
+        select_expr [, select_expr ...]
+        [FROM table_references
+        [WHERE where_condition]
+        [GROUP  BY {col_name | expr | position}
+          [ASC | DESC], ... [WITH  ROLLUP]]
+        [HAVING where_condition]
+        [ORDER  BY {col_name | expr | position}
+          [ASC | DESC], ...]
+        [LIMIT {[offset,] row_count | row_count OFFSET offset}]
+        [PROCEDURE procedure_name(argument_list)]
+        [INTO  OUTFILE 'file_name'
+            [CHARACTER  SET charset_name]
+            export_options
+          | INTO  DUMPFILE 'file_name'
+          | INTO var_name [, var_name]]
+        [FOR  UPDATE | LOCK  IN  SHARE  MODE]]
+  ```
+# research
+
 coalesce
 group_concat
 group_concat(distinct tracks.title order by tracks.title asc separator ', ')
@@ -13,46 +52,11 @@ Modify user
 Administration roles
 Everything is done via terminal
 connections
-Start server & login
-Cmd mysql –u yourUserName –p
-Mysql might have to be mysql or mysql5 depending on the install
--u # username
--p #cmd will prompt for the password on the next line
-connect to a database
-mysql –u username –h hostname database-name
-start the server #dont know if works
-"C:\Program Files (x86)\MySQL\MySQL Server 5.6\bin\mysqld.exe" --console
-start the client #eorks
-"C:\Program Files (x86)\MySQL\MySQL Server 5.6\bin\mysql.exe" -u root -p
-Show databases;
-#will list all of the databases
-Quit mysql
-cmd quit
+
 
 Syntax
 syntax
-SELECT
-    [ALL | DISTINCT | DISTINCTROW ]
-      [HIGH_PRIORITY]
-      [STRAIGHT_JOIN]
-      [SQL_SMALL_RESULT] [SQL_BIG_RESULT] [SQL_BUFFER_RESULT]
-      [SQL_CACHE | SQL_NO_CACHE] [SQL_CALC_FOUND_ROWS]
-    select_expr [, select_expr ...]
-    [FROM table_references
-    [WHERE where_condition]
-    [GROUP  BY {col_name | expr | position}
-      [ASC | DESC], ... [WITH  ROLLUP]]
-    [HAVING where_condition]
-    [ORDER  BY {col_name | expr | position}
-      [ASC | DESC], ...]
-    [LIMIT {[offset,] row_count | row_count OFFSET offset}]
-    [PROCEDURE procedure_name(argument_list)]
-    [INTO  OUTFILE 'file_name'
-        [CHARACTER  SET charset_name]
-        export_options
-      | INTO  DUMPFILE 'file_name'
-      | INTO var_name [, var_name]]
-    [FOR  UPDATE | LOCK  IN  SHARE  MODE]]
+
 definitions
 ALL: the default select
 Distinct: unique records based on the combination of columns after the select statement
@@ -455,7 +459,7 @@ valid use of the where clause, notice there are two (one before the union, and o
 
 Subqueries
 notes
-- A subquery must be enclosed in parentheses.  
+- A subquery must be enclosed in parentheses.
 - Use single-row operators with single-row subqueries, and use multiple-row operators with multiple-row subqueries.
 - If a subquery (inner query) returns a null value to the outer query, the outer query will not return any rows when using certain comparison operators in a WHERE clause.
 A scalar subquery:
@@ -475,8 +479,8 @@ FROM table2);
 
 try these
 number 1
-select     
-  a.*,  
+select
+  a.*,
   COUNT(a.ID) SUMFILL
 from
   quizz a

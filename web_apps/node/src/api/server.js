@@ -1,6 +1,7 @@
 var express = require('express')
 var path = require('path');
 var app = express();
+
 app.use(require('morgan')('short'));
 if (process.env.NODE_ENV !== 'production') {
   const webpack = require('webpack')

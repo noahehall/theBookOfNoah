@@ -9,6 +9,7 @@ export default function clientConfig(nconf, config) {
   config.when(
     ['development'].includes(env),
     config => {
+      console.log('client webpack dev mode')
       config
         .entry('client')
           .add('react-hot-loader/patch')
@@ -19,7 +20,6 @@ export default function clientConfig(nconf, config) {
 
       config.plugin('HotModuleReplacementPlugin')
         .use(webpack.HotModuleReplacementPlugin);
-
       config.plugin('NoEmitOnErrorsPlugin')
         .use(webpack.NoEmitOnErrorsPlugin);
 
@@ -67,14 +67,14 @@ export default function clientConfig(nconf, config) {
 
   config
     .entry('client')
-      .add('./web/app/client/components/root/index.js')
+      .add('./client/index.js')
       .end()
     .output
       .path(nconf.get('output'))
+      .publicPath(nconf.get('publicPath'))
       .filename(nconf.get('jspath')+'/bundle_[name].js')
 
 
-  config = htmlPlugin(nconf, config);
-
-  return config;
+  console.log('client js returning html plugin')
+  return htmlPlugin(nconf, config);
 }
