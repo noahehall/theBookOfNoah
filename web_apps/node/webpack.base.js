@@ -1,6 +1,7 @@
 import path from 'path';
 import clientConfig from './config/webpack/client';
 import Config from 'webpack-chain';
+
 let config = new Config();
 
 import webpack from 'webpack';
