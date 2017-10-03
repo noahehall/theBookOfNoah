@@ -18,13 +18,15 @@ nconf.set('output', nconf.get('path') || path.resolve(__dirname, '..','build/pub
 nconf.set('jspath', nconf.get('jspath') || 'js')
 nconf.set('htmlpath', nconf.get('htmlpath') || 'html')
 nconf.set('imagepath', nconf.get('imagepath') || 'images')
-nconf.set('protocol', nconf.get('protocl') || 'http');
+nconf.set('protocol', nconf.get('protocol') || 'http');
+nconf.set('publicPath', nconf.get('publicPath') || '/');
 
 fse.outputJson(
   'config.json',
   nconf.get(),
   function cb(err, data) {
     if (err) console.error('config/index',err);
-    else process(nconf);
+    console.log('return process')
+    return process(nconf);
   }
 )

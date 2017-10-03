@@ -5,14 +5,18 @@ export default function htmlPlugin (nconf, config) {
     .plugin('htmlplugin')
     .use(HtmlWebpackPlugin);
 
+  const filename = path.join(nconf.get('output'), nconf.get('htmlpath'),'index.html');
+  console.log('filename', filename)
   config.plugin('htmlplugin')
     .init(
       Plugin => new Plugin({
-        template: './web/app/client/components/root/index.html',
-        filename: path.join(nconf.get('output'), nconf.get('htmlpath'),'index.html'),
+        template: './client/index.html',
+        filename,
         inject: 'body'
       })
     )
+
+    console.log('returning html plugin')
 
   return config;
 }
