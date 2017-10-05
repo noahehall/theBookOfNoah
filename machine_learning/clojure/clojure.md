@@ -565,6 +565,11 @@
               (b 2)
               (c 3)
               (d 4))
+        ;; waterfall logic
+          (->> (range) ; do this
+            (filter even?) ; then this
+            (take 5)) ; finally this
+          ; => (0 2 4 6 8)
       ; cond macro
         ; instead of this
           (let [t 42]
