@@ -3,8 +3,7 @@
 
 ;Write a function that returns the average of a set of numbers.
 ;Be sure to return longs. We don't want to return Clojure Ratios!
-(defn find-average
-  [numbers]
+(defn find-average [numbers]
     (def total (count numbers))
     (def sum (apply + numbers))
     (double( / sum total))
@@ -35,8 +34,7 @@
 
   (def vowels #{\a \A \e \E \i \I \o \O \u \U \y \Y})
 
-  (defn vowel-indices
-    [word]
+  (defn vowel-indices [word]
     (keep-indexed #(when (vowels %2) (inc %1)) word))
 
   ; another version

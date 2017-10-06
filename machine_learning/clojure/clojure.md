@@ -166,7 +166,7 @@
 
 
   ```
-### vars
+### variables
   - vars hold values
   - types
     - thread local vars:
@@ -223,6 +223,9 @@
 
   ```clojure
     "i am a string"
+    ; string methods
+      (require '[clojure.string :as Str]) ; bring string methods into your namespace
+      (Str/split "abc" #"") ; returns ["a" "b" "c"]
   ```
 
 
@@ -312,6 +315,7 @@
 ## sets
   - only store values (in random order)
   - immutable
+  - [sorted sets](https://clojuredocs.org/clojure.core/sorted-set)
   ```clojure
     (set [1 2 3]) ; returns #{1 2 3}
     (conj #{1 2 3} 4) ; add 4 to a set
@@ -320,6 +324,8 @@
     (#{1 2 3} 2) ; returns 2 if 2 is in set else nil
     #{value1 "value2"}
 
+    (sorted-set 1 2 3) ; returns #{1 2 3}
+    (sorted-set 3 2 1 1) ; #{1 2 3}
   ```
 
 ## vectors
