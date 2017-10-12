@@ -2,7 +2,9 @@
   - [postgres cheatsheet](https://gist.github.com/Kartones/dd3ff5ec5ea238d4c546)
   - [general sql cheatsheet](https://gist.github.com/janikvonrotz/6e27788f662fcdbba3fb)
   - [getting started postgresql server mac osx](https://www.codementor.io/devops/tutorial/getting-started-postgresql-server-mac-osx)
-  - [postgresql official docs](http://www.postgresqltutorial.com/)
+  - [postgresql tut](http://www.postgresqltutorial.com/)
+    - todo sections: 4, 5, 6, 9, 10, 11, 12, 13, 14, 15,
+    - 
 
 
 # research
@@ -162,8 +164,41 @@
   ```
 
 # tables
-  - types: serial, varchar, numeric, int,
-    - specify col size: varchar (255)
+  - types: serial, numeric, int,
+    - character
+      - char(n) varchar(n) text
+        - text has unlimited length
+    - numeric:
+      - integers
+        - smallint int serial
+          - serial is auto generated & incremented
+      - floating point
+        - float(n) real float8 numeric numeric(p,s)
+          - float(n) where n = number of decimal places
+          - numeric(p,s)
+            - p = number of digits before the decimal
+            - s = number of digits after the decimal
+    - temporal/time
+      - date time timestamp timestampz interval
+        - timestampz = stores both timestamp and timezone
+        - interval = periods of time
+    - bool:
+      - truthy: true, t, yes, y, 1
+      - falsy: false, f, no, n, 0
+    - arrays: array of other data types, e.g. for storing days of week
+    - json: plain json data that requires reparsing later on
+    - jsonb: json in binary format for faster processing but slower insert
+      - supports indexing
+    - uuid: store uuid values defined by RFC 4122
+      - guarantee a better uniqueness than serial
+      - can be used to hide sensitive data
+    - box: rectangular box
+    - line: a set of points
+    - point: geometric pair of numbers
+    - lseg: line segment
+    - polygon: closed geometric
+    - inet: ip4 address
+    - macaddr: a mac address
   - keywords: primary key, not null
   ```sql
     create table tablename (
@@ -171,7 +206,19 @@
       col2 etc,
       colX etc
       foreign key(col1) references othertablename(colid)
+      unique(col2)
+      unique(col3, col4) --unique combination
     );
+
+    -- add index based on two columns
+      create index indexname on tablename(col1, col2)
+    -- add unique index to col1 to table and name the index indexname
+      create unique index concurrently indexname
+        on tablename (col1)
+    -- add a unique constraint to a table using an index name
+      alter table tablename
+        add constrain contraintname
+        unique using index indexname;
 
     -- create a table with the same schema as another
       create table tablename (like othertablename)
@@ -213,9 +260,44 @@
         where tablename.id = othertablename.id
 
     -- upserting
+      insert into tablename(col1, colX)
+        values(val1, valX)
+        on conflict target action
+          -- targets
+            on (col1)
+            on constraint constraintname
+            on a where clause with a predicate -- research this
+          -- actions
+            do nothing -- do nothing if row already exists
+            do update set col1 = val1 where CONDITION -- update fields with these values on conflict
+    -- upsert: do nothing example
+      insert into ... values ...
+        on conflict on constraint constraintname
+        do nothing
 
   ```
 
+# deleting records
+  ```sql
+    delete from tablename where CONDITION
+    -- delete based on values from othertablename
+      delete from tablename
+        using othertablename
+        where tablename.id = othertablename.id
+      delete from tablename where tablename.id = (
+        select id from othertablename
+      ) -- same as above
+    -- delete all records from tablename
+      delete from tablename;
+  ```
+# prepared statements
+  ```sql
+    -- create a prepared statement that accepts an argument
+      prepare statementname(arg1)
+        as select * from tablename where col1 = $1 -- $1 = arg1
+    -- execute a prepared statement
+      execute statename(val1)
+  ```
 
 # handy queries
   ```sql
