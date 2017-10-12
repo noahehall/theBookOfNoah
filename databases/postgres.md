@@ -4,7 +4,7 @@
   - [getting started postgresql server mac osx](https://www.codementor.io/devops/tutorial/getting-started-postgresql-server-mac-osx)
   - [postgresql tut](http://www.postgresqltutorial.com/)
     - todo sections: 4, 5, 6, 9, 10, 11, 12, 13, 14, 15,
-    - 
+    -
 
 
 # research
@@ -49,7 +49,7 @@
     -  The purpose of extensions is to make it easier to maintain.
   - subquery: a query nested inside another query, e.g. in the where clause with the in operator
 
-# other
+# admin
   ```sql
     -- locations
       config file: /etc/postgresql/9.3/main/postgresql.conf
@@ -65,11 +65,30 @@
       sudo service postgresql start
       sudo service postgresql restart
 
+
     -- server
       # select version(); -- show postgres version
-      psql -U postgres --connect to local db server
+      psql -U username --connect to local db server
+        -- default username is postgres
+      psql -d databasename -U username -W
+        -- connect to local db as user and ask for pw on next line
+      psql -h hostname -d databasename -u username -W
+        -- connect to remote db
+      psql -U username -h hostname "dbname=db sslmode=require"
+        -- connect to remote db via SSL
       \q -- Quit/Exit
       \x -- toggle enhanced view for display query results
+      \a -- toggle aligned/non aligned column output
+      \H -- toggle html output format
+      \g -- execute previous command
+      \s -- display command history
+      \s /path/to/file -- save cmd history to file
+      \i /path/to/file -- execute psql cmds from file
+      \? -- list all available cmds
+      \h CMD -- get help on a specific cmd
+      \timing -- toggle the display of query execution time
+      \e -- use the program defined by the EDITOR env var to execute a cmd
+      \ef functioname -- edit a function with default text editor
 
     -- user admin
       \du -- List users
@@ -81,13 +100,23 @@
 
     -- db admin
       create database NAME -- create
+      alter database dbname rename to newname -- rename db
       pg_restore -U USERNAME -d DBNAME -l /path/to/db_data.tar -- load data into a db
       \c DBNAME -- Connect to a database
+      \c dbname username -- connect to db as user
       \l -- list all dbs
 
     -- table admin
-      \d+ -- describe table
+      select pg_relation_size('dbname'); -- returns the size of the table in bytes, not included indexes or additional objects.
+      select pg_total_relation_size('dbname'); -- returns the size of the table in bytes, including indexes or additional objects.
+      SELECT pg_size_pretty (pg_relation_size('actor')); -- convert bytes to kb/mb/gb/tb
       \dt -- list all tables in current db
+      \d+ -- describe table
+      \dn -- list all schema of current db
+      \df -- list all available functions of current db
+      \dv -- list all views
+      \du -- list all users
+
   ```
 # statements
 ## select
@@ -164,13 +193,31 @@
   ```
 
 # tables
-  - types: serial, numeric, int,
+  - temporary table: exists for the duration of a db session
+## creating and modifying
+  - primary key: field(s) used to uniquely identify a record
+    - default name is tablename_pk
+    - Technically, a primary key constraint is the combination of a not-null constraint and a UNIQUE constraint.
+    - A table can have one and only one primary key.
+    - good practice to add a primary key to every table.
+  - foreign key: field(s) in one table record that uniquely identify the primary key of a record in another table
+    - default name is tablename__colname_fk
+    - referencing/child table: the table that contains the foreign key
+    - referenced/parent table: the table whose primary key is referenced by the child table
+    - a foreign key constraint maintains referential integrity between child and parent tables
+  - column keywords:
+    - primary key (col1, colX)
+      - can be one/more columns
+    - not null
+  - data types: serial, numeric, int,
     - character
       - char(n) varchar(n) text
         - text has unlimited length
     - numeric:
       - integers
         - smallint int serial
+          - int4 | int8
+            - research this
           - serial is auto generated & incremented
       - floating point
         - float(n) real float8 numeric numeric(p,s)
@@ -199,17 +246,35 @@
     - polygon: closed geometric
     - inet: ip4 address
     - macaddr: a mac address
-  - keywords: primary key, not null
   ```sql
     create table tablename (
       col1 TYPE keyword1 keyword2 keywordX,
       col2 etc,
-      colX etc
-      foreign key(col1) references othertablename(colid)
+      col3 primary key, -- default name is tablename_pk
+      constraint NAME primary key(col4) -- give the pkey a name
+      colX etc,
+      foreign key(col1) references othertablename(colid) -- this gives the foreign key a name
+      col3 TYPE references othertablename(colid2) -- references keyword defines the foreign key constraint, doesnt give the foreign key a name
+      col4 type references othertablename(colid3) ON DELETE RESTRICT -- the parent table record will not be deleted until all references are deleted
+      col5 type references othertablename(colid4) ON DELETE CASCADE -- all child records are deleted if the parent record is deleted
+      FOREIGN KEY (c2, c3) REFERENCES parent_table (p1, p2) -- group of columns as foreign keys
       unique(col2)
       unique(col3, col4) --unique combination
     );
 
+    -- add primary key to a table without one
+      alter table tablename add primary key (colX)
+    -- add auto incremented primary key
+      alter table tablename add column colx serial primary key
+    -- remove primary key
+      alter table tablename drop constraint pkname
+
+    -- add foreign key constraint to existing table
+      ALTER TABLE child_table ADD CONSTRAINT constraint_name
+        FOREIGN KEY (c1) REFERENCES parent_table (p1);
+
+    -- remove a constraint from a table
+      ALTER TABLE child_table DROP CONSTRAINT constraint_fkey;
     -- add index based on two columns
       create index indexname on tablename(col1, col2)
     -- add unique index to col1 to table and name the index indexname
@@ -229,6 +294,13 @@
       alter table tablename alter column col1 set default value
 
 
+  ```
+## deleting tables
+  ```sql
+    drop table tablename
+    drop table if exists tablename -- dont throw error if table doesnt exist
+    drop table cascade -- drop and remove all dependent objects (views, references, etc)
+    drop table restrict -- dont drop if any references exist
   ```
 # updating records
   - 'upsert: update if it exists, else inserts it'
@@ -278,6 +350,9 @@
   ```
 
 # deleting records
+  - truncate: remove all data from a large table
+    - does not remove any child tables unless you specify `cascade`
+  - delete: scans the table before deleting records (usually because of where clause)
   ```sql
     delete from tablename where CONDITION
     -- delete based on values from othertablename
@@ -289,6 +364,14 @@
       ) -- same as above
     -- delete all records from tablename
       delete from tablename;
+
+    -- truncate table
+      truncate table tablename1, tablename2
+    -- truncate and remove reset sequence generator
+      truncate table tablename reset identity
+    -- truncate table and remove records from all child tables if any
+      truncate table tablename cascade
+
   ```
 # prepared statements
   ```sql
@@ -355,4 +438,24 @@
       WHERE
        return_date BETWEEN '2005-05-29'
       AND '2005-05-30';
+
+    -- get the 5 biggest tables from current database
+      SELECT
+          relname AS "relation",
+          pg_size_pretty (
+              pg_total_relation_size (C .oid)
+          ) AS "total_size"
+      FROM
+          pg_class C
+      LEFT JOIN pg_namespace N ON (N.oid = C .relnamespace)
+      WHERE
+          nspname NOT IN (
+              'pg_catalog',
+              'information_schema'
+          )
+      AND C .relkind <> 'i'
+      AND nspname !~ '^pg_toast'
+      ORDER BY
+          pg_total_relation_size (C .oid) DESC
+      LIMIT 5;
   ```
