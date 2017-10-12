@@ -293,6 +293,13 @@
       (:a {:a 24, :b 42})
   ```
 
+## converting data types
+  ```clojure
+    (into [] '(1 2 3 4)) ==> [1 2 3 4]  ;"have a lazy list and want a vector"
+    (into #{} [1 2 3 4]) ==> #{1 2 3 4} ; "have a vector and want a set"
+    (into {} #{[1 2] [3 4]}) ==> {3 4, 1 2} ;"have a set of vectors want a map"
+    (into #{} [{1 2} {3 4}]) ==> #{{1 2} {3 4}} ; "have a vector of maps want a set of maps"
+  ```
 ## maps
   - store names and values like hashes
   - immutable
@@ -324,8 +331,9 @@
     (#{1 2 3} 2) ; returns 2 if 2 is in set else nil
     #{value1 "value2"}
 
-    (sorted-set 1 2 3) ; returns #{1 2 3}
-    (sorted-set 3 2 1 1) ; #{1 2 3}
+    ; sorted-set
+      (sorted-set 1 2 3) ; returns #{1 2 3}
+      (sorted-set 3 2 1 1) ; #{1 2 3}
   ```
 
 ## vectors
