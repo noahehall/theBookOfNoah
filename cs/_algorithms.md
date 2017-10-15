@@ -84,6 +84,16 @@
 #### Big O Notation
   - Big O notation: classify the behavior of an algorithm as it solves problem instances of increasing size, n
     + O(f(n)): where f(n) is comonly a function such as n, n^3, or 2^n
+    + analyzes the efficiency (time) of code execution as the input gets larger
+      + how much time it will take to solve a problem of increasing orders of magnitude
+    + examples
+      + O(1) = no loops and you just do something and return
+      + O(n) = if you only loop once
+      + O(n^2) = if you loop twice
+      + O(log n) = as you add more inputs it takes less and less time, a diminishing adding of time
+        + divide and conquer
+        + recursion: costly because each functional call must be added to the stack which could lead to stack overflows due to memory running out
+          + do recursion with loops
   - Lower (best) and Upper (worst) bounds:
     - some constant `c > 0` : a different `c` exists for upper and lower bounds
     - problem instance size `n0` is the point at which each problem instance is 'large enough' to satisfy the formula
@@ -96,7 +106,11 @@
       - Ω(n) === `t(n) > c*n` for all `n > n0`
   - complexity theory and `Θ(f(n))`
     - combines lower and upper bounds to identify an accurate tight bound: when the lower bound is `Ω(f(n))` and the upper bound is also `O(f(n))` for the same classification `f(n)``
+  -
+    ```js
+      3x2 +x +1 === O(n2)
 
+    ```
 #### performance families
   - compare algorithms: by evaluating their performance on problem instances of size `n`
     + time: used to determine which algorithms scale to solve problems of a nontrivial size by evaluating the running time needed by the algorithm in relation to the size of the provided problem instance
@@ -116,6 +130,27 @@
     5. Quadratic: `O(n 2 )`
     6. Exponential: `O(2 n )`
 
+# recursion
+  ```js
+    recursive(max, current) {
+      if (current > max) return; // base case
+      recursive(max, current + 1)
+    }
+  ```
+
+# sorting algorithms
+## bubble sort
+  - compare two things at a time and swap them if their out of order
+  - O(n2)
+  ```js
+
+  ```
+## insertion sort
+  - good for arrays that are already/close to sorted
+  - O(n)
+  ```js
+
+  ```
 ################ OLD NOTES ###############
 ### uncategorized
   - dynamic programming
