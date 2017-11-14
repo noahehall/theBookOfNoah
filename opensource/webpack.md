@@ -17,8 +17,27 @@
     - prevent duplication: use the CommonChunksPlugin to dedupe and split chunks
     - dynamic imports: split code via inline function calls within modules
   - source maps: In order to make it easier to track down errors and warnings, JavaScript offers source maps, which maps your compiled code back to your original source code. If an error originates from b.js, the source map will tell you exactly that.
+  - tree shaking:  dead-code elimination. It relies on the static structure of ES2015 module syntax, i.e. import and export. The name and concept have been popularized by the ES2015 module bundler rollup.
+  -
+
+
+# hot module replacement
+  - [review this](https://webpack.js.org/guides/hot-module-replacement/)
+
+
+# source maps
+  - [review this](https://webpack.js.org/configuration/devtool/)
+
+
+# development tools
+  - [review this](https://webpack.js.org/guides/development/#choosing-a-development-tool)
+    - webpack watch mode
+    - webpack dev server
+    - webpack dev middleware
+
 
 # top loaders
+  - [webpack pwa manifest](https://github.com/arthurbergmz/webpack-pwa-manifest)
   - [dll plugin](https://webpack.js.org/plugins/dll-plugin/)
     - The DllPlugin and DllReferencePlugin provide means to split bundles in a way that can drastically improve build time performance.
   - css: postcss, sass, less, style=loader, css-loader
