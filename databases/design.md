@@ -1,0 +1,17 @@
+# background
+  - table:
+    - 1 table = 1 model
+    - represents a single concept (a noun)
+  - column:
+    - set of data of a single data type
+  - row: a single record of data
+  - field: intersection of column and row that reduces to a single value
+  - index: table data structure to increase lookup
+  - foreign key: references rows in another table
+    - always put indexes on foreign keys
+  - schema: structuraldefinition of a db
+  - CRUD:
+    - create
+    - read
+    - update
+    - delete

@@ -82,15 +82,14 @@
     #KeyError is raised whenever you access a var that doesn't exist
   ```
 
-
 # strings
   ```ruby
-	 #single line comment
-=begin
-   this is a
-   multi line comment
-   must be flush against the left
-=end
+	  #single line comment
+    # =begin
+    #    this is a
+    #    multi line comment
+    #    must be flush against the left
+    # =end
     thisstring = 'blah'
     # string interpolation requires double quotes
       "hey #{somevar}"
@@ -106,8 +105,6 @@
       'string'.split! #returns an array splitting on spaces
       'string'.split!('r') #splits on every r
 	```
-
-
 
 # numbers
   - Integers (Without decimals)
@@ -144,7 +141,6 @@
     blah = :randomsymbolname #creates a constant, there can be only 1
 
   ```
-
 
 # arrays
   ```ruby
@@ -279,6 +275,19 @@
   	}
   ```
 
+# classes
+  - class variables
+    - local: defined inside a method,not available outside the method
+    - instance: available across class instances, can be different for each instance
+    - class: belong to the class, and is the same for all instances
+    - global: available to all classes
+  ```ruby
+    class blah
+      @instance_var = 'only for this instance'
+      @@class_var = 'available to all instances'
+      $global_var = 'available to all classes'
+    end
+  ```
 # functions
   ```ruby
     def functionname(arg1, arg2)
