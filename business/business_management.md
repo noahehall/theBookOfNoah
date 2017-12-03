@@ -1,0 +1,475 @@
+# chapter 2: The strategic Management Process
+
+- Strategic management process: describes the method by which managers conceive of and implement a strategy that can lead to a sustainable competitive advantage
+  - What do we want to accomplish ultimately? What is our vision
+  - What are we about? What is our mission?
+  - How do we accomplish our goals? What are our values
+- AFI: Analyze &gt; formulate &gt; implement strategy framework
+- Vision: a statement about what an organization ultimately wants to accomplish
+- Strategic intent: the taking out of a desired leadership position that far exeeds a company&#39;s current resources and capabilities
+- Mission: description of what an organization actually does – what its  business is- and why it does it; can be customer oriented or product oriented
+  - Product oriented mission&#39;s: define a business in terms of a good or service provided rather than in terms of the customer need to be met
+  - Customer oriented mission: defines a business in terms of providing solutions  to customer needs
+- Strategic commitments: actions that are costly, long term oriented, and difficult to reverse
+- Organizational values: ethical standards and norms that govern the behavior of individuals within a firm or organization
+- Strategic long range planning: a rational top down process through which management can program future success; typically concentrates strategic intelligence and decision making responsibilities in the office of the CEO
+- Scenario planning: strategy planning activity in which managers envision different what if scenarios to anticipate plausible futures
+  - Managers envision different what if scenarios
+  - Analysis: identify multiple scenarios
+  - Formulation: develop strategic plans to address future scenarios
+  - Implementation: execute dominant strategic plan
+  - Dominant strategic plan: the option they think most closely matches reality
+- Strategic initiative: any activity a firm pursues to explore and develop new products and processes, new markets, or new ventures
+- Emergent strategy: any unplanned strategic initiative undertaken by mid level employees of their own volition
+- Illusion of control: the hard numbers in a strategic plan can convey a false sense of security
+- Intended strategy: the outcome of a rational and structured top down strategic plan
+- Unrealized strategy: part of all of a firms strategic plan that falls by the wayside due to unexpected events
+- Realized strategy: combination of intended and emergent strategy
+- Bottom up emergent strategy: emerge as a consequence of the firms Resource Allocation Process (RAP) - autonomous actions; serendipity; real options
+  - RAP: resource allocation process: how a firm allocates its resources can be critical in shaping its realized strategy
+
+## Study questions
+
+- Explain the role of vision, mission, and values in the strategic management process
+  - A vision captures an organizations aspirations. An effective vision inspires members of the organization
+  - A mission statement describes what an organization actually does – what its business is – and why it does it
+  - Values define the ethical standards and norms that should govern the behavior of individuals within the firms
+  - Success is created twice: first by creating a mental model of what the firm wants to accomplish, and second by formulating and implementing a strategy that makes this vision a reality
+- Describe and evaluate the role of strategic intent in achieving long term goals
+  - Strategic intent finds its expression ins stretch goals that exceed the firms existing resources and capabilities by a large margin
+  - Effective use of strategic intent creates at all levels of the organization an obsession with winning that can help companies ascend to global leadership
+- Distinguish between customer oriented and product oriented missions and identify strategic implications
+  - Customer oriented missions define business in terms of providing solutions to customer needs
+  - Product oriented missions define a business in terms of a good or service provided
+  - Customer oriented missions provide managers with more strategic flexibility than product oriented missions
+- Critically evaluate the relationship between mission statements and competitive advantage
+  - Mission statements can help a firm achieve superior performance, but mission statements by themselves do not directly affect firm performance
+  - To be effective, mission statements need to be backed up by hard to reverse commitments
+- Explain why anchoring a firm in ethical values is essential for long term success
+  - Ethical core values enable employees to make day to day decisions that are guided by correct principles
+  - Strong ethical values are the guardrails that help keep the company on track when pursuing its mission and its quest for competitive advantage
+- Compare and contrast strategic planning, scenario planning, and strategy as planned emergence, and discuss strategic implications
+  - Top down strategic ( long range ) planning works reasonably well when the environment does not change much
+  - In scenario planning, managers envision different what if scenarios and prepare contingency plans that can be called upon when necessary
+  - Strategic initiatives can be the result of top down planning by executives or can emerge through a bottom up process from deep within the organization
+  - A firms realized strategy is generally a combination of its top down intended strategy and bottom up emergent strategy, resulting in planned emergence
+
+# Chapter 3: external analysis: industry structure, competitive forces, and strategic groups
+
+- Strategic group: the set of companies that pursue a similar strategy within a specific industry,; consists of the firm&#39;s closest competitors
+- PESTEL model: a framework that categorizes and analyses an important set of external forces that might impinge upon a firm. These forces are embedded in the global environment that can create both opportunities and threats for the firm
+  - Political: describes the processes and actions of government bodies that can influence the decisions and behavior of firms
+  - Economic: largely macroeconomic, affecting economy wide phenomena; growth rates, interest rates, levels of employment, price stability (inflation/deflation), currency exchange rates
+    - Price stability: the lack of change in price levels of goods and services
+    - Deflation: describes a decrease In the overall price level
+    - Inflation: rising prices
+  - Sociocultural factors: capture a society&#39;s cultures, norms, and values
+    - Demographic trends: capture characteristics in a  population related to age, gender, family size, ethnicity, sexual orientation, religion, and socioeconomic class
+  - Technological: capture the application of knowledge to create new processes and products
+  - Ecological: concern broad environmental issues such as the natural environment, global warming, and sustainable economic growth
+  - Legal: captures the official outcomes of the political processes as manifested in laws, mandates, regulations and court decisions
+- Industry: a group of companies offering similar products or services. It makes up the supply side of the market, while customers make up the demand side
+- Structured conduct performance (SCP) model: a framework that explains differences in industry performance. It identifies four different industry types
+  - Perfect competition: many small firms, firms are price takers, commodity product; low entry barriers
+  - Monopolistic competition: many firms; some pricing power; differentiated product; medium entry barriers;
+  - Oligopoly: few/large firms; some pricing power; differentiated product; high entry barriers
+  - Monopoly: one firm; consider able pricing power; unique product; high entry barriers
+  - Fragmented industries tend to be less profitable than consolidated ones
+- Five forces model (Michael porter): a framework proposed by Michael porter that identifies five forces that determine the profit potential of an industry and shape a firms competitive strategy
+  - Entry barriers: obstacles that determine how easily a firm can enter an industry. Entry barriers are often one of the most significant predictors of industry profitability
+    - Potential competitors: those that are not yet competing in the industry but have the capability to do so if they chose
+    - Threat of entry is high when: customer switching costs are low; capital requirements are low; incumbents do not possess proprietary technology or established brand equity; new entrants expect that incumbents will not or cannot retaliate
+  - Power of suppliers:  the bargaining power of suppliers captures pressures that industry suppliers can exert on an industry&#39;s, and there a company&#39;s, profitability
+    - Power of suppliers is high when: incumbent firms face significant switching costs when changing suppliers; suppliers offer products that are differentiated; there are no readily available substitutes for the products or services that the suppliers offer; suppliers can credibly threaten to forward-integrate into the industry
+  - Power of buyers: bargaining power of buyers concerns the pressure  buyers can put on the margins of products in the industry, by demanding a lower price or higher product quality
+    - Power of buyers is high when; there are a few large buyers; each buyer purchases large quantities relative to the size of a single seller; the industry&#39;s products are standardized or undifferentiated commodities; buyers face little or no switching costs; buyers can credibly threaten to backward integrate into the industry
+  - Threat of substitutes: the idea that products or services available from outside the given industry will come close to meeting the needs of current customers
+    - Threat of substitutes is high when; the substitute offers an attractive price-performance trade off; the buyers cost of switching to the substitute is low
+  - Rivalry among existing competitors: the intensity with which companies in an industry jockey for market share and profitability
+    - There are many competitors in the industry; the competitors are roughly of equal size; industry growth is slow, zero or even negative; exit barriers are high; products and services are direct
+- Complement: a product, service, or competency that adds value to the original product offering when the two are used in tandem
+  - Complements increase demand for the primary product, thereby enhancing the profit potential for the industry and the firm
+  - A company is a complementor to your company if customers value your product or service offering more when they are able to combine it with the other company&#39;s product or service
+- Industry attractiveness: in terms of profit potential is determined by three distinct pairs of two forces
+  - Supplier and buyer power
+  - Entry and exit barriers
+  - Available complements and the threat of substitutes
+- Co-opetition: describes the cooperative interactions among competitors, which results in success for each of the players, a large pie for everyone involved
+- Industry convergence: a process whereby formerly unrelated industries begin to satisfy the same customer need
+- Strategic group model: explains the differences in firm performance within the same industry, by clustering different firms into groups based on a  few key strategic dimensions
+  - Identify the most important strategic dimensions (e.g. expenditures on research and development, technology, product differentiation, product and service offerings, pricing, market segments, distribution channels, and customer service)
+  - Choose two key dimensions for the horizontal and vertical axes, which expose important differences among the competitors
+  - The dimensions chosen for the axes should not be highly correlated
+  - Position on the graph the firms in the strategic group, indicating each firms market share by the size of the bubble by which it is represented
+  - Insights from strategic group mappings
+    - The competitive rivalry is strongest between firms that are within the same strategic group
+    - Strategic groups are affected differently by the external environment
+    - Strategic groups are affected differently by the competitive forces
+    - Some strategic groups are more profitable than others
+- Mobility barriers: industry specific factors that separate one strategic group from another
+
+## Study Questions
+
+- Apply the pestel model to organize and assess the impact of external forces on the firm
+  - A firms macro environment consists of a wide range of political, economic, sociocultural, technological, ecological, and legal factors that can affect industry and firm performance
+  - The political environment describes the influence government bodies can have on firms
+  - The economic environment is mainly affected by five factors; growth rates, interest rates, levels of employment, price stability, and currency exchange rates
+  - Sociocultural factors capture a society&#39;s cultures, norms, and values
+  - Technological factors capture the application of knowledge to create new processes and products
+  - Ecological factors concern a firms regard for environmental issue such as the natural environment, global warming, and sustainable economic growth
+  - Legal environment factors capture the official outcomes of the political processes that manifest themselves in laws, mandates, regulations, and court decisions
+- Apply the structure conduct performance SCP model toe explain the effect of industry structure on firm profitability
+  - The structure conduct performance SCP model is a framework that helps to explain differences in industry performance
+  - A perfectly competitive  industry is characterized by many small firms, a commodity product, low entry barriers, and no pricing power for individual firms
+  - A monopolistic industry is characterized by many firms, a differentiated product, medium entry barriers, and some pricing power
+  - An oligopolistic industry is characterized by few large firms, a differentiated product , high entry  barriers, and some degree of pricing power
+  - A monopoly exists when there is only one large firm supplying the market, the firm may offer a unique product, the barriers to entry are high, and the monopolist has considerable pricing power
+- Apply the five forces model to understand the profit potential of the firms industry
+  - Five competitive forces shape an industry&#39;s profit potential: threat of entry, power of suppliers, power of buyers, threat of substitutes, and rivalry among existing competitors
+  - The stronger a competitive force, the greater the threat it represents
+  - The weaker the competitive force, the greater the opportunity it presents
+  - A firm can shape an industry&#39;s structure in its favor through its strategy
+- Describe the strategic role of complements in creating positive-sum co-opetition
+  - Co-opetition: co-operation among competitors, can create a positive-sum game, resulting in a  larger pie for everyone involved
+  - Complements increase demand for the primary product, enhancing the profit potential for the indsutry and the firm
+  - Industry attractiveness can be determined by three pairs fo two forces: supplier and buyer power, entry and exit barriers, and available complements and the threat of substitutes
+  - Attractive indsutries for co-opetition are characterized by high entry barriers, low exit barriers, lwo buyer and supplier power, a low threat of substitutes, and the availability of complements
+- Understand the role of idnsutry dynamics and the indsutry convergence in shaping he firms external environment
+  - Industry are dynamic; they change over time
+  - Different conditions prevail in different industries, directly affecting the firms competiting in these indsutries and their profitability
+  - In industry convergence, formerly unrelated industries begin to satisfy the same customer need; it is often brought on by technological advances
+
+# Chapter 4: internal analysis: resources, capabilities, and activities
+
+- Core competencies: unique strengths embedded deep within a firm, that allow a firm to differentiate its products and services from those of its rivals, creating higher value for the customer or offering products and services of comparable value at lower cost
+  - Creating a strategic fit between strategy, resources, capabilities, core competencies, and firm activities to exploit external opportunities
+- Resource based view: a model that sees resources as key to superior firm performance. If a resource exhibits VRIO attributes, the resource enables the firm to gain and sustain a competitive advantage
+  - Resource heterogeneity: assumption in the resource based view that a firm is a bundle of resources and capabilities that differ across firms
+  - Resource immobility: assumption in the resource based view that a firm has resources that tend to be sticky and that do not move easily from firm to firm
+  - VRIO framework: a theoretical framework that explains and predicts firm level competitive advantage. A firm can gain a competitive advantage if it has resources that are :
+    - Valuable: if it helps a firm increase the perceived value of its product or service in the eyes of customers by either adding attractive features or by lowering price because the resource helps fthe firm lower it costs
+    - Rare: if only one or a few firms possess the resource or can perform the capability in the same unique way
+    - Costly to Imitate: if firms that do not possess the resource are unable to develop or buy the resource at a reasonable price
+    - Organize to capture the value of the resources: the characteristic of having in place an effective organizational structure and coordinating systems to fully exploit the competitive potential of the firms resoruces and capabilities
+- Tangible resources: resources with physical attribures, which thus are visible
+  - Capital, land, buildings, plant, equipment, supplies
+- Intangible resources: resources that do not have physical attributes and thus are invisible
+  - Culture, knowledge, brand equity, reputation, intellectual property (patents, copyrights, trademarks, trade secrets)
+  - Competitive advantage is more likely to spring from intangible rather than tangible resources (because these cant be bought)
+- Value chain: the internal activities a firm engages in when transforming inputs into outputs: each activity adds incremental value; primary activities directly add value; support activities add value indirectly
+- Primary activities: firm activities add value directly by transforming inputs into outputs as the firms a product or service horizontally along the internal value chain
+  -
+    - Raw materials &gt; intermediate goods/components &gt; final assembly/manufacturing&gt;  marketing and sales &gt; customer service
+- Support activities: firm activities that add value indirectly, but are necessary to sustain primary activities
+- Strategic activity system: the conceptualization of a firm as a network of interconnected activities
+- Dynamic capabilities perspective: a model that emphasizes a firms ability to modify and leverage its resource base in a way that enables it to gain and sustain competitive advantage in constantly changing environment
+- Resource stocks: the firms currently level fo intangible resources
+- Resource flows: the firms level of investments to maintain or build a  resource
+- The bathtub metaphor: the role of inflows and outflows in building stocks of intangible resources
+- Path dependence: a situation in which the options one faces in the current situation are limited by decision made in the past
+- Causal ambiguity: a situation in which the cause and effect of a phenomenon are not readily apparent
+- Social complexity: a situation in which different social and business systems interact with one another
+- SWOT analysis: a framework that allows managers to synthesize insights obtained from an internal analysis of the company&#39;s strengths and weaknesses (S and W) with those from an analysis of external opportunities and threats ( o and t)
+
+## Study Questions
+
+- Differentiate between tangible and intangible resources
+  - Tangible resources have physical attributes and are visible
+  - Intangible resources have no physical attributes and are invisible
+  - Competitive advantage is more likely to be based on intangible resources
+- Describe the critical assumptions behind the resource based view
+  - The resource based view makes two critical assumptions: resource heterogeneity (resources differ across firms) and resource immobility (resources are sticky)
+- Apply the VRIO framework to assess the competitive implications of a firms resources
+  - For a firms resources to be the basis of a competitive advantage, it must have VRIO attributes
+    - Valuable, Rare, Costly to imitate, the firm must be able to organize in order to capture the value of the resource
+- Identify competitive advantage as residing in a network of firm activiteis
+  - Each primary activity the firm performs should add incremental value directly by transforming inputs into outputs. Support activities sustain primary activities
+  - A network of primary and supporting firm activities can create a strategic fit that can lead to competitive advantage
+  - A strategic activity system conceives of a firm as a network of interconnected activities. Firms need to upgrade their value activities over time, in response to changes in the external environment and to moves of competitors
+- Outline how dynamic capabilities can help a  firm sustain competitive advantage
+  - To sustain a competitive advantage, any fit between a firms internal strengths and the external environment must be dynamic. This is accomplished through the ability to create, deploy, modify, reconfigure, or upgrade the resource base
+- Identify different conditions that allow firms to sustain their competitive advantage
+  - Several conditions make it costly for competitors to imitate another firms resource or capability that underlie its competitive advantage: better expectations of future resource value; path dependence; causal ambiguity; social complexity
+- Conduct a SWOT analysis
+  - Formulating a strategy that increases the chances of gaining and sustaining a competitive advantage is based on synthesizing insights obtained from an internal analysis of the company&#39;s strengths
+  - a SWOT analysis by itself is insufficient to guide strategy formulation
+- Customer centricity: indicates a business orientation that caters to specific customer needs and behaviors (opposite of product centered marketing) and looks at the business from the outside in
+
+# Chapter 6 Business Strategy: Differentiation, Cost Leadership, And Integration
+
+- Business level strategy: the actions managers take in their quest for competitive advantage when competing in a single product market
+  - Who/which customer segments will we serve
+  - What customer needs, wishes, and desires will we satisfy
+  - Why do we want to satisfy them
+  - How will we satisfy our customers needs
+- Strategic position: a firm&#39;s strategic profile based on value creation and cost; the goal I to create as large a gap as possible between the value the firm&#39;s product or service creates and the cost required to produce it (V-C)
+  - V = value, C = cost
+- Strategic trade-offs: situations that require choosing between a cost or value position, necessary because higher value tends to require higher cost
+- Firm effects:
+  - value position relative to competitors
+  - cost position relative to competitors
+  - business strategy: cost leadership, differentiation, integration
+- industry effects: industry attractiveness: scp framework, 5 forces model; complements
+- within industry: strategic groups
+- Competitive advantage: industry effects + firm effects
+- Differentiation strategy: generic business strategy that seeks to create higher value fro customers than the value that cmopetitors create by delivering products or services with unique featuers while keeping the firms cost structure at the same or similar levels
+- Cost leadership strategy: generic business strategy that seeks to create tehsame or similar value for customers by delivering products or services at a lower cost than competitors, enabling the firm to offer lower prices to its customers
+- Scope of competition: the size (narrow/broad) of the market in which a firm choose to compete
+- Focused cost-leadership strategy: same as the cost-leadership strategy except with a narrow focus on a niche market
+- Focused differentiation strategy: same as the differentiation strategy except with a  narrow focus on a niche market
+- Value drivers: product features, customer service, customization, complements
+- Mass customization: the manufacture of a large variety of customized products or services at a relatively low unit cost
+- Cost drivers: cost of input factors, economies of scale, learning-curve effects, experience-curve effects
+- Economies of scale: decrease in cost per unit as output increases
+- Minimum efficient scale (MES): output range needed to bring down the cost per unit as much as possible, allowing a firm to stake out the lowest cost position that is achievable through economies of scale
+- Diseconomies of scale: increases in cost per unit when output increases
+- Experience curve: attempts to capture both economies of scale and learning effects; economies of scale allow movement down a given learning curve based on current production technology
+- Integration strategy; business level strategy that successfully combines differentiation and cost leadership activities
+- Economies of scope: savings that come from product two/more outputs at a less cost than producing each output individually, despite using the same resources and technology
+- Innovation: describes any new product and process, or any modification of existing ones
+- Ambidextrous organization: an organization able to balance and harness different activities in trade of situations
+- Conglomerate: an organization that combines two or more business units, often active in different industries, under one overarching corporation
+- Productive frontier: relationship that captures the result of performing best practices at any given time; the function is convex (bowed outward) to capture the trade off between value creation and production cost
+
+## Study questions
+
+- Define business level strategy and describe how it determines a firms strategic position
+  - Business level strategy determines a firms strategic position in its quest for competitive advantage when competing ian single industry or product market
+  - Strategic positioning requires that managers address strategic trade offs that arise between value and cost, because higher value tends to go along with higher cost
+  - Differentiation and cost leadership are distinct strategic positions
+  - Besides selecting an appropriate strategic position, managers must also define the scope of competition – whether to pursue a specific market niche or go after the broader market
+- Examine the relationship between value drivers and differentiation strategy
+  - The goal of differentiation strategy is to increase the perceived value of goods and services so that customers will pay a higher price for additional features
+  - In a differentiation strategy, the focus of competition is on non price attributes
+  - Some of the unique value drivers managers can manipulate are product features, customer service, customization, and complements
+  - Value drivers contribute to competitive advantage only if their increase in vlue creation exceeds the increase in costs
+- Examine the relationship between cost drivers and cost leadership strategy
+  - The goal of a cost leadership strategy is to reduce the firms cost below that of its competitors
+  - In a cost leaderships trategy, the focus of competition is on lowest possible price, while offering acceptable value
+  - Some of the unique cost drivers that mangers can manipulate are the cost of input factors, economies of scale, and learning and experience curve effects
+  - No matter how low the price if there is no acceptable value proposition , the product or service will not sell
+- Assess the benefits and risks of cost leadership and differentiation business strategies vis a vis the five forces that shape the competition
+  - The five forces model helps managers use generic business strategies to protect hemselves against the industry forces that drive down profitability
+  - Differentiation and cost leadership strategies allow firsm to carve out strong strategic positions, not only to prtoec tthemselves against the five forces, but also to benefit from them in their quest for competitive advantage
+- Explain why it is difficutl to success at an integration strategy
+  - A successful integrations trategy requires that trade offs between differentiation and low cost be reconciled
+  - Integration strategy often is difficult because the two distinct strategic positions require internal value chain activities that are fundamentally different from one another
+  - When firms fail to resolve strategic trade offs between differentiation and cost, they end up being stuck in the middle. They then success at neither strategy, leading to a ocmpetitive disadvantage
+- Evaluate value and cost drivers that may allow a firm to pursue an integration strategy
+  - To address the trade offs between differentiation and cost leadership at the business level, managers may leverage quality economies ofs cope, innovation, and the firms structure, culture and routines
+  - The trade offs between differentiation and low csot can either be addressed at the business level or at the corporate level
+- Describe and evaluate the dynamics of competitive positioning
+  - Strategic positions need to change over time as the environment changes
+  - Best practices determine the productivity frontier at any given time
+  - Reaching the productivity frontier enhances the likelihood of obtaining a competitive advantage
+  - Not reaching the productivity frontier implies competitive disadvantage if other firms are poistioined at the productivity frontier
+
+# Chapter 7: business strategy innovation and strategic entrepreneurship
+
+- Innovation: the commercialization of any new product, process, or idea, or the modification and recombination of existing ones. To drive growth, innovation also needs to be useful and successfully implemented
+  - Must be novel, useful, and implemented
+- Industry life cycle: the four different stages: introduction, growth, maturity, and decline that occur in the evolution of an industry over time
+  - Introduction: early adopters
+  - Growth: early majority
+  - Maturity: late majority and laggards
+  - Decline
+- Network effects: the positive effect (Externality) that one user of a product or service has on the value of that product for other users
+- Standard: dominant design: an agreed upon solution about a common set of engineering features and design choices; also known as dominant design
+- Product innovations: new products, such as the jet airplane, electric vehicle, mp3 player, and netbook
+- Process innovations: new ways to produce existing products or deliver existing services
+- Entrepreneurship: the process by which people undertake economic risk to innovate: to create new products, processes, and sometimes new organizations
+- Strategic entrepreneurship: the pursuit of innovation using the tools and concepts available in strategic management
+- Types of innovation
+  - Incremental innovation: an innovation that squarely builds on the firms established knowledge base, steadily improves the product or service it offers, and targets existing markets by using existing technology
+  - Radical innovation: an innovation that draws on novel methods or materials, is derived from either an entirely different knowledge base or from the recombination of the firm&#39;s existing knowledge base with a  new stream of knowledge, or targets new markets by using new technologies
+  - Architectural innovation: a new product in which known components, based on existing technologies, are reconfigured in a  novel way to attack new markets
+  - Disruptive innovation: an innovation that leverages new technologies to attack existing markets from the bottom up
+- Long tail: business model in which companies can obtain a large part of their reveneus by selling a small number of units from among almost unlimited choices
+- Thin markets: a situation in which transactions are likely not to take place because there are only a few buyers and sellers, who have difficulty finding each other
+- Discontinuities: periods of time in which the underlying technological standard changes
+  - Propeller airplanes to supersonic jets
+  - Film based to digital cameras
+  - Vinyl record player to casset tae to cd players to digital mp3 players
+- Paradigm shift: a situation in which a new technology revolutionizes an existing industry and eventually establishes itself as the new standard
+- Absorptive capacity: a firm&#39;s ability to understand, evaluate, and integrate external technology developments
+- Hypercompetition: a situation in which competitive intensity has increased and periods of competitive advantage have shortened, especially in newer technology based industries, marking any competitive advantage a string of short lived advantages
+
+## Study questions
+
+- Define innovation and describe its roel in the competitive process
+  - Continuous innovation is the engine behind successful companies
+  - Innovation is a potent competitive weapon; it enables firms to redefine the marketplace in their favor and achieve much needed growth
+  - The successful commercialization of a new product or service allows a firm to extract temporary monopoly profits
+- Describe the competitive implications of different stages in the industry life cycle
+  - Innovations frequently lead to the birth of new idnustries
+  - Industries generally follow a predictable industry life cycle with four distinct stages: introduction, growth, maturity, and decline
+  - Different life cycle stages have different consumer adoption rates and different competitive implications
+- Apply strategic management concepts to entrepreneurship and innovation
+  - Strategic entrepreneurship focuses on generating integrated insghts pertaining to innovation and change using the concepts available ins trategic management
+- Evaluate different types of innovation and derive their strategic implications
+  - Four types of innovatin emerge when applying the existing versus new dimensions of technology and markets: incremental, radical, architectural, and disruptive innovations
+- Describe the long tail concept and derive strategic implications
+  - The internet is a stonrgly disruptive force that digitizes any industry that can be digitized
+  - The long tail describes a business model in which companies can obtain a significant part of their revenues by selling a small number of untis from among almost unlimited choices
+- Evaluate discontinuities and describe the dynamics of paradigm changes
+  - Discontinuities can lead to a paradigm shift, in which a new technology revolutionizes an existing industry and eventually establishes itself as the new standard
+  - Technologies follow a predictable technology s curve, improving in performance over time as a consequence of continued r&amp;d effort
+  - The probability of a discontinuity increases when a given technology approaches its physical limit
+- Identify the process leading to hypercompetition and explain why the competitive advantage can be sustained through continuous innovation
+  - Competitive intensity has increased and periods of competitive advantage have shortened, especially in newer technology based industries
+  - Nos ingle strategy can sustain competitive advantage over time
+  - Any competitive advantage must be a string of short lived advantages. This is achieved trough a constant escalation of competition in the areas of price, quality, timing and know how, capital commitments, and supply chain management
+  - Hypercompetition can result from a lack of strategic positioning
+
+# Chapter 8: vertical integration and diversification
+
+- Corporate level strategy: the decisions that senior management makes and the actions it takes in the quest for competitive advantage in several indsutries and markets simultaneously
+  - Addresses where to compete
+- Scope of the firm: the boundaries of the firm along three dimensions: industry value, products and services, and geography (regional, national, or global markets)
+- Vertical integration: stages of industry value chain:
+  - Industry value chain: the transformation of raw materials into finished goods and services along distinct vertical stages, each of which represents a distinct industry in which a number of different firms are competing
+  - Backward vertical (upstream industries): competing in products closer to raw materials
+  - Forward vertical (downstream industries): competing in products closer to finished goods/services
+  - Specialized assets: assets that have significantly more value in their intended use than in their next best use (high opportunity cost); they come in three types, site specificity, physical asset specificity, and human asset specificity
+    - Site specificity: assets are required to be colcoated, such as the equipment necessary for mining
+    - Physical asset specificity: assets whose physical and engineering properties are designed to satisfy a particular customer, e.g. machinery crafted to work with only one business, and not another business in the same industry
+    - Human asset specificity: ivnestments made in human capital to acquire unique noweldge and skills, such as mastering the routines and procedures of a specific organization, which are not transferable to a  different employer
+  - Alternatives to vertical integration
+    - Strategic outsourcing: moving one or more internal value chain activities outside the firms boundaries to other firms in the industry value chain
+    - Taper integration: a way of orchestrating value activities in which a firm is backwardly integrated but also relies on outside market firms for some of its supplies, and or is forwardly integrated but also relies on outside market firms for some of its distribution
+- Horizontal integration: products and services: what range of products and services the firm should offer.
+- Global strategy: where in the world to compete
+- Transaction cost economics: a theoretical framework in strategic management to explain and predict the scope fo the firm, which is central to formulating a corporate level strategy that is more likely to lead to competitive advantage
+- Transaction costs: all costs associated wwith an economic exchange, whether within a firm or in markets
+- Administrative costs: all costs pertaining to organizing an economic exchange within a hierarchy, including recruiting and retaining employees, paying salaries and benefits, and setting up a business
+- Principal-agent problem:  situation in which an agent performing activities on behalf of a principal pursues their own interests
+- Information asymmetries: situations in which one party is more informed than another, mostly due to the possession of private information
+- Licensing: a form of long term contracting in the manufacturing sector that enables firms to commercialize intellectual property
+- Franchising: a long term contract in which a franchisor grants a franchisee the right to use the francisors trademark and business processes to offer goods and services that carry the francisors brand name; the franchisee in turn pays an up front buy I nlump sum and a percetange of revenues
+- Credible commitment: a long term strategic decision that is both difficult and costl to reverse
+- Joint venture: organizational form in which two or more partners create and jointly own a new organization
+- Vertical integration: the firms ownership of its production of needed inputs or of the channels by which it distributes its outputs
+- Diversification: an increase in the variety of products or markets in which to compete
+- Product diversification strategy: corporate strategy in which a firm is active in several different product markets
+- Geographic diversification strategy: corporate strategy in which a firm is active in several different coutnries
+- Product market diversification strategy: corporate strategy in which a firm is active in several different product markets and several different countries
+- Related diversification strategy: corporate strategy in which a firm derives less than 70 percent of its revenues from a single business activity but obtains revenues from other lines of business that are linked to the primary business activity
+- Unrelated diversification strategy: corporate strategy in which a firm derives less than 70 percent of its revenues from a single business activity and there are few, if any, linkages among its businesses
+- Diversification ndiscount: situation in which the stock price of ighly diversified firms is valued at less than the sum of their individual business units
+- Diversification premium: situation in which the stock price of related diversification firms is valued at greater than the sum of their individual business units
+- Levels of diversification: single business &gt; dominate business &gt; related diversification &gt; unrelated diversification
+- Boston consulting group (BCG) growth share matrix: a corporate planning tool in which the corporation is viewed as a portfolio of business units, which are represented raphically along relative market share (horizontal axis) and speed of market growth (vertical axis)
+  - SBUs are plotted into four categories. Clock wise on the BCG 4 box table
+  - Question mark: earnings (low, unstable or growing) cahflow (negative) strategy (increase market share or harvest/divest)
+  - Star: earnings (high, stable, or growing) cash flow (neutral) strategy (hold or invest for growth)
+  - Dog: earnings: low, unstable, cashflow (neutral or negative) strategy (harvest/divest)
+  - Cash cow: earnings high, stable) cash flow( high, stale) strategy (hold)
+
+## Study questions
+
+- Define corporate level strategy, and describe the three dimensiosn along which it is assessed
+  - While business strategy addresses how to compete, corporate strategy addresses where to compete
+  - Corporate strategy cocnerns the scope fo the firm along three dimensinos, vertical integration (along the industry value chain), horizontal integration (diversification), and geographic scope (global strategy)
+  - To gain and sustain competitive advantage any corporate strategy msut support and strengthen a firms strategic position regardless of whether it is a differentiation, cost leadership, or integration strategy
+- Describe and evaluate different options firms have to organize economic activity
+  - Transaction cost economics help managers decide what activities to do in house (make) versus what service and products to obtain from the external market (buy)
+  - When the csots to pursue an activity in house are less than the costs of transacting in the market, then the firm should vertically integrate
+  - In the resource based view of the firm, a firms boundaries are delineated by its knowledge bases and competencies
+  - Moving from less integrated to more fully integrated forms of transacting, alternativds include
+    - Short term contracts, strategic alliances (long term contracts, equity alliances, joint ventures), and parent subsidiary relationships
+- Describe the two types of vertical integration along the indstury value chain: backward and forward vertical integration
+  - Vertical integration denotes a firms value added – what percentage of a firms sales is generated by the firm within its boudnaries
+  - Industry value chains (Vertical value chains) depict the transformation of raw materials into finished goods and services. Each stage typically represents a distinct industry in which a number of different firms are competing
+  - Backward vertical integration involves moving ownership of activtiies upstream nearer to the orgiianting (inputs) point of the industry value chain
+  - Forward vertical integration involves moving ownership of activities closer to the end (customer) point of the value chain
+- Identify and evaluate benefits and risks of vertical integration
+  - Benefits of vertical integration include: securing critical supplies, lowering costs, improving quality, facilitating scheduling and planning, and facilitating investments ins pecialized assets
+  - Risks of vertical integration icndlue: increasing costs, educing quality, reducing gflexibility, and increasing the potential for legal repercussions
+  - Vertical integration contributres to competitive advantage I the incremental value created isgreater than the incremental costs fo ths pecific corporate level strategy
+- Describe and examine alternatives to vertical integration
+  - Taper integration si a strategy in which a firm is backwardly integrated but also relies on outside market firms for some of its supplies, and or is forwardly integrated but also relies on outside market firms for some of its distribution
+  - Strategic outsourcing involves moving one or more value chain activities outside the firms boundaries to other firms in the industry value chain. Off shoring is the outsourcing of activities outside the home country
+- Describe and evaluate different types of corporate diversification
+  - A single business firm derives 95 percent or more of its revenues from one business
+  - A dominant business firm derives between 70 and 95 percent of its reveneus froma  single business, but pursues at least one other business activity
+  - A firm follows a related diversification strategy when it derives less than 70 percent of its revenues froma  single business activity, but obtains revnues from other lines of business that are linked to the primary business activity. Choices within a related diversifications trategy can be related constrained or related linked
+  - A firm follows an unrelated diversifications trategy when less than 70 percent of its revenues come from a single business, and there are few, if any, linkages among its busineses
+- Apply the core competence market matrix to derive different diversifications strategies
+  - When applying an existing/new dimension to core competencies and markets, four quadrants emerge
+    - Existing market + new core competencies
+    - Existin market + existing core competencies
+    - New market + new core competencies
+    - New market +existing core competencies
+- Explain when a diversification strategy creates a competitive advantage, and when it does not
+  - The diversification performance relationship is a function fo the underlying type of diversification
+  - The relationship between the type of diversification and overall firm performance takes on the shape of an inverted U
+    - Single business &gt; dominant business &gt; related diversification &gt; unrelated diversification
+  - In the BCG matrix, the corporate is viewed as aportfolio of businesses, much like a portofolio of stocks in finace
+  - Both low and high levels of diversification are generally associated with lower overall performance, while moderate levels of diversification are associated with higher firm performance
+
+# Chapter 9: corporate strategy: acquisitions, alliances, and networks
+
+- Merger: the joining of two indepdent companies to forma  combined entity
+- Acquisition: the purchase or takeover of one company by antoher: can be friendly/unfriendly
+- Hostile takeover: an acquisition in which the target company does not wish to be acquired
+- Horizontal integration: the process fo acquiring and merging with competitors, leading to idnsutry consolidation
+- Managerial hubris: a form of self delusion, in which managers convince themselves of their superior skills nit he face of clear evidence to the contrary
+- Strategic alliance: a voluntary arrangement between firms that involves the sharing of knowledge, resources, and capabilities wth the intent of developing processes, products or servies to elad to competitive advantage
+- Relational view of competitive advantage: strategic management framework that propses that criticl resources and capabilities frequently are embedded in strategic alliances that spam firm boundaries
+- Non equity alliance: partnership based on contracts between firms. The most frequent forms are supply agreements, distribution agreements, and licensing agreements
+- Explicit knowledge: knowledge that can be codified (e.g. information, facts, instructions, recipies0; concerns knowing about a process or product
+- Equity alliance: partnership in which at least one partner takes partial ownership inte other partner
+- Tacit knowledge: knowledge that cannot be codified; concernings knowing how to do a certain task and can be acquired only through active participation in that task
+- Corporate venture capital: CVC; equity investments by established firms in entrepreneurial ventures; cVC falls under the broader rubric of equity alliances
+- Joint venture: a standalone organization created and jointly owned by two or more parent companies
+- Alliance management capability: a firms ability to effectively manage three alliance related tasks concurrently;
+  - Partner selection and alliance formation
+  - Alliance design and governance
+  - Post formation alliance management
+- Strategic network: a social structure composed of multiple organizations (network nodes) and the links among the nodes (network ties)
+- Degree centrality: the number of direct ties a firm has ina  network, out of the possible direct tires; the more direct ties, the more centrally located the firm is
+
+## Study questions
+
+- Differentiate between merges and acquisitions and explain why firms would use etiher as a vehicle for corporate strategy
+  - A merger describes the joining of two indepdnent companies to forma  combined entity
+  - An acquisition describes the purchase or hostile takeover of one company by another
+  - The distinction between mergers and acquisitions (M&amp;A) can be blurry. Many observers simply use the umbrella term M&amp;A to describe horizontal integration
+  - Firms can sue M&amp;A activity fo competitive advantage when they possess a superior relational capability, which is often built on superior alliance management capability
+- Define horizontal itnegartion and evaluate the advantages and disadvantages of this corporate level strategy
+  - Horizontal integration nis the process of acquiring and merging with competitors, leading to indstury consolidation
+  - As a corporate strategy, firms use horizontal integration to
+    - Reduce competitive intensity
+    - Lower cost
+    - Increase differentiation
+    - Access new markets and distribution channels
+  - Evaluate whether mergers and acquisitiosn lead to competitive advantage
+    - Most mergers and acquisitions destroy shareholder value because anticipated synergies never materialize
+    - If ther is any value creation in M&amp;As, it gerneally accrues to the sharholders fo the firm that is take over, because acquiriers often pay a premium when buying the target company
+    - M&amp;As are populare corporate level strategy for three reasons
+      - The desire to overcome competitive disadvantage
+      - The quest for superior acquisition and integration capability
+      - Because of principal-agent problems
+  - Define strategic alliances and explain wy they are important corporate strategy vehicles,a dn why firms enter into them
+    - Strategic alliances have the goal of sharing knowledge, resoruc,es and capabilities in order to devlo processed, procuts or services
+    - An alliances qualifies as strategic if it has the potentiatl to affect ta firm scompetitive advantage by increasing value/lowering costs
+    - The most common reasons why firsm enter into aliances are to
+      - Strengthen competitive position
+      - Enter new markets
+      - Hedge aginst uncertainty
+      - Access critical compelementary resources
+      - Learn new capabilities
+  - Describe three alliance governance mechanisms and evaluate their pros and cons
+    - Alliances can be governed by th following mechniasms: contractual agreements for no nequity alliances, equity alliances, and joint ventures
+  - Describe the thre phases of alliance management, and explain how an alliance management capability can elad to a competitive advantage
+    - Alliance management capability can be a source of competitive advantage
+    - Alliance managmenet capability consists of a firms ability to effectively manage three alliance realted tasks concurrently
+      - Partner selection and alliance formulation
+      - Alliance designa dn governance
+      - Psot formation alliance management
+      - Firms build a superior alliance management capability through learning by doing and by establishing a dedicated alliance function
+  - Define strategic networks and evaluate the advantages an disadantages of different network positions
+    - A strategic network is an alliance fo several firms to pursue a common purpose. It is s social structure of multiple organizations (network nodes) and the links among the nodes (network ties)
+    - A firm with a high degree centrality in a strategic network is connected to many other firms, provides social capital to the central firm, and is trsuted I the closely connected network cluster
+    - A network broker firm connectrs different network clsuters. The roker often spans structureal holes, which strengthens it sposition, especially in a small world network
+    - A firm not connected to any other firm in a anetwork is an isaolte. Given its lack of connections, an isolate frequently is at a competitive disadvantage
