@@ -1,44 +1,44 @@
-<?php
-virtual hosting: method for hosting multipel domain names with
-separate handling of each name on a single server or pool of servers
-https://en.wikipedia.org/wiki/Virtual_hosting
+# virtual hosting
+  virtual hosting: method for hosting multipel domain names with
+  separate handling of each name on a single server or pool of servers
+  https://en.wikipedia.org/wiki/Virtual_hosting
 
-	this allows one server to share its resources, e.g. memory &
-	processor cycles, without requiring all services provided
-	to use* the same host name
+  	this allows one server to share its resources, e.g. memory &
+  	processor cycles, without requiring all services provided
+  	to use* the same host name
 
-	types of virtual hosting
-		name-based: uses the host name presented by the client, this
-		saves the IP addresses and the associated admin overhead but
-		the protocol being served msut supply the host name an
-		appropriate point
-			difficult to with SSL/TLS
-				you must use* a single certificate to cover all host names
-				through wildcards
+  	types of virtual hosting
+  		name-based: uses the host name presented by the client, this
+  		saves the IP addresses and the associated admin overhead but
+  		the protocol being served msut supply the host name an
+  		appropriate point
+  			difficult to with SSL/TLS
+  				you must use* a single certificate to cover all host names
+  				through wildcards
 
-			i.e. uses multiple host names for the same IP address
+  			i.e. uses multiple host names for the same IP address
 
-			example:
-				a server could be receiving requests for two domains,
-				.example.com and www.example.net, both of which
-				resolve to the same IP address. For www.example.com,
-				the server would send the HTML file from the directory
-				/var/www/user/Joe/site/, while requests for
-				www.example.net would make the server serve pages from
-				/var/www/user/Mary/site/. Equally two subdomains of the
-				same domain may be hosted together. For instance, a blog
-				server may host both blog1.example.com and
-				blog2.example.com.
+  			example:
+  				a server could be receiving requests for two domains,
+  				.example.com and www.example.net, both of which
+  				resolve to the same IP address. For www.example.com,
+  				the server would send the HTML file from the directory
+  				/var/www/user/Joe/site/, while requests for
+  				www.example.net would make the server serve pages from
+  				/var/www/user/Mary/site/. Equally two subdomains of the
+  				same domain may be hosted together. For instance, a blog
+  				server may host both blog1.example.com and
+  				blog2.example.com.
 
-			SSL
-		ip-based: uses separate IP addresses for each host name, and
-		it can be performed with any protocol but requires a
-		dedicated IP address per domain served
+  			SSL
+  		ip-based: uses separate IP addresses for each host name, and
+  		it can be performed with any protocol but requires a
+  		dedicated IP address per domain served
 
-		name + ip based virtual hosting can be combined
+  		name + ip based virtual hosting can be combined
 
-apache virtual host documentation
-http://httpd.apache.org/docs/2.0/vhosts/
+# apache virtual host documentation
+  http://httpd.apache.org/docs/2.0/vhosts/
 
 	name based virtual host
 
