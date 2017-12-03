@@ -1759,6 +1759,1340 @@
     - ms-user-select: none;
     - user-select: none;
 
+<<<<<<< HEAD:_javascript.md
+## Classes & [Mixins](http://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/)
+  - is really a subclass factory, parameterized by the superclass, which produces mixin applications
+### Mixin examples
+  - benefits of approach below:
+    0. the only difference between a mixin and a normal subclass is that a normal class has a fixed superclass, while a mixin definition doesnt (the mixin application does)
+    1. the definition of a class that may be applieed to different super classes.
+    2. mixin application: the application of a mixin definition to a specific superclass, producing a new subclass
+  - implementation features based on es6 classes
+    1. mixins are added to the prototype chain
+    2. mixins are applied without modifying existing objects
+    3. mixins do no magic, and dont define new semantics on top of the core language
+    4. superfoo property access works within mixins and subclasses
+    5. super() calls work in constructors
+    6. mixins are able to extend other mixins
+    7. instanceof works
+    8. mixins donot require library support and can be writtin in a universal style
+    9. subclasses correctly override mixin methods which override superclass methods.
+
+  - definition
+    ``` simple
+      // simple mixin definition
+      let MyMixin = (superclass) => class extends superclass {  
+        foo() {
+          console.log('foo from MyMixin');
+        }
+      };
+
+      // advanced mixin inheritance definition
+      let Mixin2 = (superclass) => class extends Mixin1(superclass) {  
+        /* Add or override methods here */
+      }
+
+      // function composition mixin inheritance
+      let CompoundMixin = (superclass) => Mixin2(Mixin3(superclass));  
+
+      // single subclass definition
+      class MyClass extends MyMixin(MyBaseClass) {  
+        /* ... */
+      }
+
+      // multiple subclass definition
+      class MyClass extends Mixin1(Mixin2(MyBaseClass)) {  
+        /* ... */
+      }
+
+      // instantiation
+      let c = new MyClass();  
+      c.foo(); // prints "foo from MyMixin"  
+    ```
+### classes
+  - classes can be used as an expression as well as a statement
+    1. as an expression it returns a new class each time its evaluated (sort of like a factory)
+  - the extends clause accepts arbitrary expressions that return classes or constructors
+### prototypes and constructors and 'class' section
+	-	helps you create formalized objects (i.e. classes)
+	-	its simply a function that creates an object
+	-	new = the constructor operator, creates a new instance of an object
+	-	prototype object allows you to extend functions functionality after its created
+  ```
+  	function ClassConstructor(n) {
+  		this.name = n;
+  	}
+    var instance = new ClassConstructor('fred');
+  ```
+
+	``` use prototype to attach new methods/vars to the constructor
+		ClassConstructor.prototype.blah = function(){
+			console.log('this.name', 'is my name.');
+		}
+  ```
+	- get the original prototype function
+		`Object.getPrototypeOf(someFunctionHere);`
+	```create a class that uses another classes methods (this example uses arrays)
+			var Queue = function() {
+			  this._array = [];
+			};
+			Queue.prototype.enqueue = function(item) {
+			  this._array.push(item);
+			};
+			Queue.prototype.dequeue = function() {
+			  return this._array.shift();
+			};
+			Queue.prototype.size = function() {
+			  return this._array.length; // the size of the queue
+			};
+  ```
+  - delegate prototypes
+    ``` define the prototype
+      let animal = {
+        animalType: 'animal',
+
+        describe () {
+          return `An ${this.animalType}, with ${this.furColor} fur,
+            ${this.legs} legs, and a ${this.tail} tail.`;
+        }
+      };
+      // create an instance
+      let mouse = Object.assign(Object.create(animal), {
+        animalType: 'mouse',
+        furColor: 'brown',
+        legs: 4,
+        tail: 'long, skinny'
+      });
+    ```
+
+## [jsdocs](http://www.2ality.com/2011/08/jsdoc-intro.html)
+ - takes code with `/** */ `comments and produces HTML documentation 'for' it
+ -	meta data 'for' the entire file
+    ```
+  	/**
+  	  * @fileOverview HTML widget for displaying documentation about a reusable react component.
+  	  * @author <a href="mailto:noah.hall@dictionary.com">Noah Hall</a>
+  	  * @version 0.3.0
+  	  */
+    ```
+	- giving an example of use
+    ```
+  	/**
+  		* @example
+  	  * var str = "abc";
+  	  * console.log(repeat(str, 3)); // abcabcabc
+  	  */
+    ```
+
+	- @see: points to a related resource.
+    ```
+  		/**
+  		  * @see MyClass#myInstanceMethod
+    	  * @see The <a href="http://example.com">Example Project</a>.
+  		  */
+    ```
+	- {@link ...}: works like @see, but can be used inside other tags.
+	- @requires resourceDescription: a resource that the documented entity needs. The resource description is either a name path or a natural language description.
+	- documenting functions and methods: For functions and methods. describes the parameter whose name is paramName. Type and description are optional.
+    ```
+  		@param {paramType} paramName description:
+  			@param str
+  	    @param str The string to repeat.
+  	    @param {string} str
+  	    @param {string} str The string to repeat.
+    ```
+	  - specify a param is optional and not require
+			`@param {number} [times] The number of times is optional`
+		- specify a param is optional and display its default value
+			`@param {number} [times=1] The number of times is optional.`
+		- specify the return of a function
+		  `@returns {returnType} describes the return value of the function or method. Either type or description can be omitted.`
+		- specify if this function throws any errors
+			`@throws {exceptionType} description: describes an exception that might be thrown during the execution of the function or method. Either type or description can be omitted.`
+
+
+
+
+# JAVASCRIPT
+# ES5:
+## [prototypical inheritance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
+  - prototype: each object has an internal link to another object, its prototype, that provides additional behavior and properties
+  - prototype chain: the sequence of linked objects from one object's prototype to another, all the way up until you reach the Null object (which does not have a prototype)
+### basics
+  - operators
+    ```
+    	+	Addition	x = y + 2	y = 5	x = 7	Try it »
+    	-	Subtraction	x = y - 2	y = 5	x = 3	Try it »
+    	*	Multiplication	x = y * 2	y = 5	x = 10	Try it »
+    	/	Division	x = y / 2	y = 5	x = 2.5	Try it »
+    	%	Modulus (division remainder)	x = y % 2	y = 5	x = 1	Try it »
+    	++	Increment	x = ++y	y = 6	x = 6	Try it »
+    	x = y++	y = 6	x = 5	Try it »
+    	--	Decrement	x = --y	y = 4	x = 4	Try it »
+    	x = y--	y = 4	x = 5
+    ```
+  - statements
+  	- `break`	Exits a 'switch' or a loop
+  	- `continue`	Breaks one iteration (in the loop) if a specified condition occurs, and continues with the next iteration in the loop
+  	- `debugger`	Stops the execution of JavaScript, and calls (if available) the debugging function
+  	- `do ... while`	Executes a block of statements and repeats the block while a condition is true
+  	- `for`	Marks a block of statements to be executed as long as a condition is true
+  	- `for ... in`	Marks a block of statements to be executed for each element of an object (or array)
+  	- `function`	Declares a function
+  	- `if ... else ... else if`	Marks a block of statements to be executed depending on a condition
+  	- `return`	Stops the execution of a function and returns a value from that function
+  	- `switch`	Marks a block of statements to be executed depending on different cases
+  	- `throw`	Throws (generates) an error
+  		+ `throw "This is my error message"`
+  	- `try ... catch ... finally`	Marks the block of statements to be executed when an error occurs in a try block, and implements error handling
+  	- `var`	Declares a variable
+  	- `while`	Marks a block of stat
+    - `object instanceof constructor `//tests whether an object has in its prototype chain the prototype property of a constructor.
+  		`constructos === String, Number, Object, Date etc.`
+    - `debugger` pauses app run time at this point in the app.
+  		1. you can open up console and type in any of the variables in the app, and it will print to the console
+  		2. you can type in a function name and review it
+  		3. you can click through the sources panel and view different things
+
+  - scope
+  	+ determines the life and death of a variable
+  	+ block scope: lives within {}
+  	+ function scope: lives within function definitions/expressions/closures
+  	+ scope chain:
+  		1. if the variable is not available in the current scope:
+  		2. look for it in the parent function, if its not available there
+  		3. go up one level, and continue all the way to the window (global) scope
+  - data conversion
+  	+ `String(x)` returns a string from a number variable x
+  	+ `toExponential()`	Returns a string, with a number rounded and written using exponential notation.
+  	+ `toFixed()`	Returns a string, with a number rounded and written with a specified number of decimals.
+  	+ `toPrecision()`	Returns a string, with a number written with a specified length
+    + `Number("3.14") ` returns 3.14
+    + `parseFloat()`	Parses a string and returns a floating point number
+    + `parseInt()`	Parses a string and returns an integer
+### quick reference
+#### DOM
+  - timers
+    ```
+    	setTimeout(someFunctionName, milliseconds); //runs someFunctionName ONCE after X milliseconds
+    	setInterval(someFunctionName, milliseconds); //runs someFunctionName EVERY X milliseconds
+    	clearInterval(intervalHandle) //you must assign setInterval to a variable
+    	clearTimeout(timeoutHandle) //you must assign setTimeout to a variable
+    ```
+  - setting CSS
+    ```
+    	someelement.style.property = value
+    		any property wtih hyphens (e.g. background-color) becomes camel case (e.g. backgroundColor)
+    		to access the elements class, you have to use somelement.style.className
+    ```
+#### Number
+  ```
+    Number()	Returns a number, converted from its argument.
+    parseFloat()	Parses its argument and returns a floating point number without trailing zeros
+      parseFloat((rad / 0.0174533).toFixed(2))
+    parseInt()	Parses its argument and returns an integer
+    toString()	Returns a number as a string
+    toExponential()	Returns a string, with a number rounded and written using exponential notation.
+    toFixed()	Returns a string, with a number rounded and written with a specified number of decimals.
+    toPrecision()	Returns a string, with a number written with a specified length
+    valueOf()	Returns a number as a number
+  ```
+#### Date
+  - creation
+    ```
+      var today = new Date(); //current date and time
+    	var y2k = new Date(2000,0,1); //month is 0 based, everything else is normal
+    	var d = new Date("October 13, 2014 11:13:00");
+    	d = new Date("2015-03-25T12:00:00"); //The T in the date string, between the date and time, indicates UTC time.
+    	var d = new Date();
+    	var d = new Date(milliseconds);
+    	var d = new Date(dateString);
+    	var d = new Date(year, month, day, hours, minutes, seconds, milliseconds);
+    ```
+  - ADT
+    ```
+      d = new Date(); //todays date & time
+      getDate()	Get the day as a number (1-31)
+      getDay()	Get the weekday a number (0-6)
+      getFullYear()	Get the four digit year (yyyy)
+      getHours()	Get the hour (0-23)
+      getMilliseconds()	Get the milliseconds (0-999)
+      getMinutes()	Get the minutes (0-59)
+      getMonth()	Get the month (0-11)
+      getSeconds()	Get the seconds (0-59)
+      getTime()	Get the time (milliseconds since January 1, 1970)
+    ```
+#### String
+  ```
+    charAt()	Returns the character at the specified index (position)
+    charCodeAt()	Returns the Unicode of the character at the specified index
+    concat()	Joins two or more strings, and returns a new joined strings
+    fromCharCode()	Converts Unicode values to characters
+      seems to work, jsut like this
+        String.fromCharcode(yourStringVarHere);
+    indexOf()	Returns the position of the first found occurrence of a specified value in a string
+      blah.indexOf('blah2') !== -1 // in the event blah2 is at the 0 index
+    lastIndexOf()	Returns the position of the last found occurrence of a specified value in a string
+    localeCompare()	Compares two strings in the current locale
+    match()	Searches a string for a match against a regular expression, and returns the matches
+    replace(regexp|substr, newSubStr|function[, flags]) returns a new string (best to use a RegExp object so you can use flags)
+    search()	Searches a string for a specified value, or regular expression, and returns the position of the match
+    slice()	Extracts a part of a string and returns a new string
+    split()	Splits a string into an array of substrings
+    substr()	Extracts the characters from a string, beginning at a specified start position, and through the specified number of character
+    substring()	Extracts the characters from a string, between two specified indices
+    toLocaleLowerCase()	Converts a string to lowercase letters, according to the host's locale
+    toLocaleUpperCase()	Converts a string to uppercase letters, according to the host's locale
+    toLowerCase()	Converts a string to lowercase letters
+    toString()	Returns the value of a String object
+    toUpperCase()	Converts a string to uppercase letters
+    trim()	Removes whitespace from both ends of a string
+    valueOf()	Returns the primitive value of a String object
+  ```
+  - code examples
+    1. reverse a string
+      `s.split('').reverse().join('');`
+    2. remove last char of string
+      `str = str.substring(0, str.length - 1);`
+#### [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/)
+  - creation
+    ```
+    	var blah = [];
+    	var blah = [1,2,3];
+    	var blah = new Array();
+    	var blah = Array();
+    	var blah = Array(5);
+    	var cars = new Array("Saab", "Volvo", "BMW");
+    	var name = cars[0];
+    	cars[0] = "Opel";
+    ```
+	- ADT
+    ```
+      blah.length //how many items
+  		concat()	Joins two or more arrays, and returns a copy of the joined arrays
+  		indexOf()	Search the array for an element and returns its position
+  		join()	Joins all elements of an array into a string
+  		lastIndexOf()	Search the array for an element, starting at the end, and returns its position
+  		pop()	Removes the last element of an array, and returns that element
+  		push()	Adds new elements to the end of an array, and returns the new length
+  		reverse()	Reverses the order of the elements in an array
+  		shift()	Removes the first element of an array, and returns that element
+  		slice()	Selects a part of an array, and returns the new array
+  		sort([compareFunction])	Sorts the elements of an array
+  		splice(start, deleteCount[, item1[, item2[, ...]]])	Adds/Removes elements from an array, item1,itemX will be added
+  			If you specify a different number of elements to insert than the number youre removing, the array will have a different length at the end of the call.
+  		toString()	Converts an array to a string, and returns the result
+  		unshift()	Adds new elements to the beginning of an array, and returns the new length
+  		valueOf()	Returns the primitive value of an array
+  		map(callback) apply the function to each item in the array
+  		filter(callback[, thisArg]) The filter() method creates a new array with all elements that pass the test implemented by the provided function.
+  		some(functionName) The some() method tests whether some element in the array passes the test implemented by the provided function. if any element returns true, it returns true
+  		reduce(callback[, initialValue]) method applies a function against an accumulator and each value of the array (from left-to-right) to reduce it to a single value.
+  		every(callback[, thisArg]) tests whether all elements in the array pass the test implemented by the provided function.
+    ```
+#### [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
+  - creation
+    ```
+    	var blah = {'this':'that','this':'that'}
+    	var blah {
+    		'myFunction':function() {return this.firstName + " " + this.lastName;},
+    		'otherObject' : {
+    			'item1': 'sometext'
+    		}
+    	}
+    ```
+  - associate functions with objects
+    ```
+  		function someFunction(){
+  			console.log(this);
+  		};
+
+  		var blah = {};
+  		blah.someMethod() = someFunction;
+  			this associtiates the method on the object, with a predefined function
+  			make sure the function uses the keyword 'this' so it can be used with
+  			multiple objects
+    ```
+	- access object properties
+    ```
+  		objectName.propertyName
+  		objectName["propertyName"]
+  		objectName.methodName()
+    ```
+	- ADT
+    ```
+  		Object.assign() Creates a new object by copying the values of all enumerable own properties from one or more source objects to a target object.
+  		Object.create() Creates a new object with the specified prototype object and properties.
+  		Object.defineProperty() Adds the named property described by a given descriptor to an object.
+  		Object.defineProperties() Adds the named properties described by the given descriptors to an object.
+  		Object.entries()  Returns an array of a given objects own enumerable property [key, value] pairs.
+  		Object.freeze() Freezes an object: other code cant delete or change any properties.
+  		Object.getOwnPropertyDescriptor() Returns a property descriptor for a named property on an object.
+  		Object.getOwnPropertyNames() Returns an array containing the names of all of the given objects own enumerable and non-enumerable properties.
+  		Object.getOwnPropertySymbols() Returns an array of all symbol properties found directly upon a given object.
+  		Object.getPrototypeOf() Returns the prototype of the specified object.
+  		Object.is() Compares if two values are distinguishable (ie. the same)
+  		Object.isExtensible() Determines if extending of an object is allowed.
+  		Object.isFrozen() Determines if an object was frozen.
+  		Object.isSealed() Determines if an object is sealed.
+  		Object.keys() Returns an array containing the names of all of the given objects own enumerable properties.
+  		Object.observe()  Asynchronously observes changes to an object.
+  		Object.getNotifier()  Get a notifier with which to create object changes manually.
+  		Object.preventExtensions() Prevents any extensions of an object.
+  		Object.seal() Prevents other code from deleting properties of an object.
+  		Object.setPrototypeOf() Sets the prototype (i.e., the internal [[Prototype]] property)
+  		Object.unobserve()  Unobserves changes to an object.
+  		Object.values()  Returns an array of a given objects own enumerable values.
+    ```
+#### control
+	- try catch
+    ```
+  		try {
+  			/*code*/
+  		} catch (err){
+  			/*
+  				err.message == message of error
+  			*/
+  		}finally {
+  			/*do this regardless of what happens*/
+  		}
+    ```
+	- if statements
+    ```
+  		if (condition1) {
+  		    block of code to be executed if condition1 is true
+  		} else if (condition2) {
+  		    block of code to be executed if the condition1 is false and condition2 is true
+  		} else {
+  		    block of code to be executed if the condition1 is false and condition2 is false
+  		}
+    ```
+	- switch statements
+    ```
+  		switch(expression) {
+  		    case n:
+  		        code block
+  		        break;
+  		    case n:
+  		        code block
+  		        break;
+  		    default:
+  		        default code block
+  		}
+    ```
+#### loops
+	- The break statement breaks the loop and continues executing the code after the loop (if any):
+	- The continue statement breaks one iteration (in the loop), if a specified condition occurs, and continues with the next iteration in the loop.
+	- for
+    ```
+  		var fruits = ["Banana", "Orange", "Apple", "Mango"];
+  		for	(index = 0; index < fruits.length; index++) {
+  		    text += fruits[index];
+  		}
+    ```
+	- for in
+    ```
+  		var person = {fname:"John", lname:"Doe", age:25};
+  		var text = "";
+  		var x;
+  		for (x in person) {
+  		    text += person[x];
+  		}
+    ```
+	- while
+    ```
+  		index =100
+  		while (index--) {
+  			//index in here will start at 99, since you used index-- as the condition
+  		    code block to be executed
+  		}
+    ```
+	- do while
+    ```
+  		do {
+  		    code block to be executed
+  		}
+  		while (condition);
+    ```
+#### functions
+	- function parameters are variables that are local to the function
+	- functions can return anything, even other functions
+	- arguments = an array-like OBJECT containing all of the parameters passed to the function. it is NOT AN Array
+    ```
+			function blah(){
+				//arguments[0], arguments[1], etc contains all the args passed in
+				// you dont need to have a parameter declared,
+			}
+			convert it to an array:
+				var args = (arguments.length === 1?[arguments[0]]:Array.apply(null, arguments));
+			call an arrays method on arguments object
+				Array.every.call(arguments, function(value){ return this stuff;})
+    ```
+	- function declaration
+    ```
+  		function myFunction(){
+  			/*do this stuff*/
+  		}
+    ```
+	- definition expressions (i.e. anonymous function)
+    ```
+  		var myFunction = function(a,b) {
+  			//do some stuff
+  		}
+  		can be executed immediately
+  		var myFunction = function(a,b){
+  			return a+b;
+  		}(2,2);
+    ```
+	- save data in a function after every call
+    ```
+  		function saveThis(data) {
+  		 this.save = this.save || []; //create a new array only on the first call
+  		 if (this.save[data]) return this.save[data]; //return the data if it exists
+  		 return this.save[data] = data; //save new data on each call
+  		}
+    ```
+	- anonymous enclosures
+    ```
+  		(function(arg1,arg2){
+  			//wrap the anonymous function in paranthesis
+  			//then call the function immediately by ending wtih () and send in parameters
+  			//any variables declared inside this function are local to this function
+
+  		})(par1, par2);
+    ```
+	- using call and apply to control 'this' and 'arguments' inside a function
+    ```
+  		functionName.call(someOBject, someParameter)
+  			someObject becomes the value of 'this' inside of the function
+  			someParameter becomes the parameter passed to the function
+
+  		functionNAme.apply(someObject, ['someArrayElement'])
+  			same as the above, only the function parameter is passed as an array
+    ```
+	- functions fired on events
+		`<button type="button" onclick="myFunction()">Try it</button>`
+	- function closures: defining a function within a function
+#### Math
+  - ADT
+    ```
+      Math.random();       // returns a random number
+      Math.pow(base, exponent)
+      Math.min(0, 150, 30, 20, -8, -200);
+      Math.max(0, 150, 30, 20, -8, -200);
+      Math.round(4.7);            // returns 5
+      Math.round(4.4);            // returns 4
+      Math.ceil(4.4);             // returns 5
+      Math.floor(4.7);            // returns 4
+      Math.E          // returns Euler's number
+      Math.PI         // returns PI
+      Math.SQRT2      // returns the square root of 2
+      Math.SQRT1_2    // returns the square root of 1/2
+      Math.LN2        // returns the natural logarithm of 2
+      Math.LN10       // returns the natural logarithm of 10
+      Math.log2(x)      // returns base 2 logarithm of E
+      Math.log10(x)    // returns base 10 logarithm of E
+      abs(x)	Returns the absolute value of x
+      acos(x)	Returns the arccosine of x, in radians
+      asin(x)	Returns the arcsine of x, in radians
+      atan(x)	Returns the arctangent of x as a numeric value between -PI/2 and PI/2 radians
+      atan2(y,x)	Returns the arctangent of the quotient of its arguments
+      ceil(x)	Returns x, rounded upwards to the nearest integer
+      cos(x)	Returns the cosine of x (x is in radians)
+      exp(x)	Returns the value of Ex
+      floor(x)	Returns x, rounded downwards to the nearest integer
+      log(x)	Returns the natural logarithm (base E) of x
+      max(x,y,z,...,n)	Returns the number with the highest value
+      min(x,y,z,...,n)	Returns the number with the lowest value
+      pow(x,y)	Returns the value of x to the power of y
+      random()	Returns a random number between 0 and 1
+      round(x)	Rounds x to the nearest integer
+      sin(x)	Returns the sine of x (x is in radians)
+      sqrt(x)	Returns the square root of x
+      tan(x)	Returns the tangent of an angle
+    ```
+#### [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+	- `/pattern/modifiers;`
+  - regexp tester: https://regex101.com/
+  - creation
+    ```
+    	var patt = /w3schools/i
+    	var patt = new RegExp('w3schools', 'i');
+    	var matches = textVar.match(/[8wtyuioahxvm]/gi); //returns an array of matches
+    		/w3schools/i  is a regular expression.
+    		w3schools  is a pattern (to be used in a search).
+    		i  is a modifier (modifies the search to be case-insensitive).
+    ```
+	- modifiers
+    ```
+  		i	Perform case-insensitive matching
+  		g	Perform a global match (find all matches rather than stopping after the first match)
+  		m	Perform multiline matching
+    ```
+  - quantifiers
+    ```
+      n+	Matches any string that contains at least one n
+      n*	Matches any string that contains zero or more occurrences of n
+      n?	Matches any string that contains zero or one occurrences of n
+      n{X}	Matches any string that contains a sequence of X ns
+      n{X,Y}	Matches any string that contains a sequence of X to Y ns
+      n{X,}	Matches any string that contains a sequence of at least X ns
+      n$	Matches any string with n at the end of it
+      ^n	Matches any string with n at the beginning of it
+      ?=n	Matches any string that is followed by a specific string n
+      ?!n	Matches any string that is not followed by a specific string n
+    ```
+ - expressions: Brackets are used to find a range of characters:
+    ```
+			[abc]	Find any character between the brackets
+			[^abc]	Find any character NOT between the brackets
+			[0-9]	Find any digit between the brackets
+			[^0-9]	Find any digit NOT between the brackets
+			(x|y)	Find any of the alternatives specified
+			(?:YourRegexHere) non capturing group
+				will match YourRegexHere but wont return it as a match
+				i.e. it must PASS the test, but dont include it in the returned results
+    ```
+  - groups
+    ```
+      (x) Matches x and remembers the match. These are called capturing groups.
+      (?:x) Matches x but does not remember the match. These are called non-capturing groups.
+    ```
+  - assertions
+    ```
+      x(?=y) Matches x only if x is followed by y.
+      x(?!y) Matches x only if x is not followed by y.
+    ```
+	- meta-characters: characters withs special meanings
+    ```
+  		.	Find a single character, except newline or line terminator
+  		\w	Find a word character
+  		\W	Find a non-word character
+  		\d	Find a digit
+  		\D	Find a non-digit character
+  		\s	Find a whitespace character
+  		\S	Find a non-whitespace character
+  		\b	Find a match at the beginning/end of a word \bword\b
+  				Before the first character in the string, if the first character is a word character.
+  				After the last character in the string, if the last character is a word character.
+  				Between two characters in the string, where one is a word
+  		\B	Find a match not at the beginning/end of a word
+  				opposte of \b
+  		\0	Find a NUL character
+  		\n	Find a new line character
+  		\f	Find a form feed character
+  		\r	Find a carriage return character
+  		\t	Find a tab character
+  		\v	Find a vertical tab character
+  		\b  match a word boundary \bword\b.
+  			character and the other is not a word character.
+  		\xxx	Find the character specified by an octal number xxx
+  		\xdd	Find the character specified by a hexadecimal number dd
+  		\uxxxx	Find the Unicode character specified by a hexadecimal number xxxx
+    ```
+	- Methods that use regular expressions
+		```
+  		exec	A RegExp method that executes a search for a match in a string. It returns an array of information.
+  		test	A RegExp method that tests for a match in a string. It returns true or false.
+  		match	A String method that executes a search for a match in a string. It returns an array of information or null on a mismatch.
+  		search	A String method that tests for a match in a string. It returns the index of the match, or -1 if the search fails.
+  		replace	A String method that executes a search for a match in a string, and replaces the matched substring with a replacement substring.
+  		split	A String method that uses a regular expression or a fixed string to break a string into an array of substrings.
+      myRegex = /blah/i;
+      myRegex.test(myString);
+    ```
+
+# [ES6](https://github.com/lukehoban/es6features)
+## Strings
+  ```
+    "abcde".includes("cd") // true
+    "abc".repeat(3) // "abcabcabc"
+    `${some var or function call} some string`
+  ```
+## numbers
+  ```
+    Number.EPSILON
+    Number.isInteger(Infinity) // false
+    Number.isNaN("NaN") // false
+  ```
+## Math
+  ```
+    Math.acosh(3) // 1.762747174039086
+    Math.hypot(3, 4) // 5
+    Math.imul(Math.pow(2, 32) - 1, Math.pow(2, 32) - 2) // 2
+  ```
+## Arrays:
+  ```
+    Array.from(document.querySelectorAll('*')) // Returns a real Array
+    Array.of(1, 2, 3) // Similar to new Array(...), but without special one-arg behavior
+    [0, 0, 0].fill(7, 1) // [0,7,7]
+    [1, 2, 3].find(x => x == 3) // 3
+    [1, 2, 3].findIndex(x => x == 2) // 1
+    [1, 2, 3, 4, 5].copyWithin(3, 0) // [1, 2, 3, 1, 2]
+    ["a", "b", "c"].entries() // iterator [0, "a"], [1,"b"], [2,"c"]
+    ["a", "b", "c"].keys() // iterator 0, 1, 2
+    ["a", "b", "c"].values() // iterator "a", "b", "c"
+  ```
+## Objects
+    Object Literals:
+      {
+        // __proto__
+        __proto__: theProtoObj,
+        blah,
+        function() {...},
+        ['one' + id]: 'computed property'
+      }
+## Operators
+  - Spread Operator: expands an array/object into elements, i.e. flatten arrays and objects in function calls, array literals, destructuring assignment
+    `myFunction(...iterableObj);`
+    `[...iterableObj, 4, 5, 6]`
+  - Destructuring: pull values out of arrays/objects and assign them to variables
+    + arrays
+      ```
+        [a, b, ...rest] = [1, 2, 3, 4, 5];
+        console.log(a); // 1
+        console.log(b); // 2
+        console.log(rest); // [3, 4, 5]
+      ```
+    + objects
+      ```
+        ({a, b} = {a:1, b:2});
+        console.log(a); // 1
+        console.log(b); // 2
+      ```
+    + assign new var names:
+      ```
+        var o = {p: 42, q: true};
+        var {p: foo, q: bar} = o;
+        console.log(foo); // 42
+        console.log(bar); // true
+      ```
+    + Fail-soft destructuring
+      ```
+        var [a] = [];
+        a === undefined;
+      ```
+## Functions:
+  - Default Arguments
+    `function drawES6Chart({size = 'big', cords = { x: 0, y: 0 }, radius = 25} = {}) {..}`
+  - Rest Parameters/: used in function arguments to capture a list of variables from arrays
+    ```
+      function(a, b, ...theArgs) {
+        // ...
+      }
+    ```
+### Arrow functions:
+## metaprogramming:
+### Symbols:
+  + reflection within implementation - you sprinkle them on your existing classes and objects to change the behaviour.
+  + use cases:
+    - not iterable over
+    - not fetched using the already existing Reflection tools
+    - guaranteed not to conflict with other properties in the object!
+    - If you create a symbol (var mysym = Symbol()) it creates a completely new value inside the JavaScript engine.
+      + If you don’t have the reference for the Symbol, you just can’t use it.
+      + This also means two symbols will never equal the same value, even if they have the same description.
+    - Symbol.for(). This method creates a Symbol in a “global Symbol registry”. Small aside: this registry is also cross-realm, meaning a Symbol from an iframe or service worker will be the same as one generated from your existing frame:
+  + code:
+    - create a symbol:
+      `const blah = Symbol();`
+      `const blah1 = Symbol('with a description for console logging')`
+    - symbols as object properties
+      ```
+        const blah = Symbol('used as object key');
+        const object = {};
+        object[blah] = 'Something else';
+        **note**
+          object.blah === 'undefined' // doesnt work
+          object[blah] === 'Something else'; // only work sif you have reference to the symbol
+
+      ```
+    - see an object's symbols: `Object.getOwnPropertySymbols:`
+
+### Reflect
+  + all about Reflection through introspection - used to discover very low level information about your code.
+### Proxy:
+  + Reflection through intercession - wrapping objects and intercepting their behaviours through traps.
+## Classes:
+    - function declarations are hoisted, classes are not
+    - creating
+      ```
+        class Polygon {
+          constructor({...options}) {
+            this.height = height;
+            this.width = width;
+          }
+          get area() {
+            return this.calcArea();
+          }
+          set matrixType(matrixType) {
+            this.idMatrix = matrixType;
+          }
+          static distance(a, b) {
+            //not callable from instances
+            const dx = a.x - b.x;
+            const dy = a.y - b.y;
+
+            return Math.sqrt(dx*dx + dy*dy);
+          }
+        }
+      ```
+    - extending
+      ```
+        class OtherShape extends Polygon {
+          constructor({...options}) {
+            super(options); //parent.constructor()
+            this.blah = blah;
+          }
+          area2() {
+            // call parent method
+            super.area();
+          }
+        }
+      ```
+### Generators examples
+  - send and receive data
+    ```
+      function* someName() {
+        yield 'someValue'; //send data without accepting a return value
+        const getIt = yield; //receive data without sending a value
+        const getIt = yield 'someOtherValue'; // send and receive data
+
+        return 'someFinalValue'; // exit permanently
+      }
+      const blah = someName(); // always call the function immediately to get everything up to the first yield
+      blah.next(optionalParam) // enter and continue the function
+    ```
+
+  - use with 'for' of loops
+    ```
+      function* colors() {
+        yield 'red'; yield 'blue';
+      }
+      for (let color of colors()) {
+        console.log(color)
+      }
+    ```
+## Iterators:
+### Iterators examples
+  - create fibonacci sequence
+    ```
+      let fibonacci = {
+        [Symbol.iterator]() {
+          let pre = 0, cur = 1;
+          return {
+            next() {
+              [pre, cur] = [cur, pre + cur];
+              return { done: false, value: cur }
+            }
+          }
+        }
+      }
+      for (var n of fibonacci) {
+        if (n > 1000) break;
+        console.log(n);
+      }
+    ```
+  - combine generators with iterators:
+    ```
+      var fibonacci = {
+        [Symbol.iterator]: function*() {
+          var pre = 0, cur = 1;
+          for (;;) {
+            var temp = pre;
+            pre = cur;
+            cur += temp;
+            yield cur;
+          }
+        }
+      }
+
+      for (var n of fibonacci) {
+        // truncate the sequence at 1000
+        if (n > 1000)
+          break;
+        console.log(n);
+      }
+    ```
+## Loops:
+  ```
+    'for..of': iterating arrays
+      for (let color of colors) {
+        // color = each item in the array
+      }
+  ```
+## Map, weakmap
+### Maps
+    var m = new Map();
+    m.set("hello", 42);
+    m.set(s, 34);
+    m.get(s) == 34;
+    // Weak Maps
+    //  WeakMaps provides leak-free object-key’d side tables.
+    var wm = new WeakMap();
+    wm.set(s, { extra: 42 });
+    wm.size === undefined
+## Set, weakset
+    // Sets
+    var s = new Set();
+    s.add("hello").add("goodbye").add("hello");
+    s.size === 2;
+    s.has("hello") === true;
+    // Weak Sets
+    var ws = new WeakSet();
+    ws.add({ data: 42 });
+      // Because the added object has no other references, it will not be held in the set
+  proxies: Proxies enable creation of objects with the full range of behaviors available to host objects. Can be used 'for' interception, object virtualization, logging/profiling, etc.
+
+  reflect
+  tail
+  module loaders:
+    // Dynamic loading – ‘System’ is default loader
+    System.import('lib/math').then(function(m) {
+      alert("2π = " + m.sum(m.pi, m.pi));
+    });
+    // Create execution sandboxes – new Loaders
+    var loader = new Loader({
+      global: fixup(window) // replace ‘console.log’
+    });
+    loader.eval("console.log('hello world!');");
+    // Directly manipulate module cache
+    System.get('jquery');
+    System.set('jquery', Module({$: $})); // WARNING: not yet finalized
+## keywords
+### let: defines block scoped variables
+  ```
+    var x = 10 (global)
+    if (x){
+      var x = 5 //overrides the global x, and sets it to 5
+          //this is because the if block does not define a new scope
+    }
+    if (x){
+      let x = 2 //this x is only available within this if statement
+    }
+  ```
+  - where to use
+    ```
+      for (let i = 0; i<blah;i++){
+        i is no longer overridden on each loop
+      }
+    ```
+### const: set constant vars that should not be reasigned
+  - example: `const name = "noah";`
+# ES7: (ES2016)
+## async await
+  - @see #topics Async Promises section above
+## destructuring:
+  `({a, b, ...rest} = {a:1, b:2, c:3, d:4});`
+## Generators: a function that can be exited, and entered multiple times
+  - yield: exit the function and send a value to the caller, and optionally receive a value back
+  - function.next(): retrieve and send data, executes up to and including the next yield statement
+    + for each yield statement you need to call blah.next()
+    + returns ``{value: 'dataInAndOut', done: true|false}``
+      1. value: data sent out from yield, or data sent in through next(someData);
+      2. done:
+        - false if function is not done, and can be entered again
+        - true: if function is done, and should not be re-entered
+    + you can access the value directly: `bloop.next().value;``
+  - use cases
+    + asynchornous events
+    + timers (e.g. setInterval)
+
+
+# APIs
+## WINDOW: the lord of the ring
+## DOM
+	- nodes: represent elements, comments, text, comments, etc. there are 12 node types, most important are element, attribute, and text
+	- checking node types
+    ```
+  		someVar.nodeType
+  			1 = element
+  			2 = attribute
+  			3 = text
+    ```
+	- grabbing elements
+    ```
+  		var myelement = document.GetElementById('idname');
+  			getElementById can be used at any level, not just the document level
+  			e.g. if you grab a UL, you can use getElementsByTagName to grab its child li tags
+  		var myelement = document.getElementsByTagName('p'); //returns an array containing 0/more elements
+    ```
+	- working with attributes
+    ```
+  		myelemen.getAttribute('attributename');
+  		myelement.setAttribute('attributename', 'attributevalue');
+    ```
+	- change html content
+		`document.getElementById("demo").innerHTML = "Hello JavaScript";`
+	- change html styles (CSS)
+		`document.getElementById("demo").style.fontSize = "25px";`
+	- creating element and inserting elements into the DOM
+    ```
+  		var newElement = document.createElement('li');
+  		var newText = document.createTextNode('add this text');
+  		newElement.appendChild(newText);
+  		otherElement.appendChild(newElement);
+    ```
+	- good tricks
+    ```
+  		window.onload = function() {
+  			do stuff once the entire page has loaded
+
+  		}
+    ```
+	- display data to the user
+    ```
+      alert('your message') //give user information
+      prompt('your question') //ask user for information
+      document.write('your html') //rewrite the entire page
+      element.innerHTML = 'Your Text' //add text to an element
+      console.log('your message') //writes tot he console during program execution
+    ```
+
+### [window.fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API):
+  - simplified XMLhttpRequest
+### Fetch examples
+  - fetch with a request object
+  `fetch(requestObject).then(...)`
+
+  - Simple response handling
+  ```
+    fetch('https://davidwalsh.name/some/url')
+      .then(function(response) {
+
+      }).catch(function(err) {
+      	// Error :(
+      });
+  ```
+
+  - url (required), options (optional)
+  ```
+    fetch('https://davidwalsh.name/some/url', {
+    	method: 'get'
+    }).then(function(response) {
+
+    }).catch(function(err) {
+    	// Error :(
+    });
+  ```
+
+  - Chaining for more "advanced" handling
+  ```
+    fetch('https://davidwalsh.name/some/url')
+    .then(function(response) {
+    	return //...
+    }).then(function(returnedValue) {
+    	// ...
+    }).catch(function(err) {
+    	// Error :(
+    });
+  ```
+
+  - The fetch signature, however, acts like Request so you could also do:
+  ```
+    fetch('https://davidwalsh.name/users.json', {
+    	method: 'POST',
+    	mode: 'cors',
+    	redirect: 'follow',
+    	headers: new Headers({
+    		'Content-Type': 'text/plain'
+    	})
+    }).then(function() { /* handle response */ });
+  ```
+
+### [window.Request](https://developer.mozilla.org/en-US/docs/Web/API/Request)
+  - A Request instance represents the request piece of a fetch call.
+    + important properties
+        1. method - GET, POST, PUT, DELETE, HEAD
+        2. url - URL of the request
+        3. headers - associated Headers object
+        4. referrer - referrer of the request
+        5. mode - cors, no-cors, same-origin
+        6. credentials - should cookies go with the request? omit, same-origin
+        7. redirect - follow, error, manual
+        8. integrity - subresource integrity value
+        9. cache - cache mode (default, reload, no-cache)
+### Request examples
+  **sample request and fetch**
+    ```
+      var request = new Request('https://davidwalsh.name/users.json', {
+        method: 'POST',
+        mode: 'cors',
+        redirect: 'follow',
+        headers: new Headers({
+          'Content-Type': 'text/plain'
+        })
+      });
+      // Now use it!
+      fetch(request).then(function() { /* handle response */ });
+    ```
+
+### [window.Response](https://developer.mozilla.org/en-US/docs/Web/API/Response):
+  - properties
+    1. type - basic, cors
+    2. url
+    3. useFinalURL - Boolean for if url is the final URL
+    4. status - status code (ex: 200, 404, etc.)
+    5. ok - Boolean for successful response (status in the range 200-299)
+    6. statusText - status code (ex: OK)
+    7. headers - Headers object associated with the response.
+  - methods
+    1. clone() - Creates a clone of a Response object. VERY USFUL! as you can only read a response body once, so clone it to read it multipel tiems (e.g. to send to multiple places)
+    2. error() - Returns a new Response object associated with a network error.
+    3. redirect() - Creates a new response with a different URL.
+    4. arrayBuffer() - Returns a promise that resolves with an ArrayBuffer.
+    5. blob() - Returns a promise that resolves with a Blob.
+    6. formData() - Returns a promise that resolves with a FormData object.
+    7. json() - Returns a promise that resolves with a JSON object.
+    8. text() - Returns a promise that resolves with a USVString (text).
+### response examples
+  - json example
+    ```
+      fetch('https://davidwalsh.name/demo/arsenal.json').then(function(response) {
+      	// Convert to JSON
+      	return response.json();
+      }).then(function(j) {
+      	// Yay, `j` is a JSON object
+      	console.log(j);
+      });
+    ```
+
+### [window.Headers](https://developer.mozilla.org/en-US/docs/Web/API/Headers)
+  - Allows you to perform various actions on HTTP request and response headers. These actions include retrieving, setting, adding to, and removing.
+### headers examples
+  - Create an empty Headers instance
+    ```
+      var headers = new Headers();
+      // Add a few headers
+      headers.append('Content-Type', 'text/plain');
+      headers.append('X-My-Custom-Header', 'CustomValue');
+      // Check, get, and set header values
+      headers.has('Content-Type'); // true
+      headers.get('Content-Type'); // "text/plain"
+      headers.set('Content-Type', 'application/json');
+      // Delete a header
+      headers.delete('X-My-Custom-Header');
+      // Add initial values
+      var headers = new Headers({
+        'Content-Type': 'text/plain',
+        'X-My-Custom-Header': 'CustomValue'
+      });
+    ```
+
+### [window.localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage)
+  - localStorage is the same as sessionStorage with the same same-origin rules applied but it is persistent.
+### localStorage examples
+  ```
+    localStorage.setItem('thisVar','toThisString')
+    localStorage.getItem('thisVar')
+    localStorage.removeItem('thisVar')
+    localStorage.clear();
+  ```
+
+### [window.indexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+  - IndexedDB is a low-level API for client-side storage of significant amounts of structured data, including files/blobs. This API uses indexes to enable high performance searches of this data.
+  - background:
+    - positives:
+      + every major browser supports indexeddb
+    - negatives:
+      + is async but predates promsies, so its eventbased system is horrid.
+        1. use [IndexedDB Promised library instead](https://github.com/jakearchibald/idb)
+  - location: resources > indexedDB
+
+  - structure:
+    + db: can be multiple per website
+      + object store: each db can have multiple object stores (i.e. tables) to store data
+          - object stores can only be created via the upgrade funcion when creating the DB
+            - you have to bump up the version to modify the object store (e.g. add object stores / create indexes)
+            - upgrade version only gets called with the upgradeDb() function
+        - values: any data type, each item can have a primary key/one of its values can be set as the primary key
+        - transactions: (i.e. CRUD), all CRUD operations must be part of a transaction
+          1. if a transaction fails for a series of steps/actions, none of the steps/actions are applied and the whole transaction is reverted
+          2. create a transaction object > use it to return an objectStore > operate CRUD on object store
+        - indexes: you can create multiple indexes per object store, which orders (i.e. sorts) the values by a specific property making it faster to look up
+
+  - API
+    - indexedDb: found on window object
+      1. .deleteDatabase('dbName')
+    - IDBObjectStore: interface for an object store
+      - methods: add, clear, delete, get, getAll, getAllKeys, etc.
+      - properties: indexNames, keyPath, name, transaction, autoIncrement
+### [idb promised](https://github.com/jakearchibald/idb)
+  - idb: IndexedDB Promised; a library built to convert IndexedDB to promises
+  - background: whenever IndexeDB would return a request, IDB returns a promise
+#### idb promised examples
+  - open DB: always use in switch statement
+    ```
+      const someDb = idb.open('someDbName',3, (upgradeDb){
+        switch(upgradeDb.oldVersion) {
+          case 0:
+            // original create db
+            someTable = upgradeDb.createObjectStore('someName1');
+            // all db 0 version logic here
+          case 1:
+            //add new object store with key id
+            someOtherTable = upgradeDb.createObjectStore('someName2', { keyPath: 'id' })
+            // all db version 2 logic here
+          case 2:
+            //modify someTable and add new index
+            var someTable = upgradeDb.transaction.objectStore('someName1');
+          someTable.createIndex('animal', 'favriteAnimal'); // index name = animal, sorts on key favoriteAnimal
+        }
+      })
+    ```
+  - create db and create record
+    ```
+      const dbName = idb.open('newDbName', 1, (upgradeDb) => {
+        const keyValStore = upgradeDb.createObjectStore('keyval');
+        keyValStore.put('value', 'keyName') // create record
+        // create objectStore and define index
+        upgradeDb.createObjectStore('people', { keyPath: 'name' });
+      })
+    ```
+  - read from db
+    ```
+      dbName.then((db) => {
+        const transaction = db.transaction('keyval');
+        const keyValStore = transaction.objectStore('keyval');
+        return keyValStore.get('keyName'); // returns promise
+      }).then((value) => {
+        console.log('the value from transaction is', value);
+      })
+    ```
+  - read and write to db
+    ```
+      dbName.then((db) => {
+        const transaction = db.transaction('keyval', 'readwrite');
+        const keyValStore = transaction.objectStore('keyval');
+        keyValStore.put('value', 'keyName');
+        return transaction.complete; // returns promise
+      }).then(() => {
+        console.log('transaction completed successfully if promise resolves');
+      })
+    ```
+  - get all records
+    ```
+      dbName.then(function(db) {
+        var tx = db.transaction('people');
+        var peopleStore = tx.objectStore('people');
+        return peopleStore.getAll(); // all objects in store
+
+        //or get all people by idnex
+        var ageIndex = peopleStore.index('age');
+        return ageIndex.getAll(); // all objects in store
+
+      }).then(function(people) {
+        console.log('people', people)
+      })
+    ```
+  - get records one at a time
+    ```
+      dbName.then(function(db) {
+        var tx = db.transaction('people');
+        var peopleStore = tx.objectStore('people');
+        var ageIndex = peopleStore.index('age');
+        return ageIndex.openCursor();
+
+        //loop through records backwords
+        store.index('indexName')
+          .openCursor(null, 'prev')
+          .then(function(cursor){...})
+
+      }).then(function(cursor) {
+        if (!cursor)  return;
+        // skip first two items
+        return cursor.advance(2);
+      }).then(function logPerson(cursor){
+        if (!cursor) return;
+        console.log('cursored at', cursor.value.keyName);
+        // cursor.update(newValue)
+        // cursor.delete()
+        return cursor.continue().then(logPerson); // recursively call logPerson
+      }).then(function() {
+        console.log('done cursoring');
+      })
+    ```
+
+### [window.document](https://developer.mozilla.org/en-US/docs/Web/API/document)
+### document important properties
+  - readyState: has 3 States (values); everytime readState changes, a ready state change event fires
+    1. loading: document still loading
+    2. interactive: document has loaded and has been parsed, but sub resources (images, css, frames, etc) hasnt loaded
+      + loaded === dom.contentLoaded event
+      useful for running code after all of the initial DOM content has been loaded
+    3. complete: everything has loaded
+### document examples
+  - implement jQuery on .ready() handler:
+    ```
+      function ready() {
+        // Credit to Jake Archibald
+        // https://github.com/jakearchibald/svgomg/blob/master/src/js/page/utils.js#L7
+        return new Promise(function(resolve) {
+          function checkState() {
+            if (document.readyState !== 'loading') {
+              resolve();
+            }
+          }
+          document.addEventListener('readystatechange', checkState);
+          checkState();
+        });
+      };
+      ready().then(run your other code);
+    ```
+
+### window.navigator
+  - The Navigator interface represents the state and the identity of the user agent. It allows scripts to query it and to register themselves to carry on some activities.
+
+### [window.Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)
+  + Web worker: runs separately from the page, isnt visible to the user, cant access the DOM,
+        .it intercepts and controls requests made by the browser
+
+### [window.caches](https://developer.mozilla.org/en-US/docs/Web/API/cache)
+  - updating static cache:
+    1. create new SW
+    2. remove old SW
+    3. when #1 is actived, deleted old cache
+    4. create new cache
+  - see cache: dev tools > resources/application > cache storage
+  - cache names in prod should be auto generated and cache times set to a year a more, when the file changes, you can just upload the new file (with a different name) and that will force an update since the url to the file changes
+    + be sure the cache names are versioned or auto-generated, e.g. somecache-v1 | somecache-!@#s
+  - opening a cache returns a response objects
+    +  a response object can only be used once, you will need to call response.clone() to use it more than once
+  - methods
+    1. caches.open('createOrOpenACache').then(function(cache){...})
+      + create or open a cache-box by name
+      + returns a promise of request and response pairs from any secure origin
+      + can store fonts, scripts, images, etc. from your origin, and any origin on the web
+    2. cache.put(request, response);
+      + store a request response in
+    3. cache.addAll([request1, request2, 'url3', 'url4'])
+      + accepts request objects / urls, makes the requests, and stores the results
+      + are atomic requests, if any fail, none are added
+    4. cache.match(requestObjectOrUrlString)
+      + retrieve something from the cache
+      + returns matching response or null
+    5. caches.match(requestObjectOrUrlString)
+      + same as cache.match, only searches ALL CACHES starting with the oldest first
+      + retrieve response from cache for all matching requests
+    6. caches.delete('cacheName|cacheObject') //always clean your cache
+    7. caches.keys() //get names of all your caches
+#### cache examples
+  - check if request is in cache
+    ```
+      self.addEventListener('fetch', function(event) {
+        event.respondWith(
+          caches.match(event.request).then(function(response) {
+            console.log('res', response);
+            if (response) return response;
+            return fetch(event.request);
+          }).catch(function(error) {
+            console.log('err', error);
+            return fetch(event.request);
+          })
+        );
+      });
+    ```
+=======
 ## design patterns
 ### creation patterns
 #### factory pattern:
@@ -2173,3 +3507,4 @@
   			};
     ```
 	- AMD format asynchronous module definition
+>>>>>>> master:web_apps/_javascript.md
