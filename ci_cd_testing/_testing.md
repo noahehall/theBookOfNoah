@@ -120,7 +120,7 @@
   1. unit tests (thousands)
 
 # react testing
-  - component contract: expected behavior of the component  
+  - component contract: expected behavior of the component
     + what it renders (maybe nothing)
     + The props the component receives
     + The state the component holds (if any)

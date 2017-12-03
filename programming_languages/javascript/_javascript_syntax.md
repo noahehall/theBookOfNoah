@@ -648,7 +648,7 @@
 ## array
   - Array.from(arrayLike[, mapFn[, thisArg]]): method creates a new Array instance from an array-like or iterable object.
     ```s
-    Array.from([1, 2, 3], x => x + x);      
+    Array.from([1, 2, 3], x => x + x);
       // [2, 4, 6]
     ```
   - Array.of(element0[, element1[, ...[, elementN]]]): creates a new Array instance with a variable number of arguments, regardless of number or type of the arguments.
@@ -762,7 +762,7 @@
 ## reflect
 ## Math
   - skipped
-## number  
+## number
   - Number.isNaN(value): method determines whether the passed value is NaN and its type is Number. It is a more robust version of the original, global isNaN().
   -  Number.isFinite(value): method determines whether the passed value is a finite number.
   - Number.isInteger(value): method determines whether the passed value is an integer.

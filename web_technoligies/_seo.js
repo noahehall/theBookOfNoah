@@ -14,4 +14,3 @@ external outbound links
 
 -Link equity is the concept of the influence of links on a pages ability to rank 'for' particular search queries.
   .Link equity takes into account: relevance, authority and trust, link placement and accessibility, the positive value of relevant outbound links, and the like
-  

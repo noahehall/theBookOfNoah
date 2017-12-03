@@ -9,4 +9,4 @@
 
 # [request/response]
   - [server design patterns](http://www.servicedesignpatterns.com/clientserviceinteractions/requestresponse)
-  - 
+  -

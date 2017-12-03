@@ -824,7 +824,7 @@
     2. RENDER: initial route
     3. PRE-CACHE: remaining routes
     4. LAZY-LOAD: and create remaning routes on demand
-  - benefits of PRPL  
+  - benefits of PRPL
     1. minimum time to interactive
     2. maximum caching efficiency, espcially overtime as updates are released
     3. simplicity of development and deployment
@@ -1313,7 +1313,7 @@
           ```
             for (var i = 0, headings = $$('h1,h2,h3,h4,h5,h6');
                  i < headings.length; i++) {
-               console.log(headings[i].textContent.trim() + " " +  
+               console.log(headings[i].textContent.trim() + " " +
                            headings[i].tagName,
                            headings[i]);
             }
@@ -1781,33 +1781,33 @@
   - definition
     ``` simple
       // simple mixin definition
-      let MyMixin = (superclass) => class extends superclass {  
+      let MyMixin = (superclass) => class extends superclass {
         foo() {
           console.log('foo from MyMixin');
         }
       };
 
       // advanced mixin inheritance definition
-      let Mixin2 = (superclass) => class extends Mixin1(superclass) {  
+      let Mixin2 = (superclass) => class extends Mixin1(superclass) {
         /* Add or override methods here */
       }
 
       // function composition mixin inheritance
-      let CompoundMixin = (superclass) => Mixin2(Mixin3(superclass));  
+      let CompoundMixin = (superclass) => Mixin2(Mixin3(superclass));
 
       // single subclass definition
-      class MyClass extends MyMixin(MyBaseClass) {  
+      class MyClass extends MyMixin(MyBaseClass) {
         /* ... */
       }
 
       // multiple subclass definition
-      class MyClass extends Mixin1(Mixin2(MyBaseClass)) {  
+      class MyClass extends Mixin1(Mixin2(MyBaseClass)) {
         /* ... */
       }
 
       // instantiation
-      let c = new MyClass();  
-      c.foo(); // prints "foo from MyMixin"  
+      let c = new MyClass();
+      c.foo(); // prints "foo from MyMixin"
     ```
 ### classes
   - classes can be used as an expression as well as a statement
