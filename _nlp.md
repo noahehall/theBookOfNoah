@@ -12,12 +12,33 @@
   - inflectional morphology
   - part of speech
 
+# techniques
+## sequence labeling
+## n-gram models
+## backoff
+## evaluation
+## POS tagging
+  - process of classifying words into their parts of speech and labeling them
+### parts of speech:
+  - nouns: people, places, things, concepts; woman, scotland, book, intelligence
+    + can appear after determiners and adjectives
+      - the woman  who I saw yesterday...
+    + can be the subject/object of the verb
+      - the woman sat down
+  - verbs: describe events and actions; fall, eat
+    + express a relation involving the referents of one/more noun phrases
+      - dot com stocks suddenly FELL like a storing-files-directories-in-memory-with-tmpfs
+      - john ATE the pizza with gusto
 
 
+
+# [chapter 5](http://www.nltk.org/book/ch05.html)
+  - word classes/parts of speech/lexical categories: noun, verb, adjective, etc, arise form analysie of the distribution of words in text
 
 # basics
   - nlp: field of computer science, artificial intelligence and computational linguistics concerned with the itneractions between computers and human natural languages
     1. concerned with programming computers to fruitfully process large natural language corpora
+
 
 
 

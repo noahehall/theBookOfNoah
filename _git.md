@@ -1,3 +1,6 @@
+# setup hooks
+  - [read more](https://www.digitalocean.com/community/tutorials/how-to-use-git-hooks-to-automate-development-and-deployment-tasks)
+  
 # change remote
 	1. git clone <url> <newname>
 	2. git remote -v //check where git push will send the files
