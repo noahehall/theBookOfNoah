@@ -1,3 +1,7 @@
+# note to reader
+  - all the awesome stuff i learned in my udacity nanodegree program is in other files, e.g. the _javascript.md file
+
+  
 bookmark: https://classroom.udacity.com/courses/ud894/lessons/7084670183/concepts/70969789090923
 
 https://babeljs.io/blog/2015/06/07/react-on-es6-plus

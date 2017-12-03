@@ -1,0 +1,7 @@
+- [make](http://www.tutorialspoint.com/unix_commands/make.htm)
+  - `make [ -f makefile ] [ options ] ... [ targets ] ... `
+  - The purpose of the make utility is to determine automatically which pieces of a large program need to be recompiled, and issue the commands to recompile them.
+  - you can use make with any programming language whose compiler can be run with a shell command.
+  - You can use it to describe any task where some files must be updated automatically from others whenever the others change.
+  - To prepare to use make, you must write a file called the makefile that describes the relationships among files in your program, and the states the commands for updating each file.
+  - In a program, typically the executable file is updated from object files, which are in turn made by compiling source files.
