@@ -1,5 +1,0 @@
-{
-  "dependencies": {
-    "@mdsol/sandman": "https://s3.amazonaws.com/mdsol-resources/sandman-npm/mdsol-sandman-1.4.0.tgz"
-  }
-}
