@@ -41,7 +41,8 @@
     4. Linearithmic: `O(n log n)`
     5. Quadratic: `O(n 2 )`
     6. Exponential: `O(2 n )`
-
+  4. choosing algorithms
+    1. the constant `c` is not as important as knowing the rate of growth of the algorithm
 ## Terminology
   - multiplicative constant: an algorithm that performs a computation using integers stored using 64 bits may take twice as long as a similar algorithm coded using integers stored in 32 bits
     + performance costs that differ by a multiplicative constant are asymptotically equivalent,
@@ -64,6 +65,10 @@
     1. constructs an approximate convex hull by partitioning the points into vertical strips (Bentley et al., 1982). Within each strip, the maximum and minimum points (based on y coordinate) are identified (they are drawn in Figure 1-6 with squares around the points). Together with the leftmost point and the rightmost point in P, these extreme points are stitched together to form the approximate convex hull.
   - Sequential Search: examines a list of n ≥ 1 distinct elements, one at a time, until a desired value, v, is found.
   - *guessing algorithm*: start by guessing `n`, is it too low ? double it by half, is to too low ? double it by half, etc., and keep going up/down until find the correct solution
+  - *Bisection algorithm*: computes a root of an equation in one variable; e.g. for what values of `x` does a continous function `f(x) = 0`
+    1. start with two values `a` and `b` for which `f(a)` and `f(b)` are opposite signs (one positive, one negative)
+    2. at each computation, the method bisects the range `[a, b]` by computing its midpoint `c`
+    3. determine on which side of `c` the root must lie, and continue until you find the root
 ## Mathematics
   - all can be used to choose the correct algorithm for a specific problem
 ### Size of a Problem Instance
@@ -100,10 +105,10 @@
       + a different `n0` exists for bount upper and lower bounds
     1. worst-case performance / upper bound: the execution time is classified as O(f(n)) and corresponds to the worst-case scenario
       - is never greater than directly proportiional to the size of the input problem instance, once the size is large enough
-      - O(n) === `t(n) < c*n` for all `n > n0`
+      - `O(n)` === `t(n) < c*n` for all `n > n0`
     2. best case performance / lower bound: the execution time of an algorithm is classified as Ω(f(n)) and corresponds to the best-case scenario
       - is never smaller than directly proportional to the size of the input problem instance
-      - Ω(n) === `t(n) > c*n` for all `n > n0`
+      - `Ω(n)` === `t(n) > c*n` for all `n > n0`
   - complexity theory and `Θ(f(n))`
     - combines lower and upper bounds to identify an accurate tight bound: when the lower bound is `Ω(f(n))` and the upper bound is also `O(f(n))` for the same classification `f(n)``
   -
@@ -122,10 +127,13 @@
       - the problem size (i.e. `x` and `y`) cannot be `> k`
     1. Logarithmic: `O(log n)`
       - algorithms that succeed in finding an optimial solution by reducing the size of the problem instance by half each time
-        + *guessing algorithm*: start by guessing `n`, is it too low ? double it by half, is to too low ? double it by half, etc., and keep going up/down until find the correct solution
-        +
+        + *guessing algorithm*
+        + *Bisection algorithm*
     2. Sublinear: `O(n d ) for d < 1`
+      - the behavior of an aglorithm is better than linear, yet not as efficient as logarithmic
     3. Linear: `O(n)`
+      - an algorithm is linear with respect to its input size `n` if there som econstant `c > 0` such that `t(n) <= c*n` for 'large enough' `n`
+      - `n === n > n0`
     4. Linearithmic: `O(n log n)`
     5. Quadratic: `O(n 2 )`
     6. Exponential: `O(2 n )`
