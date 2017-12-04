@@ -1,6 +1,7 @@
 # TODO
 https://en.wikipedia.org/wiki/Client%E2%80%93server_model
 https://developer.mozilla.org/en-US/docs/Web/HTTP
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages
 
 
 # Links
@@ -480,7 +481,14 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP
       - Type = DATA
         - multiple lines for data
   - request body
-    - requests fetching resources usually
+    - requests fetching resources usually dont have a body
+    - requests sending data usually require one
+    - two broad categories
+      - single resource bodies: consist of one single file defined by two headers
+        - content type
+        - content length
+      - multiple resource bodies: consist of multipart body, each containing a different bit of information
+        - typically associated with html forms
 #### http message methods
   - the client informs the server the action to take
   - get
