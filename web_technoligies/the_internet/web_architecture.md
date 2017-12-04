@@ -40,6 +40,27 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP
   - [application programming interface](https://en.wikipedia.org/wiki/Application_programming_interface)
   - [message queue](https://en.wikipedia.org/wiki/Message_queue)
   - [push technology](https://en.wikipedia.org/wiki/Push_technology)
+  - [hyper text transfer protocol HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)
+  - [http2](https://en.wikipedia.org/wiki/HTTP/2)
+  - [application layer protocol negotiation](https://en.wikipedia.org/wiki/Application-Layer_Protocol_Negotiation)
+  - [transport layer security](https://en.wikipedia.org/wiki/Transport_Layer_Security#TLS_1.2)
+  - [user agent](https://en.wikipedia.org/wiki/User_agent)
+  - [web cache server](https://en.wikipedia.org/wiki/Web_cache)
+  - [proxy server](https://en.wikipedia.org/wiki/Proxy_server)
+  - [upstream server](https://en.wikipedia.org/wiki/Upstream_server)
+  - [http headers](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields)
+  - [anatomy of a simple http transaction](https://www.juniper.net/documentation/en_US/webapp5.5/topics/concepts/w-a-s-http-request-response-flow.html)
+  - [sync and async http requests](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests)
+  - [rendering a webpage step by step](https://friendlybit.com/css/rendering-a-web-page-step-by-step/)
+  - [document loading and DOM lifecycle events](http://www.breck-mckye.com/blog/2014/04/document-loading-and-DOM-lifecycle-events/)
+  - [http fundamentals](https://gist.github.com/alyssaq/6388253)
+  - [http messages](https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages)
+
+## APIs
+  - [send beacon](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon)
+    - useful for window.onunload and window.onbeforeunload event listeners typically for sending analytics (e.g. log data)
+
+
 
 
 # MUST DO:
@@ -52,13 +73,11 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP
   - https://www.ted.com/speakers/tim_berners_lee
   - https://en.wikipedia.org/wiki/Standard_Generalized_Markup_Language
   - https://en.wikipedia.org/wiki/HTML
-  - https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
   - http://www.restapitutorial.com/lessons/httpmethods.html
   - https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
   - https://developers.google.com/web/updates/2015/03/introduction-to-fetch?hl=en
   - http://nc110.sourceforge.net/
   - https://en.wikipedia.org/wiki/Netcat
-  - https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
   - https://badssl.com/
   - https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content
   - https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content/How_to_fix_website_with_mixed_content
@@ -112,6 +131,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP
   - local area network: a computer network that interconnects computers within a limited area, e.g. residence, school, etc
   - wide area network: WAN: a computer network that extends over a large geographical distance, are often established with leased telecommunications circuits
 
+
 # background
 ## The World Wide Web
   - is just a small part of the internet
@@ -162,20 +182,68 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP
     - a computer/other device connected to a copmuter network, oferring information resources/services/applications to users/other nodes on the network
     - is assigned a network address
   - are classified by the services they provide
-    - web server: serves web pages
-      - computer system that processes requests via http, the basic network protocol used to distribute information on the world wide web.
-    - file server: serves computer files
-      - a computer attached to a network that provides a location for shared disk access,  that can be accessed by workstations that are able to reach the computer that shares the access through a computer network
-      - its common that file servers do not perform computational tasks/run programs on behalf of clients
-      - designed to enable the storage and retrieval of data while the computation is carried out by the clients
+
+
+### web server: serves web pages
+  - computer system that processes requests via http, the basic network protocol used to distribute information on the world wide web.
+
+
+### web cache server
+  - i.e. http cache
+    - clients can also store content for reuse
+      - e.g. when you press the back button, the locacl cached version of a page may be displayed instead of a new request being sent to the web server
+  - information technology for the temporary storage of web documents/pages, images, to reduce server lag
+  - stores copies of documents passing through it
+    - subsequent requests may be satisfied from the cache if certain conditions are met
+  - web cache system: either an appliance/computer program
+  - forward position system: recipient/client side
+    - forward cache is a cache outside the web server's network, e.g.
+      - on the client computer
+      - in an ISP
+      - within a corporate network
+    - network aware forward cache: caches heavily accessed items
+
+### proxy server
+  - acts as an intermediary for requests from clients seeking resources from other servers
+    - a client connects to the proxy server, requesting some service, and the proxy server evaluates the requests as a way to simplify and control its complexity
+    - invented to add structure and encapsulation to distributed systems
+  - these are servers that sit between you and some other server
+  - useful for:
+    1. adding additinoal compression
+    2. downsampling images
+    3. doing aggressive caching
+
+
+#### web proxy server
+  - forwards http requests
+  -
+
+
+### upstream server
+  - a server that provides service to another server
+    - a server that is located higher in the hierarchy of servers
+    - the highest server in the hierarchy is sometimes called the 'origin server'
+
+### file server: serves computer files
+  - a computer attached to a network that provides a location for shared disk access,  that can be accessed by workstations that are able to reach the computer that shares the access through a computer network
+  - its common that file servers do not perform computational tasks/run programs on behalf of clients
+  - designed to enable the storage and retrieval of data while the computation is carried out by the clients
+
+
+### CDN
+  - content delivery network: system of distributed servers that deliver assets to a user based on geographic locations of the user, the origin of the assets, and a content delivery server
+    + the closer the CDN server to the user geographically, the faster the content will be dleivered to the user.
+
 
 ### API
   - application programming interface
   - an abstraction layer for accessing a service
 
+
 ### inter-server communication:
   - an extension of the client-server model in which data are exchanged directly between servers
   - aka server to server or inter-domain
+
 
 #### Domain name system: DNS
   - uses an inter-server protocol for zone transfers
@@ -191,15 +259,11 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP
   - router/residential gateway can be enabled to act as a DHCP server
   -
 
+
 ## clients: resource/service requesters
   - does not share any resources, but requests a server's content/function
     - initiate communication sessions with servers which await incoming requests
-    -
-
-# REST: REpresentational State Transfer
-## Basics
-  - basic entitires are collections and entities inside those collections
-    + GET <collection name>/<item name>
+  - user agent: software agent that is acting on behalf of a user, e.g. a web browser, email readerweb crawlers/bots, voice browsers, mobile apps, etc
 
 
 # http
@@ -209,7 +273,308 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP
     - follows the classic client-server  model
     - is a stateless protocol
     - can be used on any reliable transport layer (not just tcp/ip)
-  - is public, and anyone can eaves drop on your requests and responses
+    - is public, and anyone can eaves drop on your requests and responses
+    - functions as a request-response protocol in the client-server computing model
+    - permits intermediate network elements (e.g. caches) to improve/enable communications between clients and servers
+  - hyper text: structured text that uses logical links (hyperlinks) between nodes containing text
+
+## http transaction layers
+  - client perspective
+    1. HTTP: application layer: sits on the top
+    2. TCP: transport control protocol: transport  layer
+    3. IP: internet protocol: network layer
+    4. ethernet/IEEE 802.11: data link layer
+    5. drivers / cards: physical layer
+  - switch perspective
+    1. ethernet:
+    2. drivers/cards:
+  - router perspective
+    1. ethernet
+    2. drivers/cards
+  - server perspective
+    1. messageL application layer
+    2. segments: transport layer
+    3. packats: network layer
+    4. frames: data link layer
+    5. drivers/cards:
+.
+
+## HTTP Requests and Responses
+  - http data rides above the TCP protocol in the application layer
+    - TCP protocol guarantees reliability of delivery and breaks down large data requests and responses into network-manageable chunks
+      - is a connection orientated protocol that manages the connection between client and server
+    - all HTTP data is expressed in human-readable ASCII text (as opposed to http2 data which is not human-readable)
+  - synchronous requests: block the execution of code which creates 'freezing' on the screen and an unresponsive user experience
+    - inline javascript
+  - asynchronous requests: client receives a callback when the data has been received allowing the browser to work as normal while the request is being handled
+  - bottlenecks in request-response performance
+    - large # of redirects
+    - images/videos without optimizations e.g. compression and form factor aware content delivery
+    - blocking/long running javascript
+    - performance tax of using SSL
+    - large # of third party services which are out of your control for optimization
+  - optimizations
+    - resource consolidation
+      - avoid redudant download of script files
+      - sprite your images
+      - use browser cache + local storage
+      - embed (inline) resources in html that have low re use to limit the # of requests
+        - images + binary resources can be inlined via data URIs that are base64 encoded
+      - eliminate redirects
+    - reduce payload
+      - use compression
+      - use minification
+      - dynamically resize images
+    - optimize client side processing
+      - defer rendering of below the fold content
+      - defer loading and execution of scripts
+      - adapt to network connection
+      - use html5 web workers for multi threading
+    - TCP related optimizations for http
+      - TCP fast open
+      - proportional rate reduction for TCP
+      - Tail Loss Probe
+      - use SPDY
+      - use http2
+
+
+### http request - response metrics and document life cycle events
+  - time to first byte (TTFB) the time it took from teh request being issued to receiving the first byte of data from the primary URL
+    - no redirects: DNS + TCP Connection + Send + Wait
+    - with redirects: Sum of TTFB for each domain in the redirect chain
+  - Response: the elapsed time betwen request being issued and  primary host server responding with the last byte of the primary url
+    - for redirects: the sum of response times for each domain in the redirect chain
+  - server response: the elapsed time between the DNS resolution and the server responding with the last byte of the primary url
+    - i.e. the servers response time sans DNS resolution time
+    - for redirects: sum of server response time for each domain in the redirect chain minus DNS resolution time
+  - render start: the time it took the browser to start rendering the page
+  - document complete: even indicating the browser has finished rendering the page
+    - chrome: browser onload event
+    - IE: document ready stte changes to complete
+  -
+
+
+### simple http transaction
+  - one where the client makes a single request for http content
+  - anatomy and flow
+    - Domain Name Resolution
+      1. DNS Lookup
+        - client tries tries to resolve the domain name for the request
+          - client sends DNS query to local ISP DNS server
+          - DNS server responds with the IP address for hostname.com
+    -  Three Way TCP Handshake
+      2. TCP CONNECTION OPEN
+        - client establishes TCP connection with the IP address of hostname.com
+        - client sends SYN packet
+        - web server sends SYN-ACK packet
+        - client answers with ACK packet, concluding the three way TCP connection establishment
+    - Client-Server Request Response
+      3. CLIENT REQUEST
+        - client sends teh HTTP request to the web server
+      4. CLIENT WAIT
+        - client waits for the server to respond to the request
+        - SERVER RESPONSE
+          - server processes the request, finds the resource, and sends the response to the client
+        - CLIENT RECEIPT
+          - client receives the first byte of the first packer from server
+          - contains the HTTP response headers and content
+      5. CLIENT LOAD
+        - client loads the content of the response
+        - server sends second TCP segment with the PSH flag set
+        - client sends ACK
+          - client sends ACK every two segments ir receives from host
+        - server sends third TCP segment with HTTP_Continue
+      6. TCP CONNECTION CLOSE
+        - client sends a FIN packet to close the TCP Connection
+
+
+### Serial HTTP Connection
+  - when multiple requests are issued sequentially to a server and each request establishes a new connection
+    - only occurs when:
+      - a browser/server only supports HTTP 1.0 without Keep alive
+      - a browser/server only supports HTTP 1.0+ and the first request is a blocking requests (e.g. inline javascript request)
+  - rarely occurs because all modern browsers support parallel connections to a host server
+  - Anatomy and flow (abbreviated)
+    - request 1
+      1. DNS LOOK UP
+      2. TCP CONNECTION OPEN
+      3. CLIENT REQUEST
+      4. CLIENT WAIT
+      5. SERVER RESPONSE
+      6. CLIENT LOAD
+    - request 2
+      1. TCP CONNECTION OPEN
+      2. CLIENT REQUEST
+      3. CLIENT WAIT
+      4. SERVER RESPONSE
+      5. CLIENT LOAD
+
+### Persistent HTTP Transactions
+  - allow the browser/http client to utilize the same connection for different object requests to the same hostname
+  - HTTP 1.1 protocol supports persistent connections natively
+  - HTTP 1.0 protocol requests the Keep-Alive http header
+  - anatomy and flow
+    - Domain name resolution
+      1. DNS LOOKUP
+    - persistent TCP connection open
+    - multiple serial requests
+      2. CLIENT REQUEST X
+      3. CLIENT WAIT X
+      4. CLIENT LOAD X
+
+### Parallel HTTP transactions
+  - HTTP 1.0 requires Keep-Alive header and has different implementation
+  - HTTP 1.1 permits clients to open multiple TCP connections and perform HTTP requests in parallel
+    - requirements
+      - the first TCP connection has been established
+      - the first request to the first connection is completed
+      - now additional TCP connections can be established
+      - all TCP connections can send their requests in parallel
+    - anatomy and flow
+      1. DNS lookup to hostname1
+      2. TCP connection to hostname1
+      3. client request to hostname 1
+      4. client wait from hostname 1
+        - server response from hostname 1
+      5. client load from hostname 1
+        - now the cycle can repeat for sending requests to multiple hostnames via distinct TCP connections
+        -
+  -
+
+### http messages
+  - how data is exchanged between a server and client
+    - requests: sent by client to trigger an action on server
+    - responses: answer from server
+  - http 1.1/0:
+    - textual information encoded in ASCII
+    - span multiple lines
+  - http 2:
+    - divided into HTTP frames for optimization and performance improvements
+  - http message initiation
+    - APIs / scripts
+    - UI activity in browser
+    - HTML forms in browser
+    - config file in server
+  - http message structure
+    - http 1.1/0
+      - start line:
+        - client: METHOD PATH HTTP VERSION
+        - server: status code
+      - HEADERS (1 per line)
+        - client: headers describing request
+        - server: headers describing body
+      - BLANK LINE
+        - indicates the end of medidata and start of body
+      - BODY (optional)
+        - client: e.g. form data
+        - server: e.g. the requested resource
+    - http 1.1/0 example
+      - PUT /create_page HTTP 1.1
+      - Host: blah.com:80
+      - Connection: keep-alive
+      - *more headers*
+      - Body line X
+    - http/2 stream (each line is a frame)
+      - Type = HEADERS
+      - Type = CONTINUATION
+      - Type = DATA
+        - multiple lines for data
+  - request body
+    - requests fetching resources usually
+#### http message methods
+  - the client informs the server the action to take
+  - get
+  - put
+  - post
+  - head
+  - options
+
+
+#### request and response HTTP header fields
+  - components of the header section of request and response messages in HTTP
+    - define the operating parameters of an HTTP transaction
+  - request headers
+    - general headers: apply to the whole http message
+      - Via
+    - request headers: modify the request by specifying it further/giving context/conditionally restricting it
+      - user-agent
+      - accept-type
+      - accept-language
+      - referer
+      - if-none
+    - entity headers: apply to the body of the request
+      - content-length
+
+#### http message body
+  -
+### Requests
+
+
+
+
+#### Request Methods
+  + GET: retriev stuff
+  + POST: create new stuff
+    - the response should redirect to the newly created stuff
+  + PUT: update existing stuff
+  + DELETE: duh!
+  + HEAD: get the headers of a file, without the actual file
+    - useful for:
+      + checking if there is enough space to store the response
+      + if your cached version is still up to date
+      + only useful for very large files, as you will incur two round trips
+  + OPTIONS: get a list of methods that are accepted on the current URL
+    - Post: you should respond to post requests with a redirect so that reloading the page doesnt cause an additional post
+
+
+
+##### Request Headers
+  - Connection: Keep Alive
+    + informs the server to keep the connection open after it returns the response
+    + this allows you to send multiple requests to the same server, without having to go through the TCP 3 way handshake each time
+
+
+
+#### Responses
+  - response structure: only requires http version line and content-length header
+    + HTTP/1.1 200 OK
+      - http version, status code, status text
+    + Headers
+      - Content-Length:
+      - Server:
+      - Etag:
+      - Content-Type:
+      - Date:
+    + Binary data: the actual data
+
+
+## REST: REpresentational State Transfer
+  - architectural strategies for implementing all the HTTP methods
+  - basic entitires are collections and entities inside those collections
+    + GET <collection name>/<item name>
+
+
+# HTTP2
+  - a major revision of the HTTP network protocol used by the world wide web
+    - derived from the earlier experimental SPDY protocol developed by google
+    - requires ALPN
+  - head of line requests: when one request is blocking others from completing
+    + a browser will open at most 6 simultaneous connections to a server
+    + you will have to wait for a round trip (req + res) to complete before another request can happen
+  - benefits
+    + header compression
+      - all streams share the browser compressor, so headers never have to be sent twice
+    + multiplexing: combining multiple connections into a single connection via streams
+      - streams are split up into frames
+      - resolves head of line blocking
+    + concatenating JS/CSS files is no longer necessary since head of line blocking is gone
+      - its also worse to serve one big file, vs a lot of small files, for sites that use caching
+        + you are forcing your users to download the concated files, instead of the single file that changed
+
+
+
+
+
 
 
 
@@ -226,6 +591,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP
 
 ## TLS (formerlley ssl)
   + TLS: transport layer security, can be use with any protocol, e.g. FTP has FTPS
+    - cryptographic protocols that provide communications security over a computer network
     - encrypts communcation via a certificate issued by a certificate authority
       + metadata about the server
       + an encrypted fingerprint to decode communication
@@ -293,100 +659,15 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP
  - you can get pass this by only consuming securing content
 
 
-# HTTP2
-  - head of line requests: when one request is blocking others from completing
-    + a browser will open at most 6 simultaneous connections to a server
-    + you will have to wait for a round trip (req + res) to complete before another request can happen
-  - benefits
-    + header compression
-      - all streams share the browser compressor, so headers never have to be sent twice
-    + multiplexing: combining multiple connections into a single connection via streams
-      - streams are split up into frames
-      - resolves head of line blocking
-    + concatenating JS/CSS files is no longer necessary since head of line blocking is gone
-      - its also worse to serve one big file, vs a lot of small files, for sites that use caching
-        + you are forcing your users to download the concated files, instead of the single file that changed
-
-# Proxy
-  - these are servers that sit between you and some other server
-  - useful for:
-    1. adding additinoal compression
-    2. downsampling images
-    3. doing aggressive caching
-
-## CDN
-  - content delivery network: system of distributed servers that deliver assets to a user based on geographic locations of the user, the origin of the assets, and a content delivery server
-    + the closer the CDN server to the user geographically, the faster the content will be dleivered to the user.
-    s
-
-
-# HTTP Requests and Responses:
-#### Requests
-  - request structure: only requires method and host header
-    + method: GET, POST, etc, tells the server what the client wants to do
-      - GET /path/to/document.jpg HTTP/1.1
-      - method, document path, http version
-    + Headers
-      - Host: where the server is located
-      - User Agent: type of client
-      - Connection:
-      - Accept: what type of document format the client accepts
-      - If-None-Match: the version already available in client
-  -
-##### Request Methods
-  + GET: retriev stuff
-  + POST: create new stuff
-    - the response should redirect to the newly created stuff
-  + PUT: update existing stuff
-  + DELETE: duh!
-  + HEAD: get the headers of a file, without the actual file
-    - useful for:
-      + checking if there is enough space to store the response
-      + if your cached version is still up to date
-      + only useful for very large files, as you will incur two round trips
-  + OPTIONS: get a list of methods that are accepted on the current URL
-    - Post: you should respond to post requests with a redirect so that reloading the page doesnt cause an additional post
+### application layer protocol negotiation ALPN
+ - a transport layer security (TLS) extension for application layer protocol negotiation
+   - allows the application layer to negotiate which protocol should be performed over a secure connection in a manner that avoids additional round trips and which is independent of the application layer protocols
+   - required by HTTP2
 
 
 
-##### Request Headers
-  - Connection: Keep Alive
-    + informs the server to keep the connection open after it returns the response
-    + this allows you to send multiple requests to the same server, without having to go through the TCP 3 way handshake each time
 
 
-
-#### Responses
-  - response structure: only requires http version line and content-length header
-    + HTTP/1.1 200 OK
-      - http version, status code, status text
-    + Headers
-      - Content-Length:
-      - Server:
-      - Etag:
-      - Content-Type:
-      - Date:
-    + Binary data: the actual data
-
-
-
-##### Response Headers
-  - https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
-  - Content-Length
-    + is a header that must be contained in every response and tells the browser the size of the body in the response. This way the browser knows how many bytes it can expect to receive after the header section and can show you a meaningful progress bar when downloading a file.
-  - Content-Type
-    + is also a non-optional header and tells you what type the document has. This way the browser knows which parsing engine to spin up. If it's an image/jpeg, show the image. It’s text/html? Let’s parse it and fire off the necessary, additional HTTP requests. And so on.
-  - Last-Modified
-    + is a header that contains the date when the document was last changed. It turned out that the Last-Modified date is not very reliable when trying to figure out if a document has been changed. Sometimes developers will uploaded all files to the server after fixing something, resetting the Last-Modified date on all files even though the contents only changed on a subset. To accommodate this, most servers also send out an ETag.
-  - ETag
-    + stands for entity tag, and is a unique identifier that changes solely depending on the content of the file. Most servers actually use a hash function like SHA256 to calculate the ETag.
-      1. enables efficient resource update checks - no data is transferred if the resource has not changed
-
-  - Cache-Control
-    + is exactly what it sounds like. It allows the server to control how and for how long the client will cache the response it received. Cache-Control is a complex beast and has a lot of built-in features. 99% of the time, you only need the “cacheability“ and the “max-age”.
-
-  - If-Modified-Since
-    + permits the server to skip sending the actual content of the document if it hasn’t been changed since the date provided in that header. Is there something similar for ETags? Yes there is! The header is called If-None-Match and does exactly that. If the ETag for the document is still matching the ETag sent in the If-None-Match header, the server won’t send the actual document. Both If-None-Match and If-Modified-Since can be present in the same request, but the ETag takes precedence over the If-Modified-Since, as it is considered more accurate.
 
 
 # CACHING
