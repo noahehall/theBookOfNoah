@@ -1,10 +1,52 @@
+# TODO
+https://en.wikipedia.org/wiki/Client%E2%80%93server_model
+https://developer.mozilla.org/en-US/docs/Web/HTTP
+
+
+# Links
+  - [http @ mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP)
+  - [application layer @ mdn](https://en.wikipedia.org/wiki/Application_layer)
+  - [absraction layer @wikipedia](https://en.wikipedia.org/wiki/Abstraction_layer)
+  - [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns)
+  - [interoperability](https://en.wikipedia.org/wiki/Interoperability)
+  - [cross platform software](https://en.wikipedia.org/wiki/Cross-platform)
+  - [communication protocol](https://en.wikipedia.org/wiki/Communication_protocol)
+  - [interface](https://en.wikipedia.org/wiki/Interface_(computing))
+  - [computer network](https://en.wikipedia.org/wiki/Computer_network)
+  -[internet protocol suite](https://en.wikipedia.org/wiki/Internet_protocol_suite)
+  - [transmission control protocol](https://en.wikipedia.org/wiki/Transmission_Control_Protocol)
+  - [world wide web](https://en.wikipedia.org/wiki/World_Wide_Web)
+  - [url](https://en.wikipedia.org/wiki/URL)
+  - [the internet](https://en.wikipedia.org/wiki/Internet)
+  - [remote administration](https://en.wikipedia.org/wiki/Remote_administration)
+  - [file transfer](https://en.wikipedia.org/wiki/File_transfer)
+  - [internet protocol](https://en.wikipedia.org/wiki/Internet_Protocol)
+  - [client server model](https://en.wikipedia.org/wiki/Client%E2%80%93server_model)
+  - [stateless protocol](https://en.wikipedia.org/wiki/Stateless_protocol)
+  - [transport layer](https://en.wikipedia.org/wiki/Transport_layer)
+  - [host network](https://en.wikipedia.org/wiki/Host_(network))
+  - [network address](https://en.wikipedia.org/wiki/Network_address)
+  - [web server](https://en.wikipedia.org/wiki/Web_server)
+  - [file server](https://en.wikipedia.org/wiki/File_server)
+  - [inter server](https://en.wikipedia.org/wiki/Inter-server)
+  - [domain name system](https://en.wikipedia.org/wiki/Domain_Name_System)
+  - [dynamic host configuration protocol DHCP](https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol)
+  - [router](https://en.wikipedia.org/wiki/Router_(computing)))
+  - [residential gateway](https://en.wikipedia.org/wiki/Residential_gateway)
+  - [local area network](https://en.wikipedia.org/wiki/Local_area_network)
+  - [wide area network](https://en.wikipedia.org/wiki/Wide_area_network)
+  - [request response](https://en.wikipedia.org/wiki/Request%E2%80%93response)
+  - [messaging pattern](https://en.wikipedia.org/wiki/Messaging_pattern)
+  - [application programming interface](https://en.wikipedia.org/wiki/Application_programming_interface)
+  - [message queue](https://en.wikipedia.org/wiki/Message_queue)
+  - [push technology](https://en.wikipedia.org/wiki/Push_technology)
+
+
 # MUST DO:
   - https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching
   - https://www.w3.org/2005/MWI/BPWG/techs/CachingWithETag.html
   - https://devcenter.heroku.com/articles/increasing-application-performance-with-http-cache-headers
   - https://classroom.udacity.com/courses/ud884/lessons/1464158641/concepts/14734291220923#
-
-## links
   - https://en.wikipedia.org/wiki/Tim_Berners-Lee
   - https://www.w3.org/People/Berners-Lee/
   - https://www.ted.com/speakers/tim_berners_lee
@@ -27,9 +69,51 @@
   - https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Preflighted_requests
   - https://en.wikipedia.org/wiki/Cross-site_scripting
 
+# related Terminology
+  - separation of concerns: a design principle for separating a computer program into distinct sections, such that each section addresses a separate concern
+    - concern: a set of information that affects the code of a computer program
+  - interoperability: a characteristic of a product or system, whose interfaces are completely unerstood, to work with other products or systems, at present or future, in either implementation or access, without any restrictions
+  - cross-platform software: computer software that is implemented on multiple computing platforms
+  - communication protocol: a system of rules that allow two or more entities of a communications system to transmit information via any kind of variation of a physical quantity. the protocol defines the communication in terms of:
+    - syntax
+    - semantics
+    - syncrhonization
+  - interface: a shared boundary across which two/more separate components of a copmuter system exchange information
+  - computer/data network: digital telecommunications network which allows nodes to share resources
+    - networked computing devices exchange data with each other using a data link
+    - the connections between nodes are established using cable/wireless media
+  - message queue: software-engineering components used for inter-process communication, or for inter-thread communication within the same process
+
+
+# terminology
+  - application layer: is an abstraction layer that specifies the shared protocols and interface methods used by hosts in a communication network
+  - abstraction layer/level: a way of hiding the implementation details of a particular set of functionality, allowing the separation of concerns to facilitate interoperability and platform independence
+  - internet protocol suite: the conceptual model and set of communications protocols used on the internet and similar computer networks
+    - commonly known as TCP/iP becuase the foundational protocols in the suite are the transmission control protocol (tcp) and the internet protocol(ip)
+  - Transmission control protocol: one of the main protocols of the internet protocol suite. provides reliable, ordered, and error-checked delivery of a stream of octets between applications running on hosts communicating by an ip network
+  - world wide web: an information space where documents and other web resources are identified by uniform resource locators (urls), interlinked by hypertext links, and can be accessed via the internet
+  - url: uniform resource locator: web address: a reference to a web resource that specifies its location on a computer network and a mechanism for retrieving it
+  - the internet: the global system of interconnected computer networks that use the internet protocol suite (tcp/ip) to link devices world wide
+    - a network of networks that consists of private, public, academic, business and government networks of local to global scope, linked by a broad array of electronic, wireless, and optical networking technologies
+  - remote administration: refers to any method of controlling a computer from a remote location
+  - file transfer: the transmission of a computer file through a communication channel from one computer system to antoher
+  - internet protocol: the principal communications protocol in the internet protocol suite for relaying datagrams across network boundaries
+    - its routing function enables internetworking and essentially establishes the internet
+  - stateless protocol: a communications protocol in which no information is retained by either sender/receiver
+    - the sender transmits a packet to the receiver and does not expect an acknowledgement of receipt
+  - transport layer: a conceptual division of methods in the layered architecture of protocols in the network stack in the internet protocol suite and the open systems interconnection
+  - network address: an identifier for a node/network interface of a telecommunications network
+    - designed to be unique identifiers across the network, although some neworks allow for local, private addresses or locally administerd addresses that may not be globally unique
+  - router: a networking device that forwards data packets between computer networks
+    - perform the traffic directing functions on the internet
+    - a data packet is typically forwarded from one router to another router through the networks that constitute an internetwork until it reaches its destination node
+  - residential gateway: home gateway: allows the connection of a local area network (LAN) to a wide area network (WAN)
+    - the wan can be a larger computer network like a municipal WAN or the internet
+  - local area network: a computer network that interconnects computers within a limited area, e.g. residence, school, etc
+  - wide area network: WAN: a computer network that extends over a large geographical distance, are often established with leased telecommunications circuits
 
 # background
-## The Web
+## The World Wide Web
   - is just a small part of the internet
   - is a platform for web developers to publish ideas to the world
   - it is clients (browsers) communicating with servers
@@ -53,74 +137,64 @@
       + ethernet
 
 
-# HTTP Requests and Responses:
-#### Requests
-  - request structure: only requires method and host header
-    + method: GET, POST, etc, tells the server what the client wants to do
-      - GET /path/to/document.jpg HTTP/1.1
-      - method, document path, http version
-    + Headers
-      - Host: where the server is located
-      - User Agent: type of client
-      - Connection:
-      - Accept: what type of document format the client accepts
-      - If-None-Match: the version already available in client
+# client server model
+  - a distributed application structure that partitions tasks/workloads between the providers of a resource/service (servers) and service requesters (clients)
+    - use by:
+      - email
+      - network printing
+      - world wide web
+  - describes the relationship of cooperating programs in an application
+
+
+
+## client and server communication
+  - service: an abstraction of computer resources
+  - the client must understand the response based on a well-known application protocol that describes the content and the formatting of the data for the requested service
+  - client sends a request and the server returns a response
+    - the client and server must have a common language, and they must follow rules so that both know what to expect
+      - communication protocols operate in the application layer
+      - to formalize the data exchange even further, the server may implement an application programming interface
+
+
+
+## servers: resource/service providers
+  - host: runs one/more server programs which share their resources with clients
+    - a computer/other device connected to a copmuter network, oferring information resources/services/applications to users/other nodes on the network
+    - is assigned a network address
+  - are classified by the services they provide
+    - web server: serves web pages
+      - computer system that processes requests via http, the basic network protocol used to distribute information on the world wide web.
+    - file server: serves computer files
+      - a computer attached to a network that provides a location for shared disk access,  that can be accessed by workstations that are able to reach the computer that shares the access through a computer network
+      - its common that file servers do not perform computational tasks/run programs on behalf of clients
+      - designed to enable the storage and retrieval of data while the computation is carried out by the clients
+
+### API
+  - application programming interface
+  - an abstraction layer for accessing a service
+
+### inter-server communication:
+  - an extension of the client-server model in which data are exchanged directly between servers
+  - aka server to server or inter-domain
+
+#### Domain name system: DNS
+  - uses an inter-server protocol for zone transfers
+  - a hierarchical decentralized naming system for computers, services or other resources connected to the itnernet or a private network
+  - associates various information with domain names assigned to each o fhte participating entitites
+    - e.g. translates more readiliy memorized domain names to the numerical IP addresses needed for locating and identifying computer services and devices with the underlying network protocols
+
+
+#### dynamic host configuration protocol: DHCP
+  - a standardized network protocol used on internet protocol networks
+    - the DHCP is controlled by a DHCP server that dynamically distributes network configuration parameters, e.g.  IP addresses, for itnerfaces and services
+    - enables computers to request ip addresses and networking parameters automatically, reducing the need for a network administrator or user to conifgure these settings manually
+  - router/residential gateway can be enabled to act as a DHCP server
   -
-##### Request Methods
-  + GET: retriev stuff
-  + POST: create new stuff
-    - the response should redirect to the newly created stuff
-  + PUT: update existing stuff
-  + DELETE: duh!
-  + HEAD: get the headers of a file, without the actual file
-    - useful for:
-      + checking if there is enough space to store the response
-      + if your cached version is still up to date
-      + only useful for very large files, as you will incur two round trips
-  + OPTIONS: get a list of methods that are accepted on the current URL
-    - Post: you should respond to post requests with a redirect so that reloading the page doesnt cause an additional post
 
-
-
-##### Request Headers
-  - Connection: Keep Alive
-    + informs the server to keep the connection open after it returns the response
-    + this allows you to send multiple requests to the same server, without having to go through the TCP 3 way handshake each time
-
-
-
-#### Responses
-  - response structure: only requires http version line and content-length header
-    + HTTP/1.1 200 OK
-      - http version, status code, status text
-    + Headers
-      - Content-Length:
-      - Server:
-      - Etag:
-      - Content-Type:
-      - Date:
-    + Binary data: the actual data
-
-
-
-##### Response Headers
-  - https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
-  - Content-Length
-    + is a header that must be contained in every response and tells the browser the size of the body in the response. This way the browser knows how many bytes it can expect to receive after the header section and can show you a meaningful progress bar when downloading a file.
-  - Content-Type
-    + is also a non-optional header and tells you what type the document has. This way the browser knows which parsing engine to spin up. If it's an image/jpeg, show the image. It’s text/html? Let’s parse it and fire off the necessary, additional HTTP requests. And so on.
-  - Last-Modified
-    + is a header that contains the date when the document was last changed. It turned out that the Last-Modified date is not very reliable when trying to figure out if a document has been changed. Sometimes developers will uploaded all files to the server after fixing something, resetting the Last-Modified date on all files even though the contents only changed on a subset. To accommodate this, most servers also send out an ETag.
-  - ETag
-    + stands for entity tag, and is a unique identifier that changes solely depending on the content of the file. Most servers actually use a hash function like SHA256 to calculate the ETag.
-      1. enables efficient resource update checks - no data is transferred if the resource has not changed
-
-  - Cache-Control
-    + is exactly what it sounds like. It allows the server to control how and for how long the client will cache the response it received. Cache-Control is a complex beast and has a lot of built-in features. 99% of the time, you only need the “cacheability“ and the “max-age”.
-
-  - If-Modified-Since
-    + permits the server to skip sending the actual content of the document if it hasn’t been changed since the date provided in that header. Is there something similar for ETags? Yes there is! The header is called If-None-Match and does exactly that. If the ETag for the document is still matching the ETag sent in the If-None-Match header, the server won’t send the actual document. Both If-None-Match and If-Modified-Since can be present in the same request, but the ETag takes precedence over the If-Modified-Since, as it is considered more accurate.
-
+## clients: resource/service requesters
+  - does not share any resources, but requests a server's content/function
+    - initiate communication sessions with servers which await incoming requests
+    -
 
 # REST: REpresentational State Transfer
 ## Basics
@@ -129,8 +203,14 @@
 
 
 # http
+## high level
+  - http: hyper text transfer protocol: an application layer protocol for transmitting hypermedia documents, e.g. html
+    - designed for communicatino between web browsers and web servers
+    - follows the classic client-server  model
+    - is a stateless protocol
+    - can be used on any reliable transport layer (not just tcp/ip)
   - is public, and anyone can eaves drop on your requests and responses
-  - https://en.wikipedia.org/wiki/Firesheep
+
 
 
 # https
@@ -238,6 +318,75 @@
   - content delivery network: system of distributed servers that deliver assets to a user based on geographic locations of the user, the origin of the assets, and a content delivery server
     + the closer the CDN server to the user geographically, the faster the content will be dleivered to the user.
     s
+
+
+# HTTP Requests and Responses:
+#### Requests
+  - request structure: only requires method and host header
+    + method: GET, POST, etc, tells the server what the client wants to do
+      - GET /path/to/document.jpg HTTP/1.1
+      - method, document path, http version
+    + Headers
+      - Host: where the server is located
+      - User Agent: type of client
+      - Connection:
+      - Accept: what type of document format the client accepts
+      - If-None-Match: the version already available in client
+  -
+##### Request Methods
+  + GET: retriev stuff
+  + POST: create new stuff
+    - the response should redirect to the newly created stuff
+  + PUT: update existing stuff
+  + DELETE: duh!
+  + HEAD: get the headers of a file, without the actual file
+    - useful for:
+      + checking if there is enough space to store the response
+      + if your cached version is still up to date
+      + only useful for very large files, as you will incur two round trips
+  + OPTIONS: get a list of methods that are accepted on the current URL
+    - Post: you should respond to post requests with a redirect so that reloading the page doesnt cause an additional post
+
+
+
+##### Request Headers
+  - Connection: Keep Alive
+    + informs the server to keep the connection open after it returns the response
+    + this allows you to send multiple requests to the same server, without having to go through the TCP 3 way handshake each time
+
+
+
+#### Responses
+  - response structure: only requires http version line and content-length header
+    + HTTP/1.1 200 OK
+      - http version, status code, status text
+    + Headers
+      - Content-Length:
+      - Server:
+      - Etag:
+      - Content-Type:
+      - Date:
+    + Binary data: the actual data
+
+
+
+##### Response Headers
+  - https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
+  - Content-Length
+    + is a header that must be contained in every response and tells the browser the size of the body in the response. This way the browser knows how many bytes it can expect to receive after the header section and can show you a meaningful progress bar when downloading a file.
+  - Content-Type
+    + is also a non-optional header and tells you what type the document has. This way the browser knows which parsing engine to spin up. If it's an image/jpeg, show the image. It’s text/html? Let’s parse it and fire off the necessary, additional HTTP requests. And so on.
+  - Last-Modified
+    + is a header that contains the date when the document was last changed. It turned out that the Last-Modified date is not very reliable when trying to figure out if a document has been changed. Sometimes developers will uploaded all files to the server after fixing something, resetting the Last-Modified date on all files even though the contents only changed on a subset. To accommodate this, most servers also send out an ETag.
+  - ETag
+    + stands for entity tag, and is a unique identifier that changes solely depending on the content of the file. Most servers actually use a hash function like SHA256 to calculate the ETag.
+      1. enables efficient resource update checks - no data is transferred if the resource has not changed
+
+  - Cache-Control
+    + is exactly what it sounds like. It allows the server to control how and for how long the client will cache the response it received. Cache-Control is a complex beast and has a lot of built-in features. 99% of the time, you only need the “cacheability“ and the “max-age”.
+
+  - If-Modified-Since
+    + permits the server to skip sending the actual content of the document if it hasn’t been changed since the date provided in that header. Is there something similar for ETags? Yes there is! The header is called If-None-Match and does exactly that. If the ETag for the document is still matching the ETag sent in the If-None-Match header, the server won’t send the actual document. Both If-None-Match and If-Modified-Since can be present in the same request, but the ETag takes precedence over the If-Modified-Since, as it is considered more accurate.
 
 
 # CACHING
