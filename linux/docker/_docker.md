@@ -16,10 +16,32 @@ everything you need:https://docs.docker.com/engine/userguide/
   - [manage docker as non-root user](https://docs.docker.com/engine/installation/linux/linux-postinstall/)
 
 # quickies
+## quick run
+  -
+## quick admin
   - start docker on boot ` sudo systemctl enable docker`
   - disable docker on boot `sudo systemctl disable docker`
   - restart docker daemon `sudo service docker restart`
   - pull an image `docker pull hello-world`
+  - bash into a docker container `docker run IMAGE_NAME /bin/bash`
+  - login to docker hub `docker login --username=yourhubusername --email=youremail@company.com`
+  - remove dangling docker images `docker rmi $(docker images -f dangling=true -q)`
+  - stop containers with text in name `docker stop $(docker ps -aq --filter name=node)`
+  - remove all stopped containers `docker rm $(docker ps -a -q)`
+
+
+# volumes
+  docker volume create my-vol
+  docker volume ls
+  docker volume inspect my-vol
+  docker volume rm my-vol
+  docker volume rm $(docker volume ls -f dangling=true -q)
+
+# view container logs
+  docker logs CONTAINER_NAME
+  docker logs -t CONTAINER_NAME
+
+
 
 VM vs Containers
   -VM: virtual machine
@@ -34,45 +56,9 @@ VM vs Containers
       .looks like a VM, but it isnt
       Host os > host OS kernel > multiple containers that are isolated application platforms
 
-BEST !
-  docker run IMAGE_NAME /bin/bash //create a bash shell inside the container after it starts
 
-// TODO:130 upgrade docker mysql to 5.7
-/*
-  If You create `docker-compose.override.yml`
-  You can run newer versions of MySQL in container.
-  dcom-mysql:
-      build: docker/mysql/5.7
-
-  note:
-  testing instance uses Mysql 5.6:  Percona XtraDB Cluster (GPL), Release rel74.0, Revision 1, WSREP version 25.12, wsrep_25.12 |
-*/
-
-DARCI
-  migrations script - you can manually run this in root dir by executing the migratino.sh shell script
-    -first bash into dcom-apache-php
-    -this runs database migrations in dcom-mysql via dcom-apache-php
-      .copy migrations.sh to /migrations.sh
-      .$chmod u+x /migrations.sh
-
-  https://wiki.iacpublishing.com/display/DCOMWIKI/Docker+setup
-  $docker-compose up -d
-    -do this within the darci folder to start the darci
-
-  $docker exec -it dcom-apache-php bash
-    starts bash process in the apache-php container (start bash shell)
-
-  $php /home/scripts/devconfig.php
-    adjusts darci config based on my devconfig.ini
-    compiles less files
-      if you ever see dict.local without swag, run this
-      should be executed when setting up the container
 
 commands
-  user
-    -login to docker:
-      $docker login --username=yourhubusername --email=youremail@company.com
-
   administration
     containers
       -see which docker containers are running
@@ -108,6 +94,8 @@ commands
         2. docker attach CONTAINER_ID
       -exit container and leave it running
         1.CTRL P Q
+      - sh/bash in to container
+        `docker exec -i -t CON_NAME sh|/bin/bash`
 
     docker-machine
       -Set environment variables to dictate that docker should run a command against a particular machine, i.e export your docker-machine info to shell
@@ -218,7 +206,7 @@ commands
           -0.0.0.0:32768->5000/tcp //tells you which ports are mapped, your docker-machine port 32768 is mapped to the containers 5000.
         3.find your docker-machine ip
           docker-machine env
-          -export DOCKER_HOST="tcp://192.168.99.100:2376" //this is what youre looking for
+          -export DOCKER_HOST="tcp://169.254.1.1:2375" //this is what youre looking for
         4.load your browser on your machine ip in step 3 on the port specified in step 2
           192.168.99.100:32768
 

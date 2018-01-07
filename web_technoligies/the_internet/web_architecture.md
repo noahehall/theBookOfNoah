@@ -56,6 +56,7 @@ https://en.wikipedia.org/wiki/Web_cache
   - [document loading and DOM lifecycle events](http://www.breck-mckye.com/blog/2014/04/document-loading-and-DOM-lifecycle-events/)
   - [http fundamentals](https://gist.github.com/alyssaq/6388253)
   - [http messages](https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages)
+  - [http cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies)
 
 ## APIs
   - [send beacon](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon)
@@ -540,6 +541,7 @@ https://en.wikipedia.org/wiki/Web_cache
   - Connection: Keep Alive
     + informs the server to keep the connection open after it returns the response
     + this allows you to send multiple requests to the same server, without having to go through the TCP 3 way handshake each time
+  - Cookie: all cookies previously sent in server responses and stored in browser
 
 
 
@@ -553,6 +555,22 @@ https://en.wikipedia.org/wiki/Web_cache
       - Etag:
       - Content-Type:
       - Date:
+      - Set-Cookie
+        - server sends to browser
+        - browser stores it and sends it back with the next request
+        - useful for:
+          - session management: logins, shopping carts,
+          - personalization: user preferences, themes, other settings
+          - tracking: recording and analyzing user behavior
+        - Session Cookies:
+          - deleted when the client shuts down
+        - Permanent cookies
+          - expire at a specific Date/Age
+            - Set-Cookie: blah=blah, Max-Age=28days, Expires=Wed, 21 Oct 2016 7:27:00 GMT; (relative to the client)
+        - Secure Cookies
+          - requite Https
+          - Set-Cookie: blah=blah, Secure, HttpOnly;
+            - HttpOnly = prevent cross-site scripting attacks, cookie inaccessible to javascript ( cant access it in Document.cookie) 
     + Binary data: the actual data
 
 

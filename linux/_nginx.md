@@ -2,6 +2,7 @@
   - [setting up nginx server blocks](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04)
   - [setup LEMP stack](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-in-ubuntu-16-04)
 # links
+  - [nginx caching layer](https://www.youtube.com/watch?v=xZrOjmAkFC8)
   - [setting up node with nginx](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04)
   - [alphabetical nginx variables](http://nginx.org/en/docs/varindex.html)
   - [nginx beginners guide](http://nginx.org/en/docs/beginners_guide.html)
@@ -14,6 +15,87 @@
   - nginx -s signal
     - signal can be stop|quit|reload|reopen
 
+# caching with nginx
+  - client > nginx cache -> origin server | cache memory zone -> back to client
+    - nginx cache -> cache memory -> client
+    - nginx cache -> origin server -> cache memory -> client
+  - required directives in conf file
+    - cache key: defines a key for caching
+      - proxy_cache_key directive in conf
+    - cache path
+      - proxy_cache_path
+    - validation time
+      - proxy_cache_valid
+    - origin server
+      - proxy_pass
+    - dealing with stale content
+      - proxy_cache_revalidate
+        - initiates a conditional get request to the upstream server to change the modified date
+      - proxy_cache_use_stale
+        - specify when to use stale version based on error/timeout/response code from server
+    - purge cache (requires nginx +)
+      - proxy_cache_purge
+    - specify minim requests for a resource before caching it
+      - proxy_cache_min_uses
+    - proxy_cache_ignore
+      - use to ignore headers
+    - proxy_cache_bypass
+      - allow some uers to bypass cache based on http header/cookie
+    - use split clients
+      - allows you to have more than one hard drive to store content
+        - e.g. one for video and another for images
+        - hashes the request URI  and stores % in one hard drive and the rest in the other hard drive
+          - useful for a & b testing
+        -
+## cache spectrum
+  - easy to cache
+    - static content: imeges, css, html
+  - micro cachable:
+    - dynamic content: blog posts, status, api data
+  - cannot cache:
+    - user content: shopping cart, unique data, account data
+  - micro cache recommendations
+    - in nginx http block
+      - enable keepalive directive
+      - set small inactive directive
+      - set small max size
+    - on up stream server
+      - enble keep alive
+        - set http version 1.1
+        - clear proxy_set_header Connection to ""
+      - set cache time for 1 second
+      - set proxy_cache_lock
+        - only one user can populate a cache resource
+        - proxy_cache_background_update
+          - turn it on to update request in background and serve version in memory
+        - proxy_cache_use_stale updating;
+          - use stale version if proxy cache is updating
+  - dealing with large caches
+    - sharded cache: high capacity
+      - setup a load balancing tier with the hash load balancing directive set to consisten and the hash based on the cache key you set in your cache
+        - since the load balancing hash is based on the cache key, every request will always get routed to the same cache in the cache tier
+      - setup a cache tier
+        - as many cache servers as you want
+    - shared cache: replicated, designed for high availability
+      - shared cache cluster:
+        - primary and secondary instances
+          - primary always calls secondary
+          - can have as many tiers as you want
+        - cache cluster with failover
+          - if one fails, the other always has a copy
+
+# logging with nginx
+  - log the request id
+    - and add it to the response header
+  - log the nginx cache key
+  - log the cache status
+    - and add it to the respone headers
+
+
+# load balancing
+  - use ip_hash to always send an IP to the same load balancer
+    - i.e. sticky sessions
+  - 
 # tips and tricks
   - ensure there arent any errors i your nginx config
     - `sudo nginx -t`
