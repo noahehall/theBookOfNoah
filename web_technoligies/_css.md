@@ -17,8 +17,12 @@
     2. unknown width & height
     3. flexbox
 
+# flexbox
+  - one dimensional: columns OR rows
+
+  
 # [grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
-  - CSS Grid Layout (aka "Grid"), is a two-dimensional grid-based layout system
+  - CSS Grid Layout (aka "Grid"), is a two-dimensional (columns and rows) grid-based layout system
   - define:
     - grid container: `display: grid`
       - the direct parent of all the grid items.
