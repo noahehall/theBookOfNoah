@@ -3,7 +3,9 @@
 	- [oracle learning java](https://docs.oracle.com/javase/tutorial/java/index.html)
 	- [oracle OO concepts](https://docs.oracle.com/javase/tutorial/java/concepts/index.html)
 	- [oracle annotations](https://docs.oracle.com/javase/tutorial/java/annotations/index.html)
+	- [oracle class path](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/classpath.html)
 
+	
 # about
 	- released 1995
 	- object oriented
@@ -113,18 +115,20 @@
 
 # terminal
 	```sh
-		# compile a class to bytecode
-			javac
-		# run bytecode
-			java
+		# compile a java file to bytecode
+			javac com/example/blah/SomeClass.java # creates SomeClass.class
+		# execute bytecode
+			java com.example.blah.SomeClass #the folder structure, class name, and package name have to align else you'll need to set the class path (see links at top)
 		# java
 			java -version
-		# jshell start a java shell environment
-		# you can now run any java statement in shell
-			jshell
+		# jshell:  run any java statement in shell for testing statements
+			jshell # start a java shell environment
 				/help # get list of commands
 				/exit #hmmm
 				/history
+				/list #get list of commands
+					/2 #run the second command
+
 
 
 
@@ -136,6 +140,8 @@
 	- all code is defined in classes
 	- every class is in a single file, whose filename matches the name of the class `SomeClass.java`
 	- main method: JVM will always look for the main method when running a class
+		- the main method should always accept an array of strings
+		-
 
 	```java
 		// example class
