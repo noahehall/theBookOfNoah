@@ -119,6 +119,14 @@
 			java
 		# java
 			java -version
+		# jshell start a java shell environment
+		# you can now run any java statement in shell
+			jshell
+				/help # get list of commands
+				/exit #hmmm
+				/history
+
+
 
 
 	```
