@@ -5,7 +5,7 @@
 	- [oracle annotations](https://docs.oracle.com/javase/tutorial/java/annotations/index.html)
 	- [oracle class path](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/classpath.html)
 
-	
+
 # about
 	- released 1995
 	- object oriented
@@ -182,6 +182,13 @@
 		for (int i=0; i < 10; i++) {
 			// boom
 		}
+
+		// print every string in the array of strings
+		for (String s :
+            arrayOfStrings) {
+              System.out.println(s);
+            }
+
 	```
 
 # native classes
