@@ -15,6 +15,39 @@ everything you need:https://docs.docker.com/engine/userguide/
   - [docker ubuntu](https://docs.docker.com/engine/installation/linux/ubuntu/)
   - [manage docker as non-root user](https://docs.docker.com/engine/installation/linux/linux-postinstall/)
 
+
+
+# tips
+  - reclaiming disk space
+  ```js
+      docker rm $(docker ps -a -q)
+      docker rmi $(docker images -q)
+      docker volume rm $(docker volume ls |awk '{print $2}')
+      rm -rf ~/Library/Containers/com.docker.docker/Data/*
+      */ // dont use this line
+  ```
+# API
+## docker build
+  - build an image from docker file
+    - docker build -f DOCKER_FILE_PATH -t IMAGE_NAME .
+      - `.` is to tar the current dir
+
+# docker run
+  - Docker runs processes in isolated containers
+  - A container is a process which runs on a host
+  - The host may be local or remote
+  - The docker run command must specify an IMAGE to derive the container from.
+
+
+
+
+
+
+
+
+
+
+
 # quickies
 ## quick run
   -
@@ -55,8 +88,6 @@ VM vs Containers
       -network ports
       .looks like a VM, but it isnt
       Host os > host OS kernel > multiple containers that are isolated application platforms
-
-
 
 commands
   administration
