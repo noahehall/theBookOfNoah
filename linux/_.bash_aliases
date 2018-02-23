@@ -1,7 +1,3 @@
-if [ -f /git/theBookOfNoah/linux/_.bash_variables ]; then
-    . /git/theBookOfNoah/linux/_.bash_variables
-fi
-
 alias lessbashrc='less /git/theBookOfNoah/linux/_.bashrc'
 alias nanobashrc='nano /git/theBookOfNoah/linux/_.bashrc'
 alias sourcebashrc='source /git/theBookOfNoah/linux/.bashrc'
