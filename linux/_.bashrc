@@ -110,25 +110,3 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-export NVM_DIR="/home/fame/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-#mongo
-alias mongocheck='ps -aux | grep mongo'
-alias mongoport='netstat -nap | grep 27017'
-alias mongostart='mongod --auth --port 27017 --dbpath /data/db'
-alias mongosudo='sudo mongod -f /etc/mongod.conf'
-alias mongologin='mongo --port 27017 -u "imsovru" -p "somepassword" --authenticationDatabase "admin"'
-alias mongomod='sudo chown -R mongodb:mongodb /var/lib/mongodb && sudo chown -R mongodb:mongodb /data/db'
-
-# users
-alias listallsystemusers='cut -d: -f1 /etc/passwd'
-alias listallhumanusers='awk -F':' '$2 ~ "\$" {print $1}' /etc/shadow'
-
-#misc
-alias pbcopy='xclip -selection clipboard'
-alias getwifi='sudo iwlist wlp3s0 scan | grep ESSID'
-
-## npm
-alias npmglobals='npm list -g --depth=0'
