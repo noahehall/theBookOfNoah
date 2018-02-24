@@ -1,10 +1,9 @@
-alias lessbashrc='less /git/theBookOfNoah/linux/_.bashrc'
-alias nanobashrc='nano /git/theBookOfNoah/linux/_.bashrc'
-alias sourcebashrc='source /git/theBookOfNoah/linux/.bashrc'
+alias lessbashrc='less ~/.bashrc'
+alias nanobashrc='nano ~/.bashrc'
+alias sourcebashrc='source ~/.bashrc'
 
 alias copyssh="pbcopy < ~/.ssh/id_rsa.pub"
 alias getwifi='sudo iwlist wlp3s0 scan | grep ESSID'
-alias listallhumanusers='awk -F':' '$2 ~ "\$" {print $1}' /etc/shadow'
 alias listallsystemusers='cut -d: -f1 /etc/passwd'
 alias myubunturelease="lsb_release -cs"
 alias npmglobals='npm list -g --depth=0'
