@@ -71,7 +71,7 @@
 # containers: networking
   - programs in containers are isolated from the internet by default
   - you can group containers into 'private' networks
-  - 
+  -
 # random docker commands
 
 

@@ -1,3 +1,10 @@
 # usage:
 # docker ps --format="$DOCKER_FORMAT"
 export DOCKER_FORMAT="ID\t{{.ID}}\nNAME\t{{.Names}}\nIMAGE\t{{.Image}}\nPORTS\t{{.Ports}}\nCOMMAND\t{{.Command}}\nCREATED\t{{.CreatedAt}}\nSTATUS\t{{.Status}}\n"
+
+## NISHANT
+# Pretty prompt for git
+red=$(tput setaf 1) # \e[31m
+yellow=$(tput setaf 3) # \e[33m
+reset=$(tput setaf 2) # \e[32m
+PS1="[\u@\h]\[$red\]\w\[$yellow\]\$(__git_ps1)\[$reset\]\$ "
