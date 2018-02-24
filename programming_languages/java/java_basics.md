@@ -112,13 +112,38 @@
 		- void
 		- String | String[] (array of strings)
 
+# data types
+## primitives
+	- about
+		- are values and not objects
+		- primitive type names are all lowercase
+		- integers: are always signed
+			-
+	- char: single character
+	- boolean
+	- numeric
+		- byte
+		- short
+		- int
+		- long
+		- float
+		- double
+## objects
+	- about
+		- objects are complex
+		- start with an upper case
+	-
 
 # terminal
 	```sh
-		# compile a java file to bytecode
-			javac com/example/blah/SomeClass.java # creates SomeClass.class
+		# compile a set of java files to
+			javac com/example/blah/SomeClass.java # creates SomeClass.class in sam dir
+		# compile a set of java files to out dir
+			javac -d out src/myFirstPackage/*.java
 		# execute bytecode
 			java com.example.blah.SomeClass #the folder structure, class name, and package name have to align else you'll need to set the class path (see links at top)
+		# execute a set of compiled files in out dir
+			java -cp ./out myFirstPackage.Main
 		# java
 			java -version
 		# jshell:  run any java statement in shell for testing statements
@@ -197,5 +222,18 @@
 			Runtime
 				.maxMemoy()
 				.totalMemory()
+
+		// primitive wrapper classes
+		// support for conversion and formatting
+			java.lang
+				.Byte
+				.Short
+				.Integer
+				.Long
+				.Float
+				.Boolean
+				.Character
+				.Double
+					.parseDouble("156.5")
 
 	```
