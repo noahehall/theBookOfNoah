@@ -1,7 +1,7 @@
-if [ -f /git/theBookOfNoah/linux/_.bash_variables ]; then
-    . /git/theBookOfNoah/linux/_.bash_variables
+if [ -f ~/git/theBookOfNoah/linux/_.bash_variables ]; then
+    . ~/git/theBookOfNoah/linux/_.bash_variables
 fi
 
-if [ -f /git/theBookOfNoah/linux/_.bash_aliases ]; then
-    . /git/theBookOfNoah/linux/_.bash_aliases
+if [ -f ~/git/theBookOfNoah/linux/_.bash_aliases ]; then
+    . ~/git/theBookOfNoah/linux/_.bash_aliases
 fi
