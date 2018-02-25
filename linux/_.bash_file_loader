@@ -10,10 +10,6 @@ if [ -f ~/git/theBookOfNoah/linux/qfc/bin/qfc.sh ]; then
     source ~/git/theBookOfNoah/linux/qfc/bin/qfc.sh
 fi
 
-if [ -f ~/git/theBookOfNoah/linux/_.git-prompt.sh ]; then
-    . ~/git/theBookOfNoah/linux/_.git-prompt.sh
-fi
-
 alias g='git'
 
 function_exists() {
