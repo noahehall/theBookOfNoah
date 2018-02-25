@@ -6,6 +6,14 @@ if [ -f ~/git/theBookOfNoah/linux/_.bash_aliases ]; then
     . ~/git/theBookOfNoah/linux/_.bash_aliases
 fi
 
+if [ -f ~/git/theBookOfNoah/linux/qfc/bin/qfc.sh ]; then
+    source ~/git/theBookOfNoah/linux/qfc/bin/qfc.sh
+fi
+
+if [ -f ~/git/theBookOfNoah/linux/_.git-prompt.sh ]; then
+    . ~/git/theBookOfNoah/linux/_.git-prompt.sh
+fi
+
 alias g='git'
 
 function_exists() {
@@ -17,7 +25,7 @@ function_exists() {
 if [ -f ~/git/theBookOfNoah/linux/_.bash_git_aliases ] && [ -f ~/git/theBookOfNoah/linux/_.git-completion.bash ]; then 
     . ~/git/theBookOfNoah/linux/_.git-completion.bash
     complete -o default -o nospace -F _git g
-    git config --local include.path ~/git/theBookOfNoah/linux/_.bash_git_aliases
+    git config --global include.path ~/git/theBookOfNoah/linux/_.bash_git_aliases
 
     for al in `__git_aliases`; do
      alias g$al="git $al"
