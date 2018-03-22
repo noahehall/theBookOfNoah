@@ -1,5 +1,12 @@
 
 # [basics]
+## mac specific
+  ```sh
+    mysql -uroot #login
+    brew services start mysql #start mysql and relaunch at every startup
+    mysql.server start #start mysql with no restart
+
+  ```
 ## [administration]
   ```mysql
     # Start server & login

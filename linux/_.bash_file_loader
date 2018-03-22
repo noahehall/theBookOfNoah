@@ -1,6 +1,9 @@
-if [ -f ~/git/theBookOfNoah/linux/_.bash_variables ]; then
-    . ~/git/theBookOfNoah/linux/_.bash_variables
-fi
+# clone this repository to ~/git/theBookOfNoah
+# update your ~/.bashrc
+## if [ -f ~/git/theBookOfNoah/linux/_.bash_file_loader ]; then
+##    . ~/git/theBookOfNoah/linux/_.bash_file_loader
+## fi
+
 
 if [ -f ~/git/theBookOfNoah/linux/_.bash_aliases ]; then
     . ~/git/theBookOfNoah/linux/_.bash_aliases
@@ -18,14 +21,14 @@ function_exists() {
 }
 
 
-if [ -f ~/git/theBookOfNoah/linux/_.bash_git_aliases ] && [ -f ~/git/theBookOfNoah/linux/_.git-completion.bash ]; then 
+if [ -f ~/git/theBookOfNoah/linux/_.bash_git_aliases ] && [ -f ~/git/theBookOfNoah/linux/_.git-completion.bash ]; then
     . ~/git/theBookOfNoah/linux/_.git-completion.bash
     complete -o default -o nospace -F _git g
     git config --global include.path ~/git/theBookOfNoah/linux/_.bash_git_aliases
 
     for al in `__git_aliases`; do
      alias g$al="git $al"
-    
+
      complete_func=_git_$(__git_aliased_command $al)
      function_exists $complete_fnc && __git_complete g$al $complete_func
     done
