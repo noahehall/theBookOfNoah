@@ -30,13 +30,20 @@
       - The $ prefix is there to namespace AngularJS-provided services. To prevent collisions it's best to avoid naming your services and models anything that begins with a $.
     - `$$ name prefix`: If you inspect a Scope, you may also notice some properties that begin with $$. These properties are considered private, and should not be accessed or modified.
 
-# [tips and trips for debugging](http://eng.localytics.com/tips-and-tricks-for-debugging-unfamiliar-angularjs-code/)
+# [tips and tricks for debugging](http://eng.localytics.com/tips-and-tricks-for-debugging-unfamiliar-angularjs-code/)
   - tracking scope:
     - Angular creates a scope hierarchy with controllers and directive
     - Directives can sometimes have their own isolate scope.
 
 # [API](https://docs.angularjs.org/api/ng)
 ## [directives](https://docs.angularjs.org/api/ng/directive)
+  -  html attributes: teaches the browser new syntax: They apply special behavior to attributes or elements in the HTML.
+    - An attribute or element that augments an existing DOM element or represents a reusable DOM component.
+    - Data binding, as in {{}}.
+    - DOM control structures for repeating, showing and hiding DOM fragments.
+    - Support for forms and form validation.
+    - Attaching new behavior to DOM elements, such as DOM event handling.
+    - Grouping of HTML into reusable components.
   - ngApp: This directive is used to flag the HTML element that AngularJS should consider to be the root element of our application. This gives application developers the freedom to tell AngularJS if the entire HTML page or only a portion of it should be treated as the AngularJS application.
     - determines the `AngularJS Module` to use, e.g. `ng-app="phonecatApp"` that has all of your controllers need for your application
   - ngController: in charge of the DOM sub-tree under (and including) the element on which its placed
@@ -56,15 +63,20 @@
   - [provider components](https://docs.angularjs.org/api/ng/provider)
   - [input components](https://docs.angularjs.org/api/ng/input)
   - [filter components](https://docs.angularjs.org/api/ng/filter)
+  - services
+  - Directives
   - [guide](https://docs.angularjs.org/guide/component)
   - templates + controllers combined together into reusable and isolated entities
   - Component Definition Object: the syntax for defining a component
+
+
 ###  isolate scope
   - for each instance of your component, where no prototypal inheritance and no risk of your component affecting other parts of the application or vice versa.
     - An isolate scope is one that is unique to the directive and is not affected by anything outside of it (aside from bindings)
 
 ## templates
   - part of the view containing the bindings and presentation logic
+  - When Angular starts your application, it parses and processes this new markup from the template using the compiler. The loaded, transformed and rendered DOM is then called the view.
   - `{{'yet' + '!'}}`: a binding will result in efficient continuous updates whenever the result of the expression evaluation changes.
 
 ## views
@@ -74,14 +86,22 @@
   - The ngModel directive binds an input, select, textarea (or custom form control) to a property on the scope using NgModelController, which is created and exposed by this directive.
 
 ## Controller
-  - The controller is simply a constructor function that takes a $scope parameter:
+  - a Controller is defined by a JavaScript constructor function that is used to augment the Angular Scope.
+    - The controller is simply a constructor function that takes a $scope parameter:
+    - Use controllers to:
+      - Set up the initial state of the $scope object.
+      - Add behavior to the $scope object.
+      - Controllers should contain only business logic
+      -  It should contain only the business logic needed for a single view.
 
 ## scopes
   - [root scope](https://docs.angularjs.org/api/ng/type/$rootScope.Scope)
   - [what are scopes](https://docs.angularjs.org/guide/scope)
+  - [1.5 scope docs](https://code.angularjs.org/1.5.11/docs/guide/scope)
     - Scope is an object that refers to the application model. It is an execution context for expressions.
     - Scopes are arranged in hierarchical structure which mimic the DOM structure of the application.
     - Scopes can watch expressions and propagate events.
+  - Every application has a single root scope. All other scopes are descendant scopes of the root scope.
   - This scope is a prototypal descendant of the root scope that was created when the application was defined.
     - AngularJS scopes prototypically inherit from their parent scope, all the way up to the root scope of the application.
   - A scope can be seen as the glue which allows the template, model, and controller to work together.
@@ -89,14 +109,31 @@
     - Any changes made to the model are reflected in the view; any changes that occur in the view are reflected in the model.
     - assigning values directly on the scope makes it easy to share data across different parts of the page and create interactive applications.
     - While this approach works for prototypes and smaller applications, it quickly leads to tight coupling and difficulty to reason about changes in our data model.
+  - Scopes provide context against which expressions are evaluated. For example {{username}} expression is meaningless, unless it is evaluated against a specific scope which defines the username property.
+  -  any objects (or primitives) assigned to the scope become model properties.
 
 ## routing
   - angular renders the router wherever you put the `ng-view` attribute in the html file
+
+
 ## modules
   - [module guide](https://docs.angularjs.org/guide/module)
+
+
+# dependency injection
+  - Controllers are defined by a constructor function, which can be injected with any of the "service" and "value" components as dependencies, but they can also be provided with special dependencies
+    - The run method accepts a function, which can be injected with "service", "value" and "constant" components as dependencies.
+    - The config method accepts a function, which can be injected with "provider" and "constant" components as dependencies.
+    -
 ## [services](https://docs.angularjs.org/api/ng/service)
   -  several built-in AngularJS services that handle common operations in web applications.
   - services are managed by AngularJS's DI subsystem
+  - Angular services are substitutable objects that are wired together using dependency injection (DI). You can use services to organize and share code across your app.
+  - Like other core Angular identifiers, built-in services always start with $ (e.g. $http).
+  - to create services you generally use the module factory api: https://code.angularjs.org/1.5.11/docs/guide/services#creating-services
+  - You can also register services via the $provide service inside of a module's config function:
+
+
 ### [$http](https://docs.angularjs.org/api/ng/service/$http)
 
 ## [functions](https://docs.angularjs.org/api/ng/function)
@@ -270,3 +307,19 @@
     // declare the names of the dependencies you need as arguments to the controller's constructor function,
     // Note that the names of arguments are significant, because the injector uses these to look up the dependencies.
       function PhoneListController($http) {...}
+```
+
+
+```s
+  // dependency injection
+  angular.module('myModule', [])
+    .factory('serviceId', ['depService', function(depService) {
+      // ...
+    }])
+    .directive('directiveName', ['depService', function(depService) {
+      // ...
+    }])
+    .filter('filterName', ['depService', function(depService) {
+      // ...
+    }]);
+```
