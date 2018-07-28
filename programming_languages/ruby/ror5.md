@@ -128,7 +128,8 @@
 ## Model: ActiveRecord
   - access permissions granted at the db level
     - wegive rails ull access, and controllers decide which users can access which data
-  - migrations: set of db instructions to migrate your db to and from one state to another
+
+## Model: migrations: set of db instructions to migrate your db to and from one state to another
     - keeps db schema with ap code
     - share db schema changes with other devs, environments, and systems
     - helps with versioning
@@ -138,7 +139,18 @@
   ```sh
     rails g migration MigrationName #create a migration file in /db/migrate/timestamp_name.rb
     rails g model ModelName # create a model file in /db/migrate/timestamp_name.rb and app/models/modelName.rb and /test/models/modelName_test.rb and /test/fixtures/modelName.yml
-
+    # table migration methods
+      create_table(tablename, options) do |t|
+        #...columns
+      end
+      drop_table(tablename)
+      rename_table(tablename, new_name)
+    # column migration methods
+      add_colum(tablename, columnname, type, options)
+      remove_column(tablename, columnname)
+      rename_column(tablename, columnname, new_name)
+      change_column(tablename, columnname, type, options)
+      
   ```
   ```ruby
     # create a model via migration
