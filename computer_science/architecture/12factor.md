@@ -7,6 +7,18 @@
 	- continous development
 	- distributed system
 		- usually multiple copies of the codebase distributed to various environments
+	- backing services:
+		- any service the app consumes over the network as part of its normal operation
+			- databases,
+			- messaging/queuing systems (e.g. rabbitmq/beanstalkd)
+			- smpt services for outbound email
+			- caching systems (e.g. memcached)
+			- stmp services (e.g postmark)
+			- metrics-gathering services (e.g. new relic / loggly)
+			- binary asset servides (e.g. amazon s3)
+			- api accessible consumer services e.g. (twitter, google maps, etc)
+
+
 
 
 # background
@@ -42,8 +54,7 @@
 		- per-deploy values e.g. canonical hostname for the deploy
 		- strict separation between code and configurataion
 		- always store config in environment variables
-		- 
-
+		-
 
 	- NEVER:
 		- store config as constants in the code
@@ -52,6 +63,12 @@
 		- if the app can be opensourced at any moment without compromising any credentials
 
 # 4. backing services
+	- ALWAYS
+		- treat services as attached resources
+		- treat local and third party services the same
+			- both are treated as attached resources accessed via a URL / other locator/creds and stored in the config
+		- should be able to swap out a local mysql db with one managed by a third party without any changes to the apps code
+		- should be able to attach and detach resources from deploys at will
 
 # 5. build, release, run
 
