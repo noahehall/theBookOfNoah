@@ -71,6 +71,19 @@
 		- should be able to attach and detach resources from deploys at will
 
 # 5. build, release, run
+	- a codebase is transformed in a non-dev deploy through 3 stages
+	- build stage: converts a code repo into an executable bubndle known as a build
+		- usees a version of the code at a commit specified by teh deployment process
+		- the build stage fetches vendors deps and compiles binaries and assets
+	- release stage: takes the build produced by the build stage and combines it with the deloy's current config
+		- the resulting release contains both the build and the config and is ready for immediate execution in the execution environment
+	- run stage: aka runtime
+		- runs the app in the execution environment by launching some set of the apps processes against a selected a release
+	- ALWAYS
+		- bel able to roll a release back to a previous version
+		- tag each release with a unique release ID, e.g. a timestamp or version number
+		- 
+
 
 # 6. processes
 
