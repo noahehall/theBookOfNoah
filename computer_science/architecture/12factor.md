@@ -82,10 +82,25 @@
 	- ALWAYS
 		- bel able to roll a release back to a previous version
 		- tag each release with a unique release ID, e.g. a timestamp or version number
-		- 
+		-
 
 
 # 6. processes
+	- execute the app as one/more stateless processes
+		- in the simples case the code is a stand alone script and the execution environment is a devs local laptop with an installed language runtime  and the processes is launched via the cmd line
+
+	- ALWAYS
+		- execute the app in the deploy environment as one/more processes
+		- any data that needs to persist must be stored in a sstateful backing service, e.g. a database
+		- always ensure asset package managers build assets at runtime and not during the lifecycle of the application or process 
+
+	- NEVER
+		- use environment memory / filesystem for long term storage
+			- only as a brief single-transaction cache
+		- never assume anything stored in cache or on disk will be available on a future request or job
+		-
+
+
 
 # 7. port binding
 
