@@ -5,6 +5,8 @@
 	- declarative format
 	- continuous deployment
 	- continous development
+	- distributed system
+		- usually multiple copies of the codebase distributed to various environments
 
 
 # background
@@ -20,11 +22,34 @@
 
 # the 12 factors
 # 1. Codebase
-
+	- one codebase tracked in git with many deploys to various environments
+	- if there are multiple codebases its not an app, its a distributed system
 
 # 2. dependencies
+	- never rely on implicit existence of syste,-wide packages
+		- all dependencies must be:
+			- declared completed and exactly in a manifest (e.g. package.json)
+			- must be isolated via some tool (e.g. npm) to ensure that no implicit dependencies 'leak in' from the surrounding system
+			-
+		-
+
 
 # 3. config
+	- store application config in the environment since it is very likely to vary between deploys/environments
+	- including :
+		- resource handles to database, memcached and other backing services
+		- credentials to external services e.g. amazon s3 or twitter etc.
+		- per-deploy values e.g. canonical hostname for the deploy
+		- strict separation between code and configurataion
+		- always store config in environment variables
+		- 
+
+
+	- NEVER:
+		- store config as constants in the code
+
+	- the TEST
+		- if the app can be opensourced at any moment without compromising any credentials
 
 # 4. backing services
 
@@ -42,4 +67,4 @@
 
 # 11. logs
 
-# 12. admin processes 
+# 12. admin processes
