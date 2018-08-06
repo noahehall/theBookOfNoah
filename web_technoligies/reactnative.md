@@ -1,7 +1,15 @@
 # links
-  - [setup env for android development](https://facebook.github.io/react-native/releases/0.23/docs/android-setup.html)
+  - [setup env for android development](https://facebook.github.io/react-native/docs/getting-started.html)
+  - setup KVM
+    - https://help.ubuntu.com/community/KVM/Installation
+    - https://developer.android.com/studio/run/emulator-acceleration?utm_source=android-studio#vm-linux
+    - setup inotify
+    - setup virt mananger https://askubuntu.com/questions/930491/group-libvirtd-does-not-exist-while-installing-qemu-kvm
 
-
+# quickies
+  - start app
+    - start virtual device in android Studio
+    - start app `react-native run-android`
 # background
   - framework for building native apps
   - the syntax is the same as react
@@ -68,6 +76,7 @@
   - tools > android > android avd manager
   - click + to create new virtual device
   - select phone from list
+  -
 # releasing your app
   - general process
     - relea
