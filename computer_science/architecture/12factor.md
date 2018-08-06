@@ -92,7 +92,7 @@
 	- ALWAYS
 		- execute the app in the deploy environment as one/more processes
 		- any data that needs to persist must be stored in a sstateful backing service, e.g. a database
-		- always ensure asset package managers build assets at runtime and not during the lifecycle of the application or process 
+		- always ensure asset package managers build assets at runtime and not during the lifecycle of the application or process
 
 	- NEVER
 		- use environment memory / filesystem for long term storage
@@ -103,6 +103,21 @@
 
 
 # 7. port binding
+	- export services via port binding
+		- web apps are sometimes executed inside a webserver container
+			- php might run as a module inside apache httpd
+			- java apps might run inside tomcat
+
+
+	- ALWAYS
+		- ensure the app is completed self contained and does not rely on runtime injection of a webserver into the execution environment to create a web facing service
+			- the web app should export HTTP as a service by binding to a port and listening to requests coming in on that port
+				- the app should have a routing layer that handles routing requests from a public-facing hostname to the port-bound web processes
+			- every kind of server software that can be run via a processing bining to a port and awaiting incoming requests should be
+				- e.g. redis
+				- this also means that one app can become the backing service for another app by providin gthe URL to the backing app as a resource handle in the config for the consuming application
+
+
 
 # 8. concurrency
 
