@@ -6,6 +6,9 @@
     - setup inotify
     - setup virt mananger https://askubuntu.com/questions/930491/group-libvirtd-does-not-exist-while-installing-qemu-kvm
 
+# doc links
+  - [layout props](https://facebook.github.io/react-native/docs/layout-props)
+  -
 # quickies
   - start app
     - start virtual device in android Studio
@@ -280,21 +283,139 @@
     ```
   - fixed dimensions: All dimensions in React Native are unitless, and represent density-independent pixels.
     ```js
-    import React, { Component } from 'react';
-    import { AppRegistry, View } from 'react-native';
+      import React, { Component } from 'react';
+      import { AppRegistry, View } from 'react-native';
 
-    export default class FixedDimensionsBasics extends Component {
-      render() {
-        return (
-          <View>
-            <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} />
-            <View style={{width: 100, height: 100, backgroundColor: 'skyblue'}} />
-            <View style={{width: 150, height: 150, backgroundColor: 'steelblue'}} />
-          </View>
-        );
+      export default class FixedDimensionsBasics extends Component {
+        render() {
+          return (
+            <View>
+              <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} />
+              <View style={{width: 100, height: 100, backgroundColor: 'skyblue'}} />
+              <View style={{width: 150, height: 150, backgroundColor: 'steelblue'}} />
+            </View>
+          );
+        }
       }
-    }
     ```
+# flexbox https://facebook.github.io/react-native/docs/flexbox
+  - flex dimensions: Use flex in a component's style to have the component expand and shrink dynamically based on available space.
+    - Normally you will use flex: 1, which tells a component to fill all available space, shared evenly amongst each other component with the same parent. The larger the flex given, the higher the ratio of space a component will take compared to its siblings.
+    - A component can only expand to fill available space if its parent has dimensions greater than 0. If a parent does not have either a fixed width and height or flex, the parent will have dimensions of 0 and the flex children will not be visible.
+    ```js
+      import React, { Component } from 'react';
+      import { AppRegistry, View } from 'react-native';
+
+      export default class FlexDimensionsBasics extends Component {
+        render() {
+          return (
+            // Try removing the `flex: 1` on the parent View.
+            // The parent will not have dimensions, so the children can't expand.
+            // What if you add `height: 300` instead of `flex: 1`?
+            <View style={{flex: 1}}>
+              <View style={{flex: 1, backgroundColor: 'powderblue'}} />
+              <View style={{flex: 2, backgroundColor: 'skyblue'}} />
+              <View style={{flex: 3, backgroundColor: 'steelblue'}} />
+            </View>
+          );
+        }
+      }
+
+    ```
+  - layout with flexbox
+    - You will normally use a combination of flexDirection, alignItems, and justifyContent to achieve the right layout.
+    - Flexbox works the same way in React Native as it does in CSS on the web, with a few exceptions. The defaults are different, with flexDirection defaulting to column instead of row, and the flex parameter only supporting a single number.
+  - API
+    - flex direction: Adding flexDirection to a component's style determines the primary axis of its layout. Should the children be organized horizontally (row) or vertically (column)? The default is column
+    - justify content: Adding justifyContent to a component's style determines the distribution of children along the primary axis. Should children be distributed at the start, the center, the end, or spaced evenly? Available options are flex-start, center, flex-end, space-around, space-between and space-evenly.
+    - align items: Adding alignItems to a component's style determines the alignment of children along the secondary axis (if the primary axis is row, then the secondary is column, and vice versa). Should children be aligned at the start, the center, the end, or stretched to fill? Available options are flex-start, center, flex-end, and stretch.
+      - For stretch to have an effect, children must not have a fixed dimension along the secondary axis. In the following example, setting alignItems: stretch does nothing until the width: 50 is removed from the children.
+
+
+# user input
+  - text input: allows the user to enter text. It has an onChangeText prop that takes a function to be called every time the text changed, and an onSubmitEditing prop that takes a function to be called when the text is submitted.
+
+# handling touches
+  - Users interact with mobile apps mainly through touch. They can use a combination of gestures, such as tapping on a button, scrolling a list, or zooming on a map
+  - compponents
+    - button: Button provides a basic button component that is rendered nicely on all platforms
+    - touchables: If the basic button doesn't look right for your app, you can build your own button using any of the "Touchable" components provided by React Native.
+      - The "Touchable" components provide the capability to capture tapping gestures, and can display feedback when a gesture is recognized.
+        - TouchableHighlight: anywhere you would use a button or link on web. The view's background will be darkened when the user presses down on the button.
+        - TouchableNativeFeedback: on Android to display ink surface reaction ripples that respond to the user's touch.
+        - TouchableOpacity: can be used to provide feedback by reducing the opacity of the button, allowing the background to be seen through while the user is pressing down
+        - TouchableWithoutFeedback: If you need to handle a tap gesture but you don't want any feedback to be displayed,
+        - In some cases, you may want to detect when a user presses and holds a view for a set amount of time. These long presses can be handled by passing a function to the onLongPress props of any of the "Touchable" components.
+
+        ```js
+          import React, { Component } from 'react';
+          import { Alert, AppRegistry, Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback, View } from 'react-native';
+
+          export default class Touchables extends Component {
+            _onPressButton() {
+              Alert.alert('You tapped the button!')
+            }
+
+            _onLongPressButton() {
+              Alert.alert('You long-pressed the button!')
+            }
+
+
+            render() {
+              return (
+                <View style={styles.container}>
+                  <TouchableHighlight onPress={this._onPressButton} underlayColor="white">
+                    <View style={styles.button}>
+                      <Text style={styles.buttonText}>TouchableHighlight</Text>
+                    </View>
+                  </TouchableHighlight>
+                  <TouchableOpacity onPress={this._onPressButton}>
+                    <View style={styles.button}>
+                      <Text style={styles.buttonText}>TouchableOpacity</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableNativeFeedback
+                      onPress={this._onPressButton}
+                      background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}>
+                    <View style={styles.button}>
+                      <Text style={styles.buttonText}>TouchableNativeFeedback</Text>
+                    </View>
+                  </TouchableNativeFeedback>
+                  <TouchableWithoutFeedback
+                      onPress={this._onPressButton}
+                      >
+                    <View style={styles.button}>
+                      <Text style={styles.buttonText}>TouchableWithoutFeedback</Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                  <TouchableHighlight onPress={this._onPressButton} onLongPress={this._onLongPressButton} underlayColor="white">
+                    <View style={styles.button}>
+                      <Text style={styles.buttonText}>Touchable with Long Press</Text>
+                    </View>
+                  </TouchableHighlight>
+                </View>
+              );
+            }
+          }
+
+          const styles = StyleSheet.create({
+            container: {
+              paddingTop: 60,
+              alignItems: 'center'
+            },
+            button: {
+              marginBottom: 30,
+              width: 260,
+              alignItems: 'center',
+              backgroundColor: '#2196F3'
+            },
+            buttonText: {
+              padding: 20,
+              color: 'white'
+            }
+          })
+
+        ```
 # API
   - setState
   -
