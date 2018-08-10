@@ -46,7 +46,7 @@
       prompt('your question') //ask user for information
       document.write('your html') //rewrite the entire page
       element.innerHTML = 'Your Text' //add text to an element
-      console.log('your message') //writes tot he console during program execution
+      console.log('your message') //writes to the console during program execution
     ```
 
 ### [window.fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API):

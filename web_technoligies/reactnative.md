@@ -10,6 +10,8 @@
   - start app
     - start virtual device in android Studio
     - start app `react-native run-android`
+
+
 # background
   - framework for building native apps
   - the syntax is the same as react
@@ -28,7 +30,6 @@
     - when you build your app a new terminal process opens
     - the package bundles all of your source code into a single js bundle file
     - when you save changes to the source, the react packager updates your js bundle and sends the updated bundle to the simular
-
 
 # terminology
   - bridge: manages the UI using native components
@@ -50,6 +51,8 @@
   - OS10: operating system for ios apps
   - apple developer acocunt: required to distribute your application in the apple app store
   - homebrew: used to install react native dependencies
+
+
 ## android
   - [Android studio](https://developer.android.com/studio/install.html)
     - do custom install and be sure to install everything
@@ -80,6 +83,8 @@
 # releasing your app
   - general process
     - relea
+
+
 ## google play store
 ## itunes
 
@@ -89,6 +94,8 @@
     - /index.js: mounts your application in the app registry
   - /ios: where the ios application is located
   - /android: where the android application is located
+
+
 # cli
 ## react-native-cli
   ```js
@@ -131,6 +138,7 @@
   ```
 
 # react-native components
+
 ## display component
   ```js
     import { blah } from 'react-native'
@@ -226,7 +234,99 @@
         // without stylesheet component
           <Text style={{ backgroundColor: 'white'}} />
   ```
+## BIGLIES
+  - props: set byu the parent component and are fixed throughout the lifetime of a component
+  - state: used for data that is going to change, and owned by the current component
+  - can use redux/mobx
+
+### style
+  - all of the core components accept a prop named style
+  - the style naems and values usually match how CSS works on the web, except names are written using camel casing
+  - style prop
+    - plain javascript object
+    - can also pass an array of styles in which the last style in the array has precedence
+      - this can be sued to inherit styles
+  - use `StyleSheet.create` to define several styles in one place
+    ```js
+          import React, { Component } from 'react';
+          import { AppRegistry, StyleSheet, Text, View } from 'react-native';
+
+          export default class LotsOfStyles extends Component {
+            render() {
+              return (
+                <View>
+                  <Text style={styles.red}>just red</Text>
+                  <Text style={styles.bigblue}>just bigblue</Text>
+                  <Text style={[styles.bigblue, styles.red]}>bigblue, then red</Text>
+                  <Text style={[styles.red, styles.bigblue]}>red, then bigblue</Text>
+                </View>
+              );
+            }
+          }
+
+          const styles = StyleSheet.create({
+            bigblue: {
+              color: 'blue',
+              fontWeight: 'bold',
+              fontSize: 30,
+            },
+            red: {
+              color: 'red',
+            },
+          });
+
+          // skip this line if using Create React Native App
+          AppRegistry.registerComponent('AwesomeProject', () => LotsOfStyles);
+    ```
+  - fixed dimensions: All dimensions in React Native are unitless, and represent density-independent pixels.
+    ```js
+    import React, { Component } from 'react';
+    import { AppRegistry, View } from 'react-native';
+
+    export default class FixedDimensionsBasics extends Component {
+      render() {
+        return (
+          <View>
+            <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} />
+            <View style={{width: 100, height: 100, backgroundColor: 'skyblue'}} />
+            <View style={{width: 150, height: 150, backgroundColor: 'steelblue'}} />
+          </View>
+        );
+      }
+    }
+    ```
+# API
+  - setState
+  -
 ## api components
+  - View
+  - Text
+  - Image
+
+
+### view
+  - used as a container for other components to help control style and layout
+  -
+### image
+  ```js
+        import React, { Component } from 'react';
+        import { AppRegistry, Image } from 'react-native';
+
+        export default class Bananas extends Component {
+        render() {
+          let pic = {
+            uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+          };
+          return (
+            <Image source={pic} style={{width: 193, height: 110}}/>
+          );
+        }
+        }
+
+        // skip this line if using Create React Native App
+        AppRegistry.registerComponent('AwesomeProject', () => Bananas);
+
+  ```
   ```js
   fetch('url').then() // same as html5 fetch,is a global so no need to import
     AsyncStorage // save/load data to the device asynchronously
