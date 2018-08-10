@@ -1,3 +1,7 @@
+# next: https://facebook.github.io/react-native/docs/network
+
+
+
 # links
   - [setup env for android development](https://facebook.github.io/react-native/docs/getting-started.html)
   - setup KVM
@@ -8,7 +12,7 @@
 
 # doc links
   - [layout props](https://facebook.github.io/react-native/docs/layout-props)
-  -
+  - [compopnents and APIs](https://facebook.github.io/react-native/docs/components-and-apis)
 # quickies
   - start app
     - start virtual device in android Studio
@@ -416,6 +420,21 @@
           })
 
         ```
+# scrolling lists, swiping pages, pinch to zoom
+  - ScrollView: is a generic scrolling container that can host multiple components and views. The scrollable items need not be homogeneous, and you can scroll both vertically and horizontally (by setting the horizontal property).
+    - The ScrollView works best to present a small amount of things of a limited size
+    - All the elements and views of a ScrollView are rendered, even if they are not currently shown on the screen
+    - - can be configured to allow paging through views using swiping gestures by using the pagingEnabled props. Swiping horizontally between views can also be implemented on Android using the ViewPagerAndroid component.
+    - ScrollView with a single item can be used to allow the user to zoom content. Set up the maximumZoomScale and minimumZoomScale props and your user will be able to use pinch and expand gestures to zoom in and out.
+## lists of data
+  - FlatList: component displays a scrolling list of changing, but similarly structured, data.
+    - FlatList works well for long lists of data, where the number of items might change over time.
+    - Unlike the more generic ScrollView, the FlatList only renders elements that are currently showing on the screen, not all the elements at once.
+  - sectionlist: If you want to render a set of data broken into logical sections, maybe with section headers,
+
+
+# networking
+
 # API
   - setState
   -
