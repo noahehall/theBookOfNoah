@@ -1,7 +1,5 @@
 # next: https://facebook.github.io/react-native/docs/network
 
-
-
 # links
   - [setup env for android development](https://facebook.github.io/react-native/docs/getting-started.html)
   - setup KVM
@@ -13,6 +11,12 @@
 # doc links
   - [layout props](https://facebook.github.io/react-native/docs/layout-props)
   - [compopnents and APIs](https://facebook.github.io/react-native/docs/components-and-apis)
+  - [View component](https://facebook.github.io/react-native/docs/view.html)
+  - [navigation](https://facebook.github.io/react-native/docs/navigation)
+  - [react navigation](https://reactnavigation.org/docs/en/hello-react-navigation.html)
+  - [react native elements](https://react-native-training.github.io/react-native-elements/docs/getting_started.html)
+
+  
 # quickies
   - start app
     - start virtual device in android Studio
