@@ -446,14 +446,29 @@ https://en.wikipedia.org/wiki/Web_cache
 
 ### http messages
   ```js
-    GET / HTTP/1.1
-    Host: developer.mozilla.org
-    Accept-Language: fr
+    // http request anatomy
+      GET / HTTP/1.1
+      Host: developer.mozilla.org
+      Accept-Language: fr
 
-    // GET = method
-    // / = path
-    // HTTP/1.1 = version of the protocol
-    // Host... and reminaing lines = Headers
+      // GET = method
+      // / = path
+      // HTTP/1.1 = version of the protocol
+      // Host... and reminaing lines = Headers
+
+    // http response anatomy
+      HTTP/1.1 200 OK
+      Date: Sat, 09 Oct 2010 14:28:02 GMT
+      Server: Apache
+      Last-Modified: Tue, 01 Dec 2009 20:18:22 GMT
+      ETag: "123-abc-123-abc"
+      Accept-Ranges: bytes
+      Content-Length: 223458
+      Content-Type: text/html
+      // HTTP/1.1 = version of the protocol
+      // 200 = Status Code
+      // OK = Status message
+      // Date... and remaining lines = Headers
   ```
   - how data is exchanged between a server and client
     - requests: sent by client to trigger an action on server
