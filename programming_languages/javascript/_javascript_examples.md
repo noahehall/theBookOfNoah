@@ -71,8 +71,7 @@
   - [html5rocks](https://www.html5rocks.com/en/tutorials/speed/animations/)
 
 
-#  closures
-  - [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
+#  [closures]((https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures))
   - terminology
     - closure: the combination of a function and the lexical environment within which that function was declared
     - lexical scoping: the static environment
@@ -240,3 +239,6 @@
         return this.message;
       };
   ```
+
+
+# [inheritance and prototype chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
