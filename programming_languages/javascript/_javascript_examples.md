@@ -252,7 +252,10 @@
 
   - notes
     - JavaScript objects are dynamic "bags" of properties (referred to as own properties). JavaScript objects have a link to a prototype object. When trying to access a property of an object, the property will not only be sought on the object but on the prototype of the object, the prototype of the prototype, and so on until either a property with a matching name is found or the end of the prototype chain is reached.
+    - functions are able to have properties. It does not matter how you declare the function, a function in javascript will always have a default prototype property.
 
+
+    
   ```js
     // example prototype chain demonstrated through property access
     // Let's create an object o from function f with its own properties a and b:
