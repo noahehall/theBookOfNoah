@@ -69,3 +69,52 @@
 
 # [request animation frame]
   - [html5rocks](https://www.html5rocks.com/en/tutorials/speed/animations/)
+
+
+#  closures
+  - [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
+  - terminology
+    - closure: the combination of a function and the lexical environment within which that function was declared
+      - Closures are useful because they let you associate some data (the lexical environment) with a function that operates on that data. This has obvious parallels to object-oriented programming, where objects allow us to associate some data (the object's properties) with one or more methods.
+    - lexical scoping: the static environment
+
+## examples
+  - closure
+    ```js
+      // closure 1: however displayName is not returend
+      function init() {
+        var name = 'Mozilla'; // name is a local variable created by init
+        function displayName() { // displayName() is the inner function, a closure
+          alert(name); // use variable declared in the parent function
+        }
+        displayName();
+      }
+      init();
+
+
+      // closure 2: this time the inner function is returned
+      function makeFunc() {
+        var name = 'Mozilla';
+        function displayName() {
+          alert(name);
+        }
+        return displayName;
+      }
+
+      var myFunc = makeFunc();
+      myFunc();
+
+
+      // closure 3:
+      function makeAdder(x) {
+        return function(y) {
+          return x + y;
+        };
+      }
+
+      var add5 = makeAdder(5);
+      var add10 = makeAdder(10);
+
+      console.log(add5(2));  // 7
+      console.log(add10(2)); // 12
+  ```
