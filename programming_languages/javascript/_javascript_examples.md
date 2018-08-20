@@ -75,9 +75,18 @@
   - [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
   - terminology
     - closure: the combination of a function and the lexical environment within which that function was declared
-      - Closures are useful because they let you associate some data (the lexical environment) with a function that operates on that data. This has obvious parallels to object-oriented programming, where objects allow us to associate some data (the object's properties) with one or more methods.
     - lexical scoping: the static environment
 
+## background on closures
+  - Closures are useful because they let you associate some data (the lexical environment) with a function that operates on that data. This has obvious parallels to object-oriented programming, where objects allow us to associate some data (the object's properties) with one or more methods.
+  - Consequently, you can use a closure anywhere that you might normally use an object with only a single method.
+    - event handlers
+    - private methods: Private methods aren't just useful for restricting access to code: they also provide a powerful way of managing your global namespace, keeping non-essential methods from cluttering up the public interface to your code.
+    - module pattern: use closures to define public functions that can access private functions and variables
+      - Using closures in this way provides a number of benefits that are normally associated with object-oriented programming -- in particular, data hiding and encapsulation.
+  - notes
+    - use let instead of var for variables, so every closure binds the block-scoped variable, meaning that no additional closures are required.
+    - It is unwise to unnecessarily create functions within other functions if closures are not needed for a particular task, as it will negatively affect script performance both in terms of processing speed and memory consumption.
 ## examples
   - closure
     ```js
@@ -117,4 +126,83 @@
 
       console.log(add5(2));  // 7
       console.log(add10(2)); // 12
+
+      // closure 3: practical example of using
+      // a closure to respond to an event
+      function makeSizer(size) {
+        return function() {
+          document.body.style.fontSize = size + 'px';
+        };
+      }
+
+      // create event handlers
+      var size12 = makeSizer(12);
+      var size14 = makeSizer(14);
+      var size16 = makeSizer(16);
+      // attach event handlers
+      document.getElementById('size-12').onclick = size12;
+      document.getElementById('size-14').onclick = size14;
+      document.getElementById('size-16').onclick = size16;
+
+      // closure 4: module pattern, notice the IFEE
+      // annonymous functions creates the lexical environment (closure)
+      // which is executed as soon as it has been defined
+      var counter = (function() {
+        var privateCounter = 0; // private
+        function changeBy(val) { // private
+          privateCounter += val;
+        }
+
+        return {
+          // these functions share teh lexical environment
+          increment: function() {
+            changeBy(1);
+          },
+          decrement: function() {
+            changeBy(-1);
+          },
+          value: function() {
+            return privateCounter;
+          }
+        };
+      })();
+
+      console.log(counter.value()); // logs 0
+      counter.increment();
+      counter.increment();
+      console.log(counter.value()); // logs 2
+      counter.decrement();
+      console.log(counter.value()); // logs 1
+
+
+      // closure 5: different version of above
+      // this time we are converting the IIFE into a function variable
+      // that can create counters, each with its own version of the closure
+      var makeCounter = function() {
+        var privateCounter = 0;
+        function changeBy(val) {
+          privateCounter += val;
+        }
+        return {
+          increment: function() {
+            changeBy(1);
+          },
+          decrement: function() {
+            changeBy(-1);
+          },
+          value: function() {
+            return privateCounter;
+          }
+        }
+      };
+
+      var counter1 = makeCounter();
+      var counter2 = makeCounter();
+      alert(counter1.value()); /* Alerts 0 */
+      counter1.increment();
+      counter1.increment();
+      alert(counter1.value()); /* Alerts 2 */
+      counter1.decrement();
+      alert(counter1.value()); /* Alerts 1 */
+      alert(counter2.value()); /* Alerts 0 */
   ```
