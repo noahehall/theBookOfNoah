@@ -87,6 +87,7 @@
   - notes
     - use let instead of var for variables, so every closure binds the block-scoped variable, meaning that no additional closures are required.
     - It is unwise to unnecessarily create functions within other functions if closures are not needed for a particular task, as it will negatively affect script performance both in terms of processing speed and memory consumption.
+    - when creating a new object/class, methods should normally be associated to the object's prototype rather than defined into the object constructor. The reason is that whenever the constructor is called, the methods would get reassigned (that is, for every object creation).
 ## examples
   - closure
     ```js
@@ -205,4 +206,37 @@
       counter1.decrement();
       alert(counter1.value()); /* Alerts 1 */
       alert(counter2.value()); /* Alerts 0 */
+
+
+      // closure 6: methods on objects should be assigned
+      // to the object's prototype so that whenever the constructor
+      // is called, the methods do not get reassigned for every
+      // object created
+      function MyObject(name, message) {
+        this.name = name.toString();
+        this.message = message.toString();
+
+        // dont do this
+        this.getName = function() {
+          return this.name;
+        };
+        // dont do this
+        this.getMessage = function() {
+          return this.message;
+        };
+      }
+
+      // proper example
+      function MyObject(name, message) {
+        this.name = name.toString();
+        this.message = message.toString();
+      }
+
+      // append new methods to the prototype
+      MyObject.prototype.getName = function() {
+        return this.name;
+      };
+      MyObject.prototype.getMessage = function() {
+        return this.message;
+      };
   ```
