@@ -5,6 +5,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages
 https://en.wikipedia.org/wiki/Web_cache
 
 # Links
+  - [http overview @ mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview)
   - [http @ mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP)
   - [application layer @ mdn](https://en.wikipedia.org/wiki/Application_layer)
   - [absraction layer @wikipedia](https://en.wikipedia.org/wiki/Abstraction_layer)
@@ -570,7 +571,7 @@ https://en.wikipedia.org/wiki/Web_cache
         - Secure Cookies
           - requite Https
           - Set-Cookie: blah=blah, Secure, HttpOnly;
-            - HttpOnly = prevent cross-site scripting attacks, cookie inaccessible to javascript ( cant access it in Document.cookie) 
+            - HttpOnly = prevent cross-site scripting attacks, cookie inaccessible to javascript ( cant access it in Document.cookie)
     + Binary data: the actual data
 
 
