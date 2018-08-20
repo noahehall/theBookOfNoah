@@ -445,6 +445,16 @@ https://en.wikipedia.org/wiki/Web_cache
   -
 
 ### http messages
+  ```js
+    GET / HTTP/1.1
+    Host: developer.mozilla.org
+    Accept-Language: fr
+
+    // GET = method
+    // / = path
+    // HTTP/1.1 = version of the protocol
+    // Host... and reminaing lines = Headers
+  ```
   - how data is exchanged between a server and client
     - requests: sent by client to trigger an action on server
     - responses: answer from server
@@ -535,9 +545,28 @@ https://en.wikipedia.org/wiki/Web_cache
       + only useful for very large files, as you will incur two round trips
   + OPTIONS: get a list of methods that are accepted on the current URL
     - Post: you should respond to post requests with a redirect so that reloading the page doesnt cause an additional post
-
-
-
+  + HTTP Flow:
+    1. open a TCP connection
+    2. send an HTTP message
+      ```js
+        // GET / HTTP/1.1
+        // Host: developer.mozilla.org
+        // Accept-Language: fr
+      ```
+    3. read the response sent by the server
+      ```js
+        // HTTP/1.1 200 OK
+        // Date: Sat, 09 Oct 2010 14:28:02 GMT
+        // Server: Apache
+        // Last-Modified: Tue, 01 Dec 2009 20:18:22 GMT
+        // ETag: "51142bc1-7449-479b075b2891b"
+        // Accept-Ranges: bytes
+        // Content-Length: 29769
+        // Content-Type: text/html
+        //
+        // <!DOCTYPE html... (here comes the 29769 bytes of the requested web page)
+      ```
+    4. close/reuse the connection for further requests
 ##### Request Headers
   - Connection: Keep Alive
     + informs the server to keep the connection open after it returns the response
