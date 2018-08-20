@@ -5,6 +5,7 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages
 https://en.wikipedia.org/wiki/Web_cache
 
 # Links
+  - [CORS @mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
   - [http overview @ mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview)
   - [http @ mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP)
   - [application layer @ mdn](https://en.wikipedia.org/wiki/Application_layer)

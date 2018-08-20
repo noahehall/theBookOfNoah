@@ -50,7 +50,11 @@
     ```
 
 ### [window.fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API):
-  - simplified XMLhttpRequest
+  - simplified and more powerful and flexible feature set vs XMLhttpRequest
+	- fetch provides a generic definition of Request and Response objects (and other things involved with network requests).
+    -  allow them to be used wherever they are needed in the future, whether it’s for service workers, Cache API and other similar things that handle or modify requests and responses, or any kind of use case that might require you to generate your own responses programmatically.
+    - also provides a definition for related concepts such as CORS and the HTTP origin header semantics, supplanting their separate definitions elsewhere.
+    -
 ### Fetch examples
   - fetch with a request object
   `fetch(requestObject).then(...)`
@@ -156,6 +160,8 @@
       	console.log(j);
       });
     ```
+
+### CORS
 
 ### [window.Headers](https://developer.mozilla.org/en-US/docs/Web/API/Headers)
   - Allows you to perform various actions on HTTP request and response headers. These actions include retrieving, setting, adding to, and removing.
