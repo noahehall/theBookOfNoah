@@ -4,7 +4,8 @@
   - [getting started postgresql server mac osx](https://www.codementor.io/devops/tutorial/getting-started-postgresql-server-mac-osx)
   - [postgresql tut](http://www.postgresqltutorial.com/)
     - todo sections: 4, 5, 6, 9, 10, 11, 12, 13, 14, 15,
-    -
+  - [setup postgresql on ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
+  -
 
 
 # research
@@ -49,6 +50,25 @@
     -  The purpose of extensions is to make it easier to maintain.
   - subquery: a query nested inside another query, e.g. in the where clause with the in operator
 
+# installing on buntu 18.04
+  - install commands
+    ```sh
+      sudo apt update
+      sudo apt install postgresql postgresql-contrib
+    ```
+  - post install
+    - installation process creates a user account called `postgres` that is associated wiht the default postgres role
+      - in order to use postgres, you can log into that account
+      ```sh
+        # option 1: switch over to postgres account via intermediary bash shell
+          sudo -i -u postgres # switch to postgres linux user
+          psql # access postgres prompt
+          \q # exit out of postgresql prompt
+
+        # option 2: accessing postgres prompt without switching accounts via sudo
+          sudo -u postgres psql
+
+      ```
 # admin
   ```sql
     -- locations
@@ -116,6 +136,22 @@
       \df -- list all available functions of current db
       \dv -- list all views
       \du -- list all users
+
+  ```
+## roles/users and databases
+  - roles: handle authentication and authorization
+    - similar to unix-style accounts
+    - does not distinguish between users and groups
+    - each user has a 'role'
+  - types of authentication
+    - ident: associates postgres roles with a matching unix/linux system account
+      - if a role exists within postgress, a unix/linux username with the same name is able to sign in as that role
+  ```sh
+    # creating a new user
+      # if logged in as postgres account
+        createuser --interactive
+      # if current user has sudo access
+        sudo -u postgres creaeteuer --interactive
 
   ```
 # statements
