@@ -146,6 +146,7 @@
   - types of authentication
     - ident: associates postgres roles with a matching unix/linux system account
       - if a role exists within postgress, a unix/linux username with the same name is able to sign in as that role
+      - Another assumption that the Postgres authentication system makes by default is that for any role used to log in, that role will have a database with the same name which it can access.
   ```sh
     # creating a new user
       # if logged in as postgres account
