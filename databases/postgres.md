@@ -5,7 +5,10 @@
   - [postgresql tut](http://www.postgresqltutorial.com/)
     - todo sections: 4, 5, 6, 9, 10, 11, 12, 13, 14, 15,
   - [setup postgresql on ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
-  -
+  - [postgres roles and permissions](https://www.digitalocean.com/community/tutorials/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2)
+  - [formatting CLI responses](https://stackoverflow.com/questions/9604723/alternate-output-format-for-psql)
+  - [managing db tables](https://www.digitalocean.com/community/tutorials/how-to-create-remove-manage-tables-in-postgresql-on-a-cloud-server)
+  - [upsert tut](http://www.postgresqltutorial.com/postgresql-upsert/)
 
 
 # research
@@ -52,22 +55,24 @@
 
 # installing on buntu 18.04
   - install commands
-    ```sh
+    ```sql
       sudo apt update
       sudo apt install postgresql postgresql-contrib
     ```
   - post install
     - installation process creates a user account called `postgres` that is associated wiht the default postgres role
       - in order to use postgres, you can log into that account
-      ```sh
-        # option 1: switch over to postgres account via intermediary bash shell
-          sudo -i -u postgres # switch to postgres linux user
-          psql # access postgres prompt
-          \q # exit out of postgresql prompt
+      ```sql
+        -- option 1: switch over to postgres account via intermediary bash shell
+          sudo -i -u postgres -- switch to postgres linux user
+          psql -- access postgres prompt
+          \q -- exit out of postgresql prompt
 
-        # option 2: accessing postgres prompt without switching accounts via sudo
+        -- option 2: accessing postgres prompt without switching accounts via sudo
           sudo -u postgres psql
 
+      -- setup formatting so responses fit to the width of the screen
+        \x auto
       ```
 # admin
   ```sql
@@ -138,21 +143,126 @@
       \du -- list all users
 
   ```
-## roles/users and databases
+## roles/users
   - roles: handle authentication and authorization
     - similar to unix-style accounts
-    - does not distinguish between users and groups
-    - each user has a 'role'
+    - roles do not distinguish between users and groups
+      - roles: users that cannot login
+      - users: roles with LOGIN permission
+    - can be members of other roles, allowing them to take on the permission characteristics of previously defined roles.
+    - can also own objects and control access to those object for other roles.
+
+  ```sql
+    -- creating a new user (same as role) from the CLI
+      -- if logged in as postgres account
+        createuser --interactive
+      -- if current user has sudo access
+        sudo -u postgres creaeteuer --interactive
+    -- create a role from psql prompt
+      CREATE ROLE new_role_name WITH permission_name;
+      CREATE ROLE new_role_name WITH LOGIN; -- same as creating a user
+      CREATE USER role_name; --creates a role with login permission
+
+    -- alter roles
+      ALTER ROLE role_name WITH permissions
+
+
+    -- DELETE roles
+      DROP ROLE role_name; --errors if role does not exist
+      DROP ROLE IF EXISTS role_name;
+
+    -- roles
+      \du --view roles
+      \h CREATE ROLE -- view role permissions
+        --   SUPERUSER | NOSUPERUSER
+        -- | CREATEDB | NOCREATEDB
+        -- | CREATEROLE | NOCREATEROLE
+        -- | INHERIT | NOINHERIT
+        --
+        -- | LOGIN | NOLOGIN
+        -- | REPLICATION | NOREPLICATION
+        -- | BYPASSRLS | NOBYPASSRLS
+        -- | CONNECTION LIMIT connlimit
+        -- | [ ENCRYPTED ] PASSWORD 'password'
+        -- | VALID UNTIL 'timestamp'
+        -- | IN ROLE role_name [, ...]
+        -- | IN GROUP role_name [, ...]
+        --
+        -- | ROLE role_name [, ...]
+        -- | ADMIN role_name [, ...]
+        -- | USER role_name [, ...]
+        -- | SYSID uid
+  ```
+## permissions
+  - hen a database or table is created, usually only the role that created it (not including roles with superuser status) has permission to modify it.
+  ```sql
+    -- grant permission to role for a table
+      GRANT permission_type ON table_name TO role_name;
+
+    -- grant one role member of another role
+      GRANT some_role TO member_of_this_role;
+
+    -- issue commands as a role you are member of
+      SET ROLE role_im_member_of;
+
+    -- automatically have all permissions of all roles you are member of
+      ALTER ROLE some_role INHERIT;
+
+    -- reset role to original permissions
+      RESET ROLE;
+
+    -- grant full permissions to user
+      GRANT ALL ON table_name TO role_name;
+
+    -- grant permissions for every user on system
+      GRANT INSERT ON table_name TO PUBLIC;
+
+    -- remove permissions
+      REVOKE permission_type ON table_name FROM user_name;
+
+    -- remove all public/super-user permissions from table
+      REVOKE INSERT ON table_name FROM PUBLIC|ALL;
+
+
+
+    -- view all grant table (all granted permissions)
+      \z
+  ```
+## Authentication
   - types of authentication
     - ident: associates postgres roles with a matching unix/linux system account
       - if a role exists within postgress, a unix/linux username with the same name is able to sign in as that role
       - Another assumption that the Postgres authentication system makes by default is that for any role used to log in, that role will have a database with the same name which it can access.
-  ```sh
-    # creating a new user
-      # if logged in as postgres account
-        createuser --interactive
-      # if current user has sudo access
-        sudo -u postgres creaeteuer --interactive
+    - accessing database
+      - Logging in
+        - users are only allowed to login locally if the system username matches the PostgreSQL username.
+          - an get around this by either:
+            - changing the login type
+            - or by specifying that PostgreSQL should use the loopback network interface, which would change the connection type to remote, even though it is actually a local connection.
+  ```sql
+    -- login with username and pass to a specific DB and IP
+      psql -U user_name -d database_name -h 127.0.0.1 -W
+
+    -- passwords
+      \password test_user
+  ```
+
+
+
+## databases and tables
+  ```sql
+    -- create a table
+      CREATE TABLE demo (
+        name varchar(25),
+        id serial,
+        start_date date
+      );
+
+    -- change ownership of table to another role
+      ALTER TABLE table_name OWNER TO role_name;
+
+    -- view table relations/ownership
+      \d
 
   ```
 # statements
@@ -248,7 +358,9 @@
     - not null
   - data types: serial, numeric, int,
     - character
-      - char(n) varchar(n) text
+      - char(n) - fixed length blank padded
+      - varchar(n) variable length
+      - text
         - text has unlimited length
     - numeric:
       - integers
