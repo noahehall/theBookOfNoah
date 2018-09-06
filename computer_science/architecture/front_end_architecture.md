@@ -15,6 +15,9 @@
   - readability
   - fe-dev - design coexistence
   - 12 factor
+  - staying up to date: conferences / blogs
+
+  
 ## design
 
 ## ops/backend
@@ -41,8 +44,9 @@
   - Accessibility (WAI-ARIA)
   - logging / error reporting
   - analytics
+  - JS compilers
 
-  
+
 ## delivery
   - caches
   -
