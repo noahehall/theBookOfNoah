@@ -1,7 +1,7 @@
 # links
   - [frontend architecture by micagodbolt](https://github.com/micahgodbolt/front-end-architecture)
   - [FEA expections by wolfgang gehner](https://medium.com/statuscode/what-i-expect-from-a-front-end-architecture-31b9be4498af)
-  -
+  - [what is FEA by elyse](http://www.elyseholladay.com/posts/2014/10/16/front-end-architect/)
 
 
 # basics
@@ -16,8 +16,9 @@
   - fe-dev - design coexistence
   - 12 factor
   - staying up to date: conferences / blogs
+  - dealing with stakeholders : designers, developers, product, QA
+  - refactoring, organizing, structuring, build and repeat
 
-  
 ## design
 
 ## ops/backend
