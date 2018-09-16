@@ -30,3 +30,23 @@ PRPL	/home/imsov/git/theBookOfNoah/web_technoligies/core/web_performance.md	/^##
 need to file	/home/imsov/git/theBookOfNoah/web_technoligies/core/web_performance.md	/^# need to file$/;"	function	line:745
 links	/home/imsov/git/theBookOfNoah/web_technoligies/core/readme.md	/^# links$/;"	function	line:1
 web app basics	/home/imsov/git/theBookOfNoah/web_technoligies/core/readme.md	/^# web app basics$/;"	function	line:6
+links	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^# links$/;"	function	line:1
+must do	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^# must do$/;"	function	line:5
+bookmark	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^# bookmark$/;"	function	line:9
+links	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^# links$/;"	function	line:13
+Web Components	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^# Web Components$/;"	function	line:18
+Shadow dom	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^## Shadow dom$/;"	function	line:19
+Architecture: Definition	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^### Architecture: Definition$/;"	function	line:70
+Architecture: styling	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^### Architecture: styling$/;"	function	line:100
+Examples	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^### Examples$/;"	function	line:126
+complete Shadow DOM definition	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^#### complete Shadow DOM definition$/;"	function	line:127
+<slot> definition	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^#### <slot> definition$/;"	function	line:174
+scoped CSS inside shadow DOM definition	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^#### scoped CSS inside shadow DOM definition$/;"	function	line:213
+create a shadow dom for a native HTML element	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^#### create a shadow dom for a native HTML element$/;"	function	line:314
+create a shadow dom for a custom HTML element	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^#### create a shadow dom for a custom HTML element$/;"	function	line:324
+HTML templates	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^## HTML templates$/;"	function	line:343
+Custom elements	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^## Custom elements$/;"	function	line:344
+HTML Imports	/home/imsov/git/theBookOfNoah/web_technoligies/core/shadow_dom.md	/^## HTML Imports$/;"	function	line:347
+DOM	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^# DOM$/;"	function	line:2
+next up	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^# next up$/;"	function	line:3
+iframes	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^# iframes$/;"	function	line:12
