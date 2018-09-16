@@ -8,10 +8,7 @@
   -
 # next up
   - [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
-  - [css variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables)
-  - [react and web components](https://facebook.github.io/react/docs/web-components.html)
-  - [react and webcomponetns example](https://github.com/facebook/react/blob/master/examples/webcomponents/index.html)
-   -
+
 # links
   - [what the heck is a shadow dom](https://glazkov.com/2011/01/14/what-the-heck-is-shadow-dom/)
   - [html template tag](https://www.html5rocks.com/en/tutorials/webcomponents/template/)
@@ -20,7 +17,7 @@
 
 
 # DOM
-  - When the browser loads the page, it transforms your HTML in a live document
+  - When the browser loads the page, it transforms your HTML into a live document
     1. parses html (strings of text) into a data model (objects and nodes)
     2. preserves the HTML hierarchy by creating a tree of nodes (the DOM)
 

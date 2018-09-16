@@ -1,6 +1,12 @@
+# must read
+  - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
+
 # links
   - [psuedo classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes)
   - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
+  - [css variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables)
+  -
+
 # basics
   - media query: consits of a media type and zero/more expressions that check for the conditions of particular media features
 # quickies
@@ -20,7 +26,7 @@
 # flexbox
   - one dimensional: columns OR rows
 
-  
+
 # [grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
   - CSS Grid Layout (aka "Grid"), is a two-dimensional (columns and rows) grid-based layout system
   - define:

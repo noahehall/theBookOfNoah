@@ -5,37 +5,28 @@
 
 
 # basics
-  - my own spin on front end architecture, many things stolen and remixed from the internet
+  - my own spin on designing, developing, and deploying a javascript based application, many things stolen and remixed from the internet
   - A Front-end developer's audience is the website user, a Front-end Architect's audience is the developer themselves. [micahgodbolt]
 
-
-# Foundations
 ## paradigms and principles
   - maintanability
   - readability
-  - fe-dev - design coexistence
   - 12 factor
   - staying up to date: conferences / blogs
-  - dealing with stakeholders : designers, developers, product, QA
   - refactoring, organizing, structuring, build and repeat
 
-## design
-
-## ops/backend
-  - fe-dev - ops coexistence
-## planning environment
-
-## Dev environment
-  - editors
-  - build system
+## considerations
   - git
-  - folder structure
-
-
-## tools
+  - build system
+  - editors
   - web frameworks
   - libraries
-  - css preprocessors
+  - css
+    - Methodologies
+      - [BEM](http://getbem.com/introduction/)
+      - [OOCSS](http://oocss.org/)
+      - [SUITCSS](http://suitcss.github.io/)
+      - [JSS](http://cssinjs.org/?v=v9.8.7)
   - build tools
   - SSR
   - animation
@@ -46,21 +37,8 @@
   - logging / error reporting
   - analytics
   - JS compilers
-
-
-## delivery
-  - caches
-  -
-## Client environment
   - browsers
   - mobile
   - SEO
   - Accelerated Mobile Pages (AMP)
-
-
-## Documentation
-  - styleguides
-  -
-## Testing
-
-## Process
+  - caches
