@@ -9,6 +9,7 @@
 
 # basics
   - media query: consits of a media type and zero/more expressions that check for the conditions of particular media features
+
 # quickies
 ## [centering](https://css-tricks.com/centering-css-complete-guide/)
   - horizontal
@@ -23,11 +24,11 @@
     2. unknown width & height
     3. flexbox
 
-# flexbox
+## flexbox
   - one dimensional: columns OR rows
 
 
-# [grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
+## [grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
   - CSS Grid Layout (aka "Grid"), is a two-dimensional (columns and rows) grid-based layout system
   - define:
     - grid container: `display: grid`
