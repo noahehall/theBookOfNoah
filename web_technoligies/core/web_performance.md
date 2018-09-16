@@ -9,6 +9,7 @@
       - e.g. if you have a huge array, but you need to change a single item, you'll have to create a new array (because its immutable)
 
 # boomshakala
+  - [web prformance overview](https://developers.google.com/web/fundamentals/performance/why-performance-matters/)
   - [Analyzing performance](http://w3c.github.io/navigation-timing/#introduction)
   - [understanding performance](https://developers.google.com/web/fundamentals/performance/)
 
