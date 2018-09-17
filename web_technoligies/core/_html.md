@@ -4,7 +4,11 @@
   - [guides and tutorials](https://developer.mozilla.org/en-US/docs/Learn/HTML)
   - [facebook open graph protocol](http://ogp.me/)
   - [html forms](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms)
-
+  - https://developer.mozilla.org/en-US/docs/Web/HTML/Element
+  - http://docs.webplatform.org/wiki/Main_Page
+  - wufu: http://www.wufoo.com/html5/types/7-number.html
+  - https://www.tjvantoll.com/2013/04/15/list-of-pseudo-elements-to-style-form-controls/#input_date
+  - https://html.spec.whatwg.org/#constraints
 
 ## element links
   - [meta](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta)
@@ -131,3 +135,88 @@
       </body>
     </html>
     ```
+
+# FORMS
+  - forms separate users from companies
+  - someone wants to buy something, someone wants to sell something
+  - someone wants to grow their userbase, someone wants to be part of a community/team/fanbase/etc
+  - placeholders should be used as an aid to guide users
+    - provide immediate feedback to users
+    - best practices
+      - use existing data to pre-populate fields
+      - ensure forms are auto-fillable by browsers
+      - always show progress meters
+      - dont break the back button
+      - provide visual calendars when selecting dates
+      - use datalist to provide suggestions 'for' form inputs
+        .users are not restricted to the suggestions provided
+      - use labels on form inputs, and make them visible
+      - use placheolders to provide guidance
+      - use established names 'for' elements and include the autocomplete attribute
+      - use the browsers built in validation attributes like pattern, required, min, and max
+      - use javascript and the constraints validation api 'for' complex validation
+      - manage focus when validation fails
+      - autocorrect when you can
+      - show validation errors in real time
+
+    labels
+      label.for='someInputId'
+      input.id='someInputId'
+
+    inputs
+      input.placeholder='show this text when no user input exists'
+      input.type='datetime-local' //calendar
+
+    widgets:
+      calendar: http://codepen.io/greenido/pen/xwGEWO
+
+    autocomplete attribute:
+      https://developers.google.com/web/updates/2015/06/checkout-faster-with-autofill?hl=en
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-autocomplete
+      input.autocomplete='email'
+
+    autofocus: only one element can have it, boolean
+      input.autofocus='true'
+
+    validation
+      required: if exists, this input needs a value
+        input.required
+
+      custom validation: https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity
+        input.value='blah'
+        submit.onclick=()=>{
+          if input.value !== 'bloop'
+          input.setCustomValidity = 'Input value should be bloop'
+        }
+      constraint validation:
+        https://html.spec.whatwg.org/#constraint-validation-api
+        https://www.html5rocks.com/en/tutorials/forms/constraintvalidation/
+        the algorithm utilizes new HTML5 attributes min, max, step, pattern, and required as well as existing attributes maxlength and type.
+
+        //has error
+        el.validity.valueMissing ||
+        el.validity.typeMismatch ||
+        el.validity.patternMismatch ||
+        el.validity.tooLong ||
+        el.validity.tooShort ||
+        el.validity.rangeUnderflow ||
+        el.validity.rangeOverflow ||
+        el.validity.stepMismatch ||
+        el.validity.badInput ||
+        !el.validity.valid;
+
+        // set error + message to user
+        el.setCustomValidity(el.validationMessage);
+        el.title = el.validationMessage;
+        //clear error
+        el.setCustomValidity('');
+        //check if form is invalid
+        if (!e.currentTarget.checkValidity())
+        if (formElement.checkValidity())
+
+      numeric input.number|range
+        min=#
+        max=#
+        step=#
+        input.type=range.onchange=()=>{this.innerHTML = this.value;} //only works for range inputs that have slider
+

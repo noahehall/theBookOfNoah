@@ -6,6 +6,7 @@
   - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
   - [css variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables)
   - [css box model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Box_model#Types_of_CSS_boxes1)
+  - [get width of current device](http://mydevice.io/)
 
 # basics
   - media query: consits of a media type and zero/more expressions that check for the conditions of particular media features
@@ -43,24 +44,133 @@
   - grid area: The total space surrounded by four grid lines. A grid area may be comprised of any number of grid cells.
   -
 
+# fonts
+# media Queries
+# pseudo elements
+# pseudo states
 
-## fonts
-  - `@font-face`: allows you to define the location of a particular font resource, its style characteristics, and unicode codepoints that should be used
+# SASS:
+  CSS extension
+  pre-processed
+  extensible
+  written in ruby
+
+
+	define variables
+	    ```css
+        $variableName : VALUE
+  	    .navbar {
+  	      background-color: $navbar-color
+	    }
+      ```
+
+
+	nesting rules <a class='parent'> <b class='child'></b></a>
+	  dont nest more than 3 levels, just 'for' sanity sake
+	    ```css
+      .parent {
+	      style1
+
+	      childstyle {
+	        style2
+
+	        grandchildstyle {
+	          style 3
+	        }
+	      }
+	    }
+      ```
+	    loads the rule as div.parent.child.grandchild
+
+	parent selectors div.parent.child
+	    parentClass
+	      css definitions
+	      &.chidClass
+	        css definitions
+	partials
+	    ```css
+        @import "path/to/css/file.scss";
+      ```
+
+	    convention
+	        name partial.scss files as _fileName.scss
+
+	extensions/inheritance : base one style declaration on another
+	    ```css
+        .someBaseClass {
+  	      blah blah blah
+  	    }
+
+  	    .childClass {
+  	      @extend .someBaseClass
+  	      overwite style1
+  	      new style1
+  	    }
+
+  	    .message {
+  	      border: 1px solid #ccc;
+  	      padding: 10px;
+  	      color: #333;
+  	    }
+
+  	    .success {
+  	      @extend .message;
+  	      border-color: green;
+  	    }
+
+  	    .error {
+  	      @extend .message;
+  	      border-color: red;
+  	    }
+
+  	    .warning {
+  	      @extend .message;
+  	      border-color: yellow;
+  	    }
+      ```
+	Operators: use basic math to set/not set styles
+	    math operators: '+, -, *, /, and %'
+    ```css
+	    $border = 1px;
+	    $thicker = $border * 5;
+
+	    .blah {
+	      @if ($border < 1){
+	        style:value;
+	      }@else{
+	        style:value;
+	      }
+	    }
+	    .container { width: 100%; }
+
+
+	    article[role="main"] {
+	      float: left;
+	      width: 600px / 960px * 100%;
+	    }
+
+	    aside[role="complimentary"] {
+	      float: right;
+	      width: 300px / 960px * 100%;
+	    }
+
     ```
-      @font-face {
-      font-family: 'Awesome Font';
-      font-style: normal;
-      font-weight: 400;
-        // reference, load, and use locally installed fonts
-      src: local('Awesome Font'),
-          // load external fonts with specific formats
-          // the order of format()s is important, as the browser checks each one and picks the first that is supported
-           url('/fonts/awesome.woff2') format('woff2'),
-           url('/fonts/awesome.woff') format('woff'),
-           url('/fonts/awesome.ttf') format('truetype'),
-           url('/fonts/awesome.eot') format('embedded-opentype');
-      // specify the range of characters to get from the font
-      unicode-range: U+000-5FF; /* Latin glyphs */
-    }
+	mixins: macros, like javascript functions
+  ```css
+	    @mixin rounded ($radius : 10px) { /*10px is the default value*/
+	      style1: $radius;
+	      style2: blah
+	    }
+	    .ul {
+	      @include rounded(20px); /*call rounded with 20px to override its defualt value */
+	    }
+
+	    @mixin border-radius($radius) {
+	      -webkit-border-radius: $radius;
+	         -moz-border-radius: $radius;
+	          -ms-border-radius: $radius;
+	              border-radius: $radius;
+	    }
+
+	    .box { @include border-radius(10px); }
     ```
-    1. multiple `@font-face` declarations can be used to construct a *font-family*
