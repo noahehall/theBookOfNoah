@@ -1,7 +1,7 @@
 # bookmark
   - [selectors](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Selectors)
 
-  
+
 # must read
   - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
 
@@ -21,6 +21,7 @@
   - [css reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
   - [color converter](https://serennu.com/colour/hsltorgb.php)
   - [css validator by w3c](http://jigsaw.w3.org/css-validator/#validate_by_input)
+  - [pseudo-classes](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Pseudo-classes_and_pseudo-elements)
 
 
 # TLDR; best practices, tips and tricks
@@ -31,8 +32,8 @@
 
 
 # vaues and units
-  - #
-  - %
+  - numbers e.g. `20`
+  - percentage e.g. `20%`
   - colors
     - keywords e.g. `red`
     - hexadecimal e.g. `#ff0000`
@@ -78,18 +79,32 @@
 
 
 # selectors
+  - universel selector: selects all elements
   - simple: element type, class, id
-  - attirbute: attribute & attribute values
-  - pseudo-classes: based on element state
-    - :hover
-    - :checked
-    - :disabled
-    - first-child
-    - nth-child
+  - attirbute: attribute & attribute values; values are case sensitive unless `i` i specified
+  - pseudo-classes: based on element state, append keyword to selector
   - pseudo-elements: parts of content in a certain position in relation to an element, e.g. first word of a paragraph or some generated content
   - combinators: ways of combining two/more selectors for a more precise selection
   - multiple selectors: applying the same rule to multiple selectors that are separated by commas
+    ```css
 
+      element
+      p {}
+      p.class {}
+      p.id {}
+
+      [attribute-exists] {}
+      [attribute-with='value'] {}
+      [attribute-with-case-insensitive='value' i] {}
+      [attribute-contains-enum~='value'] {}
+      [attribute-contains*='value'] {}
+      [attribute-exactly-or-starts-with|='value'] {}
+      [attribute-starts-with^='value'] {}
+      [attribute-with='value'] {}
+      [attribute-ends-with$='value'] {}
+
+
+    ```
 
 # media queries
   - media query: consits of a media type and zero/more expressions that check for the conditions of particular m edia features

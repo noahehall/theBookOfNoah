@@ -11,6 +11,7 @@
   - https://html.spec.whatwg.org/#constraints
 
 ## element links
+  - [data attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)
   - [meta](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta)
   - [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link)
   - [link type reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types)
@@ -26,7 +27,10 @@
   - [sections of a document](https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure)
   - [using html sections and outlines](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Using_HTML_sections_and_outlines)
   - [html markup validation service by w3c](https://validator.w3.org/)
+  - [using data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes)
 
+
+  
 # TLDR; best practices
   - implement structural hierarchy
     - review our page with an html outline checker / validator
