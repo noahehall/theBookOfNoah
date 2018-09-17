@@ -22,16 +22,36 @@
   - [color converter](https://serennu.com/colour/hsltorgb.php)
   - [css validator by w3c](http://jigsaw.w3.org/css-validator/#validate_by_input)
   - [pseudo-classes](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Pseudo-classes_and_pseudo-elements)
-
-
+  - [at-rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)
+    - [import](https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
+  - fonts
+    - [great font-face explanation](https://hacks.mozilla.org/2009/06/beautiful-fonts-with-font-face/)
+    - [font-face](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face)
+    - [font-face generator](https://everythingfonts.com/font-face)
+    - [web font generator](https://www.fontsquirrel.com/tools/webfont-generator)
+    - [cool fonts for download](https://coolfont.org/)
+  - keyframes
+    - [key frames reference](https://developer.mozilla.org/en-US/docs/Web/API/CSSKeyframesRule)
+    - [keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes)
+  -
 # TLDR; best practices, tips and tricks
   - always validate your CSS, e.g. with http://jigsaw.w3.org/css-validator/#validate_by_input
   - always size things from the inside out
   - use `background-clip` to adjust how background-color|image fill its element
   - set the opacity of selected elements and their children via `opacity`
+  - `@import` statements must precede all other types of rules except charset and cannot be ussed inside conditional group at-rule
+    - in general, review the `import` link above as there are many gotchas
+  - review `@font-face` syntax before using them, too many gotchas
+  -
 
+# syntax
+  - property, e.g. `background-color`
+  - value e.g. red in`background-color: red`
+  - declaration: property + value e.g. `background-color: red;`
+  - declaration block: one/more declarations surrounded by braces e.g. e.g. `{ background-color: red; width: 20px }`
+  - rule: selector(s) + declaration block e.g. e.g. `p { background-color: red; }`
 
-# vaues and units
+# values and units
   - numbers e.g. `20`
   - percentage e.g. `20%`
   - colors
@@ -88,10 +108,20 @@
   - multiple selectors: applying the same rule to multiple selectors that are separated by commas
     ```css
 
-      element
+      :root {}
       p {}
       p.class {}
       p.id {}
+
+      li:active {}
+      checkbox:checked {}
+      li:first-child {}
+      li:last-child {}
+      button:enabled {}
+      a:hover {}
+      input:focus {}
+      input:required {}
+
 
       [attribute-exists] {}
       [attribute-with='value'] {}
@@ -104,10 +134,12 @@
       [attribute-ends-with$='value'] {}
 
 
+
+
     ```
 
 # media queries
-  - media query: consits of a media type and zero/more expressions that check for the conditions of particular m edia features
+
 
 # flexbox
     - one dimensional: columns OR rows
@@ -127,9 +159,70 @@
     - grid area: The total space surrounded by four grid lines. A grid area may be comprised of any number of grid cells.
   -
 
-# fonts
-# media Queries
-# pseudo elements
-# pseudo classes
+
+# at-rules
+  - used to convey metadata & conditional information e.g. `@IDENTIFIER (RULE);`
+    - media query: consits of a media type and zero/more expressions that check for the conditions of particular m edia features
+    - page: modify margins, orphans, widows, and page breaks when printing a document
+    - font-face: specify a custom font loaded from a remote/server or user's computer
+      - most browsers only download `@font-face` fonts if the font-family is actually used in a CSS declaration
+        - so list as many as needed, but be careful how many you actually use
+      - use `local()` to specify the name of a locally-installed front, useful for offline styling
+    - keyframes: controls the intermediate steps ina  CSS animation sequence by defining styles for keyframes/waypoints along the animation sequence
+  ```css
+
+    @charset 'UTF-8';
+    @import 'custom.css';
+    @import 'noahedwardhall.com/styles/poop.css';
+
+    @font-face {
+      font-display: auto;
+      font-style: oblique 30deg 50deg;
+      font-variation-settings: normal;
+      font-weight: bold;
+      font-family: "Open Sans";
+      src: local("Helvetica Neue Bold"),
+           url(https://somewebsite.com/path/to/font.woff),
+           url(/fonts/OpenSans-Regular-webfont.woff2) format("woff2"),
+           url("/fonts/OpenSans-Regular-webfont.woff") format("woff");
+    }
+    @page {}
+
+    @supports (display: flex) {
+      @media screen and (min-width: 900px) {
+        article {
+          display: flex;
+        }
+      }
+    }
+
+    @media (min-width: 801px) {
+      body {
+        margin: 0 auto;
+        width: 800px;
+      }
+    }
+
+    @keyframes slidein {
+      from {
+        margin-left: 100%;
+        width: 300%;
+      }
+
+      to {
+        margin-left: 0%;
+        width: 100%;
+      }
+    }
+
+    @keyframes identifier {
+      0% { top: 0; left: 0; }
+      30% { top: 50px; }
+      68%, 72% { left: 50px; }
+      100% { top: 100px; left: 100%; }
+    }
+  ```
+
+
 # SASS
 # JSS
