@@ -17,7 +17,24 @@
   - [html reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference)
   - [xml/html character entity reference](https://en.m.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references)
   - [html on mdn](https://developer.mozilla.org/en-US/docs/Web/HTML)
+  - [semantics](https://developer.mozilla.org/en-US/docs/Glossary/semantics)
+  -
 
+# TLDR; best practices
+  - implement structural hierarchy
+    - use the appropriate HTML element that best describes the semantic meaning of the content
+    - use the appropriate heading element
+      - only one `h1` per page
+      - dont use more than three different heading elements per page
+    - required for accessibility (e.g. screen readers and navigation)
+    - required for good SEO
+  - anchor tags
+    - should always have a title attribute
+    - use relative links where possible
+      - the browser starts by looking up the real location of the server on the Domain Name System, then it goes to that server and finds the file that is being requested. With a relative URL on the other hand, the browser just looks up the file that is being requested, on the same server.
+      - When you are linking to a resource that is to be downloaded rather than opened in the browser, you can use the download attribute to provide a default save filename
+  - img tags
+    - should always have an alt tag
 
 # Basics
   - HTML: yper text markup language
@@ -57,6 +74,38 @@
 #### body
   - body: contains all pages content
   - img: embeds an image into the page at the position it appears
+  - block text
+    - p
+    - h#
+  - lists
+    - ol / ul
+    - dl + dt + dd
+    -
+  - inline text
+    - em
+    - strong
+    - blockquote
+    - cite
+    - abbr
+    - address
+    - sup / sub
+  - times and dates
+    - time
+  - computer code
+    - code
+    - pre
+    - var
+    - kbd
+    - samp
+  - q
+  - a
+    ```
+      mailto:
+      mailto:nowhere@mozilla.org
+      mailto:nowhere@mozilla.org,nobody@mozilla.org
+      mailto:nowhere@mozilla.org?cc=nobody@mozilla.org
+      mailto:nowhere@mozilla.org?cc=nobody@mozilla.org&subject=This%20is%20the%20subject
+    ```
 ## anatomy of an HTML document
   - doctype: always include for things to work right
   - ht
