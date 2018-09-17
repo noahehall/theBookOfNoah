@@ -1,5 +1,7 @@
 # bookmark
-  - [selectors](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Selectors)
+  - [css layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout)
+  - [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
+  - 
 
 
 # must read
@@ -13,7 +15,23 @@
   - [css box model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Box_model#Types_of_CSS_boxes1)
   - [animation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations)
   - [positioning](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Positioning)
-  -
+  - [pseudo-classes](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Pseudo-classes_and_pseudo-elements)
+  - [at-rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)
+    - [import](https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
+    - fonts
+      - [great font-face explanation](https://hacks.mozilla.org/2009/06/beautiful-fonts-with-font-face/)
+      - [font-face](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face)
+      - [font-face generator](https://everythingfonts.com/font-face)
+      - [web font generator](https://www.fontsquirrel.com/tools/webfont-generator)
+      - [cool fonts for download](https://coolfont.org/)
+    - keyframes
+      - [key frames reference](https://developer.mozilla.org/en-US/docs/Web/API/CSSKeyframesRule)
+      - [keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes)
+    - [media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)
+    - [using media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)
+  - [introduction to css box model](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model)
+  - [visual formatting model](https://developer.mozilla.org/en-US/docs/Web/CSS/Visual_formatting_model)
+
 
 ## important links
   - [centering things](https://css-tricks.com/centering-css-complete-guide/)
@@ -21,19 +39,8 @@
   - [css reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
   - [color converter](https://serennu.com/colour/hsltorgb.php)
   - [css validator by w3c](http://jigsaw.w3.org/css-validator/#validate_by_input)
-  - [pseudo-classes](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Pseudo-classes_and_pseudo-elements)
-  - [at-rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)
-    - [import](https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
-  - fonts
-    - [great font-face explanation](https://hacks.mozilla.org/2009/06/beautiful-fonts-with-font-face/)
-    - [font-face](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face)
-    - [font-face generator](https://everythingfonts.com/font-face)
-    - [web font generator](https://www.fontsquirrel.com/tools/webfont-generator)
-    - [cool fonts for download](https://coolfont.org/)
-  - keyframes
-    - [key frames reference](https://developer.mozilla.org/en-US/docs/Web/API/CSSKeyframesRule)
-    - [keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes)
-  -
+
+    -
 # TLDR; best practices, tips and tricks
   - always validate your CSS, e.g. with http://jigsaw.w3.org/css-validator/#validate_by_input
   - always size things from the inside out
@@ -105,6 +112,11 @@
   - pseudo-classes: based on element state, append keyword to selector
   - pseudo-elements: parts of content in a certain position in relation to an element, e.g. first word of a paragraph or some generated content
   - combinators: ways of combining two/more selectors for a more precise selection
+    - `a,b`: matching a or b
+    - `a b`: b is descendant of a
+    - `a > b`: b is direct child of a
+    - `a + b`: b is direct sibling of a
+    - `a ~ b`: b is one of a's siblings
   - multiple selectors: applying the same rule to multiple selectors that are separated by commas
     ```css
 
@@ -134,6 +146,17 @@
       [attribute-ends-with$='value'] {}
 
 
+      /* All elements with an attribute "href" with values
+     starting with "http" will have an arrow added after their
+     content (to indicate they are external links) */
+      [href^=http]::after {
+        content: '⤴';
+      }
+      ::before {}
+      ::first-letter {}
+      ::first-line {}
+      ::selection {}
+      ::backdrop {}
 
 
     ```
@@ -213,6 +236,10 @@
         margin-left: 0%;
         width: 100%;
       }
+    }
+
+    @media (400px <= width <= 700px) {
+      body { line-height: 1.4; }
     }
 
     @keyframes identifier {
