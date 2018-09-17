@@ -1,8 +1,9 @@
-# current - html basics
+# current - forms
 # links
   - [html basics](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics)
   - [guides and tutorials](https://developer.mozilla.org/en-US/docs/Learn/HTML)
   - [facebook open graph protocol](http://ogp.me/)
+  - [html forms](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms)
 
 
 ## element links
@@ -18,10 +19,13 @@
   - [xml/html character entity reference](https://en.m.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references)
   - [html on mdn](https://developer.mozilla.org/en-US/docs/Web/HTML)
   - [semantics](https://developer.mozilla.org/en-US/docs/Glossary/semantics)
-  -
+  - [sections of a document](https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure)
+  - [using html sections and outlines](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Using_HTML_sections_and_outlines)
+  - [html markup validation service by w3c](https://validator.w3.org/)
 
 # TLDR; best practices
   - implement structural hierarchy
+    - review our page with an html outline checker / validator
     - use the appropriate HTML element that best describes the semantic meaning of the content
     - use the appropriate heading element
       - only one `h1` per page
@@ -74,6 +78,12 @@
 #### body
   - body: contains all pages content
   - img: embeds an image into the page at the position it appears
+  - layout elements
+    - header
+    - nav
+    - main / article / section / div
+    - aside
+    - footer
   - block text
     - p
     - h#
