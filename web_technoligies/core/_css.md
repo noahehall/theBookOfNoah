@@ -1,7 +1,7 @@
 # bookmark
   - [css layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout)
   - [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
-  - 
+  -
 
 
 # must read
@@ -161,28 +161,6 @@
 
     ```
 
-# media queries
-
-
-# flexbox
-    - one dimensional: columns OR rows
-
-# grid
-    - CSS Grid Layout (aka "Grid"), is a two-dimensional (columns and rows) grid-based layout system
-    - define:
-      - grid container: `display: grid`
-        - the direct parent of all the grid items.
-      - grid item: set the column and row sizes with `grid-template-columns` and `grid-template-rows`,
-      - place grid-item child elements into the grid with
-        - `grid-column`
-        - `grid-row`
-    - grid line: The dividing lines that make up the structure of the grid
-    - grid track: The space between two adjacent grid lines.
-    - grid cell: The space between two adjacent row and two adjacent column grid lines. It's a single "unit" of the grid.
-    - grid area: The total space surrounded by four grid lines. A grid area may be comprised of any number of grid cells.
-  -
-
-
 # at-rules
   - used to convey metadata & conditional information e.g. `@IDENTIFIER (RULE);`
     - media query: consits of a media type and zero/more expressions that check for the conditions of particular m edia features
@@ -250,6 +228,107 @@
     }
   ```
 
+# LAYOUT
+## GRID
+
+## FLEXBOX
+  - one dimensional: columns OR rows
+  - flex container: contain flex items, define how flex items are laid out
+  - flex item: direct child of flex containers positioned on a flex line
+  - flex line: the imaginary line(s) on which flex items are layed out on the main and cros axis
+  - main axis: horizontal
+    - main start: the beginning of the axis
+    - main end: the end of the axis
+  - cross axis: vertical
+    - cross start: the start of the axis
+    - cross end: the end of the axis
+  ```css
+    /*
+      bocoup.com
+     */
+    .flex-containers {
+      display: flex;
+        /*
+          inline-flex: inline
+          flex: block
+         */
+      flex-direction: row;
+        /* how flex items are laid out onthe main and cross axis lines
+          row: left to right
+          row-reverse: main start and end are swapped
+          column: main and cross axis are swapped
+          column-reverse: same as column, but revered
+         */
+      justify-content: flex-start;
+        /* how whitespace is distributed on the main axis and adjusts the positions of flex items on the main axis
+          flex-start: default, whitespace pushed to end of main axis
+          flex-end: white space pushed to start of main axis
+          center: equal whitespace at start and end of main axis
+          space-between: whitespace between items but not at either end of main axis
+          space-around: white space between and at ends of main axis
+         */
+      align-items: flex-start;
+        /* how whitespace is distributed on the cross axis and adjusts the positions of flex items on the cross axis
+          flex-start: default, whitespace pushed to end of cross axis
+          flex-end: whitespace pushed to start of cross axis
+          center: equal whitespace at start and end of cross axis, but not inbetween flex items
+          baseline: flex items aligned along their baseline, which is calculated based on the content of each distinct flex item
+          stretch: no whitespace, flex items stretched to fill cross axis
+         */
+      flex-wrap: nowrap;
+        /* specify how many flex lines are within a flex container
+          nowrap: default, one flex line
+          wrap: (think word wrapping) as many flex lines as required, additional flex items are added in the direction of the cross axis
+          wrap-reverse: same as wrap but in the opposite direction on the cross axis
+         */
+    }
+
+  ```
+# grid
+    - CSS Grid Layout (aka "Grid"), is a two-dimensional (columns and rows) grid-based layout system
+    - define:
+      - grid container: `display: grid`
+        - the direct parent of all the grid items.
+      - grid item: set the column and row sizes with `grid-template-columns` and `grid-template-rows`,
+      - place grid-item child elements into the grid with
+        - `grid-column`
+        - `grid-row`
+    - grid line: The dividing lines that make up the structure of the grid
+    - grid track: The space between two adjacent grid lines.
+    - grid cell: The space between two adjacent row and two adjacent column grid lines. It's a single "unit" of the grid.
+    - grid area: The total space surrounded by four grid lines. A grid area may be comprised of any number of grid cells.
+  -
+
+## FLOATS
+  ```css
+    /* w3schools */
+      .column {
+        float: left;
+        width: 33.33%;
+      }
+
+      .row:after {
+        content: '';
+        display: table;
+        clear: both;
+      }
+
+      /* switch to 2 column */
+      @media screen (max-width: 900px) {
+        .column {
+          width: 50%;
+        }
+      }
+
+      /* switch to 1 column */
+      @media screen (max-width: 600px) {
+        .column {
+          width: 100%;
+        }
+      }
+
+  ```
+# POSITIONING
 
 # SASS
 # JSS
