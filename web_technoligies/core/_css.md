@@ -30,6 +30,7 @@
     - [media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)
     - [using media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)
   - [introduction to css box model](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model)
+  - [flexbox on csstricks](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
   - [visual formatting model](https://developer.mozilla.org/en-US/docs/Web/CSS/Visual_formatting_model)
 
 
@@ -232,16 +233,20 @@
 ## GRID
 
 ## FLEXBOX
-  - one dimensional: columns OR rows
+  - one dimensional layout model (columns OR rows) with ease in distributing space between items in an interface
+  -
   - flex container: contain flex items, define how flex items are laid out
+    - flex line: the imaginary line(s) on which flex items are layed out on the main and cros axis
+    - main axis: horizontal
+      - main start: the beginning of the axis
+      - main end: the end of the axis
+    - cross axis: vertical
+      - cross start: the start of the axis
+      - cross end: the end of the axis
   - flex item: direct child of flex containers positioned on a flex line
-  - flex line: the imaginary line(s) on which flex items are layed out on the main and cros axis
-  - main axis: horizontal
-    - main start: the beginning of the axis
-    - main end: the end of the axis
-  - cross axis: vertical
-    - cross start: the start of the axis
-    - cross end: the end of the axis
+    - main size: size of hte flex item in the dimensioin it's parent flex-container main axis
+    - cross size: size of the flex item in the dimension it's parent flex-container cross axis
+    -
   ```css
     /*
       bocoup.com
@@ -280,6 +285,52 @@
           nowrap: default, one flex line
           wrap: (think word wrapping) as many flex lines as required, additional flex items are added in the direction of the cross axis
           wrap-reverse: same as wrap but in the opposite direction on the cross axis
+         */
+      align-content: stretch;
+        /* aligns flex lines modififying behavior of flex-wrap
+          stretch: default,
+          flex-start:
+          flex-end:
+          center:
+          space-between:
+          space-around:
+         */
+      flex-flow: row nowrap:
+        /*
+          shorthand for flex-direction and flex-wrap
+          val1 = flex-direction
+          val2 = flex-wrap
+         */
+    }
+    .flex-items {
+      order: 1;
+        /* any integer, set the rendered order of any flex item
+          */
+      margin: auto;
+        /* similar affect as regular margin but with super powers
+          auto: will absorb extra space and push flex items into different positions
+            can be used to verticaly cente ritems
+         */
+      align-self: stretch;
+        /* overrides the parent flex-container align-items property
+          stretch: default,
+          flex-start:
+          flex-end:
+          center:
+          baseline:
+         */
+      flex-grow:
+      flex-shrink:
+      flex-basis:
+      flex: 1;
+        /* specifies how a flex item will be prioritized when free space is being distributed on the main axis
+          1: there is one slice, distribute items evenly
+          #: play around with other integers
+          initial: item will be inflexible when there is free space, but can shrink if needed
+          auto: fully flexibly on main axis
+          none: fully inflexible in all situations
+          flex: [flex-grow] [flex0shrink] [flex-basis]
+            - advanced use case
          */
     }
 
