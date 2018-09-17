@@ -4,4 +4,15 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-iframes	/home/imsov/git/theBookOfNoah/web_technoligies/core/iframes.md	/^# iframes$/;"	function	line:1
+current - html basics	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^# current - html basics$/;"	function	line:1
+links	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^# links$/;"	function	line:2
+DOM	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^# DOM$/;"	function	line:9
+next up	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^# next up$/;"	function	line:10
+DOM	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^# DOM$/;"	function	line:14
+Basics	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^# Basics$/;"	function	line:19
+syntax	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^# syntax$/;"	function	line:25
+tags	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^## tags$/;"	function	line:26
+elements	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^### elements$/;"	function	line:35
+head	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^#### head$/;"	function	line:39
+body	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^#### body$/;"	function	line:43
+anatomy of an HTML document	/home/imsov/git/theBookOfNoah/web_technoligies/core/_html.md	/^## anatomy of an HTML document$/;"	function	line:46

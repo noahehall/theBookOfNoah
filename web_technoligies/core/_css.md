@@ -5,7 +5,7 @@
   - [psuedo classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes)
   - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
   - [css variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables)
-  -
+  - [css box model](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Box_model#Types_of_CSS_boxes1)
 
 # basics
   - media query: consits of a media type and zero/more expressions that check for the conditions of particular media features

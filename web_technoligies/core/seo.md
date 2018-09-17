@@ -1,4 +1,8 @@
-docs: https://docs.google.com/document/d/1IsWfHlqmbU-c4hiuQbcffRtXfzwxxoy0NoO0oB-Rm2o/edit?ts=5744ae98
+# links
+ - [google search console](https://search.google.com/search-console/about?hl=en&utm_source=wmx&utm_medium=wmx-welcome)
+ - [google webmaster central](https://www.google.com/webmasters/#?modal_active=none)
+ - [docs](https://docs.google.com/document/d/1IsWfHlqmbU-c4hiuQbcffRtXfzwxxoy0NoO0oB-Rm2o/edit?ts=5744ae98)
+ - [seo wikipedia](https://en.wikipedia.org/wiki/Search_engine_optimization)
 
 when outbound > inboud === bad
 outbound links to pages with
