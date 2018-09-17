@@ -4,12 +4,12 @@
   - [guides and tutorials](https://developer.mozilla.org/en-US/docs/Learn/HTML)
   - [facebook open graph protocol](http://ogp.me/)
 
+
 ## element links
   - [meta](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta)
   - [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link)
   - [link type reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types)
   -
-
 
 
 ## really important links
@@ -18,16 +18,6 @@
   - [xml/html character entity reference](https://en.m.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references)
   - [html on mdn](https://developer.mozilla.org/en-US/docs/Web/HTML)
 
-
-# DOM
-# next up
-  - [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
-  -
-
-# DOM
-  - When the browser loads the page, it transforms your HTML into a live document
-    1. parses html (strings of text) into a data model (objects and nodes)
-    2. preserves the HTML hierarchy by creating a tree of nodes (the DOM)
 
 # Basics
   - HTML: yper text markup language
