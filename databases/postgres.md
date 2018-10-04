@@ -1,4 +1,5 @@
 # links
+  - [accessing a DB](https://www.postgresql.org/docs/current/static/tutorial-accessdb.html)
   - [postgres cheatsheet](https://gist.github.com/Kartones/dd3ff5ec5ea238d4c546)
   - [general sql cheatsheet](https://gist.github.com/janikvonrotz/6e27788f662fcdbba3fb)
   - [getting started postgresql server mac osx](https://www.codementor.io/devops/tutorial/getting-started-postgresql-server-mac-osx)
@@ -68,6 +69,8 @@
           psql -- access postgres prompt
           \q -- exit out of postgresql prompt
 
+        -- include flag E
+          sudo -i -u postgres psql -E
         -- option 2: accessing postgres prompt without switching accounts via sudo
           sudo -u postgres psql
 
@@ -92,7 +95,7 @@
 
 
     -- server
-      # select version(); -- show postgres version
+      select version(); -- show postgres version
       psql -U username --connect to local db server
         -- default username is postgres
       psql -d databasename -U username -W
@@ -157,7 +160,7 @@
       -- if logged in as postgres account
         createuser --interactive
       -- if current user has sudo access
-        sudo -u postgres creaeteuer --interactive
+        sudo -u postgres createuser --interactive
     -- create a role from psql prompt
       CREATE ROLE new_role_name WITH permission_name;
       CREATE ROLE new_role_name WITH LOGIN; -- same as creating a user
@@ -441,6 +444,9 @@
       alter table tablename add column col1 type;
     -- set default value for column
       alter table tablename alter column col1 set default value
+    -- rename column
+      ALTER TABLE table_name
+      RENAME COLUMN column_name TO new_column_name;
 
 
   ```
