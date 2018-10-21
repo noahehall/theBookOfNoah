@@ -96,6 +96,7 @@
 
     -- server
       select version(); -- show postgres version
+      \c DBNAME -- connect to db
       psql -U username --connect to local db server
         -- default username is postgres
       psql -d databasename -U username -W
@@ -613,4 +614,38 @@
       ORDER BY
           pg_total_relation_size (C .oid) DESC
       LIMIT 5;
+  ```
+
+# get foreign key constraints
+  ```sql
+  -- get specific table foreign key constraints
+    SELECT
+        tc.table_schema,
+        tc.constraint_name,
+        tc.table_name,
+        kcu.column_name,
+        ccu.table_schema AS foreign_table_schema,
+        ccu.table_name AS foreign_table_name,
+        ccu.column_name AS foreign_column_name
+    FROM
+        information_schema.table_constraints AS tc
+        JOIN information_schema.key_column_usage AS kcu
+          ON tc.constraint_name = kcu.constraint_name
+          AND tc.table_schema = kcu.table_schema
+        JOIN information_schema.constraint_column_usage AS ccu
+          ON ccu.constraint_name = tc.constraint_name
+          AND ccu.table_schema = tc.table_schema
+    WHERE constraint_type = 'FOREIGN KEY' AND tc.table_name='mytable';
+
+  -- get all foreign keys
+    select *
+    from information_schema.key_column_usage
+    where position_in_unique_constraint is not null;
+  -- alter foreign key constraint
+  alter table TABLE_NAME -- e.g. evens
+  drop constraint CONSTRAINT_NAME, -- events_host_uuid_fkey,
+  add constraint CONSTRAINT_NAME -- events_host_uuid_fkey,
+     foreign key (COLUMN_NAME) -- host_uuid
+     references TABLE_NAME(COLUMN_NAME) -- users(uuid)
+     on delete cascade;
   ```

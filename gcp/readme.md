@@ -1,0 +1,178 @@
+# links
+  - [lynda GCP essential training](https://www.lynda.com/Google-Cloud-Platform-tutorials/Google-Cloud-Platform-Essential-Training/540539-2.html)
+  - [gcloud architect exam guide](https://cloud.google.com/certification/guides/cloud-architect/)
+  -
+
+
+# basics
+  - GCP: google cloud Platform
+  - GCP Resources:
+    - physical assets: computers, hard disk drives
+    - virtual resources: VMs
+    - Google data centers:
+      - located in a global region: Central US, w. Europe, E. Asia
+      - each reach has multiple zones  which are isolated from each other
+        - asia-east1-a
+    - global resources:  can be accessed by any other resource, across regions and zones. These global resources include
+      - preconfigured disk images,
+      - disk snapshots, and
+      - networks
+    - regional resources: static external IP addresses.
+      - , you wouldn't want to attach a disk in one region to a computer in a different region because the latency you'd introduce would make for very poor performance. Thankfully, GCP won't let you do that; disks can only be attached to computers in the same zone.
+    - zonal resources: VM instances, their types and disks
+  - GCP Projects: Any GCP resources that you allocate and use must belong to a project. You can think of a project as the organizing entity for what you're building
+    - project is made up of the settings, permissions, and other metadata that describe your applications
+      - A project name, which you provide.
+      - A project ID, which you can provide or GCP can provide for you.
+      - A project number, which GCP provides.
+    - The resources that each project contains remain separate across project boundaries; you can only interconnect them through an external network connection.
+  - Services
+    -
+# services
+  - GCP gives you three basic ways to interact with the services and resources.
+      - GUI
+    - GCP console
+    - CLI
+      - Google cloud SDK provides gcloud cl tool
+      - cloud shell: browser-based interactive shell environment
+    - client libraries
+      -
+## Compute: virtual machines
+  - Compute Engine: Virtual Machines
+  - App Engine: PaaS for apps and backends
+  - Kubernetes engine: containers
+  - cloud functions: event driven serverless compute platform
+  - Containers & Container Management
+  - Functions and Lambdas (serverless)
+  -
+## storage: files and databases
+  - Storing
+    - cloud storage for firebase hot files: frequently accessed
+    - cloud filestore: cold files: archival
+    - Persistent Disk: block storage for VMs: (also a type of hot file)
+  - Data Services
+    - NoSQL: highly available and eventually consistent
+      - cloud bigtable: wide-column db service
+      - cloud datastore: nosql document db service
+    - RDBMS:
+      - Cloud SQL: mysql + postgres
+      - cloud spanner:
+    - Hadoop & Spark
+## Big Data
+  - data pipelines: ability to string together different data services as you process data across different workloads
+  - data warehouses: very large data storage for read only / infrequently updated enterprise reporting
+  - data science notebooks:
+    - jupiter notebooks, interactive webpages that allow computation & analysis & visualizations, pairs very well with ML
+
+## other services: networking, ML, etc.
+### Identity & Security
+  - IM: Identity & Access Permissions
+### Management & Monitoring
+  - stack driver
+### Developer Tools
+  - Gcloud: scripting tool
+  - IDE Integrations:
+    - java
+    - visual studio (.net)
+## Machine Learning
+
+
+# architecture
+  - what are the business requirements?
+    - buusiness use cases and product strategy
+    - cost optimization
+    - supporting the application design
+    - integration
+    - movement of data
+    - tradeoffs
+    - build, buy or modify
+    - success measurements (e.g., Key Performance Indicators (KPI), Return on Investment (ROI), metrics)
+  - Designing a solution infrastructure that meets technical requirements. Considerations include:
+    - high availability and failover design
+    - elasticity of cloud resources
+    - scalability to meet growth requirements
+  - Designing network, storage, and compute resources. Considerations include:
+    - integration with on premises/multi-cloud environments
+    - identification of data storage needs and mapping to storage systems
+    - data flow diagrams
+    - storage system structure (e.g., Object, File, RDBMS, NoSQL, New SQL)
+    - mapping compute needs to platform products
+  - 1.4 Creating a migration plan (i.e., documents and architectural diagrams). Considerations include:
+	 - integrating solution with existing systems
+	 - migrating systems and data to support the solution
+	 - licensing mapping
+	 - network and management planning
+	 - testing and proof-of-concept
+ - 1.5 Envisioning future solution improvements. Considerations include:
+	 - cloud and technology improvements
+	 - business needs evolution
+	 - evangelism and advocacy
+ - Section 2: Managing and provisioning solution Infrastructure
+	 - 2.1 Configuring network topologies. Considerations include:
+  	 - extending to on-premises (hybrid networking)
+  	 - extending to a multi-cloud environment
+  	 - security
+  	 - data protection
+	 - 2.2 Configuring individual storage systems. Considerations include:
+	 -
+  	 - data storage allocation
+  	 - data processing/compute provisioning
+  	 - security and access management
+  	 - network configuration for data transfer and latency
+  	 - data retention and data lifecycle management
+  	 - data growth management
+	 - 2.3	Configuring compute systems. Considerations include:
+	 -
+  	 - compute system provisioning
+  	 - compute volatility configuration (preemptible vs. standard)
+  	 - network configuration for compute nodes
+  	 - orchestration technology configuration (e.g. Chef/Puppet/Kubernetes)
+  	 - Section 3: Designing for security and compliance
+	 -
+	 - 3.1	Designing for security. Considerations include:
+	 -
+  	 - Identity and Access Management (IAM)
+  	 - data security
+  	 - penetration testing
+  	 - Separation of Duties (SoD)
+  	 - security controls
+	 - 3.2 Designing for legal compliance. Considerations include:
+	 -
+  	 - legislation (e.g., Health Insurance Portability and Accountability Act (HIPAA), Children’s Online Privacy Protection Act (COPPA), etc.)
+  	 - audits
+  	 - certification (e.g., Information Technology Infrastructure Library (ITIL) framework)
+ - Section 4: Analyzing and optimizing technical and business processes
+	 -
+	 - 4.1 Analyzing and defining technical processes. Considerations include:
+	 -
+  	 - Software Development Lifecycle Plan (SDLC)
+  	 - continuous integration / continuous deployment
+  	 - troubleshooting / post mortem analysis culture
+  	 - testing and validation
+  	 - IT enterprise process (e.g. ITIL)
+  	 - business continuity and disaster recovery
+	 - 4.2 Analyzing and defining business processes. Considerations include:
+	 -
+  	 - stakeholder management (e.g. Influencing and facilitation)
+  	 - change management
+  	 - decision making process
+  	 - customer success management
+	 - 4.3 Developing procedures to test resilience of solution in production (e.g., DiRT and Chaos Monkey)
+	 -
+ - Section 5: Managing implementation
+	 -
+	 - 5.1 Advising development/operation team(s) to ensure successful deployment of the solution. Considerations include:
+	 -
+  	 - application development
+  	 - API best practices
+  	 - testing frameworks (load/unit/integration)
+  	 - data and system migration tooling
+	 - Section 6: Ensuring solution and operations reliability
+	 -
+  	 - 6.1 Monitoring/Logging/Alerting solution
+  	 -
+  	 - 6.2 Deployment and release management
+  	 -
+  	 - 6.3	Supporting operational troubleshooting
+  	 -
+  	 - 6.4	Evaluating quality control measures
