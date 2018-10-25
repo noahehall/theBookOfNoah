@@ -3,7 +3,368 @@
   - [gcloud architect exam guide](https://cloud.google.com/certification/guides/cloud-architect/)
   -
 
+# Terms
+  - cloud computing:
+    - on demand self service: no human intervention to get resources
+    - broad network access from anywhere
+    - resource pooling: provider shares resources to customers
+    - rapid elasticity: if you need more resources you can get more or if you need less you can reduce usage
+    - measured service: pay only for what you use
+  - virtualization: managing services separately from the hardware
+  - GCP Computing Architectures
+    - IaaS: infrastructure as a service
+      - provide raw, compute, storage, and network
+      - you pay for what you allocate
+      - e.g. compute engine
+    - PaaS: platform as a service
+      - bind application code you write to libraries that give access to infrastructure your application needs
+      - you pay for what you use
+      - e.g. app engine
+    - SaaS: Software as a Service
+      - applications consumed directly over the internet by end users
+      - e.g. gmail
 
+
+# High Level
+## GCP Regions and Zones
+  - Zone: deployment area for GCP resources like a VM in Compute Engine
+    - you generally spread resources across multiple zones in a region to build a fault tolerant application to protect against unexpected failures
+    - e.g. europe-west2-a
+  - Regions: independent geographic areas
+    - all zones in tbe same region have fast network latencies under 5 ms
+    - Multi-region: storing your data in multiple regions for redundancy
+
+## Core Infrastructure
+  - resource hierarchy: policies can be defined at each level
+    - policies are inherited downward
+    1. org node: the top node that allows you to have visibility into all of your folders and projects
+    2. folders: groups projects into logical units
+    3. projects: usually relate to a specific business function
+      - all GCP resources belong to a project
+      - are the basis for enabling and using GCP services like APIs, billing, collaborates, etc
+      - each project is a separate compartment
+      - billed separately and managed separately
+      - identifying a project
+        - ID: immutable & globally unique and chosen by you
+        - name: mutable & chosen by you
+        - number: immutable globally unique and chosen by GCP
+    4. resources: e.g. storage, VM
+      - inherit policies of their parent resource
+      - parent policies cant take away access thats granted at a lower level
+### Projects
+  - projects: organize your resources, and group resources that have a common business objective
+  -
+### Cloud Identity and Access Management
+  - IAM: controls who can take what action on specific Resources
+    - WHO:
+      - a google account or cloud identity users e.g. blah@gmail.com
+      - a google group e.g. test@googlegroups.com
+      - a google service account: provision an ID to control server-to-server interactions in a project
+        - use cases:
+          - control privileges used by resources for applications to perform actions on behalf of authenticated end users
+          - authenticate one service to another
+          - control privileges used by resources
+        - authentication:
+          - use cryptographic keys
+          - can be assigned custom or predefine roles
+        - identified by an email address
+          - PROJECT_NUMBER-compute@developer.gserviceaccount.com
+          - PROJECT_ID@appspot.gserviceaccount.com
+        -
+      - a G suite domain or cloud identity domain  e.g. blah.com
+    - What: defined by an IAM Role, which is a collection of permissions
+      - primitive role: apply across all GCP services in a project
+        - owner: invite, remove, delete,
+          - includes editor + viewer permissions
+        - editor: deploy apps, modify code, configure services\
+          - includes viewer permissions
+        - viewer: read only access
+        - billing admin: manage billing, add & remove admins
+      - predefined roles: IAM fine-grained permissions tailored for specific services
+      - custom roles: define a role with a specific set of permissions to help implement a principal of least for projects and organizations
+        - cant be used for folders
+  - principal of least privilege: users only receive permissions to do what they are required to do
+
+
+### Managing resources
+  - Web Console: web based admin
+    - view and manage projects and their resources
+    - enable and disable and explore API of GCP resources
+    - Cloud Shell: CLI to access GCP from your browser
+      - a temp VM installed with the google SDK
+  - SDK CLI: manage resources and applications, is available as a docker image
+    - gcloud: all services except cloud storage and bq
+    - gsutil: for cloud storage
+    - bq: big query
+  - API: are all restful
+    - use JSON as an interchange format
+    - uses OAuth 2.0 for authentication and authorization
+    - each API is enabled through console
+    - include daily quotas and rates that can be raised by request
+    - API Explorer: interactive tool to easily try google APIs using a browser
+      - see Docs
+      - execute requests for any method and see responses in real time
+      - make authenticated and authorized API calls
+    - Client Libraries:
+      - cloud client libraries: community-owned
+      - API Client libraries: open source generated supporting various languages
+  - Mobile App
+    - manage virtual machines and DB instances
+    - manage apps in google app engine
+    - manage billing
+    - visualize projects via customizable dashboards
+
+
+### Security
+ - customer responsibility
+   - content
+   - access policies
+   - usage
+   - deployment
+   - web app security
+   - identity
+ - google responsibility
+   - operations
+   - access and auth
+   - network security
+   - os, data and content
+   - audit logging
+   - network
+   - storage and encryption
+   - hardware
+ - levels
+  - operational security: intrusion detection systems; techniques to reduce insider risk; employee U2F use;
+  - internet communication: Google Front End service; designed-in denial of service protection
+  - storage services: encryption at rest;
+  - user identity: centrial identity service with support for U2F;
+  - service deployment; encryption of inter-service communication;
+  - hardwaare infrastructure; hardware design and provenance; secure boot stack; premises security
+  -
+  - googles infrastructure provides cryptographic privacy and integrity for remote procedures called data-on-the-network, which is how google services communicate with each other
+    - automatically encrypts PC traffic in transit between data centers
+    - GFE: the google front end:
+
+# Products
+## Cloud Launcher
+  - tool for quickly deploying functional software packages to GCP
+    - marketplace containing prepackaged ready to deploy solutions
+    - some created by google (free), other by third party vendors (could cost)
+    -
+
+
+
+## Virtual Private Cloud
+  - generally the first step is to define a VPC for a project
+  - connects GCP rsources to each other and the internet
+  - Characteristics
+    - networks are global
+    - subnets are regional
+      - different zones can be part of the same subnet
+      - can dynamically increase the size of a subnet by expanding the ranges of IPs allocated to it
+    - routing tables: used to forward traffic from one instance to another within the same network without requiring an external IP address
+    - firewal: are globally distributed, you can restrict access to instances both incoming and outging traffic
+      - metadata tags on compute engines
+    - VPC Peering: interconnect networks in GCP projects
+    - shared VPC:  share a network or individual subnets with other GCP projects
+    - cloud load balancing:
+      - get a global anycast IP address to frontend all your backend services
+      - types
+        - global https: layer 7 load balanced based on load
+          - route to different urls to different back ends
+        - global ssl proxy: layer 4 load balancing of no https ssl traffic based on load
+          - supported on specific port numbers
+        - global tcp proxy: layer 4 load balancing of non ssl tcp traffic
+          - supported on specific port numbers
+        - regional: load balancing of any traffic (tcp, udp)
+          - supported on any port number
+        - regional internal: load balancing of traffic inside a vpc
+          - use for the internal tiers of multi tier applications
+        - internal load balancer: accepts traffic on a GCP internal IP address and load balances it across compute engine VMs
+    - Cloud DNS:
+        - create managed zones, then add, edit, delete DNS records
+        - programmatically manage zones and records using restful APIs or CLI or console
+      - Cloud CDN: distributed edge caches to cache content close to end users
+    - VPC interconnect with external networks
+      - VPN: secure multi GPS connection over VPN tunnels
+      - direct peering: private connection between you and google for hybrid cloud workloads
+      - carrier peering: connection through larget partner network of service providers
+      - dediated interconnect: connect N X 10G transpart circuits for private cloud traffic to gcloud at google POPs
+
+
+## Compute Engine
+  - run a VM
+    - OS
+    - memory
+    - # of virtual CPUs
+    - persistant storage
+      - standard
+      - ssd
+      - attach a local SSD that doesnt last when the VM is terminated
+  - types of VMs
+    - preemptible VM: give compute engine permission to terminate it if its resources are needed elseware
+    -
+
+## containers
+  - Container Based virtualization is different than hypervisor (regular VM) based virtualization
+    - container: app -> lib -> container runtime -> host OS + kernel -> hardware
+      - give processes their own namespace
+      - each container does not have
+      - consistenc yacross dev, testing, prod env
+      - loose coupling between app and operating system layers
+      - simplified migration between on premis and cloud envs
+      -
+    - hypervisor: app -> lib -> guest OS -> hypervisor -> hardwar
+  - kubernetes: orchestration layer for containers
+    - uses the docker container
+    - POD: a group of containers that can be deployed together
+      - you can perform rolling updates, which incrementally replaces containers in pods with new ones without downtime
+    - cluster: a group of machines where kubernetes can schedule containers
+      - node: a machine
+      -
+  - kubernetes engine: managed service, a hybrid IaaS and PaaS (sits in the middle)
+    - build manage and delete a  cluster with arbitrary requirements
+    - give kubernetes a description of the application config, and kubernetes manages
+  - google cloud container builder: create docker container images from app code in google cloud storage
+  - google container registry: docker image storage for a specific project
+
+
+## Storage
+  - object storage: storage of BYTES that are addressed with a unique key, e.g. URLs
+    -
+  - file storage: hierarchy of folders
+  - block storage: OS manages data as chunks of disk
+  - cost
+    - cost per GB of data stored per month
+    - egress & data transfer harges
+    - nearline + coldline storage has access fee per GB of data read
+  - uploading data
+    - storage transfer service: schedule and manage batch transfers from other cloud providers, other regions, http endpoints
+    - transfer appliance: hardware google sends you to load up data, and ship it back to google
+      - up to a petabyte of data
+    - online transfer: using GSUTIL or google console drag n drop
+  - syncing with other GCP services
+    - bigquery: import and export tables
+    - app engine: object storage, logs, and datastore backups
+    - compute engine: startup scripts, general object storage
+    - cloud sql: import and export tables
+  - differences
+    - cloud data store:
+      - best for app engine
+      - unstructured objects
+      - support for transactions
+      - sql like queries
+      - terabytes of capacity
+      - maximum unit size of one megabyte per entity
+    - cloud big table
+      - for analytical data with heavy read/write events like adtech/financial or iot data
+      - store large amount of structued objects
+      - no sql queries
+      - no multi row transactions
+      - petabytes of capacity
+      - maximum unit size of 10 megabytes per call and 100 megabytes per row
+    - cloud storage
+      - for structured and unstructured binary or object data
+      - immutable blobs larger than 10 megabytes e.g. images/movies
+      - petabytes of TouchableOpacitymaximum unit size of 5 terabytes per object
+    - cloud sql
+      - best for web frameworks and existing applications like storing user creds and customer orders
+    - / cloud spanner
+      - for large scale applications that are larger than two terabytes
+      - full sql support for online transaction processing system
+      - terabytes of capacity (cloud sql)
+      - petabytes of dapacity (cloud spanner)
+    - bigquery
+      - big data analysis
+      - interactive query
+      -
+### Cloud Storage
+  - for object storage, each object is given a URL
+  - full managed scalable service
+  - no need to provision capacity ahead of time
+  - data encrypt at rest and in transit
+  - online and offline import services
+  - NOT FOR
+    - file storage
+    - block storage
+  - Use cases
+    - binary large object storage
+    - objects are organized in buckets, in geographic locations
+    - objects are immutable
+    - Object versioning:
+      - history of all changes to an object
+      - can list objects, restore objects to an older state, or permanently delete versions
+  - Permissions
+    - IAM roles: project -> bucket -> object
+    - ACL: access control Lists
+      - scope: WHO can perform specific actions
+      - permission: WHAT can they do
+  - Storage classes
+    - multi-regional:
+      - most frequently accessed data
+      - SLA: 99.95% availability
+      - stored in broad geographical locations, e.g. US or ASIA
+        - cloud storage will store your data in at least 2 regions within the geographical location
+    - regional:
+      - accessed frequently within a region, e.g. data closer to compute engine or kubernetes clusters
+      - 99.90%
+      - stored in a specific region
+    - nearline storage:
+      - low cost, highly durable, for infrequently accessed data
+      - for read/writes for once a month or less
+    - cold line storage:
+      - low cost, highly durable, for data achiving, online backup, and disaster recovery
+      - accessed at most once per year
+      - 90 day minimum storage duration, cost per data access,
+
+###  Big Table
+  - big data NoSQL DB service
+  - use cases
+    - where applications need a DB where table records will have different columns
+    - ideal for data that have a single lookup key, e.g. when you need a hash
+    - user analytics or, financial data analysis, internet of things
+  - characteristics
+    - same open soruce API as HBase (the native DB for hadoop)
+    - can increase your machine count without any downtime
+    - handles upgrades and restarts transparently
+    - data is encrypted both in flight and at rest
+    -
+
+### Cloud SQL and Google Cloud Spanner
+  - offers mysql and postgresql dbs as a service
+  - characteristics
+    - transactions: a set of database changes as all or nothing, either they all get made or none get made
+    - provide several replica services like read, fallover, and external replicas
+    - can replicate data between zones with automatic failover
+    - can scale both vertically by changing the machine type
+    - can scale horizontally via read replicas
+    - include network firewalls, and customer data is encrypted when on googles internal networks
+    - supports sql workbench, toad, etc.
+    -
+
+### Google Cloud Spanner
+  - transactional consistency at a global scale, schemas, SQL, and automatic synchronous replication for high availability
+  - provides petabytes of capacity
+  - use cases
+    - if you have outgrown any relational dbs
+    - are sharding your databases for throughput high performance
+    - need transactional consistency
+    -
+
+### Cloud Datastore
+  - NoSQL horizontally scalable DB
+  - use cases
+    - store structured data from app engine apps
+    - integration point for app engine and compute engine with cloud datastore as the integration point
+  - characteristics
+    - automatically handles sharding and replication
+    - offers transactions that affet multiple db rows
+    - SQL like queries
+    -
+
+
+
+
+# LinkedIn (Lynda) Learning
 # basics
   - GCP: google cloud Platform
   - GCP Resources:
