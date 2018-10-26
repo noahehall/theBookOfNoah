@@ -190,8 +190,14 @@
       - carrier peering: connection through larget partner network of service providers
       - dediated interconnect: connect N X 10G transpart circuits for private cloud traffic to gcloud at google POPs
 
-
-## Compute Engine
+## compute infrastructure for applications
+  - you choose the infrastructure in which your app runs
+    - VMs for compute engine
+    - containers for kubernetes engine
+  - google provides the infrastructure for your app so you can focus on your code
+    - i.e. PaaS
+    -
+### Compute Engine
   - run a VM
     - OS
     - memory
@@ -204,7 +210,7 @@
     - preemptible VM: give compute engine permission to terminate it if its resources are needed elseware
     -
 
-## containers
+### kubernetes
   - Container Based virtualization is different than hypervisor (regular VM) based virtualization
     - container: app -> lib -> container runtime -> host OS + kernel -> hardware
       - give processes their own namespace
@@ -226,6 +232,103 @@
     - give kubernetes a description of the application config, and kubernetes manages
   - google cloud container builder: create docker container images from app code in google cloud storage
   - google container registry: docker image storage for a specific project
+
+### app engine
+  - cost
+    - standard environment: pay per instance class after daily free use with automatic shutdown
+    - flexible environment: pay for resource allocation per hour, no automatic shutdown
+  - manages the hardware and networking infrastructure required to run your app
+  - you give app engine your code, and it handles the rest
+    - nosql dbs
+    - in-memory caching
+    - load balancing
+    - health checks
+    - logging
+    - user authentication
+    - auto scaling based on traffic
+  - characteristics
+    - you pay for resources you use
+    - for apps where the workload is highly variable  or unpredictable like web apps and mobile ackends
+  - standard environment
+    - no ssh
+    - instance starts up in milliseconds
+    - network access only via app engine services
+    - simple deployment experience
+    - fine grained auto scale
+    - free daily usage quota for some services
+      - low utilization apps may run at no charge
+      - runtime: the executable environment to run your application
+        - python
+        - java
+        - php
+        - GO
+    - sdks
+      - multiple SDK kits in various languages
+      - simple commands for deployment
+    - sandbox
+      - your code must run in a sandbox
+      - independent of hte hardware, operating system, or phsyical locatino of the server your app is running on
+      - constraints
+        - app cant write to the local file system
+          - must use a db service
+        - all requests have a 60 second timeout
+        - you cant install arbitrary third party software
+    - workflow
+      1. dev and test locally
+      2. use SDK to deploy to app engine
+      3. app engine automatically scales and reliable serves the application
+        - app engine can access a variaty of services using dedicated apis
+          - nosql datastore
+          - caching via memcache
+          - searching
+          - logging
+          - task queues
+          - scheduled tasks
+          -
+  - flexible environment
+    - lets you specify the container your app engine runs in
+      - no sandbox model like standard environment
+      - docker containers run in compute engine machine VMs
+    - build and deploy apps with a click
+    - can access app engine resources
+    - instances startup in minutes
+    - can turn on SSH but its off by default
+    - can write to local disk for scratch space
+    - can make calls to network without going through app engine
+    - supports any language
+    - use case
+      - web and mobile applications
+      - container based workloads
+      -
+    -
+
+## API management tools
+  - have a well defined interface that abstracts away needless details
+  - documented interface
+  - the underlying implementation can change as long as the interface doesnt
+  - when you have to change an API
+    - always version your API
+    - consumers should be able to specify the API version they want to use
+### cloud endpoints
+  - distributed api management through api console
+  - expose the api using a restful interface
+  - control access and validate calls with json web tokens and google api keys
+  - identify web, mobile users with Auth0 and firebase
+  - generate client libraries
+  - monitor and log use
+  - deploys a proxy infront of your application
+  - support
+    - app engine flexible environment: support android clients
+    - kubernetes engine: supports ios clients
+    - compute engine: supports javascript clients
+    -
+### apigee edge
+  - platform for making APIs available to your customers and partners
+  - containers analytics, monetization, and a developer portal
+  - use cases
+    - replaing a legacy application
+      - use apigee to standup microservices that replace the legacy applications services one by one
+
 
 
 ## Storage
