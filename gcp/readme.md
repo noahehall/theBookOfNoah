@@ -2,13 +2,14 @@
   - [lynda GCP essential training](https://www.lynda.com/Google-Cloud-Platform-tutorials/Google-Cloud-Platform-Essential-Training/540539-2.html)
   - [gcloud architect exam guide](https://cloud.google.com/certification/guides/cloud-architect/)
   - [coursera GCP fundamentals](https://www.coursera.org/learn/gcp-fundamentals)
-
+  - [links for transform based programming model](https://scholar.google.com/scholar?q=transform+based+programming+model&hl=en&as_sdt=0&as_vis=1&oi=scholart)
+  - [stream analytics](http://www.dataversity.net/streaming-analytics-101/)
+  - [project jupyter: the jupyter notebook](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html)
+  - [martin fowler serverless architectures](https://martinfowler.com/articles/serverless.html)
+  - [nosql wide column store](https://www.forbes.com/sites/metabrown/2018/03/31/get-the-basics-on-nosql-databases-wide-column-store-databases/#453e9a4b6e50)
+  - [types of relational and nosql dbs](https://www.forbes.com/sites/metabrown/2018/03/31/get-to-know-relational-and-nosql-databases-that-power-big-data-analytics/#725169291943)
 
 # TO CATEGORIZE
-## google cloud shell
-  - shell environment to access cloud resources
-  - web preview: start a web browser on an arbitrary port to the connected resource
-
 
 # Terms
   - cloud computing:
@@ -31,7 +32,56 @@
       - applications consumed directly over the internet by end users
       - e.g. gmail
   - git: used to store and manage their source code trees whether on-premise or hosted
-
+  - serverless:
+    - applications that significantly or fully incorporate third party, cloud-hosted applications and services to manage server-side logic and state
+    - applications where server-side logic is written by the application developer, but run in stateless compute containers that are event-triggered, ephemeral and fully managed by a third party
+    - you dont have to provision compute instances to run your jobs
+  - integrated platform: products on the platform can seamlessly commmunicate with eachother
+  - stream analytics: stream processing analyzes and performs actions on real-time data through the use of continuous queries
+    - connects to external data sources, enabling applications to integrate certain data into th eapplication flow, or to update an external database with processed information
+  - pub/sub model:
+    - pub: the publisher who posts messages to specific topics
+    - sub: the subscriber who listens for messages about specific topics
+    - push vs pull
+      - push: subscribers are pushed messages when they arrive
+      - pull: subscribes poll/check for new messages at arbitrary intervals
+  - metadata: information that describes data
+  - database architectures
+    - relational:
+      - use metadata to provide information about the data source, data collection methods, and meaning
+      - tabular structure keeps data well organized, accessible
+      - exact kind and quanitity of data is always known
+    - NoSQL
+      - dont use normalized data model found in dbs,
+        - dont organize data in tables, rows and columns
+      - use cases
+        - data has little/inconsistent structure
+        - data must be distributed across more than on emachine
+        - speed is more important than accuracy
+        - application requires data types or analysis methods that common relational dbs handle poorly
+      - types
+        - content store: aka content repository: large, complex data formats like video, audio
+        - document store: semi-structure data like registration forms, business correspondence, articles
+        - event store: tracking events in real time
+        - graph: finding connections among people and things
+        - key value: associative array, data structure, dictionary, hash,
+          - simple structure,
+          - flexibility
+          - scalability
+        - multivalue: NF2, non-first normal form systems
+          - complex data structures with schemas similar to relational dbs
+        - navigational: hierarchical (one to many) or network (many to many) data structure
+        - object oriented: model data as objects, similar to OOP
+        - RDF store: resource description fraemwork, semantic graph dbs, or triple stores
+          - information processing in applications that connect multiple data sources
+        - search engine: finding information in documents
+        - time series: time series data
+        - wide column storea: manage data that wont fit on one computer; aka column families, columnar databaes, column-oriented DBS
+          - columns: related facts
+          - column families: groups of columns that have content and function similar to tables in a relational databae
+        - XML: native XML db or native XML dbms
+          - data in xml format or varied copmlex formats like audio or video
+          -
 
 # developing, deploying, and monitoring in the cloud
   - setting up your environment
@@ -75,6 +125,7 @@
     - deployment manager executes your template to create the environment described
     - to make changes, edit the template and deployment manager will update your environment automatically
     -
+
 ## monitoring
   - you cant run an application stably without monitoring
   - use cases
@@ -112,7 +163,6 @@
       - per-url latency and statistics
   -
 
-
 # GCP Platform Administration
   - principal of least privilege: users only receive permissions to do what they are required to do
 
@@ -120,12 +170,13 @@
   - Web Console: web based admin
     - view and manage projects and their resources
     - enable and disable and explore API of GCP resources
-    - Cloud Shell: CLI to access GCP from your browser
+    - Cloud Shell: CLI to access GCP resources from your browser
       - a temp VM installed with the google SDK
+      - web preview: start a web browser on an arbitrary port to the connected resource
   - SDK CLI: manage resources and applications, is available as a docker image
     - gcloud: all services except cloud storage and bq
     - gsutil: for cloud storage
-    - bq: big query
+    - bq: BigQuery
   - API: are all restful
     - use JSON as an interchange format
     - uses OAuth 2.0 for authentication and authorization
@@ -170,7 +221,6 @@
       - inherit policies of their parent resource
       - parent policies cant take away access thats granted at a lower level
 
-
 ## IAM: Cloud Identity and Access Management
   - IAM: controls WHO can take WHAT action on specific Resources
 ### IAM Users: The WHO
@@ -189,7 +239,6 @@
   - identified by an email address
     - PROJECT_NUMBER-compute@developer.gserviceaccount.com
     - PROJECT_ID@appspot.gserviceaccount.com
-
 ### IAM roles: the WHAT
   - role: a collection of permissions
   - types of roles
@@ -233,6 +282,7 @@
     - GFE: the google front end:
 
 # Core Products
+
 ## Cloud Launcher
   - tool for quickly deploying functional software packages to GCP
     - marketplace containing prepackaged ready to deploy solutions
@@ -242,6 +292,8 @@
 ## Virtual Private Cloud
   - generally the first step is to define a VPC for a project
   - connects GCP rsources to each other and the internet
+  - VPC Peering: interconnect networks in GCP projects
+  - shared VPC:  share a network or individual subnets with other GCP projects
   - Characteristics
     - networks are global
     - subnets are regional
@@ -250,43 +302,61 @@
     - routing tables: used to forward traffic from one instance to another within the same network without requiring an external IP address
     - firewall: are globally distributed, you can restrict access to instances both incoming and outging traffic
       - metadata tags on compute engines
-    - VPC Peering: interconnect networks in GCP projects
-    - shared VPC:  share a network or individual subnets with other GCP projects
-    - cloud load balancing:
-      - get a global anycast IP address to frontend all your backend services
-      - types
-        - global https: layer 7 load balanced based on load
-          - route to different urls to different back ends
-        - global ssl proxy: layer 4 load balancing of no https ssl traffic based on load
-          - supported on specific port numbers
-        - global tcp proxy: layer 4 load balancing of non ssl tcp traffic
-          - supported on specific port numbers
-        - regional: load balancing of any traffic (tcp, udp)
-          - supported on any port number
-        - regional internal: load balancing of traffic inside a vpc
-          - use for the internal tiers of multi tier applications
-        - internal load balancer: accepts traffic on a GCP internal IP address and load balances it across compute engine VMs
-    - Cloud DNS:
-        - create managed zones, then add, edit, delete DNS records
-        - programmatically manage zones and records using restful APIs or CLI or console
-      - Cloud CDN: distributed edge caches to cache content close to end users
-    - VPC interconnect with external networks
-      - VPN: secure multi GPS connection over VPN tunnels
-      - direct peering: private connection between you and google for hybrid cloud workloads
-      - carrier peering: connection through larget partner network of service providers
-      - dediated interconnect: connect N X 10G transpart circuits for private cloud traffic to gcloud at google POPs
+### interconnect with networks external to GCP
+  - VPN: secure multi-Gbps connection over VPN tunnels
+    - use cloud router to make it dynamic
+  - direct peering: private connection between you and google for hybrid cloud workloads
+  - carrier peering: connection through larget partner network of service providers
+  - dediated interconnect: connect N X 10G transpart circuits for private cloud traffic to google cloud at google POPs
+    - when you need a service level agreement
+    - requires you to use the providers network typology
+### cloud load balancing: load balance inbound traffic
+  1.  http and https inbound traffic
+    - global http(s): layer 7 load balanced based on load
+      - route different urls to different back ends
+      - put your application behind a single & global anycast IP to the entire internet
+      - load balances traffic among all your backend instances
+      - integrated with GCP CDN
+  2. non http/https inbound traffic
+    - global ssl proxy: layer 4 load balancing of no https ssl traffic based on load
+      - supported on specific port numbers
+    - global tcp proxy: layer 4 load balancing of non ssl tcp traffic
+      - supported on specific port numbers
+  3. for UDP traffic and TCP(non ssl) traffic
+    - regional: load balancing of tcp (non ssl), udp on any port numbers
+      - supported on any port number
+  4. for internal tiers of multi-tier applications
+    - regional internal: load balancing of traffic inside a vpc
+      - use for the internal tiers of multi tier applications
+    - accepts traffic on a GCP internal IP address and load balances it across compute engine VMs
+### Cloud DNS:
+  - create managed zones, then add, edit, delete DNS records
+  - programmatically manage zones and records using restful APIs or CLI or console
+### Cloud CDN:
+  - distributed edge caches to cache content close to end users
 
 ## compute infrastructure for applications
-  - architectures:
-    - IaaS
-    - Hybrid
-    - PaaS
-  - you choose the infrastructure in which your app runs
-    - VMs for compute engine
-    - containers for kubernetes engine
-  - google provides the infrastructure for your app so you can focus on your code
-    - i.e. PaaS
-    -
+  - cloud architectures: from managed infrastructure to dynamic infrastructure
+    1. IaaS: infrastructure as a service
+      - compute engine: general computing workloads
+        - deploy your app in virtual machines
+    2. Hybrid: incorporates IaaS and PaaS
+      - kubernetes engine: container based workloads
+        - deployr app in containers
+    3. PaaS: platform as a service: google provides the infrastructure for your app so you can focus on your code
+      - app engine: focus on code and with less responsibility for managing infrastructure/provisioning
+        - flex: use any runtime you want with full control over the environment
+          - web and mobile applications
+          - container based workloads
+        - standard: use one of the supported runtimes with finer grain scaling
+          - web and mobile applications
+    4. Serverless: no responsibility for managing infrastructure
+      - BaaS: Backend as a service
+        - database services
+        - authentication services
+      - FaaS: functions as a service
+        - cloud functions: you supply chunks of code for business logic triggered by events
+          -
 ### Compute Engine
   - run a VM
     - OS
@@ -299,7 +369,6 @@
   - types of VMs
     - preemptible VM: give compute engine permission to terminate it if its resources are needed elseware
     -
-
 ### kubernetes
   - Container Based virtualization is different than hypervisor (regular VM) based virtualization
     - container: app -> lib -> container runtime -> host OS + kernel -> hardware
@@ -322,7 +391,6 @@
     - give kubernetes a description of the application config, and kubernetes manages
   - google cloud container builder: create docker container images from app code in google cloud storage
   - google container registry: docker image storage for a specific project
-
 ### app engine
   - cost
     - standard environment: pay per instance class after daily free use with automatic shutdown
@@ -447,37 +515,43 @@
     - app engine: object storage, logs, and datastore backups
     - compute engine: startup scripts, general object storage
     - cloud sql: import and export tables
-  - differences
-    - cloud data store:
-      - best for app engine
-      - unstructured objects
+### Gcloud Storage Products
+  - cloud datastore:: nosql document
+    - use cases
+      - structured objects
       - support for transactions
       - sql like queries
-      - terabytes of capacity
-      - maximum unit size of one megabyte per entity
-    - cloud big table
+    - terabytes of capacity
+    - maximum unit size of one megabyte per entity
+    - best for app engine
+  - cloud big table: nosql wide column
+    - use cases
       - for analytical data with heavy read/write events like adtech/financial or iot data
-      - store large amount of structued objects
-      - no sql queries
-      - no multi row transactions
-      - petabytes of capacity
-      - maximum unit size of 10 megabytes per call and 100 megabytes per row
-    - cloud storage
+      - store large amount of single-keyed structued objects
+    - no sql queries (duh its nosql)
+    - no multi row transactions
+    - petabytes of capacity
+    - maximum unit size of 10 megabytes per call and 100 megabytes per row
+  - cloud storage
+    - use cases
       - for structured and unstructured binary or object data
       - immutable blobs larger than 10 megabytes e.g. images/movies
-      - petabytes of TouchableOpacitymaximum unit size of 5 terabytes per object
-    - cloud sql
-      - best for web frameworks and existing applications like storing user creds and customer orders
-    - / cloud spanner
-      - for large scale applications that are larger than two terabytes
-      - full sql support for online transaction processing system
-      - terabytes of capacity (cloud sql)
-      - petabytes of dapacity (cloud spanner)
-    - bigquery
-      - big data analysis
-      - interactive query
-      -
-### Cloud Storage
+      - backups
+    - petabytes of data, maximum unit size of 5 terabytes per object
+  - cloud sql
+    - best for web frameworks and existing applications like storing user creds and customer orders
+    - terabytes of capacity
+  - cloud spanner (relational)
+    - for large scale applications that are larger than two terabytes
+    - full sql support for online transaction processing system
+    - whenever high I/O global consistency is required
+    - petabytes of dapacity
+    - horizontal scalability
+  - bigquery
+    - big data analysis
+    - interactive query
+    -
+#### Cloud Storage
   - for object storage, each object is given a URL
   - full managed scalable service
   - no need to provision capacity ahead of time
@@ -499,24 +573,39 @@
       - scope: WHO can perform specific actions
       - permission: WHAT can they do
   - Storage classes
+    - all have consistent APIs with millisecond access
+    - cost: high to low
+      - storage
+        - multi-regional
+        - regional
+        - nearline
+        - coldline
+      - retrieval
+        - coldline
+        - nearline
+        - regional
+        - multi-regional
     - multi-regional:
+      - content storage and delivery
       - most frequently accessed data
       - SLA: 99.95% availability
       - stored in broad geographical locations, e.g. US or ASIA
         - cloud storage will store your data in at least 2 regions within the geographical location
     - regional:
+      - in-region analytics, transcoding
       - accessed frequently within a region, e.g. data closer to compute engine or kubernetes clusters
       - 99.90%
       - stored in a specific region
     - nearline storage:
+      - long-tail content, backups
       - low cost, highly durable, for infrequently accessed data
       - for read/writes for once a month or less
     - cold line storage:
+      - archiving, disaster recovery
       - low cost, highly durable, for data achiving, online backup, and disaster recovery
       - accessed at most once per year
       - 90 day minimum storage duration, cost per data access,
-
-###  Big Table
+#### Big Table
   - big data NoSQL DB service
   - use cases
     - where applications need a DB where table records will have different columns
@@ -528,8 +617,7 @@
     - handles upgrades and restarts transparently
     - data is encrypted both in flight and at rest
     -
-
-### Cloud SQL and Google Cloud Spanner
+#### Cloud SQL and Google Cloud Spanner
   - offers mysql and postgresql dbs as a service
   - characteristics
     - transactions: a set of database changes as all or nothing, either they all get made or none get made
@@ -540,8 +628,7 @@
     - include network firewalls, and customer data is encrypted when on googles internal networks
     - supports sql workbench, toad, etc.
     -
-
-### Google Cloud Spanner
+#### Google Cloud Spanner
   - transactional consistency at a global scale, schemas, SQL, and automatic synchronous replication for high availability
   - provides petabytes of capacity
   - use cases
@@ -549,8 +636,7 @@
     - are sharding your databases for throughput high performance
     - need transactional consistency
     -
-
-### Cloud Datastore
+#### Cloud Datastore
   - NoSQL horizontally scalable DB
   - use cases
     - store structured data from app engine apps
@@ -561,10 +647,232 @@
     - SQL like queries
     -
 
+## Big Data and Machine Learning
+  - requires investments in specific infrastructure and data processing
+  - building and maintaining compute heavy data and analytics systems
+  - real time analytics
+  - hot keys: situations where proportionately large chunks of your input get mapped to the same cluster in a distributed system
+    - e.g. in map/reduce transformations
+
+### Big Data
+  - integrated serverless platform
+#### Cloud dataproc
+  - fast way to run data mining and analysis in datasets of known size
+  - you have to request a Hadoop cluster
+    - built in 90 seconds
+    - uses compute engine virtual machines (you specify the type and number of VMs)
+    - can scale up and down
+    - can customize the default configuration
+    - monitor using stackdriver
+  - cost
+    - pay for what you use per hour for the lifetime of the cluster
+    - all cloud dataproc clusters are built in one second clock time increments: and you pay for the time it takes to build (1 minute minimum)
+      - save money on the cost of the cluster by configuring the build process to use preemptible compute engine instances for your batch processing
+        - requires that your jobs can be restarted cleanly if they're terminated
+        - around 80% cheaper
+  - managed services
+    - apache hadoop: open source framework for big data based on the mapreduce programming model
+    - mapreduce: one function 'the map' runs in parallel with a massive dataset to produce intermediate results, another function the 'reduce' builds a final result set based on all of the intermediate results
+    - spark & spark sql:
+      - do data mining
+      - MLliB: machine learning libraries to run classification algorithms to discover patterns through machine learning
+    - pig,
+    - hive
+  - other use cases (extension of use cases for the managed services above)
+    - when you have a dataset of known size
+      - NOT when your data shows up in real time
+    - when you want to manage your dataset yourself
+#### cloud dataflow
+  - unified programming model and managed service to build data pipelines for batch and streaming/continous data
+    - transform-based programming model
+  - develop and execute various data processing patterns
+  - ETL (extract, transform, and load)
+  - batch computation
+  - continuous computation
+  - full automates the management of whatever processing resources are required
+    - no need to spin up a cluster or size instances
+    - takes responsibility for operational tasks like resource management and performance optimization
+  - use cases
+    - when you have real time data
+    - your data has an unpredictable size or rate
+  - example
+    - each step below is elastically scaled, i.e. the service provides all resources on demand
+      - has automated and optimized worked partitioning built in which can dynamically rebalance lagging work
+      - no need to manage/scale
+    1. dataflow pipeline reads data from a source (e.g. a BigQuery table)
+    2. transforms/processes the data in a variety of ways
+      - map operations
+      - reduce operations
+    3. writes its output to a sink (e.g. cloud storage)
+  - use cases
+    - ETL: extract/transform/load pipelines to move, filter, enrich and shape data
+    - data analysis: batch or continuous computation using streaming
+      - fraud detection
+      - iot analytics
+      - health care
+      - logistics
+      - click stream
+      - point of sale
+      - segmentation analysis
+    - orchestration: create pipelines that coordinate internal/external services
+    - real time applications
+      - personalizing user expeeriences
+#### BigQuery
+  - provides near real-time interactive (adhoc) analysis (SQL 2011) of massive datasets (hundreds of TBs)
+  - stream data at 100k rows per second
+  - fully managed petabyte scale analytics data warehouse
+    - no cluster maintenance
+    - SLA: 99.9% availibility
+  - data can be kept in any region
+    - compute and storage are separated with a terabit network in between
+  - read and write data via cloud dataflow, hadoop, or spark
+  - getting data into bigquery
+    - stream it at 100k rows per second
+    - cloud storage
+    - cloud datastore
+  - datasets can be shared with people in different projects
+  - cost
+    - free monthly quotas
+    - separate costs for storage and computation (queries)
+      - storage:
+        - automatic discount for long-term data storage automatically
+        - sharing does NOT impact your cost or performance
+          - but those users will be charged for running queries
+      - queries: only when they are running
+  - use cases
+    - data analystics warehousing
+#### cloud pub/sub
+  - scalable and flexible enterprise messaging for events in realtime and stream analytics
+    - on demand scalability beyond one million messages per second
+  - application components make push/pull subscriptions to topics
+  - supports offline consumers
+  - provides at least once delivery
+    - theres a small chance some messages might be delivered more than once
+  - use cases
+    - decoupling applications/systems: allow each to send/receive messages permitting you to then scale them independently
+    - many-to-many asynchronous messaging
+    - when your data arrives at high and unpredictable rates
+    - analyzing streaming data (e.g. with cloud dataflow)
+    - push notifications for cloud-based applications
+    - connect applications across GCP (e.g. push/pull between compute and app engine)
+  - cost
+    -
+#### cloud datalab
+  - managed service: interactive tool for large-scale data exploration, transformation, analysis and visualization
+    - built on `jupyter notebook` which lets you create web based notebooks containing python code that can be run interactively and view the results
+  - runs in a compute engine VM
+  - intersperse data anlsysis with comments about the results
+  - workflow
+    1. specify the VM type you want and what GCP region it should run in
+    2. when it launches, presents an interactive python environment thats ready to use
+      - orchestrates multiple GCP services automatially
+    3. visualize your data with google charts or map plot line
+      - many existing packages for statistics, machine learning, and others
+  - cost
+    - only pay for the resources you use
+    - no charge for datalab itself
+  - integrations
+    - BigQuery: analyze and deploy models
+    - compute engine
+    - cloud storage:
+  - languages
+    - python
+    - sql
+    - javascript
+
+### Machine Learning Platform
+  - Machine Learning: one branch in the field of AI
+    - a way of solving problems without explicity coding the solution
+    - human coders build systems that improve themselves over time through repeated exposure to sample (training) data
+  - examples
+    - youtube
+    - photos
+    - google mobile app
+    - google translate
+  - google provides a platform to generate your own training models or use pre-trained models built by google
+    - use cases:
+      - for structured data:
+        - classification and regression tasks
+          - customer churn analysis
+          - product diagnostics
+          - forecasting
+        - recommendation engine for content personalization and cross/up-sales
+        - anomaly detection
+          - fraud detection
+          - sensor diagnostics
+          - log metrics
+      - for unstructured data:
+        - image and video analytics
+          - identifying
+            - damanged shipment
+            - styles
+          - flagging content
+        - text analytics
+          - call centers
+          - blog analysis
+          - language identification
+          - topic classification
+          - sentiment analysis
+#### TensorFlow
+  - open source tool to build and run neural network models
+  - platform support:
+    - CPU:
+    - GPU:
+    - mobile:
+    - server:
+    - cloud:
+  - Tensor processing units: hardware devices designed to accelerate machine learning workloads with TensorFlow
+    - available with compute engine VMs
+      - each cloud TPU provides up to 180 teraflops of performance
+  - cost:
+    - pay only for what you use
+#### Cloud ML
+  - fully managed machine learning service
+    - works on any type of data of any size
+    - can take any tensorflow model and perform large-scale training on a managed cluster
+  - familiar notebook-based developer experience
+  - optimized for google infrastructure
+  - Integrations
+    - BigQuery
+    - cloud storage
+
+#### Machine Learning APIs
+  - pre-trained machine learning models built by google made available through APIs
+  - speech api: stream results in real time, detects 80 languages and variants
+    - accessible from any device
+    - highly accurate even in noisy environments
+    - use cases
+      - convert audio to text in real time
+      - enable command and control through voice
+  - vision API: analyze and identify objects, landmarks, text, and content with a simple API
+    - quickly classifies images into thousands of categories
+    - detects individual objects within images
+    - finds and reads printed words contained within images
+    - detect inapropriate content
+    - image sentiment analysis
+    - extract text
+  - translate api: language translation including detection
+    - translate arbitrary strings between thousands of language pairs
+    - programtically detect a documents language
+  - natural language api: offers a variety of natural language understanding technologies
+    - supported languages:
+      - english
+      - spanish
+      - japanese
+    - use cases
+      - syntax analysis: breaking down sentences into tokens: identifying the noun, verbs and other parts of speach to figure out the relationship between words and reveal the structure and meaning of text
+      - entity recognition: parse text and flag mentions of people, organizations, etc, to extract information about items mentioned in text documents, new articles and blog posts
+  - video intelligence API:
+    - annotate videos in a variety of formats
+    - use cases:
+      - detect scene changes
+      - flag inapropriate content
+      - identify key entities (nouns) within your video and when they occur
+        - make video content searchable and discoverable
 
 
 
-# LinkedIn (Lynda) Learning
+# OLD: LinkedIn (Lynda) Learning
 # basics
   - GCP: google cloud Platform
   - GCP Resources:
@@ -624,7 +932,6 @@
   - data warehouses: very large data storage for read only / infrequently updated enterprise reporting
   - data science notebooks:
     - jupiter notebooks, interactive webpages that allow computation & analysis & visualizations, pairs very well with ML
-
 ## other services: networking, ML, etc.
 ### Identity & Security
   - IM: Identity & Access Permissions
@@ -636,8 +943,6 @@
     - java
     - visual studio (.net)
 ## Machine Learning
-
-
 # architecture
   - what are the business requirements?
     - buusiness use cases and product strategy
