@@ -1,7 +1,14 @@
 # links
   - [lynda GCP essential training](https://www.lynda.com/Google-Cloud-Platform-tutorials/Google-Cloud-Platform-Essential-Training/540539-2.html)
   - [gcloud architect exam guide](https://cloud.google.com/certification/guides/cloud-architect/)
-  -
+  - [coursera GCP fundamentals](https://www.coursera.org/learn/gcp-fundamentals)
+
+
+# TO CATEGORIZE
+## google cloud shell
+  - shell environment to access cloud resources
+  - web preview: start a web browser on an arbitrary port to the connected resource
+
 
 # Terms
   - cloud computing:
@@ -23,70 +30,93 @@
     - SaaS: Software as a Service
       - applications consumed directly over the internet by end users
       - e.g. gmail
+  - git: used to store and manage their source code trees whether on-premise or hosted
 
 
-# High Level
-## GCP Regions and Zones
-  - Zone: deployment area for GCP resources like a VM in Compute Engine
-    - you generally spread resources across multiple zones in a region to build a fault tolerant application to protect against unexpected failures
-    - e.g. europe-west2-a
-  - Regions: independent geographic areas
-    - all zones in tbe same region have fast network latencies under 5 ms
-    - Multi-region: storing your data in multiple regions for redundancy
-
-## Core Infrastructure
-  - resource hierarchy: policies can be defined at each level
-    - policies are inherited downward
-    1. org node: the top node that allows you to have visibility into all of your folders and projects
-    2. folders: groups projects into logical units
-    3. projects: usually relate to a specific business function
-      - all GCP resources belong to a project
-      - are the basis for enabling and using GCP services like APIs, billing, collaborates, etc
-      - each project is a separate compartment
-      - billed separately and managed separately
-      - identifying a project
-        - ID: immutable & globally unique and chosen by you
-        - name: mutable & chosen by you
-        - number: immutable globally unique and chosen by GCP
-    4. resources: e.g. storage, VM
-      - inherit policies of their parent resource
-      - parent policies cant take away access thats granted at a lower level
-### Projects
-  - projects: organize your resources, and group resources that have a common business objective
+# developing, deploying, and monitoring in the cloud
+  - setting up your environment
+    - imperative approach: figure out the commands you need to setup/change from the old state to the new
+    - declarative: use a template to specify what the environment should look like
   -
-### Cloud Identity and Access Management
-  - IAM: controls who can take what action on specific Resources
-    - WHO:
-      - a google account or cloud identity users e.g. blah@gmail.com
-      - a google group e.g. test@googlegroups.com
-      - a google service account: provision an ID to control server-to-server interactions in a project
-        - use cases:
-          - control privileges used by resources for applications to perform actions on behalf of authenticated end users
-          - authenticate one service to another
-          - control privileges used by resources
-        - authentication:
-          - use cryptographic keys
-          - can be assigned custom or predefine roles
-        - identified by an email address
-          - PROJECT_NUMBER-compute@developer.gserviceaccount.com
-          - PROJECT_ID@appspot.gserviceaccount.com
-        -
-      - a G suite domain or cloud identity domain  e.g. blah.com
-    - What: defined by an IAM Role, which is a collection of permissions
-      - primitive role: apply across all GCP services in a project
-        - owner: invite, remove, delete,
-          - includes editor + viewer permissions
-        - editor: deploy apps, modify code, configure services\
-          - includes viewer permissions
-        - viewer: read only access
-        - billing admin: manage billing, add & remove admins
-      - predefined roles: IAM fine-grained permissions tailored for specific services
-      - custom roles: define a role with a specific set of permissions to help implement a principal of least for projects and organizations
-        - cant be used for folders
+
+## development
+### cloud source repositories (i.e. git)
+    - keep code private to a GCP project
+    - IAM permissions used to protect the code
+    - fully featured git repositories
+    - source viewer: browser and view repo files within the GCP console
+    - allow external users
+  - supported platforms
+    -
+### cloud functions
+    - create single-purpose functions that respond to events without a server/runtime
+    - written in javascript, execute in managed node.js environment on GCP
+    - triggers
+      - you choose what events you care about
+      - you attach javascript functions to your event triggers
+      - supported platforms
+        - cloud storage events
+        - cloud pub/sub events
+        - http calls
+    - use cases
+      - breakapart an existing monolithic application into microservices with little developer effort
+      - enhance existing applications without having to worry about scaling
+      - enhance an event-driven application without having to provision additional compute resources
+    - cost
+      - pay when function runs in 100ms intervals
+
+## deployment
+### deployment manager
+  - infrastructure as code
+  - automates the creation and management of your GCP resources via templates
+  - you can version control your templates in cloud source repos
+  - workflow
+    - create a template file in YAML/Python that describes what you want the components of your environment to look like
+    - deployment manager executes your template to create the environment described
+    - to make changes, edit the template and deployment manager will update your environment automatically
+    -
+## monitoring
+  - you cant run an application stably without monitoring
+  - use cases
+    - understanding if the changes made good / bad ?
+    - respond with information vs panic when end-users complain
+### Stackdriver
+  - insight into your applications health, performance and availability, diagnostics, and various other metrics
+  - gives you access to many signals:
+    - infrastructure platforms
+    - virtual machines
+    - containers
+    - middleware
+    - application tier
+  - core components
+    - monitoring: checks the endpoints of applications and other internet accessible services running in GCP
+      - platform, system and application metrics
+      - uptime/health checks: associated with URLS, groups, or resources
+      - alerts: on any criteria/condition and integration with popular notification tools
+      - dashboards: visualize state of app
+    - logging: view logs from applications
+      - define metrics based on log content
+      - export to bigquery, cloud storage, and cloud pubsub
+      - platform, system, and application logs
+      - log search, view, filter, and export
+    - error reporting: tracks and groups errors in cloud applications and notifies you when new errors are detected
+      - error notifications
+      - error dashboard
+    - debugging: connects your application's production data to your source code for you to inspect the state of your app at any code location in production
+      - view the app state without adding logging statements
+      - works best when your app source code is available
+        - cloud source repos
+        - other repos
+    - Trace: sample the latency of app engine applications and report per-url statistics
+      - latency reporting and sampling
+      - per-url latency and statistics
+  -
+
+
+# GCP Platform Administration
   - principal of least privilege: users only receive permissions to do what they are required to do
 
-
-### Managing resources
+## Managing resources
   - Web Console: web based admin
     - view and manage projects and their resources
     - enable and disable and explore API of GCP resources
@@ -114,8 +144,67 @@
     - manage billing
     - visualize projects via customizable dashboards
 
+## GCP Regions and Zones
+  - Zone: deployment area for GCP resources like a VM in Compute Engine
+    - you generally spread resources across multiple zones in a region to build a fault tolerant application to protect against unexpected failures
+    - e.g. europe-west2-a
+  - Regions: independent geographic areas
+    - all zones in tbe same region have fast network latencies under 5 ms
+    - Multi-region: storing your data in multiple regions for redundancy
 
-### Security
+## resource hierarchy:
+  - policies can be defined at each level
+  - policies are inherited downward
+    1. org node: the top node that allows you to have visibility into all of your folders and projects
+    2. folders: groups projects into logical units
+    3. projects: organize your resources, and group resources that have a common business objective
+      - all GCP resources belong to a project
+      - are the basis for enabling and using GCP services like APIs, billing, collaborates, etc
+      - each project is a separate compartment
+      - billed separately and managed separately
+      - identifying a project
+        - ID: immutable & globally unique and chosen by you
+        - name: mutable & chosen by you
+        - number: immutable globally unique and chosen by GCP
+    4. resources: e.g. storage, VM
+      - inherit policies of their parent resource
+      - parent policies cant take away access thats granted at a lower level
+
+
+## IAM: Cloud Identity and Access Management
+  - IAM: controls WHO can take WHAT action on specific Resources
+### IAM Users: The WHO
+  - types of users
+    - a google account or cloud identity users e.g. blah@gmail.com
+    - a google group e.g. test@googlegroups.com
+    - a G suite domain or cloud identity domain  e.g. blah.com
+    - a google service account: provision an ID to control server-to-server interactions in a project
+  - use cases:
+    - control privileges used by resources for applications to perform actions on behalf of authenticated end users
+    - authenticate one service to another
+    - control privileges used by resources
+  - authentication:
+    - use cryptographic keys
+    - can be assigned custom or predefine roles
+  - identified by an email address
+    - PROJECT_NUMBER-compute@developer.gserviceaccount.com
+    - PROJECT_ID@appspot.gserviceaccount.com
+
+### IAM roles: the WHAT
+  - role: a collection of permissions
+  - types of roles
+    - primitive role: apply across all GCP services in a project
+      - owner: invite, remove, delete,
+        - includes editor + viewer permissions
+      - editor: deploy apps, modify code, configure services\
+        - includes viewer permissions
+      - viewer: read only access
+      - billing admin: manage billing, add & remove admins
+    - predefined roles: IAM fine-grained permissions tailored for specific services
+    - custom roles: define a role with a specific set of permissions to help implement a principal of least for projects and organizations
+      - cant be used for folders
+
+## Security
  - customer responsibility
    - content
    - access policies
@@ -139,19 +228,16 @@
   - user identity: centrial identity service with support for U2F;
   - service deployment; encryption of inter-service communication;
   - hardwaare infrastructure; hardware design and provenance; secure boot stack; premises security
-  -
   - googles infrastructure provides cryptographic privacy and integrity for remote procedures called data-on-the-network, which is how google services communicate with each other
     - automatically encrypts PC traffic in transit between data centers
     - GFE: the google front end:
 
-# Products
+# Core Products
 ## Cloud Launcher
   - tool for quickly deploying functional software packages to GCP
     - marketplace containing prepackaged ready to deploy solutions
     - some created by google (free), other by third party vendors (could cost)
     -
-
-
 
 ## Virtual Private Cloud
   - generally the first step is to define a VPC for a project
@@ -162,7 +248,7 @@
       - different zones can be part of the same subnet
       - can dynamically increase the size of a subnet by expanding the ranges of IPs allocated to it
     - routing tables: used to forward traffic from one instance to another within the same network without requiring an external IP address
-    - firewal: are globally distributed, you can restrict access to instances both incoming and outging traffic
+    - firewall: are globally distributed, you can restrict access to instances both incoming and outging traffic
       - metadata tags on compute engines
     - VPC Peering: interconnect networks in GCP projects
     - shared VPC:  share a network or individual subnets with other GCP projects
@@ -191,6 +277,10 @@
       - dediated interconnect: connect N X 10G transpart circuits for private cloud traffic to gcloud at google POPs
 
 ## compute infrastructure for applications
+  - architectures:
+    - IaaS
+    - Hybrid
+    - PaaS
   - you choose the infrastructure in which your app runs
     - VMs for compute engine
     - containers for kubernetes engine
@@ -248,7 +338,7 @@
     - auto scaling based on traffic
   - characteristics
     - you pay for resources you use
-    - for apps where the workload is highly variable  or unpredictable like web apps and mobile ackends
+    - for apps where the workload is highly variable  or unpredictable like web apps and mobile backends
   - standard environment
     - no ssh
     - instance starts up in milliseconds
@@ -300,7 +390,16 @@
       - web and mobile applications
       - container based workloads
       -
-    -
+  - notes
+    - app engine has a development environment
+      - activate cloud shell
+      - git clone git clone https://github.com/GoogleCloudPlatform/appengine-guestbook-python
+      - click web preview in cloud shell port `:8080`
+  - YAML: templating language used by many google cloud services
+  - disabling deployed applications
+    - App Engine offers no option to undeploy an application. After an application is deployed, it remains deployed, although you could instead replace the application with a simple page that says something like "not in service."
+      - However, you can disable the application, which causes it to no longer be accessible to users.
+      - `home -> app engine -> settings -> disable application`
 
 ## API management tools
   - have a well defined interface that abstracts away needless details
@@ -328,8 +427,6 @@
   - use cases
     - replaing a legacy application
       - use apigee to standup microservices that replace the legacy applications services one by one
-
-
 
 ## Storage
   - object storage: storage of BYTES that are addressed with a unique key, e.g. URLs
