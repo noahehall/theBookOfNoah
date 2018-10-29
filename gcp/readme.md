@@ -8,8 +8,7 @@
   - [martin fowler serverless architectures](https://martinfowler.com/articles/serverless.html)
   - [nosql wide column store](https://www.forbes.com/sites/metabrown/2018/03/31/get-the-basics-on-nosql-databases-wide-column-store-databases/#453e9a4b6e50)
   - [types of relational and nosql dbs](https://www.forbes.com/sites/metabrown/2018/03/31/get-to-know-relational-and-nosql-databases-that-power-big-data-analytics/#725169291943)
-
-# TO CATEGORIZE
+  - [Google Cloud: Application Development Coursera Course](https://www.coursera.org/learn/getting-started-app-development/home/welcome)
 
 # Terms
   - cloud computing:
@@ -24,6 +23,8 @@
       - provide raw, compute, storage, and network
       - you pay for what you allocate
       - e.g. compute engine
+    - Hybrid: incorporating aspects of Iaas and PaaS
+      - e.g. Kubernetes
     - PaaS: platform as a service
       - bind application code you write to libraries that give access to infrastructure your application needs
       - you pay for what you use
@@ -49,14 +50,14 @@
   - database architectures
     - relational:
       - use metadata to provide information about the data source, data collection methods, and meaning
-      - tabular structure keeps data well organized, accessible
+      - tabular structure keeps data well organized and accessible
       - exact kind and quanitity of data is always known
     - NoSQL
       - dont use normalized data model found in dbs,
         - dont organize data in tables, rows and columns
       - use cases
         - data has little/inconsistent structure
-        - data must be distributed across more than on emachine
+        - data must be distributed across more than one emachine
         - speed is more important than accuracy
         - application requires data types or analysis methods that common relational dbs handle poorly
       - types
@@ -76,12 +77,31 @@
           - information processing in applications that connect multiple data sources
         - search engine: finding information in documents
         - time series: time series data
-        - wide column storea: manage data that wont fit on one computer; aka column families, columnar databaes, column-oriented DBS
+        - wide column storea: manage data that wont fit on one computer; aka column families, columnar databases, column-oriented DBS
           - columns: related facts
-          - column families: groups of columns that have content and function similar to tables in a relational databae
+          - column families: groups of columns that have content and function similar to tables in a relational database
         - XML: native XML db or native XML dbms
           - data in xml format or varied copmlex formats like audio or video
           -
+
+# Best Practices
+  - Cloud Native Application Goals
+    - global reach
+    - scalability
+    - high availability
+    - security
+    - loosely coupled
+    - resiliency
+    - repeatable deployments
+    - strong build and release systems via infrastructure as code
+    - debugging, monitoring and performance-tuning are crucial for running robust applications
+  - understand your data storage needs to and storage options
+    - storage needs
+      - high volumes of flat structured data
+      - relational data
+      - multimedia
+      -
+
 
 # developing, deploying, and monitoring in the cloud
   - setting up your environment
@@ -97,7 +117,8 @@
     - source viewer: browser and view repo files within the GCP console
     - allow external users
   - supported platforms
-    -
+
+
 ### cloud functions
     - create single-purpose functions that respond to events without a server/runtime
     - written in javascript, execute in managed node.js environment on GCP
@@ -723,6 +744,7 @@
   - fully managed petabyte scale analytics data warehouse
     - no cluster maintenance
     - SLA: 99.9% availibility
+  - Data stored in is highly durable. Google stores your data in a replicated manner by default and at no additional charge for replicas.
   - data can be kept in any region
     - compute and storage are separated with a terabit network in between
   - read and write data via cloud dataflow, hadoop, or spark
@@ -738,9 +760,19 @@
         - automatic discount for long-term data storage automatically
         - sharing does NOT impact your cost or performance
           - but those users will be charged for running queries
-      - queries: only when they are running
+      - queries: incur charges based on the amount of data they process:
+        - when you submit a query, you pay for the compute nodes only for the duration of that query.
+        - don't have to pay to keep a compute cluster up and running.
   - use cases
     - data analystics warehousing
+  - terms
+    - Datasets: a grouping mechanism that holds zero or more tables.
+      - the lowest level unit of access control
+      - owned by GCP projects.
+      - Each dataset can be shared with individual users.
+    - Tables: a row-column structure that contains actual data.
+      - Each table has a schema that describes strongly typed columns of values.
+      - Each table belongs to a dataset.
 #### cloud pub/sub
   - scalable and flexible enterprise messaging for events in realtime and stream analytics
     - on demand scalability beyond one million messages per second
