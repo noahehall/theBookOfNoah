@@ -1,7 +1,7 @@
 # bookmark
   - [css layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout)
   - [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
-  -
+  - [sass vs less](https://www.keycdn.com/blog/sass-vs-less/)
 
 
 # must read
@@ -41,6 +41,9 @@
   - [color converter](https://serennu.com/colour/hsltorgb.php)
   - [css validator by w3c](http://jigsaw.w3.org/css-validator/#validate_by_input)
 
+# TODO
+  - CSS Preprocessor: scripting language that extends CSS and then compiltes it into regular CSS
+  -
     -
 # TLDR; best practices, tips and tricks
   - always validate your CSS, e.g. with http://jigsaw.w3.org/css-validator/#validate_by_input
