@@ -9,6 +9,7 @@
   - [nosql wide column store](https://www.forbes.com/sites/metabrown/2018/03/31/get-the-basics-on-nosql-databases-wide-column-store-databases/#453e9a4b6e50)
   - [types of relational and nosql dbs](https://www.forbes.com/sites/metabrown/2018/03/31/get-to-know-relational-and-nosql-databases-that-power-big-data-analytics/#725169291943)
   - [Google Cloud: Application Development Coursera Course](https://www.coursera.org/learn/getting-started-app-development/home/welcome)
+  - [the worker pattern](https://gist.github.com/ryandotsmith/1660752)
 
 # Terms
   - cloud computing:
@@ -86,14 +87,14 @@
 
 # Best Practices
   - Cloud Native Application Goals
-    - global reach
+    - global reach and can handle high traffic volumes reliably
     - scalability
     - high availability
     - security
     - loosely coupled
     - resiliency
-    - repeatable deployments
-    - strong build and release systems via infrastructure as code
+    - repeatable & rollbackable deployments
+    - build and release systems that enable continuous integration and delivery
     - debugging, monitoring and performance-tuning are crucial for running robust applications
   - understand your data storage needs to and storage options
     - storage needs
@@ -101,6 +102,66 @@
       - relational data
       - multimedia
       -
+
+## app code and environment
+  - code repository
+    - all code should be stored in a repository
+    - enables you to track changes and setup systems for continuous integration and delivery
+  - use a dependency manager
+    - this allows you to never store external packages in your repository
+    - each version of your application should explicity list its dependencies
+  - configuration settings
+    - separate config settings from coder
+    - never store config settings as constants
+    - specify config settings as env variables
+      - allows you to easily modify settings in differeent environments
+
+
+## Microservices Architecture
+  - enables you to structure your application in relation to your business boundaries
+  - designed for loosely coupled services
+    - this makes them resiliant to spikes, failures, and changes to traffic (load)
+    - use pub/sub model
+      - a cloud pub/sub topic can be the message queue
+        - enabling perform asynchronous processing, and buffer requests during spikes in traffic
+    - consumers of HTTP apis should bind loosely with publisher payloads
+      - never attempt to bind with all fields in the payload
+      - this enables the publisher to modify the API in a backwards compatibld manner
+  - implement stateless components for scalability
+    - never store state internally or access shared state
+      - shared states are a common bottleneck for scalability
+    - each component should focus on compute tasks only
+      - enables you to implement the worker pattern in order to add/remove additional instances of the component for scalability
+    - components should startup & shutdown quickly to enable efficient scaling
+  - cache application data/content
+    - improves performance and lowers network latency
+    - anything that is computationally intensive to calculate
+    - anything that is frequently accessed
+    - never cache private/personal data
+    - always follow modern cache strategies
+    - store data in a cache service like memcached/redis
+    - store webpages/static content in a CDN
+  - each service is monitored and can fail gracely on error
+  - each service lives as a distinct application that can be updated, deployed and scaled indepdendently of each other
+    - perfect for handling feature changes and bug fixes
+  - far more easier to understand where code needs to be changed compared to a monolithic application
+  - each service has distinct dependencies (vs the tangled dependencies in large monoliths)
+  - things to watch out for
+    - remote operations can be unpredictable and response times can make your app seem slow
+      - keep ui responsive
+      - always perform backend operations asynchronously
+      - keep operations on the user thread at a minimum
+      - use event-driven processing where possible
+  -
+
+## API Gateways
+  - enables backend functionality to be available to consumer applications
+  - if your backend cannot be moved to the cloud
+    - the API can still serve as a facade or adapter link instead of communicating with the legacy backend using outdated protocols or desparate interfaces
+      - each consumer can then invoke a modern cloud API which then invokes the legacy backend
+## build & Deployment
+  - compliance with local laws
+  - user latency
 
 
 # developing, deploying, and monitoring in the cloud
@@ -498,6 +559,7 @@
     - always version your API
     - consumers should be able to specify the API version they want to use
 ### cloud endpoints
+  - develop, deploy, protect and monitor APIs based ont he open APIs specification or GRPC
   - distributed api management through api console
   - expose the api using a restful interface
   - control access and validate calls with json web tokens and google api keys
@@ -511,6 +573,7 @@
     - compute engine: supports javascript clients
     -
 ### apigee edge
+  - design, secure, analyze and scale your APIs for legacy backends
   - platform for making APIs available to your customers and partners
   - containers analytics, monetization, and a developer portal
   - use cases

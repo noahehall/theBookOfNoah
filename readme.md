@@ -12,3 +12,11 @@
     - there are instances where examples are provided, which either could be copy/pasted from the source links at the top of the file or created by me
   - the purpose of file content is short term memorization and ramping up to a general understanding of high level topics concerning a specific realm of information
   -
+
+# must do
+## Architecture
+  - [the worker pattern](https://gist.github.com/ryandotsmith/1660752)
+
+## APIs
+  - [open api specification](https://github.com/OAI/OpenAPI-Specification)
+  - [GRPC](https://grpc.io/)
