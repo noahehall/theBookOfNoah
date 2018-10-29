@@ -25,6 +25,8 @@
 
 ## Architecture
   - [the worker pattern](https://gist.github.com/ryandotsmith/1660752)
+  - [martin fowler blue/green deployment](https://martinfowler.com/bliki/BlueGreenDeployment.html)
+  - [strangler pattern](https://docs.microsoft.com/en-us/azure/architecture/patterns/strangler)
 
 ## APIs
   - [open api specification](https://github.com/OAI/OpenAPI-Specification)

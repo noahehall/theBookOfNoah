@@ -85,7 +85,9 @@
           - column families: groups of columns that have content and function similar to tables in a relational database
         - XML: native XML db or native XML dbms
           - data in xml format or varied copmlex formats like audio or video
-          -
+  - setting up your environment
+    - imperative approach: figure out the commands you need to setup/change from the old state to the new
+    - declarative: use a template to specify what the environment should look like
 
 
 # Best Practices
@@ -165,12 +167,6 @@
     - the API can still serve as a facade or adapter link instead of communicating with the legacy backend using outdated protocols or desparate interfaces
       - each consumer can then invoke a modern cloud API which then invokes the legacy backend
 
-
-## build & Deployment
-  - compliance with local laws
-  - user latency
-
-
 ## External User Administration
   - use federated identity management
     - minimizes effort for user administration
@@ -192,11 +188,100 @@
     - make user IDs case insensitive
     - build a secure auth system
 
-# developing, deploying, and monitoring in the cloud
-  - setting up your environment
-    - imperative approach: figure out the commands you need to setup/change from the old state to the new
-    - declarative: use a template to specify what the environment should look like
-  -
+## Application Reliability
+### health-check endpoints
+  - monitor the status of your app and services via a Health Monitoring Agent (e.g. a load balancer)
+    - periodically sends requests tot he health check endpoint
+  - ensure they are available and performing optimally
+  - setup alerts to devOps at thresholds
+  - the health-check handler should check the health of:
+    - all critical dependencies
+      - storage
+      - database
+      - network connections
+      - etc
+    - all infrastructure components required for the service to function properly
+
+### Logging
+  - monitoring your app's performance
+    - debugging
+    - error reporting
+    - tracing
+    - logs-based metrics
+    - monitoring
+  - treat your logs as event streams: logs constitute a continous stream of events that keep occuring as long as the app is running
+  - never manage your log files in your application
+    - write to an event stream, e.g. standard out and let the underlying infrastructure collate all events for later analysis and storage
+  - setup logs-baased metrics and trace requests across different services in you rapplication
+
+### error handling
+  - handle transient and long-lasting errors gracefully
+  - transient errors: retry with exponential backoff
+  - service availability errors: implement a circuit breaker
+  - each UI component should degrade gracefully
+  - for errors that propagate back to the user
+    - consider degrading the application gracefully instead of explicity displaying the error message
+      - this can help with security
+
+### Testing
+  - setup high availability tests
+  - setup functional tests
+  - setup performance tests
+  - setup tabletop tests
+    - teams discuss how they will respond in failure scenarios but dont perform any real actions
+  - setup canary testing
+  - identify failure scenarios and simulate them in your development environment to test the efficacy of your disaster recovery plans
+    - connectivity failiure
+    - on-premises data center / other cloud provider failure
+    - zone/region failure
+    - deployment rollback
+    - data corruption caused by network / application issues
+  - develop disaster recovery plans
+    - people are notified
+    - traffic is rerouted using redundant routes
+    - make sure data was not corrupted during failure & recovery process
+    - ensure all services/processes are restored ina timely manner
+    - processes
+    - tools
+
+## DevOps
+  - devops model
+    - should be fullly automated
+    - continouosly integrated
+    - continuously deployed
+  - code repo -> build system -> deploy system ->
+    - test environments: execute integration, security, and performance tests
+    - production environment: monitor performance with metrics and alerts
+  - integrate and deliver small changes vs big changes
+    - lowers risk of regression
+    - debug issues faster
+    - rollback to the last stable build
+
+
+### SecDevOps
+  - consider security throughout the continuous integration and delivery process
+  - automate security checks
+    - confirm your using the most secure version of third party dependencies
+    - scan code for security vulnerabilities
+    - confirm resources have permissions based on principle of least privilege
+    - detecting errors in production
+
+
+## Application Security
+### Data
+  - data sovereignty
+    - some regions and industry segments have strict compliance requirements for data protection and consu mer privacy
+    - Areas to consider
+      - processing user data
+      - storing user data
+      - sharing user data
+      - review the industry segment and region where your users live and your services will be located
+
+
+## Migrating to the cloud
+  - implement the strangler pattern: incremently replace components of the old application with new services
+
+# GCP PRODUCTS
 
 ## development
 ### cloud source repositories (i.e. git)
@@ -297,6 +382,7 @@
       - execute requests for any method and see responses in real time
       - make authenticated and authorized API calls
     - Client Libraries:
+      - retry failed requests automatically
       - cloud client libraries: community-owned
       - API Client libraries: open source generated supporting various languages
   - Mobile App
