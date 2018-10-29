@@ -18,13 +18,18 @@ everything you need:https://docs.docker.com/engine/userguide/
 
 
 # tips
+  ```sh
+    # getting help
+      docker help COMMAND
+      docker COMMAND OPTIONS
+
+  ```
   - reclaiming disk space
-  ```js
+  ```sh
       docker rm $(docker ps -a -q)
       docker rmi $(docker images -q)
       docker volume rm $(docker volume ls |awk '{print $2}')
       rm -rf ~/Library/Containers/com.docker.docker/Data/*
-      */ // dont use this line
   ```
 # API
 ## docker build
@@ -41,10 +46,8 @@ everything you need:https://docs.docker.com/engine/userguide/
 
 
 
-
-
-
-
+# help
+  - add current user to docker group `sudo usermod -aG docker $USER`
 
 
 
@@ -56,7 +59,11 @@ everything you need:https://docs.docker.com/engine/userguide/
   - disable docker on boot `sudo systemctl disable docker`
   - restart docker daemon `sudo service docker restart`
   - pull an image `docker pull hello-world`
-  - bash into a docker container `docker run IMAGE_NAME /bin/bash`
+  - bash into a docker container
+    - if no docker container, start from image and bash into container `docker run IMAGE_NAME /bin/bash`
+    - if docker container exists
+      - Use docker ps to get the name of the existing container.
+      - Use the command docker exec -it <container name> /bin/bash to get a bash shell in the container.
   - login to docker hub `docker login --username=yourhubusername --email=youremail@company.com`
   - remove dangling docker images `docker rmi $(docker images -f dangling=true -q)`
   - stop containers with text in name `docker stop $(docker ps -aq --filter name=node)`
