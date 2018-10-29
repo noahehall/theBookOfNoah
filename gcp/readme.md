@@ -10,6 +10,8 @@
   - [types of relational and nosql dbs](https://www.forbes.com/sites/metabrown/2018/03/31/get-to-know-relational-and-nosql-databases-that-power-big-data-analytics/#725169291943)
   - [Google Cloud: Application Development Coursera Course](https://www.coursera.org/learn/getting-started-app-development/home/welcome)
   - [the worker pattern](https://gist.github.com/ryandotsmith/1660752)
+  - [user auth/password management](https://cloud.google.com/blog/products/gcp/12-best-practices-for-user-account)
+  -
 
 # Terms
   - cloud computing:
@@ -85,6 +87,7 @@
           - data in xml format or varied copmlex formats like audio or video
           -
 
+
 # Best Practices
   - Cloud Native Application Goals
     - global reach and can handle high traffic volumes reliably
@@ -102,6 +105,7 @@
       - relational data
       - multimedia
       -
+
 
 ## app code and environment
   - code repository
@@ -154,15 +158,39 @@
       - use event-driven processing where possible
   -
 
+
 ## API Gateways
   - enables backend functionality to be available to consumer applications
   - if your backend cannot be moved to the cloud
     - the API can still serve as a facade or adapter link instead of communicating with the legacy backend using outdated protocols or desparate interfaces
       - each consumer can then invoke a modern cloud API which then invokes the legacy backend
+
+
 ## build & Deployment
   - compliance with local laws
   - user latency
 
+
+## External User Administration
+  - use federated identity management
+    - minimizes effort for user administration
+  - whether using FIM or building inhouse, always:
+    - implement secure solution for authenticating & authorizing users
+    - use strong cryptographic hash for passwords
+    - allow for third party identity providers
+    - separate the concept of user identity and user account
+      - users are not an email address, phone number, etc.
+      - users are a columnation of their unique personalized data and experience within your service
+    - maintain low coupling and high cohesion between different parts of a user's profile
+    - allow multiple identities to link to a single user account
+    - don't block long/complex passwords
+    - don't impose unreasonable ruules for usernames
+    - allow users to change their username
+    - permit users to delete their accounts
+    - make a consious decision on session length
+    - use 2-step verification
+    - make user IDs case insensitive
+    - build a secure auth system
 
 # developing, deploying, and monitoring in the cloud
   - setting up your environment
