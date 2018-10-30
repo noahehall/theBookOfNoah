@@ -889,15 +889,21 @@
   - managed service providing replication, failover, backups
     - can replicate a master instance to one/more read-replicas
     - failover to make your data highly available
-  - proxy allows for secure access to your cloud SQL second gen instances without whitelisting
+    - enable automated backup that contains data you need to protect from loss/damage
   - terabytes of capacity
-  -
+  - cloud SQL Proxy
+    - proxy allows for secure access to your cloud SQL second gen instances without whitelisting
+    - create a proxy (client) that runs in your local environment
+    - your app communicates with the proxy using a standard db protocol used by your database
+    - the proxy uses a secure tunnel to communicate with its companion process running on the cloud server
   - use cases
     - best for web frameworks and existing applications
     - storing user creds and customer orders
     - structured data
     - OLTP workloads
     - applications using mysql/pgs
+
+
 #### Google Cloud Spanner
   - petabytes of dapacity
   - horizontal scalability

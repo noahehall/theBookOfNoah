@@ -3036,6 +3036,16 @@ remove	/home/imsov/git/theBookOfNoah/LinkedList/index.js	/^SinglyList.prototype.
 SinglyList.remove	/home/imsov/git/theBookOfNoah/LinkedList/index.js	/^SinglyList.prototype.remove = function(position) {$/;"	method	line:55
 SinglyList.const.failure	/home/imsov/git/theBookOfNoah/LinkedList/index.js	/^    const message = {failure: 'Failure: non-existent node in this list.'};$/;"	property	line:56
 Node	/home/imsov/git/theBookOfNoah/LinkedList/Node.js	/^export default function Node(data) {$/;"	function	line:1
+about	/home/imsov/git/theBookOfNoah/readme.md	/^# about$/;"	function	line:1
+how to use	/home/imsov/git/theBookOfNoah/readme.md	/^# how to use$/;"	function	line:8
+When to use	/home/imsov/git/theBookOfNoah/readme.md	/^# When to use$/;"	function	line:16
+must do	/home/imsov/git/theBookOfNoah/readme.md	/^# must do$/;"	function	line:22
+Architecture	/home/imsov/git/theBookOfNoah/readme.md	/^## Architecture$/;"	function	line:26
+APIs	/home/imsov/git/theBookOfNoah/readme.md	/^## APIs$/;"	function	line:31
+databases	/home/imsov/git/theBookOfNoah/readme.md	/^## databases$/;"	function	line:35
+best practices	/home/imsov/git/theBookOfNoah/readme.md	/^## best practices$/;"	function	line:41
+Javascript	/home/imsov/git/theBookOfNoah/readme.md	/^### Javascript$/;"	function	line:42
+Security	/home/imsov/git/theBookOfNoah/readme.md	/^### Security$/;"	function	line:44
 Todos	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# Todos$/;"	function	line:1
 links	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# links$/;"	function	line:3
 Terms	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# Terms$/;"	function	line:18
@@ -3097,37 +3107,27 @@ Cloud Datastore	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud Datastor
 Big Table	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Big Table$/;"	function	line:858
 Cloud SQL and Google Cloud Spanner	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud SQL and Google Cloud Spanner$/;"	function	line:878
 Cloud SQL	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Cloud SQL$/;"	function	line:888
-Google Cloud Spanner	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Google Cloud Spanner$/;"	function	line:901
-Big Data and Machine Learning	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Big Data and Machine Learning$/;"	function	line:915
-Big Data	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Big Data$/;"	function	line:922
-Cloud dataproc	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud dataproc$/;"	function	line:924
-cloud dataflow	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud dataflow$/;"	function	line:950
-BigQuery	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### BigQuery$/;"	function	line:985
-cloud pub/sub	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud pub\/sub$/;"	function	line:1022
-cloud datalab	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud datalab$/;"	function	line:1038
-Machine Learning Platform	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Machine Learning Platform$/;"	function	line:1061
-TensorFlow	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### TensorFlow$/;"	function	line:1094
-Cloud ML	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Cloud ML$/;"	function	line:1107
-Machine Learning APIs	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Machine Learning APIs$/;"	function	line:1117
-OLD: LinkedIn (Lynda) Learning	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# OLD: LinkedIn (Lynda) Learning$/;"	function	line:1153
-basics	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# basics$/;"	function	line:1154
-services	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# services$/;"	function	line:1178
-Compute: virtual machines	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Compute: virtual machines$/;"	function	line:1187
-storage: files and databases	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## storage: files and databases$/;"	function	line:1195
-Big Data	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Big Data$/;"	function	line:1208
-other services: networking, ML, etc.	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## other services: networking, ML, etc.$/;"	function	line:1213
-Identity & Security	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Identity & Security$/;"	function	line:1214
-Management & Monitoring	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Management & Monitoring$/;"	function	line:1216
-Developer Tools	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Developer Tools$/;"	function	line:1218
-Machine Learning	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Machine Learning$/;"	function	line:1223
-architecture	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# architecture$/;"	function	line:1224
-about	/home/imsov/git/theBookOfNoah/readme.md	/^# about$/;"	function	line:1
-how to use	/home/imsov/git/theBookOfNoah/readme.md	/^# how to use$/;"	function	line:8
-When to use	/home/imsov/git/theBookOfNoah/readme.md	/^# When to use$/;"	function	line:16
-must do	/home/imsov/git/theBookOfNoah/readme.md	/^# must do$/;"	function	line:22
-Architecture	/home/imsov/git/theBookOfNoah/readme.md	/^## Architecture$/;"	function	line:26
-APIs	/home/imsov/git/theBookOfNoah/readme.md	/^## APIs$/;"	function	line:31
-databases	/home/imsov/git/theBookOfNoah/readme.md	/^## databases$/;"	function	line:35
-best practices	/home/imsov/git/theBookOfNoah/readme.md	/^## best practices$/;"	function	line:41
-Javascript	/home/imsov/git/theBookOfNoah/readme.md	/^### Javascript$/;"	function	line:42
-Security	/home/imsov/git/theBookOfNoah/readme.md	/^### Security$/;"	function	line:44
+Google Cloud Spanner	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Google Cloud Spanner$/;"	function	line:907
+Big Data and Machine Learning	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Big Data and Machine Learning$/;"	function	line:921
+Big Data	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Big Data$/;"	function	line:928
+Cloud dataproc	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud dataproc$/;"	function	line:930
+cloud dataflow	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud dataflow$/;"	function	line:956
+BigQuery	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### BigQuery$/;"	function	line:991
+cloud pub/sub	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud pub\/sub$/;"	function	line:1028
+cloud datalab	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud datalab$/;"	function	line:1044
+Machine Learning Platform	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Machine Learning Platform$/;"	function	line:1067
+TensorFlow	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### TensorFlow$/;"	function	line:1100
+Cloud ML	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Cloud ML$/;"	function	line:1113
+Machine Learning APIs	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Machine Learning APIs$/;"	function	line:1123
+OLD: LinkedIn (Lynda) Learning	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# OLD: LinkedIn (Lynda) Learning$/;"	function	line:1159
+basics	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# basics$/;"	function	line:1160
+services	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# services$/;"	function	line:1184
+Compute: virtual machines	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Compute: virtual machines$/;"	function	line:1193
+storage: files and databases	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## storage: files and databases$/;"	function	line:1201
+Big Data	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Big Data$/;"	function	line:1214
+other services: networking, ML, etc.	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## other services: networking, ML, etc.$/;"	function	line:1219
+Identity & Security	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Identity & Security$/;"	function	line:1220
+Management & Monitoring	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Management & Monitoring$/;"	function	line:1222
+Developer Tools	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Developer Tools$/;"	function	line:1224
+Machine Learning	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Machine Learning$/;"	function	line:1229
+architecture	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# architecture$/;"	function	line:1230
