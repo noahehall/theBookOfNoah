@@ -1,4 +1,13 @@
+# Todos
+  - [gcloud reference](https://cloud.google.com/sdk/gcloud/reference/)
 # cmds
+## basics
+  ```sh
+    #initialize
+      gcloud init 
+
+
+  ```
 ## regions and zones
   ```sh
 

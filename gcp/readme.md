@@ -1,3 +1,5 @@
+# Todos
+  -
 # links
   - [lynda GCP essential training](https://www.lynda.com/Google-Cloud-Platform-tutorials/Google-Cloud-Platform-Essential-Training/540539-2.html)
   - [gcloud architect exam guide](https://cloud.google.com/certification/guides/cloud-architect/)
@@ -11,7 +13,7 @@
   - [Google Cloud: Application Development Coursera Course](https://www.coursera.org/learn/getting-started-app-development/home/welcome)
   - [the worker pattern](https://gist.github.com/ryandotsmith/1660752)
   - [user auth/password management](https://cloud.google.com/blog/products/gcp/12-best-practices-for-user-account)
-  -
+  - [google cloud client libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
 
 # Terms
   - cloud computing:
@@ -280,6 +282,7 @@
 
 ## Migrating to the cloud
   - implement the strangler pattern: incremently replace components of the old application with new services
+    -
 
 # GCP PRODUCTS
 
@@ -362,17 +365,42 @@
   - principal of least privilege: users only receive permissions to do what they are required to do
 
 ## Managing resources
-  - Web Console: web based admin
+### Web Console:
+  - web based admin
     - view and manage projects and their resources
     - enable and disable and explore API of GCP resources
-    - Cloud Shell: CLI to access GCP resources from your browser
-      - a temp VM installed with the google SDK
-      - web preview: start a web browser on an arbitrary port to the connected resource
-  - SDK CLI: manage resources and applications, is available as a docker image
+  - API Explorer: testing google cloud APIs in a sandbox
+#### Cloud Shell:
+  - CLI to access GCP resources from your browser
+    - built-in authorization to cloud platofrm console proejcts and resources
+    -
+  - a temp VM instance
+    - 5gb of persistent disk
+    - pre-intsalled google cloud sdk
+  - features
+    - web preview: start a web browser on an arbitrary port to the connected resource
+    - built-in code editor
+### Google Cloud SDK:
+  - manage resources and applications, is available as a docker image
+    - useful for writing scripts
+  - has 3 tools
     - gcloud: all services except cloud storage and bq
+      - perform common tasks on GCP
+      - create and manage GCP resources
+      - script/automate gcloud commands
+      - use gcloud interactive shell
     - gsutil: for cloud storage
+      - create and manage buckets
+      - upload, download and delete objects
+      - move, copy and rename objects
+      - manage access to stored objects
     - bq: BigQuery
-  - API: are all restful
+      - manage datasets, tables, and other BigQuery entities
+      - allows you to run queries
+
+### Google API client library:
+  - should only be used if your programming language does not have a a Google Client Library
+    - does not support gRPC
     - use JSON as an interchange format
     - uses OAuth 2.0 for authentication and authorization
     - each API is enabled through console
@@ -381,11 +409,33 @@
       - see Docs
       - execute requests for any method and see responses in real time
       - make authenticated and authorized API calls
-    - Client Libraries:
-      - retry failed requests automatically
-      - cloud client libraries: community-owned
-      - API Client libraries: open source generated supporting various languages
-  - Mobile App
+
+
+### Cloud Client Libraries:
+  - API Client libraries: open source generated supporting various languages
+    - handle low level communication with the server, including authentication with google
+    - installed using familiar package managers
+    - provide retry login for failed requests automatically
+    - gRPC: google remote procedure call APIs
+      - makes it easier to build connected systems by enabling client and server applications to communicate transparently
+      - makes it
+  - recommended method to invoke google cloud API
+  - architecture
+    - every package uses a client as a base for interacting with an API
+      - authentication
+        - if your app is on app/compute engine authentication will just work
+        - if you dont explicitly provide credentials, the client will reuse the credentials from the gcloud tool if it has already been setup
+        -
+### firebase sdk:
+  - firebase: mobile and web app dev platform
+    - ios, android, web, c++, unity, nodejs
+  - use cases
+    - implement federated identity management with firebase authentication
+    - firebase sdk for cloud storage stores files directly in google cloud storage buckets
+    - use app engine api to share data between firebase and app engine
+    - cloud functions for firebase lets you run backend code in respond to events triggered by firebase features and http requests
+    -
+### Mobile App
     - manage virtual machines and DB instances
     - manage apps in google app engine
     - manage billing
@@ -435,6 +485,8 @@
   - identified by an email address
     - PROJECT_NUMBER-compute@developer.gserviceaccount.com
     - PROJECT_ID@appspot.gserviceaccount.com
+
+
 ### IAM roles: the WHAT
   - role: a collection of permissions
   - types of roles
@@ -695,6 +747,9 @@
       - use apigee to standup microservices that replace the legacy applications services one by one
 
 ## Storage
+  - choosing a storage option
+    - based on application type
+    - based on workload
   - object storage: storage of BYTES that are addressed with a unique key, e.g. URLs
     -
   - file storage: hierarchy of folders
@@ -713,58 +768,28 @@
     - app engine: object storage, logs, and datastore backups
     - compute engine: startup scripts, general object storage
     - cloud sql: import and export tables
-### Gcloud Storage Products
-  - cloud datastore:: nosql document
-    - use cases
-      - structured objects
-      - support for transactions
-      - sql like queries
-    - terabytes of capacity
-    - maximum unit size of one megabyte per entity
-    - best for app engine
-  - cloud big table: nosql wide column
-    - use cases
-      - for analytical data with heavy read/write events like adtech/financial or iot data
-      - store large amount of single-keyed structued objects
-    - no sql queries (duh its nosql)
-    - no multi row transactions
-    - petabytes of capacity
-    - maximum unit size of 10 megabytes per call and 100 megabytes per row
-  - cloud storage
-    - use cases
-      - for structured and unstructured binary or object data
-      - immutable blobs larger than 10 megabytes e.g. images/movies
-      - backups
-    - petabytes of data, maximum unit size of 5 terabytes per object
-  - cloud sql
-    - best for web frameworks and existing applications like storing user creds and customer orders
-    - terabytes of capacity
-  - cloud spanner (relational)
-    - for large scale applications that are larger than two terabytes
-    - full sql support for online transaction processing system
-    - whenever high I/O global consistency is required
-    - petabytes of dapacity
-    - horizontal scalability
-  - bigquery
-    - big data analysis
-    - interactive query
-    -
-#### Cloud Storage
+
+
+### Cloud Storage
   - for object storage, each object is given a URL
   - full managed scalable service
   - no need to provision capacity ahead of time
   - data encrypt at rest and in transit
   - online and offline import services
+  - Object versioning:
+    - history of all changes to an object
+    - can list objects, restore objects to an older state, or permanently delete versions
   - NOT FOR
     - file storage
     - block storage
+  - petabytes of data, maximum unit size of 5 terabytes per object
   - Use cases
     - binary large object storage
     - objects are organized in buckets, in geographic locations
     - objects are immutable
-    - Object versioning:
-      - history of all changes to an object
-      - can list objects, restore objects to an older state, or permanently delete versions
+    - for structured and unstructured binary or object data
+    - immutable blobs larger than 10 megabytes e.g. images/movies
+    - backups
   - Permissions
     - IAM roles: project -> bucket -> object
     - ACL: access control Lists
@@ -803,19 +828,23 @@
       - low cost, highly durable, for data achiving, online backup, and disaster recovery
       - accessed at most once per year
       - 90 day minimum storage duration, cost per data access,
-#### Big Table
-  - big data NoSQL DB service
+### Big Table
+  - big data nosql wide column
+  - no multi row transactions
+  - petabytes of capacity
+  - maximum unit size of 10 megabytes per call and 100 megabytes per row
+  - same open soruce API as HBase (the native DB for hadoop)
+  - can increase your machine count without any downtime
+  - handles upgrades and restarts transparently
+  - data is encrypted both in flight and at rest
   - use cases
     - where applications need a DB where table records will have different columns
     - ideal for data that have a single lookup key, e.g. when you need a hash
     - user analytics or, financial data analysis, internet of things
-  - characteristics
-    - same open soruce API as HBase (the native DB for hadoop)
-    - can increase your machine count without any downtime
-    - handles upgrades and restarts transparently
-    - data is encrypted both in flight and at rest
-    -
-#### Cloud SQL and Google Cloud Spanner
+    - for analytical data with heavy read/write events like adtech/financial or iot data
+    - store large amount of single-keyed structued objects
+
+### Cloud SQL and Google Cloud Spanner
   - offers mysql and postgresql dbs as a service
   - characteristics
     - transactions: a set of database changes as all or nothing, either they all get made or none get made
@@ -825,20 +854,32 @@
     - can scale horizontally via read replicas
     - include network firewalls, and customer data is encrypted when on googles internal networks
     - supports sql workbench, toad, etc.
-    -
+#### Cloud SQL
+    - best for web frameworks and existing applications like storing user creds and customer orders
+    - terabytes of capacity
 #### Google Cloud Spanner
+  - relational db
+  - petabytes of dapacity
+  - horizontal scalability
   - transactional consistency at a global scale, schemas, SQL, and automatic synchronous replication for high availability
   - provides petabytes of capacity
   - use cases
     - if you have outgrown any relational dbs
     - are sharding your databases for throughput high performance
     - need transactional consistency
-    -
-#### Cloud Datastore
-  - NoSQL horizontally scalable DB
+    - for large scale applications that are larger than two terabytes
+    - full sql support for online transaction processing system
+    - whenever high I/O global consistency is required
+### Cloud Datastore
+  - NoSQL horizontally scalable document store
+  - terabytes of capacity
+  - maximum unit size of one megabyte per entity
+  - best for app engine
   - use cases
-    - store structured data from app engine apps
-    - integration point for app engine and compute engine with cloud datastore as the integration point
+    - store structured data/objects from app engine apps
+    - integration point for app engine and compute engine with cloud
+    - support for transactions
+    - sql like queries datastore as the integration point
   - characteristics
     - automatically handles sharding and replication
     - offers transactions that affet multiple db rows
@@ -854,7 +895,7 @@
 
 ### Big Data
   - integrated serverless platform
-#### Cloud dataproc
+### Cloud dataproc
   - fast way to run data mining and analysis in datasets of known size
   - you have to request a Hadoop cluster
     - built in 90 seconds
@@ -880,7 +921,7 @@
     - when you have a dataset of known size
       - NOT when your data shows up in real time
     - when you want to manage your dataset yourself
-#### cloud dataflow
+### cloud dataflow
   - unified programming model and managed service to build data pipelines for batch and streaming/continous data
     - transform-based programming model
   - develop and execute various data processing patterns
@@ -915,7 +956,9 @@
     - orchestration: create pipelines that coordinate internal/external services
     - real time applications
       - personalizing user expeeriences
-#### BigQuery
+### BigQuery
+  - big data analysis
+  - interactive query
   - provides near real-time interactive (adhoc) analysis (SQL 2011) of massive datasets (hundreds of TBs)
   - stream data at 100k rows per second
   - fully managed petabyte scale analytics data warehouse
@@ -950,7 +993,7 @@
     - Tables: a row-column structure that contains actual data.
       - Each table has a schema that describes strongly typed columns of values.
       - Each table belongs to a dataset.
-#### cloud pub/sub
+### cloud pub/sub
   - scalable and flexible enterprise messaging for events in realtime and stream analytics
     - on demand scalability beyond one million messages per second
   - application components make push/pull subscriptions to topics
@@ -966,7 +1009,7 @@
     - connect applications across GCP (e.g. push/pull between compute and app engine)
   - cost
     -
-#### cloud datalab
+### cloud datalab
   - managed service: interactive tool for large-scale data exploration, transformation, analysis and visualization
     - built on `jupyter notebook` which lets you create web based notebooks containing python code that can be run interactively and view the results
   - runs in a compute engine VM
@@ -989,7 +1032,7 @@
     - sql
     - javascript
 
-### Machine Learning Platform
+## Machine Learning Platform
   - Machine Learning: one branch in the field of AI
     - a way of solving problems without explicity coding the solution
     - human coders build systems that improve themselves over time through repeated exposure to sample (training) data

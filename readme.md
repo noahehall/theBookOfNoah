@@ -33,6 +33,8 @@
   - [GRPC](https://grpc.io/)
 
 ## best practices
+### Javascript
+  - [idiotmatic JS](https://medium.com/the-node-js-collection/modernizing-node-js-with-idiomatic-javascript-f18d984dcf93)
 ### Security
   - [external user administration](https://cloud.google.com/blog/products/gcp/12-best-practices-for-user-account)
   - [NIST guidelines on password complexity and strength](https://pages.nist.gov/800-63-3/sp800-63b.html#appendix-astrength-of-memorized-secrets)
