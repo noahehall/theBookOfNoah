@@ -771,25 +771,31 @@
 
 
 ### Cloud Storage
-  - for object storage, each object is given a URL
+  - unified object storage allowing you to serve, analyze and archive data/objects/blobs
+  - built for availability, durability, scalability, and consistency
   - full managed scalable service
-  - no need to provision capacity ahead of time
-  - data encrypt at rest and in transit
+    - no need to provision capacity ahead of time
+    - data encrypt at rest and in transit
   - online and offline import services
-  - Object versioning:
-    - history of all changes to an object
-    - can list objects, restore objects to an older state, or permanently delete versions
+  - objects
+    - has metadata but is treated as just bytes with no structure
+      - the only key is the object name
+    - versioning:
+      - history of all changes to an object
+      - can list objects, restore objects to an older state, or permanently delete versions
+    - accessed via HTTP
+      - includes ranged gets to retrieve portions of data
   - NOT FOR
     - file storage
     - block storage
   - petabytes of data, maximum unit size of 5 terabytes per object
   - Use cases
-    - binary large object storage
-    - objects are organized in buckets, in geographic locations
-    - objects are immutable
-    - for structured and unstructured binary or object data
+    - images, videos, objects and blobs, any unstructured data, static website hosting, backups
+      - includes end-user uploaded content
+    - for structured/unstructured binary and immutable large object storage
+      - each object is given a URL
+      - objects are organized in buckets, in geographic locations
     - immutable blobs larger than 10 megabytes e.g. images/movies
-    - backups
   - Permissions
     - IAM roles: project -> bucket -> object
     - ACL: access control Lists
@@ -828,21 +834,46 @@
       - low cost, highly durable, for data achiving, online backup, and disaster recovery
       - accessed at most once per year
       - 90 day minimum storage duration, cost per data access,
+
+### Cloud Datastore
+  - fully managed NoSQL horizontally scalable document store
+  - designed to automatically scale to very large datasets, sharding, and replication
+    - terabytes of capacity
+    - maximum unit size of one megabyte per entity
+    - offers transactions that affet multiple db rows
+  - use cases
+    - for durable key-value data
+    - best choice for high value application data
+      - user profiles, shopping carts, orders, etc.
+    - store semi-structured or hierarchical data
+    - managing multiple indexes over each entity
+    - crossroad transactions
+    - integration point for app engine and compute engine with cloud
+    - support for transactions
+    - sql like queries datastore as the integration point
+  - characteristics
+    -
+    - SQL like queries
+
 ### Big Table
-  - big data nosql wide column
-  - no multi row transactions
-  - petabytes of capacity
-  - maximum unit size of 10 megabytes per call and 100 megabytes per row
+  - big data sparsely populated nosql wide column
+    - petabytes of capacity
+    - maximum unit size of 10 megabytes per call and 100 megabytes per row
   - same open soruce API as HBase (the native DB for hadoop)
   - can increase your machine count without any downtime
   - handles upgrades and restarts transparently
   - data is encrypted both in flight and at rest
+  - built for fast key-value lookup and scanning over a defined key range
+    - similar to a spreadsheet that gives you access to anyset of columns from continuous rows by searching only the value in the first column, the key
+    - updates to individual rows are atomic
   - use cases
-    - where applications need a DB where table records will have different columns
-    - ideal for data that have a single lookup key, e.g. when you need a hash
-    - user analytics or, financial data analysis, internet of things
-    - for analytical data with heavy read/write events like adtech/financial or iot data
-    - store large amount of single-keyed structued objects
+    - operational/analytical applications
+      - user analytics or, financial data analysis, internet of things
+      - for analytical data with heavy read/write events like adtech/financial or iot data
+    - storing large amounts of single-keyed data (e.g. a hash table)
+    - mapReduce operations
+  - NOT FOR
+    - if you need multi-row transactions
 
 ### Cloud SQL and Google Cloud Spanner
   - offers mysql and postgresql dbs as a service
@@ -855,10 +886,19 @@
     - include network firewalls, and customer data is encrypted when on googles internal networks
     - supports sql workbench, toad, etc.
 #### Cloud SQL
-    - best for web frameworks and existing applications like storing user creds and customer orders
-    - terabytes of capacity
+  - managed service providing replication, failover, backups
+    - can replicate a master instance to one/more read-replicas
+    - failover to make your data highly available
+  - proxy allows for secure access to your cloud SQL second gen instances without whitelisting
+  - terabytes of capacity
+  -
+  - use cases
+    - best for web frameworks and existing applications
+    - storing user creds and customer orders
+    - structured data
+    - OLTP workloads
+    - applications using mysql/pgs
 #### Google Cloud Spanner
-  - relational db
   - petabytes of dapacity
   - horizontal scalability
   - transactional consistency at a global scale, schemas, SQL, and automatic synchronous replication for high availability
@@ -870,21 +910,7 @@
     - for large scale applications that are larger than two terabytes
     - full sql support for online transaction processing system
     - whenever high I/O global consistency is required
-### Cloud Datastore
-  - NoSQL horizontally scalable document store
-  - terabytes of capacity
-  - maximum unit size of one megabyte per entity
-  - best for app engine
-  - use cases
-    - store structured data/objects from app engine apps
-    - integration point for app engine and compute engine with cloud
-    - support for transactions
-    - sql like queries datastore as the integration point
-  - characteristics
-    - automatically handles sharding and replication
-    - offers transactions that affet multiple db rows
-    - SQL like queries
-    -
+
 
 ## Big Data and Machine Learning
   - requires investments in specific infrastructure and data processing

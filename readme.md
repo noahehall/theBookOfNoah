@@ -32,6 +32,12 @@
   - [open api specification](https://github.com/OAI/OpenAPI-Specification)
   - [GRPC](https://grpc.io/)
 
+## databases
+  - [nosql multi-document transactions](https://www.marklogic.com/blog/nosql-without-multi-document-multi-statement-transactions/)
+  - [managing database failover and recovery](https://docs.oracle.com/database/121/TTREP/failure.htm#TTREP547)
+  - [a primer on database replication](https://www.brianstorti.com/replication/)
+
+
 ## best practices
 ### Javascript
   - [idiotmatic JS](https://medium.com/the-node-js-collection/modernizing-node-js-with-idiomatic-javascript-f18d984dcf93)
