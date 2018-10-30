@@ -36,7 +36,7 @@
   - [nosql multi-document transactions](https://www.marklogic.com/blog/nosql-without-multi-document-multi-statement-transactions/)
   - [managing database failover and recovery](https://docs.oracle.com/database/121/TTREP/failure.htm#TTREP547)
   - [a primer on database replication](https://www.brianstorti.com/replication/)
-
+  - [OLTP: online transaction processing](https://docs.microsoft.com/en-us/azure/architecture/data-guide/relational-data/online-transaction-processing)
 
 ## best practices
 ### Javascript

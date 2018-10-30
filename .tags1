@@ -23,69 +23,69 @@ Application Security	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Applicatio
 Data	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Data$/;"	function	line:273
 Migrating to the cloud	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Migrating to the cloud$/;"	function	line:283
 GCP PRODUCTS	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# GCP PRODUCTS$/;"	function	line:287
-development	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## development$/;"	function	line:289
-cloud source repositories (i.e. git)	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud source repositories (i.e. git)$/;"	function	line:290
-cloud functions	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud functions$/;"	function	line:299
-deployment	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## deployment$/;"	function	line:316
-deployment manager	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### deployment manager$/;"	function	line:317
-monitoring	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## monitoring$/;"	function	line:327
-Stackdriver	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Stackdriver$/;"	function	line:332
-GCP Platform Administration	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# GCP Platform Administration$/;"	function	line:364
-Managing resources	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Managing resources$/;"	function	line:367
-Web Console:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Web Console:$/;"	function	line:368
-Cloud Shell:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Cloud Shell:$/;"	function	line:373
-Google Cloud SDK:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Google Cloud SDK:$/;"	function	line:383
-Google API client library:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Google API client library:$/;"	function	line:401
-Cloud Client Libraries:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud Client Libraries:$/;"	function	line:414
-firebase sdk:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### firebase sdk:$/;"	function	line:429
-Mobile App	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Mobile App$/;"	function	line:438
-GCP Regions and Zones	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## GCP Regions and Zones$/;"	function	line:444
-resource hierarchy:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## resource hierarchy:$/;"	function	line:452
-IAM: Cloud Identity and Access Management	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## IAM: Cloud Identity and Access Management$/;"	function	line:470
-IAM Users: The WHO	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### IAM Users: The WHO$/;"	function	line:472
-IAM roles: the WHAT	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### IAM roles: the WHAT$/;"	function	line:490
-Security	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Security$/;"	function	line:504
-Core Products	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# Core Products$/;"	function	line:532
-Cloud Launcher	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Cloud Launcher$/;"	function	line:534
-Virtual Private Cloud	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Virtual Private Cloud$/;"	function	line:540
-interconnect with networks external to GCP	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### interconnect with networks external to GCP$/;"	function	line:553
-cloud load balancing: load balance inbound traffic	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud load balancing: load balance inbound traffic$/;"	function	line:561
-Cloud DNS:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud DNS:$/;"	function	line:580
-Cloud CDN:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud CDN:$/;"	function	line:583
-compute infrastructure for applications	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## compute infrastructure for applications$/;"	function	line:586
-Compute Engine	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Compute Engine$/;"	function	line:608
-kubernetes	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### kubernetes$/;"	function	line:620
-app engine	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### app engine$/;"	function	line:642
-API management tools	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## API management tools$/;"	function	line:720
-cloud endpoints	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud endpoints$/;"	function	line:727
-apigee edge	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### apigee edge$/;"	function	line:741
-Storage	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Storage$/;"	function	line:749
-Cloud Storage	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud Storage$/;"	function	line:773
-Cloud Datastore	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud Datastore$/;"	function	line:838
-Big Table	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Big Table$/;"	function	line:858
-Cloud SQL and Google Cloud Spanner	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud SQL and Google Cloud Spanner$/;"	function	line:878
-Cloud SQL	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Cloud SQL$/;"	function	line:888
-Google Cloud Spanner	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Google Cloud Spanner$/;"	function	line:907
-Big Data and Machine Learning	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Big Data and Machine Learning$/;"	function	line:921
-Big Data	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Big Data$/;"	function	line:928
-Cloud dataproc	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud dataproc$/;"	function	line:930
-cloud dataflow	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud dataflow$/;"	function	line:956
-BigQuery	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### BigQuery$/;"	function	line:991
-cloud pub/sub	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud pub\/sub$/;"	function	line:1028
-cloud datalab	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud datalab$/;"	function	line:1044
-Machine Learning Platform	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Machine Learning Platform$/;"	function	line:1067
-TensorFlow	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### TensorFlow$/;"	function	line:1100
-Cloud ML	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Cloud ML$/;"	function	line:1113
-Machine Learning APIs	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Machine Learning APIs$/;"	function	line:1123
-OLD: LinkedIn (Lynda) Learning	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# OLD: LinkedIn (Lynda) Learning$/;"	function	line:1159
-basics	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# basics$/;"	function	line:1160
-services	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# services$/;"	function	line:1184
-Compute: virtual machines	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Compute: virtual machines$/;"	function	line:1193
-storage: files and databases	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## storage: files and databases$/;"	function	line:1201
-Big Data	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Big Data$/;"	function	line:1214
-other services: networking, ML, etc.	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## other services: networking, ML, etc.$/;"	function	line:1219
-Identity & Security	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Identity & Security$/;"	function	line:1220
-Management & Monitoring	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Management & Monitoring$/;"	function	line:1222
-Developer Tools	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Developer Tools$/;"	function	line:1224
-Machine Learning	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Machine Learning$/;"	function	line:1229
-architecture	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# architecture$/;"	function	line:1230
+development	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## development$/;"	function	line:288
+cloud source repositories (i.e. git)	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud source repositories (i.e. git)$/;"	function	line:289
+cloud functions	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud functions$/;"	function	line:298
+deployment	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## deployment$/;"	function	line:315
+deployment manager	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### deployment manager$/;"	function	line:316
+monitoring	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## monitoring$/;"	function	line:326
+Stackdriver	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Stackdriver$/;"	function	line:331
+GCP Platform Administration	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# GCP Platform Administration$/;"	function	line:363
+Managing resources	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Managing resources$/;"	function	line:366
+Web Console:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Web Console:$/;"	function	line:367
+Cloud Shell:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Cloud Shell:$/;"	function	line:372
+Google Cloud SDK:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Google Cloud SDK:$/;"	function	line:382
+Google API client library:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Google API client library:$/;"	function	line:400
+Cloud Client Libraries:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud Client Libraries:$/;"	function	line:413
+firebase sdk:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### firebase sdk:$/;"	function	line:428
+Mobile App	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Mobile App$/;"	function	line:437
+GCP Regions and Zones	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## GCP Regions and Zones$/;"	function	line:443
+resource hierarchy:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## resource hierarchy:$/;"	function	line:451
+IAM: Cloud Identity and Access Management	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## IAM: Cloud Identity and Access Management$/;"	function	line:469
+IAM Users: The WHO	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### IAM Users: The WHO$/;"	function	line:471
+IAM roles: the WHAT	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### IAM roles: the WHAT$/;"	function	line:489
+Security	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Security$/;"	function	line:503
+Core Products	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# Core Products$/;"	function	line:531
+Cloud Launcher	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Cloud Launcher$/;"	function	line:533
+Virtual Private Cloud	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Virtual Private Cloud$/;"	function	line:539
+interconnect with networks external to GCP	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### interconnect with networks external to GCP$/;"	function	line:552
+cloud load balancing: load balance inbound traffic	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud load balancing: load balance inbound traffic$/;"	function	line:560
+Cloud DNS:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud DNS:$/;"	function	line:579
+Cloud CDN:	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud CDN:$/;"	function	line:582
+compute infrastructure for applications	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## compute infrastructure for applications$/;"	function	line:585
+Compute Engine	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Compute Engine$/;"	function	line:607
+kubernetes	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### kubernetes$/;"	function	line:619
+app engine	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### app engine$/;"	function	line:641
+API management tools	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## API management tools$/;"	function	line:719
+cloud endpoints	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud endpoints$/;"	function	line:726
+apigee edge	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### apigee edge$/;"	function	line:740
+Storage	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Storage$/;"	function	line:748
+Cloud Storage	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud Storage$/;"	function	line:772
+Cloud Datastore	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud Datastore$/;"	function	line:837
+Big Table	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Big Table$/;"	function	line:857
+Cloud SQL and Google Cloud Spanner	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud SQL and Google Cloud Spanner$/;"	function	line:877
+Cloud SQL	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Cloud SQL$/;"	function	line:889
+Cloud Spanner	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Cloud Spanner$/;"	function	line:908
+Big Data and Machine Learning	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Big Data and Machine Learning$/;"	function	line:935
+Big Data	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Big Data$/;"	function	line:942
+Cloud dataproc	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Cloud dataproc$/;"	function	line:944
+cloud dataflow	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud dataflow$/;"	function	line:970
+BigQuery	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### BigQuery$/;"	function	line:1005
+cloud pub/sub	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud pub\/sub$/;"	function	line:1042
+cloud datalab	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### cloud datalab$/;"	function	line:1058
+Machine Learning Platform	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Machine Learning Platform$/;"	function	line:1081
+TensorFlow	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### TensorFlow$/;"	function	line:1114
+Cloud ML	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Cloud ML$/;"	function	line:1127
+Machine Learning APIs	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^#### Machine Learning APIs$/;"	function	line:1137
+OLD: LinkedIn (Lynda) Learning	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# OLD: LinkedIn (Lynda) Learning$/;"	function	line:1173
+basics	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# basics$/;"	function	line:1174
+services	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# services$/;"	function	line:1198
+Compute: virtual machines	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Compute: virtual machines$/;"	function	line:1207
+storage: files and databases	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## storage: files and databases$/;"	function	line:1215
+Big Data	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Big Data$/;"	function	line:1228
+other services: networking, ML, etc.	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## other services: networking, ML, etc.$/;"	function	line:1233
+Identity & Security	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Identity & Security$/;"	function	line:1234
+Management & Monitoring	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Management & Monitoring$/;"	function	line:1236
+Developer Tools	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^### Developer Tools$/;"	function	line:1238
+Machine Learning	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Machine Learning$/;"	function	line:1243
+architecture	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# architecture$/;"	function	line:1244

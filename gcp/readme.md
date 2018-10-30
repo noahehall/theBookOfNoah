@@ -108,7 +108,7 @@
       - high volumes of flat structured data
       - relational data
       - multimedia
-      -
+  - interleaved ttable: a table that you declare to be a child of another table you want the rows of the child table to be physically stored together with the associated parent row
 
 
 ## app code and environment
@@ -285,7 +285,6 @@
     -
 
 # GCP PRODUCTS
-
 ## development
 ### cloud source repositories (i.e. git)
     - keep code private to a GCP project
@@ -876,6 +875,8 @@
     - if you need multi-row transactions
 
 ### Cloud SQL and Google Cloud Spanner
+  - spanner uses real primary keys and interleaved child records instead of forein keys
+    - Cloud SQL has foreign keys
   - offers mysql and postgresql dbs as a service
   - characteristics
     - transactions: a set of database changes as all or nothing, either they all get made or none get made
@@ -892,7 +893,9 @@
     - enable automated backup that contains data you need to protect from loss/damage
   - terabytes of capacity
   - cloud SQL Proxy
-    - proxy allows for secure access to your cloud SQL second gen instances without whitelisting
+    - proxy allows for secure access to your cloud SQL second gen instances without whitelisting or configure SSL
+      - uses cloud sql API to communicate with GCP
+        - must provide a valid user account
     - create a proxy (client) that runs in your local environment
     - your app communicates with the proxy using a standard db protocol used by your database
     - the proxy uses a secure tunnel to communicate with its companion process running on the cloud server
@@ -900,21 +903,32 @@
     - best for web frameworks and existing applications
     - storing user creds and customer orders
     - structured data
-    - OLTP workloads
+    - OLTP (online transaction processing) workloads
     - applications using mysql/pgs
-
-
-#### Google Cloud Spanner
+#### Cloud Spanner
+  - fully mannaged relational db service
+    - strong consistency
+    - horizontal scalability
+    - automatic synchronous replication for high avialiabilty
+    - multi-region replication
+    - transactional consistency at a global scale, schemas, SQL,
   - petabytes of dapacity
-  - horizontal scalability
-  - transactional consistency at a global scale, schemas, SQL, and automatic synchronous replication for high availability
-  - provides petabytes of capacity
+    - divides data among servers by key ranges
+  - considerations
+    - avoid monotonically increasing/decreasing keys
+      - instead hash the key and spread the rights among n-shards
+    - make sure writes are well distributed and load the data using multiple workers
+    - use interleaved tables to establish hierarchy
+    - don't create non-interleaved indexes on columns with monotonically increasing or decreasing keys
+      - this causes all your inserts to be directed to a single instance
+      - always created indexes after you bulk upload your data
   - use cases
+    - mission critical OLTP (online transaction processing) applications
     - if you have outgrown any relational dbs
     - are sharding your databases for throughput high performance
     - need transactional consistency
     - for large scale applications that are larger than two terabytes
-    - full sql support for online transaction processing system
+    - full sql support for  system
     - whenever high I/O global consistency is required
 
 
