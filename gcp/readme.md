@@ -746,6 +746,51 @@
       - use apigee to standup microservices that replace the legacy applications services one by one
 
 ## Storage
+  - comparisons
+    - cloud storage
+      - binary/object store
+      - large or rarely accessed unstructured data
+      - read write latency: medium
+      - typical size: any
+      - storage type: object
+      - NOT FOR: structured data, building fast apps
+    - datastore:
+      - scalable store for structured data
+      - GAE apps,
+      - structured pure-serve use cases
+      - read wriet latency: medium
+      - typical size: less than 200 tb
+      - storage type: document
+      - NOT FOR: relational or analytic data
+    - Bigtable:
+      - high volume, low latency database
+      - flat, heavy read/write, analytic data
+      - read wriet latency: low
+      - typical size: 2tb-10tb
+      - storage type: key value
+      - NOT FOR: high structure or transactional data
+    - CloudSQL
+      - well-understored VM Based RDBMS
+      - web frameworks
+      - existing applications
+      - read write latency: low
+      - typical size: less than 10 tb
+      - storage type: relational
+      - NOT FOR: scaling, analytics, heavy writes
+    - Spanner:
+      - relational DB service
+      - low latency, tansactional systems
+      - read write latency: low
+      - typical size: any
+      - storage type: relational
+      - NOT FOR: analytic data
+    - Bigquery
+      - autoscaling analytic data warehouse
+      - interactive analysis of static datsets
+      - read write latency: high
+      - typical size: any
+      - storage type: columnar
+      - NOT FOR: building fast apps
   - choosing a storage option
     - based on application type
     - based on workload
@@ -767,8 +812,9 @@
     - app engine: object storage, logs, and datastore backups
     - compute engine: startup scripts, general object storage
     - cloud sql: import and export tables
-
-
+### Caching
+  - redis labs
+  - memcached cloud
 ### Cloud Storage
   - unified object storage allowing you to serve, analyze and archive data/objects/blobs
   - built for availability, durability, scalability, and consistency
@@ -789,6 +835,7 @@
     - block storage
   - petabytes of data, maximum unit size of 5 terabytes per object
   - Use cases
+    - storing files
     - images, videos, objects and blobs, any unstructured data, static website hosting, backups
       - includes end-user uploaded content
     - for structured/unstructured binary and immutable large object storage
@@ -931,7 +978,6 @@
     - full sql support for  system
     - whenever high I/O global consistency is required
 
-
 ## Big Data and Machine Learning
   - requires investments in specific infrastructure and data processing
   - building and maintaining compute heavy data and analytics systems
@@ -1003,17 +1049,15 @@
     - real time applications
       - personalizing user expeeriences
 ### BigQuery
-  - big data analysis
-  - interactive query
+  - fuly managed data warehouse for analytics
+  - can scan terabytes in seconds and petabytes in minutes
   - provides near real-time interactive (adhoc) analysis (SQL 2011) of massive datasets (hundreds of TBs)
   - stream data at 100k rows per second
-  - fully managed petabyte scale analytics data warehouse
-    - no cluster maintenance
-    - SLA: 99.9% availibility
+  - no cluster maintenance
+  - SLA: 99.9% availibility
   - Data stored in is highly durable. Google stores your data in a replicated manner by default and at no additional charge for replicas.
   - data can be kept in any region
     - compute and storage are separated with a terabit network in between
-  - read and write data via cloud dataflow, hadoop, or spark
   - getting data into bigquery
     - stream it at 100k rows per second
     - cloud storage
@@ -1029,8 +1073,6 @@
       - queries: incur charges based on the amount of data they process:
         - when you submit a query, you pay for the compute nodes only for the duration of that query.
         - don't have to pay to keep a compute cluster up and running.
-  - use cases
-    - data analystics warehousing
   - terms
     - Datasets: a grouping mechanism that holds zero or more tables.
       - the lowest level unit of access control
@@ -1039,6 +1081,50 @@
     - Tables: a row-column structure that contains actual data.
       - Each table has a schema that describes strongly typed columns of values.
       - Each table belongs to a dataset.
+  - use cases
+    - big data analystics warehousing, analytics, and processing
+    - OLAP (online analytic processing) workloads
+    - big data exploration and processing
+    - reporting via BI tools
+    - read and write data via cloud dataflow, hadoop, or spark
+    - run microsoft SQL
+### Microsoft SQL Server
+  - you can run SQL Server images on Google Compute Engine
+    - can be preloaded with SQL Server
+  - supported versions
+    - SQL Server Standard, Web, and Enterprise
+  - NOT a managed service
+# Storage options for mobile
+  - Cloud storage for firebase
+    - overview
+      - stores user generated data and files to google cloud storage
+      - mobile and web access to google cloud storage
+      - serverless third0party authentication and authorization
+    - use cases
+      - images, pictures, and videos
+      - objects and  blobs
+      - unstructured data
+  - firebase realtime database
+    - store and sync data with Firebase's NoSQL Cloud database
+    - overview
+      - realtime
+      - NoSQL JSON database
+    - use cases
+      - offline responsiveness
+      - mobile and web applications
+      - real time
+  - Fire base Hosting
+    - fore static resources for web apps
+    -
+    - overview
+      - mobile and web content hosting
+      - production grade
+    - use cases
+      - automic release management
+      - URL rewriting
+      - JS App support
+      - firebase instegration
+      -
 ### cloud pub/sub
   - scalable and flexible enterprise messaging for events in realtime and stream analytics
     - on demand scalability beyond one million messages per second
