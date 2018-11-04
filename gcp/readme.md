@@ -104,6 +104,7 @@
   - [the worker pattern](https://gist.github.com/ryandotsmith/1660752)
   - [user auth/password management](https://cloud.google.com/blog/products/gcp/12-best-practices-for-user-account)
   - [google cloud client libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+  - [Cloud pub/sub notifications for cloud storage](https://cloud.google.com/storage/docs/pubsub-notifications)
 
 # Terms
   - cloud computing:
@@ -180,6 +181,10 @@
   - setting up your environment
     - imperative approach: figure out the commands you need to setup/change from the old state to the new
     - declarative: use a template to specify what the environment should look like
+	- strongly consistent: when you perform an operation and receive a success response, the object is immediately available
+	- eventually consistent: when you perform an operation, the effect is not immediately available
+	- truncated exponential backoff: error handling strategy for networking applications
+		- a client periodically retries failed requests with increasing delays between requests
 
 
 # Best Practices
@@ -905,33 +910,68 @@
 ### Caching
   - redis labs
   - memcached cloud
+
+
 ### Cloud Storage
+	- for file (object) storage
   - unified object storage allowing you to serve, analyze and archive data/objects/blobs
   - built for availability, durability, scalability, and consistency
   - full managed scalable service
     - no need to provision capacity ahead of time
     - data encrypt at rest and in transit
   - online and offline import services
-  - objects
-    - has metadata but is treated as just bytes with no structure
-      - the only key is the object name
-    - versioning:
-      - history of all changes to an object
-      - can list objects, restore objects to an older state, or permanently delete versions
-    - accessed via HTTP
-      - includes ranged gets to retrieve portions of data
+  - buckets and objects
+	  - strongly consistent operations
+		  - read-after-write
+		  - read-after-metadata-update
+		  - read-after-delete
+		  - bucket listing
+		  - object listing
+		  - granting access to resources
+	  - eventually consistent operations
+		  - revoking access from objects
+			  - can take up to a minute for the relocation has taken place
+		  - accessing publicly readable cached objects
+			  - if the object is in the cache when it is updated/deleted
+				  - doesnt take effect until its cache lifetime has expired
+	  - Buckets: basic cloud storage container
+	  - objects: individual pieces of data
+		  - petabytes of data, maximum unit size of 5 terabytes per object
+	    - has metadata but is treated as just bytes with no structure
+	      - the only key is the object name
+	    - versioning:
+	      - history of all changes to an object
+	      - can list objects, restore objects to an older state, or permanently delete versions
+	    - accessed via HTTP
+	      - includes ranged gets to retrieve portions of data
+	- cloud storage API access
+		- always use truncated exponential backoff for all requests to cloud storage that return HTTP 5xx and 429 error codes
+			- including uploads & downloads of data/metadata
+			- the cloud platform console sends requests on your behalf and will handle any necessary backoff
+		- accessible through 3 endpoints/URIs
+			- all support secure sockets layer, SSL encryption for HTTP/HTTPS
+				- XML:
+					- storage.googleapies.com/<bucket>/<object>
+					- <bucket>.storage.googleapis.com/<object>
+				- JSON
+					- www.googleapis.com/download/storage/v1/b/<bucket>/o/<object-encoded-as-url-path-segment>?alt=media
+		- CNAME redirects: use a URI from your own domain to access a resource bucket & bucket without revealing the google cloud storage uri
+			- HTTP only
+			- you create a CNAME for the bucket/object and map it to the cloud storage URI
+			- use c.storage.googleapis.com portion of your CNAME record
+				- <bucket>.<domain>.com/<object>
+		- authenticated browser downloads
+			- if you are signed into your gaccount and granted read permission using cookie-based authnetications you can download via your browser
+			- HTTPS only
+			- https://storage.cloud.google.com/<bucket>/<object>
+		- content-based load balancing: route requests for static content to a storage bucket
+			- requests to URI-PATH that begin with */static*
+				- all other requests sent to VM instances
+			- create a backend bucket for your cloud storage bucket and modify the *web-map* uri-map and fetch resources using the below http/https URIs
+			- http://[IP_ADDRESS]/static/[OBJECT_NAME]
+			- https://[IP_ADDRESS]/static/[OBJECT_NAME]
   - NOT FOR
-    - file storage
     - block storage
-  - petabytes of data, maximum unit size of 5 terabytes per object
-  - Use cases
-    - storing files
-    - images, videos, objects and blobs, any unstructured data, static website hosting, backups
-      - includes end-user uploaded content
-    - for structured/unstructured binary and immutable large object storage
-      - each object is given a URL
-      - objects are organized in buckets, in geographic locations
-    - immutable blobs larger than 10 megabytes e.g. images/movies
   - Permissions
     - IAM roles: project -> bucket -> object
     - ACL: access control Lists
@@ -951,27 +991,174 @@
         - regional
         - multi-regional
     - multi-regional:
-      - content storage and delivery
-      - most frequently accessed data
+	    - use case
+	      - content storage and delivery
+	      - most frequently accessed data
+	      - serving website content
+	      - streaming videos
+	      - mobile apps
       - SLA: 99.95% availability
       - stored in broad geographical locations, e.g. US or ASIA
         - cloud storage will store your data in at least 2 regions within the geographical location
     - regional:
-      - in-region analytics, transcoding
-      - accessed frequently within a region, e.g. data closer to compute engine or kubernetes clusters
+	    - use case
+		    - data analytics
+	      - in-region analytics, transcoding
+	      - accessed frequently within a region, e.g. data closer to compute engine or kubernetes clusters
       - 99.90%
       - stored in a specific region
     - nearline storage:
-      - long-tail content, backups
-      - low cost, highly durable, for infrequently accessed data
-      - for read/writes for once a month or less
+	    - use case
+		    - backups
+	      - long-tail content multi-media content
+	      - low cost, highly durable, for infrequently accessed data
+	      - for read/writes for once a month or less
+      - SLA: 99% availability
+      - 30-day minimum storage duration
     - cold line storage:
-      - archiving, disaster recovery
-      - low cost, highly durable, for data achiving, online backup, and disaster recovery
-      - accessed at most once per year
+	    - use case
+	      - archiving, disaster recovery, backups
+	      - low cost, highly durable, for data achiving, online backup, and disaster recovery
+	      - accessed at most once per year
+      - SLA: 99% availability
       - 90 day minimum storage duration, cost per data access,
+	- best practices
+		- naming bucket names are public and must be globally unique
+			- DO:
+				- use globally unique bucket names
+				- use GUIDs when a lot of buckets are required
+				- conform to standard DNS naming conventions
+					- bucket names can appear in a DNS record as part of a CNAME redirect
+			- DONT
+				- use personally identifiable information (PII)
+				- use user IDs, emails, project names/IDs
+				- use IP address notation
+				- use the google prefix/include any spelling similar to google
+					- e.g. goog, gogle, etc
+		- cloud storage traffic:
+			- consider :
+				- operations per second
+				- bandwidth
+				- cache control
+					- if specified in object metadata:
+						- read latency will be lowered on hot/frequently accessed objects
+			- design to minimize spikes in traffic
+			- spread updates through the day
+			- always use exponential backoff when retrying failed requests
+			- requests
+				- > 1000 write requests per second or 500 read requests per second
+					- start with a request rate below/near threshold
+					- double request rate no faster than every 20 minutes
+				- < than the above
+					- no ramp up is needed
+		- location and availability
+			- store data in a region closest to your application users
+			- for analytics workloads, store data in regional buckets to reduce network charges and better performance (compared to multi-regional)
+			- consider compliance requirements when choosing data location
+			- storage optoins
+		- bucket security
+			- access control
+				- IAM: identity and access management permissions
+					- access to buckets
+					- bulk access to bucket's objects
+				- ACLs: access control lists
+					- only when you need fine grained control
+					- read/write access to users for individual buckets/objects
+					- access when fine-grained control over individual objects is required
+				- Signed URLs: query string authentication
+					- provide time-limited read/write access to an object through a generated URL
+					- can be created using gsutil/programmatically
+				- Signed Policy Documents
+					- specify what can be uploaded toa  bucket
+					- control size, content type, and other upload characteristics
+					- only work with forum posts
+					- for website owners to allow visitors to uplaod files to cloud storage
+				- Firebase security rules
+					- granular, attribute-based access control to mobile & weeb apps using firebase SDKs for cloud storage
+			- use TLS (HTTPS) to transport data
+			- use an https library that validates server certificates
+			- revoke authnetication credentials to applications that no longer need access to data
+			- securely store credentials
+			- use groups isntead of large numbers of users
+			- bucket and object ACLs are independent of each other
+				- make sure default bucket permissions are valid before uploading objects
+				- a user denied to a bucket can still access objects inside the bucket if they have permissions
+			- avoid making buckets publicly readable / writable
+		- XMLHttpRequests
+			- when using XHR callbacks for progress updates
+				- do not close/reopen connection
+				- it creaes a bad positive feedback loop during times of congestion
+					- when the network congested, XHR callbacks get backlog behind the acnowledgement activity from the upload stream
+		- upload traffic
+			- make the request to create the resumable upload URL from the same region as the bucket and upload location
+				- colocate compute engine instances and cloud storage buckets
+				- use a geo-ip service to pick the compute engine region to which you route customer request
+					- helps keep traffic localized to a geo region
+			- set reasonable long timeouts for upload traffic
+			- avoid breaking tansfers into smaller chunks
+			- avoid uploading content that has both:
+				- content-encoding gzip
+				- content-type that is compressed
+		- gsutil for cloud storage
+			- gsutil -D will include oauth2 refresh and access tokens in the output
+				- make sure to redact this information
+			- gsutil --trace-token will include oauth2 tokens and the contents of any files accessed during the trace
+			- .boto config file
+				- customer-supplied encryption key information
+				- proxy configuration information
+					- host and port number for proxy
+					- may include user/pass info
+			- in a product environment, use a service account for gsutil
+				- never use user creds
+		- validate your data
+			- corruption during upload/download
+				- noisy network links
+				- memory errors
+					- client computer
+					- server computers
+					- routers along the path
+				- software bugs
+			- validate data during transport
+				- CRC32c Hash
+					- available for all cloud storage objects
+					- gsutil automatically performs integrity checks on all uploads and downloads
+				- MD5 Hash
+					- supported for non-composite objects
+					- cannot be used for partial downloads caused by performing a range get
+				- specify a specific bucket for scripts hosted in cloud storage accessing static resources in websites external to cloud storage
+	- Use cases
+		- use storage classes for object life cycle management
+			- store and archive data based on frequency of access
+	  - storing/retrieving large # of files, or multi-terabyte file exports and data dumps for data analytics pipelines
+		  - images, videos,
+			- objects and blobs,
+			- any unstructured data,
+			- static website hosting (html css js),
+				- automatically authenticates users
+				- supports cross-origin resource sharing
+				- no need for compute engine VMs
+				- automatic scaling
+			- backups
+	    - includes end-user uploaded content
+	  - for structured/unstructured binary and immutable large object storage
+	    - each object is given a URL
+	    - objects are organized in buckets, in geographic locations
+	  - immutable blobs larger than 10 megabytes e.g. images/movies
+	  - combine up to 32 objects into a new single object without transferring additional object data
+		  - great for recovering for network failures during uploads
+	  - parallel uploads: divide an object into multiple pieces
+		  - great for speeding up uploads
+		  - upload the pieces to a temporary location simultaneously
+			- compose the original object from these temp pieces
+			- delete the temporary pieces
+		- object composition: uploading an object in parallel
+			- dividing your data and uploading each chunk into a distinct object
+				- compose your final object
+				- deleting temporary objects
+			-
 
 ### Cloud Datastore
+	- for structured/semi-structured data
   - fully managed NoSQL horizontally scalable document store
 	  - built on top of BigTable
   - designed to automatically scale to very large datasets, sharding, and replication
@@ -1141,6 +1328,7 @@
 
 
 ### Big Table
+	- high volume, low latency database
   - big data sparsely populated nosql wide column
     - petabytes of capacity
     - maximum unit size of 10 megabytes per call and 100 megabytes per row
@@ -1176,6 +1364,7 @@
     - include network firewalls, and customer data is encrypted when on googles internal networks
     - supports sql workbench, toad, etc.
 #### Cloud SQL
+	- for mysql and postgresql
   - managed service providing replication, failover, backups
     - can replicate a master instance to one/more read-replicas
     - failover to make your data highly available

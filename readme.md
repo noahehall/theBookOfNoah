@@ -22,7 +22,7 @@
 # must do
   - if there were 30 more minutes in the day...
 
-## Learning 
+## Learning
   - [Arcitura Cloud Certified Professional CCP](https://www.arcitura.com/cloud-school/courses/)
 
 
@@ -33,6 +33,10 @@
   - [SOA design patterns](http://soapatterns.org/)
     - dope ^^
   -
+
+## Networking
+  - [Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+
 
 ## APIs
   - [open api specification](https://github.com/OAI/OpenAPI-Specification)

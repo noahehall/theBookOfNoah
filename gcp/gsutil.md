@@ -16,4 +16,6 @@
       gsutil acl ch -u allUsers:R gs://$DEVSHELL_PROJECT_ID/my-excellent-blog.png
 
 
+    # compose an object of smaller chunks
+    # cloud storage object composition and parallel uploads
   ```
