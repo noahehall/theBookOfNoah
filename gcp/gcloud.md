@@ -4,7 +4,7 @@
 ## basics
   ```sh
     #initialize
-      gcloud init 
+      gcloud init
 
 
   ```
@@ -37,4 +37,16 @@
     # app.yaml is an arbitrary app engine configuration file
       gcloud app deploy ./index.yaml ./app.yaml
 
+  ```
+
+# cloud datastore
+  ```sh
+    # deploy a composite index
+    # modify index.yaml config to include all properties
+    # queries that run before the index has finished building will result in an exception
+      gcloud datastore create-indexes
+
+    # delete a composite index
+    # modify index.yaml config to remove indexes no longer required
+      gcloud datastore cleanup-indexes
   ```

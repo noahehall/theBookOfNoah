@@ -22,21 +22,29 @@
 # must do
   - if there were 30 more minutes in the day...
 
+## Learning 
+  - [Arcitura Cloud Certified Professional CCP](https://www.arcitura.com/cloud-school/courses/)
+
 
 ## Architecture
   - [the worker pattern](https://gist.github.com/ryandotsmith/1660752)
   - [martin fowler blue/green deployment](https://martinfowler.com/bliki/BlueGreenDeployment.html)
   - [strangler pattern](https://docs.microsoft.com/en-us/azure/architecture/patterns/strangler)
+  - [SOA design patterns](http://soapatterns.org/)
+    - dope ^^
+  -
 
 ## APIs
   - [open api specification](https://github.com/OAI/OpenAPI-Specification)
   - [GRPC](https://grpc.io/)
+  - [using atomic transactions to power an idempotent API](https://brandur.org/http-transactions)
 
 ## databases
   - [nosql multi-document transactions](https://www.marklogic.com/blog/nosql-without-multi-document-multi-statement-transactions/)
   - [managing database failover and recovery](https://docs.oracle.com/database/121/TTREP/failure.htm#TTREP547)
   - [a primer on database replication](https://www.brianstorti.com/replication/)
   - [OLTP: online transaction processing](https://docs.microsoft.com/en-us/azure/architecture/data-guide/relational-data/online-transaction-processing)
+
 
 ## best practices
 ### Javascript

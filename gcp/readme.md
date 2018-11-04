@@ -1,5 +1,95 @@
-# Todos
-  -
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [links](#links)
+- [Terms](#terms)
+- [Best Practices](#best-practices)
+	- [app code and environment](#app-code-and-environment)
+	- [Microservices Architecture](#microservices-architecture)
+	- [API Gateways](#api-gateways)
+	- [External User Administration](#external-user-administration)
+	- [Application Reliability](#application-reliability)
+		- [health-check endpoints](#health-check-endpoints)
+		- [Logging](#logging)
+		- [error handling](#error-handling)
+		- [Testing](#testing)
+	- [DevOps](#devops)
+		- [SecDevOps](#secdevops)
+	- [Application Security](#application-security)
+		- [Data](#data)
+	- [Migrating to the cloud](#migrating-to-the-cloud)
+- [GCP PRODUCTS](#gcp-products)
+	- [development](#development)
+		- [cloud source repositories (i.e. git)](#cloud-source-repositories-ie-git)
+		- [cloud functions](#cloud-functions)
+	- [deployment](#deployment)
+		- [deployment manager](#deployment-manager)
+	- [monitoring](#monitoring)
+		- [Stackdriver](#stackdriver)
+- [GCP Platform Administration](#gcp-platform-administration)
+	- [Managing resources](#managing-resources)
+		- [Web Console:](#web-console)
+			- [Cloud Shell:](#cloud-shell)
+		- [Google Cloud SDK:](#google-cloud-sdk)
+		- [Google API client library:](#google-api-client-library)
+		- [Cloud Client Libraries:](#cloud-client-libraries)
+		- [firebase sdk:](#firebase-sdk)
+		- [Mobile App](#mobile-app)
+	- [GCP Regions and Zones](#gcp-regions-and-zones)
+	- [resource hierarchy:](#resource-hierarchy)
+	- [IAM: Cloud Identity and Access Management](#iam-cloud-identity-and-access-management)
+		- [IAM Users: The WHO](#iam-users-the-who)
+		- [IAM roles: the WHAT](#iam-roles-the-what)
+	- [Security](#security)
+- [Core Products](#core-products)
+	- [Cloud Launcher](#cloud-launcher)
+	- [Virtual Private Cloud](#virtual-private-cloud)
+		- [interconnect with networks external to GCP](#interconnect-with-networks-external-to-gcp)
+		- [cloud load balancing: load balance inbound traffic](#cloud-load-balancing-load-balance-inbound-traffic)
+		- [Cloud DNS:](#cloud-dns)
+		- [Cloud CDN:](#cloud-cdn)
+	- [compute infrastructure for applications](#compute-infrastructure-for-applications)
+		- [Compute Engine](#compute-engine)
+		- [kubernetes](#kubernetes)
+		- [app engine](#app-engine)
+	- [API management tools](#api-management-tools)
+		- [cloud endpoints](#cloud-endpoints)
+		- [apigee edge](#apigee-edge)
+	- [Storage](#storage)
+		- [Caching](#caching)
+		- [Cloud Storage](#cloud-storage)
+		- [Cloud Datastore](#cloud-datastore)
+		- [Big Table](#big-table)
+		- [Cloud SQL and Google Cloud Spanner](#cloud-sql-and-google-cloud-spanner)
+			- [Cloud SQL](#cloud-sql)
+			- [Cloud Spanner](#cloud-spanner)
+	- [Big Data and Machine Learning](#big-data-and-machine-learning)
+		- [Big Data](#big-data)
+		- [Cloud dataproc](#cloud-dataproc)
+		- [cloud dataflow](#cloud-dataflow)
+		- [BigQuery](#bigquery)
+		- [Microsoft SQL Server](#microsoft-sql-server)
+- [Storage options for mobile](#storage-options-for-mobile)
+		- [cloud pub/sub](#cloud-pubsub)
+		- [cloud datalab](#cloud-datalab)
+	- [Machine Learning Platform](#machine-learning-platform)
+			- [TensorFlow](#tensorflow)
+			- [Cloud ML](#cloud-ml)
+			- [Machine Learning APIs](#machine-learning-apis)
+- [OLD: LinkedIn (Lynda) Learning](#old-linkedin-lynda-learning)
+- [basics](#basics)
+- [services](#services)
+	- [Compute: virtual machines](#compute-virtual-machines)
+	- [storage: files and databases](#storage-files-and-databases)
+	- [Big Data](#big-data)
+	- [other services: networking, ML, etc.](#other-services-networking-ml-etc)
+		- [Identity & Security](#identity-security)
+		- [Management & Monitoring](#management-monitoring)
+		- [Developer Tools](#developer-tools)
+	- [Machine Learning](#machine-learning)
+- [architecture](#architecture)
+
+<!-- /TOC -->
+
 # links
   - [lynda GCP essential training](https://www.lynda.com/Google-Cloud-Platform-tutorials/Google-Cloud-Platform-Essential-Training/540539-2.html)
   - [gcloud architect exam guide](https://cloud.google.com/certification/guides/cloud-architect/)
@@ -883,23 +973,172 @@
 
 ### Cloud Datastore
   - fully managed NoSQL horizontally scalable document store
+	  - built on top of BigTable
   - designed to automatically scale to very large datasets, sharding, and replication
     - terabytes of capacity
     - maximum unit size of one megabyte per entity
     - offers transactions that affet multiple db rows
+    - can scale from 0 to millions of requests per second without any user management
+	    - write scale: automatically distributing data
+	    - read scale: only supports queries whose performance scales with the size of the result set
+			  - does not support
+				  - join operations
+				  - inequality filtering on multiple properties
+				  - filtering on data based on results of subqueries
+	- concepts
+		- difference with relational DBs
+			- object: KIND vs TABLE
+			- one object: ENTITY vs ROW
+			- object datum: PROPERTY vs FIELD
+			- object unique ID: KEY vs PRIMARY KEY
+		- files
+			- *index.yaml*: the config file for datastore
+		- indexes
+			- only for properties needed for a query
+				- uneccesary indexes result in increased latency and storage costs
+			- do not index properties with monotonicallyincreasing values, e.g. date/timestamps
+			- types
+				- built-in:
+					- automaticlly pre-define an index for each property of an entity kind
+					- are suitable for simple types of queries
+				- composite indexes:
+					- index multiple property values for indexed entity
+					- support for complex queries
+					- defined in an index configuration file
+					- are viewable not editable in the web console
+		- entities: data objects
+			- properties: entities are made up of properties
+			- key: uniquely identifies an entity
+				- for numeric keys:
+					- dont use a negative number
+					- do not use 0
+					- sequential numeric IDs creates bigtable hot spots
+						- impacts cloud datastore latency
+						- get a block of IDs using the allocateIds() method to assign your own numeric IDs
+							- generates well distributed sequences of numeric IDs
+					- avoid monotonically increasing values, especiialy for apps with large traffic
+						- this creates a bigtable hotspot
+							- writes to new entities are always occuring at the end of the row key space
+								- prevents bigtable from effectively distributing writes
+			- namespace:
+			- kind: the entity type, e.g. Customer
+			- identifier: string/numeric id
+			- ancestor ID: optional
+				- root entity: an entity without an ancestor (parent)
+				- ancestor path: the sequence of entities from a root entity to child entity forms the ancestor path
+					- entity groups: the group of entities connected by the ancestor path
+						- queries of entity groups give you a consistent view of your data
+						- all related entities can be updated in a single transaction
+			- transactions: operations on one/more entities
+				- are atomic
+	- best practices
+		- use UTF-8 characters for
+			- namespace names
+			- kind names
+			- property names
+			- key names
+		- avoid forward slash */*
+			- in kind names
+			- in custom key names
+		- avoid storing sensitive information in a cloud project ID
+		- read/writes/deletes
+			- traffic: ramp up gradually with the 555 rule
+				- 500 writes per second and increase by 50% every 5 minutes
+				- distribute writes across a key range
+			- batch operations: use for read, writes and deletes
+				- allow you to perform multiple operations with the same overhead as a single operation
+			- transactions: set of datastore operations on one/more entities
+				- should always be idempotent:
+					- if you repeat a transaction, the end result will be the same
+					- no side effects if it is called more than once with the same input parameters
+				- are atomic: either all are applied or none are applied
+				- max time of 60 seconds
+					- but transactions over 30 seconds will be terminated if idle for 10 seconds/more
+				- rollback failed transactions to minimize retry latency for concurrent requests for the same resource in a transaction
+					- dont retry rollbacks that throw an exception
+				- can fail when
+					- too many concurrent modifications attempted on the same entity group
+					- exceed resource limits
+					- datastore has internal error
+					- datastore operations in a transaction operate on more than 25 entity groups
+			- requests
+				- always use asynchronous calls to minimize latency impact
+			- queries
+				- types:
+					- keys only:
+						- `select key from task`
+						- retrieve only the key
+						- return results at lower latency and cost
+					- projection:
+						- `select one, two from task`
+						- retrieve specific properties from an entity
+						- retrieve only the properties included in the query filter
+						- return results at lower latency and cost
+					- ancestor:
+						- `select one, two from task where has ancestor key(tasklist, 'defualt')`
+						- return strongly consistent results
+						- requires your data to be structured for strong consistency
+					- entity:
+						- `select * from task where done = true`
+						- retrieve an entity kind, zero or more filters, and zero or more sort orders
+				- latency: use cursors > offsets
+					- integer offsets:
+						- doesnt return skipped entities to your app but it still retrieves the entities internally
+							- cause your app to be billed for read operations
+					- query cursors:
+						- retrieve a query's results in convenient batches
+						- don't incur the overhead of a  query offset
+			- maximum transaction throughput is limited to 1 write per second per entity group
+				- split frequently updated entities across multiple kinds
+				- if you update an entity group too rapidly
+					- higher latency
+					- timeouts
+					- and other contention errors
+			- avoid high read/writes to keys that are lexicographically close
+			- gradually ramp up traffic to new cloud datastore kinds/portions of the keyspace
+				- gives bigtable sufficient time to shard (split) tables as the traffic grows
+			- avoid deleting large numbers of cloud datastore entities across a small range of keys
+				- compaction: rewriting tables to remove deleted entries and reorganizing data so that reads & writes are more efficient
+			- for hot cloud datastore keys
+				- use sharding to write to a portion of the key range at a higher rate
+					- sharding: splits a single entity into many,
+						- e.g. Customer KIND may have 100 entities, the first 50 stored in one key range, the next 50 stored in another
+						- you can shard manually if the number of your application writes exceeds the bigtable limits
+						- shard counters to avoid contention with high writes
+							- build a sharded counter: break the counter up into N different counters
+								- pick a shard at random to increment the counter
+								- increasing the number of shards will increase the throughput you will have for increments on your counter
+				- use replication to read a portion of the key range at a higher rate than big table permits
+					- store N copies of the same entity, allowing an N times higher rate of reads
+						- e.g. a static config file that gets loaded per request, when loading your app will pick a random number between 0 and N and
+		- handling errors
+			- 4xx or 5xx response codes
+			- do not retry without fixing the problem
+				- ALREADY_EXISTS
+				- FAILED_PRECONDITION
+				- INVALID_ARGUMENT
+				- NOT_FOUND
+				- PERMISSION_DENIED
+				- RESOURCE_EXHAUSTED
+				- UNAUTHENTICATED
+			- retry using exponential backoff
+				- DEADLINE_EXCEEDED
+				- UNAVAILABLE
+			- do not retry this request more than once
+				- INTERNAL
+			- for a non transactional commit: retry the request/structure your enitties to reduce contention
+				- ABORTED
+			- for requests that are part of a transactional commit: retry th eentire transaction/structure your entities to reduce contention
+				- ABORTED
   - use cases
     - for durable key-value data
     - best choice for high value application data
       - user profiles, shopping carts, orders, etc.
-    - store semi-structured or hierarchical data
+    - store structured / semi-structured or hierarchical data
     - managing multiple indexes over each entity
-    - crossroad transactions
+    - support for crossroad transactions
     - integration point for app engine and compute engine with cloud
-    - support for transactions
-    - sql like queries datastore as the integration point
-  - characteristics
-    -
-    - SQL like queries
+
 
 ### Big Table
   - big data sparsely populated nosql wide column
@@ -912,6 +1151,9 @@
   - built for fast key-value lookup and scanning over a defined key range
     - similar to a spreadsheet that gives you access to anyset of columns from continuous rows by searching only the value in the first column, the key
     - updates to individual rows are atomic
+  - concepts
+	  - scaling:
+		  - scales by sharding rows onto separate tables where each row is lexicographically ordered by key
   - use cases
     - operational/analytical applications
       - user analytics or, financial data analysis, internet of things
@@ -1082,6 +1324,7 @@
       - Each table has a schema that describes strongly typed columns of values.
       - Each table belongs to a dataset.
   - use cases
+	  - execute adhoc queries on adhoc datasets without predefined indexes
     - big data analystics warehousing, analytics, and processing
     - OLAP (online analytic processing) workloads
     - big data exploration and processing
