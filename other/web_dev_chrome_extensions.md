@@ -1,9 +1,10 @@
-**Generated:** Sat, 10 Nov 2018 07:06:16 GMT
+**Generated:** Sat, 10 Nov 2018 07:16:08 GMT
 **User Agent:** Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36
 
-**Extensions:** 24
+**Extensions:** 26
 
  - [Web Developer](https://chrome.google.com/webstore/detail/bfbameneiokkgbdmiekhjnmfkcnldhhm) v0.5: *Adds a toolbar button with various web developer tools.*
+ - [Octotree](https://chrome.google.com/webstore/detail/bkhaagjahfmjljalopjnoealnfndnagc) v2.5.1: *Code tree for GitHub*
  - [Lighthouse](https://chrome.google.com/webstore/detail/blipmdconlkpinefehnmjammfjpmpbjk) v3.3.0.4000: *Lighthouse*
  - [DevTools Theme: Zero Dark Matrix](https://chrome.google.com/webstore/detail/bomhdjeadceaggdgfoefmpeafkjhegbo) v3.0.5.1: *A highly customized dark theme for Devtools.*
  - [Share Extensions](https://chrome.google.com/webstore/detail/chdafcbnfkfenoeejpaeenpdamhmalhe) v0.1.2: *Export your favorite Google Chrome™ extensions as BBCode, HTML, Wiki, Markdown or text. Share extensions via Twitter, Google Mail™.*
@@ -17,6 +18,7 @@
  - [HTML5 Storage Manager All in One](https://chrome.google.com/webstore/detail/giompennnhheakjcnobejbnjgbbkmdnd) v1.7.1: *Local Storage, Session Storage, Cookie, indexedDB (beta) ... Most Complete Storage Manager Extension Ever!*
  - [Devtools Domains](https://chrome.google.com/webstore/detail/gnkedgaeponkfccalpobeillgledleii) v0.1.1: *Displays the domains that a page requests with color coded reponses.*
  - [LastPass: Free Password Manager](https://chrome.google.com/webstore/detail/hdokiejnpimakedhajhdlcegeplioahd) v4.19.0.5: *LastPass, an award-winning password manager, saves your passwords and gives you secure access from every computer and mobile device.*
+ - [Refined GitHub](https://chrome.google.com/webstore/detail/hlepfoohegkhhmjieoechaddaejaokhf) v18.11.8.1738: *Simplifies the GitHub interface and adds useful features*
  - [ModHeader](https://chrome.google.com/webstore/detail/idgpnmonknjnojddfkpgkljpfnnfcklj) v2.2.5: *Modify request and response headers*
  - [Tabli](https://chrome.google.com/webstore/detail/igeehkedfibbnhbfponhjjplpkeomghi) v1.1.1: *A simple, powerful tab manager*
  - [JS Runtime Inspector](https://chrome.google.com/webstore/detail/iilpjebedgohcmlffhnkhbjhabkdhfmn) v0.2: *Explore your javascript runtime*
