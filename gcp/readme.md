@@ -562,39 +562,136 @@
       - parent policies cant take away access thats granted at a lower level
 
 ## IAM: Cloud Identity and Access Management
-  - IAM: controls WHO can take WHAT action on specific Resources
-### IAM Users: The WHO
-  - types of users
-    - a google account or cloud identity users e.g. blah@gmail.com
-    - a google group e.g. test@googlegroups.com
-    - a G suite domain or cloud identity domain  e.g. blah.com
-    - a google service account: provision an ID to control server-to-server interactions in a project
-  - use cases:
-    - control privileges used by resources for applications to perform actions on behalf of authenticated end users
-    - authenticate one service to another
-    - control privileges used by resources
-  - authentication:
-    - use cryptographic keys
-    - can be assigned custom or predefine roles
-  - identified by an email address
-    - PROJECT_NUMBER-compute@developer.gserviceaccount.com
-    - PROJECT_ID@appspot.gserviceaccount.com
+  - IAM: manage access control by defining WHO (members) has ACCESS (roles) to  WHAT (resources)
+  - best practices
+	  - always use the principle of least privilege
+	  - use external keys for use from outside GCP
+		  - you are responsible for the security of the private key and other management operations such as key rotation
+		  - manage via: IAM API, gcloud CLI, service accounts page in GCP Console
+	  - use API keys for GCP APIs that do not need to access private user data
+		  - browser/mobile apps that dont have a backend server
+		  - used to track API requests associated with your project for quota and billing
+	  - service accounts:
+			- for authenticating to a GCP API so users aren't directly involved
+		  - represent each microservice by its own distinct service account
+
+	### OAuth 2.0
+	  - your app needs to access data that belongs to a user
+	  - your app needs to authenticate as a user to act on their behalf
+		- steps
+			1. your app requests access to the resource
+			2. the user will be prompted for consent
+			3. the app will request creds from an authorization server
+			4. the app will then use those creds to access the resources on behalf of the user
+	  -
+### IAP: Cloud identity-aware proxy
+	- controls access to your cloud apps running on GCP
+		- apps and resources protected by IAP can only be accessed via the proxy
+	- verifies a user's identity
+	- determines whether that user should be allowed access to the app
+	- flow:
+		- users request resource
+		- routed to IAP proxy
+			- authenticate: identity verified
+			- authorize: roles + permission to access resource
+			- identify not verified
+	- use cases
+		- establish a central authorization layer for your apps accessed by HTTPS
+		- adopt an application level access control model instead of relying on network level firewalls
+### IAM Members: The WHO
+	- ADC: application default credentials
+  - types
+    1. a google account or cloud identity users e.g. blah@gmail.com
+	    - a developer, administrator, or a person who interactions with GCP
+		2. a google service account: provision an ID to control server-to-server interactions in a project
+			- belong to an app/VM
+			- identified by a unique email address
+			- associated with a key pair
+			- supported by all GCP APIs
+			- authentication:
+		    - use cryptographic keys
+		    - can be assigned custom or predefine roles
+		  - identified by an email address
+		    - PROJECT_NUMBER-compute@developer.gserviceaccount.com
+		    - PROJECT_ID@appspot.gserviceaccount.com
+			- steps
+				1. create service account via console
+				2. generate and download cred file
+				3. set an env var to provide creds to your app
+					```sh
+						export GOOGLE_APPLICATION_CREDENTIALS=<path_to_file>
+					```
+				4. authenticate in your code with default creds (find example code for your language)
+					1. if you dont specify the credentials, the client library will look for credentials in the environment (step 3)
+					2. if the env isnt set, ADC will use a default service account that compute engine, container engine, app engine, and cloud functions provide (if your app runs those services)
+					3. if neither 1 or 2 are available, an error is trhown
+			- use cases:
+		    - control privileges used by resources for applications to perform actions on behalf of authenticated end users
+		    - authenticate one service to another
+				- can have up to 10 keys associated with them to faciliate key rotation (done daily by google)
+				- enable authentication and authorization: you can assign specific IAM roles to a service account
+    3. a google group e.g. test@googlegroups.com
+	    - named collection of google accounts & service accounts
+	    - apply an access policy to a group of users
+	    - cannot be used to establish identity
+    4. a G suite domain e.g. username@yourdomain.com
+	    - a virtual group of all the members in an organization
+	    - cannot be used to establish idenity
+		5. cloud identity domain
+			- a virtual group of all members in an organization
+			- does not provide access to g suite applications and features
 
 
-### IAM roles: the WHAT
-  - role: a collection of permissions
+### IAM Roles: the ACCESS
+	- permissions: what operations are allowed on resources,
+		- cannot be assigned to users, you must assign permissions to roles, and roles to users
+		- usually correspond one-to-one with REST methods
+			- the caller of the method needs the associated permissions to call that method
+		- syntax: `SERVICE.RESOURCE.VERB`
+			- pubsub.subscripts.consume
+			- storage.objects.list
+  - role: a collection of permissions that can be granted to a user, group, or service account
   - types of roles
-    - primitive role: apply across all GCP services in a project
-      - owner: invite, remove, delete,
-        - includes editor + viewer permissions
-      - editor: deploy apps, modify code, configure services\
-        - includes viewer permissions
-      - viewer: read only access
+    - primitive role: apply across all GCP services in a project using the Cloud Console, API or gcloud CLI
+			- viewer: read only actions that preserve state
+			- editor: viewer + actions that modify state
+				- deploy apps, modify code, configure services\
+      - owner: editor permissions + manage project (and its resources) access control + setup billing
+				- project: invite, remove, delete,
+				- does not contain any permission for the organization resource
       - billing admin: manage billing, add & remove admins
     - predefined roles: IAM fine-grained permissions tailored for specific services
+	    - e.g. compute.instanceAdmin, storage.objectAdmin, logging.viewer
     - custom roles: define a role with a specific set of permissions to help implement a principal of least for projects and organizations
       - cant be used for folders
-
+### IAM Resources: the WHAT
+	- examples
+		- GCP projects
+		- compute engine instances
+		- cloud storage buckets
+		- pub/sub topics
+	- resources are organized hierarchically
+		- organization
+		- projects
+		- resources: each has exactly one parent
+	- policy: consists of a list of bindings that are attached to a resource and is used to enforce access control whenever that resource is accessed
+		- bindings: binds a list of members to a role
+		- syntax:
+			```js
+				{
+					"role": "roles/owner", // policy owners
+					"members": [
+						"user:blah@blah.com",
+						"group:admins@blah.com",
+						"domain:blah.com",
+						"serviceAccount:blah@appspot.gserviceaccount.com"
+					]
+				}
+			```
+	- API Methods
+	  - setIAMPolicy: set policies on resources
+	  - getIAMPolicy: get a policy that was previously set
+	  - testIamPermissions: test if the caller has the specified permissions for a resource
 ## Security
  - customer responsibility
    - content
@@ -1685,7 +1782,6 @@
       - flag inapropriate content
       - identify key entities (nouns) within your video and when they occur
         - make video content searchable and discoverable
-
 
 
 # OLD: LinkedIn (Lynda) Learning
