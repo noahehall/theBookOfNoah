@@ -520,15 +520,7 @@
         - if your app is on app/compute engine authentication will just work
         - if you dont explicitly provide credentials, the client will reuse the credentials from the gcloud tool if it has already been setup
         -
-### firebase sdk:
-  - firebase: mobile and web app dev platform
-    - ios, android, web, c++, unity, nodejs
-  - use cases
-    - implement federated identity management with firebase authentication
-    - firebase sdk for cloud storage stores files directly in google cloud storage buckets
-    - use app engine api to share data between firebase and app engine
-    - cloud functions for firebase lets you run backend code in respond to events triggered by firebase features and http requests
-    -
+
 ### Mobile App
     - manage virtual machines and DB instances
     - manage apps in google app engine
@@ -586,18 +578,53 @@
 	  -
 ### IAP: Cloud identity-aware proxy
 	- controls access to your cloud apps running on GCP
-		- apps and resources protected by IAP can only be accessed via the proxy
-	- verifies a user's identity
-	- determines whether that user should be allowed access to the app
+		- apps and resources protected by IAP can only be accessed via the proxy by users and groups with the correct cloud IAM role
+		- verifies a user's identity without requiring a VPN
+		- determines whether that user should be allowed access to the app
+		- end users use a URL to access IAP secured apps without a VPN
 	- flow:
 		- users request resource
 		- routed to IAP proxy
 			- authenticate: identity verified
 			- authorize: roles + permission to access resource
 			- identify not verified
+	- Best practices
+		- configure your firewalla nd load balancer to protect against traffic that doesnt come from the serving infrastructure
+		- use signed headers or the app engine standard environment users API
 	- use cases
 		- establish a central authorization layer for your apps accessed by HTTPS
 		- adopt an application level access control model instead of relying on network level firewalls
+### firebase sdk for authentication
+	- google's federated authentication supporting end user signin at the client app using third-party creds (e.g. google/facebook)
+  - firebase: mobile and web app dev platform
+    - ios, android, web, c++, unity, nodejs
+   - flow
+	   - get auth creds from the user
+	   - pass the creds to firebase authentication sdk
+	   - firebase backend services verify creds and return a response to the client
+	   - after successfuly sign in
+		   - access users profile
+		   - control the users access to data stored in other firebase products
+		   - use provided auth token to verify identify of users in your own backend services
+   - cost
+	   - price
+		   - spark plan: free
+		   - flame plan 25/month
+		   - blaze plan: pay as you go
+	   - auth
+		   - spark plan: free
+		   - flame plan: free
+		   - blaze plan: free
+	   - phone auth
+		   - spark plan: 10k auth/month
+		   - flame: 10k auth/month
+		   - blaze: 0.01/verification (use, canada, india) 0.06 (all other countries)
+  - use cases
+    - implement federated identity management with firebase authentication
+    - firebase sdk for cloud storage stores files directly in google cloud storage buckets
+    - use app engine api to share data between firebase and app engine
+    - cloud functions for firebase lets you run backend code in respond to events triggered by firebase features and http requests
+    -
 ### IAM Members: The WHO
 	- ADC: application default credentials
   - types
@@ -1655,14 +1682,56 @@
       - firebase instegration
       -
 ### cloud pub/sub
-  - scalable and flexible enterprise messaging for events in realtime and stream analytics
+  - scalable and flexible enterprise messaging architecture for events in realtime and stream analytics
     - on demand scalability beyond one million messages per second
-  - application components make push/pull subscriptions to topics
-  - supports offline consumers
-  - provides at least once delivery
-    - theres a small chance some messages might be delivered more than once
+	  - application components make push/pull subscriptions to topics
+	  - provides at least once delivery
+	    - theres a small chance some messages might be delivered more than once
+  - concepts
+	  - publisher: application that publishes messages to a topic
+	  - subscriber: creates a subscription to a topic
+		  - execution environments
+			  - cloud functions: triggered whenever a new message is received
+				  - serverless approach
+			  - deploy a subscriber application on computer/container/ appengine flexible environment
+				  - multiple instances can spinup and process the messages in the topic and split the workload
+				  - instances can be auto shutdown when there are few messages
+					  - autoscale using stackdriver metrics
+	  - subscription: a subscriber push/pull messages from a topic
+		  - pull: subscribers calls pull method to request messages and receives a message and acknowledgement ID
+			  - default subscription
+				  - enables batch delivery and acknowledgements and parallel consumption
+			  - subscribers
+					- control rate of delivery and acknowledgement deadline
+					- multiple subscribers can pull from the same subscription
+				  - can be any app using gcloud client libraries
+				- message delivery: messages are delivered to each subscription at least once
+					- subscriber sends acknowledgement of receipt to the pub/sub service
+					- if subscriber doesnt acknowledge receipt of message before the acknowledgement deadline, it will receive the message again
+		  - push: subscribers dont need to implement gcloud client libraries to retrieve and process messages
+			  - message delivery
+				  - pubsub service sends each message as an http request to the subscriber at a preconfigured http endpoint
+					  - e.g. a load balancer / appengine standard app
+					  - the http endpoint acknowledges receipt by reutrning an http success status code
+						  - failure response indicates the message should be sent again
+						  - pubsub dynamically adjusts the rate of pushes based on the rate it receives success responses
   - use cases
+	  - message ordering is NOT guaranteed
+	  - pull subscription
+		  - process large volumes of messages with high throughput
+	  - push subscription
+		  - whenever gcloud credentials/client libraries cant be configured
+		  - multiple topics must be processed by the same webhook
+		  - when an http endpoint will be envoked by pubsub and other apps
+			  - the subscriber should be able to process message payloads for each consumer of the endpoint
+	  - use topics as a buffer for incoming data
+		  - data generating services acts as publishers
+		  - downstream services acts as a subscriber and consume the data at a reasonable pace
+	  - real time gaming apps, click stream data injection/processing, device/sensor data procesing for healthcare/manufacturing, integrating data sources in financial apps
+	  - supports offline consumers
+	  - loosely coupled microservices
     - decoupling applications/systems: allow each to send/receive messages permitting you to then scale them independently
+    - support multi-cloud/hybrid apps
     - many-to-many asynchronous messaging
     - when your data arrives at high and unpredictable rates
     - analyzing streaming data (e.g. with cloud dataflow)
@@ -1749,9 +1818,9 @@
     - BigQuery
     - cloud storage
 
-#### Machine Learning APIs
-  - pre-trained machine learning models built by google made available through APIs
-  - speech api: stream results in real time, detects 80 languages and variants
+#### pre-trained machine learning apis
+ 	- models built by google made available through APIs
+  - speech api: stream results in real time, detects 110 languages and variants
     - accessible from any device
     - highly accurate even in noisy environments
     - use cases
