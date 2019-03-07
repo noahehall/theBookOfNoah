@@ -30,4 +30,16 @@
       - webpack outputs a bundle base on the entry file
 
 # getting started tutorial catchall
+## todo: now
+  - [entry points](https://webpack.js.org/concepts/entry-points/)
+  - [output](https://webpack.js.org/concepts/output/)
+  - [configuration](https://webpack.js.org/concepts/configuration/)
   - 
+### todo: next
+  - [cli](https://webpack.js.org/api/cli/)
+  - [module-api](https://webpack.js.org/api/module-methods/)
+## basic
+  - need to specify a /src and /dist directory
+    - src: where you write and edit your code
+    - dist: the minimized and optimized code, i.e. the bundle
+    -
