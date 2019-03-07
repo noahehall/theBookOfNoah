@@ -185,7 +185,8 @@
 	- eventually consistent: when you perform an operation, the effect is not immediately available
 	- truncated exponential backoff: error handling strategy for networking applications
 		- a client periodically retries failed requests with increasing delays between requests
-
+	- hot keys: situations where proportionately large chunks of your input get mapped to the same cluster in a distributed system
+    - e.g. in map/reduce transformations
 
 # Best Practices
   - Cloud Native Application Goals
@@ -205,7 +206,6 @@
       - multimedia
   - interleaved ttable: a table that you declare to be a child of another table you want the rows of the child table to be physically stored together with the associated parent row
 
-
 ## app code and environment
   - code repository
     - all code should be stored in a repository
@@ -218,7 +218,6 @@
     - never store config settings as constants
     - specify config settings as env variables
       - allows you to easily modify settings in differeent environments
-
 
 ## Microservices Architecture
   - enables you to structure your application in relation to your business boundaries
@@ -256,7 +255,6 @@
       - keep operations on the user thread at a minimum
       - use event-driven processing where possible
   -
-
 
 ## API Gateways
   - enables backend functionality to be available to consumer applications
@@ -298,7 +296,6 @@
       - network connections
       - etc
     - all infrastructure components required for the service to function properly
-
 ### Logging
   - monitoring your app's performance
     - debugging
@@ -310,7 +307,6 @@
   - never manage your log files in your application
     - write to an event stream, e.g. standard out and let the underlying infrastructure collate all events for later analysis and storage
   - setup logs-baased metrics and trace requests across different services in you rapplication
-
 ### error handling
   - handle transient and long-lasting errors gracefully
   - transient errors: retry with exponential backoff
@@ -319,7 +315,6 @@
   - for errors that propagate back to the user
     - consider degrading the application gracefully instead of explicity displaying the error message
       - this can help with security
-
 ### Testing
   - setup high availability tests
   - setup functional tests
@@ -353,8 +348,6 @@
     - lowers risk of regression
     - debug issues faster
     - rollback to the last stable build
-
-
 ### SecDevOps
   - consider security throughout the continuous integration and delivery process
   - automate security checks
@@ -362,7 +355,6 @@
     - scan code for security vulnerabilities
     - confirm resources have permissions based on principle of least privilege
     - detecting errors in production
-
 
 ## Application Security
 ### Data
@@ -374,12 +366,12 @@
       - sharing user data
       - review the industry segment and region where your users live and your services will be located
 
-
 ## Migrating to the cloud
   - implement the strangler pattern: incremently replace components of the old application with new services
     -
 
 # GCP PRODUCTS
+
 ## development
 ### cloud source repositories (i.e. git)
     - keep code private to a GCP project
@@ -388,8 +380,6 @@
     - source viewer: browser and view repo files within the GCP console
     - allow external users
   - supported platforms
-
-
 ### cloud functions
     - create single-purpose functions that respond to events without a server/runtime
     - written in javascript, execute in managed node.js environment on GCP
@@ -408,6 +398,25 @@
       - pay when function runs in 100ms intervals
 
 ## deployment
+	- reliable services require reliable release processes
+	- automate build test and release processes
+	- build pipelines: use container registry + builder
+	- continuous integration:
+		- code: frequently pull from master branch and commit changes to a feature branch in a repo (github/cloud source repository)
+		- build: commit triggers (jenkins/circleci) a build and stores a new application image (container builder) and stores it in an artifact repository (container registry)
+		- deploy: deployment system (spinnaker, chef, puppet, ansible, terraform) deploys the artifact(s) in your cloud environment
+			- deployment manager stands up any resources your application needs
+		- test: your application is now running and you can test
+			- if tests are successful merge your changes back into master
+	- continuous delivery: triggered when changes are pushed to master repository
+		- code
+		- build
+		- deploy: (this time to staging)
+		- test: if all tests pass then the build is tagged as a release candidate build
+			- successful builds are marked as release candidates
+		- release: release candidate approvals can trigger automatic deployment as a canary or blue/green release
+		- monitor: monitor (stackdriver) production environment and switch over entire traffic to this release or rollback to last stable release
+	- continous deployment: automatically deploys release candidates to production environment
 ### deployment manager
   - infrastructure as code
   - automates the creation and management of your GCP resources via templates
@@ -416,8 +425,26 @@
     - create a template file in YAML/Python that describes what you want the components of your environment to look like
     - deployment manager executes your template to create the environment described
     - to make changes, edit the template and deployment manager will update your environment automatically
-    -
+### cloud container registry
+	- container image: complate package that contains the app binary and software required for the app to run
+		- you should deploy the same container image to all your environments to ensure you app performs correctly
+	- create build triggers for trigger types for building different types of artifacts
+		- trigger type: specifies whether builds should be triggered by commits to which branch / tag
+		- build configuration yaml/json file: specifies the steps in the build pipeline
+			- steps: each step is a docker container that is invoked by container builder when the build is executed; analogous to cmd/scripts executed to build the application
+				- name: identifies the continer to invoke for that build step
+					- e.g. gcr.io/cloud-builders/docker
+				- images: the name of the container image to be created by this build configuration
+					- e.g. gcr.io/$PROJECT_ID/cd-demo-img
+	- triggers new builds in container builder
 
+### cloud container builder
+	- fully managed service to setup build pipelines
+		- create a docker container image for application and push it to cloud container registry
+	- workflow
+		- retrieves source code and build configuration from repo
+		- pushes new container image to container registry
+	-
 ## monitoring
   - you cant run an application stably without monitoring
   - use cases
@@ -491,7 +518,6 @@
     - bq: BigQuery
       - manage datasets, tables, and other BigQuery entities
       - allows you to run queries
-
 ### Google API client library:
   - should only be used if your programming language does not have a a Google Client Library
     - does not support gRPC
@@ -503,8 +529,6 @@
       - see Docs
       - execute requests for any method and see responses in real time
       - make authenticated and authorized API calls
-
-
 ### Cloud Client Libraries:
   - API Client libraries: open source generated supporting various languages
     - handle low level communication with the server, including authentication with google
@@ -520,7 +544,6 @@
         - if your app is on app/compute engine authentication will just work
         - if you dont explicitly provide credentials, the client will reuse the credentials from the gcloud tool if it has already been setup
         -
-
 ### Mobile App
     - manage virtual machines and DB instances
     - manage apps in google app engine
@@ -567,7 +590,7 @@
 			- for authenticating to a GCP API so users aren't directly involved
 		  - represent each microservice by its own distinct service account
 
-	### OAuth 2.0
+### OAuth 2.0
 	  - your app needs to access data that belongs to a user
 	  - your app needs to authenticate as a user to act on their behalf
 		- steps
@@ -667,8 +690,6 @@
 		5. cloud identity domain
 			- a virtual group of all members in an organization
 			- does not provide access to g suite applications and features
-
-
 ### IAM Roles: the ACCESS
 	- permissions: what operations are allowed on resources,
 		- cannot be assigned to users, you must assign permissions to roles, and roles to users
@@ -1034,8 +1055,6 @@
 ### Caching
   - redis labs
   - memcached cloud
-
-
 ### Cloud Storage
 	- for file (object) storage
   - unified object storage allowing you to serve, analyze and archive data/objects/blobs
@@ -1532,16 +1551,6 @@
     - for large scale applications that are larger than two terabytes
     - full sql support for  system
     - whenever high I/O global consistency is required
-
-## Big Data and Machine Learning
-  - requires investments in specific infrastructure and data processing
-  - building and maintaining compute heavy data and analytics systems
-  - real time analytics
-  - hot keys: situations where proportionately large chunks of your input get mapped to the same cluster in a distributed system
-    - e.g. in map/reduce transformations
-
-### Big Data
-  - integrated serverless platform
 ### Cloud dataproc
   - fast way to run data mining and analysis in datasets of known size
   - you have to request a Hadoop cluster
@@ -1650,7 +1659,7 @@
   - supported versions
     - SQL Server Standard, Web, and Enterprise
   - NOT a managed service
-# Storage options for mobile
+### Storage options for mobile
   - Cloud storage for firebase
     - overview
       - stores user generated data and files to google cloud storage
@@ -1795,7 +1804,7 @@
           - language identification
           - topic classification
           - sentiment analysis
-#### TensorFlow
+### TensorFlow
   - open source tool to build and run neural network models
   - platform support:
     - CPU:
@@ -1808,7 +1817,7 @@
       - each cloud TPU provides up to 180 teraflops of performance
   - cost:
     - pay only for what you use
-#### Cloud ML
+### Cloud ML
   - fully managed machine learning service
     - works on any type of data of any size
     - can take any tensorflow model and perform large-scale training on a managed cluster
@@ -1817,8 +1826,7 @@
   - Integrations
     - BigQuery
     - cloud storage
-
-#### pre-trained machine learning apis
+### pre-trained machine learning apis
  	- models built by google made available through APIs
   - speech api: stream results in real time, detects 110 languages and variants
     - accessible from any device
@@ -1851,6 +1859,10 @@
       - flag inapropriate content
       - identify key entities (nouns) within your video and when they occur
         - make video content searchable and discoverable
+
+
+
+
 
 
 # OLD: LinkedIn (Lynda) Learning
