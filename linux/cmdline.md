@@ -9,6 +9,7 @@
   - https://practices.learningaccelerator.org/insights/the-why-and-how-of-mastery-based-progression
   - https://blog.codinghorror.com/
   - https://accidentallyquadratic.tumblr.com/
+  - https://geek-university.com/linux/
 
 
 # BOOKMARK: pg 124 coproc cmd
@@ -30,40 +31,38 @@
 
 
 
-# important locations and files
+# important files and locations
+## important locations
   - / : root
   - /bin/ : many GNU user-level utilities
   - /boot/ : boot files
   - /dev/ : where linux creates device nodes
   - /etc/ : system configuration directory
-    - inittabs: a table of processes tos tart automatically on bootup
     - init.d/ : contains scripts for starting and stopping individual apps at bootime
     - rcX.d/ : X is a run level, contains entries for each script within init.d/
-    - passwd: See ## passwd under #important files
   - /home/ : where linux creates user directories
-    - [username] a users home
-      - Alias at ~
-      - .bash_history `all the cmds entered`
-
-
-/lib/ : system and application library files
-/media/ : common place for mount points used for removable media
-/mnt/ : another common place for mount points used for removable media
-/opt/ : often used to store third-party software packages and data files
-/proc/ current hardware and process information
-/root/ : root home directory
-/sbin/ : many GNU admin-level utilities
-/run/ : runtime data is held during system operation
-/src/ : local services store their files
-/sys/ : system hardware information files
-/tmp/ : temporary work files can be created and distroyed
-/usr/ : the bulk of GNU user-level utilities and data files
-/var/ : for files that change frequently, e.g. log files
+  - /lib/ : system and application library files
+  - /media/ : common place for mount points used for removable media
+  - /mnt/ : another common place for mount points used for removable media
+  - /opt/ : often used to store third-party software packages and data files
+  - /proc/ current hardware and process information
+  - /root/ : root home directory
+  - /sbin/ : many GNU admin-level utilities
+  - /run/ : runtime data is held during system operation
+  - /src/ : local services store their files
+  - /sys/ : system hardware information files
+  - /tmp/ : temporary work files can be created and distroyed
+  - /usr/ : the bulk of GNU user-level utilities and data files
+  - /var/ : for files that change frequently, e.g. log files
 
 
 
 
-## important files extended
+## important files
+- /etc/inittab: a table of processes to start automatically on bootup
+- /home/[username] a users home
+  - Alias at ~
+  - .bash_history `all the cmds entered`
 /bin/bash: the default shell for many userIDs
 OPTIONS
 -c string `reads commands from string and processes them`
