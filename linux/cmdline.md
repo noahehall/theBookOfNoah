@@ -15,7 +15,6 @@
 # BOOKMARK: pg 124 coproc cmd
 
 
-
 # TODO
   - Copy table 1-1 pg 8
   - Copy table 1-2 pg 10
@@ -27,8 +26,6 @@
   - Rearrange shit when you get the fk outa gdocs
   - Replace gdoc quotes with regular quotes
   - Copy table 4-6 SORT CMD pg 105
-
-
 
 
 # important files and locations
@@ -58,8 +55,6 @@
   - /var/ : for files that change frequently, e.g. log files
 
 
-
-
 ## important files
   - /etc/inittab: a table of processes to start automatically on bootup
   - /home/[username]/.bash_history `all the cmds entered`
@@ -68,194 +63,194 @@
     - Example entry: noahjedwardhall:x:501:501:Noah Edward:/home/noahedwardhall:/bin/bash
 
 
-# important programs
-  - /bin/bash: the default shell for many userIDs
-    - OPTIONS
-      - -c string `reads commands from string and processes them`
-      - -i `starts an interactive shell, allowing input from the user`
-      - -l `acts as if invoked as a login shell`
-      - -r `starts a restricted shell, limiting the user to the default directory`
-      - -s `reads commands from the standard input`
-  - /bin/tcsh: shell based on the original C shell
-  - /bin/dash: the debian based versio of the ash shell
-  - /bin/csh: a softlink to pointing to the tcsh shell
-  - /bin/sh: the default system shell; used for system shell scritps, e.g. those needed at startup
-
 # important environment variables
-Environment variables: store information about the shell session and the working environment
-Used to store data in memory
-Global vars:
-Local vars:
-vars
-BASH_SUBSHELL `used at the end of a cmd/process-list to determine how many subshell(s) were created
-LS_COLORS: controls the color for different types of text displayed in a terminal emulator
-HISTISZE: how many cmds are kept in bash history
+  - Environment variables: store information about the shell session and the working environment
+  - Used to store data in memory
+  - Global vars:
+  - Local vars:
+  - vars
+    - BASH_SUBSHELL `used at the end of a cmd/process-list to determine how many subshell(s) were created
+    - LS_COLORS: controls the color for different types of text displayed in a terminal emulator
+    - HISTISZE: how many cmds are kept in bash history
 
 
 # CLI CMD Quickies
-Parameter types
-Unix style: preceded by a dash
-BSD style: not preceded by a dash
-GNU long: preceded by a double dash
+  - Parameter types
+  - Unix style: preceded by a dash
+  - BSD style: not preceded by a dash
+  - GNU long: preceded by a double dash
 
 
+# important programs
+  - shell programs
+    - /bin/bash: the default shell for many userIDs
+      - OPTIONS
+        - -c string `reads commands from string and processes them`
+        - -i `starts an interactive shell, allowing input from the user`
+        - -l `acts as if invoked as a login shell`
+        - -r `starts a restricted shell, limiting the user to the default directory`
+        - -s `reads commands from the standard input`
+    - /bin/tcsh: shell based on the original C shell
+    - /bin/dash: the debian based versio of the ash shell
+    - /bin/csh: a softlink to pointing to the tcsh shell
+    - /bin/sh: the default system shell; used for system shell scritps, e.g. those needed at startup
 
-## TERMINAL
-setterm
-Setterm -background white `change a console background to white`
-Setterm -foreground black `change console text to black`
-Setterm -inversescreen on|off  `switch between dark/bright mode`
-Setterm -reset `switch to default setting`
-Setterm -store `sets the current settings to be used as default (for when u use -reset)`
-History:  list bash history
-!! : reuse the last command
-! history_cmd_number: issue the CMD at line # in history
+  - setterm
+    - setterm -background white `change a console background to white`
+    - setterm -foreground black `change console text to black`
+    - setterm -inversescreen on|off  `switch between dark/bright mode`
+    - setterm -reset `switch to default setting`
+    - setterm -store `sets the current settings to be used as default (for when u use -reset)`
 
+  - History:  list bash history
+    - !! : reuse the last command
+    - ! history_cmd_number: issue the CMD at line # in history
 
+  - alias CMD OPTIONS: create an alias name for common commands (and their params)
 
-## GENERAL
-Alias CMD OPTIONS: create an alias name for common commands (and their params)
-Which CMD: finds  the program file in the users path
-Type -a CMD: determines if a program is builtin/esxternal and finds all program files of CMD
-Man CMD:  the bash manual; provides access to manual pages stored on the linux system
-Section names in the manual
-Name: command name and short description
-Synopsis: command syntax
-Configuration: configuration information
-Description:
-Options
-Exit status:
-Return value
-Errors: cmd error messages
-Environment: environment variables used
-Files: files used by the command
-Versions
-Conforming to: standards followed
-Notes
-Bugs
-Example:
-See also
-Man # CMD `go to a section area for a CMD`
-1 `executable programs or shell cmds`
-2 `system calls`
-3 `library calls`
-4 `special files`
-5 `file formats and conventions`
-6 `games`
-7 `overviews, conventions, and misc`
-8 `super user and system administration commands`
-9 `kernel routines`
-Man -k KEYWORD `Searching for programs dealing with your keyword`
+  - which CMD: finds  the program file in the users path
 
+  - type -a CMD: determines if a program is builtin/esxternal and finds all program files of CMD
 
-
-
-## FILESYSTEM
-Gzip:  file compression
-Gzcat: displaying the contents of compressed files
-Gunzip: uncompressing files
-Tar function OPTIONS OBJECT
-FUNCTIONS
--A `appends an existing tar archive file to another existing tar archive file`
--c `creates a new tar archive file`
--d `checks the diff between a tar archive file and the file system
--r `appends files to the end of an existing tar archive file`
--t `list the congtents of an existing tar archive file`
--u `appends files to an existing tart archive file that are newer than a file wiht the same name in the existing archive
--x `extracts files from an existing archive file`
-OPTIONS
--C DIR `changes to the specified directory`
--f FILE `outputs results to a file/device`
--p `preserve all file permissions`
--v `list files as they are processed`
--z `redirects the output to the gzip command for compression`
-EXAMPLES
-Tar -cvf new.tar src/dir1 src/dir2 `creates an archive new.tar containing the contents of the src dirs`
-Tar -tf existing.tar `list but dont extract the contents of existing.tar`
-Tar -xvf existing.tar `extracts the contents of existing.tar`
-Tar -zxvf existing.tgz `extract  a gzipped tar file, e.g. many open source archives`
-Cd : change directory
-Cd `go to the current user’s home directory`
-Cd /absolute/reference `go to the directory with root dir as base`
-Cd relative/reference `go to the directory with cur dir as base`
-Cd ./ `see above`
-Cd ../relative/reference `go to the directory with the parent dir as base`
-Pwd : print working dir
-Ls : display files and directories
-Ls OPTIONS DIRECTORY
-OPTIONS
--F distinguish files and directories
--a display hidden files as well
--R recursive: display child files and dirs
---time=atime : display the access time
--d : list directory information but not its content
--l display additional info about each file and dir
-d directory
-- file
-l linked file
-c character device
-b block device
-file permissions; owner, primary group, byte size, last modified
+  - man CMD:  the bash manual; provides access to manual pages stored on the linux system
+    - Section names in the manual
+      - Name: command name and short description
+      - Synopsis: command syntax
+      - Configuration: configuration information
+      - Description:
+      - Options:
+      - Exit status:
+      - Return value
+      - Errors: cmd error messages
+      - Environment: environment variables used
+      - Files: files used by the command
+      - Versions
+      - Conforming to: standards followed
+      - Bugs
+      - Notes
+      - Example:
+        - `man # CMD` go to a section area for a CMD
+          - 1 `executable programs or shell cmds`
+          - 3 `library calls`
+          - 2 `system calls`
+          - 4 `special files`
+          - 5 `file formats and conventions`
+          - 7 `overviews, conventions, and misc`
+          - 6 `games`
+          - 8 `super user and system administration commands`
+          - 9 `kernel routines`
+        - `man -k KEYWORD` Searching for programs dealing with your keyword
 
 
+## FILESYSTEM programs
+  - gzip:  file compression
+  - gzcat: displaying the contents of compressed files
+  - gunzip: uncompressing files
+  - tar function OPTIONS OBJECT
+    - FUNCTIONS
+      - A `appends an existing tar archive file to another existing tar archive file`
+      - c `creates a new tar archive file`
+      - d `checks the diff between a tar archive file and the file system
+      - r `appends files to the end of an existing tar archive file`
+      - t `list the congtents of an existing tar archive file`
+      - u `appends files to an existing tart archive file that are newer than a file wiht the same name in the existing archive
+      - x `extracts files from an existing archive file`
+    - OPTIONS
+      - C DIR `changes to the specified directory`
+      - f FILE `outputs results to a file/device`
+      - p `preserve all file permissions`
+      - v `list files as they are processed`
+      - z `redirects the output to the gzip command for compression`
+    - EXAMPLES
+      - tar -cvf new.tar src/dir1 src/dir2 `creates an archive new.tar containing the contents of the src dirs`
+      - tar -tf existing.tar `list but dont extract the contents of existing.tar`
+      - tar -xvf existing.tar `extracts the contents of existing.tar`
+      - tar -zxvf existing.tgz `extract  a gzipped tar file, e.g. many open source archives`
 
+  - cd : change directory
+    - cd `go to the current user’s home directory`
+    - cd /absolute/reference `go to the directory with root dir as base`
+    - cd relative/reference `go to the directory with cur dir as base`
+    - cd ../relative/reference `go to the directory with the parent dir as base`
+    - cd ./ `see above`
 
-Cp SRC DEST: copy files and directories
-OPTIONS
--i : force permission to overwrite files if the file already exists in DEST
--R : recursively copy the contents of an entire directory
-Mv SRC DEST : move i.e rename files
-OPTIONS
--i : prompt before overwriting dest files
-Rm SRC : remove i.e. delete a file/dir
-OPTIONS
--i : prompt before deleting files
--r : remove files and directories
-Mkdir DEST : create a directory
-OPTIONS
--p : create child directories as needed
-Rmdir SRC : delete directories
-OPTIONS
+  - pwd : print working dir
 
+  - ls : display files and directories
+    - ls OPTIONS DIRECTORY
+    - OPTIONS
+      - -F distinguish files and directories
+      - -a display hidden files as well
+      - -R recursive: display child files and dirs
+      - --time=atime : display the access time
+      - -d : list directory information but not its content
+      - -l display additional info about each file and dir
+        - d directory
+        - - file
+        - l linked file
+        - b block device
+        - c character device
+        - file permissions; owner, primary group, byte size, last modified
 
-Ln : link files
-Ln -s physical/file/src virtual/file/dest `create a symbolic link to a file`
-The virtual file merely points to the original file but is not the same file
-Have different inode #
-Ln physical/file/src virtual/file/dest `create a hard link to a file
-They are physically the same file
-Share the same inode #
-Can only be created with files on the same medium
-File SRC : returns the SRC type: file / directory and what kind
-Cat SRC : display all the data in SRC
-OPTIONS
--n : number each line
--b : number each line with text
--T : dont print tab characters
-More SRC: displays a tax file one page at a time
-Less SRC: displays a text file one page at a time with advanced features
-Tail OPTIONS SRC: displays the last lines in a file
-OPTIONS
--n INT : display the last INT lines of SRC
--f : peek inside the file as its being used by other processes to display new lines as they appear (e.g. monitoring log files)
-Head OPTIONS SRC: displays the first lines of a file
-OPTIONS: sead TAIL
-Mount OPTIONS DEVICE DIRECTORY: place a new media disk into the virtual directory
-DEVICE: the device location, e.g. /dev/sdb1
-DIRECTORY: the virtual directory location to mount it, e.g. /mount/disk
-Mount `displays  list of media devices currently mounted on the system`
-COLUMNS
-The device filename of the media
-The mount point in the virtual directory where the media is mounted
-The filesystem type
-The access status of the mounted media
-OPTIONS
- -t `the filesystem type`
-Vfat: windows long filesystem
-Ntfs: windows advanced filesystem used in NT, XP and Vista
-Iso9660: standard cd-rom filesystem
-Usb sticks: usually vfat
-Cd-rom: usually iso9660
+  - cp SRC DEST: copy files and directories
+    - -i : force permission to overwrite files if the file already exists in DEST
+    - -R : recursively copy the contents of an entire directory
+
+  - mv SRC DEST : move i.e rename files
+    - -i : prompt before overwriting dest files
+
+  - rm SRC : remove i.e. delete a file/dir
+    - -i : prompt before deleting files
+    - -r : remove files and directories
+
+  - mkdir DEST : create a directory
+    - -p : create child directories as needed
+
+  - rmdir SRC : delete directories
+
+  - ln : link files
+    - `ln -s physical/file/src virtual/file/dest` create a symbolic link to a file
+      - The virtual file merely points to the original file but is not the same file
+      - Have different inode #
+    - `ln physical/file/src virtual/file/dest` create a hard link to a file
+      - They are physically the same file
+      - Share the same inode #
+      - Can only be created with files on the same medium
+
+  - file SRC : returns the SRC type: file / directory and what kind
+
+  - cat SRC : display all the data in SRC
+    - -n : number each line
+    - -b : number each line with text
+    - -T : dont print tab characters
+
+  - more SRC: displays a tax file one page at a time
+
+  - less SRC: displays a text file one page at a time with advanced features
+
+  - tail OPTIONS SRC: displays the last lines in a file
+    - -n INT : display the last INT lines of SRC
+    - -f : peek inside the file as its being used by other processes to display new lines as they appear (e.g. monitoring log files)
+
+  - head OPTIONS SRC: displays the first lines of a file
+    - OPTIONS: sead TAIL
+
+  - mount OPTIONS DEVICE DIRECTORY: place a new media disk into the virtual -directory
+  - DEVICE: the device location, e.g. /dev/sdb1
+  - DIRECTORY: the virtual directory location to mount it, e.g. /mount/disk
+  - Mount `displays  list of media devices currently mounted on the system`
+  - COLUMNS
+  - The device filename of the media
+  - The mount point in the virtual directory where the media is mounted
+  - The filesystem type
+  - The access status of the mounted media
+  - OPTIONS
+  - -t `the filesystem type`
+  - Vfat: windows long filesystem
+  - Ntfs: windows advanced filesystem used in NT, XP and Vista
+  - Iso9660: standard cd-rom filesystem
+  - Usb sticks: usually vfat
+  - cd-rom: usually iso9660
 
 
 Umount DIR|DEVICE : remove a removable media device
@@ -343,21 +338,6 @@ Killall http*
 OPTIONS
 -s : send other signals using their name or number
 
-
-
-
-
-S
-Sd
-Sd
-Sad
-Asd
-Asd
-Asd
-Asd
-Asd
-Asd
-asd
 
 # REGEX
 ## FILE GLOBBING
