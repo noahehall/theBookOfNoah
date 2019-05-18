@@ -41,6 +41,8 @@
     - init.d/ : contains scripts for starting and stopping individual apps at bootime
     - rcX.d/ : X is a run level, contains entries for each script within init.d/
   - /home/ : where linux creates user directories
+    - [username] a users home
+      - Alias at ~
   - /lib/ : system and application library files
   - /media/ : common place for mount points used for removable media
   - /mnt/ : another common place for mount points used for removable media
@@ -59,25 +61,25 @@
 
 
 ## important files
-- /etc/inittab: a table of processes to start automatically on bootup
-- /home/[username] a users home
-  - Alias at ~
-  - .bash_history `all the cmds entered`
-/bin/bash: the default shell for many userIDs
-OPTIONS
--c string `reads commands from string and processes them`
--i `starts an interactive shell, allowing input from the user`
--l `acts as if invoked as a login shell`
--r `starts a restricted shell, limiting the user to the default directory`
--s `reads commands from the standard input`
-/bin/tcsh: shell based on the original C shell
-/bin/dash: the debian based versio of the ash shell
-/bin/csh: a softlink to pointing to the tcsh shell
-/bin/sh: the default system shell; used for system shell scritps, e.g. those needed at startup
-/etc/passwd: contains a list of all the system user accounts a long with some basic configuration information about each user
-User entry: one per line consisting of seven fields delimited by colons that are each used to assign specific features for the user
-Example entry: noahjedwardhall:x:501:501:Noah Edward:/home/noahedwardhall:/bin/bash
+  - /etc/inittab: a table of processes to start automatically on bootup
+  - /home/[username]/.bash_history `all the cmds entered`
+  - /etc/passwd: contains a list of all the system user accounts a long with some basic configuration information about each user
+    - User entry: one per line consisting of seven fields delimited by colons that are each used to assign specific features for the user
+    - Example entry: noahjedwardhall:x:501:501:Noah Edward:/home/noahedwardhall:/bin/bash
 
+
+# important programs
+  - /bin/bash: the default shell for many userIDs
+    - OPTIONS
+      - -c string `reads commands from string and processes them`
+      - -i `starts an interactive shell, allowing input from the user`
+      - -l `acts as if invoked as a login shell`
+      - -r `starts a restricted shell, limiting the user to the default directory`
+      - -s `reads commands from the standard input`
+  - /bin/tcsh: shell based on the original C shell
+  - /bin/dash: the debian based versio of the ash shell
+  - /bin/csh: a softlink to pointing to the tcsh shell
+  - /bin/sh: the default system shell; used for system shell scritps, e.g. those needed at startup
 
 # important environment variables
 Environment variables: store information about the shell session and the working environment
