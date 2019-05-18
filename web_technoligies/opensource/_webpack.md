@@ -77,6 +77,7 @@
 
 # plugins
 ## loaders
+  - Note that the order of adding these loaders is important. First, we need to resolve the CSS files before adding them to the DOM with the style-loader. By default, webpack uses the loaders from the right (last element in the array) to the left (first element in the array).
   - [style-loader](https://webpack.js.org/loaders/style-loader/)
     - add CSS to the DOM by injecting a style tag
   - [css-loader](https://webpack.js.org/loaders/css-loader/)
@@ -90,6 +91,8 @@
     - by default it generates its own index.html and places it in your dist directory
   - [html webpack template](https://github.com/jaketrent/html-webpack-template)
     - adds a default html template for use with the htmlwebpackplugin
+  - [html-loader](https://github.com/webpack-contrib/html-loader)
+    - exports HTML as a string
 
 
 ## directory plugins / output
