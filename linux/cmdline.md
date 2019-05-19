@@ -224,11 +224,60 @@
       - pointers to each disk block that contains data from the file
     - inode number: linux references each inode in the inode table using a unique number to identify each file (rather than use the filename / path)
   - ext2: an expansion of the basic abilities of the ext system but maintains the same structure
-    -
+    - adds the following to the inode table
+      - created time
+      - modified time
+      - last access time
+  - ext3: uses the same inode table structure as the ext 2 filesystem
+    - adds the following
+      - journaling
+  - ext4: the default filesystem of the linux kernel since 2008
+
 
 
 ### JOURNALING FILESYSTEMS
-  - 
+  - instead of writing data directly to the storage device and then updating the inode table, journaling filesystems write file changes into a temporal file (journal) first then update the inode table
+  - METHODS
+    - data mode: both inode and file data are journaled
+      - low risk of losing data
+      - poor performance
+    - ordered mode: only inode data is written tot he journal but not removed until the file data is successfully written
+      - good comporomise between performance and safety (system crashes)
+    - writeback mode: only inode data is written to the journal
+      - no control over when the file data is written
+      - higher risk of losing dta
+      - better than not using journaling at all
+  - COW: copy on write; an alternative to journaling filesystems
+    - offers both safet and performance via snapshots
+
+
+## PARTITIONS
+  - you need to create a partition on the storage device to contain the filesystem
+  - hard drive device names
+    - /dev/hdX - X is a letter based on the order the drive is detected
+      - only used for older ide drives
+    - /dev/sdX - X is a letter based on the order the drive is detected
+      - used for SATA and SCSI drives
+
+### CMDS
+  - fdisk: organize partitions on any stoage device installed on the system
+    - a - toggles a flag indicating if the partition is bootable
+    - b - edits the disklabel used by BSD unix systems
+    - c - toggles the DOS compatibility flag
+    - d - deletes the partition
+    - l - lists the available partition types
+    - m - displays the command options
+    - n - adds a new partition
+    - o - creates a DOS partition table
+    - p - displays the current partition table
+    - q - quits without saving changes
+    - s - creates a new disklabel for sun unix systems
+    - t - changes the partition system ID
+    - u - changes the storage units used
+    - v - verifies the partition table
+    - w - writes the partition table to disk
+    - x - advanced functions
+
 
 ### FILES
   - linking files: when you need to maintain 2/more copies of the same file on the system; have one physical copy and multiple virtual copies
