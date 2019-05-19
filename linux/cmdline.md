@@ -203,13 +203,32 @@
   - Builtin commands: execute in the users shell without creating a child process
 
 
-## file system
+## FILESYSTEMS
   - Linux does not use drive letters in pathnames
   - Virtual directory: Contains file paths from all the storage devices installed on the computer, merged into a single directory structure, however the actual files and directories could be located physically on any of the harddrives attached to the system
   - Root: the base directory; all other files and directories in the virtual directory are stored here
   - Root drive: the first hard drive installed on the system
   - Mount points: directories in the virtual directory where you can assign additional storage devices
 
+
+### BASIC FILESYSTEMS
+  - ext: extended file system: the original file system of the linux operating system
+    - uses virtual directories to handle physical devices and storing data in fixed-length blocks on the physical devices
+    - inodes: tracks informatino about the files stored in the virtual directory
+    - inode table: a separate table on each physical to store file information
+      - the filename
+      - the file size
+      - the owner of the file
+      - the group the file belongs to
+      - access permissions for the file
+      - pointers to each disk block that contains data from the file
+    - inode number: linux references each inode in the inode table using a unique number to identify each file (rather than use the filename / path)
+  - ext2: an expansion of the basic abilities of the ext system but maintains the same structure
+    -
+
+
+### JOURNALING FILESYSTEMS
+  - 
 
 ### FILES
   - linking files: when you need to maintain 2/more copies of the same file on the system; have one physical copy and multiple virtual copies
@@ -574,12 +593,12 @@
 # SECURITY
 ## FILE PERMISSIONS
   - `ls -l` show permissions for a directory
-    - [everyone][group][owner]
-    - r - read permission
-    - w - write permission
-    - x - execute permission
+    - [sticky][everyone][group][owner]
+    - r|4 - read permission
+    - w|2 - write permission
+    - x|1 - execute permission
     - - -permission denied
-  - octal permissions
+  - octal: permissions
     - 0 none
     - 1 execute only
     - 2 write only
@@ -588,13 +607,37 @@
     - 5 read and execute
     - 6 read and write
     - 7 read, write, execute
-  -
+    - the sticky bit
+      - 0 all bits are cleared
+      - 1 sticky bit is set
+      - 2 SGID is set
+      - 3 SGID and stick are set
+      - 4 SUID is set
+      - 5 SUID and sticky ar eset
+      - 6 SUID AND SGID are set
+      - 7 all bits are set
+  - SUID: set user id: when a file is executed by a user, the program runs under the permissions of the file owner
+  - SGID: set group ID: import for sharing files by forcing all new files created in a shared directory to be owned by the directorys group an
+    - for a file - the program runs under the permissions of the file group
+    - for a directory - new files created in the directory use the directory group as the default group
+  - sticky bit: the file remains (sticks) in memory after the process ends
+    -
 
 ### CMDS
-  - umask - sets the default permissions for any file/director you create
+  - `umask BINARY_VALUE` - sets the default permissions for any file/director you create
     - /etc/profile - where umask values are stored
     - /etc/login.defs also where umask values are stored
-    -
+
+  - `chmod options mode file/dir` change teh security settings for files and directories
+    - examples
+      - `chmod 760 FILE`
+
+  - `chown options user:group file` change the owner of a file/directory
+    - -R make changes recursively through subdirectories and files
+    - -h change ownership of any files that are symbolically linked to the file
+    - `chown noah file` set noah as the owenr of file
+
+
 ## USER ACCOUNTS
   - user account: the core of the linux security system
     - each user who accesses ta linmux system should have a unique user account
