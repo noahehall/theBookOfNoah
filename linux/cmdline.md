@@ -23,7 +23,63 @@
   - Copy table 4-6 SORT CMD pg 105
 
 
-# BOOKMARK: pg 124 coproc cmd
+# BOOKMARK: pg 165 top/middleware somewhere
+
+### important locations
+  - / : root
+  - /bin/ : many GNU user-level utilities
+  - /boot/ : boot files
+  - /dev/ : where linux creates device nodes
+  - /etc/ : system configuration directory
+    - profile.d/ : contains `.sh` files that contain persistent variables for all users, i.e. a global .bashrc files
+    - e.g. this is where bash_completion.sh should go so all users have bash completion
+    - init.d/ : contains scripts for starting and stopping individual apps at bootime
+    - rcX.d/ : X is a run level, contains entries for each script within init.d/
+  - /home/ : where linux creates user directories
+    - [username] a users home
+      - Alias at ~
+  - /lib/ : system and application library files
+  - /media/ : common place for mount points used for removable media
+  - /mnt/ : another common place for mount points used for removable media
+  - /opt/ : often used to store third-party software packages and data files
+  - /proc/ current hardware and process information
+  - /root/ : root home directory
+  - /sbin/ : many GNU admin-level utilities
+  - /run/ : runtime data is held during system operation
+  - /src/ : local services store their files
+  - /sys/ : system hardware information files
+  - /tmp/ : temporary work files can be created and distroyed
+  - /usr/ : the bulk of GNU user-level utilities and data files
+  - /var/ : for files that change frequently, e.g. log files
+
+
+### important files
+  - /etc/inittab: a table of processes to start automatically on bootup
+  - /etc/passwd - holds all user/system accounts
+  - /etc/group - holds all group information
+  - /etc/shadow - holds user passwords
+  - /etc/login.defs also where umask values are stored
+  - /home/[username]/.bash_history `all the cmds entered`
+  - /etc/passwd: contains a list of all the system user accounts a long with some basic configuration information about each user
+    - User entry: one per line consisting of seven fields delimited by colons that are each used to assign specific features for the user
+    - Example entry: noahjedwardhall:x:501:501:Noah Edward:/home/noahedwardhall:/bin/bash
+  - startup files for initiating a bash shell
+    - /etc/profile - default startup file for the bash shell
+      - sometimes stores the umask values (default permissions for created objectss)
+      - not processed in interactive shells
+  - user specific startup files for defining user-specific environment variables
+    - the first file found is run, and the rest are ignored
+    - $HOME/.bash_profile
+    - $HOME/.bashrc
+      - only run from interactive shells
+      - but is usually included in one of the other files
+    - $HOME/.bash_login
+    - $HOME/.profile - the main startup file for the bash shell
+      - all users execute this startup file when they log in
+    - startup files for systems usig PAM (pluggable  authentication modules)
+      - /etc/environment
+      - $HOME/.pam_environment
+
 
 # BACKGROUND
 ## file types
@@ -127,6 +183,11 @@
   - Graphical terminals: a virtual console (terminal) emulation that runs inside a graphical desktop environment to simulate the virtual console
   - Prompt: the CLI prompt / shell prompt: where you enter commands that can be interpreted by the shell
     - $ is the default prompt symbol
+  - you can start a bash shell in 3 ways
+    - as a default login shell at login timers
+    - as an interactive shell that is started by spawning a subshells
+      - e.g. typing bash
+    - as a non interactive shell to run a script
 
 
 ### PARENT-CHILD SHELLS
@@ -155,85 +216,6 @@
   - Link: a placeholder in a directory that points to the real locatin of the file
   - Symbolic link: a physical file that points to another file somewhere in the virtual directory structure; but they do not share the same contents
   - Hard link: creates a separate virtual file that contains information about the original file and where to locate it, however they are physically the same file
-
-
-## PROCESSES
-  - Signals: how processes communicate with each other; a predefined message that processes recognize and may choose to ignore or act on
-    - 1: HUP : hangs up
-    - 2: INT: interrupts
-    - 3: QUIT: stops running
-    - 9: KILL: unconditionally temrinates
-    - 11: SEGV: preduces segment violation
-    - 15: TERM: terminates if possible
-    - 17: STOP: stops unconditinally but doesnt terminate
-    - 18: TSTP: stops or pauses. But continues to run in background
-    - 19: CONT: resumes execution after STOP or TSTP
-
-
-## cmd / process grouping / modifications
-  - Sequential cmd list: a list of commands to be run one-after-another
-    - cmd1; cmd2; cmd3; cmdX
-  - Sequential cmd list no errors: a list of commands that will run only if the previous cmd exited without error
-    - cmd1 && cmd2 && cmd3 && cmdX
-  - Process list w/ subshell: executes sequential commands in a subshell
-    - (cmd1; cmd2 && cmd3;  cmd4)
-    - (cmd1; cmd2 && cmd3; ((echo $BASH_SUBSHELL)) `create another subshell`
-  - Process list w/out subshell: cmd list must end with a semicolon
-    - { cmd1 && cmd2; cmd3; }
-  - Background mode: allows the cmd to be processed in a subshell while releasing the CLI back to the user
-    - cmd1& `its the & that forces background mode`
-      - Returns the job number and the PID of the process
-    - Co-processing: spawns a subshell in background mode and executes a command within that subshell
-      - coproc : See CLI CMD QUICKIES section
-
-
-
-# important files and locations
-## important locations
-  - / : root
-  - /bin/ : many GNU user-level utilities
-  - /boot/ : boot files
-  - /dev/ : where linux creates device nodes
-  - /etc/ : system configuration directory
-    - init.d/ : contains scripts for starting and stopping individual apps at bootime
-    - rcX.d/ : X is a run level, contains entries for each script within init.d/
-  - /home/ : where linux creates user directories
-    - [username] a users home
-      - Alias at ~
-  - /lib/ : system and application library files
-  - /media/ : common place for mount points used for removable media
-  - /mnt/ : another common place for mount points used for removable media
-  - /opt/ : often used to store third-party software packages and data files
-  - /proc/ current hardware and process information
-  - /root/ : root home directory
-  - /sbin/ : many GNU admin-level utilities
-  - /run/ : runtime data is held during system operation
-  - /src/ : local services store their files
-  - /sys/ : system hardware information files
-  - /tmp/ : temporary work files can be created and distroyed
-  - /usr/ : the bulk of GNU user-level utilities and data files
-  - /var/ : for files that change frequently, e.g. log files
-
-
-## important files
-  - /etc/inittab: a table of processes to start automatically on bootup
-  - /home/[username]/.bash_history `all the cmds entered`
-  - /etc/passwd: contains a list of all the system user accounts a long with some basic configuration information about each user
-    - User entry: one per line consisting of seven fields delimited by colons that are each used to assign specific features for the user
-    - Example entry: noahjedwardhall:x:501:501:Noah Edward:/home/noahedwardhall:/bin/bash
-
-
-# important environment variables
-  - Environment variables: store information about the shell session and the working environment
-  - Used to store data in memory
-  - Global vars:
-  - Local vars:
-  - vars
-    - BASH_SUBSHELL `used at the end of a cmd/process-list to determine how many subshell(s) were created
-    - LS_COLORS: controls the color for different types of text displayed in a terminal emulator
-    - HISTISZE: how many cmds are kept in bash history
-
-
 
 # CLI CMD Quickies
   - Parameter types
@@ -264,14 +246,17 @@
     - setterm -store `sets the current settings to be used as default (for when u use -reset)`
 
   - History:  list bash history
+    - `history -a` force a command to be written to .bash_history
     - !! : reuse the last command
     - ! history_cmd_number: issue the CMD at line # in history
 
   - alias CMD OPTIONS: create an alias name for common commands (and their params)
+    - -p see a list of active aliases
+    - alias KEYS='CMD ...' create an alias for the current terminal session
 
   - which CMD: finds  the program file in the users path
 
-  - type -a CMD: determines if a program is builtin/esxternal and finds all program files of CMD
+  - type -a CMD: determines if a program is builtin/external and finds all program files of CMD
 
   - man CMD:  the bash manual; provides access to manual pages stored on the linux system
     - Section names in the manual
@@ -301,6 +286,7 @@
           - 8 `super user and system administration commands`
           - 9 `kernel routines`
         - `man -k KEYWORD` Searching for programs dealing with your keyword
+
 
 
 ## FILESYSTEM programs
@@ -438,6 +424,7 @@
     - -c `produces a grand total of all the files listed
     - -s `summarizes each argument`
 
+
 ### FILES
   - touch : create empty files or change the modification time of prexisting files
     - `touch myfile` creates myfile and sets your username as the file owner
@@ -460,10 +447,38 @@
       - `sort -t ':' -k 3 -n /etc/passwd` sort the passwd file based on numerical userid
 
 
-# PROCESSES
-  - coproc JOB_NAME { CMD; }:  spawns a subshell in background mode(job) and runs CMD in that subshell; returning the background job number and the PID
-    - `coproc cmd` same thing but without naming the job
-    - `coproc ( cmd1; cmdX )` combine co-processing with process lists creating nested subshells
+## PROCESSES
+  - Signals: how processes communicate with each other; a predefined message that processes recognize and may choose to ignore or act on
+    - 1: HUP : hangs up
+    - 2: INT: interrupts
+    - 3: QUIT: stops running
+    - 9: KILL: unconditionally temrinates
+    - 11: SEGV: preduces segment violation
+    - 15: TERM: terminates if possible
+    - 17: STOP: stops unconditinally but doesnt terminate
+    - 18: TSTP: stops or pauses. But continues to run in background
+    - 19: CONT: resumes execution after STOP or TSTP
+
+
+## cmd / process grouping / modifications
+  - Sequential cmd list: a list of commands to be run one-after-another
+    - cmd1; cmd2; cmd3; cmdX
+  - Sequential cmd list no errors: a list of commands that will run only if the previous cmd exited without error
+    - cmd1 && cmd2 && cmd3 && cmdX
+  - Process list w/ subshell: executes sequential commands in a subshell
+    - (cmd1; cmd2 && cmd3;  cmd4)
+    - (cmd1; cmd2 && cmd3; ((echo $BASH_SUBSHELL)) `create another subshell`
+    - `(cmdX;)&` put the process list in the background
+  - Process list w/out subshell: cmd list must end with a semicolon
+    - { cmd1 && cmd2; cmd3; }
+  - Background mode: allows the cmd to be processed in a subshell while releasing the CLI back to the user
+    - cmd1& `its the & that forces background mode`
+      - Returns the job number and the PID of the process
+    - Co-processing: spawns a subshell in background mode and executes a command within that subshell
+      - coproc: spawns a subshell in background mode(job) and runs CMD in that subshell; returning the background job number and the PID
+        - `coproc cmd` spawn a subshell and run a background job
+        - `coproc ( cmd1; cmdX )` combine co-processing with process lists creating nested subshells
+        - coproc JOB_NAME { CMD; } give the background job a custom name
 
   - jobs OPTIONS: display running background processes
     - -l `long listing; important for retrieving the PID of each process`
@@ -500,6 +515,51 @@
       - -s : send other signals using their name or number
 
 
+## VARIABLES
+  - Environment variables: store information about the shell session and the working environment
+  - Used to store data in memory
+  - Global vars: visible from the current shell session and from any spawned child subshells
+  - Local vars: available only in the shell that creates them
+  - variable arrays
+    - myvar=(one two three four)
+      - echo $myvar - one
+      - echo ${myvar[1]} - two
+      - echo ${myvar[2]} - three
+      - echo ${myvar[*]} - one two three four
+      - unset myvar[3] - deletes index 3
+      - unset myvar - deletes all values
+
+### important environment variables
+  - BASH_SUBSHELL `used at the end of a cmd/process-list to determine how many subshell(s) were created
+  - LS_COLORS: controls the color for different types of text displayed in a terminal emulator
+  - HISTISZE: how many cmds are kept in bash history
+  - PATH: defines the directories to be searched when looking for commands and programs
+    - `PATH=$PATH:some/new/dir` add a new directory containing applications
+      - be sure to export the new path var if you want it the modifications available in subshells
+      - `PATH=$PATH:.` include the current directory in your path
+  - BASH_ENV
+    - when the shell starts a non-interactive subshell process, it checks this environment variable for the startup file name to execute
+    - useful to set variables for shell scripts
+
+
+### BACKGROUND
+  - `myvar=myval` re/set a variable, no space around the `=`
+    - global vars: use uppercase
+    - local vars: use lowercase
+  - export myvar: converts a local variable to a global variable
+    - changing a global variable within a child shell does not affect the variables value in the parent shell
+
+
+### CMDS
+  - printenv prints ALL global environment variables
+  - printenv VAR prints the value of VAR
+  - echo $VAR prints the value of VAR but requires the `$`
+    - in general the `$` before a variable name allows the variable to be passed as a command parameter
+  - env prints global environment variables
+  - set prints local AND global variables
+  - unset VARNAME removes the variable
+
+
 # REGEX
 ## FILE GLOBBING
   -  e.g. ls -l my?script
@@ -511,5 +571,120 @@
 
 
 
+# SECURITY
+## FILE PERMISSIONS
+  - `ls -l` show permissions for a directory
+    - [everyone][group][owner]
+    - r - read permission
+    - w - write permission
+    - x - execute permission
+    - - -permission denied
+  - octal permissions
+    - 0 none
+    - 1 execute only
+    - 2 write only
+    - 3 write and execute
+    - 4 read only
+    - 5 read and execute
+    - 6 read and write
+    - 7 read, write, execute
+  -
+
+### CMDS
+  - umask - sets the default permissions for any file/director you create
+    - /etc/profile - where umask values are stored
+    - /etc/login.defs also where umask values are stored
+    -
+## USER ACCOUNTS
+  - user account: the core of the linux security system
+    - each user who accesses ta linmux system should have a unique user account
+    - user permissions to objects on the system depend on the user account they login with
+  - UID: user id
+    - user permissions are tracked via the UID
+  - /etc/passwd - matches a login name to a corresponding UID value
+    - is a standard text file - any program can edit it
+    - root user account: the administrator for the linux system and is always assigned UID 0
+    - system accounts: created by the linux system for various functions/programs that require access to system resources
+      - all services that run in background mode need to be logged into the linux system under a system user account
+      - UIDs below 500 are for system accounts
+  - /etc/shadow
+    - holds user passwords
+    - can only be edited by certain programs
 
 
+### cmds
+  - useradd easy way to create a new user account and setup a users home directory strcture all at once
+    - /etc/default/useradd - defaults when creating a new user account
+    - OPTIONS
+      - -D show/set the default values
+        - GROUP=group UID
+        - HOME=user home directory
+        - INACTIVE=will the account be disabled when the password expires
+        - EXPIRE=when the account expires
+        - SHELL=the default shell
+        - SKEL=the system copies the contents of /etc/skel directory to the users home directory
+        - CREATE_MAIL_SPOOL=the system creates a file i the mail directory for the user haccoutn to receive mail
+      - changing defaults `sudo useradd -D -s /bin/tsch`
+        - -c adds text to the new users comment field
+        - -e experiation date
+        - -f inactive
+        - -g gorup
+        - -s shell
+
+  - userdel remove a user form the system
+    - -r remove the user home directory aswell
+      - be careful: sometimes programs/files in a users home directory can be shared with other users/programs
+
+  - usermod edit user account fields, primary/secondary group membership
+    - you can practically modify any of the fields in the /etc/passwd file
+    - OPTIONS
+      - same ass useradd parameters plus the following
+      - -l changes the login name of hte user account
+      - -L locks teh account so the user can login
+      - -p change the password
+      - -U unlocks the acount
+      - -G append an existing group to an existing user
+      - -g replace the default group for an existing user
+
+  - passwd changes the password for an existing user
+    - `passwd USERNAME` will then provide a prompt to set a new password for USERNAME
+    - -e force a user to set a new password at their next login
+    -
+
+  - chpasswd reads a file of login name and password pairs and updates the passwords
+    - see `passwd`
+
+  - chage manage the password aging process for user accounts
+    - -d sets the number of days since the password was last changed
+    - -E sets the date the password expires
+    - -I sets the number of days of inactivity after the password expires to lock the account
+    - -m sets the minimum number of days between password changes
+    - -W sets the number of days before the password expires that a warning message appears
+
+  - chfn change the users accounts comment information
+
+  - chsh changes the user accounts default shell
+    - `chsh -s /bin/bash USERNAME`
+
+  - `finger USERNAME` see information about a user
+    - many system administrators disable the finger command for security concerns
+
+## USER GROUPS
+  - groups: security for groups of users to share resources
+  - group permissions: allow multiple users to share a common set of permissions for an object ont he system, e.g. a file/directory/device
+  - GID: group id
+  - /etc/group - all groups on the system
+    - the group name
+    - the group password
+      - allows non group member to temporarily become a member of the group by using the password
+    - the group GID
+    - the list of user accounts that belong to the group
+      - when a user accout uses a group as the default group in the /etc/passwd file, the user account does not appear in teh e/tc/group file as a member
+
+### cmds
+  - `groupadd NEWGROUPNAME` - create new groups
+    - use `usermod` to add users to the group
+  - groupmod - modify a group
+    - -g change the GID
+      - all security permissions are based on the GID, be careful when changing
+    - -n change the name
