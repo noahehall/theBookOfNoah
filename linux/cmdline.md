@@ -21,7 +21,8 @@
   - Rearrange shit when you get the fk outa gdocs
   - Replace gdoc quotes with regular quotes
   - Copy table 4-6 SORT CMD pg 105
-
+# skipped
+  - anything to do with harddrives/partitions
 
 # BOOKMARK: pg 165 top/middleware somewhere
 
@@ -857,21 +858,121 @@
 
 ## REVIEW 101
 ```sh
-  # first line in a shell script must specify which shell
-  # to run the script under
-    #!bin/bash
+# first line in a shell script must specify which shell
+# to run the script under
+#!bin/bash
 
-  # run two consecutive cmds
-  # maximum command line char count is 255 on a single line
-    cmd1; cmd2
+# run two consecutive cmds
+# maximum command line char count is 255 on a single line
+cmd1; cmd2
 
-  # echo
-    echo this line without quotes
-    echo 'this line with quotes'
+# echo
+echo this line without quotes
+echo 'this line with quotes'
 
-    # use quotes to be sure there is a space between lines
-    echo -n 'put this line and the next line '
-    echo on the same line
+# use quotes to be sure there is a space between lines
+echo -n 'put this line and the next line '
+echo on the same line
 
-    echo $HOME
+echo $HOME
+
+# CMD SUBSTITUTION
+# saving the output of a cmd to a variable
+datevar=`date`
+datevar=$(date)
+today=$(date +%y%m%d)
+```
+
+## REDIRECTS
+```sh
+# output redirection: saving to file
+  cmd > outputfile # overwrite
+  cmd >> outputfile # append
+
+# input redirection: content of file as params to cmd
+  cmd < inputfile
+
+# input redirection: inline
+cmd << EOF
+  data
+  data
+EOF
+
+# PIPES
+# send the output of one cmd to the input of another
+# linux runs both cmds at the same time linking them
+# together internall (not executed back to back)
+cmdfrom | cmdto
+
+```
+
+## MATH
+ - unfortunately no floating points (decimals)
+ - you need the zshell
+
+
+### expr
+  - many operators need to be escaped/quoted for shells
+  - prints the value to standard output
+  - blank line separates increasing precedence groups
+
+
+```sh
+# ARG1 if it is neither null nor 0, otherwise ARG2
+expr ARG1 | ARG2
+
+# ARG1 if neither argument is null or 0, otherwise 0
+expr ARG1 & ARG2
+
+# ARG1 is less than ARG2
+expr ARG1 < ARG2
+# ARG1 is less than or equal to ARG2
+expr ARG1 <= ARG2
+# ARG1 is equal to ARG2
+expr ARG1 = ARG2
+# ARG1 is unequal to ARG2
+expr ARG1 != ARG2
+# ARG1 is greater than or equal to ARG2
+expr ARG1 >= ARG2
+# ARG1 is greater than ARG2
+expr ARG1 > ARG2
+
+# arithmetic sum of ARG1 and ARG2
+expr ARG1 + ARG2
+# arithmetic difference of ARG1 and ARG2
+expr ARG1 - ARG2
+
+# arithmetic product of ARG1 and ARG2
+expr ARG1 * ARG2
+# arithmetic quotient of ARG1 divided by ARG2
+expr ARG1 / ARG2
+# arithmetic remainder of ARG1 divided by ARG2
+expr ARG1 % ARG2
+
+# couldnt get this to work
+# anchored pattern match of REGEXP in STRING
+expr STRING : REGEXP
+
+# same as STRING : REGEXP
+expr match STRING REGEXP
+# substring of STRING, POS counted from 1
+expr substr STRING POS LENGTH
+# index in STRING where any CHARS is found, or 0
+expr index STRING CHARS
+# length of STRING
+expr length STRING
+# interpret TOKEN as a string, even if it is a
+# keyword like 'match' or an operator like '/'
+expr + TOKEN
+
+# value of EXPRESSION
+( EXPRESSION )
+```
+
+
+### BRACKETS
+```sh
+var1=$[1 + 5]
+var2=$[$var1 * 2]
+var3=$[$var2 * ($var1 - 3)]
 ```
