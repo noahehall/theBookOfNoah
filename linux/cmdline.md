@@ -934,7 +934,24 @@ exit 0
   - `shift` shifts the cmd line parameters down 1 relative to their current position
     - `shift 2` shifts the values by 2
     - `shift n` etc
-  -
+  - getopt OPTIONS OPTSTRING PARAMETERS
+    - throws errors if an opt provided that is not listed in OPTSTRING
+    - OPTSTRING: defines the valid option letters and which require a parameter
+      - ab:c: both b and c require param values
+    - OPTIONS
+      - -q ignore error messages
+  - getopts OPTSTRING VARIABLE
+    - works on the existing shell parameter variables sequentially
+    - it processes the parameters ont he cmd line one at a time each time its called
+      - when it runs out of parameters it exists with an exit status
+    - strips off the leading dash
+      - be careful in your case statements!!!!
+    - ENV VARS
+      - OPTARG the value to be used if an option letter requires a parameter value
+      - OPTIND the value of the current location within the parameter list where getopts left off
+    - OPTSTRING
+      - precede optstring with `:` to suppress error messages
+      - any option letter not define in OPTSTRING is sent to your code as a question mark
 
 
 ```sh
@@ -944,7 +961,9 @@ while [ -n "$1"]; do
  shift
 done
 
-#somescript -a -b someValue -c -d -- e f g
+#somescript -a -b paramValue -c -d -- e f g
+# replace the cmd line options with the ones provided by getopts
+set -- $(getopt -q ab:cd "$@")
 while [ -n "1" ]; do
   case "$1" in
     -a) echo "found -a option" ;;
@@ -963,6 +982,26 @@ while [ -n "1" ]; do
   esac
   shift
 done
+
+
+#somescript -a -b paramValue -c -d -- e f g
+while getopts :ab:cd opt; do
+  case "$opt" in
+    a) echo "found -a option" ;;
+    b)
+      echo "found -b option"
+      echo "with value $OPTARG"
+      ;;
+    c) echo "found -c option" ;;
+    d) echo "found -d option" ;;
+    *) echo "$1 is not an option" ;;
+  esac
+done
+
+shift $[ $OPTIND - 1 ]
+echo "remaining parameters $1"
+
+
 ```
 
 ## REDIRECTS
@@ -1192,7 +1231,7 @@ case $THISTHING in
     echo do this stuff
     ;;
   *)
-    'echo do this if no match'
+    echo 'do this if no match'
     ;;
 esac
 ```
