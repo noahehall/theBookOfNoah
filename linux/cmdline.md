@@ -23,6 +23,7 @@
   - Copy table 4-6 SORT CMD pg 105
 # skipped
   - anything to do with harddrives/partitions
+  - bc - bash calculator
 
 # BOOKMARK: pg 165 top/middleware somewhere
 
@@ -631,7 +632,7 @@
       - unset myvar[3] - deletes index 3
       - unset myvar - deletes all values
 
-### important environment variables
+### environment variables: some important ones
   - BASH_SUBSHELL `used at the end of a cmd/process-list to determine how many subshell(s) were created
   - LS_COLORS: controls the color for different types of text displayed in a terminal emulator
   - HISTISZE: how many cmds are kept in bash history
@@ -642,6 +643,9 @@
   - BASH_ENV
     - when the shell starts a non-interactive subshell process, it checks this environment variable for the startup file name to execute
     - useful to set variables for shell scripts
+  - IFS
+    - internal field separator
+    - defines the list of characters the bash shell uses as field separators
 
 
 ### BACKGROUND
@@ -664,6 +668,7 @@
 
 # REGEX
 ## FILE GLOBBING
+  - process of producing filenames/pathnames that match a specified wildcard character
   -  e.g. ls -l my?script
   - ? one character
   - * any number of chars
@@ -862,6 +867,18 @@
 # to run the script under
 #!bin/bash
 
+# you should always keep the original value to reset it
+IFS.OLD=$IFS
+# change the field separator to only recognize new lines
+IFS=$'\n'
+# change it to regonize multiple field separators
+# ; and : are now the field separators
+# IFS=;:
+
+# only way to reliable get the script name
+# excludes the path if invokied with some/blah/scriptname.shx
+scritpname=$(basename $0)
+
 # run two consecutive cmds
 # maximum command line char count is 255 on a single line
 cmd1; cmd2
@@ -881,6 +898,71 @@ echo $HOME
 datevar=`date`
 datevar=$(date)
 today=$(date +%y%m%d)
+
+# exit statuses
+# 0 success
+# 1 general unknown error (e.g. invalid parameter)
+# 2 misuse of shell cmd
+# 126 cmd cant execute (i.e. permissions issue)
+# 127 cmd not found
+# 128 invalid exit argument
+# 128+x fatal error with linux signal x
+# 130 cmd terminated with ctrl+c
+# 255 exit status out of range
+# prints the exit status of the last executed cmd
+echo $?
+# manually exist with status
+exit 0
+```
+
+
+## USER INPUT
+  - command line parameters: add data values to the command line when you execute the script
+    - `--` separate options from positional parameters
+      - somescript -a one -b two -- three four
+  - positional parameters:
+    - `$0` script name
+    - `$1-9` first 9 parameters
+    - `${10-X}` 10 and up
+  - parameter options
+    - single letters preceded by a dash that alter the behavior of a command
+    -
+  - $# the number of command line parameters included when the script was run
+  - `$*` takes all the parameters supplied on the cmd line as a single word
+  - `$@` takes all the parameters supplied on the cmd line as separate words int he same string
+    - allows you to iterate through the values, e.g. with a for loop
+  - `shift` shifts the cmd line parameters down 1 relative to their current position
+    - `shift 2` shifts the values by 2
+    - `shift n` etc
+  -
+
+
+```sh
+# somescript a b c d
+while [ -n "$1"]; do
+ echo $1
+ shift
+done
+
+#somescript -a -b someValue -c -d -- e f g
+while [ -n "1" ]; do
+  case "$1" in
+    -a) echo "found -a option" ;;
+    -b)
+      echo "found -b option"
+      echo "with value $2"
+      ;;
+    -c) echo "found -c option" ;;
+    -d) echo "found -d option" ;;
+    --)
+        # shift out the -- so we only have
+        # positional parameters in $@
+        shift
+        break ;;
+    *) echo "$1 is not an option" ;;
+  esac
+  shift
+done
 ```
 
 ## REDIRECTS
@@ -975,4 +1057,208 @@ expr + TOKEN
 var1=$[1 + 5]
 var2=$[$var1 * 2]
 var3=$[$var2 * ($var1 - 3)]
+```
+
+## STRUCTURED CMDS
+  - if statements can only validate the exit status of cmds
+
+### IF STATEMENTS
+```sh
+# syntax 1
+if pwd
+then
+  echo it worked
+fi
+
+# syntax 2
+if pwd; then
+  echo it still worked
+fi
+
+# else
+if unknowncmd; then
+  echo is not gonna work
+else
+  echo bad cmd
+fi
+
+# elif
+if unknowncmd; then
+  echo is not gonna work
+elif pwd; then
+  echo bad cmd
+fi
+
+# elif + else
+# the else is part of the elif block
+# not the else if block
+if unknowncmd; then
+  echo is not gonna work
+elif unknowncmd; then
+  echo bad cmd
+else
+  echo 'if and elif = bad cmds'
+fi
+```
+
+### TEST / BRACKETS / DOUBLE PARANTHESIS
+  - test: cmd validates TRUE/FALSE expressions
+    - can also use single brackets `[ expression ]`
+    - evaluates:
+      - numeric comparisons
+      - string comparisons
+      - file comparisons
+  - notes
+    - cannot use floating point numbers
+    - punctuation and capitalization are important for string comparisons
+    - `>` and `<` string comparisons
+      - are opposite of the `sort` cmd
+      - must be escaped
+    - double brackets provide pattern matching as well as all the regular string comparisons
+```sh
+if [ expression ]; then
+  dothis
+fi
+
+if [ exp1 ] && [ exp2 ]; then
+  echo both are true
+fi
+
+if [ exp1 ] || [ exp2 ]; then
+  echo atleast one is true
+fi
+
+# == indicates the string to the right is a regular expression
+if [[ $USER == r* ]]; then
+  echo $USER contains character r
+fi
+
+if (( expr )); then
+  echo truthy
+fi
+
+# numeric comparisons
+n1 -eq n2 ===
+n1 -ge n2 >=
+n1 -gt n2 >
+n1 -le n2 <=
+n1 -lt n2 <
+n1 -ne n2 !=
+
+## DOUBLE PARENTHSIS
+## includes numeric comparisons
+val++
+val--
+++val
+--val
+! logical flip
+** exponentiation
+&&
+||
+# ~ bitwise negation
+# << left bitwise shift
+# >> rigth bitwise shift
+# & bitwise boolean AND
+# | bitwise boolean OR
+
+# string comparisons
+# > and < must be escaped
+# else there parsed as redirection operators
+str1 = str2 ===
+str1 != str2
+str1 \< str2
+str1 \> str2
+#-n str true if str.length > 0
+#-z str true if str.length === 0
+
+# file comparisons
+#-d file true if file exists and is a directory
+#-e file true if file exists
+#-f file true if file exists and is a file
+#-r file true if file exists and is readable
+#-s file true if file exists and is not empty
+#-w file true if file exists and is writable
+#-x file true if file exists and is executable
+#-O file true if file exists and is owned by the current user
+#-G file true if file exists and the *DEFAULT* group is the same as current user
+#file1 -nt file2 true if file1 is newer than file2
+#file1 -ot file2 true if file1 is older than file2
+```
+
+### CASE STATEMENTS
+```sh
+case $THISTHING in
+  pat1 | pat2)
+    echo do this stuff
+    ;;
+  *)
+    'echo do this if no match'
+    ;;
+esac
+```
+
+## ITERATION
+  - you can pipe the output of a loop to other cmds/files by appending the pipe to the done statement
+  - break - terminates the current loop
+    - break 2 - terminates the parent loop
+    - break N - etc
+  - continue - stops the current iteration and begins the next iteration
+    - continue N - see break
+ - for loop: iterate through a series of values
+   - the var used in the loop will retain the last value of the iteration for the remainder of the script!
+   - assumes each value is separated by a space
+   - c-style syntax
+     - the assignment of the variable value can contain spaces
+     - the variable in the condition isnt preceded with a dollar sign
+     - the equation for the iteration process doesnt use the `expr` cmd
+ - while loop
+   - the test cmd is the same exact format as the if-then statement
+   - if multiple test cmds are specified, only the last executed one is used to determine if the loop stops
+   - the last iteration of the loop is the first falsy value!
+     - remember this!!!!
+ - until loop
+   - the exact opposite of the while loop
+   - do this while something is FALSE!
+
+```sh
+for var in list; do
+  echo 'this stuff for each $var'
+done
+
+for name in noah edward hall; do
+  echo 'the name is $name'
+done
+
+for blah in $(cat some/file); do
+  echo 'got $blah'
+done
+
+for (( a = 1; a < 10; a++)); do
+  echo 'value is $a'
+done
+# with multiple vars
+# for (( a = 1. b = 2, etc; a < 10; a++)); do
+
+var=10
+while [ $var -gt 0 ]; do
+  echo $var1
+  var1=$[ $var - 1 ]
+  if [ $var -eq 5]; then
+    break
+  elif [ $var -lt 2 ]; then
+    continue
+  fi
+done | sort
+# with multiple test cmds, each on a separate line
+# while echo $var1
+#       [ $var -gt 0 ]; do
+
+
+until [ $var -lt 0 ]; do
+  echo $var
+  var1=$[ $var - 1 ]
+done > somefile
+# with multiple test cmds, each on a separate line
+# while echo $var1
+#       [ $var -lt 0 ]; do
 ```
