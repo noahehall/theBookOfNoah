@@ -391,7 +391,6 @@
         - `man -k KEYWORD` Searching for programs dealing with your keyword
 
 
-
 ## FILESYSTEM programs
   - gzip:  file compression
 
@@ -913,6 +912,7 @@ today=$(date +%y%m%d)
 echo $?
 # manually exist with status
 exit 0
+
 ```
 
 
@@ -952,9 +952,30 @@ exit 0
     - OPTSTRING
       - precede optstring with `:` to suppress error messages
       - any option letter not define in OPTSTRING is sent to your code as a question mark
+    -
 
 
 ```sh
+# prompting user for input
+read -p "what is your name: " first last
+echo "your name is $first $last"
+
+read -p "this time without vars"
+echo "your name is $REPLY"
+
+read -t 5 -p "this time with a 5 second timer "
+echo "your response was $REPLY"
+
+echo "auto exit based on char count"
+read -n1 -p "please choose an interger between 0-9"
+
+echo -s -p "enter your password - but we wont display it "
+
+# reading from a file
+cat somefile | while read line; do
+  echo "line is: $line"
+done
+
 # somescript a b c d
 while [ -n "$1"]; do
  echo $1
