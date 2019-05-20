@@ -59,6 +59,8 @@
   - /etc/group - holds all group information
   - /etc/shadow - holds user passwords
   - /etc/login.defs also where umask values are stored
+  - /etc/fstab - contains file systems to be mounted at boot
+  - /etc/apt/sources.list - contains all the software repositories
   - /home/[username]/.bash_history `all the cmds entered`
   - /etc/passwd: contains a list of all the system user accounts a long with some basic configuration information about each user
     - User entry: one per line consisting of seven fields delimited by colons that are each used to assign specific features for the user
@@ -203,15 +205,21 @@
   - Builtin commands: execute in the users shell without creating a child process
 
 
-## FILESYSTEMS
+# FILESYSTEMS
   - Linux does not use drive letters in pathnames
   - Virtual directory: Contains file paths from all the storage devices installed on the computer, merged into a single directory structure, however the actual files and directories could be located physically on any of the harddrives attached to the system
   - Root: the base directory; all other files and directories in the virtual directory are stored here
   - Root drive: the first hard drive installed on the system
   - Mount points: directories in the virtual directory where you can assign additional storage devices
 
+## FILESYSTEM - CHECKING AND REPAIRING
+  - fsck OPTIONS FILESYSTEM - check and repair most filesystem types
+    - can be run on unmounted filesystems only
+      - to check your root filesystem
+        - boot yoursystem usingn a LiveCD linux distro -> run fsck on the root filesystem
+    - COW filesystems generally do not need the fsck cmd
 
-### BASIC FILESYSTEMS
+## FILESYSTEMS - BASIC
   - ext: extended file system: the original file system of the linux operating system
     - uses virtual directories to handle physical devices and storing data in fixed-length blocks on the physical devices
     - inodes: tracks informatino about the files stored in the virtual directory
@@ -235,7 +243,7 @@
 
 
 
-### JOURNALING FILESYSTEMS
+## FILESYSTEMS - JOURNALING
   - instead of writing data directly to the storage device and then updating the inode table, journaling filesystems write file changes into a temporal file (journal) first then update the inode table
   - METHODS
     - data mode: both inode and file data are journaled
@@ -250,6 +258,15 @@
   - COW: copy on write; an alternative to journaling filesystems
     - offers both safet and performance via snapshots
 
+## CREATING FILE SYSTEMS
+  - each filesystem type uses its own command line program to format partitions
+    - mkefs - ext
+    - mke2fs - ext2
+    - mkfs.ext3 - ext3
+    - mkfs.ext4 - ext4
+    - etc
+
+
 
 ## PARTITIONS
   - you need to create a partition on the storage device to contain the filesystem
@@ -258,6 +275,11 @@
       - only used for older ide drives
     - /dev/sdX - X is a letter based on the order the drive is detected
       - used for SATA and SCSI drives
+  - primary partition: can be formatted with a filesystem directly
+    - there can only be 4 partitions on a single storage device
+  - extended partition: can only contain othe rprimary partitions
+    - each extended partition can contain 4 primary partitions
+    -
 
 ### CMDS
   - fdisk: organize partitions on any stoage device installed on the system
@@ -278,8 +300,19 @@
     - w - writes the partition table to disk
     - x - advanced functions
 
+## LOGICAL VOLUMES PAGE 204
+  - LVM: logical volume manager: enables you to add a partition from another harddrive to an existing filesystem
+    - LVM1: the original package released in 1998
+    - LVM2: updated LVM1
+  - PV: physical volume: each PV maps to a speific physical partition created on a harddrive
+  - VG: volume group - multiple PV elements are pooled together to create a VG
+  - the LVM treats the VG like a physical hard drive, but in reality the VG may consist of mmultiple physical partitions spread across multiple hard drives
+  - LG: logical volume: the lg creates the partition environment for linux to create a filesystem
+    - the linux system treats the LV like a physical harddrive
+    - you can format the LV using any of the standard linux filesystems and then add it to the linux virtual directory at a mount point
+  -
 
-### FILES
+# FILES
   - linking files: when you need to maintain 2/more copies of the same file on the system; have one physical copy and multiple virtual copies
   - Link: a placeholder in a directory that points to the real locatin of the file
   - Symbolic link: a physical file that points to another file somewhere in the virtual directory structure; but they do not share the same contents
@@ -780,3 +813,65 @@
     - -g change the GID
       - all security permissions are based on the GID, be careful when changing
     - -n change the name
+
+
+# PACKAGE MANAGEMENT SYSTEM (PMS)
+  - PMS: utilizes a database to keep track of
+    - what software packages are installed on the linux system
+    - what files have been installed for each package
+    - versions of each of the software packages installed
+  - repositories: servers that store software packages
+  - /etc/apt/sources.list - contains all the software repositories
+    - deb|deb-src address distribution_name package_type_list
+      - deb: source of compiled packages
+      - deb-src - source of source code
+      - address: the web address
+      - distribution name: name of the software repositorys distributions
+      - package type list: indicates what type of packages the repository has in it
+        - main
+        - restricted
+        - universe
+        - partner
+
+## CMDS
+  - dpkg: interacts directly with the PMS on the linux system and is used for isntalling, managing and removing existing Software
+    - -L PKGNAME - show all the files associated with PKGNAME
+    - --search FILE_PATH - show what package a particular file belongs to
+  - apt-get
+  - apt-cache
+  - aptitude: a frontend for both the apt tools and dpkg
+    - show PKGNAME - show info about PKGNAME
+    - search PKGNAME - search for the PKGNAME (or related packages)
+      - i - package currently install
+      - p / v - available but not installed
+    - install PKGNAME
+    - purge PKGNAME - remove a package and all its related data
+    - remove PKGNAME - remove a package but it keeps data
+    - safe-upgrade - upgrades all the isntalled packages to the most recent version available in the repository
+
+
+# SHELL SCRIPTING
+## BACKGROUND
+  - good idea to add `$HOME/bin` to your path so each user can have a dir in which the shell can execute their scripts
+  - every script file must be executable `ls -l`
+
+## REVIEW 101
+```sh
+  # first line in a shell script must specify which shell
+  # to run the script under
+    #!bin/bash
+
+  # run two consecutive cmds
+  # maximum command line char count is 255 on a single line
+    cmd1; cmd2
+
+  # echo
+    echo this line without quotes
+    echo 'this line with quotes'
+
+    # use quotes to be sure there is a space between lines
+    echo -n 'put this line and the next line '
+    echo on the same line
+
+    echo $HOME
+```
