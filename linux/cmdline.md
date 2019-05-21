@@ -37,6 +37,11 @@
     - e.g. this is where bash_completion.sh should go so all users have bash completion
     - init.d/ : contains scripts for starting and stopping individual apps at bootime
     - rcX.d/ : X is a run level, contains entries for each script within init.d/
+    - cron.*ly/ pre-configured cron script directories than run files within their directory at the schedule time
+      - cron.hourly
+      - cron.daily
+      - cron.weekly
+      - cron.monthly
   - /home/ : where linux creates user directories
     - [username] a users home
       - Alias at ~
@@ -64,6 +69,7 @@
   - /etc/login.defs also where umask values are stored
   - /etc/fstab - contains file systems to be mounted at boot
   - /etc/apt/sources.list - contains all the software repositories
+  - /etc/anacrontab - config file (similar to cron table) for the anacron program
   - /home/[username]/.bash_history `all the cmds entered`
   - - /dev/null
     - the null file
@@ -79,7 +85,7 @@
     - the first file found is run, and the rest are ignored
     - $HOME/.bash_profile
     - $HOME/.bashrc
-      - only run from interactive shells
+      - only run from interactive shells and EVERY time a new shell is started
       - but is usually included in one of the other files
     - $HOME/.bash_login
     - $HOME/.profile - the main startup file for the bash shell
@@ -87,6 +93,7 @@
     - startup files for systems usig PAM (pluggable  authentication modules)
       - /etc/environment
       - $HOME/.pam_environment
+  - /var/spool/anacron/cron.*ly timestamp file(s) for the anacron program
 
 
 # BACKGROUND
@@ -565,6 +572,12 @@
 
 
 ## PROCESSES
+  - scheduling priority: amount fo CPU time the kernel assigns to the process relative to other processes
+    - by default all processes started from the shell have the same scheduling priority
+    - -20 highest priority
+    - 19 lowest priority
+
+
 ### SIGNALS
   - Signals: how processes communicate with each other; a predefined message that processes recognize and may choose to ignore or act on
     - 1: HUP : hangs up
@@ -674,6 +687,68 @@
     - STDOUT and STDERR are redirected to the `nohup.out` file
       - if multiple cmds are run from the same directory, all STDOUT and STDERR get appended to the same file
         - be careful!!! ^^ it can be confusing
+
+  - `nice -n X CMD` set the s
+  - the root user can renice cheduling priority of a cmd as you start it
+    - -n X - set the scheduling priority
+      - -20 highest
+      - 19 lowest
+
+  - `renice -n X -p PID` change the priority of a cmd thats already running ont he system
+    - can only renice processes that you own
+    - can only renice your processes to a lower priority
+    - the root user can renice any process to any priority
+
+#### SCHEDLING
+  - `at -f SCRIPT TIME` specify a time when the linux system will run a script
+    - its best to redirect the script output as by default the at cmd will email it via the sendmail application
+    - TIME if you submit a time that has already passed the SCRIPT will run immediately
+      - 10:15pm
+      - noon, midnight, teatime (i.e. 4pm), now
+      - MMDDYY, MM/DD/YY, DD.MM.YY
+      - now + 25 minutes, 10:15pm tomorrow, 10:15 + 7 days
+    - OPTIONS
+      - -f specify the script to run
+      - -q specify the job queue
+        - 26 job queues available for different priority levels
+          - a-z, A-Z
+          - the higher alphabetically the job queue, the lower the priority
+          - default job queue = a
+      - -M suppress all output, i.e. no redirection / email
+
+  - `atd` daemon that runs in the background and checks the job queue for jobs to run
+    - most distros start this damon automatically at boot time
+
+  - `atq` view pending jobs
+
+  - `atrm JOB_NUMBER` removing pending jobs
+
+  - `crontab` schedule jobs to run on a regular basis
+    - if the linux system is turned off at the time the scheduled job is set to run, the script WILL NOT RUN!!!
+      - use `anacron` instead if you expect this is likely
+    - cron tables: contains all jobs and their schedules
+      - format
+        - min hour dayofmonth month dayofweek cmd
+        - `15 10 * * * CMD` everyday at 10:15
+        - `15 16 * * 1 CMD` every monday at 4:15
+        - `00 12 * * * if [ "date %d -d tomorrow" = 01 ]l then; CMD`
+          - check everday at 12noon to see if its the last of the of the month, if so, run the CMD
+    - each user can have their own cron table
+    - OPTIONS
+      - -l list all schedule jobs
+      - -e create/add/edit entries to your crontable
+
+  - `anacron` similar to crontab, except it will execute missed jobs in the advent the system was off during the scheduled time
+    - deals only with programs located in the cron directories, e.g. /etc/cron.monthly
+    - /var/spool/anacron/cron.*ly
+      - it uses timestamps to determine if the jobs have been run at the proper scheduled interval
+    - /etc/anacrontab config file for the anacron program
+      - similar to the cron table
+        - except it does not deal with scripts that have execution time needs less than daily
+      - format
+        - period delay identifier cmd
+          - period: how often the jobs should be run in days
+          -
 
 
 ## VARIABLES
