@@ -586,6 +586,7 @@
           - before it exits it will pass the signal to any processes started by the shell
 
 
+
 ## cmd / process grouping / modifications
   - Sequential cmd list: a list of commands to be run one-after-another
     - cmd1; cmd2; cmd3; cmdX
@@ -598,7 +599,11 @@
   - Process list w/out subshell: cmd list must end with a semicolon
     - { cmd1 && cmd2; cmd3; }
   - Background mode: allows the cmd to be processed in a subshell while releasing the CLI back to the user
-    - cmd1& `its the & that forces background mode`
+    - STDOUT and STDERR will still display on the terminal monitor
+      - you sbhould redirect!!!!
+    - the background job is still associated with the terminal session!
+      - if the terminal session ends, the background job ends as well!!!
+    - `cmd1&` its the & that forces background mode
       - Returns the job number and the PID of the process
     - Co-processing: spawns a subshell in background mode and executes a command within that subshell
       - coproc: spawns a subshell in background mode(job) and runs CMD in that subshell; returning the background job number and the PID
@@ -607,7 +612,20 @@
         - coproc JOB_NAME { CMD; } give the background job a custom name
 
   - jobs OPTIONS: display running background processes
-    - -l `long listing; important for retrieving the PID of each process`
+    - view the current jobs being handled by the shell
+    - OPTIONS
+      - -l long listing; important for retrieving the PID of each process
+      - -n list only jobs that have changed their status since the last notificatino from the shell
+      - -p list only PIDs
+      - -r list only running jobs
+      - -s list only stopped jobs
+    - OUTPUT
+      - + indicates the default job, i.e. the job referenced by any job control cmds if a job number was not specified at the cmd line
+      - - indicates the next default job if the current default job is terminated
+
+  - bg JOB_NUMBER - restart the process with JOB_NUMBER as a background process
+
+  - fg JOB_NUMBER - restart the process with JOB)NUMBER as a foreground process
 
   - sleep SECONDS: forces a process to wait the number of specified SECONDS
 
@@ -640,6 +658,22 @@
       - killall http*
     - OPTIONS
       - -s : send other signals using their name or number
+
+  - trap CMD SIGNALS
+    - trapping signals: perform arbitrary cmds when your script detects a signal
+    - to handle traps different in various sections of your script, simply reissue the tramp command with new otions
+    - EXAMPLES
+      - `trap "echo 'i trapped ctrlc so it no longer exits'" SIGINT`
+      - `trap "run this before I exit" EXIT`
+      - `trap -- SIGINT` remove the trap for SIGINT
+
+  - `nohup CMD&`: runs another cmd blocking any SIGHUP signals that are sent to the process
+    - prevents the process from exiting when you exit your terminal session
+    - i.e. keep a script running even if you close your terminal
+    - the shell assigns the cmd a job number and the linux system assigns a PID number
+    - STDOUT and STDERR are redirected to the `nohup.out` file
+      - if multiple cmds are run from the same directory, all STDOUT and STDERR get appended to the same file
+        - be careful!!! ^^ it can be confusing
 
 
 ## VARIABLES
