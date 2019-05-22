@@ -1666,7 +1666,15 @@
 ```
 
 ### DIALOG WINDOWS
+  - GNOME desktop additionaly has the following packages
+    - gdialog
+    - zenity
   - `dialog OPTIONS WIDGETS` you can have multiple options and multiple widgets
+    - usage in scripts
+      - check the exit status if there is a cancel/yes/no button
+      - redirect STDERR to retrieve the output value
+        - `dialogoutput=$(mktempt -t test.XXXXXX)`
+        - `dialog... 2> $dialogoutput`
     - OPTIONS
       - `--title "My Title"`
       - too many to list
