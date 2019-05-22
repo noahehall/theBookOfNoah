@@ -344,7 +344,7 @@
       - `. FILE` the dot operator is a shortcut
 
     - `echo $blah` prints things
-      - -e enable interpretation of backslash escapes 
+      - -e enable interpretation of backslash escapes
         - useful for printing tabs `\t`
       - -n no trailing new line
         - useful for putting the echo line on the same line as the next cmd
@@ -1496,7 +1496,7 @@
   esac
 ```
 
-## ITERATION
+##  LOOPS / ITERATION
   - you can pipe the output of a loop to other cmds/files by appending the pipe to the done statement
   - break - terminates the current loop
     - break 2 - terminates the parent loop
@@ -1560,6 +1560,13 @@
   # with multiple test cmds, each on a separate line
   # while echo $var1
   #       [ $var -lt 0 ]; do
+
+  # useful for keeping a menu on the screen
+  # you should use `clear` effectively
+  while [ 1 ]; do
+    myshowmenufunc
+  done;
+
 ```
 
 ### FUNCTIONS
@@ -1604,4 +1611,54 @@
   - the core of a shell script menu is the case cmd
 
 ### TEXT MENUS
-  -
+```sh
+
+  # using case statement
+  clear
+  echo -e Simple text menu
+  echo -e "\t\t 1. Run simple loop"
+  echo -e "\t\t 2. Echo function array"
+  echo -en "\t\t Enter Option "
+
+  read -n 1 opt
+  case $opt in
+  	1)
+  		echo
+  		simpleloop
+  		;;
+  	2)
+  		echo
+  		echoarray
+  		;;
+    *)
+
+  		echo -e "\n you did not enter a valid option"
+  		;;
+  esac
+
+  # using select statement
+  # auto builds identical menu from above
+
+  function testmenu {
+  	PS3="Enter Option..."
+  	while [ 1 ]; do
+  		select opt in \
+  			"Run Loop" \
+  			"Echo Array"\
+  		; do
+  			case $opt in
+  				"Run Loop")
+  					clear
+  					echo -e "\n simpleloop"
+  					;;
+  				"Echo Array")
+  					clear
+  					echo -e "\n echoarray"
+  					;;
+  				*)
+  					echo -e "\n you did not enter a valid option"
+  			esac
+  		done
+  	done
+  }
+```

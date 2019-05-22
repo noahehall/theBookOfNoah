@@ -24,22 +24,27 @@ function echoarray {
 	echo "new arr is: $newarr"
 }
 
-echo -e Simple text menu
-echo -e "\t\t 1. Run simple loop"
-echo -e "\t\t 2. Echo function array"
-echo -en "\t\t Enter Option "
+function testmenu {
+	PS3="Enter Option..."
+	while [ 1 ]; do
+		select opt in \
+			"Run Loop" \
+			"Echo Array"\
+		; do
+			case $opt in
+				"Run Loop")
+					clear
+					echo -e "\n simpleloop"
+					;;
+				"Echo Array")
+					clear
+					echo -e "\n echoarray"
+					;;
+				*)
+					echo -e "\n you did not enter a valid option"
+			esac
+		done
+	done
+}
 
-read -n 1 opt
-case $opt in
-	1)
-		echo
-		simpleloop
-		;;
-	2)
-		echo
-		echoarray
-		;;
-  *)
-		echo you did not enter a valid option
-		;;
-esac
+testmenu
