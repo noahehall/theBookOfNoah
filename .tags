@@ -3133,42 +3133,62 @@ Machine Learning	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^## Machine Learni
 architecture	/home/imsov/git/theBookOfNoah/gcp/readme.md	/^# architecture$/;"	function	line:1242
 TODOSSSSSS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# TODOSSSSSS$/;"	function	line:1
 BOOK TODO	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# BOOK TODO$/;"	function	line:13
-BOOKMARK: pg 165 top/middleware somewhere	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# BOOKMARK: pg 165 top\/middleware somewhere$/;"	function	line:26
-important locations	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### important locations$/;"	function	line:28
-important files	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### important files$/;"	function	line:56
-BACKGROUND	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# BACKGROUND$/;"	function	line:84
-file types	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## file types$/;"	function	line:85
-Linux system:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## Linux system:$/;"	function	line:95
-Linux kernel:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### Linux kernel:$/;"	function	line:96
-System memory management:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### System memory management:$/;"	function	line:100
-Hardware management:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### Hardware management:$/;"	function	line:116
-Filesystem management:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### Filesystem management:$/;"	function	line:124
-user interfaces	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### user interfaces$/;"	function	line:133
-linux distributions	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## linux distributions$/;"	function	line:155
-SHELL	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## SHELL$/;"	function	line:174
-PARENT-CHILD SHELLS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### PARENT-CHILD SHELLS$/;"	function	line:193
-FILESYSTEMS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILESYSTEMS$/;"	function	line:206
-BASIC FILESYSTEMS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### BASIC FILESYSTEMS$/;"	function	line:214
-JOURNALING FILESYSTEMS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### JOURNALING FILESYSTEMS$/;"	function	line:238
-PARTITIONS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## PARTITIONS$/;"	function	line:254
-CMDS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### CMDS$/;"	function	line:262
-FILES	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### FILES$/;"	function	line:282
-CLI CMD Quickies	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# CLI CMD Quickies$/;"	function	line:288
-important programs	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# important programs$/;"	function	line:295
-FILESYSTEM programs	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILESYSTEM programs$/;"	function	line:360
-FILES	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### FILES$/;"	function	line:496
-PROCESSES	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## PROCESSES$/;"	function	line:518
-cmd / process grouping / modifications	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## cmd \/ process grouping \/ modifications$/;"	function	line:531
-VARIABLES	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## VARIABLES$/;"	function	line:586
-important environment variables	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### important environment variables$/;"	function	line:600
-BACKGROUND	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### BACKGROUND$/;"	function	line:613
-CMDS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### CMDS$/;"	function	line:621
-REGEX	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# REGEX$/;"	function	line:631
-FILE GLOBBING	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILE GLOBBING$/;"	function	line:632
-SECURITY	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# SECURITY$/;"	function	line:642
-FILE PERMISSIONS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILE PERMISSIONS$/;"	function	line:643
-CMDS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### CMDS$/;"	function	line:675
-USER ACCOUNTS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## USER ACCOUNTS$/;"	function	line:690
-cmds	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### cmds$/;"	function	line:707
-USER GROUPS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## USER GROUPS$/;"	function	line:764
-cmds	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### cmds$/;"	function	line:776
+skipped	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# skipped$/;"	function	line:24
+BOOKMARK: pg 165 top/middleware somewhere	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# BOOKMARK: pg 165 top\/middleware somewhere$/;"	function	line:28
+important locations	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### important locations$/;"	function	line:30
+important files	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### important files$/;"	function	line:64
+BACKGROUND	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# BACKGROUND$/;"	function	line:99
+file types	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## file types$/;"	function	line:100
+Linux system:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## Linux system:$/;"	function	line:110
+Linux kernel:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### Linux kernel:$/;"	function	line:111
+System memory management:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### System memory management:$/;"	function	line:115
+Hardware management:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### Hardware management:$/;"	function	line:131
+Filesystem management:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### Filesystem management:$/;"	function	line:139
+user interfaces	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### user interfaces$/;"	function	line:148
+linux distributions	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## linux distributions$/;"	function	line:170
+SHELL	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## SHELL$/;"	function	line:189
+PARENT-CHILD SHELLS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### PARENT-CHILD SHELLS$/;"	function	line:208
+FILESYSTEMS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# FILESYSTEMS$/;"	function	line:221
+FILESYSTEM - CHECKING AND REPAIRING	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILESYSTEM - CHECKING AND REPAIRING$/;"	function	line:228
+FILESYSTEMS - BASIC	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILESYSTEMS - BASIC$/;"	function	line:235
+FILESYSTEMS - JOURNALING	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILESYSTEMS - JOURNALING$/;"	function	line:259
+CREATING FILE SYSTEMS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## CREATING FILE SYSTEMS$/;"	function	line:274
+PARTITIONS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## PARTITIONS$/;"	function	line:284
+CMDS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### CMDS$/;"	function	line:297
+LOGICAL VOLUMES PAGE 204	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## LOGICAL VOLUMES PAGE 204$/;"	function	line:316
+FILES	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# FILES$/;"	function	line:328
+CLI CMD Quickies	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# CLI CMD Quickies$/;"	function	line:334
+important programs	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# important programs$/;"	function	line:341
+FILESYSTEM programs	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILESYSTEM programs$/;"	function	line:421
+FILES	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### FILES$/;"	function	line:557
+PROCESSES	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## PROCESSES$/;"	function	line:579
+SIGNALS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### SIGNALS$/;"	function	line:586
+cmd / process grouping / modifications	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## cmd \/ process grouping \/ modifications$/;"	function	line:608
+SCHEDLING	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^#### SCHEDLING$/;"	function	line:707
+VARIABLES	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## VARIABLES$/;"	function	line:759
+environment variables: some important ones	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### environment variables: some important ones$/;"	function	line:777
+CMDS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### CMDS$/;"	function	line:794
+REGEX	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# REGEX$/;"	function	line:804
+FILE GLOBBING	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILE GLOBBING$/;"	function	line:805
+SECURITY	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# SECURITY$/;"	function	line:816
+FILE PERMISSIONS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILE PERMISSIONS$/;"	function	line:817
+CMDS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### CMDS$/;"	function	line:849
+USER ACCOUNTS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## USER ACCOUNTS$/;"	function	line:864
+cmds	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### cmds$/;"	function	line:881
+USER GROUPS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## USER GROUPS$/;"	function	line:942
+cmds	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### cmds$/;"	function	line:954
+PACKAGE MANAGEMENT SYSTEM (PMS)	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# PACKAGE MANAGEMENT SYSTEM (PMS)$/;"	function	line:963
+CMDS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## CMDS$/;"	function	line:981
+SHELL SCRIPTING	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# SHELL SCRIPTING$/;"	function	line:998
+BACKGROUND	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## BACKGROUND$/;"	function	line:999
+REVIEW 101	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## REVIEW 101$/;"	function	line:1004
+FILE DESCRITORS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILE DESCRITORS$/;"	function	line:1060
+USER INPUT	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## USER INPUT$/;"	function	line:1156
+MATH	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## MATH$/;"	function	line:1288
+expr	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### expr$/;"	function	line:1293
+STRUCTURED CMDS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## STRUCTURED CMDS$/;"	function	line:1357
+IF STATEMENTS / TEST / BRACKETS / DOUBLE PARANTHESIS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### IF STATEMENTS \/ TEST \/ BRACKETS \/ DOUBLE PARANTHESIS$/;"	function	line:1359
+CASE STATEMENTS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### CASE STATEMENTS$/;"	function	line:1480
+ITERATION	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## ITERATION$/;"	function	line:1492
+FUNCTIONS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### FUNCTIONS$/;"	function	line:1558
+GRAPHICAL DESKTOPS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## GRAPHICAL DESKTOPS/;"	function	line:1595

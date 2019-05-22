@@ -339,6 +339,11 @@
 
 
 # important programs
+  - holy grail
+    - `source FILE` executes cmds within the current shell context instead of creating a new shell to execute them
+      - `. FILE` the dot operator is a shortcut
+
+
   - shell programs
     - /bin/bash: the default shell for many userIDs
       - OPTIONS
@@ -1552,6 +1557,8 @@
 
 ### FUNCTIONS
   - must be defined before they are invoked
+  - self-containment: a self-contained function doesnt use any resources outside of the function, other than whatever variables the script passes to it
+  - recursive: a function that calls it self must be self-contained
   - have exit statuses
     - exit status returned by the last cmd
     - use the `return` cmd
@@ -1562,7 +1569,8 @@
       - thus you must manually pass the script params to the function
     - passing arrays: you must disassemble the array variable into its individual values and use the values as function parameters
       - within the function you can reassemble all the params into a new array variable
-      -
+  - library file
+    - any file you source within your script
 
 ```sh
   # syntax 1
@@ -1584,4 +1592,4 @@
   returnValue='myFunc'
 ```
 
-### BLAH
+## GRAPHICAL DESKTOPS
