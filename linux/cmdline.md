@@ -1717,3 +1717,38 @@
           - good for display file content
         - `dialog --menu "Window based text menu" 20 30 10 1 "item 1" 2 "item 2" 2> windowtextmenu.txt`
         - `dialog --title "Select a file" --fselect $HOME/ 10 50 2>selectfile.txt`
+
+## TEXT
+### SED
+  - stream editor: edits a stream of data based on a set of rules you supply ahead of time, before the editor processes the data
+  - sed process
+    - reads one data line at a time from the input
+    - matches that data with the supplied editor commands
+    - changes data in the stream as specified in the commands
+    - outputs the new data to STDOUT
+  - `sed OPTIONS SCRIPT FILE`
+    - `-e SCRIPT` adds commands specified script file to the commands runw hile processing the input
+    - `-f file` adds the commands specified int he file to the commands run while processing the input
+    - `-n` doesnt produce output for each command, but waits for the print command
+    - OPTIONS
+      - `-e` execute more than one command
+    - COMMANDS
+      - `'s/replace regex/with this/'`
+      -
+
+```sh
+  echo 'this is a test' | sed 's/test/big test/'
+  sed 's/test/big test/' processEachLineInThisFile.txt
+  sed -e 's/test/big test/; s/another/one/'
+```
+
+### GAWK
+  - the GNU version of the original awk program in Unix
+  - provides a programming language instead of just editor commands like `sed`
+  - capabilities
+    - define variables to store data
+    - use arithmetic and string operators to operate on data
+    - use structured programming concepts
+      - if-then statements
+      - loops
+    - generate formatted reports by extracting data elements within the data file and repositioning them in another order or format 
