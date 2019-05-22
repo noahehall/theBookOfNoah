@@ -1555,12 +1555,13 @@
   - have exit statuses
     - exit status returned by the last cmd
     - use the `return` cmd
+      - must be a numeric value
   - passing parameters
     - can use the standard param environment variables to passed to scripts
       - this restricts you from accessing the script parameter values
       - thus you must manually pass the script params to the function
     - passing arrays: you must disassemble the array variable into its individual values and use the values as function parameters
-      - within the function you can reassemble all the params into a new array variable 
+      - within the function you can reassemble all the params into a new array variable
       -
 
 ```sh
@@ -1572,7 +1573,7 @@
 
   # syntax 2
   myFunc () {
-    cmds
+    local newArraydd
     local returnValue=0
     return $returnValue;
   }

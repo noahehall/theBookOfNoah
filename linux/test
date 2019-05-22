@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo hello
+
+count=10
+
+while [ $count -gt 0 ]; do
+	echo "count is: $count"
+	count=$[ $count - 1 ]
+done
+
+funcwitharray () {
+	local arr=$@
+
+	# how to return an array
+	echo ${arr[*]}
+}
+arr=(1 2 3 4 5)
+newarr=$(funcwitharray ${arr[*]})
+echo "new arr is: $newarr"
