@@ -1,3 +1,6 @@
+#  books used in this file
+  - linux cmd line and shell scripting bible 3rd edition
+    - blum, bresnahan
 # TODOSSSSSS
   - https://keybase.io/
   - http://world.std.com/~reinhold/diceware.html
@@ -610,7 +613,8 @@
         - does not ignore 1 and 2
           - before it exits it will pass the signal to any processes started by the shell
 
-
+    - key combinations
+      - ctrl+d generates an end-of-file character
 
 ## cmd / process grouping / modifications
   - Sequential cmd list: a list of commands to be run one-after-another
@@ -1730,20 +1734,41 @@
     - `-e SCRIPT` adds commands specified script file to the commands runw hile processing the input
     - `-f file` adds the commands specified int he file to the commands run while processing the input
     - `-n` doesnt produce output for each command, but waits for the print command
+      - use with the -p flag to only output lines that have modifications
     - OPTIONS
       - `-e` execute more than one command
     - COMMANDS
-      - `'s/replace regex/with this/'`
-      -
+      - `'s/replace regex/with this/FLAGS'` substitution
+        - FLAGS
+          - # a number indicating the 1-based index for which matched text should be substituted
+          - g indicating that new text shoudld be substitutded for all occurrences of the existing text
+          - p indicating that the contents of the original line should be printed
+          - w which means to write the results of the substitution to a file
+    - line addressing
+      - by default the cmds apply to all lines of text
+      - this enables you apply a cmd only to specific lines/group of lines
+      - types
+        - numeric range of lines
+        - text pattern that filters out a line
 
 ```sh
   echo 'this is a test' | sed 's/test/big test/'
   sed 's/test/big test/' processEachLineInThisFile.txt
   sed -e 's/test/big test/; s/another/one/'
+  sed -n 's/only/only output changed lines/p'
+  sed 's/save/modifications to a file' thisfile.txt
+
+  # change the string delimiter / => !
+  # very useful
+  sed 's!test!big test!'
+
+  # line addressing
 ```
 
 ### GAWK
   - the GNU version of the original awk program in Unix
+  - use `ctrl+d` to exit from gawk on the cmd line
+    - especially important if you have any `END` programs
   - provides a programming language instead of just editor commands like `sed`
   - capabilities
     - define variables to store data
@@ -1751,4 +1776,45 @@
     - use structured programming concepts
       - if-then statements
       - loops
-    - generate formatted reports by extracting data elements within the data file and repositioning them in another order or format 
+    - generate formatted reports by extracting data elements within the data file and repositioning them in another order or format
+      - PERFECT for log files
+  - `gawk OPTIONS PROGRAM FILE`
+    - OPTIONS
+      - -F fs specifies a file separator for dileanting data fields in a line
+      - -f file specifies a filename to read the program from
+      - -v var=value defines a variable and default value used in teh gawk program
+      - -mf N specifies the max number of fields to process in the data file
+      - -mr N specifies the max record size in the data file
+      - -W keyword specifies the compatibility mode or warning level for gawk
+    - PROGRAM
+      - print prints to STDOUT
+    - FILE
+      - if you dont specify a file, it waits for text to come in via STDIN
+    - data field variables
+      - each data field is determiend in a text line by a field separation character
+        - default: any whitespace character (e.g. tab/space)
+      - variables
+        - $0 the entire line of text
+        - $1 first data field
+        - $X etc.
+
+
+```sh
+  gawk '{print "hello world"}'
+  gawk '{print $1}' # prints the first character
+  gawk -F : '{print $1}' # : is now the field separator
+  gawk 'BEGIN {print "this is a header"} {print "this is body content"}'
+  gawk '{print "this is body content"} END {print "this is a footer"}'
+  # read the program from a file
+  gawk somefile.gawk
+  # BEGIN {
+  #   print 'this is a header'
+  #   # specify field separator here
+  #   # so we dont force script consumers to use the -F option
+  #   FS=":"
+  # }
+  # {
+  #   print 'this is from a file'
+  #   print 'each cmd on a single line'
+  # }
+```
