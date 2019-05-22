@@ -343,6 +343,13 @@
     - `source FILE` executes cmds within the current shell context instead of creating a new shell to execute them
       - `. FILE` the dot operator is a shortcut
 
+    - `echo $blah` prints things
+      - -e enable interpretation of backslash escapes 
+        - useful for printing tabs `\t`
+      - -n no trailing new line
+        - useful for putting the echo line on the same line as the next cmd
+      -
+
 
   - shell programs
     - /bin/bash: the default shell for many userIDs
@@ -1593,3 +1600,8 @@
 ```
 
 ## GRAPHICAL DESKTOPS
+  - usually you wantt to cleear the display area and then show your menus
+  - the core of a shell script menu is the case cmd
+
+### TEXT MENUS
+  -

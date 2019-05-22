@@ -4,10 +4,12 @@ echo hello
 
 count=10
 
-while [ $count -gt 0 ]; do
-	echo "count is: $count"
-	count=$[ $count - 1 ]
-done
+function simpleloop {
+	while [ $count -gt 0 ]; do
+		echo "count is: $count"
+		count=$[ $count - 1 ]
+	done
+}
 
 funcwitharray () {
 	local arr=$@
@@ -16,5 +18,28 @@ funcwitharray () {
 	echo ${arr[*]}
 }
 arr=(1 2 3 4 5)
-newarr=$(funcwitharray ${arr[*]})
-echo "new arr is: $newarr"
+
+function echoarray {
+	newarr=$(funcwitharray ${arr[*]})
+	echo "new arr is: $newarr"
+}
+
+echo -e Simple text menu
+echo -e "\t\t 1. Run simple loop"
+echo -e "\t\t 2. Echo function array"
+echo -en "\t\t Enter Option "
+
+read -n 1 opt
+case $opt in
+	1)
+		echo
+		simpleloop
+		;;
+	2)
+		echo
+		echoarray
+		;;
+  *)
+		echo you did not enter a valid option
+		;;
+esac
