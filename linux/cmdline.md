@@ -1609,6 +1609,8 @@
 ## GRAPHICAL DESKTOPS
   - usually you wantt to cleear the display area and then show your menus
   - the core of a shell script menu is the case cmd
+  - select statements are better than echo lines of text
+  - dialog windows are better than select statements
 
 ### TEXT MENUS
 ```sh
@@ -1639,26 +1641,71 @@
   # using select statement
   # auto builds identical menu from above
 
-  function testmenu {
-  	PS3="Enter Option..."
-  	while [ 1 ]; do
-  		select opt in \
-  			"Run Loop" \
-  			"Echo Array"\
-  		; do
-  			case $opt in
-  				"Run Loop")
-  					clear
-  					echo -e "\n simpleloop"
-  					;;
-  				"Echo Array")
-  					clear
-  					echo -e "\n echoarray"
-  					;;
-  				*)
-  					echo -e "\n you did not enter a valid option"
-  			esac
-  		done
-  	done
-  }
+  # function testmenu {
+  # 	PS3="Enter Option..."
+  # 	while [ 1 ]; do
+  # 		select opt in \
+  # 			"Run Loop" \
+  # 			"Echo Array"\
+  # 		; do
+  			# case $opt in
+  				# "Run Loop")
+  			# 		clear
+  			# 		echo -e "\n simpleloop"
+  			# 		;;
+  			# 	"Echo Array")
+  			# 		clear
+  			# 		echo -e "\n echoarray"
+  			# 		;;
+  			# 	*)
+  # 					echo -e "\n you did not enter a valid option"
+  # 			esac
+  # 		done
+  # 	done
+  # }
 ```
+
+### DIALOG WINDOWS
+  - `dialog OPTIONS WIDGETS` you can have multiple options and multiple widgets
+    - OPTIONS
+      - `--title "My Title"`
+      - too many to list
+    - each widget provides output in two forms
+      - STDERR
+        - any data returned by the user
+        -
+      - exit code status
+        - indicates the button selected by the user
+    - OPTIONS
+    -
+    - --WIDGET PARAMS
+      - widgets: dialog package term for a type of windows element
+        - this list is old!!! checkout the new shiznit via `dialog`
+        - calendar
+        - checklist
+        - form
+        - fselect: a file selection window to browse for a file
+        - gauge: a meter showing a percentage of completion
+        - infobox: display a message without waiting for a response
+        - inputbox: display a single text form box for text entry
+        - inputmenu: provides an editable menu
+        - menu: displays a list of selections from which to choose
+        - msgbox: displays a message and requires the user to select an ok button
+        - pause: displays a meter showing the status of a specified pause period
+        - passwordbox: displays a single textbox that hides entered text
+        - passwordform: displays a form with labels and hidden text fields
+        - radiolist
+        - tailbox: displays a text from a file in a scroll window using the tail command
+        - tailboxbg: same as tailbox; but operates in background mode
+        - textbox: displays the contents of a file in a scroll window
+        - timebox: provides a window to select an hour, minute, and second
+        - yesno: provides a simple message with yes and no buttons
+      - examples
+        - `dialog --inputbox "Enter your age" 10 20 2> age.txt`
+        - `dialog --msgbox "Please click ok" 10 20 2> msgbox.txt`
+        - `dialog --title "Please select yes or no" --yesno "This is a question" 10 20 2> yesnowithtitle.txt`
+        - `dialog --inputbox "Enter your age:" 10 20 2>age.txt`
+        - `dialog --textbox /etc/passwd 15 45`
+          - good for display file content
+        - `dialog --menu "Window based text menu" 20 30 10 1 "item 1" 2 "item 2" 2> windowtextmenu.txt`
+        - `dialog --title "Select a file" --fselect $HOME/ 10 50 2>selectfile.txt`
