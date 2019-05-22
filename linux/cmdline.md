@@ -998,59 +998,60 @@
 ## BACKGROUND
   - good idea to add `$HOME/bin` to your path so each user can have a dir in which the shell can execute their scripts
   - every script file must be executable `ls -l`
+  -
 
 ## REVIEW 101
 ```sh
-# first line in a shell script must specify which shell
-# to run the script under
-#!bin/bash
+  # first line in a shell script must specify which shell
+  # to run the script under
+  #!bin/bash
 
-# you should always keep the original value to reset it
-IFS.OLD=$IFS
-# change the field separator to only recognize new lines
-IFS=$'\n'
-# change it to regonize multiple field separators
-# ; and : are now the field separators
-# IFS=;:
+  # you should always keep the original value to reset it
+  IFS.OLD=$IFS
+  # change the field separator to only recognize new lines
+  IFS=$'\n'
+  # change it to regonize multiple field separators
+  # ; and : are now the field separators
+  # IFS=;:
 
-# only way to reliable get the script name
-# excludes the path if invokied with some/blah/scriptname.shx
-scritpname=$(basename $0)
+  # only way to reliable get the script name
+  # excludes the path if invokied with some/blah/scriptname.shx
+  scritpname=$(basename $0)
 
-# run two consecutive cmds
-# maximum command line char count is 255 on a single line
-cmd1; cmd2
+  # run two consecutive cmds
+  # maximum command line char count is 255 on a single line
+  cmd1; cmd2
 
-# echo
-echo this line without quotes
-echo 'this line with quotes'
+  # echo
+  echo this line without quotes
+  echo 'this line with quotes'
 
-# use quotes to be sure there is a space between lines
-echo -n 'put this line and the next line '
-echo on the same line
+  # use quotes to be sure there is a space between lines
+  echo -n 'put this line and the next line '
+  echo on the same line
 
-echo $HOME
+  echo $HOME
 
-# CMD SUBSTITUTION
-# saving the output of a cmd to a variable
-datevar=`date`
-datevar=$(date)
-today=$(date +%y%m%d)
+  # CMD SUBSTITUTION
+  # saving the output of a cmd to a variable
+  datevar=`date`
+  datevar=$(date)
+  today=$(date +%y%m%d)
 
-# exit statuses
-# 0 success
-# 1 general unknown error (e.g. invalid parameter)
-# 2 misuse of shell cmd
-# 126 cmd cant execute (i.e. permissions issue)
-# 127 cmd not found
-# 128 invalid exit argument
-# 128+x fatal error with linux signal x
-# 130 cmd terminated with ctrl+c
-# 255 exit status out of range
-# prints the exit status of the last executed cmd
-echo $?
-# manually exist with status
-exit 0
+  # exit statuses
+  # 0 success
+  # 1 general unknown error (e.g. invalid parameter)
+  # 2 misuse of shell cmd
+  # 126 cmd cant execute (i.e. permissions issue)
+  # 127 cmd not found
+  # 128 invalid exit argument
+  # 128+x fatal error with linux signal x
+  # 130 cmd terminated with ctrl+c
+  # 255 exit status out of range
+  # prints the exit status of the last executed cmd
+  echo $?
+  # manually exist with status
+  exit 0
 
 ```
 
@@ -1095,57 +1096,57 @@ exit 0
       -
 
 ```sh
-## redirect STDERR to a file
-ls -l badfile 2> error.log
+  ## redirect STDERR to a file
+  ls -l badfile 2> error.log
 
-## redirect STDERR and STDOUT to the same file
-## use the special & symbol
-ls -l goodfile badfile &> goodandbad.log
+  ## redirect STDERR and STDOUT to the same file
+  ## use the special & symbol
+  ls -l goodfile badfile &> goodandbad.log
 
-## redirect STERR and STDOUT to separate files
-ls -l goodfile badfile 2> error.log 1> good.log
+  ## redirect STERR and STDOUT to separate files
+  ls -l goodfile badfile 2> error.log 1> good.log
 
-# the following are temporary (within a script)
-## redirect a single line to whatever STDERR is referencing
-echo "this is an error message" >&2
+  # the following are temporary (within a script)
+  ## redirect a single line to whatever STDERR is referencing
+  echo "this is an error message" >&2
 
-# the following are for the duration of the script
-## redirect to a file
-exec 1> some.log
-exec 2> error.log
+  # the following are for the duration of the script
+  ## redirect to a file
+  exec 1> some.log
+  exec 2> error.log
 
-## get STDIN from a file
-exec 0< somefile
-# while read line... #gets line from somefile
+  ## get STDIN from a file
+  exec 0< somefile
+  # while read line... #gets line from somefile
 
-# creating file descriptors
-exec 3>somefile
-# echo "this goes to somefile" >&3
-echo "this goes to monitor"
+  # creating file descriptors
+  exec 3>somefile
+  # echo "this goes to somefile" >&3
+  echo "this goes to monitor"
 
-## other examples
-exec 3>>appendtothisfile
+  ## other examples
+  exec 3>>appendtothisfile
 
-## save the file descriptor
-exec 3>&1
-## set a new file descriptor
-exec 1>somefile
-### put things back to normal
-exec 1>&3
+  ## save the file descriptor
+  exec 3>&1
+  ## set a new file descriptor
+  exec 1>somefile
+  ### put things back to normal
+  exec 1>&3
 
-## create a weird read/write file descriptor
-## a single file descriptor for both input and output
-exec 3<> somefile
+  ## create a weird read/write file descriptor
+  ## a single file descriptor for both input and output
+  exec 3<> somefile
 
-## closing file descriptors
-## by redirectoring to special sybol &-
-## if you reopen a closed file descriptor
-## the shell replaces the oldfile with a new file
-exec 3>&-
+  ## closing file descriptors
+  ## by redirectoring to special sybol &-
+  ## if you reopen a closed file descriptor
+  ## the shell replaces the oldfile with a new file
+  exec 3>&-
 
-# get all open file descriptors for the current process
-# very useful inside of scripts
-lsof -a -p $$ -d 0,1,2
+  # get all open file descriptors for the current process
+  # very useful inside of scripts
+  lsof -a -p $$ -d 0,1,2
 ```
 
 
@@ -1190,95 +1191,95 @@ lsof -a -p $$ -d 0,1,2
 
 
 ```sh
-# prompting user for input
-read -p "what is your name: " first last
-echo "your name is $first $last"
+  # prompting user for input
+  read -p "what is your name: " first last
+  echo "your name is $first $last"
 
-read -p "this time without vars"
-echo "your name is $REPLY"
+  read -p "this time without vars"
+  echo "your name is $REPLY"
 
-read -t 5 -p "this time with a 5 second timer "
-echo "your response was $REPLY"
+  read -t 5 -p "this time with a 5 second timer "
+  echo "your response was $REPLY"
 
-echo "auto exit based on char count"
-read -n1 -p "please choose an interger between 0-9"
+  echo "auto exit based on char count"
+  read -n1 -p "please choose an interger between 0-9"
 
-echo -s -p "enter your password - but we wont display it "
+  echo -s -p "enter your password - but we wont display it "
 
-# reading from a file
-cat somefile | while read line; do
-  echo "line is: $line"
-done
+  # reading from a file
+  cat somefile | while read line; do
+    echo "line is: $line"
+  done
 
-# somescript a b c d
-while [ -n "$1"]; do
- echo $1
- shift
-done
+  # somescript a b c d
+  while [ -n "$1"]; do
+   echo $1
+   shift
+  done
 
-#somescript -a -b paramValue -c -d -- e f g
-# replace the cmd line options with the ones provided by getopts
-set -- $(getopt -q ab:cd "$@")
-while [ -n "1" ]; do
-  case "$1" in
-    -a) echo "found -a option" ;;
-    -b)
-      echo "found -b option"
-      echo "with value $2"
-      ;;
-    -c) echo "found -c option" ;;
-    -d) echo "found -d option" ;;
-    --)
-        # shift out the -- so we only have
-        # positional parameters in $@
-        shift
-        break ;;
-    *) echo "$1 is not an option" ;;
-  esac
-  shift
-done
-
-
-#somescript -a -b paramValue -c -d -- e f g
-while getopts :ab:cd opt; do
-  case "$opt" in
-    a) echo "found -a option" ;;
-    b)
-      echo "found -b option"
-      echo "with value $OPTARG"
-      ;;
-    c) echo "found -c option" ;;
-    d) echo "found -d option" ;;
-    *) echo "$1 is not an option" ;;
-  esac
-done
-
-shift $[ $OPTIND - 1 ]
-echo "remaining parameters $1"
+  #somescript -a -b paramValue -c -d -- e f g
+  # replace the cmd line options with the ones provided by getopts
+  set -- $(getopt -q ab:cd "$@")
+  while [ -n "1" ]; do
+    case "$1" in
+      -a) echo "found -a option" ;;
+      -b)
+        echo "found -b option"
+        echo "with value $2"
+        ;;
+      -c) echo "found -c option" ;;
+      -d) echo "found -d option" ;;
+      --)
+          # shift out the -- so we only have
+          # positional parameters in $@
+          shift
+          break ;;
+      *) echo "$1 is not an option" ;;
+    esac
+    shift
+  done
 
 
-```
+  #somescript -a -b paramValue -c -d -- e f g
+  while getopts :ab:cd opt; do
+    case "$opt" in
+      a) echo "found -a option" ;;
+      b)
+        echo "found -b option"
+        echo "with value $OPTARG"
+        ;;
+      c) echo "found -c option" ;;
+      d) echo "found -d option" ;;
+      *) echo "$1 is not an option" ;;
+    esac
+  done
 
-## REDIRECTS
-```sh
-# output redirection: saving to file
-  cmd > outputfile # overwrite
-  cmd >> outputfile # append
+  shift $[ $OPTIND - 1 ]
+  echo "remaining parameters $1"
 
-# input redirection: content of file as params to cmd
-  cmd < inputfile
 
-# input redirection: inline
-cmd << EOF
-  data
-  data
-EOF
+  ```
 
-# PIPES
-# send the output of one cmd to the input of another
-# linux runs both cmds at the same time linking them
-# together internall (not executed back to back)
-cmdfrom | cmdto
+  ## REDIRECTS
+  ```sh
+  # output redirection: saving to file
+    cmd > outputfile # overwrite
+    cmd >> outputfile # append
+
+  # input redirection: content of file as params to cmd
+    cmd < inputfile
+
+  # input redirection: inline
+  # cmd << EOF
+  #   data
+  #   data
+  # EOF
+
+  # PIPES
+  # send the output of one cmd to the input of another
+  # linux runs both cmds at the same time linking them
+  # together internall (not executed back to back)
+  cmdfrom | cmdto
 
 ```
 
@@ -1294,108 +1295,67 @@ cmdfrom | cmdto
 
 
 ```sh
-# ARG1 if it is neither null nor 0, otherwise ARG2
-expr ARG1 | ARG2
+  # ARG1 if it is neither null nor 0, otherwise ARG2
+  expr ARG1 | ARG2
 
-# ARG1 if neither argument is null or 0, otherwise 0
-expr ARG1 & ARG2
+  # ARG1 if neither argument is null or 0, otherwise 0
+  expr ARG1 & ARG2
 
-# ARG1 is less than ARG2
-expr ARG1 < ARG2
-# ARG1 is less than or equal to ARG2
-expr ARG1 <= ARG2
-# ARG1 is equal to ARG2
-expr ARG1 = ARG2
-# ARG1 is unequal to ARG2
-expr ARG1 != ARG2
-# ARG1 is greater than or equal to ARG2
-expr ARG1 >= ARG2
-# ARG1 is greater than ARG2
-expr ARG1 > ARG2
+  # ARG1 is less than ARG2
+  expr ARG1 < ARG2
+  # ARG1 is less than or equal to ARG2
+  expr ARG1 <= ARG2
+  # ARG1 is equal to ARG2
+  expr ARG1 = ARG2
+  # ARG1 is unequal to ARG2
+  expr ARG1 != ARG2
+  # ARG1 is greater than or equal to ARG2
+  expr ARG1 >= ARG2
+  # ARG1 is greater than ARG2
+  expr ARG1 > ARG2
 
-# arithmetic sum of ARG1 and ARG2
-expr ARG1 + ARG2
-# arithmetic difference of ARG1 and ARG2
-expr ARG1 - ARG2
+  # arithmetic sum of ARG1 and ARG2
+  expr ARG1 + ARG2
+  # arithmetic difference of ARG1 and ARG2
+  expr ARG1 - ARG2
 
-# arithmetic product of ARG1 and ARG2
-expr ARG1 * ARG2
-# arithmetic quotient of ARG1 divided by ARG2
-expr ARG1 / ARG2
-# arithmetic remainder of ARG1 divided by ARG2
-expr ARG1 % ARG2
+  # arithmetic product of ARG1 and ARG2
+  expr ARG1 * ARG2
+  # arithmetic quotient of ARG1 divided by ARG2
+  expr ARG1 / ARG2
+  # arithmetic remainder of ARG1 divided by ARG2
+  expr ARG1 % ARG2
 
-# couldnt get this to work
-# anchored pattern match of REGEXP in STRING
-expr STRING : REGEXP
+  # couldnt get this to work
+  # anchored pattern match of REGEXP in STRING
+  expr STRING : REGEXP
 
-# same as STRING : REGEXP
-expr match STRING REGEXP
-# substring of STRING, POS counted from 1
-expr substr STRING POS LENGTH
-# index in STRING where any CHARS is found, or 0
-expr index STRING CHARS
-# length of STRING
-expr length STRING
-# interpret TOKEN as a string, even if it is a
-# keyword like 'match' or an operator like '/'
-expr + TOKEN
+  # same as STRING : REGEXP
+  expr match STRING REGEXP
+  # substring of STRING, POS counted from 1
+  expr substr STRING POS LENGTH
+  # index in STRING where any CHARS is found, or 0
+  expr index STRING CHARS
+  # length of STRING
+  expr length STRING
+  # interpret TOKEN as a string, even if it is a
+  # keyword like 'match' or an operator like '/'
+  expr + TOKEN
 
-# value of EXPRESSION
-( EXPRESSION )
+  # value of EXPRESSION
+  ( EXPRESSION )
+
+  # brackets
+  var1=$[1 + 5]
+  var2=$[$var1 * 2]
+  var3=$[$var2 * ($var1 - 3)]
 ```
 
-
-### BRACKETS
-```sh
-var1=$[1 + 5]
-var2=$[$var1 * 2]
-var3=$[$var2 * ($var1 - 3)]
-```
 
 ## STRUCTURED CMDS
+
+### IF STATEMENTS / TEST / BRACKETS / DOUBLE PARANTHESIS
   - if statements can only validate the exit status of cmds
-
-### IF STATEMENTS
-```sh
-# syntax 1
-if pwd
-then
-  echo it worked
-fi
-
-# syntax 2
-if pwd; then
-  echo it still worked
-fi
-
-# else
-if unknowncmd; then
-  echo is not gonna work
-else
-  echo bad cmd
-fi
-
-# elif
-if unknowncmd; then
-  echo is not gonna work
-elif pwd; then
-  echo bad cmd
-fi
-
-# elif + else
-# the else is part of the elif block
-# not the else if block
-if unknowncmd; then
-  echo is not gonna work
-elif unknowncmd; then
-  echo bad cmd
-else
-  echo 'if and elif = bad cmds'
-fi
-```
-
-### TEST / BRACKETS / DOUBLE PARANTHESIS
   - test: cmd validates TRUE/FALSE expressions
     - can also use single brackets `[ expression ]`
     - evaluates:
@@ -1410,85 +1370,121 @@ fi
       - must be escaped
     - double brackets provide pattern matching as well as all the regular string comparisons
 ```sh
-if [ expression ]; then
-  dothis
-fi
+  # syntax 1
+  if pwd
+  then
+    echo it worked
+  fi
 
-if [ exp1 ] && [ exp2 ]; then
-  echo both are true
-fi
+  # syntax 2
+  if pwd; then
+    echo it still worked
+  fi
 
-if [ exp1 ] || [ exp2 ]; then
-  echo atleast one is true
-fi
+  # else
+  if unknowncmd; then
+    echo is not gonna work
+  else
+    echo bad cmd
+  fi
 
-# == indicates the string to the right is a regular expression
-if [[ $USER == r* ]]; then
-  echo $USER contains character r
-fi
+  # elif
+  if unknowncmd; then
+    echo is not gonna work
+  elif pwd; then
+    echo bad cmd
+  fi
 
-if (( expr )); then
-  echo truthy
-fi
+  # elif + else
+  # the else is part of the elif block
+  # not the else if block
+  if unknowncmd; then
+    echo is not gonna work
+  elif unknowncmd; then
+    echo bad cmd
+  else
+    echo 'if and elif = bad cmds'
+  fi
 
-# numeric comparisons
-n1 -eq n2 ===
-n1 -ge n2 >=
-n1 -gt n2 >
-n1 -le n2 <=
-n1 -lt n2 <
-n1 -ne n2 !=
+  if [ expression ]; then
+    dothis
+  fi
 
-## DOUBLE PARENTHSIS
-## includes numeric comparisons
-val++
-val--
-++val
---val
-! logical flip
-** exponentiation
-&&
-||
-# ~ bitwise negation
-# << left bitwise shift
-# >> rigth bitwise shift
-# & bitwise boolean AND
-# | bitwise boolean OR
+  if [ exp1 ] && [ exp2 ]; then
+    echo both are true
+  fi
 
-# string comparisons
-# > and < must be escaped
-# else there parsed as redirection operators
-str1 = str2 ===
-str1 != str2
-str1 \< str2
-str1 \> str2
-#-n str true if str.length > 0
-#-z str true if str.length === 0
+  if [ exp1 ] || [ exp2 ]; then
+    echo atleast one is true
+  fi
 
-# file comparisons
-#-d file true if file exists and is a directory
-#-e file true if file exists
-#-f file true if file exists and is a file
-#-r file true if file exists and is readable
-#-s file true if file exists and is not empty
-#-w file true if file exists and is writable
-#-x file true if file exists and is executable
-#-O file true if file exists and is owned by the current user
-#-G file true if file exists and the *DEFAULT* group is the same as current user
-#file1 -nt file2 true if file1 is newer than file2
-#file1 -ot file2 true if file1 is older than file2
+  # == indicates the string to the right is a regular expression
+  if [[ $USER == r* ]]; then
+    echo $USER contains character r
+  fi
+
+  if (( expr )); then
+    echo truthy
+  fi
+
+  # numeric comparisons
+  n1 -eq n2 ===
+  n1 -ge n2 >=
+  n1 -gt n2 >
+  n1 -le n2 <=
+  n1 -lt n2 <
+  n1 -ne n2 !=
+
+  ## DOUBLE PARENTHSIS
+  ## includes numeric comparisons
+  val++
+  val--
+  ++val
+  --val
+  ! logical flip
+  ** exponentiation
+  &&
+  ||
+  # ~ bitwise negation
+  # << left bitwise shift
+  # >> rigth bitwise shift
+  # & bitwise boolean AND
+  # | bitwise boolean OR
+
+  # string comparisons
+  # > and < must be escaped
+  # else there parsed as redirection operators
+  str1 = str2 ===
+  str1 != str2
+  str1 \< str2
+  str1 \> str2
+  #-n str true if str.length > 0
+  #-z str true if str.length === 0
+
+  # file comparisons
+  #-d file true if file exists and is a directory
+  #-e file true if file exists
+  #-f file true if file exists and is a file
+  #-r file true if file exists and is readable
+  #-s file true if file exists and is not empty
+  #-w file true if file exists and is writable
+  #-x file true if file exists and is executable
+  #-O file true if file exists and is owned by the current user
+  #-G file true if file exists and the *DEFAULT* group is the same as current user
+  #file1 -nt file2 true if file1 is newer than file2
+  #file1 -ot file2 true if file1 is older than file2
 ```
 
 ### CASE STATEMENTS
 ```sh
-case $THISTHING in
-  pat1 | pat2)
-    echo do this stuff
-    ;;
-  *)
-    echo 'do this if no match'
-    ;;
-esac
+  case $THISTHING in
+    pat1 | pat2)
+      echo do this stuff
+      ;;
+    *)
+      echo 'do this if no match'
+      ;;
+  esac
 ```
 
 ## ITERATION
@@ -1515,44 +1511,54 @@ esac
    - do this while something is FALSE!
 
 ```sh
-for var in list; do
-  echo 'this stuff for each $var'
-done
+  for var in list; do
+    echo 'this stuff for each $var'
+  done
 
-for name in noah edward hall; do
-  echo 'the name is $name'
-done
+  for name in noah edward hall; do
+    echo 'the name is $name'
+  done
 
-for blah in $(cat some/file); do
-  echo 'got $blah'
-done
+  for blah in $(cat some/file); do
+    echo 'got $blah'
+  done
 
-for (( a = 1; a < 10; a++)); do
-  echo 'value is $a'
-done
-# with multiple vars
-# for (( a = 1. b = 2, etc; a < 10; a++)); do
+  for (( a = 1; a < 10; a++)); do
+    echo 'value is $a'
+  done
+  # with multiple vars
+  # for (( a = 1. b = 2, etc; a < 10; a++)); do
 
-var=10
-while [ $var -gt 0 ]; do
-  echo $var1
-  var1=$[ $var - 1 ]
-  if [ $var -eq 5]; then
-    break
-  elif [ $var -lt 2 ]; then
-    continue
-  fi
-done | sort
-# with multiple test cmds, each on a separate line
-# while echo $var1
-#       [ $var -gt 0 ]; do
+  var=10
+  while [ $var -gt 0 ]; do
+    echo $var1
+    var1=$[ $var - 1 ]
+    if [ $var -eq 5]; then
+      break
+    elif [ $var -lt 2 ]; then
+      continue
+    fi
+  done | sort
+  # with multiple test cmds, each on a separate line
+  # while echo $var1
+  #       [ $var -gt 0 ]; do
 
 
-until [ $var -lt 0 ]; do
-  echo $var
-  var1=$[ $var - 1 ]
-done > somefile
-# with multiple test cmds, each on a separate line
-# while echo $var1
-#       [ $var -lt 0 ]; do
+  until [ $var -lt 0 ]; do
+    echo $var
+    var1=$[ $var - 1 ]
+  done > somefile
+  # with multiple test cmds, each on a separate line
+  # while echo $var1
+  #       [ $var -lt 0 ]; do
 ```
+
+### FUNCTIONS
+
+```sh
+  function myFunc {
+    cmds
+  }
+```
+
+### BLAH
