@@ -754,8 +754,9 @@
 ## VARIABLES
   - Environment variables: store information about the shell session and the working environment
   - Used to store data in memory
-  - Global vars: visible from the current shell session and from any spawned child subshells
-  - Local vars: available only in the shell that creates them
+  - Global scope: visible from the current shell session and from any spawned child subshells
+    - global vars: use uppercase
+  - Local scope: available only in the shell that creates them
   - variable arrays
     - myvar=(one two three four)
       - echo $myvar - one
@@ -764,7 +765,10 @@
       - echo ${myvar[*]} - one two three four
       - unset myvar[3] - deletes index 3
       - unset myvar - deletes all values
-
+    - local vars: use lowercase
+  - `myvar=myval` re/set a variable, no space around the `=`
+  - export myvar: converts a local variable to a global variable
+    - changing a global variable within a child shell does not affect the variables value in the parent shell
 ### environment variables: some important ones
   - BASH_SUBSHELL `used at the end of a cmd/process-list to determine how many subshell(s) were created
   - LS_COLORS: controls the color for different types of text displayed in a terminal emulator
@@ -780,14 +784,6 @@
     - internal field separator
     - defines the list of characters the bash shell uses as field separators
   - $$ the current process ID
-
-
-### BACKGROUND
-  - `myvar=myval` re/set a variable, no space around the `=`
-    - global vars: use uppercase
-    - local vars: use lowercase
-  - export myvar: converts a local variable to a global variable
-    - changing a global variable within a child shell does not affect the variables value in the parent shell
 
 
 ### CMDS
@@ -1049,6 +1045,7 @@
   # 130 cmd terminated with ctrl+c
   # 255 exit status out of range
   # prints the exit status of the last executed cmd
+  # exit statuses must be <= 255
   echo $?
   # manually exist with status
   exit 0
@@ -1554,11 +1551,33 @@
 ```
 
 ### FUNCTIONS
+  - must be defined before they are invoked
+  - have exit statuses
+    - exit status returned by the last cmd
+    - use the `return` cmd
+  - passing parameters
+    - can use the standard param environment variables to passed to scripts
+      - this restricts you from accessing the script parameter values
+      - thus you must manually pass the script params to the function
+    -
 
 ```sh
+  # syntax 1
   function myFunc {
     cmds
+    return $[ $value * 2 ]
   }
+
+  # syntax 2
+  myFunc () {
+    cmds
+    return 0;
+  }
+
+  # invokation
+  myFunc
+  myFunc param1 $var
+  returnValue='myFunc'
 ```
 
 ### BLAH
