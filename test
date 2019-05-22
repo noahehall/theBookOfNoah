@@ -6,6 +6,13 @@ count=10
 
 while [ $count -gt 0 ]; do
 	echo "count is: $count"
-	sleep 20
 	count=$[ $count - 1 ]
 done
+
+funcwitharray () {
+	local arr=$@
+	echo "arr values: ${arr[*]}"
+}
+
+arr=(1 2 3 4 5)
+funcwitharray ${arr[*]}

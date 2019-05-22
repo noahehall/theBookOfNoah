@@ -1559,7 +1559,9 @@
     - can use the standard param environment variables to passed to scripts
       - this restricts you from accessing the script parameter values
       - thus you must manually pass the script params to the function
-    -
+    - passing arrays: you must disassemble the array variable into its individual values and use the values as function parameters
+      - within the function you can reassemble all the params into a new array variable 
+      -
 
 ```sh
   # syntax 1
@@ -1571,7 +1573,8 @@
   # syntax 2
   myFunc () {
     cmds
-    return 0;
+    local returnValue=0
+    return $returnValue;
   }
 
   # invokation
