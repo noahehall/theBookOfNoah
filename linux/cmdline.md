@@ -1908,7 +1908,18 @@
   # }
 ```
 
-# REGEX
+# REGEX regular expressata stream
+  - pattern template for filtering text
+  - makes use of wildcard cbhbaracters to represent one or more charactesr in the data stream
+  - regular expression engine: the underlying software that interprets regular expression patterns and uses those patterns to match text
+    - BRE: POSIX basic regular expression engine
+      - most common but not a powerful as ERE
+      - sed uses a subsewt of BRE (focusing on speed)
+    - ERE: POSIX extended regular expression engine
+      - often found in programming languages
+      - used by GAWK
+
+
 ## FILE GLOBBING
   - process of producing filenames/pathnames that match a specified wildcard character
   -  e.g. ls -l my?script
