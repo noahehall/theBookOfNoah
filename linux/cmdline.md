@@ -1728,13 +1728,19 @@
     - COMMANDS
       - `'s/replace regex/with this/FLAGS'` substitution
         - FLAGS
+          - printing
+            - `s/one/two/p indicating that the contents of the original line should be printed
+          - others
           - # a number indicating the 1-based index for which matched text should be substituted
           - g indicating that new text shoudld be substitutded for all occurrences of the existing text
-          - p indicating that the contents of the original line should be printed
-          - w which means to write the results of the substitution to a file'
-        - `i insertthisline` add a new line before the specified line
-        - `a appendthisline` append a new line after the specified line
-        - `c change this line`
+            - w which means to write the results of the substitution to a file'
+          - `i insertthisline` add a new line before the specified line
+          - `a appendthisline` append a new line after the specified line
+          - `c change (i.e. replace) this line`
+          - `y/123/789/` replaces 1 with 7, 2 -> 8, 3->9
+            - if the first block and second block have different lengths an error is produced
+            - replaces each char globaly, without regard to the number of occurrences
+            -
     - line addressing
       - by default the cmds apply to all lines of text
       - this enables you apply a cmd only to specific lines/group of lines
@@ -1756,6 +1762,12 @@
   sed -e 's/test/big test/; s/another/one/'
   sed -n 's/only/only output changed lines/p'
   sed 's/save/modifications to a file' thisfile.txt
+
+
+  # printing
+  sed -n '2,3p' printlines2to3.txt
+  sed -n '/number 3/p' printlinesmatchingregex.txt
+
 
   # change the string delimiter / => !
   # very useful
@@ -1806,6 +1818,11 @@
   # change a line
   sed '/ifyouseethis/c\
   replace it with this text
+  '
+
+  # change a group of lines to a single line
+  sed '2,5c\
+  replace lines 2 through 5 with this single line of text
   '
 ```
 
