@@ -1738,6 +1738,14 @@
       - types
         - numeric range of lines
         - text pattern that filters out a line
+    - deletion notes
+      - using two text patterns
+        - sed '/first/,/second/d' blah.txt
+          - first `turns on` line deletion
+            - everytime /first/ is encountered it is turned on
+            - becareful if /first/ is encountered AFTER second is encountered as it will turn on line deletion again
+          - second `turns off` line deletion
+            - everytime second is encountered it turns off
 
 ```sh
   echo 'this is a test' | sed 's/test/big test/'
@@ -1771,7 +1779,7 @@
   sed '/iflinehasthis/d' deleteit.txt
 
   # delete range of lines using two text patterns
-  sed '/1/,/3/d' deletelines1to3.txt
+  sed '/deleteWhenYouSeeThis/,/StopWhenYouSeeThis/d' deletestuff.txt
 
 ```
 
