@@ -1719,11 +1719,12 @@
     - changes data in the stream as specified in the commands
     - outputs the new data to STDOUT
   - `sed OPTIONS SCRIPT FILE`
-    - `-e SCRIPT` adds commands specified script file to the commands runw hile processing the input
-    - `-f file` adds the commands specified int he file to the commands run while processing the input
-    - `-n` doesnt produce output for each command, but waits for the print command
+    - OPTIONS (confirm these options later)
+      - `-e SCRIPT` adds commands specified script file to the commands run while processing the input
+        - omit -e to specify cmds inline
+      - `-f file` adds the commands specified in the file to the commands run while processing the input
+      - `-n` doesnt produce output for each command, but waits for the print command
       - use with the -p flag to only output lines that have modifications
-    - OPTIONS
       - `-e` execute more than one command
     - COMMANDS
       - `'s/replace regex/with this/FLAGS'` substitution
@@ -1767,7 +1768,8 @@
   # printing
   sed -n '2,3p' printlines2to3.txt
   sed -n '/number 3/p' printlinesmatchingregex.txt
-
+  # see the before and after of changing a line
+  sed -n ''
 
   # change the string delimiter / => !
   # very useful
