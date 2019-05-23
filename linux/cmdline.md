@@ -812,18 +812,6 @@
   - unset VARNAME removes the variable
 
 
-# REGEX
-## FILE GLOBBING
-  - process of producing filenames/pathnames that match a specified wildcard character
-  -  e.g. ls -l my?script
-  - ? one character
-  - * any number of chars
-  - [ab] either one
-  - [a-z] a range
-  - [!a] this character is not 'a'
-
-
-
 # SECURITY
 ## FILE PERMISSIONS
   - `ls -l` show permissions for a directory
@@ -1763,6 +1751,28 @@
   sed 's!test!big test!'
 
   # line addressing
+  sed '2s/dog/cat/' # only process line 2
+  sed '2,3s/dog/cat/' # only process lines 2 and 3
+  sed '2,$s/dog/cat' # process the 2nd line to the end of file
+
+  # text pattern filters
+  sed /pattern/command/
+  sed '/IfLineHasThis/s/replaceThis/withThis/'
+
+  # multiline
+  sed '3,${
+    /command/
+    /pattern/
+  }'
+
+  # deleting
+  sed 'd' deleteall.txt
+  sed '2,3d' deletelines2to3.txt
+  sed '/iflinehasthis/d' deleteit.txt
+
+  # delete range of lines using two text patterns
+  sed '/1/,/3/d' deletelines1to3.txt
+
 ```
 
 ### GAWK
@@ -1818,3 +1828,15 @@
   #   print 'each cmd on a single line'
   # }
 ```
+
+# REGEX
+## FILE GLOBBING
+  - process of producing filenames/pathnames that match a specified wildcard character
+  -  e.g. ls -l my?script
+  - ? one character
+  - * any number of chars
+  - [ab] either one
+  - [a-z] a range
+  - [!a] this character is not 'a'
+
+
