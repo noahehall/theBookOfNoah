@@ -1731,7 +1731,10 @@
           - # a number indicating the 1-based index for which matched text should be substituted
           - g indicating that new text shoudld be substitutded for all occurrences of the existing text
           - p indicating that the contents of the original line should be printed
-          - w which means to write the results of the substitution to a file
+          - w which means to write the results of the substitution to a file'
+        - `i insertthisline` add a new line before the specified line
+        - `a appendthisline` append a new line after the specified line
+        - `c change this line`
     - line addressing
       - by default the cmds apply to all lines of text
       - this enables you apply a cmd only to specific lines/group of lines
@@ -1758,7 +1761,7 @@
   # very useful
   sed 's!test!big test!'
 
-  # line addressing
+  # line addressing (address range)
   sed '2s/dog/cat/' # only process line 2
   sed '2,3s/dog/cat/' # only process lines 2 and 3
   sed '2,$s/dog/cat' # process the 2nd line to the end of file
@@ -1781,6 +1784,29 @@
   # delete range of lines using two text patterns
   sed '/deleteWhenYouSeeThis/,/StopWhenYouSeeThis/d' deletestuff.txt
 
+  # insert/append text
+  # on two different lines
+  sed 'i insertThis'
+  before this
+
+  # on a single line
+  echo 'before this' | sed 'i insert this'
+  echo 'after this' | sed 'a insert this'
+
+  # within text
+  sed '3a insert this after line 3'
+
+  # insert multiple lines
+  # must specify each line on a new line
+  # inserts before line 1
+  sed '1i\
+  insert this line\
+  and this line'
+
+  # change a line
+  sed '/ifyouseethis/c\
+  replace it with this text
+  '
 ```
 
 ### GAWK
