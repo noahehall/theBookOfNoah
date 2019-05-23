@@ -1938,6 +1938,15 @@
     - [abc] matches any `abc`
     - [0-9] matches the range of 0,1,2...9. disposability
     - [^abc] dont match an `abc` `[^]` is the negate pattern
+    - [[:alpha:]] any alphabetical character ignoring case
+    - [[:alnum:]] any alphanumeric character 0-9 + [[:alpha:]]
+    - [[:blank:]] space/tab
+    - [[:digit:]] 0-9
+    - [[:lower:]] a-z
+    - [[:print:]] printable characters
+    - [[:punxr:]] punctuation character
+    - [[:space:]] whitespace character: space, TAB, NL, FF, VT, CR
+    - [[:upper:]] A-Z
     -
 ```sh
   sed '/^$/d' deleteblanklinesfromthisfile.txt
