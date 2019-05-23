@@ -1741,7 +1741,10 @@
           - `y/123/789/` replaces 1 with 7, 2 -> 8, 3->9
             - if the first block and second block have different lengths an error is produced
             - replaces each char globaly, without regard to the number of occurrences
-            -
+          - `[address]r fromthisfile` reads data from a file
+            - e.g. copying take from one file into another
+            - cant use a range of addresses for the read cmd
+            - only specify a single number or text pattern address
     - line addressing
       - by default the cmds apply to all lines of text
       - this enables you apply a cmd only to specific lines/group of lines
@@ -1768,8 +1771,19 @@
   # printing
   sed -n '2,3p' printlines2to3.txt
   sed -n '/number 3/p' printlinesmatchingregex.txt
+  sed '=' printlinenumbersnexttoeachline.txt
+
+  # see the line number of a specific line
+  sed -n '/findthisline/{
+    =
+    p
+  }' andprintitslinenumberWithTheText.txt
+
   # see the before and after of changing a line
-  sed -n ''
+  sed -n '/forlineswiththis/{
+    p
+    s/replacethis/withthis/
+  }' inthisfile.txt
 
   # change the string delimiter / => !
   # very useful
@@ -1826,6 +1840,18 @@
   sed '2,5c\
   replace lines 2 through 5 with this single line of text
   '
+
+  # writing to files
+  sed '1,2w tothisfile.txt' fromthisfile.txt
+  sed '/findthistext/w putitinthisnewfile.txt' fromthisfile.txt
+
+  # reading from files
+  # copies all lines fromthisfile and inserts them
+  # beginning at line 3 into atlineof
+  sed '3r tothisfile.txt' fromthisfile.txt
+  sed '/findthispattern/r tothisfile.txt' fromthisfile.txt
+
+
 ```
 
 ### GAWK
