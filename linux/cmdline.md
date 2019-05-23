@@ -1918,7 +1918,34 @@
     - ERE: POSIX extended regular expression engine
       - often found in programming languages
       - used by GAWK
+  - general rules
+    - everything is case sensitive by default
+    - spaces are treated like any other character
+  - special characters
+    - /x./ - match a single `x` character
+      - can match any character except a new line
+    - *
+    - []
+    - ^
+    - $
+    - +?
+    - |
+    - ()
+    - anchors
+      - /^must start with/
+      - /must end with$/
+  - character classes: specific sets of a characters to match
+    - [abc] matches any `abc`
+    - [0-9] matches the range of 0,1,2...9. disposability
+    - [^abc] dont match an `abc` `[^]` is the negate pattern
+    -
+```sh
+  sed '/^$/d' deleteblanklinesfromthisfile.txt
 
+  # great for parsing words that may be misspelled
+  echo 'Yes' | sed -n '/[Yy]es/p' # prints 'yes'
+
+```
 
 ## FILE GLOBBING
   - process of producing filenames/pathnames that match a specified wildcard character
