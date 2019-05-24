@@ -1713,6 +1713,8 @@
 ## TEXT
 ### SED
   - stream editor: edits a stream of data based on a set of rules you supply ahead of time, before the editor processes the data
+  - pattern space: each line in the data stream gets processed one line at a time
+    - the processing occurres in the 'pattern space'
   - sed process
     - reads one data line at a time from the input
     - matches that data with the supplied editor commands
@@ -1720,21 +1722,23 @@
     - outputs the new data to STDOUT
   - `sed OPTIONS SCRIPT FILE`
     - OPTIONS (confirm these options later)
-      - `-e SCRIPT` adds commands specified script file to the commands run while processing the input
+      - `-e SCRIPT` adds commands specified in the script file to the commands run while processing the input
+        - execute more than one command
         - omit -e to specify cmds inline
       - `-f file` adds the commands specified in the file to the commands run while processing the input
       - `-n` doesnt produce output for each command, but waits for the print command
       - use with the -p flag to only output lines that have modifications
-      - `-e` execute more than one command
     - COMMANDS
       - FLAGS
         - printing
           - command/p indicating that the contents of the original line should be printed
           - others
           - command/# a number indicating the 1-based index for which matched text should be substituted
+            - e.g. /2 would replace the second occurrence
           - command/g global
       - MULTILINE
         - N adds the next line in the data stream to create a multiline processing
+          - it moves the next line into the 'pattern space'
         - D deletes a single line in a multiline group
         - P prints a single line a multiline group
       - `'s/replace regex/with this/FLAGS'` substitution
@@ -1749,6 +1753,10 @@
         - e.g. copying take from one file into another
         - cant use a range of addresses for the read cmd
         - only specify a single number or text pattern address
+      - {n ; command} move to the next line and start processing again
+        - e.g. sed '/header/{n ; d}'
+          - find the line with 'header', move to the next line, and delete it
+          - then start looking for another header and repeat
     - line addressing
       - by default the cmds apply to all lines of text
       - this enables you apply a cmd only to specific lines/group of lines
@@ -1855,7 +1863,15 @@
   sed '3r tothisfile.txt' fromthisfile.txt
   sed '/findthispattern/r tothisfile.txt' fromthisfile.txt
 
+  # next cmd - single line
+  # find the word header, and delete the next line
+  sed '/header/{n ; d} somefile'
 
+  # next cmd - multiline
+  # put two lines on a single line 
+  # find the word next, move to the next line
+  # find a new line character and replace it with a space
+  sed '/first/{ N ; s/\n/ / }' somefile
 ```
 
 ### GAWK
