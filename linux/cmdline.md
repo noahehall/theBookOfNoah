@@ -1873,7 +1873,13 @@
   # put two lines on a single line
   # find the word next, move to the next line
   # find a new line character and replace it with a space
+  # be sure to specify MULTILINE cmds BEFORE single line cmds
   sed '/first/{ N ; s/\n/ / }' somefile
+  sed 'N s/replace.This/with This/ s/thenreplace/thisone/' inthisfile
+
+  # delete - multiline
+  # use capital D whenever your deleting using N
+  sed '/^$/{N ; /header/D}' somefile 
 ```
 
 ### GAWK
