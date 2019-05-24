@@ -1742,6 +1742,7 @@
           - command/# a number indicating the 1-based index for which matched text should be substituted
             - e.g. /2 would replace the second occurrence
           - command/g global
+          - command/!cmd ! skips processing of `cmd`
       - HOLD SPACE
         - lets you copy text from the pattern space to the hold space
           - frees up the pattern space to load another string for processing
@@ -1906,8 +1907,14 @@
   # 2. h - place it into the hold space
   # 3. p - print the pattern space (i.e. the line after the line containing `first`)
   # 4. n - retrieve the next data line in the data stream and place it into the pattern space
-  #
+  # 5. p - print the contents of the pattern space
+  # 6. g - place the contents of the hold space back into the pattern space
+  # 7. p - print the pattern space
   sed -n '/first/ { h ; p ; n ; p ; g ; p }' somefile
+
+  # swap two lines
+  sed -n '/swapThisLineWithTheNextLine/ {h ; n p ; g ; p }' somefile
+
 ```
 
 ### GAWK
