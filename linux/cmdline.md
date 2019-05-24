@@ -1715,8 +1715,12 @@
   - stream editor: edits a stream of data based on a set of rules you supply ahead of time, before the editor processes the data
   - by default CHECKS ONE LINE AT A TIME!!!
     - if you want to check for patterns that space multiple lines you have to use multiline processing with the `N` cmd
-  - pattern space: each line in the data stream gets processed one line at a time
-    - the processing occurres in the 'pattern space'
+    - sed concepts
+      - data stream: a single line from the data you send it
+      - pattern space: i.e. buffer space that holds the text examined by the sed editor while it processes commands
+        - each line in the data stream gets processed one line at a time
+        - the processing occurres in the 'pattern space'
+      - hold space: temporarily hold lines of text while working on other lines in the pattern space
   - sed process
     - reads one data line at a time from the input
     - matches that data with the supplied editor commands
@@ -1738,6 +1742,17 @@
           - command/# a number indicating the 1-based index for which matched text should be substituted
             - e.g. /2 would replace the second occurrence
           - command/g global
+      - HOLD SPACE
+        - lets you copy text from the pattern space to the hold space
+          - frees up the pattern space to load another string for processing
+          - generally
+            - h/H commands to move a string to the hold space
+            - g/G/x commnads to move teh stored string back into the pattern space
+        - h copies pattern space to hold space
+        - H appends apttern space to hold space
+        - g copies hold space to pattern space
+        - G appends hold space to pattern space
+        - x exchanges contents of pattern and hold spaces
       - MULTILINE
         - N adds the next line in the data stream to create a multiline processing
           - it moves the next line into the 'pattern space'
@@ -1879,7 +1894,20 @@
 
   # delete - multiline
   # use capital D whenever your deleting using N
-  sed '/^$/{N ; /header/D}' somefile 
+  # it forces the sed editor to return to the beginning of the script
+  sed '/^$/{N ; /header/D}' somefile
+
+  # print - multiline
+  # prints only the first line in a multiline pattern space
+  sed -n 'N ; /firstline\nsecondline/P' somefile
+
+  # holding space
+  # 1. find the line with `first`
+  # 2. h - place it into the hold space
+  # 3. p - print the pattern space (i.e. the line after the line containing `first`)
+  # 4. n - retrieve the next data line in the data stream and place it into the pattern space
+  #
+  sed -n '/first/ { h ; p ; n ; p ; g ; p }' somefile
 ```
 
 ### GAWK
