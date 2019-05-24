@@ -1713,6 +1713,8 @@
 ## TEXT
 ### SED
   - stream editor: edits a stream of data based on a set of rules you supply ahead of time, before the editor processes the data
+  - by default CHECKS ONE LINE AT A TIME!!!
+    - if you want to check for patterns that space multiple lines you have to use multiline processing with the `N` cmd
   - pattern space: each line in the data stream gets processed one line at a time
     - the processing occurres in the 'pattern space'
   - sed process
@@ -1868,7 +1870,7 @@
   sed '/header/{n ; d} somefile'
 
   # next cmd - multiline
-  # put two lines on a single line 
+  # put two lines on a single line
   # find the word next, move to the next line
   # find a new line character and replace it with a space
   sed '/first/{ N ; s/\n/ / }' somefile
