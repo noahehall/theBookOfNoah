@@ -512,6 +512,7 @@
     - -n : number each line
     - -b : number each line with text
     - -T : dont print tab characters
+  - tac SRC : displays SRC in reverse order
 
   - more SRC: displays a tax file one page at a time
 
@@ -1735,6 +1736,13 @@
       - `-n` doesnt produce output for each command, but waits for the print command
       - use with the -p flag to only output lines that have modifications
     - COMMANDS
+      - general notes
+        - any flag can go in front of any cmd
+        - and line address can go in front of any cmd
+        - e.g. `'{ 1!g ; h ; $p}'`
+          - 1 = line addressing
+          - $ = line addressing
+          - both appearing in front of a cmd
       - FLAGS
         - printing
           - command/p indicating that the contents of the original line should be printed
@@ -1742,7 +1750,7 @@
           - command/# a number indicating the 1-based index for which matched text should be substituted
             - e.g. /2 would replace the second occurrence
           - command/g global
-          - command/!cmd ! skips processing of `cmd`
+          - command/!cmd ! negates the effect of `cmd`
       - HOLD SPACE
         - lets you copy text from the pattern space to the hold space
           - frees up the pattern space to load another string for processing
@@ -1758,37 +1766,44 @@
         - N adds the next line in the data stream to create a multiline processing
           - it moves the next line into the 'pattern space'
         - D deletes a single line in a multiline group
+          - after deletiong, it forces sed to RETURN TO THE TOP OF THE SCRIPT WITHOUT READING THE NEXT LINE!!!
+            - this can be very useful and magical
         - P prints a single line a multiline group
-      - `'s/replace regex/with this/FLAGS'` substitution
-      - `i insertthisline` add a new line before the specified line
-      - `a appendthisline` append a new line after the specified line
-      - `c change (i.e. replace) this line`
-      - `y/123/789/` replaces 1 with 7, 2 -> 8, 3->9
-        - if the first block and second block have different lengths an error is produced
-        - replaces each char globaly, without regard to the number of occurrences
-        - w which means to write the results of the substitution to a file'
-      - r reads data from a file
-        - e.g. copying take from one file into another
-        - cant use a range of addresses for the read cmd
-        - only specify a single number or text pattern address
-      - {n ; command} move to the next line and start processing again
-        - e.g. sed '/header/{n ; d}'
-          - find the line with 'header', move to the next line, and delete it
-          - then start looking for another header and repeat
-    - line addressing
-      - by default the cmds apply to all lines of text
-      - this enables you apply a cmd only to specific lines/group of lines
-      - types
-        - numeric range of lines
-        - text pattern that filters out a line
-    - deletion notes
-      - using two text patterns
-        - sed '/first/,/second/d' blah.txt
-          - first `turns on` line deletion
-            - everytime /first/ is encountered it is turned on
-            - becareful if /first/ is encountered AFTER second is encountered as it will turn on line deletion again
-          - second `turns off` line deletion
-            - everytime second is encountered it turns off
+      - regular
+        - `'s/replace regex/with this/FLAGS'` substitution
+        - `i insertthisline` add a new line before the specified line
+        - `a appendthisline` append a new line after the specified line
+        - `c change (i.e. replace) this line`
+        - `y/123/789/` replaces 1 with 7, 2 -> 8, 3->9
+          - if the first block and second block have different lengths an error is produced
+          - replaces each char globaly, without regard to the number of occurrences
+          - w which means to write the results of the substitution to a file'
+        - r reads data from a file
+          - e.g. copying take from one file into another
+          - cant use a range of addresses for the read cmd
+          - only specify a single number or text pattern address
+        - {n ; command} move to the next line and start processing again
+          - e.g. sed '/header/{n ; d}'
+            - find the line with 'header', move to the next line, and delete it
+            - then start looking for another header and repeat
+      - line addressing
+        - by default the cmds apply to all lines of text
+        - this enables you apply a cmd only to specific lines/group of lines
+        - types
+          - numeric range of lines
+          - text pattern that filters out a line
+      - BRANCHING
+        - negate an entire section of cmds based on an adress, an address pattern, or an address range
+        - permitting you to perform a group of cmds only on a specific subset within the data stream
+        - `[address]b [label]`
+      - deletion notes
+        - using two text patterns
+          - sed '/first/,/second/d' blah.txt
+            - first `turns on` line deletion
+              - everytime /first/ is encountered it is turned on
+              - becareful if /first/ is encountered AFTER second is encountered as it will turn on line deletion again
+            - second `turns off` line deletion
+              - everytime second is encountered it turns off
 
 ```sh
   echo 'this is a test' | sed 's/test/big test/'
@@ -1912,8 +1927,22 @@
   # 7. p - print the pattern space
   sed -n '/first/ { h ; p ; n ; p ; g ; p }' somefile
 
+  # reverse the order of a text file
+  # 1. place a line in the pattern space
+  # 2. place the pattern space line into the hold space
+  # 3. put the next line of text in the pattern space
+  # 4. append the hold space to the pattern space
+  # 5. place everything int he pattern space into the hold space
+  # 6. repeat steps 3-5 until youve put all lines in reverse order in the hold space
+  # 7. retrieve the lines, and print them
+  sed -n '{1!G ; h ; $p}' somefile
+
   # swap two lines
   sed -n '/swapThisLineWithTheNextLine/ {h ; n p ; g ; p }' somefile
+
+  # negation
+  # print all lines except the ones that match
+  sed -n '/header/!p' somefile
 
 ```
 
