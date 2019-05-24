@@ -1796,6 +1796,10 @@
         - negate an entire section of cmds based on an adress, an address pattern, or an address range
         - permitting you to perform a group of cmds only on a specific subset within the data stream
         - `[address]b [label]`
+          - address: determines whine line/lines of data trigger the branch command
+          - label: defines the location to branch to
+            - can be up to 7 chars in length
+            - if the label parameter is omitted, the branch command proceeds to the end of the script
       - deletion notes
         - using two text patterns
           - sed '/first/,/second/d' blah.txt
@@ -1944,6 +1948,16 @@
   # print all lines except the ones that match
   sed -n '/header/!p' somefile
 
+  # branching
+  # skips the second and third line
+  sed '{2,3b ; cmd ; cmd }' somefile
+
+  # executes cmds between labels when matching
+  # executes other cmds when not matching
+  sed '{
+    /ifthis/b jump1 ; /do/this/ :jump1
+    s/dothis/toallotherlines/
+  }' somefile
 ```
 
 ### GAWK
