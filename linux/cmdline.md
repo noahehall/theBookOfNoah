@@ -1727,24 +1727,28 @@
       - use with the -p flag to only output lines that have modifications
       - `-e` execute more than one command
     - COMMANDS
-      - `'s/replace regex/with this/FLAGS'` substitution
-        - FLAGS
-          - printing
-            - `s/one/two/p indicating that the contents of the original line should be printed
+      - FLAGS
+        - printing
+          - command/p indicating that the contents of the original line should be printed
           - others
-          - # a number indicating the 1-based index for which matched text should be substituted
-          - g indicating that new text shoudld be substitutded for all occurrences of the existing text
-            - w which means to write the results of the substitution to a file'
-          - `i insertthisline` add a new line before the specified line
-          - `a appendthisline` append a new line after the specified line
-          - `c change (i.e. replace) this line`
-          - `y/123/789/` replaces 1 with 7, 2 -> 8, 3->9
-            - if the first block and second block have different lengths an error is produced
-            - replaces each char globaly, without regard to the number of occurrences
-          - `[address]r fromthisfile` reads data from a file
-            - e.g. copying take from one file into another
-            - cant use a range of addresses for the read cmd
-            - only specify a single number or text pattern address
+          - command/# a number indicating the 1-based index for which matched text should be substituted
+          - command/g global
+      - MULTILINE
+        - N adds the next line in the data stream to create a multiline processing
+        - D deletes a single line in a multiline group
+        - P prints a single line a multiline group
+      - `'s/replace regex/with this/FLAGS'` substitution
+      - `i insertthisline` add a new line before the specified line
+      - `a appendthisline` append a new line after the specified line
+      - `c change (i.e. replace) this line`
+      - `y/123/789/` replaces 1 with 7, 2 -> 8, 3->9
+        - if the first block and second block have different lengths an error is produced
+        - replaces each char globaly, without regard to the number of occurrences
+        - w which means to write the results of the substitution to a file'
+      - r reads data from a file
+        - e.g. copying take from one file into another
+        - cant use a range of addresses for the read cmd
+        - only specify a single number or text pattern address
     - line addressing
       - by default the cmds apply to all lines of text
       - this enables you apply a cmd only to specific lines/group of lines
@@ -1867,6 +1871,7 @@
       - loops
     - generate formatted reports by extracting data elements within the data file and repositioning them in another order or format
       - PERFECT for log files
+    - a bit slower than `sed` if ERE regular expressions are used
   - `gawk OPTIONS PROGRAM FILE`
     - OPTIONS
       - -F fs specifies a file separator for dileanting data fields in a line
@@ -1921,38 +1926,68 @@
   - general rules
     - everything is case sensitive by default
     - spaces are treated like any other character
-  - special characters
-    - /x./ - match a single `x` character
-      - can match any character except a new line
-    - *
-    - []
-    - ^
-    - $
-    - +?
-    - |
-    - ()
-    - anchors
-      - /^must start with/
-      - /must end with$/
-  - character classes: specific sets of a characters to match
-    - [abc] matches any `abc`
-    - [0-9] matches the range of 0,1,2...9. disposability
-    - [^abc] dont match an `abc` `[^]` is the negate pattern
-    - [[:alpha:]] any alphabetical character ignoring case
-    - [[:alnum:]] any alphanumeric character 0-9 + [[:alpha:]]
-    - [[:blank:]] space/tab
-    - [[:digit:]] 0-9
-    - [[:lower:]] a-z
-    - [[:print:]] printable characters
-    - [[:punxr:]] punctuation character
-    - [[:space:]] whitespace character: space, TAB, NL, FF, VT, CR
-    - [[:upper:]] A-Z
+  - BRE + ERE
+    - special characters
+      - /x./ - match a single `x` character
+        - can match any character except a new line
+      - * the previous character must match 0/more times
+      - []
+      - ^
+      - $
+      - +?
+      - |
+      - ()
+      - anchors
+        - /^must start with/
+        - /must end with$/
+    - character classes: specific sets of a characters to match
+      - [abc] matches any `abc`
+      - [0-9] matches the range of 0,1,2...9. disposability
+      - [^abc] dont match an `abc` `[^]` is the negate pattern
+      - [[:alpha:]] any alphabetical character ignoring case
+      - [[:alnum:]] any alphanumeric character 0-9 + [[:alpha:]]
+      - [[:blank:]] space/tab
+      - [[:digit:]] 0-9
+      - [[:lower:]] a-z
+      - [[:print:]] printable characters
+      - [[:punxr:]] punctuation character
+      - [[:space:]] whitespace character: space, TAB, NL, FF, VT, CR
+      - [[:upper:]] A-Z
+  - ERE only
+    - + preceding character can match 1/more times
+    - {this[, that]} specify a limit on a repeatable regular expressions (i.e. interval)
+      - `gawk` reguires the `--re-interval` option to recognize intervals
+    - expr|expr one of the expressions must match
+    - (exactly) creates a group that is treated like a standard character
     -
 ```sh
   sed '/^$/d' deleteblanklinesfromthisfile.txt
 
   # great for parsing words that may be misspelled
   echo 'Yes' | sed -n '/[Yy]es/p' # prints 'yes'
+
+  /any.*characters/ # between any and characters
+
+  /(c|b)a(b|t) # cat/cab/bat/bab
+
+  # validate phone number
+  #   optionally surround area code with paranthesis
+  #   must have an area code
+  #   area code and first three separated by empty space/space/dot/dash
+  #   first and last four separated by space/dot/dash
+  /^\(?[2-9][0-9]2\)?(| |-|\.)[0-9]{3}( |-|\.)[0-9]{4}/
+
+  # validate email address username@hostname
+  #   username:
+  #     any alphanumeric
+  #     dot/dash/plus sign/underscore
+  #  hostname: e.g. server.subdomain.topleveldomain
+  #   one/more domain names and a server name
+  #     any alphanumeric
+  #     dot/underscore
+  #   domain names + server names separated by a dot
+  #   top level domain name not followed by a dot
+  /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.])+\.([a-zA-Z]{2,5})$/
 
 ```
 
