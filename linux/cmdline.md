@@ -27,6 +27,8 @@
 # skipped
   - anything to do with harddrives/partitions
   - bc - bash calculator
+  - halfway through advanced sed
+  - entirety of advanced gawk
 
 # BOOKMARK: pg 165 top/middleware somewhere
 
@@ -2016,6 +2018,10 @@
   # returns 'that hat is pretty'
   echo 'that furry hat is pretty' | sed 's/furry \(.at\)/\1/'
 
+  # bash wrapper for sed program
+  # ./wrapperfile.sh somefile
+  # reverses the text in somefile
+  sed -n '{1!G ; h ; $p}' $1
 ```
 
 ### GAWK
