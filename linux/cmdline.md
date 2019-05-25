@@ -1802,6 +1802,10 @@
             - if the label parameter is omitted, the branch command proceeds to the end of the script
             - you can branch to any label whether before/after a given cmd
               - i.e. create a looping effect
+      - testing
+        - used to modify the flow of the sed editor script
+        - instead of jumping to a label based on an address
+          - it jumpts to a label base don the outcome of  a substitution cmd
       - deletion notes
         - using two text patterns
           - sed '/first/,/second/d' blah.txt
@@ -1969,6 +1973,15 @@
     :start
     s/,//1p
     b start
+  }'
+
+  # fixes the above never endless loop issue
+  # by specifying an address pattern for the branch command to look for
+  # if the pattern isnt present the branching should stop
+  sed '{
+    :start
+    s/,//1p
+    /,/b start # <-- look for , before looping
   }'
 ```
 
