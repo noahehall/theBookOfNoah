@@ -1950,13 +1950,13 @@
 
   # branching
   # skips the second and third line
-  sed '{2,3b ; cmd ; cmd }' somefile
+  sed '{2,3b ; /skip2,3/ ; /anddothis/ }' somefile
 
   # executes cmds between labels when matching
   # executes other cmds when not matching
   sed '{
-    /ifthis/b jump1 ; /do/this/ :jump1
-    s/dothis/toallotherlines/
+    /ifthisdontmatch/b jump1 ; s/do/this/ :jump1
+    s/else/dothis/
   }' somefile
 ```
 
