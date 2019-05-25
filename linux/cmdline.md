@@ -1803,9 +1803,12 @@
             - you can branch to any label whether before/after a given cmd
               - i.e. create a looping effect
       - testing
+        - i.e. if-then statement on the text int he data stream
         - used to modify the flow of the sed editor script
         - instead of jumping to a label based on an address
           - it jumpts to a label base don the outcome of  a substitution cmd
+        - `[address]t [label]`
+          - if you omit the label sed branches to the of the script if the text succeeds
       - deletion notes
         - using two text patterns
           - sed '/first/,/second/d' blah.txt
@@ -1983,6 +1986,14 @@
     s/,//1p
     /,/b start # <-- look for , before looping
   }'
+
+  # testing
+  sed '{
+    s/if this/do this/
+    t
+    s/else/do this/
+  }' somefile
+
 ```
 
 ### GAWK
