@@ -1800,6 +1800,8 @@
           - label: defines the location to branch to
             - can be up to 7 chars in length
             - if the label parameter is omitted, the branch command proceeds to the end of the script
+            - you can branch to any label whether before/after a given cmd
+              - i.e. create a looping effect
       - deletion notes
         - using two text patterns
           - sed '/first/,/second/d' blah.txt
@@ -1952,12 +1954,22 @@
   # skips the second and third line
   sed '{2,3b ; /skip2,3/ ; /anddothis/ }' somefile
 
-  # executes cmds between labels when matching
-  # executes other cmds when not matching
+  # executes cmds between labels branch address doesnt match
+  # execute cmd outside branches for matching lines
   sed '{
     /ifthisdontmatch/b jump1 ; s/do/this/ :jump1
-    s/else/dothis/
+    s/always/dothis/
   }' somefile
+
+  # each iteration removes the first occurrence of a comma from a the text string and prints the string
+  # but it never ends
+  # this istuation creates an endless loop
+  # searching for commas untilyouo manually stop it by sending a signal with ctrl c
+  echo 'this, is, a, test, to, remove, commas' | sed -n '{
+    :start
+    s/,//1p
+    b start
+  }'
 ```
 
 ### GAWK
