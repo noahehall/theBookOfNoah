@@ -1802,13 +1802,17 @@
             - if the label parameter is omitted, the branch command proceeds to the end of the script
             - you can branch to any label whether before/after a given cmd
               - i.e. create a looping effect
-      - testing
+      - TESTING
         - i.e. if-then statement on the text int he data stream
         - used to modify the flow of the sed editor script
         - instead of jumping to a label based on an address
           - it jumpts to a label base don the outcome of  a substitution cmd
         - `[address]t [label]`
           - if you omit the label sed branches to the of the script if the text succeeds
+      - PATTERN MATCHING
+        - `&` used to represent the matching pattern in the substitution cmd
+          - whatever text matches the pattern - you can use the `&` symbol to recall it in the replacement pattern
+        - \# replace individual matches
       - deletion notes
         - using two text patterns
           - sed '/first/,/second/d' blah.txt
@@ -1817,6 +1821,9 @@
               - becareful if /first/ is encountered AFTER second is encountered as it will turn on line deletion again
             - second `turns off` line deletion
               - everytime second is encountered it turns off
+  - bash shell script support for sed editor programs
+    - shell script wrappers:
+      - wrapper acts as a go between for the sed editor script and the cmd line
 
 ```sh
   echo 'this is a test' | sed 's/test/big test/'
@@ -1993,6 +2000,21 @@
     t
     s/else/do this/
   }' somefile
+
+  # remove commas by looping with the test cmd
+  echo 'this, is, a, test' | sed -n '{
+    :start
+    s/,//1p
+    t start
+  }'
+
+  # recall matches
+  sed 's/.at/"&"/'
+
+  # replace individual matches
+  # paranthesis groups must be escaped
+  # returns 'that hat is pretty'
+  echo 'that furry hat is pretty' | sed 's/furry \(.at\)/\1/'
 
 ```
 
