@@ -432,6 +432,10 @@
       - -a append to somefile
       -
 
+## DATE/TIME
+  - date print/set the date/time
+    - EXAMPLES
+      - date +%y%m%d # 2018 Dec 11 15:58
 
 ## FILESYSTEM programs
   - gzip:  file compression
@@ -1125,7 +1129,10 @@
 
   ## get STDIN from a file
   exec 0< somefile
-  # while read line... #gets line from somefile
+  read FILE_NAME
+  while [ $? -eq 0 ]; do
+    #process each file path in somefile
+  done
 
   # creating file descriptors
   exec 3>somefile
@@ -2183,6 +2190,7 @@
   - if doing something on an interval (e.g. backuping up some dirs)
     - create a location to store the stuff
       - but not in a $HOME dir, as you may want to give r/w access to it to other users
-        - if giving w access
-          - make sure to enable the sticky bit so users cant delete other users stuff
-          -
+  - sharing stuff
+    - create a group and set the group as the owner of the dir
+    - make sure to add the sticky bit so users cant delete other users stuff
+  -
