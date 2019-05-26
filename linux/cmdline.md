@@ -1425,6 +1425,10 @@
     echo atleast one is true
   fi
 
+  if [ -f $pathisfile -o -d $pathisdir ]; then
+    echo path is a file or directory
+  fi
+
   # == indicates the string to the right is a regular expression
   if [[ $USER == r* ]]; then
     echo $USER contains character r
@@ -2169,4 +2173,14 @@
   - [a-z] a range
   - [!a] this character is not 'a'
 
+
+# SAMPLE SCRIPTS
+  - generally
+    - you want to keep script params in a config file then read them in the script
+    - redirect to /dev/null to hide irrelevant information from end users
+    - you dont want to include the entirety of $HOME in a graphical desktop environment
+      - it contains many configuration/tmp files specific to the graphical desktop
+```sh
+#
+```
 
