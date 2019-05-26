@@ -25,10 +25,13 @@
   - Replace gdoc quotes with regular quotes
   - Copy table 4-6 SORT CMD pg 105
 # skipped
-  - anything to do with harddrives/partitions
-  - bc - bash calculator
-  - halfway through advanced sed
-  - entirety of advanced gawk
+  - linux cmd line bible
+    - anything to do with harddrives/partitions
+    - bc - bash calculator
+    - halfway through advanced sed
+    - advanced gawk
+    - dash shell
+    - zshell (oooh i need to do this)
 
 # BOOKMARK: pg 165 top/middleware somewhere
 
