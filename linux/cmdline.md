@@ -841,13 +841,14 @@
       - 2 SGID is set
       - 3 SGID and stick are set
       - 4 SUID is set
-      - 5 SUID and sticky ar eset
+      - 5 SUID and sticky are set
       - 6 SUID AND SGID are set
       - 7 all bits are set
   - SUID: set user id: when a file is executed by a user, the program runs under the permissions of the file owner
-  - SGID: set group ID: import for sharing files by forcing all new files created in a shared directory to be owned by the directorys group an
+  - SGID: set group ID: important for sharing files by forcing all new files created in a shared directory to be owned by the directorys group an
     - for a file - the program runs under the permissions of the file group
     - for a directory - new files created in the directory use the directory group as the default group
+    - so users cant delete other users stuff
   - sticky bit: the file remains (sticks) in memory after the process ends
     -
 
@@ -2174,13 +2175,14 @@
   - [!a] this character is not 'a'
 
 
-# SAMPLE SCRIPTS
-  - generally
-    - you want to keep script params in a config file then read them in the script
-    - redirect to /dev/null to hide irrelevant information from end users
-    - you dont want to include the entirety of $HOME in a graphical desktop environment
-      - it contains many configuration/tmp files specific to the graphical desktop
-```sh
-#
-```
-
+# GENERAL SCRIPTING ADVICE
+  - you want to keep script params in a config file then read them in the script
+  - redirect to /dev/null to hide irrelevant information from end users
+  - you dont want to include the entirety of $HOME in a graphical desktop environment
+    - it contains many configuration/tmp files specific to the graphical desktop
+  - if doing something on an interval (e.g. backuping up some dirs)
+    - create a location to store the stuff
+      - but not in a $HOME dir, as you may want to give r/w access to it to other users
+        - if giving w access
+          - make sure to enable the sticky bit so users cant delete other users stuff
+          -
