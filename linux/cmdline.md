@@ -687,6 +687,9 @@
       - -F `use extra full output`
       - -f `full format listing; great for inspect parent-child PID relationships`
       - -l view all stopped/traced/paused processes
+      - --no-heading get the information without the heading
+        - VERY useful for scripting
+          - e.g. getting all processes owned by a user before so you can kill them all and delete the user account
 
   - top: dispays process information in real time mode
 
@@ -903,7 +906,7 @@
       - be sure it exists on the system by checking `etc/passwd`
     - kill any processes currently running on the system that belongs to that acocunt
     - determine all files on teh system belonging to the account
-    - remove the suer account 
+    - remove the suer account
 
 ### cmds
   - useradd easy way to create a new user account and setup a users home directory strcture all at once
