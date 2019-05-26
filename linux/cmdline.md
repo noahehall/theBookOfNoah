@@ -446,6 +446,12 @@
       -
 
 ## FILESYSTEM programs
+  - find: search for files in a directory hierarchy
+    - EXAMPLES
+      - find / -user $SOME_USER
+        - find all finds owned by $SOME_USER
+
+
   - gzip:  file compression
 
   - gzcat: displaying the contents of compressed files
