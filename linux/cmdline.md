@@ -434,8 +434,16 @@
 
 ## DATE/TIME
   - date print/set the date/time
+    - OPTIONS
+    - FORMATS (+%a%b%etc)
+      - %y 2018
+      - %m Dec
+      - %k 24-hour hour (1...23)
+      - %k0 padded 24-hour hour (01...23)
+      - %M minutes
     - EXAMPLES
       - date +%y%m%d # 2018 Dec 11 15:58
+      -
 
 ## FILESYSTEM programs
   - gzip:  file compression
@@ -886,7 +894,16 @@
   - /etc/shadow
     - holds user passwords
     - can only be edited by certain programs
-
+### MANAGING USER ACCOUNTS
+  - more than just adding, modifying and deleting accounts
+    - security issues
+    - preserving work
+  - deleting an account
+    - obtain the correct user account name to delete
+      - be sure it exists on the system by checking `etc/passwd`
+    - kill any processes currently running on the system that belongs to that acocunt
+    - determine all files on teh system belonging to the account
+    - remove the suer account 
 
 ### cmds
   - useradd easy way to create a new user account and setup a users home directory strcture all at once
