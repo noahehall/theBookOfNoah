@@ -897,6 +897,8 @@
   - /etc/shadow
     - holds user passwords
     - can only be edited by certain programs
+
+
 ### MANAGING USER ACCOUNTS
   - more than just adding, modifying and deleting accounts
     - security issues
@@ -905,8 +907,12 @@
     - obtain the correct user account name to delete
       - be sure it exists on the system by checking `etc/passwd`
     - kill any processes currently running on the system that belongs to that acocunt
-    - determine all files on teh system belonging to the account
-    - remove the suer account
+    - determine all files on the system belonging to the account
+      - you need to archive / chown all files
+      - if you delete user A with ID X
+      - the next time a user is created with ID X will own all there files
+        - security issueeeeee!!!!
+    - remove the user account
 
 ### cmds
   - useradd easy way to create a new user account and setup a users home directory strcture all at once
@@ -2213,4 +2219,10 @@
   - sharing stuff
     - create a group and set the group as the owner of the dir
     - make sure to add the sticky bit so users cant delete other users stuff
-  -
+
+
+```sh
+
+  # kill all running cmds owned by some user
+  ps -u $USER  --no-heading | gawk '{print $1}' | xargs -d \\n /usr/bin/sudo /bin/kill -9
+```
