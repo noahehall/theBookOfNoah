@@ -3,6 +3,32 @@
 #  background
   - mysql - open source, multithreaded, relational database management system created by michael monty widenius in 95
 
+## MAILING LISTS
+  - lists.mysql.com
+
+# INSTALLATION
+  - check the online installation docs for the latest info!
+  - which version to install ?
+    - GA: (generally available) - best choice - latest stable version
+    - newer (than GA) releases: not recommended unless you need some new feature that is contained
+      - beta version
+      - RC (release candidate)
+  - What type of distribution ?
+    - source distribution: if you have special configuration requirements that must be set during the installation or at compile time
+    - binary distribution: esier and recommended
+  - general (albeit old) installation steps
+    - create a user and group `mysql`
+    - `./configure` the download
+        - get the options for this script
+        - but definitely set these options
+          - `--prefix`
+          - `--with-charset`
+    - run `make`
+    - make sure the `mysql:mysql` user:group owns the `--prefix` path
+    - start mysql!
+      - you may also choose to start mysql automatically at boot time 
+    -
+
 
 # STORAGE ENGINES
   - storage engine: manages queries and itnerfaces betweena users sql statements and the databases backend storage, is the critical software any database management system
@@ -15,6 +41,7 @@
   - text-based interface:
   - user can login and execute queries
   - accept queries from text files containing queries, and thereby execute them on behalf of the user or other software
+  - can be used to import the data from a dump file into mysql
 
 # WRAPPER SCRIPTS
 ## MYSQLD_SAFE
@@ -37,4 +64,5 @@
 
 ## MYSQLDUMP
   - popular for exporting data and table structures to a plain text file known as a dump file
-    - used for backing up data or for manually moving it between servers 
+    - used for backing up data or for manually moving it between servers
+  -
