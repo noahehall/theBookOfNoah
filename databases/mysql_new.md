@@ -288,6 +288,8 @@
 ```
 
 # VARIABLES
+  - max_used_connections - number of sessions open at any given time
+  -
 ```sql
   set @SOMEVARIABLE = 'some value';
 ```
@@ -408,8 +410,19 @@
         - query cache - instructs the server to defragment the query cache to improve performance
           - use `reset query cache` to remove queries
         - slave - deprecated - use `reset slave` instead
-        -
-      - TYPES
+        - status - resets the session values and counters for key caches to 0
+        - table NAME, NAMEX - forces the given tables to be closed
+        - TABLES - causes all tables to be closed
+        - tables with read lock - closed all tables and locks them with a global read lock
+          - allows users to view the data but not ot update it or insert records
+          - the lock will remain in place until `unlock tables` statement is executed
+          - this is not logged
+        - user_resources - resets all user resource values that are calculated on an hourly basis
+          - specifically the following columns in `mysql.user`
+            - max_questions
+            - max_updates
+            - max_connections 
+          -
 
   - PRIVILEGES (for `grant` and `revoke`)
     - all - all basic privileges except `grant`
