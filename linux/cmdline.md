@@ -33,8 +33,6 @@
     - dash shell
     - zshell (oooh i need to do this)
 
-# BOOKMARK: pg 165 top/middleware somewhere
-
 ### important locations
   - / : root
   - /bin/ : many GNU user-level utilities
@@ -45,7 +43,7 @@
     - e.g. this is where bash_completion.sh should go so all users have bash completion
     - init.d/ : contains scripts for starting and stopping individual apps at bootime
     - rcX.d/ : X is a run level, contains entries for each script within init.d/
-    - cron.*ly/ pre-configured cron script directories than run files within their directory at the schedule time
+    - cron.*ly/ pre-configured cron script directories than run files within their directory at the schedule timerr
       - cron.hourly
       - cron.daily
       - cron.weekly
@@ -84,7 +82,7 @@
     - useful for suppressing output or redirecting things you dont want to keep
   - /etc/passwd: contains a list of all the system user accounts a long with some basic configuration information about each user
     - User entry: one per line consisting of seven fields delimited by colons that are each used to assign specific features for the user
-    - Example entry: noahjedwardhall:x:501:501:Noah Edward:/home/noahedwardhall:/bin/bash
+    - Example entry: noahedwardhall:x:501:501:Noah Edward:/home/noahedwardhall:/bin/bash
   - startup files for initiating a bash shell
     - /etc/profile - default startup file for the bash shell
       - sometimes stores the umask values (default permissions for created objectss)
@@ -107,10 +105,10 @@
 # BACKGROUND
 ## file types
   - Device files: hardware devices
-  - Character files: for devices that can only handle data one character at a time , e.g. modems/terminals
+  - Character files: for devices that can only handle data one character at a time, e.g. modems/terminals
   - Block files: for devices that can handle data in large blocks at a time, e.g. disk drives
   - Network files: devices that use packets to send and receive data, e.g. network cards and the special loopback device
-  - Loopback device: allows the linux system to communmicate with itself using common network programming protocols
+  - Loopback device: allows the linux system to communicate with itself using common network programming protocols
   - Nodes: special files created for each device on the system; all communication with the device is performed through the device node
     - Each node has a unique number pair that identifies it to the linux kernel
 
@@ -122,7 +120,7 @@
 
 ### System memory management:
   - physical memory; create and manage virtual memory
-  - Swap space: the kenerl swaps the contents of virtual memory locations back n forth from the swap space to the actual physical memory: causes the system to think there is more memory available than what physically exists
+  - Swap space: the kernel swaps the contents of virtual memory locations back n forth from the swap space to the actual physical memory: causes the system to think there is more memory available than what physically exists
   - Software program management:  kernel controls how the linux system manages all the processes running on the system
     - Process: a running program; whether in the foreground (output on a display) or background (behind the scenes)
     - Init process: the first process the kernel starts; used to start all other processes on the system
@@ -1476,6 +1474,11 @@
 
   if (( expr )); then
     echo truthy
+  fi
+
+  if test EXPR; then
+  # if test = 1...
+    :
   fi
 
   # numeric comparisons
