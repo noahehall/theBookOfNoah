@@ -1,4 +1,9 @@
 # MYSQL in a nutshell russel jt dyer
+## TLDR
+  - searching
+    - # header|keyword
+    - `cmd|option|etc`
+
 
 # UPDATING
   - importing data from file
@@ -46,6 +51,8 @@
 # IMPORTANT NOTES
   - column index types
     - BTREE:
+    - RTREE
+      - for myisam tables that use spatial indexes for columns
 
 
 # IMPORTANT FILES
@@ -171,8 +178,12 @@
   - reference table: is referenced by another table via a primary key
     - e.g. books table will reference authors table
 
-
-### COLUMN TYPES
+### COLUMNS
+#### KEYS
+  - `on delete restrict` do not allow a row forone table to be removed from another table without first removing the foreign key record
+  - `foreign key` an index that refers to a key/index in another table
+    -
+#### TYPES
  - enum(key1, keyX)
  - int
  - text
@@ -183,17 +194,23 @@
    -
 
 
-### COLUMN OPTIONS
+#### OPTIONS
   - auto_increment
   - primary key
   - unique
 
-## COLUMN INDEXES
+#### INDEXES
+  - notes
+    - all indexes require `NOT NULL`
   - `fulltext` the whole column will be used for each colum index (as opposed to the first few characters)
     - necessary to use fulltext functionality
       - `match()` and `against()` functions
     - use the `with parser` statement to specify a plugin to use
       - requires the plugin table be loaded in the mysql database
+  - `spacial` can index only spacial columns
+    - used in a tablethat holds data based on the open geospation consortium data for geographical and global positioning satellite (GPS) systems
+
+
 ```sql
   -- CREATE TABLE
   create table NAME (
@@ -586,7 +603,16 @@
         - requires alter, create and insert privileges
         - while table is being altered users can `read` but usually not modify/add
         - any insert statements using `delayed` that are not completed will be canceled
-      -
+      - when changing a column
+        - if a columns data type is changed, mysql attempts to adjust the data to suit the new data type
+        - if a column width is shortened, mysql truncates the data and generates warning messages for the affected rows
+        - indexes related to changed columns will be adjusted automatically for the newe lengths
+        - the `modify` clause cannot be used to change a columns name
+      - when dropping a column
+        - a table must have at least one column, else error is thrown
+      - when dropping an index
+          - if the primary key is based on a column with auto_increment type
+            - you need to change the column definition in the same statement so it is no longer auto_increment
     - ACTIONS
       - add a new
         - column, index, foreign key constraint, table partition
@@ -604,7 +630,6 @@
     - KEYWORDS
       - `first` prepend new column
       - `after` insert new column after some other column
-      -
 ### FUNCTIONS
   - most use `select function()`
   - `databse()` returns the current database name
@@ -638,4 +663,39 @@
     add fulltext index INDEXNAME (
       COLNAME1, COLNAMEX
     )
+
+  -- add a spacial index
+  alter table...
+    add spatial index INDEXNAME (COLNAME)
+
+  -- see indexes for table
+  show indexes from TABLENAME \G;
+
+  -- add foreign key
+  alter table...
+    add foreign key KEYNAME (COLNAME1)
+    references TABLENAME (COLNAME2);
+
+  -- set a default values
+  -- modify coldef + specify new character set
+  alter table...
+    alter column COLNAME set default 'DEFAULT VALUE',
+    modify column COLNAME COLDEF character set 'NEW CHAR SET';
+
+  -- remove a column
+  -- remove an index
+  alter table...
+    drop column COLNAME,
+    drop index COLNAME2,
+    drop primary key, -- cannot be auto_increment
+    drop foreign key 'INDEX NAME';
+
+  -- change column type from auto_increment to int
+  -- so that we can drop the index
+  alter table...
+    change COLNAME1 COLNAME1 int,
+    drop primary key
+    
+  -- see all columns containing  'this'
+  show columns from TABLENAME like '%this%';
 ```
