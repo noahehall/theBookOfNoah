@@ -40,7 +40,8 @@
       - authentication versions does not support it
   - add nonadministrative users
   -
-
+# IMPORTANT FLAGS
+  - `\G` show results vertically; easier to read for small results/screens
 # IMPORTANT FILES
   - `~/.my.cnf` per-user mysql config file
     - e.g. to specify ssl-ca, ssl-key and ssl-cert pem files
@@ -51,6 +52,11 @@
       - default-collation=latin
 
 # IMPORTANT LOCATIONS
+
+# PERFORMANCE
+  - increasing the size of the `myisam_sort_buffer_size` will sometimes make table alterations go faster
+  - limiting the number of characters used in an index makes for a smaller index which will be faster and probably just as accurate as using the complete column widths
+
 # STORAGE ENGINES
   - storage engine: manages queries and itnerfaces betweena users sql statements and the databases backend storage, is the critical software any database management system
 
@@ -182,12 +188,6 @@
     add column COLDEF1,
     add column COLDEF2
   );
-
-  -- MODIFY TABLE
-  alter table TABLENAME
-    change column COLUMNAME NEWCOLDEF,
-    add column COLDEF
-    ;
 
   -- INSTPECTING TABLES
   -- list column definitions of a table
@@ -568,6 +568,13 @@
     - requirs `super` privileges
 
   - `alter table` change an existing tables structure and other properties
+    - NOTES
+      - when adding a column
+        - by default it will be appended to the end of the table
+        - requires alter, create and insert privileges
+        - while table is being altered users can `read` but usually not modify/add
+        - any insert statements using `delayed` that are not completed will be canceled
+      -
     - ACTIONS
       - add a new
         - column, index, foreign key constraint, table partition
@@ -579,7 +586,13 @@
         - column, index
       - set table-wide options
     - FLAGS
-      - ignore - applies to all clauses and instructs mysql to ignore any error messages regarding duplicate rows that may occur as aa result of a column change 
+      - ignore - applies to all clauses and instructs mysql to ignore any error messages regarding duplicate rows that may occur as aa result of a column change
+        - will keep the first unique row found adn drop any duplicate rows
+        - otherwise the statement will be terminated and changes will roll back
+    - KEYWORDS
+      - `first` prepend new column
+      - `after` insert new column after some other column
+      -
 ### FUNCTIONS
   - most use `select function()`
   - `databse()` returns the current database name
@@ -590,7 +603,21 @@
     character set SOMETHING
     collate SOMETHING
 
+  -- syntax
+  alter table TABLENAME
+    change column COLUMNAME NEWCOLDEF,
+    add column COLDEF;
+
   -- change the value of an existing server
   alter server SERVERNAME
     OPTIONS (user 'USERNAME', password 'PASSWORD', port 'PORT#')
+
+  -- add a column after an existing column
+  alter table TABLENAME
+    add column COLDEF after COLNAME
+
+  -- add new index
+  alter table TABLENAME
+    add index INDEXNAMEs
+
 ```
