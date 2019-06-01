@@ -343,129 +343,165 @@
   - NOTES
     - you can no longer use `grant` to create users, instead user the `create user` statement
     - generally when `joining` two tables make sure the fields used in the join have the same data type
-  - CMDS
-    - `create user`
-      - users can have more than one account
-        - i.e. different user & host combinations
-      - must be in quotes
-        - password
-        - username
-        - hostname / ip address
-        - for accessing mysql  loocally use the host of `localhost`
-        - `%` permits the user to connect from any host
-      - multiple users can be created, separated by commas
+# STATEMENTS
+  - `create user`
+    - users can have more than one account
+      - i.e. different user & host combinations
+    - must be in quotes
+      - password
+      - username
+      - hostname / ip address
+      - for accessing mysql  loocally use the host of `localhost`
+      - `%` permits the user to connect from any host
+    - multiple users can be created, separated by commas
 
-    - `grant` assigning privileges for an existing user account
-      - REQUIRE
-        - ssl: require the user to login via ssl
-        - -x509
-          - require a validte CA certific
-          - mysql client must be started with -ssl-ca --ssl-key ssl-cert
-        - cipher: force a specific cipher method
-        - issuer: require the user to supply a valid x.509 certificate issued by the given CA
-        - subject: require that a x.509 certificated used by a user account have a given subject
-      - WITH OPTIONS - default value for all is 0 (unlimited)
-        - `max_queries_per_hour X`
-          - max number of queriies a user may execute per hour
-        - `max_updates_per_hour X`
-          - max update statements
-        - `max_connections_per_hour X`
-        - `max_user_connections X`
+  - `grant` assigning privileges for an existing user account
+    - REQUIRE
+      - ssl: require the user to login via ssl
+      - -x509
+        - require a validte CA certific
+        - mysql client must be started with -ssl-ca --ssl-key ssl-cert
+      - cipher: force a specific cipher method
+      - issuer: require the user to supply a valid x.509 certificate issued by the given CA
+      - subject: require that a x.509 certificated used by a user account have a given subject
+    - WITH OPTIONS - default value for all is 0 (unlimited)
+      - `max_queries_per_hour X`
+        - max number of queriies a user may execute per hour
+      - `max_updates_per_hour X`
+        - max update statements
+      - `max_connections_per_hour X`
+      - `max_user_connections X`
 
 
-    - `revoke` remove privileges
+  - `revoke` remove privileges
 
-    - `rename user`
+  - `rename user`
 
-    - `set password` change the password  for an existing user
+  - `set password` change the password  for an existing user
 
-    - `reset` reset certain server settings and log files
-      - requires reload privilege
-      - OPTIONS
-        - master - reset a master used for replication
-          - must be executed from the master
-          - will start a new binary log file as well as delete the binary log filenames from the index file and delete the contents of the binary log index file
-        - slave -reset a slaaved used for replication
-          - must be executed from the slave
-          - will start a new relay log file and delete any existing ones as well as delete its notiation of its position in the masters binary log file
+  - `show grants` displays the grant statement for a given user
 
-    - `drop user` delete an existing user account
-      - see `create user`
-      - requires the `create user` or `delete user` privilege for the mysql database
-      - it will take effect when any sessions opened by the user terminate
-        - use the `kill` statement to terminate an open client session for a user that has been dropped
+  - `reset` reset certain server settings and log files
+    - requires reload privilege
+    - OPTIONS
+      - master - reset a master used for replication
+        - must be executed from the master
+        - will start a new binary log file as well as delete the binary log filenames from the index file and delete the contents of the binary log index file
+      - slave -reset a slaaved used for replication
+        - must be executed from the slave
+        - will start a new relay log file and delete any existing ones as well as delete its notiation of its position in the masters binary log file
 
-    - `flush` clear and reload cache so any changes take effect immediately (without restart the daemon)
-      - requires `reload` privileges
-      - cannot be used in stored functions or triggers
-      - OPTIONS
-        - `local` prevent this statement from writing tot he binary log file
-        - des_key_file - reloads the des encryption file, which is given the --des-key-file option at staartup or int he optinos file
-        - hosts - clear the hosts cache, which is used to minmize host/ip address lookups
-        - logs - used to close all of the log files aand reopen them
-        - if the server has binary logging enabled it will change the binary log file to the next numeric sequence
-        - master - deprecated -
-          - use `reset master`
-        - privileges - reloads the grant tables for user privileges
-        - query cache - instructs the server to defragment the query cache to improve performance
-          - use `reset query cache` to remove queries
-        - slave - deprecated - use `reset slave` instead
-        - status - resets the session values and counters for key caches to 0
-        - table NAME, NAMEX - forces the given tables to be closed
-        - TABLES - causes all tables to be closed
-        - tables with read lock - closed all tables and locks them with a global read lock
-          - allows users to view the data but not ot update it or insert records
-          - the lock will remain in place until `unlock tables` statement is executed
-          - this is not logged
-        - user_resources - resets all user resource values that are calculated on an hourly basis
-          - specifically the following columns in `mysql.user`
-            - max_questions
-            - max_updates
-            - max_connections 
-          -
+  - `drop user` delete an existing user account
+    - see `create user`
+    - requires the `create user` or `delete user` privilege for the mysql database
+    - it will take effect when any sessions opened by the user terminate
+      - use the `kill` statement to terminate an open client session for a user that has been dropped
 
-  - PRIVILEGES (for `grant` and `revoke`)
-    - all - all basic privileges except `grant`
-    - alter - alter tables
-    - alter routine - alter/drop stored routines
-      - including alter function|procedure
-      - including drop function|procedure
-    - create - create table
-    - create routine - create stored routinges
-      - including create function|precedure
-    - create temporary tables
-    - create user
-      - including rename user, revoke all privileges, and drop user
-    - create view- create temporary tables
-    - delete
-    - drop
-      - including truncate
-    - event create events for the event schedule
-      - including alter event and drop event
-    - execute - the execution of stored procedures
-    - file - use of   select...into outfile and load data info
-      - i.e.e to import/export files
-    - with grant option - grant privileges to users
-    - index - create index and drop index
-    - insert
-    - lock tables - lock statement for tables for which the user has `select` privileges
-    - process - use of the `show full processlist` statements
-    - references - not used?
-    -  reload - flush and reset statements
-    - repliation client - query master and slave servers for status information
-    - replication slaave - required for replication slave servers
-      - allows binary log events to be read from the master server
-    - select
-    - show databases - `show databases` for all databases
-      - be careful with this one!
-    - show view - show create view
-    - shutdown - shutdown option with the `mysqladmin` utility
-    - super - change master, kill, purge master logs and set global statements and the debug option with the cmd line utility `mysqladmin`
-    - trigger - create and drop triggers
-    - update
-    - usage - create a user without privileges or to modify resource limits on an existing user without affecting the existing privileges
+  - `flush` clear and reload cache so any changes take effect immediately (without restart the daemon)
+    - requires `reload` privileges
+    - cannot be used in stored functions or triggers
+    - OPTIONS
+      - `local` prevent this statement from writing tot he binary log file
+      - des_key_file - reloads the des encryption file, which is given the --des-key-file option at staartup or int he optinos file
+      - hosts - clear the hosts cache, which is used to minmize host/ip address lookups
+      - logs - used to close all of the log files aand reopen them
+      - if the server has binary logging enabled it will change the binary log file to the next numeric sequence
+      - master - deprecated -
+        - use `reset master`
+      - privileges - reloads the grant tables for user privileges
+      - query cache - instructs the server to defragment the query cache to improve performance
+        - use `reset query cache` to remove queries
+      - slave - deprecated - use `reset slave` instead
+      - status - resets the session values and counters for key caches to 0
+      - table NAME, NAMEX - forces the given tables to be closed
+      - TABLES - causes all tables to be closed
+      - tables with read lock - closed all tables and locks them with a global read lock
+        - allows users to view the data but not ot update it or insert records
+        - the lock will remain in place until `unlock tables` statement is executed
+        - this is not logged
+      - user_resources - resets all user resource values that are calculated on an hourly basis
+        - specifically the following columns in `mysql.user`
+          - max_questions
+          - max_updates
+          - max_connections
+    - `show privileges` provides a list of privileges availble, along with the context of each one
+      - e.g. server administration and a description
 
-  - ]
+- PRIVILEGES (for `grant` and `revoke`)
+  - all - all basic privileges except `grant`
+  - alter - alter tables
+  - alter routine - alter/drop stored routines
+    - including alter function|procedure
+    - including drop function|procedure
+  - create - create table
+  - create routine - create stored routinges
+    - including create function|precedure
+  - create temporary tables
+  - create user
+    - including rename user, revoke all privileges, and drop user
+  - create view- create temporary tables
+  - delete
+  - drop
+    - including truncate
+  - event create events for the event schedule
+    - including alter event and drop event
+  - execute - the execution of stored procedures
+  - file - use of   select...into outfile and load data info
+    - i.e.e to import/export files
+  - with grant option - grant privileges to users
+  - index - create index and drop index
+  - insert
+  - lock tables - lock statement for tables for which the user has `select` privileges
+  - process - use of the `show full processlist` statements
+  - references - not used?
+  -  reload - flush and reset statements
+  - repliation client - query master and slave servers for status information
+  - replication slaave - required for replication slave servers
+    - allows binary log events to be read from the master server
+  - select
+  - show databases - `show databases` for all databases
+    - be careful with this one!
+  - show view - show create view
+  - shutdown - shutdown option with the `mysqladmin` utility
+  - super - change master, kill, purge master logs and set global statements and the debug option with the cmd line utility `mysqladmin`
+  - trigger - create and drop triggers
+  - update
+  - usage - create a user without privileges or to modify resource limits on an existing user without affecting the existing privileges
+
+## FUNCTIONS
+  - many use like this `select md5('example function call')`
+  - AES_DECRIPT(string, pw)
+    - decrypts text that was encrypted using the advanced encryption standard (AES) algorithm with a 128 bit key length, reversing the AES_ENCRYPT() function
+  - AES_ENCRYPT(string, pw)
+    - encrypts a given string using the AES elgorithm with 128 bit key length
+
+  - `DES_DECYPT(string, [key])` decryptss text that was encrypted using the triple data encryption standard algorithm with a 128 bit key length
+  - `DES_ENCRYPT(string, [key])` returns encrypted text using the triple DES algorithm  with a 128 bit key length
+    - returns null if error occurs
+
+  - `select current_user()` returns the username and the host that were give  by the user for the current mysql connection
+
+  - `decode(string, pw)` decrypts a given string that was encryted with a given password
+    - see `encode()`
+  - encode(string, pw) encrypts a given string in binary format and locks it with pw
+    - DO NOT use this for the pw column in the user table
+      - see `password()`
+  - `encrypt(string[, seed])`
+
+  - `md5(string)` uses aa message-digest algorithm 5 128 bit checksum to return a 320character hash value of string from the request for comments (RC) 1321 standard
+
+  - `password(string)` encrypts a password
+    - the result cannot be decrypted
+      - used for encrypting data in the pw column of the user table
+
+  - `session_users()` returns the username and the hostname for the current mysql connection
+    - synonmyous with `system_user()` and `user()`
+    - `system_user()`
+
+  - `sha(string)` returns the secure hash algorithm 160-bit checksum for the given string
+    - the result is a string composed of 40 hexadecimal digits
+  - `sha1(string)` see above
+
 ```sql
   -- default tables for managing users and privileges
   show tables from mysql;
@@ -506,6 +542,13 @@
 
   -- PASSWORDS
   SET PASSWORD FOR <user> = '<plaintext_password>';
+  set password = password('undecryptable pw')
+
+  -- see a users grants
+  show grants for 'someuser'@'somehost'
+
+  -- see all available privileges + their context
+  show privileges;
 
   -- FLUSH
   flush privileges
