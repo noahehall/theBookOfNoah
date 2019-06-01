@@ -343,7 +343,7 @@
   - NOTES
     - you can no longer use `grant` to create users, instead user the `create user` statement
     - generally when `joining` two tables make sure the fields used in the join have the same data type
-# STATEMENTS
+## STATEMENTS
   - `create user`
     - users can have more than one account
       - i.e. different user & host combinations
@@ -427,7 +427,7 @@
     - `show privileges` provides a list of privileges availble, along with the context of each one
       - e.g. server administration and a description
 
-- PRIVILEGES (for `grant` and `revoke`)
+## PRIVILEGES (for `grant` and `revoke`)
   - all - all basic privileges except `grant`
   - alter - alter tables
   - alter routine - alter/drop stored routines
