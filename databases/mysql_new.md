@@ -49,6 +49,8 @@
   - `\G` show results vertically; easier to read for small results/screens
 
 # IMPORTANT NOTES
+  - `show create table`
+    - only method for viewing the options for a table
   - column index types
     - BTREE:
     - RTREE
@@ -63,16 +65,37 @@
     - OPTIONS
       - default-character-set=latin1
       - default-collation=latin
+  - tablename.par
+    - this table is part of a partition
+  - tablename.frm
+  - tablename.myd
+  - tablename.myi
 
 # IMPORTANT LOCATIONS
 
 # PERFORMANCE
   - increasing the size of the `myisam_sort_buffer_size` will sometimes make table alterations go faster
   - limiting the number of characters used in an index makes for a smaller index which will be faster and probably just as accurate as using the complete column widths
+  - when running a large number of row inserts it can be useful to disable indexing until afterward
+    - via the `alter table disable keys` clause
+    - make sure to enable it when you're done
+  - permanently reordering rows in a table can improve performance for tables that rarely change
+  - `avg_row_length`
+    - for large tables set this value for better table optimization
+    - check the current row length via the `show table status` clause
+    -
+
+# ISSUES
+  - the `convert to` clause can cause issues
+    - make sure to backup your data first
+
 
 # STORAGE ENGINES
   - storage engine: manages queries and itnerfaces betweena users sql statements and the databases backend storage, is the critical software any database management system
 
+## INNODB
+  - use tablespaces instead of individual file  for each table
+  - tablespace - an involve multiple files and can allow a table to exceed the filesystem file limit
 
 # MYSQL SERVER (i.e. mysqld daemon)
   - mysqld daemon: listenes for requests on a particular network port by which clients submit queries
@@ -179,6 +202,19 @@
     - e.g. books table will reference authors table
 
 ### COLUMNS
+#### DEFINITIONS
+  - character set - sets the character set to use for  haracter data in the table
+  - collate - how the data is alphabetized
+  - checksum - enables/disables a checksum for a table
+    - 0 = disable
+    - 1 = enable
+  - comment - add notes for yourself/other table administrators regarding a table
+
+
+#### KEYWORDS
+  - `auto_increment = NUMBER` set the starting point for an auto incrementing column
+  -
+
 #### KEYS
   - `on delete restrict` do not allow a row forone table to be removed from another table without first removing the foreign key record
   - `foreign key` an index that refers to a key/index in another table
@@ -613,6 +649,14 @@
       - when dropping an index
           - if the primary key is based on a column with auto_increment type
             - you need to change the column definition in the same statement so it is no longer auto_increment
+      - partitioning
+        - the execution of the partition clauses for alter table is very slow
+          - instead
+            - lock the table to be partitioned for read-only activities,
+            - make a copy
+            - partition the copy
+            - switch to the new table
+            - keep the old table as a backup
     - ACTIONS
       - add a new
         - column, index, foreign key constraint, table partition
@@ -695,7 +739,130 @@
   alter table...
     change COLNAME1 COLNAME1 int,
     drop primary key
+
+  -- convert all data in table
+  -- then change the default
+  alter table...
+    convert to character set CHARSETNAME  collate COLLATENAME,
+    default character set CHARSETNAME collate COLLATENAME;
+
+  -- disable|enable keys
+  -- requires alter, create, index aand insert privs
+  alter table TABLENAME
+    disable|enable keys;
+
+  -- for innodb
+  alter table...
+    import|discard tablespace
+
+  -- permenantly reorder rows in a table
+  -- thereafter any additional rows will appended
+  alter table...
+    order by COLNAME;
+
+  -- rename a table
+  -- changes user privs to match the new name of the table
+  alter table TABLENAME rename to NEWNAME;
+
+  -- disable checksum for this table
+  alter table TABLENAME checksum = 0;
+
+  -- set the max rows for a table
+  -- and add a comment for the table
+  alter table...
+    max_rows = 1000,
+    comment = 'this table can hold a max of 1000 records'
+
+  -- federate an existing table with a remote table
+  alter table...
+    connection='REMOTE ADDR';
+
+  -- change the storage engine to InnoDB
+  alter table...
+    engine = INNODB
     
-  -- see all columns containing  'this'
+  -- see all col defs including charset and collation
+  show table status;
+
+  -- see all coldefs containing  'this'
   show columns from TABLENAME like '%this%';
+
+  -- sbow the statement for recreating this table
+  -- this is the only way to view the table options
+  show create table TABLENAME \G;
+```
+
+# PARTITIONS
+  - a table thas a primary key must be included in the basis used for partitioning
+  - partitions need to be in order, but not sequentially named
+    - p0 = 0-400 records
+    - p123 = 401-600 records
+    - p1 = etc
+
+## ISSUES
+  - the `add partition` clause wont work with a table in which the last partition was given the range `MAXVALUE`
+    - you can overcome this issue via the `reorganize partition` clause
+      - this takes a very long time
+  - following statements do not work with partitioned tables
+    - anayze table
+    - check table
+    - optimize table
+    - repair table
+    - to overcome this issue, you have to use the aforementioned statements within an `alter table` clause
+
+```sql
+  -- split a table into two based on key column quack!
+  alter table...
+    paritition by key(COLNAME)
+    PARTITIONS 2;
+
+  -- p#  (p1, p2, etc) is the number of the partition
+  -- add a new partition to a table in which partitions
+  -- are determined based on a range of values
+  alter table...
+    add partition (partition p#)
+
+  -- give a range of values for partitioning
+  -- p1 and p2 are arbitrary partition names
+  alter table...
+    partition by range (PRIMKEYNAME) (
+      partition P0 values less than (400)
+      partition P1 values less than maxvalue
+    )
+
+  -- split a partition in two
+  alter table...
+    reorganize partition P0 into (
+      partition P1 values less than (800),
+      partition P2 values less than maxvalue
+    )
+
+  -- remove partitioning from a table
+  -- shifts data back to one datafile and one index file
+  alter table...
+    remove partitioning;
+
+  -- eliminate named partitions p1 and p2
+  -- deletes the data contained in the dropped partitions
+  alter table...
+    drop partition P1, P2;
+
+  -- reduce the number of partitions by 1
+  -- without data loss
+  alter table...
+    coalsce partition 1;
+
+  -- only way to use these statements on partitions
+  alter table...
+    -- read and store the indexes of a partition
+    analyze partition P1, P2;
+    -- check for corrupted data and idnexes
+    check partition...
+    -- compact a partition in which the data has changed
+    -- signficantly
+    optimize partition...
+    -- defragments the given partitions
+    rebuild partition...
+    -- attempts to repair corrupted partitions
+    repair partition...
 ```
