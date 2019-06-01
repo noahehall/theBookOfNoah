@@ -563,8 +563,23 @@
 ### STATEMENTS
   - `alter database`
   - `alter schema` synonmyous with `alter database`
-  - `alter server` used with the federated storage engine to change the connectino parameters of a server created with `create server`
 
+  - `alter server` used with the federated storage engine to change the connectino parameters of a server created with `create server`
+    - requirs `super` privileges
+
+  - `alter table` change an existing tables structure and other properties
+    - ACTIONS
+      - add a new
+        - column, index, foreign key constraint, table partition
+      - change an existing
+        - column, table partition
+      - delete a
+        - column, index
+      - set other factors concerning
+        - column, index
+      - set table-wide options
+    - FLAGS
+      - ignore - applies to all clauses and instructs mysql to ignore any error messages regarding duplicate rows that may occur as aa result of a column change 
 ### FUNCTIONS
   - most use `select function()`
   - `databse()` returns the current database name
@@ -574,4 +589,8 @@
   alter database
     character set SOMETHING
     collate SOMETHING
+
+  -- change the value of an existing server
+  alter server SERVERNAME
+    OPTIONS (user 'USERNAME', password 'PASSWORD', port 'PORT#')
 ```
