@@ -83,7 +83,8 @@
   - `avg_row_length`
     - for large tables set this value for better table optimization
     - check the current row length via the `show table status` clause
-    -
+  - to give  the storage engine a hint of the size of the indx key blocks use the `key_block_size` option
+    - set it to 0 to use the default value
 
 # ISSUES
   - the `convert to` clause can cause issues
@@ -92,6 +93,18 @@
 
 # STORAGE ENGINES
   - storage engine: manages queries and itnerfaces betweena users sql statements and the databases backend storage, is the critical software any database management system
+
+## MERGE
+  - you have to specify the `insert_method` (first|last) when creating a `merge` table
+    - first -  first table listed in the `union` is used for isnerts
+    - last - opposite of `first`
+
+
+## BLACKHOLE
+## MYISAM
+  - if using `fulltext` indexes
+    - this table cannot be converted to `InnoDB`
+
 
 ## INNODB
   - use tablespaces instead of individual file  for each table
@@ -253,6 +266,12 @@
     add column COLDEF1,
     add column COLDEF2
   );
+
+  -- other options
+  create table...
+    engine = ENGINENAME
+    union = (TABLENAME1, TABLENAME2)
+    INSERT_METHOD = LAST|FIRST
 
   -- INSTPECTING TABLES
   -- list column definitions of a table
@@ -767,11 +786,12 @@
   -- disable checksum for this table
   alter table TABLENAME checksum = 0;
 
-  -- set the max rows for a table
+  -- set the max and min rows for a table
   -- and add a comment for the table
   alter table...
     max_rows = 1000,
-    comment = 'this table can hold a max of 1000 records'
+    min_rows = 50,
+    comment = 'this table can hold between 50-1000 records'
 
   -- federate an existing table with a remote table
   alter table...
@@ -780,7 +800,7 @@
   -- change the storage engine to InnoDB
   alter table...
     engine = INNODB
-    
+
   -- see all col defs including charset and collation
   show table status;
 
