@@ -42,6 +42,12 @@
   -
 # IMPORTANT FLAGS
   - `\G` show results vertically; easier to read for small results/screens
+
+# IMPORTANT NOTES
+  - column index types
+    - BTREE:
+
+
 # IMPORTANT FILES
   - `~/.my.cnf` per-user mysql config file
     - e.g. to specify ssl-ca, ssl-key and ssl-cert pem files
@@ -182,6 +188,12 @@
   - primary key
   - unique
 
+## COLUMN INDEXES
+  - `fulltext` the whole column will be used for each colum index (as opposed to the first few characters)
+    - necessary to use fulltext functionality
+      - `match()` and `against()` functions
+    - use the `with parser` statement to specify a plugin to use
+      - requires the plugin table be loaded in the mysql database
 ```sql
   -- CREATE TABLE
   create table NAME (
@@ -618,6 +630,12 @@
 
   -- add new index
   alter table TABLENAME
-    add index INDEXNAMEs
+    add index INDEXNAME
 
+  -- add a fulltext index
+  -- based on two existing columns
+  alter table...
+    add fulltext index INDEXNAME (
+      COLNAME1, COLNAMEX
+    )
 ```
