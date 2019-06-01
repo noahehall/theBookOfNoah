@@ -44,6 +44,12 @@
 # IMPORTANT FILES
   - `~/.my.cnf` per-user mysql config file
     - e.g. to specify ssl-ca, ssl-key and ssl-cert pem files
+  - `db.opt` contains the settings for a database
+    - better to use the `alter database` statement vs editing this file directly
+    - OPTIONS
+      - default-character-set=latin1
+      - default-collation=latin
+
 # IMPORTANT LOCATIONS
 # STORAGE ENGINES
   - storage engine: manages queries and itnerfaces betweena users sql statements and the databases backend storage, is the critical software any database management system
@@ -530,8 +536,6 @@
   grant usage on ...
     with ...
 
-
-
   -- REVOKE
   -- all = all privileges
   -- *.* = all tables in all databases
@@ -552,4 +556,22 @@
 
   -- FLUSH
   flush privileges
+```
+
+# DATABASE / TABLE SCHEMA
+## ANALYSIS
+### STATEMENTS
+  - `alter database`
+  - `alter schema` synonmyous with `alter database`
+  - `alter server` used with the federated storage engine to change the connectino parameters of a server created with `create server`
+
+### FUNCTIONS
+  - most use `select function()`
+  - `databse()` returns the current database name
+
+
+```sql
+  alter database
+    character set SOMETHING
+    collate SOMETHING
 ```
