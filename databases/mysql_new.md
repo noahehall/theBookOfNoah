@@ -85,6 +85,10 @@
     - check the current row length via the `show table status` clause
   - to give  the storage engine a hint of the size of the indx key blocks use the `key_block_size` option
     - set it to 0 to use the default value
+  - `pack_keys` for small myisam tables primarily used for reading data and rarely updating
+    - 1 - make reads faster but updates slower
+    - 0 - disable
+    - default - pack char and varchar data type columns only
 
 # ISSUES
   - the `convert to` clause can cause issues
@@ -214,6 +218,7 @@
   - reference table: is referenced by another table via a primary key
     - e.g. books table will reference authors table
 
+      -
 ### COLUMNS
 #### DEFINITIONS
   - character set - sets the character set to use for  haracter data in the table
@@ -643,8 +648,36 @@
 ```
 
 # DATABASE / TABLE SCHEMA
-## ANALYSIS
-### STATEMENTS
+## TABLES
+  - `delay_key_write` delays updates of indexes until the table is closed
+    - 1 = enable
+    - 0 = disable
+  - `row_format` instructs the storage engine how to store rows of data
+    - myisam tables
+      - dynamic - variable length
+      - fixed -
+      - compressed - requires the utility myisampack
+      - redundant - change a compressed myisam to uncompressed
+    - compact - for innodb tables
+
+## VIEWS
+  - `alter view` change a view
+    - actions
+      - change the select statement that determines the view
+      - change the column names provided by the view queries by providing the new column names in a comma separated list
+        - dont include either the old select statement or hte old column names
+      - change the algorithmic methods to use for processing a view
+        - merge,
+        - temptable: prevents the view from being updatable
+      - change the user account considered to be the views creator
+      - authorize access to the view based on the privileges of either the user acocunt of the views creator (DEFINER) or the current viewer (INVOKER)
+        - use the sql security clause
+      - change the restrictions on the updatinng of a view to only rows in which the wehere clause of the underlying select statement returns true
+        - local - for views based on another view - this retrsiction will be limited tothe view in which its given and not the underlying view
+        - cascaded - underlying views will be considered as well
+        -
+
+## STATEMENTS
   - `alter database`
   - `alter schema` synonmyous with `alter database`
 
@@ -693,7 +726,7 @@
     - KEYWORDS
       - `first` prepend new column
       - `after` insert new column after some other column
-### FUNCTIONS
+## FUNCTIONS
   - most use `select function()`
   - `databse()` returns the current database name
 
@@ -801,6 +834,10 @@
   alter table...
     engine = INNODB
 
+  alter table...
+    pack_keys = 1;
+
+  alter view
   -- see all col defs including charset and collation
   show table status;
 
