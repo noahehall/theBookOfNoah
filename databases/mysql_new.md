@@ -72,10 +72,43 @@
   - tablename.myi
 
 # IMPORTANT LOCATIONS
+  - mysql servers data directory
+    - each database files are located within a subdirectory
+    -
+# IMPORTANT KEYWORDS
+  - `if not exist` suppress an error message when a create statement fails if the entity already exists
+
+
+..
+## IMPORTANT SQL
+```sql
+  -- # get help for a cmd
+  \h CMD
+  \h 'CREATE USER'
+
+  -- show the results vertically
+  select... \G;
+
+  -- inspect the mechanics of a select statement
+  explain select...
+
+  -- create
+  create database bookstore
+
+  -- select which database is the default
+  USE test
+
+  -- see the definition of an entity
+  SHOW tables|databases;
+
+```
+
 
 # PERFORMANCE
   - increasing the size of the `myisam_sort_buffer_size` will sometimes make table alterations go faster
   - limiting the number of characters used in an index makes for a smaller index which will be faster and probably just as accurate as using the complete column widths
+    - especially for wide columns
+    - speeds up indexing and reduces the size of the files on the filesystem
   - when running a large number of row inserts it can be useful to disable indexing until afterward
     - via the `alter table disable keys` clause
     - make sure to enable it when you're done
@@ -91,12 +124,11 @@
     - default - pack char and varchar data type columns only
 
 # ISSUES
-  - the `convert to` clause can cause issues
-    - make sure to backup your data first
 
 
 # STORAGE ENGINES
   - storage engine: manages queries and itnerfaces betweena users sql statements and the databases backend storage, is the critical software any database management system
+  - federated - i.e. remote
 
 ## MERGE
   - you have to specify the `insert_method` (first|last) when creating a `merge` table
@@ -181,38 +213,16 @@
 ```
 
 
-# MYSQL CMDS
+# needs categorization
   - SQL statements can span multiple lines, but they must end with a `;` or `\G`
   - when enclosed in paranetheses, multiple values can usually be specified separated by commas
   - strings and dates must be specified within single//double quotes unlewss a dte is given as a numeric and is part of a date calculation
   - elements of a statements syntax are case insensitive
     - on unix type systems, database and table names as well as file names are case sensitive
-## BASICS
-```sql
-  -- # get help for a cmd
-  \h CMD
-  \h 'CREATE USER'
-```
+
+`
 
 
-## ANALYSIS
-```sql
-  -- see the definition of an entity
-  SHOW tables|databases|TABLENAME|DBNAME|etc;
-
-  -- see something from another
-```
-
-
-## DATABASES
-```sql
-  -- create
-  create database bookstore
-
-  -- select which database is the default
-  USE test
-
-```
 
 ## TABLES
   - reference table: is referenced by another table via a primary key
@@ -252,17 +262,6 @@
   - auto_increment
   - primary key
   - unique
-
-#### INDEXES
-  - notes
-    - all indexes require `NOT NULL`
-  - `fulltext` the whole column will be used for each colum index (as opposed to the first few characters)
-    - necessary to use fulltext functionality
-      - `match()` and `against()` functions
-    - use the `with parser` statement to specify a plugin to use
-      - requires the plugin table be loaded in the mysql database
-  - `spacial` can index only spacial columns
-    - used in a tablethat holds data based on the open geospation consortium data for geographical and global positioning satellite (GPS) systems
 
 
 ```sql
@@ -355,12 +354,6 @@
 ```
 
 
-# functions
-```sql
-  -- retrieve the identification number assigned to the last entered row
-  select last_insert_id();
-
-```
 
 ## MATH
 ```sql
@@ -403,7 +396,7 @@
     - you have to alias each column in `text fields(...)`
     - even if you later ignore `SET...`
 ```sql
-  # import from file
+  -- import from file
   load data infile 'path/to/file'
     replace into table TABLENAME
     fields temrinated by '|' -- could be ',' e,g, CSV
@@ -414,6 +407,106 @@
       TABLEFIELDNAME = COLALIASX
     ignore COLALIAS2, colheaderN; -- dont import these columns
 ```
+
+# IMPORTANT ISSUES
+## TABLES
+  - the `convert to` clause can cause issues
+    - make sure to backup your data first
+
+## DATABASES
+  - special characters in the DB name are encoded int he filesystem names
+    - if you upgrade your system to a new version of  mysql you may not be able to access the db
+    - use the mysqlcheck utility to overcome this issue
+      - `mysqlcheck --check-upgrade --fix-db-names`
+
+
+# PARTITIONS
+  - the `add partition` clause wont work with a table in which the last partition was given the range `MAXVALUE`
+    - you can overcome this issue via the `reorganize partition` clause
+      - this takes a very long time
+  - following statements do not work with partitioned tables
+    - anayze table
+    - check table
+    - optimize table
+    - repair table
+    - to overcome this issue, you have to use the aforementioned statements within an `alter table` clause
+  - a table that has a primary key must be included in the basis used for partitioning
+  - partitions need to be in order, but not sequentially named
+    - p0 = 0-400 records
+    - p123 = 401-600 records
+    - p1 = etc
+
+```sql
+  -- split a table into two based on key column quack!
+  alter table...
+    paritition by key(COLNAME)
+    PARTITIONS 2;
+
+  -- p#  (p1, p2, etc) is the number of the partition
+  -- add a new partition to a table in which partitions
+  -- are determined based on a range of values
+  alter table...
+    add partition (partition p#)
+
+  -- give a range of values for partitioning
+  -- p1 and p2 are arbitrary partition names
+  alter table...
+    partition by range (PRIMKEYNAME) (
+      partition P0 values less than (400)
+      partition P1 values less than maxvalue
+    )
+
+  -- split a partition in two
+  alter table...
+    reorganize partition P0 into (
+      partition P1 values less than (800),
+      partition P2 values less than maxvalue
+    )
+
+  -- remove partitioning from a table
+  -- shifts data back to one datafile and one index file
+  alter table...
+    remove partitioning;
+
+  -- eliminate named partitions p1 and p2
+  -- deletes the data contained in the dropped partitions
+  alter table...
+    drop partition P1, P2;
+
+  -- reduce the number of partitions by 1
+  -- without data loss
+  alter table...
+    coalsce partition 1;
+
+  -- only way to use these statements on partitions
+  alter table...
+    -- read and store the indexes of a partition
+    analyze partition P1, P2;
+    -- check for corrupted data and idnexes
+    check partition...
+    -- compact a partition in which the data has changed
+    -- signficantly
+    optimize partition...
+    -- defragments the given partitions
+    rebuild partition...
+    -- attempts to repair corrupted partitions
+    repair partition...
+```
+
+
+## FUNCTIONS
+  - most use `select function()`
+  - `databse()` returns the current database name
+  - `mbrcontains(spatialcol, geofromtext('point(1 2)'))`
+    - find which square contains a given point ona  cartesian plan (e.g. x=1, y=2)
+  -
+
+
+  ```sql
+    -- retrieve the identification number assigned to the last entered row
+    select last_insert_id();
+
+  ```
 
 # SECURITY: USER STATEMENTS AND FUNCTIONS
   - user access and privileges
@@ -648,7 +741,16 @@
 ```
 
 # DATABASE / TABLE SCHEMA
-## TABLES
+## DATABSES - database/table schema
+  - notes
+    - the database keyword is synonmyous with `schema`
+    - a database name cannot be longer than 64 bytes (not chars)
+    - if you want a db name to contain quotes you must enable thee sql `ansi_quotes` mode
+  - `create database` creates a new database with the given name
+  - `create schema` see create database
+  - `create server`
+
+## TABLES - database / table schema
   - `delay_key_write` delays updates of indexes until the table is closed
     - 1 = enable
     - 0 = disable
@@ -661,21 +763,41 @@
     - compact - for innodb tables
 
 ## VIEWS
+  - notes
+    - you cannot change the name of an existing view
+      - instead use the `drop view` statement to delete it, and then create another one
   - `alter view` change a view
     - actions
       - change the select statement that determines the view
       - change the column names provided by the view queries by providing the new column names in a comma separated list
         - dont include either the old select statement or hte old column names
-      - change the algorithmic methods to use for processing a view
+      - `algorithm` change the algorithmic methods to use for processing a view
         - merge,
         - temptable: prevents the view from being updatable
-      - change the user account considered to be the views creator
-      - authorize access to the view based on the privileges of either the user acocunt of the views creator (DEFINER) or the current viewer (INVOKER)
-        - use the sql security clause
-      - change the restrictions on the updatinng of a view to only rows in which the wehere clause of the underlying select statement returns true
+      - `definer` change the user account considered to be the views creator
+      - `sql security` authorize access to the view based on the privileges of either the user acocunt of the views creator (DEFINER) or the current viewer (INVOKER)
+      - `with check option` change the restrictions on the updatinng of a view to only rows in which the wehere clause of the underlying select statement returns true
         - local - for views based on another view - this retrsiction will be limited tothe view in which its given and not the underlying view
         - cascaded - underlying views will be considered as well
         -
+
+## INDEXES
+  - notes
+    - all indexes require `NOT NULL` columns
+    - indexes can only be created for myisam, innodb, and bdb engines
+    -
+  - `create index` add an index to a table after it has been created
+    - `unique` prevent duplicates
+    - `using` specify the type of index
+      - btree - default for myisam and innodb
+      - rtree
+      - `spacial` only for spacial columns in myisam engine
+      - `fulltext` the whole column will be used for each colum index (as opposed to the first few characters)
+        - use the `with parser` statement to specify a plugin to use
+          - requires the plugin table be loaded in the mysql database
+        - are required to use fulltext functionality
+          - `match()` and `against()` functions
+        - char, text, and varchar column for myisam engines
 
 ## STATEMENTS
   - `alter database`
@@ -726,10 +848,6 @@
     - KEYWORDS
       - `first` prepend new column
       - `after` insert new column after some other column
-## FUNCTIONS
-  - most use `select function()`
-  - `databse()` returns the current database name
-
 
 ```sql
   alter database
@@ -837,7 +955,22 @@
   alter table...
     pack_keys = 1;
 
-  alter view
+  alter view TABLENAME(COLUMNLIST)
+    as select SELECTSTATEMENT...
+
+  -- create a unique or fulltext index
+  -- using the first two chars of col1
+  -- and all chars from COLX
+   create unique|fulltext index INDEXNAME
+    on TABLENAME(COL1(2), COLX)
+
+  -- create a spatial index\
+  -- COLNAME must be a spatial column, ie. POLYGON NOT NULL
+  create spatial index INDEXNAME
+    on TABLENAME (COLNAME)
+  -- see all indexes on a table
+  show indexes from tABLENAME;
+
   -- see all col defs including charset and collation
   show table status;
 
@@ -847,79 +980,4 @@
   -- sbow the statement for recreating this table
   -- this is the only way to view the table options
   show create table TABLENAME \G;
-```
-
-# PARTITIONS
-  - a table thas a primary key must be included in the basis used for partitioning
-  - partitions need to be in order, but not sequentially named
-    - p0 = 0-400 records
-    - p123 = 401-600 records
-    - p1 = etc
-
-## ISSUES
-  - the `add partition` clause wont work with a table in which the last partition was given the range `MAXVALUE`
-    - you can overcome this issue via the `reorganize partition` clause
-      - this takes a very long time
-  - following statements do not work with partitioned tables
-    - anayze table
-    - check table
-    - optimize table
-    - repair table
-    - to overcome this issue, you have to use the aforementioned statements within an `alter table` clause
-
-```sql
-  -- split a table into two based on key column quack!
-  alter table...
-    paritition by key(COLNAME)
-    PARTITIONS 2;
-
-  -- p#  (p1, p2, etc) is the number of the partition
-  -- add a new partition to a table in which partitions
-  -- are determined based on a range of values
-  alter table...
-    add partition (partition p#)
-
-  -- give a range of values for partitioning
-  -- p1 and p2 are arbitrary partition names
-  alter table...
-    partition by range (PRIMKEYNAME) (
-      partition P0 values less than (400)
-      partition P1 values less than maxvalue
-    )
-
-  -- split a partition in two
-  alter table...
-    reorganize partition P0 into (
-      partition P1 values less than (800),
-      partition P2 values less than maxvalue
-    )
-
-  -- remove partitioning from a table
-  -- shifts data back to one datafile and one index file
-  alter table...
-    remove partitioning;
-
-  -- eliminate named partitions p1 and p2
-  -- deletes the data contained in the dropped partitions
-  alter table...
-    drop partition P1, P2;
-
-  -- reduce the number of partitions by 1
-  -- without data loss
-  alter table...
-    coalsce partition 1;
-
-  -- only way to use these statements on partitions
-  alter table...
-    -- read and store the indexes of a partition
-    analyze partition P1, P2;
-    -- check for corrupted data and idnexes
-    check partition...
-    -- compact a partition in which the data has changed
-    -- signficantly
-    optimize partition...
-    -- defragments the given partitions
-    rebuild partition...
-    -- attempts to repair corrupted partitions
-    repair partition...
 ```
