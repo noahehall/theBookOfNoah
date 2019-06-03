@@ -77,7 +77,7 @@
     -
 # IMPORTANT KEYWORDS
   - `if not exist` suppress an error message when a create statement fails if the entity already exists
-
+ - `comment` - attach notes to a table, or a specific column
 
 ..
 ## IMPORTANT SQL
@@ -718,11 +718,17 @@
     - `checksum` - enables/disables a checksum for a table
       - 0 = disable
       - 1 = enable
-    - `comment` - add notes for yourself/other table administrators regarding a table
+
+
+### COLUMN NOTES
+  - if a column is indexed `ASC` | `DESC` can be given next to indicate whether indexes should be stored in ascending or descending order
 
 
 ### COLUMN OPTIONS
-  - `auto_increment = NUMBER` set the starting point for an auto incrementing column
+  - `not null`  column may not be null
+  - `default` set the default value
+  - `auto_increment = NUMBER` set the starting point for a primary/unique column type
+    - you cannot have more than one auto_increment column in a table
 
   - `on delete restrict` do not allow a row forone table to be removed from another table without first removing the foreign key record
 
@@ -740,7 +746,8 @@
 - text
  - variable data type
  - can hold very large amounts of data, up to 64 kilobytes
- -
+- timestamp
+  - default values not allowed
 
 
 ## VIEWS database & table schema
@@ -970,8 +977,9 @@
 
   -- basic table
   create table TABLENAME (
-    COLNAME1 COLTYPE OPTIONS...,
-    COLDEF2...
+    COLDEF...,
+    NAME int not null auto_increment primary key,
+    NAME char(15) comment 'wTf Yo'
   )
 
   -- other options
@@ -993,6 +1001,9 @@
 
   -- see all coldefs containing  'this'
   show columns from TABLENAME like '%this%';
+
+  -- see full column defs
+  show full columns from TABLENAME;
 
   -- sbow the statement for recreating this table
   -- this is the only way to view the table options
