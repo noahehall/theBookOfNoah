@@ -734,6 +734,9 @@
     - if an option is not give, the default will b ean empty string
 
 ## TABLES - database & table schema
+  - `create table` create a new table within a database
+    -
+  - `temporary` create a temporary table that can be accessed only by the current connection thread and is not accessible by other users
   - `delay_key_write` delays updates of indexes until the table is closed
     - 1 = enable
     - 0 = disable
@@ -964,7 +967,12 @@
       OWNER 'root'
     )
 
-  -- CRcreate tableEATE TABLE
+  -- use an existing server as the connection
+  -- see above
+  create table TABLENAME (COLDEF...)
+    engine = federated connection='SERVERNAME';
+
+  -- create table
   create table NAME (
     add column COLDEF1,
     add column COLDEF2
