@@ -720,8 +720,8 @@
   flush privileges
 ```
 
-# DATABASE / TABLE SCHEMA
-## DATABSES - database/table schema
+# DATABASE & TABLE SCHEMA
+## DATABSES - database & table schema
   - notes
     - the database keyword is synonmyous with `schema`
     - a database name cannot be longer than 64 bytes (not chars)
@@ -733,7 +733,7 @@
     - server name cannot exceed 63 chars
     - if an option is not give, the default will b ean empty string
 
-## TABLES - database / table schema
+## TABLES - database & table schema
   - `delay_key_write` delays updates of indexes until the table is closed
     - 1 = enable
     - 0 = disable
@@ -745,7 +745,7 @@
       - redundant - change a compressed myisam to uncompressed
     - compact - for innodb tables
 
-## VIEWS
+## VIEWS database & table schema
   - notes
     - you cannot change the name of an existing view
       - instead use the `drop view` statement to delete it, and then create another one
@@ -764,7 +764,7 @@
         - cascaded - underlying views will be considered as well
         -
 
-## INDEXES
+## INDEXES database & table schema
   - notes
     - all indexes require `NOT NULL` columns
     - indexes can only be created for myisam, innodb, and bdb engines
@@ -782,7 +782,7 @@
           - `match()` and `against()` functions
         - char, text, and varchar column for myisam engines
 
-## STATEMENTS
+## STATEMENTS database & table schema
   - `alter database`
   - `alter schema` synonmyous with `alter database`
 
@@ -980,7 +980,7 @@
   -- list column definitions of a table
   describe DBNAME.TABLENAME;
   describe TABLENAME; -- to use current db
-  
+
   -- see all indexes on a table
   show indexes from tABLENAME;
 
