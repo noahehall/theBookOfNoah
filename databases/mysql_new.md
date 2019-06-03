@@ -74,6 +74,11 @@
 # MYSQL SERVER (i.e. mysqld daemon) needs categorization
   - mysqld daemon: listenes for requests on a particular network port by which clients submit queries
 
+## MYSQLD OPTIONS
+  - `--updatable_views_with_limit` updates that contain a `limit` clause can update views only if the views contain all of hte columns that are part of the primary keys of the underlying tables
+    - 1 = only a warning is returned and updates are not restricted
+      - this is the default
+
 
 # MYSQL CLIENT (i.e. mysql) needs categorization
   - text-based interface:
@@ -419,6 +424,7 @@
     - p123 = 401-600 records
     - p1 = etc
 
+
 ## PARTITION OPTIONS
   - `hash()` creates a key/value pair that controls which partition is used for saving rows of data and indexing data
   - `linear` see performance
@@ -591,7 +597,13 @@
 
   ```
 
-# SECURITY: USER STATEMENTS AND FUNCTIONS
+# SECURITY
+## VIEWS security
+  - can be useful for improved security
+    - but why?...
+
+
+## USER STATEMENTS AND FUNCTIONS security
   - user access and privileges
     - scopes: see `grant`
       - global: aplly to all databases ont he server
@@ -610,10 +622,13 @@
       - columns_priv: column specific privileges
   -
 
+
 ## USER ADMINISTRATION
   - NOTES
     - you can no longer use `grant` to create users, instead user the `create user` statement
     - generally when `joining` two tables make sure the fields used in the join have the same data type
+
+
 ## STATEMENTS
   - `create user`
     - users can have more than one account
@@ -698,6 +713,7 @@
     - `show privileges` provides a list of privileges availble, along with the context of each one
       - e.g. server administration and a description
 
+
 ## PRIVILEGES (for `grant` and `revoke`)
   - all - all basic privileges except `grant`
   - alter - alter tables
@@ -738,6 +754,7 @@
   - trigger - create and drop triggers
   - update
   - usage - create a user without privileges or to modify resource limits on an existing user without affecting the existing privileges
+
 
 ## FUNCTIONS
   - many use like this `select md5('example function call')`
@@ -921,26 +938,54 @@
 
 
 ## VIEWS database & table schema
-  - you cannot change the name of an existing view
-    - instead use the `drop view` statement to delete it, and then create another one
+  - the contents of a view are based on the `select` statement given in the `as` clause
+    - users can issue queries and updates tot he view in place of a table
+    - updates change the data in the tables that underlie the views
+  - a view can be based on other views/tables
+  - to label the column names of a views results set
+    - give a comma separated list in paranthesis after the view name
+  - the name of a view
+    - cannot be the same as a table in the database
+      - because they share the same tablespace
+    - cannot be changed once created
+      - instead use the `drop view` statement to delete it, and then create another one
+      - or use the `or replace` paramater to upsert a view
+  -
 
 
-### VIEW OPTIONS
+### VIEW OPTIONS database & table schema
+  - `create view` create a view i.e. a preset query stored in a database
+    - see security
   - `alter view` change a view
-    - actions
-      - change the select statement that determines the view
-      - change the column names provided by the view queries by providing the new column names in a comma separated list
-        - dont include either the old select statement or hte old column names
+    - change the select statement that determines the view
+    - change the column names provided by the view queries by providing the new column names in a comma separated list
+      - dont include either the old select statement or hte old column names
 
-      - `algorithm` change the algorithmic methods to use for processing a view
-        - merge,
-        - temptable: prevents the view from being updatable
-      - `definer` change the user account considered to be the views creator
-      - `sql security` authorize access to the view based on the privileges of either the user acocunt of the views creator (DEFINER) or the current viewer (INVOKER)
-      - `with check option` change the restrictions on the updatinng of a view to only rows in which the wehere clause of the underlying select statement returns true
-        - local - for views based on another view - this retrsiction will be limited tothe view in which its given and not the underlying view
-        - cascaded - underlying views will be considered as well
-        -
+  - `algorithm` change the algorithmic methods to use for processing a view
+    - merge,
+    - temptable: prevents the view from being updatable
+    - the default value is `undefined` which leaves the choice up to mysql
+  - `definer` set the user account considered to be the views creator
+    - determines access rights to the columns of the view
+    - by default its whoever created the view
+  - `sql security` authorize access to the view based on the privileges of either the views creator `DEFINER` or the current viewer `INVOKER`
+    - helps to prevent some users from accessing restricted views
+  - `with check option` set the restrictions on the updatinng of a view to only rows in which the where clause of the underlying select statement returns true
+    - `local` - for views based on another view - this restriction will be limited to the view in which its given and not the underlying view
+    - `cascaded` - underlying views will be considered as well
+      - this is the default
+  -
+
+
+```sql
+  -- create a view
+  -- custom definer sql security clause
+  create definer = 'USERNAME'@'HOST'
+    sql security invoker
+    view VIEWNAME(COLNAME1, COLNAMEX...)
+    as select...
+    from...
+```
 
 
 ## INDEXES database & table schema
@@ -1193,6 +1238,12 @@
 
   -- see full column defs
   show full columns from TABLENAME;
+
+  -- see all views in the current database
+  show full tables where table_type='view';
+  
+  -- see whos logged in
+  show full processlist;
 
   -- sbow the statement for recreating this table
   -- this is the only way to view the table options
