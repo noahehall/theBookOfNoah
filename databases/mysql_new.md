@@ -263,26 +263,6 @@
   - primary key
   - unique
 
-
-```sql
-  -- CREATE TABLE
-  create table NAME (
-    add column COLDEF1,
-    add column COLDEF2
-  );
-
-  -- other options
-  create table...
-    engine = ENGINENAME
-    union = (TABLENAME1, TABLENAME2)
-    INSERT_METHOD = LAST|FIRST
-
-  -- INSTPECTING TABLES
-  -- list column definitions of a table
-  describe DBNAME.TABLENAME;
-  describe TABLENAME; -- to use current db
-```
-
 # CRUD
   - duplicates: occur only when columns defined as unique contain the same value
 ## CREATE
@@ -748,7 +728,10 @@
     - if you want a db name to contain quotes you must enable thee sql `ansi_quotes` mode
   - `create database` creates a new database with the given name
   - `create schema` see create database
-  - `create server`
+  - `create server` for use with the federated storage engine to set the connection parameters
+    - the values given are stored int he mysql db in the server table in a new row
+    - server name cannot exceed 63 chars
+    - if an option is not give, the default will b ean empty string
 
 ## TABLES - database / table schema
   - `delay_key_write` delays updates of indexes until the table is closed
@@ -804,7 +787,7 @@
   - `alter schema` synonmyous with `alter database`
 
   - `alter server` used with the federated storage engine to change the connectino parameters of a server created with `create server`
-    - requirs `super` privileges
+    - requires `super` privileges
 
   - `alter table` change an existing tables structure and other properties
     - NOTES
@@ -968,6 +951,36 @@
   -- COLNAME must be a spatial column, ie. POLYGON NOT NULL
   create spatial index INDEXNAME
     on TABLENAME (COLNAME)
+
+
+  -- create a server
+  create server SERVERNAME
+    foreign data wrapper mysql
+    options (
+      user 'USERNAME',
+      host 'HOSTNAME|IP-ADDRESS',
+      database 'DBNAME',
+      PORT ####,
+      OWNER 'root'
+    )
+
+  -- CRcreate tableEATE TABLE
+  create table NAME (
+    add column COLDEF1,
+    add column COLDEF2
+  );
+
+  -- other options
+  create table...
+    engine = ENGINENAME
+    union = (TABLENAME1, TABLENAME2)
+    INSERT_METHOD = LAST|FIRST
+
+  -- INSPECTING TABLES
+  -- list column definitions of a table
+  describe DBNAME.TABLENAME;
+  describe TABLENAME; -- to use current db
+  
   -- see all indexes on a table
   show indexes from tABLENAME;
 
