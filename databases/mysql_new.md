@@ -6,17 +6,101 @@
       - # table engine
       - etc
 
+..
+
+# needs categorization
+  - best practices
+    - reserved words should be UPPERCASE
+      - everything else lowercase
+    -
+  - SQL statements can span multiple lines, but they must end with a `;` or `\G`
+  - when enclosed in paranetheses, multiple values can usually be specified separated by commas
+  - strings and dates must be specified within single//double quotes unlewss a dte is given as a numeric and is part of a date calculation
+  - elements of a statements syntax are case insensitive
+    - on unix type systems, database and table names as well as file names are case sensitive
+  - `mysql cluster` are divided into different node groups in order to let certain nodes manage the data nodes
+    - `nodegroup` places a partition in the given node group`
+    - `tablespace` specifices the tablespace to be used with a partition
+  - `alter database`
+  - `alter schema` synonmyous with `alter database`
+
+  - `alter server` used with the federated storage engine to change the connectino parameters of a server created with `create server`
+    - requires `super` privileges
+
+  - `alter table` change an existing tables structure and other properties
+  - NOTES
+    - when adding a column
+      - by default it will be appended to the end of the table
+      - requires alter, create and insert privileges
+      - while table is being altered users can `read` but usually not modify/add
+      - any insert statements using `delayed` that are not completed will be canceled
+    - when changing a column
+      - if a columns data type is changed, mysql attempts to adjust the data to suit the new data type
+      - if a column width is shortened, mysql truncates the data and generates warning messages for the affected rows
+      - indexes related to changed columns will be adjusted automatically for the newe lengths
+      - the `modify` clause cannot be used to change a columns name
+    - when dropping a column
+      - a table must have at least one column, else error is thrown
+    - when dropping an index
+        - if the primary key is based on a column with auto_increment type
+          - you need to change the column definition in the same statement so it is no longer auto_increment
+    - partitioning
+      - the execution of the partition clauses for alter table is very slow
+        - instead
+          - lock the table to be partitioned for read-only activities,
+          - make a copy
+          - partition the copy
+          - switch to the new table
+          - keep the old table as a backup
+  - ACTIONS
+    - add a new
+      - column, index, foreign key constraint, table partition
+    - change an existing
+      - column, table partition
+    - delete a
+      - column, index
+    - set other factors concerning
+      - column, index
+    - set table-wide options
+  - FLAGS
+    - ignore - applies to all clauses and instructs mysql to ignore any error messages regarding duplicate rows that may occur as aa result of a column change
+      - will keep the first unique row found adn drop any duplicate rows
+      - otherwise the statement will be terminated and changes will roll back
+  - KEYWORDS
+    - `first` prepend new column
+    - `after` insert new column after some other column
+
+
+# MYSQL SERVER (i.e. mysqld daemon) needs categorization
+  - mysqld daemon: listenes for requests on a particular network port by which clients submit queries
+
+
+# MYSQL CLIENT (i.e. mysql) needs categorization
+  - text-based interface:
+  - user can login and execute queries from cmd line/within an interface environment
+  - accept queries from text files containing queries, and thereby execute them on behalf of the user or other software
+  - can be used to import the data from a dump file into mysql
+  - OPTIONS
+    - `-e CMD` execute CMD then immediately execute
+
+# WRAPPER SCRIPTS needs categorization
+## mysqld_safe needs categorization
+  - the most common way to start mysqld, becuase the script can restart the daemon if it crashes
+    - helps ensure minimal downtime for database services
+
 
 # UPDATING
   - importing data from file
     - especially importing select fields from a file dynamically
 
 
-#  background
+# background needs categorization
   - mysql - open source, multithreaded, relational database management system created by michael monty widenius in 95
 
-## MAILING LISTS
+
+# MAILING LISTS
   - lists.mysql.com
+
 
 # INSTALLATION
   - check the online installation docs for the latest info!
@@ -40,6 +124,7 @@
     - start mysql!
       - you may also choose to start mysql automatically at boot time
 
+
 ## POST INSTALLATION
   - make any required changes tot he config file
   - change the password for the root user
@@ -47,8 +132,11 @@
       - authentication versions does not support it
   - add nonadministrative users
   -
+
+
 # IMPORTANT FLAGS
   - `\G` show results vertically; easier to read for small results/screens
+
 
 # IMPORTANT NOTES
   - `show create table`
@@ -73,16 +161,19 @@
   - tablename.myd
   - tablename.myi
 
+
 # IMPORTANT LOCATIONS
   - mysql servers data directory
     - each database files are located within a subdirectory
-    -
+
+
 # IMPORTANT KEYWORDS
   - `if not exist` suppress an error message when a create statement fails if the entity already exists
  - `comment` - attach notes to a table, partition, or a specific column
+   - text must be single-quoted
 
-..
-## IMPORTANT SQL
+
+# IMPORTANT SQL
 ```sql
   -- # get help for a cmd
   \h CMD
@@ -103,6 +194,24 @@
   -- see the definition of an entity
   SHOW tables|databases;
 
+```
+
+
+### IMPORTANT SHELL CMDS
+```sh
+  # make sure the daemon is restarted in the event that it crashes
+  mysqld_safe &
+
+  # login locally  - prompting for password
+  # initially root user password is unset
+  mysql -u USER -p
+
+  # login with password without secondary prompt
+  # no space between -p and SOMEPASSWORD
+  mysql -u user -pSOMEPASSWORD
+
+  # login remotely
+  mysql -h HOST -u USER -p
 ```
 
 
@@ -129,38 +238,16 @@
     - for extremely large tables of data, the linear hash has higher performance results in processing data
       - however it does not evely spread ata among partitions
 
-# MYSQL SERVER (i.e. mysqld daemon)
-  - mysqld daemon: listenes for requests on a particular network port by which clients submit queries
 
-# MYSQL CLIENT (i.e. mysql)
-  - text-based interface:
-  - user can login and execute queries from cmd line/within an interface environment
-  - accept queries from text files containing queries, and thereby execute them on behalf of the user or other software
-  - can be used to import the data from a dump file into mysql
-  - OPTIONS
-    - `-e CMD` execute CMD then immediately execute
-
-# WRAPPER SCRIPTS
-## mysqld_safe
-  - the most common way to start mysqld, becuase the script can restart the daemon if it crashes
-    - helps ensure minimal downtime for database services
-
-### CMDS - shell
-```sh
-  # make sure the daemon is restarted in the event that it crashes
-  mysqld_safe &
-
-
-```
-
-
+# UTILITIES
 ## mysqld_multi
   - used to start multiple sessions of mysqld_safe, and thereby multiple mysqld instances
     - for handling rewquests on different ports
     - make it easier to serve different sets of databases or to test different versions of mysql
 
-# UTILITIES
+
 ## MYISAMPACK
+
 
 ## MYSQLACCESS
   - used for creating user accounts and setting their privileges
@@ -168,45 +255,16 @@
     - on ubuntu 19.04 `sudo apt install mariadb-client-10.3`
       - check the latest version
 
+
 ## MYSQLADMIN
   - can be used to manage teh mysql server itself from the cmd line
     - checking a servers status
     - information about database and tables
 
+
 ## MYSQLDUMP
   - popular for exporting data and table structures to a plain text file known as a dump file
     - used for backing up data or for manually moving it between servers
-
-
-# SHELL - basics
-  - best practices
-    - reserved words should be UPPERCASE
-      - everything else lowercase
-    -
-```sh
-  # login locally  - prompting for password
-  # initially root user password is unset
-  mysql -u USER -p
-
-  # login with password without secondary prompt
-  # no space between -p and SOMEPASSWORD
-  mysql -u user -pSOMEPASSWORD
-
-  # login remotely
-  mysql -h HOST -u USER -p
-
-```
-
-
-# needs categorization
-  - SQL statements can span multiple lines, but they must end with a `;` or `\G`
-  - when enclosed in paranetheses, multiple values can usually be specified separated by commas
-  - strings and dates must be specified within single//double quotes unlewss a dte is given as a numeric and is part of a date calculation
-  - elements of a statements syntax are case insensitive
-    - on unix type systems, database and table names as well as file names are case sensitive
-
-`
-
 
 
 ## TABLES
@@ -260,9 +318,8 @@
   update TABLENAME
     set COLNAME = 'value'
     where COLNAME = 'value';
-
-
 ```
+
 
 ## UPSERT
 ```sql
@@ -272,12 +329,13 @@
     COLVALUE1, COLVALUEX
   )
 ```
+
+
 ## DELETE
 ```sql
   delete from TABLENAME where...
   delete from TABLENAME where COLNAME1 = (subquery)
 ```
-
 
 
 ## MATH
@@ -371,6 +429,14 @@
     - `less than (#)` set limits for each range
     - `less than maxvalue` set the limit of the final partition
   - `comment` see important keywords
+  - `data directory` & `index directory`
+    - specify file pathnames in order to fix the locations of partitions
+    - directories given myst exist and you must have access privileges
+  - `nodegroup` see `mysql cluster`
+  - `tablespace` see `mysql cluster`
+  - `subpartition` only for partitions distributed by `range` and `list` methods
+    - each `subpartition` can only use the `hash` or `key` methods
+    -
 
 
 ```sql
@@ -379,6 +445,33 @@
   create table...
     partition by key (COLNAME)
     partitions 4;
+
+  -- partition with subpartitions
+  -- even though the subpartition uses hash
+  -- the subpartitions qqre specified in ranges of values
+  -- because its a subpartition of a partition that uses range
+  create table...
+    partition by range(year(COLNAME1))
+    subpartition by hash(to_Days(COLNAME2))
+    subpartitions 2 (
+      partition P0 values less than (1990),
+      partition P1 values less than (2000),
+      partition P2 values less than maxvalue
+    )
+
+  -- partition with subpartitions
+  -- even though the subpartition uses hash
+  -- the subpartitions qqre specified in ranges of values
+  -- because its a subpartition of a partition that uses range
+  create table...
+    partition by range... --see above
+    subpartition by hash(month(COLNAME))
+    subpartitions 4 (
+      partition QTR1 values less than (4)
+      partition QTR2 values less than (7),
+      partition QTR3 values less than (10),
+      partition QTR4 values less than maxvalue
+    )
 
   -- partition a table by the hash of months
   -- into 12 partitions
@@ -392,13 +485,40 @@
       partition COLNAME1 values in(100,200,300),
       partition COLNAME2 values in (400, 500)
     )
+
   -- distribute data among partitions based on COLNAME
+  -- each partition can be given a distinct data and index dir
   create table...
     partition by range (COLNAME) (
-      partition p0 values less than (500),
+      partition p0 values less than (500)
+        data directory = 'some/dir/data'
+        index directory = 'some/dir/index'
+        engine = ENGINENAME,
       partition p1 value less thaan (1000),
       partition p3 values less than maxvalue
     )
+
+  -- create a table based on the structure of another
+  -- no data is imported from OTHERTABLENAME
+  -- in order to create an index
+  -- you would first have to import the data over
+  create table...
+    like OTHERTABLENAME
+
+  -- create a table based on the structure of another
+  -- and copy the data over
+  -- after the table is created
+  -- you can then create an index
+  -- however it doesnt make the column a primary key
+  -- or an auto_increment one
+  -- for that you would need to use alter table instead
+  insert into NEWTABLENAME
+    select * from OTHERTABLENAME
+    where...
+
+
+
+
 
   -- split a table into two based on key column quack!
   alter table...
@@ -704,7 +824,7 @@
 ```
 
 # DATABASE & TABLE SCHEMA
-## DATABSES - database & table schema
+## DATABASES - database & table schema
   - notes
     - the database keyword is synonmyous with `schema`
     - a database name cannot be longer than 64 bytes (not chars)
@@ -725,7 +845,6 @@
   - `create table` create a new table within a database
   - OPTIONS
     - `temporary` create a temporary table that can be accessed only by the current connection thread and is not accessible by other users
-
 
 
 ### TABLE OPTIONS
@@ -750,14 +869,17 @@
     - 0 = disable
   - `engine` see storage engines
   - `insert_method` see table engines, merge
-- `max_rows` & `min_rows`
-  - set the max/min rows of a table
+  - `max_rows` & `min_rows`
+    - set the max/min rows of a table
+
 
 #### TABLE ENGINES
+  - can be given to a table / partition
   - formaly known as `table type`
-  - make a backup of yoru table and data before converting to a different engine type
+  - make a backup of your table and data before converting to a different engine type
     - a table engine cannot be converted to `blackhole` or `merge`
   - manages queries and interfaces betweena users sql statements and the databases backend storage, is the critical software any database management system
+
 
 ##### TABLE ENGINE OPTIONS (for all)
   - `key_block_size` see performance
@@ -777,9 +899,11 @@
     - first -  first table listed in the `union` is used for isnerts
     - last - opposite of `first`
   - `union` change the tables that make up a merge table
+  -
 
 
 ##### BLACKHOLE
+
 
 ##### MYISAM
   - if using `fulltext` indexes
@@ -791,11 +915,60 @@
   - use tablespaces instead of individual file  for each table
   - tablespace - an involve multiple files and can allow a table to exceed the filesystem file limit
 
+
 ##### FEDERATED
   - see `connection`
 
 
-### COLUMN NOTES
+## VIEWS database & table schema
+  - you cannot change the name of an existing view
+    - instead use the `drop view` statement to delete it, and then create another one
+
+
+### VIEW OPTIONS
+  - `alter view` change a view
+    - actions
+      - change the select statement that determines the view
+      - change the column names provided by the view queries by providing the new column names in a comma separated list
+        - dont include either the old select statement or hte old column names
+
+      - `algorithm` change the algorithmic methods to use for processing a view
+        - merge,
+        - temptable: prevents the view from being updatable
+      - `definer` change the user account considered to be the views creator
+      - `sql security` authorize access to the view based on the privileges of either the user acocunt of the views creator (DEFINER) or the current viewer (INVOKER)
+      - `with check option` change the restrictions on the updatinng of a view to only rows in which the wehere clause of the underlying select statement returns true
+        - local - for views based on another view - this retrsiction will be limited tothe view in which its given and not the underlying view
+        - cascaded - underlying views will be considered as well
+        -
+
+
+## INDEXES database & table schema
+  - notes
+    - all indexes require `NOT NULL` columns
+    - indexes can only be created for myisam, innodb, and bdb engines
+    - you can use more than one column for an index
+    - a table can contain multiple indexes
+    - often combined with `auto_increment`
+    - must be unique
+    - often used for identifiers that appear as columns
+    - `foreign key` and `primary key` also create indexes
+  - `create index` add an index to a table after it has been created
+    - `unique` prevent duplicates
+    - `using` specify the type of index
+      - btree - default for myisam and innodb
+      - rtree
+      - `spatial` only for spatial columns in myisam engine
+      - `blob`
+      - `fulltext` the whole column will be used for each colum index (as opposed to the first few characters)
+        - use the `with parser` statement to specify a plugin to use
+          - requires the plugin table be loaded in the mysql database
+        - are required to use fulltext functionality
+          - `match()` and `against()` functions
+        - char, text, and varchar column for myisam engines
+
+
+## COLUMNS
   - if a column is indexed `ASC` | `DESC` can be given next to indicate whether indexes should be stored in ascending or descending order
 
 
@@ -833,109 +1006,16 @@
 
 
 ### COLUMN TYPES
-- enum(key1, keyX)
-- int
-- text
-- varchar(length)
-- text
- - variable data type
- - can hold very large amounts of data, up to 64 kilobytes
-- timestamp
-  - default values not allowed
+  - enum(key1, keyX)
+  - int
+  - text
+  - varchar(length)
+  - text
+   - variable data type
+   - can hold very large amounts of data, up to 64 kilobytes
+  - timestamp
+    - default values not allowed
 
-
-## VIEWS database & table schema
-  - notes
-    - you cannot change the name of an existing view
-      - instead use the `drop view` statement to delete it, and then create another one
-  - `alter view` change a view
-    - actions
-      - change the select statement that determines the view
-      - change the column names provided by the view queries by providing the new column names in a comma separated list
-        - dont include either the old select statement or hte old column names
-      - `algorithm` change the algorithmic methods to use for processing a view
-        - merge,
-        - temptable: prevents the view from being updatable
-      - `definer` change the user account considered to be the views creator
-      - `sql security` authorize access to the view based on the privileges of either the user acocunt of the views creator (DEFINER) or the current viewer (INVOKER)
-      - `with check option` change the restrictions on the updatinng of a view to only rows in which the wehere clause of the underlying select statement returns true
-        - local - for views based on another view - this retrsiction will be limited tothe view in which its given and not the underlying view
-        - cascaded - underlying views will be considered as well
-        -
-
-## INDEXES database & table schema
-  - notes
-    - all indexes require `NOT NULL` columns
-    - indexes can only be created for myisam, innodb, and bdb engines
-    - you can use more than one column for an index
-    - a table can contain multiple indexes
-    - often combined with `auto_increment`
-    - must be unique
-    - often used for identifiers that appear as columns
-    - `foreign key` and `primary key` also create indexes
-  - `create index` add an index to a table after it has been created
-    - `unique` prevent duplicates
-    - `using` specify the type of index
-      - btree - default for myisam and innodb
-      - rtree
-      - `spatial` only for spatial columns in myisam engine
-      - `blob`
-      - `fulltext` the whole column will be used for each colum index (as opposed to the first few characters)
-        - use the `with parser` statement to specify a plugin to use
-          - requires the plugin table be loaded in the mysql database
-        - are required to use fulltext functionality
-          - `match()` and `against()` functions
-        - char, text, and varchar column for myisam engines
-
-## STATEMENTS database & table schema
-  - `alter database`
-  - `alter schema` synonmyous with `alter database`
-
-  - `alter server` used with the federated storage engine to change the connectino parameters of a server created with `create server`
-    - requires `super` privileges
-
-  - `alter table` change an existing tables structure and other properties
-    - NOTES
-      - when adding a column
-        - by default it will be appended to the end of the table
-        - requires alter, create and insert privileges
-        - while table is being altered users can `read` but usually not modify/add
-        - any insert statements using `delayed` that are not completed will be canceled
-      - when changing a column
-        - if a columns data type is changed, mysql attempts to adjust the data to suit the new data type
-        - if a column width is shortened, mysql truncates the data and generates warning messages for the affected rows
-        - indexes related to changed columns will be adjusted automatically for the newe lengths
-        - the `modify` clause cannot be used to change a columns name
-      - when dropping a column
-        - a table must have at least one column, else error is thrown
-      - when dropping an index
-          - if the primary key is based on a column with auto_increment type
-            - you need to change the column definition in the same statement so it is no longer auto_increment
-      - partitioning
-        - the execution of the partition clauses for alter table is very slow
-          - instead
-            - lock the table to be partitioned for read-only activities,
-            - make a copy
-            - partition the copy
-            - switch to the new table
-            - keep the old table as a backup
-    - ACTIONS
-      - add a new
-        - column, index, foreign key constraint, table partition
-      - change an existing
-        - column, table partition
-      - delete a
-        - column, index
-      - set other factors concerning
-        - column, index
-      - set table-wide options
-    - FLAGS
-      - ignore - applies to all clauses and instructs mysql to ignore any error messages regarding duplicate rows that may occur as aa result of a column change
-        - will keep the first unique row found adn drop any duplicate rows
-        - otherwise the statement will be terminated and changes will roll back
-    - KEYWORDS
-      - `first` prepend new column
-      - `after` insert new column after some other column
 
 ```sql
   alter database
