@@ -52,7 +52,7 @@
   - `show create table`
     - only method for viewing the options for a table
   - column index types
-    - BTREE:
+    - BTREE: default for myisam tables
     - RTREE
       - for myisam tables that use spatial indexes for columns
 
@@ -697,6 +697,8 @@
   - reference table: is referenced by another table via a primary key
     - e.g. books table will reference authors table
 
+  - `type|engine` both are used to specify the engine to be used
+
   - `create table` create a new table within a database
   - OPTIONS
     - `temporary` create a temporary table that can be accessed only by the current connection thread and is not accessible by other users
@@ -731,11 +733,29 @@
     - you cannot have more than one auto_increment column in a table
 
   - `on delete restrict` do not allow a row forone table to be removed from another table without first removing the foreign key record
+  - `on delete cascade` delete the record which contains the reference whenever the referenced record is deleted
 
   - `foreign key` an index that refers to a key/index in another table
+    - creates a constraint in the current table based on a colun in another table
+    - links columns in innodb tables
   - `PRIMARY KEY`
+    - there can only be one per table
   - `UNIQUE`
     - duplicates: occur only when columns defined as unique contain the same value
+  - `references` creates a relationship between an index and another table
+    - `match full` requires that the reference match on the full width of each column
+    - `match partial` allows the use of partial columns
+      - can accelerate indexing when the first few characters of a column determine that a row is unique
+    - `match simple`
+    - `on delete` react to deletions of matching rows from the foreign table according to the option that follows
+      - see the options for `on update`
+    - `on update` respond to updates made to the references table according to the options that follow
+      - `restrict` not to allow the deletion/update of the rows in the rows in the foreign table if rows in the current table are linked to them
+      - `cascade` when deleting/updating the rows referenced in the parent table, delete/update the related rows in the child table
+      - `set null` change thee data contained int he related columns toa  NULL value
+        - the child table must allow null values for this to work
+      - `no action` do not react to deletions/updates
+    -
 
 
 ### COLUMN TYPES
@@ -773,13 +793,19 @@
   - notes
     - all indexes require `NOT NULL` columns
     - indexes can only be created for myisam, innodb, and bdb engines
-    -
+    - you can use more than one column for an index
+    - a table can contain multiple indexes
+    - often combined with `auto_increment`
+    - must be unique
+    - often used for identifiers that appear as columns
+
   - `create index` add an index to a table after it has been created
     - `unique` prevent duplicates
     - `using` specify the type of index
       - btree - default for myisam and innodb
       - rtree
-      - `spacial` only for spacial columns in myisam engine
+      - `spatial` only for spatial columns in myisam engine
+      - `blob`
       - `fulltext` the whole column will be used for each colum index (as opposed to the first few characters)
         - use the `with parser` statement to specify a plugin to use
           - requires the plugin table be loaded in the mysql database
@@ -866,7 +892,7 @@
       COLNAME1, COLNAMEX
     )
 
-  -- add a spacial index
+  -- add a spatial index
   alter table...
     add spatial index INDEXNAME (COLNAME)
 
@@ -979,8 +1005,15 @@
   create table TABLENAME (
     COLDEF...,
     NAME int not null auto_increment primary key,
-    NAME char(15) comment 'wTf Yo'
+    NAME char(15) comment 'wTf Yo',
+    index INDEXNAME using INDEXTYPE (
+      COL1(5), COL2 DESC
+    ),
+    foreign key (COLNAME)
+      references OTHERTABLE(COLNAME)
+      on delete cascade
   )
+  type = innodb;
 
   -- other options
   create table...
