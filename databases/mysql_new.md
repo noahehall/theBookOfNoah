@@ -225,46 +225,6 @@
 
 
 ## TABLES
-  - reference table: is referenced by another table via a primary key
-    - e.g. books table will reference authors table
-
-      -
-### COLUMNS
-#### DEFINITIONS
-  - character set - sets the character set to use for  haracter data in the table
-  - collate - how the data is alphabetized
-  - checksum - enables/disables a checksum for a table
-    - 0 = disable
-    - 1 = enable
-  - comment - add notes for yourself/other table administrators regarding a table
-
-
-#### KEYWORDS
-  - `auto_increment = NUMBER` set the starting point for an auto incrementing column
-  -
-
-#### KEYS
-  - `on delete restrict` do not allow a row forone table to be removed from another table without first removing the foreign key record
-  - `foreign key` an index that refers to a key/index in another table
-    -
-#### TYPES
- - enum(key1, keyX)
- - int
- - text
- - varchar(length)
- - text
-   - variable data type
-   - can hold very large amounts of data, up to 64 kilobytes
-   -
-
-
-#### OPTIONS
-  - auto_increment
-  - primary key
-  - unique
-
-# CRUD
-  - duplicates: occur only when columns defined as unique contain the same value
 ## CREATE
 ```sql
   insert into TABLENAME (
@@ -731,22 +691,57 @@
   - `create server` for use with the federated storage engine to set the connection parameters
     - the values given are stored int he mysql db in the server table in a new row
     - server name cannot exceed 63 chars
-    - if an option is not give, the default will b ean empty string
+    - if an option is not give, the default`create server` will b ean empty string
 
 ## TABLES - database & table schema
+  - reference table: is referenced by another table via a primary key
+    - e.g. books table will reference authors table
+
   - `create table` create a new table within a database
-    -
-  - `temporary` create a temporary table that can be accessed only by the current connection thread and is not accessible by other users
-  - `delay_key_write` delays updates of indexes until the table is closed
+  - OPTIONS
+    - `temporary` create a temporary table that can be accessed only by the current connection thread and is not accessible by other users
+
+    - `delay_key_write` delays updates of indexes until the table is closed
     - 1 = enable
     - 0 = disable
-  - `row_format` instructs the storage engine how to store rows of data
+
+    - `row_format` instructs the storage engine how to store rows of data
     - myisam tables
       - dynamic - variable length
       - fixed -
       - compressed - requires the utility myisampack
       - redundant - change a compressed myisam to uncompressed
     - compact - for innodb tables
+
+    - `character set` - sets the character set to use for character data in the table
+    - `collate` - how the data is alphabetized
+    - `checksum` - enables/disables a checksum for a table
+      - 0 = disable
+      - 1 = enable
+    - `comment` - add notes for yourself/other table administrators regarding a table
+
+
+### COLUMN OPTIONS
+  - `auto_increment = NUMBER` set the starting point for an auto incrementing column
+
+  - `on delete restrict` do not allow a row forone table to be removed from another table without first removing the foreign key record
+
+  - `foreign key` an index that refers to a key/index in another table
+  - `PRIMARY KEY`
+  - `UNIQUE`
+    - duplicates: occur only when columns defined as unique contain the same value
+
+
+### COLUMN TYPES
+- enum(key1, keyX)
+- int
+- text
+- varchar(length)
+- text
+ - variable data type
+ - can hold very large amounts of data, up to 64 kilobytes
+ -
+
 
 ## VIEWS database & table schema
   - notes
@@ -972,11 +967,12 @@
   create table TABLENAME (COLDEF...)
     engine = federated connection='SERVERNAME';
 
-  -- create table
-  create table NAME (
-    add column COLDEF1,
-    add column COLDEF2
-  );
+
+  -- basic table
+  create table TABLENAME (
+    COLNAME1 COLTYPE OPTIONS...,
+    COLDEF2...
+  )
 
   -- other options
   create table...
