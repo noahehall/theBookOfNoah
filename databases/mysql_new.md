@@ -1,8 +1,10 @@
 # MYSQL in a nutshell russel jt dyer
 ## TLDR
   - searching
-    - # header|keyword
-    - `cmd|option|etc`
+    - # header keyword
+      - # table option
+      - # table engine
+      - etc
 
 
 # UPDATING
@@ -77,7 +79,7 @@
     -
 # IMPORTANT KEYWORDS
   - `if not exist` suppress an error message when a create statement fails if the entity already exists
- - `comment` - attach notes to a table, or a specific column
+ - `comment` - attach notes to a table, partition, or a specific column
 
 ..
 ## IMPORTANT SQL
@@ -116,35 +118,16 @@
   - `avg_row_length`
     - for large tables set this value for better table optimization
     - check the current row length via the `show table status` clause
-  - to give  the storage engine a hint of the size of the indx key blocks use the `key_block_size` option
+  - to give the storage engine a hint of the size of the indx key blocks use the `key_block_size` option
     - set it to 0 to use the default value
   - `pack_keys` for small myisam tables primarily used for reading data and rarely updating
     - 1 - make reads faster but updates slower
     - 0 - disable
     - default - pack char and varchar data type columns only
-
-# ISSUES
-
-
-# STORAGE ENGINES
-  - storage engine: manages queries and itnerfaces betweena users sql statements and the databases backend storage, is the critical software any database management system
-  - federated - i.e. remote
-
-## MERGE
-  - you have to specify the `insert_method` (first|last) when creating a `merge` table
-    - first -  first table listed in the `union` is used for isnerts
-    - last - opposite of `first`
-
-
-## BLACKHOLE
-## MYISAM
-  - if using `fulltext` indexes
-    - this table cannot be converted to `InnoDB`
-
-
-## INNODB
-  - use tablespaces instead of individual file  for each table
-  - tablespace - an involve multiple files and can allow a table to exceed the filesystem file limit
+  - `linear` change the algorithm to a linear powers of two algorithm
+    - may precede `hash()` or `key()`
+    - for extremely large tables of data, the linear hash has higher performance results in processing data
+      - however it does not evely spread ata among partitions
 
 # MYSQL SERVER (i.e. mysqld daemon)
   - mysqld daemon: listenes for requests on a particular network port by which clients submit queries
@@ -177,6 +160,8 @@
     - make it easier to serve different sets of databases or to test different versions of mysql
 
 # UTILITIES
+## MYISAMPACK
+
 ## MYSQLACCESS
   - used for creating user accounts and setting their privileges
   - notes
@@ -231,7 +216,7 @@
     colname1, colnameX
   ) VALUES (
     colval1, crical value
-  sum(COLNAME1olvalX)
+    sum(COLNAME1olvalX)
   )
 ```
 
@@ -349,11 +334,11 @@
 ```
 
 # IMPORTANT ISSUES
-## TABLES
+## TABLES important issues
   - the `convert to` clause can cause issues
     - make sure to backup your data first
 
-## DATABASES
+## DATABASES important issues
   - special characters in the DB name are encoded int he filesystem names
     - if you upgrade your system to a new version of  mysql you may not be able to access the db
     - use the mysqlcheck utility to overcome this issue
@@ -376,7 +361,45 @@
     - p123 = 401-600 records
     - p1 = etc
 
+## PARTITION OPTIONS
+  - `hash()` creates a key/value pair that controls which partition is used for saving rows of data and indexing data
+  - `linear` see performance
+  - `key()` functions the saame as `hash()` except that it accepts only a comma separated list of columns for indexing and distributing data among partitions
+  - `list()` give specific  values for distributing data across partitiions
+    - the column and values must all be numeric not strings
+  - `range()` distribute data among partitions based on a range of values
+    - `less than (#)` set limits for each range
+    - `less than maxvalue` set the limit of the final partition
+  - `comment` see important keywords
+
+
 ```sql
+  -- partition a table by some column
+  -- into 4 partitions
+  create table...
+    partition by key (COLNAME)
+    partitions 4;
+
+  -- partition a table by the hash of months
+  -- into 12 partitions
+  create table...
+    partition by hash(month(COLNAME))
+    partitions 12;
+
+  -- distribute data between two partitions
+  create table...
+    partition by list(COLNAME) (
+      partition COLNAME1 values in(100,200,300),
+      partition COLNAME2 values in (400, 500)
+    )
+  -- distribute data among partitions based on COLNAME
+  create table...
+    partition by range (COLNAME) (
+      partition p0 values less than (500),
+      partition p1 value less thaan (1000),
+      partition p3 values less than maxvalue
+    )
+
   -- split a table into two based on key column quack!
   alter table...
     paritition by key(COLNAME)
@@ -703,23 +726,73 @@
   - OPTIONS
     - `temporary` create a temporary table that can be accessed only by the current connection thread and is not accessible by other users
 
-    - `delay_key_write` delays updates of indexes until the table is closed
+
+
+### TABLE OPTIONS
+  - notes
+    - all options come after the closing paranthesis of the column definitions
+  - `auto_increment` assign a unique identification number automatically to the column in each row added to the table
+    - auto_increment = 1000 - starts at 1000 instead of 1
+  - `avg_row_length` for large tables set the avg row length for better table optimization
+    - avg_row_length = 12638
+  - `character set` - sets the character set to use for character data in the table
+    - often used with `collate`
+  - `collate` - sets the alphabetizing order to use with character data int he table
+    - does not affect columns for which the collation and character sets have been set explicity
+  - `checksum` - enables/disables a checksum for a table
+    - 0 = disable
+    - 1 = enable
+  - `comment` see important keywords
+  - `connection` for tables that use the federated storage engine
+    - to federate an existing table with a remote connection you have to alter the table
+  - `delay_key_write` delays updates of indexes until the table is closed
     - 1 = enable
     - 0 = disable
+  - `engine` see storage engines
+  - `insert_method` see table engines, merge
+- `max_rows` & `min_rows`
+  - set the max/min rows of a table
 
-    - `row_format` instructs the storage engine how to store rows of data
+#### TABLE ENGINES
+  - formaly known as `table type`
+  - make a backup of yoru table and data before converting to a different engine type
+    - a table engine cannot be converted to `blackhole` or `merge`
+  - manages queries and interfaces betweena users sql statements and the databases backend storage, is the critical software any database management system
+
+##### TABLE ENGINE OPTIONS (for all)
+  - `key_block_size` see performance
+  - `row_format` instructs the storage engine how to store rows of data
     - myisam tables
       - dynamic - variable length
       - fixed -
       - compressed - requires the utility myisampack
       - redundant - change a compressed myisam to uncompressed
+      - see myisampack
     - compact - for innodb tables
 
-    - `character set` - sets the character set to use for character data in the table
-    - `collate` - how the data is alphabetized
-    - `checksum` - enables/disables a checksum for a table
-      - 0 = disable
-      - 1 = enable
+
+##### MERGE
+  - create a table based on two/more other tables
+  - you have to specify the `insert_method` (first|last)
+    - first -  first table listed in the `union` is used for isnerts
+    - last - opposite of `first`
+  - `union` change the tables that make up a merge table
+
+
+##### BLACKHOLE
+
+##### MYISAM
+  - if using `fulltext` indexes
+    - this table cannot be converted to `InnoDB`
+  - `pack_keys` see performance
+
+
+##### INNODB
+  - use tablespaces instead of individual file  for each table
+  - tablespace - an involve multiple files and can allow a table to exceed the filesystem file limit
+
+##### FEDERATED
+  - see `connection`
 
 
 ### COLUMN NOTES
@@ -729,8 +802,9 @@
 ### COLUMN OPTIONS
   - `not null`  column may not be null
   - `default` set the default value
-  - `auto_increment = NUMBER` set the starting point for a primary/unique column type
+  - `auto_increment` identifies this column as auto increment
     - you cannot have more than one auto_increment column in a table
+    - see table options
 
   - `on delete restrict` do not allow a row forone table to be removed from another table without first removing the foreign key record
   - `on delete cascade` delete the record which contains the reference whenever the referenced record is deleted
@@ -798,7 +872,7 @@
     - often combined with `auto_increment`
     - must be unique
     - often used for identifiers that appear as columns
-
+    - `foreign key` and `primary key` also create indexes
   - `create index` add an index to a table after it has been created
     - `unique` prevent duplicates
     - `using` specify the type of index
@@ -915,7 +989,7 @@
   alter table...
     drop column COLNAME,
     drop index COLNAME2,
-    drop primary key, -- cannot be auto_increment
+    drop primary key, -- cannot be auto_increment, see below
     drop foreign key 'INDEX NAME';
 
   -- change column type from auto_increment to int
@@ -960,7 +1034,8 @@
 
   -- federate an existing table with a remote table
   alter table...
-    connection='REMOTE ADDR';
+    engine = federated
+    connection='mysql://USERNAME:PASSWORD:HOSTNAME:PORT/DBNAME/TABLENAME';
 
   -- change the storage engine to InnoDB
   alter table...
@@ -1013,6 +1088,7 @@
       references OTHERTABLE(COLNAME)
       on delete cascade
   )
+  auto_increment = 1000
   type = innodb;
 
   -- other options
