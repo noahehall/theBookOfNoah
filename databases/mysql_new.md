@@ -593,7 +593,7 @@
 
 # SECURITY
 ## DATABASE security
-  - deleting a database
+  - dropping a database|table|server
     - any user privileges specific to the database are not deleted
       - e.g. any privileges listed in the db table of the mysql database
       - if a database is created later with the same name those user privileges will apply to the new db, which is a security risk
@@ -855,6 +855,7 @@
     - extra - any extra information about this column
   - `show create table` returns the statement needed to recreate the table
     - only method for viewing the options for a table
+  - `show warnings` retrieve `notes` created when errors are suppressed via `if exists` flag
 
 
 ## DATABASES database & table schema
@@ -876,6 +877,9 @@
           - they will have to be deleted manually
       - if the database is deleted
         - see security
+  - `rename database`
+    - while a database is being renamed, no other client can interact with the database involved
+    - tables that are currently lockied/table part of a transaction in progress cannot be renamed
 
 ### SERVERS database & table schema
   - `alter server` used with the federated storage engine to change the connectino parameters of a server created with `create server`
@@ -884,7 +888,8 @@
       - the values given are stored int he mysql db in the server table in a new row
       - server name cannot exceed 63 chars
       - if an option is not give, the default`create server` will b ean empty string
-  - `drop server` for use with federated storage engines to delet a given server that is created with `creat server`
+  - `drop server` for use with federated storage engines to delet a given server that is created with `create server`
+    - see security
 
 ## TABLES database & table schema
   - reference table: is referenced by another table via a primary key
@@ -896,12 +901,17 @@
   - OPTIONS
     - `temporary` create a temporary table that can be accessed only by the current connection thread and is not accessible by other users
   - `drop table` delete a table and its data from a database
+    - requires drop privileges
+      - unless the `temporary` flag is used
+    - will cause a commit of the current transaction except when the `temporary` flag is used
+    - `temporary` only temporary tables matching the table names given will be deleted
+      - temporary tables
     -
 
 
 ### TABLE OPTIONS
-  - notes
-    - all options come after the closing paranthesis of the column definitions
+  - all options come after the closing paranthesis of the column definitions
+
   - `auto_increment` assign a unique identification number automatically to the column in each row added to the table
     - auto_increment = 1000 - starts at 1000 instead of 1
   - `avg_row_length` for large tables set the avg row length for better table optimization
@@ -991,6 +1001,8 @@
 ### VIEW OPTIONS database & table schema
   - `create view` create a view i.e. a preset query stored in a database
     - see security
+  - `drop view` deletes a view
+    -
 
   - `alter view` change a view
     - change the select statement that determines the view
@@ -1259,6 +1271,8 @@
 
 
   drop database if exists DATABASENAME;
+
+  rename database CURNAME to NEWNAME;
 
   -- INSPECTING TABLES
   -- list column definitions of a table
