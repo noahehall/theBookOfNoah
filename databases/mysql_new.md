@@ -241,6 +241,8 @@
     - compact a table that has had many rows deleting by using the `optimize table` statement or the `myisamchk` utility
   - reading values
     - use `explain` to help analyze slow queries
+    - a `handler` can be faster than select statements when reading large numbers of rows from a table
+      - requires `myisam` and `innodb` storage engines
 
 
 # UTILITIES
@@ -1471,8 +1473,17 @@
         - `subquery` the first select stateme nt in a subquery
         - `dependent subquery` the first select statement in a subquery that is dependent on the main query
         - `uncacheable subquery` indicates a subquery in which the results cannot be cached and therfore must be reevaluated for each row of the main query
-        - `uncacheable union` the union of a subquery in which the results cannot be cached and therefore must be reevavluated for each row of the main query 
+        - `uncacheable union` the union of a subquery in which the results cannot be cached and therefore must be reevaluated for each row of the main query
   - `handler`
+    - provides direct access to a table as opposed to working from a results set
+      - requires
+        - myisam and innodb tables
+        - can only be used by the session (connection thread) that established it
+          - the table can change and even be incomplete as the handler performs successive reads
+            - if there are other connections updating the table
+      - cannot use `order by` clause
+        - records are retrieved in the order they are stored in the database 
+    - see performance
   - `help`
   - `insert`
   - `join`
@@ -1575,6 +1586,16 @@
 
   -- suppresses the results
   do (set @SOMEVVAR = 'somevalue');
+
+  -- using a handler
+  handler TABLENAME as HANDLERALIAS; -- open
+  handler HANDLERALIAS read FIRST; -- read first row
+  handler HANDLERALIAS read NEXT; -- read next 1 row
+  handler HANDLERALIAS read NEXT limit 2000; -- read next X
+  handler HANDLERALIAS read NEXT
+    where... -- with a where clause
+  handler HANDLERALIAS close; -- close the handlerf
+
 
   -- analyze a select statement
   explain select...
