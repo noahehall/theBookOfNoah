@@ -1430,3 +1430,79 @@
   -- this is the only way to view the table options
   show create table TABLENAME \G;
 ```
+
+# CRUD
+  - adding, changing, deleting, and selecting data
+
+## STATEMENTS crud
+  - `delete`
+  - `do`
+  - `explain`
+  - `handler`
+  - `help`
+  - `insert`
+  - `join`
+  - `limit`
+  - `load data infile`
+  - `replace`
+  - `select`
+  - `set`
+    - `set autocommit`
+      - 0 - disable
+      - 1 - enable
+  - `show errors`
+  - `sho warnings`
+  - `truncate`
+  - `union`
+  - `update`
+  - `use`
+
+
+# TRANSACTIONS
+  - a set of sql statements that the server has to execute as a unit
+    - either all succeed/fail
+      - on success they are entered into mysql but not persisted, to permanently record:
+        - issue a `commit` statement
+        - start another transaction
+        - connection is terminated
+      - on failure the server undos any changes made during the transaction
+    - supported engines
+      - innodb, bdb, and ndb cluster storage engines
+    - not supported
+      - myisam
+
+
+## STATEMENTS transactions
+  - `begin`
+    - use `start transaction` instead to avoid confusion with `begin...end` statement
+    - start a transaction
+      - only supported by innodb, ndb cluster, and bddb storage engreleaweines
+    - `work`
+  - `commit`
+    - permenantly record a transaction
+    - `autocommit` must be disabled for this statement to be meaningful
+    - see `set autocommit`
+
+  - `release savepoitn`
+  - `rollback`
+    - reverse a transaction if it has not been commited
+  - `rollback to savepoint`
+  - `savepoint`
+  - `set transaction`
+  - `start transaction`
+  - `xa`
+### FUNCTIONS transactions
+  - `analyse()`
+  - `benchmark()`
+  - `database()`
+  - `found_rows()`
+  - `last_insert_id()`
+  - `row_count()`
+  - `schema()`
+  -
+
+```sql
+  begin;
+    ...
+  commit;
+```
