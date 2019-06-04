@@ -69,6 +69,8 @@
 
 # MYSQLSHOW
   - utility to view entities from the cmd line ?
+  - keywords
+    - `--keys`
 ```sql
   -- show the indexes of the database.table
   mysqlshow
@@ -188,20 +190,12 @@
   \h CMD
   \h 'CREATE USER'
 
-  -- show the results vertically
-  select... \G;
-
   -- inspect the mechanics of a select statement
   explain select...
-
-  -- create
-  create database bookstore
 
   -- select which database is the default
   USE test
 
-  -- see the definition of an entity
-  SHOW tables|databases;
 
 ```
 
@@ -881,10 +875,15 @@
       - displays the list of databases on the server
       - `show schemas` same thing
       - `show databases` privilege is required to see all databases
-
+    - `show views`
     - `show table`
       - displays a list of tables and views
-      
+      - does not display temporary tables
+      - fields
+        - `table_type` whether a view/ base table
+          - requires `full` clause
+        -
+
     - `show table status`
       - displays status information on a set of tables from a database
         - fields
@@ -1397,6 +1396,12 @@
   -- see all indexes on a table(s)
   show indexes from TABLENAME;
   show indexes from TABLE1 fom TABLE2;
+
+  -- show tables matching pattern
+  -- show views
+  show tables from DATABASENAME like '%PATTERN%'
+  show full tables where table_type='view'
+
 
   -- see all col defs including charset and collation
   show table status;
