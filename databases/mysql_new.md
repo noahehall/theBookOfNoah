@@ -69,7 +69,15 @@
 
 # MYSQLSHOW
   - utility to view entities from the cmd line ?
-
+```sql
+  -- show the indexes of the database.table
+  mysqlshow
+    --user=USERNAME
+    --password
+    --keys
+    DATABASENAME
+    TABLENAME
+```
 # MYSQL SERVER (i.e. mysqld daemon) needs categorization
   - mysqld daemon: listenes for requests on a particular network port by which clients submit queries
 
@@ -157,7 +165,7 @@
     - this table is part of a partition
   - tablename.frm
   - tablename.myd
-  - tablename.myi
+  - tablename.myi - the index file
 
 
 # LOCATIONS important
@@ -873,10 +881,37 @@
       - displays the list of databases on the server
       - `show schemas` same thing
       - `show databases` privilege is required to see all databases
+
+    - `show table`
+      - displays a list of tables and views
+      
+    - `show table status`
+      - displays status information on a set of tables from a database
+        - fields
+          - `name` table name
+          - `engine` type of storage engine
+          - `version` version number from the tables .frm file
+          - `row_format`
+            - `innodb` compact | redundant
+            - all other dbs - compact compressed dynamic fixed redundant
+          - `row` the number of rows contained in the table
+          - `avg_row_length` average length of rows in bytes
+          - `data_length` the size of the datafile in bytes
+            - the same size shown at the filesystem level for the .myd file
+          - `max_data_length` the maximum size permitted for the datafile of the table
+          - `index_length` size of the index file (.myi file)
+          - `data_free` space that has been allocated for the datafile that is not in use at the moment
+          - `auto_increment` the value of the column that uses auto_increment for the next row to be created
+          - `create_time` the data and time the table was created
+          - `update_time` the time the table was last updated
+          - `check_time` the last date and time that the table was checked (not *always* accurrate)
+          - `collation` the collation used for sorting the tables data
+          - `checksum` provides the checksum (if there is one)
+          - `create_options` any options
+          - `comment` aany comments given when the table was created/altered
     - `show indexes`
         - displays informationa bout the indexes for a given table
         - index, keys, indexes all retrieve the same entity list
-
         - fields
           - `table` - the table name
           - `non_unique`
@@ -906,7 +941,6 @@
             - fulltext
             - rtree
             - spatial
-
 
     - `show character set` show all of the character sets installed on the server
     - `show create database` displays an SQL statement that can be used to create a database like the one given
@@ -1366,6 +1400,8 @@
 
   -- see all col defs including charset and collation
   show table status;
+  show table status [from DATABSENAME]
+  show table status [like '%pattern%']
 
   -- see all coldefs containing  'this'
   show columns from TABLENAME like '%this%';
