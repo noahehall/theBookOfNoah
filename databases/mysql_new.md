@@ -243,6 +243,7 @@
     - use `explain` to help analyze slow queries
     - a `handler` can be faster than select statements when reading large numbers of rows from a table
       - requires `myisam` and `innodb` storage engines
+      - specifying a an index when reading can boost performance
 
 
 # UTILITIES
@@ -1482,7 +1483,7 @@
           - the table can change and even be incomplete as the handler performs successive reads
             - if there are other connections updating the table
       - cannot use `order by` clause
-        - records are retrieved in the order they are stored in the database 
+        - records are retrieved in the order they are stored in the database
     - see performance
   - `help`
   - `insert`
@@ -1594,6 +1595,7 @@
   handler HANDLERALIAS read NEXT limit 2000; -- read next X
   handler HANDLERALIAS read NEXT
     where... -- with a where clause
+  handler HNDLENAME read INDEXNAME FIRST|PREV|LAST;
   handler HANDLERALIAS close; -- close the handlerf
 
 
