@@ -67,6 +67,8 @@
     - `first` prepend new column
     - `after` insert new column after some other column
 
+# MYSQLSHOW
+  - utility to view entities from the cmd line ?
 
 # MYSQL SERVER (i.e. mysqld daemon) needs categorization
   - mysqld daemon: listenes for requests on a particular network port by which clients submit queries
@@ -358,8 +360,13 @@
 ```
 
 # VARIABLES
-  - max_used_connections - number of sessions open at any given time
-  -
+  - `max_used_connections` - number of sessions open at any given time
+  - `sql_quote_show_create`
+    - quote the entity name with backquotes in a `show create`
+    - 0 = dont quote, useful for copy and pasting
+    - 1 = keep the quotes (default)
+  - `--skip-show-database`
+    - remove the `show database` privilege requirement for viewing all databases
 ```sql
   set @SOMEVARIABLE = 'some value';
 ```
@@ -857,13 +864,57 @@
         - this is permitted because the column is only one of multiple columns making up an index
     - extra - any extra information about this column
   - `show` retrieve an entity list
-    - the `\G` flag is particularly useful
-    - `show character set` show all of the character sets installed on the server
     - `show variables`
+      - the `\G` flag is particularly useful
+
+    - `show warnings` retrieve `notes` created when errors are suppressed via `if exists` flag
+
+    - `show databases`
+      - displays the list of databases on the server
+      - `show schemas` same thing
+      - `show databases` privilege is required to see all databases
+    - `show indexes`
+        - displays informationa bout the indexes for a given table
+        - index, keys, indexes all retrieve the same entity list
+
+        - fields
+          - `table` - the table name
+          - `non_unique`
+            - 0 = is unique
+            - 1 = not unique
+          - `key_name`: the key | index name
+            - for indexes composed of multiple columns, there will be multiple results with the same key_name but different column names
+              - they are output in the order they were created
+                  - e.g. create... (col1, col2)
+          - `column_name`:
+          - `collation`
+            - a = ascending sort
+            - d = descending sort
+            - null = not sorted
+          - `cardinality` based on the number of unique indexes contained in the column
+            - the server consults this information to determine whther to use an index in a join
+            - higher the cardinality the more likely it will be used
+          - `sub_part` indicates the number of characters of the column that are indexed for partially indexed columns
+            - null = if the null column is indexed
+          - `packed` indicates how the key is packed
+            - null = not packed
+          - `null` if the column can contain a null value
+            - yes|empty string
+          - `index_type` structure of the index
+            - btree
+            - hash
+            - fulltext
+            - rtree
+            - spatial
+
+
+    - `show character set` show all of the character sets installed on the server
     - `show create database` displays an SQL statement that can be used to create a database like the one given
     - `show create table` returns the statement needed to recreate the table
       - only method for viewing the options for a table
-    - `show warnings` retrieve `notes` created when errors are suppressed via `if exists` flag
+    - `show create view` display an sql statement that can be used to create a view like the one given
+    -
+
 
 
 ## DATABASES database & table schema
@@ -1309,8 +1360,9 @@
   show character set like 'this%';
   show character set where charset = 'cp932';
 
-  -- see all indexes on a table
-  show indexes from tABLENAME;
+  -- see all indexes on a table(s)
+  show indexes from TABLENAME;
+  show indexes from TABLE1 fom TABLE2;
 
   -- see all col defs including charset and collation
   show table status;
@@ -1326,6 +1378,9 @@
 
   -- see whos logged in
   show full processlist;
+
+  -- get the create statement for the given view
+  show create view VIEWNAME;
 
   -- get the create statement for the given DB
   show create database DATABASENAME;
