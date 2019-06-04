@@ -856,9 +856,14 @@
       - MUL - multiple occurrences, i.e. duplicate values are permitted for this column
         - this is permitted because the column is only one of multiple columns making up an index
     - extra - any extra information about this column
-  - `show create table` returns the statement needed to recreate the table
-    - only method for viewing the options for a table
-  - `show warnings` retrieve `notes` created when errors are suppressed via `if exists` flag
+  - `show` retrieve an entity list
+    - the `\G` flag is particularly useful
+    - `show character set` show all of the character sets installed on the server
+    - `show variables`
+    - `show create database` displays an SQL statement that can be used to create a database like the one given
+    - `show create table` returns the statement needed to recreate the table
+      - only method for viewing the options for a table
+    - `show warnings` retrieve `notes` created when errors are suppressed via `if exists` flag
 
 
 ## DATABASES database & table schema
@@ -884,6 +889,7 @@
     - while a database is being renamed, no other client can interact with the database involved
     - tables that are currently lockied/table part of a transaction in progress cannot be renamed
 
+
 ### SERVERS database & table schema
   - `alter server` used with the federated storage engine to change the connectino parameters of a server created with `create server`
     - requires `super` privileges
@@ -893,6 +899,7 @@
       - if an option is not give, the default`create server` will b ean empty string
   - `drop server` for use with federated storage engines to delet a given server that is created with `create server`
     - see security
+
 
 ## TABLES database & table schema
   - reference table: is referenced by another table via a primary key
@@ -939,11 +946,15 @@
   - `rename table`
     - can be renamed and moved to databases on the same filesystem
     - see issues
+    - requires
+      - alter and drop privs for the table being renamed
+      - create and insert privs are needed for the new table and database if the database is being moved
     - multiple renames are executed left to right
       - if any errors are encountered, all of the table name changes are reversed from right to left
       - whiile tables are being renamed, no other client can interact with the tables involed
         - tables that are currently locked/part of a transaction in progress cannot be renamed
-      -
+    - can be used to rename a view but the view cannot be moved to a different database
+  -
 
 
 #### TABLE ENGINES
@@ -1292,6 +1303,12 @@
   describe TABLENAM COLUMNAME -- specific column
   describe TABLENAME 'COLNAME%' -- columns matching wildcard
 
+  -- retrieve all variables
+  show variables\G;
+  -- retrieve character sets
+  show character set like 'this%';
+  show character set where charset = 'cp932';
+
   -- see all indexes on a table
   show indexes from tABLENAME;
 
@@ -1309,6 +1326,9 @@
 
   -- see whos logged in
   show full processlist;
+
+  -- get the create statement for the given DB
+  show create database DATABASENAME;
 
   -- sbow the statement for recreating this table
   -- this is the only way to view the table options
