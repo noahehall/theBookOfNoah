@@ -144,12 +144,6 @@
 
 
 # IMPORTANT NOTES
-  - `show create table`
-    - only method for viewing the options for a table
-  - column index types
-    - BTREE: default for myisam tables
-    - RTREE
-      - for myisam tables that use spatial indexes for columns
 
 
 # IMPORTANT FILES
@@ -174,8 +168,9 @@
 
 # IMPORTANT KEYWORDS
   - `if not exist` suppress an error message when a create statement fails if the entity already exists
- - `comment` - attach notes to a table, partition, or a specific column
-   - text must be single-quoted
+  - `comment` - attach notes to a table, partition, or a specific column
+    - text must be single-quoted
+  - `if exists` suppresses an error message if the entity does not already exist 
 
 
 # IMPORTANT SQL
@@ -841,6 +836,22 @@
 ```
 
 # DATABASE & TABLE SCHEMA
+  - `describe`  displays information about the columns of a given table
+    - field - the name of each column in the table
+    - type - data type of each column
+    - null - whether the column in the table may contain a null value
+    - default - the default value of the column
+    - key - what type of key the column is
+      - empty - the column is not indexed
+      - PRI - a primary key
+      - UNI - a unique index
+      - MUL - multiple occurrences, i.e. duplicate values are permitted for this column
+        - this is permitted because the column is only one of multiple columns making up an index
+    - extra - any extra information about this column
+  - `show create table` returns the statement needed to recreate the table
+    - only method for viewing the options for a table
+
+
 ## DATABASES - database & table schema
   - notes
     - the database keyword is synonmyous with `schema`
@@ -852,6 +863,9 @@
     - the values given are stored int he mysql db in the server table in a new row
     - server name cannot exceed 63 chars
     - if an option is not give, the default`create server` will b ean empty string
+  - `drop database` delete a given database along with all of its tables and data
+    -
+
 
 ## TABLES - database & table schema
   - reference table: is referenced by another table via a primary key
@@ -975,17 +989,6 @@
     - `cascaded` - underlying views will be considered as well
       - this is the default
   -
-
-
-```sql
-  -- create a view
-  -- custom definer sql security clause
-  create definer = 'USERNAME'@'HOST'
-    sql security invoker
-    view VIEWNAME(COLNAME1, COLNAMEX...)
-    as select...
-    from...
-```
 
 
 ## INDEXES database & table schema
@@ -1222,10 +1225,22 @@
     union = (TABLENAME1, TABLENAME2)
     INSERT_METHOD = LAST|FIRST
 
+
+  -- create a view
+  -- custom definer sql security clause
+  create definer = 'USERNAME'@'HOST'
+    sql security invoker
+    view VIEWNAME(COLNAME1, COLNAMEX...)
+    as select...
+    from...
+
+
   -- INSPECTING TABLES
   -- list column definitions of a table
   describe DBNAME.TABLENAME;
   describe TABLENAME; -- to use current db
+  describe TABLENAM COLUMNAME -- specific column
+  describe TABLENAME 'COLNAME%' -- columns matching wildcard
 
   -- see all indexes on a table
   show indexes from tABLENAME;
@@ -1241,7 +1256,7 @@
 
   -- see all views in the current database
   show full tables where table_type='view';
-  
+
   -- see whos logged in
   show full processlist;
 
