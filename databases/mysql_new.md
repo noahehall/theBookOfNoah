@@ -1437,13 +1437,16 @@
 ## STATEMENTS crud
   - `delete`
     - delete rows of data from a given table
-      - should always use a `where` clause unless you want to delete all rows 
+      - should always use a `where` clause unless you want to delete all rows
+        - deleting all rows with this method is slow
+        - see `truncate`
     - `low_priority` instructs the server to wait until there are no queries on the table named before delting rows.
       - only works with engines that permit  table locking
         - myisam, memory, merge
     - `quick` can be used with myisam tables to make deletions fatster by not merging leaves in the idnexes tree
     - `ignore` instructs mysql to continue even if it encounters errors
-    -
+    - `limit` specify max number of rows to be deleted
+      - often used with `order by` to delete a range of records
   - `do`
   - `explain`
   - `handler`
@@ -1461,6 +1464,8 @@
   - `show errors`
   - `sho warnings`
   - `truncate`
+    - faster that deleting all rows via `delete` method
+      - however `delete` returns number of rows deleted, this one doesnt
   - `union`
   - `update`
   - `use`
@@ -1526,4 +1531,22 @@
     commit; -- persist transaction upon success
     rollback; -- undo changes upon error
     unlock tables;
+
+  delete low_priority from TABLENAME
+    where...
+
+  -- the table listed after DELETE
+  -- will have records deleted (table1)
+  -- but you can use other tables to help
+  delete TABLE1 from TABLE1, TABLE2
+    where TABLE1.blah = TABLE2.blah;
+
+  -- delete records from table1 and table2
+  delete TABLE1, TABLE2 from TABLE1, TABLE2
+    ...
+
+  -- the preferred syntax as it is clear
+  -- from which tables records will be deleted
+  delete from TABLE1 using TABLE1, TABLE2
+    ...
 ```
