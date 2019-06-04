@@ -168,9 +168,11 @@
 
 # IMPORTANT KEYWORDS
   - `if not exist` suppress an error message when a create statement fails if the entity already exists
+    - `table`, `database`, `view`
   - `comment` - attach notes to a table, partition, or a specific column
     - text must be single-quoted
-  - `if exists` suppresses an error message if the entity does not already exist 
+  - `if exists` suppresses an error message if the entity does not already exist
+    - `table`, `database`, `view`
 
 
 # IMPORTANT SQL
@@ -836,7 +838,7 @@
 ```
 
 # DATABASE & TABLE SCHEMA
-  - `describe`  displays information about the columns of a given table
+  - `describe` displays information about the columns of a given table
     - field - the name of each column in the table
     - type - data type of each column
     - null - whether the column in the table may contain a null value
@@ -970,6 +972,7 @@
 ### VIEW OPTIONS database & table schema
   - `create view` create a view i.e. a preset query stored in a database
     - see security
+
   - `alter view` change a view
     - change the select statement that determines the view
     - change the column names provided by the view queries by providing the new column names in a comma separated list
