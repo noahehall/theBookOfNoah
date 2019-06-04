@@ -136,14 +136,14 @@
   -
 
 
-# IMPORTANT FLAGS
+# FLAGS
   - `\G` show results vertically; easier to read for small results/screens
 
 
-# IMPORTANT NOTES
+# NOTES important
 
 
-# IMPORTANT FILES
+# FILES important
   - `~/.my.cnf` per-user mysql config file
     - e.g. to specify ssl-ca, ssl-key and ssl-cert pem files
   - `db.opt` contains the settings for a database
@@ -158,12 +158,12 @@
   - tablename.myi
 
 
-# IMPORTANT LOCATIONS
+# LOCATIONS important
   - mysql servers data directory
     - each database files are located within a subdirectory
 
 
-# IMPORTANT KEYWORDS
+# KEYWORDS important
   - `if not exist` suppress an error message when a create statement fails if the entity already exists
     - `table`, `database`, `view`
   - `comment` - attach notes to a table, partition, or a specific column
@@ -172,7 +172,7 @@
     - `table`, `database`, `view`, `server`
 
 
-# IMPORTANT SQL
+# SQL important
 ```sql
   -- # get help for a cmd
   \h CMD
@@ -196,7 +196,7 @@
 ```
 
 
-### IMPORTANT SHELL CMDS
+## SHELL CMDS important
 ```sh
   # make sure the daemon is restarted in the event that it crashes
   mysqld_safe &
@@ -390,12 +390,15 @@
     ignore COLALIAS2, colheaderN; -- dont import these columns
 ```
 
-# IMPORTANT ISSUES
-## TABLES important issues
+# ISSUES important
+## TABLES issues
   - the `convert to` clause can cause issues
     - make sure to backup your data first
+  - renaming a table
+    - if a trigger is associated with a table that is renamed and moved toa  new database, the trigger will fail when used
+      - you wont be warned of this possibility when renaming a table
 
-## DATABASES important issues
+## DATABASES issues
   - special characters in the DB name are encoded int he filesystem names
     - if you upgrade your system to a new version of  mysql you may not be able to access the db
     - use the mysqlcheck utility to overcome this issue
@@ -933,6 +936,14 @@
   - `insert_method` see table engines, merge
   - `max_rows` & `min_rows`
     - set the max/min rows of a table
+  - `rename table`
+    - can be renamed and moved to databases on the same filesystem
+    - see issues
+    - multiple renames are executed left to right
+      - if any errors are encountered, all of the table name changes are reversed from right to left
+      - whiile tables are being renamed, no other client can interact with the tables involed
+        - tables that are currently locked/part of a transaction in progress cannot be renamed
+      -
 
 
 #### TABLE ENGINES
