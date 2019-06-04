@@ -240,9 +240,14 @@
     - may precede `hash()` or `key()`
     - for extremely large tables of data, the linear hash has higher performance results in processing data
       - however it does not evely spread ata among partitions
+  - `delete`
+    - compact a table that has had many rows deleting by using the `optimize table` statement or the `myisamchk` utility
+  - reading values
+    - use `explain` to help analyze slow queries 
 
 
 # UTILITIES
+## myisamchk
 ## mysqld_multi
   - used to start multiple sessions of mysqld_safe, and thereby multiple mysqld instances
     - for handling rewquests on different ports
@@ -1448,7 +1453,13 @@
     - `limit` specify max number of rows to be deleted
       - often used with `order by` to delete a range of records
   - `do`
+    - suppresses the display of an expressions results
   - `explain`
+    - display information about the columns of a given table
+      - synonmyous with `describe` and `show columns`
+    - analyzes the handling of a select statement
+      - when multiple tables are queried, the order  in which the tables are used
+      - see performance
   - `handler`
   - `help`
   - `insert`
@@ -1549,4 +1560,7 @@
   -- from which tables records will be deleted
   delete from TABLE1 using TABLE1, TABLE2
     ...
+
+  -- suppresses the results
+  do (set @SOMEVVAR = 'somevalue');
 ```
