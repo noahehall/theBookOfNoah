@@ -190,9 +190,6 @@
   \h CMD
   \h 'CREATE USER'
 
-  -- inspect the mechanics of a select statement
-  explain select...
-
   -- select which database is the default
   USE test
 
@@ -243,7 +240,7 @@
   - `delete`
     - compact a table that has had many rows deleting by using the `optimize table` statement or the `myisamchk` utility
   - reading values
-    - use `explain` to help analyze slow queries 
+    - use `explain` to help analyze slow queries
 
 
 # UTILITIES
@@ -1455,11 +1452,22 @@
   - `do`
     - suppresses the display of an expressions results
   - `explain`
+    - tells you want mysql does when it executes a give sql statement
+      - however it doestn tell you what to do differently to improve performance.
     - display information about the columns of a given table
       - synonmyous with `describe` and `show columns`
     - analyzes the handling of a select statement
       - when multiple tables are queried, the order  in which the tables are used
       - see performance
+    - fields
+      - `possible_keys` lists the indexes that might have been used to find the data
+      - `key` indicates the specific index(s) that were actually used
+      - `select_type`
+        - `simple` indicates a simple select statement with a subquery or a union
+        - `primary` when using a subquery this is the mains elect statement
+        - `union` when using a union this is not hte first select statement
+        - `dependent union` when using a union this is not the first select statement that is dependent on the main query 
+        -
   - `handler`
   - `help`
   - `insert`
@@ -1563,4 +1571,8 @@
 
   -- suppresses the results
   do (set @SOMEVVAR = 'somevalue');
+
+  -- analyze a select statement
+  explain select...
+
 ```
