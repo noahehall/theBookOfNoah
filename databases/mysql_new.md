@@ -1466,8 +1466,12 @@
         - `simple` indicates a simple select statement with a subquery or a union
         - `primary` when using a subquery this is the mains elect statement
         - `union` when using a union this is not hte first select statement
-        - `dependent union` when using a union this is not the first select statement that is dependent on the main query 
-        -
+        - `dependent union` when using a union this is not the first select statement that is dependent on the main query
+        - `union result` the result of a union
+        - `subquery` the first select stateme nt in a subquery
+        - `dependent subquery` the first select statement in a subquery that is dependent on the main query
+        - `uncacheable subquery` indicates a subquery in which the results cannot be cached and therfore must be reevaluated for each row of the main query
+        - `uncacheable union` the union of a subquery in which the results cannot be cached and therefore must be reevavluated for each row of the main query 
   - `handler`
   - `help`
   - `insert`
