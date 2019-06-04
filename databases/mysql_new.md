@@ -1436,6 +1436,14 @@
 
 ## STATEMENTS crud
   - `delete`
+    - delete rows of data from a given table
+      - should always use a `where` clause unless you want to delete all rows 
+    - `low_priority` instructs the server to wait until there are no queries on the table named before delting rows.
+      - only works with engines that permit  table locking
+        - myisam, memory, merge
+    - `quick` can be used with myisam tables to make deletions fatster by not merging leaves in the idnexes tree
+    - `ignore` instructs mysql to continue even if it encounters errors
+    -
   - `do`
   - `explain`
   - `handler`
@@ -1482,6 +1490,10 @@
     - permenantly record a transaction
     - `autocommit` must be disabled for this statement to be meaningful
     - see `set autocommit`
+    - `and chain` compolete one transaction and start another thus making it unnecessaary to use `start transaction` again
+    - `and release` end the current client session after completing the transaction
+    - `no` indicate explicitly that a new transaction is not to begin (when used with `chain`) or that the client session is not to end (when used with `release`)
+    -
 
   - `release savepoitn`
   - `rollback`
@@ -1490,6 +1502,7 @@
   - `savepoint`
   - `set transaction`
   - `start transaction`
+    -
   - `xa`
 ### FUNCTIONS transactions
   - `analyse()`
@@ -1505,4 +1518,12 @@
   begin;
     ...
   commit;
+
+  start transaction;
+    lock tables TABLENAME write;
+    ... -- your create/update statement
+    select... -- verify results
+    commit; -- persist transaction upon success
+    rollback; -- undo changes upon error
+    unlock tables;
 ```
