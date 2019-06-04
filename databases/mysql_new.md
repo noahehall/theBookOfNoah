@@ -24,9 +24,6 @@
   - `alter database`
   - `alter schema` synonmyous with `alter database`
 
-  - `alter server` used with the federated storage engine to change the connectino parameters of a server created with `create server`
-    - requires `super` privileges
-
   - `alter table` change an existing tables structure and other properties
   - NOTES
     - when adding a column
@@ -172,7 +169,7 @@
   - `comment` - attach notes to a table, partition, or a specific column
     - text must be single-quoted
   - `if exists` suppresses an error message if the entity does not already exist
-    - `table`, `database`, `view`
+    - `table`, `database`, `view`, `server`
 
 
 # IMPORTANT SQL
@@ -595,6 +592,12 @@
   ```
 
 # SECURITY
+## DATABASE security
+  - deleting a database
+    - any user privileges specific to the database are not deleted
+      - e.g. any privileges listed in the db table of the mysql database
+      - if a database is created later with the same name those user privileges will apply to the new db, which is a security risk
+
 ## VIEWS security
   - can be useful for improved security
     - but why?...
@@ -854,22 +857,36 @@
     - only method for viewing the options for a table
 
 
-## DATABASES - database & table schema
-  - notes
-    - the database keyword is synonmyous with `schema`
-    - a database name cannot be longer than 64 bytes (not chars)
-    - if you want a db name to contain quotes you must enable thee sql `ansi_quotes` mode
+## DATABASES database & table schema
+  - the database keyword is synonmyous with `schema`
+  - a database name cannot be longer than 64 bytes (not chars)
+  - if you want a db name to contain quotes you must enable thee sql `ansi_quotes` mode
+
+
+### DATABASE OPTIONS database & table schema
   - `create database` creates a new database with the given name
   - `create schema` see create database
-  - `create server` for use with the federated storage engine to set the connection parameters
-    - the values given are stored int he mysql db in the server table in a new row
-    - server name cannot exceed 63 chars
-    - if an option is not give, the default`create server` will b ean empty string
+
   - `drop database` delete a given database along with all of its tables and data
-    -
+    - requires drop privilege
+    - numbr of tables deleted is returned int he rows affected count
+      - if the database does not exist or if there are other files int he databases filesystem directory an error message will be displayed
+        - the tables will still be deleted if other files exist
+        - but the foreign file and the directory for the database wont be removed
+          - they will have to be deleted manually
+      - if the database is deleted
+        - see security
 
+### SERVERS database & table schema
+  - `alter server` used with the federated storage engine to change the connectino parameters of a server created with `create server`
+    - requires `super` privileges
+  - `create server` for use with the federated storage engine to set the connection parameters
+      - the values given are stored int he mysql db in the server table in a new row
+      - server name cannot exceed 63 chars
+      - if an option is not give, the default`create server` will b ean empty string
+  - `drop server` for use with federated storage engines to delet a given server that is created with `creat server`
 
-## TABLES - database & table schema
+## TABLES database & table schema
   - reference table: is referenced by another table via a primary key
     - e.g. books table will reference authors table
 
@@ -878,6 +895,8 @@
   - `create table` create a new table within a database
   - OPTIONS
     - `temporary` create a temporary table that can be accessed only by the current connection thread and is not accessible by other users
+  - `drop table` delete a table and its data from a database
+    -
 
 
 ### TABLE OPTIONS
@@ -995,7 +1014,6 @@
 
 
 ## INDEXES database & table schema
-  - notes
     - all indexes require `NOT NULL` columns
     - indexes can only be created for myisam, innodb, and bdb engines
     - you can use more than one column for an index
@@ -1004,6 +1022,9 @@
     - must be unique
     - often used for identifiers that appear as columns
     - `foreign key` and `primary key` also create indexes
+
+
+### INDEX OPTIONS database & table schema
   - `create index` add an index to a table after it has been created
     - `unique` prevent duplicates
     - `using` specify the type of index
@@ -1017,6 +1038,8 @@
         - are required to use fulltext functionality
           - `match()` and `against()` functions
         - char, text, and varchar column for myisam engines
+  - `drop index` deletes a given index from a table
+    - see `alter table` drop index
 
 
 ## COLUMNS
@@ -1100,9 +1123,6 @@
   -- add a spatial index
   alter table...
     add spatial index INDEXNAME (COLNAME)
-
-  -- see indexes for table
-  show indexes from TABLENAME \G;
 
   -- add foreign key
   alter table...
@@ -1237,6 +1257,8 @@
     as select...
     from...
 
+
+  drop database if exists DATABASENAME;
 
   -- INSPECTING TABLES
   -- list column definitions of a table
