@@ -1476,7 +1476,7 @@
   - `begin`
     - use `start transaction` instead to avoid confusion with `begin...end` statement
     - start a transaction
-      - only supported by innodb, ndb cluster, and bddb storage engreleaweines
+      - only supported by innodb, ndb cluster, and bddb storage engine
     - `work`
   - `commit`
     - permenantly record a transaction
