@@ -1581,7 +1581,7 @@
     - `no` indicate explicitly that a new transaction is not to begin (when used with `chain`) or that the client session is not to end (when used with `release`)
     -
 
-  - `release savepoitn`
+  - `release savepoint` instructs the server to release a savepoint named earlier with the `savepoint` statement for the current transaction
   - `rollback`
     - reverse a transaction if it has not been commited
   - `rollback to savepoint`
@@ -1725,11 +1725,22 @@
   -- import from file
   -- with low priority and ignoring errors/warnings
   -- ignores the first line in the file
+  -- specify columns at the end
   load data low_priority infile 'path/to/file.txt' ignore
     into table TABLENAME
     fields terminated by '|'
     ignore 1 lines
     lines terminated by '\n'
+    (colname1, etc...)
+
+  -- use a variable to set the value of some other column
+  load data low_priority infile 'path/to/file.txt' ignore
+    into table TABLENAME
+    fields terminated by '|'
+    ignore 1 lines
+    lines terminated by '\n'
+    (colname1, @somecol etc...)
+    set @somecol = @somecall * 2
 
   -- analyze a select statement
   explain select...
