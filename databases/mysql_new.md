@@ -1520,7 +1520,14 @@
     - `force index` force it to use a particular index
       - see performance
   - `limit`
+    - limit the number of rows the server will process to satisfy the given SQL statement
+      - `select` it limits the number of rows returned in the result set
+      - `update` limits the number of rows changed
+      - `delete` limits the number of rows deleted
+    - only accepts literal values, not expressions, variables or negative values
   - `load data infile`
+    - import organized data from a text file into a table in mysql
+    - file on server: if you use a bare filename (e.g. input.text) or a relative path, the file is found relative to the directory of the database into which the data is to be imported 
   - `replace`
   - `select`
   - `set`
