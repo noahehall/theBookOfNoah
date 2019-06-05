@@ -182,9 +182,14 @@
     - text must be single-quoted
   - `if exists` suppresses an error message if the entity does not already exist
     - `table`, `database`, `view`, `server`
+
   - `low_priority` instructs the server to wait until there are no queries on the table before operating on rows.
     - when the table is free it is locked for the action and will prevent concurrency
-    - `delete`, `insert`,
+    - `delete`, `insert`, `load data infile`
+    - opposite of `concurrent`
+  - `concurrent` take an action even if other clients are reading/writing the given table,
+    - opposite of `low_priority`
+    - `load data infile`
   - `ignore` - applies to all clauses and instructs mysql to ignore any error messages regarding duplicate rows that may occur as a result of a column change
     - will keep the first unique row found and drop any duplicate rows
     - otherwise the statement will be terminated and changes will roll back
@@ -1524,10 +1529,14 @@
       - this feature must be enabled on both the client and server by using the startup option of `--local-infile=1`
     - throws error when importing rows that already exist in the table
       - only the rows that were imported before the error occurs will succeed
-      - see `ignore`
-      - see `replace`
+    - `lines started by` the character(s) used to start a new line
+    - `enclosed by` indicaates the charadter useed int he input file to escape special characters
+      - '\' default
+    - `ignore lines` omit one/more lines (e.g. headers) at the top of the file
+    - see `ignore`
+    - see `replace`
   - `replace`
-    - `load data infile`
+    - upsert - `load data infile`
   - `select`
   - `set`
     - `set autocommit`
@@ -1708,15 +1717,19 @@
     ...
 
   -- import from file
-  load data infile 'path/to/file'
-    replace into table TABLENAME
-    fields temrinated by '|' -- could be ',' e,g, CSV
-    lines terminated by '\r\n' -- new line
-    text_fields (COLALIAS1, COLALIASX)
-    set
-      TABLEFIELDNAME = COLALIAS1.
-      TABLEFIELDNAME = COLALIASX
-    ignore COLALIAS2, colheaderN; -- dont import these columns
+  load data infile 'path/to/file.txt'
+    into table TABLENAME
+    fields terminated by '|' -- could be a comma/anything
+    lines terminated by '\n' -- could be \n\r/anything
+
+  -- import from file
+  -- with low priority and ignoring errors/warnings
+  -- ignores the first line in the file
+  load data low_priority infile 'path/to/file.txt' ignore
+    into table TABLENAME
+    fields terminated by '|'
+    ignore 1 lines
+    lines terminated by '\n'
 
   -- analyze a select statement
   explain select...
