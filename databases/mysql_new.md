@@ -60,9 +60,7 @@
       - column, index
     - set table-wide options
   - FLAGS
-    - ignore - applies to all clauses and instructs mysql to ignore any error messages regarding duplicate rows that may occur as aa result of a column change
-      - will keep the first unique row found adn drop any duplicate rows
-      - otherwise the statement will be terminated and changes will roll back
+    -
   - KEYWORDS
     - `first` prepend new column
     - `after` insert new column after some other column
@@ -87,6 +85,7 @@
   - `--updatable_views_with_limit` updates that contain a `limit` clause can update views only if the views contain all of hte columns that are part of the primary keys of the underlying tables
     - 1 = only a warning is returned and updates are not restricted
       - this is the default
+  - `--low-priority-updates`
 
 
 # MYSQL CLIENT (i.e. mysql) needs categorization
@@ -183,7 +182,12 @@
   - `if exists` suppresses an error message if the entity does not already exist
     - `table`, `database`, `view`, `server`
   - `low_priority` instructs the server to wait until there are no queries on the table before operating on rows.
+    - when the table is free it is locked for the action and will prevent concurrency
     - `delete`, `insert`,
+  - `ignore` - applies to all clauses and instructs mysql to ignore any error messages regarding duplicate rows that may occur as aa result of a column change
+    - will keep the first unique row found adn drop any duplicate rows
+    - otherwise the statement will be terminated and changes will roll back
+    - `insert`, `delete`
 
 
 
@@ -1492,6 +1496,11 @@
       - but it releases the eclient so that other queries may be run and so that the connection may be terminated
       - a delayed query that returns without an error message does not guarantee that the isnerts will take place
         - it confirms only that the query is received by the server to be processed
+      - user wont be informed of any failures if the server crashes
+        - to confirm - you must check the table later for the inserted content
+    - `high_priority`
+      - overrides a `--low-priority-updates` server option and to disable concurrent inserts
+    -
     - see important keywords
   - `join`
   - `limit`
