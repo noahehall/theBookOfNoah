@@ -182,22 +182,13 @@
     - text must be single-quoted
   - `if exists` suppresses an error message if the entity does not already exist
     - `table`, `database`, `view`, `server`
+  - `low_priority` instructs the server to wait until there are no queries on the table before operating on rows.
+    - `delete`, `insert`,
 
 
-# SQL important
-```sql
-  -- # get help for a cmd
-  \h CMD
-  \h 'CREATE USER'
-
-  -- select which database is the default
-  USE test
 
 
-```
-
-
-## SHELL CMDS important
+# SHELL CMDS important
 ```sh
   # make sure the daemon is restarted in the event that it crashes
   mysqld_safe &
@@ -1445,15 +1436,18 @@
       - should always use a `where` clause unless you want to delete all rows
         - deleting all rows with this method is slow
         - see `truncate`
-    - `low_priority` instructs the server to wait until there are no queries on the table named before delting rows.
       - only works with engines that permit  table locking
         - myisam, memory, merge
     - `quick` can be used with myisam tables to make deletions fatster by not merging leaves in the idnexes tree
     - `ignore` instructs mysql to continue even if it encounters errors
     - `limit` specify max number of rows to be deleted
       - often used with `order by` to delete a range of records
+    - see performance
+    - see important keywords
+
   - `do`
     - suppresses the display of an expressions results
+
   - `explain`
     - tells you want mysql does when it executes a give sql statement
       - however it doestn tell you what to do differently to improve performance.
@@ -1476,6 +1470,11 @@
         - `uncacheable subquery` indicates a subquery in which the results cannot be cached and therfore must be reevaluated for each row of the main query
         - `uncacheable union` the union of a subquery in which the results cannot be cached and therefore must be reevaluated for each row of the main query
   - `handler`
+    - directions
+      - first
+      - next
+      - prev - select some previous selected rows
+      - last - searches for and retrieves rows from the last row of the table
     - provides direct access to a table as opposed to working from a results set
       - requires
         - myisam and innodb tables
@@ -1486,7 +1485,14 @@
         - records are retrieved in the order they are stored in the database
     - see performance
   - `help`
+    - access built-in documentation
   - `insert`
+    - add rows of data to a table
+    - `delayed` indicates the same priority status as `low_priority`
+      - but it releases the eclient so that other queries may be run and so that the connection may be terminated
+      - a delayed query that returns without an error message does not guarantee that the isnerts will take place
+        - it confirms only that the query is received by the server to be processed
+    - see important keywords
   - `join`
   - `limit`
   - `load data infile`
@@ -1601,5 +1607,10 @@
 
   -- analyze a select statement
   explain select...
+
+  -- get help for a cmd
+  \help -- see all cmds
+  \h CMD
+  \h 'CREATE USER'
 
 ```
