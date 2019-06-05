@@ -184,10 +184,11 @@
   - `low_priority` instructs the server to wait until there are no queries on the table before operating on rows.
     - when the table is free it is locked for the action and will prevent concurrency
     - `delete`, `insert`,
-  - `ignore` - applies to all clauses and instructs mysql to ignore any error messages regarding duplicate rows that may occur as aa result of a column change
-    - will keep the first unique row found adn drop any duplicate rows
+  - `ignore` - applies to all clauses and instructs mysql to ignore any error messages regarding duplicate rows that may occur as a result of a column change
+    - will keep the first unique row found and drop any duplicate rows
     - otherwise the statement will be terminated and changes will roll back
     - `insert`, `delete`
+    - see `show warnings` to review any generated warning messages ignored by this clause
 
 
 
@@ -271,15 +272,6 @@
 
 
 ## TABLES
-## CREATE
-```sql
-  insert into TABLENAME (
-    colname1, colnameX
-  ) VALUES (
-    colval1, crical value
-    sum(COLNAME1olvalX)
-  )
-```
 
 ## READ
 ```sql
@@ -1500,9 +1492,15 @@
         - to confirm - you must check the table later for the inserted content
     - `high_priority`
       - overrides a `--low-priority-updates` server option and to disable concurrent inserts
-    -
+    - `default`
+      - instructs the server to use the default value for the column
+    - `on duplicate key update` tell an `insert` statement how to handle an insert when an index in the table already constains a specified value in a column
+      - the statement updates the data in the existing row to reflect the new values in the given column
+        - without this clause the statement generates an error
     - see important keywords
   - `join`
+    - link tables together base don columns with common data for purposes of seelecting, updating or deleting data 
+    - used by `select`, `update`, `delete`
   - `limit`
   - `load data infile`
   - `replace`
@@ -1612,6 +1610,27 @@
     where... -- with a where clause
   handler HNDLENAME read INDEXNAME FIRST|PREV|LAST;
   handler HANDLERALIAS close; -- close the handlerf
+
+  -- insert a single row
+  -- updates an existing row if duplicate exists
+  insert into TABLENAME set
+    COL1=VALUE,
+    etc...
+    on duplicate key update
+  --
+  insert into TABLENAME
+    (COL1, etc...)
+    VALUES
+    ( VAL1, etc... ),
+    ( VAL1, etc... )
+
+  -- insert multiple rows based on data
+  -- retrieved from a select statement
+  insert into TABLENAME
+    (COL1, etc...)
+    select COLNAME1, etc...
+      from OTHERTABLE
+      where...
 
 
   -- analyze a select statement
