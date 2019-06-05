@@ -1582,6 +1582,8 @@
     -
 
   - `release savepoint` instructs the server to release a savepoint named earlier with the `savepoint` statement for the current transaction
+    - it does not commit/rollback the transaction to the savepoint
+    - instead it merely eliminates the saavepoint as a possible rollback point
   - `rollback`
     - reverse a transaction if it has not been commited
   - `rollback to savepoint`
@@ -1612,6 +1614,18 @@
     commit; -- persist transaction upon success
     rollback; -- undo changes upon error
     unlock tables;
+
+  -- release a savepoinnt after verifying its results
+  -- the select statement is used to verify the
+  -- previous import
+  start transaction;
+    lock tables TABLENAME write;
+    insert1...;
+    savepoint SAVEPOINTNAME1;
+    insert2... ;
+    savepoint SAVEPOINTNAME2;
+    select...;
+    release savepoint SAVEPOINTNAME2;
 
   delete low_priority from TABLENAME
     where...
@@ -1740,7 +1754,7 @@
     ignore 1 lines
     lines terminated by '\n'
     (colname1, @somecol etc...)
-    set @somecol = @somecall * 2
+    set @somecol = @somecol * 2
 
   -- analyze a select statement
   explain select...
