@@ -86,6 +86,7 @@
     - 1 = only a warning is returned and updates are not restricted
       - this is the default
   - `--low-priority-updates`
+  - `--local-infile`
 
 
 # MYSQL CLIENT (i.e. mysql) needs categorization
@@ -151,10 +152,10 @@
   - `\G` show results vertically; easier to read for small results/screens
 
 
-# NOTES important
+# important NOTES
 
 
-# FILES important
+# important FILES
   - `~/.my.cnf` per-user mysql config file
     - e.g. to specify ssl-ca, ssl-key and ssl-cert pem files
   - `db.opt` contains the settings for a database
@@ -169,12 +170,12 @@
   - tablename.myi - the index file
 
 
-# LOCATIONS important
+# important LOCATIONS
   - mysql servers data directory
     - each database files are located within a subdirectory
 
 
-# KEYWORDS important
+# important KEYWORDS
   - `if not exist` suppress an error message when a create statement fails if the entity already exists
     - `table`, `database`, `view`
   - `comment` - attach notes to a table, partition, or a specific column
@@ -187,13 +188,13 @@
   - `ignore` - applies to all clauses and instructs mysql to ignore any error messages regarding duplicate rows that may occur as a result of a column change
     - will keep the first unique row found and drop any duplicate rows
     - otherwise the statement will be terminated and changes will roll back
-    - `insert`, `delete`
+    - `insert`, `delete`, `load data infile`
     - see `show warnings` to review any generated warning messages ignored by this clause
 
 
 
 
-# SHELL CMDS important
+# important SHELL CMDS
 ```sh
   # make sure the daemon is restarted in the event that it crashes
   mysqld_safe &
@@ -371,33 +372,22 @@
   where COLNAME like '%containsThis%'
 ```
 
-# IMPORT/EXPORT/MIGRATION
-  - generally
-    - eah record should be on a separate line
-    - each field (column headers and values) should have a common field separator
-  - importing
-    - you have to alias each column in `text fields(...)`
-    - even if you later ignore `SET...`
-```sql
-  -- import from file
-  load data infile 'path/to/file'
-    replace into table TABLENAME
-    fields temrinated by '|' -- could be ',' e,g, CSV
-    lines terminated by '\r\n' -- new line
-    text_fields (COLALIAS1, COLALIASX)
-    set
-      TABLEFIELDNAME = COLALIAS1.
-      TABLEFIELDNAME = COLALIASX
-    ignore COLALIAS2, colheaderN; -- dont import these columns
-```
-
-# ISSUES important
+# important ISSUES
 ## TABLES issues
   - the `convert to` clause can cause issues
     - make sure to backup your data first
   - renaming a table
     - if a trigger is associated with a table that is renamed and moved toa  new database, the trigger will fail when used
       - you wont be warned of this possibility when renaming a table
+
+# important BEST PRACTICES
+  - IMPORT/EXPORT/MIGRATION
+    - generally
+      - eah record should be on a separate line
+      - each field (column headers and values) should have a common field separator
+    - importing
+      - you have to alias each column in `text fields(...)`
+      - even if you later ignore `SET...`
 
 ## DATABASES issues
   - special characters in the DB name are encoded int he filesystem names
@@ -1525,10 +1515,19 @@
       - `update` limits the number of rows changed
       - `delete` limits the number of rows deleted
     - only accepts literal values, not expressions, variables or negative values
+
   - `load data infile`
     - import organized data from a text file into a table in mysql
-    - file on server: if you use a bare filename (e.g. input.text) or a relative path, the file is found relative to the directory of the database into which the data is to be imported 
+    - file on server - if you use a bare filename (e.g. input.text) or a relative path, the file is found relative to the directory of the database into which the data is to be imported
+      - if the file is located elsewhere, the file permissions must permit all users read access
+    - file on client - `local` keyword must be given
+      - this feature must be enabled on both the client and server by using the startup option of `--local-infile=1`
+    - throws error when importing rows that already exist in the table
+      - only the rows that were imported before the error occurs will succeed
+      - see `ignore`
+      - see `replace`
   - `replace`
+    - `load data infile`
   - `select`
   - `set`
     - `set autocommit`
@@ -1708,7 +1707,16 @@
     ignore index for join (COLNAME)
     ...
 
-
+  -- import from file
+  load data infile 'path/to/file'
+    replace into table TABLENAME
+    fields temrinated by '|' -- could be ',' e,g, CSV
+    lines terminated by '\r\n' -- new line
+    text_fields (COLALIAS1, COLALIASX)
+    set
+      TABLEFIELDNAME = COLALIAS1.
+      TABLEFIELDNAME = COLALIASX
+    ignore COLALIAS2, colheaderN; -- dont import these columns
 
   -- analyze a select statement
   explain select...
