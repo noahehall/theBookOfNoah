@@ -235,11 +235,11 @@
       - however it does not evely spread ata among partitions
   - `delete`
     - compact a table that has had many rows deleting by using the `optimize table` statement or the `myisamchk` utility
-  - reading values
-    - use `explain` to help analyze slow queries
-    - a `handler` can be faster than select statements when reading large numbers of rows from a table
-      - requires `myisam` and `innodb` storage engines
-      - specifying a an index when reading can boost performance
+  - `explain` to help analyze slow queries
+    - when mysql joins/searches tables, find out which index it should use
+  - `handler` can be faster than select statements when reading large numbers of rows from a table
+    - requires `myisam` and `innodb` storage engines
+    - specifying a an index when reading can boost performance
 
 
 # UTILITIES
@@ -1499,8 +1499,26 @@
         - without this clause the statement generates an error
     - see important keywords
   - `join`
-    - link tables together base don columns with common data for purposes of seelecting, updating or deleting data 
+    - link tables together base don columns with common data for purposes of seelecting, updating or deleting data
     - used by `select`, `update`, `delete`
+    - `on` indicate the pair of columns by which the tables are to be joined
+    - `using` instead of specifying `on`, specify the column name(s) that each table has in common
+      - thus you only need to list the column name  once
+    - `left`
+      - include all columns from the first table listed whether or join they exist in other tables
+    - `right`
+      - include all columns from the second table listed whether or not htey exist in other tables
+    - `natural`
+      - use whatever ID column all tables have in common
+    - `straight_join`
+      - cannot be used with left|right|natural
+      - explicity instruct mysql to read the tables as listed from left to right
+    - `use index`
+      - tell mysql which index it should check first
+    - `ignore index`
+      - which index to ignore
+    - `force index` force it to use a particular index
+      - see performance
   - `limit`
   - `load data infile`
   - `replace`
@@ -1631,6 +1649,58 @@
     select COLNAME1, etc...
       from OTHERTABLE
       where...
+
+  -- join two tables on specific columns
+  select... as SOMEALIAS
+    from TABLE1
+    join TABLE2
+      on SOMEALIAS.COL1 = TABLE2.COL1
+    where...
+    group by SOMECOL
+
+  -- join two tables specifying column(s) they both share
+  select... as SOMEALIAS
+    from TABLE1
+    join TABLE2
+      using COL1
+    where...
+
+  -- join two tables on whatever ID column they both share
+  select... as SOMEALIAS
+    from TABLE1
+    natural join TABLE2
+    where...
+
+  -- join two tables on whatever ID column they both share
+  select... as SOMEALIAS
+    from TABLE1
+    left|right join TABLE2...
+
+  -- SUGGEST to mysql which index to use for the join
+  -- the use index and using statement can be different cols
+  select...
+    from TABLE1
+    join TABLE2
+    use index for join (COLNAME)
+    using(SOMECOL)
+    ...
+
+  -- FORCE mysql to use a specific index
+  -- however other indexes could be used if required
+  select...
+    from TABLE1
+    join TABLE2
+    force index for join (COLNAME)
+    ...
+
+  ...I
+  -- FORCE mysql to ignore a specific index
+  select...
+    from TABLE1
+    join TABLE2
+    ignore index for join (COLNAME)
+    ...
+
 
 
   -- analyze a select statement
