@@ -1767,7 +1767,9 @@
 
 
   -- need concrete example
-  xa... ?
+  -- appears to take the same syntax as `start transaction`
+  xa start ALIASNAME
+    ...
 
 
   delete low_priority from TABLENAME
