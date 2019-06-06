@@ -1732,8 +1732,15 @@
     - param2 - the max memory that should be allocated for each column during analysis
       - default 8,192 bytes (8mb)
   - `benchmark()`
+    - used to evaluate the performance of a mysql serer
+      - param1 - number of times to run the expression
+      - param2 - expression to run
   - `database()`
+    - returns the name of the database currently in use for the session
+    - if no database is selected/set as default `null` is returned
+    - `schema()` does the same thing
   - `found_rows()`
+    - use this function in conjunction with the `sql_calc_found_rows` option of a `select` statement to determine the number of rows an sql statement using a `limit` clause would have generated without the limitation
   - `last_insert_id()`
   - `row_count()`
   - `schema()`
@@ -1946,6 +1953,9 @@
   select...
     procedure analyse(10, 255);
 
+  -- run pi() 1000 times
+  select benchmark(1000, PI())
+
   -- merge two tables
   select...
     from TABLENAME...
@@ -1964,6 +1974,13 @@
   ( select... )
     order by...
 
+  -- retrieve a set of records limited by some number
+  -- then issue found_rows()
+  -- to get the total if there was no limit clause
+  select sql_calc_found_rows
+    COL1, COLX...
+    limit..;
+  select found_rows();
 
   -- update every column
   update TABLENAME
@@ -2018,6 +2035,7 @@
     lines terminated by '\n'
     (colname1, @somecol etc...)
     set @somecol = @somecol * 2
+
 
   -- analyze a select statement
   explain select...
