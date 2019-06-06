@@ -612,7 +612,7 @@
 ## USER STATEMENTS AND FUNCTIONS security
   - user access and privileges
     - scopes: see `grant`
-      - global: aplly to all databases ont he server
+      - global: aplly to all databases on the server
       - database specific:
       - table specific
       - column specific
@@ -1438,10 +1438,6 @@
         - myisam, memory, merge
     - `quick` can be used with myisam tables to make deletions fatster by not merging leaves in the idnexes tree
     - `ignore` instructs mysql to continue even if it encounters errors
-    - `limit` specify max number of rows to be deleted
-      - often used with `order by` to delete a range of records
-    - see performance
-    - see important keywords
 
   - `do`
     - suppresses the display of an expressions results
@@ -1591,7 +1587,23 @@
     - `order by`
       - change the order (by column/expression) of the results set
         -  by default are displayed in the order in which the rows of data are found in the table
+    - `procedure`
+      - send the results of a `select` statement as standard input to a procedure
+    - `lock in share mode`
+      - lock the rows that are being selected from a table
+      - prevents other clients from changing the data while the select statement is running
+    - `for update`
+      - instructs mysql to invoke a temporary write lock on the rows being selected
+
   - `set`
+    - set a system/user variable for global/session use
+      - `@@global`
+        - global variables - visible to all users
+      - `@@session`
+        - session variables - i.e. local - available only to the connection thread that creates the variable
+        - system variables are limited to the current session by default
+      - `@VARNAME`
+        - a user variable
     - `set autocommit`
       - 0 - disable
       - 1 - enable
@@ -1865,9 +1877,29 @@
     group by...
     having max(COLNAME)
 
-  -- order the results set by an expression 
+  -- order the results set by an expression
+  -- or by specifi column(s)
   select...
-    order by COLNAME1 * COLNAME2
+    order by COLNAME1 * COLNAME2 DESC
+    order by COLNAME1, COLNAME2 ASC
+
+  -- retrieve the first 5 records
+  -- or skip the first 10 records, and retrieve the next 5
+  select...
+    limit 5;
+    limit 10, 5;
+
+  -- send the results to the specified procedure
+  select...
+    procedure analyse(10, 255);
+
+  -- create a user variable
+  -- use it as a column in a results set
+  -- increments by 1 for each record
+  set @SOMEVAR = 0;
+  select @SOMEVAR := @SOMEVAR + 1 as row
+    ...
+
 
   -- import from file
   load data infile 'path/to/file.txt'
