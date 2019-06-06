@@ -192,6 +192,7 @@
     - `insert`, `replace`
   - `high_priority`
     - overrides a `--low-priority-updates` server option and to disable concurrent inserts
+    - gives `select` statements higher priority of `update` statements submitted at the same time by different clients
     - `insert`, `replace`
   - `low_priority` instructs the server to wait until there are no queries on the table before operating on rows.
     - when the table is free it is locked for the action and will prevent concurrency
@@ -205,6 +206,8 @@
     - otherwise the statement will be terminated and changes will roll back
     - `insert`, `delete`, `load data infile`
     - see `show warnings` to review any generated warning messages ignored by this clause
+  - `sq1l_small_result` cause mysql to use temporary tables, with a key based on the group by clause elemenets, to sort the results and possibly make for faster data retrieval
+    - only use when you know the result set will be relatively small
 
 
 
@@ -1534,6 +1537,10 @@
     -
     - upserting statements - `load data infile`
   - `select`
+    - retrieve and display data fro tables within a database
+      - `all` the default - display all data
+      - `distinct` display the first of all occurence i.e. no duplicates
+      -
   - `set`
     - `set autocommit`
       - 0 - disable
