@@ -367,6 +367,7 @@
     - 1 = keep the quotes (default)
   - `--skip-show-database`
     - remove the `show database` privilege requirement for viewing all databases
+  - `completion_type` ?
 ```sql
   set @SOMEVARIABLE = 'some value';
 ```
@@ -1571,7 +1572,7 @@
     - permenantly record a transaction
     - `autocommit` must be disabled for this statement to be meaningful
     - see `set autocommit`
-    - `and chain` compolete one transaction and start another thus making it unnecessaary to use `start transaction` again
+    - `and chain` complete one transaction and start another thus making it unnecessaary to use `start transaction` again
     - `and release` end the current client session after completing the transaction
     - `no` indicate explicitly that a new transaction is not to begin (when used with `chain`) or that the client session is not to end (when used with `release`)
     -
@@ -1580,12 +1581,25 @@
     - it does not commit/rollback the transaction to the savepoint
     - instead it merely eliminates the saavepoint as a possible rollback point
   - `rollback`
-    - reverse a transaction if it has not been commited
+    - for transactional tables to reverse transactions that have not yet been commited
+    - supported engines: `innodb`, `ndb cluster`, `bdb`
+    - `autocommit` must be disabled
+      - see `set autocommit`
   - `rollback to savepoint`
   - `savepoint`
   - `set transaction`
   - `start transaction`
-    -
+    - forces `autocommit` to be disabled
+      - but is re-enabled with
+        - the execution of the `commit` statement
+        - ending of the current session
+        - and several other statements that imply that  commit is desired
+        - see `commit`
+        - see `and chain`
+        - see `and release`
+        - see `no`
+          - only necessary when the sysstem variable `completion_type` is set to soemthing other than the default setting
+        -
   - `xa`
 ### FUNCTIONS transactions
   - `analyse()`
@@ -1693,7 +1707,7 @@
     select COLNAME...
     from TABLENAME
     where...
-    
+
   -- join two tables on specific columns
   select... as SOMEALIAS
     from TABLE1
