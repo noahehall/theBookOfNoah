@@ -206,8 +206,8 @@
     - otherwise the statement will be terminated and changes will roll back
     - `insert`, `delete`, `load data infile`
     - see `show warnings` to review any generated warning messages ignored by this clause
-  - `sq1l_small_result` cause mysql to use temporary tables, with a key based on the group by clause elemenets, to sort the results and possibly make for faster data retrieval
-    - only use when you know the result set will be relatively small
+
+
 
 
 
@@ -373,6 +373,9 @@
   - `completion_type` ?
 ```sql
   set @SOMEVARIABLE = 'some value';
+
+  -- see if mysql server uses query cache by default
+  show variables like `query_cache_type`
 ```
 
 # OPERATORS
@@ -1534,13 +1537,46 @@
   - `replace`
     - insert new rows of data and to replace existing rows where the primary key or unique index is the same as the new record being inserted
     - requires insert and delete privs as its potentially a combination of both
-    -
     - upserting statements - `load data infile`
+
   - `select`
     - retrieve and display data fro tables within a database
       - `all` the default - display all data
       - `distinct` display the first of all occurence i.e. no duplicates
-      -
+    - only one of the following in a single statement
+      - `sql_small_result`
+        - cause mysql to use temporary tables, with a key based on the group by clause elemenets, to sort the results and possibly make for faster data retrieval
+        - only use when you know the result set will be relatively small
+      - `sql_big_result`
+        - if you expect results to be large, this will cause mysql to use temporary tables on the filesystem
+      - `sql_buffer_result`
+        - instruct mysql to use a temporary table to buffer the results
+    - `sql_cache`
+      - force mysql to use the query cache
+    - `sql_no_cache`
+      - force mysql NOT to use the query cache
+    - `sql_cacl_found_rows` total rows
+    - `into`
+      - export data from a `select` statement to an external text file/variable
+      - file privilege is required
+      - counterpart of `load data infile`
+      - `escaped by`
+        - character used to escape special charadters in the output
+          - default `\`
+        - `fields enclosed by`
+          - character to use before and after each field
+            - default no character used
+        - `fields terminated by`
+          - character with which to separate fields
+            - default `\t`
+        - `lines starting by`
+          - character used to start each line
+            - default no character used
+        - `lines terminated by`
+          - character used to end each lines
+    - `into dumpfile`
+      - exports onlh one row into an external text file
+      - does not permit any field or line terminators like the `into outfile`
   - `set`
     - `set autocommit`
       - 0 - disable
@@ -1786,6 +1822,13 @@
     join TABLE2
     ignore index for join (COLNAME)
     ...
+
+  -- export results into file/path.txt
+  select * from TABLENAME
+    into outfile 'file/path.txt'
+    fields termianted by 'SYMBOL'
+    lines terminated by 'SYMBOL'
+    escaped by 'SYMBOL'
 
   -- import from file
   load data infile 'path/to/file.txt'
