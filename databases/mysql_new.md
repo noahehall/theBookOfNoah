@@ -572,14 +572,7 @@
   - `databse()` returns the current database name
   - `mbrcontains(spatialcol, geofromtext('point(1 2)'))`
     - find which square contains a given point ona  cartesian plan (e.g. x=1, y=2)
-  -
 
-
-  ```sql
-    -- retrieve the identification number assigned to the last entered row
-    select last_insert_id();
-
-  ```
 
 # SECURITY
 ## DATABASE security
@@ -1742,6 +1735,10 @@
   - `found_rows()`
     - use this function in conjunction with the `sql_calc_found_rows` option of a `select` statement to determine the number of rows an sql statement using a `limit` clause would have generated without the limitation
   - `last_insert_id()`
+    - returns the ID number of the last row inserted using the mysql connection
+      - ID numbers that are set manually when rows are inserted without `auto_increment` option wont register and therefore wont be returned
+    - the ID number for rows inserted by other clients will not be returned
+    -
   - `row_count()`
   - `schema()`
   -
@@ -1981,6 +1978,9 @@
     COL1, COLX...
     limit..;
   select found_rows();
+
+  -- retrieve the identification number assigned to the last entered row
+  select last_insert_id();
 
   -- update every column
   update TABLENAME
