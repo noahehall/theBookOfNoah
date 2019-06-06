@@ -182,10 +182,20 @@
     - text must be single-quoted
   - `if exists` suppresses an error message if the entity does not already exist
     - `table`, `database`, `view`, `server`
-
+  - `delayed` indicates the same priority status as `low_priority`
+    - but it releases the client so that other queries may be run and so that the connection may be terminated
+      - i.e. it will free the client by storing the statement in a buffer for processing when the table is not busy 
+    - a delayed query that returns without an error message does not guarantee that the isnerts will take place
+      - it confirms only that the query is received by the server to be processed
+    - user wont be informed of any failures if the server crashes
+      - to confirm - you must check the table later for the inserted content
+    - `insert`, `replace`
+  - `high_priority`
+    - overrides a `--low-priority-updates` server option and to disable concurrent inserts
+    - `insert`, `replace`
   - `low_priority` instructs the server to wait until there are no queries on the table before operating on rows.
     - when the table is free it is locked for the action and will prevent concurrency
-    - `delete`, `insert`, `load data infile`
+    - `delete`, `insert`, `load data infile`, `replace`
     - opposite of `concurrent`
   - `concurrent` take an action even if other clients are reading/writing the given table,
     - opposite of `low_priority`
@@ -1479,14 +1489,6 @@
     - access built-in documentation
   - `insert`
     - add rows of data to a table
-    - `delayed` indicates the same priority status as `low_priority`
-      - but it releases the eclient so that other queries may be run and so that the connection may be terminated
-      - a delayed query that returns without an error message does not guarantee that the isnerts will take place
-        - it confirms only that the query is received by the server to be processed
-      - user wont be informed of any failures if the server crashes
-        - to confirm - you must check the table later for the inserted content
-    - `high_priority`
-      - overrides a `--low-priority-updates` server option and to disable concurrent inserts
     - `default`
       - instructs the server to use the default value for the column
     - `on duplicate key update` tell an `insert` statement how to handle an insert when an index in the table already constains a specified value in a column
@@ -1536,7 +1538,10 @@
     - see `ignore`
     - see `replace`
   - `replace`
-    - upsert - `load data infile`
+    - insert new rows of data and to replace existing rows where the primary key or unique index is the same as the new record being inserted
+    - requires insert and delete privs as its potentially a combination of both
+    -
+    - upserting statements - `load data infile`
   - `select`
   - `set`
     - `set autocommit`
