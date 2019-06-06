@@ -946,8 +946,9 @@
 
 
 ### SERVERS database & table schema
-  - `alter server` used with the federated storage engine to change the connectino parameters of a server created with `create server`
+  - `alter server` used with the federated storage engine to change the connection parameters of a server created with `create server`
     - requires `super` privileges
+    - servers are created with the `create server` statement 
   - `create server` for use with the federated storage engine to set the connection parameters
       - the values given are stored int he mysql db in the server table in a new row
       - server name cannot exceed 63 chars
@@ -2061,6 +2062,7 @@
 # SERVER/TABLE ADMINISTRATION
 ## STATEMENTS server/table administration
   - `alter server`
+    - see `database and table schema`
   - `analyze table`
   - `backup table`
   - `cache index`
@@ -2095,4 +2097,4 @@
   - `release_lock()`
   - `uuid()`
   - `version()`
-  - 
+  -
