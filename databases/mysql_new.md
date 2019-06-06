@@ -1698,7 +1698,7 @@
         - the safest level
         - changes are not permitted in other transaction sif a transaction has executed a simple select statement
           - i.e. queries are performed with `lock in share mode`
-    -
+
   - `start transaction`
     - purpose of a transaction is the ability to undo sql statements if need be
     - forces `autocommit` to be disabled
@@ -1716,6 +1716,8 @@
     - see `no`
       - only necessary when the sysstem variable `completion_type` is set to soemthing other than the default setting
     - only for `innodb`, `ndb cluster`, `bdb` engines
+
+
 ### FUNCTIONS transactions
   - `analyse()`
     - returns an analysis of a results take from a select statement
@@ -1738,9 +1740,11 @@
     - returns the ID number of the last row inserted using the mysql connection
       - ID numbers that are set manually when rows are inserted without `auto_increment` option wont register and therefore wont be returned
     - the ID number for rows inserted by other clients will not be returned
-    -
   - `row_count()`
-  - `schema()`
+    - returns the number of rows changed by the previous sql statement executed
+    - see `insert`, `update`, `delete`
+      - and any other statement that modifies records
+  - `schema()` see `database()`
   -
 
 ```sql
@@ -1982,6 +1986,10 @@
   -- retrieve the identification number assigned to the last entered row
   select last_insert_id();
 
+  -- total number of records modified
+  -- by the last executed statement
+  select row_count();
+
   -- update every column
   update TABLENAME
     set COLNAME = 'value',
@@ -2048,5 +2056,43 @@
   \help -- see all cmds
   \h CMD
   \h 'CREATE USER'
-
 ```
+
+# SERVER/TABLE ADMINISTRATION
+## STATEMENTS server/table administration
+  - `alter server`
+  - `analyze table`
+  - `backup table`
+  - `cache index`
+  - `check table`
+  - `checksum table`
+  - `create server`
+  - `flush`
+  - `kill`
+  - `load index into cache`
+  - `lock tables`
+  - `optimize table`
+  - `repair table`
+  - `reset`
+  - `restore table`
+  - `set`
+  - `show engine`
+  - `show engines`
+  - `show open tables`
+  - `show plugins`
+  - `show processlist`
+  - `show status`
+  - `show table status`
+  - `show variables`
+  - `unlock tables`
+
+
+## FUNCTIONS server/table administration
+  - `connection_id()`
+  - `get_lock()`
+  - `is_free_lock()`
+  - `is_usedlock()`
+  - `release_lock()`
+  - `uuid()`
+  - `version()`
+  - 
