@@ -189,7 +189,8 @@
       - it confirms only that the query is received by the server to be processed
     - user wont be informed of any failures if the server crashes
       - to confirm - you must check the table later for the inserted content
-    - `insert`, `replace`
+    - `insert`, `replace`, `update`
+
   - `high_priority`
     - overrides a `--low-priority-updates` server option and to disable concurrent inserts
     - gives `select` statements higher priority of `update` statements submitted at the same time by different clients
@@ -204,7 +205,7 @@
   - `ignore` - applies to all clauses and instructs mysql to ignore any error messages regarding duplicate rows that may occur as a result of a column change
     - will keep the first unique row found and drop any duplicate rows
     - otherwise the statement will be terminated and changes will roll back
-    - `insert`, `delete`, `load data infile`
+    - `insert`, `delete`, `load data infile`, `update`
     - see `show warnings` to review any generated warning messages ignored by this clause
 
 
@@ -323,23 +324,6 @@
     ...
 ```
 
-## UPDATE
-```sql
-  -- update every column
-  update TABLENAME
-    set COLNAME = 'value';
-  -- single column
-  update TABLENAME
-    set COLNAME = 'value'
-    where COLNAME = 'value';
-```
-
-
-## DELETE
-```sql
-  delete from TABLENAME where...
-  delete from TABLENAME where COLNAME1 = (subquery)
-```
 
 
 ## MATH
@@ -1632,9 +1616,20 @@
         - merge columns of data from multiple tables into rows in the results of a select statement
       - `union`
         - merge together the results tables of separate and distinct select statements into one results table
-      -
   - `update`
+    - changes existing rows of data in a table.
+    - for `NOT NULL` columns
+      - if set to NULL
+        - will use default value if available
+        - else erro
   - `use`
+    - sets the default database that mysql is to use for the current session
+      - permitting the name of the defaults database to be omitted from statements
+  - `xa`
+    - used for XA distributed transactions
+    - transactions in which mulitple, separate transactional resources may be involved in a global transaction
+    - only `innodb` tables
+    -
 
 
 # TRANSACTIONS
@@ -1727,7 +1722,6 @@
     - see `no`
       - only necessary when the sysstem variable `completion_type` is set to soemthing other than the default setting
     - only for `innodb`, `ndb cluster`, `bdb` engines
-  - `xa`
 ### FUNCTIONS transactions
   - `analyse()`
   - `benchmark()`
@@ -1770,6 +1764,11 @@
     select... -- verificaiton of crud statement
     rollback; -- undo CRUD
     unlock tables; -- release tables for other clients
+
+
+  -- need concrete example
+  xa... ?
+
 
   delete low_priority from TABLENAME
     where...
@@ -1938,13 +1937,46 @@
   select...
     procedure analyse(10, 255);
 
+  -- merge two tables
+  select...
+    from TABLENAME...
+    union
+      select...
+      from OTHERTABLENAME...
+    order by... -- good to have
+
+  -- limit the first select statement to 10 records
+  -- the second select statement is unlimited
+  (
+    select...
+    limit 10
+  )
+    union
+  ( select... )
+    order by...
+
+
+  -- update every column
+  update TABLENAME
+    set COLNAME = 'value',
+
+  -- single column
+  update TABLENAME
+    set COLNAME = 'value'
+    where COLNAME = 'value';-- update a record in a table
+
+  -- update table1
+  -- data from table2 is used to determine which record
+  update TABLE1 join TABLE2 using (COLNAME)
+    set SOMECOL = SOMEVAL
+    where OTHERCOL = OTHERVAL;
+
   -- create a user variable
   -- use it as a column in a results set
   -- increments by 1 for each record
   set @SOMEVAR = 0;
   select @SOMEVAR := @SOMEVAR + 1 as row
     ...
-
 
   -- set the transaction environment
   set session transactioin isolation level read committed;
