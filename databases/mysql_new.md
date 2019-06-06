@@ -1581,12 +1581,25 @@
     - it does not commit/rollback the transaction to the savepoint
     - instead it merely eliminates the saavepoint as a possible rollback point
   - `rollback`
-    - for transactional tables to reverse transactions that have not yet been commited
+    - for transactional tables to reverse ALL transactions that have not yet been commited
+      - unlike `rollback to savepoint` which undos up until the previous savepoint
     - supported engines: `innodb`, `ndb cluster`, `bdb`
     - `autocommit` must be disabled
       - see `set autocommit`
   - `rollback to savepoint`
+    - instructs the server to reverse sql  statements for the current session back to a point marked int he transaction by the `savepoint` statement
+      - any transactions made after the savepoint are undone
+      - unlike `rollback` which undos ALL uncommited transactions
+    - supported engines - `innodb`, `ndb cluster`, `bdb`
   - `savepoint`
+    - identify a point in a transaction to which sql statements may potentially be undone later
+    - if an additional savepoint is issued with the same name it will replace the previous one
+    - if a stored function/trigger is used
+      - a new savepoint level is setup and the previoius savepoitns are suspended
+      - when the stored function/trigger is finished
+        - any savepoints it created are released and the original savepoint level resumes
+    - see `rollback to savepoint`
+    - see `release savepoint`
   - `set transaction`
   - `start transaction`
     - forces `autocommit` to be disabled
@@ -1643,7 +1656,7 @@
     select... -- verificaiton of crud statement
     rollback; -- undo CRUD
     unlock tables; -- release tables for other clients
-    
+
   delete low_priority from TABLENAME
     where...
 
