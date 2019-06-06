@@ -1540,7 +1540,7 @@
     - upserting statements - `load data infile`
 
   - `select`
-    - retrieve and display data fro tables within a database
+    - retrieve and display data from tables within a database
       - `all` the default - display all data
       - `distinct` display the first of all occurence i.e. no duplicates
     - only one of the following in a single statement
@@ -1574,9 +1574,17 @@
             - default no character used
         - `lines terminated by`
           - character used to end each lines
+    - `into outfile`
+      - exports results set into file
     - `into dumpfile`
       - exports onlh one row into an external text file
       - does not permit any field or line terminators like the `into outfile`
+    - `group by`
+      - group together rows containing the same value for a particular column
+      - does its own sorting
+        - cannot be used with the `order by` clause
+    - `with rollup`
+      - display a total of values for all grouped rows at the end of the result set
   - `set`
     - `set autocommit`
       - 0 - disable
@@ -1823,6 +1831,11 @@
     ignore index for join (COLNAME)
     ...
 
+  -- create then export results into variable
+  set @SOMEVAR = 0
+  select sum(COLNAME) as ALIASNAME
+    into @SOMEVAR
+
   -- export results into file/path.txt
   select * from TABLENAME
     into outfile 'file/path.txt'
@@ -1830,6 +1843,15 @@
     lines terminated by 'SYMBOL'
     escaped by 'SYMBOL'
 
+  -- export an object into file/path.jpg
+  select SOMEIMAGE
+    into dumpfile 'file/path.jpg'
+    from TABLENAME
+
+  -- add a final sum for COLNAME2
+  -- at the end of the result sets
+  select...
+  group by COLNAME1, COLNAME2 with rollup
   -- import from file
   load data infile 'path/to/file.txt'
     into table TABLENAME
