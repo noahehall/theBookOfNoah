@@ -2083,7 +2083,8 @@
     - deprecated
     - does not work reliably
   - `cache index`
-    - tells mysql to cache the given indexes to a specific index cache, which can be creeated with the `set global` statement
+    - tells mysql to cache the given indexes to a specific index cache, which can be created with the `set global` statement
+    - see `key_buffer_size`
   - `check table`
   - `checksum table`
   - `create server`
@@ -2096,6 +2097,7 @@
   - `reset`
   - `restore table`
   - `set`
+    - create a new cache
   - `show engine`
   - `show engines`
   - `show open tables`
@@ -2119,4 +2121,9 @@
 ```sql
   -- get information about a table
   analyze table TABLENAME;
+
+  -- create a new cache
+  -- then use it to cache an existing index
+  set global NEWCACHENAME.key_buffer_size = 100*1024;
+  cache index INDEXNAME in NEWCACHENAME;
 ```
