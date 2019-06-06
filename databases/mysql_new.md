@@ -1585,6 +1585,12 @@
         - cannot be used with the `order by` clause
     - `with rollup`
       - display a total of values for all grouped rows at the end of the result set
+    - `having`
+      - used for conditions returned by aggregate functions
+        - see `avg()` `min()` `max()` etc
+    - `order by`
+      - change the order (by column/expression) of the results set
+        -  by default are displayed in the order in which the rows of data are found in the table
   - `set`
     - `set autocommit`
       - 0 - disable
@@ -1852,6 +1858,17 @@
   -- at the end of the result sets
   select...
   group by COLNAME1, COLNAME2 with rollup
+
+  -- select the row having the max COLNAME value
+  -- max() can be any aggregate function
+  select...
+    group by...
+    having max(COLNAME)
+
+  -- order the results set by an expression 
+  select...
+    order by COLNAME1 * COLNAME2
+
   -- import from file
   load data infile 'path/to/file.txt'
     into table TABLENAME
