@@ -1573,6 +1573,7 @@
         -  by default are displayed in the order in which the rows of data are found in the table
     - `procedure`
       - send the results of a `select` statement as standard input to a procedure
+      - see `analyse()`
     - `lock in share mode`
       - lock the rows that are being selected from a table
       - prevents other clients from changing the data while the select statement is running
@@ -1724,6 +1725,12 @@
     - only for `innodb`, `ndb cluster`, `bdb` engines
 ### FUNCTIONS transactions
   - `analyse()`
+    - returns an analysis of a results take from a select statement
+    - only used with `procedure` clause
+    - param1 - max number of unique values that may be analyzed for each column
+      - default 256
+    - param2 - the max memory that should be allocated for each column during analysis
+      - default 8,192 bytes (8mb)
   - `benchmark()`
   - `database()`
   - `found_rows()`
