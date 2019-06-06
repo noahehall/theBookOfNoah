@@ -184,7 +184,7 @@
     - `table`, `database`, `view`, `server`
   - `delayed` indicates the same priority status as `low_priority`
     - but it releases the client so that other queries may be run and so that the connection may be terminated
-      - i.e. it will free the client by storing the statement in a buffer for processing when the table is not busy 
+      - i.e. it will free the client by storing the statement in a buffer for processing when the table is not busy
     - a delayed query that returns without an error message does not guarantee that the isnerts will take place
       - it confirms only that the query is received by the server to be processed
     - user wont be informed of any failures if the server crashes
@@ -329,16 +329,6 @@
   update TABLENAME
     set COLNAME = 'value'
     where COLNAME = 'value';
-```
-
-
-## UPSERT
-```sql
-  replace TABLENAME (
-    COLNAME1, COLNAMEX
-  ) value (
-    COLVALUE1, COLVALUEX
-  )
 ```
 
 
@@ -1684,6 +1674,26 @@
       from OTHERTABLE
       where...
 
+  -- upsert multiple rows into a table
+  replace into TABLENAME
+    (COL1, COL2, etc...)
+    values
+      (VAL1, etc...),
+      (VAl2, etc...);
+
+  -- upsert one row into a table
+  replace into TABlENAME
+    set COL1 = VALUE1, etc...
+
+
+  -- upsert into table based on data retrieved
+  -- fromm another table
+  replace into TABLENAME
+    (COL1, etc...)
+    select COLNAME...
+    from TABLENAME
+    where...
+    
   -- join two tables on specific columns
   select... as SOMEALIAS
     from TABLE1
