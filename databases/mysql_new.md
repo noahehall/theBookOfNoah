@@ -1636,6 +1636,14 @@
     select...;
     release savepoint SAVEPOINTNAME2;
 
+  -- transaction with rollback
+  start transaction;
+    lock tables TABLENAME write;
+    some CRUD statement...
+    select... -- verificaiton of crud statement
+    rollback; -- undo CRUD
+    unlock tables; -- release tables for other clients
+    
   delete low_priority from TABLENAME
     where...
 
