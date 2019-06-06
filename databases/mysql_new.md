@@ -948,7 +948,7 @@
 ### SERVERS database & table schema
   - `alter server` used with the federated storage engine to change the connection parameters of a server created with `create server`
     - requires `super` privileges
-    - servers are created with the `create server` statement 
+    - servers are created with the `create server` statement
   - `create server` for use with the federated storage engine to set the connection parameters
       - the values given are stored int he mysql db in the server table in a new row
       - server name cannot exceed 63 chars
@@ -2064,8 +2064,26 @@
   - `alter server`
     - see `database and table schema`
   - `analyze table`
+    - stores information that can be useful later when the mysql optimizer chooses the order for consulting indexes during a query
+    - equivalent to using `myisamchk analyze`
+    - for `innodb`
+      - places a write lock on tables
+    - for `myisam`
+      - places a read lock on tables
+    - `no_write_to__binlog` | `local`
+      - do not record this statement in the binlog
+      - else this statement will also be executed on slave servers if replication is enabled
+    - fields
+      - `table` the database and table name
+      - `msg_type` status|error|info|warning
+      - `msg_text` depends
+    -
+    - requires `select` and `insert` privs
   - `backup table`
+    - deprecated
+    - does not work reliably
   - `cache index`
+    - tells mysql to cache the given indexes to a specific index cache, which can be creeated with the `set global` statement
   - `check table`
   - `checksum table`
   - `create server`
@@ -2097,4 +2115,8 @@
   - `release_lock()`
   - `uuid()`
   - `version()`
-  -
+
+```sql
+  -- get information about a table
+  analyze table TABLENAME;
+```
