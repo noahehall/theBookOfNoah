@@ -1670,6 +1670,26 @@
     - see `rollback to savepoint`
     - see `release savepoint`
   - `set transaction`
+    - only for innodb tables ?
+    - set an isolation level for
+      - `session` set the level for the current transaction
+      - `global` to set it for all subsequent transactions (not existing ones)
+      - else a transaction about to be started
+    - `transaction isolation level`
+      - `read uncommitted`
+        - i.e. a dirty read - because seleect statements are executed in a nonlock maneer
+          - thus queries by one transaction can be affected by ongoing, uncommitted updates in another transaction or old data may be used
+      - `read commited`
+        - more consistent read
+        - however changes that are committed in one transaction will be visible to another
+          - i.e. the same query in the same transaction could return different results
+      - `repeatable read`
+        - the default - makes all reads consistent for a transaction
+      - `serializable`
+        - the safest level
+        - changes are not permitted in other transaction sif a transaction has executed a simple select statement
+          - i.e. queries are performed with `lock in share mode`
+    -
   - `start transaction`
     - forces `autocommit` to be disabled
       - but is re-enabled with
@@ -1899,6 +1919,12 @@
   set @SOMEVAR = 0;
   select @SOMEVAR := @SOMEVAR + 1 as row
     ...
+
+
+  -- set the transaction environment
+  set session transactioin isolation level read committed;
+  start transaction;
+  ...
 
 
   -- import from file
