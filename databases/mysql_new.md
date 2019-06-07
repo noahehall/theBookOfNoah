@@ -612,7 +612,7 @@
     - generally when `joining` two tables make sure the fields used in the join have the same data type
 
 
-## STATEMENTS
+## STATEMENTS user administration
   - `create user`
     - users can have more than one account
       - i.e. different user & host combinations
@@ -697,7 +697,8 @@
       - e.g. server administration and a description
 
 
-## PRIVILEGES (for `grant` and `revoke`)
+## PRIVILEGES user administration
+  - for `grant` and `revoke`
   - all - all basic privileges except `grant`
   - alter - alter tables
   - alter routine - alter/drop stored routines
@@ -2129,7 +2130,7 @@
     - the `checksum` value can be different if the row format changes which can happen between versions of mysql
   - `create server`
     - see `database & table schema`
-  - `flush`
+  - `flush` see
   - `kill`
   - `load index into cache`
   - `lock tables`
