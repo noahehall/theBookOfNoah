@@ -699,48 +699,48 @@
 
 ## PRIVILEGES user administration
   - for `grant` and `revoke`
-  - all - all basic privileges except `grant`
-  - alter - alter tables
-  - alter routine - alter/drop stored routines
+  - `all` - all basic privileges except `grant`
+  - `alter` - alter tables
+  - `alter routine`- alter/drop stored routines
     - including alter function|procedure
     - including drop function|procedure
-  - create - create table
-  - create routine - create stored routinges
+  - `create` - create table
+  - `create routine` - create stored routinges
     - including create function|precedure
-  - create temporary tables
-  - create user
+  - `create temporary tables`
+  - `create user`
     - including rename user, revoke all privileges, and drop user
-  - create view- create temporary tables
-  - delete
-  - drop
+  - `create view` - create temporary tables
+  - `delete`
+  - `drop`
     - including truncate
-  - event create events for the event schedule
+  - `event` create events for the event schedule
     - including alter event and drop event
-  - execute - the execution of stored procedures
-  - file - use of   select...into outfile and load data info
+  - `execute` - the execution of stored procedures
+  - `file` - use of   select...into outfile and load data info
     - i.e.e to import/export files
-  - with grant option - grant privileges to users
-  - index - create index and drop index
-  - insert
-  - lock tables - lock statement for tables for which the user has `select` privileges
-  - process - use of the `show full processlist` statements
-  - references - not used?
-  -  reload - flush and reset statements
-  - repliation client - query master and slave servers for status information
-  - replication slaave - required for replication slave servers
+  - `with grant option` - grant privileges to users
+  - `index` - create index and drop index
+  - `insert`
+  - `lock tables` - lock statement for tables for which the user has `select` privileges
+  - `process` - use of the `show full processlist` statements
+  - `references` - not used?
+  -  `reload` - flush and reset statements
+  - `replication client` - query master and slave servers for status information
+  - `replication slave` - required for replication slave servers
     - allows binary log events to be read from the master server
-  - select
-  - show databases - `show databases` for all databases
+  - `select`
+  - `show databases` - `show databases` for all databases
     - be careful with this one!
-  - show view - show create view
-  - shutdown - shutdown option with the `mysqladmin` utility
-  - super - change master, kill, purge master logs and set global statements and the debug option with the cmd line utility `mysqladmin`
-  - trigger - create and drop triggers
+  - `show view` - show create view
+  - `shutdown` - shutdown option with the `mysqladmin` utility
+  - `super` - change master, kill, purge master logs and set global statements and the debug option with the cmd line utility `mysqladmin`
+  - `trigger` - create and drop triggers
   - update
-  - usage - create a user without privileges or to modify resource limits on an existing user without affecting the existing privileges
+  - `s` - create a user without privileges or to modify resource limits on an existing user without affecting the existing privileges
 
 
-## FUNCTIONS
+## FUNCTIONS user administration
   - many use like this `select md5('example function call')`
   - AES_DECRIPT(string, pw)
     - decrypts text that was encrypted using the advanced encryption standard (AES) algorithm with a 128 bit key length, reversing the AES_ENCRYPT() function
@@ -2130,8 +2130,15 @@
     - the `checksum` value can be different if the row format changes which can happen between versions of mysql
   - `create server`
     - see `database & table schema`
-  - `flush` see
+  - `flush` see `user administration`
   - `kill`
+    - flag a connection/connections running query for termination
+    - see `show processlist` to get obtain a connection thread identifier for us in this statement
+    - `connection` terminate the connection
+    - `query` terminate the query associated with a given `connection`
+    - never
+      - `kill` a `repair table` or `optimize table` query
+        - it could corrupt a `myisam` table 
   - `load index into cache`
   - `lock tables`
   - `optimize table`
