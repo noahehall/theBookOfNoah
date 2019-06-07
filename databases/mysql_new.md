@@ -950,7 +950,7 @@
     - requires `super` privileges
     - servers are created with the `create server` statement
   - `create server` for use with the federated storage engine to set the connection parameters
-      - the values given are stored int he mysql db in the server table in a new row
+      - the values given are stored in the mysql db in the server table in a new row
       - server name cannot exceed 63 chars
       - if an option is not give, the default`create server` will b ean empty string
   - `drop server` for use with federated storage engines to delet a given server that is created with `create server`
@@ -1301,6 +1301,8 @@
 
 
   -- create a server
+  -- query it
+  -- create a table in it
   create server SERVERNAME
     foreign data wrapper mysql
     options (
@@ -1309,7 +1311,12 @@
       database 'DBNAME',
       PORT ####,
       OWNER 'root'
-    )
+    );
+  select * from mysql.servers
+    where server_name = 'SERVERNAME';
+  create table TABLENAME (...)
+    engine=federated
+    connection='SERVERNAME';
 
   -- use an existing server as the connection
   -- see above
@@ -2119,8 +2126,9 @@
     - `extended`
       - instructs the server to check each row
       - use this option only as a last resort
-    -
+    - the `checksum` value can be different if the row format changes which can happen between versions of mysql
   - `create server`
+    - see `database & table schema`
   - `flush`
   - `kill`
   - `load index into cache`
@@ -2162,4 +2170,7 @@
 
   -- check the table for medium type errors
   check table TABLENAME medium;
+
+  -- retrieve a tables live checksum
+  checksum table TABLENAME;
 ```
