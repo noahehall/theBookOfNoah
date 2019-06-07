@@ -2137,7 +2137,7 @@
   - `flush` see `user administration`
   - `kill`
     - flag a connection/connections running query for termination
-    - see `show processlist` to get obtain a connection thread identifier for us in this statement
+    - see `show processlist` to obtain a connection thread identifier for us in this statement
     - `connection` terminate the connection
     - `query` terminate the query associated with a given `connection`
     - never
@@ -2202,8 +2202,14 @@
       - `like` used to limit the tables displayed by a naming pattern
       - `where` used to refine the results set
   - `show plugins`
+    - display a list of plugins on the server
   - `show processlist`
+    - displays a list of connection threads running on the mysql server
+    - requires the `super` privs to be able to see all threads
+      - else only threads related to the current connection are shown
+      -
   - `show status`
+    - displays status information and variables from the server
   - `show table status`
   - `show variables`
   - `unlock tables`
@@ -2264,4 +2270,10 @@
   -- list of tables matching wildcard
   show open tables
   from DATABASENAME like '%POOP%'
+
+  -- list all plugins
+  show plugins;
+
+  -- list all plugins/variables matching poop
+  show status like '%poop%'
 ```
