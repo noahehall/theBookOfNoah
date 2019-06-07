@@ -2107,8 +2107,19 @@
         - if table created from an earlier version of mysql and there have been changes to the current version that make the table incompatible
           - only then will it execute an extended check for errors
           - if successful
-            - it will mark the table as checked and future scans will not recheck the table 
+            - it will mark the table as checked and future scans will not recheck the table
   - `checksum table`
+    - returns a `myisam` tables live checksum value
+      - the value can be optionally maintained to improve a tables repairability
+        - see `create table` or `alter table` setting `checksum` to 1
+    - `quick`
+      - if available, the live checksum table will be returned
+      - if not, null will be returned
+      - use this when the table is probably fine
+    - `extended`
+      - instructs the server to check each row
+      - use this option only as a last resort
+    -
   - `create server`
   - `flush`
   - `kill`
@@ -2148,4 +2159,7 @@
   -- then use it to cache an existing index
   set global NEWCACHENAME.key_buffer_size = 100*1024;
   cache index INDEXNAME in NEWCACHENAME;
+
+  -- check the table for medium type errors
+  check table TABLENAME medium;
 ```
