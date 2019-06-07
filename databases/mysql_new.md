@@ -2083,9 +2083,31 @@
     - deprecated
     - does not work reliably
   - `cache index`
-    - tells mysql to cache the given indexes to a specific index cache, which can be created with the `set global` statement
+    - tells mysql to cache the given table indexes to a specific index cache, which can be created with the `set global` statement
     - see `key_buffer_size`
+    - as long as the cache exists all queries by al users will use this cache
+    - used only on `myisam` tables
   - `check table`
+    - check tables for errors
+    - supports `myisam`, `innodb`, `archive`, `csv` engines
+    - `changed`
+      - checks only tables tht have been changed since the last check
+    - `quick`
+      - checks tables for errors but wont scan individual rows for linking problems
+    - `fast`
+      - checks only tables that have not been closed properly
+    - `medium`
+      - deterimes the key checksum for the rows and compares the results against the chedcksum for the keys
+        - this option also checks rows to ensure that links were deleted properly
+    - `extended`
+      - thoroughly cheecks each row for errors
+        - takes a long time to complete
+    - `for upgrade`
+      - checks a table against the version of mysql in use
+        - if table created from an earlier version of mysql and there have been changes to the current version that make the table incompatible
+          - only then will it execute an extended check for errors
+          - if successful
+            - it will mark the table as checked and future scans will not recheck the table 
   - `checksum table`
   - `create server`
   - `flush`
