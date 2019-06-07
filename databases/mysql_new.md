@@ -207,6 +207,9 @@
     - otherwise the statement will be terminated and changes will roll back
     - `insert`, `delete`, `load data infile`, `update`
     - see `show warnings` to review any generated warning messages ignored by this clause
+  - `no_write_to_binlog`
+    - prevent the activities of this statement from being recorded in the binary log file
+    - `local` does the same thing
 
 
 
@@ -2156,7 +2159,8 @@
     - giving a locked table an alias forces all SQL queries by the lockign thread  to use the alias
   - `optimize table`
     - optimize the data contained the table
-    - it temporarly locks the tables involved while optimizing 
+    - it temporarly locks the tables involved while optimizing
+    - see `no_write_to__binlog`
     - useful when
       - many rows have been deleted from a table
       - to repair some row problems and sort indexes
@@ -2164,8 +2168,14 @@
       - `varchar` `blob` `text`
     - supported by `myisam` `bdb` and `innodb`
       - may work with other tables if `--skip-new` of `--safe-mode` are set when `mysqld` is started
-    -
+    - see `no_write_to_binlog`
   - `repair table`
+    - use this statement to repair corrupted `myisam` tables
+    - see `no_write_to_binlog`
+    - `quick` isntructs mysqlk to repair the table indexes only
+    - `extended` rebuilds the indexes one row at a time
+      - takes longer but is more effective especially with rows containing duplicate keys
+      - 
   - `reset`
   - `restore table`
   - `set`
@@ -2220,4 +2230,7 @@
     TABLENAME1 read,
     TABLENAME2 read local,
     TABLENAME3 as POOP low_priority  write;
+
+  -- optimize tabless
+  optimize local table TABLENAME1, TABLENAME2
 ```
