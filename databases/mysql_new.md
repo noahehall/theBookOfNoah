@@ -671,24 +671,24 @@
     - cannot be used in stored functions or triggers
     - OPTIONS
       - `local` prevent this statement from writing tot he binary log file
-      - des_key_file - reloads the des encryption file, which is given the --des-key-file option at staartup or int he optinos file
-      - hosts - clear the hosts cache, which is used to minmize host/ip address lookups
-      - logs - used to close all of the log files aand reopen them
-      - if the server has binary logging enabled it will change the binary log file to the next numeric sequence
-      - master - deprecated -
+      - `des_key_file` - reloads the des encryption file, which is given the --des-key-file option at staartup or int he optinos file
+      - `hosts` - clear the hosts cache, which is used to minmize host/ip address lookups
+      - `logs` - used to close all of the log files aand reopen them
+        - if the server has binary logging enabled it will change the binary log file to the next numeric sequence
+      - `master` - deprecated -
         - use `reset master`
-      - privileges - reloads the grant tables for user privileges
-      - query cache - instructs the server to defragment the query cache to improve performance
+      - `privileges` - reloads the grant tables for user privileges
+      - `query_cache` - instructs the server to defragment the query cache to improve performance
         - use `reset query cache` to remove queries
-      - slave - deprecated - use `reset slave` instead
-      - status - resets the session values and counters for key caches to 0
-      - table NAME, NAMEX - forces the given tables to be closed
-      - TABLES - causes all tables to be closed
-      - tables with read lock - closed all tables and locks them with a global read lock
+      - `slave` - deprecated - use `reset slave` instead
+      - `status` - resets the session values and counters for key caches to 0
+      - `table` forces the given tables to be closed
+      - `tables` - causes all tables to be closed
+      - `tables with read lock` - closed all tables and locks them with a global read lock
         - allows users to view the data but not ot update it or insert records
         - the lock will remain in place until `unlock tables` statement is executed
         - this is not logged
-      - user_resources - resets all user resource values that are calculated on an hourly basis
+      - `user_resources` - resets all user resource values that are calculated on an hourly basis
         - specifically the following columns in `mysql.user`
           - max_questions
           - max_updates
