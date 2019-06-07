@@ -260,6 +260,7 @@
   - `handler` can be faster than select statements when reading large numbers of rows from a table
     - requires `myisam` and `innodb` storage engines
     - specifying a an index when reading can boost performance
+  - see `optimize table`
 
 
 # UTILITIES
@@ -2152,7 +2153,18 @@
       - prohibits other threads from reading fromm or writing to locked tables
         - reads and writes by the locking thread are permitted
       - has priority of `read` locked tables
+    - giving a locked table an alias forces all SQL queries by the lockign thread  to use the alias
   - `optimize table`
+    - optimize the data contained the table
+    - it temporarly locks the tables involved while optimizing 
+    - useful when
+      - many rows have been deleted from a table
+      - to repair some row problems and sort indexes
+    - run this statement periodically for tables with several variable-character-width columns
+      - `varchar` `blob` `text`
+    - supported by `myisam` `bdb` and `innodb`
+      - may work with other tables if `--skip-new` of `--safe-mode` are set when `mysqld` is started
+    -
   - `repair table`
   - `reset`
   - `restore table`
