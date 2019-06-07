@@ -2138,9 +2138,20 @@
     - `query` terminate the query associated with a given `connection`
     - never
       - `kill` a `repair table` or `optimize table` query
-        - it could corrupt a `myisam` table 
+        - it could corrupt a `myisam` table
   - `load index into cache`
+    - preload a tables index into a given key cache for a `myisam` table
+
   - `lock tables`
+    - lock the given tables for exclusive use by the current connection thread
+    - `read` allows the lock tables to be read by all threads
+      - does not allow writes to the tables even by the thread that locked them
+    - `read local` allows all threads to read the tables that are locked while the locking connection can execute insert statements
+      - direct data manipulation by cmd line utilies should be avoid until the lock is released
+    - `write`
+      - prohibits other threads from reading fromm or writing to locked tables
+        - reads and writes by the locking thread are permitted
+      - has priority of `read` locked tables
   - `optimize table`
   - `repair table`
   - `reset`
@@ -2181,4 +2192,20 @@
 
   -- retrieve a tables live checksum
   checksum table TABLENAME;
+
+  -- retrieve an ID then kill it
+  show processlist \G;
+  kill query 1234;
+
+  -- preload table(s)index(es) into cache
+  load into cache TABLENAME;
+
+  -- lock multiple tables
+  -- table1 no writing
+  -- table2 no reading or writing
+  -- table3 no writing except by the current connection
+  lock tables
+    TABLENAME1 read,
+    TABLENAME2 read local,
+    TABLENAME3 as POOP low_priority  write;
 ```
