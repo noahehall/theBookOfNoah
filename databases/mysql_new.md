@@ -2197,7 +2197,10 @@
   - `show engines`
     - lists the table types or storage engines available for the version of mysql running on the server
   - `show open tables`
-    - 
+    - display a list of tables that are open, i.e. that are in the table cache.
+      - does not include anyt emporary tables
+      - `like` used to limit the tables displayed by a naming pattern
+      - `where` used to refine the results set
   - `show plugins`
   - `show processlist`
   - `show status`
@@ -2254,4 +2257,11 @@
 
   -- restore a table
   restore table TABLENAME1, TABLENAME2 from 'file/path'
+
+  -- list all engines
+  show engines \G;
+
+  -- list of tables matching wildcard
+  show open tables
+  from DATABASENAME like '%POOP%'
 ```
