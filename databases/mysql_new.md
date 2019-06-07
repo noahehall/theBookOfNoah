@@ -2171,18 +2171,33 @@
     - see `no_write_to_binlog`
   - `repair table`
     - use this statement to repair corrupted `myisam` tables
+    - before using this statement make a backup of the table
+      - if the table coontinues to havve problems there may be other problems (e.g file system issues) that you should consider
     - see `no_write_to_binlog`
     - `quick` isntructs mysqlk to repair the table indexes only
     - `extended` rebuilds the indexes one row at a time
       - takes longer but is more effective especially with rows containing duplicate keys
-      - 
+      -
   - `reset`
+    - see `user administration`
   - `restore table`
+    - restores a table that was saved to a filesystem by the `backup table` statement
+      - the absolute path to the directory containing the backup files must appear within quotes
+      - if the tables already exist in the database an error will be genreated and the restore will fail
+      - if successful the indexes willl automatically be rebuilt
+        - ths is necessary because the `backup table` statement doesnt backup the index files
   - `set`
-    - create a new cache
+    - see `crud`
   - `show engine`
+    - display the details of the status of given storage engine
+    - provides information on the table and record locks for transactions, waiting locks, prending requests, buffer statistics, and logs related to the engine
+    - supports `innodb` `ndb` `ndbcluster`
+    - `mutex` option only supported by `innodb`
+    - `ndb` returns empty results set if thhere are no operations at the time
   - `show engines`
+    - lists the table types or storage engines available for the version of mysql running on the server
   - `show open tables`
+    - 
   - `show plugins`
   - `show processlist`
   - `show status`
@@ -2233,4 +2248,10 @@
 
   -- optimize tabless
   optimize local table TABLENAME1, TABLENAME2
+
+  -- repair a table
+  repair table TABLENAME quick extended;
+
+  -- restore a table
+  restore table TABLENAME1, TABLENAME2 from 'file/path'
 ```
