@@ -175,6 +175,15 @@
       - a timestamp for slave servers to adjust their updates to match the
       - `use` statement to ensure the slave uses the correct `database`
       - the value of any `insert_id` to ensure the ids match across servers
+  - `relay.log`
+    - the slave appends changes it has made to its relay.log file
+    - similar to the masters binlog file
+    - a new `relay.log` is created
+      - when replication starts ont he slave and when  the logs are flusehd (i.e. the `flush logs`)
+      - when the current file reaches themaximum size as set with the `max_relay_log_size` or the `max_binlog_size` variable
+  - `master.info`
+    - heavily used in replication
+    - slaves record their position in the masters `bin.log` file inside of the `master.info` file location on the slaves server
 
 
 # important LOCATIONS
@@ -2361,7 +2370,9 @@
     - houses the data and handles clietn requests
     - the server logs all data changes toa  binary log, locally
     - the master in turn informs another mysql server (the `slave server`)
+
   - `slave server`
+    - see `important files`
     - contains a copy of the masters databse and of any additions to its binary
     - the slave in turns makes the same changes  to its databases
     - the slave can either reexecute the masters sql statements locaally or just copy over changes to the masters database
@@ -2372,17 +2383,22 @@
           - it looks to see whetether any salves are connected and waiting fo rupdates
           - the master then pokes the slave to let it know that an entry has been made to its binary log in case its interested
         - the slave will ask the master to send entries starting froom the position identification number of the last log file entry the slave processed
+    - never makes direct changes to its data
+      - instead it uses the mysql API
+
   - backup method
     - setup a separate server to be a slave, and then once a day/e.g. turn off replication to make a clean backup of the slave servers  database
     - when complete replication can be restarted and the slave willa utomatically query the master for changes to the masters data that the slave missed while it was offline
+
   - replication process
     - sql statements that change data are recorded in a binary log (`bin.log`) on the master server as it executes them
       - data-changing statements e.g.
         - `insert` `update` `delete`
       - schema-manipulation statements e.g.
         - `create table` `alter table` `drop table`
-    - the master records a  log position id number used to determine which log entries the master should relay to the slave
+    - the master records a log position id number used to determine which log entries the master should relay to the slave
       - planned downtime for making a backup of  the slave
       - slave has difficulty staying connected to the master du eot networkign problems
       - slave falls behind because the master has a heavy load of updates in a short period of time
-    -
+    - slave retrieves updates and records those updates in its `relay.log` file
+    - after issueing statements in the `relay.log` file, records its new position ID number in the `master.info` file
