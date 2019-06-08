@@ -2326,3 +2326,21 @@
   -- retrive the ysql server version
   select version();
 ```
+
+# REPLICATION
+  - replication
+    - primarily a matter of configuring mulitple servers to the one where users submit their queries,
+    - supports making clean backups without having to bring the down server
+  - what not to do
+    - performing a backup while a server is running can slow down a system
+    - backups made on active servers can result in inconsistent  data because a related table may be changed while another is being copied
+    - taking down the eserver ensures consistency of data but interrupts syql service to users
+  - `master server`
+    - houses the data and handles clietn requests
+    - the server logs all data changes toa  binary log, locally
+    - the master in turn informs another mysql server
+      - `slave server`
+        - contains a copy of the masters databse and of any additions to its binary
+        - the slave in turns makes the same changes  to its databases
+        - the slave can either reexecute the masters sql statements locaally or just copy over changes to the masters database
+    -
