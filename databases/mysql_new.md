@@ -2443,6 +2443,11 @@
     - when complete replication can be restarted and the slave willa utomatically query the master for changes to the masters data that the slave missed while it was offline
 
 ## PROCESS replication
+  - steps
+    - create replication user accounts
+    - configure servers
+    - load the backup-databases onto the slave servers
+    - start replication
   - sql statements that change data are recorded in a binary log (`bin.log`) on the master server as it executes them
     - data-changing statements e.g.
       - `insert` `update` `delete`
@@ -2478,6 +2483,11 @@
 
 ### STARTING REPLICATION replication
 
+```sql
+  -- connect to the master and get the changes it missed since the last backup
+  start slave
+```
+
 ## STATEMENTS AND FUNCTIONS replication
   - `change master to`
     - set variables on the slave related to its connection with the master
@@ -2486,6 +2496,16 @@
         - the only time it changes the `master.info` file is when you expclitity tell it to via `change master to`
 
     -
+  - `start slave`
+    - connect to master and get changes since last backup
+    - the slave should thereafter stay current and continuously interact with the master
+    - requires `super` privs
+    - on success
+      - no message is returned, yay!
+    - on failure
+      - slave-to-master connection may fail
+      - sql thread processing entries received from master may fail
+      - no message is returned, WTF?!?!?!
 ```sh
   # configure replication
   # add to both master and slave server `my.cnf` files
