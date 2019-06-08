@@ -2433,13 +2433,52 @@
   - configuring the servers
     - add the following lines to the mysql configuration file on the master and slave servers
       - `my.cnf` or `my.ini`
-      - see sh block below
+      - `server-id` abritrary number used to identify the master server in the `bin.log` and in communications with `slave server`
+        - do not use 0
+        - a unique number should be assigned to each slave
+      - `log-bin` instructs mysql to perform binary logging to the path and file given
+        - the directory must exist and the user `mysql` is the owner, or atleast has permission to write to the cirectory
+        - to use defaults, give the `log-bin` option without the equals sign and without the file pathname
+      - see sh block below for example
+## STATEMENTS AND FUNCTIONS replication
+  - `change master to`
+    - set variables on the slave related to its connection with the master
+      - not recommected to set these variables in the configuration file (even tho you can)
+    -
 ```sh
   # configure replication
   # add to both master and slave server `my.cnf` files
+  # the innodb lines resolve problems that can occur
+  # with transactions and binary logging
   [mysqld]
   server-id = 1
   log-bin = /var/log/mysql/bin.log
+  innodb_flush_log_at_trx_commit = 1 # only for innodb
+  sync-binlog = 1 # only for innodb
+
+  # configure replication
+  # add to each slave server
+  [mysql]
+  server-id = 2
+  # set logs and related index files
+  # starts binary logging like on the master server
+  log-bin = /var/log/mysql/bin.log
+  log-bin-index = /varlog/mysqllog-bin.index
+  log-error = /var/log/mysql/error.log
+  # defines relay log that records each entry
+  # in the master servers binary log
+  relay-log = /var/log/mysql/relay.log
+  # records the most recent position in the masters bin.log
+  # that should be executed next
+  relay-log-info-file = /var/log/mysql/relay-log.info
+  relay-log-index = /var/log/mysql/relay-log.index
+  # necessary only if you expect the load data infile
+  # to be executed on the server
+  # specifies the temp directory for these files
+  slave-load-tmpdir = /var/log/mysql
+  # prevents the slave fromm replicating until you are ready
+  skip-slave-start
+  ...
 
 ```
 

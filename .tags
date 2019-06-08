@@ -3271,3 +3271,4 @@ SERVER/TABLE ADMINISTRATION	/home/wesov/git/theBookOfNoah/databases/mysql_new.md
 STATEMENTS server/table administration	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## STATEMENTS server\/table administration$/;"	function	line:2118
 FUNCTIONS server/table administration	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## FUNCTIONS server\/table administration$/;"	function	line:2265
 REPLICATION	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# REPLICATION$/;"	function	line:2374
+STATEMENTS AND FUNCTIONS replication	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## STATEMENTS AND FUNCTIONS replication$/;"	function	line:2443
