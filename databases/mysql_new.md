@@ -2329,7 +2329,8 @@
 
 # REPLICATION
   - replication
-    - primarily a matter of configuring mulitple servers to the one where users submit their queries,
+    - primarily a matter of configuring mulitple servers to the one where users submit their queries
+    - physically setup a `slave server` and configure mysql on boht servesr appropriately to begin replication
     - supports
       - data backups making clean backups without having to bring the down server
       - load balancing
@@ -2349,3 +2350,14 @@
   - backup method
     - setup a separate server to be a slave, and then once a day/e.g. turn off replication to make a clean backup of the slave servers  database
     - when complete replication can be restarted and the slave willa utomatically query the master for changes to the masters data that the slave missed while it was offline
+  - replication process
+    - sql statements that change data are recorded in a binary log (`bin.log`) on the master server as it executes them
+      - data-changing statements e.g.
+        - `insert` `update` `delete`
+      - schema-manipulation statements e.g.
+        - `create table` `alter table` `drop table`
+    - the master records a  log position id number used to determine which log entries the master should relay to the slave
+      - planned downtime for making a backup of  the slave
+      - slave has difficulty staying connected to the master du eot networkign problems
+      - slave falls behind because the master has a heavy load of updates in a short period of time 
+    -
