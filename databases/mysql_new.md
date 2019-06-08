@@ -233,7 +233,6 @@
   mysql -h HOST -u USER -p
 ```
 
-
 # PERFORMANCE
   - increasing the size of the `myisam_sort_buffer_size` will sometimes make table alterations go faster
   - limiting the number of characters used in an index makes for a smaller index which will be faster and probably just as accurate as using the complete column widths
@@ -2211,18 +2210,45 @@
   - `show status`
     - displays status information and variables from the server
   - `show table status`
+    - see databas & table schema
   - `show variables`
+    - see database & table schema
   - `unlock tables`
+    - unlock tables that were locked by the current connection with the `lock tables` statement or by `flush tables with read lock`
+    - implicitly commits any active transactions if any tables were lunlock tables locked with `lock tables`e
 
 
 ## FUNCTIONS server/table administration
   - `connection_id()`
+    - returns the mysql connection/thread id number for the mysql session
   - `get_lock()`
+    - attempts to get a lock by name for a number of seconds
+    - on success returns 1
+    - on failure
+      - due to timeout returns 0
+      - due to error returns null
+    - see `release_lock()`
+    - a lock is released via `release_lock()` or issuing another `get_lock()`
   - `is_free_lock()`
-  - `is_usedlock()`
+    - determine whether the name of the lock given in parantheses is free and available as a lock name
+    - if the lock name is in use, it returns the connection identifier of the client holding the lock
+    - returns 1 if the lock name is freen
+    - returns 0 if its not (because its in use by another client)
+    - returns null if there is an error
+  - `is_used_lock()`
+    - determines whether the name given is already in use as a lock name
+    - if th elock name is in use returns the connection identifier of the client holding the lock
+    - returns null if its not in use
   - `release_lock()`
+    - releases a lock created by `get_lock()`
+    - returns 1 if successfull
+    - returns 0 on failure
+    - returns null if the specified lock does not exist
   - `uuid()`
+    - returns a uuid, a 128-bit number composed of five hexadecimal numbers
+    - it is unique per invocation and is based ont he values that are borth temporal and spatial
   - `version()`
+    - returns the mysql server version
 
 ```sql
   -- get information about a table
@@ -2276,4 +2302,27 @@
 
   -- list all plugins/variables matching poop
   show status like '%poop%'
+
+  -- retrieve the mysql connection/thread ID
+  -- for the current mysql session
+  select connection_id();
+
+  -- attempt to create lock for 10 seconds
+  select get_lock('SOMENAME', 10)
+
+  -- see if a lock name is free/not in use
+  select is_free_lock('SOMENAME')
+
+  -- see if a lock name is in use
+  select is_used_lock('SOMENAME')
+
+  -- release a given lock
+  select release_lock()
+  do release_lock('SOMENAME') -- same thing
+
+  -- create a UUID
+  select uuid();
+
+  -- retrive the ysql server version
+  select version();
 ```
