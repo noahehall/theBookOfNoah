@@ -4,7 +4,8 @@
     - # header keyword
       - # table option
       - # table engine
-      - etc
+      - # important files
+    - `some cmd`
 
 ..
 
@@ -358,9 +359,6 @@
     - information about database and tables
 
 
-## MYSQLDUMP
-  - popular for exporting data and table structures to a plain text file known as a dump file
-    - used for backing up data or for manually moving it between servers
 
 
 ## TABLES
@@ -2444,23 +2442,23 @@
     - setup a separate server to be a slave, and then once a day/e.g. turn off replication to make a clean backup of the slave servers  database
     - when complete replication can be restarted and the slave willa utomatically query the master for changes to the masters data that the slave missed while it was offline
 
-  - replication process
-    - sql statements that change data are recorded in a binary log (`bin.log`) on the master server as it executes them
-      - data-changing statements e.g.
-        - `insert` `update` `delete`
-      - schema-manipulation statements e.g.
-        - `create table` `alter table` `drop table`
-    - the master records a log position id number used to determine which log entries the master should relay to the slave
-      - planned downtime for making a backup of  the slave
-      - slave has difficulty staying connected to the master du eot networkign problems
-      - slave falls behind because the master has a heavy load of updates in a short period of time
-    - slave retrieves updates and records those updates in its `relay.log` file
-    - after issueing statements in the `relay.log` file, records its new position ID number in the `master.info` file
+## PROCESS replication
+  - sql statements that change data are recorded in a binary log (`bin.log`) on the master server as it executes them
+    - data-changing statements e.g.
+      - `insert` `update` `delete`
+    - schema-manipulation statements e.g.
+      - `create table` `alter table` `drop table`
+  - the master records a log position id number used to determine which log entries the master should relay to the slave
+    - planned downtime for making a backup of  the slave
+    - slave has difficulty staying connected to the master du eot networkign problems
+    - slave falls behind because the master has a heavy load of updates in a short period of time
+  - slave retrieves updates and records those updates in its `relay.log` file
+  - after issueing statements in the `relay.log` file, records its new position ID number in the `master.info` file
 
-  - replication user account
+##  USER ACCOUNT replication
     - setup a user account(s) dedicated to replication on both the master and the slave
       - best not to use ane xisting account for security reasons
-  - configuring the servers
+## CONFIGURING SERVERS replication
     - add the following lines to the mysql configuration file on the master and slave servers
       - `my.cnf` or `my.ini`
       - `server-id` abritrary number used to identify the master server in the `bin.log` and in communications with `slave server`
