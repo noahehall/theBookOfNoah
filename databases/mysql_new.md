@@ -182,8 +182,16 @@
       - when replication starts ont he slave and when  the logs are flusehd (i.e. the `flush logs`)
       - when the current file reaches themaximum size as set with the `max_relay_log_size` or the `max_binlog_size` variable
   - `master.info`
-    - heavily used in replication
+    - used primarily in replication for the slave to remember its position in the masters binary log file even if the slave is rebooted as well as the information necessary to reconnect to he master
+    - lines
+      - first line contains the number of lines of data in the file
+      - second line shows the name of the last binary log file on the master from which the slave received entries
+      - third line show sthe position identification  number int he masters binary log
+      - the next few lines contain the masters host address, the replication username, the password, and the port number
+        - the password is not encrypted and stored in clear text
+        - you need to keep this file in a secure directory
     - slaves record their position in the masters `bin.log` file inside of the `master.info` file location on the slaves server
+      -
 
 
 # important LOCATIONS
@@ -604,6 +612,7 @@
 
 
 # SECURITY
+  - you have to keep the `master.info` file used by the `slave server` for replication in a secure directory as the `master server` password is store in plain text
 ## DATABASE security
   - dropping a database|table|server
     - any user privileges specific to the database are not deleted
