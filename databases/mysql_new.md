@@ -181,7 +181,7 @@
     - a new `relay.log` is created
       - when replication starts ont he slave and when  the logs are flusehd (i.e. the `flush logs`)
       - when the current file reaches themaximum size as set with the `max_relay_log_size` or the `max_binlog_size` variable
-  - `relay-log.info` after eaach new entry is recorded int he slaves `relay.log` file, the new relay log position id number is recorded in this file through the slaves `sql thread`
+  - `relay-log.info` after each new entry is recorded int he slaves `relay.log` file, the new relay log position id number is recorded in this file through the slaves `sql thread`
   - `master.info`
     - used primarily in replication for the slave to remember its position in the masters binary log file even if the slave is rebooted as well as the information necessary to reconnect to he master
     - lines
@@ -770,8 +770,12 @@
   - `references` - not used?
   -  `reload` - flush and reset statements
   - `replication client` - query master and slave servers for status information
-  - `replication slave` - required for replication slave servers
+    - see `replication`
+    - permits the user to execute the `show master status` and the `show slave status` statements
+  - `replication slave` - required for users on the master server to be setup replication slave servers
     - allows binary log events to be read from the master server
+    - permits the user to connect to the master and to receive updates to the masters binary log
+    - see `replication`
   - `select`
   - `show databases` - `show databases` for all databases
     - be careful with this one!
@@ -2370,7 +2374,7 @@
 # REPLICATION
   - see important files
   - see security
-  - replication
+  - replication notes
     - primarily a matter of configuring mulitple servers to the one where users submit their queries
     - physically setup a `slave server` and configure mysql on boht servesr appropriately to begin replication
     - supports
@@ -2399,9 +2403,12 @@
           - it looks to see whetether any salves are connected and waiting fo rupdates
           - the master then pokes the slave to let it know that an entry has been made to its binary log in case its interested
         - the slave will ask the master to send entries starting froom the position identification number of the last log file entry the slave processed
+        - when the slave compares the entries in the `relay.log` to the data in its databases
+          - if comparison reveals any inconsistency the replication process is stopped and an error message is recorded in the slaves error log `error.log`
+            - the slave will not restart until it is told to do so
+            - after you have resolved the discrepancy you can isntruct the slave to resume replication
     - never makes direct changes to its data
       - instead it uses an sql thread to execute the new sql statements recorded in the `relay.log`
-      -
 
   - backup method
     - setup a separate server to be a slave, and then once a day/e.g. turn off replication to make a clean backup of the slave servers  database
@@ -2419,3 +2426,29 @@
       - slave falls behind because the master has a heavy load of updates in a short period of time
     - slave retrieves updates and records those updates in its `relay.log` file
     - after issueing statements in the `relay.log` file, records its new position ID number in the `master.info` file
+
+  - replication user account
+    - setup a user account(s) dedicated to replication on both the master and the slave
+      - best not to use ane xisting account for security reasons
+  - configuring the servers
+    - add the following lines to the mysql configuration file on the master and slave servers
+      - `my.cnf` or `my.ini`
+      - see sh block below
+```sh
+  # configure replication
+  # add to both master and slave server `my.cnf` files
+  [mysqld]
+  server-id = 1
+  log-bin = /var/log/mysql/bin.log
+
+```
+
+```sql
+  -- user account for replication
+  -- enter identical statements on the master and slave(s)
+  -- only changing the hostname for each
+  -- replicate slave - priv for a user to replicate a server
+  grant replication slave,
+    replication client on *.*
+    to 'replicant'@'slave_host' identified by 'somepw'
+```
