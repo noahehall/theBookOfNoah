@@ -2559,9 +2559,20 @@
     - it is used for fine tuning a recovery
     - it returns an error if the slave thyread is running
 
+  - `set sql_log_bin`
+    - enables/disables binary logging of sql statements for the current connection
+      - it does not affect logging for the activites of other threads and is reset to the default value when the connection is closed
+        - 0 - disable binary logging
+        - 1 - enable binary logging
+
   - `show slave status`
     - if any slave is reading the oldest file in the returned list, you may want to purge it
     - see `expire_logs_day` to shorten the amount of time logs are kept before being purge
+  - `show binglog events`
+    - displays the events in a binary log file
+    - `in` spcify a particular log file
+      - else the current log file is used
+    - see `show master logs` to get a list of all binary log files
 
   - `start slave`
     - connect to master and get changes since last backup
@@ -2578,6 +2589,7 @@
           - of the failure
           - nor of the subsequent termiantion of the `slave server` thread
           - you have to read the slave server logs
+          -
 
   - `stop slave`
     - stops a slave server from replicating
@@ -2649,4 +2661,11 @@
 
   -- skip 100 events from the master
   set global sql_slave_skip_counter = 100;
+
+  -- disable binary logging
+  set sql_log_bin = 0;
+
+  -- display events in this particular log file
+  show binglog events in 'log-bin.123456' \G
+  show binglog events; -- from whatever the current file is
 ```
