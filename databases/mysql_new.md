@@ -309,8 +309,7 @@
     -
 
 ```sh
-  # create a dump file of the master server
-  # in order to setup `replication`
+  # create a dump file  (i.e. backup of a server
   mysqldump \
     --user=USERNAME \
     --passowrd=PW \
@@ -445,6 +444,9 @@
   - renaming a table
     - if a trigger is associated with a table that is renamed and moved toa  new database, the trigger will fail when used
       - you wont be warned of this possibility when renaming a table
+## REPLICATION issues
+  - if `start slave` statements fails to start the slave, you have to review the `slave server` error logs
+    - no other information will inform you
 
 # important BEST PRACTICES
   - IMPORT/EXPORT/MIGRATION
@@ -727,7 +729,7 @@
       - master - reset a master used for replication
         - must be executed from the master
         - will start a new binary log file as well as delete the binary log filenames from the index file and delete the contents of the binary log index file
-      - slave -reset a slaaved used for replication
+      - slave - reset a slave used for replication
         - must be executed from the slave
         - will start a new relay log file and delete any existing ones as well as delete its notiation of its position in the masters binary log file
 
@@ -2486,18 +2488,68 @@
 ```sql
   -- connect to the master and get the changes it missed since the last backup
   start slave
+
+  -- only start the sql_thread
+  -- specify exact master log file and the log position
+  -- useful for debugging issues
+  -- reverting to a particular position in a log file
+  -- to undo some changes causinng errors
+  -- until clause is ignored if sql_thread is already running
+  -- thus until clause must be executed with --skip-slave-start
+  -- in the slave configuration file
+  start slave SQL_THREAD
+  until master_log_file  'relay.123456'
+  master_log_post = 123;
+```
+
+### BACKUPS replication
+  - make a backup of data via a `slave server`
+
+```sql
+  -- stop the slave server from replicating
+  stop slave
 ```
 
 ## STATEMENTS AND FUNCTIONS replication
   - `change master to`
-    - set variables on the slave related to its connection with the master
-      - not recommected to set these variables in the configuration file (even tho you can)
+    - set variables on the slave server related to its connection with the master
+      - not recommended to set these variables in the configuration file (even tho you can)
         - the `slave server` will read the file only the first time you start up the slave for replication via the `master.info` file
         - the only time it changes the `master.info` file is when you expclitity tell it to via `change master to`
+    - you should issue `stop slave` if the `slave server` is currently running before issueing this statement
+    - cert options
+      - `master_ssl_verify_server_cert`
+        - `--ssl-verify-server-cert`
+    - slave options
+      - `master_host`
+      - `master_port`
+      - `master_user`
+      - `master_password`
+      - `master_Connect_retry`
+    - log file options
+      - `master_log_file`
+      - `master_log_pos`
+      - `relay_log_file`
+      - `relay_log_pos`
 
-    -
+  - `load data from master`
+    - deprecated
+  - `load table...from master`
+    - deprecated
+
+  - `master_pos_wait()`
+    - useful to  synchronize mysql master and slave server loging
+    - causes the master to wait until the `slave server` has read and applied all updates to the position it he master log
+    - returns the number of log entries that were made by the slave while the master was waiting
+
+  - `purge master logs`
+    - deletes the binary logs from a `master server`
+    - keyword `master` is `synonmyous` with `binary` and either can be used
+    - make sure to backup the log files before running this statement
+
   - `start slave`
     - connect to master and get changes since last backup
+      - starts both the i/o thread and the execution thread
     - the slave should thereafter stay current and continuously interact with the master
     - requires `super` privs
     - on success
@@ -2506,6 +2558,16 @@
       - slave-to-master connection may fail
       - sql thread processing entries received from master may fail
       - no message is returned, WTF?!?!?!
+        - the client that started the slave will not be informed
+          - of the failure
+          - nor of the subsequent termiantion of the `slave server` thread
+          - you have to read the slave server logs
+
+  - `stop slave`
+    - stops a slave server from replicating
+      - the slave knows the position where it left off in the binary log of the `master server` and will record that information in the `master.info` file
+    - if the slave also supports handling user requests for load balancing it will redirect those requests back to the master or to other slaves
+        -
 ```sh
   # configure replication
   # add to both master and slave server `my.cnf` files
@@ -2556,4 +2618,13 @@
   change master to masteR_prot = 3306
   change master to master_user = 'replicant'
   change master to master_password = 'SOMEPW'
+
+  -- force the master to wait for the slave to finish updating
+  select master_post_wait(LOG_FILENAME, LOG_POSITION, TIMEOUT)
+
+  --- delete all log files up to the one indicated
+  purge master logs to 'log-bin.123456'
+
+  -- delete all log files up until but not including
+  purge master logs before '2019-11-11 7:00:00'
 ```
