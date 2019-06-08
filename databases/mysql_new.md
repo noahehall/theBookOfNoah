@@ -295,6 +295,36 @@
 
 
 # UTILITIES
+## mysqldump
+  - creates a file of sql statements that can later be executed to recreate databases and their contents
+  - `--extended-insert`
+    - creates multiple-row insert statements and thereby makes the resulting dump file smarter
+    - allows the backup to run faster
+  - `--ignore-table`
+    - so that the usernames and passwords wont be copied
+    - this is a required security precation if the slave will have different users and especially if it will be only used for backups of the master
+  - `--master-data`
+    - locks all of the tables during the dump to prevent data from being changed but permits users to continue reading the tables
+    -
+
+```sh
+  # create a dump file of the master server
+  # in order to setup `replication`
+  mysqldump \
+    --user=USERNAME \
+    --passowrd=PW \
+    --extended-insert \
+    --all-databases
+    --ignore-table=mysql.users \
+    --master-data > /tmp/BACKUPFILENAME.sql
+
+  # execute a dump file and setup the databases and data
+  # on the slave server
+  mysql --user=USERNAME \
+    --password=PW \
+    < /tmp/BACKUPFILENAME.sql
+
+```
 ## mysqlbinlog
   - read the contents of mysql bin logs
   - contents of a `bin.log` file redirected to a txt file can be used to restore data on the master server to a specific point in time
@@ -2440,10 +2470,20 @@
         - the directory must exist and the user `mysql` is the owner, or atleast has permission to write to the cirectory
         - to use defaults, give the `log-bin` option without the equals sign and without the file pathname
       - see sh block below for example
+
+## COPYING DATABASES AND STARTING REPLICATION
+  - with an existing server that already contains data
+    - make an initial backup of the databases and copy the backup to the slave server
+      - create a server snapshot - you need to shutdown the server and make a copy of the data
+    - see `mysqldump`
+
 ## STATEMENTS AND FUNCTIONS replication
   - `change master to`
     - set variables on the slave related to its connection with the master
       - not recommected to set these variables in the configuration file (even tho you can)
+        - the `slave server` will read the file only the first time you start up the slave for replication via the `master.info` file
+        - the only time it changes the `master.info` file is when you expclitity tell it to via `change master to`
+
     -
 ```sh
   # configure replication
@@ -2490,4 +2530,9 @@
   grant replication slave,
     replication client on *.*
     to 'replicant'@'slave_host' identified by 'somepw'
+
+  change master to master_host = 'HOSTNAME or IP'
+  change master to masteR_prot = 3306
+  change master to master_user = 'replicant'
+  change master to master_password = 'SOMEPW'
 ```
