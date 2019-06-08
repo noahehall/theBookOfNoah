@@ -186,12 +186,16 @@
     - lines
       - first line contains the number of lines of data in the file
       - second line shows the name of the last binary log file on the master from which the slave received entries
-      - third line show sthe position identification  number int he masters binary log
+      - third line show sthe position identification  number in the masters binary log
       - the next few lines contain the masters host address, the replication username, the password, and the port number
         - the password is not encrypted and stored in clear text
         - you need to keep this file in a secure directory
+      - the next to last line lists the number of attempts the slave should make when reconnecting to the master before stopping
+      - the lat line could be 0 if the sever from which this master information file came does not have teh ssl feature enabled
+        - if ssl was enabled ont he slave and allowed on the master there would be a value of 1
+        - see `show slave status`
     - slaves record their position in the masters `bin.log` file inside of the `master.info` file location on the slaves server
-      -
+      - see security
 
 
 # important LOCATIONS
@@ -2364,6 +2368,7 @@
 
 # REPLICATION
   - see important files
+  - see security
   - replication
     - primarily a matter of configuring mulitple servers to the one where users submit their queries
     - physically setup a `slave server` and configure mysql on boht servesr appropriately to begin replication
@@ -2382,6 +2387,7 @@
 
   - `slave server`
     - see `important files`
+    - see `security`
     - contains a copy of the masters databse and of any additions to its binary
     - the slave in turns makes the same changes  to its databases
     - the slave can either reexecute the masters sql statements locaally or just copy over changes to the masters database
@@ -2393,7 +2399,7 @@
           - the master then pokes the slave to let it know that an entry has been made to its binary log in case its interested
         - the slave will ask the master to send entries starting froom the position identification number of the last log file entry the slave processed
     - never makes direct changes to its data
-      - instead it uses the mysql API
+      - instead it uses an sql thread to execute the new sql statements recorded in the `relay.log`
 
   - backup method
     - setup a separate server to be a slave, and then once a day/e.g. turn off replication to make a clean backup of the slave servers  database
