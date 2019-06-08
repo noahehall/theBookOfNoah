@@ -2572,7 +2572,10 @@
     - displays the events in a binary log file
     - `in` spcify a particular log file
       - else the current log file is used
+    - this statement is very slow on medium-to-large log files and can be very resource-intensive on the server
+      - use the `from` and `limit` clause to specify the exact range
     - see `show master logs` to get a list of all binary log files
+    - see `mysqlbinlog` for a more robust alternative
 
   - `start slave`
     - connect to master and get changes since last backup
@@ -2595,7 +2598,7 @@
     - stops a slave server from replicating
       - the slave knows the position where it left off in the binary log of the `master server` and will record that information in the `master.info` file
     - if the slave also supports handling user requests for load balancing it will redirect those requests back to the master or to other slaves
-        -
+      -
 ```sh
   # configure replication
   # add to both master and slave server `my.cnf` files
@@ -2665,7 +2668,12 @@
   -- disable binary logging
   set sql_log_bin = 0;
 
+  -- from whatever the current file is
+  show binglog events;
   -- display events in this particular log file
   show binglog events in 'log-bin.123456' \G
-  show binglog events; -- from whatever the current file is
+  -- show binlog events starting at a particular position
+  -- and limited to a number of lines
+  show bing log events in 'PATH/TO/LOGFILE'
+    from POS_NUMBER limit 10,100
 ```
