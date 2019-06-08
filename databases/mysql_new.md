@@ -2330,7 +2330,10 @@
 # REPLICATION
   - replication
     - primarily a matter of configuring mulitple servers to the one where users submit their queries,
-    - supports making clean backups without having to bring the down server
+    - supports
+      - data backups making clean backups without having to bring the down server
+      - load balancing
+      - resiliency
   - what not to do
     - performing a backup while a server is running can slow down a system
     - backups made on active servers can result in inconsistent  data because a related table may be changed while another is being copied
@@ -2343,4 +2346,6 @@
         - contains a copy of the masters databse and of any additions to its binary
         - the slave in turns makes the same changes  to its databases
         - the slave can either reexecute the masters sql statements locaally or just copy over changes to the masters database
-    -
+  - backup method
+    - setup a separate server to be a slave, and then once a day/e.g. turn off replication to make a clean backup of the slave servers  database
+    - when complete replication can be restarted and the slave willa utomatically query the master for changes to the masters data that the slave missed while it was offline
