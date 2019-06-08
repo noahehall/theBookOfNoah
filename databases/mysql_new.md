@@ -2455,25 +2455,28 @@
   - slave retrieves updates and records those updates in its `relay.log` file
   - after issueing statements in the `relay.log` file, records its new position ID number in the `master.info` file
 
-##  USER ACCOUNT replication
+###  USER ACCOUNT replication
     - setup a user account(s) dedicated to replication on both the master and the slave
       - best not to use ane xisting account for security reasons
-## CONFIGURING SERVERS replication
-    - add the following lines to the mysql configuration file on the master and slave servers
-      - `my.cnf` or `my.ini`
-      - `server-id` abritrary number used to identify the master server in the `bin.log` and in communications with `slave server`
-        - do not use 0
-        - a unique number should be assigned to each slave
-      - `log-bin` instructs mysql to perform binary logging to the path and file given
-        - the directory must exist and the user `mysql` is the owner, or atleast has permission to write to the cirectory
-        - to use defaults, give the `log-bin` option without the equals sign and without the file pathname
-      - see sh block below for example
 
-## COPYING DATABASES AND STARTING REPLICATION
+### CONFIGURING SERVERS replication
+  - add the following lines to the mysql configuration file on the master and slave servers
+    - `my.cnf` or `my.ini`
+    - `server-id` abritrary number used to identify the master server in the `bin.log` and in communications with `slave server`
+      - do not use 0
+      - a unique number should be assigned to each slave
+    - `log-bin` instructs mysql to perform binary logging to the path and file given
+      - the directory must exist and the user `mysql` is the owner, or atleast has permission to write to the cirectory
+      - to use defaults, give the `log-bin` option without the equals sign and without the file pathname
+    - see sh block below for example
+
+### COPYING DATABASES replication
   - with an existing server that already contains data
     - make an initial backup of the databases and copy the backup to the slave server
       - create a server snapshot - you need to shutdown the server and make a copy of the data
     - see `mysqldump`
+
+### STARTING REPLICATION replication
 
 ## STATEMENTS AND FUNCTIONS replication
   - `change master to`
