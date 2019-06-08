@@ -2545,7 +2545,23 @@
   - `purge master logs`
     - deletes the binary logs from a `master server`
     - keyword `master` is `synonmyous` with `binary` and either can be used
-    - make sure to backup the log files before running this statement
+    - make sure to backup the log files before running this statement via `show slave status` on each slave and `show binar logs` on the master
+
+  - `reset master`
+    - deletes all the `bin.log` files on the master server and will begin numbering the nuew file at `000001`
+      - the `bin.log` files are located in the directory indicated by the value of the `--log-bin` option of `mysqld`
+      - see `show master logs` to get a list of log files
+  - `reset slave`
+    - use this statement within or after the `reset master statement that sets the `binlog` index back to 1
+
+  - `set global sql_slave_skip_counter`
+    - skips the given number of events from the master
+    - it is used for fine tuning a recovery
+    - it returns an error if the slave thyread is running
+
+  - `show slave status`
+    - if any slave is reading the oldest file in the returned list, you may want to purge it
+    - see `expire_logs_day` to shorten the amount of time logs are kept before being purge
 
   - `start slave`
     - connect to master and get changes since last backup
@@ -2627,4 +2643,10 @@
 
   -- delete all log files up until but not including
   purge master logs before '2019-11-11 7:00:00'
+
+  -- reset the master and slave server
+  reset master, slave
+
+  -- skip 100 events from the master
+  set global sql_slave_skip_counter = 100;
 ```
