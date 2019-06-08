@@ -181,6 +181,7 @@
     - a new `relay.log` is created
       - when replication starts ont he slave and when  the logs are flusehd (i.e. the `flush logs`)
       - when the current file reaches themaximum size as set with the `max_relay_log_size` or the `max_binlog_size` variable
+  - `relay-log.info` after eaach new entry is recorded int he slaves `relay.log` file, the new relay log position id number is recorded in this file through the slaves `sql thread`
   - `master.info`
     - used primarily in replication for the slave to remember its position in the masters binary log file even if the slave is rebooted as well as the information necessary to reconnect to he master
     - lines
@@ -191,8 +192,8 @@
         - the password is not encrypted and stored in clear text
         - you need to keep this file in a secure directory
       - the next to last line lists the number of attempts the slave should make when reconnecting to the master before stopping
-      - the lat line could be 0 if the sever from which this master information file came does not have teh ssl feature enabled
-        - if ssl was enabled ont he slave and allowed on the master there would be a value of 1
+      - the last line could be 0 if the sever from which this master information file came does not have teh ssl feature enabled
+        - if ssl was enabled on the slave and allowed on the master there would be a value of 1
         - see `show slave status`
     - slaves record their position in the masters `bin.log` file inside of the `master.info` file location on the slaves server
       - see security
@@ -2400,6 +2401,7 @@
         - the slave will ask the master to send entries starting froom the position identification number of the last log file entry the slave processed
     - never makes direct changes to its data
       - instead it uses an sql thread to execute the new sql statements recorded in the `relay.log`
+      -
 
   - backup method
     - setup a separate server to be a slave, and then once a day/e.g. turn off replication to make a clean backup of the slave servers  database

@@ -4,64 +4,82 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-TODOSSSSSS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# TODOSSSSSS$/;"	function	line:1
-BOOK TODO	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# BOOK TODO$/;"	function	line:13
-skipped	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# skipped$/;"	function	line:24
-BOOKMARK: pg 165 top/middleware somewhere	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# BOOKMARK: pg 165 top\/middleware somewhere$/;"	function	line:28
-important locations	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### important locations$/;"	function	line:30
-important files	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### important files$/;"	function	line:64
-BACKGROUND	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# BACKGROUND$/;"	function	line:99
-file types	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## file types$/;"	function	line:100
-Linux system:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## Linux system:$/;"	function	line:110
-Linux kernel:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### Linux kernel:$/;"	function	line:111
-System memory management:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### System memory management:$/;"	function	line:115
-Hardware management:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### Hardware management:$/;"	function	line:131
-Filesystem management:	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### Filesystem management:$/;"	function	line:139
-user interfaces	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### user interfaces$/;"	function	line:148
-linux distributions	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## linux distributions$/;"	function	line:170
-SHELL	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## SHELL$/;"	function	line:189
-PARENT-CHILD SHELLS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### PARENT-CHILD SHELLS$/;"	function	line:208
-FILESYSTEMS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# FILESYSTEMS$/;"	function	line:221
-FILESYSTEM - CHECKING AND REPAIRING	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILESYSTEM - CHECKING AND REPAIRING$/;"	function	line:228
-FILESYSTEMS - BASIC	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILESYSTEMS - BASIC$/;"	function	line:235
-FILESYSTEMS - JOURNALING	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILESYSTEMS - JOURNALING$/;"	function	line:259
-CREATING FILE SYSTEMS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## CREATING FILE SYSTEMS$/;"	function	line:274
-PARTITIONS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## PARTITIONS$/;"	function	line:284
-CMDS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### CMDS$/;"	function	line:297
-LOGICAL VOLUMES PAGE 204	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## LOGICAL VOLUMES PAGE 204$/;"	function	line:316
-FILES	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# FILES$/;"	function	line:328
-CLI CMD Quickies	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# CLI CMD Quickies$/;"	function	line:334
-important programs	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# important programs$/;"	function	line:341
-FILESYSTEM programs	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILESYSTEM programs$/;"	function	line:421
-FILES	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### FILES$/;"	function	line:557
-PROCESSES	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## PROCESSES$/;"	function	line:579
-SIGNALS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### SIGNALS$/;"	function	line:586
-cmd / process grouping / modifications	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## cmd \/ process grouping \/ modifications$/;"	function	line:608
-SCHEDLING	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^#### SCHEDLING$/;"	function	line:707
-VARIABLES	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## VARIABLES$/;"	function	line:759
-environment variables: some important ones	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### environment variables: some important ones$/;"	function	line:777
-CMDS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### CMDS$/;"	function	line:794
-REGEX	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# REGEX$/;"	function	line:804
-FILE GLOBBING	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILE GLOBBING$/;"	function	line:805
-SECURITY	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# SECURITY$/;"	function	line:816
-FILE PERMISSIONS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILE PERMISSIONS$/;"	function	line:817
-CMDS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### CMDS$/;"	function	line:849
-USER ACCOUNTS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## USER ACCOUNTS$/;"	function	line:864
-cmds	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### cmds$/;"	function	line:881
-USER GROUPS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## USER GROUPS$/;"	function	line:942
-cmds	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### cmds$/;"	function	line:954
-PACKAGE MANAGEMENT SYSTEM (PMS)	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# PACKAGE MANAGEMENT SYSTEM (PMS)$/;"	function	line:963
-CMDS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## CMDS$/;"	function	line:981
-SHELL SCRIPTING	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^# SHELL SCRIPTING$/;"	function	line:998
-BACKGROUND	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## BACKGROUND$/;"	function	line:999
-REVIEW 101	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## REVIEW 101$/;"	function	line:1004
-FILE DESCRITORS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## FILE DESCRITORS$/;"	function	line:1060
-USER INPUT	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## USER INPUT$/;"	function	line:1156
-MATH	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## MATH$/;"	function	line:1288
-expr	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### expr$/;"	function	line:1293
-STRUCTURED CMDS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## STRUCTURED CMDS$/;"	function	line:1357
-IF STATEMENTS / TEST / BRACKETS / DOUBLE PARANTHESIS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### IF STATEMENTS \/ TEST \/ BRACKETS \/ DOUBLE PARANTHESIS$/;"	function	line:1359
-CASE STATEMENTS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### CASE STATEMENTS$/;"	function	line:1480
-ITERATION	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## ITERATION$/;"	function	line:1492
-FUNCTIONS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^### FUNCTIONS$/;"	function	line:1558
-GRAPHICAL DESKTOPS	/home/imsov/git/theBookOfNoah/linux/cmdline.md	/^## GRAPHICAL DESKTOPS/;"	function	line:1595
+MYSQL in a nutshell russel jt dyer	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# MYSQL in a nutshell russel jt dyer$/;"	function	line:1
+TLDR	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## TLDR$/;"	function	line:2
+needs categorization	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# needs categorization$/;"	function	line:11
+MYSQLSHOW	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# MYSQLSHOW$/;"	function	line:68
+MYSQL SERVER (i.e. mysqld daemon) needs categorization	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# MYSQL SERVER (i.e. mysqld daemon) needs categorization$/;"	function	line:81
+MYSQLD OPTIONS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## MYSQLD OPTIONS$/;"	function	line:84
+MYSQL CLIENT (i.e. mysql) needs categorization	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# MYSQL CLIENT (i.e. mysql) needs categorization$/;"	function	line:92
+WRAPPER SCRIPTS needs categorization	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# WRAPPER SCRIPTS needs categorization$/;"	function	line:100
+mysqld_safe needs categorization	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## mysqld_safe needs categorization$/;"	function	line:101
+UPDATING	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# UPDATING$/;"	function	line:106
+background needs categorization	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# background needs categorization$/;"	function	line:111
+MAILING LISTS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# MAILING LISTS$/;"	function	line:115
+INSTALLATION	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# INSTALLATION$/;"	function	line:119
+POST INSTALLATION	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## POST INSTALLATION$/;"	function	line:142
+FLAGS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# FLAGS$/;"	function	line:151
+important NOTES	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# important NOTES$/;"	function	line:155
+important FILES	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# important FILES$/;"	function	line:158
+important LOCATIONS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# important LOCATIONS$/;"	function	line:202
+important KEYWORDS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# important KEYWORDS$/;"	function	line:207
+important SHELL CMDS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# important SHELL CMDS$/;"	function	line:248
+PERFORMANCE	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# PERFORMANCE$/;"	function	line:265
+UTILITIES	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# UTILITIES$/;"	function	line:297
+mysqlbinlog	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## mysqlbinlog$/;"	function	line:298
+myisamchk	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## myisamchk$/;"	function	line:308
+mysqld_multi	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## mysqld_multi$/;"	function	line:309
+MYISAMPACK	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## MYISAMPACK$/;"	function	line:315
+MYSQLACCESS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## MYSQLACCESS$/;"	function	line:318
+MYSQLADMIN	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## MYSQLADMIN$/;"	function	line:325
+MYSQLDUMP	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## MYSQLDUMP$/;"	function	line:331
+TABLES	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## TABLES$/;"	function	line:336
+READ	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## READ$/;"	function	line:338
+MATH	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## MATH$/;"	function	line:371
+TIME	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## TIME$/;"	function	line:377
+VARIABLES	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# VARIABLES$/;"	function	line:391
+OPERATORS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# OPERATORS$/;"	function	line:407
+important ISSUES	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# important ISSUES$/;"	function	line:413
+TABLES issues	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## TABLES issues$/;"	function	line:414
+important BEST PRACTICES	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# important BEST PRACTICES$/;"	function	line:421
+DATABASES issues	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## DATABASES issues$/;"	function	line:430
+PARTITIONS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# PARTITIONS$/;"	function	line:437
+PARTITION OPTIONS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## PARTITION OPTIONS$/;"	function	line:454
+FUNCTIONS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## FUNCTIONS$/;"	function	line:612
+SECURITY	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# SECURITY$/;"	function	line:619
+DATABASE security	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## DATABASE security$/;"	function	line:621
+VIEWS security	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## VIEWS security$/;"	function	line:627
+USER STATEMENTS AND FUNCTIONS security	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## USER STATEMENTS AND FUNCTIONS security$/;"	function	line:632
+USER ADMINISTRATION	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## USER ADMINISTRATION$/;"	function	line:652
+STATEMENTS user administration	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## STATEMENTS user administration$/;"	function	line:658
+PRIVILEGES user administration	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## PRIVILEGES user administration$/;"	function	line:743
+FUNCTIONS user administration	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## FUNCTIONS user administration$/;"	function	line:786
+DATABASE & TABLE SCHEMA	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# DATABASE & TABLE SCHEMA$/;"	function	line:870
+DATABASES database & table schema	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## DATABASES database & table schema$/;"	function	line:968
+DATABASE OPTIONS database & table schema	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^### DATABASE OPTIONS database & table schema$/;"	function	line:974
+SERVERS database & table schema	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^### SERVERS database & table schema$/;"	function	line:992
+TABLES database & table schema	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## TABLES database & table schema$/;"	function	line:1004
+TABLE OPTIONS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^### TABLE OPTIONS$/;"	function	line:1022
+TABLE ENGINES	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^#### TABLE ENGINES$/;"	function	line:1060
+TABLE ENGINE OPTIONS (for all)	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^##### TABLE ENGINE OPTIONS (for all)$/;"	function	line:1068
+MERGE	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^##### MERGE$/;"	function	line:1080
+BLACKHOLE	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^##### BLACKHOLE$/;"	function	line:1089
+MYISAM	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^##### MYISAM$/;"	function	line:1092
+INNODB	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^##### INNODB$/;"	function	line:1098
+FEDERATED	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^##### FEDERATED$/;"	function	line:1103
+VIEWS database & table schema	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## VIEWS database & table schema$/;"	function	line:1107
+VIEW OPTIONS database & table schema	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^### VIEW OPTIONS database & table schema$/;"	function	line:1123
+INDEXES database & table schema	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## INDEXES database & table schema$/;"	function	line:1150
+INDEX OPTIONS database & table schema	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^### INDEX OPTIONS database & table schema$/;"	function	line:1161
+COLUMNS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## COLUMNS$/;"	function	line:1179
+COLUMN OPTIONS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^### COLUMN OPTIONS$/;"	function	line:1183
+COLUMN TYPES	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^### COLUMN TYPES$/;"	function	line:1216
+CRUD	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# CRUD$/;"	function	line:1457
+STATEMENTS crud	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## STATEMENTS crud$/;"	function	line:1460
+TRANSACTIONS	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# TRANSACTIONS$/;"	function	line:1681
+STATEMENTS transactions	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## STATEMENTS transactions$/;"	function	line:1695
+FUNCTIONS transactions	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^### FUNCTIONS transactions$/;"	function	line:1773
+SERVER/TABLE ADMINISTRATION	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# SERVER\/TABLE ADMINISTRATION$/;"	function	line:2113
+STATEMENTS server/table administration	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## STATEMENTS server\/table administration$/;"	function	line:2114
+FUNCTIONS server/table administration	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^## FUNCTIONS server\/table administration$/;"	function	line:2261
+REPLICATION	/home/wesov/git/theBookOfNoah/databases/mysql_new.md	/^# REPLICATION$/;"	function	line:2370
