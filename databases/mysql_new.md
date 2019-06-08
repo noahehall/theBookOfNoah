@@ -168,6 +168,13 @@
   - tablename.frm
   - tablename.myd
   - tablename.myi - the index file
+  - `/var/log/mysql/bin.1234567`
+    - mysql binary log files, heavily used in replication
+    - each data changing statements contains
+      - position identifcation number - a line starting with `# at 12345`
+      - a timestamp for slave servers to adjust their updates to match the
+      - `use` statement to ensure the slave uses the correct `database`
+      - the value of any `insert_id` to ensure the ids match across servers
 
 
 # important LOCATIONS
@@ -269,6 +276,7 @@
 ## mysqlbinlog
   - read the contents of mysql bin logs
   - contents of a `bin.log` file redirected to a txt file can be used to restore data on the master server to a specific point in time
+  - `point-in-time` recovery mmethods are an exccelent recourse when you have inadvertently deleted a large amount of data that has been added since your last backup
 
 ```sh
   # redirect a binary log file to a txt file
@@ -2337,6 +2345,7 @@
 ```
 
 # REPLICATION
+  - see important files
   - replication
     - primarily a matter of configuring mulitple servers to the one where users submit their queries
     - physically setup a `slave server` and configure mysql on boht servesr appropriately to begin replication
@@ -2351,11 +2360,18 @@
   - `master server`
     - houses the data and handles clietn requests
     - the server logs all data changes toa  binary log, locally
-    - the master in turn informs another mysql server
-      - `slave server`
-        - contains a copy of the masters databse and of any additions to its binary
-        - the slave in turns makes the same changes  to its databases
-        - the slave can either reexecute the masters sql statements locaally or just copy over changes to the masters database
+    - the master in turn informs another mysql server (the `slave server`)
+  - `slave server`
+    - contains a copy of the masters databse and of any additions to its binary
+    - the slave in turns makes the same changes  to its databases
+    - the slave can either reexecute the masters sql statements locaally or just copy over changes to the masters database
+    - slave process
+      - listens for communications from the master than through an I/O thread for new entries in the masters binary log indicating changes to the masters data
+        - the master does not transmit data unless requested by the slave
+        - instead after each update to the master, the master will
+          - it looks to see whetether any salves are connected and waiting fo rupdates
+          - the master then pokes the slave to let it know that an entry has been made to its binary log in case its interested
+        - the slave will ask the master to send entries starting froom the position identification number of the last log file entry the slave processed
   - backup method
     - setup a separate server to be a slave, and then once a day/e.g. turn off replication to make a clean backup of the slave servers  database
     - when complete replication can be restarted and the slave willa utomatically query the master for changes to the masters data that the slave missed while it was offline
