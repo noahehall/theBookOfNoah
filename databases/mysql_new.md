@@ -266,6 +266,15 @@
 
 
 # UTILITIES
+## mysqlbinlog
+  - read the contents of mysql bin logs
+  - contents of a `bin.log` file redirected to a txt file can be used to restore data on the master server to a specific point in time
+
+```sh
+  # redirect a binary log file to a txt file
+  mysqlbinlog /var/log/mysql/bin.00001 > /tmp/somefile.txt
+```
+
 ## myisamchk
 ## mysqld_multi
   - used to start multiple sessions of mysqld_safe, and thereby multiple mysqld instances
@@ -2359,5 +2368,5 @@
     - the master records a  log position id number used to determine which log entries the master should relay to the slave
       - planned downtime for making a backup of  the slave
       - slave has difficulty staying connected to the master du eot networkign problems
-      - slave falls behind because the master has a heavy load of updates in a short period of time 
+      - slave falls behind because the master has a heavy load of updates in a short period of time
     -
