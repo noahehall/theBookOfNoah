@@ -2527,7 +2527,7 @@
         - `waiting for the slave sql thread to free enough relay log spave`
           - if the sql thread isnt processing the entries int he relay log fast enough and the backlog has caused the relay log files to become too large the io thread will enter this state
         - `waiting for slave mutex on exit`
-          - when  the io thread has beent erminated, it w
+          - when the io thread has been terminated, it enters this state as it closes
           -
 ###  USER ACCOUNT replication
     - setup a user account(s) dedicated to replication on both the master and the slave
