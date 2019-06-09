@@ -2461,15 +2461,24 @@
     - slave falls behind because the master has a heavy load of updates in a short period of time
   - slave retrieves updates and records those updates in its `relay.log` file
   - after issueing statements in the `relay.log` file, records its new position ID number in the `master.info` file
-  - `replication states`
-    - see `show processlist`
-      - use on the master and slave
-      - at least one line will be related to replication statements
-      - `command` column
-        - `binlog dump`
-          - indicates a binary log thread on the master server
-        - `connect`
-          - value on the slave server indicates ???
+
+### REPLICATION STATES replication
+  - recommended to develop a script to check that repliation is running on the slave not stalled and to notify you if its not running
+  - see `show processlist`
+    - use on the master and slave
+    - at least one line will be related to replication statements
+    - `command` column
+      - `binlog dump`
+        - indicates a binary log thread on the master server
+          - the binary log thead  is only for providing information about the binary log to the slave 
+        - `has sent all binlog to slave; waiting for binlog to be updated`
+          - most common status for a slave connection on the master
+          - the master is doing nothing regarding replication
+            - it has already sent  all entries jrequested and is now waiting for another even t to occur that wil lcause its binary log to be updated
+            -
+      - `connect`
+        - value on the slave server indicates an i/o thread
+    -
 ###  USER ACCOUNT replication
     - setup a user account(s) dedicated to replication on both the master and the slave
       - best not to use ane xisting account for security reasons
