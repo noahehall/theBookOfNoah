@@ -2520,7 +2520,15 @@
           - once its done the slave sql thread will read the relay log and execute the new sql staements writtent to the log
           - on the sql thread this is the `reading event formm the relay log`
         - `waiting to reconnect after a failed master event read`
-          - 
+          - if the connection to the slave failed while reading an event (represented by an entrhyy int he masters binary log) the slave will wait int his state for a certain amount of time before attempting to recconect to the master
+          - the number of seconds that slave will wait before retrying is found in the `master-connect-retry` variable
+        - `reconnecting after a failed master event read`
+          - this state ocurs after the slave i/o thread loses its connection to the master while receiving an entry from the master binary log
+        - `waiting for the slave sql thread to free enough relay log spave`
+          - if the sql thread isnt processing the entries int he relay log fast enough and the backlog has caused the relay log files to become too large the io thread will enter this state
+        - `waiting for slave mutex on exit`
+          - when  the io thread has beent erminated, it w
+          -
 ###  USER ACCOUNT replication
     - setup a user account(s) dedicated to replication on both the master and the slave
       - best not to use ane xisting account for security reasons
