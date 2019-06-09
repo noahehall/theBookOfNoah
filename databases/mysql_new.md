@@ -2505,8 +2505,22 @@
             - the timeout is configured via `--master-connect-retry`
               - default is 60 seconds
         - `reconnecting after a failed binlog dump request`
+          - if the slave failed to stay conencted tot he master while trying to retrieve entries to the masters binary log this state indicates that the slave is trying to reconnect
+          - if it fails to connect again it will go the previous state and wait to retry
+          - by default it will try 60 times before stopping
+            - see `--master-connect-retry`
+        - `waiting for master to send event`
+          - the most common state, unless yoru server is very busy
+          - the `sql thread` is currently connected to the master and is waiting for the master to send it binary log updates
+          - if there is noa ctivity for awhile the connection will time out
+          - the number of seconds that will elapse is determined by `slave_net_timeout`
+          - a timeout is considered a lost connection for the slave
+        - `queueing master event to the relay log`
+          - occurs whenn the slave i/o thread has received changes to hte masters binary log form the master is writing the sql statements and the related information to the slaves `relay.log`
+          - once its done the slave sql thread will read the relay log and execute the new sql staements writtent to the log
+          - on the sql thread this is the `reading event formm the relay log`
+        - `waiting to reconnect after a failed master event read`
           - 
-    -
 ###  USER ACCOUNT replication
     - setup a user account(s) dedicated to replication on both the master and the slave
       - best not to use ane xisting account for security reasons
