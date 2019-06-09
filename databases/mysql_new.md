@@ -2694,4 +2694,11 @@
 
   -- list of binary logs
   show binary logs;
+
+  -- information on the status of the bin.log file
+  -- currently in use by the master
+  show master status;
+
+  -- list of slave servers for the master server
+  show slave hosts
 ```
