@@ -2469,7 +2469,7 @@
     - at least one line will be related to replication
 
     - `command` column
-      - `binlog dump`
+      - `binlog dump` master binlog dump thread states
         - indicates a binary log thread on the master server
           - the binary log thread is only for providing information about the binary log to the slave
         - `has sent all binlog to slave; waiting for binlog to be updated`
@@ -2485,8 +2485,27 @@
         - `waiting to finalize temrination`
           - once the master has completed the process of updating a slave the master shows this status as its closing the binary log file and winding down the communication with the slave
 
-      - `connect`
+      - `connect` slave i/o thread states
         - value on the slave server indicates an i/o thread
+        - `connecting to master`
+          - indicates that the slave i/o thread is attempting to conenct to the master
+            - if it cant connect it may stay in this state for a while as it retries
+        - `checking the master version`
+          - after the slave connects to the master it compares versions of mysql with the maste rto ensure compatibility
+        - `registering slave on the master`
+          - after the slave conencts to the master it registers itself with the master as a replication slave server
+            - during this process the `binlog dump` state will be `has sent all binlog to slave; waiting for binlog to be updated`
+        - `requesting binlog dump`
+          - enters this state
+            - when the slave has been informed of changes to the master binary log it enters this state to request the new entries
+            - when it first connects to a server either for the first time or having been disconnected for awhile
+          - on the master side youll see `sending binlog even tot slave`
+        - `waiting to reconnect after a failed llg binlog dump request`
+          - if the request for new entries fails to be received from the master the slave enters this state as it waits to be able to connect to the master periodically
+            - the timeout is configured via `--master-connect-retry`
+              - default is 60 seconds
+        - `reconnecting after a failed binlog dump request`
+          - 
     -
 ###  USER ACCOUNT replication
     - setup a user account(s) dedicated to replication on both the master and the slave
