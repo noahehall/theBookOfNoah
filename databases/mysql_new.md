@@ -2528,7 +2528,8 @@
           - if the sql thread isnt processing the entries int he relay log fast enough and the backlog has caused the relay log files to become too large the io thread will enter this state
         - `waiting for slave mutex on exit`
           - when the io thread has been terminated, it enters this state as it closes
-          -
+          - `mutex` standards for muttual exclusion
+          - the sql thread gets the `mutex` to prevent any other slave replication activities so that replication can be shut down without loss of data or file corruption
 ###  USER ACCOUNT replication
     - setup a user account(s) dedicated to replication on both the master and the slave
       - best not to use ane xisting account for security reasons
