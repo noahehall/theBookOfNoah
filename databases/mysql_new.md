@@ -2608,10 +2608,21 @@
           - of the failure
           - nor of the subsequent termiantion of the `slave server` thread
           - you have to read the slave server logs
-          -
+    - initiating threads
+      - `sql_thread` start the sql thread
+        - reads the relay log file and then executes the statements
+      - `io_thread` start the i/o thread
+        - reads sql queries from the `master server` and records them in the relay log file
+      - default is to start both unless one of the above is given
+    - `master_log_pos`
+      - limits the reading of the threads to a specific point
+    - `master_log_file`
+      - specifies the log file to retrieve statements from
+    - `relay_log_file`
+      - specifies the relay log file to retrieve statements from
 
   - `stop slave`
-    - stops a slave server from replicating
+    - stops a `slave server` from replicating
       - the slave knows the position where it left off in the binary log of the `master server` and will record that information in the `master.info` file
     - if the slave also supports handling user requests for load balancing it will redirect those requests back to the master or to other slaves
       -
