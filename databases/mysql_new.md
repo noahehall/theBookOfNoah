@@ -2461,7 +2461,15 @@
     - slave falls behind because the master has a heavy load of updates in a short period of time
   - slave retrieves updates and records those updates in its `relay.log` file
   - after issueing statements in the `relay.log` file, records its new position ID number in the `master.info` file
-
+  - `replication states`
+    - see `show processlist`
+      - use on the master and slave
+      - at least one line will be related to replication statements
+      - `command` column
+        - `binlog dump`
+          - indicates a binary log thread on the master server
+        - `connect`
+          - value on the slave server indicates ???
 ###  USER ACCOUNT replication
     - setup a user account(s) dedicated to replication on both the master and the slave
       - best not to use ane xisting account for security reasons
@@ -2622,10 +2630,12 @@
       - specifies the relay log file to retrieve statements from
 
   - `stop slave`
-    - stops a `slave server` from replicating
+    - stops a `slave server` thread from replicating
       - the slave knows the position where it left off in the binary log of the `master server` and will record that information in the `master.info` file
     - if the slave also supports handling user requests for load balancing it will redirect those requests back to the master or to other slaves
-      -
+    - `io_thread` stop the i/o thread
+    - `sql_thread` stop the sql thread
+    - requires super privs
 ```sh
   # configure replication
   # add to both master and slave server `my.cnf` files
