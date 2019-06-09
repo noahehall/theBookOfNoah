@@ -2576,6 +2576,21 @@
       - use the `from` and `limit` clause to specify the exact range
     - see `show master logs` to get a list of all binary log files
     - see `mysqlbinlog` for a more robust alternative
+  - `show binary logs`
+    - displays a list of binary logs created by the master msql server int he filesystem directory
+    - synonymous with `show master logs`
+  - `show master logs`
+    - see `show binary logs`
+  - `show master status`
+    - displays information on the status of the binary log file that is being used currenlty on the msyql server
+  - `show slave host`
+    - displays a list of slave servers for the master server
+    - slaves must be started with the `--report-host=slave` option in order to be shown
+    - fields
+      - `server_id` the server id number for the slave server which is set by the `--server-id` option preferably in the slaves options file
+      - `host` the hostname of the slave server which is set by the `--report-host` option on the slave
+      - `port` the port on which the slave is listening for replication this defaults to 3306 but can be set with the `chaange master to` statement
+      - `master_id` the server id number of the master its set ont he master with teh `--server-id` and converselhy on the slave with the `change master to` option
 
   - `start slave`
     - connect to master and get changes since last backup
@@ -2676,4 +2691,7 @@
   -- and limited to a number of lines
   show binlog events in 'PATH/TO/LOGFILE'
     from POS_NUMBER limit 10,100
+
+  -- list of binary logs
+  show binary logs;
 ```
