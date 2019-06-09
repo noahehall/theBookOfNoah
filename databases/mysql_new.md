@@ -2566,6 +2566,7 @@
         - 1 - enable binary logging
 
   - `show slave status`
+    - displays information (list of vars) on the slave thread
     - if any slave is reading the oldest file in the returned list, you may want to purge it
     - see `expire_logs_day` to shorten the amount of time logs are kept before being purge
   - `show binlog events`
@@ -2701,4 +2702,7 @@
 
   -- list of slave servers for the master server
   show slave hosts
+
+  -- list of vars for the slave thread
+  show slave status;
 ```
