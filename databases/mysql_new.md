@@ -2466,16 +2466,25 @@
   - recommended to develop a script to check that repliation is running on the slave not stalled and to notify you if its not running
   - see `show processlist`
     - use on the master and slave
-    - at least one line will be related to replication statements
+    - at least one line will be related to replication
+
     - `command` column
       - `binlog dump`
         - indicates a binary log thread on the master server
-          - the binary log thead  is only for providing information about the binary log to the slave 
+          - the binary log thread is only for providing information about the binary log to the slave
         - `has sent all binlog to slave; waiting for binlog to be updated`
           - most common status for a slave connection on the master
           - the master is doing nothing regarding replication
             - it has already sent  all entries jrequested and is now waiting for another even t to occur that wil lcause its binary log to be updated
-            -
+        - `sending binlog event to slave`
+          - after the binary log has been updated the master informs the slave that one or more new entries have been made
+            - if the slave then requests thoses entries the master enters this state
+        - `finished reading one binlog; switching to next binlog`
+          - if a slave has been offline for awhile the master may have flushed its log in the interim and start a new one
+            - when a slave requests log entries that span more tha one log file as the master switches from one file to the next it enters this state
+        - `waiting to finalize temrination`
+          - once the master has completed the process of updating a slave the master shows this status as its closing the binary log file and winding down the communication with the slave
+
       - `connect`
         - value on the slave server indicates an i/o thread
     -
