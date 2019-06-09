@@ -2568,7 +2568,7 @@
   - `show slave status`
     - if any slave is reading the oldest file in the returned list, you may want to purge it
     - see `expire_logs_day` to shorten the amount of time logs are kept before being purge
-  - `show binglog events`
+  - `show binlog events`
     - displays the events in a binary log file
     - `in` spcify a particular log file
       - else the current log file is used
@@ -2669,11 +2669,11 @@
   set sql_log_bin = 0;
 
   -- from whatever the current file is
-  show binglog events;
+  show binlog events;
   -- display events in this particular log file
-  show binglog events in 'log-bin.123456' \G
+  show binlog events in 'log-bin.123456' \G
   -- show binlog events starting at a particular position
   -- and limited to a number of lines
-  show bing log events in 'PATH/TO/LOGFILE'
+  show binlog events in 'PATH/TO/LOGFILE'
     from POS_NUMBER limit 10,100
 ```
