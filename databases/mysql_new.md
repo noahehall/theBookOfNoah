@@ -2533,6 +2533,20 @@
     - `mutex` standards for muttual exclusion
     - the sql thread gets the `mutex` to prevent any other slave replication activities so that replication can be shut down without loss of data or file corruption
 
+#### SLAVE SQL THREAD STATES
+  - `has read all relay log; waiting for the slavei/o thread to updaate it`
+    - common state for the slave sql thread unless you have a very busy database system with data constantly being updated
+    - this state indicates that the slaves sql thread has read all of the entries in its relay log and has executed all of the sql statements that it contains
+    - it is waiting for the slaves i/o thread to add more entries to the relay log file
+  - `reading event from the relay log`
+    - when an entry has been made to the relay log by the slaves io thread, the slaves sql thread enters this state
+    - in this state it is reading the current relay log file and is executing the new sql statements that it contains
+      - i.e. the sql thread is busy updating the slaves databases
+  - `waiting for slave mutex on exit`
+    - when th sql thread has finished updating hte slaves databases it enters this state while it is closing the relay log file and terminating communications with the slave server
+    - the sql thread getrs the mutex to prevent any other slave replication activities so that replication can be shut down without loss of data or file corruption
+    - this state is displayed *SO THAT YOU KNOW THE THREAD IS LOCKED*
+      - if yu see this state you may want to run `myisamchk`, a similar utility, or `repair table` statement on the tables thatg accessed  at the time of the lockup
 ###  USER ACCOUNT replication
     - setup a user account(s) dedicated to replication on both the master and the slave
       - best not to use ane xisting account for security reasons
@@ -2790,3 +2804,39 @@
   -- list of vars for the slave thread
   show slave status;
 ```
+
+# ROUTINES
+  - sets of sql statements stored in the database for easier and more consistent use
+  - build your own functions based on existing sql statements and built in functions allowing a user to pass values to these user defined functions as well as receive values in return
+  - `events` internal methods to schedule th eexecution of sql statements or stored procedures
+  - `alter event`
+  - `alter function`
+  - `alter procedure`
+  - `alter trigger`
+  - `begin...end`
+  - `call`
+  - `close`
+  - `cretae event`
+  - `create function`
+  - `create procedure`
+  - `create trigger`
+  - `declare`
+  - `delimiter`
+  - `drop event`
+  - `drop function`
+  - `drop prepare`
+  - `drop procedure`
+  - `drop trigger`
+  - `execute`
+  - `fetch`
+  - `open`
+  - `prepare`
+  - `show create event`
+  - `show create function`
+  - `show create procedure`
+  - `show events`
+  - `show function code`
+  - `show function status`
+  - `show procedure code`
+  - `show procedure status`
+  - `show triggers`
