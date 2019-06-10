@@ -2812,6 +2812,22 @@
 
 ## STATEMENTS routines
   - `alter event`
+    - alter an existing scheduled mysql event
+    - change the time when the schedule sql statement will execute or other aspects of its upcoming execution
+    - `event` the name of a previously scheduled event but has yet to be completed, or was completed but preserved by the server
+      - to change the name of the event drop it then create it
+        - see `drop event`
+        - see `create event`
+        - see `show create event`
+    - `definer` change the mysql user and host through which mysql executes the event
+    - `on schedule at` change the time and data that form the basis for running the event
+      - timestamp format - yyy-mm-dd hh:mm:ss
+        - can be a string, time function, or just `current_timestamp`
+      - `interval` specify a relative time
+        - see `create event` for allowable intervals
+      - `every` make a recurring event
+        - `starts` specify a start time
+        - `ends` specify an end time 
   - `alter function`
   - `alter procedure`
   - `alter trigger`
