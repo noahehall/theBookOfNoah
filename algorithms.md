@@ -1,0 +1,3 @@
+- Algorithms for dummies
+  - John paul mueller
+  - luca massaron
