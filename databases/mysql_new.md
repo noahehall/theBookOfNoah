@@ -2808,9 +2808,9 @@
 # ROUTINES
   - sets of sql statements stored in the database for easier and more consistent use
   - build your own functions based on existing sql statements and built in functions allowing a user to pass values to these user defined functions as well as receive values in return
+  - `events` internal methods to schedule th eexecution of sql statements or stored procedures
 
 ## STATEMENTS routines
-  - `events` internal methods to schedule th eexecution of sql statements or stored procedures
   - `alter event`
   - `alter function`
   - `alter procedure`
