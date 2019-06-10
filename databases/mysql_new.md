@@ -2472,64 +2472,67 @@
       - `binlog dump` master binlog dump thread states
         - indicates a binary log thread on the master server
           - the binary log thread is only for providing information about the binary log to the slave
-        - `has sent all binlog to slave; waiting for binlog to be updated`
-          - most common status for a slave connection on the master
-          - the master is doing nothing regarding replication
-            - it has already sent  all entries jrequested and is now waiting for another even t to occur that wil lcause its binary log to be updated
-        - `sending binlog event to slave`
-          - after the binary log has been updated the master informs the slave that one or more new entries have been made
-            - if the slave then requests thoses entries the master enters this state
-        - `finished reading one binlog; switching to next binlog`
-          - if a slave has been offline for awhile the master may have flushed its log in the interim and start a new one
-            - when a slave requests log entries that span more tha one log file as the master switches from one file to the next it enters this state
-        - `waiting to finalize temrination`
-          - once the master has completed the process of updating a slave the master shows this status as its closing the binary log file and winding down the communication with the slave
-
       - `connect` slave i/o thread states
         - value on the slave server indicates an i/o thread
-        - `connecting to master`
-          - indicates that the slave i/o thread is attempting to conenct to the master
-            - if it cant connect it may stay in this state for a while as it retries
-        - `checking the master version`
-          - after the slave connects to the master it compares versions of mysql with the maste rto ensure compatibility
-        - `registering slave on the master`
-          - after the slave conencts to the master it registers itself with the master as a replication slave server
-            - during this process the `binlog dump` state will be `has sent all binlog to slave; waiting for binlog to be updated`
-        - `requesting binlog dump`
-          - enters this state
-            - when the slave has been informed of changes to the master binary log it enters this state to request the new entries
-            - when it first connects to a server either for the first time or having been disconnected for awhile
-          - on the master side youll see `sending binlog even tot slave`
-        - `waiting to reconnect after a failed llg binlog dump request`
-          - if the request for new entries fails to be received from the master the slave enters this state as it waits to be able to connect to the master periodically
-            - the timeout is configured via `--master-connect-retry`
-              - default is 60 seconds
-        - `reconnecting after a failed binlog dump request`
-          - if the slave failed to stay conencted tot he master while trying to retrieve entries to the masters binary log this state indicates that the slave is trying to reconnect
-          - if it fails to connect again it will go the previous state and wait to retry
-          - by default it will try 60 times before stopping
-            - see `--master-connect-retry`
-        - `waiting for master to send event`
-          - the most common state, unless yoru server is very busy
-          - the `sql thread` is currently connected to the master and is waiting for the master to send it binary log updates
-          - if there is noa ctivity for awhile the connection will time out
-          - the number of seconds that will elapse is determined by `slave_net_timeout`
-          - a timeout is considered a lost connection for the slave
-        - `queueing master event to the relay log`
-          - occurs whenn the slave i/o thread has received changes to hte masters binary log form the master is writing the sql statements and the related information to the slaves `relay.log`
-          - once its done the slave sql thread will read the relay log and execute the new sql staements writtent to the log
-          - on the sql thread this is the `reading event formm the relay log`
-        - `waiting to reconnect after a failed master event read`
-          - if the connection to the slave failed while reading an event (represented by an entrhyy int he masters binary log) the slave will wait int his state for a certain amount of time before attempting to recconect to the master
-          - the number of seconds that slave will wait before retrying is found in the `master-connect-retry` variable
-        - `reconnecting after a failed master event read`
-          - this state ocurs after the slave i/o thread loses its connection to the master while receiving an entry from the master binary log
-        - `waiting for the slave sql thread to free enough relay log spave`
-          - if the sql thread isnt processing the entries int he relay log fast enough and the backlog has caused the relay log files to become too large the io thread will enter this state
-        - `waiting for slave mutex on exit`
-          - when the io thread has been terminated, it enters this state as it closes
-          - `mutex` standards for muttual exclusion
-          - the sql thread gets the `mutex` to prevent any other slave replication activities so that replication can be shut down without loss of data or file corruption
+#### BINLOG DUMP THREAD STATES replication
+  - `has sent all binlog to slave; waiting for binlog to be updated`
+    - most common status for a slave connection on the master
+    - the master is doing nothing regarding replication
+      - it has already sent  all entries jrequested and is now waiting for another even t to occur that wil lcause its binary log to be updated
+  - `sending binlog event to slave`
+    - after the binary log has been updated the master informs the slave that one or more new entries have been made
+      - if the slave then requests thoses entries the master enters this state
+  - `finished reading one binlog; switching to next binlog`
+    - if a slave has been offline for awhile the master may have flushed its log in the interim and start a new one
+      - when a slave requests log entries that span more tha one log file as the master switches from one file to the next it enters this state
+  - `waiting to finalize temrination`
+    - once the master has completed the process of updating a slave the master shows this status as its closing the binary log file and winding down the communication with the slave
+
+#### SLAVE I/O THREAD STATES replication
+  - `connecting to master`
+    - indicates that the slave i/o thread is attempting to conenct to the master
+      - if it cant connect it may stay in this state for a while as it retries
+  - `checking the master version`
+    - after the slave connects to the master it compares versions of mysql with the maste rto ensure compatibility
+  - `registering slave on the master`
+    - after the slave conencts to the master it registers itself with the master as a replication slave server
+      - during this process the `binlog dump` state will be `has sent all binlog to slave; waiting for binlog to be updated`
+  - `requesting binlog dump`
+    - enters this state
+      - when the slave has been informed of changes to the master binary log it enters this state to request the new entries
+      - when it first connects to a server either for the first time or having been disconnected for awhile
+    - on the master side youll see `sending binlog even tot slave`
+  - `waiting to reconnect after a failed llg binlog dump request`
+    - if the request for new entries fails to be received from the master the slave enters this state as it waits to be able to connect to the master periodically
+      - the timeout is configured via `--master-connect-retry`
+        - default is 60 seconds
+  - `reconnecting after a failed binlog dump request`
+    - if the slave failed to stay conencted tot he master while trying to retrieve entries to the masters binary log this state indicates that the slave is trying to reconnect
+    - if it fails to connect again it will go the previous state and wait to retry
+    - by default it will try 60 times before stopping
+      - see `--master-connect-retry`
+  - `waiting for master to send event`
+    - the most common state, unless yoru server is very busy
+    - the `sql thread` is currently connected to the master and is waiting for the master to send it binary log updates
+    - if there is noa ctivity for awhile the connection will time out
+    - the number of seconds that will elapse is determined by `slave_net_timeout`
+    - a timeout is considered a lost connection for the slave
+  - `queueing master event to the relay log`
+    - occurs whenn the slave i/o thread has received changes to hte masters binary log form the master is writing the sql statements and the related information to the slaves `relay.log`
+    - once its done the slave sql thread will read the relay log and execute the new sql staements writtent to the log
+    - on the sql thread this is the `reading event formm the relay log`
+  - `waiting to reconnect after a failed master event read`
+    - if the connection to the slave failed while reading an event (represented by an entrhyy int he masters binary log) the slave will wait in this state for a certain amount of time before attempting to recconect to the master
+    - the number of seconds that slave will wait before retrying is found in the `master-connect-retry` variable
+  - `reconnecting after a failed master event read`
+    - this state ocurs after the slave i/o thread loses its connection to the master while receiving an entry from the master binary log
+  - `waiting for the slave sql thread to free enough relay log spave`
+    - if the sql thread isnt processing the entries int he relay log fast enough and the backlog has caused the relay log files to become too large the io thread will enter this state
+  - `waiting for slave mutex on exit`
+    - when the io thread has been terminated, it enters this state as it closes
+    - `mutex` standards for muttual exclusion
+    - the sql thread gets the `mutex` to prevent any other slave replication activities so that replication can be shut down without loss of data or file corruption
+
 ###  USER ACCOUNT replication
     - setup a user account(s) dedicated to replication on both the master and the slave
       - best not to use ane xisting account for security reasons
