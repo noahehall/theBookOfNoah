@@ -269,11 +269,18 @@
     - i.e. uses a considerable amount of memory for a large number of nodes
 
 ### depth-first search
-  - begins at the root node and explores a set of connected child nodes until it  reaches a leaf node
-  - progresses branch by branch until it finds a solution
+  - begins at the root node and explores a set of connected c hild nodes until reaches a leaf node
+  - it progresses branch by branch until it finds a solution
+  - use cases
+    - its memory efficient thus suited for problems with limited memory resources
+
 
 #### issues
-  - 
+  - it must store ever node in memory which means that it might traverse the same node paths mmore than once
+    - i.e.it might not find a solution at all
+    - thus yoou must define a cutoff point to keep the algorithm from searching infinetely
+
+
 ## divide and conquer
   - divide the problem into smaller pieces each of which is manageable on its own
   - by making a problem simpler, you dan create a set of simpler steps to finding a problem solution
