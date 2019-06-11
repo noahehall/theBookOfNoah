@@ -115,7 +115,8 @@
     - use cases
       - security
 
-# running algorithms
+
+# algorithm design
   - `cluster computing`
     - network computers together using special software
     - a master computer can use the the processors of slave computers running an agent
@@ -125,8 +126,6 @@
     - the master then puts the pieces together to create a consolidated answer
   - `distributed computing`
     - another version of cluster computing but with a looser organization
-
-# algorithm design
   - algorithms consist of a series of steps used to solve a problem
   - you need to know how to measure algoirthms
     - usability
@@ -145,7 +144,13 @@
     - potentially disprove the solution
     - provide boundaryies that define the solution better
     - consider situations in which the hypothesis used as a basis for the solution remains untested
-    - help you understand the limits of the solution 
+    - help you understand the limits of the solution
+    - `ensemble` of simple algorithms ca n produce better results with fewer potential counterexamples than a single complex algorithm
+    - example
+      - all prime numbers are odd
+        - 2 is prime but its even
+        - 1 is odd but isnt considered a prime number
+      -
   - `ensemble`
     - a series of algorithms used together to create a desire result
   - `setting time` the time during whichc the algorithm controlling the machine hasnt yet found the right answer
@@ -154,7 +159,29 @@
 # specific algorithms
   - `greedy` approach
     - one that makes an optimial choice at each problem-sovling stage to obtain an overall optimal solution to solve the problem
-    -
+  - `brute force` solution
+    - one in which you try each possible answer one at a time to locate the best possible answer
+    - very thorough but wastes time and resources in most cases
+    - example
+      - hacking a combination lock
+        - start at 0,0,0,0
+        - increment by 1 until you find the correct combination
+    - use cases
+      - finding a solution if one exsits is require d
+      - the problem size is limited
+      - you can use `heuristics` to reduce the size of the solution set
+      - simplicity of implementation is more important than speed
+      -
 ## divide and conquer
-  - divide the prob lem into smaller pieces eah of which is manageable on its own
+  - divide the problem into smaller pieces each of which is manageable on its own
+  - by making a problem simpler, you dan create a set of simpler steps to finding a problem solution
+    - reduces  the time to find the solution
+    - reduces the number of resources untestedimproves you rchances of finding precisly the solution you need
+  - example
+    - looking for a book in a library (i.e. dewey decimal system)
+      - divide the library into childrens and adults sections
+      - divide the adults section into further categories, etc
+      - give each category a code
+      - map each book to a category code
+### process divide and conquer
   -
