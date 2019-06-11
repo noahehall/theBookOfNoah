@@ -324,4 +324,24 @@
   - are complex
   -
 
-###
+### pure heuristic approach
+  - expands nodes in order of their cost to perform an intelligent cost-based search for the solution
+  - it maintains two lists
+    - `closed list` contains the nodes it has already explored
+    - `open list` contains the nodes its yet to explore
+  - in each iteration  the algorithm expands the node with the lowest possible cost
+    - all its child nodes with low cost are placed back in the open list
+    - the high cost nodes are deleted
+
+### A* search
+  - tracks the cost of nodes as it explores them using the eqution `f(n) = g(n) + h(n)`
+    - n - the node identifier
+    - g(n) - the cost of reaching the node so far
+    - h(n) - the estimated cost to reach the goal from the node
+    - f(n) - the estimated cost of the path from n to the goal
+  - the idea is to search the most  promising paths first and avoid expensive paths
+
+### greedy best-first search
+  - always chooses the path that is closest to the goal using the equation `f(n) = h(n)`
+  - can find solutions quite quickly but it can also get stuck in loops
+    - thus many people dont consider it an optimal appraoch to finding a solution 
