@@ -16,6 +16,7 @@
     - supports neural network algorithms among other things
   - [ibm artificial neurons](https://www.google.com/search?q=ibm+artificial+neurons)
     - memory that simulates the human brain
+  - [proportional integral derivative](https://www.google.com/search?q=proportional+integral+derivative+algorithm)
 
 ## Books
   - *Art of computer programming* Donald E. Knuth
@@ -139,6 +140,16 @@
     - consider what sorts of solutions havent produced desirable result
   - `problem solution`
     - the solution to the problem you are trying to solve
+  - `counterexamples`
+    - playing the devils advocate by locating scenarios where a solution fails
+    - potentially disprove the solution
+    - provide boundaryies that define the solution better
+    - consider situations in which the hypothesis used as a basis for the solution remains untested
+    - help you understand the limits of the solution 
+  - `ensemble`
+    - a series of algorithms used together to create a desire result
+  - `setting time` the time during whichc the algorithm controlling the machine hasnt yet found the right answer
+  -
 
 # specific algorithms
   - `greedy` approach
