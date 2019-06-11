@@ -207,6 +207,9 @@
   - when looking for a maximum value in an array
     - unsorted arraywhichc
       - `brute force` > `divide and conquer`
+  - heuristic algorithms learn from previous failures
+    - brute force solutions dont
+    -
 
 ## greedy approach
   - one that makes an optimial choice at each problem-solving stage to obtain an overall optimal solution to solve the problem
@@ -281,6 +284,16 @@
     - thus yoou must define a cutoff point to keep the algorithm from searching infinetely
 
 
+### bidirectional search
+  - searches simultaneously from the root node and the goal node until the two search paths meet in the middle
+  - use cases
+    - its time efficient because it finds the solution faster than many other brute force solutions
+    - uses memory more efficiently that other approaches and always finds a solution
+
+#### issues
+  - complexity of implementation translating into a longer development cycle
+
+
 ## divide and conquer
   - divide the problem into smaller pieces each of which is manageable on its own
   - by making a problem simpler, you dan create a set of simpler steps to finding a problem solution
@@ -299,5 +312,16 @@
 
 ## heuristic approach
   - relies on `self-discovery` and produces sufficiently useful (not optimal but good enough) results
+    - i.e. the algorithm makes an educated guess and then tries again when it fails
   - `self-discovery`
-    - the process of allowing the algorithm to show you a potentially useful path to a solution but you still rely on human intuition and understanding to know whether the solution is the right on e
+    - the process of allowing the algorithm to show you a potentially useful path to a solution but you still rely on human intuition and understanding to know whether the solution is the right one
+  - `cost function`
+  - use cases
+    - advantage in solving complex problems
+
+
+### issues
+  - are complex
+  -
+
+###
