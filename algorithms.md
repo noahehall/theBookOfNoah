@@ -127,5 +127,23 @@
 
 # algorithm design
   - algorithms consist of a series of steps used to solve a problem
+  - you need to know how to measure algoirthms
+    - usability
+    - size
+    - resource usage
+    - cost
+  - solving a problem
+    - discover how ohter people have created new problem solutions
+    - know whaat resources you have on hand
+    - determine the sorts of solutions that wowrked for similar problems in the pastg
+    - consider what sorts of solutions havent produced desirable result
   - `problem solution`
-    - the solution to the problem you are trying to solve 
+    - the solution to the problem you are trying to solve
+
+# specific algorithms
+  - `greedy` approach
+    - one that makes an optimial choice at each problem-sovling stage to obtain an overall optimal solution to solve the problem
+    -
+## divide and conquer
+  - divide the prob lem into smaller pieces eah of which is manageable on its own
+  -
