@@ -202,6 +202,23 @@
   - `setting time` the time during which the algorithm controlling the machine hasnt yet found the right answer
   -
 
+# algorithm evaluation
+  - `analysis of algorithms`
+    - the branch oof computer science devote dto understanding how algoritjms workin a formal way
+      - measures resources required in terms of the number of operations an algorithm reqires to reach a solution or by its `occupied space`
+
+  - determining whether an algorithm actually performs int he way you need it to
+  - perform accurate comparisons to know whether you really do need to discover a new mehtod of solving a problem when an older solution works to slowly or uses to many resources
+
+## complexity
+  - a measure of algoirhytm efficiency in terms of tiem usage because each operations takes some time
+  - the more operations an algoirthms requires the more complex it is
+  - `random access machine` (RAM)
+    - `abstract machines` consider how well an algorithm would work on a computer without testing it on the real thing yet bound by the type of hardware youd use
+    - `ram simulation`
+      - count each simple operation (arithmetic ones) as a time step
+      - break complex operations into simple arithmetic operations and count time steps as defined in step 1
+      - count ever data access from memeory as one time step
 # specific algorithms
 ## comparisons
   - when looking for a maximum value in an array
@@ -344,4 +361,5 @@
 ### greedy best-first search
   - always chooses the path that is closest to the goal using the equation `f(n) = h(n)`
   - can find solutions quite quickly but it can also get stuck in loops
-    - thus many people dont consider it an optimal appraoch to finding a solution 
+    - thus many people dont consider it an optimal appraoch to finding a solution
+  -
