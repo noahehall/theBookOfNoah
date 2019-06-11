@@ -11,6 +11,8 @@
 
 ## algorithm problems
   - [change making problem](https://www.google.com/search?q=change+making+problem)
+
+
 ## other things
   - [intel xeon phi](https://www.google.com/search?q=intel+xeon+phi)
     - processor add-on for performing compute-intensive tasks e.g. machine learning
@@ -67,9 +69,11 @@
   - making your day an algorithm that solves the problem of how to live successfully while expending the least amount of energy possible
   -
 ## General terminology
-  - `equation` numbers and symbols that, when taken as a whoe, equate to a specific value
+  - `equation`
+    - numbers and symbols that, when taken as a whoe, equate to a specific value
     - always contains an equals sign
-  - formula - combination of numbers and symbols used to express information or ideas
+  - `formula`
+    - combination of numbers and symbols used to express information or ideas
     - generally show the relationship between two/more variables
   - `algorithm`
     - sequence of steps used to solve a problem
@@ -84,13 +88,20 @@
         - just the presentation to help you see patterns new patterns that werent apparent before but were actually present in the data all along
     - desired outputs
     - process/e rare and occur only in situations that are acceptable for the intendsorting ed algorithm use
+
   - `parallel processing` performing more than one algorithmic step at a time
+
   - `neural networks`
     - technology that is used to simulate human thought and make deep learning tehcniques possible for machine learning scenarios
+
   - `pyrrhic victory`
     - one in which someone wins every battle but ends up losing the war because the cost of the victory exceeds the gains of winning by such a large margin
-    -
 
+  - `problem space`
+    - an environment in which a search for a solution takes place
+    - example
+      - a tile game that has 8 tiles in a 3x3 frame, each tile shows one part of a ppicture and the tiles start in somme random order so that the picture is scrambled
+        - the combination of the start state, randomized tiles and the goal state (tiles ina particular order) is the `problem instance`
 ## other things
   - GPUs are commonly used chips for perming algorithm-related tasks
     - specialize in providing support for math-intensive tasks, especially those that involve data transformations
@@ -161,18 +172,23 @@
         - 1 is odd but isnt considered a prime number
   - `good solution`
     - provides optimal results that can be measured and best meets the needs of the problem and problem domain and resources
+      - you have to create an environment in which you can fully test
+        - the algorithm
+        - the state it creates
+        - the operators it uses to change those states
+        - and the time required to derive a solution
       - example
         - providing change
           - you want to use the fewest amount of coins to reduce reduce equipment wear and the weight of coins required and the time required to make change
   - `ensemble`
     - a series of algorithms used together to create a desire result
-  - `setting time` the time during whichc the algorithm controlling the machine hasnt yet found the right answer
+  - `setting time` the time during which the algorithm controlling the machine hasnt yet found the right answer
   -
 
 # specific algorithms
 ## comparisons
   - when looking for a maximum value in an array
-    - unsorted array
+    - unsorted arraywhichc
       - `brute force` > `divide and conquer`
 
 ## greedy approach
@@ -183,14 +199,14 @@
     - views the problem one step at a time and focuses just on the steep at hand
     - often used as part of an optimization process
 
-## issues
+### issues
   - since a greedy solution uses the optimal solution at every stage, it may pick a non optimal solution
     - e.g. when giving change for $.40
       - greedy solution - .25 + .10 + (5 * .1)
       - optimal - 4 * .10
         - it will never pick a .10 if a .25 is available
 
-## process greedy approach
+### process greedy approach
   - you can make a single optimal choice at a given step
   - by choosing the optimal selection at each step you can find an optimal solution for the overall problem
 
@@ -236,3 +252,7 @@
   - create a precise problem definition
   - divide the problem into manageable pieces
 
+## heuristic approach
+  - relies on `self-discovery` and produces sufficiently useful (not optimal but good enough) results
+  - `self-discovery`
+    - the process of allowing the algorithm to show you a potentially useful path to a solution but you still rely on human intuition and understanding to know whether the solution is the right on e
