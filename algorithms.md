@@ -9,6 +9,8 @@
   - [euclidean algorithm](https://www.google.com/search?q=euclidean+algorithm)
   - [bayes theorem](https://www.google.com/search?q=bayes+theorem)
 
+## algorithm problems
+  - [change making problem](https://www.google.com/search?q=change+making+problem)
 ## other things
   - [intel xeon phi](https://www.google.com/search?q=intel+xeon+phi)
     - processor add-on for performing compute-intensive tasks e.g. machine learning
@@ -32,12 +34,15 @@
         - just the presentation to help you see patterns new patterns that werent apparent before but were actually present in the data all along
     - desired outputs
     - process/sequence of actions used to obtain a desired output fromm a given input
+
   - algorithms can see multiple presentations
     - recursive vs iterative
+
   - elements of all algorithms
     - describe the problem
     - create a series of steps to solve the problem
     - p34ro4m 5h3 w53pw 5o og5qin q e3wi43e 43wul5W
+
   - `data`
     - to create a solution you need data on which to base a conslusion
     - the size and complexity of data sources can greatly affect the solution resolution
@@ -47,7 +52,7 @@
       - computers only see ones and zeros
       - a large part of algorithms is making the data appear in a form that the computer dan use when using the algorithm to find a solution to an issue
       -
-  - algorithms have twoo main perspectives
+  - algorithms have two main perspectives
     - issues - problems tha tyou need to solve
       - can describe the desired output of an algorithm
       - describe a hurdle you must overcome to obtain a desried output
@@ -55,6 +60,7 @@
       - the methods, or steps used to address the issue
         - can related to just one step or many steps within the algorithm
         - the output of an algorithm, i.e. the response to the last step is the solution
+  -
 
 
 ## General Use Cases
@@ -81,6 +87,9 @@
   - `parallel processing` performing more than one algorithmic step at a time
   - `neural networks`
     - technology that is used to simulate human thought and make deep learning tehcniques possible for machine learning scenarios
+  - `pyrrhic victory`
+    - one in which someone wins every battle but ends up losing the war because the cost of the victory exceeds the gains of winning by such a large margin
+    -
 
 ## other things
   - GPUs are commonly used chips for perming algorithm-related tasks
@@ -150,28 +159,67 @@
       - all prime numbers are odd
         - 2 is prime but its even
         - 1 is odd but isnt considered a prime number
-      -
+  - `good solution`
+    - provides optimal results that can be measured and best meets the needs of the problem and problem domain and resources
+      - example
+        - providing change
+          - you want to use the fewest amount of coins to reduce reduce equipment wear and the weight of coins required and the time required to make change
   - `ensemble`
     - a series of algorithms used together to create a desire result
   - `setting time` the time during whichc the algorithm controlling the machine hasnt yet found the right answer
   -
 
 # specific algorithms
-  - `greedy` approach
-    - one that makes an optimial choice at each problem-sovling stage to obtain an overall optimal solution to solve the problem
-  - `brute force` solution
-    - one in which you try each possible answer one at a time to locate the best possible answer
-    - very thorough but wastes time and resources in most cases
-    - example
-      - hacking a combination lock
-        - start at 0,0,0,0
-        - increment by 1 until you find the correct combination
-    - use cases
-      - finding a solution if one exsits is require d
-      - the problem size is limited
-      - you can use `heuristics` to reduce the size of the solution set
-      - simplicity of implementation is more important than speed
-      -
+## comparisons
+  - when looking for a maximum value in an array
+    - unsorted array
+      - `brute force` > `divide and conquer`
+
+## greedy approach
+  - one that makes an optimial choice at each problem-solving stage to obtain an overall optimal solution to solve the problem
+    - this can oft times lead to a `pyrrhic victory`
+  - it looks for an overall solution such that it chooses the best possible outcome at each problem solution state
+  - `greedy reasoning`
+    - views the problem one step at a time and focuses just on the steep at hand
+    - often used as part of an optimization process
+
+## issues
+  - since a greedy solution uses the optimal solution at every stage, it may pick a non optimal solution
+    - e.g. when giving change for $.40
+      - greedy solution - .25 + .10 + (5 * .1)
+      - optimal - 4 * .10
+        - it will never pick a .10 if a .25 is available
+
+## process greedy approach
+  - you can make a single optimal choice at a given step
+  - by choosing the optimal selection at each step you can find an optimal solution for the overall problem
+
+### graph analysis
+#### krusklas Minimum spanning tree (MST)
+   - chooses the edge between two nodes with the smallest value, not the greatest value as the word greedy might initially convey
+   - use cases
+     - find the shortest path between two locations on a maps
+     - perform graph-related tasks
+
+#### prims Minimum spanning tree (MST)
+  - splits an undirected graph in half then selects the edge that connects the two halves such that the total weight of the two halves is the smallest it can be
+  - use cases
+    - locate the shortest distance between the start and finish of a maze
+    -
+## brute force solution
+  - one in which you try each possible answer one at a time to locate the best possible answer
+  - very thorough but wastes time and resources in most cases
+  - example
+    - hacking a combination lock
+      - start at 0,0,0,0
+      - increment by 1 until you find the correct combination
+  - use cases
+    - finding a solution if one exsits is require d
+    - the problem size is limited
+    - you can use `heuristics` to reduce the size of the solution set
+    - simplicity of implementation is more important than speed
+
+
 ## divide and conquer
   - divide the problem into smaller pieces each of which is manageable on its own
   - by making a problem simpler, you dan create a set of simpler steps to finding a problem solution
@@ -183,5 +231,8 @@
       - divide the adults section into further categories, etc
       - give each category a code
       - map each book to a category code
+
 ### process divide and conquer
-  -
+  - create a precise problem definition
+  - divide the problem into manageable pieces
+
