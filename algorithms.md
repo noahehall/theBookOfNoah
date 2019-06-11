@@ -7,6 +7,7 @@
 ## Algorithms
   - [making toast algorithms](https://www.google.com/search?q=making+toast+algorithm)
   - [euclidean algorithm](https://www.google.com/search?q=euclidean+algorithm)
+  - [bayes theorem](https://www.google.com/search?q=bayes+theorem)
 
 ## other things
   - [intel xeon phi](https://www.google.com/search?q=intel+xeon+phi)
@@ -36,7 +37,15 @@
     - describe the problem
     - create a series of steps to solve the problem
     - p34ro4m 5h3 w53pw 5o og5qin q e3wi43e 43wul5W
-  - to create a solution you need data on which to base a conslusion
+  - `data`
+    - to create a solution you need data on which to base a conslusion
+    - the size and complexity of data sources can greatly affect the solution resolution
+    - humans think about dta in nonspecific ways and apply various rules to the  same data to tunderstand it in ways that computers never can
+    - computers view of data is structued, simple, uncompromising, and uncreative
+      - you have to consider data from the computers point of view when using algorithms
+      - computers only see ones and zeros
+      - a large part of algorithms is making the data appear in a form that the computer dan use when using the algorithm to find a solution to an issue
+      -
   - algorithms have twoo main perspectives
     - issues - problems tha tyou need to solve
       - can describe the desired output of an algorithm
@@ -44,7 +53,7 @@
     - solutions
       - the methods, or steps used to address the issue
         - can related to just one step or many steps within the algorithm
-        - the output of an algorithm, i.e. the response to the last step is the solution 
+        - the output of an algorithm, i.e. the response to the last step is the solution
 
 
 ## General Use Cases
@@ -115,4 +124,8 @@
     - the master then puts the pieces together to create a consolidated answer
   - `distributed computing`
     - another version of cluster computing but with a looser organization
-    -
+
+# algorithm design
+  - algorithms consist of a series of steps used to solve a problem
+  - `problem solution`
+    - the solution to the problem you are trying to solve 
