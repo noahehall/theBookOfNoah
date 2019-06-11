@@ -102,3 +102,6 @@
     - offload pieces of th eproblem to a number of slave copmuters
     - as each computer in the network solves its part of th eproblem, it sends the results back to the master,
     - the master then puts the pieces together to create a consolidated answer
+  - `distributed computing`
+    - another version of cluster computing but with a looser organization
+    -
