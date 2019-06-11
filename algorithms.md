@@ -99,9 +99,26 @@
 
   - `problem space`
     - an environment in which a search for a solution takes place
+    - things to consider
+      - `space complexity`
+        - maximum number of nodes that will fit in memory
+      - `time complexity`
+        - the maximum number of nodes created to solve the problem
+          - determines whether all of the nodes will fit into memory
+      - `branching factor`
+        - the average number of nodes created in the `problem space graph` to solve a problem
+    - `problem space graph`
+      - visual representation of the problem space
+      - each node of hte problem space graph represents a state
+      - the edges represent operations
+      - movement along the edges represent a state transition      -
     - example
+    - `problem depth`
+      - the minimum number of state transitions required to reach a solution
       - a tile game that has 8 tiles in a 3x3 frame, each tile shows one part of a ppicture and the tiles start in somme random order so that the picture is scrambled
-        - the combination of the start state, randomized tiles and the goal state (tiles ina particular order) is the `problem instance`
+        - `problem instance`
+          - the combination of the start state, randomized tiles and the goal state (tiles ina particular order)
+    -
 ## other things
   - GPUs are commonly used chips for perming algorithm-related tasks
     - specialize in providing support for math-intensive tasks, especially those that involve data transformations
@@ -221,8 +238,9 @@
   - splits an undirected graph in half then selects the edge that connects the two halves such that the total weight of the two halves is the smallest it can be
   - use cases
     - locate the shortest distance between the start and finish of a maze
+
     -
-## brute force solution
+## brute force approach
   - one in which you try each possible answer one at a time to locate the best possible answer
   - very thorough but wastes time and resources in most cases
   - example
@@ -234,8 +252,28 @@
     - the problem size is limited
     - you can use `heuristics` to reduce the size of the solution set
     - simplicity of implementation is more important than speed
+  - doesnt require any domain specific knowledge to use one of these type of algorithms
+    - as it tries every possible pathway without considering the environment
+    - uses the simplest possible approach to solving the problem
+    -
+
+### breadth-first search
+  - begins at the root node, explores each of the child nodes first and only then moves down to the next level
+  - progresses level by level until it finds a solution
+  - use cases
+    - chcking for duplicate nodes
 
 
+#### issues
+  - it must store every node in memory
+    - i.e. uses a considerable amount of memory for a large number of nodes
+
+### depth-first search
+  - begins at the root node and explores a set of connected child nodes until it  reaches a leaf node
+  - progresses branch by branch until it finds a solution
+
+#### issues
+  - 
 ## divide and conquer
   - divide the problem into smaller pieces each of which is manageable on its own
   - by making a problem simpler, you dan create a set of simpler steps to finding a problem solution
