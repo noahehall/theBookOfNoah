@@ -36,6 +36,16 @@
     - describe the problem
     - create a series of steps to solve the problem
     - p34ro4m 5h3 w53pw 5o og5qin q e3wi43e 43wul5W
+  - to create a solution you need data on which to base a conslusion
+  - algorithms have twoo main perspectives
+    - issues - problems tha tyou need to solve
+      - can describe the desired output of an algorithm
+      - describe a hurdle you must overcome to obtain a desried output
+    - solutions
+      - the methods, or steps used to address the issue
+        - can related to just one step or many steps within the algorithm
+        - the output of an algorithm, i.e. the response to the last step is the solution 
+
 
 ## General Use Cases
   - making your day an algorithm that solves the problem of how to live successfully while expending the least amount of energy possible
@@ -66,6 +76,7 @@
   - GPUs are commonly used chips for perming algorithm-related tasks
     - specialize in providing support for math-intensive tasks, especially those that involve data transformations
   - using multiple cores makes parallel processing possible
+  -
   -
 ## Types of algorithms
   - searching
