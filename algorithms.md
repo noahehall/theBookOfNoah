@@ -105,6 +105,7 @@
       - `time complexity`
         - the maximum number of nodes created to solve the problem
           - determines whether all of the nodes will fit into memory
+        - the standard measure is time, which you set equal to the  number of operations, and indicates the complexity of the algorithm
       - `branching factor`
         - the average number of nodes created in the `problem space graph` to solve a problem
     - `problem space graph`
@@ -222,7 +223,12 @@
       - `ram simulation`
         - count each simple operation (arithmetic ones) as a time step
         - break complex operations into simple arithmetic operations and count time steps as defined in step 1
-        - count ever data access from memeory as one time step
+          - count time because when you can employ a solution in so many environments and its resource usage depands on so many factors you have to find a way to simplify comparisons os that they become standard
+            - otherwise you cant compare alternatives
+        - count every data access from memory as one time step
+        - the analysis of algorithms  proposes to use the number of operation syou get from a ram simulation and turn them into a mathematical function expressing how yoru algorithm behaves in terms of time which is a quantifications of the steps or operations required when the number of data inputs grows
+          - e.g. if your aglorithm sorts object you can express complexity using a function that reports how many operations i t needs depending on tye number of objects it receives
+          - 
   - measuring space
     - e.g. memory usage
     - you consider space when your problem is greedy for resources
