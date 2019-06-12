@@ -213,12 +213,32 @@
 ## complexity
   - a measure of algoirhytm efficiency in terms of tiem usage because each operations takes some time
   - the more operations an algoirthms requires the more complex it is
-  - `random access machine` (RAM)
-    - `abstract machines` consider how well an algorithm would work on a computer without testing it on the real thing yet bound by the type of hardware youd use
-    - `ram simulation`
-      - count each simple operation (arithmetic ones) as a time step
-      - break complex operations into simple arithmetic operations and count time steps as defined in step 1
-      - count ever data access from memeory as one time step
+  - measuring operations
+    - `random access machine` (RAM)
+      - `abstract machines` consider how well an algorithm would work on a computer without testing it on the real thing yet bound by the type of hardware youd use
+        - performs basic arithmetic opeartions and interacts with information in memory
+        - `time step` every time the machine does something it takes time
+          - i.e. each operation
+      - `ram simulation`
+        - count each simple operation (arithmetic ones) as a time step
+        - break complex operations into simple arithmetic operations and count time steps as defined in step 1
+        - count ever data access from memeory as one time step
+  - measuring space
+    - e.g. memory usage
+    - you consider space when your problem is greedy for resources
+    - resource consumption aspects
+      - running time
+        - for quicker execution you can increase memory or power consumption
+      - computer memory requirements
+      - hard disk usage
+      - power consumption
+      - data transmission speed in a network
+      -
+  - `benchmark` real computer measures where you run the code and verify the time required to run it
+    - as opposed to a `RAM simulation` with uses pseudo code
+    - is useful but lacks generalization like `RAM simulation`
+
+
 # specific algorithms
 ## comparisons
   - when looking for a maximum value in an array
