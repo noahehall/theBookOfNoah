@@ -464,6 +464,19 @@
   - solves many computer problems that relies oon the capability of a function to continue calling itself until it satisfies a particular condition
   - you call the same function multiple times but modifying the terms under which you call it until the tasks reaches a specific condition
     - all the previous calls are still active
-    - the calls unwind themselves untilt he first call finally ends with the correct answer and th eunwiding proces where most peopel enocunter a problem 
+    - the calls unwind themselves untilt he first call finally ends with the correct answer and th eunwiding proces where most peopel enocunter a problem
   - provides an easier way to solve problems when working with some algorithms because it mimics the way a human would solve it
-    -
+  - recusive conditions
+    - the conditions for ending recursion haven t been met so the function must call itself again
+    - the conditions for ending recusion have been  met so the function returns af inal value that is ued to calcule the ending result
+  - `factorial`
+    - the multiolication of a series of numbers between a starting point and ending a point in which each number in the series is one less than the number before it
+      - e.g. 5 * 4 * 3 * 2 * 1
+  - `tail call` a tail call occurs any time the resursion makes a call to the function as the last thing before it returns
+  -
+
+
+```js
+
+
+```
