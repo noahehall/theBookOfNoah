@@ -284,9 +284,29 @@
       - `quicksort`
   - `quadratic complexity O(n^2)`
     - operations grow as a square of the number of inputs
+    - means that your algorithms may run for hours or even days before reaching a solution
     - types
-      - nested iterations
-    -
+      - `nested iterations`
+      - `bubble sort`
+      - `selection sort`
+      - `insertion sort`
+  - `cubic complexity O(n^3)`
+    - operations grow even faster than quadratic because n ow you have multile nested iterations
+    - when an algorithm has this order of complexity you need to process a modest amount of data (100k elements)
+    - algorithm may run for years
+    - when you have operations that is a poer of hte input it is commont to refer tot he algorithm as `running in polynomial time`
+  - `exponential complexity O(2^n)`
+    - algorithm takes twice the number of previous operations for every new element added
+    - when an algorithm has this complexity even small problems may take forever
+    - may algoirthms doing exhaustive searches have exponential complexity
+    - types
+      - `fibonnaci` numbers
+  - `factorial complexity O(n!)`
+    - a nightmare complexity because of the large number of possible combinations between the elements
+    - if your input is 100 objects and an operaton on your computer takes 10^-6 seconds you will need 10^140 years to copmlete the task successfully
+    - types
+      - the `traveling salesmen` problem
+        - a salesman has to find the shortest route for visiting man y cities and coming back to the starting city
 
 
 
