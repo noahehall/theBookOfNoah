@@ -224,20 +224,19 @@
   - a measure of algoirhytm efficiency in terms of tiem usage because each operations takes some time
   - the more operations an algoirthms requires the more complex it is
   - measuring operations
-    - `random access machine` (RAM)
-      - `abstract machines` consider how well an algorithm would work on a computer without testing it on the real thing yet bound by the type of hardware youd use
-        - performs basic arithmetic opeartions and interacts with information in memory
-        - `time step` every time the machine does something it takes time
-          - i.e. each operation
-      - `ram simulation`
-        - count each simple operation (arithmetic ones) as a time step
-        - break complex operations into simple arithmetic operations and count time steps as defined in step 1
-          - count time because when you can employ a solution in so many environments and its resource usage depands on so many factors you have to find a way to simplify comparisons os that they become standard
-            - otherwise you cant compare alternatives
-        - count every data access from memory as one time step
-        - the analysis of algorithms  proposes to use the number of operation syou get from a ram simulation and turn them into a mathematical function expressing how yoru algorithm behaves in terms of time which is a quantifications of the steps or operations required when the number of data inputs grows
-          - e.g. if your aglorithm sorts object you can express complexity using a function that reports how many operations i t needs depending on the number of objects it receives
-          -
+    - `abstract machines` | `random access machine` (RAM)
+      - consider how well an algorithm would work on a computer without testing it on the real thing yet bound by the type of hardware youd use
+      - performs basic arithmetic opeartions and interacts with information in memory
+      - `time step` every time the machine does something it takes time
+        - i.e. each operation
+    - `ram simulation`
+      - count each simple operation (arithmetic ones) as a time step
+      - break complex operations into simple arithmetic operations and count time steps as defined in step 1
+        - count time because when you can employ a solution in so many environments and its resource usage depands on so many factors you have to find a way to simplify comparisons os that they become standard
+          - otherwise you cant compare alternatives
+      - count every data access from memory as one time step
+      - the analysis of algorithms  proposes to use the number of operations you get from a ram simulation and turn them into a mathematical function expressing how yoru algorithm behaves in terms of time which is a quantifications of the steps or operations required when the number of data inputs grows
+        - e.g. if your aglorithm sorts object you can express complexity using a function that reports how many operations i t needs depending on the number of objects it receives
   - measuring space
     - e.g. memory usage
     - you consider space when your problem is greedy for resources
@@ -248,10 +247,47 @@
       - hard disk usage
       - power consumption
       - data transmission speed in a network
-      -
   - `benchmark` real computer measures where you run the code and verify the time required to run it
     - as opposed to a `RAM simulation` with uses pseudo code
     - is useful but lacks generalization like `RAM simulation`
+
+### big o notation
+  - `big o`
+    - the algorithm that, after a certain *n* value (threshold for considering an input big) always results in a larger number of operations given the same input than the worse case algoirthm
+  - a function describing how an algoirhytm relates its solution to the quantity of data it receives is something you can analyze without specific hardware or software support
+  - represents the performance of algorithms
+  - visually
+    - a cartesian coordinate system can represent its function as measured by `ram simulation` where the
+    - abscissa (x coordinate) is the size of the input
+    - ordinate (y coordinate) is its resulting number of operations
+  - worst case
+  - average case
+  - best case
+  - `constant complexity O(1)`
+    - the same time
+    - no mater how much input you provide in ithe end it is a constant n7mber of operations no matter how long the input data is
+    - very rare in practice
+  - `logarithmic complexity O(log n)`
+    - the number of operations grows at a slower rate than the input
+    - making the algorithm less efficient with small inputs and more efficient with larger ones
+    - types
+      - `binary search`
+  - `linear complexity O(n)`
+    - operations grow with athe input in a 1:1 ratio
+    - types
+      - iteration which you can input once and apply an operation to each element of it
+  - `linearithmic complexity O(n log n)`
+    - complexity is a mix between logarithmic and linear complexity
+    - types
+      - `mergesort`
+      - `heapsort`
+      - `quicksort`
+  - `quadratic complexity O(n^2)`
+    - operations grow as a square of the number of inputs
+    - types
+      - nested iterations
+    -
+
 
 
 # specific algorithms
