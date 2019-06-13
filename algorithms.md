@@ -2,7 +2,11 @@
   - John paul mueller
   - luca massaron
 
-
+# TODO
+  - skipped `performing essential data manipulations using python` cuz python is for pussies
+    - but i need to reread the section
+    - i gues ima ...
+  - 
 # Continue Learning
 ## Algorithms
   - [making toast algorithms](https://www.google.com/search?q=making+toast+algorithm)
