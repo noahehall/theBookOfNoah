@@ -81,7 +81,7 @@
 
     - `function`
       - a way to map some inputs to a response
-      - a transformation (based on math operations) that transform 
+      - a transformation (based on math operations) that transform
       -
   - `algorithm`
     - sequence of steps used to solve a problem
@@ -128,6 +128,7 @@
         - `problem instance`
           - the combination of the start state, randomized tiles and the goal state (tiles ina particular order)
     -
+
 ## other things
   - GPUs are commonly used chips for perming algorithm-related tasks
     - specialize in providing support for math-intensive tasks, especially those that involve data transformations
@@ -213,10 +214,10 @@
 
 # algorithm evaluation
   - `analysis of algorithms`
-    - the branch oof computer science devote dto understanding how algoritjms workin a formal way
+    - the branch of computer science devote dto understanding how algorithms work in a formal way
       - measures resources required in terms of the number of operations an algorithm reqires to reach a solution or by its `occupied space`
 
-  - determining whether an algorithm actually performs int he way you need it to
+  - determining whether an algorithm actually performs in the way you need it to
   - perform accurate comparisons to know whether you really do need to discover a new mehtod of solving a problem when an older solution works to slowly or uses to many resources
 
 ## complexity
