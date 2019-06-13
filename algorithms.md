@@ -9,10 +9,12 @@
 
 
 # Continue Learning
+  - [big o cheatsheet](http://bigocheatsheet.com)
 ## Algorithms
   - [making toast algorithms](https://www.google.com/search?q=making+toast+algorithm)
   - [euclidean algorithm](https://www.google.com/search?q=euclidean+algorithm)
   - [bayes theorem](https://www.google.com/search?q=bayes+theorem)
+  - [recursive tail calls vs trampoline](https://www.google.com/search?q=recursive+tail+calls+trampoline)
 
 
 ## algorithm problems
@@ -33,6 +35,15 @@
   - *Art of computer programming* Donald E. Knuth
   - *Machine learning for dummies* John Mueller and Luca MAssaron
 
+# data
+  - to create a solution you need data on which to base a conslusion
+  - the search size and complexity of data sources can greatly affect the solution resolution
+  - humans think about dta in nonspecific ways and apply various rules to the  same data to tunderstand it in ways that computers never can
+  - computers view of data is structued, simple, uncompromising, and uncreative
+    - you have to consider data from the computers point of view when using algorithms
+    - cosearchmputers only see ones and zeros
+    - a large part of algorithms is making the data appear in a form that the computer dan use when using the algorithm to find a solution to an issue
+## structured data
 
 # Algorithms - background
   - algorithms are all about finding solutions
@@ -47,20 +58,11 @@
 
   - algorithms can see multiple presentations
     - recursive vs iterative
-
   - elements of all algorithms
     - describe the problem
     - create a series of steps to solve the problem
 
-  - `data`
-    - to create a solution you need data on which to base a conslusion
-    - the size and complexity of data sources can greatly affect the solution resolution
-    - humans think about dta in nonspecific ways and apply various rules to the  same data to tunderstand it in ways that computers never can
-    - computers view of data is structued, simple, uncompromising, and uncreative
-      - you have to consider data from the computers point of view when using algorithms
-      - computers only see ones and zeros
-      - a large part of algorithms is making the data appear in a form that the computer dan use when using the algorithm to find a solution to an issue
-      -
+
   - algorithms have two main perspectives
     - issues - problems tha tyou need to solve
       - can describe the desired output of an algorithm
@@ -316,14 +318,27 @@
 
 
 # specific algorithms
+  - `sequential search`
+    - generally takes longer than any other solution you can employ
+    -
 ## comparisons
   - when looking for a maximum value in an array
     - unsorted arraywhichc
       - `brute force` > `divide and conquer`
   - heuristic algorithms learn from previous failures
     - brute force solutions dont
-    -
+  - `search` routines
+    - work better with sorted data
 
+## binary search
+  - process
+    - split the content in question in half
+      - isntead of splitting in half you could also split the content in thirds, etc
+    - compare the keys for the content with the search term
+      - this can be done via `iteration` or `recursion`
+    - choose the half that contains the key
+    - repeat steps 1 through 3 until you find the key
+  - `complexity` O(log n)
 ## greedy approach
   - one that makes an optimial choice at each problem-solving stage to obtain an overall optimal solution to solve the problem
     - this can oft times lead to a `pyrrhic victory`
@@ -411,13 +426,16 @@
   - divide the problem into smaller pieces each of which is manageable on its own
   - by making a problem simpler, you dan create a set of simpler steps to finding a problem solution
     - reduces  the time to find the solution
-    - reduces the number of resources untestedimproves you rchances of finding precisly the solution you need
+    - reduces the number of resources untestedimproves your chances of finding precisly the solution you need
   - example
     - looking for a book in a library (i.e. dewey decimal system)
       - divide the library into childrens and adults sections
       - divide the adults section into further categories, etc
       - give each category a code
       - map each book to a category code
+    - writing a book
+      - instead of writing a whole book
+      - write it one chapter at a time
 
 ### process divide and conquer
   - create a precise problem definition
@@ -473,7 +491,10 @@
     - the multiolication of a series of numbers between a starting point and ending a point in which each number in the series is one less than the number before it
       - e.g. 5 * 4 * 3 * 2 * 1
   - `tail call` a tail call occurs any time the resursion makes a call to the function as the last thing before it returns
-  -
+    - issues
+      - forces the programming language to keep track of the individual call values untilt he recursion rewinds
+      - each call consumes memory
+      - at some point the ssystem will run out of memory and the `tail call` will fail, and thus your algorithm will fail
 
 
 ```js
