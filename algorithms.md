@@ -43,8 +43,71 @@
     - you have to consider data from the computers point of view when using algorithms
     - cosearchmputers only see ones and zeros
     - a large part of algorithms is making the data appear in a form that the computer dan use when using the algorithm to find a solution to an issue
+    -
 ## structured data
+  - before you can do an ything wiht most data you must structure it in some manner so that you can begin to see what it does and does not contain
+  - `structured data`
+    - entails organizating data in some way so that all the data has teh same attribu5tes, appearance, and components
+  - `organization`
+    - you arent changing the data in any wayssimply making the data more useful
+    - constrasts  with `remediating` or `shaping` data where you sometimes do change values to convert one data type to another or experience a loss of accurance e.g. with data, or when moving between data sources
 
+## data from multiple sources
+  - determine whether all datasets contain all the required data
+    - consider whetherh all datasets provide jthe data you need or whether you need to remediate the data in some way to botain the desired result
+  - check datasets for datat ype issues
+    - e.g. are all dates in the same format and data type (strings vs date objects)
+  - ensure all datasets place the same meaning on data elements
+    - data from one source might have a different meaning that data created by another source
+    - e.g. size of an itneger can vary between sources
+      - 32 bit vs 16 bit
+      - dates stored in milliseconds vs dates stored in seconds
+  - verify the data attributes
+    - to combine data from various sources you must understand the data attributes to ensure that you enterpret the data correctly
+    - the more time you spend verifying the compatibility of data from each of the sources you want to use for d atat set the less likely you are to encounter problems
+
+## remediation
+  - when you find problems in your dataset you need to remediate it so that all datasets work properly with the algorithms you use
+  - data duplication
+    - e.g. when combining two/more datasets could create multip;e records when the data appears in more than one location
+  - missing values
+    - can skew the results of an algorithms output
+    - you can set missing values to a standard value
+    - use the mean of all values
+      - this tends to make the missing values not count
+
+## data structures
+### stack
+  - provides last in/first out (LIFO) data storage
+  - issues
+    - some lists dont perform well because lsit elements are stored in computer memeory and accessed using an index and memory poitners
+    - `memory pointers` a number that provides the memory address of the data
+
+### queues
+  - first in/first out (FIFO) data structure
+
+### dictionaries
+  - can quickly provide access to specific data items using the key
+  - `hash tables`
+    - an array thatg maps keys to values
+  - requirements
+    - `key` must be unique
+    - `key` must be immutable
+
+### trees
+  - helps you organize data quickly and find it in a shorter time than using other data storage techniques
+  - use cases
+    - `search`
+    - `sort routines`
+  - `nodes`
+    - each item you add to the tree is a node
+    - `root node` provides the starting point for the various kinds of processing you perform
+    - `leaf node` always an ending point for the tree
+    - `branch n ode` support either other branches or leaves
+  - `links`
+    - `nodes` connet to each other using link
+    - the relationship between nodes is important because discussions about trees often consider the child/parent relationship between nodes
+  -
 # Algorithms - background
   - algorithms are all about finding solutions
     - i.e. present methods for solving formulas
@@ -331,6 +394,8 @@
     - work better with sorted data
 
 ## binary search
+  - requirements
+    - the data has to be in sorted order
   - process
     - split the content in question in half
       - isntead of splitting in half you could also split the content in thirds, etc
@@ -339,6 +404,9 @@
     - choose the half that contains the key
     - repeat steps 1 through 3 until you find the key
   - `complexity` O(log n)
+
+
+
 ## greedy approach
   - one that makes an optimial choice at each problem-solving stage to obtain an overall optimal solution to solve the problem
     - this can oft times lead to a `pyrrhic victory`
