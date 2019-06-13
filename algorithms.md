@@ -127,6 +127,16 @@
   - the use of data insertion makes sorting faster
   - you can further classify these trees as `max heaps` and `min heaps`
     - depending on the trees capability to immediately proovide the maximum or minimum value present in tree
+
+#### graphs
+  - sort of a tree extension
+    - you have `nodes` that connect to each other to create relationships
+    - unlike binary trees
+      - a graph can have mroe than one/two connections
+      - `graph nodes` often have a multitude of connections
+  - characteristics
+    - a graph shows connectivity between nodes in a way that is useful for defining complex relationships
+    - `directionality`
 # Algorithms - background
   - algorithms are all about finding solutions
     - i.e. present methods for solving formulas
