@@ -107,7 +107,26 @@
   - `links`
     - `nodes` connet to each other using link
     - the relationship between nodes is important because discussions about trees often consider the child/parent relationship between nodes
-  -
+  - `traversing the tree`
+    - means travelling between nodes via links
+  - building a tree
+    - `bottom up`
+      - build the leaves first
+    - `top down`
+
+#### balanced trees
+  - kind of tree that maintains a balanced structure through reorganization so that it can provide reduced access times
+  - the number of elements on the left size differs from the elements right side by at most one
+
+#### unbalanced trees
+  - places new data items wherever necessary inn the tree without regard to balance
+  - this method of adding items makes buiding the tree faster but reduces access speed when searchiong or sorting
+
+#### heaps
+  - sophisticated tree that allows data insertions into the tree structure
+  - the use of data insertion makes sorting faster
+  - you can further classify these trees as `max heaps` and `min heaps`
+    - depending on the trees capability to immediately proovide the maximum or minimum value present in tree
 # Algorithms - background
   - algorithms are all about finding solutions
     - i.e. present methods for solving formulas
