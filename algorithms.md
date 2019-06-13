@@ -6,7 +6,8 @@
   - skipped `performing essential data manipulations using python` cuz python is for pussies
     - but i need to reread the section
     - i gues ima ...
-  - 
+
+
 # Continue Learning
 ## Algorithms
   - [making toast algorithms](https://www.google.com/search?q=making+toast+algorithm)
@@ -457,4 +458,12 @@
   - always chooses the path that is closest to the goal using the equation `f(n) = h(n)`
   - can find solutions quite quickly but it can also get stuck in loops
     - thus many people dont consider it an optimal appraoch to finding a solution
-  -
+
+
+## recursion
+  - solves many computer problems that relies oon the capability of a function to continue calling itself until it satisfies a particular condition
+  - you call the same function multiple times but modifying the terms under which you call it until the tasks reaches a specific condition
+    - all the previous calls are still active
+    - the calls unwind themselves untilt he first call finally ends with the correct answer and th eunwiding proces where most peopel enocunter a problem 
+  - provides an easier way to solve problems when working with some algorithms because it mimics the way a human would solve it
+    -
