@@ -9,6 +9,7 @@
   - [euclidean algorithm](https://www.google.com/search?q=euclidean+algorithm)
   - [bayes theorem](https://www.google.com/search?q=bayes+theorem)
 
+
 ## algorithm problems
   - [change making problem](https://www.google.com/search?q=change+making+problem)
 
@@ -22,9 +23,11 @@
     - memory that simulates the human brain
   - [proportional integral derivative](https://www.google.com/search?q=proportional+integral+derivative+algorithm)
 
+
 ## Books
   - *Art of computer programming* Donald E. Knuth
   - *Machine learning for dummies* John Mueller and Luca MAssaron
+
 
 # Algorithms - background
   - algorithms are all about finding solutions
@@ -43,7 +46,6 @@
   - elements of all algorithms
     - describe the problem
     - create a series of steps to solve the problem
-    - p34ro4m 5h3 w53pw 5o og5qin q e3wi43e 43wul5W
 
   - `data`
     - to create a solution you need data on which to base a conslusion
@@ -72,9 +74,15 @@
   - `equation`
     - numbers and symbols that, when taken as a whoe, equate to a specific value
     - always contains an equals sign
+
   - `formula`
     - combination of numbers and symbols used to express information or ideas
     - generally show the relationship between two/more variables
+
+    - `function`
+      - a way to map some inputs to a response
+      - a transformation (based on math operations) that transform 
+      -
   - `algorithm`
     - sequence of steps used to solve a problem
     - `finite`
@@ -227,8 +235,8 @@
             - otherwise you cant compare alternatives
         - count every data access from memory as one time step
         - the analysis of algorithms  proposes to use the number of operation syou get from a ram simulation and turn them into a mathematical function expressing how yoru algorithm behaves in terms of time which is a quantifications of the steps or operations required when the number of data inputs grows
-          - e.g. if your aglorithm sorts object you can express complexity using a function that reports how many operations i t needs depending on tye number of objects it receives
-          - 
+          - e.g. if your aglorithm sorts object you can express complexity using a function that reports how many operations i t needs depending on the number of objects it receives
+          -
   - measuring space
     - e.g. memory usage
     - you consider space when your problem is greedy for resources
