@@ -151,7 +151,7 @@
   - dictionaries
     - key - node name
     - vallues - connections for the node
-    - 
+    -
 # Algorithms - background
   - algorithms are all about finding solutions
     - i.e. present methods for solving formulas
@@ -608,8 +608,26 @@
       - each call consumes memory
       - at some point the ssystem will run out of memory and the `tail call` will fail, and thus your algorithm will fail
 
+# searching and sorting data
+  - unless you can access the data when you want in the manner you want, you cannot effectively `CRUD`
+  - `crud`
+    -  create read update delete
+    - focus on the needt o access the data you need to perform just about every task in life quickly and easily
 
-```js
+## hashes
+  - the use of indexing makes sorting and searching significantly faster
+  - `index`
+    - kind of pointer/address; its not the data but it points to the data
+    - e.g.
+      - your home address points to your home
+## sorting
+  - placing data in an order that makes it easy to perform CRUD operations
+  - makes searches considerably faster
+  - as long as the sort matches the search
+  - sorting most focus on a particular need
+    - e.g.
+      - find employes by last name
+        - you would sort by last name, and not birthday
 
-
-```
+### mergesort
+  -
