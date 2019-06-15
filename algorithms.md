@@ -126,7 +126,7 @@
   - sophisticated tree that allows data insertions into the tree structure
   - the use of data insertion makes sorting faster
   - you can further classify these trees as `max heaps` and `min heaps`
-    - depending on the trees capability to immediately proovide the maximum or minimum value present in tree
+    - depending on the trees capability to immediately provide the maximum or minimum value present in tree
 
 #### graphs
   - sort of a tree extension
