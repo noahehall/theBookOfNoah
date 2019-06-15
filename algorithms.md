@@ -137,6 +137,21 @@
   - characteristics
     - a graph shows connectivity between nodes in a way that is useful for defining complex relationships
     - `directionality`
+    -  a graph node can connect to any other node with a specific direction in mind
+      - e.g.
+        - some streets are bidirectional
+        - some streets are one-way streets
+  - weights
+    -  a graph can designate a weight to a particular connection
+      - distintance between two points
+      - time required to traverse the route
+      - etc
+##### graph construction
+  - most developers use dictionaries, lesser times lists to build graphs
+  - dictionaries
+    - key - node name
+    - vallues - connections for the node
+    - 
 # Algorithms - background
   - algorithms are all about finding solutions
     - i.e. present methods for solving formulas
