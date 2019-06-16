@@ -132,6 +132,8 @@ f- Algorithms for dummies
     - depending on the trees capability to immediately provide the maximum or minimum value present in tree
 
 #### graphs
+  - a set of vertexes, nodes, or points connected by edges, arcs, or lines
+    - using graphs enables you to decribe relationships between nodes
   - sort of a tree extension
     - you have `nodes` that connect to each other to create relationships
     - unlike binary trees
@@ -153,7 +155,10 @@ f- Algorithms for dummies
     - wizards - which lead you through a series of steps in an application
     - recipes in cookbooks are a kind of graph
     - organizational chart - graph that reflects relationnships between people in various settings
-    -
+
+##### sorting graphs
+  - in order to make sense of a graph you need to sort the nodes to create a specific `organization`
+    - without `organization`, making any sort of decision beecomes impossible
 
 ##### graph terminology
 
@@ -216,7 +221,12 @@ f- Algorithms for dummies
     - a 2-dimensional array
       - 0 - no connections exist
       - 1 - a connection exist
-      - total number of cells is the square  of the number of nodes 
+      - total number of cells is the square  of the number of nodes
+  - `sparse matrix`
+    - a matrix in which only the actual connection appear in the matrix
+    - all other entries do not exist
+    - use cases
+      - saves resources because the memory requiremments for fa sparse matrix are small
 # Algorithms - background
   - algorithms are all about finding solutions
     - i.e. present methods for solving formulas
