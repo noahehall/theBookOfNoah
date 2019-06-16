@@ -17,6 +17,7 @@
   - [bayes theorem](https://www.google.com/search?q=bayes+theorem)
   - [recursive tail calls vs trampoline](https://www.google.com/search?q=recursive+tail+calls+trampoline)
   - [khan academy algorithms](https://www.khanacademy.org/computing/computer-science/algorithms)
+  - [fibonacci heap](https://www.google.com/search?q=fibonacci+heap)
 
 ## algorithm problems
   - [change making problem](https://www.google.com/search?q=change+making+problem)
@@ -431,26 +432,58 @@
     -
 ## comparisons
   - when looking for a maximum value in an array
-    - unsorted arraywhichc
+    - unsorted arraywhichcsmallestsmallest
       - `brute force` > `divide and conquer`
   - heuristic algorithms learn from previous failures
     - brute force solutions dont
   - `search` routines
     - work better with sorted data
+  - BST vs binary heap
+    - search
+      - BST O(log n)
+      - binary heap O(n)
+    - printing elements in order
+      - BST O(log n)
+      - binary heap O(n log n)
+    - finding the the lfoor and ceiling requires O(log n) for both
+    - locating the kth smallest/largest element requires o(log n) when the tree is properly configured
+    - BST
+      - works best ins ituations inw hich you spend more time searching and less time building the tre
+    - binary heap
+      - works best in dynamic situations inw hich keys change regularly
+      - the following advantages over BST
+        - creating the required structures requires fewer resources because the binary heaps rely on arrays and making them cache friendlier as well
+        - building a binary heap requires O(n) time,
+          - BST requires O(n log n)
+        - using pointers to implement the tree isnt necessary
+        - relying on binary heap variations (e.g. `fibonacci heap`) offers advantages such as increase and decrease key times of O(1)
 
 ## binary search
   - requirements
     - the data has to be in sorted order
   - process
-    - split the content in question in half
-      - isntead of splitting in half you could also split the content in thirds, etc
+    - split the content in half
+      - or split the content in thirds, etc
     - compare the keys for the content with the search term
       - this can be done via `iteration` or `recursion`
     - choose the half that contains the key
     - repeat steps 1 through 3 until you find the key
   - `complexity` O(log n)
 
-
+### binary search tree
+  - BST
+  - less numbers appear to the left and greater numbers appear to the right
+  - the root node contains a value that is int he middle of the range of keys
+    - giving the BST and easily understood balanced approached to storing keys
+    -
+## binary heap
+  - places each of the node elements in a special order
+  - the root node always contains either the smallest/largest value
+    - `binary min heap` smallest value
+    - `binary maxheap` largest value
+  - upper level branches are always a smallerlarger vallue than lower level branches and leaves
+  - the effect is to keep the tree balanced and in a predictable order so that searching becomes extremely efficient
+    - the cost is in keeping the tree balanced
 
 ## greedy approach
   - one that makes an optimial choice at each problem-solving stage to obtain an overall optimal solution to solve the problem
@@ -614,6 +647,7 @@
   - `crud`
     -  create read update delete
     - focus on the needt o access the data you need to perform just about every task in life quickly and easily
+  - of all the tass applications do searching is the more time consuming and also the one that is required the most
 
 ## hashes
   - the use of indexing makes sorting and searching significantly faster
@@ -699,3 +733,6 @@
   - average case O(n log n)
   - process
     - partition the data by choosing a pivot point that determines the left and right side of the sort
+    - searches for elements in each partition that are in the wrong place and swaps them
+    - when all alements are in the correct place, create a new pivot point and return
+    - recursively repeat
