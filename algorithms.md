@@ -662,17 +662,18 @@
   - `hash table`
     - provides the means to create an index of keys that points to the individual items in a data structure so tha tan algoritym can easily predict the location of the data
     - usually provides a search time of O(1)
-    - contains a specific number of `slots` that you can view as buckets for holding data
-      - each slot can holode one data item
-    - `load factor` the specific number of available slots in a `hash table`
-      - high `load factor`
-        - the potential for `collisions` is larger
-          - where two data entries have the same hash value
+  - `slots` i.e. buckets for holding data inside the `hash table`
+    - each slot can hold one data item
+  - `load factor` the number of filled-to-available `slots` in a `hash table`
+    - high `load factor` increases the potential for `collisions`
+  - `collisions` where two data entries have the same hash value
+    - keep the `load factor` low to reduce colissions
   - `hash function` placing keys in the index by turning each key into a numeric value
     - the numeric value acts as an index into the hash table and the hash table provides a pointer to the full record in the dataset
-    - the `hash function` produces repetable results - thus you can predict the location of hte required data
+    - the `hash function` produces repeatable results - thus you can predict the location of hte required data
     - examples
-      - 
+      - obtain the modulus of the value divided by the number of slots
+        - *value  % slots.length
 
 
 ## sorting
