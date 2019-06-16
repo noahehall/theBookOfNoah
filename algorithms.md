@@ -687,5 +687,15 @@
   - use cases
     - arrays
   - worst case O(n^2)
+    - the dataset is already sorted in the desired order
+    - the dataset is sorted inr everse order
+    - all the elements in the dataset are the same
+      - occur because of the pivot point that a less intelligent sort function uses
+    - using the right programming technique can mitigate these problems by defining something other than the leftmost / rightmost index as the pivot point
+      - choosing a random index
+      - chsooing the middle index of hte partition
+      - choosing the median of the first, middle, and last element of the partition for the pivot
+        - especially for longer partions
   - average case O(n log n)
-  - 
+  - process
+    - partition the data by choosing a pivot point that determines the left and right side of the sort
