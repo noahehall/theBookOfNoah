@@ -161,11 +161,21 @@ f- Algorithms for dummies
     - the number of  edges and vertexes
   - graph `centrality`
     - the most important vertexes in a graph
-    - ???
+    - can be calculated a number of different ways
+      - based on node degrees / connection types
+      - `closesness centrality` to other nodes
+        - when working with traffic analysis you might need to determine which locaions are central based on their distance to other nodes
+          - e.g.
+            - even though a shopping center in the suburbs has all sorts of connections
+              - the fact that it is in the suburbs (and not the city) may reduce its impact on traffic
+              - the same store in the city with fewer connections may have a greater impact on traffic
+      - `betweeness centrality`
+        - determine the node that has the highest number of short paths coming to it
+        -
   - `node degree`
     - the count of edges to a particular node
     - the higher the degree the more complex the node becomes
-  - `graph functionlaity`
+  - `graph functionality`
     - the capability of the graph to model a specific problem
   - `plotting`
     - the act of turning the numbers that represent a graph into a gaphic visualization
@@ -179,7 +189,7 @@ f- Algorithms for dummies
       - distintance between two points
       - time required to traverse the route
       - etc
-    -
+  -
 
 ##### graph types
   - `networks`
@@ -199,8 +209,14 @@ f- Algorithms for dummies
   - `vertex-labeled graph`
     - each vertex has a name associated with it
     - e.g. a road map with all the towns labeled
+  -
 
-
+##### graphs in numeric format
+  - `matrix`
+    - a 2-dimensional array
+      - 0 - no connections exist
+      - 1 - a connection exist
+      - total number of cells is the square  of the number of nodes 
 # Algorithms - background
   - algorithms are all about finding solutions
     - i.e. present methods for solving formulas
