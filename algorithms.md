@@ -138,20 +138,46 @@ f- Algorithms for dummies
       - a graph can have more than one/two connections
       - `graph nodes` often have a multitude of connections
   - structures that present a number of nodes (vertexes) connected by a number of edges/arcs (depending on the presentation)
-    - appear as ordered pairs int he form `g=(v,e)`
-    -
+    - appear as ordered pairs in the form `g=(v,e)`
+      - g - the graph
+      - v - list of vertexes
+      - e - list of edges that connect the vertexes
+        - a numeric pair that expresses the two vertexes that it connects
   - most developers use dictionaries, lesser times lists to build graphs
     - dictionaries
       - key - node name
       - values - connections for the node
-
   - a graph shows connectivity between nodes in a way that is useful for defining complex relationships
+  - examples
+    - telephone menu systems are a form directional graphs
+    - wizards - which lead you through a series of steps in an application
+    - recipes in cookbooks are a kind of graph
+    - organizational chart - graph that reflects relationnships between people in various settings
+    -
 
 ##### graph terminology
+  - `undirected graph`
+    - a graph in which the order of the edge entries doesnt matter
+    - e.g.
+      - a road map would represent an undirected graph in most cases because traffic can travel along the road in both directions
+  - `directed graph`
+    - a graph in which the order of the edge entries does matter because the flow is from the first entry to the second
+    - in this case, most people call the edges `arcs` to differentiate them from undirected entries
+    - e.g.
+      - a graph representation of a traffic light sequence
+  - `mixed graph`  when a graph has both `undirected` and `directed` subgraphs in the same graph
+  - `weighted graph`
+    - a graph that has values assigned to each of the edges or arcs
+  - `vertex-labeled graph`
+    - each vertex has a name associated with it
+    - e.g. a road map with all the towns labeled
   - `graph complexity`
     - count the edges and vertexes
-  - `graph centrality`
+  - graph `centrality`
+    - the most important vertexes in a graph
     - ???
+  - `graph functionlaity`
+    - the capability of the graph to model a specific problem
   - `plotting`
     - the act of turning the numbers that represent a graph into a gaphic visualization
   - `directionality`
@@ -165,6 +191,7 @@ f- Algorithms for dummies
       - time required to traverse the route
       - etc
     -
+
 ##### graph types
   - `networks`
     - kind of graph that associates names with the vertexes (nodes/points),  edges (artcs/lines), or both
