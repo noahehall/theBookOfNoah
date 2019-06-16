@@ -135,26 +135,42 @@ f- Algorithms for dummies
   - sort of a tree extension
     - you have `nodes` that connect to each other to create relationships
     - unlike binary trees
-      - a graph can have mroe than one/two connections
+      - a graph can have more than one/two connections
       - `graph nodes` often have a multitude of connections
-  - characteristics
-    - a graph shows connectivity between nodes in a way that is useful for defining complex relationships
-    - `directionality`
-    -  a graph node can connect to any other node with a specific direction in mind
-      - e.g.
-        - some streets are bidirectional
-        - some streets are one-way streets
+  - structures that present a number of nodes (vertexes) connected by a number of edges/arcs (depending on the presentation)
+    - appear as ordered pairs int he form `g=(v,e)`
+    -
+  - most developers use dictionaries, lesser times lists to build graphs
+    - dictionaries
+      - key - node name
+      - values - connections for the node
+
+  - a graph shows connectivity between nodes in a way that is useful for defining complex relationships
+
+##### graph terminology
+  - `graph complexity`
+    - count the edges and vertexes
+  - `graph centrality`
+    - ???
+  - `plotting`
+    - the act of turning the numbers that represent a graph into a gaphic visualization
+  - `directionality`
+    - a graph node can connect to any other node with a specific direction in mind
+    - e.g.
+      - some streets are bidirectional
+      - some streets are one-way streets
   - weights
     -  a graph can designate a weight to a particular connection
       - distintance between two points
       - time required to traverse the route
       - etc
-##### graph construction
-  - most developers use dictionaries, lesser times lists to build graphs
-  - dictionaries
-    - key - node name
-    - vallues - connections for the node
     -
+##### graph types
+  - `networks`
+    - kind of graph that associates names with the vertexes (nodes/points),  edges (artcs/lines), or both
+    -
+
+
 # Algorithms - background
   - algorithms are all about finding solutions
     - i.e. present methods for solving formulas
@@ -694,12 +710,14 @@ f- Algorithms for dummies
         - everytime a collision ocurs the code simply appends the value to the list in the target slot
         - the hash will always produce a correct slot
           - the list within each slot will still require some osrt of sequential/other search to find the specific value
+
   - `hash function` placing keys in the index by turning each key into a numeric value
     - the numeric value acts as an index into the hash table and the hash table provides a pointer to the full record in the dataset
-    - the `hash function` produces repeatable results - thus you can predict the location of hte required data
+    - the `hash function` produces repeatable results - thus you can predict the location of the required data
     - examples
       - obtain the modulus of the value divided by the number of slots
         - *value  % slots.length
+      - combine the output of mu8litple hash functions when working with complex applications that rely on a large dataset
   - `sha`
     - secure hash algorithms
     - released by the national institutde of standards and technology (NIST) as a US federal information processing standard (FIPS)
