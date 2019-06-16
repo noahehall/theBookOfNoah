@@ -161,7 +161,17 @@ f- Algorithms for dummies
     - without `organization`, making any sort of decision beecomes impossible
 
 ##### graph terminology
-
+  - `traversing a graph`
+    - to search/visit each vertex/node in a specific order
+    - `undiscovered`
+      - an unvisited vertex
+    - `discovered`
+      - a vertex you've previously visited
+    - also called `processed`
+    - `redundancy`
+      - nodes interconnect such that you might have to traverse some nodes more than once toe xplore the entire graph
+      - to help reduce redundancy
+        - you should mark visited  nodes as such
   - `graph complexity`
     - the number of  edges and vertexes
   - graph `centrality`
@@ -530,6 +540,13 @@ f- Algorithms for dummies
           - BST requires O(n log n)
         - using pointers to implement the tree isnt necessary
         - relying on binary heap variations (e.g. `fibonacci heap`) offers advantages such as increase and decrease key times of O(1)
+  - breadth-first vs depth-first
+    - the difference between the two is how eaach stores the vertexes
+      - a `queue` for `bfs`
+        - a list that works according to the `fifo` principle
+        - newly discovered vertexes dont wait long for processing
+      - a `stack` for `dfs`
+        - a list that works according `lifo`
 
 ## binary search
   - requirements
@@ -607,20 +624,23 @@ f- Algorithms for dummies
     - uses the simplest possible approach to solving the problem
     -
 
-### breadth-first search
-  - begins at the root node, explores each of the child nodes first and only then moves down to the next level
-  - progresses level by level until it finds a solution
+### breadth-first search (BFS)
+  - begins at the root node
+    - explores each of the child nodes first and only then moves down to the next level
+    - progresses level by level until it finds a solution
   - use cases
-    - chcking for duplicate nodes
+    - checking for duplicate nodes
+    - guaranteed to return the shortest path between two points as the first output when used to find paths
 
 
 #### issues
   - it must store every node in memory
     - i.e. uses a considerable amount of memory for a large number of nodes
 
-### depth-first search
-  - begins at the root node and explores a set of connected c hild nodes until reaches a leaf node
+### depth-first search (DFS)
+  - begins at the root node and explores a set of connected child nodes until reaches a leaf node
   - it progresses branch by branch until it finds a solution
+    - i.e. it explores every node from the root down a single path to the end
   - use cases
     - its memory efficient thus suited for problems with limited memory resources
 
