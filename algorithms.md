@@ -259,8 +259,11 @@ f- Algorithms for dummies
     - schedules, with each milestone representing a particular milestone
     - family trees
   - `topological sorting`
-    - orders all the vertexes of a graph on a line with the cirected eges pointing from to right
-      - 
+    - orders all the vertexes of a graph on a line with the directed edges pointing from to right
+      - organize the graph so that every graph vertex leads to a later vertex int he sqeuence
+    - useful when
+      - you have activities requiring you do something in a specific order
+      - any sort of scheduling that requires you to move from a specific starting point to a specific ending point can rely on a DAG with topological sorting
 
 ##### graphs in numeric format
   - `matrix`
