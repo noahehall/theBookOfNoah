@@ -667,7 +667,19 @@
   - `load factor` the number of filled-to-available `slots` in a `hash table`
     - high `load factor` increases the potential for `collisions`
   - `collisions` where two data entries have the same hash value
-    - keep the `load factor` low to reduce colissions
+    - preventing collisions
+      - keep the `load factor` low
+      - use `partial values` in the hash functioon
+        - e.g. dont use the zip code as it repeats for many phone numbers
+      - `folding` create a unique number by diving the original number into pieces adding the pieces and using th result of the hash value
+        - e.g. split a phone number into 3 pieces and add them as the hash functioon
+        - i.e. use some algebra on the value to create the hash function
+      - `mid-square`
+        - square the center digits of the number, and take the middle digits as the hash value
+        - i.e. another algebra function
+    - reacting to collisions
+      - `open addressing`
+        - stores the value in the next open slot by looking throught he slots equentially until  it finds an open slot to use
   - `hash function` placing keys in the index by turning each key into a numeric value
     - the numeric value acts as an index into the hash table and the hash table provides a pointer to the full record in the dataset
     - the `hash function` produces repeatable results - thus you can predict the location of hte required data
