@@ -631,6 +631,8 @@ f- Algorithms for dummies
   - use cases
     - checking for duplicate nodes
     - guaranteed to return the shortest path between two points as the first output when used to find paths
+    - locating the shortest route between two points as quickly as possible
+    - minimization algorithms
 
 
 #### issues
@@ -641,8 +643,13 @@ f- Algorithms for dummies
   - begins at the root node and explores a set of connected child nodes until reaches a leaf node
   - it progresses branch by branch until it finds a solution
     - i.e. it explores every node from the root down a single path to the end
+  - using a stack + recursion makes this algorithm faster
   - use cases
     - its memory efficient thus suited for problems with limited memory resources
+    - finding an entire path before exploring any other path
+    - when you need to serach in detail, rather than generally
+      - e.g. in games where finding a complete path is important
+      - optimal approach to perform tasks such as finding a solution in a maze
 
 
 #### issues
