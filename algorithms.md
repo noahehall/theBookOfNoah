@@ -156,26 +156,15 @@ f- Algorithms for dummies
     -
 
 ##### graph terminology
-  - `undirected graph`
-    - a graph in which the order of the edge entries doesnt matter
-    - e.g.
-      - a road map would represent an undirected graph in most cases because traffic can travel along the road in both directions
-  - `directed graph`
-    - a graph in which the order of the edge entries does matter because the flow is from the first entry to the second
-    - in this case, most people call the edges `arcs` to differentiate them from undirected entries
-    - e.g.
-      - a graph representation of a traffic light sequence
-  - `mixed graph`  when a graph has both `undirected` and `directed` subgraphs in the same graph
-  - `weighted graph`
-    - a graph that has values assigned to each of the edges or arcs
-  - `vertex-labeled graph`
-    - each vertex has a name associated with it
-    - e.g. a road map with all the towns labeled
+
   - `graph complexity`
-    - count the edges and vertexes
+    - the number of  edges and vertexes
   - graph `centrality`
     - the most important vertexes in a graph
     - ???
+  - `node degree`
+    - the count of edges to a particular node
+    - the higher the degree the more complex the node becomes
   - `graph functionlaity`
     - the capability of the graph to model a specific problem
   - `plotting`
@@ -195,7 +184,21 @@ f- Algorithms for dummies
 ##### graph types
   - `networks`
     - kind of graph that associates names with the vertexes (nodes/points),  edges (artcs/lines), or both
-    -
+  - `undirected graph`
+    - a graph in which the order of the edge entries doesnt matter
+    - e.g.
+      - a road map would represent an undirected graph in most cases because traffic can travel along the road in both directions
+  - `directed graph`
+    - a graph in which the order of the edge entries does matter because the flow is from the first entry to the second
+    - in this case, most people call the edges `arcs` to differentiate them from undirected entries
+    - e.g.
+      - a graph representation of a traffic light sequence
+  - `mixed graph`  when a graph has both `undirected` and `directed` subgraphs in the same graph
+  - `weighted graph`
+    - a graph that has values assigned to each of the edges or arcs
+  - `vertex-labeled graph`
+    - each vertex has a name associated with it
+    - e.g. a road map with all the towns labeled
 
 
 # Algorithms - background
