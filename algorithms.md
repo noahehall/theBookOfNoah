@@ -381,7 +381,7 @@
   - best case
   - `constant complexity O(1)`
     - the same time
-    - no mater how much input you provide in ithe end it is a constant n7mber of operations no matter how long the input data is
+    - no mater how much input you provide in ithe end it is a constant number of operations no matter how long the input data is
     - very rare in practice
   - `logarithmic complexity O(log n)`
     - the number of operations grows at a slower rate than the input
@@ -660,8 +660,19 @@
     - each index maintains a specific data order and points to the full dataset so you find what youre looking for extremely fast
   - `key` the identifying data for a particular data record
   - `hash table`
-    - provides the means to create and  index of keys that points to the individual items in a data structure so tha tan algoritym can easily predict the location of the data 
-    -
+    - provides the means to create an index of keys that points to the individual items in a data structure so tha tan algoritym can easily predict the location of the data
+    - usually provides a search time of O(1)
+    - contains a specific number of `slots` that you can view as buckets for holding data
+      - each slot can holode one data item
+    - `load factor` the specific number of available slots in a `hash table`
+      - high `load factor`
+        - the potential for `collisions` is larger
+          - where two data entries have the same hash value
+  - `hash function` placing keys in the index by turning each key into a numeric value
+    - the numeric value acts as an index into the hash table and the hash table provides a pointer to the full record in the dataset
+    - the `hash function` produces repetable results - thus you can predict the location of hte required data
+    - examples
+      - 
 
 
 ## sorting
