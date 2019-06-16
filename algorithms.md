@@ -658,6 +658,10 @@
     - enables you to maintain several sorted orders for the same data
     - sorting a small index is faster than sorting the entire dataset
     - each index maintains a specific data order and points to the full dataset so you find what youre looking for extremely fast
+  - `key` the identifying data for a particular data record
+  - `hash table`
+    - provides the means to create and  index of keys that points to the individual items in a data structure so tha tan algoritym can easily predict the location of the data 
+    -
 
 
 ## sorting
