@@ -10,12 +10,13 @@
 
 # Continue Learning
   - [big o cheatsheet](http://bigocheatsheet.com)
+
 ## Algorithms
   - [making toast algorithms](https://www.google.com/search?q=making+toast+algorithm)
   - [euclidean algorithm](https://www.google.com/search?q=euclidean+algorithm)
   - [bayes theorem](https://www.google.com/search?q=bayes+theorem)
   - [recursive tail calls vs trampoline](https://www.google.com/search?q=recursive+tail+calls+trampoline)
-
+  - [khan academy algorithms](https://www.khanacademy.org/computing/computer-science/algorithms)
 
 ## algorithm problems
   - [change making problem](https://www.google.com/search?q=change+making+problem)
@@ -393,7 +394,7 @@
   - `linearithmic complexity O(n log n)`
     - complexity is a mix between logarithmic and linear complexity
     - types
-      - `mergesort`
+      - `#`
       - `heapsort`
       - `quicksort`
   - `quadratic complexity O(n^2)`
@@ -620,6 +621,11 @@
     - kind of pointer/address; its not the data but it points to the data
     - e.g.
       - your home address points to your home
+    - enables you to maintain several sorted orders for the same data
+    - sorting a small index is faster than sorting the entire dataset
+    - each index maintains a specific data order and points to the full dataset so you find what youre looking for extremely fast
+
+
 ## sorting
   - placing data in an order that makes it easy to perform CRUD operations
   - makes searches considerably faster
@@ -628,6 +634,58 @@
     - e.g.
       - find employes by last name
         - you would sort by last name, and not birthday
+  - comparing sorts via speed
+    - `comparisons`
+      - to move data from one location in a dataset to antoher you need to know where to move it
+        - which means comparing the target datat to other data int he dataset
+      - having fewer comparisons = better performance
+    - `exchanges`
+      - depending on the algorithm, the data may need to be moved several times
+        - the number of exchanges affects speed consdierably because youre actually mmoving data from one location in memory to another
+      - fewer and smaller exchanges (e.g. when using `indexes`) = better performance
+
+### naive sort
+  - ordering using brute-force methods
+    - without any regard to making any kind fo guess as tow here the data should appear
+  - tend to work with the entire dataset instead of applying approaches that would likey reduce sorting time (e.g. `divide and conquer`)
+  - use cases
+    - efficient
+    - easy to understand
+
+#### selection sort
+  - replaces the `bubble sort`
+  - also called an `in-place comparison sort`
+  - worst case speded  O(n^2)
+  - process
+    - both types guarantee that items immediately appear in the final location once moved
+    - type 1
+      - look for the smallest item in the list and place it in the front of the list ensuring that the item is in the correct location
+    - type 2
+      - looks for the larget item placesit in the back of the list
+
+#### insertion sort
+  - process
+    - using a single item as a starting point and adding items to the left or right of it based onw hether these items are less than or greater than the selected item
+    - checks new items against the sorted items and isnerts the new item into the right position
+  - best case O(n)
+    - i.e. when the entire dat set is already sorted
+  - worst cast O(n^2)
+    - i.e when the entire dataset is sorted in reverse order because every insertion will require moving every value
 
 ### mergesort
-  -
+  - use cases
+    - sorting linked lists
+  - process
+    - applying the `divide and conquer` approach by breaking the dataset into individual pieces and sorting the pieces
+    - merges the pieces ina  manner that ensures that it has sorted the merged piece
+    - first function recursively split the pieces apart and ptuts them back together
+    - second function peforms the task of merging the pieces iteravely
+  - worst case O(n log n)
+
+### quicksort
+  - one of the fastest methods of sorting data
+  - use cases
+    - arrays
+  - worst case O(n^2)
+  - average case O(n log n)
+  - 
