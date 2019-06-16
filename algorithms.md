@@ -207,24 +207,60 @@ f- Algorithms for dummies
   -
 
 ##### graph types
-  - `networks`
-    - kind of graph that associates names with the vertexes (nodes/points),  edges (artcs/lines), or both
-  - `undirected graph`
+###### `networks`
+  - kind of graph that associates names with the vertexes (nodes/points),  edges (artcs/lines), or both
+
+###### `undirected graph`
     - a graph in which the order of the edge entries doesnt matter
+    - edges connect vertexes in both directions
     - e.g.
       - a road map would represent an undirected graph in most cases because traffic can travel along the road in both directions
-  - `directed graph`
-    - a graph in which the order of the edge entries does matter because the flow is from the first entry to the second
-    - in this case, most people call the edges `arcs` to differentiate them from undirected entries
-    - e.g.
-      - a graph representation of a traffic light sequence
-  - `mixed graph`  when a graph has both `undirected` and `directed` subgraphs in the same graph
-  - `weighted graph`
+
+
+###### `directed graph`
+  - edges have a single direction and can have these additional properties
+    - `cyclic`
+      - the edges form a cycle that take you back to the initial vertex after having visited the itnermediary vertexes
+    - `a-cycle`
+      - this graph lacks cycles
+  - a graph in which the order of the edge entries does matter because the flow is from the first entry to the second
+  - in this case, most people call the edges `arcs` to differentiate them from undirected entries
+  - e.g.
+    - a graph representation of a traffic light sequence
+
+###### `mixed graph`
+  - when a graph has both `undirected` and `directed` subgraphs in the same graph
+
+
+###### `weighted graph`
     - a graph that has values assigned to each of the edges or arcs
-  - `vertex-labeled graph`
+    - each edge has a  cost associated with it
+      - e.g. time, money, energey, etc. which you must pay to pass through it
+
+###### unweighted
+  - all the edges have no cost or the same cost
+
+###### dense graph
+  - a graph that has a large number of edges whenc opamred to the number of vertexes
+
+###### sparse graph
+  - a graph that has a small number of edges when compared to the nubmer of vertexes
+
+
+###### `vertex-labeled graph`
     - each vertex has a name associated with it
     - e.g. a road map with all the towns labeled
-  -
+###### `directed acyclic graphs` `dags`
+  - finite directed graphs that dont have any loops in them
+  - you start from a aprticular location and folow specific route to an end9ing location without ever going back to the starting location
+    - follow a particular order so that you cant get from one vertex to another and back to the beginning vertex using any route
+    - provide a specific path from one vertex to another so that you can reate a predictable set of routes
+  - use cases
+    - schedules, with each milestone representing a particular milestone
+    - family trees
+  - `topological sorting`
+    - orders all the vertexes of a graph on a line with the cirected eges pointing from to right
+      - 
 
 ##### graphs in numeric format
   - `matrix`
@@ -541,12 +577,14 @@ f- Algorithms for dummies
         - using pointers to implement the tree isnt necessary
         - relying on binary heap variations (e.g. `fibonacci heap`) offers advantages such as increase and decrease key times of O(1)
   - breadth-first vs depth-first
-    - the difference between the two is how eaach stores the vertexes
-      - a `queue` for `bfs`
-        - a list that works according to the `fifo` principle
-        - newly discovered vertexes dont wait long for processing
-      - a `stack` for `dfs`
-        - a list that works according `lifo`
+    - the difference between the two is how each stores the vertexes
+    - a `queue` for `bfs`
+      - a list that works according to the `fifo` principle
+      - newly discovered vertexes dont wait long for processing
+    - a `stack` for `dfs`
+      - a list that works according `lifo`
+    - `bfs` needs lots of memeory because it sytematically stores all the paths before finding a solution
+    - `dfs` needs less memory but you have no guarantee that it will find the shortest and most direct solution
 
 ## binary search
   - requirements
