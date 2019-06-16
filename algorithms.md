@@ -117,7 +117,25 @@ f- Algorithms for dummies
       - build the leaves first
     - `top down`
 
-#### balanced trees
+...
+#### minimum spanning tree
+  - defines the problem of finding the most economical way to accomplish a task
+  - e.g.
+    - when looking at a map you see the number of paths to get from point A to point B
+    - each path has places where you must turn or change roads and each of these junctions is a vertex
+    - the distnace between vertexes represents the edge weight
+    - generally one path between point A and point B provides the shortest route
+      -
+  - `spanning tree`
+    - the list of edges required to connect all the vertexes in an undirected graph
+    - a single graph could contain multiple spanning trees
+    - for an `unweighted graph`
+      - its spanning trees are all the same length
+      - and since all edges haave teh same length, and the order you visit them doesnt matter because the run path is all the same
+        - all spanning trees have the same number of edges
+    - for a `weighted graph`
+      - edges have different lengths
+        - minimum spanning tree is the spanning tree that guarantees a path with the least possible edge weight
   - kind of tree that maintains a balanced structure through reorganization so that it can provide reduced access times
   - the number of elements on the left size differs from the elements right side by at most one
 
@@ -172,6 +190,10 @@ f- Algorithms for dummies
       - nodes interconnect such that you might have to traverse some nodes more than once toe xplore the entire graph
       - to help reduce redundancy
         - you should mark visited  nodes as such
+      - some `redundancy` is desirable in critical transportantion or energey networks even when stringing for economical solutions
+        - otherwise if only one method connects the network
+        - its easily disrupted accidently or by a voluntary act
+          - e.g an act of war
   - `graph complexity`
     - the number of  edges and vertexes
   - graph `centrality`
@@ -210,12 +232,11 @@ f- Algorithms for dummies
 ###### `networks`
   - kind of graph that associates names with the vertexes (nodes/points),  edges (artcs/lines), or both
 
-###### `undirected graph`
+###### undirected graph
     - a graph in which the order of the edge entries doesnt matter
     - edges connect vertexes in both directions
     - e.g.
       - a road map would represent an undirected graph in most cases because traffic can travel along the road in both directions
-
 
 ###### `directed graph`
   - edges have a single direction and can have these additional properties
@@ -264,6 +285,11 @@ f- Algorithms for dummies
     - useful when
       - you have activities requiring you do something in a specific order
       - any sort of scheduling that requires you to move from a specific starting point to a specific ending point can rely on a DAG with topological sorting
+      - can you help determine that your graph has no cycles because otherwise you cant order the edges connecting the  vertexes from left to right
+    - process
+      - obtain topological sorting suing the `dfs` traversal algorithm
+      - simply note the processing order of the vertexes by the algorithm
+      -
 
 ##### graphs in numeric format
   - `matrix`
