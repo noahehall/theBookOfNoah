@@ -700,18 +700,25 @@ f- Algorithms for dummies
     - examples
       - obtain the modulus of the value divided by the number of slots
         - *value  % slots.length
-    - `sha`
-      - secure hash algorithms
-      - released by the national institutde of standards and technology (NIST) as a US federal information processing standard (FIPS)
-      - provide support for security applications and protocols
-      - include `sha1` `sha224` `sha256` `sha384` `sha512`
-    - `md5`
-      - rsas md5 algoirthm
-      - initially designe dfor security applications
-      - is now a popular way to `checksum` files
-        - reduce files to a single number than enables you to determine whether the file was modified since the hash creation
-        - e.g. determine whether the file you downloaded was corrupted/been altered by a hacker
-        - to ensure file integrity, checkl whether the md5 checksum of your copy corresponds tot he original one communicated by the author of the file
+  - `sha`
+    - secure hash algorithms
+    - released by the national institutde of standards and technology (NIST) as a US federal information processing standard (FIPS)
+    - provide support for security applications and protocols
+    - include `sha1` `sha224` `sha256` `sha384` `sha512`
+  - `md5`
+    - rsas md5 algoirthm
+    - initially designe dfor security applications
+    - is now a popular way to `checksum` files
+      - reduce files to a single number than enables you to determine whether the file was modified since the hash creation
+      - e.g. determine whether the file you downloaded was corrupted/been altered by a hacker
+      - to ensure file integrity, checkl whether the md5 checksum of your copy corresponds tot he original one communicated by the author of the file
+  - `lsh`
+    - `locality-sensitive hasing`
+    - chunks information to check into parts and digests it using many hash functions resulting in the production of a special hash result which is an address for a bucket used to hold similar words
+    - relies on a large number of hash functions to stitch apparently separeated information together
+    - e.g. how marketing companies and intelligence services put different chunks of information together based on names and addresses that arent identical
+      - e.g. guessing los angels and los angles both refer to los angeles
+  -
 
 
 ## sorting
