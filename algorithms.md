@@ -1,4 +1,4 @@
-- Algorithms for dummies
+f- Algorithms for dummies
   - John paul mueller
   - luca massaron
 
@@ -31,7 +31,8 @@
   - [ibm artificial neurons](https://www.google.com/search?q=ibm+artificial+neurons)
     - memory that simulates the human brain
   - [proportional integral derivative](https://www.google.com/search?q=proportional+integral+derivative+algorithm)
-
+### hash functions
+  - [SHA secure hash Algorithms](https://www.google.com/search?q=sha+algorithms)
 
 ## Books
   - *Art of computer programming* Donald E. Knuth
@@ -679,13 +680,38 @@
         - i.e. another algebra function
     - reacting to collisions
       - `open addressing`
-        - stores the value in the next open slot by looking throught he slots equentially until  it finds an open slot to use
+        - stores the value in the next open slot by looking throught he slots equentially until it finds an open slot to use
+        - issues
+          - it assumes an open slot for each potential value which may not be the case
+          - the search slows considerably after the load factor increases
+            - i.e. you can no longer find the needed value ont he first comparison
+      - `rehashing`
+        - the code hashes the value plus a constant
+          - if sllot X contains a value, rehash  to produce a new hash value
+      - `chaining`
+        - each slot in the `hash table` can hold multiple values
+        - can be implemented using a list
+        - everytime a collision ocurs the code simply appends the value to the list in the target slot
+        - the hash will always produce a correct slot
+          - the list within each slot will still require some osrt of sequential/other search to find the specific value
   - `hash function` placing keys in the index by turning each key into a numeric value
     - the numeric value acts as an index into the hash table and the hash table provides a pointer to the full record in the dataset
     - the `hash function` produces repeatable results - thus you can predict the location of hte required data
     - examples
       - obtain the modulus of the value divided by the number of slots
         - *value  % slots.length
+    - `sha`
+      - secure hash algorithms
+      - released by the national institutde of standards and technology (NIST) as a US federal information processing standard (FIPS)
+      - provide support for security applications and protocols
+      - include `sha1` `sha224` `sha256` `sha384` `sha512`
+    - `md5`
+      - rsas md5 algoirthm
+      - initially designe dfor security applications
+      - is now a popular way to `checksum` files
+        - reduce files to a single number than enables you to determine whether the file was modified since the hash creation
+        - e.g. determine whether the file you downloaded was corrupted/been altered by a hacker
+        - to ensure file integrity, checkl whether the md5 checksum of your copy corresponds tot he original one communicated by the author of the file
 
 
 ## sorting
