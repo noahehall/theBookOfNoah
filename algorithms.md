@@ -121,12 +121,12 @@ f- Algorithms for dummies
 #### minimum spanning tree
   - defines the problem of finding the most economical way to accomplish a task
     - could  consider time, money, fuel consumption, etc
-  - e.g.
-    - when looking at a map you see the number of paths to get from point A to point B
-    - each path has places where you must turn or change roads and each of these junctions is a vertex
-    - the distance between vertexes represents the edge weight
-    - generally one path between point A and point B provides the shortest route
-    -
+    - e.g.
+      - when looking at a map you see the number of paths to get from point A to point B
+      - each path has places where you must turn or change roads and each of these junctions is a vertex
+      - the distance between vertexes represents the edge weight
+      - generally one path between point A and point B provides the shortest route
+      -
   - `spanning tree`
     - the list of edges required to connect all the vertexes in an undirected graph
     - a single graph could contain multiple spanning trees
@@ -138,10 +138,31 @@ f- Algorithms for dummies
       - edges have different lengths
         - minimum spanning tree is the spanning tree that guarantees a path with the least possible edge weight
 
-
+##### MST algorithms
+  - most commonly are `greedy` algorithms which run in `polynomial` time
+    - which is a power of the number of edges
+    - the major factors that affect the running speed of greedy algorithms creating MSTs involve the decision making process
+      - whether a particular edge belongs in the MST
+      - whether the minimum total weight of the resulting tree exceeds a certain value
+  - `boruvkas`
+    - creates forests of individual trees
+    - relies on a series of stages in which it identifies the edges with the smallest weight in each stage
+      - begin by looking at individual vertexes,
+      - finding the smallest weight for that vertex,
+      - then combining paths to form forests of individual trees until it creates a path that combines all the forests with the smallest weight
+  - `prims`
+    - looking for the minimum edge for each vertex and building the forests one edge at a time
+    - starts with an arbitrary vertex
+    - groows the minimum spanning tree one adge at a time
+    - always choosing the edge with the least weight
+  - `kruskals`
+    - combines `boruvkas` and `prims`
+  - `reverse-delete`
+    - reversal of `kruskals`
+    - not commonly used
 #### unbalanced trees
   - places new data items wherever necessary inn the tree without regard to balance
-  - this method of adding items makes buiding the tree faster but reduces access speed when searchiong or sorting
+  - this method of adding items makes building the tree faster but reduces access speed when searchiong or sorting
 
 #### heaps
   - sophisticated tree that allows data insertions into the tree structure
@@ -518,8 +539,8 @@ f- Algorithms for dummies
 ### big o notation
   - `big o`
     - the algorithm that, after a certain *n* value (threshold for considering an input big) always results in a larger number of operations given the same input than the worse case algoirthm
-  - a function describing how an algoirhytm relates its solution to the quantity of data it receives is something you can analyze without specific hardware or software support
-  - represents the performance of algorithms
+    - a function describing how an algorithm relates its solution to the quantity of data it receives is something you can analyze without specific hardware or software support
+    - represents the performance of algorithms
   - visually
     - a cartesian coordinate system can represent its function as measured by `ram simulation` where the
     - abscissa (x coordinate) is the size of the input
@@ -527,25 +548,30 @@ f- Algorithms for dummies
   - worst case
   - average case
   - best case
+
   - `constant complexity O(1)`
     - the same time
     - no mater how much input you provide in ithe end it is a constant number of operations no matter how long the input data is
     - very rare in practice
+
   - `logarithmic complexity O(log n)`
     - the number of operations grows at a slower rate than the input
     - making the algorithm less efficient with small inputs and more efficient with larger ones
     - types
       - `binary search`
+
   - `linear complexity O(n)`
     - operations grow with athe input in a 1:1 ratio
     - types
       - iteration which you can input once and apply an operation to each element of it
+
   - `linearithmic complexity O(n log n)`
     - complexity is a mix between logarithmic and linear complexity
     - types
       - `#`
       - `heapsort`
       - `quicksort`
+
   - `quadratic complexity O(n^2)`
     - operations grow as a square of the number of inputs
     - means that your algorithms may run for hours or even days before reaching a solution
@@ -554,17 +580,20 @@ f- Algorithms for dummies
       - `bubble sort`
       - `selection sort`
       - `insertion sort`
+
   - `cubic complexity O(n^3)`
     - operations grow even faster than quadratic because n ow you have multile nested iterations
     - when an algorithm has this order of complexity you need to process a modest amount of data (100k elements)
     - algorithm may run for years
-    - when you have operations that is a poer of hte input it is commont to refer tot he algorithm as `running in polynomial time`
+    - when you have operations that is a power of the input it is common to refer to the algorithm as running in `polynomial` time
+
   - `exponential complexity O(2^n)`
     - algorithm takes twice the number of previous operations for every new element added
     - when an algorithm has this complexity even small problems may take forever
     - may algoirthms doing exhaustive searches have exponential complexity
     - types
       - `fibonnaci` numbers
+
   - `factorial complexity O(n!)`
     - a nightmare complexity because of the large number of possible combinations between the elements
     - if your input is 100 objects and an operaton on your computer takes 10^-6 seconds you will need 10^140 years to copmlete the task successfully
