@@ -120,12 +120,13 @@ f- Algorithms for dummies
 ...
 #### minimum spanning tree
   - defines the problem of finding the most economical way to accomplish a task
+    - could  consider time, money, fuel consumption, etc
   - e.g.
     - when looking at a map you see the number of paths to get from point A to point B
     - each path has places where you must turn or change roads and each of these junctions is a vertex
-    - the distnace between vertexes represents the edge weight
+    - the distance between vertexes represents the edge weight
     - generally one path between point A and point B provides the shortest route
-      -
+    -
   - `spanning tree`
     - the list of edges required to connect all the vertexes in an undirected graph
     - a single graph could contain multiple spanning trees
@@ -136,8 +137,7 @@ f- Algorithms for dummies
     - for a `weighted graph`
       - edges have different lengths
         - minimum spanning tree is the spanning tree that guarantees a path with the least possible edge weight
-  - kind of tree that maintains a balanced structure through reorganization so that it can provide reduced access times
-  - the number of elements on the left size differs from the elements right side by at most one
+
 
 #### unbalanced trees
   - places new data items wherever necessary inn the tree without regard to balance
@@ -641,7 +641,9 @@ f- Algorithms for dummies
   - upper level branches are always a smallerlarger vallue than lower level branches and leaves
   - the effect is to keep the tree balanced and in a predictable order so that searching becomes extremely efficient
     - the cost is in keeping the tree balanced
-
+  - ???
+    - kind of tree that maintains a balanced structure through reorganization so that it can provide reduced access times
+    - the number of elements on the left size differs from the elements right side by at most one
 ## greedy approach
   - one that makes an optimial choice at each problem-solving stage to obtain an overall optimal solution to solve the problem
     - this can oft times lead to a `pyrrhic victory`
