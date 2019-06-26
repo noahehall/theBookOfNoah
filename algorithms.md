@@ -89,6 +89,10 @@ f- Algorithms for dummies
 ### queues
   - first in/first out (FIFO) data structure
 
+#### priority queue
+  - rely on heap tree-based data structures that allow fast element ordering when you insert htem inside the heap
+  - `priorty heap`
+    - store edges with theiir wegihts and are immediately ready to provide you with the isnerted edge whose weight is the minimum among those stores
 ### dictionaries
   - can quickly provide access to specific data items using the key
   - `hash tables`
