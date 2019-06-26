@@ -3,11 +3,25 @@
     - flint dille
     - john zuur platten
 
+# TO READ
+  - why dont zebras get ulcers. by Robert sapolsky
+  -
 # TODO
 ## ALPHA - first steps
   - sit down and play a game for at least a half-hour
     - write a brief summry of the experience
+  - watch a sequence from a film or television show and list each element of it.
+    - how did the scene begin, how did it end, what cinematic language tricks were used to shorthand information to you
+  - take a franchise you engoy from games, film, television or books
+    - write down five iconic franchise elements that come to mind when you think of it
 ## BETA - second steps
+  - tell a bedtime story to a small child, make it up, embellish it wildly.
+    - writing down your thoguhhts about the experience
+      - what worked ?
+      - what didnt ?
+      - did inspiration hit? if so think about how
+      - dolol you think you could do it again?
+      -
 ## GOLD - final steps
 
 # quotes
@@ -15,12 +29,20 @@
   - we are not so arrogant as to believe that ours is the only way. if there were a sure path to success then this would be easy
   - every situation demands its own unique mix of strategies and tactics
 
+# definitions
+  - franchise
+    - an entertainment propery that trascends medium
+    - e.g. games, film, tv, books, costumes, collectables, identical
 # characters
   - characters and story give the player something they can invest in emotionally
 
 
 # GAMES
   - we believe games can be both interactive entertainment and a compelling medium in which to tell stories and develop characters
+  - games are exciting experiences we share and talk about
+    - they can, and do have an impact and leave an impression often in waays traditional entertainment cant
+    - because when we play a game we are active participants in the process
+    - 
 
 ## game survival commandments
   - were in the entertainment business, not the game business
@@ -57,4 +79,11 @@
     - to be in control
       - in real life control is an illusion, or at best a temporary condition
     - to be playing
+  - all of your writing and design is influenced and informed by the medium in which it will be ultimately be delivered
+
+
+# role playing
+  - its about moving whoe worlds around in your brain, which at one time was called the ultimate personal computer
+    - in rle playing you become somebody you werent, a hero or a villain, in a world that didnt exist
+    - it works because each participant, each player in the game becomes a content creator within the context of the game
     -
