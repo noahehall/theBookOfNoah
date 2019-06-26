@@ -6,6 +6,7 @@
 # TO READ
   - why dont zebras get ulcers. by Robert sapolsky
   -
+
 # TODO
 ## ALPHA - first steps
   - sit down and play a game for at least a half-hour
@@ -14,25 +15,44 @@
     - how did the scene begin, how did it end, what cinematic language tricks were used to shorthand information to you
   - take a franchise you engoy from games, film, television or books
     - write down five iconic franchise elements that come to mind when you think of it
+  - tame your favorite game of today and image it designed to run on technology from the early days of video games
+    - what elements of the game could be implemented
+      - would it be fun ?
+      - would it be good ?
+    - if you dont believe your favorite game could trasnlate back in time, why?
 ## BETA - second steps
   - tell a bedtime story to a small child, make it up, embellish it wildly.
     - writing down your thoguhhts about the experience
       - what worked ?
       - what didnt ?
       - did inspiration hit? if so think about how
-      - dolol you think you could do it again?
-      -
+      - do you think you could do it again?
+  - write out three versions of the same gameplay sequence using the play it, display it, say it model
+    - create each possible solution
+      - e.g. a hero blows up a door
+        - a version it happens in gameplay
+        - a version it happens in a narrative
+        - a version where the hero recounts blowing up the door to someone else
 ## GOLD - final steps
 
 # quotes
   - embrace the potential chaos because that is often where real inspiration is discovered
   - we are not so arrogant as to believe that ours is the only way. if there were a sure path to success then this would be easy
   - every situation demands its own unique mix of strategies and tactics
+  - often the most innovative ideas come not from constantly pushing the envelope, but from looking at the envelopoe in a new way oor using it to do something completely unexpected
+    - creativity need not and in fact should not, rely on constantly advancing technology
+    -
 
 # definitions
   - franchise
     - an entertainment propery that trascends medium
     - e.g. games, film, tv, books, costumes, collectables, identical
+  - game designer
+    - responsibile for all of the creative content in the game
+    - characters, worlds, core gameplay, level layout and design, core mechanics, weapons, player character abilities, story, usable objects, inventory systems, game-shells, controls, etc
+  - game writer
+    - primarily concerned with the narrative content of the title and how it integrates into gameplay
+      - the story, characters, worls, mythologies, creatures, enemies, mystical powers, grounded or enhanced realities, technologies, identical
 # characters
   - characters and story give the player something they can invest in emotionally
 
@@ -42,7 +62,7 @@
   - games are exciting experiences we share and talk about
     - they can, and do have an impact and leave an impression often in waays traditional entertainment cant
     - because when we play a game we are active participants in the process
-    - 
+    -
 
 ## game survival commandments
   - were in the entertainment business, not the game business
@@ -80,7 +100,16 @@
       - in real life control is an illusion, or at best a temporary condition
     - to be playing
   - all of your writing and design is influenced and informed by the medium in which it will be ultimately be delivered
+  - the story and gameplay should blend together seamlessly into a compelling experience:; story-related set-piece often make for good gameplay
+    - the story works in unison with gameplay
+  - narrative priority
+    - in games, you can play it, display it, or say it
+      - you have to prioritize your narrative do it in a certain order
 
+
+## types
+  - nonlinear story
+  - metastory
 
 # role playing
   - its about moving whoe worlds around in your brain, which at one time was called the ultimate personal computer
