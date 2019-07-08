@@ -102,7 +102,12 @@
 
 # WORLD
   - not only the location, but also the reality in which the story takes place
-
+## consequences
+  - some worlds have consequences
+  - the world watches what you do and you have to suffer the consequences of it
+  - do something wrong, and the world can be a very hostile place
+  - you shouldnt do something that will ensure you will lose the game
+  -
 
 # TONE
   - is it light, heaavy, serious, playful, black, irreverent?
@@ -127,11 +132,21 @@
     - compelling characters that are affected by and create the conflict and stakes
     - an immersive style that depends as much on the entire game experience as it does on the story
     - great challenges (manifested in gameplay) that you encounter and overcome
+  - console games
+    - usually episodic in nature (levels) so you need multiple oponents, locations and environments
+    - levels then have sub-levels and missions (objectives) throughout
+    - optimal-path
+      - the spine of the game where the main action and events take place
+  - the art of design and fiction is to create the illusion of freedome of movement or nonlinear gameplay
+    - level boss for each environment
+    - something that represents money/reward
+    - a new activity each level
+    - it is necessary for gameplay to have a punishment/reward system to drive objectives
 
 ## game survival commandments
   - were in the entertainment business, not the game business
   - build your design and story to break
-    - multiple technical and production realitities will stress your game design and story, things will be left in the trash bin, get in front of them as fast as possible
+    - multiple technical and production realities will stress your game design and story, things will be left in the trash bin, get in front of them as fast as possible
   - somebody always knows something you dont
     - learn from everyone you work with
   - dialogue is the tip of the dramatic iceberg
@@ -173,6 +188,9 @@
 
 
 # Story telling
+  - primarily exists to give meaning to gameplay
+    - the objective is to create context for the game
+    - you want to get the player up and running as quickly as possible
   - when you are creating content for an interactive medium, there are expectations on the part of your audience
     - to be engaged
     - to be in control
@@ -204,7 +222,6 @@
   - story physics
     - the physics of game story break down to
       - action/reaction/action/react; escalating tensions; foreshadowing and reveals
-    -
 
 
 ## types of stories
