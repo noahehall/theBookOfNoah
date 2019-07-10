@@ -70,15 +70,34 @@
    - `data model`
       - a collection of concepts or notations for describing data, data relationships, data semantics and data constraints
       - most data models also include a set of basic operations for manipulating data in the database
+### degrees of data abstraction
+   - external models
+      - represent the users view of the database
+      - contain multiple different external views
+      - closely related to the real world as perceived by each user
+   - conceptual models
+      - provide flexible data-structuring capabilities
+      - present a community view: the logical structure of the entire database
+      - contain data stored in the database
+      - show relationships among data including:
+         - constraints
+         - semantic infomration (e.g. business rules)
+         - security and integrity information
+      - consider a database as a collection of entities (objects) of various kinds
+      - are the basis for identification and high level description of main data objects; they avoid details
+   - are databse independent regardless of teh database you will be using
+   - 
 ## 1 data modelling
    - first step in the process of database design
    - i.e. conceptual design
    - objectives
+      - identify the business rules
       - describe the data contained in the database
       - describe the relationships between data items
-      - describe teh contraints on data
+      - describe the contraints on data
 
-## 2 ???
+
+## 2 design the database ???
    - the data items, relationships and the constraints are all expressed using the concepts provided by the high-level data model
    - useful to ensure all the users requirements are met
 
