@@ -33,6 +33,7 @@
    - `data independence`
       - refers to the immunity of user applications to changes made in the definition and organization of data
       - `logical schema`
+         - i.e. `conceptual schema`
          - a conceptual design of the database
       - `logical data independence`
          - the ability to change the `logical schema` without changing the `external schema` (i.e. user view)
@@ -42,6 +43,29 @@
          - i.e. the `logical schema` stays unchanged even though changes are made to the file organization/storage structures/storage devices/indexing strategy
 
 # fundamental concepts
+## database types
+   - based on data model
+      - relational (e.g. mysql)
+         - table oriented
+      - hierarchical
+      - network
+      - objects (e.g. mongodb)
+         - object-oriented
+         - combine database capabilities with object-oriented programming language capabilities
+   - based on user numbers
+      - single-user database
+         - only supports one user at a time
+      - multiuser database
+         - supports multiple concurrent users
+   - based on distribution
+      - centralized systems
+         - the dbms and database are stored at a single site that is used by several other systems too
+      - distributed database system
+         - the actual database and the dbms software are distributed fromvarious sites that are connected by a computer network
+      - homogeneous distributed database systems
+         - use the same dbms software from multiple sites to permit data exchange beteween these various sites
+         - e.g. buyer and seller using the same DBMS software and interfacing with each others data
+      - heterogeneous distributed database systems
 ## database
    - a shared collection of related data used to support the activities of a particular organization
    - properties
@@ -70,6 +94,7 @@
          - subschemas: display multiple external views of the data
          - conceptual schemas; there is only one, includes data items, relationships and constraints
             - all represented by an ERD
+            - i.e. `logical schema`
          - physical schema
 ## tables
    - a combination of fields
@@ -83,6 +108,7 @@
 
 
 # backup and recovery
+
 
 # database design
    - `data model`
@@ -118,6 +144,7 @@
 
    - internal models (i.e. logical design)
       - dependent on the selected DBMS
+      - a representation of the database as seen by the DBMS
       - create all the tables, constraints, keys, rules, etc
       - consider a database as a collection of fixed-size records
       - are closer to the physical level or file structure
@@ -153,6 +180,7 @@
 ## 3 database implementation and operations/user interfaces
    - `database logical design`
       - defines a database in a data model of a specific DBMS
+      - where you create all the tables, constrains, keys, rules etc.
    - `database physical design`
       - defines the internal database storage structure, file organization or indexing techniques
 
@@ -192,3 +220,4 @@
 ## Diagrams
    - `entity relationship diagram`
       - i.e. ERD
+      - a data model describing the database showing tables, attributes and relationship
