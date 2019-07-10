@@ -30,6 +30,16 @@
       - a single fact/piece of information
    - `metadata`
       - defines and describes the data and relationships between tables in the database
+   - `data independence`
+      - refers to the immunity of user applications to changes made in the definition and organization of data
+      - `logical schema`
+         - a conceptual design of the database
+      - `logical data independence`
+         - the ability to change the `logical schema` without changing the `external schema` (i.e. user view)
+         - i.e. changes tot he logical schema (e.g. alterations to the structure of the database like adding a column/tables) should not affect the function of the application (external views)
+      - `physical data independence`
+         - refers to the immunity of the internal model to changes in the physical model
+         - i.e. the `logical schema` stays unchanged even though changes are made to the file organization/storage structures/storage devices/indexing strategy
 
 # fundamental concepts
 ## database
@@ -52,7 +62,15 @@
          - determines the sort of data permitted in a field
       - `data uniqueness`
          - ensures that no duplicates are entered
-         -
+   - `schema`
+      - overall description of a database
+      - usually represented by the `entity relationship diagram` i.e. `ERD`
+      - items to consider
+         - external schemas
+         - subschemas: display multiple external views of the data
+         - conceptual schemas; there is only one, includes data items, relationships and constraints
+            - all represented by an ERD
+         - physical schema
 ## tables
    - a combination of fields
 
@@ -70,11 +88,21 @@
    - `data model`
       - a collection of concepts or notations for describing data, data relationships, data semantics and data constraints
       - most data models also include a set of basic operations for manipulating data in the database
-### degrees of data abstraction
+
+## degrees of data abstraction
+   - in decreasing levels of abstraction
+
    - external models
-      - represent the users view of the database
+      - represent the user(s) view of the database
+         - there will likely be more than one user type (e.g. API, website, or actual users submitting queries)
+         - each user type will have different needs
       - contain multiple different external views
+         - each view should satisfy a specific users requirements
       - closely related to the real world as perceived by each user
+      - requires the designer to subdivide a set of requirements and constraints into functional modules that can be examined within the framework of their external models
+         - e.g. HR vs SALES
+      - the designer needs to understand all the data so that you can build an enterprise-wide database
+
    - conceptual models
       - provide flexible data-structuring capabilities
       - present a community view: the logical structure of the entire database
@@ -85,8 +113,29 @@
          - security and integrity information
       - consider a database as a collection of entities (objects) of various kinds
       - are the basis for identification and high level description of main data objects; they avoid details
-   - are databse independent regardless of teh database you will be using
-   - 
+      - are database independent regardless of the database you will be using
+      -
+
+   - internal models (i.e. logical design)
+      - dependent on the selected DBMS
+      - create all the tables, constraints, keys, rules, etc
+      - consider a database as a collection of fixed-size records
+      - are closer to the physical level or file structure
+      - are a representation of the database as seen by the DBMS
+      - require the designer to match the coneptual models characteristics and constraints to those of the selected implementation model
+      - involve mapping the entities in the conceptual model the tables in the relational model
+      - examples
+         - relational data model, network data model, hierarchical data model
+
+   - physical models
+      - are the physical representation of the database
+      - have the lowest level of abstractions
+      - are how the data is stored; dealing with
+         - run-time performance
+         - storage utlization and compression
+         - file organization and access methods
+         - data encryption
+   -
 ## 1 data modelling
    - first step in the process of database design
    - i.e. conceptual design
@@ -106,6 +155,7 @@
       - defines a database in a data model of a specific DBMS
    - `database physical design`
       - defines the internal database storage structure, file organization or indexing techniques
+
 ## data models
    - `high-level conceptual models`
       - provide concepts for presenting data in ways that are close to the way people perceive data
@@ -137,4 +187,8 @@
 ### hierarchical model
    - represents data as a hierarchical tree structure
    - each branch of the hierarchy represents a number of related records
-   -
+
+
+## Diagrams
+   - `entity relationship diagram`
+      - i.e. ERD
