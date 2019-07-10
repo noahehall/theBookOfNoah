@@ -19,8 +19,8 @@
    - `data isolation`
       - a property that determines when and how changes made by one operation become visible to other concurrent users and systems
    - `data integrity`
-      - the maintenance and assurance that the data in a database are correcgt and consistent
-         - data values must satisfy certain consistency constraints that are specified int he application programs
+      - the maintenance and assurance that the data in a database are correct and consistent
+         - data values must satisfy certain consistency constraints that are specified in the application programs
          - difficulty in making changes to the application programs in order to enforce new constraints
    - `concurrency`
       - the ability of the database to allow multiple users access/modify the same record without adversely affecting transaction processing
@@ -33,7 +33,7 @@
 
 # fundamental concepts
 ## database
-   - a shared collection of related data used to support the activities ofa partocular organization
+   - a shared collection of related data used to support the activities of a particular organization
    - properties
       - a representation of some aspect of the real world or a collection of data elements(facts) representing real world information
       - is logical, coherent and internally consistent
@@ -66,7 +66,27 @@
 
 # backup and recovery
 
-# design
+# database design
+   - `data model`
+      - a collection of concepts or notations for describing data, data relationships, data semantics and data constraints
+      - most data models also include a set of basic operations for manipulating data in the database
+## 1 data modelling
+   - first step in the process of database design
+   - i.e. conceptual design
+   - objectives
+      - describe the data contained in the database
+      - describe the relationships between data items
+      - describe teh contraints on data
+
+## 2 ???
+   - the data items, relationships and the constraints are all expressed using the concepts provided by the high-level data model
+   - useful to ensure all the users requirements are met
+
+## 3 database implementation and operations/user interfaces
+   - `database logical design`
+      - defines a database in a data model of a specific DBMS
+   - `database physical design`
+      - defines the internal database storage structure, file organization or indexing techniques
 ## data models
    - `high-level conceptual models`
       - provide concepts for presenting data in ways that are close to the way people perceive data
