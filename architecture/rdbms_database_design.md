@@ -2,6 +2,7 @@
    - database design 2nd edition
       - adrienne watt
       - nelson eng
+      - chapter 5 data modelling
 
 
 # terminology
@@ -67,4 +68,34 @@
 
 # design
 ## data models
-   - 
+   - `high-level conceptual models`
+      - provide concepts for presenting data in ways that are close to the way people perceive data
+      - examples
+         - entity relationship model
+   - `record-based logical models`
+      - provide concepts users can understand but are not too far from the way data is stored in the computer
+      - examples
+         - relationship model
+
+
+### entity relationship model
+   - high-level conceptual data model
+   - `entity`
+      - represents a real world object such as an employee or a project
+   - `attributes`
+      - represent properties of an entity
+   - `relationship`
+      - represents an association among entities
+      - e.g. an employ works on many projects
+
+### ralationship model
+   - represents data as relations/tables
+
+
+### network model
+   - represents data as record types
+
+### hierarchical model
+   - represents data as a hierarchical tree structure
+   - each branch of the hierarchy represents a number of related records
+   -
