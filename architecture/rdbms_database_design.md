@@ -2,7 +2,7 @@
    - database design 2nd edition
       - adrienne watt
       - nelson eng
-      - chapter 5 data modelling
+      - chapter 7 data modelling
 
 
 # terminology
