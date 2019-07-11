@@ -98,9 +98,56 @@
          - physical schema
 ## tables
    - a combination of fields
+   - has a name that is distinct form all other tables in the database
+   - contains no duplicate records
+   - entries in columns are atomic; the table does not contain repeating groups or mulitivalued attributes
+   - entries from columns are from the same domain based on their data type
+   - operatings combining different data types are disallowed
+   - each attribute has a distinct name
+   - the squence of columns is insignificant
+   - the sequence of rows is insignificant
 
+### attribute types
+   - simple attributes
+      - those drawn from the atomic value domains;
+      - single value attributes
+      - e.g. firstname, age
+   - composite attributes
+      - composite attributes are those that consist of a hierarchy of attributes
+      - e.g. address,
+   - multivalued attributes
+      - have a set of values for each entity
+      - e.g. types of degrees (phd, associates, etc)
+   - derived attributes
+      - contain values calculated from other attributes
+      - e.g. age derived from birthdate
 
-
+### keys
+   - `unique`
+      - no two rows in a tablle may have teh same value at any time
+   - `minimal`
+      - every column is necessary in order to attain uniqueness
+   - `candidate key`
+      - simple/composite key that is unique and minimal
+   - `composite key`
+      - composed of two or more attributes, but it must be minimal
+   - `primary key`
+      - a `candidate key` that is selected by the database designer to be used as an identifying mechanism for the whole entity set
+      - must be unique, non null
+   - `secondary key`
+      - an attribute used strictly for retrieval purposes
+   - `alternate key`
+      - candidate keys not chosen as the `primary key`
+   - `foreign key`
+      - an attribute in a table that references the primary key in another table or it can be null
+      - both foreign and primary keys must be of the same data type
+      -
+### data types
+   - `null`
+      - either unknown or inapplicable or missing
+      - does not mean zero/blank
+      - not permitted in primary key
+      - a
 # security
 ## access
    - `read-only`
@@ -130,7 +177,6 @@
       - the designer needs to understand all the data so that you can build an enterprise-wide database
 
    - conceptual models
-      - provide flexible data-structuring capabilities
       - present a community view: the logical structure of the entire database
       - contain data stored in the database
       - show relationships among data including:
@@ -198,15 +244,58 @@
 ### entity relationship model
    - high-level conceptual data model
    - `entity`
-      - represents a real world object such as an employee or a project
+      - represents a real world object such as an employee or a project or a concept
+      - defined as tables that hold specific information/data
+   - `entity strength`
+      - weak - when the entities tables are `existence dependent`
+         - it cannot exist without a relationship with another entity
+         - its primary key is derived from the primary key of the parent entity
+         - mandatory foreign key (i.e. cannot be null)
+         - used to connect two kernels together
+         - many to many relationships
+      - strong - when the entities tables can exist  apart from all of its related entities
+         - `kernels`
+            - building blocks of the database
+            - the primary key may be simple or composite
+            - primary key is not a foreign key
+            - do not depend on another entity for their existence
+         - a table without a forein key
+         - a table that contains a forein key that can contain nulls
+   - `characteristic entities`
+      - provide more information about another table
+      - represent multivalued attributes
+      - decribe other entities
+      - typically have one-to-many relationships
    - `attributes`
       - represent properties of an entity
    - `relationship`
       - represents an association among entities
       - e.g. an employ works on many projects
+   - `entity type`
+      - defines a collectionn of similar entities
+   - `entity set`
+      - a collection of entities of an entity type at a particular point of time
+      - e.g.
+         - entity type - employee
+         - entity set - list of employes on date X
+      -
 
-### ralationship model
+### relationship/relational model
    - represents data as relations/tables
+   - `relation`
+      - table/file - a subset of the cartesian product of a list of domains charactered by a name
+      - within a table each row/record/tuple represents a group of related data values
+   - `domain`
+      - the original sets of atomic values used to model data
+   - `atomic value`
+      - each value in the domain is individisble as far ast her elational model is concerned
+      - i.e. a set of acceptable values that a column is allowed to contain
+      - e.g.
+         - the domain of marital status
+            - married, single divorced
+         - the domain of shift
+            - mon, tues, wed...
+   -
 
 
 ### network model
