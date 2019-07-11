@@ -77,15 +77,7 @@
    - database management system (DBMS)
       - collection of programs that enable users to create and maintain databases and control all access to them
       - provide an environment that is both convenient and efficient for users to retrieve and store information
-   - integrity constraints
-      - ensure that users enter valid information and maintain data integrity
-      - `database constraint`
-         - a restriction or rule that dictates what can be entered/edited in a table
-         - e.g. a postel code using a certain format
-      - `data type`
-         - determines the sort of data permitted in a field
-      - `data uniqueness`
-         - ensures that no duplicates are entered
+
    - `schema`
       - overall description of a database
       - usually represented by the `entity relationship diagram` i.e. `ERD`
@@ -96,6 +88,52 @@
             - all represented by an ERD
             - i.e. `logical schema`
          - physical schema
+## integrity rules and constraints
+   - ensure that users enter valid information and maintain data integrity
+   - `database constraint`
+      - allow a designer to specify the semantics of the data in the database
+         - are the rules that force DBMSs to check that data satisfies the semantics
+      - a restriction or rule that dictates what can be entered/edited in a table
+      - e.g. a postel code using a certain format
+   - `data type`
+      - determines the sort of data permitted in a field
+   - `data uniqueness`
+      - ensures that no duplicates are entered
+   - `domain integrity`
+      - the values of attributes in the relatn and a constrain of the relational model
+   - `entity integrity`
+      - every table have a primary key
+   - `referential integrity`
+      - requires that a foreign key must have a matching primary key or it must be null
+      - specified between two tables (parent and child)
+      - maintains the correspondonce between rows in these tables
+         - i.e. the reference form a row in one table to another table must be valid
+      - `orphan record`
+         - one whose foreign key value is not found in the corresponding entity
+            - the entity where the pk is located
+   - `forein key` rules
+      - what to do with child rows when the record with the PK  is deleted or updated
+   - `enterprise constraints`
+      - i.e. semantic constraints
+      - are additional rules specified by users or a database administerors and can be based on  multiple tables
+         - e.g.
+         - a class can have a maximum of 30 students
+         - a teacher can teadhca  maximum of four classes per semester
+         - an employee cannot otake part in more than five projects
+         - the salary of an employee cannot exceed the salary of the employees manager
+   - `business rules`
+      - obtained from users when gathering equirements
+      - requirements need to be verified by the users before tehe database  design is built
+      - e.g.
+      - see `enterprise constraints` examples
+      - determines cardinality and connectivity
+   - `cardinality`
+      - describes the relationship between two data tables by expressing the minimum and maximum number of entity occurrences associaated with one occurrence of a related entity
+   - `connectivity`
+      - the relationship between two tables
+      - e.g.
+         - 1:1
+         - 1:m
 ## tables
    - a combination of fields
    - has a name that is distinct form all other tables in the database
