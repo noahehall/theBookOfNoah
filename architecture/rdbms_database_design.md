@@ -2,7 +2,7 @@
    - database design 2nd edition
       - adrienne watt
       - nelson eng
-      - chapter 7 data modelling
+      - chapter 9 integrity rules and constraints
 
 
 # terminology
@@ -141,7 +141,46 @@
    - `foreign key`
       - an attribute in a table that references the primary key in another table or it can be null
       - both foreign and primary keys must be of the same data type
-      -
+
+### relationships
+   - used to connect related finformation between tables
+   - `relationship strength`
+      - based on how the primary key of a related entity is defined
+      - `weak`
+         - non-identifying relationship exits if the preeimary key of the related enteity does not contain a primary key compoent of the parent entity
+      - `strong`
+         - identifying relationship exists when the primary  key of the related entity contains the primary key component of the parent entity
+   - `one-to-many`
+      - 1:m
+      - department:employees
+      - the normal in most relational db design
+   - `many-to-many`
+      - m:n
+      - projects:employees
+      - cannot be implemented as such in a relational model
+      - can be changed into two 1:m relationships
+      - involves the implementation of a composite entity
+         - must contain at least the primary keys of the original tables
+      - creates two/more 1:m relationships
+      - steps
+         - for each M:N binary relationship, identify two relations
+         - A and B represent two entity types participating in R
+      - create a new relation S to represent R
+      - S needs to contgain the PKs of A and b.
+      - these together can be the PK in the S table
+   - `unary relationship` (recursive)
+      - one in which a relationship exists between occurences of the same entity set
+      - i.e the primary and foreign keys are the same
+         - but they represent two entities with different roles
+         -
+      - e.g. employee:supervisor
+   - `ternary relationships`
+      - e.g. supplier:(project, part)
+      - involes many-to-many between three tables
+      - steps
+         - for each `n-ary` (>2) relationship, create a new relation to represent the relationship
+         - the primary key of the new relation is a combination of the primary key sof hte participating entities that hold the N (many) side
+         -
 ### data types
    - `null`
       - either unknown or inapplicable or missing
