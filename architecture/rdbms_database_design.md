@@ -337,10 +337,32 @@
          - **X ----> Y**
          - x = the determinant
          - y = the dependent
-      - `armonstrongs axioms`
-         - set of inference rules used to infer all the functional dependencies on a relational database
-         -
-      -
+
+   - `armonstrongs axioms`
+      - set of inference rules used to infer all the functional dependencies on a relational database
+
+      - `axiom of reflexivity`
+         - if Y is a subset of X, then X determines Y
+
+      - `axiom of augmentation`
+         - if X determines Y, then XZ determines YZ for any Z
+         - i.e. partial dependency
+            - this is NOT good
+            - the tables need to be separated into multiple tables
+         - says that every non-key attribute must be fully dependent on the PK
+      - `axiom of transitivity`
+         - if X determines Y, and Y determines Z, then X must also determine Z
+         - this is NOT GOOD
+         - because a non-key attribute depends on another non-key attribute
+            - whereas all non-key attributes should be dependent on the PK
+   - `union rule`
+      - suggests that if two tables are separate but the PK is the same, perhaps they should be a single table
+         - if X determines Y and X determines Z then X must also determine Y and Z
+   - `decomposition`
+      - oposite of `union rule`
+      - if you have a table that appears to contain two entities thhat are detemrined by the same PK, consider breaking them up into two tables
+      - if X determines Y and Z, then X determines Y and X determines Z separately
+      - 
 
 ## 2 design the database ???
    - the data items, relationships and the constraints are all expressed using the concepts provided by the high-level data model
