@@ -3,7 +3,10 @@
       - adrienne watt
       - nelson eng
       - chapter 9 integrity rules and constraints
+        - mandatory relationships
 
+# TODO
+   - ERD diagrams
 
 # terminology
    - `data redundancy`
@@ -128,7 +131,7 @@
       - see `enterprise constraints` examples
       - determines cardinality and connectivity
    - `cardinality`
-      - describes the relationship between two data tables by expressing the minimum and maximum number of entity occurrences associaated with one occurrence of a related entity
+      - describes the relationship between two data tables by expressing the minimum and maximum number of entity occurrences associated with one occurrence of a related entity
    - `connectivity`
       - the relationship between two tables
       - e.g.
@@ -188,6 +191,15 @@
          - non-identifying relationship exits if the preeimary key of the related enteity does not contain a primary key compoent of the parent entity
       - `strong`
          - identifying relationship exists when the primary  key of the related entity contains the primary key component of the parent entity
+   - optional relationship
+      - the fk can be null/parent table does not need to have a corresponding table occurence
+   - mandatory relationship
+      - one entity occrrence requires a corresponding entity occurrence
+      -
+   - non-identifying relationship
+      - where the PK does not contain the FK
+   - identifying relationship
+      - where the PK contains the FK
    - `one-to-many`
       - 1:m
       - department:employees
