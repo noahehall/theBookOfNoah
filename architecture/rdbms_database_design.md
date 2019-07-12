@@ -2,7 +2,7 @@
    - database design 2nd edition
       - adrienne watt
       - nelson eng
-      - chapter 10 ER modelling
+      - chapter 12 first normal form pg 74
 
 # TODO
    - ERD diagrams
@@ -267,6 +267,16 @@
       - most data models also include a set of basic operations for manipulating data in the database
    - avoiding anomalies
       - ensure that all tables are normalized by understandinng functional dependencies
+   - broad outline
+      1. ER modelling
+         - entity relationship diagrams provide the big picture, or macro view of an organizations data requirements and operations
+         - an iterative process that involves identifying relevant entities, their attributes and their relationship
+      2. db design
+         - normalization
+      3. blah
+      4. blah
+      - notes
+         - steps 1 and 2 should happen concurrently
 
 ## degrees of data abstraction
    - in decreasing levels of abstraction
@@ -362,14 +372,32 @@
       - oposite of `union rule`
       - if you have a table that appears to contain two entities thhat are detemrined by the same PK, consider breaking them up into two tables
       - if X determines Y and Z, then X determines Y and X determines Z separately
-      - 
+      -
 
-## 2 design the database ???
+## 2 DB design ???
    - the data items, relationships and the constraints are all expressed using the concepts provided by the high-level data model
    - useful to ensure all the users requirements are met
    - must capture all of the necessary attributes and associations with the minimal amount of stored information and no redundant data
-   -
-   -
+
+### normalization
+   - focuses on the characteristics of specific entities and represents the micro view of entities within an ERD
+   - process of determining how much redundancy exists in a table
+   - goals
+      - be able to characterize the level of redundancy in a relational schema
+      - provide mechanisms for transforming schemas in order to remove redundancy
+   - six `normal forms` (nf)
+      - each form involves a set of dependency properties that a schema must satisfy and each normal form gives guarantees about hte presence and/or absence of update anomalies
+      - the higher normal forms have less redundancy, and as a result, fewer update problems
+
+      1. first normal form (1NF)
+         - only single values are permitted at the intersection of each row and column
+         - i.e no repeating groups
+            - to normalize a relation that
+      2. seond normal form (2NF)
+      3. third normal form (3NF)
+      4. boyce-codd normal form (BCNF)
+         - rarely used
+-
 
 ## 3 database implementation and operations/user interfaces
    - `database logical design`
@@ -458,3 +486,5 @@
    - `entity relationship diagram`
       - i.e. ERD
       - a data model describing the database showing tables, attributes and relationship
+   - `dependency diagram`
+      - illustrates the various dependencies that exist in a table
