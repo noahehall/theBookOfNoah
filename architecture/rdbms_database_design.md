@@ -2,8 +2,7 @@
    - database design 2nd edition
       - adrienne watt
       - nelson eng
-      - chapter 9 integrity rules and constraints
-        - mandatory relationships
+      - chapter 10 ER modelling
 
 # TODO
    - ERD diagrams
@@ -14,6 +13,10 @@
       - issues
          - inconsistency in data format
          - same information being kept in several different places
+         - problems maintaijning consistency after updates
+      - benefits
+         - can sometimes lead to performance improvements
+            - e.g. in place of a db join to connect data
    - `data inconsistency`
       - a situation where various copies of the same data are conflicting
       - issues
@@ -44,8 +47,16 @@
       - `physical data independence`
          - refers to the immunity of the internal model to changes in the physical model
          - i.e. the `logical schema` stays unchanged even though changes are made to the file organization/storage structures/storage devices/indexing strategy
+   - `insertion anomaly`
+      - occurs when you are innserting inconsisten information into a table
+   - `update anomaly`
+      - changing existing information incorrectly
+   - `deletion anomaly`
+      - occurs when you delete a record that kmay contain attributes that shouldnt be deleted
+   -
 
 # fundamental concepts
+
 ## database types
    - based on data model
       - relational (e.g. mysql)
@@ -69,6 +80,7 @@
          - use the same dbms software from multiple sites to permit data exchange beteween these various sites
          - e.g. buyer and seller using the same DBMS software and interfacing with each others data
       - heterogeneous distributed database systems
+
 ## database
    - a shared collection of related data used to support the activities of a particular organization
    - properties
@@ -91,6 +103,7 @@
             - all represented by an ERD
             - i.e. `logical schema`
          - physical schema
+
 ## integrity rules and constraints
    - ensure that users enter valid information and maintain data integrity
    - `database constraint`
@@ -137,6 +150,7 @@
       - e.g.
          - 1:1
          - 1:m
+
 ## tables
    - a combination of fields
    - has a name that is distinct form all other tables in the database
@@ -231,25 +245,28 @@
          - for each `n-ary` (>2) relationship, create a new relation to represent the relationship
          - the primary key of the new relation is a combination of the primary key sof hte participating entities that hold the N (many) side
          -
+
 ### data types
    - `null`
       - either unknown or inapplicable or missing
       - does not mean zero/blank
       - not permitted in primary key
       - a
+
 # security
+
 ## access
    - `read-only`
    - `read and write`
 
-
 # backup and recovery
-
 
 # database design
    - `data model`
       - a collection of concepts or notations for describing data, data relationships, data semantics and data constraints
       - most data models also include a set of basic operations for manipulating data in the database
+   - avoiding anomalies
+      - ensure that all tables are normalized by understandinng functional dependencies
 
 ## degrees of data abstraction
    - in decreasing levels of abstraction
@@ -307,10 +324,30 @@
       - describe the relationships between data items
       - describe the contraints on data
 
+### ER modelling
+   - entity relationship modelling
+
+   - `functional dependency`
+      - describe how individual attributes are related
+      - a kind of constraint among attributes within a relation and constribute to a good relational schema design
+      - ensures that all attributes in a table belong to that table
+         - eliminates redundancies and anomalies
+      - typically is a relationship between the PK and other non-key attributes within a table
+         - for any relation R, attribute Y is functionally dependent on attribute X (usually the PK) if for every valid instance of X, that value of X uniquely determines the value of Y
+         - **X ----> Y**
+         - x = the determinant
+         - y = the dependent
+      - `armonstrongs axioms`
+         - set of inference rules used to infer all the functional dependencies on a relational database
+         -
+      -
 
 ## 2 design the database ???
    - the data items, relationships and the constraints are all expressed using the concepts provided by the high-level data model
    - useful to ensure all the users requirements are met
+   - must capture all of the necessary attributes and associations with the minimal amount of stored information and no redundant data
+   -
+   -
 
 ## 3 database implementation and operations/user interfaces
    - `database logical design`
