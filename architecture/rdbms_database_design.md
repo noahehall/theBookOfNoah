@@ -261,6 +261,18 @@
 
 # backup and recovery
 
+# database development process
+   1. requirements gathering
+      - the db designers interview the customers (database users) to understand the proposed system and obtain an document the data and functional requirements
+      - all users must agree as to what persistent data they want to store along with an agreement as to the meaning and interpretation of the data elements
+      - `data requirements document`
+         - includes the detailed requirements provided by the users
+         - used to confirm the understanding of requirements with users
+         - should not describe how the data is to be processed
+         - should decribe
+            - what the data items are
+            - what attributes they have
+            - what constraints apply and the relationships that hold between the data items
 # database design
    - `data model`
       - a collection of concepts or notations for describing data, data relationships, data semantics and data constraints
@@ -385,6 +397,9 @@
    - goals
       - be able to characterize the level of redundancy in a relational schema
       - provide mechanisms for transforming schemas in order to remove redundancy
+      - make sure that proposed entities meet required normal form before table structures are created
+   - semantic rules
+      - business rules applied to the database
    - six `normal forms` (nf)
       - each form involves a set of dependency properties that a schema must satisfy and each normal form gives guarantees about hte presence and/or absence of update anomalies
       - the higher normal forms have less redundancy, and as a result, fewer update problems
@@ -392,11 +407,22 @@
       1. first normal form (1NF)
          - only single values are permitted at the intersection of each row and column
          - i.e no repeating groups
-            - to normalize a relation that
-      2. seond normal form (2NF)
+         - to normalize a relation that contains aa repating group, remove the repeating group and form two new relations
+            - the pk of the new relation is a combination of hte k of the original relation plus an attribute from the newly created relation for unique identification
+      2. second normal form (2NF)
+         - the relation must be in 1NF
+         - the PK comprises a single attribute
+         - if the relation has a composite PK
+            - each non-key attribute must be fully dependent on the entire PK and not on a subset of PK
+               - i.e. there must be no partial dependency augmentation
       3. third normal form (3NF)
+         - the relation must be in 2NF
+         - all transitive dependencies must be removed
+            - a non key attribute may not be functionally dependent on another non key attribute
       4. boyce-codd normal form (BCNF)
          - rarely used
+         - is a special case of 3NF
+         - a relation is in BCNF if every determinant is a candidate key
 -
 
 ## 3 database implementation and operations/user interfaces
