@@ -102,4 +102,50 @@
     - drop the currently selected database and delete all associated data files
 
 ## collections
-  - 
+  - `db.createCollection(name, options)`
+    - name - name of the collection
+    - options - document type, specifies the memory size and indexing of the collection
+      - capped
+        - boolean
+        - if true
+          - caps the collection at a fix size that auotmatically overwrites its oldest entries when it reaches its maximum size
+          - requires the size parameter to be specified
+      - autoindexID
+        - if true
+          - automatically creates index on ID field
+      - size
+        - specifies a maximum size in bytes for a capped collection
+      - max
+        - specifies the maximum number of documents allowed in the capped collection
+  - `show collections`
+  - `db.COLLECTION_NAME.drop()`
+    - drop a collection from a database
+    - it completely removes a collection from the database and does not leave any indexes associated with the dropped collections
+    - returns true if successful
+    - returns false when there is no existing collection to drop
+
+## CRUD
+### insert
+  - `db.COLLECTION_NAME.insert(document)`
+    - add/insert new documents into a collection
+    - pass an array of documents to insert multiple
+  - `db.COLLECTION_NAME.save()`
+    - see update
+  - `db.COLLECTION_NAME.update()`
+    - add new documents through an upsert
+  - bulk operations
+    1. intialize a bulk opeartion builder for the collection
+      - `var bulk = db.collectionName.initializeUnorderedBulkOp()`
+    2. specify your bullk actions
+      - `bulk.insert(), .update(), etc.`
+    3. execute your operation
+      - `bulk.execute()`
+### update
+  - `db.collectionName.update(selection criteria, updated data)`
+    - .update({ firstName: 'noah', }, { $set: { firstName: 'kenoah'}})
+### delete
+  - `db.collectionName.remove(deletion criteria)`
+    - used to delete documents from a collection
+    - `justOne`
+      - if true removes only one document
+      - 
