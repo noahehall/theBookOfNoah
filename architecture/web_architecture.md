@@ -95,13 +95,13 @@ https://en.wikipedia.org/wiki/Web_cache
 # related Terminology
   - separation of concerns: a design principle for separating a computer program into distinct sections, such that each section addresses a separate concern
     - concern: a set of information that affects the code of a computer program
-  - interoperability: a characteristic of a product or system, whose interfaces are completely unerstood, to work with other products or systems, at present or future, in either implementation or access, without any restrictions
+  - interoperability: a characteristic of a product or system, whose interfaces are completely understood, to work with other products or systems, at present or future, in either implementation or access, without any restrictions
   - cross-platform software: computer software that is implemented on multiple computing platforms
   - communication protocol: a system of rules that allow two or more entities of a communications system to transmit information via any kind of variation of a physical quantity. the protocol defines the communication in terms of:
     - syntax
     - semantics
     - syncrhonization
-  - interface: a shared boundary across which two/more separate components of a copmuter system exchange information
+  - interface: a shared boundary across which two/more separate components of a computer system exchange information
   - computer/data network: digital telecommunications network which allows nodes to share resources
     - networked computing devices exchange data with each other using a data link
     - the connections between nodes are established using cable/wireless media

@@ -1,9 +1,11 @@
-information seeking behaviors
-page 35
+top down architecture
+page 44
+
 # books
-  - information rchitecture  for the world wide web
+  - information architecture  for the world wide web
     - peter morville
     - louis rosenfeld
+
 ## recommended reads
   - a book on organizational psychology
 
@@ -48,9 +50,12 @@ page 35
   - main goals
     - organize huge amounts of information so that people can actually find what theyre looking for, lol an internet librarian
     - make it eaasy for customers to find products, a kind of one-to-one marketing
-    - takes on the information overload problemt hat everyones always complaining about
+    -
+    - takes on the information overload problem that everyones always complaining about
     - portrays a snapshot/spatial view of an information system
     - focus on making content and knowledge more accessible
+    - do your best to learn about users major information needs and information seeking behaviors
+      - a better understanding of what users actually want from your site will help you determine and prioritize which architectual components to build
     - structuring
       - involves determining the appropriate elevels of granularity for the information atoms in your site and deciding how to relate them to one another
     - organizing
@@ -143,6 +148,7 @@ page 35
   - value of brand
     - no matter how beautiful your website is
       - if customers cant find what they need, your brand loses value
+
 ## IA concepts
   - complex systems are a mix of content, context and users
     - form the basis of the IA model for practicing effective information architecture design
@@ -231,10 +237,40 @@ page 35
         - seeking something you need (e.g. a phone number) is far different information need that learning about a topic
         - searching for something you know is very different behavior that browsing for the unknown
         - your designs should reflect this difference
-    - information seeking behavior
-      - users iteravily search, ask, browse, repeat
-      - you must undestand information needs and information seeking behaviors
-        - your designs/architecture should reflect your understanding
+
+
+#### researching users information needs and seeking behaviors
+  - top down architecture
+    - anticipating users information needs and building off those assumptions
+    - common questions users have when landing on a site
+      - where am I
+      - i know what im looking for; how do I search for it
+      - how do I get around this siteswhats important and unique about this organization
+      - whats available on this site
+      - whats happening there
+      - do they want my opinion about their site
+      - how can I contact a human
+      - whats their address
+  - should anticipate users major information needs
+    - determine the most common questions and design the site to meet those needs
+  - search analytics
+    - based on a high volume of real user data
+      - however it doesnt provide an opportunity to interact with users and learn more about their needs directly
+    - involves reviewing the most common search queries on your site to diagnose problems with
+      - search performance
+      - metadata
+      - navigation
+      - content
+    - researching log files
+    - provides a sense of what users commonly seek and can help inform your understanding of their information needs and seeking behaviors
+    - useful for developing task analysis exercises
+  - contextual inquiry
+    - a user research method with roots in ethnography
+    - allows you to observe how users interact with information in their natural settings
+    - ask users why there are doing what they are doing while they are doing it
+  - task analysis
+  - surveys
+  - focus groups
 
 #### information needs
   - users are essentially looking for ideas and concepts that inform us and help us make decisions
@@ -272,12 +308,27 @@ page 35
     - youll bookmark it so you can find it again
 
 #### information seeking behaviors
-  -
+  - information seeking behavior
+    - users iteratively search, ask, browse, repeat
+      - enter queries in search systems
+      - browse from link to link
+      - ask humans for help
+        - email, chat interfaces, etc
+    - you must undestand information needs and information seeking behaviors
+      - your designs/architecture should reflect your understanding
+    - integration
+      - often integrate searching, browsing and asking in the same finding session
+    - iteration
+      - we dont always get things right the first time
+      - our information needs may change along the way, causing us to try new approaches with each new iteration
+
+
 ## information models
   - modeling users needs and behaviors forces us to ask questions about
     - what kind of information the user wants,
     - how much information is enough
     - how the user actually interacts with the architecture
+
   - too-simple model
     - algorithm
       1. user asks a question
@@ -295,12 +346,66 @@ page 35
         - assumes an ignorant user who brings llittle/any prior knowledge to the table
     - use cases
       - when users know what there looking for
-  -
+
+  - berry picking model
+    - users start with an information need
+    - formulate an information request (i.e. query)
+    - move iteratively through an information system along potentially complex paths, picking bits of information (i.e. berries) along the way
+    - in the process they modify their information requests as they learn more about what they need and what information is available from the system
+    - supporting users with berry picking information needs
+      - look for ways to support moving easily from search to browse and back again
+      - ability to search within the subcategories you find through browsing
+      - browse through categires you find by searching
+
+  - pearl growing model
+    - users start with one or a few good documents that are exactly what they need
+    - they want to get 'more like this one'
+    - supporting users with pearl growing information needs
+      - allow users to do just that, provide a command called 'similar pages' next to each search result
+      - allow users to link from a 'good' document to documents indexed with the same keywords
+      - allow users to navigate to items that share somethign in common
+
+  - two step model
+    - when users are confronted with a site consisting of links to perhaps hundreds of departmental subsites
+    - step one
+      - users first need to know where to look for the information they need
+      - they might search or browse through a directory until they find a good candidate or two
+    - step two
+      - looking for information within those subsites
+    - the users information seeking behavior may be radically different for each of these two steps
+      - the information architectures typically of portals are usually nothing like those of departmental subsites
+
+## visualing information architecture
+  - the sites visual designs
+  - colors
+  - typeface images
+  - information design
+    - number of columns
+    - column widths
+    - changes throughout
+  - interaction design
+    - mouseovers
+    - pull-down menus
+    -
 ## deliverables
   - wireframes
   - blueprints
   - controlled vocabularies
   - metadata schema
+  - organization systems
+    - present the sites information to us in a variety of ways
+      - content categories
+  - navigation systems
+    - help users move through the content
+  - search systems
+    - allow users to search the content
+  - labeling systems
+    - language should be meaningful to users
+      - categories
+      - options
+      - links
+
+
 # graphic design
   - responsible for all aspects of visual communication
   - examples
