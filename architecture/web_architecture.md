@@ -113,7 +113,7 @@ https://en.wikipedia.org/wiki/Web_cache
   - abstraction layer/level: a way of hiding the implementation details of a particular set of functionality, allowing the separation of concerns to facilitate interoperability and platform independence
   - internet protocol suite: the conceptual model and set of communications protocols used on the internet and similar computer networks
     - commonly known as TCP/iP becuase the foundational protocols in the suite are the transmission control protocol (tcp) and the internet protocol(ip)
-  - Transmission control protocol: one of the main protocols of the internet protocol suite. provides reliable, ordered, and error-checked delivery of a stream of octets between applications running on hosts communicating by an ip network
+  - Transmission control protocol: one of the main protocols of the internet protocol suite. provides reliable, ordered, and error-checked delivery of a stream of octets between applications running on hosts communicating by an ip networkcopcopmutercopmutermutercopmuter
   - world wide web: an information space where documents and other web resources are identified by uniform resource locators (urls), interlinked by hypertext links, and can be accessed via the internet
   - url: uniform resource locator: web address: a reference to a web resource that specifies its location on a computer network and a mechanism for retrieving it
   - the internet: the global system of interconnected computer networks that use the internet protocol suite (tcp/ip) to link devices world wide
