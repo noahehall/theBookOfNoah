@@ -339,7 +339,7 @@
   - JSON-RPC
     - a simple remote procedure call protocol similar to xml-rpc
     - uses the lightweight JSON format instead of XML
-  - 
+  -
 
 # deployments
   - components that need to be published during a web service deployment
