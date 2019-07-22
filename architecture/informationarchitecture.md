@@ -421,7 +421,7 @@ page 44
 ### major components
 #### organization systems
   - organization is closely related to navigation, labeling and indexing
-    - hierarchical organization structures often play the part of primary navigation systems
+    - hierarchical organization structures often play the ppart of primary navigation systems
   - how you categorize information and organize content
     - aka taxonomies/hierarchies
     - present the sites information to us in a variety of ways
@@ -434,9 +434,9 @@ page 44
   - components
     - organization schemes
       - defines the shared characteristics of content items and influences the logical grouping of those items
-      - exact/objective organization scheme
+      - exact/objective organization schemes
         - divide information into well-defined and mutually exclusive sections
-        - require users to know what theyre looking for
+        - requires users to know what theyre looking for
         - easy to design and maintain because there is little intellectual work involved in assigning items to categories
         - alphabetical
           - primary organization scheme for enclyopedias and dictionaries
@@ -446,6 +446,14 @@ page 44
           - often serve as an umbrella for other organization schemes
         - chronological
           - organized by date
+          - e.g. history books, magazines, diaries, TV guides
+        - geographical
+          - political, social and economic issues are frequenty location-dependent
+      - ambiguous/subjective organization schemes
+        - divide information into categories that defy exact definition
+        - users dont know what theyre looking for
+        - grouping items in intellectually meaningful ways
+        - supports an associative learning process that enables users to make new connections and reach better conclusions 
     - organization structures
       - defines the types of relationships between content items and groups
 
