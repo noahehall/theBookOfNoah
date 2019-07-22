@@ -6,16 +6,22 @@ page 44
     - peter morville
     - louis rosenfeld
 
-## recommended reads
+# recommended reads
   - a book on organizational psychology
 
+# tools
+  - navigation stress test
+    - evaluating bottom up information archhitecture
 
 # terminology
   - information architecture
     - the structural design of shared information environments
-    - the combination of organization, labeling, search and navigation systems wtihin websites and itnranets
+    - the combination of organization, labeling, search and navigation systems wtihin websites and intranets
     - the art and science of shaping information products and experiences to support usability and finability
     - an emerging discipline and community of practice focused on bringing principles of designn and architecture to the digital landscape
+    - our understanding of the world is largely determined by our ability to organize information
+    -
+
   - information
     - to distinguish information architecture from data and knowledge management
     - data - facts and figures
@@ -45,12 +51,10 @@ page 44
     - informatino hoarding
     - not-invent-here syndrom
 
-
 # information architects
   - main goals
     - organize huge amounts of information so that people can actually find what theyre looking for, lol an internet librarian
-    - make it eaasy for customers to find products, a kind of one-to-one marketing
-    -
+    - make it easy for customers to find products, a kind of one-to-one marketing
     - takes on the information overload problem that everyones always complaining about
     - portrays a snapshot/spatial view of an information system
     - focus on making content and knowledge more accessible
@@ -81,6 +85,18 @@ page 44
     - creation of categories
     - choice of labels
     - rely on developers to bring their ideas to fruition
+## challenges
+  - ambiguity
+    - classification systems are built upon the foundation of language and language is ambiguous
+    - words are capable of being understood more than one way
+    - not only do we need to agree on the labels and their definitions we also need to agree on which documents to place in which categories
+  - heterogeneity
+    - refers to an object or collection of objects composed of unrelated or unlike parts
+    - makes it difficult to impose any single structured organization system on the content
+    - homogeneous
+      - refers to something composed of similar or identical elements
+  - internal politics
+    - you have to be sensitive to your organizations political environment
 
 ## specializations
   - thesaurus designer
@@ -124,8 +140,9 @@ page 44
   - product management
     - understand how to tap the motivations and talents of a diverse group oof professionals
     - very effective in the areas of strategy formation and interdisciplinary team management
-  -
-## costs and value propositioons
+
+
+## costs and value propositions
   - cost of finding information
     - if you can save every employee X minutes per day struggling to find answers on your intranet
     - cost of frustrating your customers with a poorly organized site
@@ -200,7 +217,8 @@ page 44
     - is there a controlled vocabulary
     - are users permitted to supply their own folksonomic tags to content
     - heavily impacts both information retrieval and content management
-    -
+
+
 ### context
   - all websites and intranets exist within a particular business/organizational context
     - mission statement
@@ -240,19 +258,30 @@ page 44
 
 
 #### researching users information needs and seeking behaviors
-  - top down architecture
+  - bottom up information architecture
+    - by supporting searching and browsing, the structure inherent in content enables the answers to users questions to rise to the surface
+    - content structure, sequencing and tagging
+    - answers the following questions
+      - where am i
+      - whats here
+      - where can i go from here
+    - is important because users are increasingly likey to bypass your sites top down information architecture
+      - using websites and tools like google search
+      - click through ads
+      - clicking links while reading your content via their aggregators
+        - for all the aforementioned reasons, you need bottom up informatioon architectgure
+  - top down information architecture
     - anticipating users information needs and building off those assumptions
-    - common questions users have when landing on a site
+    - determine the most common questions and design the site to meet those needs
       - where am I
       - i know what im looking for; how do I search for it
-      - how do I get around this siteswhats important and unique about this organization
+      - how do I get around this sites
+      - whats important and unique about this organization
       - whats available on this site
       - whats happening there
       - do they want my opinion about their site
       - how can I contact a human
       - whats their address
-  - should anticipate users major information needs
-    - determine the most common questions and design the site to meet those needs
   - search analytics
     - based on a high volume of real user data
       - however it doesnt provide an opportunity to interact with users and learn more about their needs directly
@@ -279,6 +308,7 @@ page 44
     - you know what youre looking for, what to call it, and wheere youll find it
     - e.g.
       - what is the population of san francisco
+    -
 
   - exploratory seeking, i.e. lobster trapping
     - is usually open-ended, there is no clear expectation of a 'right' answer,
@@ -388,23 +418,193 @@ page 44
     - pull-down menus
     -
 ## deliverables
-  - wireframes
-  - blueprints
-  - controlled vocabularies
-  - metadata schema
-  - organization systems
+### major components
+#### organization systems
+  - organization is closely related to navigation, labeling and indexing
+    - hierarchical organization structures often play the part of primary navigation systems
+  - how you categorize information and organize content
+    - aka taxonomies/hierarchies
     - present the sites information to us in a variety of ways
-      - content categories
-  - navigation systems
-    - help users move through the content
-  - search systems
-    - allow users to search the content
-  - labeling systems
-    - language should be meaningful to users
-      - categories
-      - options
-      - links
+    - the main ways of categorizing or grouping a sites content
+      - by topic
+      - by task
+      - by audiences
+      - by chronology
 
+  - components
+    - organization schemes
+      - defines the shared characteristics of content items and influences the logical grouping of those items
+      - exact/objective organization scheme
+        - divide information into well-defined and mutually exclusive sections
+        - require users to know what theyre looking for
+        - easy to design and maintain because there is little intellectual work involved in assigning items to categories
+        - alphabetical
+          - primary organization scheme for enclyopedias and dictionaries
+          - e.g.
+            - alphabetical organization of a phone books white pages
+            - department store directories, bookstores, libraries
+          - often serve as an umbrella for other organization schemes
+        - chronological
+          - organized by date
+    - organization structures
+      - defines the types of relationships between content items and groups
+
+  - browsing aids
+    - present users with a predetermined set of paths to help them navigate the site
+    - users navigate your site through menus and links instead of search
+  - tag clouds
+  - metadata tagging / manual tagging
+    - tool for organizing content items into groups at a very detailed level
+
+#### labeling systems
+  - how you represent the categories and content created by organization systems
+    - e.g. scientific terminology 'acer' or lay terminology 'maple'
+  - language should be meaningful to users
+    - categories
+    - options
+    - links
+  - play  a significant role in defining the contents of categories
+
+#### navigation systems
+- how we browse or move through information
+    - e.g. clicking through a hierarchy
+  - help users move through the content
+  - site wide navigation systems
+    - primary navigation systems that help users understand where they are and where they can go within a site
+    - e.g. breadcrumbs
+  - local navigation systems
+    - primary navigation systems that help users understand where they are and where they can go within a portion of a site
+    - e.g. subsite
+  - sitemaps/tables of contents
+    - navigation systems that supplement primary navigation systems
+    - provide a condensed overview of and links to major content areas and subsites within the site
+    - usually in outline fora site
+    - e.g. breadcrumsm
+  - site indeces
+    - supplementtary navigation systems that provide an alphabetized list of links to the contents of the site
+  - site guides
+    - supplementary navigation systems that lead users through a sequential set of steps
+    - may also link to a related subset of the sites content
+  - site wizards
+    - supplementary navigation systems that lead users through a sequential set of steps
+    - may also link to a related subset of the sites content
+  - contextual navigation systems
+    - consistently presented links to related content
+    - often embedded in text
+    - generally used to connect highly specialized content within a site
+
+#### searching systems
+  - allow entry of a user-defined query and automatically present users with a customized set of results
+  - dynamically and mostly automated counterparts to browsing aid
+  - configured to index and search certain parts of the site
+  - to display certain kinds of information in each search result
+    - page title, extract, date, etc.
+    - to handle searc  - controlled vocabulariesh queries in certain ways
+      - removing 'stop words'
+        - e.g. a, the, and, of
+    - 'best link' and other types of manually data that are attached to automated search results
+
+  - search interface
+    - the means of entering and revising a search query
+    - typically with
+      - information on how to improve your query
+      - seleting from specific search zones
+      - etc
+  - query language
+    - the grammar of a search query
+    - typically includes
+      - boolean operators (AND/OR/NOT)
+      - proximity operators (ADJACENT/NEAR)
+      - ways of specifying which field to search (AUTHOR,NAME)
+  - query builders
+    - ways of enhancing a querys performance
+    - e.g. spell checkers, stemming, concept searching, drawing in synonyms from a thesaurus
+  - retrieval algorithms
+    - the part of a search engine that determines which content matches a users query
+    - e.g. google pagerank
+  - search zones
+    - subsets of site content that have been separately indexed to support narrower searching
+    - e.g. searching just the tech support area
+  - search results
+    - presentation of content that matches the users search query
+    - involves decisions of
+      - what types of content that should make up each individual result
+      - how many results to display
+      - how sets of results should be ranked, sorted and clustered
+
+#### content and tasks
+  - the users ultimate destinations, as opposed to separate components that get users to their desitinations
+  - headings
+    - labels for the content that follows them
+  - embedded links
+    - links within text, these label (i.e. represent) the content they link to
+  - embedded metadata
+    - information that can be used as metadata but must first be extracted
+    - e.g. in a recipe, the ingredients can be indexed to support searching by ingredient
+  - chunks
+    - logical units of content
+    - can vary in granularity
+      - e.g. sectinos and chapters are both chunks
+    - can be nested
+      - e.g. section is part of a book
+  - lists
+    - groups of chunks or links to chunks
+    - are important because
+      - theyve been grouped together (share  some trait in common)
+      - have been presented in a particular order (e.g. chronologically)
+  - sequential aids
+    - clues that suggest
+      - where the user is in a process or task
+      - how far he has to go before completing it
+  - identifiers
+    - clues that suggest where the user is in an information system
+    - e.g.
+      - logo specifying what site she is using
+      - breadcrumb explaining where in the site she is
+
+#### invisible components
+  - certain key architectural components are manifest completely in the background
+  - users rarely (if ever) interact with them
+  - often 'feed' other components
+    - e.g. a thesaurus used to enhance a search query
+  - controlled vocabularies
+    - predetermined vocabularies of preferred terms that describe a specific domain
+      - e.g. auto racing/orthopedic surgery
+    - typically include variant terms
+      - e.g. 'brewskie' for 'beer'
+    - thesauri
+      - controlled vocabularies that generally include linkis to browser and narrower terms, related terms and descriptions of preferred terms (aka scope notes)
+  - retrieval algorithms
+    - used to rank search results by relevance
+    - reflect their pgrogrammers judgments on how to determine relevance
+  - best bets
+    - preferred search results that are manually coupled with a search query
+    - editors and subject matter experts determine
+      - queries should retrieve best bets
+      - which documents merit best bet status
+  -
+### other
+  - wireframes
+    - inform visual design
+  - blueprints
+  - metadata schema
+    -
+      -
+
+
+### IA definition of 'done'
+  - you always know where you are
+  - you can navigate to relevant pages
+    - related pages
+    - hierarchically
+    - contextually
+    - menus with appropriate labels
+  - manipulate the content for better browsing
+    - sorting
+    - tag clouds
+    - options/configurations
+  - supports searching & browsing
+    - the structure inherent in content enables the anwsers to users questions to rise to the top
 
 # graphic design
   - responsible for all aspects of visual communication
