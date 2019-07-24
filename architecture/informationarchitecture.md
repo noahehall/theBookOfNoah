@@ -497,13 +497,19 @@ page 44
             - for websites that are expected to grow
               - lean toward a broad and shallow rather than a narrow and deep hierarchy
                 - allows for the addition of content without major restructuring
+                - it is less problematic to add items to secondary levels of an hierarchy than to the top level of a hierarchy
+                  - top levels of a hierarchy serve as the mkost promiment and improtant navigation interface for users
+                  -
         - allows you to quickly get a handle on the scope of a website without going through an extensive content inventory process
         - begin by identifying the major content areas and exploring possible organization schemes that will provide access to that content
         - e.g.
           - family trees,
           - books (chapters, sections, paragraphs)
       - database-oriented - bottom up approach
-        - 
+        - metadata
+          - the primary key that links information architecture to the design of database schema
+          - allows you to apply structure and power of relational databases to the heterogeneous, unstructured environments of the web
+          - 
       - hypertext
 
   - browsing aids
