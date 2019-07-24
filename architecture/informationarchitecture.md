@@ -430,6 +430,10 @@ page 44
       - by task
       - by audiences
       - by chronology
+  - the first step in transforming data into information is exploring its organization
+  - all information retrieval systems work best when applied to narrow domains of homogeneous content
+    - decomposing the content into narrow domains you can identify opportunities for highly effective organization systems
+    -
 
   - components
     - organization schemes
@@ -437,6 +441,7 @@ page 44
       - exact/objective organization schemes
         - divide information into well-defined and mutually exclusive sections
         - requires users to know what theyre looking for
+        - best for known item searching when users know exactly what they are looking for
         - easy to design and maintain because there is little intellectual work involved in assigning items to categories
         - alphabetical
           - primary organization scheme for enclyopedias and dictionaries
@@ -452,6 +457,7 @@ page 44
       - ambiguous/subjective organization schemes
         - divide information into categories that defy exact definition
         - users dont know what theyre looking for
+        - best for browsing and associative learning when users have a vaguely defined information need
         - grouping items in intellectually meaningful ways
         - supports an associative learning process that enables users to make new connections and reach better conclusions
         - topic
@@ -509,8 +515,23 @@ page 44
         - metadata
           - the primary key that links information architecture to the design of database schema
           - allows you to apply structure and power of relational databases to the heterogeneous, unstructured environments of the web
-          - 
+        - use cases
+          - automatic generation of alphabetical indexes (e.g. product index)
+          - dynamic presentation of associative 'see also' links
+          - fielded searching
+          - advancing filtering and sorting of search results
+          -
       - hypertext
+        - the items/chunks of information that will be linked and the links between those chunks
+        - reflect highly personal associations
+        - social classification
+          - aka free tagging, collaborative categorization, mob indexing, ethnoclassifcation
+          - users tag objects wtih one/more keywords
+          - tags are public and sere as pivots for social navigation
+          - users can move fluidly between objects, authors, tags, and inexers
+          - transform user behavior and tagging patterns into new organization and navigation systems
+          - the ease of tagging for personal organization with social incentives leads to a rich and discoverable folksonomy
+          -
 
   - browsing aids
     - present users with a predetermined set of paths to help them navigate the site
@@ -526,7 +547,36 @@ page 44
     - categories
     - options
     - links
-  - play  a significant role in defining the contents of categories
+  - play a significant role in defining the contents of categories
+  - the goal of a label is to
+    - communicate information efficently
+      - i.e. convey meaning without taking up too muchh of a pages vertical space or a users cognitive space
+    - show the users your organization and navigation system
+  - best practices
+    - design labels that speak the same language as the sites users while reflecting its content
+  - types
+    - contextual links
+      - hyperlinks to chunks of information on other pages or to another location on the same page
+      - rely upon the context in which they live
+      - questions to ask
+        - what kind of information will the user expewect to be taken to?
+    - headings
+      - describe the content that follows them
+      - the hierarchical relationships between headings (parent, child, sibling) are usually established visually through consistent use of numbering, font sizes, colors and styles, whitespaces and indentation, or combinations thereof
+      - using numbers is an obvious way to communicate progression, and consistently framing the labels as actions (utilizing verbs) helps tie together sequences of steps
+    - navigation system choices
+      - represents the ooptions in navigation systems
+    - index terms
+      - aka keywrods, tags, descriptive metadata, taxonomies, controlled vocabularies, thesauri, sets of index term labels
+      - can be used to
+        - represent content for searching or browsing
+        - describe any type of content
+        - provide an alternative to a sites primary organization system
+    - iconic labels
+      - icons represent information in much the same way text can
+      - constitute a much more limited language than text
+      - typically used for navigation systems or small organization system labels where the list of options is small
+    - 
 
 #### navigation systems
 - how we browse or move through information
