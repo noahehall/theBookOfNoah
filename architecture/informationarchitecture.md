@@ -12,6 +12,11 @@ page 44
 # tools
   - navigation stress test
     - evaluating bottom up information archhitecture
+  - controlled vocabularies
+    - taxonomy warehouse
+    - thesauri online
+    - controlled vocabularies (search for it)
+    - web thesaurus compendium
 
 # terminology
   - information architecture
@@ -576,35 +581,79 @@ page 44
       - icons represent information in much the same way text can
       - constitute a much more limited language than text
       - typically used for navigation systems or small organization system labels where the list of options is small
-    - 
+
+##### designing labels
+  - remember content, users and context affect all aspects of IA and designing labels specifically
+  - sources for labeling systems
+    - your site
+      - use keywords from your sites content
+      - content analysis/auto extracting terms from content
+    - comparable/competitive sites
+    - controlled vocabularies/thesauri
+    - content authors
+    - user advocates
+    - subject matter experts
+    - search log analysis
+  - best practices
+    - narrow scope whenever possible
+      - focus your efforts on a more defined audience, you reduce the number of possible perspectives on what a label means
+    - develop consistent labeling systems, not labels
+      - style
+      - presentation
+        - fonts, sizes, colors, whitespace, grouping
+      - syntax
+        - verb-based - 'grooming your dog'
+        - noun-based  - 'diets for dogs'
+      - granularity
+        - labels must represent the same specificity
+      - comprehensiveness
+        - users can be tripped up by noticeable gaps in a labeling system
+          - pants, ties, shoes... wtf happened to shirts?
+      - audience
+        - consider the languages of your sites major audiences
+        - each audience is likley to use very different terminology
+      -
 
 #### navigation systems
-- how we browse or move through information
+  - how we browse or move through information
     - e.g. clicking through a hierarchy
   - help users move through the content
-  - site wide navigation systems
-    - primary navigation systems that help users understand where they are and where they can go within a site
-    - e.g. breadcrumbs
-  - local navigation systems
-    - primary navigation systems that help users understand where they are and where they can go within a portion of a site
-    - e.g. subsite
-  - sitemaps/tables of contents
-    - navigation systems that supplement primary navigation systems
-    - provide a condensed overview of and links to major content areas and subsites within the site
-    - usually in outline fora site
-    - e.g. breadcrumsm
-  - site indeces
-    - supplementtary navigation systems that provide an alphabetized list of links to the contents of the site
-  - site guides
-    - supplementary navigation systems that lead users through a sequential set of steps
-    - may also link to a related subset of the sites content
-  - site wizards
-    - supplementary navigation systems that lead users through a sequential set of steps
-    - may also link to a related subset of the sites content
-  - contextual navigation systems
-    - consistently presented links to related content
-    - often embedded in text
-    - generally used to connect highly specialized content within a site
+  - effective navigation is simply the manifestation of a well-organized system
+  -
+  - types
+    - global/site wide navigation systems
+      - primary navigation systems that help users understand where they are and where they can go within a site
+      - intended to be present on every page throughout a site
+      - e.g. breadcrumbs
+    - local navigation systems
+      - primary navigation systems that help users understand where they are and where they can go within a portion of a site
+      - complementary to global navigation systems
+      - e.g. subsite
+    - contextual navigation systems
+      - consistently presented links to related content
+      - often embedded in text
+      - generally used to connect highly specialized content within a site
+      - e.g. 'see also' links
+    - supplemental navigation systems
+      - sitemaps/tables of contents
+        - navigation systems that supplement primary navigation systems
+        - provide a condensed overview of and links to major content areas and subsites within the site
+        - usually in outline fora site
+        - e.g. breadcrumsm
+      - site indeces
+        - supplementtary navigation systems that provide an alphabetized list of links to the contents of the site
+      - site guides
+        - supplementary navigation systems that lead users through a sequential set of steps
+        - may also link to a related subset of the sites content
+    - site wizards
+      - supplementary navigation systems that lead users through a sequential set of steps
+      - may also link to a related subset of the sites content
+
+    - embedded navigation systems
+      - wrapped around and infused withini the content of the site
+      - provde both context and flexibility
+      - helps users understand where they are and where they can go
+    -
 
 #### searching systems
   - allow entry of a user-defined query and automatically present users with a customized set of results
