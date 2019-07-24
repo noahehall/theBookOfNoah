@@ -453,9 +453,58 @@ page 44
         - divide information into categories that defy exact definition
         - users dont know what theyre looking for
         - grouping items in intellectually meaningful ways
-        - supports an associative learning process that enables users to make new connections and reach better conclusions 
+        - supports an associative learning process that enables users to make new connections and reach better conclusions
+        - topic
+          - organizing information by subject or topic is one of the most useful approaches
+          - important to define the bredadth of coverage
+            - e.g. all plumbers? or just plumbers in california
+          - e.g. phone book yellow pages, you can look under 'plumber'
+        - task
+          - task-oriented schemes organize content and applications into a collection of processes, functions or tasks
+          - appropriate when its possible to anticipate a limited number of high priority tasks that users will want to perform
+          - common in ecommerce web sites where custerom interaction takes center stage
+        - audience
+          - when there are two or more clearly definavble audiences
+          - works best
+            - when the site is frequented by repeat visitors who can bookmark their particular section of the site
+            - if there is value in customizing the content for each audience
+          - open scheme
+            - allow members of one audience to access the content intended for other audiences
+          - closed scheme
+            - prevent members from moving between audience-specific sections
+            - apprirpiate if subscription fees/security issues are involved
+        - metaphors
+          - commonly used to help users understand the new by relating it ot he familiar
+          - can help users understand the content and function of an interface intuitively
+          - useful while brainstorming
+      - hybrids
+        - including elements of multiple organization schemes into a single organization scheme
     - organization structures
       - defines the types of relationships between content items and groups
+      - the structure of information defines the primarhy ways in which users can navigate
+      - hierarchy/taxonomy - top down approach
+        - depth - number of levels in the hierarchy
+        - breadth - number of options at each level of the hierarchy
+        - polyhierarchical
+          - taxonomies that allow cross-listing
+        - best practices
+          - categories should be mutual exclusive
+          - balance between breadth and depth in the number of catagories
+            - if a hierarchy is too narrow and deep, users have to click through an inordinate number of levels to find what they are looking for
+            - too much breadth, must be sensitive to peopoles visual scanning abilities and to the cognitive limits of the human mind
+            - there is general consensus that the number of links you can safely include is ocnstrained gby users abilities to visually scan the page rather than by their short term memories
+            - too much depth, be even more conservative if users are forced to click through more than two/3 levels they may simply give up
+            - for websites that are expected to grow
+              - lean toward a broad and shallow rather than a narrow and deep hierarchy
+                - allows for the addition of content without major restructuring
+        - allows you to quickly get a handle on the scope of a website without going through an extensive content inventory process
+        - begin by identifying the major content areas and exploring possible organization schemes that will provide access to that content
+        - e.g.
+          - family trees,
+          - books (chapters, sections, paragraphs)
+      - database-oriented - bottom up approach
+        - 
+      - hypertext
 
   - browsing aids
     - present users with a predetermined set of paths to help them navigate the site
