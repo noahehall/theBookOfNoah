@@ -682,7 +682,7 @@ page 44
       - build on the premise that value for the individual user can be derived from observing the actions of other users
       - e.g. links to popular resources
 
-#### searching systems
+#### search systems
   - allow entry of a user-defined query and automatically present users with a customized set of results
   - dynamical and mostly automated counterpart to browsing aids
   - configured to index and search certain parts of the site
@@ -704,63 +704,138 @@ page 44
     - can be used as a learning tool
     - should be there if users expect it to be there
     - can t ame dynamism
+
   - components
     - user query
+
     - search interface
+      - the means of entering and revising a search query
+      - typically with
+        - information on how to improve your query
+        - seleting from specific search zones
+
       - query language
+        - the grammar of a search query
+        - typically includes
+          - boolean operators (AND/OR/NOT)
+          - proximity operators (ADJACENT/NEAR)
+          - ways of specifying which field to search (AUTHOR,NAME)
+
       - query builders
+        - ways of enhancing a querys performance often invisible to users
+        - spell checkers
+          - allow users to misspell terms and still retrieve the right results by automatically correcting search terms
+        - phonetic tools
+          - expand a query to include 'sound-alike' terms
+        - stemming tools
+          - allow users to enter a term and tretrieve documents that contain varient terms with the same stem, e.g. lodge -> loding, lodger
+        - natural language processing tools
+          - examine the syntactic nature of a query and use that knowledge to narrow retrieval
+            - e.g. is it a 'how to' question or a 'who is' question
+        - controlled vocabularies/thesauri
+          - expand teh semantic nature of a query by automatically including synonyms within the query
+        - concept searching
+
+      - search zones
+        - subsets of site content that have been separately indexed to support narrower searching (filtering)
+        - each search zone should correspond to a specific need
+        - pockets of more homogeneous content that act as silos for search queries
+          - e.g. searching just the tech support area
+        - when a user searches a search zone, they have self-identified as interested in that particular information
+        - generally should match the segments of the information architecture organization scheme
+          - and perhaps having an 'all' index that combines each as the default
+        - basic types
+          - content type
+          - audience
+          - role
+          - subject/topic
+          - geography
+          - chronology
+            - e.g. recent content
+          - author
+          - department/business unitng just the tech support area
+
     - search engine
+      - search algorithms
+        - the part of a search engine that determines which content matches a users query
+        - e.g. google pagerank
+        - recall and precision
+          - some algorithms return many results of varying relevance, while some return fewer higher quality results
+          - recall
+            - `# relevant documents retrieved / # relevant documents in collection`
+            - high recall is generally useful for learning everything about a topic
+            - e.g. in research or 'ego surfing'
+          - precision
+            - `# relevant documents retrieved / # total documents in collection`
+            - when it doesnt matter how mmany results exist as long as you get a good enough answer in the first few results
+        - pattern-matching algorithms
+          - compare the users query with an index (typically) of the full text content looking for the same string of text
+        - automatic stemming
+          - expands a term to include other terms that share the same root/stem
+          - e.g. computer -> root = comput -> stems = computers, computation, computing, etc
+          - leads to higher recall in search results
+
     - content
       - metadata
+        - each search result can be broken down into smaller atoms, e.g. authors name, which may be leveraged by a search engine, e.g. for  filtering
+        - representational metadata
+          - quickly distinguish result types
+          - e.g. title/author
+        - descriptive metadata
+          - e.g. summary, keywords, content abstracts
+          - get a sense of what the content is about
       - controlled vocabulary
+        -
+
     - results
-      - ranking and clustering algorithms
       - interface design
-  - search interface
-    - the means of entering and revising a search query
-    - typically with
-      - information on how to improve your query
-      - seleting from specific search zones
-      - etc
-  - query language
-    - the grammar of a search query
-    - typically includes
-      - boolean operators (AND/OR/NOT)
-      - proximity operators (ADJACENT/NEAR)
-      - ways of specifying which field to search (AUTHOR,NAME)
-  - query builders
-    - ways of enhancing a querys performance
-    - e.g. spell checkers, stemming, concept searching, drawing in synonyms from a thesaurus
-  - retrieval algorithms
-    - the part of a search engine that determines which content matches a users query
-    - e.g. google pagerank
-  - search zones
-    - subsets of site content that have been separately indexed to support narrower searching (filtering)
-    - each search zone should correspond to a specific need
-    - pockets of more homogeneous content that act as silos for search queries
-      - e.g. searching just the tech support area
-    - when a user searches a search zone, they have self-identified as interested in that particular information
-    - generally should match the segments of the information architecture organization scheme
-      - and perhaps having an 'all' index that combines each as the default
-    - basic types
-      - content type
-      - audience
-      - role
-      - subject/topic
-      - geography
-      - chronology
-        - e.g. recent content
-      - author
-      - department/business unitng just the tech support area
-  - search results
-    - presentation of content that matches the users search query
-    - involves decisions of
-      - what types of content that should make up each individual result
-      - how many results to display
-      - how sets of results should be ranked, sorted and clustered
-  - content component
-    - each search result can possibly be broken down into smaller atoms, e.g. authors name, which may bbe leveraged by a search engine, e.g. for  filtering
-    - truly determined by the type of content being indexed, e.g. metadata for music vs actors will have totally different components
+        - presentation of content that matches the users search query
+      - involves decisions of
+        - what types of content that should make up each individual result
+          - display less information
+            - to users who know what theyre looking for
+          - display more information
+            - to users who arent sure what they want
+            - its hard to distinguish results because of commonly displayed fields (e.g. 10 results by the same author)
+        - how many results to display
+          - many users will not venture past the first screen
+          - if the search engine is configured to display a lot of infromation for each retrieved document
+            - consider having a smaller retrieval set to improve performance
+          - always inform the user of how many results were retrieved, and which set they are viewing
+        - how sets of results should be ranked, sorted and clustered
+          - depends on
+            - the kind of information needs the user starts with
+            - what type of results they are hoping to receive
+            - how they plan to use the results
+          - sorted e.g. chronologically by date, alphabetically,
+            - useful for users seeking to make a decision/take an action
+          - ranked e.g. by relevance/popularity
+              - by relevance
+                - how many of the querys terms occur in the document
+                - how frequently query terms occur in the document
+                - how close together query terms occur, e.g. adjacent, same sentence, paragraph
+                - where query terms occur, e.g. title, body
+              - by popularity
+                - 
+            - use cases
+              - there is a need to understand information or learn something
+              - describe retrieved docouments relevance, e.g. most -> least
+      - presenting 'similar' results for an existing search result
+        - document simularity
+          - when you already have a good search result on hand, converting it into the equivalent of a search query
+          - process
+            - `stop words` are removed out of the document, leaving a useful set of semantically rich terms that idealy represent the document
+            - the remaining terms are converted into a query that should retrieve similar results to the containing document
+        - present results that have been indexed with similar metadata
+        - cited by
+          - display other results that cite the current one
+          - the relationship between cited and citing papers implies some degree of mutual relevance
+        - active bibliography (related documents)
+          - this paper cites others in its own bibliography implying a similar type of shared relevance
+        - similar documents based on text
+          - documents are converted into queries automatically and are used to find similar documents
+        - related documents from co-citation
+          - if documents appear together in the bibliographies of other papers, they probably have something in common
 
 #### content and tasks
   - the users ultimate destinations, as opposed to separate components that get users to their desitinations
