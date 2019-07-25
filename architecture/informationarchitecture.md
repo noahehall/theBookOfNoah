@@ -2,12 +2,16 @@ top down architecture
 page 44
 
 # books
-  - information architecture  for the world wide web
+  - information architecture for the world wide web
     - peter morville
     - louis rosenfeld
 
 # recommended reads
-  - a book on organizational psychology
+  - any book on organizational psychology
+  - modern information retrieval
+    - ricardo baeza-yates
+    - berthier riberio-neto
+    -
 
 # tools
   - navigation stress test
@@ -424,6 +428,13 @@ page 44
     -
 ## deliverables
 ### major components
+  - navigation vs destination
+    - navigation pages
+      - primary purpose is to get you to the destination pages
+      - e.g. main pages, search pages, and pages that help you browse a site
+      - should not be included in search results
+    - destination pages
+      - contain the actual infomration you want
 #### organization systems
   - organization is closely related to navigation, labeling and indexing
     - hierarchical organization structures often play the ppart of primary navigation systems
@@ -635,37 +646,76 @@ page 44
       - generally used to connect highly specialized content within a site
       - e.g. 'see also' links
     - supplemental navigation systems
+      - users resort to supplemental navigation systems when global, local, or contextual navigation systems fail them
+      - best practices
+        - reinforce the information hierarchy so users become increasingly familiar with how the content is organized
+        - facilitate fast, direct access to the contents of a site for those users who know what they want
+        - avoid overwhelming hte user with too much information
       - sitemaps/tables of contents
         - navigation systems that supplement primary navigation systems
         - provide a condensed overview of and links to major content areas and subsites within the site
-        - usually in outline fora site
-        - e.g. breadcrumsm
+        - usually in outline for a site
+        - e.g. breadcrums
       - site indeces
         - supplementtary navigation systems that provide an alphabetized list of links to the contents of the site
       - site guides
         - supplementary navigation systems that lead users through a sequential set of steps
         - may also link to a related subset of the sites content
-    - site wizards
-      - supplementary navigation systems that lead users through a sequential set of steps
-      - may also link to a related subset of the sites content
-
+        - e.g. guided tours, tutorials, micro-portals focused on a specific audience, topic or task
+        - best practices
+          - should be short
+          - at any point hte user should be able to exit
+          - navigation (prev, home, next) should be located in the same spot on every page
+          - should be designed to answer specific questions
+          - screenshots should be crisp clear and optimzied
+          - may need a table of contents if there are many pages
+      - site wizards
+        - supplementary navigation systems that lead users through a sequential set of steps
+        - may also link to a related subset of the sites content
     - embedded navigation systems
       - wrapped around and infused withini the content of the site
       - provde both context and flexibility
       - helps users understand where they are and where they can go
-    -
+    - personalization
+      - serving up tailored pages to the user based upon a model of the behavior, needs or preferences of  that individual
+    - social navigation
+      - build on the premise that value for the individual user can be derived from observing the actions of other users
+      - e.g. links to popular resources
 
 #### searching systems
   - allow entry of a user-defined query and automatically present users with a customized set of results
-  - dynamically and mostly automated counterparts to browsing aid
+  - dynamical and mostly automated counterpart to browsing aids
   - configured to index and search certain parts of the site
+    - you have to discern what content to index to make it available for searching
   - to display certain kinds of information in each search result
     - page title, extract, date, etc.
     - to handle searc  - controlled vocabulariesh queries in certain ways
       - removing 'stop words'
         - e.g. a, the, and, of
     - 'best link' and other types of manually data that are attached to automated search results
-
+  - questions to ask
+    - does your site have enough content
+    - do you have the time and know how to optimize your sites search system
+    - are there better alternatives
+    - will your sites users bother to search
+  - use cases
+    - when you hav etoo much ifnormation to browse
+    - if you have a fragmented site
+    - can be used as a learning tool
+    - should be there if users expect it to be there
+    - can t ame dynamism
+  - components
+    - user query
+    - search interface
+      - query language
+      - query builders
+    - search engine
+    - content
+      - metadata
+      - controlled vocabulary
+    - results
+      - ranking and clustering algorithms
+      - interface design
   - search interface
     - the means of entering and revising a search query
     - typically with
@@ -685,14 +735,32 @@ page 44
     - the part of a search engine that determines which content matches a users query
     - e.g. google pagerank
   - search zones
-    - subsets of site content that have been separately indexed to support narrower searching
-    - e.g. searching just the tech support area
+    - subsets of site content that have been separately indexed to support narrower searching (filtering)
+    - each search zone should correspond to a specific need
+    - pockets of more homogeneous content that act as silos for search queries
+      - e.g. searching just the tech support area
+    - when a user searches a search zone, they have self-identified as interested in that particular information
+    - generally should match the segments of the information architecture organization scheme
+      - and perhaps having an 'all' index that combines each as the default
+    - basic types
+      - content type
+      - audience
+      - role
+      - subject/topic
+      - geography
+      - chronology
+        - e.g. recent content
+      - author
+      - department/business unitng just the tech support area
   - search results
     - presentation of content that matches the users search query
     - involves decisions of
       - what types of content that should make up each individual result
       - how many results to display
       - how sets of results should be ranked, sorted and clustered
+  - content component
+    - each search result can possibly be broken down into smaller atoms, e.g. authors name, which may bbe leveraged by a search engine, e.g. for  filtering
+    - truly determined by the type of content being indexed, e.g. metadata for music vs actors will have totally different components
 
 #### content and tasks
   - the users ultimate destinations, as opposed to separate components that get users to their desitinations
