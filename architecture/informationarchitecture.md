@@ -710,9 +710,57 @@ page 44
 
     - search interface
       - the means of entering and revising a search query
+      - all aspects of application searching come together in the interface
+        - what to search
+        - what to retrieve
+        - how to present the results
+      - things to consider
+        - level of searching expertise and motivation
+          - can users use specialized query languages, boolean operators, etc
+          - simple/high powered interface ?
+          - how many iterations are they willing to try
+        - type of information need
+          - what is their level of involvement with their information needs
+          - do users want good enough results or are they doing comprehensive research
+          - should results be brief, extensive
+        - type of information being searched
+          - is the information made up of structured fields or full text
+          - is it navigation, destination, or both types of pages
+          - is the content dynamic or static
+          - do results contain metadata, full of fields, or just text
+        - amount of information being searched
+          - will too many results overwelm users
+          - how many results is the right number
+        - types
+          - advanced
+            - where much of the search systems functionality is unveiled to users
+            - be careful, as few users take advantage of advanced searching capabilities
+            - have to watch the costs
+          - simple 'the box' field
+        - features
+          - supporting revision
+            - help users iteratively find better search results
+            - keep the query in the search field allowing the user to modify it without reentering the entire thing
+            - explain where the results came from
+              - make clear what content was searched, especially if your search system supports multiple search zones
+            - explain what the user did
+              - especially if the results are not satisfactory, it can be useful to
+                - state what happened by the scenes
+                - provding the user with a better understanding the situation
+                - a jumping-off point to coontinue their search
+                - restate the query
+                - describe what content was searched
+                - describe any filters that might be in place
+                - show implicit boolean or other operators
+                - show other current settings, e.g. sort order
+                - mention the number of results retrieved
+          - integrate searching with browsing
+            - look for opportunities to connect your search and browse systems  to allow users to easily jump back and forth  
+            -
       - typically with
         - information on how to improve your query
         - seleting from specific search zones
+      -
 
       - query language
         - the grammar of a search query
@@ -815,11 +863,23 @@ page 44
                 - how frequently query terms occur in the document
                 - how close together query terms occur, e.g. adjacent, same sentence, paragraph
                 - where query terms occur, e.g. title, body
+                - the popularity of the document where the query terms appear
+                  - e.g. is it linked frequently, and are the sources of its links themselves popular
               - by popularity
-                - 
-            - use cases
-              - there is a need to understand information or learn something
-              - describe retrieved docouments relevance, e.g. most -> least
+                - rank results by which ones are the most popular
+                - works best with large multisite environnments with many users
+              - by users/experts ratings
+              - by pay-for-placement
+          - clustering
+            - grouping results by some common aspec
+          - hybrid
+            - e.g. cluster by category as well as by a ranked list
+        - exporting
+          - printing, emailing, saving
+          - whole or in part
+        - use cases
+          - there is a need to understand information or learn something
+          - describe retrieved docouments relevance, e.g. most -> least
       - presenting 'similar' results for an existing search result
         - document simularity
           - when you already have a good search result on hand, converting it into the equivalent of a search query
