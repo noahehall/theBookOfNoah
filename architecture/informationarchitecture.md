@@ -430,94 +430,243 @@ page 44
     -
 ## deliverables
 ### process
-  - research
-    - start with a review of existing background materials
-    - meetings
-      - with the strategy team
-        - get a high level understanding of the
-        - what are the goals for the site
-        - who are the intended audiences
-        - what is the planned content and functionality
-        - when do you need to show results
-        - what obstacles do you anticipate
-        - goals
-        - business context
-        - existing information architecture
-        - the content
-        - intended audiences
-      - with the content management team
-        - what are the formal and informal policies regarding content inclusion
-        - is there a CMS that handles authoring and publishing
-        - do existing systems use controlled vocabularies and attributes to manage content
-        - how is content entered into the system
-        - what content does each owner handle
-        - what is the purpose of the content,
-        - what are the goals and vision behind each content area
-        - is it dynamic or static
-        - where does the content originate, is it weeded
-      - with the information technology team
-        - how can we create a metadata registry to support distributed tagging
-        - does the cms handle automated categorization of documents
-        - how about an automated browsable index generation
-        - what about personalization
-        - how flexible is the search engine
-        - will the search engine support integration of a thesaurus
-        - can we get regular access to search logs and usage statistics
-    - undertake a series of studies  to explore the information ecology
-    - research framework
-      - content
-        - users need to be able to find content before they can use it
-          - findability precedes usability
-        - document/data types, content objects, metadata, volume, existing structure
-        - heuristic evaluation
-          - an expert critique that tests a website against a formal/informal set of design guidelines
-          - should occur before a review of background materials to avoid bias
-          - try to learn from the existing site and identify
-            - whats worth keeping
-            - major problems
-            - what can be improved
-          - general guidelines
-            - the site should provide multiple ways to access the same information
-            - indexes and sitemaps should be employed to supplement the taxonomy
-            - the navigation system should provide users with a sense of context
-            - the site should consistently use language appropriate for the audience
-            - searching and browsing should be integrated and reinforce each other
-        - metadata and content analysis
-        - content mapping
-        - benchmarking
-      - context
-        - business goals, funding, politics, culture, technology human resources
-        - background research
-          -  shor tand long term goals
-          -  business plan? company politics ?
-          -  schedule and budget
-          -  intended audiences
-          -  why will people come  to the site, why will they come back
-          -  what tasks should users be able to perform
-          -  how will content be created and managed, and by whom ?
-        - presentations and meetings
-        - stakeholder interviews
-          - one of the most valuable components of the business context research
-          - ask opinion leaders open ended questions about their assessment of the current information environment and their vision for the organization
+#### research
+  - start with a review of existing background materials
+  - meetings
+    - with the strategy team
+      - get a high level understanding of the
+      - what are the goals for the site
+      - who are the intended audiences
+      - what is the planned content and functionality
+      - when do you need to show results
+      - what obstacles do you anticipate
+      - goals
+      - business context
+      - existing information architecture
+      - the content
+      - intended audiences
+    - with the content management team
+      - what are the formal and informal policies regarding content inclusion
+      - is there a CMS that handles authoring and publishing
+      - do existing systems use controlled vocabularies and attributes to manage content
+      - how is content entered into the system
+      - what content does each owner handle
+      - what is the purpose of the content,
+      - what are the goals and vision behind each content area
+      - is it dynamic or static
+      - where does the content originate, is it weeded
+    - with the information technology team
+      - how can we create a metadata registry to support distributed tagging
+      - does the cms handle automated categorization of documents
+      - how about an automated browsable index generation
+      - what about personalization
+      - how flexible is the search engine
+      - will the search engine support integration of a thesaurus
+      - can we get regular access to search logs and usage statistics
+  - undertake a series of studies  to explore the information ecology
+  - research framework
+    - content
+      - users need to be able to find content before they can use it
+        - findability precedes usability
+      - document/data types, content objects, metadata, volume, existing structure
+      - heuristic evaluation
+        - an expert critique that tests a website against a formal/informal set of design guidelines
+        - provides a top down understanding of a sites organization and navigation structures
+        - should occur before a review of background materials to avoid bias
+        - try to learn from the existing site and identify
+          - whats worth keeping
+          - major problems
+          - what can be improved
+        - general guidelines
+          - the site should provide multiple ways to access the same information
+          - indexes and sitemaps should be employed to supplement the taxonomy
+          - the navigation system should provide users with a sense of context
+          - the site should consistently use language appropriate for the audience
+          - searching and browsing should be integrated and reinforce each other
+      - metadata
+        - structural
+          - describe the information hierarchy of each object
+          - is there a title, discrete sections, etc
+        - descriptive
+          - think of all the different ways you  might describe each object
+          - topi, audience, format ?
+        - administrative
+          - desscribe how each object relates to the business context
+          - who created it, who owns it, when was it created, should it be removed?
+      - content analysis
+        - provides a bottom up understanding of content objects
+        - careful review of the documents and objects that actually exist
+          - top questions
+            - individual content objects
+              - what is this content
+              - how can I describe it
+              - what distinguishes this content from others
+              - how can I make this content findable
+            - groups of content objects
+              - look for patterns and relationships that emerge
+              - are some items closely related, while others not
+              - are there hierarchical relaionthips or potential for associative
+              - are any i
+          - format
+            - e.g. textual, applications, video/audio, etc
+          - document type
+            - e.g. product catelogs, marketing brocuhures, press releases, etc
+          - source
+            - what are the sources of content
+          - subject
+            - does the site have a topical taxonomy
+            - try to find a publicly available classification scheme/thesaurus for the industry
+        - informal surveys or detailed audits
+      - content mapping
+        - a visual representation of existing information environment
+        - goal
+          - understand the structure, organization and location of existing content
+          - spark ideas about how to provide improved access
+        - defines
+          - content sources
+          - content model
+          - content types
+          - content templates
+          - content ownership
+          - publishing process
+          - relationships between content categories
+          - navigation pathways within content areas
           -
-        - technology assessment
-          - understand whats in place, whats in process, and whose available to help
-          - perform a gap analysis
-            - identifying the disconnects between business goals, user needs and the practical limitations of the existing technology infrastructure
-      - users
-        - audiences, tasks, needs, information seeking behavior, experience, vocabularies
-        - search log and clickstream analysis
-        - use cases and personas
-        - contextual inquiry
-        - user interviews
-        - user testing
-  - strategy
-    - top down perspective
-      - defines the highest two or three levels of the sites organization and navigation structures
-    - bottom up perspective
-      - suggests candidate document types and rough metadata schema
-      - provides a high level framework for the information architecture
-        - establishes a direction and scope that will guide the project through implementation
+      - benchmarking
+        - the systematic identification, evaluation and comparison of information architecture features of web sites
+        - competitive
+          - comparisons between different web sites
+          - use cases
+            - generates a laundry list of IA features, bring lots of ideas to the table
+            - encourages transition from broad genrealizations to specific actional definitions
+            - challenges embedded assumptions  (we should be like amazon)
+            - avoid copying the wrong features for the wrong reasons
+            - establishes current position with respect to competitors and creates a point of reference against which to measuure speed of improvement
+        - before and after
+          - comparisons between different versions of a single site
+          - useful in answering return on investment questions
+            - what was the reduction in average time finding core documents
+            - has the redesign improved customers ability to find products
+            - what aspects of the redesign had a nagative impact on user efficiency or effectiveness
+          - use cases
+            - identifes and prioritizes information architecture features in the existing site
+            - encourages transition from broad generalizations (the nav sucks) to specific actionable definitions (we need to change X, Y, Z)
+            - creates a point of reference against which you can measure improvements
+        - quantitative
+          - number of seconds to perform a task using competing sites
+          - interesting features of competing sites
+        - qualitative
+    - context
+      - business goals, funding, politics, culture, technology human resources
+      - background research
+        -  shor tand long term goals
+        -  business plan? company politics ?
+        -  schedule and budget
+        -  intended audiences
+        -  why will people come  to the site, why will they come back
+        -  what tasks should users be able to perform
+        -  how will content be created and managed, and by whom ?
+      - presentations and meetings
+      - stakeholder interviews
+        - one of the most valuable components of the business context research
+        - ask opinion leaders open ended questions about their assessment of the current information environment and their vision for the organization
+        -
+      - technology assessment
+        - understand whats in place, whats in process, and whose available to help
+        - perform a gap analysis
+          - identifying the disconnects between business goals, user needs and the practical limitations of the existing technology infrastructure
+    - users
+      - audiences, tasks, needs, information seeking behavior, experience, vocabularies
+      - search log and clickstream analysis
+        - page information, hits per day, whats popular
+        - visitor information, who they are, where they come from, etc
+        - search logs
+          - identify what users are looking
+          - words and phrases they are using
+          - will sensitize you to the way users really search
+      - use cases and personas
+        - user scenarios
+          - tool for helping people understand how different kinds of users, each with distinct needs and behaviors, will navigate and experience the site
+      - contextual inquiry
+      - user interviews
+      - user testing
+        - usability engineering
+        - information needs analysis
+          - simple/complex tasks - can you use this site/feature
+          - known item searches - find a single thing
+          - exhaustive search - find everything
+          - topical/subject-oriented questions, e.g. find something on X
+          -
+        - ask a user
+      - all sorts of user research methods
+      - goal is to learn about your users
+        - their needs
+        - priorities
+        - mental models
+        - information seeking behavior
+#### strategy
+  - IA strategy
+    - high level conceptual framework for structuring and organizing a website
+    - provides a firm sense of direction and scope necessary to proceed into the design and implementation phases
+  - IA strategy process
+    - think - convert research data to creative ideas
+    - articulate - conceptual diagrams, metaphors, stories, blueprints, wireframes, etc
+    - communicate - present, react, brainstorm
+    - test - prototypes
+  - IA strategy deliverables
+    - IA strategy report
+      - the most detailed and comprehensive articulation of IA
+      - big  and vague ideas must be broken down into components and eplained so that all involved can understand their intention and implications
+      - 
+    - IA strategy presentation
+    - project plan for design
+  - top down perspective
+    - defines the highest two or three levels of the sites organization and navigation structures
+  - bottom up perspective
+    - suggests candidate document types and rough metadata schema
+    - provides a high level framework for the information architecture
+      - establishes a direction and scope that will guide the project through implementation
+  - recommendations
+    - IA administration
+      - look ahead to the end game
+      - create a realistic strategy for developing and maintaing the information architecture
+        - centralization vs decentralization
+        - content ownership
+    - technology integration
+      - opportunities to leverage existing tools
+      - identify needs for additional technologies
+      - basics
+        - search engines
+        - content management
+        - auto classification
+        - collaborative filtering
+        - ppersonalization
+    - top down or bottom up emphasis
+      - bottom up
+        - if there is already a solid top down IA or strong interaction design team
+    - organization and labeling systems (top down)
+      - defining the major organization schemes for the site
+        - e.g. users must be able to navigate by product, task and customer category
+      - identifying the dominant organiztion scheme to search as the primary hierarchy
+    - document type identification (bottom up)
+      - idetnifying a suite of document and object types in coordination with content atuhoring and management teams
+        - e.g. articles, reports, white papers, etc
+    - metadata field definition
+      - the definition of administrative, structural and descriptive metadata fields
+      - globally
+        - applied to every document
+      - locally
+        - applied to documents within a particular subsite
+      - specifically
+        - only for a particular document type
+    - navigation system design
+      - explain how the integrated and supplemental navigation systems will leverage the top down and bottom up strategies
+        - search zones may allow users to leverage the top down product hierarchy
+        - fielded searching may allow users to search for a particular thing
+      - understand implications for customization and personalization capabilities
+
+
+
   - design
     - shape the high level strategy into an information architecture
     - detailed blue prints
@@ -606,6 +755,16 @@ page 44
           - commonly used to help users understand the new by relating it ot he familiar
           - can help users understand the content and function of an interface intuitively
           - useful while brainstorming
+          - organizational metaphors
+            - leverage familiarity with one systems organization to convey quick undersanding of a new systems organization
+            - e.g. a site about cars, can metaphorically be described as physical car dealership
+              - new cars, users cars, repairs and services, parts and supplies, etc
+          - functional metaphors
+            - make a connection between the tasks you can perform in a traditional environment and those you can perform in the new environment
+            - e.g. the things you can do at a library are likely the same tasks you want to do on a library web site
+          - visual metaphors
+            - leverage familiar graphic elements such as images, icons and colors to create a connection to the new elements
+            - e.g. an online phonebook may take design elements from the yellow pages
       - hybrids
         - including elements of multiple organization schemes into a single organization scheme
     - organization structures
