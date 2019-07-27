@@ -429,6 +429,111 @@ page 44
     - pull-down menus
     -
 ## deliverables
+### process
+  - research
+    - start with a review of existing background materials
+    - meetings
+      - with the strategy team
+        - get a high level understanding of the
+        - what are the goals for the site
+        - who are the intended audiences
+        - what is the planned content and functionality
+        - when do you need to show results
+        - what obstacles do you anticipate
+        - goals
+        - business context
+        - existing information architecture
+        - the content
+        - intended audiences
+      - with the content management team
+        - what are the formal and informal policies regarding content inclusion
+        - is there a CMS that handles authoring and publishing
+        - do existing systems use controlled vocabularies and attributes to manage content
+        - how is content entered into the system
+        - what content does each owner handle
+        - what is the purpose of the content,
+        - what are the goals and vision behind each content area
+        - is it dynamic or static
+        - where does the content originate, is it weeded
+      - with the information technology team
+        - how can we create a metadata registry to support distributed tagging
+        - does the cms handle automated categorization of documents
+        - how about an automated browsable index generation
+        - what about personalization
+        - how flexible is the search engine
+        - will the search engine support integration of a thesaurus
+        - can we get regular access to search logs and usage statistics
+    - undertake a series of studies  to explore the information ecology
+    - research framework
+      - content
+        - users need to be able to find content before they can use it
+          - findability precedes usability
+        - document/data types, content objects, metadata, volume, existing structure
+        - heuristic evaluation
+          - an expert critique that tests a website against a formal/informal set of design guidelines
+          - should occur before a review of background materials to avoid bias
+          - try to learn from the existing site and identify
+            - whats worth keeping
+            - major problems
+            - what can be improved
+          - general guidelines
+            - the site should provide multiple ways to access the same information
+            - indexes and sitemaps should be employed to supplement the taxonomy
+            - the navigation system should provide users with a sense of context
+            - the site should consistently use language appropriate for the audience
+            - searching and browsing should be integrated and reinforce each other
+        - metadata and content analysis
+        - content mapping
+        - benchmarking
+      - context
+        - business goals, funding, politics, culture, technology human resources
+        - background research
+          -  shor tand long term goals
+          -  business plan? company politics ?
+          -  schedule and budget
+          -  intended audiences
+          -  why will people come  to the site, why will they come back
+          -  what tasks should users be able to perform
+          -  how will content be created and managed, and by whom ?
+        - presentations and meetings
+        - stakeholder interviews
+          - one of the most valuable components of the business context research
+          - ask opinion leaders open ended questions about their assessment of the current information environment and their vision for the organization
+          -
+        - technology assessment
+          - understand whats in place, whats in process, and whose available to help
+          - perform a gap analysis
+            - identifying the disconnects between business goals, user needs and the practical limitations of the existing technology infrastructure
+      - users
+        - audiences, tasks, needs, information seeking behavior, experience, vocabularies
+        - search log and clickstream analysis
+        - use cases and personas
+        - contextual inquiry
+        - user interviews
+        - user testing
+  - strategy
+    - top down perspective
+      - defines the highest two or three levels of the sites organization and navigation structures
+    - bottom up perspective
+      - suggests candidate document types and rough metadata schema
+      - provides a high level framework for the information architecture
+        - establishes a direction and scope that will guide the project through implementation
+  - design
+    - shape the high level strategy into an information architecture
+    - detailed blue prints
+    - wireframes
+    - metadata schema
+  - implementation
+    - designs are put to the test as the site is built, tested and launched
+    - organizing and tagging documents,
+    - testing and troubhleshooting
+    - developing documentation and training programs to ensure the IA can be maintained effectively over timme
+  - administration
+    - continuous evaluation and improvement of the sites IA
+    - tagging new documents and weeding out old ones
+    - monitoring site usage and user feedback
+    - identifying opportunities to improve teh site through major/minor redesigns
+    -
 ### major components
   - navigation vs destination
     - navigation pages
@@ -841,46 +946,64 @@ page 44
         - descriptive metadata
           - e.g. summary, keywords, content abstracts
           - get a sense of what the content is about
-        - semantic relationships
-          - describe the relationship a users query terms has with other terms in the controlled vocabulary
-            - preferred, variant, broader, narrower, and associative links can all return different results
-            - potentially can surface these options in the search interface
-          - equivalence relationship
-            - focused on synonym management
-          - hierarchical relationship
-            - enables the classification of preferred terms into categories and subcategories
-          - associative relationships
-            - provides for meaningful connections that arent handled by the hierarchical or equivalence relationships
-        - preferred term
-          - aka accepted term, acceptable value, subject heading or descriptor
-          - all relationships are defined with respect to the preferred term
-        - variant term
-          - aka entry terms or non preferred terms
-          - equivalent to or loosely synonymous with the preferred term
-        - broader term
-          - the parent of the preferred term
-          - one level higher in the hierarchy
-        - narrower term
-          - child of the preferred term
-          - one level lower in the hierarchy
-        - related term
-          - connected to the preferred term through the associative relationship
-          - often articulated through the 'see also' links
-            - e.g. tylonel see headache
-        - use term
-          - a tool for indexers and users
-          - variant term use preferred term
-          - e.g. tilonel see Tylenol
-        - used for
-          - indicates the reciprocal relatioship of preferred term and variant terms
-          - used to show the full list of variants on the preferred terms record
-        - scope note
-          - a specific type of definiton of the preferred term
-          - used to deliberately restrict the meaning of that term in order to rule out ambiguety as much as possible
+
+
       - controlled vocabulary
         - any defined subset of natural language,
           - a list of equivalent terms in the form of a synonym ring
           - a list of preferred terms in the form of an authority file
+        - components
+          - preferred term
+            - aka accepted term, acceptable value, subject heading or descriptor
+            - all relationships are defined with respect to the preferred term
+            - term form
+              - things to consider
+                - grammatical form
+                  - use nouns for preferred terms
+                  - users are better at understanding and remembering nounse than verbs or adjectives
+                    - however there are lots of good reasons to use verbs, especially with task-oriented words
+                - spelling
+                  - select a specific dictionary/glossary/use your inhouse style
+                  - consider the most common spelling employed by your users
+                - singular/plural form?
+                  - use the plural form  of 'countable nounse', e.g. cars, roads maps
+                  - use the singular form for conceptual nouns, e.g. math, biology
+                - abbreviations and acronyms
+                  - use whatever is popular
+                  -
+          - variant term
+            - aka entry terms or non preferred terms
+            - equivalent to or loosely synonymous with the preferred term
+          - broader term
+            - the parent of the preferred term
+            - one level higher in the hierarchy
+          - narrower term
+            - child of the preferred term
+            - one level lower in the hierarchy
+          - related term
+            - connected to the preferred term through the associative relationship
+            - often articulated through the 'see also' links
+              - e.g. tylonel see headache
+          - use term
+            - a tool for indexers and users
+            - variant term use preferred term
+            - e.g. tilonel see Tylenol
+          - used for
+            - indicates the reciprocal relatioship of preferred term and variant terms
+            - used to show the full list of variants on the preferred terms record
+          - term specificity
+            - e.g. should 'knowledge management software' be represented as one, two or three terms
+            - as your vocabulary grows
+              - it becomes increasingly necessary to use compound terms to increase precision
+          - term definition
+            - often suggest multiple meanings
+            - e.g. cells (biology? electric? prison?)
+          - scope note
+            - a specific type of definiton of the preferred term
+            - used to deliberately restrict the meaning of that term to one concept in order to rule out ambiguety as much as possible
+            - parenthetical term qualifiers
+              - provide a way to manage homographs
+            - can be used in searching/results dispplayed to assist users
         - types (Simple to complex)
           - synonym rings
             - equivalent type relatioonship between terms
@@ -891,6 +1014,7 @@ page 44
             - be careful
               - if the query term expansion operates behind the scenes, users can be confused by results that dont actually include their keywords
               - may result in less relevant results
+
           - authority files
             - equivalence + hierarhical relationship between terms
             - a synonym ring with a list of preferred terms or acceptable values
@@ -912,7 +1036,21 @@ page 44
             - use cases
               - a frontend, browsable hierarchy thats a visible, integral part of the UI
               - a backend tool used by information architects, authors and indexers for organizing and tagging documents
-              -
+            - faceted classification
+              - based on the fact documents and objects can have multiple dimensions/facets and thus require multiple hierarchies
+                - original dimensions
+                  - personality
+                  - matter
+                  - energy
+                  - space
+                  - time
+                - information architecture dimensions
+                  - topic
+                  - product
+                  - document type
+                  - audience
+                  - geograpy
+                  - price
           - thesauri
             - associative relationships
             - semantic network of concepts, connecting words to their synonyms, homonyms, antonyms, broader and narrower and related terms
@@ -920,7 +1058,44 @@ page 44
             - model associative relationships between concepts (e.g. see also, see related)
               - incorporates all the relationships and capabilities of the simpler forms
             - integrated within a website to improve navigation and retrieval
-            - can helpp bridge the gap between past and present
+              - can helpp bridge the gap between past and present
+              - allow users to browse/navigate by equivalence, hierarchical and associative relationships
+              - terms (preferred/variant) can be used as predefined or canned queries to be run against the full text index
+            - semantic relationships
+              - describe the relationship a users query terms has with other terms in the controlled vocabulary
+                - preferred, variant, broader, narrower, and associative links can all return different results
+                - potentially can surface these options in the search interface
+              - equivalence relationship
+                - focused on synonym management
+                - used to connect preferred terms to their variants
+                - the goal is to group terms defined as equivalent for the purposes of retrieval
+                  - synonyms, near synonyms, acronyms, abbreviations, lexical variants, common misspellings, etc
+              - hierarchical relationship
+                - enables the classification of preferred terms into categories and subcategories
+                - divides up the information space into cateogires and subcategories, relating broader and narrower concepts throught he familiar parent-child relationship
+                - types
+                  - strict/pure
+                    - each term appears in one and only one place
+                    - e.g. a biological taxoxnomy, each species fits into one branch of the tree of life
+                  - polyhierarchy
+                    - a term can appear in more than one place in the hierarchy, as well as be part of other compound terms
+                    - often the case with large information systems
+                  - generic
+                    - traditional class-species relationship we draw from biological taxonomies
+                    - species B is a member of Class A
+                    - e.g. bird NT magpie
+                  - whole-part
+                    - B is part of A
+                    - e.g. Foot NT big toe
+                  - instance
+                    - B is an instance/example of A
+                    - e.g. california NT state
+              - associative relationships
+                - provides for meaningful connections that arent handled by the hierarchical or equivalence relationships
+                - usually developed after youve made progress on the other two types of semantic relationships
+                - defined as strongly implied semantic connections  that arent captured within the equivalence or hierarchical relationships
+                - e.g. hammer RT nail
+                -
             - types
               - classic
                 - used at the point of indexing and at the point of searching
