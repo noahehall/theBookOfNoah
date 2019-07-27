@@ -430,6 +430,10 @@ page 44
     -
 ## deliverables
 ### process
+  - during research and strategy
+    - focus on the top down approach of defining an information structure that will accommodate the mission, vision, audiences, and content of the site
+  - during design and implementation
+    - complete the bottom up process of collecting and analyzing content
 #### research
   - start with a review of existing background materials
   - meetings
@@ -604,6 +608,7 @@ page 44
         - priorities
         - mental models
         - information seeking behavior
+
 #### strategy
   - IA strategy
     - high level conceptual framework for structuring and organizing a website
@@ -617,9 +622,37 @@ page 44
     - IA strategy report
       - the most detailed and comprehensive articulation of IA
       - big  and vague ideas must be broken down into components and eplained so that all involved can understand their intention and implications
-      - 
+      - components
+        - executive summary
+        - audiences, mission and vision for the site
+        - lessons learned
+          - what did you see, what did you learn, how does it impact the site
+        - architectural strategies and approaches
+          - e.g. local hub strategy  and distributed content
+          - conceptual blueprint of the strategy
+        - wireframes
+        - content management
+          - provide a reality check by discussing how the IA recommendations will impact the content management infrastructure
+          - e.g.
+            - rules
+              - the processes whereby the content i smanaged
+              - e.g. workflows to create, publish and maintain content
+            - roles
+              - people that perform the content management process
+              - follow and help create the processes and guidelines
+            - resources
+              - include the content itself in its various forms of creation, modification or deletion
+              - repository for holding static content and dynamic data
+            - recommendations
+              - how to improve the overall content management process
     - IA strategy presentation
     - project plan for design
+      - for each recommendation
+        - how will you accomplish it
+        - how long will it take
+        - who will do it
+        - what kinds of deliverables will be required
+        - what are the dependencies
   - top down perspective
     - defines the highest two or three levels of the sites organization and navigation structures
   - bottom up perspective
@@ -667,16 +700,47 @@ page 44
 
 
 
-  - design
-    - shape the high level strategy into an information architecture
-    - detailed blue prints
-    - wireframes
-    - metadata schema
+#### design
+  - shape the high level strategy into an information architecture
+  - blue prints
+    - show the relationship between pages and other content components
+    - can be used to portray organization, navigation and labeling systems
+    - often referred to as site maps
+    - help determines where content should go and how it should be navigated within the context of a site, subsite or collection of content
+    - types
+      - big pictures, 100000 foot view
+      - site navigation
+      - content filtering process
+      - task-oriented feature explanations
+      - user engagement evolving through deeper user of the site type of blueprint
+      - detailed
+        - map out the entire site so that the production team can implement your plans to the letter without requiring involvement during production
+          - all pages
+          - all features
+          - all organization and labeing, and navigation systems
+  - wireframes
+    - depict how an individual page or template should look from an architectural perspective
+      - describe the content and IA to be included, however, confined toa  2d space
+    - stand at the intersection of the sites IA and its visual and information design
+  - metadata schema
+  - best practices
+    - provide multiple views of the IA
+      - a single diagram will always fail
+      - the combination of multiple diagrams is best
+      - content components
+        - what constitutes a unit of content and how those components should be grouped and sequenced
+      - connections between content components
+        - how components are linked to enable navigating between them
+    - develop each view with specific audiences in mind
+      - upstream stakeholders/executives
+      - downstream designers and developers
+
   - implementation
     - designs are put to the test as the site is built, tested and launched
     - organizing and tagging documents,
     - testing and troubhleshooting
     - developing documentation and training programs to ensure the IA can be maintained effectively over timme
+
   - administration
     - continuous evaluation and improvement of the sites IA
     - tagging new documents and weeding out old ones
