@@ -832,6 +832,7 @@ page 44
     - content
       - metadata
         - definitional data that provides information about/documentation of other data managed within an application
+          - a lens through which you can view the network of relationships between IA components
         - used to describe documents, pages, images, software, and other content objects for the purposes of improved navigation and retrieval
         - each search result can be broken down into smaller atoms, e.g. authors name, which may be leveraged by a search engine, e.g. for  filtering
         - representational metadata
@@ -840,6 +841,42 @@ page 44
         - descriptive metadata
           - e.g. summary, keywords, content abstracts
           - get a sense of what the content is about
+        - semantic relationships
+          - describe the relationship a users query terms has with other terms in the controlled vocabulary
+            - preferred, variant, broader, narrower, and associative links can all return different results
+            - potentially can surface these options in the search interface
+          - equivalence relationship
+            - focused on synonym management
+          - hierarchical relationship
+            - enables the classification of preferred terms into categories and subcategories
+          - associative relationships
+            - provides for meaningful connections that arent handled by the hierarchical or equivalence relationships
+        - preferred term
+          - aka accepted term, acceptable value, subject heading or descriptor
+          - all relationships are defined with respect to the preferred term
+        - variant term
+          - aka entry terms or non preferred terms
+          - equivalent to or loosely synonymous with the preferred term
+        - broader term
+          - the parent of the preferred term
+          - one level higher in the hierarchy
+        - narrower term
+          - child of the preferred term
+          - one level lower in the hierarchy
+        - related term
+          - connected to the preferred term through the associative relationship
+          - often articulated through the 'see also' links
+            - e.g. tylonel see headache
+        - use term
+          - a tool for indexers and users
+          - variant term use preferred term
+          - e.g. tilonel see Tylenol
+        - used for
+          - indicates the reciprocal relatioship of preferred term and variant terms
+          - used to show the full list of variants on the preferred terms record
+        - scope note
+          - a specific type of definiton of the preferred term
+          - used to deliberately restrict the meaning of that term in order to rule out ambiguety as much as possible
       - controlled vocabulary
         - any defined subset of natural language,
           - a list of equivalent terms in the form of a synonym ring
@@ -855,21 +892,63 @@ page 44
               - if the query term expansion operates behind the scenes, users can be confused by results that dont actually include their keywords
               - may result in less relevant results
           - authority files
-            - equivalence + hierarhical
-            - a list of preferred terms or acceptable values
-            - does not include variants or synonyms
-            - useed by libraries and government agencies to define the proper names for a set of entities within a llimited domain 
+            - equivalence + hierarhical relationship between terms
+            - a synonym ring with a list of preferred terms or acceptable values
+              - make sure one of the term variants are labaled as the preferred term among the variants/synonyms
+              - e.g. a list of state names, and their abbreviations, and common mispellings, will all point to the preferred variant
+            - used by
+              - libraries and government agencies to define the proper names for a set of entities within a limited domain
+              - enabling content authors and indexers to use the approved terms efficiently and ocnsistently
+              - the preferred terms
+                - can serve as the unique identifier for each collection of equivalent terms
+                - allow for more efficient addition, deltion and modification of variant terms
+                - important as the user switches from searching to browsing mode
+                  - when designing taxonomies, navigation bars, and indexes, aways use the preferred terms
+              -
           - classification scheme
-            - hierarchical + associative
-            - define hierarchical relationships between terms (e.g. broard/narrower)
+            - hierarchical + associative relationship between terms
+            - aka taxonomy
+            - define hierarchical relationships between preferred terms
+            - use cases
+              - a frontend, browsable hierarchy thats a visible, integral part of the UI
+              - a backend tool used by information architects, authors and indexers for organizing and tagging documents
+              -
           - thesauri
             - associative relationships
+            - semantic network of concepts, connecting words to their synonyms, homonyms, antonyms, broader and narrower and related terms
+              - a controlled vocabulary in which equivalence, hierarchical, and associative relationships are identified for the purposes of improved retrieval
             - model associative relationships between concepts (e.g. see also, see related)
-            - incorporates all the relationships and capabilities oof the simpler forms
-            -
-        - a lens through which you can view the network of relationships between IA components
+              - incorporates all the relationships and capabilities of the simpler forms
+            - integrated within a website to improve navigation and retrieval
+            - can helpp bridge the gap between past and present
+            - types
+              - classic
+                - used at the point of indexing and at the point of searching
+                - indexers use the thesaurus to map  v ariant terms to preferred terms when performing document level indexing
+                - searchers use the thesaurus for retrieval, whether or not there awre of the role it plays in their search experience
+                - query terms are matched against the rich vocabulary of the thesaurus, enabling synonym management, hierarchical browsering and associative linking
+                - this is the full bodied, fully integrated thesaurus your usee to
+              - indexing
+                - able to perform controlled vocabulary indexing
+                  - but not able to work at the point of searching and mapping users variant terms to preferred terms
+                - structures the indexing process
+                  - promoting consistency and efficiency
+                - build browsable indexes of preferred terms,
+                  - enabling users to find all documents about a paritcular subject or product through a single point of access
+                - useful for captive audiences (e.g. no where else to go)
+                  - users can be expected to learn the preferred terms over time
+              - searching
+                - leverages a controlled vocabulary at the poiint of searching
+                  - but not at the point of indexing
+                - maps users search query terms to the controlled vocabulary before executing the query against  the full text index
+                - perform equivalence term explosion
+                - posting down
+                  - explode down the hierarchy to include all narrower terms
+                -
+
+        -
       - thesaurus
-        - can helpp bridge the gap between past and present
+        -
         -
       -
 
