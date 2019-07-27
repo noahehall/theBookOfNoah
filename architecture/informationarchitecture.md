@@ -40,6 +40,8 @@ page 44
   - metadata
     - terms used to describe and represent content objects such as documents, people, processes and organizatinons
   - websites
+    - a collection of interconnected systems with copmlex dependencies
+      - a single link can simultaneously be part of the sites structure, organization, labeling, navigation and searching systems
     - components
       - main page, navigation bar, links, content pages, sitemap, site index, search etc
     - dimensions
@@ -226,7 +228,7 @@ page 44
     - is there a controlled vocabulary
     - are users permitted to supply their own folksonomic tags to content
     - heavily impacts both information retrieval and content management
-
+    -
 
 ### context
   - all websites and intranets exist within a particular business/organizational context
@@ -755,7 +757,7 @@ page 44
                 - show other current settings, e.g. sort order
                 - mention the number of results retrieved
           - integrate searching with browsing
-            - look for opportunities to connect your search and browse systems  to allow users to easily jump back and forth  
+            - look for opportunities to connect your search and browse systems  to allow users to easily jump back and forth
             -
       - typically with
         - information on how to improve your query
@@ -781,7 +783,7 @@ page 44
           - examine the syntactic nature of a query and use that knowledge to narrow retrieval
             - e.g. is it a 'how to' question or a 'who is' question
         - controlled vocabularies/thesauri
-          - expand teh semantic nature of a query by automatically including synonyms within the query
+          - expand the semantic nature of a query by automatically including synonyms within the query
         - concept searching
 
       - search zones
@@ -811,10 +813,14 @@ page 44
           - some algorithms return many results of varying relevance, while some return fewer higher quality results
           - recall
             - `# relevant documents retrieved / # relevant documents in collection`
+            - the proportion of relevant ddocuments in the result set compared to all the relevant documents in the system
+              - i.e. 'show me ALL the relevant documents'
             - high recall is generally useful for learning everything about a topic
             - e.g. in research or 'ego surfing'
           - precision
             - `# relevant documents retrieved / # total documents in collection`
+            - the relevance of documents within a given result set
+              - i.e. 'show me ONLY the relevant documents'
             - when it doesnt matter how mmany results exist as long as you get a good enough answer in the first few results
         - pattern-matching algorithms
           - compare the users query with an index (typically) of the full text content looking for the same string of text
@@ -825,6 +831,8 @@ page 44
 
     - content
       - metadata
+        - definitional data that provides information about/documentation of other data managed within an application
+        - used to describe documents, pages, images, software, and other content objects for the purposes of improved navigation and retrieval
         - each search result can be broken down into smaller atoms, e.g. authors name, which may be leveraged by a search engine, e.g. for  filtering
         - representational metadata
           - quickly distinguish result types
@@ -833,7 +841,38 @@ page 44
           - e.g. summary, keywords, content abstracts
           - get a sense of what the content is about
       - controlled vocabulary
+        - any defined subset of natural language,
+          - a list of equivalent terms in the form of a synonym ring
+          - a list of preferred terms in the form of an authority file
+        - types (Simple to complex)
+          - synonym rings
+            - equivalent type relatioonship between terms
+            - connects a set of words that are defined as equivalent for the purposes of retrieval
+            - useful in situations where different people will use different queries in search of the same thing
+            - e.g. information about household products may include
+              - cuisinart, cuizinart, food processor, blender, kitchen aid, etc
+            - be careful
+              - if the query term expansion operates behind the scenes, users can be confused by results that dont actually include their keywords
+              - may result in less relevant results
+          - authority files
+            - equivalence + hierarhical
+            - a list of preferred terms or acceptable values
+            - does not include variants or synonyms
+            - useed by libraries and government agencies to define the proper names for a set of entities within a llimited domain 
+          - classification scheme
+            - hierarchical + associative
+            - define hierarchical relationships between terms (e.g. broard/narrower)
+          - thesauri
+            - associative relationships
+            - model associative relationships between concepts (e.g. see also, see related)
+            - incorporates all the relationships and capabilities oof the simpler forms
+            -
+        - a lens through which you can view the network of relationships between IA components
+      - thesaurus
+        - can helpp bridge the gap between past and present
         -
+      -
+
 
     - results
       - interface design
