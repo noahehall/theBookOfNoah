@@ -48,7 +48,7 @@
       - *the set of activities that take place in a content publishing process*
 
 ### Use Case Diagram
-  - used to analyze the system’s high-level functional requirements that the system fulfillsworkflows
+  - used to analyze the system’s high-level functional requirements that the system fulfills
     - ![use case diagram](./bus_proc_mod_pics/Basic-Use-Case-Diagram-Page-1.jpeg)
       - *depicts the use case UML diagram for an inventory management system. In this case, we have the owner, the supplier, the manager, the inventory clerk and the inventory inspector.*
 
