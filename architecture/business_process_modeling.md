@@ -29,26 +29,26 @@
     - Object Diagram
     - Component Diagram
     - Composite Structure Diagram
-    - Deployment DIagram
+    - Deployment Diagram
     - Package DIagram
     - Profile Diagram
 
 ## approaches
-  1. Forward Design:  The design of the sketch is done before coding the application. This is done to get a better view of the system or workflow that you are trying to create
+  1. Forward Design:  The design sketch is done before coding the application. This is done to get a better view of the system or workflow that you are trying to create
   2. Backward Design: After writing the code, the UML diagrams are drawn as a form of documentation for the different activities, roles, actors, and workflows.
 
 # Examples
 ## Behavior Diagrams
-### Acitivity Diagram
+### Activity Diagram
   - describe the flow of different activities and actions. These can be both sequential and in parallel.
   - describe the objects used, consumed or produced by an activity and the relationship between the different activities
-  - A process is not focused on what is being produced but rather on the set of activities that lead to one the other and how they are interconnected, with a clear beginning and end.
+  - A process is not focused on what is being produced but rather on the set of activities that lead to one another and how they are interconnected, with a clear beginning and end.
   - can be used as a replacement for flow charts; provide both a more standardized way of modeling workflows as well as a wider range of features to improve readability and efficacy.
-    - ![activity diagram](./bus_proc_mod_pics/Activity-Diagram.jpeg)
+    - ![activity diagram](./busother_proc_mod_pics/Activity-Diagram.jpeg)
       - *the set of activities that take place in a content publishing process*
 
 ### Use Case Diagram
-  - used to analyze the system’s high-level functional requirements that the system fulfills
+  - used to analyze the system’s high-level functional requirements that the system fulfillsworkflows
     - ![use case diagram](./bus_proc_mod_pics/Basic-Use-Case-Diagram-Page-1.jpeg)
       - *depicts the use case UML diagram for an inventory management system. In this case, we have the owner, the supplier, the manager, the inventory clerk and the inventory inspector.*
 
