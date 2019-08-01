@@ -21,6 +21,26 @@ page 44
     - thesauri online
     - controlled vocabularies (search for it)
     - web thesaurus compendium
+  - automated categorization tools
+    - aka automated classification, utomated indexing, automated tagging, clustering
+    - software that uses human-defined rules or pattern-matching algorithms to automatically assign controlled vocabulary metadata to documents
+  - search engines
+    - software that provides full text indexing and searching capabilities
+  - thesaurus management tools
+    - tools that provide support for the development aand management of controlled vocabularies and thesauri
+  - portal/enterprise knowledge platform
+    - tools that provide completely integrated enterprise portal solutions
+  - content management sytems
+    - software that manages workflow from content authoring to editing to publishing
+  - analytics
+    - software that analyzes the usage and statistical performance of web sites, providing valuable metrics about user b ehavior aand characteristics
+  - diagramming software
+    - visual communication software that information architects use to create diagrams, charts, wireframes and blueprints
+  - prototyping tools
+    - web development software that enables you to create ineractive wireframes and clickable prototypes
+  - user research
+    - software that supports user research, including online card sorting and remote usability testing
+  -
 
 # terminology
   - information architecture
@@ -29,6 +49,18 @@ page 44
     - the art and science of shaping information products and experiences to support usability and finability
     - an emerging discipline and community of practice focused on bringing principles of designn and architecture to the digital landscape
     - our understanding of the world is largely determined by our ability to organize information
+    - top down/classical IA
+      - perscriptive, planned, stable, centralized
+    - bottom up/modern IA
+      - descriptive, emergent, adaptive, distributed
+      - 
+  - operational effectiveness
+    - performing similar activities better than rivals perform them
+    - includes but is not limited to efficiency
+  - strategy
+    - the creation of a unique and valuable position, involing a different set of activities
+  - activity system  map
+    - tool for examing and strengthening strategic fit
     -
 
   - information
@@ -434,6 +466,30 @@ page 44
     - focus on the top down approach of defining an information structure that will accommodate the mission, vision, audiences, and content of the site
   - during design and implementation
     - complete the bottom up process of collecting and analyzing content
+  - destructive creation
+    - process for iteravitely creating something
+    - strategy -> design -> implementation -> maintenance -> repeat
+  - fast and slow layers
+    - breaks down IA components based on their willingness to change/be modified
+    - IA breakdown, fast to slow
+      - content, services, interface
+        - core to the users mentl models
+      - adaptive finding tools
+        - e.g. project specific guides, indexes and collaborative filtering devices will benefit from continuous adaptation
+      - controlled vocabulary
+        - controlled vocabulary terms will evolve with product and service offerings and with the broader language of business and technology
+      - enabling technologies
+        - e.g. content management systems, search engines and portal software
+      - embedded navigation systems
+        - composed of browsable taxonomies, indexes and the search system
+        - define at  fundamental level how users are aable to serch and browse
+      - faceted classification schemes
+    - slow layers
+      - provide stability
+      - facets and hierarchies
+      - constitute the foundation of the enterprise IA infrastructure
+    - fast layers
+      - drive innovation
 #### research
   - start with a review of existing background materials
   - meetings
@@ -521,21 +577,40 @@ page 44
             - does the site have a topical taxonomy
             - try to find a publicly available classification scheme/thesaurus for the industry
         - informal surveys or detailed audits
+
       - content mapping
         - a visual representation of existing information environment
         - goal
           - understand the structure, organization and location of existing content
           - spark ideas about how to provide improved access
+          - involves breaking down or combining existing content into content chunks that are useful for inclusion in your site
+          -
         - defines
+          - content chunks
+            - the most finely grained portion of content that merits or requires individual treatment
+            - ask the following questions for each of content
+              - should this content be divided into smaller chunks that users might want to access separately
+              - what is the smallest section of content that needs to be individually indexed
+              - will this content need tob e repurposed across multiple documents or as part of multiple proesses
           - content sources
           - content model
+            - micro information architectures made up of small chunks of interconnected content
+              - helps provide an IA for small chunks of related content
+              - useful for displaying multiple items in a similar fashion
+              - once the content is displayed in similar fashion you can also link to them from each other
+                - e.g. if your viewing a pair of pants, you can have a 'view more like this' link
+            - support the critical missing piece in so many sites
+              - contextual navigation that works deep within the site
+            - primary deliverables
+              - a useful IA delierable that informs the design of contextual navigation deep within a site
+              - content modeling forces you to determmine which content is the most important content to model
+              - forces you to choose which of the many metadata attributes are the ones that will make your content model operational
           - content types
           - content templates
           - content ownership
           - publishing process
           - relationships between content categories
           - navigation pathways within content areas
-          -
       - benchmarking
         - the systematic identification, evaluation and comparison of information architecture features of web sites
         - competitive
@@ -570,7 +645,11 @@ page 44
         -  why will people come  to the site, why will they come back
         -  what tasks should users be able to perform
         -  how will content be created and managed, and by whom ?
-      - presentations and meetings
+      - presentations
+        - target audiences
+          - a single presentation for the strategy team
+          - distinct presentations to varius departments to awchieve organization wide understanding and buyin
+            - you have to put on your sales hat for this one
       - stakeholder interviews
         - one of the most valuable components of the business context research
         - ask opinion leaders open ended questions about their assessment of the current information environment and their vision for the organization
@@ -613,11 +692,13 @@ page 44
   - IA strategy
     - high level conceptual framework for structuring and organizing a website
     - provides a firm sense of direction and scope necessary to proceed into the design and implementation phases
+
   - IA strategy process
     - think - convert research data to creative ideas
     - articulate - conceptual diagrams, metaphors, stories, blueprints, wireframes, etc
     - communicate - present, react, brainstorm
     - test - prototypes
+
   - IA strategy deliverables
     - IA strategy report
       - the most detailed and comprehensive articulation of IA
@@ -633,7 +714,7 @@ page 44
         - wireframes
         - content management
           - provide a reality check by discussing how the IA recommendations will impact the content management infrastructure
-          - e.g.
+          - 3 components of effective content management
             - rules
               - the processes whereby the content i smanaged
               - e.g. workflows to create, publish and maintain content
@@ -643,16 +724,39 @@ page 44
             - resources
               - include the content itself in its various forms of creation, modification or deletion
               - repository for holding static content and dynamic data
-            - recommendations
-              - how to improve the overall content management process
+          - recommendations
+            - how to improve the overall content management process
     - IA strategy presentation
-    - project plan for design
+    - project plan for IA design
       - for each recommendation
         - how will you accomplish it
         - how long will it take
         - who will do it
         - what kinds of deliverables will be required
         - what are the dependencies
+    - style guide
+      - helps guide development in the implementation phase
+      - document explaining
+        - mission and vision for the site
+          - its important to understand the original goals
+        - lessons learned and the decision made during the research, strategy and design phases
+        - standards
+          - a few rules that must be folloed while mainntaing and changing the site
+            - e.g. how to add new content to ensure the continued integrity of the organization, labeling, navigation and indexing systems
+        - guidelines
+          - suggest (but dont mandate) how the information architecture should be maintained
+        - maintenance procedures
+          - regular tasks that are required for the sites survival should be fully documented
+            - e.g. when and how to add new items to a controlled vocabulary
+        - pattern library
+          - documents and provides access to reusable aspects of the sites design
+        - design process artifacts
+          - blueprints, wireframes, controlled vocabulary infomation, etc, anything that can be reused throughout the sites lifetime
+        - how a site is organized,
+        - why its organized that way,
+        - who its for,
+        - how the architecture should be extended as the site grows
+      -
   - top down perspective
     - defines the highest two or three levels of the sites organization and navigation structures
   - bottom up perspective
@@ -702,13 +806,16 @@ page 44
 
 #### design
   - shape the high level strategy into an information architecture
+  - the very act of shaping ideas into the more formal structure of a blueprint to become realistic and practical
   - blue prints
     - show the relationship between pages and other content components
     - can be used to portray organization, navigation and labeling systems
     - often referred to as site maps
     - help determines where content should go and how it should be navigated within the context of a site, subsite or collection of content
     - types
-      - big pictures, 100000 foot view
+      - big pictures, 100000 foot view, high level
+        - most useful for exploring primary organization schemes and approaches
+        - great for simulating discussions focsed on the organization and management of content as well as on the desired access pathways for users
       - site navigation
       - content filtering process
       - task-oriented feature explanations
@@ -718,11 +825,59 @@ page 44
           - all pages
           - all features
           - all organization and labeing, and navigation systems
+
   - wireframes
     - depict how an individual page or template should look from an architectural perspective
-      - describe the content and IA to be included, however, confined toa  2d space
+    - describe the content and IA to be included, however, confined to a 2d space
     - stand at the intersection of the sites IA and its visual and information design
+    - helps the information architect decide on how to
+      - group content components
+      - how to order components
+      - and which component groups have priority
+    - types
+      - low fidelity
+        - no graphic elements and no real content
+        - enables the visual designer to focus attention on the global, local and contextual navigation elements of the page
+      - medium fidelity
+        - has a high degree of detail
+      - high fidelity
+        - presents a close approximation of what the page will actually look like
+        - advantages
+          - the congtent and color bring the page to life, helpinng to capture the attention of clients and colleagues
+          - by simulating the actual page width and font size the wire frame forces you to recognize the constraints of an html page
+          - the fidelity is sufficient to support paper prototype testing with users
+    - best practices
+      - provide multiple views of an IA
+        - dont try to show all things at once
+      - develop each view for a specific audience if possible
+    - guidelines
+      - consistency is key especially when presenting multipe wireframes
+      - use multiple layers so you dan reuse navigation bars and other page layout items for multiple pages throughout the site
+      - should be useable and professionally developed
+      - establish procedures for developing , sharing and maintaining common templates and stenciles
+
+  - diagrams
+    - useful for communicating the two basic aspects of an informatioon systems structural elements
+      - content components
+        - what constitutes a unit of content and how those components should be grouped and sequenced
+      - connections between content components
+        - how components are linked to enable navigating between them
+
   - metadata schema
+  - design collaboration
+    - design sketches
+      - design team develops a sense of the desired graphic identity or look and feel
+      - technical team assesses the information technology infrastructure of the organization and the platform limitations and whats possible with respect to product features
+      - the architect designed the high level information architecture for the site
+      - use cases
+        - pool the collective knowledge of all teams in a first attempt at interface design for the top level pages of the site
+    - web based prototype
+      - digital renditions show how the site will look and function
+      - are concrete jand often aesthetically compelling
+    - point of production information architecture
+      - many decisions must be made during production
+  -
+
   - best practices
     - provide multiple views of the IA
       - a single diagram will always fail
@@ -735,13 +890,19 @@ page 44
       - upstream stakeholders/executives
       - downstream designers and developers
 
-  - implementation
+#### implementation
     - designs are put to the test as the site is built, tested and launched
     - organizing and tagging documents,
     - testing and troubhleshooting
-    - developing documentation and training programs to ensure the IA can be maintained effectively over timme
+    - developing documentation and training programs to ensure the IA can be maintained effectively over time
+    - detailed blueprints
+      - you focus on communicating detailed organization, labeling and navigation decisions to your colleagues for the dev team
+      - map out the entire site so that the dev team can implement the IA plans to the letter without requiring your involvement
+      - must present the complete information hierarchy from the main page to the destination pages
+      - must detail the labeling and navigation systems to be implemented in each area of the site
+      -
 
-  - administration
+#### administration
     - continuous evaluation and improvement of the sites IA
     - tagging new documents and weeding out old ones
     - monitoring site usage and user feedback
@@ -1448,13 +1609,19 @@ page 44
   - users rarely (if ever) interact with them
   - often 'feed' other components
     - e.g. a thesaurus used to enhance a search query
+
   - controlled vocabularies
     - predetermined vocabularies of preferred terms that describe a specific domain
       - e.g. auto racing/orthopedic surgery
+    - supporting tools
+      - metadata matrixes
+        - facilitate discussion about the prioritization of vocabularies
+      - any applicaation that enables you to manage the vocabulary terms and relationships
     - typically include variant terms
       - e.g. 'brewskie' for 'beer'
     - thesauri
       - controlled vocabularies that generally include linkis to browser and narrower terms, related terms and descriptions of preferred terms (aka scope notes)
+
   - retrieval algorithms
     - used to rank search results by relevance
     - reflect their pgrogrammers judgments on how to determine relevance
@@ -1468,6 +1635,9 @@ page 44
   - wireframes
     - inform visual design
   - blueprints
+    - modularizing the blueprints
+      - top level blueprint should link to subsidiary blueprints and so on
+      -
   - metadata schema
     -
       -

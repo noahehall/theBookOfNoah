@@ -124,7 +124,39 @@
             - describe sequences of interactions between objects and between processes
             - used to identify architectural elements and to illustrate and validate the architecture design
             - serve as a starting point for tests of an architecture prototype
-            -
+      - rational
+        - approach of rational rose tool
+      - data model
+        - a simple data modeling project
 
 
 # workflows
+  - gotchas
+    - deleting view elements does not delete model elements
+    - selecting an element on a diagram means selection of both model and view elements
+  - applying profiles
+    - e.g. to include the uml standard profile in the current project
+    - `file > apply profile > profile name`
+  - create diagram
+    - select an element where a new diagram rtoo be contained as a child in the explorer tab
+      - in the menu bar
+        - select `model > add diagram > diagram type`
+      - or in the context menu
+        - `add diagram > diagram type`
+  - create element
+    - create model and view element
+      - select the element type in the toolbox
+      - drag on the diagram as the size of the element, or link two elements if the element is a kind of a relationship
+    - create view element in explorer
+      - `select model element > click and drag `
+    - create model element in explorer
+      - select first an element where a new model element to be contained as a child in explorer
+      - via menu bar
+        - select `model > aded > element type`
+      - view context menu
+        - select `add > element type`
+    - deleting elements
+      - view elements are deleted via the diagram
+      - model elements are deleted via explorer
+
+
