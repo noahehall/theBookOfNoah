@@ -12,7 +12,11 @@
   - [list of nginx default modules](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/#modules-built-by-default)
   - [compiling third party modules](https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/)
   - [list of third party modules](https://www.nginx.com/resources/wiki/modules/)
-  - 
+  - [nginx wiki](https://www.nginx.com/resources/wiki/)
+  - [sample config files](https://www.nginx.com/resources/wiki/start/#pre-canned-configurations)
+  - [start, stop, restart nginx from cli](https://www.nginx.com/resources/wiki/start/topics/tutorials/commandline/)
+  - [nginx init scripts](https://www.nginx.com/resources/wiki/start/topics/examples/initscripts/?highlight=init)
+  - [script to start and stop the nginx daemon](https://gist.githubusercontent.com/sairam/5892520/raw/b8195a71e944d46271c8a49f2717f70bcd04bf1a/etc-init.d-nginx)
 
 # useful tools
   - lynx
@@ -313,13 +317,15 @@
     - --builddir=DIR
       - set the build location
     - --add-module=PATH
-      - add third party  modules during compiling nginx
+      - add static third party modules during compiling nginx
+    - --add-dynamic-module=PATH
+      - add dynamically linked modules
+      - compiled as a shared object and then dynamically loaded into NGINX open source at runtime
+      - make sure to add the load_module directive to the nginx config
+        - load_module modules/ngx_mail_module.so;
     - --with-debug
       - enables debug logging
       -
-
-
-
   - nginx default modules
     - can be enabled via
       - --with-http_MODULE_NAME
@@ -334,9 +340,17 @@
       - remove/purge any previous installations
       - apt get install
     - via source
-      - add/remove modules
-      - custom config
-      -
+      - install openssl zlib, pcre, build-essential, gcc, make,
+      - decide on which default modules to enable, and disable
+      - download any third party modules
+      - setup nginx worker process user and group
+      - create your configure script options
+      - run conf script with options
+      - run make
+      - run sudo make install
+  - enable nginx server on reboot
+    - installing from source does not create the init script that autostarts the nginx process after server reboot
+    -
 # CLI
 ```sh
   # start nginx
@@ -359,4 +373,67 @@
 
   # see config options when compiling from source
   ./configure --help
+
+  # sample config options
+  ./configure --prefix=/etc/nginx \
+    --user=nginx \
+    --group=nginx \
+    --sbin-path=/usr/sbin/nginx \
+    --conf-path=/etc/nginx/nginx.conf \
+    --pid-path=/var/run/nginx.pid \
+    --lock-path=/var/run/nginx.lock \
+    --error-log-path=/var/log/nginx/error.log \
+    --http-log-path=/var/log/nginx/access.log \
+    --with-http_gzip_static_module \
+    --with-http_stub_status_module \
+    --with-http_ssl_module \
+    --with-pcre \
+    --with-file-aio \
+    --with-http_realip_module \
+    --without-http_scgi_module \
+    --without-http_proxy_module \
+
+  # download nginx init script
+  sudo wget -O /etc/init.d/nginx https://gist.githubusercontent.com/sairam/5892520/raw/b8195a71e944d46271c8a49f2717f70bcd04bf1a/etc-init.d-nginx
+  # make it executable
+  sudo chmod +x /etc/init.d/nginx
+  # start the nginx daemon when the server reboots
+  sudo update-rc.d nginx defaults
+
+  # check the nginx process
+  ps aux | grep nginx
+```
+
+```sh
+# sample install script
+export BUILD_DIR=/path-to-source-dir
+export NGINX_DIR=/etc/nginx
+export SBIN_DIR=/usr/sbin
+export PID_DIR=/var/runath-to-source-dir
+export LOCK_DIR=/var/run
+export LOG_DIR=/var/log/nginx
+export RUN_DIR=/var/run
+export CACHE_DIR=/var/cache
+
+cd ${BUILD_DIR}
+./configure \
+  --prefix=${NGINX_DIR} \
+  --user=nginx \
+  --group=nginx \
+  --sbin-path=${SBIN_DIR}/nginx \
+  --conf-path=${NGINX_DIR}/nginx.conf \
+  --pid-path=${RUN_DIR}/nginx.pid \
+  --lock-path=${RUN_DIR}/nginx.lock \
+  --error-log-path=${LOG_DIR}/error.log \
+  --http-log-path=${LOG_DIR}/access.log \
+  --http-client-body-temp-path=${CACHE_DIR}/client_body_temp \
+  --http-fastcgi-temp-path=${CACHE_DIR}/fastcgi_temp \
+  --with-http_gzip_static_module \
+  --with-http_stub_status_module \
+  --with-http_ssl_module \
+  --with-pcre \
+  --with-file-aio \
+  --with-http_realip_module \
+  --without-http_scgi_module \
+  --without-http_proxy_module \
 ```
