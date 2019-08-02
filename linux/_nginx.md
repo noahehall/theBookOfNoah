@@ -2,6 +2,39 @@
   - nginx from beginner to pro
     - rahul soni
 
+# links
+  - [install instructions for ubuntu](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/#installing-a-prebuilt-ubuntu-package-from-an-ubuntu-repository)
+  - [install instructions for alpine](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/#installing-prebuilt-alpine-linux-packages)
+  - [available nginx distros for ubuntu](https://nginx.org/packages/mainline/ubuntu/dists/)
+  - [compiling and installing from source](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/#sources)
+  - [install openssl on ubuntu](https://websiteforstudents.com/manually-install-the-latest-openssl-toolkit-on-ubuntu-16-04-18-04-lts/)
+  - [all nginx open source downloads](https://nginx.org/download/)
+
+# useful tools
+  - lynx
+    - terminal based web browser
+    - useful for testing web accessibility issues
+  - docker
+    - containerize applications
+  - virtualbox/kvm
+    - virtualize machines
+  - nano
+    - simple text editor
+  - wget
+    - text based downloader
+  - ssh
+    - secure shell to allow remote login
+  - libpcre3
+  - libpcre3-dev
+    - both used for implementing reg expression matching
+  - openssl
+  - libssl-dev
+    - used to establish a secure channel between the web server and the client over SSL or TLS
+  - zlib1g
+  - zlib1g-dev
+    - used for compression 
+
+
 # terminology
   - http
     - hypertext transfer protocol
@@ -29,7 +62,9 @@
       - when the connection quality deterorates, a lower data rate is opted for
       - requires dedicated streaming software
       -
+
 # nginx
+  - designed as a reverse proxy that doubles up as a web server
   - use cases
     - free, open source server
       - reverse proxy first, web server second
@@ -72,3 +107,80 @@
     - single threaded
       - does not create a separate thread per request
       - instead relies on events
+  - versions
+    - mainline
+      - active dev branch with the latest features and bug fixes
+      - denoted by odd number in 1.X.0
+    - stable
+      - receives fixes for high-severity bugs, but its not updated with new features
+      - denoted by even number in 1.X.0
+
+# important dirs and files
+  - /etc/nginx
+    - default installation directory
+  - nginx.conf
+    - web server configuration
+  - mine.types
+    - all the mime types enabled on the web server
+  - fastcgi_params
+    - fastcgi configuration
+  - /usr/sbin/nginx
+    - the nginx executable is located in the system executable directory
+    - requires root
+  - /usr/share/nginx
+    - default document root directory
+    - contains sample index and error page files
+  - /var/log/nginx
+    - default error and http log files
+## nginx source directories and files
+  - auto
+    - different config options
+    - e.g.
+      - modules file for modules that will be installed by default
+      - options file that include different config options
+  - confls
+    - nginx config files like nginx.conf and fastcgi.conf
+  - configure
+    - contains config details and params that are required to compile nginx
+    - the output of this file will create a Makefile
+  - contrib
+    - contains geo2nginx module
+  - html
+    - contains default index and error file that will be configured in the root website location
+  - src
+    - source code of nginx, html, mail, etc
+  - man
+    - contains all the man pages for nginx
+
+# workflows
+  - installation
+    - pre-built nginx via package manager
+      - downloading the key used to sign nginx packages
+      - add nginx repo links to your /etc/apt/sources.list
+      - remove/purge any previous installations
+      - apt get install
+    - via source
+      - add/remove modules
+      - custom config
+      -
+# CLI
+```sh
+  # start nginx
+  nginx
+
+  # get nginx version
+  nginx -v
+
+  # get complete list of nginx configuration
+  nginx -V
+
+  # send signal to master process
+  # signals stop, quit, reopen, reload
+  nginx -s SIGNAL
+
+  # uninstall nginx
+  sudo apt-get purge nginx nginx-common
+  # then remove entries from /etc/apt/sources.list
+  # if you added the nginx repo links
+
+```
