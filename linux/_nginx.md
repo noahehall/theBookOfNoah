@@ -3,19 +3,6 @@
     - rahul soni
 
 # terminology
-  - nginx
-    - a free, open source server
-      - high performance HTTP server
-      - reverse proxy
-      - imap/pop3 proxy
-    - characteristics
-      - fast page load times
-      - accelerate existing applicaations
-        - put nginx infront of an existing set of web servers and let it take care of routing traffic to the back end intelligently
-      - straight forward load balancer
-      - scales well
-      - upgrade on the fly
-      - easy to install, maintain, and use
   - http
     - hypertext transfer protocol
     - a set of rules for transferring files
@@ -25,6 +12,63 @@
       - a server that hosts an application that listens to the HTTP requests
       - responsible for listening for and responding to http requests
     - proxy server
-    - reverse proxy server
-      - retrieves resources from the servers on behalf of a client
+      - reverse proxy server
+        - retrieves resources from other servers on behalf of a client
+  - media streaming
+    - http streaming
+      - when a viewer clicks play and the media startings playing after an intial amount of buffering
+      - backend software ensures that the data rate of the encoded file is less than that of the bandwidth
+      - no media is stored on the client
+    - http progressive download
+      - enables you to use simple http web servers
+      - the media that is delivered is typically stored at the client side and played directly from the hard drive
+      - since the data is stored locally before playing the user experience is a lot better than streaming
+    - http adaptive streaming
+      - automatically adapts to the clients bandwidth
+      - when the connection is good the viewer gets higher quality content
+      - when the connection quality deterorates, a lower data rate is opted for
+      - requires dedicated streaming software
       -
+# nginx
+  - use cases
+    - free, open source server
+      - reverse proxy first, web server second
+      - imap/pop3/smtp proxy
+      - websocket
+      - http(s), SPDY
+    - event based reverse proxy
+      - routes each request based on the URI
+      - accelerate existing applicaations
+        - put nginx infront of an existing set of web servers and let it take care of routing traffic to the back end intelligently
+    - load balancer
+      - ssl termination
+        - ssl induces an extra processing overhead on the server side where it has to decrypt the request everytime
+        - instead, each request arrives to the load balancer on a secure channel but will be sent to backend servers without SSL
+          - webservers react faster and the response still returns to the clients in a secure manner
+    - serving static files
+      - not suited for serving dynamic files
+    - video streaming mp4/flv/hds/hls
+      - used to deliver video content via progressive downloads
+    - monitoring and logging
+    - nginx plus features
+      - available only in binary form
+      - HTTP live streaming (HLS)
+      - HTTP dynamic streaming (HDS/VOD)
+      - advanced http and tcp load balancing
+      - session persistence
+      - content caching enahnced capabilities
+      - bandwidth management for MP4 media
+      - live activity monitoring
+  - characteristics
+    - fast page load times
+    - scales well
+    - upgrade on the fly
+      - update the nginx configuration without bring the service down
+    - easy to install, maintain, and use
+    - modular design
+      - all extensions are built as modules that can be in/excluded when building nginx from source
+        - every module that it requires is loaded directly inside of an nginx process
+        - ensures that nginx hs a small memory and cpu footprint on the server
+    - single threaded
+      - does not create a separate thread per request
+      - instead relies on events
