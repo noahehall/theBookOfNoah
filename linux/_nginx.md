@@ -9,6 +9,10 @@
   - [compiling and installing from source](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/#sources)
   - [install openssl on ubuntu](https://websiteforstudents.com/manually-install-the-latest-openssl-toolkit-on-ubuntu-16-04-18-04-lts/)
   - [all nginx open source downloads](https://nginx.org/download/)
+  - [list of nginx default modules](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/#modules-built-by-default)
+  - [compiling third party modules](https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/)
+  - [list of third party modules](https://www.nginx.com/resources/wiki/modules/)
+  - 
 
 # useful tools
   - lynx
@@ -230,6 +234,7 @@
       - defaults
         - /usr/local//nginx/logs
         - /var/cache/nginx
+
   - optimization modules
     - --with-cc=PATH
       - specify alternate location for c compiler
@@ -240,9 +245,82 @@
     - --with-ld-opt=OPTIONS
       - define additional parameters that will be used during linking
     - --with-cpu-opt=CPU
-      - specify different processor architecture 
+      - specify different processor architecture
 
-  - nginx modules
+  - pcre options
+    - --without-pcre
+      - disable it
+    - --with-pcre
+      - force enable it
+    - --with-pcre=DIR
+      - specifies path of the PCRE libraries
+      - used when using a specific version
+    - --with-pcre-opt=OPTIONS
+      - used to specify additional build options for PCRE
+    - --with-pcre-jit
+      - used to build PCRE with JIT compilation support
+
+  - md5 options
+    - --with-md5=DIR
+      - specifies path to md5 library sources
+    - --with-md5-opt=OPTIONS
+      - specify additional build options
+    - --with-md5-asm
+      - uses md5 assembler sources
+  - sha1 options
+    - --with-sha1=DIR
+      - path to sha1 library sources
+    - --with-sha1-opt=OPTIONS
+      - specify additional build options
+    - --with-sha1-asm
+      - use sha1 assembler sources
+
+  - zlib options
+    - --with-zlib=DIR
+      - path to zlib library sources
+    - --with-zlib-opt=OPTIONS
+      - specify additional build options
+    - --with-zlib-asm=CPU
+      - use zlib assembler sources that are optimized for pentium or pentiumpro cpu architecture
+
+  - openssl options
+    - --with-openssl=DIR
+      - path to openssl libraries
+      - when using specific version
+    - --with-openssl-opt=OPTIONS
+      - additional build options for openssl
+
+  - libatomic options
+    - --with-libatomic
+      - force enable
+    - --with-libatomic=DIR
+      - path to libatomic libraries
+      - when using specific version
+
+  - other options
+    - --without-http
+      - disable http server
+    - --without-http-cache
+      - disable http cache
+    - --with-threads
+      - enable thread pool support
+    - --with-file-aio
+      - enable support for asynchronous disk IO operations
+    - --with-ipv6
+      - enable ipv6 support
+    - --build=NAME
+      - set the build name
+    - --builddir=DIR
+      - set the build location
+    - --add-module=PATH
+      - add third party  modules during compiling nginx
+    - --with-debug
+      - enables debug logging
+      -
+
+
+
+  - nginx default modules
     - can be enabled via
       - --with-http_MODULE_NAME
     - can be disabled via
