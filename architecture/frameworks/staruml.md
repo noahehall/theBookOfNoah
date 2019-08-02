@@ -1,3 +1,5 @@
+- UML 2.5 structure diagrams
+  - uml-diagrams.org
 # star uml
 
 # links
@@ -5,9 +7,16 @@
   - [agile modeling](http://agilemodeling.com/)
   - [model driven development](https://www.mendix.com/model-driven-development/)
   - [4+1 architectural view model](https://en.wikipedia.org/wiki/4%2B1_architectural_view_model)
+  - [UML general docs](https://www.uml-diagrams.org)
 
 
 # terminology
+  - UML
+    - unified modeling language
+    - standard visual modeling language
+    - use cases
+      - modeling business and similar proceses
+      - analysis, design and implementation of software-bsed systems
   - staruml
     - software modeler aimted to support agile and concise modeling
     - target audience
@@ -47,10 +56,9 @@
     - building block of a software model
     - can have multiple corresponding view elements
     - has its own data e.g. name, stereotype, type, etc
-    -
   - diagram
-    - visual geometric symbolic representationn of softwaare model
-    - can be represented in one or more digrams with different aspects
+    - visual geometric symbolic representation of a software model
+    - can be represented in one or more diagrams with different aspects
       - e.g. focus on hierarchy or interaction
   - view elements
     - visual representations of a model element
@@ -65,8 +73,18 @@
     - using UML for a specific domain or platform
   - extension
     - package which adds new features to staruml
+  - constraint
+  - tag
+    - an element to add extended properties to model elements
     -
 
+# UML diagrams
+## structure diagrams
+  - show the static structure of a system and its parts on different abstraction and implementation levels and how they are related to each other
+  - elements in the diagram represent the meaningful concepts of the system
+
+## behavior diagrams
+  - show the dynamic behavior of the objects in a system, which can be described as a series of changes to the system over time
 
 # best practices
   - modeling a software system requires describing multiple models because it is not good enough to describe the system with a single perspective
@@ -84,51 +102,62 @@
   - top level element stored as a single file `.mdj`
   - stores multiple models/views of the a software system
   - should be organized as a set of UMLModels, UMLPAckages or UMLSubsystems
-  - components
-    - templates
-      - UML Minimal
-        - single model with uml standard profilie
-      - UML conventional
-        - use case model, analysis model, design model, implementation model, deployment model
-      - 4+1 view model
-        - pilippe kruchtens 4+1 architectural view model
-        - describes the architecture of software intensive systems bsed on the use of multiple, current views
-          - logical view
-            - concerned with the functionality that the system provides to end users
-              - class diagrams, state diagrams
-          - processs view
-            - deals with the dynamic aspects of the system, explains the system processes and how thhey communicate and focuses on the runtimem behavior of the system
-            - main concerns
-              - concurrency
-              - distribution
-              - integrators
-              - performance
-              - scalability
-            - diagrams
-              - activity diagram
-          - development view
-            - illustrates a system from a pogrammers perspective and is concerned with softwaare management
-            - aka implementation view
-            - diagrams
-              - uses the component diagram to describe system components
-              - uses the package diagrams to represent development
-          - physical view
-            - depicts the system from a systems engineers point of view
-            - concerned with the topology of software components on the physical layer as well as the physical connections between these components
-              - aka deployment view
-              - diagrams
-                - deployment diagram
-          - scenarios
-            - aka use case view
-            - description of an architecture is illustrated using a small szet of use cases (scenarios) which become the fifth view
-            - describe sequences of interactions between objects and between processes
-            - used to identify architectural elements and to illustrate and validate the architecture design
-            - serve as a starting point for tests of an architecture prototype
-      - rational
-        - approach of rational rose tool
-      - data model
-        - a simple data modeling project
 
+### templates
+  - UML Minimal
+    - single model with uml standard profilie
+  - UML conventional
+    - use case model, analysis model, design model, implementation model, deployment model
+  - 4+1 view model
+    - pilippe kruchtens 4+1 architectural view model
+    - describes the architecture of software intensive systems bsed on the use of multiple, current views
+      - logical view
+        - concerned with the functionality that the system provides to end users
+          - class diagrams, state diagrams
+      - processs view
+        - deals with the dynamic aspects of the system, explains the system processes and how thhey communicate and focuses on the runtimem behavior of the system
+        - main concerns
+          - concurrency
+          - distribution
+          - integrators
+          - performance
+          - scalability
+        - diagrams
+          - activity diagram
+      - development view
+        - illustrates a system from a pogrammers perspective and is concerned with softwaare management
+        - aka implementation view
+        - diagrams
+          - uses the component diagram to describe system components
+          - uses the package diagrams to represent development
+      - physical view
+        - depicts the system from a systems engineers point of view
+        - concerned with the topology of software components on the physical layer as well as the physical connections between these components
+          - aka deployment view
+          - diagrams
+            - deployment diagram
+      - scenarios
+        - aka use case view
+        - description of an architecture is illustrated using a small szet of use cases (scenarios) which become the fifth view
+        - describe sequences of interactions between objects and between processes
+        - used to identify architectural elements and to illustrate and validate the architecture design
+        - serve as a starting point for tests of an architecture prototype
+  - rational
+    - approach of rational rose tool
+  - data model
+    - a simple data modeling project
+
+### model explorer
+  - shows all models in the current diagram
+  - click a model to view the models properties
+    - stereotype
+    - visibility
+    - isAbstract
+    - isFinalSpecialization
+    - isLeaf
+    - isActive
+
+### editors
 
 # workflows
   - gotchas
@@ -158,5 +187,6 @@
     - deleting elements
       - view elements are deleted via the diagram
       - model elements are deleted via explorer
+        - will also delete view elements
 
 

@@ -27,4 +27,4 @@
     - proxy server
     - reverse proxy server
       - retrieves resources from the servers on behalf of a client
-      - 
+      -
