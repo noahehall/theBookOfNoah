@@ -32,7 +32,7 @@
     - used to establish a secure channel between the web server and the client over SSL or TLS
   - zlib1g
   - zlib1g-dev
-    - used for compression 
+    - used for compression
 
 
 # terminology
@@ -132,6 +132,7 @@
     - contains sample index and error page files
   - /var/log/nginx
     - default error and http log files
+
 ## nginx source directories and files
   - auto
     - different config options
@@ -140,9 +141,16 @@
       - options file that include different config options
   - confls
     - nginx config files like nginx.conf and fastcgi.conf
+
   - configure
     - contains config details and params that are required to compile nginx
-    - the output of this file will create a Makefile
+    - the configure script will
+      - scan for all dependent packages on teh server for nginx
+      - check for machine architecture
+      - define the nginx root dir, threads, modules, and various other config and temp paths
+      - will output a makefile
+    -
+
   - contrib
     - contains geo2nginx module
   - html
@@ -152,6 +160,94 @@
   - man
     - contains all the man pages for nginx
 
+# compile time options
+  - for use with the configure script
+
+  - users and groups
+    - ensure nginx worker process executes under a particular user
+      - should specify a non-priviledged user and group
+    - can also be changed by editing the nginx.conf file
+    - --user=USER
+      - defaults
+        - nginx
+        - www
+    - --group=GROUP
+      - defaults
+        - nginx
+        - www
+
+  - configuration paths
+    - can be changed via the nginx.conf file
+    - --prefix=PATH
+      - nginx server path
+      - all files except config and libraries
+      - defaults
+        - usr/local/nginx
+        - /etc/nginx
+    - --sbin-path=PATH
+      - nginx ecutable path
+      - defaults
+        - /usr/local/nginx/sbin/nginx
+        - /usr/sbin/nginx
+    - --conf-path=PATH
+      - nginx config path
+      - hosts nginx.conf, mime.type and others
+      - defaults
+        - /usr/local/nginx/conf
+        - /etc/nginx
+    - --pid-path=PATH
+      - nginx process nginx.pid file
+      - stores the process ID of the nginx process
+      - defaults
+        - /usr/local/nginx/logs
+        - /var/run
+    - --lock-path=PATH
+      - nginx lock file nginx.lock
+      - contains the lock information of the resources already in use by a particular process
+      - defaults
+        - /usr/local/nginx/logs
+        - /var/run
+
+  - log paths
+    - configure log file logcations for error files, http access files, temp paths for fastcgi and other applications
+    - --error-log-path=PATH
+      - nginx server error log path for errors, warnings, and diagnostic error output
+      - defaults
+        - /usr/local/nginx/logs/
+        - /var/log/nginx
+    - --http-log-path=PATH
+      - nginx server access log path for http request log details
+      - defaults
+        - /usr/local/nginx/logs/
+        - /var/log/nginx
+    - --http-client-body-temp-path=PATH
+      - temp file location for http requests
+      - holds the client request bodies
+    - --http-fastcgi-temp-path=PATH
+    - --http-uwsgi-temp-path=PATH
+    - --http-scgi-temp-path=PATH
+      - temp file location for http fastcgi, uwsgi, scgi
+      - defaults
+        - /usr/local//nginx/logs
+        - /var/cache/nginx
+  - optimization modules
+    - --with-cc=PATH
+      - specify alternate location for c compiler
+    - --with-cpp=PATH
+      - alternate location for c preprocessor
+    - --with-cc-opt=OPTIONS
+      - add paramters that will be added to the CFLAGS variable
+    - --with-ld-opt=OPTIONS
+      - define additional parameters that will be used during linking
+    - --with-cpu-opt=CPU
+      - specify different processor architecture 
+
+  - nginx modules
+    - can be enabled via
+      - --with-http_MODULE_NAME
+    - can be disabled via
+      - --without-http_MODULE_NAME
+    -
 # workflows
   - installation
     - pre-built nginx via package manager
@@ -183,4 +279,6 @@
   # then remove entries from /etc/apt/sources.list
   # if you added the nginx repo links
 
+  # see config options when compiling from source
+  ./configure --help
 ```
