@@ -6,9 +6,12 @@
     - richard helm
     - ralph johnson
     - john vlissides
+  - software requirements
+    - karl wiegers
 
 # links
   - [aspect-oriented programming](httpp://aosd.net)
+  - [writing effective use cases](http://www.sysflow.com/blog/5-rules-for-writing-effective-use-cases/)
 
 
 # terminology
@@ -17,7 +20,19 @@
   - resources
     - time, memory, file handles, db connectdions, threads, etc
   - use case
-    - describes an interaction between a user anda  system that fulfills a goal 
+    - describes an interaction between a user and a system that fulfills a goal
+  - internal use case
+    - i.e. work case
+    - describes an interaction between a caller and an interface
+  - sequence diagram
+    - shows a sequence of interactions between modules
+  - state diagram
+    - ???
+  - white box testing
+    - uses knowledge of hte code to devise tests
+    - typically tests that check performance and robustness
+  - observer pattern
+    - 
 
 
 # interfaces
@@ -35,7 +50,7 @@
     - advantages
       - you can store the cmds in a file, which later can be read and executed
   - graphical user interfaces
-    -
+  -
 
 # interface contracts
   - agreement between users of interfaces and their implementation
@@ -48,6 +63,14 @@
     - errors signaled
       - return codes
       - exceptions
+  - contract levels
+    - basic type contracts,
+      - e.g. typed pprogramming languages
+        - compiler enforces the type contract
+    - semantic contraacts that include the preconditions and postconditions
+    - performance contracts for real-time sytems
+    - quality of service contracts that are hard to quantify
+      - test for resource usage, reliability, scalability, and other 'ilities'
 
 
 ## 3 laws of an interface
@@ -60,6 +83,7 @@
     - an implementation should not hot resources
   - law 3 - if an implementation is unable to perform its responsibilities, it shall notify its caller
     - an implementation should alwayts report problems that are encounted and that it cannot fix itself
+
 
 ## interface design by contract
   - preconditions
@@ -96,11 +120,24 @@
   - observers that are called
   -
 
+# interface testing
+  - black box testing
+    - testing to an interface, not an implementation
+    - i.e. you test an interface without looking inside to see how its coded
+    - with more services being provided remotely you likely will not have access to the code therefore yojuj can test only to the interface
+  - advantages
+    - you can find ambiguities or unclearness in the
+      - contract obligations
+      - method definitions
+      - protocol
+    - if you find an interface is hard to test, its likely hard to use
+  -
 #  IOD Deliverables
-  - sequence diagrams
-    - illustrate the logical steps in doing something
+  - use cases
   - Interface contracts
     - preconditions
     - postconditions
     - class invariants
   - interface protocols
+    - e.g. via sequence or state diagrams
+  - interface tests
