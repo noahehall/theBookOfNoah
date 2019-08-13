@@ -38,78 +38,21 @@ stateful vs stateless interfaces
     - typically tests that check performance and robustness
   - observer pattern
     - ???
-  -
+  - interface
+    - applies to a set of method signatures (names and parameter lists)
+    - a set of funtions that apply to a common concept, such as a set of functions that operate on a file
 
-
-# interfaces
-  - applies to a set of method signatures (names and parameter lists)
-  - a set of funtions that apply to a common concept, such as a set of functions that operate on a file
-
-
-## interface types
-  - an interface can be more than one type
-  - each type lies on a spectrum
-  - having many methods vs not-many methods
-    - less methods are easier for the implementer but require more error checking
-    - more methods are safer/more specific functionality but require more implementation
-  - stateful interfaces
-    - methods operate differently based on the current state
-    - current state is changed by the sequence of method invocations
-    - advantages
-      - there is a less chatter to get the same amount of work done
-      - the order of the method calls does not matter (can check state)
-  - stateless interfaces
-    - the behavior is not dependent on the history of  method invocations
-    - advantages
-      - a small number of operators can service many requests
-      - parameter lists are short
-
-### textual interfaces
-    - specifies the functions to perform, e.g. the command prompt
-    - examples
-      - Unix device interface
-        - hard drives, displays, printers, keyboards and files all use the same interface
-        - is an example of polymorphism in a non-object oriented language
-        - to the user, each device has an entry in the file system in the `/dev` dir
-      - SMTP, FTP
-    - advantages
-      - you can store the cmds in a file, which later can be read and executed
-  - graphical user interfaces
-
-### data interfaces
-  - when the methods correspond to those in a class that contains mostly attributes
-  -  the methods in the interface typically set/retrieve values of the attributes
-  -  implementations of data interfaces have state which consists of the set of values of all attributes in the class
-  -  e.g.
-    - data transfer object (DTO)
-      - methods refer only to attributes of the object
-
-
-### service interfaces
-  - a module whoose methods that act on the parameters pased to it rather than the attributes of the implementation
-  - typically consist of mostly methods and little if any attributes outside of those associated with providing the service,
-  - e.g.
-    - command interface
-      - usually contain only service mmethods
-  -
-
-### service provider interfaces
-  - variation of the service interface
-  - adds methods to the interface that controls the life cycle of the service provider
-
-### data access interfaces
-  - interfaces that access data
-  - sequential vs random retrieval
-  - iterator interface
-    - allows access to a single element in a collection at a particular time
-    - requires less resources
-  - random-access iterator
-    - allows random access to any element in the set
-    - requires more memory to make all elements readily available
-  - pull vs pushing data
-  -
-
-
+# best practices
+## 3 laws of an interface
+  - law 1 - an interfaces implementation shall do what its methods says it does
+      - the name of a method should correspond to the operations that the implementation actually performs
+      - an implementation should perform the operations intended by the creator of the interface
+      - an implementation needs to honor  the meaning of a return value
+  - law 2 - an implementation shall do no harm
+    - harm - interfering with other modules in a program/other programs
+    - an implementation should not hot resources
+  - law 3 - if an implementation is unable to perform its responsibilities, it shall notify its caller
+    - an implementation should alwayts report problems that are encounted and that it cannot fix itself
 
 
 # interface contracts
@@ -132,19 +75,6 @@ stateful vs stateless interfaces
     - quality of service contracts that are hard to quantify
       - test for resource usage, reliability, scalability, and other 'ilities'
 
-
-## 3 laws of an interface
-  - law 1 - an interfaces implementation shall do what its methods says it does
-      - the name of a method should correspond to the operations that the implementation actually performs
-      - an implementation should perform the operations intended by the creator of the interface
-      - an implementation needs to honor  the meaning of a return value
-  - law 2 - an implementation shall do no harm
-    - harm - interfering with other modules in a program/other programs
-    - an implementation should not hot resources
-  - law 3 - if an implementation is unable to perform its responsibilities, it shall notify its caller
-    - an implementation should alwayts report problems that are encounted and that it cannot fix itself
-
-
 ## interface design by contract
   - preconditions
     - the user of an interface needs to ensure that certain conditions are met when calling a method
@@ -157,6 +87,7 @@ stateful vs stateless interfaces
   - notes
     - if a precondition is not met, the method will not execute properly
     - if a postcondition is not met, the method did not execute properly
+    - objects that cannot exist in an invalid state can make it easier to check the pre/postconditions
     - any implementation of an interface can have weaker preconditions aand stronger postconditions
       - i.e. the same way a derived class can have weaker preconditions and stronger postconditions than the base class
 
@@ -192,7 +123,70 @@ stateful vs stateless interfaces
       - method definitions
       - protocol
     - if you find an interface is hard to test, its likely hard to use
+
+# interface types
+  - an interface can be more than one type
+  - each type lies on a spectrum
+  - all interface types should consider the following
+    - having many methods vs not-many methods
+      - less methods are easier for the implementer but require more error checking
+      - more methods are safer/more specific functionality but require more implementation
+    - stateful interfaces
+      - methods operate differently based on the current state
+      - current state is changed by the sequence of method invocations
+      - advantages
+        - there is a less chatter to get the same amount of work done
+        - the order of the method calls does not matter (can check state)
+    - stateless interfaces
+      - the behavior is not dependent on the history of  method invocations
+        - there may be internal state to improve performance but the callers of the interface do not reply upon that fact or even know it
+      - advantages
+        - a small number of operators can service many requests
+        - parameter lists are short
+    - sequential vs random retrieval
+      - iterator interface
+        - allows access to a single element in a collection at a particular time
+        - requires less resources
+      - random-access iterator
+        - allows random access to any element in the set
+        - requires more memory to make all elements readily available
+    - pull vs pushing data
+
+## textual interfaces
+    - specifies the functions to perform, e.g. the command prompt
+    - examples
+      - Unix device interface
+        - hard drives, displays, printers, keyboards and files all use the same interface
+        - is an example of polymorphism in a non-object oriented language
+        - to the user, each device has an entry in the file system in the `/dev` dir
+      - SMTP, FTP
+    - advantages
+      - you can store the cmds in a file, which later can be read and executed
+  - graphical user interfaces
+
+## data interfaces
+  - when the methods correspond to those in a class that contains mostly attributes
+  -  the methods in the interface typically set/retrieve values of the attributes
+  -  implementations of data interfaces have state which consists of the set of values of all attributes in the class
+  -  e.g.
+    - data transfer object (DTO)
+      - methods refer only to attributes of the object
+
+## service interfaces
+  - a module whoose methods that act on the parameters pased to it rather than the attributes of the implementation
+  - typically consist of mostly methods and little if any attributes outside of those associated with providing the service,
+  - e.g.
+    - command interface
+      - usually contain only service mmethods
   -
+
+## service provider interfaces
+  - variation of the service interface
+  - adds methods to the interface that controls the life cycle of the service provider
+
+## data access interfaces
+  - interfaces that access data
+
 #  IOD Deliverables
   - use cases
   - Interface contracts
