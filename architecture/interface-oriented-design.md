@@ -1,3 +1,6 @@
+page 45
+stateful vs stateless interfaces
+
 # books
   - interface oriented design
     - by oops forgot
@@ -42,8 +45,15 @@
   - defs
     - applies to a set of method signatures (names and parameter lists)
     - a set of funtions that apply toa  common concept, such as a set of functions that operate on a file
+  - having many methods vs not-many methods
+    - less methods are easier for the implementer but require more error checking
+    - more methods are safer/more specific functionality but require more implementation
+
 
 ## interface types
+  - an interface can be more than one type
+  - each type lies on a spectrum
+
 ### textual interfaces
     - specifies the functions to perform, e.g. the command prompt
     - examples
@@ -78,6 +88,19 @@
   - adds methods to the interface that controls the life cycle of the service provider
 
 ### data access interfaces
+  - interfaces that access data
+  - sequential vs random retrieval
+  - iterator interface
+    - allows access to a single element in a collection at a particular time
+    - requires less resources
+  - random-access iterator
+    - allows random access to any element in the set
+    - requires more memory to make all elements readily available
+  - pull vs pushing data
+  -
+
+
+
 
 # interface contracts
   - agreement between users of interfaces and their implementation
