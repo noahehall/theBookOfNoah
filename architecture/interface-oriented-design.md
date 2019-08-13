@@ -35,6 +35,15 @@
 
 # interface contracts
   - agreement between users of interfaces and their implementation
+  - details what the implementation agrees to do for the caller
+    - errors
+      - return codes
+      - exceptions
+    - return values
+    - methods
+    - documentation
+    - examples
+## 3 laws of an interface
   - law 1 - an interfaces implementation shall do what its methods says it does
       - the name of a method should correspond to the operations that the implementation actually performs
       - an implementation should perform the operations intended by the creator of the interface
@@ -42,7 +51,21 @@
   - law 2 - an implementation shall do no harm
     - harm - interfering with other modules in a program/other programs
     - an implementation should not hot resources
-    -
+  - law 3 - if an implementation is unable to perform its responsibilities, it shall notify its caller
+    - an implementation should alwayts report problems that are encounted and that it cannot fix itself
+## interface design by contract
+  - preconditions
+    - the user of an interface needs to ensure that certain conditions are met when calling a method
+  - postconditions
+    - each method in an interface specifies certain conditions that will be true after its invocation is complete
+  - class invariants
+    - describes the conditions that every object instance must satisfy
+    - typically properties of a particular imlementation
+  - notes
+    - if a precondition is not met, the method will not execute properly
+    - if a postcondition is not met, the method did not execute properly
+    - any implementation of an interface can have weaker preconditions aand stronger postconditions
+      - i.e. the same way a derived class can have weaker preconditions and stronger postconditions than the base class
 
 #  IOD Deliverables
   - sequence diagrams
