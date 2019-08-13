@@ -16,6 +16,8 @@
     - using the same interface but with potentially different implementations
   - resources
     - time, memory, file handles, db connectdions, threads, etc
+  - use case
+    - describes an interaction between a user anda  system that fulfills a goal 
 
 
 # interfaces
@@ -38,13 +40,15 @@
 # interface contracts
   - agreement between users of interfaces and their implementation
   - details what the implementation agrees to do for the caller
-    - errors
+  - lists the operations involved in an interface
+    - preconditions
+    - postconditions
+    - parameters nd their types
+    - return values
+    - errors signaled
       - return codes
       - exceptions
-    - return values
-    - methods
-    - documentation
-    - examples
+
 
 ## 3 laws of an interface
   - law 1 - an interfaces implementation shall do what its methods says it does
@@ -84,7 +88,13 @@
       - if the corresponding method returns and the postconditions are not met, it could also signal a failure
 
 # interface protocols
-  - 
+  - the set of allowable sequences of method calls
+    - the preconditions often imply a sequence, but they may not
+    - e.g. you must open a file before you can read it
+  - the callbacks that an interface may create
+  - events that are generated
+  - observers that are called
+  -
 
 #  IOD Deliverables
   - sequence diagrams
