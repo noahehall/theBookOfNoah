@@ -6,7 +6,9 @@
     - richard helm
     - ralph johnson
     - john vlissides
-    -
+
+# links
+  - [aspect-oriented programming](httpp://aosd.net)
 
 
 # terminology
@@ -43,6 +45,7 @@
     - methods
     - documentation
     - examples
+
 ## 3 laws of an interface
   - law 1 - an interfaces implementation shall do what its methods says it does
       - the name of a method should correspond to the operations that the implementation actually performs
@@ -53,6 +56,7 @@
     - an implementation should not hot resources
   - law 3 - if an implementation is unable to perform its responsibilities, it shall notify its caller
     - an implementation should alwayts report problems that are encounted and that it cannot fix itself
+
 ## interface design by contract
   - preconditions
     - the user of an interface needs to ensure that certain conditions are met when calling a method
@@ -67,7 +71,26 @@
     - any implementation of an interface can have weaker preconditions aand stronger postconditions
       - i.e. the same way a derived class can have weaker preconditions and stronger postconditions than the base class
 
+## contract checking
+  - an interface implementation is not required to check the preconditions
+    - assume user has met those preconditions and report any failures if they have not
+  - an interface that does validate preconditions should use one of the following
+    - code embedded within each method to check the conditions
+    - use aspects if the environment supports them
+    - contract-checking proxy
+      - implementation of the interafce the checks the preconditions for each method
+      - if all preconditions are met, the proxy calls the corresponding method in the implementation that does the actual work
+        - else signals a failure
+      - if the corresponding method returns and the postconditions are not met, it could also signal a failure
+
+# interface protocols
+  - 
+
 #  IOD Deliverables
   - sequence diagrams
     - illustrate the logical steps in doing something
   - Interface contracts
+    - preconditions
+    - postconditions
+    - class invariants
+  - interface protocols
