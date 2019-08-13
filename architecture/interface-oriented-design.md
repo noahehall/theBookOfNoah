@@ -42,17 +42,27 @@ stateful vs stateless interfaces
 
 
 # interfaces
-  - defs
-    - applies to a set of method signatures (names and parameter lists)
-    - a set of funtions that apply toa  common concept, such as a set of functions that operate on a file
-  - having many methods vs not-many methods
-    - less methods are easier for the implementer but require more error checking
-    - more methods are safer/more specific functionality but require more implementation
+  - applies to a set of method signatures (names and parameter lists)
+  - a set of funtions that apply to a common concept, such as a set of functions that operate on a file
 
 
 ## interface types
   - an interface can be more than one type
   - each type lies on a spectrum
+  - having many methods vs not-many methods
+    - less methods are easier for the implementer but require more error checking
+    - more methods are safer/more specific functionality but require more implementation
+  - stateful interfaces
+    - methods operate differently based on the current state
+    - current state is changed by the sequence of method invocations
+    - advantages
+      - there is a less chatter to get the same amount of work done
+      - the order of the method calls does not matter (can check state)
+  - stateless interfaces
+    - the behavior is not dependent on the history of  method invocations
+    - advantages
+      - a small number of operators can service many requests
+      - parameter lists are short
 
 ### textual interfaces
     - specifies the functions to perform, e.g. the command prompt
