@@ -8,6 +8,8 @@
     - john vlissides
   - software requirements
     - karl wiegers
+  - object oriented software engineering
+    - ivar jacobson
 
 # links
   - [aspect-oriented programming](httpp://aosd.net)
@@ -32,14 +34,17 @@
     - uses knowledge of hte code to devise tests
     - typically tests that check performance and robustness
   - observer pattern
-    - 
+    - ???
+  -
 
 
 # interfaces
   - defs
     - applies to a set of method signatures (names and parameter lists)
     - a set of funtions that apply toa  common concept, such as a set of functions that operate on a file
-  - textual interfaces
+
+## interface types
+### textual interfaces
     - specifies the functions to perform, e.g. the command prompt
     - examples
       - Unix device interface
@@ -50,7 +55,29 @@
     - advantages
       - you can store the cmds in a file, which later can be read and executed
   - graphical user interfaces
+
+### data interfaces
+  - when the methods correspond to those in a class that contains mostly attributes
+  -  the methods in the interface typically set/retrieve values of the attributes
+  -  implementations of data interfaces have state which consists of the set of values of all attributes in the class
+  -  e.g.
+    - data transfer object (DTO)
+      - methods refer only to attributes of the object
+
+
+### service interfaces
+  - a module whoose methods that act on the parameters pased to it rather than the attributes of the implementation
+  - typically consist of mostly methods and little if any attributes outside of those associated with providing the service,
+  - e.g.
+    - command interface
+      - usually contain only service mmethods
   -
+
+### service provider interfaces
+  - variation of the service interface
+  - adds methods to the interface that controls the life cycle of the service provider
+
+### data access interfaces
 
 # interface contracts
   - agreement between users of interfaces and their implementation
@@ -92,7 +119,8 @@
     - each method in an interface specifies certain conditions that will be true after its invocation is complete
   - class invariants
     - describes the conditions that every object instance must satisfy
-    - typically properties of a particular imlementation
+      - e.g. nonfunctional aspects such as performance/quality of implementation
+    - typically properties of a particular implementation
   - notes
     - if a precondition is not met, the method will not execute properly
     - if a postcondition is not met, the method did not execute properly
