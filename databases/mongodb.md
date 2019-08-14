@@ -4,6 +4,10 @@
 
 # links
   - [install mongodb ubuntu](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
+  - [atomicity](https://en.wikipedia.org/wiki/Atomicity_(database_systems))
+  - [ACID](https://en.wikipedia.org/wiki/ACID)
+  - [CAP Theorem](https://en.wikipedia.org/wiki/CAP_theorem)
+  - [DB transactions](https://en.wikipedia.org/wiki/Database_transaction)
 
 # terminology
   - nosql database
@@ -60,6 +64,31 @@
     - javascript object notation
   - BSON
     - binary JSON
+  - transaction
+    - symbolizes a unit of work performed against a DB
+    - each is treated in a coherent and reliable waay independent of other transactions
+  - ACID
+    - Atomic transaction
+      - an indivisible and irreducible series of database operations such that either all occur, or nothing occurs
+      - a gaurantee of atomicity prevents updates to the DB occuring only partially
+        - partial updates are bad!
+    - Consistency
+      - any given DB transaction must change affected data only in allowed ways
+      - any data written to the DB must be valid according to all defined rules
+        - constraints
+        - cascades
+        - triggers
+        - etc.
+    - Isolation
+    - Durability
+  - CAP Thereom
+    - states that it is impossible for a distributed data store to simultaneously provide more than 2/3 of the following guarantees
+      - consistency
+        - every read receives the most recent write or an error
+      - availability
+        - every request receives a non-error response - without the guarantee that it contaains the most recent write
+      - partition tolerance
+        - the system continues to operate despite an arbitrary number of messaages being dropped/delayed by the network between nodes 
 
 # document vs relational architecture
   - retrieving data from relational dbs is more difficult and resource heavy
@@ -69,6 +98,8 @@
     - data retrieved from magnetic disks pose lookup issues
       - data can be sparsely located, and magnetic disks must spin/search sequentially to aggregate all data
         - over 99% of the time is spent seeking the location of the data on the magnetic disk
+  - mongodb lacks multidocument transactions
+    - difficult to guarantee atomocity
 
 
 # mongodb architecture
@@ -135,7 +166,9 @@
         - mongodb stores documents contiguously on disk
         - thus, putting all the data you need into one documents means that youre never need more than one seek away from everything in the document
       - lack of joins
-        - whenever two sets of data are cohesively bound, youll want to embed them to reduce the need for multiple round trips to the db 
+        - whenever two sets of data are cohesively bound, youll want to embed them to reduce the need for multiple round trips to the db
+      - atomicity
+      - isolation
   - referencing
     - i.e. referencing related documents via some ID
 
