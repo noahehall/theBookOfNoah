@@ -85,6 +85,9 @@
       - null
   - collections
   -
+  - relations
+    - there are no native joins in mongodb
+    - to get referential data youll need to pull the first collection, then make a second trip to get the referenced data
 ## data types
   - string
     - must be UTF 8
@@ -123,8 +126,18 @@
     - optimize your schema for more frequest use cases
     - do complex aggregation in the schema
     - duplicate the data but keep it limited, as disc space is cheaper than compute time
-## embedding vs referencing relationships
 
+## embedding vs referencing relationships
+  - embedding
+    - i.e. nesting related documents
+    - advantages
+      - data locality
+        - mongodb stores documents contiguously on disk
+        - thus, putting all the data you need into one documents means that youre never need more than one seek away from everything in the document
+      - lack of joins
+        - whenever two sets of data are cohesively bound, youll want to embed them to reduce the need for multiple round trips to the db 
+  - referencing
+    - i.e. referencing related documents via some ID
 
 
 # statements
