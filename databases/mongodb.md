@@ -56,7 +56,14 @@
         - json data model with dynamic schemas
         - auto-sharding for horizontal scalability
         - built in replicatin for high availability
-  -
+
+# document vs relational architecture
+  - retrieving data from relational dbs is more difficult and resource heavy
+    - any join will have a performance hit
+      - 
+    - data retrieved from magnetic disks pose lookup issues
+      - data can be sparsely located, and magnetic disks must spin/search sequentially to aggregate all data
+        - over 99% of the time is spent seeking the location of the data on the magnetic disk
 # data types
   - string
     - must be UTF 8
