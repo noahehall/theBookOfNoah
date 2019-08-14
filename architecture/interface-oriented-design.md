@@ -13,6 +13,11 @@ stateful vs stateless interfaces
     - karl wiegers
   - object oriented software engineering
     - ivar jacobson
+  - structured design
+    - IBM Systems journal Vol 13 No 2 1974
+    - by W.P. stevens, G.J. Meyers, L.L. Constantine
+  - dealing with complexity
+    - Robert Flood and Ewart Carons 1988
 
 # links
   - [aspect-oriented programming](httpp://aosd.net)
@@ -41,8 +46,35 @@ stateful vs stateless interfaces
   - interface
     - applies to a set of method signatures (names and parameter lists)
     - a set of funtions that apply to a common concept, such as a set of functions that operate on a file
+    - implementers of an interface are required to provide all the methods of the interface
+  - cohesion
+    - how closely one thing relates to another one
+  - coupling
+    - measures how one module depends on the implementation of another module
+    - tight coupling
+      - a method that depends uon the internal implementation of a class is tightly coupled to that class
+        - if the implementation changes, then you have to alter the method
+        - this leads to brittle systems that are hard to extend and maintain
+    - loose coupling
+      - allows you to vary the implementatino of the called interface without having to hcange the code that calls it
 
 # best practices
+## measuring interfaces
+  - minimal vs complete interfaces
+    - minimal/sufficient interface has just the methods that a caller needs to perform their work case
+      - easier to implement and test with fewer methods
+      - however user must code their particuar functionality and may wind up with duplicated code for same functionality
+    - complete interface has more methods  than required to perform  their work
+      - user has all needed methods
+      - may be harder to understand an interface with numerous methods
+  - simplicity vs complexity
+    - simple interfaces do not allow for customizations or indepth configuration
+      - easier for the user to perform common functions
+      - variations must be coded as new methods
+    - complex interfaces give maximum capabilities to the user
+      - users have flexibility to do it their way
+      - may be harder for users to understand
+
 ## 3 laws of an interface
   - law 1 - an interfaces implementation shall do what its methods says it does
       - the name of a method should correspond to the operations that the implementation actually performs
@@ -54,6 +86,19 @@ stateful vs stateless interfaces
   - law 3 - if an implementation is unable to perform its responsibilities, it shall notify its caller
     - an implementation should alwayts report problems that are encounted and that it cannot fix itself
 
+## interface method cohesiveness
+  - methods in an interface should be cohesive
+  - i.e. provide services that revolve around a common concept
+  - deciding the level of cohesion is an artform
+    - cohesiveness is a spectrum from functional cohesion to coincidental cohesion
+  - you can have a huge base interface, in which all methods are part of a single interface
+    - e.g. i-do-everything-printer-interface
+  - you can have multiple interfaces which together provide the capabilities of a concept
+    - e.g. color-printer-interface vs black-n-white-printer-interface
+
+## interface-implementation coupling
+  - always decouple the implementation by using an interface and hiding the implementation
+  - this allows for loosely coupled interfaces
 
 # interface contracts
   - agreement between users of interfaces and their implementation
@@ -186,6 +231,7 @@ stateful vs stateless interfaces
 
 ## data access interfaces
   - interfaces that access data
+
 
 #  IOD Deliverables
   - use cases
