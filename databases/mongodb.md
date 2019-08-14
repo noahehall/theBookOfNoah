@@ -1,5 +1,12 @@
+# books
+  - wtf is the name of this book?
+    - bookOfNoah/books/mongodb
+
+# links
+  - [install mongodb ubuntu](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
+
 # terminology
-  - noosql database
+  - nosql database
     - non-sql/non relational database
     - provides a mechanism for storage and retrieval of data other than tabular relations used in relational databases
     - doesnt use tables for storing data
@@ -49,7 +56,7 @@
         - json data model with dynamic schemas
         - auto-sharding for horizontal scalability
         - built in replicatin for high availability
-
+  -
 # data types
   - string
     - must be UTF 8
@@ -148,4 +155,4 @@
     - used to delete documents from a collection
     - `justOne`
       - if true removes only one document
-      - 
+      -
