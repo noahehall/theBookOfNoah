@@ -60,10 +60,15 @@
 # document vs relational architecture
   - retrieving data from relational dbs is more difficult and resource heavy
     - any join will have a performance hit
-      - 
+      - its oftern required to denormalize the model (increase redudancy) to improve performance by reducing joins
+      - if dbs are scaled across servers then you are forced to do distributed joins
     - data retrieved from magnetic disks pose lookup issues
       - data can be sparsely located, and magnetic disks must spin/search sequentially to aggregate all data
         - over 99% of the time is spent seeking the location of the data on the magnetic disk
+# mongodb architecture
+  - documents
+    - 
+  - collections
 # data types
   - string
     - must be UTF 8
