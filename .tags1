@@ -7,20 +7,21 @@
 books	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^# books$/;"	function	line:4
 links	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^# links$/;"	function	line:22
 terminology	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^# terminology$/;"	function	line:27
-best practices	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^# best practices$/;"	function	line:61
-measuring interfaces	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## measuring interfaces$/;"	function	line:62
-3 laws of an interface	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## 3 laws of an interface$/;"	function	line:78
-interface method cohesiveness	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## interface method cohesiveness$/;"	function	line:89
-interface-implementation coupling	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## interface-implementation coupling$/;"	function	line:99
-interface contracts	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^# interface contracts$/;"	function	line:103
-interface design by contract	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## interface design by contract$/;"	function	line:123
-contract checking	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## contract checking$/;"	function	line:139
-interface protocols	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^# interface protocols$/;"	function	line:151
-interface testing	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^# interface testing$/;"	function	line:160
-interface types	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^# interface types$/;"	function	line:172
-textual interfaces	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## textual interfaces$/;"	function	line:200
-data interfaces	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## data interfaces$/;"	function	line:212
-service interfaces	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## service interfaces$/;"	function	line:220
-service provider interfaces	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## service provider interfaces$/;"	function	line:228
-data access interfaces	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## data access interfaces$/;"	function	line:232
-IOD Deliverables	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^#  IOD Deliverables$/;"	function	line:236
+best practices	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^# best practices$/;"	function	line:69
+gotchas	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## gotchas$/;"	function	line:70
+measuring interfaces	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## measuring interfaces$/;"	function	line:83
+3 laws of an interface	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## 3 laws of an interface$/;"	function	line:99
+interface method cohesiveness	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## interface method cohesiveness$/;"	function	line:110
+interface-implementation coupling	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## interface-implementation coupling$/;"	function	line:120
+interface contracts	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^# interface contracts$/;"	function	line:124
+interface design by contract	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## interface design by contract$/;"	function	line:144
+contract checking	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## contract checking$/;"	function	line:160
+interface protocols	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^# interface protocols$/;"	function	line:172
+interface testing	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^# interface testing$/;"	function	line:181
+interface types	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^# interface types$/;"	function	line:193
+textual interfaces	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## textual interfaces$/;"	function	line:221
+data interfaces	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## data interfaces$/;"	function	line:233
+service interfaces	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## service interfaces$/;"	function	line:241
+service provider interfaces	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## service provider interfaces$/;"	function	line:249
+data access interfaces	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^## data access interfaces$/;"	function	line:253
+IOD Deliverables	/home/wesov/git/theBookOfNoah/architecture/interface-oriented-design.md	/^#  IOD Deliverables$/;"	function	line:257

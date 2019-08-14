@@ -27,6 +27,7 @@ stateful vs stateless interfaces
 # terminology
   - polymorphism
     - using the same interface but with potentially different implementations
+    - e.g. when multiple classes that all implement the same set of methods
   - resources
     - time, memory, file handles, db connectdions, threads, etc
   - use case
@@ -47,6 +48,12 @@ stateful vs stateless interfaces
     - applies to a set of method signatures (names and parameter lists)
     - a set of funtions that apply to a common concept, such as a set of functions that operate on a file
     - implementers of an interface are required to provide all the methods of the interface
+    - the relationship between modules (implementers) and interfacers are referred as 'provides-a' or 'implements-a'
+  - inheritance
+    - in OOP, one class extending another class to gain methods and properties
+    - i.e. a derived class receives the attributes and methods of a base class
+    - the relationship between the derived and base class is referred to as 'is-a' or 'is-a-kind-of'
+    -
   - cohesion
     - how closely one thing relates to another one
   - coupling
@@ -58,7 +65,21 @@ stateful vs stateless interfaces
     - loose coupling
       - allows you to vary the implementatino of the called interface without having to hcange the code that calls it
 
+
 # best practices
+## gotchas
+  - creating an inheritance hierarchy prematurely can cause extra work when you eventually forced to untangle it
+    - refactoring into an inherriance hierarchy is far easier than refactoring out of an existing hierarchy
+  - interfaces and class-inheritance are often two different ways to do the same thing
+    - method perspective
+      - this - a base class provides a set of methods, and derived classes inherit implementations of some methods and contain their own implementations of other methods
+      - that - mutiple classes each  implement all the methods in an interface
+  - dont duplicate code across interfaces
+    - this - create a helper class and delegate operations to it
+    - or that -
+      - create a class that implemented the interface and provided code for many, if not all of the methods
+      - then inherit from this class instead of implementing another interface
+  - 
 ## measuring interfaces
   - minimal vs complete interfaces
     - minimal/sufficient interface has just the methods that a caller needs to perform their work case
