@@ -55,7 +55,11 @@
       - supports
         - json data model with dynamic schemas
         - auto-sharding for horizontal scalability
-        - built in replicatin for high availability
+        - built in replicatin for high
+  - JSON
+    - javascript object notation
+  - BSON
+    - binary JSON
 
 # document vs relational architecture
   - retrieving data from relational dbs is more difficult and resource heavy
@@ -65,11 +69,23 @@
     - data retrieved from magnetic disks pose lookup issues
       - data can be sparsely located, and magnetic disks must spin/search sequentially to aggregate all data
         - over 99% of the time is spent seeking the location of the data on the magnetic disk
+
+
 # mongodb architecture
   - documents
-    - 
+    - data is stored in documents
+    - documents are modeled after JSON, and are stored as BSON
+    - is a dictionary of  key-value pairs where the value may be one of the following
+      - primitive JSON types
+        - number, string, boolean, etc
+      - primitive BSON types
+        - datetime, objectid, uuid, regex
+      - array of values
+      - other objects
+      - null
   - collections
-# data types
+  -
+## data types
   - string
     - must be UTF 8
     - used to store data
@@ -107,6 +123,9 @@
     - optimize your schema for more frequest use cases
     - do complex aggregation in the schema
     - duplicate the data but keep it limited, as disc space is cheaper than compute time
+## embedding vs referencing relationships
+
+
 
 # statements
 ## databases
