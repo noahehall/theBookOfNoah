@@ -8,6 +8,9 @@
   - [ACID](https://en.wikipedia.org/wiki/ACID)
   - [CAP Theorem](https://en.wikipedia.org/wiki/CAP_theorem)
   - [DB transactions](https://en.wikipedia.org/wiki/Database_transaction)
+  - [isolation](https://en.wikipedia.org/wiki/Isolation_(database_systems))
+  - [durability](https://en.wikipedia.org/wiki/Durability_(database_systems))
+  -
 
 # terminology
   - nosql database
@@ -68,7 +71,7 @@
     - symbolizes a unit of work performed against a DB
     - each is treated in a coherent and reliable waay independent of other transactions
   - ACID
-    - Atomic transaction
+    - Atomic transactions
       - an indivisible and irreducible series of database operations such that either all occur, or nothing occurs
       - a gaurantee of atomicity prevents updates to the DB occuring only partially
         - partial updates are bad!
@@ -80,7 +83,16 @@
         - triggers
         - etc.
     - Isolation
+      - determines how transaction integrity is visible to other users and systems
+      - lower isolation levels increases the ability of many users to access the same data at the same time
+        - increases the number of concurrency effects
+          - e.g. dirty reads or lost updates
+      - higher isolation level reduces the types of concurrency effects that users may encounter
+        - requires more system resources
+        - increases the chances that one transaction will block another
     - Durability
+      - guarantees that transactions that have committed will survive permanently
+      -
   - CAP Thereom
     - states that it is impossible for a distributed data store to simultaneously provide more than 2/3 of the following guarantees
       - consistency
@@ -88,9 +100,9 @@
       - availability
         - every request receives a non-error response - without the guarantee that it contaains the most recent write
       - partition tolerance
-        - the system continues to operate despite an arbitrary number of messaages being dropped/delayed by the network between nodes 
+        - the system continues to operate despite an arbitrary number of messaages being dropped/delayed by the network between nodes
 
-# document vs relational architecture
+# mongodb vs relational architecture
   - retrieving data from relational dbs is more difficult and resource heavy
     - any join will have a performance hit
       - its oftern required to denormalize the model (increase redudancy) to improve performance by reducing joins
@@ -100,6 +112,7 @@
         - over 99% of the time is spent seeking the location of the data on the magnetic disk
   - mongodb lacks multidocument transactions
     - difficult to guarantee atomocity
+  - mongodb lacks joins 
 
 
 # mongodb architecture
@@ -115,10 +128,12 @@
       - other objects
       - null
   - collections
-  -
   - relations
     - there are no native joins in mongodb
     - to get referential data youll need to pull the first collection, then make a second trip to get the referenced data
+
+
+
 ## data types
   - string
     - must be UTF 8
