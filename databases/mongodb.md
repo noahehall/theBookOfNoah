@@ -171,10 +171,6 @@
       - array of values
       - other objects
       - null
-    - when designing the structure of documents
-      - pay attention to the data types availlable for use in BSON
-      - choosing the correct data type can have significant impact on the performance and capability of the system
-        - e.g. storing a string date (28+ bytes) vs UTC date (8 bytes)
   - collections
   - relations
     - there are no native joins in mongodb
@@ -219,11 +215,21 @@
   - optimize your schema for more frequest use cases
   - do complex aggregation in the schema
   - duplicate the data but keep it limited, as disc space is cheaper than compute time
+
   - schema evolution
     - create migration scripts that upgrade the DB from one version of a schema to another
       - these are generally slow, and can hamper performance of done against a live DB
     - at the application level you can have queries that request old and new style documents, as you slowly migrate in off-hours
 
+  - when designing the structure of documents
+    - pay attention to the data types availlable for use in BSON
+      - choosing the correct data type can have significant impact on the performance and capability of the system
+      - storing a string date vs UTC date
+        - string date (28+ bytes) vs UTC date (8 bytes), including
+        - types of quering capability increases with UTC date
+      - storing numeric data as strings vs numbers
+        - storing numbers as strings requires more space ans is more difficult to query
+        -
 ## polymorphic schemas
   - when all the documents in a  collection are similar but not identically structured
   - permits you to use the same collection to perform queries
