@@ -275,6 +275,16 @@
       - many-to-many (M:R) relationships require application-level joins
         - a priori, there arent any db-level joins
 
+##  emulating transactions
+  - create a transaction collection containing documents that store the state of all outstanding actions
+    - `new` state
+      - may be rolled back if it times out
+    - `committed` state
+      - will always (i.e.) eventually be retired
+    - `rollback` state
+      - will always (i.e.) eventually be reversed
+  - 
+
 
 # statements
 ## databases
@@ -321,7 +331,11 @@
       - solution
         - atomically update the document without doing in the client application code
         - always check the return value of updates
-        - as multiple clients could be modifying the same docuemnt simultaneously 
+        - as multiple clients could be modifying the same docuemnt simultaneously
+  - be wary of application-level two-phase commit protocols
+    - its easy to miss a failure scenario in tests
+    - there are many opportunties to miss race conditions that introduce inconsistency into the data
+  -
 ### insert
   - `db.COLLECTION_NAME.insert(document)`
     - add/insert new documents into a collection
