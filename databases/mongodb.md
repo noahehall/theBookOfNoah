@@ -114,7 +114,15 @@
         - over 99% of the time is spent seeking the location of the data on the magnetic disk
   - mongodb lacks multidocument transactions
     - difficult to guarantee atomocity
-  - mongodb lacks joins
+  - mongodb lacks
+    - joins
+    - multidocument transactions
+  - mongodb db can be schemaless
+  - relational DBS generally define column names and types at the table level,
+    - this information isnt duplicated in each row
+    - in mongodb this information IS DUPLICATED !!! in each document
+      - #fail
+      - 
 
 
 # mongodb architecture
@@ -174,9 +182,16 @@
     - optimize your schema for more frequest use cases
     - do complex aggregation in the schema
     - duplicate the data but keep it limited, as disc space is cheaper than compute time
+    - schema evolution
+      - create migration scripts that upgrade the DB from one version of a schema to another
+        - these are generally slow, and can hamper performance of done against a live DB
+      - at the application level you can have queries that request old and new style documents, as you slowly migrate in off-hours
 
 ## polymorphic schemas
   - when all the documents in a  collection are similar but not identically structured
+  - permits you to use the same collection to perform queries
+    - on common fields shared by all content nodes
+    - only a particular node type
   - in mongodb store all the nodes in the same document, with each node containing their relevant fields
   - e.g. collection 'nodes'
     - includes blog page documents
