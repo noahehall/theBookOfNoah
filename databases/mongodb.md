@@ -275,7 +275,7 @@
       - many-to-many (M:R) relationships require application-level joins
         - a priori, there arent any db-level joins
 
-##  emulating transactions
+##  emulating two-phase commit protocol transactions
   - create a transaction document containing collections that store the state of all outstanding actions
     - collection fields
       - `state` indicates the step in the transaction
@@ -290,6 +290,8 @@
         - will always (i.e.) eventually be retired
       - `rollback` state
         - will always (i.e.) eventually be reversed
+      - each transaction should complete with a certain time window
+        - based on the alotted time, when it completes, the transaction will be updated to `committed` or `rollback` states
   -
 
 
