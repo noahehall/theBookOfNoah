@@ -75,7 +75,7 @@
       - either all of the statements in a group succeed or all fail
       - in relational databases
         - multi statement transactions are initiated with `BEGIN` and completed with `COMMIT` or `ROLLBACK` for succeed/failure
-        - additionally, anywhere you see `casecade` in a table definition behind the scenes is a multi statement transaction 
+        - additionally, anywhere you see `casecade` in a table definition behind the scenes is a multi statement transaction
     - two-phase commit protocol
       - for multistatement transaction consistency
       - each server prepares to execute the transaction
@@ -134,7 +134,12 @@
     - difficult to guarantee atomocity
   - mongodb lacks
     - joins
+      - share the document.id to support references
     - multidocument transactions
+      - issue two non-atomic updates
+        - this can potentially leave dangling items if one of the modifications fail
+        - its important to consider the order of the updates
+          - i.e. its better to delete the references before the referenced entity
   - mongodb db can be schemaless
   - relational DBS generally define column names and types at the table level,
     - this information isnt duplicated in each row
@@ -307,6 +312,16 @@
     - returns false when there is no existing collection to drop
 
 ## CRUD
+### best practices
+  - complex updates in application code
+    - dont retrieve an item, update it, save it, then retrieve the value for use
+      - issue
+        - that can introduce race conditions between the update, save and retrieval
+        - whereby the retrieval will not contain the new value
+      - solution
+        - atomically update the document without doing in the client application code
+        - always check the return value of updates
+        - as multiple clients could be modifying the same docuemnt simultaneously 
 ### insert
   - `db.COLLECTION_NAME.insert(document)`
     - add/insert new documents into a collection
