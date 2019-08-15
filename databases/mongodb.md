@@ -101,6 +101,8 @@
         - every request receives a non-error response - without the guarantee that it contaains the most recent write
       - partition tolerance
         - the system continues to operate despite an arbitrary number of messaages being dropped/delayed by the network between nodes
+  - schemaless database
+    - the db does not enforce a particular structure on documents in a collection
 
 # mongodb vs relational architecture
   - retrieving data from relational dbs is more difficult and resource heavy
@@ -173,6 +175,10 @@
     - do complex aggregation in the schema
     - duplicate the data but keep it limited, as disc space is cheaper than compute time
 
+## polymorphic schemas
+  - when all the documents ina  collection are similar but not identically structured
+  -
+
 ## embedding vs referencing relationships
   - generalities
     - embedded approach
@@ -181,6 +187,8 @@
     - referenced
       - adhoc queries
       - slice n dice queries
+    - compromise
+      - always review if embedding just the IDs verses the whole document serves your requirements
   - embedding
     - i.e. nesting related documents
     - advantages
