@@ -4,6 +4,9 @@
 
 # links
   - [install mongodb ubuntu](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
+  - [mongodb production notes](https://docs.mongodb.com/manual/administration/production-notes/)
+  - [mongodb ulimit](https://docs.mongodb.com/manual/reference/ulimit/)
+  - [mongodb configuration file options](https://docs.mongodb.com/manual/reference/configuration-options/#conf-file)
   - [atomicity](https://en.wikipedia.org/wiki/Atomicity_(database_systems))
   - [ACID](https://en.wikipedia.org/wiki/ACID)
   - [CAP Theorem](https://en.wikipedia.org/wiki/CAP_theorem)
@@ -176,7 +179,19 @@
     - there are no native joins in mongodb
     - to get referential data youll need to pull the first collection, then make a second trip to get the referenced data
 
-
+## important notes, files and directories
+## notes
+  - by default mongodb runs using hte `mongodb` user account
+    - if you change the user account
+      - update the permission to the data and log directories
+      -
+## files directories
+  - data directory
+    - /var/lib/mongodb
+  - log directory
+    - /var/log/mongodb
+  - configuration file
+    - /etc/mongod.conf
 
 ## data types
   - string
@@ -229,7 +244,7 @@
         - types of quering capability increases with UTC date
       - storing numeric data as strings vs numbers
         - storing numbers as strings requires more space ans is more difficult to query
-        -
+    - pay attention to the size of
 ## polymorphic schemas
   - when all the documents in a  collection are similar but not identically structured
   - permits you to use the same collection to perform queries
