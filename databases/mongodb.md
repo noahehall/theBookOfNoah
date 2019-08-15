@@ -72,7 +72,8 @@
     - each is treated in a coherent and reliable way independent of other transactions
     - multi statement transactions
       - atomic groups of transactions to ensure data consistency
-      - either all of the statements in a group succeed or all fail 
+      - either all of the statements in a group succeed or all fail
+    -
   - ACID
     - Atomic transactions
       - an indivisible and irreducible series of database operations such that either all occur, or nothing occurs
@@ -84,7 +85,10 @@
         - constraints
         - cascades
         - triggers
-        - etc.
+        - etc. & e.g.
+          - deleintg a row in a one-to-many relationship should also delete the many rows joined to it
+          - adjusting the quantity of a line item on an order should update the order total cost
+            - if the cost is stored in the order row itself
     - Isolation
       - determines how transaction integrity is visible to other users and systems
       - lower isolation levels increases the ability of many users to access the same data at the same time
