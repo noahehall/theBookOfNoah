@@ -7,8 +7,19 @@
   - [mongodb production notes](https://docs.mongodb.com/manual/administration/production-notes/)
   - [mongodb ulimit](https://docs.mongodb.com/manual/reference/ulimit/)
   - [mongodb configuration file options](https://docs.mongodb.com/manual/reference/configuration-options/#conf-file)
-  - [mong javascript shell](https://docs.mongodb.com/manual/reference/program/mongo/#bin.mongo)
+  - [mongo javascript shell](https://docs.mongodb.com/manual/reference/program/mongo/#bin.mongo)
+  - [mongo shell tutorial?](https://docs.mongodb.com/manual/mongo/)
+  - [mongos reference](https://docs.mongodb.com/manual/reference/program/mongos/#bin.mongos)
+  - [mongoimport reference](https://docs.mongodb.com/manual/reference/program/mongoimport/#bin.mongoimport)
+  - [bsondump reference](https://docs.mongodb.com/manual/reference/program/bsondump/#bin.bsondump)
+  - [mongodump reference](https://docs.mongodb.com/manual/reference/program/mongodump/#bin.mongodump)
+  - [mongoexport reference](https://docs.mongodb.com/manual/reference/program/mongoexport/#bin.mongoexport)
+  - [mongofiles reference](https://docs.mongodb.com/manual/reference/program/mongofiles/#bin.mongofiles)
+  - [mongorestore reference](https://docs.mongodb.com/manual/reference/program/mongorestore/#bin.mongorestore)
+  - [mongostat reference](https://docs.mongodb.com/manual/reference/program/mongostat/#bin.mongostat)
+  - [mongotop reference](https://docs.mongodb.com/manual/reference/program/mongotop/#bin.mongotop)
   - [mongod - the daemon](https://docs.mongodb.com/manual/reference/program/mongod/#bin.mongod)
+  - [mongodb getting started tutorial](https://docs.mongodb.com/manual/tutorial/getting-started/#getting-started)
   - [atomicity](https://en.wikipedia.org/wiki/Atomicity_(database_systems))
   - [ACID](https://en.wikipedia.org/wiki/ACID)
   - [CAP Theorem](https://en.wikipedia.org/wiki/CAP_theorem)
@@ -137,6 +148,7 @@
       -  next is generating actional reports on the data, ideally in real time with data import itself
       -  oft times you need batch operations to transform the data into a meaningful form
 
+
 # mongodb vs relational architecture
   - retrieving data from relational dbs is more difficult and resource heavy
     - any join will have a performance hit
@@ -165,6 +177,28 @@
 
 
 # mongodb architecture
+## packages
+  - mongodb-org
+    - metapackage that will automatically install the four component packages
+      - server, mongos, shell, and tools
+  - mongodb-org-server
+    - the mongod damaon
+    - init script
+    - configuration file
+  - mongodb-org-mongos
+    - mongos daemon
+  - mongodb-org-shell
+    - the mongo shell
+  - mongodb-org-tools
+    - mongoimport
+    - bsondump
+    - mongodump
+    - mongoexport
+    - mongofiles
+    - mongorestore
+    - mongostat
+    - mongotop
+## storage
   - documents
     - data is stored in documents
     - documents are modeled after JSON, and are stored as BSON
@@ -188,8 +222,10 @@
       - if you change the user account
         - update the permission to the data and log directories
     - mongodb instances run on part `27017`
+
+
 ## files directories
-  - data directory
+  - data/database directory
     - /var/lib/mongodb
   - log directory
     - /var/log/mongodb
@@ -345,6 +381,10 @@
 # statements
 ## administration
 ```sh
+  # uninstall mongodb
+  sudo apt-get purge mongodb-org*
+  sudo rm -r/var/{log,lib}/mongodb # double check the regex syntax
+
   # start mongodb
   sudo service mongod start
 
@@ -353,6 +393,10 @@
 
   # restart mongodb
   sudo service mongod restart
+
+  # connect to mongodb via the mongo shell
+  mongo # localhost with default port 27017
+
 
 ```
 
