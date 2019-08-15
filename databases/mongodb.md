@@ -73,7 +73,13 @@
     - multi statement transactions
       - atomic groups of transactions to ensure data consistency
       - either all of the statements in a group succeed or all fail
-    -
+      - in relational databases
+        - multi statement transactions are initiated with `BEGIN` and completed with `COMMIT` or `ROLLBACK` for succeed/failure
+    - two-phase commit protocol
+      - for multistatement transaction consistency
+      - each server prepares to execute the transaction
+        - all the updates are computed and guaranteed to not cause consistency violations within the server
+      - once all the servers have executed the `prepare` stepp, each server then applies the updates that are part of the transaction
   - ACID
     - Atomic transactions
       - an indivisible and irreducible series of database operations such that either all occur, or nothing occurs
@@ -89,6 +95,7 @@
           - deleintg a row in a one-to-many relationship should also delete the many rows joined to it
           - adjusting the quantity of a line item on an order should update the order total cost
             - if the cost is stored in the order row itself
+          - in a bank account transfer, the debit from the sneding account and the credit into the receiving account should be an atomic operation where boht succeed or both fail
     - Isolation
       - determines how transaction integrity is visible to other users and systems
       - lower isolation levels increases the ability of many users to access the same data at the same time
