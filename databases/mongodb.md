@@ -112,7 +112,7 @@
         - over 99% of the time is spent seeking the location of the data on the magnetic disk
   - mongodb lacks multidocument transactions
     - difficult to guarantee atomocity
-  - mongodb lacks joins 
+  - mongodb lacks joins
 
 
 # mongodb architecture
@@ -174,6 +174,13 @@
     - duplicate the data but keep it limited, as disc space is cheaper than compute time
 
 ## embedding vs referencing relationships
+  - generalities
+    - embedded approach
+      - query patterns are well known
+      - data tends to be accessed in one way (i.e. bulk)
+    - referenced
+      - adhoc queries
+      - slice n dice queries
   - embedding
     - i.e. nesting related documents
     - advantages
@@ -184,8 +191,33 @@
         - whenever two sets of data are cohesively bound, youll want to embed them to reduce the need for multiple round trips to the db
       - atomicity
       - isolation
+      - performance
+      - consistency
+    - disadvantages
+      - queries return the entire document (overload)
+        - the larger the document, the more ram required
+          - RAM is usually the most critical resource on a mongodb server
+          - mongodb database cases frequently accessed documents in RAM, and the larger those documents are, the fewer that will fit
+          - the fewer documents in RAM, the more likely the server is to page fault to retrieve documents
+            - page faults lead to random disk i/o
+      - large document sizes
+        - growing documents must eventually be copied to larger spaces
+          - since each document is stored contiguously
+            - larger documents eventually need to be copied to larger spaces as the document grows
+            - this movement (i.e. update) will be significantly slowed
+        - mongodb documents have a hard size limit of 16mb
+          - if a document reaches the 16mb cap, updates will fail
+          - usually you breach RAM limits before this cap size limit
   - referencing
     - i.e. referencing related documents via some ID
+    - advantages
+      - flexibility in performing queries
+        - adhoc queries for specific documents
+      - high-arity relationships
+        - when you have one-to-many relationships with very high/unpredictable arity
+          - e.g. blog posts with hundreds/thousands comments for each post
+    - disadvantages
+      - requires additional care to ensure redundant data does not produce invalid data overtime
 
 
 # statements
