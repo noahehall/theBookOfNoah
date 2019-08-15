@@ -193,6 +193,9 @@
       - isolation
       - performance
       - consistency
+      - many-to-many (M:N) relationships
+        - you can retrieve all the related data at the db level
+          - does not require application level joins
     - disadvantages
       - queries return the entire document (overload)
         - the larger the document, the more ram required
@@ -218,6 +221,8 @@
           - e.g. blog posts with hundreds/thousands comments for each post
     - disadvantages
       - requires additional care to ensure redundant data does not produce invalid data overtime
+      - many-to-many (M:R) relationships require application-level joins
+        - a priori, there arent any db-level joins
 
 
 # statements
