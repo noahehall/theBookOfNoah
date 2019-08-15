@@ -276,11 +276,13 @@
         - a priori, there arent any db-level joins
 
 ##  emulating transactions
-  - create a transaction collection containing documents that store the state of all outstanding actions
+  - create a transaction document containing collections that store the state of all outstanding actions
     - collection fields
       - `state` indicates the step in the transaction
       - `id` ID of the transaction
       - the remaining fields should contain all the data required to recreate, commit, and rollback the transaction
+    - documents consuming the transaction document
+      - each collection should contain a reference to the transaction collection to monitor success/rollback
     - process
       - `new` state
         - may be rolled back if it times out
