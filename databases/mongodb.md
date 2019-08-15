@@ -171,6 +171,10 @@
       - array of values
       - other objects
       - null
+    - when designing the structure of documents
+      - pay attention to the data types availlable for use in BSON
+      - choosing the correct data type can have significant impact on the performance and capability of the system
+        - e.g. storing a string date (28+ bytes) vs UTC date (8 bytes)
   - collections
   - relations
     - there are no native joins in mongodb
@@ -209,17 +213,16 @@
     - the application
     - the performance characteristics of the database engine
     - the data retrieval patterns
-  - best practices
-    - always design schema according to user requirements
-    - do join on write operations never on read operations
-    - objects you want too use together should be combined into one document
-    - optimize your schema for more frequest use cases
-    - do complex aggregation in the schema
-    - duplicate the data but keep it limited, as disc space is cheaper than compute time
-    - schema evolution
-      - create migration scripts that upgrade the DB from one version of a schema to another
-        - these are generally slow, and can hamper performance of done against a live DB
-      - at the application level you can have queries that request old and new style documents, as you slowly migrate in off-hours
+  - always design schema according to user requirements
+  - do join on write operations never on read operations
+  - objects you want too use together should be combined into one document
+  - optimize your schema for more frequest use cases
+  - do complex aggregation in the schema
+  - duplicate the data but keep it limited, as disc space is cheaper than compute time
+  - schema evolution
+    - create migration scripts that upgrade the DB from one version of a schema to another
+      - these are generally slow, and can hamper performance of done against a live DB
+    - at the application level you can have queries that request old and new style documents, as you slowly migrate in off-hours
 
 ## polymorphic schemas
   - when all the documents in a  collection are similar but not identically structured
@@ -304,7 +307,8 @@
       - each transaction should complete with a certain time window
         - based on the alotted time, when it completes, the transaction will be updated to `committed` or `rollback` states
         - you should periodically check the transaction document for any collections requiring transition to `committed` or `rollback` states
-  -
+
+## storing log files
 
 
 # statements
@@ -356,6 +360,8 @@
   - be wary of application-level two-phase commit protocols
     - its easy to miss a failure scenario in tests
     - there are many opportunties to miss race conditions that introduce inconsistency into the data
+  - retrieving data via regex expression queries require a full scan of the collection
+    - its best to extract the data into atomic fields while importing, or during a background transformation process
   -
 ### insert
   - `db.COLLECTION_NAME.insert(document)`
