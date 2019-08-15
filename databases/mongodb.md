@@ -69,7 +69,10 @@
     - binary JSON
   - transaction
     - symbolizes a unit of work performed against a DB
-    - each is treated in a coherent and reliable waay independent of other transactions
+    - each is treated in a coherent and reliable way independent of other transactions
+    - multi statement transactions
+      - atomic groups of transactions to ensure data consistency
+      - either all of the statements in a group succeed or all fail 
   - ACID
     - Atomic transactions
       - an indivisible and irreducible series of database operations such that either all occur, or nothing occurs
@@ -122,7 +125,7 @@
     - this information isnt duplicated in each row
     - in mongodb this information IS DUPLICATED !!! in each document
       - #fail
-      - 
+      -
 
 
 # mongodb architecture
