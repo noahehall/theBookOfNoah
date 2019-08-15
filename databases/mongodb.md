@@ -7,6 +7,8 @@
   - [mongodb production notes](https://docs.mongodb.com/manual/administration/production-notes/)
   - [mongodb ulimit](https://docs.mongodb.com/manual/reference/ulimit/)
   - [mongodb configuration file options](https://docs.mongodb.com/manual/reference/configuration-options/#conf-file)
+  - [mong javascript shell](https://docs.mongodb.com/manual/reference/program/mongo/#bin.mongo)
+  - [mongod - the daemon](https://docs.mongodb.com/manual/reference/program/mongod/#bin.mongod)
   - [atomicity](https://en.wikipedia.org/wiki/Atomicity_(database_systems))
   - [ACID](https://en.wikipedia.org/wiki/ACID)
   - [CAP Theorem](https://en.wikipedia.org/wiki/CAP_theorem)
@@ -181,10 +183,11 @@
 
 ## important notes, files and directories
 ## notes
-  - by default mongodb runs using hte `mongodb` user account
-    - if you change the user account
-      - update the permission to the data and log directories
-      -
+  - by default
+    - mongodb runs using hte `mongodb` user account
+      - if you change the user account
+        - update the permission to the data and log directories
+    - mongodb instances run on part `27017`
 ## files directories
   - data directory
     - /var/lib/mongodb
@@ -192,6 +195,8 @@
     - /var/log/mongodb
   - configuration file
     - /etc/mongod.conf
+    - if you modify the conf file you must restart any running mongod instances
+  -
 
 ## data types
   - string
@@ -245,6 +250,8 @@
       - storing numeric data as strings vs numbers
         - storing numbers as strings requires more space ans is more difficult to query
     - pay attention to the size of
+
+
 ## polymorphic schemas
   - when all the documents in a  collection are similar but not identically structured
   - permits you to use the same collection to perform queries
@@ -256,6 +263,7 @@
       - fields: title, url, type, text
     - includes photo documents
       - fields: title, url, type content (binary field)
+
 
 ## embedding vs referencing relationships
   - generalities
@@ -310,6 +318,7 @@
       - many-to-many (M:R) relationships require application-level joins
         - a priori, there arent any db-level joins
 
+
 ##  emulating two-phase commit protocol transactions
   - create a transaction document containing collections that store the state of all outstanding actions
     - collection fields
@@ -329,10 +338,24 @@
         - based on the alotted time, when it completes, the transaction will be updated to `committed` or `rollback` states
         - you should periodically check the transaction document for any collections requiring transition to `committed` or `rollback` states
 
+
 ## storing log files
 
 
 # statements
+## administration
+```sh
+  # start mongodb
+  sudo service mongod start
+
+  # stop mongodb
+  sudo service mongod stop
+
+  # restart mongodb
+  sudo service mongod restart
+
+```
+
 ## databases
   - `use database`
     - if there is no existing database, it will create then return it
