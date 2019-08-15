@@ -75,11 +75,15 @@
       - either all of the statements in a group succeed or all fail
       - in relational databases
         - multi statement transactions are initiated with `BEGIN` and completed with `COMMIT` or `ROLLBACK` for succeed/failure
+        - additionally, anywhere you see `casecade` in a table definition behind the scenes is a multi statement transaction 
     - two-phase commit protocol
       - for multistatement transaction consistency
       - each server prepares to execute the transaction
         - all the updates are computed and guaranteed to not cause consistency violations within the server
       - once all the servers have executed the `prepare` stepp, each server then applies the updates that are part of the transaction
+        - each server generally maintains a set of locks on data to be modified
+        - these locks are held until all the other servers have completed their prepare step
+          - this can be a lengthy process, and thus introduce performance drawbacks
   - ACID
     - Atomic transactions
       - an indivisible and irreducible series of database operations such that either all occur, or nothing occurs
