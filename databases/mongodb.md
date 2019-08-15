@@ -176,8 +176,13 @@
     - duplicate the data but keep it limited, as disc space is cheaper than compute time
 
 ## polymorphic schemas
-  - when all the documents ina  collection are similar but not identically structured
-  -
+  - when all the documents in a  collection are similar but not identically structured
+  - in mongodb store all the nodes in the same document, with each node containing their relevant fields
+  - e.g. collection 'nodes'
+    - includes blog page documents
+      - fields: title, url, type, text
+    - includes photo documents
+      - fields: title, url, type content (binary field)
 
 ## embedding vs referencing relationships
   - generalities
