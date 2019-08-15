@@ -277,13 +277,18 @@
 
 ##  emulating transactions
   - create a transaction collection containing documents that store the state of all outstanding actions
-    - `new` state
-      - may be rolled back if it times out
-    - `committed` state
-      - will always (i.e.) eventually be retired
-    - `rollback` state
-      - will always (i.e.) eventually be reversed
-  - 
+    - collection fields
+      - `state` indicates the step in the transaction
+      - `id` ID of the transaction
+      - the remaining fields should contain all the data required to recreate, commit, and rollback the transaction
+    - process
+      - `new` state
+        - may be rolled back if it times out
+      - `committed` state
+        - will always (i.e.) eventually be retired
+      - `rollback` state
+        - will always (i.e.) eventually be reversed
+  -
 
 
 # statements
