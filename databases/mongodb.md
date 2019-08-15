@@ -10,7 +10,7 @@
   - [DB transactions](https://en.wikipedia.org/wiki/Database_transaction)
   - [isolation](https://en.wikipedia.org/wiki/Isolation_(database_systems))
   - [durability](https://en.wikipedia.org/wiki/Durability_(database_systems))
-  -
+  - [idempotence](https://en.wikipedia.org/wiki/Idempotence)
 
 # terminology
   - nosql database
@@ -121,6 +121,16 @@
         - the system continues to operate despite an arbitrary number of messaages being dropped/delayed by the network between nodes
   - schemaless database
     - the db does not enforce a particular structure on documents in a collection
+  -  idempotence
+    -  a property of certain operations whereby they can be applied multiplie times without changing the result beyond the initial action
+      -  e.g.
+        -  a property is transitioned from `started` to `completed`
+        -  once in `completed` state, no matter how many times you apply this action nothing changes as its already in the `completed` state
+  -  operational intelligence
+    -  the techniques of converting transactional data to actional information ina business setting
+      -  the starting point is getting the raw transactional data into your data store
+      -  next is generating actional reports on the data, ideally in real time with data import itself
+      -  oft times you need batch operations to transform the data into a meaningful form
 
 # mongodb vs relational architecture
   - retrieving data from relational dbs is more difficult and resource heavy
@@ -140,6 +150,7 @@
         - this can potentially leave dangling items if one of the modifications fail
         - its important to consider the order of the updates
           - i.e. its better to delete the references before the referenced entity
+        - create a transaction document to manage multi document transactions
   - mongodb db can be schemaless
   - relational DBS generally define column names and types at the table level,
     - this information isnt duplicated in each row
@@ -292,6 +303,7 @@
         - will always (i.e.) eventually be reversed
       - each transaction should complete with a certain time window
         - based on the alotted time, when it completes, the transaction will be updated to `committed` or `rollback` states
+        - you should periodically check the transaction document for any collections requiring transition to `committed` or `rollback` states
   -
 
 
