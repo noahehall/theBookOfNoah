@@ -613,8 +613,7 @@ schema design
 
 ```
 
-## CRUD
-### best practices
+### CRUD
   - complex updates in application code
     - dont retrieve an item, update it, save it, then retrieve the value for use
       - issue
@@ -631,7 +630,11 @@ schema design
     - its best to extract the data into atomic fields while importing, or during a background transformation process
   - using `$in` vs `$or` operators
     - use the `$in` operator when performing equality checks on the same field
-### create
+#### create
+  - create/insert operations add new docs to collections
+    - docs & collections are created if either dont exist
+  - insert operations target a single collection
+  - all write operations are atomic on the level of a single document 
 ```js
   // insert a single document
   // will create both db and myCollection if required
@@ -651,7 +654,7 @@ schema design
       - `bulk.execute()`
   -
 
-### read
+#### read
 ```js
   // retrieve all documents in a collection
   // returns a cursor to matching documents
@@ -695,11 +698,19 @@ schema design
 
 
 ```
-### update
-  - `db.collectionName.update(selection criteria, updated data)`
-    - .update({ firstName: 'noah', }, { $set: { firstName: 'kenoah'}})
+#### update
+  - update operatins target a single collection
+  - all write operations are atomic on the level of a single document
+  - filters are the same as read operations
+```js
+  db.collection.updateOne()
 
-### delete
+  db.collection.updateMany()
+
+  db.collection.replaceOne()
+
+```
+#### delete
   - `db.collectionName.remove(deletion criteria)`
     - used to delete documents from a collection
     - `justOne`
