@@ -33,6 +33,10 @@ schema design
   - [mongodb extended json v2 docs](https://docs.mongodb.com/manual/reference/mongodb-extended-json/)
   - [mongodb sharding](https://docs.mongodb.com/manual/sharding/)
   - [CRUD operations](https://docs.mongodb.com/manual/crud/#crud)
+  - [database methods](https://docs.mongodb.com/manual/reference/method/js-database/)
+  - [aggregation](https://docs.mongodb.com/manual/aggregation/)
+  - [mongo shell methods](https://docs.mongodb.com/manual/reference/method/)
+    - Must doooey
 
 
 ## other
@@ -166,7 +170,9 @@ schema design
       -  oft times you need batch operations to transform the data into a meaningful form
   -  GridFS
     -  a convention for storing large files in a mongodb database
-    -
+  - oplog
+    - a capped collection that stores an ordered history of logical writes to mongodb db
+    - the oplog is the basic mechanism enabling replication in mongodb
 
 
 # mongodb vs relational architecture
@@ -530,6 +536,13 @@ schema design
         indexOptionDefaults: {
           'some-storage-engine-name': {...}
         }
+
+        # name of the source collection/view
+        # from which to create this view
+        # the name is not the full namespace
+        # i.e. dont include db name
+        # i.e. u ust create views in the same db as the source collection
+        viewOn: 'name'
 
       }
     )
