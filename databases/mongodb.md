@@ -41,9 +41,15 @@ schema design
   - [data modeling](https://docs.mongodb.com/manual/data-modeling/)
   - [operators](https://docs.mongodb.com/manual/reference/operator/)
   - [schema validation](https://docs.mongodb.com/manual/core/schema-validation/)
+  - [data model examples and patterns](https://docs.mongodb.com/manual/applications/data-models/)
+  - [db koda wack azz support portal](https://dbkoda.useresponse.com/)
+  - [database cmds](https://docs.mongodb.com/manual/reference/command/)
+    - [admin cmds](https://docs.mongodb.com/manual/reference/command/nav-administration/)
 
 ## related technologies
   - [wired tiger storage engine](http://www.wiredtiger.com/)
+  - [dbkoda - db dev and admin tool](https://www.dbkoda.com/)
+  - [mongdb sample collections](https://medium.com/dbkoda/mongodb-sample-collections-52d6a7745908)
 ## other
   - [atomicity](https://en.wikipedia.org/wiki/Atomicity_(database_systems))
   - [ACID](https://en.wikipedia.org/wiki/ACID)
@@ -482,7 +488,10 @@ schema design
   # deletes all associated data files
     db.dropDatabase()
 
-  #
+  # run various commands
+  # preferred method to issue db cmds
+  # as it provides a consistent interface between the shell and drivers
+    db.runCommand({...})
 
 
 ```
@@ -503,7 +512,7 @@ schema design
     - resource locking behavior
 ```sh
   # explicitly create a collection with options
-    myDb.createCollection(
+    db.createCollection(
       collectionName,
       {
         # if true, size param required
@@ -563,6 +572,9 @@ schema design
 
       }
     )
+
+  # get collection names
+    db.getCollectionNames
 
   # examples
     # create capped collection
@@ -638,8 +650,8 @@ schema design
 ### create
 ```sh
   # insert a single document
-  # will create both myDb and myCollection if required
-    myDb.myCollection.insertOne({...})
+  # will create both db and myCollection if required
+    db.myCollection.insertOne({...})
 
   # inserts new documents into the collection
   # returns a document that includees the newly inserted documents `_id` field values
