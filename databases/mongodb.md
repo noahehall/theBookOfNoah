@@ -630,6 +630,66 @@ schema design
     - its best to extract the data into atomic fields while importing, or during a background transformation process
   - using `$in` vs `$or` operators
     - use the `$in` operator when performing equality checks on the same field
+
+#### query selectors
+```js
+  // comparison
+    // $eq equal
+    // $ne not equal
+    //
+    // $gt greater than
+    // $gte greater than or equal to
+    // $lt less than
+    // $lte less than or equal to
+    //
+    // $in any in array
+    // $nin any NOT in array
+
+  // logical
+    // $and must match both clauses
+    // $nor do not match both clause
+    // $not do not match query expression
+    // $or match either clause
+
+  // element
+    // $exists documents that have the specified field
+    // $type field is of the specified type
+
+  // evaluation
+    // $expr use aggregation expressions within the query
+    // $jsonSchema validate docs against the given schema
+    // $mod modulo operation on the value of a field
+        // selects docs with a specified result
+    // $regex match regex
+    // $text text search
+    // $where satisfy javascript expression
+
+  // array
+    // $all arrays that contain all specified elements
+    // $elemMatch element in the array field
+        // must match all specified conditions
+    // $size array field equals size
+
+  // comment
+    // $comment adds a comment to a query predicate
+
+  // project operators
+    // $ projects the first element in an array
+        // that matches the query condition
+    // $elemMatch projects the first element in an array
+        // that matches the specified $elemMatch condition
+    // $meta projects the documents score assigned
+        // during $text operation
+    // $slice limits the number of elements projected
+        // from an array
+        // supports skip and limit slices 
+
+
+  // geospatial
+  // bitwise
+      // @see https://docs.mongodb.com/manual/reference/operator/query/
+
+```
 #### create
   - create/insert operations add new docs to collections
     - docs & collections are created if either dont exist
@@ -718,5 +778,7 @@ schema design
   - delete operations target a single collection
   - all write operations are atomic on the level of a single document
 ```js
+  db.collection.deleteOne()
 
+  db.collection.deleteMany({...})
 ```
