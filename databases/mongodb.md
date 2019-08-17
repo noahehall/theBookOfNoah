@@ -634,7 +634,7 @@ schema design
   - create/insert operations add new docs to collections
     - docs & collections are created if either dont exist
   - insert operations target a single collection
-  - all write operations are atomic on the level of a single document 
+  - all write operations are atomic on the level of a single document
 ```js
   // insert a single document
   // will create both db and myCollection if required
@@ -705,14 +705,18 @@ schema design
 ```js
   db.collection.updateOne()
 
-  db.collection.updateMany()
+  db.collection.updateMany({
+    {...}, // query records
+    {...}  // set values
+  })
 
   db.collection.replaceOne()
 
 ```
 #### delete
-  - `db.collectionName.remove(deletion criteria)`
-    - used to delete documents from a collection
-    - `justOne`
-      - if true removes only one document
-      -
+  - remove docs from a collection
+  - delete operations target a single collection
+  - all write operations are atomic on the level of a single document
+```js
+
+```
