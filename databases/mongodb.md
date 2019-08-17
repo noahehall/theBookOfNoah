@@ -1,3 +1,7 @@
+pdf 2
+pg 11
+schema design
+
 # books
   - wtf is the name of this book?
     - bookOfNoah/books/mongodb
@@ -472,7 +476,7 @@
       - max
         - specifies the maximum number of documents allowed in the capped collection
   - `show collections`
-  - `db.COLLECTION_NAME.drop()`
+  - `db.collection.drop()`
     - drop a collection from a database
     - it completely removes a collection from the database and does not leave any indexes associated with the dropped collections
     - returns true if successful
@@ -496,12 +500,12 @@
     - its best to extract the data into atomic fields while importing, or during a background transformation process
   -
 ### insert
-  - `db.COLLECTION_NAME.insert(document)`
+  - `db.collection.insert(document)`
     - add/insert new documents into a collection
     - pass an array of documents to insert multiple
-  - `db.COLLECTION_NAME.save()`
+  - `db.collection.save()`
     - see update
-  - `db.COLLECTION_NAME.update()`
+  - `db.collection.update()`
     - add new documents through an upsert
   - bulk operations
     1. intialize a bulk opeartion builder for the collection
@@ -510,9 +514,13 @@
       - `bulk.insert(), .update(), etc.`
     3. execute your operation
       - `bulk.execute()`
+  - `db.collection.insertMany([...])`
+    - inserts new documents into the collection
+
 ### update
   - `db.collectionName.update(selection criteria, updated data)`
     - .update({ firstName: 'noah', }, { $set: { firstName: 'kenoah'}})
+
 ### delete
   - `db.collectionName.remove(deletion criteria)`
     - used to delete documents from a collection
