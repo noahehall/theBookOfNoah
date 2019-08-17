@@ -32,6 +32,7 @@ schema design
   - [mongodb introduction](https://docs.mongodb.com/manual/introduction/)
   - [mongodb extended json v2 docs](https://docs.mongodb.com/manual/reference/mongodb-extended-json/)
   - [mongodb sharding](https://docs.mongodb.com/manual/sharding/)
+  - [CRUD operations](https://docs.mongodb.com/manual/crud/#crud)
 
 
 ## other
@@ -499,7 +500,18 @@ schema design
   - retrieving data via regex expression queries require a full scan of the collection
     - its best to extract the data into atomic fields while importing, or during a background transformation process
   -
-### insert
+### create
+```sh
+  # insert a single document
+    db.collection.insertOne()
+
+  # inserts new documents into the collection
+  # returns a document that includees the newly inserted documents `_id` field values
+    db.collection.insertMany([...])
+```
+
+
+
   - `db.collection.insert(document)`
     - add/insert new documents into a collection
     - pass an array of documents to insert multiple
@@ -514,9 +526,27 @@ schema design
       - `bulk.insert(), .update(), etc.`
     3. execute your operation
       - `bulk.execute()`
-  - `db.collection.insertMany([...])`
-    - inserts new documents into the collection
+  -
 
+### read
+```sh
+  # retrieve all documents in a collection
+    db.collection.find({})
+
+  # retrieve all documents matching a filter
+    # exact match
+    # if field is an array, then its a contains query
+    db.collection.find({ field: 'value' })
+
+    # match an array with exaactly two els
+    db.collection.find({ field: ['val1', 'val2'] })
+
+    # embedded document exact match
+    db.collection.find({ 'parent.child': 'value' })
+
+
+
+```
 ### update
   - `db.collectionName.update(selection criteria, updated data)`
     - .update({ firstName: 'noah', }, { $set: { firstName: 'kenoah'}})
