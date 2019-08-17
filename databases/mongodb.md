@@ -478,6 +478,12 @@ schema design
 
 
 ## collections
+  - validation
+    - occurs during updates and inserts
+    - existing documents do not undergo validation checks until modification
+    - cannot be specified for collections in the admin, local and config dbs, nor the system.* collections
+  - storage engines
+    - configuration specified when creating indexes are validated and logged to oplog during replication to support replica sets with members that use different storage engines
 ```sh
   # explicitly create a collection with options
     myDb.createCollection(
@@ -501,12 +507,30 @@ schema design
         max: number,
 
         # available for WiredTiger storage engine
-        # options are validated and logged to oplog during replication
         storageEngine: {...},
 
         # specify validation rules/expressions
         # uses the same mongodb query operators
         # except $geoNear, $near, $nearsphere, $text, $where
+        validator: {...},
+
+        # how stringly mongodb applies validation rules
+        # to existing docs during updates
+        validationLevel: 'off|strict|moderate',
+          # off - no validation for inserts/updates
+          # strict - default, apply to all inserts & updates
+          # moderate - do not apply rules to existing invalid docs
+
+        # determines whether to error/warn on invalid docs
+        validationAction: 'error|warn',
+          # error - write fails
+          # warn - write succeeds, warning logged
+
+        # default config for indexes when creating a collection
+        indexOptionDefaults: {
+          'some-storage-engine-name': {...}
+        }
+
       }
     )
 
