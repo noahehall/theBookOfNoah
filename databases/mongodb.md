@@ -257,7 +257,7 @@ schema design
     - mongodb stores documents in collections
     - collections are analgous to tables in a relational databse
     - exists with in a single db
-    - collections are created when you first store data for that collection via one of the collection API crud methods 
+        - collections are created when you first store data for that collection via one of the collection API crud methods
   - relations
     - there are no native joins in mongodb
     - to get referential data youll need to pull the first collection, then make a second trip to get the referenced data
@@ -478,6 +478,39 @@ schema design
 
 
 ## collections
+```sh
+  # explicitly create a collection with options
+    myDb.createCollection(
+      collectionName,
+      {
+        # if true, size param required
+        capped: boolean,
+
+        # deprecated since 3.2
+        autoIndexId: boolean,
+
+        # max size in bytes for a capped collection
+        # removes older docs when size is breached
+        # ignored if capped: false
+        # takes precedence over max param
+        size: number,
+
+        # max # of docs allowed in a capped collection
+        # if using max, make sure size param is sufficient
+        # to contain max # of docs
+        max: number,
+
+        # available for WiredTiger storage engine
+        # options are validated and logged to oplog during replication
+        storageEngine: {...},
+
+        # specify validation rules/expressions
+        # uses the same mongodb query operators
+        # except $geoNear, $near, $nearsphere, $text, $where
+      }
+    )
+
+```
   - `db.createCollection(name, options)`
     - name - name of the collection
     - options - document type, specifies the memory size and indexing of the collection
