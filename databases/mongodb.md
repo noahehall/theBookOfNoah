@@ -576,6 +576,9 @@ schema design
   // get collection names
     db.getCollectionNames
 
+  // remove a collection
+    db.collection.remove()
+
   // examples
     // create capped collection
       db.createCollection(
@@ -682,7 +685,7 @@ schema design
         // during $text operation
     // $slice limits the number of elements projected
         // from an array
-        // supports skip and limit slices 
+        // supports skip and limit slices
 
 
   // geospatial
@@ -696,9 +699,12 @@ schema design
   - insert operations target a single collection
   - all write operations are atomic on the level of a single document
 ```js
+  // insert
+    db.collection.insert()
+
   // insert a single document
-  // will create both db and myCollection if required
-    db.myCollection.insertOne({...})
+  // will create both db and collection if required
+    db.collection.insertOne({...})
 
   // inserts new documents into the collection
   // returns a document that includees the newly inserted documents `_id` field values
@@ -763,6 +769,8 @@ schema design
   - all write operations are atomic on the level of a single document
   - filters are the same as read operations
 ```js
+  db.collection.update()
+
   db.collection.updateOne()
 
   db.collection.updateMany({
@@ -781,4 +789,23 @@ schema design
   db.collection.deleteOne()
 
   db.collection.deleteMany({...})
+```
+
+#### compound operations
+```js
+  db.collection.findAndModify()
+  db.collection.findOneAndDelete()
+  db.collection.findOneAndReplace()
+  db.collection.findOneAndUpdate()
+
+```
+
+# Mongoshell
+## iterate a cursor
+  - the `db.collection.find()` retuns a cursor
+  - if you
+    - dont assign the cursor to a var mongoshell will list the first 20 items
+    - assign the cursor to a var you need to manually iterate its values
+```js
+
 ```
