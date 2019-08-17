@@ -237,6 +237,9 @@ schema design
       - statistics on a per-collection level
       - run from the cmd line, not the mongo shell
 ## storage
+  - database
+    - databases hold collections of documents
+    -
   - document
     - a record ina  mongodb collection and the basic unit of data in mongodb
     - analogous to JSON objects but exist in the db as BSON
@@ -423,10 +426,13 @@ schema design
 
 
 ## storing log files
+  - toodoo boboo
+
 
 ## sharding
   - toodoo boboo
-  -
+
+
 # statements
 ## administration
 ```sh
@@ -450,15 +456,26 @@ schema design
 ```
 
 ## databases
-  - `use database`
-    - if there is no existing database, it will create then return it
-    - else it will return it
-  - `db`
-    - show the currently selected database
-  - `show dbs`
-    - show all the databases
-  - `db.dropDatabase()`
-    - drop the currently selected database and delete all associated data files
+```sh
+  # select/create a db to use
+  # will return the db instance
+    use dbname
+
+  # show the currently selected db
+    db
+
+  # show all dbs
+    show dbs
+
+  # drop the currently selected db
+  # deletes all associated data files
+    db.dropDatabase()
+
+  #
+
+
+```
+
 
 ## collections
   - `db.createCollection(name, options)`
