@@ -612,27 +612,6 @@ schema design
 
 
 ```
-  - `db.createCollection(name, options)`
-    - name - name of the collection
-    - options - document type, specifies the memory size and indexing of the collection
-      - capped
-        - boolean
-        - if true
-          - caps the collection at a fix size that auotmatically overwrites its oldest entries when it reaches its maximum size
-          - requires the size parameter to be specified
-      - autoindexID
-        - if true
-          - automatically creates index on ID field
-      - size
-        - specifies a maximum size in bytes for a capped collection
-      - max
-        - specifies the maximum number of documents allowed in the capped collection
-  - `show collections`
-  - `db.collection.drop()`
-    - drop a collection from a database
-    - it completely removes a collection from the database and does not leave any indexes associated with the dropped collections
-    - returns true if successful
-    - returns false when there is no existing collection to drop
 
 ## CRUD
 ### best practices
@@ -650,27 +629,19 @@ schema design
     - there are many opportunties to miss race conditions that introduce inconsistency into the data
   - retrieving data via regex expression queries require a full scan of the collection
     - its best to extract the data into atomic fields while importing, or during a background transformation process
-  -
+  - using `$in` vs `$or` operators
+    - use the `$in` operator when performing equality checks on the same field
 ### create
-```sh
-  # insert a single document
-  # will create both db and myCollection if required
+```js
+  // insert a single document
+  // will create both db and myCollection if required
     db.myCollection.insertOne({...})
 
-  # inserts new documents into the collection
-  # returns a document that includees the newly inserted documents `_id` field values
+  // inserts new documents into the collection
+  // returns a document that includees the newly inserted documents `_id` field values
     db.collection.insertMany([...])
 ```
 
-
-
-  - `db.collection.insert(document)`
-    - add/insert new documents into a collection
-    - pass an array of documents to insert multiple
-  - `db.collection.save()`
-    - see update
-  - `db.collection.update()`
-    - add new documents through an upsert
   - bulk operations
     1. intialize a bulk opeartion builder for the collection
       - `var bulk = db.collectionName.initializeUnorderedBulkOp()`
@@ -681,20 +652,45 @@ schema design
   -
 
 ### read
-```sh
-  # retrieve all documents in a collection
+```js
+  // retrieve all documents in a collection
+  // returns a cursor to matching documents
     db.collection.find({})
 
-  # retrieve all documents matching a filter
-    # exact match
-    # if field is an array, then its a contains query
-    db.collection.find({ field: 'value' })
+  // retrieve all documents matching a filter
+    // exact match
+      // if field is an array, then its a contains query
+      db.collection.find({ field: 'value' })
 
-    # match an array with exaactly two els
-    db.collection.find({ field: ['val1', 'val2'] })
+      // match an array with exaactly two els
+      db.collection.find({ field: ['val1', 'val2'] })
 
-    # embedded document exact match
-    db.collection.find({ 'parent.child': 'value' })
+      // embedded document exact match
+      db.collection.find({ 'parent.child': 'value' })
+
+    // specify conditions via query operators
+    // { field: { op1: val1, ...} }
+      // IN operator
+        // all docs whose status === this|that
+        db.collection.find({
+          status: { $in: ['this', 'that' ]}
+        })
+
+      // AND operator is indicated by comma on same level
+        // all docs whose status === a && wtf < 30
+        db.collection.find({
+          status: 'a', // <-- comma = AND
+          wtf: { $lt: 30 }
+        })
+
+      // OR operator indicated by array of conditions
+        // all docs status === a OR wtf < 30
+        db.collection.find({
+          $or: [
+            { status: 'a'},
+            { wtf: { $lt: 30 }}
+          ]
+        })
 
 
 
