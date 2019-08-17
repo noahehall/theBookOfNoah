@@ -35,10 +35,15 @@ schema design
   - [CRUD operations](https://docs.mongodb.com/manual/crud/#crud)
   - [database methods](https://docs.mongodb.com/manual/reference/method/js-database/)
   - [aggregation](https://docs.mongodb.com/manual/aggregation/)
+
+### must do
   - [mongo shell methods](https://docs.mongodb.com/manual/reference/method/)
-    - Must doooey
+  - [data modeling](https://docs.mongodb.com/manual/data-modeling/)
+  - [operators](https://docs.mongodb.com/manual/reference/operator/)
+  - [schema validation](https://docs.mongodb.com/manual/core/schema-validation/)
 
-
+## related technologies
+  - [wired tiger storage engine](http://www.wiredtiger.com/)
 ## other
   - [atomicity](https://en.wikipedia.org/wiki/Atomicity_(database_systems))
   - [ACID](https://en.wikipedia.org/wiki/ACID)
@@ -490,6 +495,12 @@ schema design
     - cannot be specified for collections in the admin, local and config dbs, nor the system.* collections
   - storage engines
     - configuration specified when creating indexes are validated and logged to oplog during replication to support replica sets with members that use different storage engines
+  - [needs more indepth study](https://docs.mongodb.com/manual/reference/method/db.createCollection/#db.createCollection)
+    - pipelines
+    - collection
+    - write concerns
+    - access control
+    - resource locking behavior
 ```sh
   # explicitly create a collection with options
     myDb.createCollection(
@@ -542,10 +553,47 @@ schema design
         # the name is not the full namespace
         # i.e. dont include db name
         # i.e. u ust create views in the same db as the source collection
-        viewOn: 'name'
+        viewOn: 'name',
+
+        # TODO
+        # https://docs.mongodb.com/manual/reference/method/db.createCollection/#db.createCollection
+        pipeline: [...],
+        collation: {...},
+        writeConcern: {...},
 
       }
     )
+
+  # examples
+    # create capped collection
+      db.createCollection(
+        "log",
+        { capped : true, size : 5242880, max : 5000 }
+      )
+
+    # document validation
+      db.createCollection( "contacts", {
+       validator: { $jsonSchema: {
+        bsonType: "object",
+        required: [ "phone" ],
+        properties: {
+         phone: {
+            bsonType: "string",
+          description: "must be a string and is required"
+         },
+         email: {
+          bsonType : "string",
+          pattern : "@mongodb\.com$",
+          description: "must be a string and match the regular expression pattern"
+         },
+         status: {
+          enum: [ "Unknown", "Incomplete" ],
+          description: "can only be one of the enum values"
+         }
+        }
+       } }
+      } )
+
 
 ```
   - `db.createCollection(name, options)`
