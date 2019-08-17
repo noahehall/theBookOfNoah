@@ -241,11 +241,11 @@ schema design
     - databases hold collections of documents
     -
   - document
-    - a record ina  mongodb collection and the basic unit of data in mongodb
+    - a record in a mongodb collection and the basic unit of data in mongodb
     - analogous to JSON objects but exist in the db as BSON
     - data is stored in documents
     - documents are modeled after JSON, and are stored as BSON
-    - is a dictionary of  key-value pairs where the value may be one of the following
+    - is a dictionary of key-value pairs where the value may be one of the following
       - primitive JSON types
         - number, string, boolean, etc
       - primitive BSON types
@@ -254,10 +254,10 @@ schema design
       - other objects
       - null
   - collection
-    - a grouping of mongodb documents
-    - equivalent to an RDBMS table
+    - mongodb stores documents in collections
+    - collections are analgous to tables in a relational databse
     - exists with in a single db
-    -
+    - collections are created when you first store data for that collection via one of the collection API crud methods 
   - relations
     - there are no native joins in mongodb
     - to get referential data youll need to pull the first collection, then make a second trip to get the referenced data
@@ -520,7 +520,8 @@ schema design
 ### create
 ```sh
   # insert a single document
-    db.collection.insertOne()
+  # will create both myDb and myCollection if required
+    myDb.myCollection.insertOne({...})
 
   # inserts new documents into the collection
   # returns a document that includees the newly inserted documents `_id` field values
