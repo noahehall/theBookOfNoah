@@ -801,11 +801,44 @@ schema design
 ```
 
 # Mongoshell
+## globals
+```js
+  print();
+  tojson();
+  printjson();
+
+```
+## cursors
+  - by default the server will close the cursor
+    - after 10 minutes of inactivity
+    - or if the client has exhausted the cursor
+    -
+```js
+  var myCursor = db.collection.find();
+  // remove the default 10 minute timeout
+  // you are now required to call myCursor.close()
+  var myCursor = db.collection.find().noCursorTimeout();
+
+  myCursor.hasNext();
+  myCursor.next();
+  myCursor.forEach();
+  myCursor.close();
+  
+  // loads all documents into RAM !! be careful
+  // exhausts the cursor, i.e. .hasNext() === false
+  var documentArray = myCursor.toArray();
+  var firstDocument = documentArray[0];
+```
 ## iterate a cursor
   - the `db.collection.find()` retuns a cursor
   - if you
     - dont assign the cursor to a var mongoshell will list the first 20 items
     - assign the cursor to a var you need to manually iterate its values
 ```js
+  var myCursor = db.collection.find();
 
+  while (myCursor.hasNext()) {
+    print(tojson(myCursor.next()));
+    // or this printjson(myCursor.next())
+  }
 ```
