@@ -473,24 +473,24 @@ schema design
 ```
 
 ## databases
-```sh
-  # select/create a db to use
-  # will return the db instance
+```js
+  // select/create a db to use
+  // will return the db instance
     use dbname
 
-  # show the currently selected db
+  // show the currently selected db
     db
 
-  # show all dbs
+  // show all dbs
     show dbs
 
-  # drop the currently selected db
-  # deletes all associated data files
+  // drop the currently selected db
+  // deletes all associated data files
     db.dropDatabase()
 
-  # run various commands
-  # preferred method to issue db cmds
-  # as it provides a consistent interface between the shell and drivers
+  // run various commands
+  // preferred method to issue db cmds
+  // provides a consistent interface between the shell and drivers
     db.runCommand({...})
 
 
@@ -510,62 +510,62 @@ schema design
     - write concerns
     - access control
     - resource locking behavior
-```sh
-  # explicitly create a collection with options
+```js
+  // explicitly create a collection with options
     db.createCollection(
       collectionName,
       {
-        # if true, size param required
+        // if true, size param required
         capped: boolean,
 
-        # deprecated since 3.2
+        // deprecated since 3.2
         autoIndexId: boolean,
 
-        # max size in bytes for a capped collection
-        # removes older docs when size is breached
-        # ignored if capped: false
-        # takes precedence over max param
+        // max size in bytes for a capped collection
+        // removes older docs when size is breached
+        // ignored if capped: false
+        // takes precedence over max param
         size: number,
 
-        # max # of docs allowed in a capped collection
-        # if using max, make sure size param is sufficient
-        # to contain max # of docs
+        // max # of docs allowed in a capped collection
+        // if using max, make sure size param is sufficient
+        // to contain max # of docs
         max: number,
 
-        # available for WiredTiger storage engine
+        // available for WiredTiger storage engine
         storageEngine: {...},
 
-        # specify validation rules/expressions
-        # uses the same mongodb query operators
-        # except $geoNear, $near, $nearsphere, $text, $where
+        // specify validation rules/expressions
+        // uses the same mongodb query operators
+        // except $geoNear, $near, $nearsphere, $text, $where
         validator: {...},
 
-        # how stringly mongodb applies validation rules
-        # to existing docs during updates
+        // how stringly mongodb applies validation rules
+        // to existing docs during updates
         validationLevel: 'off|strict|moderate',
-          # off - no validation for inserts/updates
-          # strict - default, apply to all inserts & updates
-          # moderate - do not apply rules to existing invalid docs
+          // off - no validation for inserts/updates
+          // strict - default, apply to all inserts & updates
+          // moderate - do not apply rules to existing invalid docs
 
-        # determines whether to error/warn on invalid docs
+        // determines whether to error/warn on invalid docs
         validationAction: 'error|warn',
-          # error - write fails
-          # warn - write succeeds, warning logged
+          // error - write fails
+          // warn - write succeeds, warning logged
 
-        # default config for indexes when creating a collection
+        // default config for indexes when creating a collection
         indexOptionDefaults: {
           'some-storage-engine-name': {...}
         }
 
-        # name of the source collection/view
-        # from which to create this view
-        # the name is not the full namespace
-        # i.e. dont include db name
-        # i.e. u ust create views in the same db as the source collection
+        // name of the source collection/view
+        // from which to create this view
+        // the name is not the full namespace
+        // i.e. dont include db name
+        // i.e. u ust create views in the same db as the source collection
         viewOn: 'name',
 
-        # TODO
-        # https://docs.mongodb.com/manual/reference/method/db.createCollection/#db.createCollection
+        // TODO
+        // https://docs.mongodb.com/manual/reference/method/db.createCollection/#db.createCollection
         pipeline: [...],
         collation: {...},
         writeConcern: {...},
@@ -573,38 +573,42 @@ schema design
       }
     )
 
-  # get collection names
+  // get collection names
     db.getCollectionNames
 
-  # examples
-    # create capped collection
+  // examples
+    // create capped collection
       db.createCollection(
         "log",
         { capped : true, size : 5242880, max : 5000 }
       )
 
-    # document validation
-      db.createCollection( "contacts", {
-       validator: { $jsonSchema: {
-        bsonType: "object",
-        required: [ "phone" ],
-        properties: {
-         phone: {
-            bsonType: "string",
-          description: "must be a string and is required"
-         },
-         email: {
-          bsonType : "string",
-          pattern : "@mongodb\.com$",
-          description: "must be a string and match the regular expression pattern"
-         },
-         status: {
-          enum: [ "Unknown", "Incomplete" ],
-          description: "can only be one of the enum values"
-         }
+    // document validation
+      db.createCollection(
+        "contacts", {
+          validator: {
+            $jsonSchema: {
+              bsonType: "object",
+              required: [ "phone" ],
+              properties: {
+                phone: {
+                  bsonType: "string",
+                  description: "must be a string and is required"
+                },
+                email: {
+                  bsonType : "string",
+                  pattern : "@mongodb\.com$",
+                  description: "must be a string and match the regular expression pattern"
+                },
+                status: {
+                  enum: [ "Unknown", "Incomplete" ],
+                  description: "can only be one of the enum values"
+                }
+              }
+            }
+          }
         }
-       } }
-      } )
+      )
 
 
 ```
