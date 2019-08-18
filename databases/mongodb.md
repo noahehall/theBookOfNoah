@@ -667,6 +667,10 @@ schema design
     - mongodb either performs
       - a collection scan (bad) if any fields are not indexed
       - performs an index scan (good) if all fields are indexed
+    - if any clause includes a $text query
+      - all clauses in the array must be indexed
+      - because $text requires an index
+    - if any error is returned, check the fkn docs
 
 #### query selectors
 ```js
