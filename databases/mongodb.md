@@ -663,26 +663,47 @@ schema design
     - its best to extract the data into atomic fields while importing, or during a background transformation process
   - using `$in` vs `$or` operators
     - use the `$in` operator when performing equality checks on the same field
+  - $or
+    - mongodb either performs
+      - a collection scan (bad) if any fields are not indexed
+      - performs an index scan (good) if all fields are indexed
 
 #### query selectors
 ```js
   // comparison
     // $eq equal
+    // if field is an array, only a single item needs to match
+      { wtf: { $eq: 20 }}
+      { wtf: 20 } // same thing
     // $ne not equal
-    //
+      { qty: { $ne: 20 } }
     // $gt greater than
+      { qty: { $gt: 20 } }
     // $gte greater than or equal to
+      { qty: { $gte: 20 } }
     // $lt less than
+      { qty: { $lt: 20 } }
     // $lte less than or equal to
-    //
-    // $in any in array
+      { qty: { $lte: 20 } }
+    // field value $in array
+    // use $in > $or for the same field
+      { field: { $in: [<value1>, <value2>, ... <valueN> ] } }
+      { tags: { $in: [ /^be/, /^st/ ] } }
     // $nin any NOT in array
 
   // logical
-    // $and must match both clauses
-    // $nor do not match both clause
+    // $and must match ALL clauses
+    // $and only necessary when repeating the field name
+      { $and: [{price: {$ne: 1.99 }},{ price: {$exists: true}}]}
+      { price: { $ne: 1.99, $exists: true } }
+    // $nor do not match ALL clause
+      $nor: [ { <expression1> }, { <expression2> }, ...  { <expressionN> } ]
     // $not do not match query expression
-    // $or match either clause
+      { price: { $not: { $gt: 1.99 } } }
+      { item: { $not: /^p.*/ } } // not start with p
+    // $or match ANY clause
+    // best performance on indexed fields
+      $or: [ { <expression1> }, { <expression2> }, ... , { <expressionN> } ]
 
   // element
     // $exists documents that have the specified field
