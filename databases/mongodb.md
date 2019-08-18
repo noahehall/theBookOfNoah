@@ -45,7 +45,9 @@ schema design
   - [data model examples and patterns](https://docs.mongodb.com/manual/applications/data-models/)
   - [db koda wack azz support portal](https://dbkoda.useresponse.com/)
   - [database cmds](https://docs.mongodb.com/manual/reference/command/)
-    - [admin cmds](https://docs.mongodb.com/manual/reference/command/nav-administration/)
+  - [admin cmds](https://docs.mongodb.com/manual/reference/command/nav-administration/)
+  - [cursor methods](https://docs.mongodb.com/manual/reference/method/js-cursor/)
+  - [bulk write operations](https://docs.mongodb.com/manual/core/bulk-write-operations/)
 
 ## related technologies
   - [wired tiger storage engine](http://www.wiredtiger.com/)
@@ -606,7 +608,7 @@ schema design
 
   // rename collection
     db.collection.renameCollection('newCollectionName')
-    
+
   // examples
     // create capped collection
       db.createCollection(
