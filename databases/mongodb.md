@@ -48,6 +48,8 @@ schema design
   - [admin cmds](https://docs.mongodb.com/manual/reference/command/nav-administration/)
   - [cursor methods](https://docs.mongodb.com/manual/reference/method/js-cursor/)
   - [bulk write operations](https://docs.mongodb.com/manual/core/bulk-write-operations/)
+  - [aggregation pipeline reference](https://docs.mongodb.com/manual/meta/aggregation-quick-reference)
+  -
 
 ## related technologies
   - [wired tiger storage engine](http://www.wiredtiger.com/)
@@ -711,10 +713,34 @@ schema design
 
   // element
     // $exists documents that have the specified field
+    // true: field exists, regardless of field value, e.g. NULL
+    // false: field does not exist
+      field: { $exists: <boolean> }
     // $type field is of the specified type
+      field: { $type: <BSON type> }
+      field: { $type: [<BSON type>, ...] } // any type
 
   // evaluation
     // $expr use aggregation expressions within the query
+      $expr: { <expression> }
+      // spent field > budget field
+        { $expr: { $gt: [ "$spent" , "$budget" ] } }
+      // find docs whose price < 5 after the condition is executed
+      // if qty >= 100
+      // then price / 2
+      // else price / 4
+        $expr: {
+          $lt: [
+            {
+              $cond: {
+                if: { $gte: ["$qty", 100] },
+                then: { $divide: ["$price", 2] },
+                else: { $divide: ["$price", 4] }
+              }
+            },
+            5
+          ]
+        }
     // $jsonSchema validate docs against the given schema
     // $mod modulo operation on the value of a field
         // selects docs with a specified result
