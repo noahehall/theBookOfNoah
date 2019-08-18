@@ -38,6 +38,7 @@ schema design
 
 ### must do
   - [mongo shell methods](https://docs.mongodb.com/manual/reference/method/)
+  - [mongo shell quick reference](https://docs.mongodb.com/manual/reference/mongo-shell/)
   - [data modeling](https://docs.mongodb.com/manual/data-modeling/)
   - [operators](https://docs.mongodb.com/manual/reference/operator/)
   - [schema validation](https://docs.mongodb.com/manual/core/schema-validation/)
@@ -481,8 +482,14 @@ schema design
   // show the currently selected db
     db
 
-  // show all dbs
+  // show all entities
     show dbs
+    show databases
+    show collections
+    show users
+    show roles
+    show profile
+
 
   // drop the currently selected db
   // deletes all associated data files
@@ -493,6 +500,16 @@ schema design
   // provides a consistent interface between the shell and drivers
     db.runCommand({...})
 
+
+  // get server information
+    db.serverStatus()
+
+    // cursor metadata
+      db.serverStatus().metrics.cursor
+
+  // cmd helpers
+    db.help()
+    db.collection.help()
 
 ```
 
@@ -579,6 +596,17 @@ schema design
   // remove a collection
     db.collection.remove()
 
+  // create a new index on the collection if it doesnt exist
+  // if already exists, does nothing
+    db.collection.createIndex()
+
+  // return a reference to another db using this same connection
+  // allows for cross database queries
+    db.getSiblingDB()
+
+  // rename collection
+    db.collection.renameCollection('newCollectionName')
+    
   // examples
     // create capped collection
       db.createCollection(
@@ -726,6 +754,26 @@ schema design
   // returns a cursor to matching documents
     db.collection.find({})
 
+  // project fields to return form a query
+  // returns just the name field from matching queries
+    db.collection.find({}, { name: true })
+
+  // return fields int he specified sort order
+  // sort by the name field in ascending order
+  // -1 === descending order
+    db.collection.find().sort({ name: 1 })
+
+  // limit matching docs to 5 rows
+  // highly recommended for performance
+    db.collection.find().limit(1)
+
+  // skip the first 5 results
+    db.collection.find().skip(5)
+
+  // get the total documents matching the query
+    db.collection.find().count()
+
+  // skip the first
   // retrieve all documents matching a filter
     // exact match
       // if field is an array, then its a contains query
@@ -762,7 +810,52 @@ schema design
         })
 
 
+```
+##### cursors
+  - by default the server will close the cursor
+    - after 10 minutes of inactivity
+    - or if the client has exhausted the cursor
+  - the mongodb server returns the query results in batches
+  - the amount of data in the batch will nnot exceed the maximum BSON document size
+  - to overide the default size of the batch see `batchSize()` and `limit()`
+    - `find()` `aggregate()` `listIndexes` and `listCollections` return a max of 16mb per batch
+      - `batchSize()` can enforce a smaller limit, but not a larger one
+```js
+  var myCursor = db.collection.find();
+  // remove the default 10 minute timeout
+  // you are now required to call myCursor.close()
+  var myCursor = db.collection.find().noCursorTimeout();
 
+  myCursor.hasNext();
+  myCursor.next();
+  myCursor.forEach();
+  myCursor.close();
+
+  // loads all documents into RAM !! be careful
+  // exhausts the cursor, i.e. .hasNext() === false
+  var documentArray = myCursor.toArray();
+  var firstDocument = documentArray[0];
+
+  // retrieve in batches
+  var myCursor = db.collection.find();
+  // retrieves next batch||null
+  var myFirstDocument = myCursor.hasNext() ? myCursor.next() : null;
+  // returns number
+  myCursor.objectsLeftInBatch();
+
+```
+##### iterate a cursor
+  - the `db.collection.find()` retuns a cursor
+  - if you
+    - dont assign the cursor to a var mongoshell will list the first 20 items
+    - assign the cursor to a var you need to manually iterate its values
+```js
+  var myCursor = db.collection.find();
+
+  while (myCursor.hasNext()) {
+    print(tojson(myCursor.next()));
+    // or this printjson(myCursor.next())
+  }
 ```
 #### update
   - update operatins target a single collection
@@ -798,6 +891,9 @@ schema design
   db.collection.findOneAndReplace()
   db.collection.findOneAndUpdate()
 
+  // upsert a document
+  db.collection.save({...})
+
 ```
 
 # Mongoshell
@@ -807,38 +903,4 @@ schema design
   tojson();
   printjson();
 
-```
-## cursors
-  - by default the server will close the cursor
-    - after 10 minutes of inactivity
-    - or if the client has exhausted the cursor
-    -
-```js
-  var myCursor = db.collection.find();
-  // remove the default 10 minute timeout
-  // you are now required to call myCursor.close()
-  var myCursor = db.collection.find().noCursorTimeout();
-
-  myCursor.hasNext();
-  myCursor.next();
-  myCursor.forEach();
-  myCursor.close();
-  
-  // loads all documents into RAM !! be careful
-  // exhausts the cursor, i.e. .hasNext() === false
-  var documentArray = myCursor.toArray();
-  var firstDocument = documentArray[0];
-```
-## iterate a cursor
-  - the `db.collection.find()` retuns a cursor
-  - if you
-    - dont assign the cursor to a var mongoshell will list the first 20 items
-    - assign the cursor to a var you need to manually iterate its values
-```js
-  var myCursor = db.collection.find();
-
-  while (myCursor.hasNext()) {
-    print(tojson(myCursor.next()));
-    // or this printjson(myCursor.next())
-  }
 ```
