@@ -12,7 +12,7 @@
   - use cases
     - downloading/extracting content from web pages
     - producing/consuming JSON APIs
-    - creating TCP/IP servers
+    - creating TCP/IP/UDP servers
     - advertising distributioon
     - game servers
     - content management systems, blogs
@@ -24,6 +24,12 @@
       - libuv, C-Ares, Http
     - the opeprating system
 
+## globals
+  - process
+    - pipe data into and out of a node program by accessing standard i/o streams
+  -  console
+  - module system
+    -
 ## standard library: binaries
 ### libuv
   - provides a fast run loop and non-blocking i/o for networking and the file system
@@ -31,6 +37,33 @@
 ### C-Ares
 
 ### http
+
 ## standard library: core modules
   - mostly written in javascript
-  - includes features like networki
+
+### EventEmitter
+  - basis for most of nodes core modules
+  - streams netowrking and file system APIs derive from it
+
+#### Streams
+  - the basis for scalable i/o
+  - used to model data with unprediticable throughput, e.g. networking connections
+  -
+
+### fs
+  - reading and writing files using non-blocking i/o
+```js
+  // get info about files
+    // fs.stat
+    // fs.statSync
+
+  // process the contents of a file
+    // fs.createReadStream
+
+
+```
+
+### net
+  - basis for the http module
+  - can be used to create generalized network clients and servers
+  -
