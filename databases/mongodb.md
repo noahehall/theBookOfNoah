@@ -49,6 +49,7 @@ schema design
   - [cursor methods](https://docs.mongodb.com/manual/reference/method/js-cursor/)
   - [bulk write operations](https://docs.mongodb.com/manual/core/bulk-write-operations/)
   - [aggregation pipeline reference](https://docs.mongodb.com/manual/meta/aggregation-quick-reference)
+  - [mongodb query evaluations](https://docs.mongodb.com/manual/reference/operator/query/#evaluation)
   -
 
 ## related technologies
