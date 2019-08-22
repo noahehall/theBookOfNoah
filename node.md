@@ -16,7 +16,21 @@
     - advertising distributioon
     - game servers
     - content management systems, blogs
+  - architecture stack
+    - app.js
+    - V8
+      - core modules
+      - C++ bindings
+      - libuv, C-Ares, Http
+    - the opeprating system
 
 ## standard library: binaries
+### libuv
+  - provides a fast run loop and non-blocking i/o for networking and the file system
 
+### C-Ares
+
+### http
 ## standard library: core modules
+  - mostly written in javascript
+  - includes features like networki
