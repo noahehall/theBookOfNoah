@@ -67,3 +67,10 @@
   - basis for the http module
   - can be used to create generalized network clients and servers
   -
+
+
+# recipes
+```js
+  // creating a new node project
+
+```
