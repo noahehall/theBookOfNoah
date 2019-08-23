@@ -8,7 +8,6 @@
     - launched in 2013
     - works with the OS to package, ship and run software
     - a tool for efficiently installing, removing, upgrading, distributing, trusting and managing software
-    -
   - use cases
     - easier to install and run software distributed with software
     - managing large scale systems or data centers
@@ -25,21 +24,69 @@
     - hardware virtualization
       - aka virtual machines
       - provide virtual hardware on which an operating system and other programs can be installed
-      -
+  - linux namespaces
+    - help manage containers at runtime
+    - wtf else?
+  - cgroup
+    - help manage containers at runtime
+    - wtf else?
+  - user space
+    - memory alotted to run user software, e.g. cmdline programs and GUI things
 
 
 
 # architecture
   - docker is a commandline program, a background daemon, and a set of remote services that take a logistical approach to solving common software problems
     - installing, running, publishing and removing software
-  -
+  - stack
+    - without docker
+      - user space
+        - cmd line, software, etc
+      - operating system
+        - is the interface between all user programs and the hardware that the computer is running on
+      - hardware
+        - cpu
+        - memory
+        - IO
+          - network interface
+          - perisstent storage
+          - devices
+    - with docker
+      - user space
+        - docker CLI
+          - users interface directly with the CLI
+          -the CLI interfaces with the docker daemon
+        - docker daemon
+          - interfaces with each container space
+          - is the parent process to all containers
+      - container space [A...Z]
+        - each container runs as a child process of the docker daemon
+        - the container, and the child process runs in its own memory subspace of the user spoace
+        - programs running inside a container can access only their own memory and resources as scoped by the container
+  - Container isolation
+    - PID namespace
+      - process identifiers and capabilities
+    - UTS namespace
+      - host and domain name
+    - MNT namespace
+      - file system access and structure
+    - IPC namespace
+      - process communication over shared memory
+    - NET namespace
+      - network access and structure
+    - USR namespace
+      - user names and identifiers
+    - chroot()
+      - controls the location of the file system root
+    - cgroups
+      - resource protection
 
 ## cmd line
 
 ## daemon
 
 ## containers
-  - uses existing container engines to provide consistent containers built according to best practices
+  - uses existing container engines (installed in linux) to provide consistent containers built according to best practices
     - any software run with docker is run isnide a container
     - software running inside docker containers interface directly with the hosts linux kernel
 ## images
