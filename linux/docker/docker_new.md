@@ -13,6 +13,13 @@
     - managing large scale systems or data centers
     - creating build, test and deployment pipelines
     - for use with networking applications, databases, mail servers, terminal applications, etc.
+    - managing software dependencies
+      - installed images can reuse existing dependencies
+      - dependencies with different versions can coexist
+    - improving portability
+      - docker runs on all operating systems
+      - thus, you can use software deesigned for windows/linux/etc on any other OS that supports docker
+      - 
 
 # terminology
   - jail
@@ -84,9 +91,22 @@
 ## cmd line
 
 ## daemon
-
+  - should always be running
+  -
 ## containers
   - uses existing container engines (installed in linux) to provide consistent containers built according to best practices
     - any software run with docker is run isnide a container
     - software running inside docker containers interface directly with the hosts linux kernel
+  - containers started from the same image dont share changes to their file system
 ## images
+  - a bundled snapshot of all the files that should be available to programs running inside a container
+  -
+
+## registries and indexes
+  - a set of infrastructure components that simplify distributing docker images
+  -
+# workflows
+## simplified
+  - create/install images
+  - run containers
+  -
