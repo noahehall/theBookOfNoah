@@ -55,7 +55,8 @@
     - i.e. init process
     - a program thats used to launch and maintain the state of other programs
     - on a linux system, PID #1 is the init process
-
+  - agent
+    - a container specifically for providing limited  interactive access to other containers
 
 # best practices
   - docker generally runs as the root user on your system
@@ -147,6 +148,9 @@
       - host and domain name
     - MNT namespace
       - file system access and structure
+      - the linux kernel provides a namespace for the MNT system
+      - when docker creates a container
+        - the new container will have its own MNT namespace and a new mount point will be created for the container to the image
     - IPC namespace
       - process communication over shared memory
     - NET namespace
@@ -155,6 +159,7 @@
       - user names and identifiers
     - chroot()
       - controls the location of the file system root
+      - used to make the root fo the image file hsytsem the root in the containers context
     - cgroups
       - resource protection
 
@@ -191,6 +196,18 @@
       - etc
     - each time an image is changed it receives a new UID
   - when installing software with docker, your installing an image
+  - until an image is tagged
+    - the only way to refer to it is by the UID
+
+### layers
+  - images maintain parent/child relationships
+  - the files aailable to a container are the union of all of the layers in the linearge of the image the container was created from
+  - programs running inside containers know  nothing about layers
+    - the filesystem operates as though its not running in a container/operating on an image
+  - union file system
+    - used to create mount points on a hosts file system that abstract the use of layers
+    - part of a critical set of tools that combine to create effective system isolation
+      - MNT namespaces aand chroot system call
 
 ### dockerfiles
   - scripts for building images
@@ -232,13 +249,8 @@
     - make dockerfiles publicly available and utilize docker hubs continuous build system
 
 
-# workflows
-  - agent
-    - a container specifically for providing limited  interactive access to other containers
-  -
-
-## cmdline
-### docker help
+# examples
+## docker help
   - display information about the basic syntax for using the docker cmdline program as well as a complete list of cmds for your version of the program
 ```sh
   docker help
@@ -279,6 +291,8 @@
     - run the container
     - return the container UID
       - its common to persist the UID to a variable for use with other cmds
+  - docker run creates a NEW CONTAINER each time
+    - use docker start to run an existing container
 
   - options
     - -i and -t are used together for running interactive programs like a shell in an interactive container
@@ -454,6 +468,25 @@
 ```
 ### docker load
   - load an image from a tar archive/STDIN
+```sh
+  # read from a tar archive file, isntead of STDIN
+  docker load -i FILENAME.tar
+```
+
+### docker build
+  - build an image from a Dockerfile
+```sh
+  # install the built image to name:tag
+  # get the build instructions from the docker file
+  docker build -t NAME:TAG DOCKERFILE
+```
+
+### docker images
+  - list installed images
+```sh
+  # show all images, including intermediate images
+  docker images -a
+```
 ### docker login
   - login to a docker registry
 # init scripts
