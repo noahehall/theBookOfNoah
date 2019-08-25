@@ -66,6 +66,7 @@
   - be sure to rotate/truncate container logs
     - the logs for a container will remain and grow as long as the container exists
     - log-term persistence i a problem for long-lived processes
+  - creating a PID namespace for each container is a critical feature of Docker 
 
 
 # architecture
