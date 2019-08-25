@@ -107,6 +107,8 @@
 
   -  use images with publicly available dockerfiles
     -  they are more trustworthy as you can inspect how they are built
+  -  use volumes for persistent data and support tools
+    -  sinc any container can connect to an
 
 
 # architecture
@@ -245,8 +247,20 @@
 ### volumes
   - a host/containers directory tree is created by a set of mount points that describe how to piece together one/more file  systems
   - volume
-    - mount point on the containers dorectory tree where a portion of hte host directory tree has been mounted 
-
+    - mount point on the containers dorectory tree where a portion of hte host directory tree has been mounted
+    - useful for working with persistent/shared data
+    - tool for segmenting and sharing data that has a scope/life cycle independent of a single container
+    - enable separation of concerns and create modularity for architectural components
+  - use cases
+    - database data for database software
+    - log data for applications
+    - input/output data for data processing applications
+    - static content
+    - support tools
+```sh
+  docker run...
+    --volume /some/dir
+```
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
   - indexes
