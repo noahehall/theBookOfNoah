@@ -18,13 +18,17 @@
       - dependencies with different versions can coexist
     - improving portability
       - docker runs on all operating systems
-      - thus, you can use software deesigned for windows/linux/etc on any other OS that supports docker
+      - thus, you can use software designed for linux on any other OS that supports docker
+    - security
+      - the scope of any security threat associated with running a particular application is limited to the scope of the application itself
+  - limitations
+    - containers wont help much with the securiyt of programs that have to run with full access to the machine
   - Analogies
     - think of docker as a physical shipping container system
       - a box where you store and run an applkication and all of its dependencies
       - just as cranes, trucks, trains, etc work with shipping contaiiners
         - docker can run, copy and distribute containers with ease
-      - docker images are the shipping containers 
+      - docker images are the shipping containers
 
 # terminology
   - jail
@@ -44,6 +48,9 @@
     - wtf else?
   - user space
     - memory alotted to run user software, e.g. cmdline programs and GUI things
+  - abstraction
+    - allows you to work with complicated things in simplified terms
+    -
 
 
 
@@ -114,4 +121,17 @@
 ## simplified
   - create/install images
   - run containers
-  -
+
+# best practices
+  - docker generally runs as the root user on your system
+    - eliminate this by
+      - creating a `docker` group
+      - setting that group as the owner of the docker socket
+      - adding yoru user to that group
+## examples
+```sh
+  # hello world
+  docker run dockerinaction/hello_worldz
+
+
+``
