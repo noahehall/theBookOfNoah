@@ -110,6 +110,8 @@
     - any software run with docker is run isnide a container
     - software running inside docker containers interface directly with the hosts linux kernel
   - containers started from the same image dont share changes to their file system
+  - the running state of a container is directly tied to the state of a single running process inside the container
+
 ## images
   - a bundled snapshot of all the files that should be available to programs running inside a container
   -
@@ -120,17 +122,30 @@
 
 # workflows
 ## cmdline
-  - `docker run`
-    - process
-      - if the image is installed on the host OS, usez it
-      - else
-        - search docker hub and use it
-        - download the image
-        - install image layers
-          - potentially repeating the process for each dependency on all parent layers
-        - create a new container
-        - run the container
-      - 
+### docker run
+  - triggers a sequence that installs, runs and (possibly) stops a program inside a container
+  - process
+    - if the image is installed on the host OS, usez it
+    - else
+      - search docker hub and use it
+      - download the image
+      - install image layers
+        - potentially repeating the process for each dependency on all parent layers
+    - create a new container
+    - run the container
+
+
+```sh
+  # hello world
+  docker run dockerinaction/hello_worldz
+
+
+```
+### docker help
+    - display information about the basic syntax for using the docker cmdline program as well as a complete list of cmds for your version of the program
+
+
+
 ## simplified
   - create/install images
   - run containers
@@ -141,10 +156,5 @@
       - creating a `docker` group
       - setting that group as the owner of the docker socket
       - adding yoru user to that group
+
 ## examples
-```sh
-  # hello world
-  docker run dockerinaction/hello_worldz
-
-
-``
