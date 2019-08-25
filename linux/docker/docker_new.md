@@ -57,6 +57,16 @@
   -
 
 
+# best practices
+  - docker generally runs as the root user on your system
+    - eliminate this by
+      - creating a `docker` group
+      - setting that group as the owner of the docker socket
+      - adding yoru user to that group
+  - be sure to rotate/truncate container logs
+    - the logs for a container will remain and grow as long as the container exists
+    - log-term persistence i a problem for long-lived processes
+
 
 # architecture
   - docker is a commandline program, a background daemon, and a set of remote services that take a logistical approach to solving common software problems
@@ -130,7 +140,7 @@
 # workflows
   - agent
     - a container specifically for providing limited  interactive access to other containers
-    -
+  -
 ## options
   - generally
     - work for both dockerfiles and cmdline
@@ -202,16 +212,33 @@
 ```
 
 
+### docker restart
+  - restart one/more containers
+```sh
+  docker restart CONTAINER_NAME|UID
 
-## simplified
-  - create/install images
-  - run containers
+  # wait 5 seconds before restarting the container
+  docker restart -t 5 name|id
 
-# best practices
-  - docker generally runs as the root user on your system
-    - eliminate this by
-      - creating a `docker` group
-      - setting that group as the owner of the docker socket
-      - adding yoru user to that group
+```
 
-## examples
+### docker logs
+  - fetch the logs of a container
+
+```sh
+  docker logs CONTAINER_NAME|UID
+
+  # follow the log output
+  docker logs --f name|id
+
+```
+
+### docker stop
+  - stop one/moire running containers
+
+```sh
+  docker stop CONTAINER_NAME|UID
+
+  # wait 5 seconds before stopping the container(s)
+  docker stop -t 5 name|id
+```
