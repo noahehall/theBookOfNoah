@@ -244,7 +244,7 @@
     - attempt for some predetermined time to restart when a failure is detected
     - always restart the container regardless of the condition
 
-### volumes
+## volumes
   - a host/containers directory tree is created by a set of mount points that describe how to piece together one/more file  systems
   - volume
     - mount point on the containers dorectory tree where a portion of hte host directory tree has been mounted
@@ -257,10 +257,36 @@
     - input/output data for data processing applications
     - static content
     - support tools
+  - characteristics
+    - multiple containers can inherit volumes
+      - all containers will point to the same location on the hosts directory tree
+  - types
+    - bind mount volumes
+      - use any user-specified directory/file on the host operating system
+        - i.e. specify the location on the host where data is persisteed
+      - use cases
+        - when the host provides a file/dir that needs to be mounted into the container directory tree at a specified point
+          - i.e. when you need to share from host to container
+    - managed volumes
+      - use locations that are created by the docker daemon in space controlled by the daemon
+      - i.e. you have no control where the data is being saved on the host
+    -
 ```sh
+  # create a volume container
+  # uses a docker managed volume
   docker run...
+    --name poop
     --volume /some/dir
+
+  # inherit a volume from another container
+  docker run...
+    --volumes-from poop
+
+  # bind  mount a volume in a container
+  docker run...
+    -v ~/absolute/host/location:/absolute/container/location 
 ```
+
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
   - indexes
