@@ -98,7 +98,11 @@
         - programs running inside a container can access only their own memory and resources as scoped by the container
   - Container isolation
     - PID namespace
+      - the set of possible numbers that identify each process
+      - each namespace is isolated, thus PIDs are scoped to namespace3s
       - process identifiers and capabilities
+      - every running program (i.e. process) on a linux machine has a unique process identifier
+      -
     - UTS namespace
       - host and domain name
     - MNT namespace
