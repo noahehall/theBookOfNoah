@@ -19,7 +19,12 @@
     - improving portability
       - docker runs on all operating systems
       - thus, you can use software deesigned for windows/linux/etc on any other OS that supports docker
-      - 
+  - Analogies
+    - think of docker as a physical shipping container system
+      - a box where you store and run an applkication and all of its dependencies
+      - just as cranes, trucks, trains, etc work with shipping contaiiners
+        - docker can run, copy and distribute containers with ease
+      - docker images are the shipping containers 
 
 # terminology
   - jail
