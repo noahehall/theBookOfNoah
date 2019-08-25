@@ -87,8 +87,12 @@
       - data locality, e.g. data stored on a particular computer outside the deployment architecture
     - utlize the following
       - read-only file systems
+        - then create exceptions via docker volumes for specific processes that need write capability
       - env var injection
-      - docker volumes 
+        - key-value pairs that are made available to programs through their execution context
+        - let you change a programs configuration without modifying any files/cmd used to start the program
+        - programs can be configured to expect variable injection at container-creaation
+      - docker volumes
 
 
 # architecture
@@ -209,6 +213,8 @@
   docker ps -l # show the last created container
   CID=$(docker ps -l -q) # save the UID of the last created container
 ```
+
+
 ### docker run
   - triggers a sequence that installs, runs and (possibly) stops a program inside a container
   - process
@@ -243,6 +249,11 @@
       - PID namespace to use
     - `--cidfile`
       - save the container UID to a file
+    - `--read-only`
+      - mount the containers root filesystem as read only
+    - `-e | --env`
+      - set env variables
+      - overrides variables set in the image
 
 
 
@@ -331,4 +342,22 @@
   - stop one/more stopped containers
 ```sh
   docker start CONTAINER_NAME|UID
+```
+
+### docker inspect
+  - return low-level information on docker objects
+  - `-f | --format` format the output using the given Go template
+```sh
+  # returns true|false if container is running
+  docker inspect --f "{{.State.Running}}" CONTAINER_NAME|UID
+
+```
+
+# init scripts
+
+```sh
+  if [ ! -n "$SOME_VAR"]; then
+    echo "wtf var not set biotch"
+    exit 1
+  fi
 ```
