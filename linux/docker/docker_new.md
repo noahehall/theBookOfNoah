@@ -51,10 +51,10 @@
   - abstraction
     - allows you to work with complicated things in simplified terms
     - lol the def is an abstraction of itself
-  - detached container
-    -
-    -
-  -
+  - supervisor process
+    - i.e. init process
+    - a program thats used to launch and maintain the state of other programs
+    - on a linux system, PID #1 is the init process
 
 
 # best practices
@@ -68,7 +68,7 @@
     - the logs for a container will remain and grow as long as the container exists
     - log-term persistence i a problem for long-lived processes
 
-  - utlizing PID namespaces that are automatically created for each container is a critical feature of Docker
+  - utlizing the PID namespaces that are automatically created for each container is a critical feature of Docker
     - without the PID namespace containers would share PIDs and lack isolation
     - thus DO NOT share the host PID namespace unless you know wtf your doing
     - when sharing PID namespaces
@@ -82,7 +82,7 @@
 
   - build environment-agnostic systems
     - minimize specializations of the computing environment
-      - global-scoped depndencies, e.g. known host file system locations
+      - global-scoped dependencies, e.g. known host file system locations
       - hard-coded deployment architectures, e.g. env checks in code/configuration
       - data locality, e.g. data stored on a particular computer outside the deployment architecture
     - utlize the following
@@ -93,6 +93,13 @@
         - let you change a programs configuration without modifying any files/cmd used to start the program
         - programs can be configured to expect variable injection at container-creaation
       - docker volumes
+
+  - build durable containers
+    - automatically restart processes when they exit/fail
+      - use exponential backoff
+    - keep containers running with supervisor & startup processes
+      - e.g. init, systemd, runit, upstart, supervisord
+      - use a startup script that (at least) checks preconditions for successfully starting the contained software
 
 
 # architecture
@@ -174,6 +181,11 @@
       - docker pause
     - restarting
       - docker restart
+  - restart policies
+    - never restart
+    - attempt to restart when a failure is detected
+    - attempt for some predetermined time to restart when a failure is detected
+    - always restart the container regardless of the condition
 
 
 
@@ -254,6 +266,10 @@
     - `-e | --env`
       - set env variables
       - overrides variables set in the image
+    - `--restart`
+      - restart policy to appply whena  container exists
+    - `--rm`
+      - automatically remove containers when they are stopped
 
 
 
@@ -353,6 +369,22 @@
 
 ```
 
+### docker rm
+  - remove one/more containers/links
+  - `-f`
+    - force removal of a container using SIGKILL
+  - `-l`
+    - remove the specified link
+  - `-v`
+    - remove the volumes assocaited with a container
+```sh
+  # remove all containers and their assocaited volumes 
+  docker rm -vf $(docker ps -a -q)
+```
+
+
+### docker kill
+  - kill one/more containers
 # init scripts
 
 ```sh
