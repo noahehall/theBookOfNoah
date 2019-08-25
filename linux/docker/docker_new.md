@@ -50,7 +50,11 @@
     - memory alotted to run user software, e.g. cmdline programs and GUI things
   - abstraction
     - allows you to work with complicated things in simplified terms
+    - lol the def is an abstraction of itself
+  - detached container
     -
+    -
+  -
 
 
 
@@ -100,6 +104,11 @@
     - cgroups
       - resource protection
 
+
+## images
+  - when installing software with docekr, your installing an image
+  - a bundled snapshot of all the files that should be available to programs running inside a container
+  -
 ## cmd line
 
 ## daemon
@@ -112,15 +121,32 @@
   - containers started from the same image dont share changes to their file system
   - the running state of a container is directly tied to the state of a single running process inside the container
 
-## images
-  - a bundled snapshot of all the files that should be available to programs running inside a container
-  -
+
 
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
 
 
 # workflows
+  - agent
+    - a container specifically for providing limited  interactive access to other containers
+    -
+## options
+  - generally
+    - work for both dockerfiles and cmdline
+    - -i and -t are used together for running interactive programs like a shell in an interactive container
+
+  - `-d | --detached`
+    - the container will run in the background without being attached to any input/output stream
+  - `--name`
+    - assign a name to the container
+  - `-i | --interactive`
+    - keep STDIN open even if not attached
+  - `-t | --tty`
+    - allocate a pseudo-tty (i.e. virtual terminal)
+  - `--link`
+    - add link to another container
+
 ## cmdline
 ### docker run
   - triggers a sequence that installs, runs and (possibly) stops a program inside a container
@@ -133,17 +159,30 @@
         - potentially repeating the process for each dependency on all parent layers
     - create a new container
     - run the container
+    - return the container UID
+      - its common to persist the UID to a variable for use with other cmds
 
 
 ```sh
   # hello world
   docker run dockerinaction/hello_worldz
 
+  # link an nginx container named web
+  # assign it the name web inside this container
+  # interact with it via wget
+  # then detach your terminal wiithout stopping the container
+  docker run -i -t --link web:web ...
+  wget -o - http://web:80
+  ctrl p q
+
 
 ```
 ### docker help
-    - display information about the basic syntax for using the docker cmdline program as well as a complete list of cmds for your version of the program
-
+  - display information about the basic syntax for using the docker cmdline program as well as a complete list of cmds for your version of the program
+```sh
+  docker help
+  docker help cp
+```
 
 
 ## simplified
