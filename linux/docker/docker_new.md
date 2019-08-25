@@ -101,6 +101,12 @@
       - e.g. init, systemd, runit, upstart, supervisord
       - use a startup script that (at least) checks preconditions for successfully starting the contained software
 
+  -  use proper versioning for all images
+    -  all images should be tagged
+
+  -  use images with publicly available dockerfiles
+    -  they are more trustworthy as you can inspect how they are built
+
 
 # architecture
   - docker is a commandline program, a background daemon, and a set of remote services that take a logistical approach to solving common software problems
@@ -152,16 +158,43 @@
     - cgroups
       - resource protection
 
-
-## images
-  - when installing software with docekr, your installing an image
-  - a bundled snapshot of all the files that should be available to programs running inside a container
+## repositories
+  - bucket of images
+  - have urls which are composed of
+    - e.g. quay.io/dockerinaction/ch3_hello_registry:latest
+    - the host where the image is located
+      - qay.io
+    - the user account that owns the image
+      - dockerinaction
+    - a short name
+      - ch_hello_registry
+    - a tag (latest is used by default)
+      - latest
+    -
   -
-## cmd line
+
+
+## docker cmd line
+  - search the docker hub index and display results
 
 ## daemon
   - should always be running
-  -
+
+## images
+  - a file for starting containers
+    - a bundled snapshot of all the files that should be available to programs running inside a container
+    - installed images contain metadata
+      - relationships between images
+      - coommand history for an image
+      - exposed ports
+      - volume definitions
+      - etc
+    - each time an image is changed it receives a new UID
+  - when installing software with docker, your installing an image
+
+### dockerfiles
+  - scripts for building images
+
 ## containers
   - uses existing container engines (installed in linux) to provide consistent containers built according to best practices
     - any software run with docker is run isnide a container
@@ -191,6 +224,12 @@
 
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
+  - indexes
+    - search engines that catalog repositories
+  - docker hub
+    - the default registry and index with a website run by docker inc
+    - push images to docker hub
+    - make dockerfiles publicly available and utilize docker hubs continuous build system
 
 
 # workflows
@@ -378,13 +417,45 @@
   - `-v`
     - remove the volumes assocaited with a container
 ```sh
-  # remove all containers and their assocaited volumes 
+  # remove all containers and their assocaited volumes
   docker rm -vf $(docker ps -a -q)
 ```
 
+### docker rmi
+  - remove one/more images
+
+```sh
+  docker rmi IMAGE_NAME|UID
+```
 
 ### docker kill
   - kill one/more containers
+
+### docker search
+  - search the docker hub for images
+  -
+
+```sh
+  docker search nginx
+
+```
+
+### docker pull
+  - install an image/pull a repository from a registry
+```sh
+  docker pull NAME|URL
+
+```
+
+### docker save
+  - save one/more images to a tar archive
+```sh
+  docker save -o FILENAME.tar IMAGE_NAME|UID
+```
+### docker load
+  - load an image from a tar archive/STDIN
+### docker login
+  - login to a docker registry
 # init scripts
 
 ```sh
@@ -393,3 +464,4 @@
     exit 1
   fi
 ```
+
