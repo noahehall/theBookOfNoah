@@ -66,7 +66,17 @@
   - be sure to rotate/truncate container logs
     - the logs for a container will remain and grow as long as the container exists
     - log-term persistence i a problem for long-lived processes
-  - creating a PID namespace for each container is a critical feature of Docker
+  - utlizing PID namespaces that are automatically created for each container is a critical feature of Docker
+    - without the PID namespace containers would share PIDs and lack isolation
+    - thus DO NOT share the host PID namespace unless you know wtf your doing
+    - when sharing PID namespaces
+      - containers are able to determine what other processing are running inside the namespace
+      - their will be collisions if programs utlize the same resources
+        - two programs binding to the same port
+        - two programs using the same dir/file location
+        - two programs use different versions of some globally installed library
+        - two programs use the same PID file
+        - a second program installed modified an env var that another program uses 
 
 
 # architecture
@@ -198,6 +208,8 @@
       - allocate a pseudo-tty (i.e. virtual terminal)
     - `--link`
       - add link to another container
+    - `--pid`
+      - PID namespace to use
 
 
 
