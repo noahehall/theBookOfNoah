@@ -63,9 +63,11 @@
       - creating a `docker` group
       - setting that group as the owner of the docker socket
       - adding yoru user to that group
+
   - be sure to rotate/truncate container logs
     - the logs for a container will remain and grow as long as the container exists
     - log-term persistence i a problem for long-lived processes
+
   - utlizing PID namespaces that are automatically created for each container is a critical feature of Docker
     - without the PID namespace containers would share PIDs and lack isolation
     - thus DO NOT share the host PID namespace unless you know wtf your doing
@@ -77,6 +79,16 @@
         - two programs use different versions of some globally installed library
         - two programs use the same PID file
         - a second program installed modified an env var that another program uses
+
+  - build environment-agnostic systems
+    - minimize specializations of the computing environment
+      - global-scoped depndencies, e.g. known host file system locations
+      - hard-coded deployment architectures, e.g. env checks in code/configuration
+      - data locality, e.g. data stored on a particular computer outside the deployment architecture
+    - utlize the following
+      - read-only file systems
+      - env var injection
+      - docker volumes 
 
 
 # architecture
@@ -225,6 +237,8 @@
       - allocate a pseudo-tty (i.e. virtual terminal)
     - `--link`
       - add link to another container
+      - injects IP addresses into dependent containers
+        - containers that arent running dont have IP addresses, thus an error will be thrown if linking to a non-running container
     - `--pid`
       - PID namespace to use
     - `--cidfile`
