@@ -66,7 +66,7 @@
   - be sure to rotate/truncate container logs
     - the logs for a container will remain and grow as long as the container exists
     - log-term persistence i a problem for long-lived processes
-  - creating a PID namespace for each container is a critical feature of Docker 
+  - creating a PID namespace for each container is a critical feature of Docker
 
 
 # architecture
@@ -146,21 +146,6 @@
   - agent
     - a container specifically for providing limited  interactive access to other containers
   -
-## options
-  - generally
-    - work for both dockerfiles and cmdline
-    - -i and -t are used together for running interactive programs like a shell in an interactive container
-
-  - `-d | --detached`
-    - the container will run in the background without being attached to any input/output stream
-  - `--name`
-    - assign a name to the container
-  - `-i | --interactive`
-    - keep STDIN open even if not attached
-  - `-t | --tty`
-    - allocate a pseudo-tty (i.e. virtual terminal)
-  - `--link`
-    - add link to another container
 
 ## cmdline
 ### docker help
@@ -200,6 +185,21 @@
     - return the container UID
       - its common to persist the UID to a variable for use with other cmds
 
+  - options
+    - -i and -t are used together for running interactive programs like a shell in an interactive container
+
+    - `-d | --detached`
+      - the container will run in the background without being attached to any input/output stream
+    - `--name`
+      - assign a name to the container
+    - `-i | --interactive`
+      - keep STDIN open even if not attached
+    - `-t | --tty`
+      - allocate a pseudo-tty (i.e. virtual terminal)
+    - `--link`
+      - add link to another container
+
+
 
 ```sh
   # hello world
@@ -216,6 +216,15 @@
 
 ```
 
+### docker exec
+  - run a cmd in a running container
+
+```sh
+  docker exec CONTAINER_NAME|ID CMD
+
+  # run the ps cmd in the poop container
+  docker exec poop ps
+```
 
 ### docker restart
   - restart one/more containers
