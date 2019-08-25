@@ -208,6 +208,11 @@
     - used to create mount points on a hosts file system that abstract the use of layers
     - part of a critical set of tools that combine to create effective system isolation
       - MNT namespaces aand chroot system call
+    - uses the copy-on-write pattern
+      - makes implementing memory-mapped files (mmap() system call) difficult
+      - essentially adds a new layer on top of an existing one while copying over everything that did not change
+        - think of git, where you can go to an revision
+        - similarly you can go to any image in a layer
 
 ### dockerfiles
   - scripts for building images
@@ -237,7 +242,10 @@
     - attempt for some predetermined time to restart when a failure is detected
     - always restart the container regardless of the condition
 
-
+### volumes
+  - a host/containers directory tree is created by a set of mount points that describe how to piece together one/more file  systems
+  - volume
+    - mount point on the containers dorectory tree where a portion of hte host directory tree has been mounted 
 
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
