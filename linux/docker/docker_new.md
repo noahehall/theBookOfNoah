@@ -116,8 +116,21 @@
 
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
-  -
+
+
 # workflows
+## cmdline
+  - `docker run`
+    - process
+      - if the image is installed on the host OS, usez it
+      - else
+        - search docker hub and use it
+        - download the image
+        - install image layers
+          - potentially repeating the process for each dependency on all parent layers
+        - create a new container
+        - run the container
+      - 
 ## simplified
   - create/install images
   - run containers
