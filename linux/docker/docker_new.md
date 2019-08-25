@@ -71,12 +71,12 @@
     - thus DO NOT share the host PID namespace unless you know wtf your doing
     - when sharing PID namespaces
       - containers are able to determine what other processing are running inside the namespace
-      - their will be collisions if programs utlize the same resources
+      - there will be collisions if programs utlize the same resources
         - two programs binding to the same port
         - two programs using the same dir/file location
         - two programs use different versions of some globally installed library
         - two programs use the same PID file
-        - a second program installed modified an env var that another program uses 
+        - a second program installed modified an env var that another program uses
 
 
 # architecture
@@ -180,6 +180,9 @@
 ```sh
   docker ps # show running
   docker ps -a # show all
+  docker ps -q # only show the container UIDs
+  docker ps -l # show the last created container
+  CID=$(docker ps -l -q) # save the UID of the last created container
 ```
 ### docker run
   - triggers a sequence that installs, runs and (possibly) stops a program inside a container
@@ -200,6 +203,7 @@
 
     - `-d | --detached`
       - the container will run in the background without being attached to any input/output stream
+      - a container UID will be returned
     - `--name`
       - assign a name to the container
     - `-i | --interactive`
@@ -210,6 +214,8 @@
       - add link to another container
     - `--pid`
       - PID namespace to use
+    - `--cidfile`
+      - save the container UID to a file
 
 
 
@@ -224,6 +230,13 @@
   docker run -i -t --link web:web ...
   wget -o - http://web:80
   ctrl p q
+
+
+  # run and save the UID of a container
+  # run a new container linked to the previous one
+  WEB_CID=$(docker run ...)
+  docker run ...
+    --link $WEB_CID:web
 
 
 ```
@@ -267,4 +280,22 @@
 
   # wait 5 seconds before stopping the container(s)
   docker stop -t 5 name|id
+```
+
+### docker rename
+  - rename a container
+```sh
+  docker rename OLD NEW
+```
+
+### docker create
+  - create a new container
+  - useful for retrieving the UID of a container for use in other cmds
+
+```sh
+  # create a container from the nginx image
+  docker create nginx
+
+  # save the container UID to a shell var
+  CID=$(docker create nginx:latest)
 ```
