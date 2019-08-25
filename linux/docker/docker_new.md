@@ -148,6 +148,29 @@
     - add link to another container
 
 ## cmdline
+### docker help
+  - display information about the basic syntax for using the docker cmdline program as well as a complete list of cmds for your version of the program
+```sh
+  docker help
+  docker help cp
+  docker help run | grep OPTION
+
+```
+
+### docker ps
+  - lists containers and metadata for each
+  - container ID
+  - image used
+  - cmd executed in the container
+  - time since the container was creaated
+  - the duration that the container has been running
+  - the network ports exposed by the container
+  - the name of the container
+  -
+```sh
+  docker ps # show running
+  docker ps -a # show all
+```
 ### docker run
   - triggers a sequence that installs, runs and (possibly) stops a program inside a container
   - process
@@ -177,12 +200,7 @@
 
 
 ```
-### docker help
-  - display information about the basic syntax for using the docker cmdline program as well as a complete list of cmds for your version of the program
-```sh
-  docker help
-  docker help cp
-```
+
 
 
 ## simplified
