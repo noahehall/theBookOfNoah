@@ -145,6 +145,19 @@
     - software running inside docker containers interface directly with the hosts linux kernel
   - containers started from the same image dont share changes to their file system
   - the running state of a container is directly tied to the state of a single running process inside the container
+  - lifecycle statuses (as reported by docker ps)
+    - running
+      - docker run
+      - docker start
+      - docker restart
+      - docker unpause
+    - exited
+      - docker create
+      - docker stop
+    - paused
+      - docker pause
+    - restarting
+      - docker restart
 
 
 
@@ -298,4 +311,10 @@
 
   # save the container UID to a shell var
   CID=$(docker create nginx:latest)
+```
+
+### docker start
+  - stop one/more stopped containers
+```sh
+  docker start CONTAINER_NAME|UID
 ```
