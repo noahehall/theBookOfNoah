@@ -674,8 +674,10 @@
     -
 
 ```sh
+  # limmit memory to 256 megabytes
+  # can be b, k, m, g
   docker run...
-
+    --memory 256m
 
 ```
 
