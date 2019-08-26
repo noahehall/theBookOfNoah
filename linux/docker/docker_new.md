@@ -86,6 +86,10 @@
   - CIDR
     - classless inter-domain routing
     - provides a way to specify an IP address and its routing prefix
+  - service portability
+    - the idea
+      - that a service could be running on any machine, in any container ina larger environment
+      - that a system where any process might run anywhere is more robust than systems with strict locality contraints
 
 
 # best practices
@@ -150,10 +154,13 @@
     -  use custom DNS servers (e.g. 8.8.8.8)
       -  to provide consistency
       -  working on a laptop and often move between internet service providers
+      -  your applications are slow to start and you need to handle IP address changes on service discovery
     - configure the docker daemon to disallow network connections between containers (icc=false)
       - this is the best practice in multi-tenant environments
       - it minimizes the points (i.e. attack surface) where an attacker might compromise other containers
       - you can explicitly permitted inter-container communication by link containers that require it
+  -  set reasonable resource allowances for physical system resources like memory and CPU time
+    -  creates a strong isolated context for individual containers
 
 
 
@@ -185,31 +192,7 @@
         - each container runs as a child process of the docker daemon
         - the container, and the child process runs in its own memory subspace of the user spoace
         - programs running inside a container can access only their own memory and resources as scoped by the container
-  - Container isolation
-    - PID namespace
-      - the set of possible numbers that identify each process
-      - each namespace is isolated, thus PIDs are scoped to namespace3s
-      - process identifiers and capabilities
-      - every running program (i.e. process) on a linux machine has a unique process identifier
-      -
-    - UTS namespace
-      - host and domain name
-    - MNT namespace
-      - file system access and structure
-      - the linux kernel provides a namespace for the MNT system
-      - when docker creates a container
-        - the new container will have its own MNT namespace and a new mount point will be created for the container to the image
-    - IPC namespace
-      - process communication over shared memory
-    - NET namespace
-      - network access and structure
-    - USR namespace
-      - user names and identifiers
-    - chroot()
-      - controls the location of the file system root
-      - used to make the root fo the image file hsytsem the root in the containers context
-    - cgroups
-      - resource protection
+  -
 
 
 ## repositories
@@ -483,7 +466,7 @@
     -
 
 
-## docker networking
+### docker networking
   - docker creates a bridge network to connect all of the running containers to the host computers network
   - single-host virtual networks
     - local virtual networks are used to provide container isolation
@@ -508,7 +491,7 @@
     - provide an overlay where any container on a participating host can have its on routable IP address from any other container in the network
 
 
-## docker container networking archetypes
+### docker container networking archetypes
   - define how a container interacts with other local containers and the hosts network
   - each archetype provides a different level of isolation\]]
 
@@ -564,7 +547,7 @@
     - processes can bind to protected network ports less than 1024
       - generally you require sudo priviledges to access this range
 
-### docker bridge network
+#### docker bridge network
   - routes connections to the external network and each container interfaces
     - analagous to your home router
     - all intefaces connected to docker0 are part of the same virtual subnet
@@ -653,6 +636,40 @@
     --net host
 
 ```
+
+
+## resources
+  - containers provide isolated process context, not 100% system virtualization
+  - Container isolation
+    - PID namespace
+      - the set of possible numbers that identify each process
+      - process identifiers
+      - process capabilities
+      - each namespace is isolated, thus PIDs are scoped to namespaces
+      - every running program (i.e. process) on a linux machine has a unique process identifier
+      -
+    - UTS namespace
+      - host and domain name
+    - MNT namespace
+      - file system access and structure
+      - the linux kernel provides a namespace for the MNT system
+      - when docker creates a container
+        - the new container will have its own MNT namespace and a new mount point will be created for the container to the image
+    - IPC namespace
+      - process communication over shared memory
+    - NET namespace
+      - network access and structure
+    - USR namespace
+      - user names and identifiers
+    - chroot()
+      - controls the location of the file system root
+      - used to make the root of the image file system the root in the containers context
+    - cgroups
+      - resource protection
+  - resource allowances
+    -
+
+
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
   - indexes
@@ -786,7 +803,7 @@
           - containers that arent running dont have IP addresses, thus an error will be thrown if linking to a non-running container
           - i.e. has to be built from new containers to existing containers
           - containers maintain IP address leases only when they are running
-            - if a container is stopped/restarted, it will lose its IP lease and any linked containers will have stale data 
+            - if a container is stopped/restarted, it will lose its IP lease and any linked containers will have stale data
         - this explicitely permits inter-container communication even if `icc=false`
         -
         - environment modifications when links are created
