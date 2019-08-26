@@ -138,6 +138,7 @@
     -  sinc any container can connect to an
 
   -  always use the strongest possible container network archetype
+    -  always harden the default bridge network if using it connect containers to the outside
 
 
 # architecture
@@ -407,6 +408,10 @@
   - communicating between processes that may/not share the same local resources
   - protocol
     - agreed upon standards
+    - DNS
+      - domain name system
+      - protocol for mapping host names to IP addresses
+      - enables clients to decouple from a dependency on a specific host IP and instead depend on whatever host is referred to by a known name (e.g. poop.com)
   - network
     - defined in the way that network interfaces are linked together
     - the links between itnerfaces determines an interfaces IP address
@@ -454,10 +459,12 @@
         - docker bridge virtual interface (docker0)
           - routes connections to the external network and each container interfaces]
             - analagous topp yur home router
+            - all intefaces connected to docker0 are part of the same virtual subnet
+              - i.e. they can talk to each other and communicate with the larger network via the docker0 interface
         - logical host interface
       - physical network interface
   - multi-host virtual networks
-    - provide an overlay where any container on a paritcipating host can have its on routable IP address from any other container in the network
+    - provide an overlay where any container on a participating host can have its on routable IP address from any other container in the network
 
 
 ## docker container networking archetypes
@@ -467,6 +474,9 @@
   - closed containers
     - doesnt allow any network traffic
       - i.e. is not connected to the docker bridge (docker0) interface
+      - container process can connect to/wait for (internal) connections on the loopback interface
+      - nothing inside the container can connect to anything outside
+      - nothing outside the container can connect to anything inside
     - processes only have access to the internal loopback interface
     - use cases
       - volume containers
@@ -476,6 +486,11 @@
     -
 
   - bridged containers
+    - the most customizable and should be harded as a best practice
+    - connected to docker0
+    - use cases
+      - containers with processes requiring network access
+      -
 
   - joined containers
 
@@ -490,6 +505,10 @@
   # create a closed container
   docker run...
     --net none
+
+  # create a bridged container
+  docker run...
+    --net bridge # can be ommitted, its the default
 
 ```
 ## registries and indexes
