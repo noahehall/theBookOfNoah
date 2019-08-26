@@ -675,10 +675,18 @@
     - restrict the amount of memory that processes inside a container can use
       - doesnt guarantee the system provides this memory
   - CPU processing time
+    - two forms
+      - limit relative CPU processing time
+      - assign a container to a specific CPU set
     - lack of CPU time for a process results in degradation
     - a slow process may be worse than a failing process if its responsible for something important, e.g. makin cash money
     - are enforced only when there is a contention for time on the CPU
       - if there is no bottleneck, processes are permitted to consume up to the physical limit
+    - context switch
+      - the task of changing from executing one process to executing another
+        - is expensive and may cause a noticeable impact on the performance of your system
+        - try to limit context switching for critical process
+        - i.e. limit distinct critical processes from executinng on the same CPU set
 
 ```sh
   # limmit memory to 256 megabytes
