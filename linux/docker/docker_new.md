@@ -144,6 +144,10 @@
       -  internally
         -  when programs running inside a container need to lookup their own ip address
         -  when programs running inside a container must self-identify
+    -  use custom DNS servers (e.g. 8.8.8.8)
+      -  to provide consistency
+      -  working on a laptop and often move between internet service providers
+      -
 
 
 # architecture
@@ -521,6 +525,10 @@
   docker run...
     --hostname poop
     alpine nslookup poop
+
+  # set custom dns servers
+  docker run...
+    --dns 8.8.8.8 # googles dns server
 ```
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
@@ -612,10 +620,12 @@
         - set the containers hostname
       - `--dns`
         - set custom DNS servers
+        - must be an IP address
+        - can also be set when you startup the docker daemon that runs in the background providing it all containers by default
       - `--dns-option`
         - set DNS options
       - `--dns-search`
-        - set custom DNS 
+        - set custom DNS
       - `--add-host`
       -
 
