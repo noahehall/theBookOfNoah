@@ -778,13 +778,17 @@
         - images maintain a lkiikst of ports that are exposed for simiplicity and as a hint to users where contained services are listening
 
       - `--link`
-        - add a one-way, non-transitive network dependency to another container
+        - add a one-way (discovery, not communication), non-transitive network dependency to another container
           - non-transitive
             - containers do not inherit links from their dependencies
             - i.e. a > b > c, a is not linked to B even though B is link to C and A is linked to B
         - injects IP addresses into dependent containers
           - containers that arent running dont have IP addresses, thus an error will be thrown if linking to a non-running container
+          - i.e. has to be built from new containers to existing containers
+          - containers maintain IP address leases only when they are running
+            - if a container is stopped/restarted, it will lose its IP lease and any linked containers will have stale data 
         - this explicitely permits inter-container communication even if `icc=false`
+        -
         - environment modifications when links are created
           - injects env variables prepended with the alias name
           - <ALIAS>_PORT_<PORT_#>_<TCP|UDP>_PORT=<PORT_#>
