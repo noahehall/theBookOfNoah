@@ -543,6 +543,20 @@
       - in the default network stack, all containers share the same virtual interface
     - docker provides access to the itnerfaces created for a specific container to another container
       - analagous to shared volumes
+    - use cases
+      - expand the use of a closed container by creating a new container connected to the closed containers interface
+        - this permits the closed and joined container to share data over the network
+      - permit two differnet programs to share data over the network
+      - have network services that need to communicate but network access/service discovery mechanisms like DNS are unavailable
+      - allow one process to monitor another through a protected channel
+        - i.e. when one process needs to communicate with another on an unexposed port
+      - use a single loopback interface for communication between programs in different containers
+      - if one program is going to change the joined network stack and another program is going to use that modified network
+      - when you need to monitor the network traffic for a pprogram in another container 
+    - issues
+      - reintroduce port conflict concerns
+        - i.e. since their sharinng the same network stack, any processes owning the same ports will not work
+      -
 
   - open containers
 
@@ -612,7 +626,6 @@
   # share a containers network interface with another
   docker run --name owner...
     --net none... # closed container
-
   docker run...
     --net container:owner # joined container
 
