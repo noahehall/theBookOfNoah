@@ -503,6 +503,8 @@
     - arent accessible from the host network by default
       - by default provides no route from the hosts eternal interface to the container interface
     - containers are protected by the hosts firewall system
+    - all local bridged containers are on the same bridge network and can communicate with each other by default
+      - i.e. each container has a virtual inteface, and that interface is connectedd to the same docker bridge virtual interface (docker0)
     - use cases
       - containers with processes requiring network access
       -
@@ -689,6 +691,10 @@
       - `-P | --publish-all`
         - publish all exposed ports to random host ports if no host port is specified
         - note the capital P
+      - `--expose`
+        - expose  port/range of ports
+        - binds exposed ports to ephemeral (i.e. dynamic) ports on the host
+        - images maintain a lkiikst of ports that are exposed for simiplicity and as a hint to users where contained services are listening
 
 ```sh
   # hello world
@@ -853,6 +859,17 @@
 ```
 ### docker login
   - login to a docker registry
+
+
+### docker port
+  - list port mappings or a specific mapping for the container
+```sh
+
+  # list port mappings for a container
+  docker port CONTAINER_NAME|UID
+```
+
+
 # init scripts
 
 ```sh
@@ -861,4 +878,3 @@
     exit 1
   fi
 ```
-
