@@ -552,13 +552,16 @@
         - i.e. when one process needs to communicate with another on an unexposed port
       - use a single loopback interface for communication between programs in different containers
       - if one program is going to change the joined network stack and another program is going to use that modified network
-      - when you need to monitor the network traffic for a pprogram in another container 
+      - when you need to monitor the network traffic for a pprogram in another container
     - issues
       - reintroduce port conflict concerns
         - i.e. since their sharinng the same network stack, any processes owning the same ports will not work
       -
 
   - open containers
+    - have no network container (i.e. ethernet/loopback interface) and have full access to the hosts network and services
+    - processes can bind to protected network ports less than 1024
+      - generally you require sudo priviledges to access this range
 
 ### docker bridge network
   - routes connections to the external network and each container interfaces
@@ -568,6 +571,20 @@
   - modifying the bridge interface
     - define the address and subnet of the bridgeddefine the range of ip addresses that can be assigned to containers
     - define the maximum transmission unit (MTU)
+
+
+### local service discovery
+  - alternatives
+    - use a local dns server and a registration hook/agent when each container starts
+    - write programs to scan the local network for IP addresses listening on known ports
+  - the default docker way is to use links to connect containers
+    - the linked container must be running
+      - because containers hold their IP address only whe their running
+  - adding a link to a container does three things
+    - environment variables descri bing the target containers end point will be created
+    - the link alias will be added to the DNS override list of the new container the IP address 0f the target container
+    - if inter-container communication (ICC) has been disabled,
+      - docker will add specific firewall rules to allow communication between linked containers 
 ```sh
   # list all interfaces
     docker run --rm...
@@ -628,6 +645,10 @@
     --net none... # closed container
   docker run...
     --net container:owner # joined container
+
+  # create an open container
+  docker run...
+    --net host
 
 ```
 ## registries and indexes
