@@ -676,12 +676,15 @@
       - doesnt guarantee the system provides this memory
   - CPU processing time
     - lack of CPU time for a process results in degradation
+    - a slow process may be worse than a failing process if its responsible for something important, e.g. makin cash money
 
 ```sh
   # limmit memory to 256 megabytes
   # can be b, k, m, g
   docker run...
     --memory 256m
+
+  docker run...
 
 ```
 
@@ -780,6 +783,25 @@
         - pass `-1` to enable unlimited swap
       - `--memory-swappiness`
         - tune container memory swappiness (0...100)
+      - `--cpuset-mems`
+        - MEMs in which to allow execution
+        - 0...3, 0,1
+      - `--cpu-period`
+        - limit CPU CFS (completely fair scheduler) period
+      - `--cpu-quota`
+        - limit CPU CFS( completely fair scheduler) quota
+      - `--cpu-rt-period`
+        - limit CPU real-time period in microseconds
+      - `--cpu-rt-runtime`
+        - limit CPU real-time runtime in microseconds
+      - `--cpu-shares`
+        - cpu shares (relative weight)
+      - `--cpus`
+        - number of CPUs
+      - `--cpuset-cpus`
+        - CPUs in which to allow esecution
+        - 0...3, 0,1
+
 
     - networking
       - `-h | --hostname`
