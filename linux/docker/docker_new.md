@@ -546,6 +546,26 @@
   # add a map from poop to some IP addr
   docker run...
     --add-host poop:127.0.0.2
+
+  # bind container port to dynamic host port
+  # on all host interfaces
+  docker run...
+    -p 1234
+
+  # bind specific container (4321) and host (1234) port
+  # on all host interfaces
+  docker run...
+    -p 1234:4321
+
+  # bind specific container (4321) port to specific
+  # host interface on a dynamic port
+  docker run...
+    -p 123.123.123.123:4321
+
+  # bind specific container (4321) port to specific
+  # host interface on specific port (1234)
+  docker run...
+    -p 123.123.123.123:1234:4321
 ```
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
@@ -635,10 +655,12 @@
     - networking
       - `-h | --hostname`
         - set the containers hostname
+
       - `--dns`
         - set custom DNS servers
         - must be an IP address
         - can also be set when you startup the docker daemon that runs in the background providing it all containers by default
+
       - `--dns-search`
         - set custom DNS
         - specify a dns search documentationlike a defrault host name suffic
@@ -648,8 +670,10 @@
             - e.g. http://wiki/ -> http://wiki.google.com/
           - setting up dev/test env  hostnames that auto resolve without builcing env-aware software
           - can be set with setting up the docker daemon to provide defaults for every container created
+
       - `--dns-option`
         - set DNS options
+
       - `--add-host`
         - override the DNS system (i.e. update /etc/hosts)
         - add a custom host-to-ip mapping (host:ip)
@@ -659,6 +683,12 @@
           - route traffic for a particular destination through a proxy
           - often used to route unsecure traffic through secure channels like an SSH tunnel
 
+      - `-p | --publish`
+        - publish a containers port(s) to the host
+        - i.e. maps container network interface ports to host network interface ports
+      - `-P | --publish-all`
+        - publish all exposed ports to random host ports if no host port is specified
+        - note the capital P
 
 ```sh
   # hello world
