@@ -13,7 +13,28 @@
     - managing large scale systems or data centers
     - creating build, test and deployment pipelines
     - for use with networking applications, databases, mail servers, terminal applications, etc.
-    - managing software dependencies
+    - managing ingle-host virtual networks
+    - local virtual networks are used to provide container isolation
+    - local to the machine where docker is installed
+    - made up of routes between participating containers and the wider network where the host is attached
+    - the connection between interfaces describe how exposed or isolated a specific network container is from the rest of the network
+    - default stack
+      - container X network
+        - loopback interface
+        - private (ethernet) interface
+          - links to the virtual interface in the hosts namespace
+          - assigned a unique private IP address
+          - not directly reachable from the external network\
+          - docker uses kernel namespaces to create each virtual private interface
+      - operating system network
+        - container X virtual interface
+        - docker bridge virtual interface (docker0)
+          - routes connections to the external network and each container interfaces]
+            - analagous topp yur home router
+        - logical host interface
+      - physical network interface
+  - multi-host virtual networks
+    - provide an overlay where any container on a paritcipating host can have its on routable IP address from any otsoftware dependencies
       - installed images can reuse existing dependencies
       - dependencies with different versions can coexist
     - improving portability
@@ -114,6 +135,8 @@
     -  they are more trustworthy as you can inspect how they are built
   -  use volumes for persistent data and support tools
     -  sinc any container can connect to an
+
+  -  always use the strongest possible container network archetype
 
 
 # architecture
@@ -407,6 +430,8 @@
       - a recipient/sender of messages at a specific number at a specific IP address
       - defined as part of the Transmission Control Protocol (TCP)
     -
+
+
 ## docker networking
   - docker creates a bridge network to connect all of the running containers to the host computers network
   - single-host virtual networks
@@ -414,7 +439,7 @@
     - local to the machine where docker is installed
     - made up of routes between participating containers and the wider network where the host is attached
     - the connection between interfaces describe how exposed or isolated a specific network container is from the rest of the network
-    - netowrk exposure/isolation is provided by the hosts firewall rules 
+    - netowrk exposure/isolation is provided by the hosts firewall rules
     - default stack
       - container X network
         - loopback interface
@@ -432,6 +457,20 @@
       - physical network interface
   - multi-host virtual networks
     - provide an overlay where any container on a paritcipating host can have its on routable IP address from any other container in the network
+
+
+## docker container networking archetypes
+  - define how a container interacts with other local containers and the hosts network
+  - each archetype provides a different level of isolation\]]
+
+  - closed containers
+
+  - bridged containers
+
+  - joined containers
+
+  - open containers    
+
 
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
