@@ -677,6 +677,8 @@
   - CPU processing time
     - lack of CPU time for a process results in degradation
     - a slow process may be worse than a failing process if its responsible for something important, e.g. makin cash money
+    - are enforced only when there is a contention for time on the CPU
+      - if there is no bottleneck, processes are permitted to consume up to the physical limit
 
 ```sh
   # limmit memory to 256 megabytes
@@ -684,7 +686,14 @@
   docker run...
     --memory 256m
 
+  # set limits on a containers CPU share
+  # relative to other containers on the host
+  # 1024 vs 512, the first gets 2 CPU cycles for every one
+  # i.e. share/total, or this/that
   docker run...
+    --cpu-shares 512
+  docker run...
+    --cpu-shares 1024
 
 ```
 
