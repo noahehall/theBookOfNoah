@@ -386,6 +386,14 @@
   - network
     - defined in the way that network interfaces are linked together
     - the links between itnerfaces determines an interfaces IP address
+    - types
+      - bridge network
+        - virtual network that connects multiple networks so that they can function as a single network
+  - network router
+    - intermediate interfaces that sends messages between networks
+    - types
+      - local network router
+      - regional network router
   - network interface
     - has an IP address and represents a location
     - messages are delivered to and received from network interfaces
@@ -399,6 +407,20 @@
       - a recipient/sender of messages at a specific number at a specific IP address
       - defined as part of the Transmission Control Protocol (TCP)
     -
+## docker networking
+  - docker creates a bridge network to connect all of the running containers to the host computers network
+- single-host virtual networks
+  - local virtual networks are used to provide container isolation
+  - default stack
+    - container X
+      - loopback interface
+      - private interface
+        - connects to the OS network stack
+    - operating system network stack
+      - container X virtual interface
+      - docker bridge virtual interface (docker0)
+- multi-host virtual networks
+  - provide an overlay where any container on a paritcipating host can have its on routable IP address from any other container in the network
 
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
