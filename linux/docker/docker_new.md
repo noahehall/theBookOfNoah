@@ -31,6 +31,7 @@
       - docker images are the shipping containers
     -
 
+
 # terminology
   - jail
     - describes a modified runtime environment for a program that prevents that program from accessing protected services
@@ -60,6 +61,7 @@
     - a container specifically for providing limited  interactive access to other containers
   - polymorphic tool
     - a tool you can interact with in a consistent way bu tmay have several implementations that do different things
+
 
 # best practices
   - docker generally runs as the root user on your system
@@ -167,6 +169,7 @@
       - used to make the root fo the image file hsytsem the root in the containers context
     - cgroups
       - resource protection
+
 
 ## repositories
   - bucket of images
@@ -375,6 +378,27 @@
   docker exec app /tools/dir/new/program # inject new app
 ```
 
+
+## networking
+  - communicating between processes that may/not share the same local resources
+  - protocol
+    - agreed upon standards
+  - network
+    - defined in the way that network interfaces are linked together
+    - the links between itnerfaces determines an interfaces IP address
+  - network interface
+    - has an IP address and represents a location
+    - messages are delivered to and received from network interfaces
+    - single points in larger networks
+    - ethernet inteface
+      - connects to other interfaces and processes
+    - loopback interface
+      - not connected to any other interface
+      - enables use of network protocols to communicate with other programs on the same computer
+    - port
+      - a recipient/sender of messages at a specific number at a specific IP address
+      - defined as part of the Transmission Control Protocol (TCP)
+    -
 
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
