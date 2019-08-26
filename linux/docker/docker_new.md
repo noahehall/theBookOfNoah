@@ -29,6 +29,7 @@
       - just as cranes, trucks, trains, etc work with shipping contaiiners
         - docker can run, copy and distribute containers with ease
       - docker images are the shipping containers
+    -
 
 # terminology
   - jail
@@ -57,6 +58,8 @@
     - on a linux system, PID #1 is the init process
   - agent
     - a container specifically for providing limited  interactive access to other containers
+  - polymorphic tool
+    - a tool you can interact with in a consistent way bu tmay have several implementations that do different things
 
 # best practices
   - docker generally runs as the root user on your system
@@ -263,6 +266,30 @@
   - types
     - for virtualbox (docker machine / boot2docker) users
       - the host path specified in each value is relative to their virtual machine root file system and not the root of their host
+
+    - bind mount volumes
+      - use any user-specified directory/file on the host operating system
+        - i.e. specify the location on the host where data is persisteed
+      - use cases
+        - when the host provides a file/dir that needs to be mounted into the container directory tree at a specified point
+          - i.e. when you need to share from host to container
+        - override/inject files/directories in the container
+          - the file must exist on the host else a directory is assumed
+      - issues
+        - decrease container portability by tieing containers file systems to a specific host
+        - create an opportunity for conflict with other containers
+          - i.e. multiple databases sharing the same host location for database data
+
+    - managed volumes
+      - use locations that are created by the docker daemon in space controlled by the daemon
+        - i.e. you have no control where the data is being saved on the host
+      - use cases
+        - decoupling volumes from specialized locations on the host file system
+      - issues
+        - its difficult to find the location of the managed volume on the host file system
+          - thus no way to share/delete a managed volume manually
+        - can only be identified by the containers that use them
+  - patterns
     - volume container
       - creating a container with an attached volume, stopping the container, then source that containers volume when creating other containers
         - when creating the container, you can issue a simple echo command to run it and exit immediately
@@ -280,29 +307,15 @@
       - i.e. specify the volume in the Dockerfile, and copy static content into the volume at container creation time
 
     - polymorphic container pattern
-      - 
-    - bind mount volumes
-      - use any user-specified directory/file on the host operating system
-        - i.e. specify the location on the host where data is persisteed
-      - use cases
-        - when the host provides a file/dir that needs to be mounted into the container directory tree at a specified point
-          - i.e. when you need to share from host to container
-        - override/inject files/directories in the container
-          - the file must exist on the host else a directory is assumed
-      - issues
-        - decrease container portability by tieing containers file systems to a specific host
-        - create an opportunity for conflict with other containers
-          - i.e. multiple databases sharing the same host location for database data
-    - managed volumes
-      - use locations that are created by the docker daemon in space controlled by the daemon
-        - i.e. you have no control where the data is being saved on the host
-      - use cases
-        - decoupling volumes from specialized locations on the host file system
-      - issues
-        - its difficult to find the location of the managed volume on the host file system
-          - thus no way to share/delete a managed volume manually
-        - can only be identified by the containers that use them
-        -
+      - provides some functionality thats easily substituted using volumes
+      - e.g.
+        - an image that contains nodejs and by default executes a cmd that runs /app/app.js
+        - you can override /app/app.js at container creation time to do something else
+          - alternatively you can create a new layer in the image, but this doesnt make sense in two environments
+            - development - where speed during iteration is vital
+            - operational - make additional tools availble in an image that you had not anticipated when the image was built
+        - you can make  additional tools available via docker exec to run addtional processes in a running container
+
   - sharing volumes
     - host-dependent sharing
       - when two/more containers all have a bind mount volume for a single known location on the host file system
@@ -347,6 +360,13 @@
   docker run...
     -v /config
     SOME_IMAGE /bin/sh -c 'cp /image/content /config'
+
+  # provide additional tools to a running application
+  # via the polymorphic container pattern
+  docker run --name tools... # create a data packed container
+  docker run --name app...
+    volumes-from tools... # copy over data from tools
+  docker exec app /tools/dir/new/program # inject new app
 ```
 
 ## registries and indexes
