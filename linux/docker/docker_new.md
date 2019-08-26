@@ -147,7 +147,10 @@
     -  use custom DNS servers (e.g. 8.8.8.8)
       -  to provide consistency
       -  working on a laptop and often move between internet service providers
-      -
+    - configure the docker daemon to disallow network connections between containers
+      - this is the best practice in multi-tenant environments
+      - it minimizes the points (i.e. attack surface) where an attacker might compromise other containers
+
 
 
 # architecture
@@ -230,7 +233,13 @@
   - should always be running
   - route cmds to containers
 
+```sh
 
+  # disable inter-container communication
+  # any traffic from one container will be blocked
+  # by the host firewall except where explicitly permitted
+  docker -d --icc=false...
+```
 ## images
   - a file for starting containers
     - a bundled snapshot of all the files that should be available to programs running inside a container
