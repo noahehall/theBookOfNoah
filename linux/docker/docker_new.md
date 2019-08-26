@@ -251,7 +251,13 @@
 
   # define the ip addr and subnet range
   # of the bridge network
-  docker -d --bip "192.168.0.128/25"
+  # docker0 = 192.168.0.128
+  # container ip range = 192.168.0.129...255
+  docker -d --fixed-cdr "192.168.0.128/25"
+
+  # set the maximum size of a packet
+  # from default of 1500 to 1200
+  docker -d -mtu 1200
 ```
 ## images
   - a file for starting containers
