@@ -247,7 +247,7 @@
 ## volumes
   - a host/containers directory tree is created by a set of mount points that describe how to piece together one/more file  systems
   - volume
-    - mount point on the containers dorectory tree where a portion of hte host directory tree has been mounted
+    - mount point on the containers dorectory tree where a portion of the host directory tree has been mounted
     - useful for working with persistent/shared data
     - tool for segmenting and sharing data that has a scope/life cycle independent of a single container
     - enable separation of concerns and create modularity for architectural components
@@ -274,9 +274,13 @@
         - can easily backup, restore and migrate the data out of the container
         - important to have a mount-point naming convention
           - so when containers source from the volume container, they have some indication where the volume will be mounted
+
     - data packed volume containers
       - using images to distribute static resources like configuration/code for use in containers created with other images
       - i.e. specify the volume in the Dockerfile, and copy static content into the volume at container creation time
+
+    - polymorphic container pattern
+      - 
     - bind mount volumes
       - use any user-specified directory/file on the host operating system
         - i.e. specify the location on the host where data is persisteed
@@ -336,6 +340,13 @@
 
   # remove all associated volumes when removing the container
     docker rm -vf CONTAINER_NAME/UID
+
+
+  # copy image config into container
+  # i.e. data packed volume
+  docker run...
+    -v /config
+    SOME_IMAGE /bin/sh -c 'cp /image/content /config'
 ```
 
 ## registries and indexes
