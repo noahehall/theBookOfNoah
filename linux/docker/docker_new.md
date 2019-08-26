@@ -187,8 +187,10 @@
 ## docker cmd line
   - search the docker hub index and display results
 
+
 ## daemon
   - should always be running
+
 
 ## images
   - a file for starting containers
@@ -203,6 +205,7 @@
   - when installing software with docker, your installing an image
   - until an image is tagged
     - the only way to refer to it is by the UID
+
 
 ### layers
   - images maintain parent/child relationships
@@ -219,8 +222,10 @@
         - think of git, where you can go to an revision
         - similarly you can go to any image in a layer
 
+
 ### dockerfiles
   - scripts for building images
+
 
 ## containers
   - uses existing container engines (installed in linux) to provide consistent containers built according to best practices
@@ -246,6 +251,7 @@
     - attempt to restart when a failure is detected
     - attempt for some predetermined time to restart when a failure is detected
     - always restart the container regardless of the condition
+
 
 ## volumes
   - a host/containers directory tree is created by a set of mount points that describe how to piece together one/more file  systems
@@ -368,6 +374,7 @@
     volumes-from tools... # copy over data from tools
   docker exec app /tools/dir/new/program # inject new app
 ```
+
 
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
