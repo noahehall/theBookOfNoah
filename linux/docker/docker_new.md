@@ -141,6 +141,9 @@
     -  always harden the default bridge network if using it connect containers to the outside
     -  generally every container involved in the network stack should be assigned a hostname
       -  this permits you to decouple the container from its IP address and reroute messages without hardcoded IP addresses
+      -  internally
+        -  when programs running inside a container need to lookup their own ip address
+        -  when programs running inside a container must self-identify
 
 
 # architecture
@@ -513,6 +516,11 @@
   docker run...
     --net bridge # can be ommitted, its the default
 
+  # provide a hostname to a container
+  # and then lookup its ip address
+  docker run...
+    --hostname poop
+    alpine nslookup poop
 ```
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
@@ -599,6 +607,17 @@
     - `--rm`
       - automatically remove containers when they are stopped
 
+    - networking
+      - `-h | --hostname`
+        - set the containers hostname
+      - `--dns`
+        - set custom DNS servers
+      - `--dns-option`
+        - set DNS options
+      - `--dns-search`
+        - set custom DNS 
+      - `--add-host`
+      -
 
 
 ```sh
