@@ -223,10 +223,12 @@
 
 ## docker cmd line
   - search the docker hub index and display results
+  - issue cmds to the docker daemon
 
 
 ## daemon
   - should always be running
+  - route cmds to containers
 
 
 ## images
@@ -529,6 +531,13 @@
   # set custom dns servers
   docker run...
     --dns 8.8.8.8 # googles dns server
+
+  # set default dns-search
+  # automatically appends poop.com to hostnames
+  # without a top-level domain
+  # e.g. timeto -> timeto.poop.com
+  docker run...
+    --dns-search poop.com
 ```
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
@@ -622,10 +631,12 @@
         - set custom DNS servers
         - must be an IP address
         - can also be set when you startup the docker daemon that runs in the background providing it all containers by default
-      - `--dns-option`
-        - set DNS options
       - `--dns-search`
         - set custom DNS
+          - specify a dns search documentationlike a defrault host name suffic
+          - any hostnamaes that do not have a top-level domain (e.g. .com) will be searched for with the specified suffix appended
+      - `--dns-option`
+        - set DNS options
       - `--add-host`
       -
 
