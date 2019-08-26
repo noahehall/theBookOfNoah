@@ -83,6 +83,9 @@
     - a container specifically for providing limited  interactive access to other containers
   - polymorphic tool
     - a tool you can interact with in a consistent way bu tmay have several implementations that do different things
+  - CIDR
+    - classless inter-domain routing
+    - provides a way to specify an IP address and its routing prefix
 
 
 # best practices
@@ -233,12 +236,22 @@
   - should always be running
   - route cmds to containers
 
+
 ```sh
+  # generally all changes requires restarting the docker
+  # daemon and thus all running containers
 
   # disable inter-container communication
   # any traffic from one container will be blocked
   # by the host firewall except where explicitly permitted
   docker -d --icc=false...
+
+  # define the ip addr of the  bridge network
+  docker -d --bip "192.168.0.128"
+
+  # define the ip addr and subnet range
+  # of the bridge network
+  docker -d --bip "192.168.0.128/25"
 ```
 ## images
   - a file for starting containers
