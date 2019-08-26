@@ -960,12 +960,24 @@
   docker port CONTAINER_NAME|UID
 ```
 
-
-# init scripts
-
+# common scripts
 ```sh
+  # exit if some var not set
   if [ ! -n "$SOME_VAR"]; then
     echo "wtf var not set biotch"
     exit 1
+  fi
+
+  # link a container, aliased at database
+  # exit if link is not set
+  # else execute CMD
+  docker run...
+    --link CONTAINER:databbase
+  if [ -z ${DATABASE_PORT+x} ]
+  then
+    echo 'link alias database not set'
+    exit 1
+  else
+    exec "$@"
   fi
 ```
