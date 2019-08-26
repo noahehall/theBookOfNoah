@@ -498,8 +498,11 @@
     -
 
   - bridged containers
-    - the most customizable and should be harded as a best practice
+    - the most customizable and should be hardened as a best practice
     - connected to docker0
+    - arent accessible from the host network by default
+      - by default provides no route from the hosts eternal interface to the container interface
+    - containers are protected by the hosts firewall system
     - use cases
       - containers with processes requiring network access
       -
