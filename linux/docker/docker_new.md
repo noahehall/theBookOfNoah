@@ -21,6 +21,7 @@
     - default stack
       - container X network
         - loopback interface
+          - i.e. localhost/127.0.0.1
         - private (ethernet) interface
           - links to the virtual interface in the hosts namespace
           - assigned a unique private IP address
@@ -464,14 +465,29 @@
   - each archetype provides a different level of isolation\]]
 
   - closed containers
+    - doesnt allow any network traffic
+      - i.e. is not connected to the docker bridge (docker0) interface
+    - processes only have access to the internal loopback interface
+    - use cases
+      - volume containers
+      - backup jobs
+      - offline batch processing
+      - diagnostic tools
+    -
 
   - bridged containers
 
   - joined containers
 
-  - open containers    
+  - open containers
 
 
+```sh
+  # create a closed container
+  docker run...
+    --net none 
+
+```
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
   - indexes
