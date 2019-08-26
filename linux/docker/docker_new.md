@@ -538,6 +538,11 @@
   # e.g. timeto -> timeto.poop.com
   docker run...
     --dns-search poop.com
+
+  # update the containers host file
+  # add a map from poop to some IP addr
+  docker run...
+    --add-host poop:127.0.0.2
 ```
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
@@ -633,12 +638,23 @@
         - can also be set when you startup the docker daemon that runs in the background providing it all containers by default
       - `--dns-search`
         - set custom DNS
-          - specify a dns search documentationlike a defrault host name suffic
-          - any hostnamaes that do not have a top-level domain (e.g. .com) will be searched for with the specified suffix appended
+        - specify a dns search documentationlike a defrault host name suffic
+        - any hostnamaes that do not have a top-level domain (e.g. .com) will be searched for with the specified suffix appended
+        - use cases
+          - shortcut names for internal corporate networks
+            - e.g. http://wiki/ -> http://wiki.google.com/
+          - setting up dev/test env  hostnames that auto resolve without builcing env-aware software
+          - can be set with setting up the docker daemon to provide defaults for every container created
       - `--dns-option`
         - set DNS options
       - `--add-host`
-      -
+        - override the DNS system (i.e. update /etc/hosts)
+        - add a custom host-to-ip mapping (host:ip)
+        - use cases
+          - providing specific name mappings for individual containers is the most fine-grained customization possible
+          - block targeted host names by mapping them to a known ip address like 127.0.0.1
+          - route traffic for a particular destination through a proxy
+          - often used to route unsecure traffic through secure channels like an SSH tunnel
 
 
 ```sh
