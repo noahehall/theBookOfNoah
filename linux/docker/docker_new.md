@@ -412,13 +412,22 @@
 - single-host virtual networks
   - local virtual networks are used to provide container isolation
   - default stack
-    - container X
+    - local to the machine where docker is installed
+    - made up of routes between participating containers and the wider network where the host is attached
+    - container X network
       - loopback interface
-      - private interface
-        - connects to the OS network stack
-    - operating system network stack
+      - private (ethernet) interface
+        - links to the virtual interface in the hosts namespace
+        - assigned a unique private IP address
+        - not directly reachable from the external network
+    - operating system network
       - container X virtual interface
       - docker bridge virtual interface (docker0)
+        - routes connections to the external network and each container interfaces]
+          - analagous topp yur home router
+        - 
+      - logical host interface
+    - physical network interface
 - multi-host virtual networks
   - provide an overlay where any container on a paritcipating host can have its on routable IP address from any other container in the network
 
