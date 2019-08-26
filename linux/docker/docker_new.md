@@ -308,13 +308,13 @@
 
     - polymorphic container pattern
       - provides some functionality thats easily substituted using volumes
+      - you can make additional tools available via docker exec to run addtional processes in a running container
+        - alternatively you can create a new layer in the image, but this doesnt make sense in two environments
+          - development - where speed during iteration is vital
+          - operational - make additional tools availble in an image that you had not anticipated when the image was built
       - e.g.
         - an image that contains nodejs and by default executes a cmd that runs /app/app.js
         - you can override /app/app.js at container creation time to do something else
-          - alternatively you can create a new layer in the image, but this doesnt make sense in two environments
-            - development - where speed during iteration is vital
-            - operational - make additional tools availble in an image that you had not anticipated when the image was built
-        - you can make  additional tools available via docker exec to run addtional processes in a running container
 
   - sharing volumes
     - host-dependent sharing
