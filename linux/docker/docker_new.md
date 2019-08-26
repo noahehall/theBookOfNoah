@@ -258,6 +258,10 @@
   # set the maximum size of a packet
   # from default of 1500 to 1200
   docker -d -mtu 1200
+
+  # set the docker bridge to a custom bridge
+  # you need to define it first
+  docker -d -b YOURBRIDGE_NAME
 ```
 ## images
   - a file for starting containers
@@ -534,6 +538,11 @@
       -
 
   - joined containers
+    - containers that share a common network stack
+      - i.e. theres no isolation between between them
+      - in the default network stack, all containers share the same virtual interface
+    - docker provides access to the itnerfaces created for a specific container to another container
+      - analagous to shared volumes
 
   - open containers
 
@@ -599,6 +608,14 @@
   # host interface on specific port (1234)
   docker run...
     -p 123.123.123.123:1234:4321
+
+  # share a containers network interface with another
+  docker run --name owner...
+    --net none... # closed container
+
+  docker run...
+    --net container:owner # joined container
+
 ```
 ## registries and indexes
   - a set of infrastructure components that simplify distributing docker images
