@@ -150,9 +150,10 @@
     -  use custom DNS servers (e.g. 8.8.8.8)
       -  to provide consistency
       -  working on a laptop and often move between internet service providers
-    - configure the docker daemon to disallow network connections between containers
+    - configure the docker daemon to disallow network connections between containers (icc=false)
       - this is the best practice in multi-tenant environments
       - it minimizes the points (i.e. attack surface) where an attacker might compromise other containers
+      - you can explicitly permitted inter-container communication by link containers that require it 
 
 
 
@@ -584,7 +585,7 @@
     - environment variables descri bing the target containers end point will be created
     - the link alias will be added to the DNS override list of the new container the IP address 0f the target container
     - if inter-container communication (ICC) has been disabled,
-      - docker will add specific firewall rules to allow communication between linked containers 
+      - docker will add specific firewall rules to allow communication between linked containers
 ```sh
   # list all interfaces
     docker run --rm...
