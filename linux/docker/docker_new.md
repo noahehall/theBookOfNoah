@@ -478,10 +478,6 @@
       - operating system network
         - container X virtual interface
         - docker bridge virtual interface (docker0)
-          - routes connections to the external network and each container interfaces]
-            - analagous topp yur home router
-            - all intefaces connected to docker0 are part of the same virtual subnet
-              - i.e. they can talk to each other and communicate with the larger network via the docker0 interface
         - logical host interface
       - physical network interface
   - multi-host virtual networks
@@ -522,7 +518,14 @@
 
   - open containers
 
-
+### docker bridge network
+  - routes connections to the external network and each container interfaces
+    - analagous to your home router
+    - all intefaces connected to docker0 are part of the same virtual subnet
+      - i.e. they can talk to each other and communicate with the larger network via the docker0 interface
+  - modifying the bridge interface
+    - define the address and subnet of the bridgeddefine the range of ip addresses that can be assigned to containers
+    - define the maximum transmission unit (MTU)
 ```sh
   # list all interfaces
     docker run --rm...
