@@ -139,6 +139,8 @@
 
   -  always use the strongest possible container network archetype
     -  always harden the default bridge network if using it connect containers to the outside
+    -  generally every container involved in the network stack should be assigned a hostname
+      -  this permits you to decouple the container from its IP address and reroute messages without hardcoded IP addresses
 
 
 # architecture
@@ -412,6 +414,7 @@
       - domain name system
       - protocol for mapping host names to IP addresses
       - enables clients to decouple from a dependency on a specific host IP and instead depend on whatever host is referred to by a known name (e.g. poop.com)
+      - one of the most basic ways to change outbound communications is by creating names for IP addresses
   - network
     - defined in the way that network interfaces are linked together
     - the links between itnerfaces determines an interfaces IP address
