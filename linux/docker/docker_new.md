@@ -720,14 +720,7 @@
       - keep STDIN open even if not attached
     - `-t | --tty`
       - allocate a pseudo-tty (i.e. virtual terminal)
-    - `--link`
-      - add a one-way network dependency to another container
-      - injects IP addresses into dependent containers
-        - containers that arent running dont have IP addresses, thus an error will be thrown if linking to a non-running container
-      - this explicitely permits inter-container communication even if `icc=false`
-      - injects env variables prepended with the alias name
-        - e.g. --link container:ALIAS
-          - ALIAS_PORT, ALIAS_BLAH
+
     - `--pid`
       - PID namespace to use
     - `--cidfile`
@@ -783,6 +776,26 @@
         - expose  port/range of ports
         - binds exposed ports to ephemeral (i.e. dynamic) ports on the host
         - images maintain a lkiikst of ports that are exposed for simiplicity and as a hint to users where contained services are listening
+
+      - `--link`
+        - add a one-way, non-transitive network dependency to another container
+          - non-transitive
+            - containers do not inherit links from their dependencies
+            - i.e. a > b > c, a is not linked to B even though B is link to C and A is linked to B
+        - injects IP addresses into dependent containers
+          - containers that arent running dont have IP addresses, thus an error will be thrown if linking to a non-running container
+        - this explicitely permits inter-container communication even if `icc=false`
+        - environment modifications when links are created
+          - injects env variables prepended with the alias name
+          - <ALIAS>_PORT_<PORT_#>_<TCP|UDP>_PORT=<PORT_#>
+            - contains the port number
+          - <ALIAS>_PORT_<PORT_#>_<TCP|UDP>ADDR=<IP>
+            - contains the ip address of the container
+          - <ALIAS>_PORT_<PORT_#>_<TCP|UDP>_PROTO=<PROTO>
+            - contains the protocol, either TCP/UDP
+          - <ALIAS>_PORT_<PORT_#>_<TCP|UDP>=<URI>
+            - contains the full url, e.g. tcp://172.17.0.23/3333
+          - <ALIAS>_NAME=/<container_name>/<alias_name>
 
 ```sh
   # hello world
