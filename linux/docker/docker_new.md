@@ -666,8 +666,18 @@
       - used to make the root of the image file system the root in the containers context
     - cgroups
       - resource protection
-  - resource allowances
+### resource allowances
+  - memory limits
+    - the most basic restriction you can place on a container
+    - restrict the amount of memory that processes inside a container can use
+    - ensures that one container cannot overwhelm the others running on a single system
     -
+
+```sh
+  docker run...
+
+
+```
 
 
 ## registries and indexes
@@ -751,6 +761,19 @@
       - restart policy to appply whena  container exists
     - `--rm`
       - automatically remove containers when they are stopped
+
+    - resource limits
+      - `--kernel-memory`
+        - kernel memory llimit
+      - `--memory`
+        - memory limit
+      - `--memory-reservation`
+        - memory soft limit
+      - `--memory-swap`
+        - swap limit equal to memory plus swap
+        - pass `-1` to enable unlimited swap
+      - `--memory-swappiness`
+        - tune container memory swappiness (0...100)
 
     - networking
       - `-h | --hostname`
