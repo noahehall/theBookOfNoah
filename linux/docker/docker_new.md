@@ -153,7 +153,7 @@
     - configure the docker daemon to disallow network connections between containers (icc=false)
       - this is the best practice in multi-tenant environments
       - it minimizes the points (i.e. attack surface) where an attacker might compromise other containers
-      - you can explicitly permitted inter-container communication by link containers that require it 
+      - you can explicitly permitted inter-container communication by link containers that require it
 
 
 
@@ -618,6 +618,7 @@
 
   # update the containers host file
   # add a map from poop to some IP addr
+  # you now access it via http://poop/
   docker run...
     --add-host poop:127.0.0.2
 
@@ -720,9 +721,13 @@
     - `-t | --tty`
       - allocate a pseudo-tty (i.e. virtual terminal)
     - `--link`
-      - add link to another container
+      - add a one-way network dependency to another container
       - injects IP addresses into dependent containers
         - containers that arent running dont have IP addresses, thus an error will be thrown if linking to a non-running container
+      - this explicitely permits inter-container communication even if `icc=false`
+      - injects env variables prepended with the alias name
+        - e.g. --link container:ALIAS
+          - ALIAS_PORT, ALIAS_BLAH
     - `--pid`
       - PID namespace to use
     - `--cidfile`
@@ -787,13 +792,16 @@
   # assign it the name web inside this container
   # interact with it via wget
   # then detach your terminal wiithout stopping the container
-  docker run -i -t --link web:web ...
+  docker run -it...
+   --link web:web
   wget -o - http://web:80
   ctrl p q
 
 
   # run and save the UID of a container
   # run a new container linked to the previous one
+  # connect via http://web:SOME_PORT/
+  # port is optional
   WEB_CID=$(docker run ...)
   docker run ...
     --link $WEB_CID:web
