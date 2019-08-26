@@ -483,9 +483,13 @@
 
 
 ```sh
+  # list all interfaces
+    docker run --rm...
+      ip addr
+
   # create a closed container
   docker run...
-    --net none 
+    --net none
 
 ```
 ## registries and indexes
