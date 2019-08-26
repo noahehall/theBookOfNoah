@@ -90,6 +90,8 @@
     - the idea
       - that a service could be running on any machine, in any container ina larger environment
       - that a system where any process might run anywhere is more robust than systems with strict locality contraints
+  - swap space
+    - virtual memory that extends onto disk
 
 
 # best practices
@@ -666,12 +668,14 @@
       - used to make the root of the image file system the root in the containers context
     - cgroups
       - resource protection
+
 ### resource allowances
   - memory limits
-    - the most basic restriction you can place on a container
+    - lack of memory for a process results in failure
     - restrict the amount of memory that processes inside a container can use
-    - ensures that one container cannot overwhelm the others running on a single system
-    -
+      - doesnt guarantee the system provides this memory
+  - CPU processing time
+    - lack of CPU time for a process results in degradation
 
 ```sh
   # limmit memory to 256 megabytes
