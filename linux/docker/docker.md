@@ -1193,6 +1193,16 @@
   - docker run creates a NEW CONTAINER each time
     - use docker start to run an existing container
 
+  - entry points and default cmd
+    - entryoint is the program that will be executed when the container starts
+      - use this for all sorts of things
+      - e.g. validatioon
+    - cmds
+      - entrypoint not set
+        - the default cmd will be executed immediately
+      - entrypoint is set
+        - the default cmd and its arguments will be passed to the entrypoint as parameters
+
   - options
     - -i and -t are used together for running interactive programs like a shell in an interactive container
 
@@ -1550,7 +1560,10 @@
 
 
 ### docker commit
-  - Create a new image from a container's changes
+  - Create a new image from a containers changes
+  - the command you started the original container with will be commited with the new image
+    - be sure the default command is relavant to the final image
+    -
 
 ```sh
   # save container with ID 123 to some repo
