@@ -95,7 +95,11 @@
       - that a service could be running on any machine, in any container ina larger environment
       - that a system where any process might run anywhere is more robust than systems with strict locality contraints
   - swap space
-    - virtual memory that extends onto disk
+  - virtual memory that extends onto disk
+  - SUID
+    - an executable file with the SUID bit set will always execute as its owner
+  - SGID
+    - an executable file with the SGId set will always execute as the group owner
 
 
 # best practices
@@ -178,15 +182,31 @@
       - disable the root account or atleast set a passwd
     - be careful about which users can control the docker daemon
       - that person can effectively control the root account on your host
-    - specify the UID and GID of the user who should run the container, and not the uname or gname
+    - add the user and group as the first line in image building so that their IDs get assigned consistently, regardless of whatever deps get added
       - specifying the uid:gid helps alleviate reading, writing, and executing files across hosts & containers
+        - however using numbers makes it less readable, and managenable
+    - never use common/system-level uid/gids if its avoidable
+    - drop user permissions as soon as possible
+    - delete/unset all files with the SUID/SGID set at container creation time
+      - these files are generally only needed during image build
 
   - volumes
     - dont mount files/dirs in containers that are required
 
 
 
+```sh
+  # find all files with SUID set
+  # use +2000 for SGID
+  docker run...
+    find / -perm 6000 -type -f
 
+  # unset SUID and SGID for all appropriate files
+  RUN for i in \
+    $(find / -type -f\( -perm +6000 -o -perm +2000\)); \
+    do chmod ug-s $1; done
+
+```
 # architecture
   - docker is a commandline program, a background daemon, and a set of remote services that take a logistical approach to solving common software problems
     - installing, running, publishing and removing software
