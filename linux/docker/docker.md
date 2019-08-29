@@ -174,6 +174,11 @@
       - disable the root account or atleast set a passwd
     - be careful about which users can control the docker daemon
       - that person can effectively control the root account on your host
+    - specify the UID and GID of the user who should run the container, and not the uname or gname
+      - specifying the uid:gid helps alleviate reading, writing, and executing files across hosts & containers
+
+  - volumes
+    - dont mount files/dirs in containers that are required
 
 
 
@@ -731,6 +736,26 @@
         - try to limit context switching for critical process
         - i.e. limit distinct critical processes from executinng on the same CPU setbr
 
+### OS feature access & capabilities
+  - docker can adjust the feature (i.e. capabilities) authorization of processes within containers
+    - whenever a presource - override resource limits
+    - sys_rocess attempts to make a gated system call, the capabilities of htat process are checked for the required capability
+  - default dropped capabilities
+    - setpcap - modify process capabilities
+    - sys_module - insert/remove kernel modules
+    - sys_rawio - modify kernel memory
+    - sys_pacct - configuree process accounting
+    - sys_nice - modify priority processes
+    - sys_resource - override resource limits
+    - sys_time - modify system clock
+    - sys_tty_config - configure TTY devices
+    - audit_write - write the audit log
+    - audit_control configure audit subsystem
+    - mac_override - ignore kernel mac policy
+    - mac_Admin - configure mac configuration
+    - syslog - modify kernel print behavior
+    - net_admin - configure the network
+    - sys_admin - catchall for administrative functions
 ```sh
   # limmit memory to 256 megabytes
   # can be b, k, m, g
