@@ -327,6 +327,10 @@
   - automated builds
     - images that are built by the registry proiding using image sources that youve made available
       - generally has a higher degree of trust since the registry owner is building the images from source that can be peer-reviewed
+    - general process
+      - a host image repository and hosted git repository where image sources are published
+      - a git webhook notifies the image repository that changes have been made, and a new build should be invoked
+      - the image build process will invoke the defined docker build command, tag the new image according to configuration, then push it to the hosted image repository
 
 ```sh
   # create image, login to docker hub, and push
