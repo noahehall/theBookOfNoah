@@ -207,6 +207,8 @@
     do chmod ug-s $1; done
 
 ```
+
+
 # architecture
   - docker is a commandline program, a background daemon, and a set of remote services that take a logistical approach to solving common software problems
     - installing, running, publishing and removing software
@@ -249,7 +251,8 @@
         -
 
 
-## repositories
+## registries, indexes, repositories
+### repositories
   - bucket of images
   - have urls which are composed of
     - e.g. quay.io/dockerinaction/ch3_hello_registry:latest
@@ -264,6 +267,33 @@
     -
   -
 
+### registries and indexes
+  - a set of infrastructure components that simplify distributing docker images
+  - indexes
+    - search engines that catalog repositories
+  - docker hub
+    - the default registry and index with a website run by docker inc
+    - push images to docker hub
+    - make dockerfiles publicly available and utilize docker hubs continuous build system
+
+
+### public and private software distribution
+  - hosted registries
+    - offer both public and private repositories with automated build tools
+  - private registry
+    - enables you to hide and customize your image distribution ifnrastructure
+  - distribution methods
+    - hosted registry with public repos
+      - e.g. docker hub, quay.io
+    - hosted registry with private repos
+      - e.g. docker hub, quay.io, tutum.co, gcr.io
+    - private registries
+      - utlizes local registry software
+        - e.g. local priate network, orporate network, private cloud infrastructure
+    - custom image distribution infrastructure
+      - e.g. sftp, http downloads, config management tools
+    - image source distributions
+      - e.g. include a dockerfile with your project source code
 
 ## docker cmd line
   - search the docker hub index and display results
@@ -301,6 +331,8 @@
   # you need to define it first
   docker -d -b YOURBRIDGE_NAME
 ```
+
+
 ## images
   - a file for starting containers
     - a bundled snapshot of all the files that should be available to programs running inside a container
@@ -444,6 +476,8 @@
           - it will override any existing data at the mount point
           - you cannot change the permissions of the data in the new container
         -
+
+
 ```sh
   # create a volume container
   # uses a docker managed volume
@@ -601,6 +635,7 @@
     - processes can bind to protected network ports less than 1024
       - generally you require sudo priviledges to access this range
 
+
 #### docker bridge network
   - routes connections to the external network and each container interfaces
     - analagous to your home router
@@ -623,6 +658,8 @@
     - the link alias will be added to the DNS override list of the new container the IP address 0f the target container
     - if inter-container communication (ICC) has been disabled,
       - docker will add specific firewall rules to allow communication between linked containers
+
+
 ```sh
   # list all interfaces
     docker run --rm...
@@ -741,6 +778,7 @@
     - cgroups
       - resource protection
 
+
 ### resource allowances
   - memory limits
     - lack of memory for a process results in failure
@@ -759,6 +797,7 @@
         - is expensive and may cause a noticeable impact on the performance of your system
         - try to limit context switching for critical process
         - i.e. limit distinct critical processes from executinng on the same CPU setbr
+
 
 ### OS feature access & capabilities
   - docker can adjust the feature (i.e. capabilities) authorization of processes within containers
@@ -785,6 +824,8 @@
   - default enabled capabilities
     - net_raw
       - recommended to be disabled...
+
+
 ```sh
   # limmit memory to 256 megabytes
   # can be b, k, m, g
@@ -835,16 +876,6 @@
     --cap-drop net_raw
     --cap-add other_thing
 ```
-
-
-## registries and indexes
-  - a set of infrastructure components that simplify distributing docker images
-  - indexes
-    - search engines that catalog repositories
-  - docker hub
-    - the default registry and index with a website run by docker inc
-    - push images to docker hub
-    - make dockerfiles publicly available and utilize docker hubs continuous build system
 
 
 # examples
