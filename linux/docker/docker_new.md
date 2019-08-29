@@ -823,6 +823,9 @@
         - block io weight (relative device weight)
       - `--device`
         - add a host device to the container
+        - usecases
+          - custom hardware/proprietary drives
+            - instead of modifying host, you can mount in a container and use it 
       - `--device-cgroup-rule`
         - add a rule to the cgroup allowed devices
       - `--device-read-bps`
