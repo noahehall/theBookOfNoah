@@ -275,6 +275,54 @@
     - the default registry and index with a website run by docker inc
     - push images to docker hub
     - make dockerfiles publicly available and utilize docker hubs continuous build system
+  - customized registries
+    - use cases
+      - software that integrates with a docker registry may require a local instance to develop against
+      - dev team might devploy their own central registry to share their work and streamline integrations
+      - a company running one/more centralized registries that are backed by durable artifact storage
+        - to control external image deps
+        - managing deployment artifacts
+    - types
+        - personal
+          - layer 1
+            - local docker client
+            - registry
+            - local hd
+        - centralized
+          - layer 1
+            - docker clients
+          - layer 2
+            - proxy
+            - registry
+            - local hd
+        - centralized durable
+          - centralized
+          - but replace the local hd with a remote blob storage
+        - fast and scalable
+          - layer 1
+            - docker clients
+          - layer 2
+            - machine 1
+              - proxy
+              - registry
+            - machine 2
+              - metadata cache
+          - layer 3
+            - middleware-enhanced remote blob storage
+        - integrated
+          - layer 1
+            - docker clients
+          - layer 2
+            - machine 1
+              - hook 1...X
+            - machine 2
+              - proxy
+              - registry
+            - machine 3
+              - metadata cache
+          - layer 3
+            - middleware-enhanced remote blob storage 
+              -
 
 
 ### public and private software distribution
@@ -317,10 +365,17 @@
         - docker save/export to .tar file
         - download/upload from sftp, http downloads, config management tools, blob storage, web server, email server, usb key
         - docker load/import .tar file into local iamge cache
-        - docker run container 
+        - docker run container
 
     - image source distributions
       - e.g. include a dockerfile with your project source code
+      - when you distribute image sources instead of images
+        - you cut out all the docker distribution workflow and rely soly on the docker image builder
+        - youll have to build your workflow but without the help of docker dave, load, export or import cmds
+        - producers need to determine how they will package their sources
+        - consumers need to understand
+          - how those sources are packaged
+          - how to build an image from those sources
 
   - distribution selection criteria
     - cost
