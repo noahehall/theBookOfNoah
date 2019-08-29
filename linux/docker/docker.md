@@ -1028,6 +1028,15 @@
         - i.e. file owners define access rules
   - AppArmor
   - SELinux
+    - a labeling system
+    - context
+      - a set of labels
+      - applied to
+        - every file and system object
+        - every user and process
+    - at runtime whe n a process attempts to interact with a file or system resource
+      - the sets of labels are evaluated against a  set of allowed rules
+      - the result of that evaluation determines whnether the interactioin is allowed or blocked 
   - if your using the LXC container provider
     - LXC configuration
     - seccomp-bpf
