@@ -802,7 +802,7 @@
         - tune container memory swappiness (0...100)
       - `--cpuset-mems`
         - MEMs in which to allow execution
-        - 0...3, 0,1
+        - 0...3, (range) 0,1 (specific)
       - `--cpu-period`
         - limit CPU CFS (completely fair scheduler) period
       - `--cpu-quota`
@@ -817,7 +817,22 @@
         - number of CPUs
       - `--cpuset-cpus`
         - CPUs in which to allow esecution
-        - 0...3, 0,1
+        - 0...3 (range), 0,1 (specific)
+
+      - `--blkio-weight-device`
+        - block io weight (relative device weight)
+      - `--device`
+        - add a host device to the container
+      - `--device-cgroup-rule`
+        - add a rule to the cgroup allowed devices
+      - `--device-read-bps`
+        - limit read (bets per sec) rate from a device
+      - `--device-read-iops`
+        - limit read (io per sec) from a device
+      - `--device-write-bps`
+        - limit write (bytes per sec) rate to a device
+      - `--device-write-iops`
+        - limit write (io per sec) rate to a device
 
 
     - networking
@@ -909,6 +924,13 @@
     --link $WEB_CID:web
 
 
+  # run and rm an interactive container
+  # this should be your default
+  docker run -it --rm...
+
+  # mount webcam at video0 to container
+  docker run...
+    --device /dev/video0:/dev/video0...
 ```
 
 ### docker exec
