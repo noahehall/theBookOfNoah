@@ -105,7 +105,7 @@
 
 
 # best practices
-  - use busyboxy  or alpine for base images
+  - use busyboxy or alpine or scratch for base images
 
   - docker generally runs as the root user on your system
     - eliminate this by
@@ -345,7 +345,7 @@
   GET http://localhost:5000/v2/
 
   # get list of tags in registry
-  # returns an array of images:[tags] entities 
+  # returns an array of images:[tags] entities
   v2/distribution/tags/list
 ```
 ### public and private software distribution
