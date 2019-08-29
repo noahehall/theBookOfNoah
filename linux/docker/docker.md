@@ -94,7 +94,9 @@
     - virtual memory that extends onto disk
 
 
-3 practices
+# best practices
+  - use busyboxy  or alpine for base images
+
   - docker generally runs as the root user on your system
     - eliminate this by
       - creating a `docker` group
@@ -169,6 +171,9 @@
 
   - users
     - never use the root user inside the container, or a process that inherits the permissions of the root user
+      - disable the root account or atleast set a passwd
+    - be careful about which users can control the docker daemon
+      - that person can effectively control the root account on your host
 
 
 
@@ -752,6 +757,26 @@
   # beware!!
   docker run --IPC host
 
+  # get the default user name
+  # if blank, its will run as the default root user
+  # else the user was set in image/containerr start time
+  docker inspect --f "{{.Config.User}}" name|id
+
+  #  better way to get the default username
+  docker run --entrypoint ""...
+   whoami # returns the username
+  docker run --entrypoint ""...
+    id # return the uid, gid, and groups
+
+  #  see all users defined in an image
+  docker run...
+    awk -F: '$0=$1' /etc/passwd
+
+  # set default user and group
+  docker run...
+    --user unameOrId:gnameOrId
+
+
 ```
 
 
@@ -1074,16 +1099,6 @@
   # returns true|false if container is running
   docker inspect --f "{{.State.Running}}" CONTAINER_NAME|UID
 
-  # get the default user name
-  # if blank, its will run as the default root user
-  # else the user was set in image/containerr start time
-  docker inspect --f "{{.Config.User}}" name|id
-
-  #  better way to get the default username
-  docker run...
-   whoami # returns the username
-  docker run...
-    id # return the uid, gid, and groups
 
 ```
 
@@ -1180,6 +1195,17 @@
 
   # remove al dangling volumes
   docker volume rm $(docker volume ls -f dangling=true -q)
+
+  # test file permissions in volume
+  # create root-owned file on host
+  # try to read file as nobody (unsuccessful)
+  # try to read file as container root
+  echo 'poop' > garbage
+  chmod 600 garbage
+  sudo chown root:root garbage
+  docker run --rm -v "$(pwd)"/garbage:/test/garbage
+    -u root busybox
+
 ```
 
 ### docker attach
