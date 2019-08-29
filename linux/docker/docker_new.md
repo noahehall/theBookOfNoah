@@ -1114,6 +1114,15 @@
   docker images -a
 ```
 
+### docker commit
+  - Create a new image from a container's changes
+
+```sh
+  # save container with ID 123 to some repo
+  docker commit 123 dev0/mynewimage
+
+```
+
 ### docker volume
   - `create`
     - create a volume
@@ -1134,6 +1143,11 @@
   docker volume rm $(docker volume ls -f dangling=true -q)
 ```
 
+### docker attach
+```sh
+  # Attach local standard input, output, and error streams to a running container
+  docker attach name|id
+```
 
 ### docker login
   - login to a docker registry
@@ -1146,6 +1160,14 @@
   # list port mappings for a container
   docker port CONTAINER_NAME|UID
 ```
+
+### docker top
+```sh
+  # Display the running processes of a container
+  docker top name|id
+
+```
+
 
 # common scripts
 ```sh
