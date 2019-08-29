@@ -338,8 +338,15 @@
             -
 
 ```sh
-  # registry api
-  GET http://
+  # registry URL
+  GET http://localhost:5000
+
+  # confirm version 2 of registry is accessible
+  GET http://localhost:5000/v2/
+
+  # get list of tags in registry
+  # returns an array of images:[tags] entities 
+  v2/distribution/tags/list
 ```
 ### public and private software distribution
   - hosted registries
