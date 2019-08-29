@@ -296,6 +296,7 @@
       - utlizes local registry software
         - e.g. local priate network, orporate network, private cloud infrastructure
       - users can interact with a private registry the same as a public registry
+      - the most flexible distribution method that involves docker registries
       - use cases
         - hard requirement on availability, longevity or secrecy
         - regional image caches
@@ -310,7 +311,13 @@
         - the registry uses a file system storage backend
 
     - custom image distribution infrastructure
-      - e.g. sftp, http downloads, config management tools
+      - when you work with images as files, you use docker only to manage local images and create files
+      - process
+        - build a docker file to local iamge cache
+        - docker save/export to .tar file
+        - download/upload from sftp, http downloads, config management tools, blob storage, web server, email server, usb key
+        - docker load/import .tar file into local iamge cache
+        - docker run container 
 
     - image source distributions
       - e.g. include a dockerfile with your project source code
@@ -368,6 +375,12 @@
   # then push the image to the local repository
   docker tag someimage/name localhost:5000/poop
   docker push localhost:5000/poop
+
+  # delete image from local registry
+  docker rmi localhost:5000/poop
+
+  # remove local registry
+  docker rm -vf local-registry
 
 
 
