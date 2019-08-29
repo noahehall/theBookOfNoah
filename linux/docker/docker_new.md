@@ -686,7 +686,7 @@
       - the task of changing from executing one process to executing another
         - is expensive and may cause a noticeable impact on the performance of your system
         - try to limit context switching for critical process
-        - i.e. limit distinct critical processes from executinng on the same CPU set
+        - i.e. limit distinct critical processes from executinng on the same CPU setbr
 
 ```sh
   # limmit memory to 256 megabytes
@@ -996,6 +996,9 @@
 ```sh
   # remove all containers and their assocaited volumes
   docker rm -vf $(docker ps -a -q)
+
+  # remove a specific container and associated volume
+  docker rm -vf name_or_id
 ```
 
 ### docker rmi

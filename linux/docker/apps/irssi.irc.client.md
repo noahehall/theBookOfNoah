@@ -12,4 +12,12 @@
   /connect irc.foo.com
   /connect irc.http.com
 
+  # cmds
+  /disconnect # from active server
+  /join #channel-name
+
+
+  # blah?
+  # /server
+
 ```
