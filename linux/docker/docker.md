@@ -337,6 +337,7 @@
     -
             -
 
+
 ```sh
   # registry URL
   GET http://localhost:5000
@@ -348,6 +349,8 @@
   # returns an array of images:[tags] entities
   v2/distribution/tags/list
 ```
+
+
 ### public and private software distribution
   - hosted registries
     - offer both public and private repositories with automated build tools
@@ -438,6 +441,7 @@
       - a git webhook notifies the image repository that changes have been made, and a new build should be invoked
       - the image build process will invoke the defined docker build command, tag the new image according to configuration, then push it to the hosted image repository
 
+
 ```sh
   # create image, login to docker hub, and push
   docker build -t username/repository
@@ -472,6 +476,8 @@
 
 
 ```
+
+
 ## docker cmd line
   - search the docker hub index and display results
   - issue cmds to the docker daemon
@@ -1001,6 +1007,12 @@
   - default enabled capabilities
     - net_raw
       - recommended to be disabled...
+  - full privileges
+    - privileged containers maintain their file system and network isolation but have access to shared memory, devices and possess full system capabilities 
+    - use cases
+      - when you need to run a system admin task inside a container
+        - grant that container full priviledged access to the host
+        -
 
 
 ```sh
