@@ -547,6 +547,13 @@
   - when installing software with docker, your installing an image
   - until an image is tagged
     - the only way to refer to it is by the UID
+  - building images from containers
+    - create a container from an existing image
+    - modify the file system of the container
+      - i.e. why create a new image from a non-modified existing image?
+      - new changes will be written to a new layer on the UFS for the container
+    - commit the modify container to a new image file
+      - you can now create containers
 
 
 ### layers
@@ -554,7 +561,9 @@
   - the files aailable to a container are the union of all of the layers in the linearge of the image the container was created from
   - programs running inside containers know  nothing about layers
     - the filesystem operates as though its not running in a container/operating on an image
-  - union file system
+  - UFS
+    - union file system
+    - UFS mount provides a containers file system
     - used to create mount points on a hosts file system that abstract the use of layers
     - part of a critical set of tools that combine to create effective system isolation
       - MNT namespaces aand chroot system call
@@ -1539,6 +1548,7 @@
   docker images -a
 ```
 
+
 ### docker commit
   - Create a new image from a container's changes
 
@@ -1546,7 +1556,22 @@
   # save container with ID 123 to some repo
   docker commit 123 dev0/mynewimage
 
+  # add your username and message to the commit
+  # similar to git, always do this
+  docker commit -a '@pooperscooper' -m 'phat ones' name|id
+
 ```
+
+
+### docker diff
+  - inspect changes to files/irs on a containers UFS
+
+
+```sh
+  # inspect changes made to container
+  docker diff name|id
+```
+
 
 ### docker volume
   - `create`
