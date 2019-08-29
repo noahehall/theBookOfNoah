@@ -3,6 +3,8 @@
     - jeff nickoloff
 
 # links
+  - [docker registry docs](https://docs.docker.com/registry/)
+  - [docker registry specs](https://docs.docker.com/registry/spec/)
 
 ## todo
   - [linux capabilities](https://linux-audit.com/linux-capabilities-101/)
@@ -330,9 +332,15 @@
         - metadata cache
     - layer 3
       - middleware-enhanced remote blob storage
+  - registry API
+    - the VV2 registry API is restful
+    -
             -
 
-
+```sh
+  # registry api
+  GET http://
+```
 ### public and private software distribution
   - hosted registries
     - offer both public and private repositories with automated build tools
