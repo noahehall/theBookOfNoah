@@ -2,6 +2,10 @@
   - docker in action
     - jeff nickoloff
 
+# links
+
+## todo
+  - [linux capabilities](https://linux-audit.com/linux-capabilities-101/)
 
 # background
   - about
@@ -740,6 +744,8 @@
   - docker can adjust the feature (i.e. capabilities) authorization of processes within containers
     - whenever a presource - override resource limits
     - sys_rocess attempts to make a gated system call, the capabilities of htat process are checked for the required capability
+    - to use linux capabilities
+      - remove the `CAP_` prefixm, and lowercase the name
   - default dropped capabilities
     - setpcap - modify process capabilities
     - sys_module - insert/remove kernel modules
@@ -756,6 +762,9 @@
     - syslog - modify kernel print behavior
     - net_admin - configure the network
     - sys_admin - catchall for administrative functions
+  - default enabled capabilities
+    - net_raw
+      - recommended to be disabled...
 ```sh
   # limmit memory to 256 megabytes
   # can be b, k, m, g
@@ -801,7 +810,10 @@
   docker run...
     --user unameOrId:gnameOrId
 
-
+  # drop/add a capability
+  docker run...
+    --cap-drop net_raw
+    --cap-add other_thing
 ```
 
 
