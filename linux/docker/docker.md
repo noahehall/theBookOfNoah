@@ -324,7 +324,9 @@
       - common requirement for companies development trade secrets/proprietary software
     - requisite expertise
       - hosted solutions require low expertise
-      -
+  - automated builds
+    - images that are built by the registry proiding using image sources that youve made available
+      - generally has a higher degree of trust since the registry owner is building the images from source that can be peer-reviewed
 
 ```sh
   # create image, login to docker hub, and push
