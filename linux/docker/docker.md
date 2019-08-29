@@ -310,11 +310,30 @@
       - more of a business concern than technical
       - hosted distribution methods are subject to external companies business concernes
         - i.e. wtf if amazon shuts down? whats up with all our shiznit
+    - availability
+      - the ability to control the resolution of availablity issues with repositories
+        - hosted solutions provide no availability control
+          - i.e. you can report an issue, but its not up to you to schedule the fix of the issue
     - access control
+      - protects your images from modification or access by unauthorized parties
+      - one of the least flexible but most important selection crtieria
     - artifact integrity
+      - trustworthiness and consistency of your files and images
+      - violations include man-in-the-middle attacks, malicious/hacked registries
     - artifact confidentiality
+      - common requirement for companies development trade secrets/proprietary software
     - requisite expertise
+      - hosted solutions require low expertise
+      -
 
+```sh
+  # create image, login to docker hub, and push
+  docker build -t username/repository
+  docker login
+  docker push username/repository
+
+
+```
 ## docker cmd line
   - search the docker hub index and display results
   - issue cmds to the docker daemon
