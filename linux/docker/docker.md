@@ -275,54 +275,60 @@
     - the default registry and index with a website run by docker inc
     - push images to docker hub
     - make dockerfiles publicly available and utilize docker hubs continuous build system
-  - customized registries
+
+#### customizing registries
+  - use cases
+    - software that integrates with a docker registry may require a local instance to develop against
+    - dev team might devploy their own central registry to share their work and streamline integrations
+    - a company running one/more centralized registries that are backed by durable artifact storage
+      - to control external image deps
+      - managing deployment artifacts
+
+  - personal registries
+    - architecture
+      - layer 1
+        - local docker client
+        - registry
+        - local hd
     - use cases
-      - software that integrates with a docker registry may require a local instance to develop against
-      - dev team might devploy their own central registry to share their work and streamline integrations
-      - a company running one/more centralized registries that are backed by durable artifact storage
-        - to control external image deps
-        - managing deployment artifacts
-    - types
-        - personal
-          - layer 1
-            - local docker client
-            - registry
-            - local hd
-        - centralized
-          - layer 1
-            - docker clients
-          - layer 2
-            - proxy
-            - registry
-            - local hd
-        - centralized durable
-          - centralized
-          - but replace the local hd with a remote blob storage
-        - fast and scalable
-          - layer 1
-            - docker clients
-          - layer 2
-            - machine 1
-              - proxy
-              - registry
-            - machine 2
-              - metadata cache
-          - layer 3
-            - middleware-enhanced remote blob storage
-        - integrated
-          - layer 1
-            - docker clients
-          - layer 2
-            - machine 1
-              - hook 1...X
-            - machine 2
-              - proxy
-              - registry
-            - machine 3
-              - metadata cache
-          - layer 3
-            - middleware-enhanced remote blob storage 
-              -
+      - dev purposes
+      -
+
+  - centralized
+    - layer 1
+      - docker clients
+    - layer 2
+      - proxy
+      - registry
+      - local hd
+  - centralized durable
+    - centralized
+    - but replace the local hd with a remote blob storage
+  - fast and scalable
+    - layer 1
+      - docker clients
+    - layer 2
+      - machine 1
+        - proxy
+        - registry
+      - machine 2
+        - metadata cache
+    - layer 3
+      - middleware-enhanced remote blob storage
+  - integrated
+    - layer 1
+      - docker clients
+    - layer 2
+      - machine 1
+        - hook 1...X
+      - machine 2
+        - proxy
+        - registry
+      - machine 3
+        - metadata cache
+    - layer 3
+      - middleware-enhanced remote blob storage
+            -
 
 
 ### public and private software distribution
