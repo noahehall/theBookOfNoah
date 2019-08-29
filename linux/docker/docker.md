@@ -1031,6 +1031,7 @@
       - works with file paths instead of labels
       - has a training mode to passively build provles based on obsered application behavior
       - easier to adopt and maintain for NOOOBS LIKE YUUU
+
   - SELinux
     - a labeling system
     - context
@@ -1041,7 +1042,14 @@
     - at runtime whe n a process attempts to interact with a file or system resource
       - the sets of labels are evaluated against a  set of allowed rules
       - the result of that evaluation determines whnether the interactioin is allowed or blocked
-  - if your using the LXC container provider
+  - LXC (linux containers)
+    - a container runtime provider
+    - a tool that actually works with linux to create namespaces and all the components that go into building a container
+      - replaced by libcontainer (current runtime provider for docker)
+    - docker was originally built to use LXC
+    - is more mature  that libcontainer and provides many additioonal features
+      - however you LOSE PORTABILITY!
+        - phuck your portability
     - LXC configuration
     - seccomp-bpf
       - secure computing with system call filtering
