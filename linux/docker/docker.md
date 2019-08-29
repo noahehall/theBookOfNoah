@@ -94,7 +94,7 @@
     - virtual memory that extends onto disk
 
 
-# best practices
+3 practices
   - docker generally runs as the root user on your system
     - eliminate this by
       - creating a `docker` group
@@ -166,6 +166,9 @@
     -  creates a strong isolated context for individual containers
     -  dont share host memory (i.e. IPC host) unless you need to comunicate with a process that must run ont he host
       - instead share container memory specifically (i.e. IPC somecontainer)
+
+  - users
+    - never use the root user inside the container, or a process that inherits the permissions of the root user
 
 
 
@@ -665,22 +668,42 @@
       - each namespace is isolated, thus PIDs are scoped to namespaces
       - every running program (i.e. process) on a linux machine has a unique process identifier
       -
+
     - UTS namespace
       - host and domain name
+
     - MNT namespace
       - file system access and structure
       - the linux kernel provides a namespace for the MNT system
       - when docker creates a container
         - the new container will have its own MNT namespace and a new mount point will be created for the container to the image
+
     - IPC namespace
       - process communication over shared memory
+
     - NET namespace
       - network access and structure
+
     - USR namespace
       - user names and identifiers
-    - chroot()
+      - allows users in one namespace to be mapped to users in another
+        - operates like the PID namespace
+        - map user 1000 on host to user 2 in container
+          - very useful for resolving file permissions when reading/writing to volumes
+          -
+      - docker starts containers as the root user inside that container by default
+        - has full almost full priviledged access to the state of the container
+        - any processes running as that user inherits those permissions
+          - thus, if one of those processes are bugged, the entire system is bugged
+      - root user use cases
+        - for buiding images
+        - at runtime when there are no other options
+          - running system admin software that requires priviledged access
+
+    .- chroot()
       - controls the location of the file system root
       - used to make the root of the image file system the root in the containers context
+
     - cgroups
       - resource protection
 
@@ -724,6 +747,10 @@
   docker run --name producer...
   docker run --name consumer \
     --ipc container:producer...
+
+  # share the IPC of the host
+  # beware!!
+  docker run --IPC host
 
 ```
 
@@ -1039,10 +1066,24 @@
 
 ### docker inspect
   - return low-level information on docker objects
+    - only includes the configuration the container was started with
+      - if an init/boot script modifies the container, this will not be reflected
   - `-f | --format` format the output using the given Go template
+    - in general, you can do .Key.Key.key etc
 ```sh
   # returns true|false if container is running
   docker inspect --f "{{.State.Running}}" CONTAINER_NAME|UID
+
+  # get the default user name
+  # if blank, its will run as the default root user
+  # else the user was set in image/containerr start time
+  docker inspect --f "{{.Config.User}}" name|id
+
+  #  better way to get the default username
+  docker run...
+   whoami # returns the username
+  docker run...
+    id # return the uid, gid, and groups
 
 ```
 
