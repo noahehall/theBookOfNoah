@@ -194,7 +194,18 @@
         - each container runs as a child process of the docker daemon
         - the container, and the child process runs in its own memory subspace of the user spoace
         - programs running inside a container can access only their own memory and resources as scoped by the container
-  -
+  - Virtualization vs Containerization
+    - VM is a virtual machine
+      - installed on top of the host OS, and runs a guest operating machine
+    - Containers are enhanced linux jails
+      - container based virtualization uses the kernel on the hosts OS to run multiple guests instances
+      - each guest is called a container, which has
+        - root file system
+        - processes
+        - memory
+        - devices
+        - netowork ports
+        -
 
 
 ## repositories
@@ -977,8 +988,6 @@
 ```
 
 ### docker logs
-  - fetch the logs of a container
-
 ```sh
   docker logs CONTAINER_NAME|UID
 

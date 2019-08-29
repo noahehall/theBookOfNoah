@@ -1,30 +1,5 @@
 
-  
-# volumes
-  docker volume create my-vol
-  docker volume ls
-  docker volume inspect my-vol
-  docker volume rm my-vol
-  docker volume rm $(docker volume ls -f dangling=true -q)
 
-# view container logs
-  docker logs CONTAINER_NAME
-  docker logs -t CONTAINER_NAME
-
-
-
-VM vs Containers
-  -VM: virtual machine
-    .installed on top of the host OS, and runs a guest operating machine
-  -Containers: container based virtualizatino uses the kernel on the hosts OS to run multiple guest instances
-    .each guest instance is a called a container, which has
-      -Root filesystem
-      -processes
-      -memory
-      -devices
-      -network ports
-      .looks like a VM, but it isnt
-      Host os > host OS kernel > multiple containers that are isolated application platforms
 
 commands
   administration
