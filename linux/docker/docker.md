@@ -281,8 +281,8 @@
   - hosted registries
     - offer both public and private repositories with automated build tools
   - private registry
-    - enables you to hide and customize your image distribution ifnrastructure
-  - distribution methods
+    - enables you to hide and customize your image distribution infrastructure
+  - distribution methods  (easiest -> most flexible)
     - hosted registry with public repos
       - e.g. docker hub, quay.io
     - hosted registry with private repos
@@ -294,6 +294,26 @@
       - e.g. sftp, http downloads, config management tools
     - image source distributions
       - e.g. include a dockerfile with your project source code
+  - distribution selection criteria
+    - cost
+      - lower cost is generally better
+      - is the most flexible lever among selection criteria
+    - visiblity
+      - secret projectsinternel tools shoudl be difficult/impossible for unauthorized people to discover
+    - transport speed/bandwidth overhead
+      - file sizes and image installation speed vary greatly between
+        - methods that leverage image layers, concurrent downloads
+        - methods that use flat image files/deployment time image builds
+      - high transport speeds/low installation latency is critical for systems that use just in time deployment to sservice synchronous requests
+        - the opposite is true in development
+    - longevity control
+      - more of a business concern than technical
+      - hosted distribution methods are subject to external companies business concernes
+        - i.e. wtf if amazon shuts down? whats up with all our shiznit
+    - access control
+    - artifact integrity
+    - artifact confidentiality
+    - requisite expertise
 
 ## docker cmd line
   - search the docker hub index and display results
