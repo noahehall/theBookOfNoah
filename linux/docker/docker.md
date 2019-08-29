@@ -1196,7 +1196,7 @@
   - entry points and default cmd
     - entryoint is the program that will be executed when the container starts
       - use this for all sorts of things
-      - e.g. validatioon
+      - e.g. validation
     - cmds
       - entrypoint not set
         - the default cmd will be executed immediately
@@ -1563,7 +1563,12 @@
   - Create a new image from a containers changes
   - the command you started the original container with will be commited with the new image
     - be sure the default command is relavant to the final image
-    -
+  - the new image will include
+    - all environment variables
+    - the working directory servicethe set of exposed ports
+    - all volume definitons
+    - the container entrypoint
+    - command and arguments
 
 ```sh
   # save container with ID 123 to some repo
