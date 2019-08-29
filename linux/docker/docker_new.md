@@ -1104,6 +1104,28 @@
   # show all images, including intermediate images
   docker images -a
 ```
+
+### docker volume
+  - `create`
+    - create a volume
+  - `inspect`
+    - display d5tailed information volume(s)
+  - `ls`
+    - list volumes
+  - `prune`
+    - remove unused local volumes
+  - `rm`
+    - remove volume(s)
+```sh
+  # create then remove volume 'myvol'
+  docker volume create myvol
+  docker volume rm myvol
+
+  # remove al dangling volumes
+  docker volume rm $(docker volume ls -f dangling=true -q)
+```
+
+
 ### docker login
   - login to a docker registry
 
