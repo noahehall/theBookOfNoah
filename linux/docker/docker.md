@@ -292,7 +292,6 @@
         - local hd
     - use cases
       - dev purposes
-      -
 
   - centralized
     - layer 1
@@ -301,9 +300,11 @@
       - proxy
       - registry
       - local hd
+
   - centralized durable
     - centralized
     - but replace the local hd with a remote blob storage
+
   - fast and scalable
     - layer 1
       - docker clients
@@ -315,6 +316,7 @@
         - metadata cache
     - layer 3
       - middleware-enhanced remote blob storage
+
   - integrated
     - layer 1
       - docker clients
@@ -428,17 +430,26 @@
   docker push username/repository
 
   # setup a local registry based on the docker registry
+  # all thats needed for running a personal registry
+  # you have to explicitly state the URL when connecting
+  # i.e. localhost:5000/somerepo/name
+  # by default stores data in /var/lib/registry
+  # within the container
+  # remove the volume to use the default
   docker run -d -p 5000:5000 \
   -v "$(pwd)"/data:/tmp/registry-dev \
   --restart=always --name local-registry registry:2
 
   # tag an image with the local repository
   # then push the image to the local repository
-  docker tag someimage/name localhost:5000/poop
-  docker push localhost:5000/poop
+  docker tag someimage:tag localhost:5000/poop:tag
+  docker push localhost:5000/poop:tag
 
-  # delete image from local registry
+  # delete the local tag
   docker rmi localhost:5000/poop
+
+  # pull image from local image cache
+  docker pull localhost:5000/poop
 
   # remove local registry
   docker rm -vf local-registry
