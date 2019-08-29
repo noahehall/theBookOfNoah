@@ -1027,6 +1027,10 @@
       - replaces the standard discreetionary access control
         - i.e. file owners define access rules
   - AppArmor
+    - frequently preferred oer SELinux
+      - works with file paths instead of labels
+      - has a training mode to passively build provles based on obsered application behavior
+      - easier to adopt and maintain for NOOOBS LIKE YUUU
   - SELinux
     - a labeling system
     - context
@@ -1036,7 +1040,7 @@
         - every user and process
     - at runtime whe n a process attempts to interact with a file or system resource
       - the sets of labels are evaluated against a  set of allowed rules
-      - the result of that evaluation determines whnether the interactioin is allowed or blocked 
+      - the result of that evaluation determines whnether the interactioin is allowed or blocked
   - if your using the LXC container provider
     - LXC configuration
     - seccomp-bpf
