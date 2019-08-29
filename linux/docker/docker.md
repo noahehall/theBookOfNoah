@@ -107,7 +107,7 @@
 # best practices
   - use busyboxy or alpine or scratch for base images
 
-  - docker generally runs as the root user on your system
+  - dont run docker as the root user on your system
     - eliminate this by
       - creating a `docker` group
       - setting that group as the owner of the docker socket
@@ -155,6 +155,7 @@
 
   -  use images with publicly available dockerfiles
     -  they are more trustworthy as you can inspect how they are built
+
   -  use volumes for persistent data and support tools
     -  sinc any container can connect to an
 
@@ -193,7 +194,24 @@
       - these files are generally only needed during image build
 
   - volumes
-    - dont mount files/dirs in containers that are required
+    - dont mount files/dirs in containers that arent required
+
+  - start with the most isolated container  you can build and justify reasons for weakneing those restrictions
+    - make sure every application is running as a user with limited permissions
+    - limit the system capabilities of the browser
+    - set limits on how much  of the CPU and memory the application can use
+    - specifically whitelist devices each program can access
+    - use capabilities to tune program access to  high level system services
+      - e.g. cron, syslogd, dbus, ssh, docker
+    - dont run low level system services in containers
+      - things like devices/network stack, firewall, file-system management, device management, network managent
+      - they most always require priv access
+      - generally are core host concerns
+    - exceptions
+      - short running configuration containers
+        - in an env where all deployments happen with docker images and containers
+        - you can create a single privileged container to make changes to high/low level system services
+        - but make sure you restrict access to this container
 
 
 
@@ -1108,7 +1126,7 @@
 
   # full privileged container
   docker run...
-    --privilegeds
+    --privileged
 
   # start docker daemon with LXC enabled
   # instead of libcontainer
