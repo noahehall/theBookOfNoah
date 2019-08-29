@@ -302,7 +302,12 @@
         - team-specific image distribution for locality/visbility
         - environmebt or deployment stage-specific image pools
         - corporate processes for approving images
-        - longevity control of external images 
+        - longevity control of external images
+      - docker registry image
+        - available on the docker hub
+        - can be used with all existing docker cmds
+          - all push/pull actions occur between the docker daemon and the network API of the registry container
+        - the registry uses a file system storage backend
 
     - custom image distribution infrastructure
       - e.g. sftp, http downloads, config management tools
@@ -353,6 +358,17 @@
   docker build -t username/repository
   docker login
   docker push username/repository
+
+  # setup a local registry based on the docker registry
+  docker run -d -p 5000:5000 \
+  -v "$(pwd)"/data:/tmp/registry-dev \
+  --restart=always --name local-registry registry:2
+
+  # tag an image with the local repository
+  # then push the image to the local repository
+  docker tag someimage/name localhost:5000/poop
+  docker push localhost:5000/poop
+
 
 
 ```
