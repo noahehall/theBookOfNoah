@@ -1008,11 +1008,18 @@
     - net_raw
       - recommended to be disabled...
   - full privileges
-    - privileged containers maintain their file system and network isolation but have access to shared memory, devices and possess full system capabilities 
+    - privileged containers maintain their file system and network isolation but have access to shared memory, devices and possess full system capabilities
     - use cases
       - when you need to run a system admin task inside a container
-        - grant that container full priviledged access to the host
-        -
+      - running docker inside a container
+      - when the root filesystem is read only
+      - when installing software outside a container is disallowed (now you can install on host)
+      - require direct access to a shell on host
+      - run a program/tune the host OS
+
+### container hardening tools
+  - AppArmor
+  - SELinux 
 
 
 ```sh
@@ -1064,6 +1071,10 @@
   docker run...
     --cap-drop net_raw
     --cap-add other_thing
+
+  # full privileged container
+  docker run...
+    --privilegeds
 ```
 
 
