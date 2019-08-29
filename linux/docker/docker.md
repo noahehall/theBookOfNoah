@@ -161,8 +161,12 @@
       - this is the best practice in multi-tenant environments
       - it minimizes the points (i.e. attack surface) where an attacker might compromise other containers
       - you can explicitly permitted inter-container communication by link containers that require it
+
   -  set reasonable resource allowances for physical system resources like memory and CPU time
     -  creates a strong isolated context for individual containers
+    -  dont share host memory (i.e. IPC host) unless you need to comunicate with a process that must run ont he host
+      - instead share container memory specifically (i.e. IPC somecontainer)
+
 
 
 
@@ -1043,15 +1047,9 @@
 ```
 
 ### docker rm
-  - remove one/more containers/links
-  - `-f`
-    - force removal of a container using SIGKILL
-  - `-l`
-    - remove the specified link
-  - `-v`
-    - remove the volumes assocaited with a container
 ```sh
-  # remove all containers and their assocaited volumes
+  # force remove all containers (even if there running)
+  # and their assocaited volumes
   docker rm -vf $(docker ps -a -q)
 
   # remove a specific container and associated volume
