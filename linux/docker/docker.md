@@ -1042,6 +1042,7 @@
     - at runtime whe n a process attempts to interact with a file or system resource
       - the sets of labels are evaluated against a  set of allowed rules
       - the result of that evaluation determines whnether the interactioin is allowed or blocked
+
   - LXC (linux containers)
     - a container runtime provider
     - a tool that actually works with linux to create namespaces and all the components that go into building a container
@@ -1108,6 +1109,15 @@
   # full privileged container
   docker run...
     --privilegeds
+
+  # start docker daemon with LXC enabled
+  # instead of libcontainer
+  docker -d --exec-driver=lxc
+
+  # set the LXC configuration
+  # requires daemon to have lxc driver enabled
+  docker run...
+    --lxc-config="lxc.cgroup.cpuset.cpus=0,1"...
 ```
 
 
