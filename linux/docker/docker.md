@@ -282,18 +282,34 @@
     - offer both public and private repositories with automated build tools
   - private registry
     - enables you to hide and customize your image distribution infrastructure
+
   - distribution methods  (easiest -> most flexible)
     - hosted registry with public repos
       - e.g. docker hub, quay.io
+
     - hosted registry with private repos
       - e.g. docker hub, quay.io, tutum.co, gcr.io
+      - tools for working with private repos are identical to those for working with public repos
+        - except for docker pull/run to install an image requires authentication
+
     - private registries
       - utlizes local registry software
         - e.g. local priate network, orporate network, private cloud infrastructure
+      - users can interact with a private registry the same as a public registry
+      - use cases
+        - hard requirement on availability, longevity or secrecy
+        - regional image caches
+        - team-specific image distribution for locality/visbility
+        - environmebt or deployment stage-specific image pools
+        - corporate processes for approving images
+        - longevity control of external images 
+
     - custom image distribution infrastructure
       - e.g. sftp, http downloads, config management tools
+
     - image source distributions
       - e.g. include a dockerfile with your project source code
+
   - distribution selection criteria
     - cost
       - lower cost is generally better
