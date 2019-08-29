@@ -961,6 +961,9 @@
 
   # run the ps cmd in the poop container
   docker exec poop ps
+
+  # interatively bash your poop
+  docker exec -it poop /bin/bash
 ```
 
 ### docker restart
@@ -992,6 +995,9 @@
 
   # wait 5 seconds before stopping the container(s)
   docker stop -t 5 name|id
+
+  # stop containers whose name contain node
+  docker stop $(docker ps -aq --filter name=node)
 ```
 
 ### docker rename
@@ -1048,6 +1054,9 @@
 
 ```sh
   docker rmi IMAGE_NAME|UID
+
+  # removing dangling docker images
+  docker rmi $(docker images -f dangling=true -q)
 ```
 
 ### docker kill
