@@ -698,10 +698,17 @@
   # relative to other containers on the host
   # 1024 vs 512, the first gets 2 CPU cycles for every one
   # i.e. share/total, or this/that
-  docker run...
-    --cpu-shares 512
-  docker run...
-    --cpu-shares 1024
+  docker run --cpu-shares 512...
+  docker run --cpu-shares 1024...
+
+  # mount webcam at video0 to container
+  docker run --device /dev/video0:/dev/video0...
+
+  # share IPC namespace
+  # for containers to communicate via shared memory
+  docker run --name producer...
+  docker run --name consumer \
+    --ipc container:producer...
 
 ```
 
@@ -788,7 +795,20 @@
     - `--rm`
       - automatically remove containers when they are stopped
 
-    - resource limits
+    - resource limits/authorization
+      - `--ipc`
+        - IPC mode to use
+        - share memory between processes on a single host but different containers
+          - i.e. run programs that communicate with shared memory in different containers
+          - creates the new container in the same IPC namespace as the target container
+            - i.e. similar to --net flag
+        - performs at memory speed
+          - e.g. a producer and consumer reading & writing to a message queue
+        - IPC - inter-process communication
+        - use cases
+          - when the latency associated with network/pipe-based IPC drags software performance below reqs
+            - e.g. scientific computing/databases(e.g. postgress)
+          -
       - `--kernel-memory`
         - kernel memory llimit
       - `--memory`
@@ -803,6 +823,7 @@
       - `--cpuset-mems`
         - MEMs in which to allow execution
         - 0...3, (range) 0,1 (specific)
+
       - `--cpu-period`
         - limit CPU CFS (completely fair scheduler) period
       - `--cpu-quota`
@@ -825,7 +846,7 @@
         - add a host device to the container
         - usecases
           - custom hardware/proprietary drives
-            - instead of modifying host, you can mount in a container and use it 
+            - instead of modifying host, you can mount in a container and use it
       - `--device-cgroup-rule`
         - add a rule to the cgroup allowed devices
       - `--device-read-bps`
@@ -930,10 +951,6 @@
   # run and rm an interactive container
   # this should be your default
   docker run -it --rm...
-
-  # mount webcam at video0 to container
-  docker run...
-    --device /dev/video0:/dev/video0...
 ```
 
 ### docker exec
