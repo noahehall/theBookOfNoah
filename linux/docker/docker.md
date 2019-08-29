@@ -1017,9 +1017,21 @@
       - require direct access to a shell on host
       - run a program/tune the host OS
 
-### container hardening tools
+### LSM: container hardening tools
+  - LSM
+    - linux security modules
+      - e.g. AppArmor, SELinux
+    - a framework that linux adopted to act as an interface between the operating systme and security providers
+    - provide mandatory access control (MAC)
+      - the system that defines access rules
+      - replaces the standard discreetionary access control
+        - i.e. file owners define access rules
   - AppArmor
-  - SELinux 
+  - SELinux
+  - if your using the LXC container provider
+    - LXC configuration
+    - seccomp-bpf
+      - secure computing with system call filtering
 
 
 ```sh
@@ -1279,6 +1291,28 @@
           - <ALIAS>_PORT_<PORT_#>_<TCP|UDP>=<URI>
             - contains the full url, e.g. tcp://172.17.0.23/3333
           - <ALIAS>_NAME=/<container_name>/<alias_name>
+    - security
+      - `--privileged`
+        - give extended privileges to this container
+      - `--security-opt`
+        - security options
+        - label:user:<USERNAME>
+          - set a SELinux user label
+          - the name of the user you want to use for the label
+        - label:role:<ROLE>
+          - set a SELinux role label
+          - the role you want to apply to processes in the container
+        - label:type:<TYPE>
+          - set a SELinux type label
+          - the type name of the processes in the container
+        - label:level:<TYPE>
+          - set a SELinux level label
+          - the level where processes in the container should run
+          - specified as high-low pairs, or a single low level
+        - label:disable
+          - disable SELinux label confinement for a container
+        -label:apparmor:<PROFILE>
+          apply an AppArmor profile on the container
 
 ```sh
   # hello world
