@@ -599,7 +599,13 @@
     - top (child) layer
       - the writable layer
       - every write to this layer creates a new top layer, as each write is atomic
-        - this is where image size increases, with each write 
+        - this is where image size increases, with each write
+        - e.g.
+          - if you install git (1 layer)
+          - uninstall git (2 layer)
+            - the size increases with the removal of git, because the image still contains the immutable layer 1
+            - UFS will create a new 'delete' file on the top layer for each layer added when git was installed
+              - this is why the size increases as the old files are still there in the parent layer even tho they are inaccessible as the 'delete' files override access
     - bottom (parent X) layers
       - read only layers
       - each parent layer is immutable, i.e. they can never be modified
@@ -1076,6 +1082,7 @@
       - require direct access to a shell on host
       - run a program/tune the host OS
 
+
 ### LSM: container hardening tools
   - LSM
     - linux security modules
@@ -1183,6 +1190,8 @@
 # examples
 ## docker help
   - display information about the basic syntax for using the docker cmdline program as well as a complete list of cmds for your version of the program
+
+
 ```sh
   docker help
   docker help cp
@@ -1200,6 +1209,8 @@
   - the network ports exposed by the container
   - the name of the container
   -
+
+
 ```sh
   docker ps # show running
   docker ps -a # show all
@@ -1414,6 +1425,7 @@
         -label:apparmor:<PROFILE>
           apply an AppArmor profile on the container
 
+
 ```sh
   # hello world
   docker run dockerinaction/hello_worldz
@@ -1445,6 +1457,7 @@
 ### docker exec
   - run a cmd in a running container
 
+
 ```sh
   docker exec CONTAINER_NAME|ID CMD
 
@@ -1455,8 +1468,11 @@
   docker exec -it poop /bin/bash
 ```
 
+
 ### docker restart
   - restart one/more containers
+
+
 ```sh
   docker restart CONTAINER_NAME|UID
 
@@ -1465,7 +1481,10 @@
 
 ```
 
+
 ### docker logs
+
+
 ```sh
   docker logs CONTAINER_NAME|UID
 
@@ -1474,6 +1493,43 @@
 
 ```
 
+
+### docker history
+  - show the history (i.e. layers) of an image
+    - abbreviated layer id
+    - age of the layer
+    - initial command of the creating container
+    - total file size of that layer
+
+
+```sh
+  # review the layers of an image
+  docker history imagename:sometag
+
+```
+
+
+### docker export
+  - export a containers filesystem as a tar archive
+  - this condenses all layers into one
+  - removes all metadata from the previous layer as if there is just a single layer
+  - use cases
+    - somewhat useful when reimported with `docker import` as the file size is reduced to just that single layer size
+    - trim/conceal an images history
+    - working with technologies with few dependencies
+  - gotchas
+    - since the layers are removed, consumers do not get any reusability from any intermediary images that could have been reused, but must install everything new required by the flattened image
+    - instead create branches via the `docker tag` using an approprite layer from the source image
+```sh
+  # flatten an image
+```
+
+### docker import
+  - import the contents from a tarball to create a filesystem image
+
+```sh
+
+```
 ### docker stop
   - stop one/moire running containers
 
