@@ -150,8 +150,15 @@
       - e.g. init, systemd, runit, upstart, supervisord
       - use a startup script that (at least) checks preconditions for successfully starting the contained software
 
-  -  use proper versioning for all images
+  -  use proper versioning for all image
     -  all images should be tagged
+      -  stray away from reliying on `:latest` at all costs
+      -  define and tag versions at a level where users can depend on consistent contracts
+        -  i.e. the smallest uinit of the versioning system captures the smallest unit of contract iteration
+          -  thus whenever a change impacts the contract, create a new version!
+      -  the `:latest` tag should refer to the latest stable version, not the latest available version 
+    -  the goal of an effective versioning scheme is to communicate clearly and provide adoption flexibility
+      -  identify contracts
 
   -  use images with publicly available dockerfiles
     -  they are more trustworthy as you can inspect how they are built
@@ -1517,9 +1524,13 @@
     - somewhat useful when reimported with `docker import` as the file size is reduced to just that single layer size
     - trim/conceal an images history
     - working with technologies with few dependencies
+    - creating minimalistic images
+      - dont include operating system files
+      - include programs that only require static linking (i.e. does not depend on dynamic files)
   - gotchas
-    - since the layers are removed, consumers do not get any reusability from any intermediary images that could have been reused, but must install everything new required by the flattened image
-    - instead create branches via the `docker tag` using an approprite layer from the source image
+    - since the layers are removed, consumers do not get any reusability from any intermediary images that could have been reused
+    - alternatives
+      - create branches via the `docker tag` using an approprite layer from the source image
 ```sh
   # export an image as a single layer filesystem
   docker export -o some/file.tar containername|id
@@ -1536,6 +1547,7 @@
 
 
 ```
+
 
 ### docker stop
   - stop one/moire running containers
