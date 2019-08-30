@@ -595,6 +595,16 @@
         - the top layer ID === image ID the container was created from
       - parent layer ID
       - the execution context of the container that the layer was created from
+  - layer architecture
+    - top (child) layer
+      - the writable layer
+      - every write to this layer creates a new top layer, as each write is atomic
+        - this is where image size increases, with each write 
+    - bottom (parent X) layers
+      - read only layers
+      - each parent layer is immutable, i.e. they can never be modified
+        - makes it possible to share access to images instead of creating independent copies for every container
+        -
 
 ### dockerfiles
   - scripts for building images
@@ -1583,6 +1593,7 @@
 
 ### docker tag
   - create a tag that refers to a source image
+  - used to create/copy an existing image
 
 ```sh
   # tag a source image
