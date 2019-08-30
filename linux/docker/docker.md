@@ -565,9 +565,17 @@
   - uses the copy-on-write pattern
     - makes implementing memory-mapped files (mmap() system call) difficult
     - essentially adds a new layer on top of an existing one while copying over everything that did not change
-      - think of git, where you can go to an revision
       - similarly you can go to any image in a layer
-  - impact on m
+  - impact on images
+    - adding, changing and deleting files from the UFS each create new layers in the resulting image
+      - image (layer) perspective
+        - each change is single level in a parent-child hierarchy than can be traversed, cached, and reused
+          - all modifications create a new 'top layer' to record the changes
+        - each layer adds additional weight to the final image
+      - container perspective
+        - each change is summed into a single layer interopable with a regular file system
+    - determins the relationship between layers and how layers relate to images, repositories and tags
+    -
 
 
 
