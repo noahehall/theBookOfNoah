@@ -575,6 +575,8 @@
         - each layer adds additional weight to the final image
       - container perspective
         - the files available to a container are the union of all of the layers in the linearge of the image the container was created from
+        - programs running inside containers know nothing about layers
+          - the filesystem operates as though its not running in a container/operating on an image
     - determins the relationship between layers and how layers relate to images, repositories and tags
     -
 
@@ -583,9 +585,12 @@
 ### layers
   - collections of changes made to a docker image, and the metadata describing those changes
   - layers maintain parent/child relationships
-  -
-  - programs running inside containers know  nothing about layers
-    - the filesystem operates as though its not running in a container/operating on an image
+  - each layer contains
+    - copies of all the file changes
+    - metadata
+      - layer ID
+      - immediate child layer ID
+      - the execution context of the container that the layer was created from
 
 ### dockerfiles
   - scripts for building images
