@@ -556,23 +556,26 @@
       - you can now create containers
 
 
+### UFS
+  - union file system
+  - the UFS mount point provides the containers file system
+  - used to create mount points on a hosts file system that abstract the use of layers
+  - part of a critical set of tools that combine to create effective system isolation
+    - MNT namespaces aand chroot system call
+  - uses the copy-on-write pattern
+    - makes implementing memory-mapped files (mmap() system call) difficult
+    - essentially adds a new layer on top of an existing one while copying over everything that did not change
+      - think of git, where you can go to an revision
+      - similarly you can go to any image in a layer
+  - impact on m
+
+
+
 ### layers
   - images maintain parent/child relationships
   - the files aailable to a container are the union of all of the layers in the linearge of the image the container was created from
   - programs running inside containers know  nothing about layers
     - the filesystem operates as though its not running in a container/operating on an image
-  - UFS
-    - union file system
-    - UFS mount provides a containers file system
-    - used to create mount points on a hosts file system that abstract the use of layers
-    - part of a critical set of tools that combine to create effective system isolation
-      - MNT namespaces aand chroot system call
-    - uses the copy-on-write pattern
-      - makes implementing memory-mapped files (mmap() system call) difficult
-      - essentially adds a new layer on top of an existing one while copying over everything that did not change
-        - think of git, where you can go to an revision
-        - similarly you can go to any image in a layer
-
 
 ### dockerfiles
   - scripts for building images
@@ -1565,10 +1568,10 @@
     - be sure the default command is relavant to the final image
   - the new image will include
     - all environment variables
-    - the working directory servicethe set of exposed ports
+    - the working directory service the set of exposed ports
     - all volume definitons
     - the container entrypoint
-    - command and arguments
+    - command used to start the container and its arguments
 
 ```sh
   # save container with ID 123 to some repo
