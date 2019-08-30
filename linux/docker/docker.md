@@ -273,7 +273,7 @@
 
 ## registries, indexes, repositories
 ### repositories
-  - bucket of images
+  - a named bucket of images
   - have urls which are composed of
     - e.g. quay.io/dockerinaction/ch3_hello_registry:latest
     - the host where the image is located
@@ -561,10 +561,11 @@
   - the UFS mount point provides the containers file system
   - used to create mount points on a hosts file system that abstract the use of layers
   - part of a critical set of tools that combine to create effective system isolation
-    - MNT namespaces aand chroot system call
+    - MNT namespaces and chroot system call
   - uses the copy-on-write pattern
     - makes implementing memory-mapped files (mmap() system call) difficult
     - essentially adds a new layer on top of an existing one while copying over everything that did not change
+      - for things that did change, the new version is copied into the top layer
       - similarly you can go to any image in a layer
   - impact on images
     - adding, changing and deleting files from the UFS each create new layers in the resulting image
@@ -573,15 +574,16 @@
           - all modifications create a new 'top layer' to record the changes
         - each layer adds additional weight to the final image
       - container perspective
-        - each change is summed into a single layer interopable with a regular file system
+        - the files available to a container are the union of all of the layers in the linearge of the image the container was created from
     - determins the relationship between layers and how layers relate to images, repositories and tags
     -
 
 
 
 ### layers
-  - images maintain parent/child relationships
-  - the files aailable to a container are the union of all of the layers in the linearge of the image the container was created from
+  - collections of changes made to a docker image, and the metadata describing those changes
+  - layers maintain parent/child relationships
+  -
   - programs running inside containers know  nothing about layers
     - the filesystem operates as though its not running in a container/operating on an image
 
@@ -1598,6 +1600,10 @@
 
 ```sh
   # inspect changes made to container
+  # produces labeled output
+  # A - file added
+  # C - file changed
+  # D - file deleted
   docker diff name|id
 ```
 
