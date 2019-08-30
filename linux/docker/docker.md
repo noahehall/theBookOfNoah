@@ -274,6 +274,8 @@
 ## registries, indexes, repositories
 ### repositories
   - a named bucket of images
+    - i.e. location/name pairs that point to set of specific layer Ids
+    -
   - have urls which are composed of
     - e.g. quay.io/dockerinaction/ch3_hello_registry:latest
     - the host where the image is located
@@ -537,6 +539,7 @@
 ## images
   - a file for starting containers
     - a bundled snapshot of all the files that should be available to programs running inside a container
+    - stacks of layers constructed by traversing the layer dependency graph from some starting layer
     - installed images contain metadata
       - relationships between images
       - coommand history for an image
@@ -589,6 +592,7 @@
     - copies of all the file changes
     - metadata
       - layer ID
+        - the top layer ID === image ID the container was created from
       - parent layer ID
       - the execution context of the container that the layer was created from
 
@@ -1574,6 +1578,15 @@
 ```sh
   # show all images, including intermediate images
   docker images -a
+```
+
+
+### docker tag
+  - create a tag that refers to a source image
+
+```sh
+  # tag a source image
+  docker tag myuser/myrepo:mytag sourceuser/sourceimage
 ```
 
 
