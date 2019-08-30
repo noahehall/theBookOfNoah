@@ -589,7 +589,7 @@
     - copies of all the file changes
     - metadata
       - layer ID
-      - immediate child layer ID
+      - parent layer ID
       - the execution context of the container that the layer was created from
 
 ### dockerfiles
