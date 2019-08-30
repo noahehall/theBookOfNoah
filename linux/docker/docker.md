@@ -1521,15 +1521,22 @@
     - since the layers are removed, consumers do not get any reusability from any intermediary images that could have been reused, but must install everything new required by the flattened image
     - instead create branches via the `docker tag` using an approprite layer from the source image
 ```sh
-  # flatten an image
+  # export an image as a single layer filesystem
+  docker export -o some/file.tar containername|id
+
 ```
 
 ### docker import
   - import the contents from a tarball to create a filesystem image
 
 ```sh
+  # import a tarball with an arbitrary docker file cmds
+  docker import -c "some dockerifle cmds" \
+    someuser/imagename:tag < somefile.tar
+
 
 ```
+
 ### docker stop
   - stop one/moire running containers
 
