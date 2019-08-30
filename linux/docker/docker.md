@@ -156,7 +156,8 @@
       -  define and tag versions at a level where users can depend on consistent contracts
         -  i.e. the smallest uinit of the versioning system captures the smallest unit of contract iteration
           -  thus whenever a change impacts the contract, create a new version!
-      -  the `:latest` tag should refer to the latest stable version, not the latest available version 
+      -  the `:latest` tag should refer to the latest stable version, not the latest available version
+      -  in situations where software dependencies change, or software needs to be distribute don top of multiple bases, those deps should be included in the tagging scheme
     -  the goal of an effective versioning scheme is to communicate clearly and provide adoption flexibility
       -  identify contracts
 
