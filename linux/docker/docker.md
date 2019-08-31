@@ -116,6 +116,8 @@
       - entrypoint is set in exec form
         - the default cmd and its arguments will be passed to the entrypoint as parameters
         - more flexible
+  - dockerfiles
+    - delay any RUN instructions that change file ownership until after all COPY/ADD cmds have been completed
 
   - use base images to create common layers
     - do not set the default user int he base otherwise all implementations will not be able to update the image
@@ -651,50 +653,75 @@
     - can use var substitution
       - ENV, ADD, COPY, WORKDIR, VOLUME, EXPOSE, USER
       - use `docker inspect...` on the resulting image to verify vars are set correctly
-      
-    - FROM image:tag
-      - i.e. sets the layer stack to start from a specific image
-      - must be the first line in the dockerfile
-      -
 
-    - MAINTAINER "super@dope.com"
-      - maintainer name and email for the image
-      - helps people know whom to contact if theres a problem with the image
-
-    - RUN any linux cmd
-      - scoped to the distro youre using
-
-    - ENTRYPOINT
-      - sets the executable to be run at container init
-      - shell form
-        - a shell cmd with whitespace-delimited arguments
-        - executed as an argument to the default shell at runtime
-          - i.e. `/bin/sh -c 'exec THECMD'`
-          - all other args provided by the CMD isntruction/at runtime as extra arguments to docker run will be ignored
-          -
+    - basic instructions
+      - FROM image:tag
+        - i.e. sets the layer stack to start from a specific image
+        - must be the first line in the dockerfile
         -
-      - exec form
-        - a string array where the first value is the cmd to eecute and the remaining values are arguments
 
-    - `# this is a comment`
-      - use comments liberally
+      - MAINTAINER "super@dope.com"
+        - maintainer name and email for the image
+        - helps people know whom to contact if theres a problem with the image
 
-    - ENV
-      - set env vars for the resulting image and other dockerfile instructions
-      - use ENV vars to also set dynamic values for later use by LABEL instructions
-        - the value of the vars will be avaiable to processes running inside a container as well as recorded to the appropriate label
+      - RUN any linux cmd
+        - scoped to the distro youre using
 
-    - LABEL
-      - define key=value pairs that are recordded as additional metadata fo ran image//container
-      - use ENV vars
+      - ENTRYPOINT
+        - sets the executable to be run at container init
+        - shell form
+          - a shell cmd with whitespace-delimited arguments
+          - executed as an argument to the default shell at runtime
+            - i.e. `/bin/sh -c 'exec THECMD'`
+            - all other args provided by the CMD isntruction/at runtime as extra arguments to docker run will be ignored
+            -
+          -
+        - exec form
+          - a string array where the first value is the cmd to eecute and the remaining values are arguments
 
-    - WORKDIR
-      - set the default working directory
-      - if the dir does not exist it will be created
+      - `# this is a comment`
+        - use comments liberally
 
-    - EXPOSE
-      - creates a layer that opens a specific port
-      -
+      - ENV
+        - set env vars for the resulting image and other dockerfile instructions
+        - use ENV vars to also set dynamic values for later use by LABEL instructions
+          - the value of the vars will be avaiable to processes running inside a container as well as recorded to the appropriate label
+
+      - LABEL
+        - define key=value pairs that are recordded as additional metadata fo ran image//container
+        - use ENV vars
+
+      - WORKDIR
+        - set the default working directory
+        - if the dir does not exist it will be created
+
+      - EXPOSE
+        - creates a layer that opens a specific port
+
+      - USER
+        - sets the user and group for all further build steps and containers created from the image
+        - while the user and group should be created as early as possible
+          - this instruction should be used as LATE as possible
+
+    - file system instructions
+      - COPY
+        - copy files from current context into the build container
+        - any files copied will be copied with the file ownership set to root
+          - the default regardless of how the default user is set before the copy instruction
+          - de
+
+      - ADD
+
+      - VOLUME
+        - defines the location int he file system and adds a volume definition to the image metadata
+          - behaves similary to the --volume flag
+        - defining volumes at image build time is more limiting than at runtime
+          - cannot specify bind-mount volumes
+          - cannot specify read-only volumes
+
+      - CMD
+        - represents the default argument list for the entrypoint exec form
+        -
 
   - `.dockerignore`
     - file that informs the docker builder which files in the context directory to NOT copy into the build image
