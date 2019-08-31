@@ -185,11 +185,18 @@
       - docker volumes
 
   - build durable containers
+    - use init processes, startup scripts and container restart policies and  to build durable & reliable containers
     - automatically restart processes when they exit/fail
       - use exponential backoff
     - keep containers running with supervisor & startup processes
       - e.g. init, systemd, runit, upstart, supervisord
       - use a startup script that (at least) checks preconditions for successfully starting the contained software
+      - define what programs to start, when to start them and what actions ot take when they stop
+      - is the BEST WAY to
+        - launch multiple programs
+        - clean up orphaned processes
+        - monitor processes
+        - automatically restart any failed processes
 
   -  use proper versioning for all image
     -  all images should be tagged
