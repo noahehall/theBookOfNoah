@@ -625,7 +625,10 @@
   - instructions are followed by the docker iamge builder fro top to bottom
   - keys
     - FROM image:tag
+      - use this image as the starting point
     - MAINTAINER "super@dope.com"
+      - maintainer name and email for the image
+      - helps people know whom to contact if theres a problem with the image 
     - RUN any linux cmd
     - ENTRYPOINT
       -
@@ -1686,8 +1689,9 @@
       -
 ```sh
   # install the built image to name:tag
-  # get the build instructions from the docker file
-  docker build -t NAME:TAG DOCKERFILE
+  # get the build instructions from the dockerfile
+  # in the current dir
+  docker build -t NAME:TAG .
 ```
 
 ### docker images
