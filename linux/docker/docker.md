@@ -105,6 +105,12 @@
 
 
 # best practices
+  - harden your images
+    - the process of shaping it in a way that will reduce the attack surface inside any docker containers based on it
+    - minimize software contained in the image
+    - enforce that images are based on a specific image
+    - have a sensible default user
+    - eliminate root user escalation 
   - remember the diff between entrypoint and cmd
     - entryoint is the program that will be executed when the container starts
       - use this for all sorts of things
@@ -189,7 +195,15 @@
     - automatically restart processes when they exit/fail
       - use exponential backoff
     - keep containers running with supervisor & startup processes
-      - e.g. init, systemd, runit, upstart, supervisord
+      - e.g. init, systemd, runit, upstart, supervisord, busybox init, daemon tools
+        - init process valuation criteria
+          - additional deps the program will bring into the image
+          - file sizes
+          - how the process passes signals to its child processes (if it even does!)
+          - required user access
+          - monitpring and restart functionality
+            - backoff-on-restart is a bonus!
+          - zombie process cleanup features
       - use a startup script that (at least) checks preconditions for successfully starting the contained software
       - define what programs to start, when to start them and what actions ot take when they stop
       - is the BEST WAY to
@@ -197,6 +211,8 @@
         - clean up orphaned processes
         - monitor processes
         - automatically restart any failed processes
+      - use the init process as the entrypoint of your application-oriented docker container
+      -
 
   -  use proper versioning for all image
     -  all images should be tagged
