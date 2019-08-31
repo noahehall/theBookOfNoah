@@ -529,7 +529,13 @@
           - middleware
             - configure the storage, registry or repository middleware to use
           - reporting
-            - configure reporting tools (e.g. bugsnag, newrelic) 
+            - configure reporting tools (e.g. bugsnag, newrelic)
+          - http
+            - specifies how the distribution should make itself available on the network
+          - notifications
+            - webhookk-style integration with other projects
+          - redis
+            - configuration for a redis cache 
 
     - custom image distribution infrastructure
       - when you work with images as files, you use docker only to manage local images and create files
