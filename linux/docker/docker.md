@@ -149,12 +149,14 @@
     - however you should always create the user:group
 
 
-  - use busyboxy or alpine or scratch for base images
+  - use debian, busyboxy, alpine or scratch for base images
     - scratch
       - starting from an empty image
       - have no dependencies
       - your providing all the dependencies
-      -
+    - debian
+      - minimal footprint for a fully featured distro
+      - about 125mb 
 
   - dont run docker as the root user on your system
     - eliminate this by
