@@ -112,6 +112,7 @@
       - use the image digest
     - have a sensible default user
     - eliminate root user escalation
+
   - remember the diff between entrypoint and cmd
     - entryoint is the program that will be executed when the container starts
       - use this for all sorts of things
@@ -159,7 +160,16 @@
     - eliminate this by
       - creating a `docker` group
       - setting that group as the owner of the docker socket
-      - adding yoru user to that group
+      - adding your user to that group
+
+  - all known container breakout tactics rely o nhaving sytem admin privileges inside the container
+    - eliminate this by either
+      - set the USER instruction to a user and group with limited priveleges
+      - change the user in the init script
+    - consider the permissions and caapabilities required at runtime
+      - any process that needs access to the system port range 1...1024
+      - need to be started by a user with admin (very least CAP_NET_ADMIN) privs
+      -
 
   - be sure to rotate/truncate container logs
     - the logs for a container will remain and grow as long as the container exists
