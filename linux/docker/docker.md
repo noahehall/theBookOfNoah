@@ -109,8 +109,9 @@
     - the process of shaping it in a way that will reduce the attack surface inside any docker containers based on it
     - minimize software contained in the image
     - enforce that images are based on a specific image
+      - use the image digest
     - have a sensible default user
-    - eliminate root user escalation 
+    - eliminate root user escalation
   - remember the diff between entrypoint and cmd
     - entryoint is the program that will be executed when the container starts
       - use this for all sorts of things
@@ -629,6 +630,9 @@
       - new changes will be written to a new layer on the UFS for the container
     - commit the modify container to a new image file
       - you can now create containers
+  - CAIID
+    - content addressable image identifer
+    - any image that includes th digest component returned from `docker pull`
 
 
 ### UFS
@@ -785,13 +789,16 @@
     - file that informs the docker builder which files in the context directory to NOT copy into the build image
 
 ```sh
+
   FROM debian:wheezy
+  # FROM debian@sha256:1234 # use the digest returned from docker pull
   MAINTAINER noah hall "poop@your.toilet"
   RUN ...
   ENV THIS="/that" \
     VERSION="400 degrees"
   LABEL base.name="lilwayne" \
     base.version="${VERSION}"
+
 
 ```
 
@@ -1798,6 +1805,8 @@
 
 ### docker pull
   - install an image/pull a repository from a registry
+  - you can manually retrieve the Digest: value to support hardening images
+  -
 ```sh
   docker pull NAME|URL
 
