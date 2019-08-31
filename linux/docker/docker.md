@@ -133,7 +133,7 @@
         - poop
       - notifications
         - e.g. webhook style integration with other projects
-      - 
+      -
 
   - remember the diff between entrypoint and cmd
     - entryoint is the program that will be executed when the container starts
@@ -420,7 +420,7 @@
         - registry
         - local hd
     - use cases
-      - dev purposes
+      - dev/test purposes
 
   - centralized
     - layer 1
@@ -429,6 +429,12 @@
       - proxy
       - registry
       - local hd
+    - use cases
+      - more than one person needs access over a network
+        - ensure to add transport layer security and auth to protect against
+          - snooping
+          - corrupting image files
+          - man-in-the-middle attacks
 
   - centralized durable
     - centralized
