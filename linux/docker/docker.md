@@ -105,6 +105,17 @@
 
 
 # best practices
+  - remember the diff between entrypoint and cmd
+    - entryoint is the program that will be executed when the container starts
+      - use this for all sorts of things
+      - e.g. validation
+    - cmds
+      - entrypoint not set
+        - the default cmd will be executed immediately
+      - entrypoint is set
+        - the default cmd and its arguments will be passed to the entrypoint as parameters
+
+        
   - use busyboxy or alpine or scratch for base images
 
   - dont run docker as the root user on your system
@@ -628,10 +639,12 @@
       - use this image as the starting point
     - MAINTAINER "super@dope.com"
       - maintainer name and email for the image
-      - helps people know whom to contact if theres a problem with the image 
+      - helps people know whom to contact if theres a problem with the image
     - RUN any linux cmd
+      - scoped to the distro youre using
     - ENTRYPOINT
-      -
+      - the entrypoint for the image
+    -
 
 
 ## containers
@@ -1254,15 +1267,7 @@
   - docker run creates a NEW CONTAINER each time
     - use docker start to run an existing container
 
-  - entry points and default cmd
-    - entryoint is the program that will be executed when the container starts
-      - use this for all sorts of things
-      - e.g. validation
-    - cmds
-      - entrypoint not set
-        - the default cmd will be executed immediately
-      - entrypoint is set
-        - the default cmd and its arguments will be passed to the entrypoint as parameters
+
 
   - options
     - -i and -t are used together for running interactive programs like a shell in an interactive container
