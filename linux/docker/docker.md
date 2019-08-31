@@ -116,8 +116,12 @@
       - entrypoint is set in exec form
         - the default cmd and its arguments will be passed to the entrypoint as parameters
         - more flexible
+
   - dockerfiles
     - delay any RUN instructions that change file ownership until after all COPY/ADD cmds have been completed
+    - use COPY over ADD
+    - create the user and group as soon as possible
+    - set the default user and group as late as possible
 
   - use base images to create common layers
     - do not set the default user int he base otherwise all implementations will not be able to update the image
@@ -703,6 +707,10 @@
         - while the user and group should be created as early as possible
           - this instruction should be used as LATE as possible
 
+      - CMD
+        - represents the default argument list for the entrypoint exec form
+        -
+
     - file system instructions
       - COPY
         - copy files from current context into the build container
@@ -711,6 +719,9 @@
           - de
 
       - ADD
+        - differs from COPY in two ways
+          - fetch remote sources if a URL is specified
+          - extract files of any source determined to be an archive file
 
       - VOLUME
         - defines the location int he file system and adds a volume definition to the image metadata
@@ -719,9 +730,7 @@
           - cannot specify bind-mount volumes
           - cannot specify read-only volumes
 
-      - CMD
-        - represents the default argument list for the entrypoint exec form
-        -
+
 
   - `.dockerignore`
     - file that informs the docker builder which files in the context directory to NOT copy into the build image
