@@ -114,8 +114,10 @@
         - the default cmd will be executed immediately
       - entrypoint is set
         - the default cmd and its arguments will be passed to the entrypoint as parameters
-  - use `FROM scratch`
-    -
+
+  - use base images to create common layers
+    - do not set the default user int he base otherwise all implementations will not be able to update the image
+    - however you should always create the user:group
 
 
   - use busyboxy or alpine or scratch for base images
@@ -640,10 +642,12 @@
 
 ### dockerfile
   - a file that contains instructions for building an image
-  - instructions are followed by the docker iamge builder fro top to bottom
+  - instructions are followed by the docker image builder from top to bottom
+  - uses extensive caching to aid rapid development and iteration
+
   - keys
     - FROM image:tag
-      - use this image as the starting point
+      - i.e. sets the layer stack to start from a specific image
       - must be the first line in the dockerfile
       -
     - MAINTAINER "super@dope.com"
@@ -652,14 +656,41 @@
     - RUN any linux cmd
       - scoped to the distro youre using
     - ENTRYPOINT
-      - the entrypoint for the image
+      - sets the executable to be run at container init
+      - shell form
+        - a shell cmd with whitespace-delimited arguments
+        - executed as an argument to the default shell
+          - i.e. `/bin/sh -c 'exec THECMD'`
+      - exec form
+        - a string array where the first value is the cmd to eecute and the remaining values are arguments
     - `# this is a comment`
       - use comments liberally
-    -
+    - ENV
+      - set env vars for the resulting image and other dockerfile instructions
+      - use ENV vars to also set dynamic values for later use by LABEL instructions
+        - the value of the vars will be avaiable to processes running inside a container as well as recorded to the appropriate label
+    - LABEL
+      - define key=value pairs that are recordded as additional metadata fo ran image//container
+      - use ENV vars
+    - WORKDIR
+      - set the default working directory
+      - if the dir does not exist it will be created
+    - EXPOSE
+      - creates a layer that opens a specific port
+      -
+
+  - `.dockerignore`
+    - file that informs the docker builder which files in the context directory to NOT copy into the build image
 
 ```sh
-  # build the image using the dockerfile and context of the current dir
-  docker build -t imagename:tag .
+  FROM debian:wheezy
+  MAINTAINER noah hall "poop@your.toilet"
+  RUN ...
+  ENV THIS="/that" \
+    VERSION="400 degrees"
+  LABEL base.name="lilwayne" \
+    base.version="${VERSION}"
+
 ```
 
 
