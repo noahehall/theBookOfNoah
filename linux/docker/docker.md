@@ -650,6 +650,7 @@
   - keys
     - can use var substitution
       - ENV, ADD, COPY, WORKDIR, VOLUME, EXPOSE, USER
+      - use `docker inspect...` on the resulting image to verify vars are set correctly
       
     - FROM image:tag
       - i.e. sets the layer stack to start from a specific image
