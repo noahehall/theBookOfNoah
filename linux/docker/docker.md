@@ -648,6 +648,9 @@
   - uses extensive caching to aid rapid development and iteration
 
   - keys
+    - can use var substitution
+      - ENV, ADD, COPY, WORKDIR, VOLUME, EXPOSE, USER
+      
     - FROM image:tag
       - i.e. sets the layer stack to start from a specific image
       - must be the first line in the dockerfile
