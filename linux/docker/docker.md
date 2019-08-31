@@ -114,9 +114,16 @@
         - the default cmd will be executed immediately
       - entrypoint is set
         - the default cmd and its arguments will be passed to the entrypoint as parameters
+  - use `FROM scratch`
+    -
 
-        
+
   - use busyboxy or alpine or scratch for base images
+    - scratch
+      - starting from an empty image
+      - have no dependencies
+      - your providing all the dependencies
+      -
 
   - dont run docker as the root user on your system
     - eliminate this by
@@ -637,6 +644,8 @@
   - keys
     - FROM image:tag
       - use this image as the starting point
+      - must be the first line in the dockerfile
+      -
     - MAINTAINER "super@dope.com"
       - maintainer name and email for the image
       - helps people know whom to contact if theres a problem with the image
@@ -644,7 +653,14 @@
       - scoped to the distro youre using
     - ENTRYPOINT
       - the entrypoint for the image
+    - `# this is a comment`
+      - use comments liberally
     -
+
+```sh
+  # build the image using the dockerfile and context of the current dir
+  docker build -t imagename:tag .
+```
 
 
 ## containers
