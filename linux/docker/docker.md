@@ -5,6 +5,7 @@
 # links
   - [docker registry docs](https://docs.docker.com/registry/)
   - [docker registry specs](https://docs.docker.com/registry/spec/)
+  - [yaml](http://yaml.org)
 
 ## todo
   - [linux capabilities](https://linux-audit.com/linux-capabilities-101/)
@@ -113,6 +114,27 @@
     - have a sensible default user
     - eliminate root user escalation
 
+  - inject a configuration file in the image
+    - consumers can override the file
+      - modify the included file directly
+      - a bind-mount volume to override the file with a new one namespaces
+    - common vars in the config
+      - version
+        - set the version of the running container
+      - log
+        - log location and verbosity at the very least
+      - storage
+        - where files/data are stored
+      - auth
+        - authentication and authorization
+      - middleware
+        - configure other dynamic aspects
+      - network
+        - poop
+      - notifications
+        - e.g. webhook style integration with other projects
+      - 
+
   - remember the diff between entrypoint and cmd
     - entryoint is the program that will be executed when the container starts
       - use this for all sorts of things
@@ -156,7 +178,7 @@
       - your providing all the dependencies
     - debian
       - minimal footprint for a fully featured distro
-      - about 125mb 
+      - about 125mb
 
   - dont run docker as the root user on your system
     - eliminate this by
