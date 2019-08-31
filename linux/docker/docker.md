@@ -126,7 +126,15 @@
       - startup assitance
       - superision
       - monitoring
-      - coordination with other in-container pprocesses 
+      - coordination with other in-container pprocesses
+      - validation
+        - presumed links/alias
+        - env vars
+        - network access
+        - network port availability
+        - root file system mount params (read-write/only)
+        - volumes
+        - current user
 
   - use base images to create common layers
     - do not set the default user int he base otherwise all implementations will not be able to update the image
@@ -1946,6 +1954,25 @@
     echo 'link alias database not set'
     exit 1
   else
-    exec "$@"
+    exec "$@" # run default cd
   fi
+
+  # validate a container is linked to web alias
+  # and has port 80 exposed
+  # or WEB_HOST env var has been defined
+  set -e
+  if [ -n "$WEB_PORT_80_TCP" ]; then
+    if [ -z "$WEB_HOOST" ]; then
+      WEB_HOST='web'
+    else
+      echo >&2 '[WARN]: linked container web overridden by $WEB_HOST'
+      echo >&2 "connecting to ($WEB_HOST)"
+    fi
+  fi
+  if [ -z "$WEB_HOST" ]; then
+    echo >&2 '[ERROR] requires linked container web or WEB_HOST env var'
+    exit 1
+  fi
+  exec "$@" # run default cmd
+
 ```
