@@ -122,6 +122,11 @@
     - use COPY over ADD
     - create the user and group as soon as possible
     - set the default user and group as late as possible
+    - use the ENTRYPOINT for startup scripts if software requires
+      - startup assitance
+      - superision
+      - monitoring
+      - coordination with other in-container pprocesses 
 
   - use base images to create common layers
     - do not set the default user int he base otherwise all implementations will not be able to update the image
@@ -674,8 +679,15 @@
       - ONBUILD
         - used to inject downstream build-time behavior
         - defines instructions to execute if the resulting image is used as a base image for naother build
+          - the instructions are recorded in the resulting images metadata under `ContainerConfig.OnBuild`
+            - view via `docker inspect`
           - e.g. to compile a program thats provided by a downstream layer
         - the upstream dockerfile will execute the ONBUILD instruction before running any other instructions
+        - examples
+          - registry.hub.docker.com/_/python/
+            - /golang/
+            - /node/
+        -
 
       - ENTRYPOINT
         - sets the executable to be run at container init
