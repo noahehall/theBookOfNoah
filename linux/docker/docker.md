@@ -511,11 +511,25 @@
         - environmebt or deployment stage-specific image pools
         - corporate processes for approving images
         - longevity control of external images
+
       - docker registry image
         - available on the docker hub
         - can be used with all existing docker cmds
           - all push/pull actions occur between the docker daemon and the network API of the registry container
         - the registry uses a file system storage backend
+        - configuration
+          - version
+            - specifies the configuration version
+          - log
+            - controls the logging output produced by the distribution project
+          - storage
+            - controls where and how images are stored and maintained
+          - auth
+            - controls in-registry authentication mechanisms
+          - middleware
+            - configure the storage, registry or repository middleware to use
+          - reporting
+            - configure reporting tools (e.g. bugsnag, newrelic) 
 
     - custom image distribution infrastructure
       - when you work with images as files, you use docker only to manage local images and create files
@@ -1417,6 +1431,13 @@
   docker run...
     --lxc-config="lxc.cgroup.cpuset.cpus=0,1"...
 ```
+
+## integrations
+### reverse proxy
+  - flow
+    - clients make requests
+    - proxy intercepts requests
+    - proxy routes to correct service
 
 
 # examples
