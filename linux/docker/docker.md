@@ -620,8 +620,15 @@
         - makes it possible to share access to images instead of creating independent copies for every container
         -
 
-### dockerfiles
-  - scripts for building images
+### dockerfile
+  - a file that contains instructions for building an image
+  - instructions are followed by the docker iamge builder fro top to bottom
+  - keys
+    - FROM image:tag
+    - MAINTAINER "super@dope.com"
+    - RUN any linux cmd
+    - ENTRYPOINT
+      -
 
 
 ## containers
@@ -1653,6 +1660,30 @@
 
 ### docker build
   - build an image from a Dockerfile
+  - build specific flags
+  - `--compress`
+    - compress the build content using gzip
+  - `--disable-content-trust`
+    - skip image verification (default true)
+  - `--force-rm`
+    - always remove intermediate containers
+  - `-f`
+    - path to docker file
+  - `--network`
+    - set set the networking mode for th eRUN instruction during build
+    - default 'default'
+  - `--no-cache`
+    - do not use cache when building the image
+  - `--rm`
+    - remove intermediate containers after a successful build
+    - default true
+  - `--security-opt`
+    - security options
+  - `--target`
+    - set the target build stage to build
+    - `-t`
+      - tag the image
+      -
 ```sh
   # install the built image to name:tag
   # get the build instructions from the docker file
