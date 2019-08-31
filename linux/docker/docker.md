@@ -168,7 +168,7 @@
       - change the user in the init script
     - consider the permissions and caapabilities required at runtime
       - any process that needs access to the system port range 1...1024
-      - need to be started by a user with admin (very least CAP_NET_ADMIN) privs
+      - need to be started by a user with admin (very least CAP_NET_ADMIN) ptrivs
       -
 
   - be sure to rotate/truncate container logs
@@ -630,6 +630,11 @@
       - volume definitions
       - etc
     - each time an image is changed it receives a new UID
+  - things to know about every image
+    - the base image and its installed software/deps
+    - the entrypoint and default cmd
+    - the configuration file (if any)
+
   - when installing software with docker, your installing an image
   - until an image is tagged
     - the only way to refer to it is by the UID
