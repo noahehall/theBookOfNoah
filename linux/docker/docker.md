@@ -671,6 +671,12 @@
       - RUN any linux cmd
         - scoped to the distro youre using
 
+      - ONBUILD
+        - used to inject downstream build-time behavior
+        - defines instructions to execute if the resulting image is used as a base image for naother build
+          - e.g. to compile a program thats provided by a downstream layer
+        - the upstream dockerfile will execute the ONBUILD instruction before running any other instructions
+
       - ENTRYPOINT
         - sets the executable to be run at container init
         - shell form
