@@ -110,10 +110,12 @@
       - use this for all sorts of things
       - e.g. validation
     - cmds
-      - entrypoint not set
+      - entrypoint not set | shell form used
         - the default cmd will be executed immediately
-      - entrypoint is set
+        - less flexible
+      - entrypoint is set in exec form
         - the default cmd and its arguments will be passed to the entrypoint as parameters
+        - more flexible
 
   - use base images to create common layers
     - do not set the default user int he base otherwise all implementations will not be able to update the image
@@ -650,31 +652,42 @@
       - i.e. sets the layer stack to start from a specific image
       - must be the first line in the dockerfile
       -
+
     - MAINTAINER "super@dope.com"
       - maintainer name and email for the image
       - helps people know whom to contact if theres a problem with the image
+
     - RUN any linux cmd
       - scoped to the distro youre using
+
     - ENTRYPOINT
       - sets the executable to be run at container init
       - shell form
         - a shell cmd with whitespace-delimited arguments
-        - executed as an argument to the default shell
+        - executed as an argument to the default shell at runtime
           - i.e. `/bin/sh -c 'exec THECMD'`
+          - all other args provided by the CMD isntruction/at runtime as extra arguments to docker run will be ignored
+          -
+        -
       - exec form
         - a string array where the first value is the cmd to eecute and the remaining values are arguments
+
     - `# this is a comment`
       - use comments liberally
+
     - ENV
       - set env vars for the resulting image and other dockerfile instructions
       - use ENV vars to also set dynamic values for later use by LABEL instructions
         - the value of the vars will be avaiable to processes running inside a container as well as recorded to the appropriate label
+
     - LABEL
       - define key=value pairs that are recordded as additional metadata fo ran image//container
       - use ENV vars
+
     - WORKDIR
       - set the default working directory
       - if the dir does not exist it will be created
+
     - EXPOSE
       - creates a layer that opens a specific port
       -
