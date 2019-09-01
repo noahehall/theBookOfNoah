@@ -176,6 +176,7 @@ configuring https (tls) on the reverse proxy
     - do not set the default user int he base otherwise all implementations will not be able to update the image
     - however you should always create the user:group
 
+  - use TLS to secure your registry
 
   - use debian, busyboxy, alpine or scratch for base images
     - scratch
@@ -411,6 +412,7 @@ configuring https (tls) on the reverse proxy
     - make dockerfiles publicly available and utilize docker hubs continuous build system
 
 #### customizing registries
+  - the docker daemon wont connect to a registry without TLs unless that registry is running on localhost
   - use cases
     - software that integrates with a docker registry may require a local instance to develop against
     - dev team might devploy their own central registry to share their work and streamline integrations
@@ -1453,8 +1455,18 @@ configuring https (tls) on the reverse proxy
     - proxy routes to correct service
 
 
-## TLS
-  - 
+### TLS
+  - transport layer security
+  - provides endpoint identifications, message integrity and message privacy
+  - implemented at a layer below http and is what provides the S in https
+  -
+
+```sh
+
+```
+
+### SSH tunnels
+
 # examples
 ## docker help
   - display information about the basic syntax for using the docker cmdline program as well as a complete list of cmds for your version of the program
