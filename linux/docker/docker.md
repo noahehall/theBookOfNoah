@@ -1460,6 +1460,10 @@ configuring https (tls) on the reverse proxy
   - transport layer security
   - provides endpoint identifications, message integrity and message privacy
   - implemented at a layer below http and is what provides the S in https
+    - uses port 443 instead of 80
+    - requires a signed certificate and private key files
+    - the host name of the server and the proxy configuration must match the one use dto create the certificate
+      - if using a reverse proxy for TLs termination
   -
 
 ```sh
@@ -1475,7 +1479,7 @@ configuring https (tls) on the reverse proxy
     - centralized registry for small teams
   - gotchas
     - requires a user account management and authentication system in place, e.g. pub/priv keys
-    - does scale well 
+    - does scale well
 
   - process
     - install an ssh server (openssh) on the same machine as the registry
