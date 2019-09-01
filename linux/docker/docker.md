@@ -1,14 +1,20 @@
+page 201
+configuring https (tls) on the reverse proxy
+
 # books
   - docker in action
     - jeff nickoloff
+
 
 # links
   - [docker registry docs](https://docs.docker.com/registry/)
   - [docker registry specs](https://docs.docker.com/registry/spec/)
   - [yaml](http://yaml.org)
 
+
 ## todo
   - [linux capabilities](https://linux-audit.com/linux-capabilities-101/)
+
 
 # background
   - about
@@ -321,7 +327,6 @@
         - but make sure you restrict access to this container
 
 
-
 ```sh
   # find all files with SUID set
   # use +2000 for SGID
@@ -535,7 +540,7 @@
           - notifications
             - webhookk-style integration with other projects
           - redis
-            - configuration for a redis cache 
+            - configuration for a redis cache
 
     - custom image distribution infrastructure
       - when you work with images as files, you use docker only to manage local images and create files
@@ -753,6 +758,7 @@
         - makes it possible to share access to images instead of creating independent copies for every container
         -
 
+
 ### dockerfile
   - a file that contains instructions for building an image
   - instructions are followed by the docker image builder from top to bottom
@@ -852,6 +858,7 @@
 
   - `.dockerignore`
     - file that informs the docker builder which files in the context directory to NOT copy into the build image
+
 
 ```sh
 
@@ -1446,6 +1453,8 @@
     - proxy routes to correct service
 
 
+## TLS
+  - 
 # examples
 ## docker help
   - display information about the basic syntax for using the docker cmdline program as well as a complete list of cmds for your version of the program

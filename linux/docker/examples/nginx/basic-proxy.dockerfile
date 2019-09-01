@@ -4,7 +4,7 @@
 # docker build -t dockerinaction/basic_proxy -f basic-proxy.dockerfile --no-cache .
 
 # start the personal registry
-# docker run -d --name personal_registry -p 5000:5000 --restart=always registry:2
+# docker run -d --name personal_registry -p 5000:5000 registry:2
 
 # start the reverse proxy
 # docker run -d --name basic_proxy -p 80:80 --link personal_registry:registry dockerinaction/basic_proxy
