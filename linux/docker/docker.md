@@ -1,6 +1,11 @@
 # skipped
-  - adding TLS+basic-auth to a custom registry in the registry.yml
-    - see the example nginx-tls-basic-auth example
+  - custom registries
+    - adding TLS+basic-auth to a custom registry in the registry.yml
+      - see the example nginx-tls-basic-auth example
+    - registries in production
+      - included notes but not example app
+    - durable blob storage
+    - hosted remote storage
 # books
   - docker in action
     - jeff nickoloff
@@ -111,9 +116,23 @@
     - an executable file with the SUID bit set will always execute as its owner
   - SGID
     - an executable file with the SGId set will always execute as the group owner
+  - Blob
+    - binary large oject
+    - there are several popular blob storage services
+  - RADOS (ceph)
+    - reliable autonomic distributed objet store
+    - ceph is the software that you would use to build your own Azure storage or AWs s3-like distributed blob storage service 
 
 
 # best practices
+  - secrets management
+    - inject secrets
+      - files by bind-mounting volumes that are on mounted tmpfs or ramdisk devices and setting limited file permissions
+      - environment variables
+  - manage logs different from dev/stage/prod
+    - prod generally needs reduced logging as to not overwhelm disk space
+  - disable debugging endpoints in prod
+
   - harden your images
     - the process of shaping it in a way that will reduce the attack surface inside any docker containers based on it
     - minimize software contained in the image
@@ -425,6 +444,22 @@
       - managing deployment artifacts
     - distribution project
       - official image by docker for creating registries
+      - production modifications
+        - secrets management
+          - TLS private key
+          - SMTP username + password
+          - redis secret
+          - various remote storage account ID and key pairs
+          - client state signature key
+        - log tuning
+        - debug endpoints
+        - reliable storage
+      - available storage backends
+        - filesystem
+        - azure
+        - s3
+        - rados
+
       - offers three mechaniisms for authentication
         - silly
           - completely insecure
