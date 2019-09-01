@@ -1467,6 +1467,26 @@ configuring https (tls) on the reverse proxy
 ```
 
 ### SSH tunnels
+  - secure shell
+    - a protocol for tunneling network track
+    - uses similar security techniques as TLS but lacks the third-party trust mechanism that makes TLS scale to large numbers of users
+  - use cases
+    - a cheaper and arguably less complex way to secure your registry network traffic is to enable connections only through SSH
+    - centralized registry for small teams
+  - gotchas
+    - requires a user account management and authentication system in place, e.g. pub/priv keys
+    - does scale well 
+
+  - process
+    - install an ssh server (openssh) on the same machine as the registry
+    - map the registry only to the loop back interface (localhost) on the machine
+      - this restricts inbound registry traffic to what comes through the SSH server
+    - when clients want to cnnect theyll create an ssh tunnel
+      - binds a local TCP port and forwards traffic to it over an SSH connection between the clients computer and the remote SSH server out to some destination host and port
+        - i.e. clients create a tunnel that allows them to treat your registry as if it were running locally
+        -
+      -
+
 
 # examples
 ## docker help
