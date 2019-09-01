@@ -10,6 +10,8 @@
 # docker run -d --name tls_proxy -p 443:443 --link personal_registry:registry dockerinaction/tls_proxy
 
 # run curl to query your registry the proxy
+# include -k flag in curl to ignore any cert errors
+# only required when using the self-signed cert
 # docker run --rm -u 1000:1000 --net host dockerinaction/curl -ks https://localhost:443/v2/
 
 FROM nginx:latest
