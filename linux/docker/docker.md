@@ -1,6 +1,6 @@
-page 201
-configuring https (tls) on the reverse proxy
-
+# skipped
+  - adding TLS+basic-auth to a custom registry in the registry.yml
+    - see the example nginx-tls-basic-auth example
 # books
   - docker in action
     - jeff nickoloff
@@ -423,6 +423,23 @@ configuring https (tls) on the reverse proxy
     - a company running one/more centralized registries that are backed by durable artifact storage
       - to control external image deps
       - managing deployment artifacts
+    - distribution project
+      - official image by docker for creating registries
+      - offers three mechaniisms for authentication
+        - silly
+          - completely insecure
+          - only for dev/testing
+        - token
+          - uses JSON web tokens
+          - enables the registry to validate that a caller has authenticated with a third-party service without any back-end communicatino
+        - htpasswd
+          - open source program that ships with apache web server utilities
+          - used to generate encoded username and password pairs
+            - the pw is encrypted with the bcrypt algo
+            - pw are sent from the client to the registry unencrypted
+          - should only be used with TLS
+        - alternatives
+          - skip the provided authentication mechanisms and implement your own at the reverse proxy layer (see example)
 
   - personal registries
     - architecture
