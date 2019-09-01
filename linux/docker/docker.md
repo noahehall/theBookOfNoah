@@ -10,6 +10,8 @@ configuring https (tls) on the reverse proxy
   - [docker registry docs](https://docs.docker.com/registry/)
   - [docker registry specs](https://docs.docker.com/registry/spec/)
   - [yaml](http://yaml.org)
+  - [credential helper for docker login](https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+)
 
 
 ## todo
@@ -177,6 +179,8 @@ configuring https (tls) on the reverse proxy
     - however you should always create the user:group
 
   - use TLS to secure your registry
+
+  - always use a credential helper with docker login
 
   - use debian, busyboxy, alpine or scratch for base images
     - scratch
@@ -1467,7 +1471,13 @@ configuring https (tls) on the reverse proxy
   -
 
 ```sh
-
+  # create a certifcate for TLS on localhost
+  # generates a 4096-bit RSA key pair
+  # priv key file and cert output to current dir
+  docker run --rm \
+    -e COMMON_NAME=localhost \
+    -e KEY_NAME=localhost \
+    -v "$(pwd)":/certs centurylink/openssl
 ```
 
 ### SSH tunnels
