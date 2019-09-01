@@ -430,6 +430,7 @@ configuring https (tls) on the reverse proxy
       - dev/test purposes
 
   - centralized
+    - requires TLS for any registry not running on localhost
     - layer 1
       - docker clients
     - layer 2
