@@ -1663,6 +1663,9 @@
 # docker config create
 ```
 ### docker-compose up
+  - build, (re)creates, starts, and attaches to containers for a service
+  - options
+    - detach, no-color, quiet-pull, force-recreate, always-recreate-deps, no-recreate, no-build, no-start, build, abort-on-container-exit, timeout, renew-anon-volumes, remove-orphans, exit-code-from, scale
 ```sh
   # start services in detached mode
   docker-compose up -d
