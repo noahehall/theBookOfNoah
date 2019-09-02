@@ -139,6 +139,8 @@
 
 
 # best practices
+  - use content-addressable images to ensure no untusted artifacts are deployed to containers
+    - i.e. `image: name@sha256poop`
   - secrets management
     - inject secrets
       - files by bind-mounting volumes that are on mounted tmpfs or ramdisk devices and setting limited file permissions
@@ -878,7 +880,7 @@
       - the attached managed volumes are not removed
       - instead they are reattached
         - thus you are free to iterate (recreate) services without losing data
-        - 
+        -
 ### volume types
   - for virtualbox (docker machine / boot2docker) users
     - the host path specified in each value is relative to their virtual machine root file system and not the root of their host
@@ -1542,9 +1544,8 @@
     - build docker images
     - launch containerized applications as services
     - launch full systems of services
-    - manage the state of individual services in a system
-    - scale services up or down
-    - view logs for the collection of containers making a service
+    - automate the build of an environment thats closely tied to specific image sources
+    - manage the build phase for environments that use data-packed volume containers to inject environment configuration
   - compose cmds should be executed in the directory the compose.yml file is located
   - build context
     - directory sent to the docker daemon
