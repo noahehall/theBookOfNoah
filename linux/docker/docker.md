@@ -2159,10 +2159,15 @@
 ### docker pull
   - install an image/pull a repository from a registry
   - you can manually retrieve the Digest: value to support hardening images
-  -
+  - compose
+    - pull images defined in a compose file
+    - options
+      - ignore-pull-failures, parallel, no-parallel, quiet, include-deps
 ```sh
   docker pull NAME|URL
 
+  # pull
+  docker-compose pull
 ```
 
 ### docker save
@@ -2202,12 +2207,19 @@
     - set the target build stage to build
     - `-t`
       - tag the image
-      -
+
+  - compose
+    - options
+      - compress, force-rm, no-cache, no-rm, pull, memory, build-arg, parallel, quiet
 ```sh
   # install the built image to name:tag
   # get the build instructions from the dockerfile
   # in the current dir
   docker build -t NAME:TAG .
+
+  # (re)build service(s)
+  # dont specify any services to build all
+   docker-compose build SERV1 SERV2
 ```
 
 ### docker images
