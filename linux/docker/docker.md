@@ -1,12 +1,14 @@
 # skipped
   - custom registries
-    - included notes but not example app
+    - included in notes (but not examples) / entirely skipped
       - adding basic auth at the registry level
       - registries in production
       - durable blob storage
       - hosted remote storage
       - internal remote storage with rados(ceph)
       - integrating a metadata cache (i.e. redis)
+      - streamline blob transfer with storage middleware
+      - integrating through notifications (webhooks)
       -
 # books
   - docker in action
@@ -185,7 +187,7 @@
       - startup assitance
       - superision
       - monitoring
-      - coordination with other in-container pprocesses
+      - coordination with other in-container processes
       - validation
         - presumed links/alias
         - env vars
@@ -254,7 +256,7 @@
       - env var injection
         - key-value pairs that are made available to programs through their execution context
         - let you change a programs configuration without modifying any files/cmd used to start the program
-        - programs can be configured to expect variable injection at container-creaation
+        - programs can be configured to expect variable injection at container-creation
       - docker volumes
 
   - build durable containers
@@ -818,122 +820,6 @@
       - each parent layer is immutable, i.e. they can never be modified
         - makes it possible to share access to images instead of creating independent copies for every container
         -
-
-
-### dockerfile
-  - a file that contains instructions for building an image
-  - instructions are followed by the docker image builder from top to bottom
-  - uses extensive caching to aid rapid development and iteration
-
-  - keys
-    - can use var substitution
-      - ENV, ADD, COPY, WORKDIR, VOLUME, EXPOSE, USER
-      - use `docker inspect...` on the resulting image to verify vars are set correctly
-
-    - basic instructions
-      - FROM image:tag
-        - i.e. sets the layer stack to start from a specific image
-        - must be the first line in the dockerfile
-        -
-
-      - MAINTAINER "super@dope.com"
-        - maintainer name and email for the image
-        - helps people know whom to contact if theres a problem with the image
-
-      - RUN any linux cmd
-        - scoped to the distro youre using
-
-      - ONBUILD
-        - used to inject downstream build-time behavior
-        - defines instructions to execute if the resulting image is used as a base image for naother build
-          - the instructions are recorded in the resulting images metadata under `ContainerConfig.OnBuild`
-            - view via `docker inspect`
-          - e.g. to compile a program thats provided by a downstream layer
-        - the upstream dockerfile will execute the ONBUILD instruction before running any other instructions
-        - examples
-          - registry.hub.docker.com/_/python/
-            - /golang/
-            - /node/
-        -
-
-      - ENTRYPOINT
-        - sets the executable to be run at container init
-        - shell form
-          - a shell cmd with whitespace-delimited arguments
-          - executed as an argument to the default shell at runtime
-            - i.e. `/bin/sh -c 'exec THECMD'`
-            - all other args provided by the CMD isntruction/at runtime as extra arguments to docker run will be ignored
-            -
-          -
-        - exec form
-          - a string array where the first value is the cmd to eecute and the remaining values are arguments
-
-      - `# this is a comment`
-        - use comments liberally
-
-      - ENV
-        - set env vars for the resulting image and other dockerfile instructions
-        - use ENV vars to also set dynamic values for later use by LABEL instructions
-          - the value of the vars will be avaiable to processes running inside a container as well as recorded to the appropriate label
-
-      - LABEL
-        - define key=value pairs that are recordded as additional metadata fo ran image//container
-        - use ENV vars
-
-      - WORKDIR
-        - set the default working directory
-        - if the dir does not exist it will be created
-
-      - EXPOSE
-        - creates a layer that opens a specific port
-
-      - USER
-        - sets the user and group for all further build steps and containers created from the image
-        - while the user and group should be created as early as possible
-          - this instruction should be used as LATE as possible
-
-      - CMD
-        - represents the default argument list for the entrypoint exec form
-        -
-
-    - file system instructions
-      - COPY
-        - copy files from current context into the build container
-        - any files copied will be copied with the file ownership set to root
-          - the default regardless of how the default user is set before the copy instruction
-          - de
-
-      - ADD
-        - differs from COPY in two ways
-          - fetch remote sources if a URL is specified
-          - extract files of any source determined to be an archive file
-
-      - VOLUME
-        - defines the location int he file system and adds a volume definition to the image metadata
-          - behaves similary to the --volume flag
-        - defining volumes at image build time is more limiting than at runtime
-          - cannot specify bind-mount volumes
-          - cannot specify read-only volumes
-
-
-
-  - `.dockerignore`
-    - file that informs the docker builder which files in the context directory to NOT copy into the build image
-
-
-```sh
-
-  FROM debian:wheezy
-  # FROM debian@sha256:1234 # use the digest returned from docker pull
-  MAINTAINER noah hall "poop@your.toilet"
-  RUN ...
-  ENV THIS="/that" \
-    VERSION="400 degrees"
-  LABEL base.name="lilwayne" \
-    base.version="${VERSION}"
-
-
-```
 
 
 ## containers
@@ -1505,6 +1391,136 @@
   docker run...
     --lxc-config="lxc.cgroup.cpuset.cpus=0,1"...
 ```
+
+
+
+## dockerfile
+  - a file that contains instructions for building an image
+  - instructions are followed by the docker image builder from top to bottom
+  - uses extensive caching to aid rapid development and iteration
+
+  - keys
+    - can use var substitution
+      - ENV, ADD, COPY, WORKDIR, VOLUME, EXPOSE, USER
+      - use `docker inspect...` on the resulting image to verify vars are set correctly
+
+    - basic instructions
+      - FROM image:tag
+        - i.e. sets the layer stack to start from a specific image
+        - must be the first line in the dockerfile
+        -
+
+      - MAINTAINER "super@dope.com"
+        - maintainer name and email for the image
+        - helps people know whom to contact if theres a problem with the image
+
+      - RUN any linux cmd
+        - scoped to the distro youre using
+
+      - ONBUILD
+        - used to inject downstream build-time behavior
+        - defines instructions to execute if the resulting image is used as a base image for naother build
+          - the instructions are recorded in the resulting images metadata under `ContainerConfig.OnBuild`
+            - view via `docker inspect`
+          - e.g. to compile a program thats provided by a downstream layer
+        - the upstream dockerfile will execute the ONBUILD instruction before running any other instructions
+        - examples
+          - registry.hub.docker.com/_/python/
+            - /golang/
+            - /node/
+        -
+
+      - ENTRYPOINT
+        - sets the executable to be run at container init
+        - shell form
+          - a shell cmd with whitespace-delimited arguments
+          - executed as an argument to the default shell at runtime
+            - i.e. `/bin/sh -c 'exec THECMD'`
+            - all other args provided by the CMD isntruction/at runtime as extra arguments to docker run will be ignored
+            -
+          -
+        - exec form
+          - a string array where the first value is the cmd to eecute and the remaining values are arguments
+
+      - `# this is a comment`
+        - use comments liberally
+
+      - ENV
+        - set env vars for the resulting image and other dockerfile instructions
+        - use ENV vars to also set dynamic values for later use by LABEL instructions
+          - the value of the vars will be avaiable to processes running inside a container as well as recorded to the appropriate label
+
+      - LABEL
+        - define key=value pairs that are recordded as additional metadata fo ran image//container
+        - use ENV vars
+
+      - WORKDIR
+        - set the default working directory
+        - if the dir does not exist it will be created
+
+      - EXPOSE
+        - creates a layer that opens a specific port
+
+      - USER
+        - sets the user and group for all further build steps and containers created from the image
+        - while the user and group should be created as early as possible
+          - this instruction should be used as LATE as possible
+
+      - CMD
+        - represents the default argument list for the entrypoint exec form
+        -
+
+    - file system instructions
+      - COPY
+        - copy files from current context into the build container
+        - any files copied will be copied with the file ownership set to root
+          - the default regardless of how the default user is set before the copy instruction
+          - de
+
+      - ADD
+        - differs from COPY in two ways
+          - fetch remote sources if a URL is specified
+          - extract files of any source determined to be an archive file
+
+      - VOLUME
+        - defines the location int he file system and adds a volume definition to the image metadata
+          - behaves similary to the --volume flag
+        - defining volumes at image build time is more limiting than at runtime
+          - cannot specify bind-mount volumes
+          - cannot specify read-only volumes
+
+
+
+  - `.dockerignore`
+    - file that informs the docker builder which files in the context directory to NOT copy into the build image
+
+
+```sh
+  FROM debian:wheezy
+  # FROM debian@sha256:1234 # use the digest returned from docker pull
+  MAINTAINER noah hall "poop@your.toilet"
+  RUN ...
+  ENV THIS="/that" \
+    VERSION="400 degrees"
+  LABEL base.name="lilwayne" \
+    base.version="${VERSION}"
+
+
+```
+
+
+## docker compose
+  - tool for defining, launching and managing services via yaml files
+  - service
+    - one/more replicas of a docker container
+  - use cases
+    - build docker images
+    - launch containerized applications as services
+    - launch full systems of services 
+    - manage the state of individual services in a system
+    - scale services up or down
+    - view logs for the collection of containers making a service
+    -
 
 ## integrations
 ### reverse proxy
