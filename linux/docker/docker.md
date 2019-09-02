@@ -22,6 +22,7 @@
   - [yaml](http://yaml.org)
   - [credential helper for docker login](https://docs.docker.com/engine/reference/commandline/login/#credentials-store)
   - [unix permissions calculator](http://permissions-calculator.org/)
+  - [docker machine drivers](https://docs.docker.com/machine/drivers/)
 
 
 ## MUST DO
@@ -35,6 +36,7 @@
   - [docker configs](https://docs.docker.com/engine/swarm/configs/)
   - [controlling service dependencies](https://docs.docker.com/compose/startup-order/)
   - [docker swarm](https://docs.docker.com/engine/swarm/)
+  - [docker machien overview](https://docs.docker.com/machine/overview/)
 
 
 # background
@@ -1681,6 +1683,8 @@
   # start services in detached mode
   docker-compose up -d
 ```
+
+# docker-machine
 
 ## integrations
 ### reverse proxy
