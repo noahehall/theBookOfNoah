@@ -26,10 +26,10 @@
   - [docker-compose ref](https://docs.docker.com/compose/compose-file/)
   - [docker-compose file version ref](https://docs.docker.com/compose/compose-file/compose-versioning/)
   - [dockerfile ref](https://docs.docker.com/engine/reference/builder/)
-
-
-## todo
+  - [docker object labels](https://docs.docker.com/config/labels-custom-metadata/)
+  - [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/)
   - [linux capabilities](https://linux-audit.com/linux-capabilities-101/)
+    - see `man 7 capabilities`
 
 
 # background
@@ -1534,6 +1534,9 @@
     - manage the state of individual services in a system
     - scale services up or down
     - view logs for the collection of containers making a service
+  - build context
+    - directory sent to the docker daemon
+    - all files not ignored in `.dockerignore` are available
 
   - variable substitution
 
@@ -1541,6 +1544,20 @@
   - options specified in the dockerfile are respected by default
     - you dont need to specify them again in the compose file
     - CMD, EXPOSE, VOLUME, ENV
+  - YAML boolean values must be enclosed in quotes
+    - true, false, yes, no, on off
+
+  - some keys accept lists or mappings
+    - lists
+      - `- key=value`
+    - mapping
+      - `key: value`
+
+  - ARGS
+    - build time arguments
+    - value lookup
+      - dockerfile -> compose file build -> env vars
+
   - service definition
     - i.e. docker container create
     - if build + image are specified
@@ -1551,12 +1568,17 @@
   - volume definition
     - i.e. docker volume create
 ```sh
+  # quickies
+  docker-compose up
+
+  # example definitions
   version: '3.7'
   services:
     SERVICE_NAME:
       # string/object, but not both
       build: ./dir/conta# docker-composeining/dockerfile/
       build:
+        image: NAME:TAG
         # path/url
         # path - containing dockerfile
         # url - git repository
@@ -1566,8 +1588,26 @@
         # accessible only during build process
         # must exist in dockerfile
         args:
-          ARGX: VALX
-      image: NAME:TAG
+          - ARGX=VALX
+          - ARGY #take val from env
+
+        # list of images the engine uses
+        # for cache resolution
+        cache_from:
+          - alpine:latest
+          - corp/web:123.4
+
+        # metadata for the resulting image
+        # best practice use reverse-DNS notation
+        labels:
+          - "com.SERVICENAME.LABELX=VALUE"
+          - "com.SERVICENAME.LABEL=VALUE"
+
+        # label this build stage
+        # used for multi-stage builds
+        target: prod
+        # skipped
+        SHM_SIZE: '2gb'
 
 ```
 ### docker-compose up
