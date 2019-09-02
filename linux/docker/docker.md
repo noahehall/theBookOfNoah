@@ -87,7 +87,8 @@
       - just as cranes, trucks, trains, etc work with shipping contaiiners
         - docker can run, copy and distribute containers with ease
       - docker images are the shipping containers
-    -
+  - docker engine and docker compose simplify the lives of developers and opreations personnel by abstracting the host from the contained environment
+  - docker machine and docker swarm help system admins and infrastructure engineers extend those abstactions to clutered environments
 
 
 # terminology
