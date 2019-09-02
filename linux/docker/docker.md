@@ -1,26 +1,31 @@
 # skipped
-  - custom registries
-    - included in notes (but not examples) / entirely skipped
-      - adding basic auth at the registry level
-      - registries in production
-      - durable blob storage
-      - hosted remote storage
-      - internal remote storage with rados(ceph)
-      - integrating a metadata cache (i.e. redis)
-      - streamline blob transfer with storage middleware
-      - integrating through notifications (webhooks)
-      -
+
 # books
   - docker in action
     - jeff nickoloff
+    - skipped
+      - custom registries
+        - adding basic auth at the registry level
+        - registries in production
+        - durable blob storage
+        - hosted remote storage
+        - internal remote storage with rados(ceph)
+        - integrating a metadata cache (i.e. redis)
+        - streamline blob transfer with storage middleware
+        - integrating through notifications (webhooks)
+        -
 
 
 # links
   - [docker registry docs](https://docs.docker.com/registry/)
   - [docker registry specs](https://docs.docker.com/registry/spec/)
   - [yaml](http://yaml.org)
-  - [credential helper for docker login](https://docs.docker.com/engine/reference/commandline/login/#credentials-store
-)
+  - [credential helper for docker login](https://docs.docker.com/engine/reference/commandline/login/#credentials-store)
+
+## MUST DO
+  - [docker-compose ref](https://docs.docker.com/compose/compose-file/)
+  - [docker-compose file version ref](https://docs.docker.com/compose/compose-file/compose-versioning/)
+  - [dockerfile ref](https://docs.docker.com/engine/reference/builder/)
 
 
 ## todo
@@ -1468,7 +1473,16 @@
 
       - CMD
         - represents the default argument list for the entrypoint exec form
-        -
+
+      - ARGS
+        - variables only available during build
+        - declared before FROM
+          - are available in the FROM
+          - sometimes available after FROM
+            - you just need to redeclare the var without a value
+        - declared after FROM
+          - not available in the FROM
+          - available after FROM
 
     - file system instructions
       - COPY
@@ -1509,18 +1523,54 @@
 ```
 
 
-## docker compose
+## docker-compose
   - tool for defining, launching and managing services via yaml files
   - service
     - one/more replicas of a docker container
   - use cases
     - build docker images
     - launch containerized applications as services
-    - launch full systems of services 
+    - launch full systems of services
     - manage the state of individual services in a system
     - scale services up or down
     - view logs for the collection of containers making a service
-    -
+
+  - variable substitution
+
+### docker-compose file structure
+  - options specified in the dockerfile are respected by default
+    - you dont need to specify them again in the compose file
+    - CMD, EXPOSE, VOLUME, ENV
+  - service definition
+    - i.e. docker container create
+    - if build + image are specified
+      - value of image becomes image name
+
+  - network definition
+    - i.e. docker network create
+  - volume definition
+    - i.e. docker volume create
+```sh
+  version: '3.7'
+  services:
+    SERVICE_NAME:
+      # string/object, but not both
+      build: ./dir/conta# docker-composeining/dockerfile/
+      build:
+        # path/url
+        # path - containing dockerfile
+        # url - git repository
+        context: ./build/context
+        # if specified, context required
+        dockerfile: /path/some.dockerfile
+        # accessible only during build process
+        # must exist in dockerfile
+        args:
+          ARGX: VALX
+      image: NAME:TAG
+
+```
+### docker-compose up
 
 ## integrations
 ### reverse proxy
