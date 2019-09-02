@@ -874,72 +874,78 @@
   - characteristics
     - multiple containers can inherit volumes
       - all containers will point to the same location on the hosts directory tree
-  - types
-    - for virtualbox (docker machine / boot2docker) users
-      - the host path specified in each value is relative to their virtual machine root file system and not the root of their host
+    - when a compose service is rebuilt
+      - the attached managed volumes are not removed
+      - instead they are reattached
+        - thus you are free to iterate (recreate) services without losing data
+        - 
+### volume types
+  - for virtualbox (docker machine / boot2docker) users
+    - the host path specified in each value is relative to their virtual machine root file system and not the root of their host
 
-    - bind mount volumes
-      - use any user-specified directory/file on the host operating system
-        - i.e. specify the location on the host where data is persisteed
-      - use cases
-        - when the host provides a file/dir that needs to be mounted into the container directory tree at a specified point
-          - i.e. when you need to share from host to container
-        - override/inject files/directories in the container
-          - the file must exist on the host else a directory is assumed
-      - issues
-        - decrease container portability by tieing containers file systems to a specific host
-        - create an opportunity for conflict with other containers
-          - i.e. multiple databases sharing the same host location for database data
+  - bind mount volumes
+    - use any user-specified directory/file on the host operating system
+      - i.e. specify the location on the host where data is persisteed
+    - use cases
+      - when the host provides a file/dir that needs to be mounted into the container directory tree at a specified point
+        - i.e. when you need to share from host to container
+      - override/inject files/directories in the container
+        - the file must exist on the host else a directory is assumed
+    - issues
+      - decrease container portability by tieing containers file systems to a specific host
+      - create an opportunity for conflict with other containers
+        - i.e. multiple databases sharing the same host location for database data
 
-    - managed volumes
-      - use locations that are created by the docker daemon in space controlled by the daemon
-        - i.e. you have no control where the data is being saved on the host
-      - use cases
-        - decoupling volumes from specialized locations on the host file system
-      - issues
-        - its difficult to find the location of the managed volume on the host file system
-          - thus no way to share/delete a managed volume manually
-        - can only be identified by the containers that use them
-  - patterns
-    - volume container
-      - creating a container with an attached volume, stopping the container, then source that containers volume when creating other containers
-        - when creating the container, you can issue a simple echo command to run it and exit immediately
-      - a volume container doesn t need to be running because stopped containers maintain their volume references
-      - use cases
-        - sharing a set of volumes with many containers
-        - can categorize a set of volumes that fit a common use case
-        - keeping a handle on data even in cases where a single container should have exclusive access to some data
-        - can easily backup, restore and migrate the data out of the container
-        - important to have a mount-point naming convention
-          - so when containers source from the volume container, they have some indication where the volume will be mounted
+  - managed volumes
+    - use locations that are created by the docker daemon in space controlled by the daemon
+      - i.e. you have no control where the data is being saved on the host
+    - use cases
+      - decoupling volumes from specialized locations on the host file system
+    - issues
+      - its difficult to find the location of the managed volume on the host file system
+        - thus no way to share/delete a managed volume manually
+      - can only be identified by the containers that use them
+      -
+### volume patterns
+  - volume container
+    - creating a container with an attached volume, stopping the container, then source that containers volume when creating other containers
+      - when creating the container, you can issue a simple echo command to run it and exit immediately
+    - a volume container doesn t need to be running because stopped containers maintain their volume references
+    - use cases
+      - sharing a set of volumes with many containers
+      - can categorize a set of volumes that fit a common use case
+      - keeping a handle on data even in cases where a single container should have exclusive access to some data
+      - can easily backup, restore and migrate the data out of the container
+      - important to have a mount-point naming convention
+        - so when containers source from the volume container, they have some indication where the volume will be mounted
 
-    - data packed volume containers
-      - using images to distribute static resources like configuration/code for use in containers created with other images
-      - i.e. specify the volume in the Dockerfile, and copy static content into the volume at container creation time
+  - data packed volume containers
+    - using images to distribute static resources like configuration/code for use in containers created with other images
+    - i.e. specify the volume in the Dockerfile, and copy static content into the volume at container creation time
 
-    - polymorphic container pattern
-      - provides some functionality thats easily substituted using volumes
-      - you can make additional tools available via docker exec to run addtional processes in a running container
-        - alternatively you can create a new layer in the image, but this doesnt make sense in two environments
-          - development - where speed during iteration is vital
-          - operational - make additional tools availble in an image that you had not anticipated when the image was built
-      - e.g.
-        - an image that contains nodejs and by default executes a cmd that runs /app/app.js
-        - you can override /app/app.js at container creation time to do something else
+  - polymorphic container pattern
+    - provides some functionality thats easily substituted using volumes
+    - you can make additional tools available via docker exec to run addtional processes in a running container
+      - alternatively you can create a new layer in the image, but this doesnt make sense in two environments
+        - development - where speed during iteration is vital
+        - operational - make additional tools availble in an image that you had not anticipated when the image was built
+    - e.g.
+      - an image that contains nodejs and by default executes a cmd that runs /app/app.js
+      - you can override /app/app.js at container creation time to do something else
 
-  - sharing volumes
-    - host-dependent sharing
-      - when two/more containers all have a bind mount volume for a single known location on the host file system
-    - generalized sharing via `volumes-from`
-      - copy the volumes from one/more containers to a new container
-      - it will copy direct and transitive  (children) volumes into the new container
-      - `volumes-from` can be set multiple times to source multiple containers
-      - issues
-        - copied volumes always have th same mount point
-          - you cannot change the the mount point into the new container
-          - it will override any existing data at the mount point
-          - you cannot change the permissions of the data in the new container
-        -
+### volume sharing
+  - host-dependent sharing
+    - when two/more containers all have a bind mount volume for a single known location on the host file system
+  - generalized sharing via `volumes-from`
+    - copy the volumes from one/more containers to a new container
+    - it will copy direct and transitive  (children) volumes into the new container
+    - `volumes-from` can be set multiple times to source multiple containers
+    - issues
+      - copied volumes always have th same mount point
+        - you cannot change the the mount point into the new container
+        - it will override any existing data at the mount point
+        - you cannot change the permissions of the data in the new container
+      -
 
 
 ```sh
@@ -1539,6 +1545,7 @@
     - manage the state of individual services in a system
     - scale services up or down
     - view logs for the collection of containers making a service
+  - compose cmds should be executed in the directory the compose.yml file is located
   - build context
     - directory sent to the docker daemon
     - all files not ignored in `.dockerignore` are available
@@ -1659,9 +1666,12 @@
         # end build
 
 # TODO
-# docke
 # docker config create
 ```
+### docker-compose scale
+  - set the number of containers to run for a service
+  - services will bind to the hosts ephemeral port 0
+    - this allows the OS to bind to a random (in a predefined range) available port
 ### docker-compose up
   - build, (re)creates, starts, and attaches to containers for a service
   - options
