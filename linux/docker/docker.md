@@ -1,11 +1,13 @@
 # skipped
   - custom registries
-    - adding TLS+basic-auth to a custom registry in the registry.yml
-      - see the example nginx-tls-basic-auth example
-    - registries in production
-      - included notes but not example app
-    - durable blob storage
-    - hosted remote storage
+    - included notes but not example app
+      - adding basic auth at the registry level
+      - registries in production
+      - durable blob storage
+      - hosted remote storage
+      - internal remote storage with rados(ceph)
+      - integrating a metadata cache (i.e. redis)
+      -
 # books
   - docker in action
     - jeff nickoloff
@@ -121,7 +123,7 @@
     - there are several popular blob storage services
   - RADOS (ceph)
     - reliable autonomic distributed objet store
-    - ceph is the software that you would use to build your own Azure storage or AWs s3-like distributed blob storage service 
+    - ceph is the software that you would use to build your own Azure storage or AWs s3-like distributed blob storage service
 
 
 # best practices
