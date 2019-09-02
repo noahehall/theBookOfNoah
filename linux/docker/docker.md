@@ -1665,7 +1665,7 @@
 ### docker-compose up
   - build, (re)creates, starts, and attaches to containers for a service
   - options
-    - detach, no-color, quiet-pull, force-recreate, always-recreate-deps, no-recreate, no-build, no-start, build, abort-on-container-exit, timeout, renew-anon-volumes, remove-orphans, exit-code-from, scale
+    - detach, no-color, quiet-pull, no-deps, force-recreate, always-recreate-deps, no-recreate, no-build, no-start, build, abort-on-container-exit, timeout, renew-anon-volumes, remove-orphans, exit-code-from, scale
 ```sh
   # start services in detached mode
   docker-compose up -d
@@ -1742,7 +1742,8 @@
   - the duration that the container has been running
   - the network ports exposed by the container
   - the name of the container
-  -
+  - compose
+    - lists all services
 
 
 ```sh
@@ -1751,6 +1752,9 @@
   docker ps -q # only show the container UIDs
   docker ps -l # show the last created container
   CID=$(docker ps -l -q) # save the UID of the last created container
+
+  # aggregated stream of all services
+  docker-compose ps
 ```
 
 
