@@ -21,6 +21,8 @@
   - [docker registry specs](https://docs.docker.com/registry/spec/)
   - [yaml](http://yaml.org)
   - [credential helper for docker login](https://docs.docker.com/engine/reference/commandline/login/#credentials-store)
+  - [unix permissions calculator](http://permissions-calculator.org/)
+
 
 ## MUST DO
   - [docker-compose ref](https://docs.docker.com/compose/compose-file/)
@@ -30,6 +32,7 @@
   - [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/)
   - [linux capabilities](https://linux-audit.com/linux-capabilities-101/)
     - see `man 7 capabilities`
+  - [docker configs](https://docs.docker.com/engine/swarm/configs/)
 
 
 # background
@@ -1553,15 +1556,15 @@
     - mapping
       - `key: value`
 
-  - ARGS
-    - build time arguments
-    - value lookup
-      - dockerfile -> compose file build -> env vars
 
   - service definition
     - i.e. docker container create
     - if build + image are specified
       - value of image becomes image name
+    - ARGS
+      - build time arguments
+      - value lookup
+      - dockerfile -> compose file build -> env vars
 
   - network definition
     - i.e. docker network create
@@ -1575,10 +1578,33 @@
   version: '3.7'
   services:
     SERVICE_NAME:
+      cap_add:
+        - something
+      cap_drop:
+        - something
+      cgroup_parent: something
+
+      container_name: poop
+      # grant access to pre-existing configs
+      # mounted at /configname in container
+      configs:
+        - config1
+        - configX
+      # or long syntax
+      configs:
+        - source: configname
+          target: /mount/path/configname
+          uid: 'owner'
+          gid: 'group'
+          mode: 0444 # default
+      # override the default cmd
+      command: any linux cmd here
+      command: ['or', 'as', 'a', 'list']
+
+      image: NAME:TAG
       # string/object, but not both
-      build: ./dir/conta# docker-composeining/dockerfile/
+      build: ./dir/with/dockerfile
       build:
-        image: NAME:TAG
         # path/url
         # path - containing dockerfile
         # url - git repository
@@ -1606,11 +1632,18 @@
         # label this build stage
         # used for multi-stage builds
         target: prod
+
+
+
         # skipped
         SHM_SIZE: '2gb'
+        # end build
 
+# TODO
+# docker compose up
+# docker config create
 ```
-### docker-compose up
+
 
 ## integrations
 ### reverse proxy
