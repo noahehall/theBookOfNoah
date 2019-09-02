@@ -33,6 +33,8 @@
   - [linux capabilities](https://linux-audit.com/linux-capabilities-101/)
     - see `man 7 capabilities`
   - [docker configs](https://docs.docker.com/engine/swarm/configs/)
+  - [controlling service dependencies](https://docs.docker.com/compose/startup-order/)
+  - [docker swarm](https://docs.docker.com/engine/swarm/)
 
 
 # background
@@ -1542,6 +1544,9 @@
     - all files not ignored in `.dockerignore` are available
 
   - variable substitution
+  - shutting down the env
+    - docker-compose stop|kill someservice
+    - docker-compose rm -fv someservice
 
 ### docker-compose file structure
   - options specified in the dockerfile are respected by default
@@ -1575,16 +1580,30 @@
   docker-compose up
 
   # example definitions
-  version: '3.7'
+  version: '3.8'
   services:
     SERVICE_NAME:
+      # skipped cuz f windows
+      credential_spec
+
+      # useful but skipped
       cap_add:
         - something
       cap_drop:
         - something
       cgroup_parent: something
 
+      # u cannot scale a service beyond 1 container
+      # if supplying a static container name
       container_name: poop
+
+
+      # impacts compose up and stop
+      # waits for the container to be started
+      # not for the service to be ready
+      depends_on:
+        - servicenameX
+        - servicenameX
       # grant access to pre-existing configs
       # mounted at /configname in container
       configs:
@@ -1640,10 +1659,14 @@
         # end build
 
 # TODO
-# docker compose up
+# docke
 # docker config create
 ```
-
+### docker-compose up
+```sh
+  # start services in detached mode
+  docker-compose up -d
+```
 
 ## integrations
 ### reverse proxy
@@ -1983,10 +2006,13 @@
 
 
 ### docker logs
-
+  - fetch logs of container
+  - docker-compose logs
+    - get aggregated stream of logs from all containers defined by a service
 
 ```sh
   docker logs CONTAINER_NAME|UID
+  docker-compose logs SERVICENAME
 
   # follow the log output
   docker logs --f name|id
@@ -2093,6 +2119,10 @@
 ```
 
 ### docker rm
+  - remove one/more containers
+  - docker-compose rm
+    - removes all services/sppecific service defined by the env
+    -
 ```sh
   # force remove all containers (even if there running)
   # and their assocaited volumes
@@ -2100,6 +2130,8 @@
 
   # remove a specific container and associated volume
   docker rm -vf name_or_id
+
+  docker-compose rm SERVICENAME
 ```
 
 ### docker rmi
