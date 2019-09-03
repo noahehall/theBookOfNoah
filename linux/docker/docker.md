@@ -1685,8 +1685,6 @@
   docker-compose up -d
 ```
 
-# docker-machine
-
 ## integrations
 ### reverse proxy
   - flow
@@ -2354,6 +2352,43 @@
   docker top name|id
 
 ```
+
+
+# docker-machine
+  - create/teardown whole fleets of docker enabled hosts
+  - drivers
+    - integrates docker machine with a virtual machine technology/cloud-based virtual computing provider
+
+```sh
+  # poop
+  docker-machine help
+
+```
+## docker-machine create
+  - create docker hosts (virtual machines)
+
+```sh
+  # create 2 docker machines with arbitrary names
+  docker-machine create --driver virtualbox host1
+  docker-machine create --driver virtualbox host2
+```
+
+## docker-machine ls
+  - list machines
+  - output
+    - name
+    - active
+      - `*` indicates the machine your environment is configured to communicate with
+      - any cmds issued with docker/compose will connect with the daemon on the active machine
+    - driver
+    - state
+    - URL
+      - where the docker daemon can be reached
+    - swarm
+    - docker version
+    - erros
+
+# docker swarm
 
 
 # common scripts
