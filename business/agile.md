@@ -13,6 +13,7 @@
   - [project management declaration of interdependence](https://en.wikipedia.org/wiki/PM_Declaration_of_Interdependence)
   - [software craftsmanship](https://en.wikipedia.org/wiki/Software_craftsmanship)
   - [rolling wave planning](https://en.wikipedia.org/wiki/Rolling_Wave_planning)
+  - [agile system development life cycle](http://www.ambysoft.com/essays/agileLifecycle.html)
 
 
 # terminology high level
@@ -51,6 +52,7 @@
     - Simplicity—the art of maximizing the amount of work not done—is essential
     - Best architectures, requirements, and designs emerge from self-organizing teams
     - Regularly, the team reflects on how to become more effective, and adjusts accordingly
+
   - manifesto for agile software development: best practices for agile development
     - individuals and interactions ove processes and tools
       - good team of developers who communicate and collaborate well > team of experts operating in isolation
@@ -60,7 +62,12 @@
       - directly involve the paying customer/end-users/proxy for them so that requirements can adapted based on feedback
     - responding to change over following a plan
       - focused on quick responses to change and continuous development.
-
+## scrum life cycle
+  - product backlog
+  - highest-priority reqs pupshed to sprint backlog
+  - sprint tasks assigned
+  - tasks released
+  - repeat 
 ## overview
   - sprints: short time frames (timeboxes) that typically last from one to four weeks.
     - Each iteration involves a cross-functional team working in all functions: planning, analysis, design, coding, unit testing, and acceptance testing.

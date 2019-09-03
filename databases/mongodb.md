@@ -138,11 +138,13 @@ schema design
         - each server generally maintains a set of locks on data to be modified
         - these locks are held until all the other servers have completed their prepare step
           - this can be a lengthy process, and thus introduce performance drawbacks
+
   - ACID
     - Atomic transactions
       - an indivisible and irreducible series of database operations such that either all occur, or nothing occurs
       - a gaurantee of atomicity prevents updates to the DB occuring only partially
         - partial updates are bad!
+
     - Consistency
       - any given DB transaction must change affected data only in allowed ways
       - any data written to the DB must be valid according to all defined rules
@@ -154,6 +156,7 @@ schema design
           - adjusting the quantity of a line item on an order should update the order total cost
             - if the cost is stored in the order row itself
           - in a bank account transfer, the debit from the sneding account and the credit into the receiving account should be an atomic operation where boht succeed or both fail
+
     - Isolation
       - determines how transaction integrity is visible to other users and systems
       - lower isolation levels increases the ability of many users to access the same data at the same time
