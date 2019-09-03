@@ -2090,7 +2090,8 @@
 
 
 ### docker stop
-  - stop one/moire running containers
+  - stop one/more running containers/machines/services
+
 
 ```sh
   docker stop CONTAINER_NAME|UID
@@ -2121,7 +2122,7 @@
 ```
 
 ### docker start
-  - stop one/more stopped containers
+  - stop one/more stoped containers/services/machines
 ```sh
   docker start CONTAINER_NAME|UID
 ```
@@ -2136,13 +2137,17 @@
   # returns true|false if container is running
   docker inspect --f "{{.State.Running}}" CONTAINER_NAME|UID
 
+  # retrieve metadata for a machine
+  # filter it to just the daemon IP
+  docker-machine inspect host1
+  docker-machine inspect --format "{{.Driver.IPAddress}}" host1
+
 
 ```
 
 ### docker rm
-  - remove one/more containers
-  - docker-compose rm
-    - removes all services/sppecific service defined by the env
+  - remove one/more containers/services/machines
+
     -
 ```sh
   # force remove all containers (even if there running)
@@ -2166,7 +2171,7 @@
 ```
 
 ### docker kill
-  - kill one/more containers
+  - kill one/more containers/machines/services
 
 ### docker search
   - search the docker hub for images
@@ -2359,6 +2364,11 @@
   - drivers
     - integrates docker machine with a virtual machine technology/cloud-based virtual computing provider
 
+
+## docker-machine architecture
+  - docker CLI gets connection information from env vars
+  - docker-machine CLI sets environemnt ariables for connecting to specific machines
+  - docker-machine records the state of all the machines it manages in a set of local files in your home directory
 ```sh
   # poop
   docker-machine help
@@ -2366,6 +2376,9 @@
 ```
 ## docker-machine create
   - create docker hosts (virtual machines)
+  - creates/imports an SSH private key file
+    - can be used to authenticate as a privileged user on the machine over th e SSH protocol
+    -
 
 ```sh
   # create 2 docker machines with arbitrary names
@@ -2388,7 +2401,47 @@
     - docker version
     - erros
 
-# docker swarm
+
+## docker-machine ip
+  - get the IP address of a machine
+```sh
+  # get the ip of host1
+  docker-machine ip host1
+```
+
+
+## docker-machine upgrade
+  - upgrade a machine to the latest version of docker
+  - process
+    - stops the machine
+    - downloads an updated version of software
+    - restarts the machine
+  - use cases
+    - perform rolling updates to your fleet
+```sh
+  docker-machine upgrade host1
+```
+
+
+## docker-machine ssh
+  - log into/run a cmd on a machine with SSH
+  - will authneticate with the target machine and bind your terminal to a shell on the machine
+```sh
+  # open a terminal session to host1
+  docker-machine ssh host1
+
+  # run a cmd in host1 then exit
+  docker-machine ssh host1 "echo poop > time.file"
+```
+
+
+## docker-machine scp
+  - copy files between host/machine(s)
+```sh
+  # copy a file from host1 to host2
+  docker-machine scp host1:dog.file host2:dog.file
+```
+
 
 
 # common scripts
