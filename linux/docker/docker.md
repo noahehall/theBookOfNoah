@@ -2392,7 +2392,7 @@
       - expoose the Swarm API
         - used to control/inspect a swarm cluster
         - is an extension to the docker remote API
-          - i.e. any docker client can coonnect directly to a swarm endpoint and treat a cluster as if it were a single machine
+          - i.e. any docker client can connect directly to a swarm endpoint and treat a cluster as if it were a single machine
             - e.g. run docker compose on a swarm cluster as if it were a single machine
 
 
@@ -2475,8 +2475,11 @@
   # print cmds to activate mach1 with bash shell
   docker-machine env --shell bash mach1
 
-  # active mach 1
+  # activate mach1
   eval $(docker-machine env mach1)
+
+  # activate mach0manager as a manager in a swarm cluster
+  eval $(docker-machine env --swarm mach0manager)
 ```
 
 ## docker-machine active
