@@ -2386,6 +2386,24 @@
   docker-machine create --driver virtualbox host2
 ```
 
+
+## docker-machine env
+  - display the cmds to setup the environment for the docker client
+  - attempts to
+    - automatically detect the users shell
+    - print commands to configure the envirnoment to connect to a specific machine
+
+
+```sh
+  # print cmds to activate mach1
+  docker-machine env mach1
+
+  # print cmds to activate mach1 with bash shell
+  docker-machine env --shell bash mach1
+
+  # active mach 1
+  eval $(docker-machine env mach1)
+```
 ## docker-machine ls
   - list machines
   - output
