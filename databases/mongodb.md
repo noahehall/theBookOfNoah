@@ -78,6 +78,7 @@ schema design
     - online analytical processing
   - RDBMS
     - relational database management system
+
   - mongodb
     - nosql database
     - document-oriented database
@@ -116,6 +117,7 @@ schema design
         - json data model with dynamic schemas
         - auto-sharding for horizontal scalability
         - built in replicatin for high
+
   - JSON
     - javascript object notation
   - BSON

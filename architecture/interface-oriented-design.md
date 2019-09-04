@@ -222,16 +222,17 @@ stateful vs stateless interfaces
     - pull vs pushing data
 
 ## textual interfaces
-    - specifies the functions to perform, e.g. the command prompt
-    - examples
-      - Unix device interface
-        - hard drives, displays, printers, keyboards and files all use the same interface
-        - is an example of polymorphism in a non-object oriented language
-        - to the user, each device has an entry in the file system in the `/dev` dir
-      - SMTP, FTP
-    - advantages
-      - you can store the cmds in a file, which later can be read and executed
-  - graphical user interfaces
+  - specifies the functions to perform, e.g. the command prompt
+  - examples
+    - Unix device interface
+      - hard drives, displays, printers, keyboards and files all use the same interface
+      - is an example of polymorphism in a non-object oriented language
+      - to the user, each device has an entry in the file system in the `/dev` dir
+    - SMTP, FTP
+  - advantages
+    - you can store the cmds in a file, which later can be read and executed
+
+## graphical user interfaces
 
 ## data interfaces
   - when the methods correspond to those in a class that contains mostly attributes
