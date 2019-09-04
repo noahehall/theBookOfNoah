@@ -2249,7 +2249,7 @@
 ```
 
 ### docker images
-  - list installed images
+  - list installed images (for the active machine)
 ```sh
   # show all images, including intermediate images
   docker images -a
@@ -2358,6 +2358,12 @@
 
 ```
 
+### docker swarm
+  - manages distributed docker fleets
+  - use cases
+    - organizing container syou run across a fleet of machines
+    - using the machine as the unit of deployment
+      - i.e. each new piece of software gets its own fleet of machines that can be scaled on demand
 
 # docker-machine
   - create/teardown whole fleets of docker enabled hosts
@@ -2404,6 +2410,12 @@
   # active mach 1
   eval $(docker-machine env mach1)
 ```
+
+## docker-machine active
+```sh
+  # print the active machine
+  docker-machine active
+``
 ## docker-machine ls
   - list machines
   - output
