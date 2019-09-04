@@ -2381,6 +2381,7 @@
       - resource useage statistics
       - the local container list
   - swarm cluster is made up of two types of machines
+
     - swarm manager
       - the machine running Swarm in mamagement mode
       - periodically pull lists of
@@ -2388,6 +2389,13 @@
         - their resource statistics
         - the container list from the cluster discovery subsystem
       - also runs the swarm agent but is in a different mode than regular nodes
+      - expoose the Swarm API
+        - used to control/inspect a swarm cluster
+        - is an extension to the docker remote API
+          - i.e. any docker client can coonnect directly to a swarm endpoint and treat a cluster as if it were a single machine
+            - e.g. run docker compose on a swarm cluster as if it were a single machine
+
+
     - node
       - any machine(s) that run the Swarm agent
       - swarm agents register with the cluster discovery subsystem via token:
