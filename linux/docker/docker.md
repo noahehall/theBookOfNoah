@@ -2364,6 +2364,35 @@
     - organizing container syou run across a fleet of machines
     - using the machine as the unit of deployment
       - i.e. each new piece of software gets its own fleet of machines that can be scaled on demand
+    - scheduling distributed machines
+      1. efficiency of resource usage
+      2. the performance characteristis of each machines hardware
+      3. network locality
+      - scheduling
+        - selecting a machine based on the above 3 factors
+    - registration
+      - advertising the availability of a service at a specific location
+    - service discovery
+      - resolving hte location of a named szervice
+
+### docker swarm architecture
+  - swarm cluster is made up of two types of machines
+    - swarm manager
+      - the machine running Swarm in mamagement mode
+    - node
+      - any machine(s) that run the Swarm agent
+  - stack
+    - layer 0
+      - virtual hardware (hypervisor)
+    - layer 1
+      - operating system (linux)
+    - layer 2
+      - init process (PID 1)
+    - layer 3
+      - docker engine (port 2376)
+      - swarm manager (port 3376)
+      - swarm agent
+      - container X...
 
 # docker-machine
   - create/teardown whole fleets of docker enabled hosts
