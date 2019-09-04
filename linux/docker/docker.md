@@ -2379,6 +2379,10 @@
   - swarm cluster is made up of two types of machines
     - swarm manager
       - the machine running Swarm in mamagement mode
+      - periodically pull lists of
+        - registered swarm agents
+        - their resource statistics
+        - the container list from the cluster discovery subsystem
     - node
       - any machine(s) that run the Swarm agent
   - stack
