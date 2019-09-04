@@ -29,7 +29,7 @@ stateful vs stateless interfaces
     - using the same interface but with potentially different implementations
     - e.g. when multiple classes that all implement the same set of methods
   - resources
-    - time, memory, file handles, db connectdions, threads, etc
+    - time, memory, file handles, db connections, threads, etc
   - use case
     - describes an interaction between a user and a system that fulfills a goal
   - internal use case
@@ -40,7 +40,7 @@ stateful vs stateless interfaces
   - state diagram
     - ???
   - white box testing
-    - uses knowledge of hte code to devise tests
+    - uses knowledge of the code to devise tests
     - typically tests that check performance and robustness
   - observer pattern
     - ???
@@ -79,7 +79,7 @@ stateful vs stateless interfaces
     - or that -
       - create a class that implemented the interface and provided code for many, if not all of the methods
       - then inherit from this class instead of implementing another interface
-  - 
+  -
 ## measuring interfaces
   - minimal vs complete interfaces
     - minimal/sufficient interface has just the methods that a caller needs to perform their work case
@@ -100,10 +100,10 @@ stateful vs stateless interfaces
   - law 1 - an interfaces implementation shall do what its methods says it does
       - the name of a method should correspond to the operations that the implementation actually performs
       - an implementation should perform the operations intended by the creator of the interface
-      - an implementation needs to honor  the meaning of a return value
+      - an implementation needs to honor the meaning of a return value
   - law 2 - an implementation shall do no harm
     - harm - interfering with other modules in a program/other programs
-    - an implementation should not hot resources
+    - an implementation should not hog resources
   - law 3 - if an implementation is unable to perform its responsibilities, it shall notify its caller
     - an implementation should alwayts report problems that are encounted and that it cannot fix itself
 
@@ -136,7 +136,7 @@ stateful vs stateless interfaces
     - basic type contracts,
       - e.g. typed pprogramming languages
         - compiler enforces the type contract
-    - semantic contraacts that include the preconditions and postconditions
+    - semantic contracts that include the preconditions and postconditions
     - performance contracts for real-time sytems
     - quality of service contracts that are hard to quantify
       - test for resource usage, reliability, scalability, and other 'ilities'
@@ -151,8 +151,8 @@ stateful vs stateless interfaces
       - e.g. nonfunctional aspects such as performance/quality of implementation
     - typically properties of a particular implementation
   - notes
-    - if a precondition is not met, the method will not execute properly
-    - if a postcondition is not met, the method did not execute properly
+    - if a precondition is not met, the method WILL not execute properly
+    - if a postcondition is not met, the method DID not execute properly
     - objects that cannot exist in an invalid state can make it easier to check the pre/postconditions
     - any implementation of an interface can have weaker preconditions aand stronger postconditions
       - i.e. the same way a derived class can have weaker preconditions and stronger postconditions than the base class
@@ -182,7 +182,7 @@ stateful vs stateless interfaces
   - black box testing
     - testing to an interface, not an implementation
     - i.e. you test an interface without looking inside to see how its coded
-    - with more services being provided remotely you likely will not have access to the code therefore yojuj can test only to the interface
+    - with more services being provided remotely you likely will not have access to the code therefore you can test only to the interface
   - advantages
     - you can find ambiguities or unclearness in the
       - contract obligations
@@ -197,18 +197,21 @@ stateful vs stateless interfaces
     - having many methods vs not-many methods
       - less methods are easier for the implementer but require more error checking
       - more methods are safer/more specific functionality but require more implementation
+
     - stateful interfaces
       - methods operate differently based on the current state
       - current state is changed by the sequence of method invocations
       - advantages
-        - there is a less chatter to get the same amount of work done
+        - there is less chatter to get the same amount of work done
         - the order of the method calls does not matter (can check state)
+
     - stateless interfaces
-      - the behavior is not dependent on the history of  method invocations
+      - the behavior is not dependent on the history of method invocations
         - there may be internal state to improve performance but the callers of the interface do not reply upon that fact or even know it
       - advantages
         - a small number of operators can service many requests
         - parameter lists are short
+
     - sequential vs random retrieval
       - iterator interface
         - allows access to a single element in a collection at a particular time

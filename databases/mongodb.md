@@ -152,7 +152,7 @@ schema design
         - cascades
         - triggers
         - etc. & e.g.
-          - deleintg a row in a one-to-many relationship should also delete the many rows joined to it
+          - deleting a row in a one-to-many relationship should also delete the many rows joined to it
           - adjusting the quantity of a line item on an order should update the order total cost
             - if the cost is stored in the order row itself
           - in a bank account transfer, the debit from the sneding account and the credit into the receiving account should be an atomic operation where boht succeed or both fail
@@ -165,9 +165,11 @@ schema design
       - higher isolation level reduces the types of concurrency effects that users may encounter
         - requires more system resources
         - increases the chances that one transaction will block another
+
     - Durability
       - guarantees that transactions that have committed will survive permanently
       -
+
   - CAP Thereom
     - states that it is impossible for a distributed data store to simultaneously provide more than 2/3 of the following guarantees
       - consistency
@@ -178,6 +180,7 @@ schema design
         - the system continues to operate despite an arbitrary number of messaages being dropped/delayed by the network between nodes
   - schemaless database
     - the db does not enforce a particular structure on documents in a collection
+
   -  idempotence
     -  a property of certain operations whereby they can be applied multiplie times without changing the result beyond the initial action
       -  e.g.
@@ -265,7 +268,7 @@ schema design
 ## storage
   - database
     - databases hold collections of documents
-    -
+
   - document
     - a record in a mongodb collection and the basic unit of data in mongodb
     - analogous to JSON objects but exist in the db as BSON
@@ -279,11 +282,13 @@ schema design
       - array of values
       - other objects
       - null
+
   - collection
     - mongodb stores documents in collections
     - collections are analgous to tables in a relational databse
     - exists with in a single db
         - collections are created when you first store data for that collection via one of the collection API crud methods
+
   - relations
     - there are no native joins in mongodb
     - to get referential data youll need to pull the first collection, then make a second trip to get the referenced data
@@ -291,7 +296,7 @@ schema design
 ## important notes, files and directories
 ## notes
   - by default
-    - mongodb runs using hte `mongodb` user account
+    - mongodb runs using the `mongodb` user account
       - if you change the user account
         - update the permission to the data and log directories
     - mongodb instances run on part `27017`
@@ -308,7 +313,7 @@ schema design
   -
 
 ## data types
-  -notes
+  - notes
     - mongodb has extended JSON to preserve type infomration
     - see the mongodb extended JSON vs documentation
   - string
@@ -387,6 +392,7 @@ schema design
       - slice n dice queries
     - compromise
       - always review if embedding just the IDs verses the whole document serves your requirements
+
   - embedding
     - i.e. nesting related documents
     - advantages
