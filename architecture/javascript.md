@@ -1,3 +1,7 @@
+# books
+  - programming javascript applications
+    - eric elliot
+    -
 # links
   - [frontend architecture by micagodbolt](https://github.com/micahgodbolt/front-end-architecture)
   - [FEA expections by wolfgang gehner](https://medium.com/statuscode/what-i-expect-from-a-front-end-architecture-31b9be4498af)
@@ -7,11 +11,6 @@
 # TOOLS
   - [frontend checklist](https://frontendchecklist.io/)
   - [style guides](http://styleguides.io/tools)
-
-
-# basics
-  - my own spin on designing, developing, and deploying a javascript based application, many things stolen and remixed from the internet
-  - A Front-end developer's audience is the website user, a Front-end Architect's audience is the developer themselves. [micahgodbolt]
 
 ## paradigms and principles
   - maintanability

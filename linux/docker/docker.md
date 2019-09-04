@@ -2476,6 +2476,7 @@
   docker-machine env --shell bash mach1
 
   # activate mach1
+  # all future docker cmds connect to this
   eval $(docker-machine env mach1)
 
   # activate mach0manager as a manager in a swarm cluster
