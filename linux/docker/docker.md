@@ -2376,6 +2376,10 @@
       - resolving hte location of a named szervice
 
 ### docker swarm architecture
+  - cluster discovery subsystem
+    - the heartbeat with
+      - resource useage statistics
+      - the local container list
   - swarm cluster is made up of two types of machines
     - swarm manager
       - the machine running Swarm in mamagement mode
@@ -2383,8 +2387,11 @@
         - registered swarm agents
         - their resource statistics
         - the container list from the cluster discovery subsystem
+      - also runs the swarm agent but is in a different mode than regular nodes
     - node
       - any machine(s) that run the Swarm agent
+      - swarm agents register with the cluster discovery subsystem via token:
+
   - stack
     - layer 0
       - virtual hardware (hypervisor)
@@ -2398,6 +2405,26 @@
       - swarm agent
       - container X...
 
+```sh
+  # create and active docker machine
+  # create a swarm cluster in the active machine
+  docker-machine create --driver virtualbox local
+  eval "$(docker-machine env local)"
+  docker run --rm swarm create # returns swarm cluster ID
+
+  # create a swarm manager and connect to a peviously created swarm cluster id
+  docker-machine create \
+    --driver virtualbox \
+    --swarm \
+    --swarm-discovery token://SWARMID
+    # indicates swarm manager
+    # drop this for regular node
+    --swarm-master \
+    machine0-manager
+
+  # create
+
+```
 # docker-machine
   - create/teardown whole fleets of docker enabled hosts
   - drivers
