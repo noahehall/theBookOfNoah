@@ -185,18 +185,18 @@ schema design
       - partition tolerance
         - the system continues to operate despite an arbitrary number of messaages being dropped/delayed by the network between nodes
 
-  -  idempotence
-    -  a property of certain operations whereby they can be applied multiplie times without changing the result beyond the initial action
-      -  e.g.
-        -  a property is transitioned from `started` to `completed`
-        -  once in `completed` state, no matter how many times you apply this action nothing changes as its already in the `completed` state
+  - idempotence
+    - a property of certain operations whereby they can be applied multiplie times without changing the result beyond the initial action
+      - e.g.
+        - a property is transitioned from `started` to `completed`
+        - once in `completed` state, no matter how many times you apply this action nothing changes as its already in the `completed` state
 
   - operational intelligence
-    -  the techniques of converting transactional data to actional information ina business setting
-      -  the starting point is getting the raw transactional data into your data store
-      -  next is generating actional reports on the data, ideally in real time with data import itself
-      -  oft times you need batch operations to transform the data into a meaningful form
-  -  GridFS
+    - the techniques of converting transactional data to actional information ina business setting
+      - the starting point is getting the raw transactional data into your data store
+      - next is generating actional reports on the data, ideally in real time with data import itself
+      - oft times you need batch operations to transform the data into a meaningful form
+  - GridFS
     - a convention for storing large files in a mongodb database
   - oplog
     - a capped collection that stores an ordered history of logical writes to mongodb db
@@ -340,7 +340,7 @@ schema design
   - null
     - store null values
   - symbol
-    -  is genreally used for languages that use a specific type
+    - is genreally used for languages that use a specific type
   - date
     - stores the current date/time in unix time format
     - makes it possible for you to specify your own date time creating object of date and pass the value of date, month, year into it
