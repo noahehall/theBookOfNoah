@@ -74,6 +74,10 @@ schema design
     - vs relational databases
       - is schema less
       - no complex joins
+
+    - schemaless database
+      - the db does not enforce a particular structure on documents in a collection
+
   - OLAP databases
     - online analytical processing
   - RDBMS
@@ -180,21 +184,20 @@ schema design
         - every request receives a non-error response - without the guarantee that it contaains the most recent write
       - partition tolerance
         - the system continues to operate despite an arbitrary number of messaages being dropped/delayed by the network between nodes
-  - schemaless database
-    - the db does not enforce a particular structure on documents in a collection
 
   -  idempotence
     -  a property of certain operations whereby they can be applied multiplie times without changing the result beyond the initial action
       -  e.g.
         -  a property is transitioned from `started` to `completed`
         -  once in `completed` state, no matter how many times you apply this action nothing changes as its already in the `completed` state
-  -  operational intelligence
+
+  - operational intelligence
     -  the techniques of converting transactional data to actional information ina business setting
       -  the starting point is getting the raw transactional data into your data store
       -  next is generating actional reports on the data, ideally in real time with data import itself
       -  oft times you need batch operations to transform the data into a meaningful form
   -  GridFS
-    -  a convention for storing large files in a mongodb database
+    - a convention for storing large files in a mongodb database
   - oplog
     - a capped collection that stores an ordered history of logical writes to mongodb db
     - the oplog is the basic mechanism enabling replication in mongodb
@@ -203,22 +206,22 @@ schema design
 # mongodb vs relational architecture
   - retrieving data from relational dbs is more difficult and resource heavy
     - any join will have a performance hit
-      - its oftern required to denormalize the model (increase redudancy) to improve performance by reducing joins
+      - its often required to denormalize the model (increase redudancy) to improve performance by reducing joins
       - if dbs are scaled across servers then you are forced to do distributed joins
     - data retrieved from magnetic disks pose lookup issues
       - data can be sparsely located, and magnetic disks must spin/search sequentially to aggregate all data
         - over 99% of the time is spent seeking the location of the data on the magnetic disk
-  - mongodb lacks multidocument transactions
-    - difficult to guarantee atomocity
   - mongodb lacks
     - joins
       - share the document.id to support references
     - multidocument transactions
-      - issue two non-atomic updates
+      - difficult to guarantee atomocity
+      - alternative: issue two non-atomic updates
         - this can potentially leave dangling items if one of the modifications fail
         - its important to consider the order of the updates
           - i.e. its better to delete the references before the referenced entity
         - create a transaction document to manage multi document transactions
+
   - mongodb db can be schemaless
   - relational DBS generally define column names and types at the table level,
     - this information isnt duplicated in each row
@@ -271,6 +274,12 @@ schema design
   - database
     - databases hold collections of documents
 
+  - collection
+    - mongodb stores documents in collections
+    - collections are analgous to tables in a relational databse
+    - exists within a single db
+        - collections are created when you first store data for that collection via one of the collection API crud methods
+
   - document
     - a record in a mongodb collection and the basic unit of data in mongodb
     - analogous to JSON objects but exist in the db as BSON
@@ -284,12 +293,6 @@ schema design
       - array of values
       - other objects
       - null
-
-  - collection
-    - mongodb stores documents in collections
-    - collections are analgous to tables in a relational databse
-    - exists with in a single db
-        - collections are created when you first store data for that collection via one of the collection API crud methods
 
   - relations
     - there are no native joins in mongodb
