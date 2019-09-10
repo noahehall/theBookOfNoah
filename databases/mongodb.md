@@ -2,6 +2,16 @@ pdf 2
 pg 11
 schema design
 
+# TLDR
+```sh
+  # launch mongo container
+  docker run -d -p 27017-27019:27017-27019 --name mongodb mongo:4.0.4
+
+  # connect to it from host
+  docker exec -it mongodb bash
+
+
+```
 # books
   - wtf is the name of this book?
     - bookOfNoah/books/mongodb
