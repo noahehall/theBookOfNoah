@@ -2359,9 +2359,9 @@
 ```
 
 ### docker swarm
-  - manages distributed docker fleets
+  - the cluster management and orchestration features embedded in the docker engine
   - use cases
-    - organizing container syou run across a fleet of machines
+    - organizing containers you run across a fleet of machines
     - using the machine as the unit of deployment
       - i.e. each new piece of software gets its own fleet of machines that can be scaled on demand
     - scheduling distributed machines
@@ -2380,10 +2380,15 @@
     - the heartbeat with
       - resource useage statistics
       - the local container list
+
+  - docker host/machine
+    -  can be a manager, workeer, or peform both roles
+
   - swarm cluster is made up of two types of machines
 
-    - swarm manager
-      - the machine running Swarm in mamagement mode
+    - swarm managers
+      - multiple docker hosts which run in swarm mode and act as managers
+        - manage membership and delegation
       - periodically pull lists of
         - registered swarm agents
         - their resource statistics
@@ -2395,9 +2400,8 @@
           - i.e. any docker client can connect directly to a swarm endpoint and treat a cluster as if it were a single machine
             - e.g. run docker compose on a swarm cluster as if it were a single machine
 
-
-    - node
-      - any machine(s) that run the Swarm agent
+    - workers
+      - responsible for running swarm services
       - swarm agents register with the cluster discovery subsystem via token:
 
   - stack

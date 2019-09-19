@@ -329,7 +329,7 @@ schema design
 
 ## data types
   - notes
-    - mongodb has extended JSON to preserve type infomration
+    - mongodb has extended JSON to preserve type information
     - see the mongodb extended JSON vs documentation
   - string
     - must be UTF 8
@@ -370,7 +370,7 @@ schema design
 
   - schema evolution
     - create migration scripts that upgrade the DB from one version of a schema to another
-      - these are generally slow, and can hamper performance of done against a live DB
+      - these are generally slow, and can hamper performance if done against a live DB
     - at the application level you can have queries that request old and new style documents, as you slowly migrate in off-hours
 
   - when designing the structure of documents
@@ -385,7 +385,7 @@ schema design
 
 
 ## polymorphic schemas
-  - when all the documents in a  collection are similar but not identically structured
+  - when all the documents in a collection are similar but not identically structured
   - permits you to use the same collection to perform queries
     - on common fields shared by all content nodes
     - only a particular node type
@@ -427,13 +427,12 @@ schema design
       - queries return the entire document (overload)
         - the larger the document, the more ram required
           - RAM is usually the most critical resource on a mongodb server
-          - mongodb database cases frequently accessed documents in RAM, and the larger those documents are, the fewer that will fit
+          - mongodb database cashes frequently accessed documents in RAM, and the larger those documents are, the fewer that will fit
           - the fewer documents in RAM, the more likely the server is to page fault to retrieve documents
             - page faults lead to random disk i/o
       - large document sizes
-        - growing documents must eventually be copied to larger spaces
+        - eventually need to be copied to larger spaces as the document grows
           - since each document is stored contiguously
-            - larger documents eventually need to be copied to larger spaces as the document grows
             - this movement (i.e. update) will be significantly slowed
         - mongodb documents have a hard size limit of 16mb
           - if a document reaches the 16mb cap, updates will fail
