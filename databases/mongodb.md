@@ -10,8 +10,38 @@ schema design
   # connect to it from host
   docker exec -it mongodb bash
 
+  # issueing cmds
+  # https://docs.mongodb.com/manual/reference/command/
+    db.runCommand(
+     {
+       find: "restaurants",
+       filter: { rating: { $gte: 9 }, cuisine: "italian" },
+       projection: { name: 1, rating: 1, address: 1 },
+       sort: { name: 1 },
+       limit: 5
+     }
+
+  # equality vs contains queries
+  # use dot nation for contain queries
+  # use object notation for exact matches
+  db.runCommand(
+    # parent document must match fields + field order
+      filter: { parent: { key: 1, key: 2}}
+    # parent document must contain fields with values
+      filter: { 'parent.key': 1, 'parent.key': 2 }
+  )
+)
 
 ```
+
+# TODOs
+  - [mongodb transactions](https://docs.mongodb.com/manual/core/transactions/)
+  - [aggregate cmd](https://docs.mongodb.com/manual/reference/command/aggregate/#dbcmd.aggregate)
+  - [all operators](https://docs.mongodb.com/manual/reference/operator/)
+  - [data modeling guide](https://docs.mongodb.com/manual/core/data-modeling-introduction/)
+  - [query on embedded/nested documents](https://docs.mongodb.com/manual/tutorial/query-embedded-documents/)
+
+
 # books
   - wtf is the name of this book?
     - bookOfNoah/books/mongodb
@@ -380,7 +410,7 @@ schema design
         - string date (28+ bytes) vs UTC date (8 bytes), including
         - types of quering capability increases with UTC date
       - storing numeric data as strings vs numbers
-        - storing numbers as strings requires more space ans is more difficult to query
+        - storing numbers as strings requires more space and is more difficult to query
     - pay attention to the size of
 
 
