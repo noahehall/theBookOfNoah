@@ -4,10 +4,23 @@
 
 ## related technologies
   - [json schema](https://json-schema.org/)
-  -
+  - [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
+
+
+## recommended plugins
+  - [all fastify org provided plugins](https://github.com/fastify?type=source)
+  - [fastify-plugin](https://github.com/fastify/fastify-plugin)
+    - When you build plugins for Fastify and you want that them to be accessible in the same context where you require them,
+  - [fastify-cors](https://github.com/fastify/fastify-cors)
+    - enables the use of CORS in a Fastify application.
+  - [fastify-language-parser](https://github.com/lependu/fastify-language-parser)
+    - It decorates req object with detectedLng and adds preHandler hook for those language parsers which you specified in order option. Supports cookie, header, query, path and session parser.
+  - [fastify swagger](https://github.com/fastify/fastify-swagger)
+    - Swagger documentation generator for Fastify. It uses the schemas you declare in your routes to generate a swagger compliant doc.
 
 # framework opinions
-  - everything is a plugin 
+  - everything is a plugin
+
 # API
 ## FASTIFY.route
   - declare a new route
