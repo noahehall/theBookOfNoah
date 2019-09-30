@@ -953,7 +953,46 @@
       -
 
 
+### docker volume
+  - `create`
+    - create a volume
+  - `inspect`
+    - display d5tailed information volume(s)
+  - `ls`
+    - list volumes
+  - `prune`
+    - remove unused local volumes
+  - `rm`
+    - remove volume(s)
 ```sh
+  # create then remove volume 'myvol'
+  docker volume create myvol
+  docker volume rm myvol
+
+  # create a data container using an existing volume based on busybox
+  docker create -v SOMEVOL:/place/here ---name CONT_NAME busybox
+
+  # copy files from host into data container
+  docker cp /some/file CONT_NAME:/place/here
+
+  # use data container in some other continer
+  docker run...
+    --volumes-from DATA_CONT_NAME
+
+  # remove al dangling volumes
+  docker volume rm $(docker volume ls -f dangling=true -q)
+
+  # test file permissions in volume
+  # create root-owned file on host
+  # try to read file as nobody (unsuccessful)
+  # try to read file as container root
+  echo 'poop' > garbage
+  chmod 600 garbage
+  sudo chown root:root garbage
+  docker run --rm -v "$(pwd)"/garbage:/test/garbage
+    -u root busybox
+
+
   # create a volume container
   # uses a docker managed volume
   docker run...
@@ -991,6 +1030,15 @@
   docker run --name app...
     volumes-from tools... # copy over data from tools
   docker exec app /tools/dir/new/program # inject new app
+
+  # backup a volumes data to the host
+  mkdir ~/backup
+  docker run --rm --volumes-from VOLNAME -v ~/backup:/backup ubuntu bash -c “cd /PATH/in/VOLNAME && tar cvf /backup/VOLNAME_BACKUP.tar .”
+
+  # restore /backup/SOMEFILE.tar on host to new volume
+  docker volume create VOLNAME
+  docker run --rm -v VOLNAME:/recover -v ~/backup:/backup ubuntu bash -c “cd /recover && tar xvf /backup/SOMEFILE.tar”
+
 ```
 
 
@@ -2301,37 +2349,6 @@
   docker diff name|id
 ```
 
-
-### docker volume
-  - `create`
-    - create a volume
-  - `inspect`
-    - display d5tailed information volume(s)
-  - `ls`
-    - list volumes
-  - `prune`
-    - remove unused local volumes
-  - `rm`
-    - remove volume(s)
-```sh
-  # create then remove volume 'myvol'
-  docker volume create myvol
-  docker volume rm myvol
-
-  # remove al dangling volumes
-  docker volume rm $(docker volume ls -f dangling=true -q)
-
-  # test file permissions in volume
-  # create root-owned file on host
-  # try to read file as nobody (unsuccessful)
-  # try to read file as container root
-  echo 'poop' > garbage
-  chmod 600 garbage
-  sudo chown root:root garbage
-  docker run --rm -v "$(pwd)"/garbage:/test/garbage
-    -u root busybox
-
-```
 
 ### docker attach
 ```sh
