@@ -167,20 +167,24 @@
         - use lowercase letters
           - although URI is case-insensitive, it is good practice to keep the URI lowercase only
         - maintain backward compatibility
-          - once a URI is made publi it should always be availble
+          - once a URI is made public it should always be availble
           - in case the URI gets updated
-            - redirect the older URI to a new URI using http status code 300
+            - redirect the older URI to a new URI using http status code 300/302
             - create a new version of the API
         - only use HTTP verbs
           - always use the standard http verbs to do operations on the resource
 
+
 # HTTP
+
 
 ## messaging
   - restful web services make use of http protocols as a medium of communication between client and server
-  - a client sends  a message in form of a http request
+  - a client sends a message in form of a http request
   - the server responds in the form of an http response
   - both http response and request contain data and metadata (headers)
+
+
 ## methods
   - get
     - provides a read only access to a resource
@@ -191,7 +195,9 @@
   - put
     - used to update an existing resource or create a new resource
   - options
-    - used to get the supported opeartions on a resource
+    - used to get the supported operations on a resource
+
+
 ## protocols
   - http request
     - verb
@@ -264,6 +270,7 @@
       2. response header
       3. response body
 
+
 # caching
   - storing the server response in the client itself
   - thus clients need not make a server request for the same resource again and again
@@ -277,6 +284,7 @@
             - private
             - public
             - max-age
+
   - server response cache headers
     - date
       - date and time of the resource when it was created
@@ -287,13 +295,13 @@
       - values
         - public
           - indicates that a resource is cacheable by any component
-        - private
+         - private
           - indicates the resource is cacheable only by the client and the server
             - i.e. no intermediary can cache the resource
         - no-cache/no-store
           - indicates that a resource is not cacheable
         - max-age
-          - indicates the caching is valid up to max-age in seconods
+          - indicates the caching is valid up to max-age in seconds
           - after this, the client has to make another request
         - must-revalidate
           - indication to server to revalidate resource if max-age has passed
@@ -301,6 +309,7 @@
       - expiration date and time of caching
     - age
       - duration in seconds from when resource was fetched from the server
+
 
 # security
   - restful web services work with HTTP url paths, thus its important to safeguard a restful web service in the same manner as a website
@@ -314,7 +323,7 @@
       - any sensitive data should be passed from client to server via POST
     - restriction on method execution
       - allow restricted use of HTTP methods
-      - the GET method should be able to delete data
+      - the GET method should NOT be able to delete data
     - validate malformed XML/JSON
       - check for well-formed input passed between client and server
     - throw generic error messages
@@ -337,7 +346,7 @@
     - encrypts data to ensure that only concerned parties can access the data
   - PKI
     - public kkey infrastructure
-    -
+
 
 # JSON
   - JSON-RPC
@@ -345,15 +354,18 @@
     - uses the lightweight JSON format instead of XML
   -
 
+
 # deployments
   - components that need to be published during a web service deployment
+
 
 # testing tools
   - soapUI
     - for soap web services
   - firefox plugin
     - testing restful services
-  -
+
+
 # examples
   - web service
     - GET /userservice/users
