@@ -2,11 +2,16 @@ alias lessbashrc='less ~/.bashrc'
 alias nanobashrc='nano ~/.bashrc'
 alias sourcebashrc='source ~/.bashrc'
 
+# show just file names
+alias grepfilenames='grep -iRl'
+# see installed packages
 alias dpkgi='grep " install " /var/log/dpkg.log'
 alias apti='grep " install " /var/log/apt/history.log'
 alias installed='(dpkgi;apti) | less'
+
+
 alias dockerps="docker ps --no-trunc -a --format 'table {{.Names}}...{{.Image}}...{{.Status}}...{{.Command}}\n'"
-#echo one two three | xargall docker pull
+#echo image1 image2 three | xargall docker pull
 alias xargall='xargs -p -t -n 1'
 alias copyssh="pbcopy < ~/.ssh/id_rsa.pub"
 alias getwifi='sudo iwlist wlp3s0 scan | grep ESSID'

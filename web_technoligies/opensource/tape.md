@@ -25,5 +25,6 @@
       t.equal(actual, expected, msg)
       t.deepEqual(actual, expected, msg)
       t.throws(fn, expected, msg) // fn should throw expected
+      t.error(err, msg) //err must be falsy
   })
 ```
