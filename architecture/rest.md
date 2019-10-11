@@ -22,7 +22,7 @@
     - can be implemented using various protocols
       - http, https, jms, rmi, rpc, etc
     - service
-      - logical encapsulation of slef-contained business functionality
+      - logical encapsulation of self-contained business functionality
       - every service encapsulates one action
         - e.g. register user, send email
     - messages
@@ -35,7 +35,7 @@
       - services should be able to communicate with each other asyncrhonously
   - distributed technologies
     - the increasing ratio of distributed applications has raised demand for distributed technologies
-    - permits segmenting of appliation units and transferring them to different computers on different networks
+    - permits segmenting of application units and transferring them to different computers on different networks
   - DISCO
     - used to create discovery documents
     - groups the list of interrelated web services
@@ -82,7 +82,7 @@
     - once a resource is identified then its representation is to be decided using a standard format so that the server can send the resource in the format the client can consume
   - resource representation concepts
     - understandability
-      - both the server and the client should be able to understand and utilize the representaion format of the resource
+      - both the server and the client should be able to understand and utilize the representation format of the resource
     - completeness
       - format should be able to represent a resource completely
       - e.g. with embedded resources (resource in a resource)
@@ -94,7 +94,7 @@
     - types
       - soap based
       - restful
-        - ontains no contract or WSDL file
+        - contains no contract or WSDL file
     - collection of open protocols and standards used for exchanging data between heterogenous applications or systems
       - xml-rpc
         - remote procedure call (RPC) protocol which uses xml to encode its calls and HTTP as a transport mechanism
@@ -105,7 +105,7 @@
       - basically a set of various protocols that can be used to explore and execute web services
       - four layers
         - service transport
-          - transfers messages between differnet applications (http, smtp, ftp, etc)
+          - transfers messages between different applications (http, smtp, ftp, etc)
           - th
         - messaging (xml/json)
           - encodes messages in XML/JSON so that messages can be understood at each end
