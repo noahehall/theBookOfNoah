@@ -1,3 +1,6 @@
+# wtf are the links?
+
+
 # terminology
   - application integration styles
     - shared database
@@ -119,7 +122,7 @@
             - used for publishing and finding businesses and web services
             - used to create business registries
             - provides consolidated directory for web services on the internet
-            - clients use the UDDI to find web serves as per their b usiness needs
+            - clients use the UDDI to find web services as per their business needs
               - it basically hosts the web services from various companies
     - applications written in various programming languages and running on various platforms can use web services to exchange data over computer networks like the internet ina manner similar to interprocess communication on a single computer
   - restful web services
@@ -128,7 +131,7 @@
     - strategies
       - document style
         - send the XML message as part of SOAP request which is not possible in RPC style
-        - suitable in applications where xml messages is treated s document and content of that document can change and the intention of web service does not depend on the content of the xml message
+        - suitable in applications where xml messages is treated as document and content of that document can change and the intention of web service does not depend on the content of the xml message
       - RPC style
         -
     - stateless
@@ -145,8 +148,9 @@
       - URI - uniform resource identifier
       - a service that provides representation such as JSON and a set of HTTP methods
   - idempotent
-    - the result will alw    - is stateless
-      - ays be the same no matter how many times the operation are invoked
+    - the result will always be the same no matter how many times the operation are invoked
+    - is stateless
+      -
   - addressing
     - locating resource(s) on the server
     - each resource is identified by its URI
