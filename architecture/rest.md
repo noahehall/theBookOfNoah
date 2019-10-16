@@ -1,3 +1,6 @@
+# wtf are the links?
+
+
 # terminology
   - application integration styles
     - shared database
@@ -22,7 +25,7 @@
     - can be implemented using various protocols
       - http, https, jms, rmi, rpc, etc
     - service
-      - logical encapsulation of slef-contained business functionality
+      - logical encapsulation of self-contained business functionality
       - every service encapsulates one action
         - e.g. register user, send email
     - messages
@@ -35,7 +38,7 @@
       - services should be able to communicate with each other asyncrhonously
   - distributed technologies
     - the increasing ratio of distributed applications has raised demand for distributed technologies
-    - permits segmenting of appliation units and transferring them to different computers on different networks
+    - permits segmenting of application units and transferring them to different computers on different networks
   - DISCO
     - used to create discovery documents
     - groups the list of interrelated web services
@@ -82,7 +85,7 @@
     - once a resource is identified then its representation is to be decided using a standard format so that the server can send the resource in the format the client can consume
   - resource representation concepts
     - understandability
-      - both the server and the client should be able to understand and utilize the representaion format of the resource
+      - both the server and the client should be able to understand and utilize the representation format of the resource
     - completeness
       - format should be able to represent a resource completely
       - e.g. with embedded resources (resource in a resource)
@@ -94,7 +97,7 @@
     - types
       - soap based
       - restful
-        - ontains no contract or WSDL file
+        - contains no contract or WSDL file
     - collection of open protocols and standards used for exchanging data between heterogenous applications or systems
       - xml-rpc
         - remote procedure call (RPC) protocol which uses xml to encode its calls and HTTP as a transport mechanism
@@ -105,7 +108,7 @@
       - basically a set of various protocols that can be used to explore and execute web services
       - four layers
         - service transport
-          - transfers messages between differnet applications (http, smtp, ftp, etc)
+          - transfers messages between different applications (http, smtp, ftp, etc)
           - th
         - messaging (xml/json)
           - encodes messages in XML/JSON so that messages can be understood at each end
@@ -119,7 +122,7 @@
             - used for publishing and finding businesses and web services
             - used to create business registries
             - provides consolidated directory for web services on the internet
-            - clients use the UDDI to find web serves as per their b usiness needs
+            - clients use the UDDI to find web services as per their business needs
               - it basically hosts the web services from various companies
     - applications written in various programming languages and running on various platforms can use web services to exchange data over computer networks like the internet ina manner similar to interprocess communication on a single computer
   - restful web services
@@ -128,7 +131,7 @@
     - strategies
       - document style
         - send the XML message as part of SOAP request which is not possible in RPC style
-        - suitable in applications where xml messages is treated s document and content of that document can change and the intention of web service does not depend on the content of the xml message
+        - suitable in applications where xml messages is treated as document and content of that document can change and the intention of web service does not depend on the content of the xml message
       - RPC style
         -
     - stateless
@@ -145,8 +148,9 @@
       - URI - uniform resource identifier
       - a service that provides representation such as JSON and a set of HTTP methods
   - idempotent
-    - the result will alw    - is stateless
-      - ays be the same no matter how many times the operation are invoked
+    - the result will always be the same no matter how many times the operation are invoked
+    - is stateless
+      -
   - addressing
     - locating resource(s) on the server
     - each resource is identified by its URI
@@ -163,20 +167,24 @@
         - use lowercase letters
           - although URI is case-insensitive, it is good practice to keep the URI lowercase only
         - maintain backward compatibility
-          - once a URI is made publi it should always be availble
+          - once a URI is made public it should always be availble
           - in case the URI gets updated
-            - redirect the older URI to a new URI using http status code 300
+            - redirect the older URI to a new URI using http status code 300/302
             - create a new version of the API
         - only use HTTP verbs
           - always use the standard http verbs to do operations on the resource
 
+
 # HTTP
+
 
 ## messaging
   - restful web services make use of http protocols as a medium of communication between client and server
-  - a client sends  a message in form of a http request
+  - a client sends a message in form of a http request
   - the server responds in the form of an http response
   - both http response and request contain data and metadata (headers)
+
+
 ## methods
   - get
     - provides a read only access to a resource
@@ -187,7 +195,9 @@
   - put
     - used to update an existing resource or create a new resource
   - options
-    - used to get the supported opeartions on a resource
+    - used to get the supported operations on a resource
+
+
 ## protocols
   - http request
     - verb
@@ -260,6 +270,7 @@
       2. response header
       3. response body
 
+
 # caching
   - storing the server response in the client itself
   - thus clients need not make a server request for the same resource again and again
@@ -273,6 +284,7 @@
             - private
             - public
             - max-age
+
   - server response cache headers
     - date
       - date and time of the resource when it was created
@@ -283,13 +295,13 @@
       - values
         - public
           - indicates that a resource is cacheable by any component
-        - private
+         - private
           - indicates the resource is cacheable only by the client and the server
             - i.e. no intermediary can cache the resource
         - no-cache/no-store
           - indicates that a resource is not cacheable
         - max-age
-          - indicates the caching is valid up to max-age in seconods
+          - indicates the caching is valid up to max-age in seconds
           - after this, the client has to make another request
         - must-revalidate
           - indication to server to revalidate resource if max-age has passed
@@ -297,6 +309,7 @@
       - expiration date and time of caching
     - age
       - duration in seconds from when resource was fetched from the server
+
 
 # security
   - restful web services work with HTTP url paths, thus its important to safeguard a restful web service in the same manner as a website
@@ -310,7 +323,7 @@
       - any sensitive data should be passed from client to server via POST
     - restriction on method execution
       - allow restricted use of HTTP methods
-      - the GET method should be able to delete data
+      - the GET method should NOT be able to delete data
     - validate malformed XML/JSON
       - check for well-formed input passed between client and server
     - throw generic error messages
@@ -333,7 +346,7 @@
     - encrypts data to ensure that only concerned parties can access the data
   - PKI
     - public kkey infrastructure
-    -
+
 
 # JSON
   - JSON-RPC
@@ -341,15 +354,18 @@
     - uses the lightweight JSON format instead of XML
   -
 
+
 # deployments
   - components that need to be published during a web service deployment
+
 
 # testing tools
   - soapUI
     - for soap web services
   - firefox plugin
     - testing restful services
-  -
+
+
 # examples
   - web service
     - GET /userservice/users
