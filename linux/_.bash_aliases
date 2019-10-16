@@ -27,3 +27,6 @@ alias whatsmyip="ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 # e.g. curl get/some/json | prettyjson
 alias prettyjson='python -m json.tool | less'
+
+# fetch and merge a branch without leaving your current branch
+# git fetch upstream develop:develop
