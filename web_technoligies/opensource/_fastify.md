@@ -41,9 +41,32 @@
   }
 ```
 # TOPICS
-## REQ/RES VALIDATION AND HOOKS
+## REQ/REP VALIDATION AND HOOKS
 
-
+## REPLY
+```js
+  // reply API
+      // code(statusCode)
+      // .header(key, value)
+      // .getHeader(key)
+      // .removeHeader(key)
+      // .hasHeader(key)
+      // .redirect(dest)
+      // .callNotFound()
+      // .getResponseTime()
+      // .type(contentType)
+      // .serializer(func)
+      // .sent
+      // .send(data)
+            // Objects
+            // Strings
+            // Streams
+            // Buffers
+            // Errors
+            // Type of the final payload
+            // Async-Await and Promises
+      // .then
+```
 
 
 # QUICKIES
