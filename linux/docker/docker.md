@@ -45,7 +45,7 @@
 
 # background
   - about
-    - build, ship a d ru  any app anywhere
+    - build, ship a d run any app anywhere in any location that has docker
     - launched in 2013
     - works with the OS to package, ship and run software
     - a tool for efficiently installing, removing, upgrading, distributing, trusting and managing software
@@ -155,6 +155,10 @@
   - RADOS (ceph)
     - reliable autonomic distributed objet store
     - ceph is the software that you would use to build your own Azure storage or AWs s3-like distributed blob storage service
+  - daemon
+    - a process that runs int he background r ather tha  under the direct control fo the user
+  - server
+    - a process that takes requests from a client and performs the actions required to fulfill the requests
 
 
 # best practices
@@ -422,8 +426,7 @@
           - users interface directly with the CLI
           -the CLI interfaces with the docker daemon
         - docker daemon
-          - interfaces with each container space
-          - is the parent process to all containers
+          - see `docker daemon`
       - container space [A...Z]
         - each container runs as a child process of the docker daemon
         - the container, and the child process runs in its own memory subspace of the user spoace
@@ -468,6 +471,11 @@
     - the default registry and index with a website run by docker inc
     - push images to docker hub
     - make dockerfiles publicly available and utilize docker hubs continuous build system
+  - private docker registry
+    - any registry that isnt publicaly available is considered private
+    - a service that stores docker images
+    - can be requested from any docker daemon that has access to the registry
+    -
 
 #### customizing registries
   - the docker daemon wont connect to a registry without TLs unless that registry is running on localhost
@@ -735,9 +743,14 @@
   - issue cmds to the docker daemon
 
 
-## daemon
+## docker daemon
   - should always be running
   - route cmds to containers
+  - interfaces with each container space
+  - is the parent process to all containers
+    - controls access to docker on your machine
+    - manages the state of containers and images
+    - brokers interactions with the outside world
 
 
 ```sh
@@ -765,10 +778,22 @@
   # set the docker bridge to a custom bridge
   # you need to define it first
   docker -d -b YOURBRIDGE_NAME
+
+  # open the docker daemon to the world
+  # e.g. to invoke docker remotely
+  # shutdown docker dameon
+  sudo docker stop
+  # make docker available on tcp socket :2375
+  # normally available on /var/run/docker.sock
+  # anything that has access to your host can invoke docker
+  sudo docker daemon -H tcp://0.0.0.0:2375
 ```
 
 
 ## images
+  - a collection of filesystem layers and some metadata
+    - used to created docker containers
+    -
   - a file for starting containers
     - a bundled snapshot of all the files that should be available to programs running inside a container
     - stacks of layers constructed by traversing the layer dependency graph from some starting layer
@@ -1545,6 +1570,7 @@
 
       - EXPOSE
         - creates a layer that opens a specific port
+        - the container will listen on all exposed ports
 
       - USER
         - sets the user and group for all further build steps and containers created from the image
@@ -2314,6 +2340,20 @@
 
 ### docker images
   - list installed images (for the active machine)
+  - ways to build docker images
+    - docker commands / by hand
+      - fire up a container with docker run and input the commands to create yoru image on the command line
+      - create an image with docker commit
+      - fire if your  doingn proofs of concepts to see whether your isntallation process works
+        - should keep notes to define the steps for creating your image via a more sopphisticated method
+    - dockerfile
+      - build from a  known base image and specify the build with a limited set of simple commands
+    - dockerfile and configuration management (CM) tool
+      - same as dockerfile, but you hand over control of the build to a more sophisticated CM tool
+      - useful when a dockerifle isnt enough for complex build steps
+    - scratch mage and import a set of files
+      - from an empty image, import a TAR file with the required files
+      - useful if you want to import a set of self-contained files created elseware
 ```sh
   # show all images, including intermediate images
   docker images -a
