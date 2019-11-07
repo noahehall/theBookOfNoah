@@ -786,7 +786,12 @@
   # make docker available on tcp socket :2375
   # normally available on /var/run/docker.sock
   # anything that has access to your host can invoke docker
+  # 0.0.0.0 makes docker listen on all public and private network interfaces
+  # instead you should pick a specific IP
   sudo docker daemon -H tcp://0.0.0.0:2375
+  # export the above as an alias
+  # cannot be used if you require sudo to run docker
+  export DOCKER_HOST=tcp://YOUR_HOST_IP:2375
   # connect to docker via the tcp socket
   docker -H tcp://HOST_IP:2375 SOME_CMD
 ```
