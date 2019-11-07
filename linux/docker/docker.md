@@ -787,6 +787,8 @@
   # normally available on /var/run/docker.sock
   # anything that has access to your host can invoke docker
   sudo docker daemon -H tcp://0.0.0.0:2375
+  # connect to docker via the tcp socket
+  docker -H tcp://HOST_IP:2375 SOME_CMD
 ```
 
 
