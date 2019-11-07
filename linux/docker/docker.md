@@ -13,7 +13,11 @@
         - integrating a metadata cache (i.e. redis)
         - streamline blob transfer with storage middleware
         - integrating through notifications (webhooks)
-        -
+
+  - Docker in practice
+    - ian miell
+    - aidan hobsan sayers
+    -
 
 
 # links
@@ -41,10 +45,22 @@
 
 # background
   - about
+    - build, ship a d ru  any app anywhere
     - launched in 2013
     - works with the OS to package, ship and run software
     - a tool for efficiently installing, removing, upgrading, distributing, trusting and managing software
   - use cases
+    - high level
+      - replacing virtual machines
+      - prototyping software
+      - packabinb software
+      - enabling a microservices architecture
+      - modeling networks
+      - enabling full stackprdouctivity when offline
+      - reducing  debuging overhead
+      - documenting software dependen cies and touchpoints
+      - enabling continuous delivery
+
     - easier to install and run software distributed with software
     - managing large scale systems or data centers
     - creating build, test and deployment pipelines
