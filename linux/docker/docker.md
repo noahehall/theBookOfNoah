@@ -1306,6 +1306,14 @@
   # run a container and connect it to the network
   docker run...
     --network SOME_NAME
+
+  # link containers via the oldschool method
+  docker run...
+    --name CONT_1
+  # link this container to CONT_1
+  # you can optionally rename the linked container
+  docker run...
+    --link CONT_1:name_inside_container
 ```
 
 
