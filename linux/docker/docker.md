@@ -1831,6 +1831,15 @@
         -
       -
 
+# dockerd
+  - controls the docker daemon without going through the docker client 
+
+```sh
+  # move docker files to a specific location, e.g. a partition
+  # to make it permanent you must configure this to run on startup
+  dockerd -g /PATH/TO/DOCKER/HOME
+
+```
 
 # examples
 ## docker help
