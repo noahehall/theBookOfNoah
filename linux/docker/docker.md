@@ -1891,6 +1891,18 @@
 
 ```
 # examples
+## microservices
+  - essentially using one service per containner
+    - easier separation of concerns through the sinsgle responsibilty principle
+    - easier to put a single container throught he software development lifecycle
+      - development, test, production
+    - more agile deliveries
+    - more scalable software
+    -
+```sh
+
+
+```
 ## docker help
   - display information about the basic syntax for using the docker cmdline program as well as a complete list of cmds for your version of the program
 
