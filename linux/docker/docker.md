@@ -1832,7 +1832,7 @@
       -
 
 # dockerd
-  - controls the docker daemon without going through the docker client 
+  - controls the docker daemon without going through the docker client
 
 ```sh
   # move docker files to a specific location, e.g. a partition
@@ -1841,6 +1841,20 @@
 
 ```
 
+# debugging
+  - should be a catchall for debugging docker/dockerd
+
+```sh
+  # use a traffic snooper (proxy) to inspect the api calls made from docker client to docker daemon
+  # -v make output readable
+  # fork ensures socat doesnt exact after the first request
+  # & run in the background
+  socat -v UNIX-LISTEN:/tmp/dockerapi.sock,fork \
+    UNIX-CONNECT:/var/run/docker.sock &
+  # now issue docker calls via the socat proxy
+  docker -H unix:///tmp/dockerapi.sock ...
+
+```
 # examples
 ## docker help
   - display information about the basic syntax for using the docker cmdline program as well as a complete list of cmds for your version of the program
