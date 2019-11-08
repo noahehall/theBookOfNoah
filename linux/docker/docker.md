@@ -1297,6 +1297,12 @@
   docker run...
     --net host
 
+  # create a user defined network
+  # allows inter-container communication
+  # but does note expose containers to the outside world
+  docker network create SOME_NAME
+  # connect a container to SOME_NAME
+  docker network connect SOME_NAME SOME_CONTAINER
 ```
 
 
@@ -2048,8 +2054,9 @@
           - often used to route unsecure traffic through secure channels like an SSH tunnel
 
       - `-p | --publish`
-        - publish a containers port(s) to the host
+        - map a host port to a containers port(s)
         - i.e. maps container network interface ports to host network interface ports
+          - -p HOSTPORT:CONTAINERPORT
       - `-P | --publish-all`
         - publish all exposed ports to random host ports if no host port is specified
         - note the capital P
