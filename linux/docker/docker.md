@@ -1907,8 +1907,13 @@
     - `-e | --env`
       - set env variables
       - overrides variables set in the image
-    - `--restart`
+    - `--restart=POLICY`
       - restart policy to appply whena  container exists
+      - policies
+        - `no` dont restart when the container exits
+        - `always` always restart when the container exits
+        - `unless-stopped` always restart, but remember explicitly stopping
+        - `on-failure[:max-retry]` restart only on failure
     - `--rm`
       - automatically remove containers when they are stopped
 
@@ -2096,6 +2101,8 @@
   # d daemon
   # i ability to interact with your terminal
   docker run -id ...
+
+
 
 
 ```
