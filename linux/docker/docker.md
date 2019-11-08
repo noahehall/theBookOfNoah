@@ -434,6 +434,11 @@
   - Virtualization vs Containerization
     - VM is a virtual machine
       - installed on top of the host OS, and runs a guest operating machine
+      - emulates a computer, usually to run an operating system  and applications
+      - local VM
+        - disk image livs on and VM execution happens on your computer
+      - remote VM
+        - VM disk image storage and VM execution happen somewhere else
     - Containers are enhanced linux jails
       - container based virtualization uses the kernel on the hosts OS to run multiple guests instances
       - each guest is called a container, which has
@@ -581,7 +586,7 @@
 ```sh
   # start a local registry
   # must add --insecure-registry HOSTNAME
-  # to your daemon options on all hosts that are connecting to it 
+  # to your daemon options on all hosts that are connecting to it
   docker run -d -p 5000:5000 \
     -v $HOME/registry:/var/lib/registry registry:2
 
@@ -1625,7 +1630,7 @@
       - ADD
         - differs from COPY in two ways
           - fetch remote sources if a URL is specified
-          - extract files of any source determined to be an archive file
+          - extract files of any source determined to be an archive file (tar, gzip, etc)
 
       - VOLUME
         - defines the location int he file system and adds a volume definition to the image metadata
@@ -2157,6 +2162,8 @@
   docker run -id ...
 
 
+  # run a container designed for multiple processes
+  docker run -d phusion/baseimage
 
 
 ```
