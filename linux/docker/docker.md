@@ -1301,8 +1301,11 @@
   # allows inter-container communication
   # but does note expose containers to the outside world
   docker network create SOME_NAME
-  # connect a container to SOME_NAME
+  # connect a running container to SOME_NAME
   docker network connect SOME_NAME SOME_CONTAINER
+  # run a container and connect it to the network
+  docker run...
+    --network SOME_NAME
 ```
 
 
