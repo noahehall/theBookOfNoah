@@ -1889,7 +1889,7 @@
     - -i and -t are used together for running interactive programs like a shell in an interactive container
 
     - `-d | --detached`
-      - the container will run in the background without being attached to any input/output stream
+      - the container will run in the background (as a daemon) without being attached to any input/output stream
       - a container UID will be returned
     - `--name`
       - assign a name to the container
@@ -2091,6 +2091,13 @@
   # run and rm an interactive container
   # this should be your default
   docker run -it --rm...
+
+  # running containers as daemons
+  # d daemon
+  # i ability to interact with your terminal
+  docker run -id ...
+
+
 ```
 
 ### docker exec
