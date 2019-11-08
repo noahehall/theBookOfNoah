@@ -1854,6 +1854,18 @@
   # now issue docker calls via the socat proxy
   docker -H unix:///tmp/dockerapi.sock ...
 
+
+
+  # run docker terminal in a browser
+  # start the docker dameon with an open port and CORS enabled
+  # cant be used behind a proxy, must use an external IP addr
+  dockerd --api-enabled-cors
+  # get the code and server the files via httpserver
+  git clone https://github.com/aidanhs/Docker-Terminal.git
+  cd Docker-Terminal
+  python2 -m SimpleHttpServer 8000
+
+
 ```
 # examples
 ## docker help
