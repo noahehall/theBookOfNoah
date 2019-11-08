@@ -7,6 +7,7 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
   - [React.Component API reference](https://reactjs.org/docs/react-component.html)
   - [Hooks tutorial](https://reactjs.org/docs/hooks-intro.html)
   - [hooks FAQ](https://reactjs.org/docs/hooks-faq.html)
+  - [using the state hook](https://reactjs.org/docs/hooks-state.html)
 
 ## articles
   - [react.cloneelement vs children](https://stackoverflow.com/questions/37521798/when-should-i-be-using-react-cloneelement-vs-this-props-children/50441271#50441271)
@@ -78,7 +79,7 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
 
 
 ## Hooks - types
-  - best practices
+### best practices
     - declare functions needed by an effect inside of it
     - specify a list of dependencies as the last argument to
       - useEffect
@@ -97,7 +98,7 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
     - Hook calls can’t be placed inside loops.
 
 
-  - effect hook
+### effect hook
     - setting up subscriptings
     - fetching data
     - replaces lifecycle methods
@@ -119,26 +120,36 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
     - The empty set of dependencies, [], means that the effect will only run once when the component mounts, and not on every re-render.
 
 
-  - reducer
+
+### reducer
     - managing local state
     - If the state logic becomes complex, we recommend managing it with a reducer or a custom Hook.
 
 
-  - useState
+### useState
+    - basics
+      - called inside a function component to add local state
+      - state is preserved between re-renders
+      - returns an array
+        - [0] the current state value
+        - [1] function to update the state value
+          -  can be called from an event handler/elseware
     - initialize state
     - for expensive computation, pass a function to useState
+      - the functional update form of setState. It lets us specify how the state needs to change without referencing the current state:
+        - is only called during the first render
     - This is because when we update a state variable, we replace its value.
       - This is different from this.setState in a class, which merges the updated fields into the object.
       - we recommend to split state into multiple state variables based on which values tend to change together.
-    - the functional update form of setState. It lets us specify how the state needs to change without referencing the current state:
-      - is only called during the first render
+    -
 
 
-  - useImperativeHandle
+### useImperativeHandle
     - make a ref to a function component
     - expose a method to a parent component
 
-  - useMemo
+
+### useMemo
     - cache calculations between multiple renders by “remembering” the previous computation
     - Remember that the function passed to useMemo runs during rendering. Don’t do anything there that you wouldn’t normally do while rendering.
     -  lets you skip an expensive re-render of a child:
