@@ -1885,8 +1885,6 @@
   - docker run creates a NEW CONTAINER each time
     - use docker start to run an existing container
 
-
-
   - options
     - -i and -t are used together for running interactive programs like a shell in an interactive container
 
