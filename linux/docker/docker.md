@@ -449,7 +449,7 @@
 ### repositories
   - a named bucket of images
     - i.e. location/name pairs that point to set of specific layer Ids
-    -
+    - allows multiple users to push and pull images from a central store using a RESTful API
   - have urls which are composed of
     - e.g. quay.io/dockerinaction/ch3_hello_registry:latest
     - the host where the image is located
@@ -579,15 +579,13 @@
 
 
 ```sh
-  # registry URL
-  GET http://localhost:5000
+  # start a local registry
+  # must add --insecure-registry HOSTNAME
+  # to your daemon options on all hosts that are connecting to it 
+  docker run -d -p 5000:5000 \
+    -v $HOME/registry:/var/lib/registry registry:2
 
-  # confirm version 2 of registry is accessible
-  GET http://localhost:5000/v2/
 
-  # get list of tags in registry
-  # returns an array of images:[tags] entities
-  v2/distribution/tags/list
 ```
 
 
@@ -1308,6 +1306,9 @@
     --network SOME_NAME
 
   # link containers via the oldschool method
+  # you must EXPOSE the ports in the dockerifle, or via with capital -P flag
+  # will output `ready for connections` in the `docker logs`
+  # when it is ready to be linked
   docker run...
     --name CONT_1
   # link this container to CONT_1
