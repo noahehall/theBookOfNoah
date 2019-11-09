@@ -86,7 +86,8 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
   - only call hooks from react functional components
     - i.e. never from regular javascript functions
     -
-    -
+
+    
 ### hook best practices
     - use the  eslint plugin
     - declare functions needed by an effect inside of it

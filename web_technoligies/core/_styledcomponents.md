@@ -3,7 +3,7 @@
   - [styled components babel plugin](https://www.styled-components.com/docs/tooling#babel-plugin)
   - [some blog post](https://medium.com/building-crowdriff/styled-components-to-use-or-not-to-use-a6bb4a7ffc21)
   - [with react hooks blog post](https://medium.com/@kamish1/getting-started-with-styled-component-and-react-hook-ba851bbdeae3)
-  - 
+  -
 
 # about
   - the result of enhancing CSS for specifically styling react components
@@ -97,6 +97,26 @@ render(
     <Button>Normal Button</Button>
     <Button as="a" href="/">Link with Button styles</Button>
     <TomatoButton as="a" href="/">Link with Tomato Button styles</TomatoButton>
+  </div>
+);
+
+
+//The styled method works perfectly on all of your own or any third-party component, as long as they attach the passed className prop to a DOM element.
+// This could be react-router-dom's Link for example
+const Link = ({ className, children }) => (
+  <a className={className}>
+    {children}
+  </a>
+);
+const StyledLink = styled(Link)`
+  color: palevioletred;
+  font-weight: bold;
+`;
+render(
+  <div>
+    <Link>Unstyled, boring Link</Link>
+    <br />
+    <StyledLink>Styled, exciting Link</StyledLink>
   </div>
 );
 ```

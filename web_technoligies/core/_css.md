@@ -6,6 +6,8 @@
 
 # must read
   - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
+  - [css flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox)
+  - [css units](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units)
 
 # links
   - [psuedo classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes)
@@ -65,6 +67,24 @@
 # values and units
   - numbers e.g. `20`
   - percentage e.g. `20%`
+  - absolute units
+    - cm	Centimeters	1cm = 96px/2.54
+    - mm	Millimeters	1mm = 1/10th of 1cm
+    - Q	Quarter-millimeters	1Q = 1/40th of 1cm
+    - in	Inches	1in = 2.54cm = 96px
+    - pc	Picas	1pc = 1/16th of 1in
+    - pt	Points	1pt = 1/72th of 1in
+    - px	Pixels	1px = 1/96th of 1in
+  - relative units
+    - em	Font size of the parent element.
+    - ex	x-height of the element's font.
+    - ch	The advance measure (width) of the glyph "0" of the element's font.
+    - rem	Font size of the root element.
+    - lh	Line height of the element.
+    - vw	1% of the viewport's width.
+    - vh	1% of the viewport's height.
+    - vmin	1% of the viewport's smaller dimension.
+    - vmax	1% of the viewport's larger dimension.
   - colors
     - keywords e.g. `red`
     - hexadecimal e.g. `#ff0000`
@@ -234,6 +254,7 @@
 
 # LAYOUT
 ## GRID
+  - for two dimensional layouts, i.e. requiring rows AND columns
 
 ## FLEXBOX
   - one dimensional layout model (columns OR rows) with ease in distributing space between items in an interface
