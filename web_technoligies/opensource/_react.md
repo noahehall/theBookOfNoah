@@ -8,6 +8,7 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
   - [Hooks tutorial](https://reactjs.org/docs/hooks-intro.html)
   - [hooks FAQ](https://reactjs.org/docs/hooks-faq.html)
   - [using the state hook](https://reactjs.org/docs/hooks-state.html)
+  - [hook rules](https://reactjs.org/docs/hooks-rules.html)
 
 ## articles
   - [react.cloneelement vs children](https://stackoverflow.com/questions/37521798/when-should-i-be-using-react-cloneelement-vs-this-props-children/50441271#50441271)
@@ -69,7 +70,9 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
         - use a callback ref instead
 
   - callback ref
-    - to measure the position or size of a DOM node, you can use a callback ref. React will call that callback whenever the ref gets attached to a different node.
+    - to measure the position or size of a DOM node,
+      - you can use a callback ref.
+      - React will call that callback whenever the ref gets attached to a different node.
     - Using a callback ref ensures that even if a child component displays the measured node later (e.g. in response to a click), we still get notified about it in the parent component and can update the measurements.
 
   - getDerivedStateFromProps
@@ -77,9 +80,15 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
   - shouldComponentUpdate
     - wrap a function component with React.memo to shallowly compare its props:
 
-
-## Hooks - types
-### best practices
+### hook rules
+  - only call hooks at the top level of react functional components
+    - never within loops, conditions, or nested functions
+  - only call hooks from react functional components
+    - i.e. never from regular javascript functions
+    -
+    -
+### hook best practices
+    - use the  eslint plugin
     - declare functions needed by an effect inside of it
     - specify a list of dependencies as the last argument to
       - useEffect
@@ -97,6 +106,9 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
     - Both useState and useReducer Hooks bail out of updates if the next value is the same as the previous one. Mutating state in place and calling setState will not cause a re-render.
     - Hook calls can’t be placed inside loops.
 
+
+
+## Hooks - types
 
 ### effect hook
     - setting up subscriptings
@@ -129,7 +141,10 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
 ### useState
     - basics
       - called inside a function component to add local state
+        - CANNOT be called inside a class components
       - state is preserved between re-renders
+        - state is only created on the first render
+        - subsequent renders return the current state value
       - returns an array
         - [0] the current state value
         - [1] function to update the state value
@@ -143,6 +158,25 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
       - we recommend to split state into multiple state variables based on which values tend to change together.
     -
 
+```js
+    // simple use state hook
+    import React, { useState } from 'react';
+
+    function Example() {
+      // Declare a new state variable, which we'll call "count"
+      const [count, setCount] = useState(0);
+
+      return (
+        <div>
+          <p>You clicked {count} times</p>
+          <button onClick={() => setCount(count + 1)}>
+            Click me
+          </button>
+        </div>
+      );
+    }
+
+```
 
 ### useImperativeHandle
     - make a ref to a function component
