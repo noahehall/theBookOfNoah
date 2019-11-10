@@ -205,7 +205,53 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
 
 
 ### useContext
+  - accepts a context object (the return of `React.createContext`) and returns the current context value for that context
+    - the current context value is determined by the value prop of the nearest `MyContext.Provider` above the calling component  in the component tree
+  - only lets you read  the context and subscrib e to its changes
+    - you still need a `MyContext.Provider` above the tree to provide the value for this context
 
+
+```js
+  const themes = {
+    light: {
+      foreground: "#000000",
+      background: "#eeeeee"
+    },
+    dark: {
+      foreground: "#ffffff",
+      background: "#222222"
+    }
+  };
+
+  const ThemeContext = React.createContext(themes.light);
+
+  function App() {
+    return (
+      <ThemeContext.Provider value={themes.dark}>
+        <Toolbar />
+      </ThemeContext.Provider>
+    );
+  }
+
+  function Toolbar(props) {
+    return (
+      <div>
+        <ThemedButton />
+      </div>
+    );
+  }
+
+  function ThemedButton() {
+    const theme = useContext(ThemeContext);
+
+    return (
+      <button style={{ background: theme.background, color: theme.foreground }}>
+        I am styled by theme context!
+      </button>
+    );
+  }
+
+```
 
 ### reducer
     - managing local state
