@@ -1,5 +1,6 @@
 # bookmark
-https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-functions-in-render
+  - https://reactjs.org/docs/hooks-reference.html#useimperativehandle
+   - https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-functions-in-render
 
 
 # LINKS
@@ -351,7 +352,10 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
 ### useMemo
   - returns a memoized value
   - pass a function and a list  of dependencies
-    - the function will only be invoked if the dependencies change 
+    - the function will only be invoked if the dependencies change
+      - if an empty list is passed the function will be invoked on every render
+    - the function is invoked DURING RENDERING
+      - so dont do any side effects
 
 
 ```js
@@ -361,11 +365,40 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
 
 
 ### useRef
+  - returns a mutable ref object whose `.current` property is initialized to the passed argument
+  - the returned object will persist for the full lifetime of the component
+  - is alike a box that can hold a mutavle value in its `.current property`
+  - basics
+    - doenst notify you when its context changes
+    - mutating the .current property does NOT cause a rerender
+    - use a `callback ref` to run some code when react attaches/detaches a ref to a DOM node
+      - i.e. to be notified when the ref content changes
 
+  - use cases
+    - to create a handle for a child component
+    - creating mutable instance properties for funcctional components
+      - i.e. anologous to class component instant memthods
+
+```js
+  function TextInputWithFocusButton() {
+    const inputEl = useRef(null);
+    const onButtonClick = () => {
+      // `current` points to the mounted text input element
+      inputEl.current.focus();
+    };
+    return (
+      <>
+        <input ref={inputEl} type="text" />
+        <button onClick={onButtonClick}>Focus the input</button>
+      </>
+    );
+  }
+
+```
 
 ### useImperativeHandle
-    - make a ref to a function component
-    - expose a method to a parent component
+  - make a ref to a function component
+  - expose a method to a parent component
 
 
 ### useLayoutEffect
