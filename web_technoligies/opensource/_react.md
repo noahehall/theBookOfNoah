@@ -9,6 +9,7 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
   - [hooks FAQ](https://reactjs.org/docs/hooks-faq.html)
   - [using the state hook](https://reactjs.org/docs/hooks-state.html)
   - [hook rules](https://reactjs.org/docs/hooks-rules.html)
+  - [effect hook docs](https://reactjs.org/docs/hooks-effect.html)
 
 ## articles
   - [react.cloneelement vs children](https://stackoverflow.com/questions/37521798/when-should-i-be-using-react-cloneelement-vs-this-props-children/50441271#50441271)
@@ -87,7 +88,7 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
     - i.e. never from regular javascript functions
     -
 
-    
+
 ### hook best practices
     - use the  eslint plugin
     - declare functions needed by an effect inside of it
@@ -112,26 +113,26 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
 ## Hooks - types
 
 ### effect hook
-    - setting up subscriptings
-    - fetching data
-    - replaces lifecycle methods
-      - componentDidMount
-      - componentDidUpdate
-      - componentWillUnmount
-    - create an instance variable with useRef
-    - If you need it, you can use a mutable ref to manually store a boolean value corresponding to whether you are on the first or a subsequent render, then check that flag in your effect. (If you find yourself doing this often, you could create a custom Hook for it.)
-    - create functions inside the effect
-      - if unable to
-        - move function outside of the component
-          - guaranteed not to reference any props/state
-          - doesnt need to be on list of deps
-        - if its a pure computation and safe to call while rendering
-          - call it outside of the effect
-          - make the effect depend on the return value
-        - add the function to effect deps but wrap its definition into the useCallback hook
-          - ensures it doesnt change on every render
-    - The empty set of dependencies, [], means that the effect will only run once when the component mounts, and not on every re-render.
-
+  - perform side effects in functional components
+  - setting up subscriptings
+  - fetching data
+  - replaces lifecycle methods
+    - componentDidMount
+    - componentDidUpdate
+    - componentWillUnmount
+  - create an instance variable with useRef
+  - If you need it, you can use a mutable ref to manually store a boolean value corresponding to whether you are on the first or a subsequent render, then check that flag in your effect. (If you find yourself doing this often, you could create a custom Hook for it.)
+  - create functions inside the effect
+    - if unable to
+      - move function outside of the component
+        - guaranteed not to reference any props/state
+        - doesnt need to be on list of deps
+      - if its a pure computation and safe to call while rendering
+        - call it outside of the effect
+        - make the effect depend on the return value
+      - add the function to effect deps but wrap its definition into the useCallback hook
+        - ensures it doesnt change on every render
+  - The empty set of dependencies, [], means that the effect will only run once when the component mounts, and not on every re-render.
 
 
 ### reducer
