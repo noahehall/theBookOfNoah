@@ -111,6 +111,10 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
 
 
 ## Hooks - types
+  - custom Hooks
+    - are just functions that use normal react hooks in the function body
+    - these functions are then imported into functional components and used normally
+      - make sure to pass in any props/values/etc that the function body requires
 
 ### effect hook
   - perform side effects (after each render) in functional components
@@ -135,7 +139,7 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
     - The empty set of dependencies, [], means that the effect will only run once when the component mounts, and not on every re-render.
       - dependencies are shallow compared
       - if you include any dependencies you must include all dependencies
-        - i.e. all props/values/whaatever that the effect relies on 
+        - i.e. all props/values/whaatever that the effect relies on
     - react will invoke every effect in their lexical order
 
   - advanced
@@ -157,6 +161,12 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
   useEffect(() => {
     document.title = `You clicked ${count} times`;
   }, [count]);
+
+
+  // Only run the effect on mount & unmount
+  useEffect(() => {
+    document.title = `You clicked ${count} times`;
+  }, []);
 
 ```
 
