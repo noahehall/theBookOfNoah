@@ -280,6 +280,15 @@
 ```css
     .flex-containers {
       display: flex|inline-flex;
+
+      /*
+        specify how many flex lines are within a flex container
+        nowrap: default, one flex line, if theres not enough space items will flow out of their container
+        wrap: (think word wrapping) as many flex lines as required, additional flex items are added in the direction of the cross axis
+        wrap-reverse: same as wrap but in the opposite direction on the cross axis
+       */
+      flex-wrap: nowrap;
+
       /*
         how flex items are laid out onthe main and cross axis lines
         row: left to right
@@ -290,12 +299,9 @@
       flex-direction: row;
 
       /*
-        specify how many flex lines are within a flex container
-        nowrap: default, one flex line, if theres not enough space items will flow out of their container
-        wrap: (think word wrapping) as many flex lines as required, additional flex items are added in the direction of the cross axis
-        wrap-reverse: same as wrap but in the opposite direction on the cross axis
+        short hand for flex-wrap & flex-direction
        */
-      flex-wrap: nowrap;
+      flex-flow: WRAP DIRECTION;
 
       /*
        how whitespace is distributed on the main axis and adjusts the positions of flex items on the main axis
@@ -339,8 +345,8 @@
     .flex-items {
       /*
         specifies how a flex item will be prioritized when free space is being distributed on the main axis
-        1: there is one slice, distribute items evenly
-        200px: minimum of 200px
+        1: unitless value dictates the proportion of flex items along the main axis after things like padding and margin. assign to individual flex-items to change each proportion relative to other flex-items
+        200px: minimum of 200px to each item
         #: play around with other integers
         initial: item will be inflexible when there is free space, but can shrink if needed
         auto: fully flexibly on main axis
