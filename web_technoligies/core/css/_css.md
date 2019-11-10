@@ -272,58 +272,70 @@
       - cross start: the start of the y-axis
       - cross end: the end of the x-axis
 
-  - flex item: direct child of flex containers positioned on a flex line
+  - flex items: direct children of flex containers positioned on a flex line
     - main size: size of hte flex item in the dimensioin it's parent flex-container main axis
     - cross size: size of the flex item in the dimension it's parent flex-container cross axis
     -
 
 ```css
     .flex-containers {
+
       display: flex|inline-flex;
+      /*
+        how flex items are laid out onthe main and cross axis lines
+        row: left to right
+        row-reverse: main start and end are swapped
+        column: main and cross axis are swapped
+        column-reverse: same as column, but revered
+      */
       flex-direction: row;
-        /* how flex items are laid out onthe main and cross axis lines
-          row: left to right
-          row-reverse: main start and end are swapped
-          column: main and cross axis are swapped
-          column-reverse: same as column, but revered
-         */
+
+      /*
+       how whitespace is distributed on the main axis and adjusts the positions of flex items on the main axis
+        flex-start: default, whitespace pushed to end of main axis
+        flex-end: white space pushed to start of main axis
+        center: equal whitespace at start and end of main axis
+        space-between: whitespace between items but not at either end of main axis
+        space-around: white space between and at ends of main axis
+       */
       justify-content: flex-start;
-        /* how whitespace is distributed on the main axis and adjusts the positions of flex items on the main axis
-          flex-start: default, whitespace pushed to end of main axis
-          flex-end: white space pushed to start of main axis
-          center: equal whitespace at start and end of main axis
-          space-between: whitespace between items but not at either end of main axis
-          space-around: white space between and at ends of main axis
-         */
+
+      /*
+       how whitespace is distributed on the cross axis and adjusts the positions of flex items on the cross axis
+        flex-start: default, whitespace pushed to end of cross axis
+        flex-end: whitespace pushed to start of cross axis
+        center: equal whitespace at start and end of cross axis, but not inbetween flex items
+        baseline: flex items aligned along their baseline, which is calculated based on the content of each distinct flex item
+        stretch: no whitespace, flex items stretched to fill cross axis
+       */
       align-items: flex-start;
-        /* how whitespace is distributed on the cross axis and adjusts the positions of flex items on the cross axis
-          flex-start: default, whitespace pushed to end of cross axis
-          flex-end: whitespace pushed to start of cross axis
-          center: equal whitespace at start and end of cross axis, but not inbetween flex items
-          baseline: flex items aligned along their baseline, which is calculated based on the content of each distinct flex item
-          stretch: no whitespace, flex items stretched to fill cross axis
-         */
+
+      /*
+        specify how many flex lines are within a flex container
+        nowrap: default, one flex line
+        wrap: (think word wrapping) as many flex lines as required, additional flex items are added in the direction of the cross axis
+        wrap-reverse: same as wrap but in the opposite direction on the cross axis
+       */
       flex-wrap: nowrap;
-        /* specify how many flex lines are within a flex container
-          nowrap: default, one flex line
-          wrap: (think word wrapping) as many flex lines as required, additional flex items are added in the direction of the cross axis
-          wrap-reverse: same as wrap but in the opposite direction on the cross axis
-         */
+
+      /*
+        aligns flex lines modififying behavior of flex-wrap
+        stretch: default,
+        flex-start:
+        flex-end:
+        center:
+        space-between:
+        space-around:
+       */
       align-content: stretch;
-        /* aligns flex lines modififying behavior of flex-wrap
-          stretch: default,
-          flex-start:
-          flex-end:
-          center:
-          space-between:
-          space-around:
-         */
+
+      /*
+        shorthand for flex-direction and flex-wrap
+        val1 = flex-direction
+        val2 = flex-wrap
+       */
       flex-flow: row nowrap:
-        /*
-          shorthand for flex-direction and flex-wrap
-          val1 = flex-direction
-          val2 = flex-wrap
-         */
+
     }
     .flex-items {
       order: 1;
