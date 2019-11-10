@@ -260,6 +260,10 @@
 
 ## FLEXBOX
   - one dimensional layout model (columns OR rows) with ease in distributing space between items in an interface
+  - use cases
+    - Vertically centering a block of content inside its parent.
+    - Making all the children of a container take up an equal amount of the available width/height, regardless of how much width/height is available.
+    - Making all columns in a multiple column layout adopt the same height even if they contain a different amount of content.
 
 
 ### flexbox layout model
@@ -304,6 +308,16 @@
       flex-flow: WRAP DIRECTION;
 
       /*
+       how whitespace is distributed on the cross axis and adjusts the positions of flex items on the cross axis
+        flex-start: default, whitespace pushed to end of cross axis
+        flex-end: whitespace pushed to start of cross axis
+        center: equal whitespace at start and end of cross axis, but not inbetween flex items
+        baseline: flex items aligned along their baseline, which is calculated based on the content of each distinct flex item
+        stretch: no whitespace, flex items stretched to fill cross axis
+       */
+      align-items: stretch;
+
+      /*
        how whitespace is distributed on the main axis and adjusts the positions of flex items on the main axis
         flex-start: default, whitespace pushed to end of main axis
         flex-end: white space pushed to start of main axis
@@ -312,16 +326,6 @@
         space-around: white space between and at ends of main axis
        */
       justify-content: flex-start;
-
-      /*
-       how whitespace is distributed on the cross axis and adjusts the positions of flex items on the cross axis
-        flex-start: default, whitespace pushed to end of cross axis
-        flex-end: whitespace pushed to start of cross axis
-        center: equal whitespace at start and end of cross axis, but not inbetween flex items
-        baseline: flex items aligned along their baseline, which is calculated based on the content of each distinct flex item
-        stretch: no whitespace, flex items stretched to fill cross axis
-       */
-      align-items: flex-start;
 
       /*
         aligns flex lines modififying behavior of flex-wrap
@@ -333,13 +337,6 @@
         space-around:
        */
       align-content: stretch;
-
-      /*
-        shorthand for flex-direction and flex-wrap
-        val1 = flex-direction
-        val2 = flex-wrap
-       */
-      flex-flow: row nowrap:
 
     }
     .flex-items {
