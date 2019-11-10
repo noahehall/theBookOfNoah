@@ -258,7 +258,8 @@
 
 ## FLEXBOX
   - one dimensional layout model (columns OR rows) with ease in distributing space between items in an interface
-  -
+
+### elements
   - flex container: contain flex items, define how flex items are laid out
     - flex line: the imaginary line(s) on which flex items are layed out on the main and cros axis
     - main axis: horizontal
