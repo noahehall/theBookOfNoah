@@ -10,6 +10,9 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
   - [using the state hook](https://reactjs.org/docs/hooks-state.html)
   - [hook rules](https://reactjs.org/docs/hooks-rules.html)
   - [effect hook docs](https://reactjs.org/docs/hooks-effect.html)
+  - [react hooks API reference](https://reactjs.org/docs/hooks-reference.html)
+
+
 
 ## articles
   - [react.cloneelement vs children](https://stackoverflow.com/questions/37521798/when-should-i-be-using-react-cloneelement-vs-this-props-children/50441271#50441271)
@@ -116,7 +119,8 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
     - these functions are then imported into functional components and used normally
       - make sure to pass in any props/values/etc that the function body requires
 
-### effect hook
+
+### useEffect
   - perform side effects (after each render) in functional components
     - react ensures the effect runs AFTER the DOM has been updated
     - accepts an anonymous function so that it never receives stale dependencies
@@ -140,6 +144,10 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
       - dependencies are shallow compared
       - if you include any dependencies you must include all dependencies
         - i.e. all props/values/whaatever that the effect relies on
+    - pass a function to setState to receive the previous state value
+    - pass a function to setState for expensive  calculations
+      - this function is only ncalled on the initial render
+      - subsequent renders use setState function returned from useState
     - react will invoke every effect in their lexical order
 
   - advanced
@@ -169,10 +177,6 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
   }, []);
 
 ```
-
-### reducer
-    - managing local state
-    - If the state logic becomes complex, we recommend managing it with a reducer or a custom Hook.
 
 
 ### useState
@@ -215,9 +219,16 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
 
 ```
 
-### useImperativeHandle
-    - make a ref to a function component
-    - expose a method to a parent component
+
+### useContext
+
+
+### reducer
+    - managing local state
+    - If the state logic becomes complex, we recommend managing it with a reducer or a custom Hook.
+
+
+### useCallback
 
 
 ### useMemo
@@ -226,8 +237,21 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
     -  lets you skip an expensive re-render of a child:
 
 
+### useRef
+
+
+### useImperativeHandle
+    - make a ref to a function component
+    - expose a method to a parent component
+
+
 ### useLayoutEffect
   - identical function signature as `useEffect`
+
+
+### useDebugValue
+
+### wtf does this belong to?
 
 ```js
   // create an instance variable
