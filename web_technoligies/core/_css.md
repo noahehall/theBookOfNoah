@@ -34,6 +34,8 @@
   - [introduction to css box model](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model)
   - [flexbox on csstricks](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
   - [visual formatting model](https://developer.mozilla.org/en-US/docs/Web/CSS/Visual_formatting_model)
+  - [boucup?](bocoup.com)
+    - think they might have blog posts or something
 
 
 ## important links
@@ -259,8 +261,9 @@
 ## FLEXBOX
   - one dimensional layout model (columns OR rows) with ease in distributing space between items in an interface
 
-### elements
-  - flex container: contain flex items, define how flex items are laid out
+
+### flexbox layout model
+  - flex container: contain flex items, define how flex items are laid out `display: flex`
     - flex line: the imaginary line(s) on which flex items are layed out on the main and cros axis
     - main axis: horizontal
       - main start: the beginning of the axis
@@ -268,6 +271,7 @@
     - cross axis: vertical
       - cross start: the start of the axis
       - cross end: the end of the axis
+
   - flex item: direct child of flex containers positioned on a flex line
     - main size: size of hte flex item in the dimensioin it's parent flex-container main axis
     - cross size: size of the flex item in the dimension it's parent flex-container cross axis
@@ -277,11 +281,7 @@
       bocoup.com
      */
     .flex-containers {
-      display: flex;
-        /*
-          inline-flex: inline
-          flex: block
-         */
+      display: flex|inline-flex;
       flex-direction: row;
         /* how flex items are laid out onthe main and cross axis lines
           row: left to right
