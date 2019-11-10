@@ -272,14 +272,13 @@
       - cross start: the start of the y-axis
       - cross end: the end of the x-axis
 
-  - flex items: direct children of flex containers positioned on a flex line
+  - flex items: direct children of flex containers positioned on a flex line `flex: VALUE`
     - main size: size of hte flex item in the dimensioin it's parent flex-container main axis
     - cross size: size of the flex item in the dimension it's parent flex-container cross axis
     -
 
 ```css
     .flex-containers {
-
       display: flex|inline-flex;
       /*
         how flex items are laid out onthe main and cross axis lines
@@ -289,6 +288,14 @@
         column-reverse: same as column, but revered
       */
       flex-direction: row;
+
+      /*
+        specify how many flex lines are within a flex container
+        nowrap: default, one flex line, if theres not enough space items will flow out of their container
+        wrap: (think word wrapping) as many flex lines as required, additional flex items are added in the direction of the cross axis
+        wrap-reverse: same as wrap but in the opposite direction on the cross axis
+       */
+      flex-wrap: nowrap;
 
       /*
        how whitespace is distributed on the main axis and adjusts the positions of flex items on the main axis
@@ -311,14 +318,6 @@
       align-items: flex-start;
 
       /*
-        specify how many flex lines are within a flex container
-        nowrap: default, one flex line
-        wrap: (think word wrapping) as many flex lines as required, additional flex items are added in the direction of the cross axis
-        wrap-reverse: same as wrap but in the opposite direction on the cross axis
-       */
-      flex-wrap: nowrap;
-
-      /*
         aligns flex lines modififying behavior of flex-wrap
         stretch: default,
         flex-start:
@@ -338,35 +337,45 @@
 
     }
     .flex-items {
+      /*
+        specifies how a flex item will be prioritized when free space is being distributed on the main axis
+        1: there is one slice, distribute items evenly
+        200px: minimum of 200px
+        #: play around with other integers
+        initial: item will be inflexible when there is free space, but can shrink if needed
+        auto: fully flexibly on main axis
+        none: fully inflexible in all situations
+        flex: [flex-grow] [flex0shrink] [flex-basis]
+          - advanced use case
+       */
+      flex: 1;
+
+      /*
+        any integer, set the rendered order of any flex item
+        */
       order: 1;
-        /* any integer, set the rendered order of any flex item
-          */
+
+      /*
+      similar affect as regular margin but with super powers
+        auto: will absorb extra space and push flex items into different positions
+          can be used to verticaly cente ritems
+       */
       margin: auto;
-        /* similar affect as regular margin but with super powers
-          auto: will absorb extra space and push flex items into different positions
-            can be used to verticaly cente ritems
-         */
+
+      /*
+      overrides the parent flex-container align-items property
+        stretch: default,
+        flex-start:
+        flex-end:
+        center:
+        baseline:
+       */
       align-self: stretch;
-        /* overrides the parent flex-container align-items property
-          stretch: default,
-          flex-start:
-          flex-end:
-          center:
-          baseline:
-         */
+
       flex-grow:
       flex-shrink:
       flex-basis:
-      flex: 1;
-        /* specifies how a flex item will be prioritized when free space is being distributed on the main axis
-          1: there is one slice, distribute items evenly
-          #: play around with other integers
-          initial: item will be inflexible when there is free space, but can shrink if needed
-          auto: fully flexibly on main axis
-          none: fully inflexible in all situations
-          flex: [flex-grow] [flex0shrink] [flex-basis]
-            - advanced use case
-         */
+
     }
 
   ```
