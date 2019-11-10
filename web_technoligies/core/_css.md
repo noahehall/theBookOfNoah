@@ -265,21 +265,19 @@
 ### flexbox layout model
   - flex container: contain flex items, define how flex items are laid out `display: flex`
     - flex line: the imaginary line(s) on which flex items are layed out on the main and cros axis
-    - main axis: horizontal
-      - main start: the beginning of the axis
-      - main end: the end of the axis
-    - cross axis: vertical
-      - cross start: the start of the axis
-      - cross end: the end of the axis
+    - main axis: x axis
+      - main start: the beginning of the x-axis
+      - main end: the end of the x-axis
+    - cross axis: y axis
+      - cross start: the start of the y-axis
+      - cross end: the end of the x-axis
 
   - flex item: direct child of flex containers positioned on a flex line
     - main size: size of hte flex item in the dimensioin it's parent flex-container main axis
     - cross size: size of the flex item in the dimension it's parent flex-container cross axis
     -
-  ```css
-    /*
-      bocoup.com
-     */
+
+```css
     .flex-containers {
       display: flex|inline-flex;
       flex-direction: row;
