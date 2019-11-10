@@ -113,27 +113,52 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
 ## Hooks - types
 
 ### effect hook
-  - perform side effects in functional components
-  - setting up subscriptings
-  - fetching data
+  - perform side effects (after each render) in functional components
+    - react ensures the effect runs AFTER the DOM has been updated
+    - accepts an anonymous function so that it never receives stale dependencies
+      - i.e. the function is recreated each time, thus receiving the latest updates of all deps
+
+  - use cases
+    - setting up subscriptings
+    - fetching data
+    - manually modifying DOM
+
   - replaces lifecycle methods
     - componentDidMount
     - componentDidUpdate
     - componentWillUnmount
-  - create an instance variable with useRef
-  - If you need it, you can use a mutable ref to manually store a boolean value corresponding to whether you are on the first or a subsequent render, then check that flag in your effect. (If you find yourself doing this often, you could create a custom Hook for it.)
-  - create functions inside the effect
-    - if unable to
-      - move function outside of the component
-        - guaranteed not to reference any props/state
-        - doesnt need to be on list of deps
-      - if its a pure computation and safe to call while rendering
-        - call it outside of the effect
-        - make the effect depend on the return value
-      - add the function to effect deps but wrap its definition into the useCallback hook
-        - ensures it doesnt change on every render
-  - The empty set of dependencies, [], means that the effect will only run once when the component mounts, and not on every re-render.
+      - return a function from  your effect and it will get called when the component unmounts
 
+  - basics
+    - place inside a functional component to have access to all props/state/etc
+    - usually runs on every render (first + updates)
+    - The empty set of dependencies, [], means that the effect will only run once when the component mounts, and not on every re-render.
+      - dependencies are shallow compared
+      - if you include any dependencies you must include all dependencies
+        - i.e. all props/values/whaatever that the effect relies on 
+    - react will invoke every effect in their lexical order
+
+  - advanced
+    - create an instance variable with useRef
+    - If you need it, you can use a mutable ref to manually store a boolean value corresponding to whether you are on the first or a subsequent render, then check that flag in your effect. (If you find yourself doing this often, you could create a custom Hook for it.)
+    - create functions inside the effect
+      - if unable to
+        - move function outside of the component
+          - guaranteed not to reference any props/state
+          - doesnt need to be on list of deps
+        - if its a pure computation and safe to call while rendering
+          - call it outside of the effect
+          - make the effect depend on the return value
+        - add the function to effect deps but wrap its definition into the useCallback hook
+          - ensures it doesnt change on every render
+
+```js
+  // Only re-run the effect if count changes
+  useEffect(() => {
+    document.title = `You clicked ${count} times`;
+  }, [count]);
+
+```
 
 ### reducer
     - managing local state
@@ -191,6 +216,8 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
     -  lets you skip an expensive re-render of a child:
 
 
+### useLayoutEffect
+  - identical function signature as `useEffect`
 
 ```js
   // create an instance variable
