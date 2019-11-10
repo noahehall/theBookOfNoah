@@ -11,6 +11,7 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
   - [hook rules](https://reactjs.org/docs/hooks-rules.html)
   - [effect hook docs](https://reactjs.org/docs/hooks-effect.html)
   - [react hooks API reference](https://reactjs.org/docs/hooks-reference.html)
+  - [context docs](https://reactjs.org/docs/context.html)
 
 
 
@@ -176,6 +177,83 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
 ```
 
 
+### useReducer
+  - alternative to `useState`
+    - preferred when you have complex state logic that involes multiple subvalues or when the next state depends on the previous one
+    - you can pass the dispatch function down to child components
+  - syntax is  almost identical to redux
+  - pass an init function as the third argument for lazy initialization
+
+
+```js
+  // syntax examples
+    const [state, dispatch] = useReducer(
+      reducer,
+      {count: initialCount}
+    );
+
+  // full example
+    const initialState = {count: 0};
+
+    function reducer(state, action) {
+      switch (action.type) {
+        case 'increment':
+          return {count: state.count + 1};
+        case 'decrement':
+          return {count: state.count - 1};
+        default:
+          throw new Error();
+      }
+    }
+
+    function Counter() {
+      const [state, dispatch] = useReducer(reducer, initialState);
+      return (
+        <>
+          Count: {state.count}
+          <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+          <button onClick={() => dispatch({type: 'increment'})}>+</button>
+        </>
+      );
+    }
+
+  // lazy initialization of state
+  // also shows how to reset the state
+    function init(initialCount) {
+      return {count: initialCount};
+    }
+
+    function reducer(state, action) {
+      switch (action.type) {
+        case 'increment':
+          return {count: state.count + 1};
+        case 'decrement':
+          return {count: state.count - 1};
+        case 'reset':
+          return init(action.payload);
+        default:
+          throw new Error();
+      }
+    }
+
+    function Counter({initialCount}) {
+      const [state, dispatch] = useReducer(reducer, initialCount, init);
+      return (
+        <>
+          Count: {state.count}
+          <button
+            onClick={() => dispatch({type: 'reset', payload: initialCount})}>
+
+            Reset
+          </button>
+          <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+          <button onClick={() => dispatch({type: 'increment'})}>+</button>
+        </>
+      );
+    }
+
+```
+
 ### useState
   - basics
     - pass a function to the setState function to receive the previous state value
@@ -253,18 +331,33 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
 
 ```
 
-### reducer
-    - managing local state
-    - If the state logic becomes complex, we recommend managing it with a reducer or a custom Hook.
-
 
 ### useCallback
+  - returns a memoized version of some arbitrary callback version
+    - i.e. only is invoked if one of the dependencies has changed
+    - useful when implementing shouldComponent in some childComponent that rely on reference equality
+
+```js
+  const memoizedCallback = useCallback(
+    () => {
+      doSomething(a, b);
+    },
+    [a, b], // only called  if one of these  are changed
+  );
+
+```
 
 
 ### useMemo
-    - cache calculations between multiple renders by “remembering” the previous computation
-    - Remember that the function passed to useMemo runs during rendering. Don’t do anything there that you wouldn’t normally do while rendering.
-    -  lets you skip an expensive re-render of a child:
+  - returns a memoized value
+  - pass a function and a list  of dependencies
+    - the function will only be invoked if the dependencies change 
+
+
+```js
+  const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+
+```
 
 
 ### useRef
