@@ -122,6 +122,7 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
 
 ### useEffect
   - perform side effects (after each render) in functional components
+    - the function passed to useEffect fires after layout and paint, during a deferred event.
     - react ensures the effect runs AFTER the DOM has been updated
     - accepts an anonymous function so that it never receives stale dependencies
       - i.e. the function is recreated each time, thus receiving the latest updates of all deps
@@ -144,10 +145,6 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
       - dependencies are shallow compared
       - if you include any dependencies you must include all dependencies
         - i.e. all props/values/whaatever that the effect relies on
-    - pass a function to setState to receive the previous state value
-    - pass a function to setState for expensive  calculations
-      - this function is only ncalled on the initial render
-      - subsequent renders use setState function returned from useState
     - react will invoke every effect in their lexical order
 
   - advanced
@@ -180,24 +177,11 @@ https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-funct
 
 
 ### useState
-    - basics
-      - called inside a function component to add local state
-        - CANNOT be called inside a class components
-      - state is preserved between re-renders
-        - state is only created on the first render
-        - subsequent renders return the current state value
-      - returns an array
-        - [0] the current state value
-        - [1] function to update the state value
-          -  can be called from an event handler/elseware
-    - initialize state
-    - for expensive computation, pass a function to useState
-      - the functional update form of setState. It lets us specify how the state needs to change without referencing the current state:
-        - is only called during the first render
-    - This is because when we update a state variable, we replace its value.
-      - This is different from this.setState in a class, which merges the updated fields into the object.
-      - we recommend to split state into multiple state variables based on which values tend to change together.
-    -
+  - basics
+    - pass a function to the setState function to receive the previous state value
+    - pass a function to the useState hook for expensive  calculations
+      - this function is only called on the initial render
+      - subsequent renders use setState function returned from useState
 
 ```js
     // simple use state hook
