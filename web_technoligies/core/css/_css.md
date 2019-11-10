@@ -344,9 +344,26 @@
     }
     .flex-items {
       /*
+        how flex items fill unused space
+       */
+      flex-grow:
+      /*
+        how flex items reduce their size when theres not enough space
+       */
+      flex-shrink:
+      /*
+        minimum size of each item
+       */
+      flex-basis:
+
+      /*
+        shorthand for flex-grow, flex-shrink, flex-basis
+
         specifies how a flex item will be prioritized when free space is being distributed on the main axis
+
         1: unitless value dictates the proportion of flex items along the main axis after things like padding and margin. assign to individual flex-items to change each proportion relative to other flex-items
         200px: minimum of 200px to each item
+        1 200px: evenly proportioned with a minimum of 200px
         #: play around with other integers
         initial: item will be inflexible when there is free space, but can shrink if needed
         auto: fully flexibly on main axis
@@ -354,7 +371,7 @@
         flex: [flex-grow] [flex0shrink] [flex-basis]
           - advanced use case
        */
-      flex: 1;
+      flex: GROW SHRINK BASIS;
 
       /*
         any integer, set the rendered order of any flex item
@@ -377,11 +394,6 @@
         baseline:
        */
       align-self: stretch;
-
-      flex-grow:
-      flex-shrink:
-      flex-basis:
-
     }
 
   ```
