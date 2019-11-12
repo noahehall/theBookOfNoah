@@ -266,6 +266,14 @@
   - grid container `display:grid`
     - defines the container
     - specifies default dimensions for rows and columns
+  - grid children
+    - child placement
+      - default flow (implicit placement)
+        - arrange children by row
+        - each item will be placed into each cell of row 1
+      - explicit placement
+        - using `grid-template-rows`
+        -
 
 ```css
   .grid-container {
@@ -273,6 +281,11 @@
       defines the grid wrapper
      */
     display: grid;
+
+    /*
+      direction of flow left->right, top->bottom
+     */
+    grid-auto-flow: row|column;
 
     /*
       specify number of columns
@@ -286,21 +299,23 @@
     grid-gap: 10px;
 
     /*
-      defines rows
+      defines height of rows
      */
-    grid-auto-rows: minmax(100px, auto)
+    grid-auto-rows: 100px; /* exactly */
+    grid-auto-rows: minmax(100px, auto) /* range */
 
   }
 
   .grid-child {
     /*
-      place this child in a specific column
+      implicit child placement
      */
-    grid-column: 2;
 
     /*
-      place this child in a specific row
+      explicit child placement by targeting a specific element
+      place this child in a specific column and row
      */
+    grid-column: 2;
     grid-row: 5;
 
   }
