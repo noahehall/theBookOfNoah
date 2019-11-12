@@ -257,7 +257,16 @@
 
 # LAYOUT
 ## GRID
-  - for two dimensional layouts, i.e. requiring rows AND columns
+  - for two dimensional layouts,
+    - i.e. requiring rows AND columns
+    - i.e. a table
+  - dividing a screen into major regions or defiing the relationship in terms of size, position, layer between parts of a control built from html primitives
+  - grid children can position themselves so they actually overlap and layer, similar to css positioned elments
+
+```css
+
+```
+
 
 ## FLEXBOX
   - one dimensional layout model (columns OR rows) with ease in distributing space between items in an interface
