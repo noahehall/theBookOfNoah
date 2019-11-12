@@ -4,6 +4,8 @@
     - [personal development](https://en.wikipedia.org/wiki/Personal_development)
     - [action plan](https://en.wikipedia.org/wiki/Action_plan)
 
+    - [time management](https://en.wikipedia.org/wiki/Time_management )
+
     - [career assessment](https://en.wikipedia.org/wiki/Career_assessment)
     - [16PF questionnaire](https://en.wikipedia.org/wiki/16PF_Questionnaire)
     - [myers-briggs type indicator](https://en.wikipedia.org/wiki/Myers%E2%80%93Briggs_Type_Indicator)
@@ -33,7 +35,8 @@
 
   - ignore
     - [educatin terminology](https://en.wikipedia.org/wiki/Category:Education_terminology)
-### Skill Assessment
+
+7### Skill Assessment
 
 #### summary
   - skillz
