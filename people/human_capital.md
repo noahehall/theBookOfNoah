@@ -1,5 +1,7 @@
 ### links
   - definitely read
+    - [list of skillz](https://en.wikipedia.org/wiki/Category:Skills)
+      - only went two levels deep
     - [personal development planning](https://en.wikipedia.org/wiki/Personal_development_planning)
     - [personal development](https://en.wikipedia.org/wiki/Personal_development)
     - [action plan](https://en.wikipedia.org/wiki/Action_plan)

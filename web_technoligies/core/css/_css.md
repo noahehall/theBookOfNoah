@@ -41,6 +41,7 @@
 ## important links
   - [centering things](https://css-tricks.com/centering-css-complete-guide/)
   - [grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
+  - [mdn css grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Auto-placement_in_CSS_Grid_Layout)
   - [css reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
   - [color converter](https://serennu.com/colour/hsltorgb.php)
   - [css validator by w3c](http://jigsaw.w3.org/css-validator/#validate_by_input)
@@ -394,20 +395,6 @@
     }
 
   ```
-# grid
-    - CSS Grid Layout (aka "Grid"), is a two-dimensional (columns and rows) grid-based layout system
-    - define:
-      - grid container: `display: grid`
-        - the direct parent of all the grid items.
-      - grid item: set the column and row sizes with `grid-template-columns` and `grid-template-rows`,
-      - place grid-item child elements into the grid with
-        - `grid-column`
-        - `grid-row`
-    - grid line: The dividing lines that make up the structure of the grid
-    - grid track: The space between two adjacent grid lines.
-    - grid cell: The space between two adjacent row and two adjacent column grid lines. It's a single "unit" of the grid.
-    - grid area: The total space surrounded by four grid lines. A grid area may be comprised of any number of grid cells.
-  -
 
 ## FLOATS
   ```css
