@@ -6,6 +6,12 @@
 
     - [time management](https://en.wikipedia.org/wiki/Time_management )
 
+    - [21st century skills](https://en.wikipedia.org/wiki/21st_century_skills)
+    - [chikckerings theory of oidentity development](https://en.wikipedia.org/wiki/Chickering%27s_theory_of_identity_development)
+    - [self help](https://en.wikipedia.org/wiki/Self-help)
+    - [lifestyle](https://en.wikipedia.org/wiki/Lifestyle_(sociology))
+    - [career positioning](https://en.wikipedia.org/wiki/Career_positioning)
+    - [curriculum vitae](https://en.wikipedia.org/wiki/Curriculum_vitae)
     - [career assessment](https://en.wikipedia.org/wiki/Career_assessment)
     - [16PF questionnaire](https://en.wikipedia.org/wiki/16PF_Questionnaire)
     - [myers-briggs type indicator](https://en.wikipedia.org/wiki/Myers%E2%80%93Briggs_Type_Indicator)
@@ -36,7 +42,7 @@
   - ignore
     - [educatin terminology](https://en.wikipedia.org/wiki/Category:Education_terminology)
 
-7### Skill Assessment
+### Skill Assessment
 
 #### summary
   - skillz
