@@ -39,6 +39,81 @@
   - skillz
     - read the wikipedia article
 
+  - personal development
+    - takes place over the course of a person's entire life
+    - involves formal and informal activities for developing others in roles such as teacher, guide, counselor, manager, life coach or mentor.
+    - activities that
+      - improve awareness and identity,
+      - develop talents and potential,
+      - build human capital and facilitate employability,
+      - enhance the quality of life
+      - contribute to the realization of dreams and aspirations.
+      - Improving self-awareness
+      - Improving self-knowledge
+      - Improving skills and/or learning new ones
+      - Building or renewing identity/self-esteem
+      - Developing strengths or talents
+      - Improving a career
+      - Identifying or improving potential
+      - Building employability or (alternatively) human capital
+      - Enhancing lifestyle and/or the quality of life and time-management
+      - Improving health
+      - improving wealth or social status
+      - Fulfilling aspirations
+      - Initiating a life enterprise
+      - Defining and executing personal development plans (PDPs)
+      - Improving social relations or emotional intelligence
+      - spiritual identity development and recognition
+    -  When personal development takes place in the context of institutions,
+      -  it refers to the methods, programs, tools, techniques, and assessment systems that support human development at the individual level in organizations.
+    - As a field of research,
+      - personal-development topics appear in psychology journals, education research, management journals and books, and human-development economics.
+      - draws on links to other academic disciplines
+        - education for questions of learning and assessment
+        - psychology for motivation and personality
+        - sociology for identity and social networks
+        - economics for human capital and economic value
+        - philosophy for ethics and self-reflection
+    - as an industry
+      - business to consumer
+        - involves selling books, courses and techniques to individuals
+      - business to business
+        - generalist firms operating in the fields of human resources, recruitment and organizational strategy have entered what they perceive as a growing market,[6] not to mention smaller firms and self-employed professionals who provide consulting, training and coaching.
+      - consumer to business
+        - a business model in which consumers (individuals) create value and businesses consume that value
+        -  when a consumer writes reviews or when a consumer gives a useful idea for new product development then that consumer is creating value for the business if the business adopts the input.
+      - consumer to consumer
+        - markets provide an innovative way to allow customers to interact with each other.
+        -  the business facilitates an environment where customers can sell goods or services to each other
+        -  Consumer to consumer (or citizen-to-citizen) electronic commerce involves the electronically facilitated transactions between consumers through some third party
+    - Any sort of development — whether economic, political, biological, organisational or personal—requires a framework if one wishes to know whether a change has actually occurred.
+      - Goals or benchmarks that define the end-points
+      - Strategies or plans for reaching goals
+      - Measurement and assessment of progress, levels or stages that define milestones along a development path
+      - A feedback system to provide information on changes
+    - Research on success in reaching goals, as undertaken by Albert Bandura (born 1925), suggested that self-efficacy[19] best explains why people with the same level of knowledge and skills get very different results
+      - According to Bandura self-confidence functions as a powerful predictor of success because:[20]
+        - it makes you expect to succeed
+        - it allows you take risks and set challenging goals
+        - it helps you keep trying if at first you don't succeed
+        - it helps you control emotions and fears when the going gets rough
+    - Martin Seligman roposed a new focus: on healthy individuals[citation needed] rather than on pathology (he created the "positive psychology" current)
+      - a set of human strengths that are the most likely buffers against mental illness
+        -  courage, optimism, interpersonal skill, work ethic, hope, honesty and perseverance
+    - Arthur Chickering defined seven vectors of personal development[23] for young adults during their undergraduate years:
+      - developing competence
+      - managing emotions
+      - achieving autonomy and interdependence
+      - developing mature interpersonal relationships
+      - establishing identity
+      - developing purpose
+      - developing integrity
+    - Steve Salerno
+      - uses the acronym SHAM: The Self-Help and Actualization Movement—not only as ineffective in achieving its goals but also as socially harmful
+      - Others similarly point out that with self-help books 'supply increases the demand...The more people read them, the more they think they need them...more like an addiction than an alliance
+      -
+
+
   - personal development planning
     - the process of creating an action plan based on awareness, values, reflection ,goal-setting and planning for personal devleopment within the context of a career, education, relationship or for self-improvement
     - types
@@ -50,6 +125,7 @@
       -  include a portfolio containing evidence of the skills gathered over a particular timeframe.
       -   undertaking PDPs will assist in creating self-directed independent learners who are more likely to progress to higher levels of academic attainment.
       -  may also include a statement of one's career and lifestyle priorities, career positioning, analysis of opportunities and risks, and alternative plans (Plan B), and a curriculum vitae (CV).
+
 
   -  action plan
     - detailed plan outlining actions needed to reach one/more goals
