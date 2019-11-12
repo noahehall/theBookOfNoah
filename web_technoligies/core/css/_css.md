@@ -263,7 +263,47 @@
   - dividing a screen into major regions or defiing the relationship in terms of size, position, layer between parts of a control built from html primitives
   - grid children can position themselves so they actually overlap and layer, similar to css positioned elments
 
+  - grid container `display:grid`
+    - defines the container
+    - specifies default dimensions for rows and columns
+
 ```css
+  .grid-container {
+    /*
+      defines the grid wrapper
+     */
+    display: grid;
+
+    /*
+      specify number of columns
+      below is 3 columns
+     */
+    grid-template-columns: repeat(3, 1fr)
+
+    /*
+      space between columns?
+     */
+    grid-gap: 10px;
+
+    /*
+      defines rows
+     */
+    grid-auto-rows: minmax(100px, auto)
+
+  }
+
+  .grid-child {
+    /*
+      place this child in a specific column
+     */
+    grid-column: 2;
+
+    /*
+      place this child in a specific row
+     */
+    grid-row: 5;
+
+  }
 
 ```
 
