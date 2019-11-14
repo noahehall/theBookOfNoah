@@ -63,6 +63,12 @@
       - communication
 
 
+## ServiceWorkerRegistration
+  - represents a service worker registration
+
+## ServiceWorkerState
+  - state of the service worker
+
 
 ## ServiceWorkerContainer
   - Provides facilities to register, unregister, and update service workers, and access the state of service workers and their registrations.
@@ -75,6 +81,10 @@
   - Represents the global execution context of a service worker.
 
 
+## SyncManager
+  - provides an interface for registering  and listing sync registrations
+
+
 ### [skipWaiting()](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/skipWaiting)
   - when a serviceWorker is installed over an existing one
     - the new serviceWorker will be activated immediately
@@ -85,6 +95,12 @@
   - either
     - a document in a browser context
     - a SharedWorker
+
+### WindowClient
+  - special type of `Client`
+  - scope of a service worker client that is a document in a browser context controlled by the active service worker
+
+  
 ## Clients
  - represnets a container for a list of Client objects
  - the mainway to access all the clients owned by the active service worker
@@ -120,7 +136,8 @@
 
 ### InstallEvent
 
-
+### SyncEvent
+  - a sync action that is dispatched on the `ServiceWorkerGlobalScope`
 
 
 ## TODO
