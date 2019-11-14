@@ -1,7 +1,11 @@
 # links
   - [mdn service worker cookbook](https://github.com/mozilla/serviceworker-cookbook)
+    - [maybe the same thing?](https://serviceworke.rs/)
   - [mdn service worker API docs](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
   - [interfaces](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API#inerfaces)
+  - [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker_API/Using_Service_Workers)
+  - [basic code example](https://github.com/mdn/sw-test)
+  - [using web workers](https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers)
 
 # terminology
   - service workers
@@ -100,7 +104,7 @@
   - special type of `Client`
   - scope of a service worker client that is a document in a browser context controlled by the active service worker
 
-  
+
 ## Clients
  - represnets a container for a list of Client objects
  - the mainway to access all the clients owned by the active service worker
