@@ -50,22 +50,31 @@
 
 
 # API (interfaces)
-## cache
-  - represents the storage for request/response object pairs that are cached as part of the serviceworker lifecycle
+## ServiceWorker
+  - Represents a service worker.
+  - Multiple browsing contexts (e.g. pages, workers, etc.) can be associated with the same ServiceWorker object.
+  -
+## Navigator.serviceWorker
+  - Returns a ServiceWorkerContainer object,
+    - provides access to the ServiceWorker objects for the associated document.
+      - registration
+      - removal
+      - upgrade
+      - communication
 
-## CacheStorage
-  - the storage for cache objects
-  - provides
-    - a master directory of all the named caches that a ServiceWorker can access
-    - maintains a mapping of string names to corresponding Cache objects
+
 
 ## ServiceWorkerContainer
+  - Provides facilities to register, unregister, and update service workers, and access the state of service workers and their registrations.
+
+
 ### [register()](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
   - service worker will be downloaded to the client and installation/activiation will be attemped
-```js
 
-```
 ## ServiceWorkerGlobalScope
+  - Represents the global execution context of a service worker.
+
+
 ### [skipWaiting()](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/skipWaiting)
   - when a serviceWorker is installed over an existing one
     - the new serviceWorker will be activated immediately
@@ -77,13 +86,50 @@
     - a document in a browser context
     - a SharedWorker
 ## Clients
+ - represnets a container for a list of Client objects
+ - the mainway to access all the clients owned by the active service worker
 ### [Claim()](https://developer.mozilla.org/en-US/docs/Web/API/Clients/claim)
   - when a serviceWorker is installad over an existing one
     - the serviceWorker can claim all pages owned by the previous service worker
     - usually it waits to claim pages until the old serviceWorker is not used by any existing loaded pages
 
 
-## events
+
+## cache
+  - represents the storage for request/response object pairs that are cached as part of the serviceworker lifecycle
+
+## CacheStorage
+  - the storage for cache objects
+  - provides
+    - a master directory of all the named caches that a ServiceWorker can access
+    - maintains a mapping of string names to corresponding Cache objects
+
+## Events
+### [MessageEvent](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
+  - used by service workers
+
+
+### FetchEvent
+  - The param passed into the ServiceWorkerGlobalScope.onfetch handler
+  - a fetch action that is dispatched on the `ServiceWorkerGlobalScope` of a `ServiceWorker`
+  - contains info about the request and resulting response
+
+#### respondWith()
+  - provide an arbitary response back to the controlled page
+
+
+### InstallEvent
+
+
+
+
+## TODO
+### ExtendableEvent
+### ExtendableMessageEvent
+### NavigationPreloadManager
+### NotificationEvent
+
+# examples
 ```js
   // InstallEvent https://developer.mozilla.org/en-US/docs/Web/API/InstallEvent
   // prepare your service worker for usage when this event fires
