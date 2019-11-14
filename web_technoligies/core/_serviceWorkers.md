@@ -1,6 +1,7 @@
 # links
   - [mdn service worker cookbook](https://github.com/mozilla/serviceworker-cookbook)
   - [mdn service worker API docs](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+  - [interfaces](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API#inerfaces)
 
 # terminology
   - service workers
@@ -22,6 +23,14 @@
   - enable the creation of offline experiences
   - intercept network request
   - react based on network availability
+  - background data syncrhonization
+  - responding to resource requests from other origins
+  - receiving centralized updates to expensive to calculate data
+  - client-side compiling and dependency management
+  - hooks for background services
+  - custom templating based on URL patterns
+  - performance enhancments
+    - prefecting resources, etc
 
 # lifecycle
   1. registration
@@ -40,21 +49,52 @@
       - event fired on the service worker and it hasnt been downloaded in the past 24 hrs
 
 
-# API
+# API (interfaces)
+## cache
+  - represents the storage for request/response object pairs that are cached as part of the serviceworker lifecycle
+
+## CacheStorage
+  - the storage for cache objects
+  - provides
+    - a master directory of all the named caches that a ServiceWorker can access
+    - maintains a mapping of string names to corresponding Cache objects
+
 ## ServiceWorkerContainer
-###  register()
+### [register()](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
   - service worker will be downloaded to the client and installation/activiation will be attemped
 ```js
 
 ```
 ## ServiceWorkerGlobalScope
-### skipWaiting()
+### [skipWaiting()](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/skipWaiting)
   - when a serviceWorker is installed over an existing one
     - the new serviceWorker will be activated immediately
       - usually it waits for the old serviceWorker to not be used by an existing loaded pages
 
+## Client
+  - the scope of a client controlled by a service worker
+  - either
+    - a document in a browser context
+    - a SharedWorker
 ## Clients
-### Claim()
+### [Claim()](https://developer.mozilla.org/en-US/docs/Web/API/Clients/claim)
   - when a serviceWorker is installad over an existing one
     - the serviceWorker can claim all pages owned by the previous service worker
     - usually it waits to claim pages until the old serviceWorker is not used by any existing loaded pages
+
+
+## events
+```js
+  // InstallEvent https://developer.mozilla.org/en-US/docs/Web/API/InstallEvent
+  // prepare your service worker for usage when this event fires
+  // e.g. create a cache (builtin storage API) and place assets inside that youll want for running yoru app offline
+
+  // activate
+  // a good time tro clean up old caches, etc, with the previous service worker
+
+  // FetchEvent - https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent
+  // respond to requests
+
+  // FetchEvent.respondWith
+  // arbitrarily  modify the response to a FetchEvent
+```
