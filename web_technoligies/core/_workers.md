@@ -8,6 +8,14 @@
   - [using web workers](https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers)
 
 # terminology
+  - web workers
+    - run scripts in background threads
+    - send/receive messages to the calling code
+  - worker thread
+    - perfeorm
+      - tasks without interfering with the UI
+      - I/O using XMLHttpRequest
+      -
   - service workers
     - act as proxy servers that  sit between web applications, the browser, and the network
     - an event-driven worker registered against an origin and a path
