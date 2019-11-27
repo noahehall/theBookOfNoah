@@ -15,7 +15,9 @@
         -   <Start>/<end> expressions 
 	        -   elements missing form the env value are assuemd to be the same as the start value + time zone 
     -   repeating intervals 
-	    -   
+	    -   formed by adding `R[n]` to the beginning of an interval expression
+		    -	R - the letter itself 
+		    -	n - number of repititions
 
 # examples 
 ```js 
