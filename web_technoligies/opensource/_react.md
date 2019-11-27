@@ -13,6 +13,7 @@
   - [effect hook docs](https://reactjs.org/docs/hooks-effect.html)
   - [react hooks API reference](https://reactjs.org/docs/hooks-reference.html)
   - [context docs](https://reactjs.org/docs/context.html)
+  - [render props](https://reactjs.org/docs/render-props.html)
 
 
 
