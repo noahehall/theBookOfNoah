@@ -9,6 +9,19 @@
 	4.	your backend saves the subscription 
 
 ## pushing: backend -> frontend 
-	1. backend sends a message to a saved subscription 
-	2. service worker receives message and sends to app thread 
-	3. BOOM
+	1.	backend sends a message to a saved subscription 
+	2.	service worker receives message and sends to app thread 
+	3.	app displays notification to user 
+	4.	BOOM
+
+## key decision points 
+	- 	ask user for permission 
+		- 	user can press X (DENIED)
+		- 	user can deny (DENIED)
+		- 	user can grant (SUCCESS)
+
+# terminology 
+	-	push
+		-	the act of sending a notification form a server to an application 
+	-	notification 
+		-	object displayed in the status bar of a client, e.g. smartphone/browser 
