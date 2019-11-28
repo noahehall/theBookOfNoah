@@ -2,7 +2,7 @@
 - [great article](https://itnext.io/an-introduction-to-web-push-notifications-a701783917ce)
 - [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters)
 - [service worker api](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
-- 
+- [VAPID docs](https://tools.ietf.org/html/rfc8292)
 
 # terminology 
 	-	push
@@ -44,6 +44,9 @@
 # API 
 ## TODO 
 	- [PushSubscription](https://developer.mozilla.org/en-US/docs/Web/API/PushSubscription)
+	- [pushMessageData](https://developer.mozilla.org/en-US/docs/Web/API/PushMessageData)
+		- the event sent when a service worker receives a push 
+
 ## [pushmanager](https://developer.mozilla.org/en-US/docs/Web/API/PushManager)
 	- subscribe()
 		- subscribes to a push service 
