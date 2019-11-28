@@ -4,6 +4,22 @@
 - [service worker api](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
 - 
 
+# terminology 
+	-	push
+		-	the act of sending a notification form a server to an application 
+	-	notification 
+		-	object displayed in the status bar of a client, e.g. smartphone/browser 
+	-	subscription 
+		-	created by a service worker
+		-	creates a unique endpoint that receives pushes from a backend server and proxies to the service worker that created it
+
+
+# best practices 
+	-	the communication between the app/service worker & the backend push serve rmust be secure 
+		-	the subscription information, if stolen, can be used to send unwatned notifications 
+	-	generally 
+		-	each subscription should be associated with a specific user 
+			-	when it is ever a good thing to send global notifications?
 
 # flow 
 ## setup
@@ -24,14 +40,6 @@
 		- 	user can deny (DENIED)
 		- 	user can grant (SUCCESS)
 
-# terminology 
-	-	push
-		-	the act of sending a notification form a server to an application 
-	-	notification 
-		-	object displayed in the status bar of a client, e.g. smartphone/browser 
-	-	subscription 
-		-	created by a service worker
-		-	creates a unique endpoint that receives pushes from a backend server and proxies to the service worker that created it
 
 # API 
 ## TODO 
