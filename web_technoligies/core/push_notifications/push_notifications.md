@@ -9,8 +9,8 @@
 ## setup
 	1.	user is asked for and provides consent to receive notifications from your application 
 	2.	service worker registration workflow completes 
-	3.	service worker creates and sends a push notification subscription to your backend
-	4.	your backend saves the subscription 
+	3.	service worker creates a push notification subscription and sends the endpoint it receives to your backend
+	4.	your backend saves the subscription endpoint for later use to push messages back to the service worker
 
 ## pushing: backend -> frontend 
 	1.	backend sends a message to a saved subscription 
