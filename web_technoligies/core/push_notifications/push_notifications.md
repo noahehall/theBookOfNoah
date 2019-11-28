@@ -1,6 +1,8 @@
 # links
 - [great article](https://itnext.io/an-introduction-to-web-push-notifications-a701783917ce)
 - [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters)
+- [service worker api](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+- 
 
 
 # flow 
@@ -27,3 +29,14 @@
 		-	the act of sending a notification form a server to an application 
 	-	notification 
 		-	object displayed in the status bar of a client, e.g. smartphone/browser 
+	-	subscription 
+		-	created by a service worker
+		-	creates a unique endpoint that receives pushes from a backend server and proxies to the service worker that created it
+
+# API 
+## TODO 
+	- [PushSubscription](https://developer.mozilla.org/en-US/docs/Web/API/PushSubscription)
+## [pushmanager](https://developer.mozilla.org/en-US/docs/Web/API/PushManager)
+	- subscribe()
+		- subscribes to a push service 
+		- return a promise that resolves to a pubscription object
