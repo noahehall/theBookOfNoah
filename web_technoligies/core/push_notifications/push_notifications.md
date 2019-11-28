@@ -1,4 +1,6 @@
+# links
 - [great article](https://itnext.io/an-introduction-to-web-push-notifications-a701783917ce)
+- [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters)
 
 
 # flow 
