@@ -8,10 +8,10 @@
     sudo systemctl start|restart|poop redis
     redis-cli # tty 
     exit 
-    
+
   # CRUD
     set someKey 'some string value'
-
+    hmset objName someKey1 someVal1 someKeyX someValX
     get someKey
 
 ```
