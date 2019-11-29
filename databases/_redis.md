@@ -1,6 +1,21 @@
 # Links
   - [bookmark](https://dictionary.udemy.com/learn-redis/learn/v4/t/lecture/1307174)
   - [all commands](http://redis.io/commands)
+
+# quickies 
+```sh 
+  # admin
+    sudo systemctl start|restart|poop redis
+    redis-cli # tty 
+    exit 
+    
+  # CRUD
+    set someKey 'some string value'
+
+    get someKey
+
+```
+  
 # MAC
   - start redis manually: redis-server /usr/local/etc/redis.conf
   - start redis at startup: brew services start redis
