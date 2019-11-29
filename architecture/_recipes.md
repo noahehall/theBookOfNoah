@@ -18,7 +18,7 @@
 	beforeFunctionToRunRuns
 		.getCurrentSetItems()
 		.then(items => functionToRun[..items])
-		.then((erros and shit) =>  handleErrsAndShit)
+		.then((erros and shit) =>  handleErrsAndShit())
 		.then(() => redis.delete(redisSetName))
 
 
