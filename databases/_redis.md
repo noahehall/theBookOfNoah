@@ -1,6 +1,7 @@
 # Links
   - [bookmark](https://dictionary.udemy.com/learn-redis/learn/v4/t/lecture/1307174)
   - [all commands](http://redis.io/commands)
+  - [pubsub](https://redis.io/topics/pubsub)
 
 # quickies 
 ```sh 
@@ -15,7 +16,8 @@
     get someKey
 
 ```
-  
+
+
 # MAC
   - start redis manually: redis-server /usr/local/etc/redis.conf
   - start redis at startup: brew services start redis
@@ -39,7 +41,7 @@
   - **note**: you dont need to specify a password for starting the service
   1. follow steps above to install redis
   2. follow steps above to create redis daemon user
-  3. start redis `sudo systemctl start redis`
+  3. start redis `sudo systemctl start redis-server`
   4. login `redis-cli -a your-pass`
   5. restart check `sudo chmod 770 /var/lib/redis`
   6. if you so choose, enable redis to start at boot: `sudo systemctl enable redis`
