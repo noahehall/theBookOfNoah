@@ -7,6 +7,7 @@
 	- [data modeling naming conventions](https://www.arangodb.com/docs/stable/data-modeling-naming-conventions-document-keys.html)
 	- [misc aql functions](https://www.arangodb.com/docs/stable/aql/functions-miscellaneous.html)
 	- [aql](https://www.arangodb.com/docs/stable/aql/)
+	- [nodejs aql template tag](https://github.com/arangodb/arangojs/blob/master/docs/Drivers/JS/Reference/Database/Queries.md#aql)
 
 
 # about 
@@ -91,6 +92,24 @@
 
 ```
 
+## node driver quickes 
+```sh
+	const db = new Database({
+	  url: "http://localhost:8529"
+	});
+	db.useDatabase("pancakes");
+	db.useBasicAuth("root", "");
+	// The database can be swapped at any time
+	db.useDatabase("waffles");
+	db.useBasicAuth("admin", "maplesyrup");
+
+	// Using ArangoDB behind a reverse proxy
+	const db = new Database({
+	  url: "http://myproxy.local:8000",
+	  isAbsolute: true // don't automatically append database path to URL
+	});
+
+```
 
 # architecture 
 	- `arangod` 

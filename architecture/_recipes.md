@@ -8,7 +8,6 @@
 		client.post({ 
 			redisSetName: dateTimeToRunFunction, 
 			value: functionNameToRun.event.id,
-			type: poop,
 		});
 
 		// backend handleer
