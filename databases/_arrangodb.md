@@ -139,6 +139,10 @@
 ### misc 
 ```sql 
 	APPLY(functionName, argumentList)
+	CALL(functionName, argX, ...)
+	FAIL(reason)
+
+
 	ASSERT(expression, msg)
 	WARN(expression, msg)
 ```
@@ -156,5 +160,11 @@
 
 	# loops 
 	FOR i IN 1..3 FILTER ASSERT(i > 0, "i is not greater 0") RETURN i
+
+	# conditionals 
+	RETURN 1 == 1 ? "okay" : FAIL("error") // "okay"
+	RETURN 1 == 1 || FAIL("error") ? true : false // true
+	RETURN 1 == 2 && FAIL("error") ? true : false // false
+	RETURN 1 == 1 && FAIL("error") ? true : false // aborted with error
 
 ```
