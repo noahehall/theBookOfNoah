@@ -42,6 +42,8 @@
 		INSERT {...} into collectionName RETURN NEW #returns the created doc
 		UPDATE "9915" WITH { age: 40 } IN users # only modifies specified attributes
 		REPLACE "9915" WITH { age: 40 } IN users # replaces entire document
+		REMOVE "9883" IN users
+
 ```
 
 
