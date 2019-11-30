@@ -13,10 +13,10 @@
 		// backend handleer
 		backend.post(req, res).then(() => {
 			// essentially a log of this post request
-			scylla.execute(upsert raw data + convertToId(functionNameToRun));
+			arrangodb.execute(upsert raw data + convertToId(functionNameToRun));
 
 			// far-in-future items arent kept in redis
-			if (dateTimeToRunFunction > 1 week) scylla.execute(save nodecronjob.config under dateTimeToRunFunction + convertToId(functionNameToRun))
+			if (dateTimeToRunFunction > 1 week) arrangodb.execute(save nodecronjob.config under dateTimeToRunFunction + convertToId(functionNameToRun))
 			// near-time items are pushed directly to redis
 			else {
 				// upsert redis set, which returns total size of set
@@ -29,20 +29,20 @@
 		// execution
 		beforeFunctionToRunRuns
 			.getCurrentSetItems()
-			.then(() => scylla.execute(get functionname with this id))
+			.then(() => arrangodb.execute(get functionname with this id))
 			.then(items => functionToRun[..items])
 			.then((erros and shit) =>  handleErrsAndShit())
 			.then(() => redis.delete(redisSetName))
-			.then(() => scylla.execute(save success and errors and other important shit))
+			.then(() => arrangodb.execute(save success and errors and other important shit))
 
 		// automation
 		nodeCron.everyday()
-			.then(() => scylla.execute(get appropriate conjob configs < 1 week))
+			.then(() => arrangodb.execute(get appropriate conjob configs < 1 week))
 			.then(items => push to redit)
-			.then((errors and shit) => scylla.execute update records with appropriate information)
+			.then((errors and shit) => arrangodb.execute update records with appropriate information)
 		
 		// init 
-		scylla.execute(save all runnable function Names with index on name)
+		arrangodb.execute(save all runnable function Names with index on name)
 
 
 
