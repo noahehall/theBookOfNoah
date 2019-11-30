@@ -106,12 +106,14 @@
 	DOCUMENT(collectionName, id)
 	COLLECTIONS()
 	COUNT()
-	LENGTH(collectionName)
-	
+	LENGTH() #pass it an array 0f anything
+
+
 	COLLECTION_COUNT() 
 	CHECK_DOCUMENT(doc)
 	CURRENT_USER()
 	DECORE_REV()
+
 ```
 
 ### operators 
@@ -120,8 +122,25 @@
 
 ```
 
-### unkown where the fuck these should go 
+
+### hash functions 
 ```sql 
+	HASH(value)
+
+	# string hashing 
+	CRC32()
+	FNV64()
+	MD5()
+	SHA1()
+	SHA512()
+```
+
+
+### misc 
+```sql 
+	APPLY(functionName, argumentList)
+	ASSERT(expression, msg)
+	WARN(expression, msg)
 ```
 
 
@@ -132,5 +151,10 @@
 	DOCUMENT( users, "john" )
 	DOCUMENT( users, [ "users/john", "users/amy" ] )
 	DOCUMENT( users, [ "john", "amy" ] )
+	DOCUMENT("users/john")
+	DOCUMENT( [ "users/john", "users/amy" ] )
+
+	# loops 
+	FOR i IN 1..3 FILTER ASSERT(i > 0, "i is not greater 0") RETURN i
 
 ```
