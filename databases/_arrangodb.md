@@ -6,6 +6,7 @@
 	- [data modeling concepts](https://www.arangodb.com/docs/stable/data-modeling-concepts.html)
 	- [data modeling naming conventions](https://www.arangodb.com/docs/stable/data-modeling-naming-conventions-document-keys.html)
 	- [misc aql functions](https://www.arangodb.com/docs/stable/aql/functions-miscellaneous.html)
+	- [aql](https://www.arangodb.com/docs/stable/aql/)
 
 
 # about 
@@ -37,6 +38,8 @@
 
 	# CRUD (aql)
 		RETURN DOCUMENT('collectionName/_key')
+		INSERT {...} INTO collectionName 
+		INSERT {...} into collectionName RETURN NEW #returns the created doc
 ```
 
 
@@ -93,11 +96,19 @@
 
 # AQL 
 ## functions 
+
+### create 
+```sql 
+
+	
+```
+
 ### control flow
 ```sql 
 	NOT_NULL(elX, ...) 
 	FIRST_LIST(arrayX, ...)
 	FIRST_DOCUMENT(valX, ...)
+	SLEEP()
 
 
 ```
@@ -141,8 +152,9 @@
 	APPLY(functionName, argumentList)
 	CALL(functionName, argX, ...)
 	FAIL(reason)
-
-
+	
+	NOOPT()
+	VERSION()
 	ASSERT(expression, msg)
 	WARN(expression, msg)
 ```
@@ -151,20 +163,26 @@
 # examples 
 ```sql 
 	# retrieving documents
-	DOCUMENT( users, "users/john" )
-	DOCUMENT( users, "john" )
-	DOCUMENT( users, [ "users/john", "users/amy" ] )
-	DOCUMENT( users, [ "john", "amy" ] )
-	DOCUMENT("users/john")
-	DOCUMENT( [ "users/john", "users/amy" ] )
+		DOCUMENT( users, "users/john" )
+		DOCUMENT( users, "john" )
+		DOCUMENT( users, [ "users/john", "users/amy" ] )
+		DOCUMENT( users, [ "john", "amy" ] )
+		DOCUMENT("users/john")
+		DOCUMENT( [ "users/john", "users/amy" ] )
 
 	# loops 
-	FOR i IN 1..3 FILTER ASSERT(i > 0, "i is not greater 0") RETURN i
+		FOR i IN 1..3 FILTER ASSERT(i > 0, "i is not greater 0") RETURN i
+		FOR user IN users
+			sort user._key 
+			RETURN user
 
 	# conditionals 
-	RETURN 1 == 1 ? "okay" : FAIL("error") // "okay"
-	RETURN 1 == 1 || FAIL("error") ? true : false // true
-	RETURN 1 == 2 && FAIL("error") ? true : false // false
-	RETURN 1 == 1 && FAIL("error") ? true : false // aborted with error
+		RETURN 1 == 1 ? "okay" : FAIL("error") // "okay"
+		RETURN 1 == 1 || FAIL("error") ? true : false // true
+		RETURN 1 == 2 && FAIL("error") ? true : false // false
+		RETURN 1 == 1 && FAIL("error") ? true : false // aborted with error
+
+	# sort 
+		SORT user.age DESC
 
 ```
