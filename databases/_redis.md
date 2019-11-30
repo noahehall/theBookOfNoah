@@ -6,55 +6,39 @@
 # quickies 
 ```sh 
   # admin
-    sudo systemctl start|restart|poop redis
+    sudo systemctl start|restart|poop redis-server
+    redis-server /usr/local/etc/redis.conf
     redis-cli # tty 
+    redis-cli monitor # see all logs in a new shell
+    shutdown # shutdown server
     exit 
+    quit
+    flushdb #delete all records from your current db
+    flushall #delete all records from all dbs
+    
 
   # CRUD
     set someKey 'some string value'
     hmset objName someKey1 someVal1 someKeyX someValX
     get someKey
 
+
 ```
 
 
-# need to research
-  - [hyperloglog](https://redis.io/commands/#hyperloglog): used to count big data, uses maybe 100x less memory than regular redis data times
-    + is a counter
-    + cardinality: 98% correctness on counting big data
-    + example: I get 20k new subscribers every hour, how many subscribers do I have that joined in the last 12 months?
-    + commands begin with pf
-      - pfadd, pfcount, pfmerge
-  - [GEO](https://redis.io/commands/#geo)
-  - [CLUSTER](https://redis.io/commands/#cluster)
-  - [KEYS](https://redis.io/commands/#generic)
-  - [SCRIPTING](https://redis.io/commands/#scripting)
-  - [SERVER](https://redis.io/commands/#server)
 
 # commands
 ## authentication
   1. open redis.conf
   2. uncomment the line beginnning with # requirepass
   3. set the master password
-## [connecting](https://redis.io/commands/#connection)
-  - auth yourPassWord # authenticate to a redis server
-    + none of the commands work less your authenticated
-  - echo blah #redis will echo blah
-  - ping #redis will reply pong
-  - select 0|1|etc # select the db to connect to
+
 ## admin
   - sudo service redis-server start|stop|restart
   - redis-server /usr/local/etc/redis.conf #start
     - Config file    : /etc/redis/6379.conf
 
-  - redis-cli #connect to client
-  - redis-cli monitor #see all logs in real time in a new shell
-    + redis-server /usr/local/etc/redis.conf
-    + redis-cli -a udacity monitor
-  - shutdown # shutdown server
-  - flushdb #delete all records from your current db
-  - flushall #delete all records from all dbs
-  - quit #exit redis
+
 ### managing clients
   - client list #get list of all connected clients
 
