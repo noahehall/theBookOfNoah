@@ -2,6 +2,8 @@
 	- [installation](https://www.arangodb.com/docs/stable/getting-started-installation.html)
 
 
+# about 
+	- this shit is a javascript devs heaven
 
 # quickies 
 ```sh
@@ -10,8 +12,9 @@
 		arangodb
 		arangod # use this per docs
 
-		# tty to server 
-		arangosh
+		# tty to things 
+		arangosh 
+		arangosh --server.username "myuser@mydb" --server.database mydb
 
 	# errors 
 		# maximum number of memory mappings per process is 65530
@@ -20,7 +23,7 @@
 
 	# bd admin
 	# create things
-		db._createDatabase("mydb");
+		db._createDatabase("mydb"); #bool
 
 		var users = require("@arangodb/users");
 		users.save("myuser@mydb", "mypw");
