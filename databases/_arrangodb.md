@@ -38,10 +38,16 @@
 		- 	the server
 		- 	speaks http/rest 
 		- 	comes with a free web interface
+
+## accessing the server 
+### shell
 	- 	`arangosh` 
 		- 	a synchronous shell for interaction with the server 
 
-## drivers 
+### web interface 
+	- alternative to using the
+
+### drivers 
 	- drivers implement a programming interace that should feel natural for that programming lanaguage
 	- do all the talking with the server 
 	- generally can ignore the http api if using a driver 
