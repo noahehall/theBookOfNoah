@@ -13,10 +13,10 @@
 		// backend handleer
 		backend.post(req, res).then(() => {
 			// essentially a log of this post request
-			scylla.execute(upsert raw data under functionToRunId);
+			scylla.execute(upsert raw data + convertToId(functionNameToRun));
 
 			// far-in-future items arent kept in redis
-			if (dateTimeToRunFunction > 1 week) scylla.execute(save nodecronjob.config under dateTimeToRunFunction)
+			if (dateTimeToRunFunction > 1 week) scylla.execute(save nodecronjob.config under dateTimeToRunFunction + convertToId(functionNameToRun))
 			// near-time items are pushed directly to redis
 			else {
 				// upsert redis set, which returns total size of set
