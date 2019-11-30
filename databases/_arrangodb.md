@@ -189,6 +189,18 @@
 				FILTER user1 != user2
 				RETURN [user1.name, user2.name]
 
+
+		# nested variable used in return 
+		FOR user1 IN users
+		  FOR user2 IN users
+		    FILTER user1 != user2
+		    LET sumOfAges = user1.age + user2.age 
+		    FILTER sumOfAges < 100
+		    RETURN {
+		        pair: [user1.name, user2.name],
+		        sumOfAges: sumOfAges
+		    }
+
 	# return statements
 			RETURN { userName: user.name, age: user.age }
 			RETURN user.name
