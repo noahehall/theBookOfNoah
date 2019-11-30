@@ -136,6 +136,64 @@
 		  RETURN u.user
 		`);
 
+		# nested query 
+			const color = "green";
+			const filterByColor = aql`FILTER d.color == ${color}'`;
+			const result2 = await db.query(aql`
+			  FOR d IN ${mydata}
+			  ${filterByColor}
+			  RETURN d
+			`);
+
+		# aql literal 
+			const filterGreen = aql.literal('FILTER d.color == "green"');
+			const result = await db.query(aql`
+			  FOR d IN ${mydata}
+			  ${filterGreen}
+			  RETURN d
+			`);
+
+		# aql joins
+			// Basic usage
+			const parts = [aql`FILTER`, aql`x`, aql`%`, aql`2`];
+			const joined = aql.join(parts); // aql`FILTER x % 2`
+
+			// Merge without the extra space
+			const parts = [aql`FIL`, aql`TER`];
+			const joined = aql.join(parts, ""); // aql`FILTER`;
+
+			// Real world example: translate keys into document lookups
+			const users = db.collection("users");
+			const keys = ["abc123", "def456"];
+			const docs = keys.map(key => aql`DOCUMENT(${users}, ${key})`);
+			const aqlArray = aql`[${aql.join(docs, ", ")}]`;
+			const result = await db.query(aql`
+			  FOR d IN ${aqlArray}
+			  RETURN d
+			`);
+			// Query:
+			//   FOR d IN [DOCUMENT(@@value0, @value1), DOCUMENT(@@value0, @value2)]
+			//   RETURN d
+			// Bind parameters:
+			//   @value0: "users"
+			//   value1: "abc123"
+			//   value2: "def456"
+
+			// Alternative without `aql.join`
+			const users = db.collection("users");
+			const keys = ["abc123", "def456"];
+			const result = await db.query(aql`
+			  FOR key IN ${keys}
+			  LET d = DOCUMENT(${users}, key)
+			  RETURN d
+			`);
+			// Query:
+			//   FOR key IN @value0
+			//   LET d = DOCUMENT(@@value1, key)
+			//   RETURN d
+			// Bind parameters:
+			//   value0: ["abc123", "def456"]
+			//   @value1: "users"
 
 
 
