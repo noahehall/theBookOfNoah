@@ -13,6 +13,9 @@
     shutdown # shutdown server
     exit 
     quit
+    client list #get list of all connected clients
+
+  # dbs
     flushdb #delete all records from your current db
     flushall #delete all records from all dbs
     
@@ -38,9 +41,6 @@
   - redis-server /usr/local/etc/redis.conf #start
     - Config file    : /etc/redis/6379.conf
 
-
-### managing clients
-  - client list #get list of all connected clients
 
 ## [DATA TYPES](https://redis.io/topics/data-types)
   - [string](https://redis.io/commands/#string)
