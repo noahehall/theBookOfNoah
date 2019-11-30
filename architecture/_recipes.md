@@ -3,23 +3,48 @@
 
 # time based triggers 
 ```js 
-	// post data to backend
-	client.post({ 
-		redisSetName: dateTimeToRunFunction, 
-		value: event.id,
-	});
+	// golden path
+		// post data to backend
+		client.post({ 
+			redisSetName: dateTimeToRunFunction, 
+			value: functionToRunId.event.id,
+		});
 
-	// backend handleer
-	// upsert redis set, which returns total size of set
-	const sizeOfRedisSetForThisDateTime = backend.post(req, res).pushToRedis(clientData)
-	// if items exist, upset nodecron job
-	if (sizeOfRedisSetForThisDateTime) nodeCron.upsertCronJob(redisSetName, functionToRun)
+		// backend handleer
+		backend.post(req, res).then(() => {
+			// essentially a log of this post request
+			scylla.execute(upsert raw data under functionToRunId);
 
-	beforeFunctionToRunRuns
-		.getCurrentSetItems()
-		.then(items => functionToRun[..items])
-		.then((erros and shit) =>  handleErrsAndShit())
-		.then(() => redis.delete(redisSetName))
+			// far-in-future items arent kept in redis
+			if (dateTimeToRunFunction > 1 week) scylla.execute(save nodecronjob.config under dateTimeToRunFunction)
+			// near-time items are pushed directly to redis
+			else {
+				// upsert redis set, which returns total size of set
+				const sizeOfRedisSetForThisDateTime = redis.sadd(clientData)
+				// create cronjob
+				nodeCron.upsertCronJob(redisSetName, functionToRun)
+			}
+		})
+
+		// execution
+		beforeFunctionToRunRuns
+			.getCurrentSetItems()
+			.then(() => scylla.execute(get functionname with this id))
+			.then(items => functionToRun[..items])
+			.then((erros and shit) =>  handleErrsAndShit())
+			.then(() => redis.delete(redisSetName))
+			.then(() => scylla.execute(save success and errors and other important shit))
+
+	// automation
+		nodeCron.everyday()
+			.then(() => scylla.execute(get appropriate conjob configs < 1 week))
+			.then(items => push to redit)
+			.then((errors and shit) => scylla.execute update records with appropriate information)
+	// peristence 
+		scylla.execute(save all runnable function Names)
+
+
+
 
 
 ```
