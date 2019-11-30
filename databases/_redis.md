@@ -18,42 +18,6 @@
 ```
 
 
-# MAC
-  - start redis manually: redis-server /usr/local/etc/redis.conf
-  - start redis at startup: brew services start redis
-  - connect to redis: redis-cli
-  - config file: /usr/local/etc
-    + daemonize yes
-    + bind to a host ip
-    + set port
-    + how long to keepalive
-    + log file
-    + number of databases
-      - databases are integers (i.e. 0, 1, etc)
-    + snapshotting (save db ever X ms)
-    + replication
-    + master and slaves
-    + security
-  - get redis info: brew info redis
-  - test if redis is running: redis-cli ping
-  - start redis with a specific config file: ./redis-server /path/to/redis.conf
-# [ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-redis-on-ubuntu-16-04)
-  - **note**: you dont need to specify a password for starting the service
-  1. follow steps above to install redis
-  2. follow steps above to create redis daemon user
-  3. start redis `sudo systemctl start redis-server`
-  4. login `redis-cli -a your-pass`
-  5. restart check `sudo chmod 770 /var/lib/redis`
-  6. if you so choose, enable redis to start at boot: `sudo systemctl enable redis`
-  7. [follow these steps to secure redis](https://www.digitalocean.com/community/tutorials/how-to-secure-your-redis-installation-on-ubuntu-14-04)
-## Links
-  - [install and config on mac](https://medium.com/@petehouston/install-and-config-redis-on-mac-os-x-via-homebrew-eb8df9a4f298#.hogmtg3ct)
-# vocab
-  - key: these are the variables, everything is stored by key
-    + hash: hset KEY fieldname value
-    + string: set KEY value
-    + lists: lpush KEY value
-
 # need to research
   - [hyperloglog](https://redis.io/commands/#hyperloglog): used to count big data, uses maybe 100x less memory than regular redis data times
     + is a counter
