@@ -5,7 +5,7 @@
 
 # quickies 
 ```sh
-	# admin  
+	# server admin  
 		# start server (both works?)
 		arangodb
 		arangod # use this per docs
@@ -18,5 +18,12 @@
 		sudo sysctl -w "vm.max_map_count=256000"
 
 
+	# bd admin
+	# create things
+		db._createDatabase("mydb");
+
+		var users = require("@arangodb/users");
+		users.save("myuser@mydb", "mypw");
+		users.grantDatabase("root@example", "example");
 
 ```
