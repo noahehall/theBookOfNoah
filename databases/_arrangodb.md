@@ -44,6 +44,51 @@
 		REPLACE "9915" WITH { age: 40 } IN users # replaces entire document
 		REMOVE "9883" IN users
 
+
+	# operators
+		u.age > 15 || u.active == true ? u.userId : null
+		&& logical and operator
+		|| logical or operator
+		! logical not/negation operator
+		AND logical and operator
+		OR logical or operator
+		NOT logical not/negation operator
+		2010..2013 // [ 2010, 2011, 2012, 2013 ]
+		0  ==  null            // false
+		1  >   0               // true
+		true  !=  null            // true
+		45  <=  "yikes!"        // true
+		65  !=  "65"            // true
+		65  ==  65              // true
+		1.23  >   1.32            // false
+		1.5  IN  [ 2, 3, 1.5 ]   // true
+		"foo"  IN  null            // false
+		42  NOT IN  [ 17, 40, 50 ]  // true
+		"abc"  ==  "abc"           // true
+		"abc"  ==  "ABC"           // false
+		"foo"  LIKE  "f%"          // true
+		"foo"  NOT LIKE  "f%"      // false
+		"foo"  =~  "^f[o].$"       // true
+		"foo"  !~  "[a-z]+bar$"    // true
+		[ 1, 2, 3 ]  ALL IN  [ 2, 3, 4 ]  // false
+		[ 1, 2, 3 ]  ALL IN  [ 1, 2, 3 ]  // true
+		[ 1, 2, 3 ]  NONE IN  [ 3 ]       // false
+		[ 1, 2, 3 ]  NONE IN  [ 23, 42 ]  // true
+		[ 1, 2, 3 ]  ANY IN  [ 4, 5, 6 ]  // false
+		[ 1, 2, 3 ]  ANY IN  [ 1, 42 ]    // true
+		[ 1, 2, 3 ]  ANY ==  2            // true
+		[ 1, 2, 3 ]  ANY ==  4            // false
+		[ 1, 2, 3 ]  ANY >  0             // true
+		[ 1, 2, 3 ]  ANY <=  1            // true
+		[ 1, 2, 3 ]  NONE <  99           // false
+		[ 1, 2, 3 ]  NONE >  10           // true
+		[ 1, 2, 3 ]  ALL >  2             // false
+		[ 1, 2, 3 ]  ALL >  0             // true
+		[ 1, 2, 3 ]  ALL >=  3            // false
+		["foo", "bar"]  ALL !=  "moo"     // true
+		["foo", "bar"]  NONE ==  "bar"    // false
+		["foo", "bar"]  ANY ==  "foo"     // true
+
 ```
 
 
@@ -132,6 +177,16 @@
 ```
 
 ### operators 
+	- all return bool
+		- ==, !=, etc.
+		- IN 
+		- NOT IN 
+		- LIKE
+		- NOT LIKE 
+		- regular expressions
+			- =~
+			- !~
+### string 
 ```sql 
 	JSON_STRINGIFY(doc)
 
@@ -184,6 +239,10 @@
 			SORT user.age
 			RETURN user.name
 			FOR user IN users
+		FOR doc IN coll
+			RETURN NOT doc.attr LIKE "…"
+
+
 
 		# nested loop
 		FOR user1 IN users
@@ -220,8 +279,10 @@
 		RETURN 1 == 2 && FAIL("error") ? true : false // false
 		RETURN 1 == 1 && FAIL("error") ? true : false // aborted with error
 
-	# OPERATORS 
+	# MISC 
 		SORT user.age DESC
 		FILTER user.age > 30
+
+
 
 ```
