@@ -1,6 +1,9 @@
 # docs 
+	- [main docs](https://www.arangodb.com/documentation/)
 	- [installation](https://www.arangodb.com/docs/stable/getting-started-installation.html)
 	- [web interface](https://www.arangodb.com/docs/stable/getting-started-web-interface.html)
+	- [web interface main docs](https://www.arangodb.com/docs/stable/programs-web-interface.html)
+	- [data modeling concepts](https://www.arangodb.com/docs/stable/data-modeling-concepts.html)
 
 
 # about 
@@ -59,3 +62,21 @@
 		- 	any user with access to the system database 
 	- db users 
 		- 	users with access to a specific db
+
+## databases
+	- sets of collections
+
+### collections 
+	- store documents
+	- you dont define what columns are in advanced
+	- collection types 
+		- 	document 
+		- 	edge
+
+#### documents
+	- a record
+	- attributes 
+		- 	`_key` immutable. assigned automatically if not given a value
+
+
+## data modeling
