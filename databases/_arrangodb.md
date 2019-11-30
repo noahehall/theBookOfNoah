@@ -112,24 +112,30 @@
 	# db commands 
 		db.createDatabase 
 		db.useDatabase(dbName) # select db
-		db.useBasicAuth(uname, upass) # authenticate with selected db
+		db.useBasicAuth(uname, upass) # authenticate with selected db.query(aqlTemplateString)
 
 
 	# aql 
 		const userCollection = db.collection("_users");
 		const role = "admin";
-
 		const query = aql`
 		  FOR user IN ${userCollection}
 		  FILTER user.role == ${role}
 		  RETURN user
 		`;
-
 		// -- is equivalent to --
 		const query = {
 		  query: "FOR user IN @@value0 FILTER user.role == @value1 RETURN user",
 		  bindVars: { "@value0": userCollection.name, value1: role }
 		};
+		async database.explain(query, [bindVars,] [opts]): ExplainResult
+
+		const cursor = await db.query(aql`
+		  FOR u IN _users
+		  FILTER u.authData.active == ${active}
+		  RETURN u.user
+		`);
+
 
 
 
