@@ -39,10 +39,12 @@
 
 	# CRUD (aql)
 		RETURN DOCUMENT('collectionName/_key')
+		# if found, update with new values
 		UPSERT searchExpression 
 			INSERT insertExpression 
 			UPDATE updateExpression 
 			IN collection options
+		# if found, replace
 		UPSERT searchExpression 
 			INSERT insertExpression 
 			REPLACE updateExpression 
