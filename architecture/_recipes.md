@@ -7,7 +7,7 @@
 		// post data to backend
 		client.post({ 
 			redisSetName: dateTimeToRunFunction, 
-			value: functionToRunId.event.id,
+			value: functionNameToRun.event.id,
 		});
 
 		// backend handleer
@@ -20,7 +20,7 @@
 			// near-time items are pushed directly to redis
 			else {
 				// upsert redis set, which returns total size of set
-				const sizeOfRedisSetForThisDateTime = redis.sadd(clientData)
+				const sizeOfRedisSetForThisDateTime = redis.sadd(clientData + convertToId(functionname))
 				// create cronjob
 				nodeCron.upsertCronJob(redisSetName, functionToRun)
 			}
@@ -35,13 +35,14 @@
 			.then(() => redis.delete(redisSetName))
 			.then(() => scylla.execute(save success and errors and other important shit))
 
-	// automation
+		// automation
 		nodeCron.everyday()
 			.then(() => scylla.execute(get appropriate conjob configs < 1 week))
 			.then(items => push to redit)
 			.then((errors and shit) => scylla.execute update records with appropriate information)
-	// peristence 
-		scylla.execute(save all runnable function Names)
+		
+		// init 
+		scylla.execute(save all runnable function Names with index on name)
 
 
 
