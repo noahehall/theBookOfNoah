@@ -39,6 +39,14 @@
 
 	# CRUD (aql)
 		RETURN DOCUMENT('collectionName/_key')
+		UPSERT searchExpression 
+			INSERT insertExpression 
+			UPDATE updateExpression 
+			IN collection options
+		UPSERT searchExpression 
+			INSERT insertExpression 
+			REPLACE updateExpression 
+			IN collection options
 		INSERT {...} INTO collectionName 
 		INSERT {...} into collectionName RETURN NEW #returns the created doc
 		UPDATE "9915" WITH { age: 40 } IN users # only modifies specified attributes
