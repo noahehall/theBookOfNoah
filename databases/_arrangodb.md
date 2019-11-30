@@ -1,5 +1,6 @@
 # docs 
 	- [installation](https://www.arangodb.com/docs/stable/getting-started-installation.html)
+	- [web interface](https://www.arangodb.com/docs/stable/getting-started-web-interface.html)
 
 
 # about 
@@ -26,7 +27,21 @@
 		db._createDatabase("mydb"); #bool
 
 		var users = require("@arangodb/users");
-		users.save("myuser@mydb", "mypw");
+		users.save("myuser@mydb", "mypw"); # {user, active, extra, code}
 		users.grantDatabase("root@example", "example");
 
 ```
+
+
+# architecture 
+	- `arangod` 
+		- 	the server
+		- 	speaks http/rest 
+		- 	comes with a free web interface
+	- 	`arangosh` 
+		- 	a synchronous shell for interaction with the server 
+
+## drivers 
+	- drivers implement a programming interace that should feel natural for that programming lanaguage
+	- do all the talking with the server 
+	- generally can ignore the http api if using a driver 
