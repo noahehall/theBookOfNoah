@@ -103,7 +103,7 @@
 ```
 ### db functions 
 ```sql 
-	DOCUMENT(collectionName, )
+	DOCUMENT(collectionName, id)
 	COLLECTIONS()
 	COUNT()
 	LENGTH(collectionName)
@@ -122,4 +122,15 @@
 
 ### unkown where the fuck these should go 
 ```sql 
+```
+
+
+# examples 
+```sql 
+	# retrieving documents
+	DOCUMENT( users, "users/john" )
+	DOCUMENT( users, "john" )
+	DOCUMENT( users, [ "users/john", "users/amy" ] )
+	DOCUMENT( users, [ "john", "amy" ] )
+
 ```
