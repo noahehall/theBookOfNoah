@@ -40,6 +40,8 @@
 		RETURN DOCUMENT('collectionName/_key')
 		INSERT {...} INTO collectionName 
 		INSERT {...} into collectionName RETURN NEW #returns the created doc
+		UPDATE "9915" WITH { age: 40 } IN users # only modifies specified attributes
+		REPLACE "9915" WITH { age: 40 } IN users # replaces entire document
 ```
 
 
@@ -175,6 +177,28 @@
 		FOR user IN users
 			sort user._key 
 			RETURN user
+		FOR user IN users
+			FILTER user.age > 30
+			SORT user.age
+			RETURN user.name
+			FOR user IN users
+
+		# nested loop
+		FOR user1 IN users
+			FOR user2 IN users
+				FILTER user1 != user2
+				RETURN [user1.name, user2.name]
+
+	# return statements
+			RETURN { userName: user.name, age: user.age }
+			RETURN user.name
+			RETURN NEW 
+			RETURN CONCAT(user.name, "'s age is ", user.age)
+			RETURN {
+				pair: [user1.name, user2.name],
+				sumOfAges: user1.age + user2.age
+			}
+
 
 	# conditionals 
 		RETURN 1 == 1 ? "okay" : FAIL("error") // "okay"
@@ -182,7 +206,8 @@
 		RETURN 1 == 2 && FAIL("error") ? true : false // false
 		RETURN 1 == 1 && FAIL("error") ? true : false // aborted with error
 
-	# sort 
+	# OPERATORS 
 		SORT user.age DESC
+		FILTER user.age > 30
 
 ```
