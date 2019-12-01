@@ -30,7 +30,7 @@
 
 				if (sizeOfRedisSetForThisDateTime)
 					// create cronjob
-					nodeCron.upsertCronJob(, functionToRun)
+					nodeCron.upsertCronJob(triggerUtc, () => functionToRun([...redisGetAllEvents(triggerUtc)]))
 			}
 		})
 
