@@ -9,7 +9,7 @@
 	// golden path
 		// post data to backend
 		client.post({ 
-			redisSetName: toUtcString(dateTimeToRunFunction), 
+			triggerUtc: toUtcString(event.endtime), 
 			functiontorun: string,
 			eventid: string.
 		});
@@ -20,14 +20,17 @@
 			// arrangodb.query(upsert raw data);
 
 			// far-in-future items arent kept in arangodb
-			if (dateTimeToRunFunction > 1 week) arrangodb.query(save nodecronjob.config under dateTimeToRunFunction + (functionNameToRun))
+			if (req.body.triggerUtc > utc(serverTime)) arrangodb.query(save req.body)
 			
 			// near-time items are pushed directly to redis
 			else {
 				// upsert redis set, which returns total size of set
-				const sizeOfRedisSetForThisDateTime = redis.sadd(clientData + (functionname))
-				// create cronjob
-				nodeCron.upsertCronJob(redisSetName, functionToRun)
+				eventTriggerConfig = getBusinessLogic(req.body)
+				const sizeOfRedisSetForThisDateTime = redis.sadd(eventTriggerConfig)
+
+				if (sizeOfRedisSetForThisDateTime)
+					// create cronjob
+					nodeCron.upsertCronJob(, functionToRun)
 			}
 		})
 
