@@ -40,14 +40,14 @@
 	# CRUD (aql)
 		RETURN DOCUMENT('collectionName/_key')
 		# if found, update with new values
-		UPSERT searchExpression 
-			INSERT insertExpression 
-			UPDATE updateExpression 
+		UPSERT searchExpression // try to find this document
+			INSERT insertExpression // insert if not found
+			UPDATE updateExpression // update if found
 			IN collection options
 		# if found, replace
 		UPSERT searchExpression 
 			INSERT insertExpression 
-			REPLACE updateExpression 
+			REPLACE updateExpression // replace if found
 			IN collection options
 		INSERT {...} INTO collectionName 
 		INSERT {...} into collectionName RETURN NEW #returns the created doc

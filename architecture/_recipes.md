@@ -3,11 +3,15 @@
 
 # time based triggers 
 ```js 
+	// todo 
+		// handle logic 
+		// user later changes date
 	// golden path
 		// post data to backend
 		client.post({ 
-			redisSetName: dateTimeToRunFunction, 
-			value: functionNameToRun.event.id,
+			redisSetName: toUtcString(dateTimeToRunFunction), 
+			functiontorun: string,
+			eventid: string.
 		});
 
 		// backend handleer
