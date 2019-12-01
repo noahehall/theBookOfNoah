@@ -13,19 +13,18 @@
 			triggerUtc: toUtcString(event.endtime), 
 			functiontorun: string,
 			eventid: string.
-		});
+		});functionToRun
 
 		// backend handleer
 		backend.post(req, res).then(() => {
-			// essentially a log of this post request
-			// arrangodb.query(upsert raw data);
-
 			// far-in-future items arent kept in arangodb
-			if (req.body.triggerUtc > utc(serverTime)) arrangodb.query(save req.body)
+			// set time to 00:00:00 to facilitate getting all dates for today
+			if (req.body.triggerUtc. > utc(serverTime)) arrangodb.query(save req.body)
 			
 			// near-time items are pushed directly to redis
 			else {
 				// upsert redis set, which returns total size of set
+				// set trigger to original trigger UTC set from client
 				eventTriggerConfig = getBusinessLogic(req.body)
 				const sizeOfRedisSetForThisDateTime = redis.sadd(eventTriggerConfig)
 
