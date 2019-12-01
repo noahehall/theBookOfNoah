@@ -1,5 +1,6 @@
 # TLDR 
  	- uhhh place to gather my thoughts 
+ 	- fuck scylladb <<<<< arangodb
 
 # time based triggers 
 ```js 
