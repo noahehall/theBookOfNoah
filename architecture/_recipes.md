@@ -42,9 +42,15 @@
 			// should return just the eventid, 
 			const eventIds = allEvents.map(event => event.split('.').pop())
 
+		// backend handler
 		// automation
 		nodeCron.everyday()
 			.then(() => arrangodb.query(get all events for today))
-			.then(items => push to redit under aforementioned logic)
+			.then({eventIds} => {
+				redis.multi
+					redis.expire fnName.TriggerDateInUtc math(24hrs in seconds)
+					redis.sadd fnName.triggerdateInUtc eventIds.map(id => triggerTimeInUtc.id)
+				redis.multiend
+			}
 
 ```
