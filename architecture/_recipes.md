@@ -45,7 +45,7 @@
 			const eventIds = allEvents.map(event => event.split('.').pop())
 
 		// backend handler
-		// automation
+		// automation: at 12:00am, load todays events into redis
 		nodeCron.everyday()
 			.then(() => arrangodb.query(get all events for today))
 			.then({eventIds} => {
@@ -55,5 +55,9 @@
 					redis.sadd fnName.triggerdateInUtc eventIds.map(id => triggerTimeInUtc.id)
 				redis.multiend
 			})
+
+		// bakcend handler 
+		// automation: run functionToRun every minute 
+		// functionToRun: knows how to retrieve items from redis and do its thing
 
 ```
