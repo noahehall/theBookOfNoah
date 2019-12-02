@@ -76,13 +76,25 @@
 		- throwing an exception , unless its caught within the same function 
 		- printing to the screen/logging 
 		- querying the html docuemnts, brower cookies or databases
+	- referential transparency 
+		- the actual definition of a pure function
+		- guarantee a consistent return value form a fucntion given the same arguments 
+		- Purity, i.e., the existence of a pure mapping betwen a fucntios arguents and its return value 
+		- i.e. must have no side effects
+		- i.e. equational correctness
+	- a program 
+		- can be defined as a set of functions that processes a given input and procudes an output 
 
 # declarative vs imperative 
 	- imeprative 
 		- loop control structure 
 			- hard to reuse and difficult to plug into other operations 
 			- implies code thats constalty changing or mutating in response to new iterations 
-			- 
+
+
+# FP thought process 
+	- separate long functions into shorter functions, each with a single ppurpose 
+	- reduce the number of side effects by explicityly defining al larguments needed for hte functions to carry our their job 
 
 # common methods 
 ## run 
@@ -91,4 +103,3 @@
 # lambda expressions
 	- e.g. JS arrow functions 
 	- useful for being passed in as antoher fucntions arguments 
-	- 
