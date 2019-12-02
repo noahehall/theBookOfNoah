@@ -16,6 +16,8 @@
 		- produces externally visible side effects
 	- formal parameters 
 		- the arguments specified in a functions signature
+	- functional awareness 
+		- the instinct of looking at problems as aa combination of simple fucntiosn that together provide a complete solution 
 
 
 # programming paradigms
@@ -24,7 +26,8 @@
 		- refers to the declarative evaluation of ppure functions to create immutable programs by avoiding extenrally observable side efects
 		- a software development style that places a major emphasis on the use of functions 
 		- purpose is to dabstract control flows and operations on data with fucntions in ordder to avoid side effects and reduce mutation of state in an applicaations 
-		- 
+		- the act of decomposing programs into smaller pieces and composing new programs by being those pieces back together 
+
 	- reactive programming 
 		- facilitates working with data flow and propagation of change 
 		- extremely importaant ahen delaing with asynchronous or event based code 
@@ -55,7 +58,7 @@
 
 
 
-# function programming concepts 
+# FP concepts 
 	- parameterized functions 
 		- parametrers arent just scalar values but can/and should be funjctioons themselves
 	- decomposition 
@@ -88,6 +91,9 @@
 		- can be defined as a set of functions that processes a given input and procudes an output 
 	- immutable data 
 		- data that cannot be changed 
+	- unit of modularity 
+		- i.e. the unitt of work in FP is the function 
+		- e.g. in object oriented programming the unit of work could be considered the class
 
 # declarative vs imperative 
 	- imeprative 
@@ -96,9 +102,12 @@
 			- implies code thats constalty changing or mutating in response to new iterations 
 
 
-# FP thought process 
+# FP thought process
 	- separate long functions into shorter functions, each with a single ppurpose 
 	- reduce the number of side effects by explicityly defining al larguments needed for hte functions to carry our their job 
+	- decompose tasks into simple fucntions 
+	- process data using fluent chains 
+	- decrease the complexity of event driven code by enabling reactive paradigms 
 
 # common methods 
 ## run 
