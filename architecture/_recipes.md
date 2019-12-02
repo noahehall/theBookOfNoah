@@ -7,6 +7,7 @@
 	// todo 
 		// handle logic 
 		// user later changes date
+		// could fit redis pub.sub in here but fuckit at this stage
 	// golden path
 		// post data to backend
 		client.post({ 
