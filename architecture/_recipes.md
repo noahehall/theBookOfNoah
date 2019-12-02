@@ -31,6 +31,7 @@
 
 		// backendhandler
 		// remove things 
+		// likely need to send before and after to be super hacky 
 		backend.post(req, res).then(() => {
 			event.status !== active 
 			redis.srem fnName.triggerDateInUtc triggerTimeInUtc.eventId
