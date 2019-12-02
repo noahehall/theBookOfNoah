@@ -19,13 +19,15 @@
 
 
 # programming paradigms
+	- functional programming 
+		- a way of writing code (and nothing else) 
+		- refers to the declarative evaluation of ppure functions to create immutable programs by avoiding extenrally observable side efects
+		- a software development style that places a major emphasis on the use of functions 
+		- purpose is to dabstract control flows and operations on data with fucntions in ordder to avoid side effects and reduce mutation of state in an applicaations 
+		- 
 	- reactive programming 
 		- facilitates working with data flow and propagation of change 
 		- extremely importaant ahen delaing with asynchronous or event based code 
-	- functional programming 
-		- a way of writing code (and nothing else) 
-		- a software development style that places a major emphasis on the use of functions 
-		- purpose is to dabstract control flows and operations on data with fucntions in ordder to avoid side effects and reduce mutation of state in an applicaations 
 	- object oriented programming
 	- declarative programming 
 		- expresses a set of oeprations without revealing how their implen=meneted or how data flows through them 
@@ -84,6 +86,8 @@
 		- i.e. equational correctness
 	- a program 
 		- can be defined as a set of functions that processes a given input and procudes an output 
+	- immutable data 
+		- data that cannot be changed 
 
 # declarative vs imperative 
 	- imeprative 
