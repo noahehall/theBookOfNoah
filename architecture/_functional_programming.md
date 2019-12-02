@@ -12,7 +12,10 @@
 
 
 # terminology 
-	- object oriented design 
+	- impore code 
+		- produces externally visible side effects
+	- formal parameters 
+		- the arguments specified in a functions signature
 
 
 # programming paradigms
@@ -32,7 +35,8 @@
 	- imperative/procedural programming 
 		- treats a computer program as merely a sequence of topt o bottom staements that changes the state of the system in order to compute a result
 		- tells the computer, in GREAT detail, how to perform a certain task (e.g. a how to loop) 
-		- 
+		- the wholed point of imperative design is to declare how variables mutate from one state to the next
+	- object oriented design 
 
 
 # application design 
@@ -49,9 +53,6 @@
 
 
 
-# function vs object oriented design 
-
-
 # function programming concepts 
 	- parameterized functions 
 		- parametrers arent just scalar values but can/and should be funjctioons themselves
@@ -63,6 +64,18 @@
 	- statelessness 
 		- stateless code has 0 chance of changing/breaking global state
 	- immutability 
+	- pure functions 
+		- functions that avoid side effects and changes  of state 
+		- depends only on the input provided and not on any hiddenexternal state that may change during its evaluatin/between calls 
+		- doesnt inflict changes beyond their scope, e.g. modyfing a global object /parameter passed by reference
+		- have clear contracts as part of their signatures that describe clearly on all of the functions formal parameters
+	- side effects
+		- changing a variable, property or data structure globally 
+		- changing the original value of a functions argument 
+		- rocessing user input 
+		- throwing an exception , unless its caught within the same function 
+		- printing to the screen/logging 
+		- querying the html docuemnts, brower cookies or databases
 
 # declarative vs imperative 
 	- imeprative 
