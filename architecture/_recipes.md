@@ -16,6 +16,7 @@
 		});functionToRun
 
 		// backend handleer
+		// save things
 		backend.post(req, res).then(() => {
 			// always save to arangodb
 			settimeout(arrangodb.query(save req.body))
@@ -27,26 +28,23 @@
 			}
 		})
 
-		// execution
-		beforeFunctionToRunRuns
-			.getCurrentSetItems()
-			.then(() => arrangodb.query(get functionname with this id))
-			.then(items => functionToRun[..items])
-			.then((erros and shit) =>  handleErrsAndShit())
-			.then(() => redis.delete(redisSetName))
-			.then(() => arrangodb.query(save success and errors and other important shit))
+		// backendhandler
+		// remove things 
+		backend.post(req, res).then(() => {
+			event.status !== active 
+			redis.srem fnName.triggerDateInUtc triggerTimeInUtc.eventId
+		})
+
+		// backendhandler 
+		// trigger invocation 
+			// returns all items for this function, for this day, with the matching time
+			const allEvents = redis.sscan fnName.triggerdateInUtc triggerTimeInUtc*
+			// should return just the eventid, 
+			const eventIds = allEvents.map(event => event.split('.').pop())
 
 		// automation
 		nodeCron.everyday()
-			.then(() => arrangodb.query(get appropriate conjob configs < 1 week))
-			.then(items => push to redit)
-			.then((errors and shit) => arrangodb.query update records with appropriate information)
-		
-		// init 
-		arrangodb.query(save all runnable function Names with index on name)
-
-
-
-
+			.then(() => arrangodb.query(get all events for today))
+			.then(items => push to redit under aforementioned logic)
 
 ```
