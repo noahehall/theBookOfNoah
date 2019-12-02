@@ -10,27 +10,20 @@
 	// golden path
 		// post data to backend
 		client.post({ 
-			triggerUtc: toUtcString(event.endtime), 
+			triggerUtc: toUtcString(event.starttime), 
 			functiontorun: string,
 			eventid: string.
 		});functionToRun
 
 		// backend handleer
 		backend.post(req, res).then(() => {
-			// far-in-future items arent kept in arangodb
-			// set time to 00:00:00 to facilitate getting all dates for today
-			if (req.body.triggerUtc. > utc(serverTime)) arrangodb.query(save req.body)
-			
-			// near-time items are pushed directly to redis
-			else {
-				// upsert redis set, which returns total size of set
-				// set trigger to original trigger UTC set from client
-				eventTriggerConfig = getBusinessLogic(req.body)
-				const sizeOfRedisSetForThisDateTime = redis.sadd(eventTriggerConfig)
+			// always save to arangodb
+			settimeout(arrangodb.query(save req.body))
 
-				if (sizeOfRedisSetForThisDateTime)
-					// create cronjob
-					nodeCron.upsertCronJob(triggerUtc, () => functionToRun([...redisGetAllEvents(triggerUtc)]))
+			// use redis for hot items (i.e trigger today)
+			if (!utc(triggerTime).today within utc(now).today) {
+				// add triggers for this day, for this function, to this set
+				redis.sadd fnName.triggerDateInUtc triggerTimeInUtc.EventId
 			}
 		})
 
