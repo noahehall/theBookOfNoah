@@ -21,9 +21,14 @@
 	- complexity 
 		- the the ease/difficult of reasoning about something
 		- thigns that increase complexity 
-			- loops 
-			- logical branches
+			- anything increases the number of paths program execution can take
+				- loops 
+				- logical branches
 			- a lot of parameters in function signatures
+	- observable 
+		- let you subscribe to a stream of data that you an process by composing and chaning oprations together
+	- prototypal relationship 
+		- defines the relationshp between on object and another by saying one is a sub/derived type of another 
 
 
 # programming paradigms
@@ -37,7 +42,14 @@
 	- reactive programming 
 		- facilitates working with data flow and propagation of change 
 		- extremely importaant ahen delaing with asynchronous or event based code 
+		- raises the level of absraction in your code
+		- based on functional programming by using pure functions to process data with the same familiar operations like map and reduce and the terseness of lambda expressions 
+	- function reactive programming 
+		- 
 	- object oriented programming
+		- favor the creation of new derived objects as the principal means to gain code reuse 
+			- i.e. one object will reuse all the data & behavior from its parent otypes
+		- rely heavily on object-based encapsulatin to protect the integrity of the objects mutable state 
 	- declarative programming 
 		- expresses a set of oeprations without revealing how their implen=meneted or how data flows through them 
 		- separates program description from evaluation 
@@ -106,6 +118,9 @@
 		- e.g. in object oriented programming the unit of work could be considered the class
 	- singularity principle 
 		- states that functions should hav ea single purpose 
+	- pure error handling 
+		- distinct from exception handling  
+		- allows exceptionns to only fire in truly exceptional conditions (i.e. an exception) 
 
 
 # declarative vs imperative 
