@@ -1,9 +1,10 @@
 # books 
 	- function programming in javascript 
-	- 	Luis Atencio
+		- Luis Atencio
 
 # links 
 	- [fp run](http://mng.bz/nmax)
+	- [FP examples](https://github.com/luijar/functional-programming-js)
 
 
 # FP ideas
@@ -144,8 +145,30 @@
 		- FP functions
 	- architecture 
 		- OO create inheritance hierarchies (Person -> Student) with methods and data tightly boudn together 
-		- FP favors general polymorphic functions that crosscut different data types and avoidds the use of `this`
-		- 
+		- FP favors general polymorphic functions that crosscut different data types and avoids the use of `this`
+			- using `this` is problematic because it gives you access to isntance-level data outside of the method scope 
+				- causes side effects
+	- inheritance vs composition
+		- OO relies heavily on class inheritance 
+		- FP relies heavily on object composition
+	- programming style 
+		- OO imperative 
+		- FP declaritive 
+	- data and behavior 
+		- OO tightly coupled in classes withmethods 
+		- FP loosely coupled into pure, stand alone function s
+	- state management  
+		- OO favors mutation of objects via instance methods 
+		- FP treats objects as immutable values 
+	- control flow 
+		- OO loops and conditionals 
+		- FP functions and recursion 
+	- thread safety 
+		- OO difficult to achieve 
+		- FP enables concurrent programming 
+	- encapsulation 
+		- OO needed to protect data integrity 
+		- FP not needed because everything is immutable 
 
 
 # FP thought process
