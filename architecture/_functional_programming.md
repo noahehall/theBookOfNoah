@@ -49,7 +49,9 @@
 	- object oriented programming
 		- favor the creation of new derived objects as the principal means to gain code reuse 
 			- i.e. one object will reuse all the data & behavior from its parent otypes
-		- rely heavily on object-based encapsulatin to protect the integrity of the objects mutable state 
+		- rely heavily on object-based encapsulatin to protect the integrity of the objects mutable state  both direct and inherited, in order to expose or manipulate the state via instance methods 
+			- results in a tight coupling between an objects data nd its fine-grained behavior
+		- central form of abstraction is the object
 	- declarative programming 
 		- expresses a set of oeprations without revealing how their implen=meneted or how data flows through them 
 		- separates program description from evaluation 
@@ -115,12 +117,15 @@
 		- data that cannot be changed 
 	- unit of modularity 
 		- i.e. the unitt of work in FP is the function 
-		- e.g. in object oriented programming the unit of work could be considered the class
+		- e.g. in object oriented programming the unit of work could be considered the class (or more specifically objects)
 	- singularity principle 
 		- states that functions should hav ea single purpose 
 	- pure error handling 
 		- distinct from exception handling  
 		- allows exceptionns to only fire in truly exceptional conditions (i.e. an exception) 
+	- polymorphic functions 
+		- i.e. duck typing 
+		- use references to base tyeps (e.g. Person) to work on objects of derived types (e.g. student)
 
 
 # declarative vs imperative 
@@ -128,6 +133,19 @@
 		- loop control structure 
 			- hard to reuse and difficult to plug into other operations 
 			- implies code thats constalty changing or mutating in response to new iterations 
+
+
+# FP vs OOP
+	- execution
+		- OO elies on fine grained class instance methods 
+		- FP relies on course grained operations that can crosscut/work across many data types 
+	- unit of work 
+		- OO classes, instances, objects 
+		- FP functions
+	- architecture 
+		- OO create inheritance hierarchies (Person -> Student) with methods and data tightly boudn together 
+		- FP favors general polymorphic functions that crosscut different data types and avoidds the use of `this`
+		- 
 
 
 # FP thought process
