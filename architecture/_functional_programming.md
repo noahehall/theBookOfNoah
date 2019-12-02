@@ -30,6 +30,8 @@
 		- let you subscribe to a stream of data that you an process by composing and chaning oprations together
 	- prototypal relationship 
 		- defines the relationshp between on object and another by saying one is a sub/derived type of another 
+	- program state 
+		- defined as a snapshot of the data stored in all of its objects at any moment of time 
 
 
 # programming paradigms
@@ -97,6 +99,8 @@
 		- depends only on the input provided and not on any hiddenexternal state that may change during its evaluatin/between calls 
 		- doesnt inflict changes beyond their scope, e.g. modyfing a global object /parameter passed by reference
 		- have clear contracts as part of their signatures that describe clearly on all of the functions formal parameters
+		- an immutable object that contains immutable functionality can be considered pure
+		- using methods to return new copies is one way to implement immutability 
 	- side effects
 		- changing a variable, property or data structure globally 
 		- changing the original value of a functions argument 
@@ -127,6 +131,9 @@
 	- polymorphic functions 
 		- i.e. duck typing 
 		- use references to base tyeps (e.g. Person) to work on objects of derived types (e.g. student)
+	- immmutable values 
+		- all primitives 
+		- including objects/functions that are pure 
 
 
 # declarative vs imperative 
@@ -179,7 +186,7 @@
 	- decrease the complexity of event driven code by enabling reactive paradigms 
 
 
-# common methods 
+# common methods and patterns
 ## run 
 	- the return value of one function becomes input to the next function in a chain like manner
 	- links each function in a chain like manner by passing 
@@ -191,6 +198,12 @@
 ## function chains 
 	- a sequential invocatin of functions that share a common object return value
 	- is lazy evaluated, i.e. it defers it execution until needed 
+## value object pattern 
+	- any object whose equality doesnt depend on identity or reference, just on its vaalue 
+	- once ts created its state may not change 
+	- e.g. numbers, strings, tuple, pair, point, zipCode, coordinate, money, date, etc.
+	- is an object oriented design pattern that was inspired by OP
+	- 
 
 # examples 
 ```js 
@@ -198,5 +211,10 @@
 	// the composition of two functions
 	// reads: f composed of g
 	f * g = f(g(x))
+
+
+	// value object in JS 
+	// note that object.freeze doesnt freeze child objects
+	const blah = Object.freeze(...)
 
 ```

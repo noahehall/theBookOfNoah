@@ -38,6 +38,7 @@
 		// backendhandler 
 		// trigger invocation 
 			// returns all items for this function, for this day, with the matching time
+			// potentially could be a lua script
 			const allEvents = redis.sscan fnName.triggerdateInUtc triggerTimeInUtc*
 			// should return just the eventid, 
 			const eventIds = allEvents.map(event => event.split('.').pop())
