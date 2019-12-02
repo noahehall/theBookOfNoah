@@ -59,5 +59,6 @@
 		// bakcend handler 
 		// automation: run functionToRun every minute 
 		// functionToRun: knows how to retrieve items from redis and do its thing
+		nodeCron.run(60second interval () => functionToRun())
 
 ```
