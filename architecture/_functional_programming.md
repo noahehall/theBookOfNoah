@@ -65,6 +65,8 @@
 		- breaking down ap rogrmaa into smaller pieces that are more reusable, reliable, and easier to understand 
 	- composition 
 		- recomposing/combining indiviudal functions to form an entire program that is easier to reason about as a whole 
+		- the requiring of two functions to be compatible is that they must agree in the number of arguments as well as their types 
+		- the meaning of the entire expression can be understand from the meaning of its individual pieces 
 	- declarative 
 	- statelessness 
 		- stateless code has 0 chance of changing/breaking global state
@@ -87,6 +89,8 @@
 		- Purity, i.e., the existence of a pure mapping betwen a fucntios arguents and its return value 
 		- i.e. must have no side effects
 		- i.e. equational correctness
+		- a priori a functions complexity is sometimes directly related to the number of arguments it receives 
+			- i.e. the generally the lower the number of functional parameters, the simple the function tends to be 
 	- a program 
 		- can be defined as a set of functions that processes a given input and procudes an output 
 	- immutable data 
@@ -94,6 +98,9 @@
 	- unit of modularity 
 		- i.e. the unitt of work in FP is the function 
 		- e.g. in object oriented programming the unit of work could be considered the class
+	- singularity principle 
+		- states that functions should hav ea single purpose 
+
 
 # declarative vs imperative 
 	- imeprative 
@@ -109,10 +116,24 @@
 	- process data using fluent chains 
 	- decrease the complexity of event driven code by enabling reactive paradigms 
 
+
 # common methods 
 ## run 
 	- the return value of one function becomes input to the next function in a chain like manner
 	- links each function in a chain like manner by passing 
-# lambda expressions
+## lambda expressions
 	- e.g. JS arrow functions 
 	- useful for being passed in as antoher fucntions arguments 
+## compose 
+	- a higher order function that accepts other functions as arguments 
+## chains 
+	- a sequential invocatin of functions that share a common object return value
+
+# examples 
+```js 
+	// algebra 
+	// the composition of two functions
+	// reads: f composed of g
+	f * g = f(g(x))
+
+```
