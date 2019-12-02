@@ -18,6 +18,12 @@
 		- the arguments specified in a functions signature
 	- functional awareness 
 		- the instinct of looking at problems as aa combination of simple fucntiosn that together provide a complete solution 
+	- complexity 
+		- the the ease/difficult of reasoning about something
+		- thigns that increase complexity 
+			- loops 
+			- logical branches
+			- a lot of parameters in function signatures
 
 
 # programming paradigms
@@ -126,8 +132,9 @@
 	- useful for being passed in as antoher fucntions arguments 
 ## compose 
 	- a higher order function that accepts other functions as arguments 
-## chains 
+## function chains 
 	- a sequential invocatin of functions that share a common object return value
+	- is lazy evaluated, i.e. it defers it execution until needed 
 
 # examples 
 ```js 
