@@ -48,10 +48,11 @@
 		nodeCron.everyday()
 			.then(() => arrangodb.query(get all events for today))
 			.then({eventIds} => {
+			// potentially could be a lua script
 				redis.multi
 					redis.expire fnName.TriggerDateInUtc math(24hrs in seconds)
 					redis.sadd fnName.triggerdateInUtc eventIds.map(id => triggerTimeInUtc.id)
 				redis.multiend
-			}
+			})
 
 ```
