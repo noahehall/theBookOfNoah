@@ -14,7 +14,7 @@
 			triggerUtc: toUtcString(event.starttime), 
 			functiontorun: string,
 			eventid: string.
-		});functionToRun
+		});
 
 		// backend handleer
 		// save things
@@ -32,6 +32,7 @@
 		// backendhandler
 		// remove things 
 		// likely need to send before and after to be super hacky 
+		// as the likely change is the trigger date, so this will srem nothing
 		backend.post(req, res).then(() => {
 			event.status !== active 
 			redis.srem fnName.triggerDateInUtc triggerTimeInUtc.eventId
