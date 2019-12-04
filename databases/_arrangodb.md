@@ -23,6 +23,7 @@
 		# tty to things 
 		arangosh 
 		arangosh --server.username "myuser@mydb" --server.database mydb
+		help # lists a bunch of cmds
 
 	# errors 
 		# maximum number of memory mappings per process is 65530
@@ -32,12 +33,17 @@
 	# db admin
 	# create things
 		db._createDatabase("mydb"); #bool
+		db._useDatabase('mydb')
 
 		var users = require("@arangodb/users");
+		users # will print methods on the users db
 		users.save("myuser@mydb", "mypw"); # {user, active, extra, code}
 		users.grantDatabase("root@example", "example");
 
 	# CRUD (aql)
+		# 	arangosh
+		db._query('RETURN DOCUMENT("ActivityActionEvents/2019-12-04T00:00:00Z")')
+
 		RETURN DOCUMENT('collectionName/_key')
 		# if found, update with new values
 		UPSERT searchExpression // try to find this document

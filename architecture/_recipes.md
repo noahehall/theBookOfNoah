@@ -14,6 +14,7 @@
 			triggerUtc: toUtcString(event.starttime), 
 			functiontorun: string,
 			eventid: string.
+			vapidKey,
 		});
 
 		// backend handleer
