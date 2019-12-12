@@ -53,9 +53,15 @@
 # lifecycle
   1. registration
   2. download
-  3. install
+  3. install (event)
     - triggers
       - when the downloaded file is found to be new/byte-wise different
+    - use cases 
+      - populte idb 
+      - fetch resources to cache site assets
+      - i.e. whatever you would do when initialling installing a mobile app 
+        - e.g. make sure its available offline 
+      - etc
   4. activate
     - triggers
       - new installation - immediately activated
@@ -75,6 +81,13 @@
     - intercepting and modifying navigation adn resource requests 
     caching resources ina  very grnaular fashion 
     etc
+
+## basic architecture 
+  - service workewer URL is fetched and registered via `serviceWorkerContainer.register()`
+    - on success 
+      - service worker is executed in the worker context `ServiceWorkerGlobalScope`
+      - service worker begins processing events
+
 
 
 # API (interfaces)
