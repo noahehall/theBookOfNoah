@@ -14,6 +14,9 @@
   - [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
   - [sw example](https://github.com/mdn/sw-test)
   0 [service worker cache for responses](https://developer.mozilla.org/en-US/docs/Web/API/Cache)
+  - [understaanding service workers](http://blog.88mph.io/2017/07/28/understanding-service-workers/)
+  -  [using web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+
 
 
 # tools 
