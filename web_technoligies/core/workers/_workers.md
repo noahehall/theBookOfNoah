@@ -172,7 +172,11 @@
 
 
 ## cache
+  - just use IDB - fuck cache
   - represents the storage for request/response object pairs that are cached as part of the serviceworker lifecycle
+  - global object on the service worker that allows us to store assets delivered by responses, and keyed by their requests
+  - works in a similar way to the browser’s standard cache, but it is specific to your domain
+
 
 ## CacheStorage
   - the storage for cache objects
