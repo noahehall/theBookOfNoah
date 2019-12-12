@@ -1,3 +1,4 @@
+// implementation
 const imgLoad = (url) => {
   return new Promise((resolve, reject) => {      
     var request = new XMLHttpRequest();
@@ -19,3 +20,15 @@ const imgLoad = (url) => {
     request.send();
   });
 }
+
+// example usage 
+let body = document.querySelector('body');
+let myImage = new Image();
+
+imgLoad('myLittleVader.jpg').then((response) => {
+  var imageURL = window.URL.createObjectURL(response);
+  myImage.src = imageURL;
+  body.appendChild(myImage);
+}, (Error) => {
+  console.log(Error);
+});
