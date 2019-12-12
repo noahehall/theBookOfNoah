@@ -1,7 +1,7 @@
 # put this shit somewhere 
   - Note: Because oninstall/onactivate could take a while to complete, the service worker spec provides a waitUntil method, once this is called oninstall or onactivate, it passes a promise. Functional events are not dispatched to the service worker until the promise is successfully resolved.
 
-  
+
 # links
   - [mdn service worker cookbook](https://github.com/mozilla/serviceworker-cookbook)
     - [maybe the same thing?](https://serviceworke.rs/)
@@ -11,6 +11,7 @@
   - [basic code example](https://github.com/mdn/sw-test)
   - [using web workers](https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers)
   - [concepts and usage](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API#Service_worker_concepts_and_usage)
+  - [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
 
 # terminology
   - web workers
