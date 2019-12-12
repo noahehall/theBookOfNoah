@@ -12,6 +12,7 @@
   - [using web workers](https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers)
   - [concepts and usage](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API#Service_worker_concepts_and_usage)
   - [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
+  - [sw example](https://github.com/mdn/sw-test)
 
 # terminology
   - web workers
@@ -76,8 +77,16 @@
     - triggers
       - navigation to an in-scope page occurs
       - event fired on the service worker and it hasnt been downloaded in the past 24 hrs
+  
   6. claiming/controlling of pages 
     - service worker only controls pages opened after the `register()` is successful 
+    - scope: 
+      - The path to your service worker file needs to be written relative to the origin, not your app’s root directory
+        - if the worker is at https://mdn.github.io/sw-test/sw.js, 
+        - and the app’s root is https://mdn.github.io/sw-test/.
+        - the path needs to be written as /sw-test/sw.js, not /sw.js.
+      - Each time a page within your scope is loaded, the service worker is installed against that page and operates on it.
+      - each page SHARES the same worker context, watchout for globals
     - `Clients.claim()` - force new worker to claim existing pages
 
 
@@ -207,4 +216,20 @@
 
   // FetchEvent.respondWith
   // arbitrarily  modify the response to a FetchEvent
+  // 
+  // 
+  
+  // registration 
+  if ('serviceWorker' in navigator) {
+    // url is relative to the origin
+    // scope specifies which paths is controlled by this service worker
+    navigator.serviceWorker.register('./sw-test/sw.js', {scope: './sw-test/'})
+    .then((reg) => {
+      // registration worked
+      console.log('Registration succeeded. Scope is ' + reg.scope);
+    }).catch((error) => {
+      // registration failed
+      console.log('Registration failed with ' + error);
+    });
+  }
 ```
