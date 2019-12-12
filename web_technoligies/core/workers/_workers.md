@@ -15,6 +15,11 @@
   - [sw example](https://github.com/mdn/sw-test)
   0 [service worker cache for responses](https://developer.mozilla.org/en-US/docs/Web/API/Cache)
 
+
+# tools 
+  - [chrome: service workers](chrome://inspect/#service-workers)
+  - [more information than inspect/#service-workers](chrome://serviceworker-internals)
+
 # terminology
   - web workers
     - run scripts in background threads
@@ -73,6 +78,7 @@
           - `ServiceWorkerGlobalScope.skipWaiting()` dont wait for existing workers to release claim
     - use cases 
       - cleanup of resources used in previous service worker versions
+        - e.g. deleting stale idb caches
 
   5. update
     - triggers
