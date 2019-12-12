@@ -41,6 +41,25 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
+// in the event everything fails (cache + user offline) 
+// respond with a wtf image 
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((resp) => {
+      return resp || fetch(event.request).then((response) => {
+        let responseClone = response.clone();
+        caches.open('v1').then((cache) => {
+          cache.put(event.request, responseClone);
+        });
+
+        return response;
+      });
+    }).catch(() => {
+      return caches.match('./sw-test/gallery/myLittleVader.jpg');
+    })
+  );
+});
+
 // return an arbitrary response with headers 
 new Response('<p>Hello from your friendly neighbourhood service worker!</p>', {
   headers: { 'Content-Type': 'text/html' }
