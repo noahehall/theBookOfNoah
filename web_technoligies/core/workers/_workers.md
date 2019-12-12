@@ -53,7 +53,7 @@
 # lifecycle
   1. registration
   2. download
-  3. install (event)
+  3. install `oninstall` event
     - triggers
       - when the downloaded file is found to be new/byte-wise different
     - use cases 
@@ -62,7 +62,8 @@
       - i.e. whatever you would do when initialling installing a mobile app 
         - e.g. make sure its available offline 
       - etc
-  4. activate
+    - installation is not complete until `oninstall` completes
+  4. activate `onactivate` event
     - triggers
       - new installation - immediately activated
       - update installation - activated when there are no longer any pages loaded that are still using the old service worker
