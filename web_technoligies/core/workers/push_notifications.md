@@ -3,6 +3,7 @@
 - [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters)
 - [service worker api](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
 - [VAPID docs](https://tools.ietf.org/html/rfc8292)
+- [server worker recipes](https://serviceworke.rs/)
 
 # terminology 
 	-	push
