@@ -6,6 +6,7 @@
   - [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker_API/Using_Service_Workers)
   - [basic code example](https://github.com/mdn/sw-test)
   - [using web workers](https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers)
+  - [concepts and usage](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API#Service_worker_concepts_and_usage)
 
 # terminology
   - web workers
@@ -17,7 +18,7 @@
       - I/O using XMLHttpRequest
       -
   - service workers
-    - act as proxy servers that  sit between web applications, the browser, and the network
+    - act as proxy servers that sit between web applications, the browser, and the network
     - an event-driven worker registered against an origin and a path
     -  a JavaScript file that can control the web-page/site that it is associated with, intercepting and modifying navigation and resource requests, and caching resources in a very granular fashion
     -  only support HTTPS
@@ -54,11 +55,21 @@
     - triggers
       - new installation - immediately activated
       - update installation - activated when there are no longer any pages loaded that are still using the old service worker
-      -
+        - force activation 
+          - `ServiceWorkerGlobalScope.skipWaiting()` dont wait for existing workers to release claim
+          - `Clients.claim()` - force new worker to claim existing pages
+
   5. update
     - triggers
       - navigation to an in-scope page occurs
       - event fired on the service worker and it hasnt been downloaded in the past 24 hrs
+
+
+# concepts and usage 
+  - a service worker is a JS file that can control the site that is it associated with 
+    - intercepting and modifying navigation adn resource requests 
+    caching resources ina  very grnaular fashion 
+    etc
 
 
 # API (interfaces)
