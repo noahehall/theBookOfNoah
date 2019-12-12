@@ -13,6 +13,7 @@
   - [concepts and usage](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API#Service_worker_concepts_and_usage)
   - [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
   - [sw example](https://github.com/mdn/sw-test)
+  0 [service worker cache for responses](https://developer.mozilla.org/en-US/docs/Web/API/Cache)
 
 # terminology
   - web workers
@@ -87,6 +88,9 @@
         - the path needs to be written as /sw-test/sw.js, not /sw.js.
       - Each time a page within your scope is loaded, the service worker is installed against that page and operates on it.
       - each page SHARES the same worker context, watchout for globals
+      - The service worker will only catch requests from clients under the service worker's scope.
+      - The max scope for a service worker is the location of the worker.
+      - If your service worker is active on a client being served with the Service-Worker-Allowed header, you can specify a list of max scopes for that worker.
     - `Clients.claim()` - force new worker to claim existing pages
 
 
