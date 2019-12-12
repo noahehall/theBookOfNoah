@@ -69,12 +69,17 @@
       - update installation - activated when there are no longer any pages loaded that are still using the old service worker
         - force activation 
           - `ServiceWorkerGlobalScope.skipWaiting()` dont wait for existing workers to release claim
-          - `Clients.claim()` - force new worker to claim existing pages
+    - use cases 
+      - cleanup of resources used in previous service worker versions
 
   5. update
     - triggers
       - navigation to an in-scope page occurs
       - event fired on the service worker and it hasnt been downloaded in the past 24 hrs
+  6. claiming/controlling of pages 
+    - service worker only controls pages opened after the `register()` is successful 
+    - `Clients.claim()` - force new worker to claim existing pages
+
 
 
 # concepts and usage 
