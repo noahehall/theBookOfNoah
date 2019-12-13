@@ -1,6 +1,10 @@
 # put this shit somewhere 
   - Note: Because oninstall/onactivate could take a while to complete, the service worker spec provides a waitUntil method, once this is called oninstall or onactivate, it passes a promise. Functional events are not dispatched to the service worker until the promise is successfully resolved.
 
+# must do
+  - [workbox](https://developers.google.com/web/tools/workbox)
+  - [workbox with webpack](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin)
+
 
 # links
   - [mdn service worker cookbook](https://github.com/mozilla/serviceworker-cookbook)
