@@ -4,8 +4,12 @@
 # must do
   - [workbox](https://developers.google.com/web/tools/workbox)
   - [workbox with webpack](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin)
+  - [workbox with webpack specific](https://developers.google.com/web/tools/workbox/guides/precache-files/webpack)
+  - [always use this one cuz your dope](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin#injectmanifest_plugin_2)
 
-
+# steal some shit 
+  - [they check for localhost](https://github.com/DennyScott/react-router-auth/blob/master/src/serviceWorker.js)
+  
 # links
   - [mdn service worker cookbook](https://github.com/mozilla/serviceworker-cookbook)
     - [maybe the same thing?](https://serviceworke.rs/)
@@ -20,6 +24,8 @@
   0 [service worker cache for responses](https://developer.mozilla.org/en-US/docs/Web/API/Cache)
   - [understaanding service workers](http://blog.88mph.io/2017/07/28/understanding-service-workers/)
   -  [using web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+  - [workbox window tut](https://medium.com/@webmaxru/workbox-4-implementing-refresh-to-update-version-flow-using-the-workbox-window-module-41284967e79c)
+  - [google workbox](https://github.com/GoogleChrome/workbox)
 
 
 
