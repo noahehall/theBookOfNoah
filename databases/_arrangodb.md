@@ -1,3 +1,7 @@
+# must do 
+	- generally all arnago courses if you decide to make arnagodb your DB of choice muther fucker 
+	- [arangodb performance course](https://www.arangodb.com/arangodb-performance-course/)
+	
 # docs 
 	- [main docs](https://www.arangodb.com/documentation/)
 	- [installation](https://www.arangodb.com/docs/stable/getting-started-installation.html)
@@ -9,6 +13,7 @@
 	- [aql](https://www.arangodb.com/docs/stable/aql/)
 	- [nodejs aql template tag](https://github.com/arangodb/arangojs/blob/master/docs/Drivers/JS/Reference/Database/Queries.md#aql)
 	- [indexes](https://www.arangodb.com/docs/stable/indexing-index-basics.html)
+	- 
 
 
 # about 
@@ -20,6 +25,12 @@
 		- 	the server
 		- 	speaks http/rest 
 		- 	comes with a free web interface
+	- `indexes 
+		- user-defined indexes can be created on a collection level 
+		- types 
+			- fulltext index 
+				- permits indexing just one attribute 
+			- 
 
 
 ## accessing the server 
