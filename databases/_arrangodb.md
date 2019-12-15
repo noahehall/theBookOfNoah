@@ -2,6 +2,7 @@
 	- generally all arnago courses if you decide to make arnagodb your DB of choice muther fucker 
 	- [arangodb performance course](https://www.arangodb.com/arangodb-performance-course/)
 	- [arangosearch](https://www.arangodb.com/docs/stable/arangosearch.html)
+	- [working with indexes](https://www.arangodb.com/docs/stable/indexing-working-with-indexes.html#creating-an-index)
 
 
 # docs 
@@ -44,17 +45,19 @@
 	- user-defined indexes can be created on a collection level 
 	
 	- creating indexes 
-		- foreground index: only permitted under an exclusive collection lock 
-			- i.e the collection is not available while the index is being crated 
-		- background index: the collection remains mostly avialable during the index creation 
-			- only available in the `RocksDB` storage engine
+		
+### general index properties 
+	- unique: no two docs can have the same value
+	- sparse: only those docs whose index attribute has a value set to a NON NULL value will be indexed 
+		- i.e. not all docs have to be indexed 
+		- usefulf for optional attributes
+	- foreground index: only permitted under an exclusive collection lock 
+		- i.e the collection is not available while the index is being crated 
+	- background index: the collection remains mostly avialable during the index creation 
+		- only available in the `RocksDB` storage engine
 
 ### index types 
-	- general index properties 
-		- unique: no two docs can have the same value
-		- sparse: only those docs whose index attribute has a value set to a NON NULL value will be indexed 
-			- i.e. not all docs have to be indexed 
-			- usefulf for optional attributes
+
 
 
 	- system indexes (automatically created) 
