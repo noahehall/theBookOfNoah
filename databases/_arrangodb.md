@@ -8,6 +8,7 @@
 	- [misc aql functions](https://www.arangodb.com/docs/stable/aql/functions-miscellaneous.html)
 	- [aql](https://www.arangodb.com/docs/stable/aql/)
 	- [nodejs aql template tag](https://github.com/arangodb/arangojs/blob/master/docs/Drivers/JS/Reference/Database/Queries.md#aql)
+	- [indexes](https://www.arangodb.com/docs/stable/indexing-index-basics.html)
 
 
 # about 
