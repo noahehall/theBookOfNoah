@@ -1,6 +1,7 @@
 # must do 
 	- generally all arnago courses if you decide to make arnagodb your DB of choice muther fucker 
 	- [arangodb performance course](https://www.arangodb.com/arangodb-performance-course/)
+	- [arangosearch](https://www.arangodb.com/docs/stable/arangosearch.html)
 
 
 # docs 
@@ -134,7 +135,9 @@
 
 		- use cases
 			- for automatically removing expired documents (setting `expireAfter` and specifiying the docs cresation date and time)
-		- 
+	
+	- geo index 
+		- [SKIPPED](https://www.arangodb.com/docs/stable/indexing-index-basics.html#geo-index)
 
 
 ## accessing the server 
