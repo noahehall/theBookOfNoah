@@ -21,7 +21,7 @@
 	- [libicu - used for word tokenization in fulltext indexes](https://packages.debian.org/sid/libicu-dev)
 	- [rocksdb storage engine, used by arango for backgroudn indexes](https://rocksdb.org/)
 	- [storage engines](https://www.arangodb.com/docs/stable/architecture-storage-engines.html)
-	
+
 
 
 # about 
@@ -538,6 +538,8 @@
 		var indexInfo = db.COL_NAME.getIndexes();
 	// drop an index
 		db.COL_NAME.dropIndex(index)
+	// load indexes into memory 
+		db.COL_NAME.loadIndexesIntoMemory();
 
 	// using explicit null values in an array index
 	db.COL_NAME.ensureIndex({ type: "hash", fields: [ "tags[*]" ] });
