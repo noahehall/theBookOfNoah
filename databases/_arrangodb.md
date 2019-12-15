@@ -20,6 +20,9 @@
 
 # about 
 	- this shit is a javascript devs heaven
+	- in general read the top section first 
+		- then find the examples/quickies below as they MAY contain more information 
+			- i had duplicating shit, and sometimes its a waste of time finding the correct place to put something
 
 
 # current best practices understanding 
@@ -461,6 +464,7 @@
 		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name.last" ] })
 		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name.last", "name.first" ] })
 	// indexing array values 
+	// 
 		
 	//retrieving documents
 		DOCUMENT( users, "users/john" )
