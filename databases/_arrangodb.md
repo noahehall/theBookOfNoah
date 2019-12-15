@@ -33,7 +33,10 @@
 	- any datum tht needs to be sorted should be a skiplist index
   - any unique value should be a form of a hash index
   - set a docs creation time as a unix timestamp
+
+## indexes
   - always build indexes during times with less load
+  - A non-unique hash index on an optional document attribute should be declared sparse so that it will not index documents for which the index attribute is not set.
 
 
 # architecture 
@@ -56,13 +59,17 @@
 ### general index properties 
 	- user-defined indexes can only be created on a collection level 
 	- unique: no two docs can have the same value
+		- inserting docs with a duplicate key will lead to a unqiue constrint violation
 	- sparse: only those docs whose index attribute has a value set to a NON NULL value will be indexed 
 		- i.e. not all docs have to be indexed 
-		- usefulf for optional attributes
+			- docs whose value is set to null will not be indexed 
+		- useful for optional attributes
+
 	- foreground index: only permitted under an exclusive collection lock 
 		- i.e the collection is not available while the index is being crated 
 	- background index: the collection remains mostly avialable during the index creation 
 		- only available in the `RocksDB` storage engine
+
 
 ### index types 
 	- system indexes (automatically created) 
@@ -98,33 +105,26 @@
 			- unsorted 
 				- does not support range queries or sorting 
 			- created on one/more document attributes
-				- will only be used if 
-					- all attributes are present int he search condition
-					all attributes are compared using `==`
+			- only be used for equality comparisons
+			- does not support range queries
+			- cannot be used for sorting
 
-			- types 
-				- unique hash indexe
-					- inserting docs with a duplicate key will lead to a unqiue constrint violation
-				
-				- unique, sparse hash index
-					- docs whose value is set to null will not be indexed 
-					- use cases 
-						- ensure unique docs 
-						- optional attributes
-				
-				- non-unique hash index
-					- all docs will be indexed 
-
-				
-				- non-unique, sparse hash index 
-					- only those docs that have all the indexed attributes set to a vaalue other than null will be indexed 
-					- use cases 
-						- for optional attributes
-
-
+		- types 
+			- unique hash indexe
+			- unique, sparse hash index
+				- use cases 
+					- ensure unique docs 
+					- optional attributes
+			- non-unique hash index
+				- all docs will be indexed 
+			- non-unique, sparse hash index 
+				- only those docs that have all the indexed attributes set to a vaalue other than null will be indexed 
+				- use cases 
+					- for optional attributes
 		- use cases
 			- used to quickly find documents withs pecific attribute values 
 			- equality lookups
+			- if all or most queries on the indexed attribute(s) are equality comparisons
 
 	- skiplist index 
 		- properties
