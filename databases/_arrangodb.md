@@ -475,5 +475,24 @@
 		FILTER user.age > 30
 
 
+	// indexes 
+	// hash indexes: the index attribute msut be in thee LEFT MOST position
+	FILTER doc.value1 == ...
+	FILTER doc.value1 < ...
+	FILTER doc.value1 > ...
+	FILTER doc.value1 > ... && doc.value1 < ...
 
+	FILTER doc.value1 == ... && doc.value2 == ...
+	FILTER doc.value1 == ... && doc.value2 > ...
+	FILTER doc.value1 == ... && doc.value2 > ... && doc.value2 < ...
+
+	// skiplist indexes 
+	// the skiplist index attributes must be 
+	// used in the same order as they were indexed 
+	// have the same sort order (asc/desc)
+	// be in the LEFT MOST 
+	SORT value1 ASC, value2 ASC (and its equivalent SORT value1, value2)
+	SORT value1 DESC, value2 DESC
+	SORT value1 ASC (and its equivalent SORT value1)
+	SORT value1 DESC
 ```
