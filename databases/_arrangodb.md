@@ -88,6 +88,28 @@
 			- used to quickly find documents withs pecific attribute values 
 			- equality lookups
 
+	- skiplist index 
+		- properties
+			- sorted index 
+			- always created in ascending order 
+				- but can access indexed elements in both ascending/descending order
+		
+		- only used if 
+			- lookups, range queries, sorting
+				- all index attributes are provide din a query 
+				- or the leftmost prefix of the index attribute is specified 
+					- i.e. the key used on the left side of the query
+			- sorting 
+				- the index attributes must be specifie dint he SORT clause of the query int he same order as they appear int he index definition 
+			- combined indexes sorting (i.e. multiple attributes)
+				- the sort ordeers in a single query are specified in the SORT must all be ascending or all be descending
+
+		
+		- use cases 
+			- quickly find docs with 
+				- specific attribute values 
+				- range queries  
+				- returning docs form the index in sorted order
 
 
 ## accessing the server 
