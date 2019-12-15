@@ -41,6 +41,12 @@
 			- primary key: _id and _key
 				- a hash index for the dockey keys of all documents in the collection 
 				- allows quick selection of documents using eith er the _key or _id attributes 
+				- is an unsorted hash index 
+					- i.e. cannot be used for non-equallity range queires or sorting
+				- cannot be 
+					- dropped 
+					- changed 
+					- create user-defiend primary indexes
 			- an edge collections edge index: _from and _to
 		- fulltext index 
 			- permits indexing just one attribute 
@@ -139,6 +145,11 @@
 		UPDATE "9915" WITH { age: 40 } IN users // only modifies specified attributes
 		REPLACE "9915" WITH { age: 40 } IN users // replaces entire document
 		REMOVE "9883" IN users
+
+		// read 
+		// best way to find things by _key or _id 
+		db.collection.document(`doc_key_here`)
+		db._document(`doc_id_here`)
 
 
 	// operators
