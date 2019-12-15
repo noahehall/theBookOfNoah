@@ -464,7 +464,26 @@
 		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name.last" ] })
 		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name.last", "name.first" ] })
 	// indexing array values 
-	// 
+	// indexing array items (vs the entire array)
+	// you can now query specific array items via the index
+	// notice the tags[*] thing
+		db.posts.ensureIndex({ type: "hash", fields: [ "tags[*]" ] });
+		db.posts.insert({ tags: [ "foobar", "baz", "quux" ] });
+		FOR doc IN posts
+		  FILTER 'foobar' IN doc.tags[*]
+		  RETURN doc
+
+	// indexing sub-attributes of array values 
+	// .e.g an array of objects 
+	db.posts.ensureIndex({ type: "hash", fields: [ "tags[*].name" ] });
+	db.posts.insert({ tags: [ { name: "foobar" }, { name: "baz" }, { name: "quux" } ] });
+	FOR doc IN posts
+	  FILTER 'foobar' IN doc.tags[*].name
+	  RETURN doc
+
+	// indexing the whole array (vs specific array items)
+	// dont use the array expansion operator 
+	// i.e. tags[*] thing
 		
 	//retrieving documents
 		DOCUMENT( users, "users/john" )
