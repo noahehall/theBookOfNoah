@@ -62,8 +62,27 @@
 					- all attributes are present int he search condition
 					all attributes are compared using `==`
 			- can be
-				- unique
-				- sparse
+				- unique: no two docs can have the same value
+				- sparse: not all docs will be indexed
+			- types 
+				- unique hash indexe
+					- inserting docs with a duplicate key will lead to a unqiue constrint violation
+				
+				- unique, sparse hash index
+					- docs whose value is set to null will not be indexed 
+					- use cases 
+						- ensure unique docs 
+						- optional attributes
+				
+				- non-unique hash index
+					- all docs will be indexed 
+
+				
+				- non-unique, sparse hash index 
+					- only those docs that have all the indexed attributes set to a vaalue other than null will be indexed 
+					- use cases 
+						- for optional attributes
+
 
 		- use cases
 			- used to quickly find documents withs pecific attribute values 
