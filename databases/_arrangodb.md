@@ -36,20 +36,38 @@
 			- i.e the collection is not available while the index is being crated 
 		- background idnex: the collection remains mostly avialable during the index creation 
 
-	- types 
-		- system indexes (automatically created) 
-			- primary key: _id and _key
-				- a hash index for the dockey keys of all documents in the collection 
-				- allows quick selection of documents using eith er the _key or _id attributes 
-				- is an unsorted hash index 
-					- i.e. cannot be used for non-equallity range queires or sorting
-				- cannot be 
-					- dropped 
-					- changed 
-					- create user-defiend primary indexes
-			- an edge collections edge index: _from and _to
-		- fulltext index 
-			- permits indexing just one attribute 
+### index types 
+	- system indexes (automatically created) 
+		- primary key: _id and _key
+			- a hash index for the dockey keys of all documents in the collection 
+			- allows quick selection of documents using eith er the _key or _id attributes 
+			- is an unsorted hash index 
+				- i.e. cannot be used for non-equallity range queires or sorting
+			- cannot be 
+				- dropped 
+				- changed 
+				- create user-defiend primary indexes
+		- an edge collections edge index: _from and _to
+			- [SKIPPED](https://www.arangodb.com/docs/stable/indexing-index-basics.html#edge-index)
+	
+	- fulltext index 
+		- permits indexing just one attribute 
+
+	- hash index 
+		- properties
+			- unsorted 
+				- does not support range queries or sorting 
+			- created on one/more document attributes
+				- will only be used if 
+					- all attributes are present int he search condition
+					all attributes are compared using `==`
+			- can be
+				- unique
+				- sparse
+
+		- use cases
+			- used to quickly find documents withs pecific attribute values 
+			- equality lookups
 
 
 
