@@ -22,19 +22,29 @@
 
 
 # architecture 
-	- `arangod` 
-		- 	the server
-		- 	speaks http/rest 
-		- 	comes with a free web interface
-	- `indexes 
-		- user-defined indexes can be created on a collection level 
-		- types 
-			- system indexes (automatically created) 
-				- primary key: _id and _key
-				- an edge collections edge index: _from and _to
-			- fulltext index 
-				- permits indexing just one attribute 
-			- 
+## `arangod` 
+	- the server
+	- speaks http/rest 
+	- comes with a free web interface
+	
+
+## `indexes 
+	- user-defined indexes can be created on a collection level 
+	
+	- creating indexes 
+		- foreground index: only permitted under an exclusive collection lock 
+			- i.e the collection is not available while the index is being crated 
+		- background idnex: the collection remains mostly avialable during the index creation 
+
+	- types 
+		- system indexes (automatically created) 
+			- primary key: _id and _key
+				- a hash index for the dockey keys of all documents in the collection 
+				- allows quick selection of documents using eith er the _key or _id attributes 
+			- an edge collections edge index: _from and _to
+		- fulltext index 
+			- permits indexing just one attribute 
+
 
 
 ## accessing the server 
