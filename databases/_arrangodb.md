@@ -20,6 +20,8 @@
 	- [indexes](https://www.arangodb.com/docs/stable/indexing-index-basics.html)
 	- [libicu - used for word tokenization in fulltext indexes](https://packages.debian.org/sid/libicu-dev)
 	- [rocksdb storage engine, used by arango for backgroudn indexes](https://rocksdb.org/)
+	- [storage engines](https://www.arangodb.com/docs/stable/architecture-storage-engines.html)
+	
 
 
 # about 
@@ -29,12 +31,17 @@
 			- i had duplicating shit, and sometimes its a waste of time finding the correct place to put something
 
 
-# best practices: current understanding 
+# best practices: my accepted best practices
 	- any datum tht needs to be sorted should be a skiplist index
   - any unique value should be a form of a hash index
   - set a docs creation time as a unix timestamp
   -  anything with an 0/1 should be a sparse index 
   	- e.g. active/non active
+  - load high value indexes into memory 
+  	- iterates over all indexes of the collection and stores the indexed values, not the entire document data, in memory
+  	- All lookups that could be found in the cache are much faster than lookups not stored in the cache so you get a nice performance boost
+  	It is also guaranteed that the cache is consistent with the stored data.
+
 
 ## best practices: indexes
   - always build indexes during times with less load
@@ -55,6 +62,9 @@
 
 
 # architecture 
+## engine types 
+	- rocksdb 
+	mmfiles
 ## `arangod` 
 	- the server
 	- speaks http/rest 
@@ -508,7 +518,6 @@
 	// examples 
 	// index examples 
 	// creating indexes 
-	// creating hash indexes 
 		db.test.ensureHashIndex('fieldNameX','fieldNameY.subAttributeY', 'etc')
 	// ensureIndex api 
 		db.COL_NAME.ensureIndex({
@@ -517,22 +526,28 @@
 			name: '',
 			fields: [],
 			inBackground: bool,
+			// hash|skiplist
 			unique: bool, 
 			// only hash|skiplist can be false, geo + fulltext === always sparse by definition
 			sparse: bool,
 			minLength: int,
-
-
+			// array hash| array skiplist
+			deduplicate: bool,
 		})
+	// getting all indexes 
+		var indexInfo = db.COL_NAME.getIndexes();
+	// drop an index
+		db.COL_NAME.dropIndex(index)
+
 	// using explicit null values in an array index
-	db.posts.ensureIndex({ type: "hash", fields: [ "tags[*]" ] });
-	db.posts.insert({tags: null}) // Will not be indexed
-	db.posts.insert({tags: []})  // Will not be indexed
-	db.posts.insert({tags: [null]}); // Will be indexed for null
-	db.posts.insert({tags: [null, 1, 2]}); // Will be indexed for null, 1 and 2
+	db.COL_NAME.ensureIndex({ type: "hash", fields: [ "tags[*]" ] });
+	db.COL_NAME.insert({tags: null}) // Will not be indexed
+	db.COL_NAME.insert({tags: []})  // Will not be indexed
+	db.COL_NAME.insert({tags: [null]}); // Will be indexed for null
+	db.COL_NAME.insert({tags: [null, 1, 2]}); // Will be indexed for null, 1 and 2
 
 	// declare an array index as sparse 
-	db.posts.ensureIndex({ type: "hash", fields: [ "tags[*]", "name" ], sparse: true });
+	db.COL_NAME.ensureIndex({ type: "hash", fields: [ "tags[*]", "name" ], sparse: true });
 
 	// hash indexes: the index attribute msut be in thee LEFT MOST position
 	FILTER doc.value1 == ...
@@ -564,16 +579,16 @@
 	// indexing array items (vs the entire array)
 	// you can now query specific array items via the index
 	// notice the tags[*] thing
-		db.posts.ensureIndex({ type: "hash", fields: [ "tags[*]" ] });
-		db.posts.insert({ tags: [ "foobar", "baz", "quux" ] });
+		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "tags[*]" ] });
+		db.COL_NAME.insert({ tags: [ "foobar", "baz", "quux" ] });
 		FOR doc IN posts
 		  FILTER 'foobar' IN doc.tags[*]
 		  RETURN doc
 
 	// indexing sub-attributes of array values 
 	// .e.g an array of objects 
-	db.posts.ensureIndex({ type: "hash", fields: [ "tags[*].name" ] });
-	db.posts.insert({ tags: [ { name: "foobar" }, { name: "baz" }, { name: "quux" } ] });
+	db.COL_NAME.ensureIndex({ type: "hash", fields: [ "tags[*].name" ] });
+	db.COL_NAME.insert({ tags: [ { name: "foobar" }, { name: "baz" }, { name: "quux" } ] });
 	FOR doc IN posts
 	  FILTER 'foobar' IN doc.tags[*].name
 	  RETURN doc
