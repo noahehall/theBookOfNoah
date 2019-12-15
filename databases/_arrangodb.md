@@ -37,6 +37,13 @@
 		- background idnex: the collection remains mostly avialable during the index creation 
 
 ### index types 
+	- general index properties 
+		- unique: no two docs can have the same value
+		- sparse: only those docs whose index attribute has a value set to a NON NULL value will be indexed 
+			- i.e. not all docs have to be indexed 
+			- usefulf for optional attributes
+
+
 	- system indexes (automatically created) 
 		- primary key: _id and _key
 			- a hash index for the dockey keys of all documents in the collection 
@@ -61,9 +68,7 @@
 				- will only be used if 
 					- all attributes are present int he search condition
 					all attributes are compared using `==`
-			- can be
-				- unique: no two docs can have the same value
-				- sparse: not all docs will be indexed
+
 			- types 
 				- unique hash indexe
 					- inserting docs with a duplicate key will lead to a unqiue constrint violation
@@ -103,6 +108,10 @@
 				- the index attributes must be specifie dint he SORT clause of the query int he same order as they appear int he index definition 
 			- combined indexes sorting (i.e. multiple attributes)
 				- the sort ordeers in a single query are specified in the SORT must all be ascending or all be descending
+
+		- types 
+			- non-unique sparse skiplist index 
+				-
 
 		
 		- use cases 
