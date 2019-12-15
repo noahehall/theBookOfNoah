@@ -16,6 +16,7 @@
 	- [nodejs aql template tag](https://github.com/arangodb/arangojs/blob/master/docs/Drivers/JS/Reference/Database/Queries.md#aql)
 	- [indexes](https://www.arangodb.com/docs/stable/indexing-index-basics.html)
 	- [libicu - used for word tokenization in fulltext indexes](https://packages.debian.org/sid/libicu-dev)
+	- [rocksdb storage engine, used by arango for backgroudn indexes](https://rocksdb.org/)
 
 
 # about 
@@ -38,13 +39,14 @@
 	- comes with a free web interface
 	
 
-## `indexes 
+## indexes 
 	- user-defined indexes can be created on a collection level 
 	
 	- creating indexes 
 		- foreground index: only permitted under an exclusive collection lock 
 			- i.e the collection is not available while the index is being crated 
-		- background idnex: the collection remains mostly avialable during the index creation 
+		- background index: the collection remains mostly avialable during the index creation 
+			- only available in the `RocksDB` storage engine
 
 ### index types 
 	- general index properties 
@@ -144,6 +146,19 @@
 				- range queries  
 				- returning docs form the index in sorted order
 
+	- array indexes 
+		- properties 
+			- Array values will automatically be de-duplicated before being inserted into an array index
+				- unless you set `deduplicate:false` when creating the array index
+					- however this will cause inserts to fail
+				
+			- use `[*]` array expansion operator to index individual items in an array, or their sub attributes (e.g. array of objects)
+			- otherwise the index will be on the array as a whole, and not its individual items
+
+			- An array index is able to index explicit null values. 
+				- When queried for nullvalues, it will only return those documents having explicitly null stored in the array, 
+				- it will not return any documents that do not have the array at all.
+
 	- TTL (time to live) index 
 		- [SKIPPED](https://www.arangodb.com/docs/stable/indexing-index-basics.html#ttl-time-to-live-index)
 		- properties 
@@ -154,6 +169,9 @@
 	
 	- geo index 
 		- [SKIPPED](https://www.arangodb.com/docs/stable/indexing-index-basics.html#geo-index)
+
+	- vertex centric indexes 
+		- [SKIPPED](https://www.arangodb.com/docs/stable/indexing-index-basics.html#vertex-centric-indexes)
 
 
 ## accessing the server 
@@ -456,7 +474,36 @@
 
 
 	// examples 
-	
+	// using explicit null values in an array index
+	db.posts.ensureIndex({ type: "hash", fields: [ "tags[*]" ] });
+	db.posts.insert({tags: null}) // Will not be indexed
+	db.posts.insert({tags: []})  // Will not be indexed
+	db.posts.insert({tags: [null]}); // Will be indexed for null
+	db.posts.insert({tags: [null, 1, 2]}); // Will be indexed for null, 1 and 2
+
+	// declare an array index as sparse 
+	db.posts.ensureIndex({ type: "hash", fields: [ "tags[*]", "name" ], sparse: true });
+
+	// hash indexes: the index attribute msut be in thee LEFT MOST position
+	FILTER doc.value1 == ...
+	FILTER doc.value1 < ...
+	FILTER doc.value1 > ...
+	FILTER doc.value1 > ... && doc.value1 < ...
+
+	FILTER doc.value1 == ... && doc.value2 == ...
+	FILTER doc.value1 == ... && doc.value2 > ...
+	FILTER doc.value1 == ... && doc.value2 > ... && doc.value2 < ...
+
+	// skiplist indexes 
+	// the skiplist index attributes must be 
+	// used in the same order as they were indexed 
+	// have the same sort order (asc/desc)
+	// be in the LEFT MOST 
+	SORT value1 ASC, value2 ASC (and its equivalent SORT value1, value2)
+	SORT value1 DESC, value2 DESC
+	SORT value1 ASC (and its equivalent SORT value1)
+	SORT value1 DESC
+
 	// indexing top level keys 
 		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name" ] })
 		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name", "age" ] })
@@ -548,24 +595,4 @@
 		FILTER user.age > 30
 
 
-	// indexes 
-	// hash indexes: the index attribute msut be in thee LEFT MOST position
-	FILTER doc.value1 == ...
-	FILTER doc.value1 < ...
-	FILTER doc.value1 > ...
-	FILTER doc.value1 > ... && doc.value1 < ...
-
-	FILTER doc.value1 == ... && doc.value2 == ...
-	FILTER doc.value1 == ... && doc.value2 > ...
-	FILTER doc.value1 == ... && doc.value2 > ... && doc.value2 < ...
-
-	// skiplist indexes 
-	// the skiplist index attributes must be 
-	// used in the same order as they were indexed 
-	// have the same sort order (asc/desc)
-	// be in the LEFT MOST 
-	SORT value1 ASC, value2 ASC (and its equivalent SORT value1, value2)
-	SORT value1 DESC, value2 DESC
-	SORT value1 ASC (and its equivalent SORT value1)
-	SORT value1 DESC
 ```
