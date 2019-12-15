@@ -13,207 +13,6 @@
 # about 
 	- this shit is a javascript devs heaven
 
-# quickies 
-```sh
-	# server admin  
-		# start server (both works?)
-		arangodb
-		arangod # use this per docs
-
-		# tty to things 
-		arangosh 
-		arangosh --server.username "myuser@mydb" --server.database mydb
-		help # lists a bunch of cmds
-
-	# errors 
-		# maximum number of memory mappings per process is 65530
-		sudo sysctl -w "vm.max_map_count=256000"
-
-
-	# db admin
-	# create things
-		db._createDatabase("mydb"); #bool
-		db._useDatabase('mydb')
-
-		var users = require("@arangodb/users");
-		users # will print methods on the users db
-		users.save("myuser@mydb", "mypw"); # {user, active, extra, code}
-		users.grantDatabase("root@example", "example");
-
-	# CRUD (aql)
-		# 	arangosh
-		db._query('RETURN DOCUMENT("ActivityActionEvents/2019-12-04T00:00:00Z")')
-
-		RETURN DOCUMENT('collectionName/_key')
-		# if found, update with new values
-		UPSERT searchExpression // try to find this document
-			INSERT insertExpression // insert if not found
-			UPDATE updateExpression // update if found
-			IN collection options
-		# if found, replace
-		UPSERT searchExpression 
-			INSERT insertExpression 
-			REPLACE updateExpression // replace if found
-			IN collection options
-		INSERT {...} INTO collectionName 
-		INSERT {...} into collectionName RETURN NEW #returns the created doc
-		UPDATE "9915" WITH { age: 40 } IN users # only modifies specified attributes
-		REPLACE "9915" WITH { age: 40 } IN users # replaces entire document
-		REMOVE "9883" IN users
-
-
-	# operators
-		u.age > 15 || u.active == true ? u.userId : null
-		&& logical and operator
-		|| logical or operator
-		! logical not/negation operator
-		AND logical and operator
-		OR logical or operator
-		NOT logical not/negation operator
-		2010..2013 // [ 2010, 2011, 2012, 2013 ]
-		0  ==  null            // false
-		1  >   0               // true
-		true  !=  null            // true
-		45  <=  "yikes!"        // true
-		65  !=  "65"            // true
-		65  ==  65              // true
-		1.23  >   1.32            // false
-		1.5  IN  [ 2, 3, 1.5 ]   // true
-		"foo"  IN  null            // false
-		42  NOT IN  [ 17, 40, 50 ]  // true
-		"abc"  ==  "abc"           // true
-		"abc"  ==  "ABC"           // false
-		"foo"  LIKE  "f%"          // true
-		"foo"  NOT LIKE  "f%"      // false
-		"foo"  =~  "^f[o].$"       // true
-		"foo"  !~  "[a-z]+bar$"    // true
-		[ 1, 2, 3 ]  ALL IN  [ 2, 3, 4 ]  // false
-		[ 1, 2, 3 ]  ALL IN  [ 1, 2, 3 ]  // true
-		[ 1, 2, 3 ]  NONE IN  [ 3 ]       // false
-		[ 1, 2, 3 ]  NONE IN  [ 23, 42 ]  // true
-		[ 1, 2, 3 ]  ANY IN  [ 4, 5, 6 ]  // false
-		[ 1, 2, 3 ]  ANY IN  [ 1, 42 ]    // true
-		[ 1, 2, 3 ]  ANY ==  2            // true
-		[ 1, 2, 3 ]  ANY ==  4            // false
-		[ 1, 2, 3 ]  ANY >  0             // true
-		[ 1, 2, 3 ]  ANY <=  1            // true
-		[ 1, 2, 3 ]  NONE <  99           // false
-		[ 1, 2, 3 ]  NONE >  10           // true
-		[ 1, 2, 3 ]  ALL >  2             // false
-		[ 1, 2, 3 ]  ALL >  0             // true
-		[ 1, 2, 3 ]  ALL >=  3            // false
-		["foo", "bar"]  ALL !=  "moo"     // true
-		["foo", "bar"]  NONE ==  "bar"    // false
-		["foo", "bar"]  ANY ==  "foo"     // true
-
-```
-
-## node driver quickes 
-```sh
-	const db = new Database({
-	  url: "http://localhost:8529"
-	});
-	db.useDatabase("pancakes");
-	db.useBasicAuth("root", "");
-	// The database can be swapped at any time
-	db.useDatabase("waffles");
-	db.useBasicAuth("admin", "maplesyrup");
-
-	// Using ArangoDB behind a reverse proxy
-	const db = new Database({
-	  url: "http://myproxy.local:8000",
-	  isAbsolute: true // don't automatically append database path to URL
-	});
-
-	# db commands 
-		db.createDatabase 
-		db.useDatabase(dbName) # select db
-		db.useBasicAuth(uname, upass) # authenticate with selected db.query(aqlTemplateString)
-
-
-	# aql 
-		const userCollection = db.collection("_users");
-		const role = "admin";
-		const query = aql`
-		  FOR user IN ${userCollection}
-		  FILTER user.role == ${role}
-		  RETURN user
-		`;
-		// -- is equivalent to --
-		const query = {
-		  query: "FOR user IN @@value0 FILTER user.role == @value1 RETURN user",
-		  bindVars: { "@value0": userCollection.name, value1: role }
-		};
-		async database.explain(query, [bindVars,] [opts]): ExplainResult
-
-		const cursor = await db.query(aql`
-		  FOR u IN _users
-		  FILTER u.authData.active == ${active}
-		  RETURN u.user
-		`);
-
-		# nested query 
-			const color = "green";
-			const filterByColor = aql`FILTER d.color == ${color}'`;
-			const result2 = await db.query(aql`
-			  FOR d IN ${mydata}
-			  ${filterByColor}
-			  RETURN d
-			`);
-
-		# aql literal 
-			const filterGreen = aql.literal('FILTER d.color == "green"');
-			const result = await db.query(aql`
-			  FOR d IN ${mydata}
-			  ${filterGreen}
-			  RETURN d
-			`);
-
-		# aql joins
-			// Basic usage
-			const parts = [aql`FILTER`, aql`x`, aql`%`, aql`2`];
-			const joined = aql.join(parts); // aql`FILTER x % 2`
-
-			// Merge without the extra space
-			const parts = [aql`FIL`, aql`TER`];
-			const joined = aql.join(parts, ""); // aql`FILTER`;
-
-			// Real world example: translate keys into document lookups
-			const users = db.collection("users");
-			const keys = ["abc123", "def456"];
-			const docs = keys.map(key => aql`DOCUMENT(${users}, ${key})`);
-			const aqlArray = aql`[${aql.join(docs, ", ")}]`;
-			const result = await db.query(aql`
-			  FOR d IN ${aqlArray}
-			  RETURN d
-			`);
-			// Query:
-			//   FOR d IN [DOCUMENT(@@value0, @value1), DOCUMENT(@@value0, @value2)]
-			//   RETURN d
-			// Bind parameters:
-			//   @value0: "users"
-			//   value1: "abc123"
-			//   value2: "def456"
-
-			// Alternative without `aql.join`
-			const users = db.collection("users");
-			const keys = ["abc123", "def456"];
-			const result = await db.query(aql`
-			  FOR key IN ${keys}
-			  LET d = DOCUMENT(${users}, key)
-			  RETURN d
-			`);
-			// Query:
-			//   FOR key IN @value0
-			//   LET d = DOCUMENT(@@value1, key)
-			//   RETURN d
-			// Bind parameters:
-			//   value0: ["abc123", "def456"]
-			//   @value1: "users"
-
-
-
-```
 
 # architecture 
 	- `arangod` 
@@ -266,26 +65,224 @@
 
 ## data modeling
 
-# AQL 
-## functions 
+# quickies 
+```js
+	// server admin  
+		// start server (both works?)
+		arangodb
+		arangod // use this per docs
+		sudo systemctl start arango // tab completeion i think its arangodb.service
 
-### create 
-```sql 
+		// tty to things 
+		arangosh 
+		arangosh --server.username "myuser@mydb" --server.database mydb
+		help // lists a bunch of cmds
 
-	
+	// errors 
+		// maximum number of memory mappings per process is 65530
+		sudo sysctl -w "vm.max_map_count=256000"
+
+
+	// db admin
+	// create things
+		db._createDatabase("mydb"); //bool
+		db._useDatabase('mydb')
+
+		var users = require("@arangodb/users");
+		users // will print methods on the users db
+		users.save("myuser@mydb", "mypw"); // {user, active, extra, code}
+		users.grantDatabase("root@example", "example");
+
+	// CRUD (aql)
+		// 	arangosh
+		db._query('RETURN DOCUMENT("ActivityActionEvents/2019-12-04T00:00:00Z")')
+
+		RETURN DOCUMENT('collectionName/_key')
+		// if found, update with new values
+		UPSERT searchExpression // try to find this document
+			INSERT insertExpression // insert if not found
+			UPDATE updateExpression // update if found
+			IN collection options
+		// if found, replace
+		UPSERT searchExpression 
+			INSERT insertExpression 
+			REPLACE updateExpression // replace if found
+			IN collection options
+		INSERT {...} INTO collectionName 
+		INSERT {...} into collectionName RETURN NEW //returns the created doc
+		UPDATE "9915" WITH { age: 40 } IN users // only modifies specified attributes
+		REPLACE "9915" WITH { age: 40 } IN users // replaces entire document
+		REMOVE "9883" IN users
+
+
+	// operators
+	//
+		// +  regular expressions
+		=~
+		!~
+		u.age > 15 || u.active == true ? u.userId : null
+		&& //logical and operator
+		|| // logical or operator
+		! //logical not/negation operator
+		== 
+		!=  //etc.
+		AND //logical and operator
+		IN 
+		LIKE
+		NOT IN 
+		NOT LIKE 
+		NOT // logical not/negation operator
+		OR // logical or operator
+		2010..2013 // [ 2010, 2011, 2012, 2013 ]
+		0  ==  null            // false
+		1  >   0               // true
+		true  !=  null            // true
+		45  <=  "yikes!"        // true
+		65  !=  "65"            // true
+		65  ==  65              // true
+		1.23  >   1.32            // false
+		1.5  IN  [ 2, 3, 1.5 ]   // true
+		"foo"  IN  null            // false
+		42  NOT IN  [ 17, 40, 50 ]  // true
+		"abc"  ==  "abc"           // true
+		"abc"  ==  "ABC"           // false
+		"foo"  LIKE  "f%"          // true
+		"foo"  NOT LIKE  "f%"      // false
+		"foo"  =~  "^f[o].$"       // true
+		"foo"  !~  "[a-z]+bar$"    // true
+		[ 1, 2, 3 ]  ALL IN  [ 2, 3, 4 ]  // false
+		[ 1, 2, 3 ]  ALL IN  [ 1, 2, 3 ]  // true
+		[ 1, 2, 3 ]  NONE IN  [ 3 ]       // false
+		[ 1, 2, 3 ]  NONE IN  [ 23, 42 ]  // true
+		[ 1, 2, 3 ]  ANY IN  [ 4, 5, 6 ]  // false
+		[ 1, 2, 3 ]  ANY IN  [ 1, 42 ]    // true
+		[ 1, 2, 3 ]  ANY ==  2            // true
+		[ 1, 2, 3 ]  ANY ==  4            // false
+		[ 1, 2, 3 ]  ANY >  0             // true
+		[ 1, 2, 3 ]  ANY <=  1            // true
+		[ 1, 2, 3 ]  NONE <  99           // false
+		[ 1, 2, 3 ]  NONE >  10           // true
+		[ 1, 2, 3 ]  ALL >  2             // false
+		[ 1, 2, 3 ]  ALL >  0             // true
+		[ 1, 2, 3 ]  ALL >=  3            // false
+		["foo", "bar"]  ALL !=  "moo"     // true
+		["foo", "bar"]  NONE ==  "bar"    // false
+		["foo", "bar"]  ANY ==  "foo"     // true
+
 ```
 
-### control flow
-```sql 
+## node driver quickes 
+```js
+	const db = new Database({
+	  url: "http://localhost:8529"
+	});
+	db.useDatabase("pancakes");
+	db.useBasicAuth("root", "");
+	// The database can be swapped at any time
+	db.useDatabase("waffles");
+	db.useBasicAuth("admin", "maplesyrup");
+
+	// Using ArangoDB behind a reverse proxy
+	const db = new Database({
+	  url: "http://myproxy.local:8000",
+	  isAbsolute: true // don't automatically append database path to URL
+	});
+
+	// db commands 
+		db.createDatabase 
+		db.useDatabase(dbName) // select db
+		db.useBasicAuth(uname, upass) // authenticate with selected db.query(aqlTemplateString)
+
+
+	// aql 
+		const userCollection = db.collection("_users");
+		const role = "admin";
+		const query = aql`
+		  FOR user IN ${userCollection}
+		  FILTER user.role == ${role}
+		  RETURN user
+		`;
+		// -- is equivalent to --
+		const query = {
+		  query: "FOR user IN @@value0 FILTER user.role == @value1 RETURN user",
+		  bindVars: { "@value0": userCollection.name, value1: role }
+		};
+		async database.explain(query, [bindVars,] [opts]): ExplainResult
+
+		const cursor = await db.query(aql`
+		  FOR u IN _users
+		  FILTER u.authData.active == ${active}
+		  RETURN u.user
+		`);
+
+		// nested query 
+			const color = "green";
+			const filterByColor = aql`FILTER d.color == ${color}'`;
+			const result2 = await db.query(aql`
+			  FOR d IN ${mydata}
+			  ${filterByColor}
+			  RETURN d
+			`);
+
+		// aql literal 
+			const filterGreen = aql.literal('FILTER d.color == "green"');
+			const result = await db.query(aql`
+			  FOR d IN ${mydata}
+			  ${filterGreen}
+			  RETURN d
+			`);
+
+		// aql joins
+			// Basic usage
+			const parts = [aql`FILTER`, aql`x`, aql`%`, aql`2`];
+			const joined = aql.join(parts); // aql`FILTER x % 2`
+
+			// Merge without the extra space
+			const parts = [aql`FIL`, aql`TER`];
+			const joined = aql.join(parts, ""); // aql`FILTER`;
+
+			// Real world example: translate keys into document lookups
+			const users = db.collection("users");
+			const keys = ["abc123", "def456"];
+			const docs = keys.map(key => aql`DOCUMENT(${users}, ${key})`);
+			const aqlArray = aql`[${aql.join(docs, ", ")}]`;
+			const result = await db.query(aql`
+			  FOR d IN ${aqlArray}
+			  RETURN d
+			`);
+			// Query:
+			//   FOR d IN [DOCUMENT(@@value0, @value1), DOCUMENT(@@value0, @value2)]
+			//   RETURN d
+			// Bind parameters:
+			//   @value0: "users"
+			//   value1: "abc123"
+			//   value2: "def456"
+
+			// Alternative without `aql.join`
+			const users = db.collection("users");
+			const keys = ["abc123", "def456"];
+			const result = await db.query(aql`
+			  FOR key IN ${keys}
+			  LET d = DOCUMENT(${users}, key)
+			  RETURN d
+			`);
+			// Query:
+			//   FOR key IN @value0
+			//   LET d = DOCUMENT(@@value1, key)
+			//   RETURN d
+			// Bind parameters:
+			//   value0: ["abc123", "def456"]
+			//   @value1: "users"
+
+
+	//control flow
 	NOT_NULL(elX, ...) 
 	FIRST_LIST(arrayX, ...)
 	FIRST_DOCUMENT(valX, ...)
 	SLEEP()
 
 
-```
-### db functions 
-```sql 
+	// db functions 
 	DOCUMENT(collectionName, id)
 	COLLECTIONS()
 	COUNT()
@@ -297,54 +294,29 @@
 	CURRENT_USER()
 	DECORE_REV()
 
-```
-
-### operators 
-	- all return bool
-		- ==, !=, etc.
-		- IN 
-		- NOT IN 
-		- LIKE
-		- NOT LIKE 
-		- regular expressions
-			- =~
-			- !~
-### string 
-```sql 
-	JSON_STRINGIFY(doc)
-
-```
-
-
-### hash functions 
-```sql 
+	// hash functions 
 	HASH(value)
 
-	# string hashing 
+	//tring hashing 
 	CRC32()
 	FNV64()
 	MD5()
 	SHA1()
 	SHA512()
-```
 
-
-### misc 
-```sql 
+	// to be categorized
+	JSON_STRINGIFY(doc)
 	APPLY(functionName, argumentList)
 	CALL(functionName, argX, ...)
 	FAIL(reason)
-	
 	NOOPT()
 	VERSION()
 	ASSERT(expression, msg)
 	WARN(expression, msg)
-```
 
 
-# examples 
-```sql 
-	# retrieving documents
+	// examples 
+	//retrieving documents
 		DOCUMENT( users, "users/john" )
 		DOCUMENT( users, "john" )
 		DOCUMENT( users, [ "users/john", "users/amy" ] )
@@ -352,7 +324,7 @@
 		DOCUMENT("users/john")
 		DOCUMENT( [ "users/john", "users/amy" ] )
 
-	# loops 
+	// loops 
 		FOR i IN 1..3 FILTER ASSERT(i > 0, "i is not greater 0") RETURN i
 		FOR user IN users
 			sort user._key 
@@ -367,14 +339,14 @@
 
 
 
-		# nested loop
+	// nested loop
 		FOR user1 IN users
 			FOR user2 IN users
 				FILTER user1 != user2
 				RETURN [user1.name, user2.name]
 
 
-		# nested variable used in return 
+		// nested variable used in return 
 		FOR user1 IN users
 		  FOR user2 IN users
 		    FILTER user1 != user2
@@ -385,7 +357,7 @@
 		        sumOfAges: sumOfAges
 		    }
 
-	# return statements
+	// return statements
 			RETURN { userName: user.name, age: user.age }
 			RETURN user.name
 			RETURN NEW 
@@ -396,13 +368,13 @@
 			}
 
 
-	# conditionals 
+	// conditionals 
 		RETURN 1 == 1 ? "okay" : FAIL("error") // "okay"
 		RETURN 1 == 1 || FAIL("error") ? true : false // true
 		RETURN 1 == 2 && FAIL("error") ? true : false // false
 		RETURN 1 == 1 && FAIL("error") ? true : false // aborted with error
 
-	# MISC 
+	// MISC 
 		SORT user.age DESC
 		FILTER user.age > 30
 
