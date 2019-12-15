@@ -42,11 +42,12 @@
 	
 
 ## indexes 
-	- user-defined indexes can be created on a collection level 
 	
-	- creating indexes 
+	- index handle - uniquely identifies an idnex in the database 
+
 		
 ### general index properties 
+	- user-defined indexes can only be created on a collection level 
 	- unique: no two docs can have the same value
 	- sparse: only those docs whose index attribute has a value set to a NON NULL value will be indexed 
 		- i.e. not all docs have to be indexed 
