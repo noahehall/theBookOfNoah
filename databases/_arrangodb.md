@@ -4,7 +4,7 @@
 		- [start here](https://www.arangodb.com/docs/stable/data-modeling-concepts.html)
 	- [arangodb performance course](https://www.arangodb.com/arangodb-performance-course/)
 	- [arangosearch](https://www.arangodb.com/docs/stable/arangosearch.html)
-	- [working with indexes](https://www.arangodb.com/docs/stable/indexing-working-with-indexes.html#creating-an-index)
+	- [indexing portal](https://www.arangodb.com/docs/stable/indexing.html)
 
 
 # docs 
