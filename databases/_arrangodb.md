@@ -34,9 +34,20 @@
   - any unique value should be a form of a hash index
   - set a docs creation time as a unix timestamp
 
-## indexes
+## indexes best practices
   - always build indexes during times with less load
   - A non-unique hash index on an optional document attribute should be declared sparse so that it will not index documents for which the index attribute is not set.
+  - For high selectivity attributes
+  	- skiplist indexes will have a higher overhead than hash indexes. 
+	- For low selectivity attributes, skiplist indexes will be more efficient than non-unique hash indexes.
+	- skiplist indexes allow more use cases (e.g. range queries, sorting) than hash indexes. 
+	- skiplists can be used for lookups based on a leftmost prefix of the index attributes.
+	- Sparse vs. non-sparse indexesPermalink
+		- A sparse index does not contain documents for which at least one of the index attribute is not set or contains a value of null
+			- i.e. a document can exist in a collection but not be included in the index 
+			- enables faster indexing and can lead to reduced memory usage in case the indexed attribute does occur only in some, but not all documents of the collection.
+
+
 
 
 # architecture 
@@ -154,6 +165,7 @@
 				- specific attribute values 
 				- range queries  
 				- returning docs form the index in sorted order
+			- used for equality lookups, range queries and for sorting
 
 	- array indexes 
 		- properties 
