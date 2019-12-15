@@ -1,7 +1,8 @@
 # must do 
 	- generally all arnago courses if you decide to make arnagodb your DB of choice muther fucker 
 	- [arangodb performance course](https://www.arangodb.com/arangodb-performance-course/)
-	
+
+
 # docs 
 	- [main docs](https://www.arangodb.com/documentation/)
 	- [installation](https://www.arangodb.com/docs/stable/getting-started-installation.html)
@@ -28,6 +29,9 @@
 	- `indexes 
 		- user-defined indexes can be created on a collection level 
 		- types 
+			- system indexes (automatically created) 
+				- primary key: _id and _key
+				- an edge collections edge index: _from and _to
 			- fulltext index 
 				- permits indexing just one attribute 
 			- 
