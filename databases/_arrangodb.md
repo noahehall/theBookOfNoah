@@ -1,5 +1,7 @@
 # must do 
 	- generally all arnago courses if you decide to make arnagodb your DB of choice muther fucker 
+	- [everything in the left side bar](https://www.arangodb.com/docs/stable/data-modeling.html)
+		- [start here](https://www.arangodb.com/docs/stable/data-modeling-concepts.html)
 	- [arangodb performance course](https://www.arangodb.com/arangodb-performance-course/)
 	- [arangosearch](https://www.arangodb.com/docs/stable/arangosearch.html)
 	- [working with indexes](https://www.arangodb.com/docs/stable/indexing-working-with-indexes.html#creating-an-index)
