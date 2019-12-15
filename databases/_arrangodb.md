@@ -74,7 +74,7 @@
 ## indexes 
 	- skipped
 		- [index database methods](https://www.arangodb.com/docs/stable/indexing-working-with-indexes.html#database-methods)
-		
+
 	- index handle - uniquely identifies an index in the database
 		- `db.COL_NAME.index('COL_NAME/INDEX_IDENTIFIER')`
 		- `db.COL_NAME.index('COLNAME/INDEX_NAME')
@@ -527,7 +527,10 @@
 			// hash|skiplist|fulltext|geo|
 			type: '',
 			name: '',
-			fields: [],
+			// normal index of type 
+			fields: [nameX, ...],
+			// array index
+			fields: [nameX[*] ...]
 			inBackground: bool,
 			// hash|skiplist
 			unique: bool, 
