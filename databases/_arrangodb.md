@@ -15,7 +15,7 @@
 	- [aql](https://www.arangodb.com/docs/stable/aql/)
 	- [nodejs aql template tag](https://github.com/arangodb/arangojs/blob/master/docs/Drivers/JS/Reference/Database/Queries.md#aql)
 	- [indexes](https://www.arangodb.com/docs/stable/indexing-index-basics.html)
-	- 
+	- [libicu - used for word tokenization in fulltext indexes](https://packages.debian.org/sid/libicu-dev)
 
 
 # about 
@@ -26,6 +26,7 @@
 	- any datum tht needs to be sorted should be a skiplist index
   - any unique value should be a form of a hash index
   - set a docs creation time as a unix timestamp
+
 
 # architecture 
 ## `arangod` 
@@ -64,7 +65,14 @@
 			- [SKIPPED](https://www.arangodb.com/docs/stable/indexing-index-basics.html#edge-index)
 	
 	- fulltext index 
-		- permits indexing just one attribute 
+		- properties 
+			- can index a single attribute only 
+			- will index all words contained the attribute value that are stringy
+			- only words with a specified min length are indexed 
+			- word tokenization is done useing the word boundary analysis provided by libicu
+
+		- use cases 
+			- find words/prefixes of words inside docs
 
 	- hash index 
 		- properties
