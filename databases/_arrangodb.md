@@ -30,6 +30,7 @@
 	- any datum tht needs to be sorted should be a skiplist index
   - any unique value should be a form of a hash index
   - set a docs creation time as a unix timestamp
+  - always build indexes during times with less load
 
 
 # architecture 
@@ -474,6 +475,18 @@
 
 
 	// examples 
+	// index examples 
+	// ensureIndex api 
+		db.COL_NAME.ensureIndex({
+			type: '',
+			fields: [],
+			inBackground: bool,
+			unique: bool, 
+			sparse: bool,
+			minLength: int,
+
+
+		})
 	// using explicit null values in an array index
 	db.posts.ensureIndex({ type: "hash", fields: [ "tags[*]" ] });
 	db.posts.insert({tags: null}) // Will not be indexed
