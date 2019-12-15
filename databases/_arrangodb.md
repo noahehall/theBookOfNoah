@@ -69,10 +69,15 @@
 			- can index a single attribute only 
 			- will index all words contained the attribute value that are stringy
 			- only words with a specified min length are indexed 
-			- word tokenization is done useing the word boundary analysis provided by libicu
+			- word tokenization is done useing the word boundary analysis provided by 
+			only available in dedicated functions for simple queries 
+				- not enabled for other types of queries/conditions
+				- use `arangosearch` for that
 
 		- use cases 
-			- find words/prefixes of words inside docs
+			- complete match queries (full words)
+			- prefix queries (partial words) 
+				- basic logical operations (and, or, not) for combin
 
 	- hash index 
 		- properties
@@ -448,6 +453,15 @@
 
 
 	// examples 
+	
+	// indexing top level keys 
+		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name" ] })
+		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name", "age" ] })
+	// indexing sub-attributes 
+		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name.last" ] })
+		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name.last", "name.first" ] })
+	// indexing array values 
+		
 	//retrieving documents
 		DOCUMENT( users, "users/john" )
 		DOCUMENT( users, "john" )
