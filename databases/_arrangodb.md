@@ -512,12 +512,13 @@
 		db.test.ensureHashIndex('fieldNameX','fieldNameY.subAttributeY', 'etc')
 	// ensureIndex api 
 		db.COL_NAME.ensureIndex({
-			// hash, skiplist, etc
+			// hash|skiplist|fulltext|geo|
 			type: '',
+			name: '',
 			fields: [],
 			inBackground: bool,
 			unique: bool, 
-			// only hash|skiplist
+			// only hash|skiplist can be false, geo + fulltext === always sparse by definition
 			sparse: bool,
 			minLength: int,
 
