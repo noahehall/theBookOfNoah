@@ -21,6 +21,11 @@
 	- this shit is a javascript devs heaven
 
 
+# current best practices understanding 
+	- any datum tht needs to be sorted should be a skiplist index
+  - any unique value should be a form of a hash index
+  - set a docs creation time as a unix timestamp
+
 # architecture 
 ## `arangod` 
 	- the server
@@ -111,7 +116,9 @@
 
 		- types 
 			- non-unique sparse skiplist index 
-				-
+			- non-unique skiplist index 
+			- unique, sparse skiplist index 
+			- unique skiplist index
 
 		
 		- use cases 
@@ -119,6 +126,15 @@
 				- specific attribute values 
 				- range queries  
 				- returning docs form the index in sorted order
+
+	- TTL (time to live) index 
+		- [SKIPPED](https://www.arangodb.com/docs/stable/indexing-index-basics.html#ttl-time-to-live-index)
+		- properties 
+			- docs are removed `expireAfter` sectonds afte rtheir reation time 
+
+		- use cases
+			- for automatically removing expired documents (setting `expireAfter` and specifiying the docs cresation date and time)
+		- 
 
 
 ## accessing the server 
