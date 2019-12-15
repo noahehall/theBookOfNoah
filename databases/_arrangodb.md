@@ -29,12 +29,14 @@
 			- i had duplicating shit, and sometimes its a waste of time finding the correct place to put something
 
 
-# current best practices understanding 
+# best practices: current understanding 
 	- any datum tht needs to be sorted should be a skiplist index
   - any unique value should be a form of a hash index
   - set a docs creation time as a unix timestamp
+  -  anything with an 0/1 should be a sparse index 
+  	- e.g. active/non active
 
-## indexes best practices
+## best practices: indexes
   - always build indexes during times with less load
   - A non-unique hash index on an optional document attribute should be declared sparse so that it will not index documents for which the index attribute is not set.
   - For high selectivity attributes
@@ -48,6 +50,8 @@
 			- enables faster indexing and can lead to reduced memory usage in case the indexed attribute does occur only in some, but not all documents of the collection.
 
 
+## best practices: joins 
+	- if you intend to use joins it may be clever to use non-sparsity and maybe even uniqueness for that attribute,
 
 
 # architecture 
@@ -256,6 +260,10 @@
 		// maximum number of memory mappings per process is 65530
 		sudo sysctl -w "vm.max_map_count=256000"
 
+	// understanding query performannce 
+		var query = "FOR doc IN collection FILTER doc.value > 42 RETURN doc";
+		var stmt = db._createStatement(query);
+		stmt.explain();
 
 	// db admin
 	// create things
@@ -501,10 +509,12 @@
 		db.test.ensureHashIndex('fieldNameX','fieldNameY.subAttributeY', 'etc')
 	// ensureIndex api 
 		db.COL_NAME.ensureIndex({
+			// hash, skiplist, etc
 			type: '',
 			fields: [],
 			inBackground: bool,
 			unique: bool, 
+			// only hash|skiplist
 			sparse: bool,
 			minLength: int,
 
