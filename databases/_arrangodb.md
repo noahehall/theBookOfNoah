@@ -264,6 +264,9 @@
 		var query = "FOR doc IN collection FILTER doc.value > 42 RETURN doc";
 		var stmt = db._createStatement(query);
 		stmt.explain();
+		// or this human readable version
+		var query = "FOR doc IN collection FILTER doc.value > 42 RETURN doc";
+		require("@arangodb/aql/explainer").explain(query);
 
 	// db admin
 	// create things
