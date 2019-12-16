@@ -1,3 +1,6 @@
+# must do first 
+	- [basic crud shit](https://www.arangodb.com/docs/stable/aql/operations-insert.html)
+
 # must do 
 	- generally all arnago courses if you decide to make arnagodb your DB of choice muther fucker 
 	- [everything in the left side bar](https://www.arangodb.com/docs/stable/data-modeling.html)
@@ -64,7 +67,7 @@
 # architecture 
 ## engine types 
 	- rocksdb 
-	mmfiles
+	- mmfiles
 ## `arangod` 
 	- the server
 	- speaks http/rest 
@@ -217,6 +220,7 @@
 	- 	`arangosh` 
 		- 	a synchronous shell for interaction with the server 
 
+
 ### web interface 
 	- http://localhost:8529/
 	- alternative to using the
@@ -295,6 +299,8 @@
 		// 	arangosh
 		db._query('RETURN DOCUMENT("ActivityActionEvents/2019-12-04T00:00:00Z")')
 
+		// returns all documpents
+		RETURN COL_NAME 
 		RETURN DOCUMENT('collectionName/_key')
 		// if found, update with new values
 		UPSERT searchExpression // try to find this document
@@ -521,9 +527,10 @@
 	// examples 
 	// index examples 
 	// creating indexes 
+	// dont use this version
 		db.test.ensureHashIndex('fieldNameX','fieldNameY.subAttributeY', 'etc')
 	// ensureIndex api 
-		db.COL_NAME.ensureIndex({
+		db.DB_NAME.ensureIndex({
 			// hash|skiplist|fulltext|geo|
 			type: '',
 			name: '',
@@ -548,14 +555,14 @@
 		db.COL_NAME.loadIndexesIntoMemory();
 
 	// using explicit null values in an array index
-	db.COL_NAME.ensureIndex({ type: "hash", fields: [ "tags[*]" ] });
+	db.DB_NAME.ensureIndex({ type: "hash", fields: [ "tags[*]" ] });
 	db.COL_NAME.insert({tags: null}) // Will not be indexed
 	db.COL_NAME.insert({tags: []})  // Will not be indexed
 	db.COL_NAME.insert({tags: [null]}); // Will be indexed for null
 	db.COL_NAME.insert({tags: [null, 1, 2]}); // Will be indexed for null, 1 and 2
 
 	// declare an array index as sparse 
-	db.COL_NAME.ensureIndex({ type: "hash", fields: [ "tags[*]", "name" ], sparse: true });
+	db.DB_NAME.ensureIndex({ type: "hash", fields: [ "tags[*]", "name" ], sparse: true });
 
 	// hash indexes: the index attribute msut be in thee LEFT MOST position
 	FILTER doc.value1 == ...
@@ -578,16 +585,16 @@
 	SORT value1 DESC
 
 	// indexing top level keys 
-		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name" ] })
-		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name", "age" ] })
+		db.DB_NAME.ensureIndex({ type: "hash", fields: [ "name" ] })
+		db.DB_NAME.ensureIndex({ type: "hash", fields: [ "name", "age" ] })
 	// indexing sub-attributes 
-		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name.last" ] })
-		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "name.last", "name.first" ] })
+		db.DB_NAME.ensureIndex({ type: "hash", fields: [ "name.last" ] })
+		db.DB_NAME.ensureIndex({ type: "hash", fields: [ "name.last", "name.first" ] })
 	// indexing array values 
 	// indexing array items (vs the entire array)
 	// you can now query specific array items via the index
 	// notice the tags[*] thing
-		db.COL_NAME.ensureIndex({ type: "hash", fields: [ "tags[*]" ] });
+		db.DB_NAME.ensureIndex({ type: "hash", fields: [ "tags[*]" ] });
 		db.COL_NAME.insert({ tags: [ "foobar", "baz", "quux" ] });
 		FOR doc IN posts
 		  FILTER 'foobar' IN doc.tags[*]
@@ -595,7 +602,7 @@
 
 	// indexing sub-attributes of array values 
 	// .e.g an array of objects 
-	db.COL_NAME.ensureIndex({ type: "hash", fields: [ "tags[*].name" ] });
+	db.DB_NAME.ensureIndex({ type: "hash", fields: [ "tags[*].name" ] });
 	db.COL_NAME.insert({ tags: [ { name: "foobar" }, { name: "baz" }, { name: "quux" } ] });
 	FOR doc IN posts
 	  FILTER 'foobar' IN doc.tags[*].name
