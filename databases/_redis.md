@@ -1,7 +1,10 @@
-# Links
+# DOCS
   - [bookmark](https://dictionary.udemy.com/learn-redis/learn/v4/t/lecture/1307174)
   - [all commands](http://redis.io/commands)
   - [pubsub](https://redis.io/topics/pubsub)
+
+## links 
+  - [pub sub pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)
 
 # quickies 
 ```sh 
@@ -165,6 +168,8 @@
 
 # [pubsub]((https://redis.io/commands/#pubsub))
   - system to subscribe to channels, and publish to channels
+  - `subscribe` `unsubscribe` and `publish` implement the pub/sub messaging paradigm
+
 
 ## commands
 ### subscribe
@@ -186,6 +191,8 @@
 
 ### pubsub
   - pubsub channels * #publish and subscribe to all channels
+
+
 
 # [transactions](https://redis.io/commands/#transactions)
   - usecases
