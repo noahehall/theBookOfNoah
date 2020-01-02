@@ -1,3 +1,8 @@
+# links 
+  - [messaging patterns](https://en.wikipedia.org/wiki/Messaging_pattern)
+  - [architectural patterns](https://en.wikipedia.org/wiki/Architectural_pattern)
+
+  
 # MARKETING
   - developer agility
   - iterate quickly
