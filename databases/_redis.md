@@ -5,6 +5,7 @@
 
 ## links 
   - [pub sub pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)
+  - [thisdavej guide to using redis with nodejs](https://thisdavej.com/guides/redis-node/)
 
 # quickies 
 ```sh 
@@ -169,14 +170,35 @@
 # [pubsub]((https://redis.io/commands/#pubsub))
   - system to subscribe to channels, and publish to channels
   - `subscribe` `unsubscribe` and `publish` implement the pub/sub messaging paradigm
+  - architecture 
+    - subscribers: clients whom subscribe to channel(s)
+      - cmds: `subscribe, `psubscribe, `unsubscribe, `punsubscribe, `ping, `quit
+      - when subscribing using glob style, you may receive the same message multiple times
+    - publishers: clients whom publish to channel(s)
+  - best practices 
+    - prefix your channels with stuff 
+      - news.blah.hello 
+      - testing.blah.hello
 
 
+
+```sh 
+  SUBSCRIBE channelA channelX
+  PUBLISH channelName msg
+  UNSUBSCRIBE # from all channels 
+
+  PSUBSCRIBE news.* #subscribe to all channels prefixed with news.
+  PUNSUBSCRIBE news.*
+
+
+
+```
 ## commands
 ### subscribe
-  - subscribe general #subscribe to/create a client to the general channel
-    + the channel is deleted if no one is subscribed
-  - psubscribe blah* #subscribe to all exiting and future channels that match the pattern blah* (i.e. begins with blah)
-    + accepts regex, very powerful
+  - subscribe to/create a client to the general channel
+  - the channel is deleted if no one is subscribed
+  - psubscribe blah* #subscribe to all existing and future channels that match the pattern blah* (i.e. begins with blah)
+
 
 
 ### unsubscribe

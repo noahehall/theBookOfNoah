@@ -442,6 +442,18 @@
 			`);
 
 		// aql joins
+		// returns separate documents
+				db._query(
+					`FOR u IN users
+						FOR c IN cities
+							FILTER u.city == c._id RETURN { user: u, city: c }"
+				`).toArray()
+		// embeds the sub doc in the primary doc 
+		db._query(
+			`FOR u IN users
+				FOR c IN cities
+					FILTER u.city == c._id RETURN merge(u, {city: c})
+			`).toArray()
 			// Basic usage
 			const parts = [aql`FILTER`, aql`x`, aql`%`, aql`2`];
 			const joined = aql.join(parts); // aql`FILTER x % 2`
