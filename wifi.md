@@ -7,3 +7,9 @@ WTF ubuntu you fucked this shit up
   - for servers 
 # NetworkManager 
   - fuck network manager
+
+# wtf 
+  - check these files
+    - /etc/netplan/*.yaml
+  - `sudo netplan generate`
+  - `sudo netplan apply`
