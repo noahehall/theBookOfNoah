@@ -402,6 +402,7 @@ i
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
 	- [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
+	- [experiment with notification options](https://tests.peter.sh/notification-generator/)
 	- [push api](https://developer.mozilla.org/en-US/docs/Web/API/Push_API)
 	- [push api intro](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications#pushapi)
 	- [PushSubscription](https://developer.mozilla.org/en-US/docs/Web/API/PushSubscription)
@@ -504,9 +505,17 @@ i
 		    navigator.serviceWorker.getRegistration().then(function(reg) {
 		    	// options are optional param
 			    var options = {
-			        body: 'Here is a notification body!',
+			        // main description with enough info 
+				    // for the user to take action
+			        body: 'do this and stfu', 
+			        // attach an image to the notification
+			        // e.g. the senders avatar
 			        icon: 'images/example.png',
+			        // in milliseconds for phones
+			        // vibrate, pause, vibrate
 			        vibrate: [100, 50, 100],
+			        // sent to the service worker
+			        // upon user interaction
 			        data: {
 			          dateOfArrival: Date.now(),
 			          primaryKey: 1
