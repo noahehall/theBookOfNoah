@@ -32,12 +32,23 @@
 		history.go(1)
 			// @see history.forward()
 	// manipulation 
-		history.pushState({whatever}, 'title', 'url')
+		// neither causes browser refreshes or ajax requests
+		// eveyrthing you want to happen on state changes 
+		// must be handled programmaticaly
+		history state object 
+			// wheneve rthe user navigates to a new state
+			// a `popstate` event is fired and contains the state object 
+			// see `pushState` and `replaceState`
+		history.pushState({state}, 'title', 'url')
 			// pushes the give data ont he session history stack
 			// changes the referrer thats gets used in the HTTP header for ajax requests
 			// the referrer will be the url of hte doc whose window is `this` at the time when the ajax object is created
-		history.replaceState({whatever}, 'title', 'url')
-			// updates the most recent entry on the history stack toh ave the specified data, title and url
+			// calling history.back() after calling history.pushState() does not fire a `popstate` event
+			// never fires a `hashchage` event 
+		history.replaceState({state}, 'title', 'url')
+			// exactly the same as `pushState` except replaces the current history entry 
+			// useful when you want to update the stateObject/url of the current 
+			// history entry in response to user action
 			
 
 
