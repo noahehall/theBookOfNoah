@@ -337,7 +337,7 @@ i
   - scope of a service worker client that is a document in a browser context controlled by the active service worker
 
 
-### Clients
+### Clients (worker context)
  - represnets a container for a list of Client objects
  - the mainway to access all the clients owned by the active service worker
 #### [Claim()](https://developer.mozilla.org/en-US/docs/Web/API/Clients/claim)
