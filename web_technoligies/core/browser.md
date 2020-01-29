@@ -4,6 +4,10 @@
 	- [push notifications](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
 	- [onpopstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/onpopstate)
+	- [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters)
+	- [service worker api](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+	- [VAPID docs](https://tools.ietf.org/html/rfc8292)
+	- [server worker recipes](https://serviceworke.rs/)
 
 
 # DOM
@@ -15,6 +19,8 @@
   - When the browser loads the page, it transforms your HTML into a live document
     1. parses html (strings of text) into a data model (objects and nodes)
     2. preserves the HTML hierarchy by creating a tree of nodes (the DOM)
+
+
 
 # window
 ## history 
@@ -65,13 +71,20 @@
 
 
 # push notifications 
+## TODO 
+	- [PushSubscription](https://developer.mozilla.org/en-US/docs/Web/API/PushSubscription)
+	- [pushMessageData](https://developer.mozilla.org/en-US/docs/Web/API/PushMessageData)
+		- the event sent when a service worker receives a push 
+	- [pushmanager](https://developer.mozilla.org/en-US/docs/Web/API/PushManager)
+
 ## terms
 	- notification 
 		- a message displaye dto the user outside of the apps normal UI 
 	- push message
-		- a message sent from the server tot he client 
+		- a message sent from the server to the client 
 	- push notification 
 		- a notification created in response to a push message 
+		- object displayed in the status bar of a client, e.g. smartphone/browser 
 	- notifications API 
 		- an interface used to configure and display notifications to the user 
 	- push api 
@@ -83,7 +96,33 @@
 		- each browser implements its own push service 
 	- web push protocol 
 		- describes how an application server or user agent interacts with a push service 
-	- 
+	- subscription
+		- created by a service worker
+		- creates a unique endpoint that receives pushes from a backend server and proxies to the service worker that created it
+
+
+
+
+
+## flow 
+### setup
+	1.	user is asked for and provides consent to receive notifications from your application 
+	2.	service worker registration workflow completes 
+	3.	service worker creates a push notification subscription and sends the endpoint it receives to your backend
+	4.	your backend saves the subscription endpoint for later use to push messages back to the service worker
+
+### pushing: backend -> frontend 
+	1.	backend sends a message to a saved subscription 
+	2.	service worker receives message and sends to app thread 
+	3.	app displays notification to user 
+	4.	BOOM
+
+### key decision points 
+	- 	ask user for permission 
+		- 	user can press X (DENIED)
+		- 	user can deny (DENIED)
+		- 	user can grant (SUCCESS)
+
 
 
 # URL 
