@@ -87,9 +87,7 @@ i
 	- [maybe the same thing?](https://serviceworke.rs/)
 	- [mdn service worker API docs](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
 	- [mdn service worker cookbook](https://github.com/mozilla/serviceworker-cookbook)
-	- [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters)
-	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
-	- [push notifications](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
+	- [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters
 	- [service worker api](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
 	- [service worker cache for responses](https://developer.mozilla.org/en-US/docs/Web/API/Cache)
 	- [sw example](https://github.com/mdn/sw-test)
@@ -404,7 +402,10 @@ i
 
 
 ## push notifications 
-### TODO 
+### TODO (not in order, but start at the top cuz fuck it)
+	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
+	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
+	- [push api](https://developer.mozilla.org/en-US/docs/Web/API/Push_API)
 	- [PushSubscription](https://developer.mozilla.org/en-US/docs/Web/API/PushSubscription)
 	- [pushMessageData](https://developer.mozilla.org/en-US/docs/Web/API/PushMessageData)
 		- the event sent when a service worker receives a push 
@@ -421,6 +422,9 @@ i
 	- push notification 
 		- a notification created in response to a push message 
 		- object displayed in the status bar of a client, e.g. smartphone/browser 
+		- can be triggered 
+			- locally by an open application, 
+			- pushed from from the server to the user even when the app is not running
 	- notifications API 
 		- an interface used to configure and display notifications to the user 
 	- push api 
@@ -456,3 +460,9 @@ i
 		- 	user can grant (SUCCESS)
 
 
+### key APIs 
+	- Notifications API
+		- lets the app display system notifications to the user
+	- Push API
+		- allows a service worker to handle push messages from a server 
+			- even while the app is not active
