@@ -1,27 +1,10 @@
 # links 
-	- [using web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
-	- [basic code example](https://github.com/mdn/sw-test)
-	- [concepts and usage](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API#Service_worker_concepts_and_usage)
-	- [google workbox](https://github.com/GoogleChrome/workbox)
 	- [history api](https://developer.mozilla.org/en-US/docs/Web/API/History)
 	- [history tutorial](http://diveintohtml5.info/history.html)
 	- [interfaces](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API#inerfaces)
-	- [maybe the same thing?](https://serviceworke.rs/)
-	- [mdn service worker API docs](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
-	- [mdn service worker cookbook](https://github.com/mozilla/serviceworker-cookbook)
-	- [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters)
-	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
 	- [onpopstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/onpopstate)
-	- [push notifications](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
-	- [service worker api](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
-	- [service worker cache for responses](https://developer.mozilla.org/en-US/docs/Web/API/Cache)
-	- [sw example](https://github.com/mdn/sw-test)
-	- [understaanding service workers](http://blog.88mph.io/2017/07/28/understanding-service-workers/)
-	- [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
-	- [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker_API/Using_Service_Workers)
-	- [using web workers](https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers)
-	- [VAPID docs](https://tools.ietf.org/html/rfc8292)
-	- [workbox window tut](https://medium.com/@webmaxru/workbox-4-implementing-refresh-to-update-version-flow-using-the-workbox-window-module-41284967e79c)
+
+	
 
 
 # DOM
@@ -92,10 +75,31 @@
 	let params = (new URL(document.location)).searchParams;
 	let name = params.get('name'); // is the string "Jonathan Smith".
 	let age = parseInt(params.get('age')); // is the number 18
-
+i
 ```
 
 # workers 
+	- [using web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+	- [basic code example](https://github.com/mdn/sw-test)
+	- [concepts and usage](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API#Service_worker_concepts_and_usage)
+	- [google workbox](https://github.com/GoogleChrome/workbox)
+	- [maybe the same thing?](https://serviceworke.rs/)
+	- [mdn service worker API docs](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+	- [mdn service worker cookbook](https://github.com/mozilla/serviceworker-cookbook)
+	- [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters)
+	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
+	- [push notifications](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
+	- [service worker api](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
+	- [service worker cache for responses](https://developer.mozilla.org/en-US/docs/Web/API/Cache)
+	- [sw example](https://github.com/mdn/sw-test)
+	- [understaanding service workers](http://blog.88mph.io/2017/07/28/understanding-service-workers/)
+	- [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
+	- [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker_API/Using_Service_Workers)
+	- [using web workers](https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers)
+	- [VAPID docs](https://tools.ietf.org/html/rfc8292)
+	- [workbox window tut](https://medium.com/@webmaxru/workbox-4-implementing-refresh-to-update-version-flow-using-the-workbox-window-module-41284967e79c)
+
+	
 ## terminology
 	- web workers
 		- run scripts in background threads
@@ -316,7 +320,7 @@
       console.log('Registration failed with ' + error);
     });
   }
-  i
+i
 ```
 
 
@@ -333,8 +337,6 @@
 
 
 ### terms
-	- notification 
-		- a message displaye dto the user outside of the apps normal UI 
 	- push message
 		- a message sent from the server to the client 
 	- push notification 
@@ -343,7 +345,7 @@
 	- notifications API 
 		- an interface used to configure and display notifications to the user 
 	- push api 
-		- an interface used to subscri9be your app to apush service and receive push messages in the service worker 
+		- an interface used to subscribe your app to a push service and receive push messages in the service worker 
 	- web push 
 		- an informal term referring to the process or components involved in the process of pushing messages from a server to a client on the web
 	- push service 
@@ -354,8 +356,6 @@
 	- subscription
 		- created by a service worker
 		- creates a unique endpoint that receives pushes from a backend server and proxies to the service worker that created it
-
-
 
 ### flow 
 #### setup
