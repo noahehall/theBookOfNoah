@@ -84,6 +84,17 @@
 ```
 
 
+
+
+## URL 
+
+```js 
+	let params = (new URL(document.location)).searchParams;
+	let name = params.get('name'); // is the string "Jonathan Smith".
+	let age = parseInt(params.get('age')); // is the number 18
+
+```
+
 # workers 
 ## terminology
 	- web workers
@@ -131,7 +142,7 @@
 		- use cases 
 		  - populte idb 
 		  - fetch resources to cache site assets
-		  - i.e. whatever you would do when initialling installing a mobile app 
+		  - i.e. whatever you would do when initialling a mobile app 
 		    - e.g. make sure its available offline 
 		  - etc
 		- installation is not complete until `oninstall` completes
@@ -172,28 +183,6 @@
 ### tools 
   - [chrome: service workers](chrome://inspect/#service-workers)
   - [more information than inspect/#service-workers](chrome://serviceworker-internals)
-
-
-### flow 
-#### setup
-	1.	user is asked for and provides consent to receive notifications from your application 
-	2.	service worker registration workflow completes 
-	3.	service worker creates a push notification subscription and sends the endpoint it receives to your backend
-	4.	your backend saves the subscription endpoint for later use to push messages back to the service worker
-
-#### pushing: backend -> frontend 
-	1.	backend sends a message to a saved subscription 
-	2.	service worker receives message and sends to app thread 
-	3.	app displays notification to user 
-	4.	BOOM
-
-#### key decision points 
-	- 	ask user for permission 
-		- 	user can press X (DENIED)
-		- 	user can deny (DENIED)
-		- 	user can grant (SUCCESS)
-
-
 
 ## API (interfaces)
 ### ServiceWorker
@@ -368,12 +357,23 @@
 
 
 
+### flow 
+#### setup
+	1.	user is asked for and provides consent to receive notifications from your application 
+	2.	service worker registration workflow completes 
+	3.	service worker creates a push notification subscription and sends the endpoint it receives to your backend
+	4.	your backend saves the subscription endpoint for later use to push messages back to the service worker
 
-# URL 
+#### pushing: backend -> frontend 
+	1.	backend sends a message to a saved subscription 
+	2.	service worker receives message and sends to app thread 
+	3.	app displays notification to user 
+	4.	BOOM
 
-```js 
-	let params = (new URL(document.location)).searchParams;
-	let name = params.get('name'); // is the string "Jonathan Smith".
-	let age = parseInt(params.get('age')); // is the number 18
+#### key decision points 
+	- 	ask user for permission 
+		- 	user can press X (DENIED)
+		- 	user can deny (DENIED)
+		- 	user can grant (SUCCESS)
 
-```
+
