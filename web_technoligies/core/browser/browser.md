@@ -231,24 +231,52 @@ i
 				  );
 				});
 		// event names
-		'install'
+		// each returns an Event of type 'name'
+		// which usually has distinct properties/methods + the ones inherited
+		// from the global Event object
+		'install' // InstallEvent
 			// service worker was installed
 			// good place to poopulate idb for offline functionality
 
-		'fetch'
+		'fetch' // FetchEvent
 		  	// an ajax request occured in one of the pages under the service workers scope
 			event.respondWith(
 				// magic goes here
 			)
+		'notificationclick' // NotificationEvent
+			event.notification // the notification object 
+			event.notification.tag // wtf is this?
+			event.notification.close() // close the notification
+			event.action // the ID of the button on the notification that was clicked
+			// example handling notification click 
+			self.addEventListener('notificationclick', function(event) {
+			  console.log('On notification click: ', event.notification.tag);
+			  event.notification.close();
 
-		// Response object 
-			new Response('this is a simple string response');
-			new Response(
-				'this string response includess custom headers', 
-				{
-					headers: { 'Content-Type': 'text/html' }
-				}
-			);
+			  // This looks to see if the current is already open and
+			  // focuses if it is
+			  event.waitUntil(clients.matchAll({
+			    type: "window"
+			  }).then(function(clientList) {
+			    for (var i = 0; i < clientList.length; i++) {
+			      var client = clientList[i];
+			      if (client.url == '/' && 'focus' in client)
+			        return client.focus();
+			    }
+			    if (clients.openWindow)
+			      return clients.openWindow('/');
+			  }));
+			});
+
+
+	// Response object 
+		new Response('this is a simple string response');
+		new Response(
+			'this string response includess custom headers', 
+			{
+				headers: { 'Content-Type': 'text/html' }
+			}
+		);
 i
 ```
 
