@@ -469,19 +469,40 @@ i
 
 
 ### key APIs 
-	- Notifications API
-		- lets the app display system notifications to the user
-		- uses the same mechanisms as a native app (mostly)
-		- split into two non technical areaas
-			- Invocation API 
-				- controls how to make yoru notifications appear 
-					- styling, vibration, etc
-				- invoked from the client / server (if pushed)
-			- Interaction API
-				- controls what happens when the user engages with the notification 
-				- handled in the service worker
-	- Push API
-		- allows a service worker to handle push messages from a server 
-			- even while the app is not active
-	- service worker api 
-		- responds to push message events in the background and relays them to your application 
+#### service worker api 
+	- responds to push message events in the background and relays them to your application 
+	- see elseware in this doc for this shit
+
+#### Notifications API
+	- lets the app display system notifications to the user
+	- uses the same mechanisms as a native app (mostly)
+	- split into two non technical areaas
+		- Invocation API 
+			- controls how to make yoru notifications appear 
+				- styling, vibration, etc
+			- invoked from the client / server (if pushed)
+		- Interaction API
+			- controls what happens when the user engages with the notification 
+			- handled in the service worker
+#### Push API
+	- allows a service worker to handle push messages from a server 
+		- even while the app is not active
+
+
+
+```js
+	// request user permission to show notifications (browser context)
+		Notification.requestPermission(function(status) {
+		    console.log('Notification permission status:', status);
+		});
+	// show a notification (browser context)
+		function displayNotification() {
+		  if (Notification.permission == 'granted') {
+		    navigator.serviceWorker.getRegistration().then(function(reg) {
+		      reg.showNotification('Hello world!');
+		    });
+		  }
+		}
+	
+i
+```
