@@ -202,10 +202,33 @@ i
   - Multiple browsing contexts (e.g. pages, workers, etc.) can be associated with the same ServiceWorker object.
   -
 ```js
+	// api
+	// methods are global in a worker context
+		skipWaiting()
+			// https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/skipWaiting
+		  	// when a serviceWorker is installed over an existing one
+		    // the new serviceWorker will be activated immediately
+		     // usually it waits for the old serviceWorker to not be used by an existing loaded pages
+
+
 	// events self.addEventListener('EVENT_NAME', (event) => {})
+		// event object 
+			event.request // the url that was requested
+			event.respondWith() // hijack the request and respond with something different
+		
+		// event names
 		'install'
 			// service worker was installed
 			// good place to poopulate idb for offline functionality
+
+		'fetch'
+		  	// an ajax request occured in one of the pages under the service workers scope
+			event.respondWith(
+				// magic goes here
+			)
+
+##### respondWith()
+  - provide an arbitary response back to the controlled page
 		 
 i
 ```
@@ -228,13 +251,18 @@ i
   - state of the service worker
 
 
-### ServiceWorkerContainer
+### ServiceWorkerContainer (`navigator.serviceWorker`)
   - Provides facilities to register, unregister, and update service workers, and access the state of service workers and their registrations.
   - i.e. the file js file that calls `navigator.serviceWorker.register()`
 
+```js
+	navigator.serviceWorker.register()
+		// https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
+	  	// service worker will be downloaded to the client and installation/activiation will be attemped
 
-#### [register()](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
-  - service worker will be downloaded to the client and installation/activiation will be attemped
+i
+```
+#### 
 
 ### ServiceWorkerGlobalScope
   - Represents the global execution context of a service worker.
@@ -244,10 +272,7 @@ i
   - provides an interface for registering  and listing sync registrations
 
 
-#### [skipWaiting()](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/skipWaiting)
-  - when a serviceWorker is installed over an existing one
-    - the new serviceWorker will be activated immediately
-      - usually it waits for the old serviceWorker to not be used by an existing loaded pages
+
 
 ### Client
   - the scope of a client controlled by a service worker
@@ -286,18 +311,6 @@ i
 ### Events
 #### [MessageEvent](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
   - used by service workers
-
-
-#### FetchEvent
-  - The param passed into the ServiceWorkerGlobalScope.onfetch handler
-  - a fetch action that is dispatched on the `ServiceWorkerGlobalScope` of a `ServiceWorker`
-  - contains info about the request and resulting response
-
-##### respondWith()
-  - provide an arbitary response back to the controlled page
-
-
-#### InstallEvent
 
 #### SyncEvent
   - a sync action that is dispatched on the `ServiceWorkerGlobalScope`
