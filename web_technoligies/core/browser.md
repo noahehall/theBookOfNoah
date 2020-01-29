@@ -32,12 +32,13 @@
 		history.go(1)
 			// @see history.forward()
 	// manipulation 
-		history.pushState()
+		history.pushState({whatever}, 'title', 'url')
 			// pushes the give data ont he session history stack
-		history.replaceState()
-			// updates the most recent entry on the history stack toh ave the specified data, title and url
 			// changes the referrer thats gets used in the HTTP header for ajax requests
 			// the referrer will be the url of hte doc whose window is `this` at the time when the ajax object is created
+		history.replaceState({whatever}, 'title', 'url')
+			// updates the most recent entry on the history stack toh ave the specified data, title and url
+			
 
 
 ```
