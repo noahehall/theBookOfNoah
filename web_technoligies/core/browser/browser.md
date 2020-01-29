@@ -403,6 +403,7 @@ i
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
 	- [push api](https://developer.mozilla.org/en-US/docs/Web/API/Push_API)
+	- [push api intro](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications#pushapi)
 	- [PushSubscription](https://developer.mozilla.org/en-US/docs/Web/API/PushSubscription)
 	- [pushMessageData](https://developer.mozilla.org/en-US/docs/Web/API/PushMessageData)
 		- the event sent when a service worker receives a push 
@@ -414,6 +415,8 @@ i
 
 
 ### terms
+	- notification 
+		- a message displayed to the user outside of the apps normal UI (i.e. browser)
 	- push message
 		- a message sent from the server to the client 
 	- push notification 
@@ -424,19 +427,27 @@ i
 			- pushed from from the server to the user even when the app is not running
 	- notifications API 
 		- an interface used to configure and display notifications to the user 
+		- see below
 	- push api 
 		- an interface used to subscribe your app to a push service and receive push messages in the service worker 
 	- web push 
 		- an informal term referring to the process or components involved in the process of pushing messages from a server to a client on the web
 	- push service 
-		- a system for routing push messaages form a server to a client 
+		- a system for routing push messaages from a server to a specific client 
 		- each browser implements its own push service 
+			- wtf we have to understand this
+			- do we need to handle this distinctly for each browser
+			- remember having to code specifically for ded azz IE?
 	- web push protocol 
 		- describes how an application server or user agent interacts with a push service 
 	- subscription
 		- created by a service worker
 		- creates a unique endpoint that receives pushes from a backend server and proxies to the service worker that created it
 
+### use cases 
+	- let your app extend beyond the browser
+	- engage the user outside of the your web app
+	- permit the user (through action buttons) to engage with your site/app without needing to go back to your webpage
 ### flow 
 #### setup
 	1.	user is asked for and provides consent to receive notifications from your application 
@@ -460,6 +471,17 @@ i
 ### key APIs 
 	- Notifications API
 		- lets the app display system notifications to the user
+		- uses the same mechanisms as a native app (mostly)
+		- split into two non technical areaas
+			- Invocation API 
+				- controls how to make yoru notifications appear 
+					- styling, vibration, etc
+				- invoked from the client / server (if pushed)
+			- Interaction API
+				- controls what happens when the user engages with the notification 
+				- handled in the service worker
 	- Push API
 		- allows a service worker to handle push messages from a server 
 			- even while the app is not active
+	- service worker api 
+		- responds to push message events in the background and relays them to your application 
