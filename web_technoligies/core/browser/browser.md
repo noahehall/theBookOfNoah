@@ -121,6 +121,7 @@ i
 		- no DOM access
 		- runs a different thread than  to the main javascript browser context
 
+
 ## service workers 
 ### use cases
   - act as a middleware (opportunities are limitless)
@@ -200,6 +201,14 @@ i
   - Represents a service worker.
   - Multiple browsing contexts (e.g. pages, workers, etc.) can be associated with the same ServiceWorker object.
   -
+```js
+	// events self.addEventListener('EVENT_NAME', (event) => {})
+		'install'
+			// service worker was installed
+			// good place to poopulate idb for offline functionality
+		 
+i
+```
 
 ### Navigator.serviceWorker
   - Returns a ServiceWorkerContainer object,
@@ -208,6 +217,8 @@ i
       - removal
       - upgrade
       - communication
+      - this occurs in a browser context (i.e. one of your application js files)
+      	- wherever you call `register()`
 
 
 ### ServiceWorkerRegistration
