@@ -1,7 +1,6 @@
 # links 
 	- [history api](https://developer.mozilla.org/en-US/docs/Web/API/History)
 	- [history tutorial](http://diveintohtml5.info/history.html)
-	- [interfaces](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API#inerfaces)
 	- [onpopstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/onpopstate)
 
 	
@@ -79,16 +78,14 @@ i
 ```
 
 # workers 
+	- [main mdn service worker api docs](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
 	- [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
 	- [using web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
 	- [basic code example](https://github.com/mdn/sw-test)
-	- [concepts and usage](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API#Service_worker_concepts_and_usage)
 	- [google workbox](https://github.com/GoogleChrome/workbox)
 	- [maybe the same thing?](https://serviceworke.rs/)
-	- [mdn service worker API docs](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
 	- [mdn service worker cookbook](https://github.com/mozilla/serviceworker-cookbook)
 	- [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters
-	- [service worker api](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
 	- [service worker cache for responses](https://developer.mozilla.org/en-US/docs/Web/API/Cache)
 	- [sw example](https://github.com/mdn/sw-test)
 	- [understaanding service workers](http://blog.88mph.io/2017/07/28/understanding-service-workers/)
