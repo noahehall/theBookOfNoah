@@ -3,6 +3,7 @@
 	- [history tutorial](http://diveintohtml5.info/history.html)
 	- [push notifications](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
+	- [onpopstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/onpopstate)
 
 
 # DOM
@@ -35,10 +36,13 @@
 		// neither causes browser refreshes or ajax requests
 		// eveyrthing you want to happen on state changes 
 		// must be handled programmaticaly
-		history state object 
-			// wheneve rthe user navigates to a new state
+		history.state
+			// whenever the user navigates to a new state
 			// a `popstate` event is fired and contains the state object 
 			// see `pushState` and `replaceState`
+			// if the browser restarts it MAY contain the state object 
+			// associated with the last `pushState` or `replaceState()` methods 
+
 		history.pushState({state}, 'title', 'url')
 			// pushes the give data ont he session history stack
 			// changes the referrer thats gets used in the HTTP header for ajax requests
@@ -49,8 +53,11 @@
 			// exactly the same as `pushState` except replaces the current history entry 
 			// useful when you want to update the stateObject/url of the current 
 			// history entry in response to user action
-			
 
+	// events 
+		window.onpopstate
+			// fired everytime the active history entry changes 
+			// contains the state object associated with `replaceState()` and `pushState()` history methods 
 
 ```
 	
@@ -77,3 +84,12 @@
 	- web push protocol 
 		- describes how an application server or user agent interacts with a push service 
 	- 
+
+
+# URL 
+```js 
+	let params = (new URL(document.location)).searchParams;
+	let name = params.get('name'); // is the string "Jonathan Smith".
+	let age = parseInt(params.get('age')); // is the number 18
+
+```
