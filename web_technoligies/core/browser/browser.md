@@ -519,7 +519,16 @@ i
 			        data: {
 			          dateOfArrival: Date.now(),
 			          primaryKey: 1
-			        }
+			        },
+			        // contextually relevant action buttons to display with the notification
+			        // for the user to interact with our app
+			        // without having to actually open the browser
+			        actions: [
+			          {action: 'explore', title: 'Explore this new world',
+			            icon: 'images/checkmark.png'},
+			          {action: 'close', title: 'Close notification',
+			            icon: 'images/xmark.png'},
+			        ]
 			      };
 		      reg.showNotification('Hello world!', options);
 		    });
