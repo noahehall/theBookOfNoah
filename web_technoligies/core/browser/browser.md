@@ -123,6 +123,10 @@ i
 
 
 ## service workers 
+### todo 
+	- [fetch api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+		- especially the `request` and `response` objects
+
 ### use cases
   - act as a middleware (opportunities are limitless)
   - enable the creation of offline experiences
@@ -213,9 +217,19 @@ i
 
 	// events self.addEventListener('EVENT_NAME', (event) => {})
 		// event object 
-			event.request // the url that was requested
-			event.respondWith() // hijack the request and respond with something different
-		
+			event.request[url|method|headers|body] // the request object 
+			event.respondWith() 
+				// potentially hijack the request and respond with something different
+				// or let it do its normal thing with fetch(event.request)
+
+			// example returning from cache, or network if cache fails
+				self.addEventListener('fetch', (event) => {
+				  event.respondWith(
+				    caches.match(event.request).then((response) => {
+				      return response || fetch(event.request);
+				    })
+				  );
+				});
 		// event names
 		'install'
 			// service worker was installed
@@ -227,9 +241,14 @@ i
 				// magic goes here
 			)
 
-##### respondWith()
-  - provide an arbitary response back to the controlled page
-		 
+		// Response object 
+			new Response('this is a simple string response');
+			new Response(
+				'this string response includess custom headers', 
+				{
+					headers: { 'Content-Type': 'text/html' }
+				}
+			);
 i
 ```
 
