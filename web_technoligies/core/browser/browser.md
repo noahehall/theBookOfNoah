@@ -79,6 +79,7 @@ i
 ```
 
 # workers 
+	- [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
 	- [using web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
 	- [basic code example](https://github.com/mdn/sw-test)
 	- [concepts and usage](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API#Service_worker_concepts_and_usage)
@@ -93,13 +94,11 @@ i
 	- [service worker cache for responses](https://developer.mozilla.org/en-US/docs/Web/API/Cache)
 	- [sw example](https://github.com/mdn/sw-test)
 	- [understaanding service workers](http://blog.88mph.io/2017/07/28/understanding-service-workers/)
-	- [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
-	- [using service workers](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker_API/Using_Service_Workers)
 	- [using web workers](https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers)
 	- [VAPID docs](https://tools.ietf.org/html/rfc8292)
 	- [workbox window tut](https://medium.com/@webmaxru/workbox-4-implementing-refresh-to-update-version-flow-using-the-workbox-window-module-41284967e79c)
 
-	
+
 ## terminology
 	- web workers
 		- run scripts in background threads
@@ -137,8 +136,16 @@ i
   - performance enhancments
     - prefecting resources, etc
 
+
 ### lifecycle
 	1. registration
+		- e.g. `workbox.register()`
+		- e.g. `navigator.serviceWorker.register('./sw-test/sw.js', {scope: './sw-test/'})`
+			- `register('./path/to/sw.js', {scope: 'relative/to/origin'})
+			- in the above example, `sw-test` is the origin
+		- A single service worker can control many pages. 
+		- Each time a page within your scope is loaded, the service worker is installed against that page and operates on it.
+		- be careful with global variables in the service worker script: each page doesn’t get its own unique worker.
 	2. download
 	3. install `oninstall` event
 		- triggers
@@ -149,7 +156,7 @@ i
 		  - i.e. whatever you would do when initialling a mobile app 
 		    - e.g. make sure its available offline 
 		  - etc
-		- installation is not complete until `oninstall` completes
+		- installation is not complete until `oninstall` handler completes
 	4. activate `onactivate` event
 		- triggers
 		  - new installation - immediately activated
@@ -188,7 +195,7 @@ i
   - [chrome: service workers](chrome://inspect/#service-workers)
   - [more information than inspect/#service-workers](chrome://serviceworker-internals)
 
-## API (interfaces)
+## API
 ### ServiceWorker
   - Represents a service worker.
   - Multiple browsing contexts (e.g. pages, workers, etc.) can be associated with the same ServiceWorker object.
@@ -212,6 +219,7 @@ i
 
 ### ServiceWorkerContainer
   - Provides facilities to register, unregister, and update service workers, and access the state of service workers and their registrations.
+  - i.e. the file js file that calls `navigator.serviceWorker.register()`
 
 
 #### [register()](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
