@@ -18,6 +18,22 @@
 # window
 ## history 
 	- enables you to use scripts to modify the URL (and related context) without triggering a page refresh
+		- i.e. manipulation of the browser session history
+		- i.e. pages visited in the tab/frame that the current page is loaded in
+
+```js
+	history.back()
+		// previous page in sessino history 
+	history.forward()
+		// next page in session history
+	history.go(-1)
+		// @see history.back()
+	history.go(1)
+		// @see history.forward()
+
+```
+	
+```
 
 
 # push notifications 
