@@ -85,7 +85,6 @@ i
 	- [google workbox](https://github.com/GoogleChrome/workbox)
 	- [maybe the same thing?](https://serviceworke.rs/)
 	- [mdn service worker cookbook](https://github.com/mozilla/serviceworker-cookbook)
-	- [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#Parameters
 	- [service worker cache for responses](https://developer.mozilla.org/en-US/docs/Web/API/Cache)
 	- [sw example](https://github.com/mdn/sw-test)
 	- [understaanding service workers](http://blog.88mph.io/2017/07/28/understanding-service-workers/)
@@ -402,6 +401,7 @@ i
 ### TODO (not in order, but start at the top cuz fuck it)
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
+	- [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
 	- [push api](https://developer.mozilla.org/en-US/docs/Web/API/Push_API)
 	- [push api intro](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications#pushapi)
 	- [PushSubscription](https://developer.mozilla.org/en-US/docs/Web/API/PushSubscription)
@@ -496,10 +496,23 @@ i
 		    console.log('Notification permission status:', status);
 		});
 	// show a notification (browser context)
+	// however it fetches the current registered service worker
+	// so that events triggered by itneractions 
+	// are heard by the current service worker
 		function displayNotification() {
 		  if (Notification.permission == 'granted') {
 		    navigator.serviceWorker.getRegistration().then(function(reg) {
-		      reg.showNotification('Hello world!');
+		    	// options are optional param
+			    var options = {
+			        body: 'Here is a notification body!',
+			        icon: 'images/example.png',
+			        vibrate: [100, 50, 100],
+			        data: {
+			          dateOfArrival: Date.now(),
+			          primaryKey: 1
+			        }
+			      };
+		      reg.showNotification('Hello world!', options);
 		    });
 		  }
 		}
