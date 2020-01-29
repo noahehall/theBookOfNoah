@@ -237,6 +237,17 @@ i
 			event.respondWith(
 				// magic goes here
 			)
+
+		'notificationclose'
+			// worker context
+			// user dismisses notification through direct action
+			// e.g. swipe 
+			self.addEventListener('notificationclose', function(e) {
+			  var notification = e.notification;
+			  var primaryKey = notification.data.primaryKey;
+
+			  console.log('Closed notification: ' + primaryKey);
+			});
 		'notificationclick' // NotificationEvent
 			event.notification // the notification object 
 			event.notification.tag // wtf is this?
@@ -534,6 +545,8 @@ i
 		    });
 		  }
 		}
+
+
 	
 i
 ```
