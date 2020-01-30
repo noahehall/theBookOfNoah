@@ -277,11 +277,28 @@ i
 
 
 		'pushsubscriptionchange'
-			// indicates a change in push subscription
+			// indicates the current subscription has expired/changed
+			// you need to resubscribe and sync the data to your backend
 			// remember subscriptsion are volatile and unstable!
 			// always listen for this event and sync it with the server
 			// this can occur while the app is offline as well!
 			// thus push that bitch in idb with a timestamp
+			self.addEventListener("pushsubscriptionchange", event => {
+			  event.waitUntil(swRegistration.pushManager.subscribe(event.oldSubscription.options)
+			    .then(subscription => {
+			    	// this should go to your backend
+			      return fetch("register", {
+			        method: "post",
+			        headers: {
+			          "Content-type": "application/json"
+			        },
+			        body: JSON.stringify({
+			          endpoint: subscription.endpoint
+			        })
+			      });
+			    })
+			  );
+			}, false);
 
 		'notificationclose'
 			// worker context
