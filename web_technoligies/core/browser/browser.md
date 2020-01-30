@@ -255,7 +255,9 @@ i
 			});
 		'notificationclick' // NotificationEvent
 			event.notification // the notification object 
-			event.notification.tag // wtf is this?
+			
+			event.notification.tag // ID used to group notifications
+			event.notification.renotify // BOOL, beep/vibrate/etc
 			event.notification.close() // close the notification
 			event.action // the ID of the button on the notification that was clicked
 			// example handling notification click 
@@ -441,6 +443,10 @@ i
 		- timeley: displayed at the right time for time sensitive events 
 		- precise: offer enough info so that the user can make a decision without clicking through to the app 
 		- relevant - make the notification relevant to the users needs
+	- never prompt the user to receive notifications as soon as they land on your app
+		- they have no context at this time
+		- find a more appropritate time to receive notifications
+		- e.g. when the user is configuring their communication settings, after the user completes a critical task, when they return to your site (after they are a known user who uses your app)
 
 ### TODO (not in order, but start at the top cuz fuck it)
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
@@ -657,9 +663,18 @@ i
 				        // main description with enough info 
 					    // for the user to take action
 				        body: 'do this and stfu', 
+				        //  tag is an ID used to group notifications together
+						//  that way you dont show 1000 notifications for the same tHING
+						// but instead they are grouped together in one notfication
+						// the browser will replace a visible notification with a new  notification
+						// if they have the same tag 
+						tag: 'someId',
 				        // attach an image to the notification
 				        // e.g. the senders avatar
 				        icon: 'images/example.png',
+				        // will vibrate/beep/etc again if an existing notification
+						// is being replaced by this notification (i.e. a visible notification has the same tag as this one)
+						renotify: true,
 				        // in milliseconds for phones
 				        // vibrate, pause, vibrate
 				        vibrate: [100, 50, 100],
