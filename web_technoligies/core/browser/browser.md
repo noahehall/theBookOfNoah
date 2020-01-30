@@ -548,8 +548,12 @@ i
 				- used to encrypt your push messages before sending to the subscription endpoint  (see webpush)
 				- you must encrypt your messages before sending to the push service as the push service may not be encrypted (https)
 
-
-### mozillas webpush nodejs library 
+### web push protocol
+	- designed to response th users privacy by keeping users anonymous and not requiring strong authentication between your app and the push service
+		- since the push service is not authneticated, it presets a greater risk of DoS attacks
+		- any application in possession of the subscription endpoint is able to send messages to your users 
+			- never send this back up to the client, only receive it from the client and store it server side
+#### mozillas webpush nodejs library 
 	- handles both encryption and the web push protocol 
 	- makes it super easy, fucking use it
 
