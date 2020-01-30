@@ -484,16 +484,21 @@ i
 	- permit the user (through action buttons) to engage with your site/app without needing to go back to your webpage
 ### flow 
 #### setup
-	1.	user is asked for and provides consent to receive notifications from your application 
+	1.	user is asked for and provides consent to receive notifications from your application (granted)
 	2.	service worker registration workflow completes 
-	3.	service worker creates a push notification subscription and sends the endpoint it receives to your backend
-	4.	your backend saves the subscription endpoint for later use to push messages back to the service worker
+	3.	service worker creates a push notification subscription and sends the endpoint & public keys it receives to your backend
+	4.	your backend saves the subscription endpoint & public keys for later use to push messages back to the service worker
 
-#### pushing: backend -> frontend 
-	1.	backend sends a message to a saved subscription 
-	2.	service worker receives message and sends to app thread 
-	3.	app displays notification to user 
-	4.	BOOM
+#### pushing: backend -> push service 
+	1. use the public keys to encrypt the data you want to send to the user
+	2. send the encrypted data to the subscription.endpoint
+
+#### receiving: push service -> user
+	1. push service routes the encrypted data to the users device 
+	2. the device wakes up the browser (if closed) 
+	3. the service worker handles the push event and invokes your business logic which outputs onto the app thread 
+	4.	app displays notification to user 
+	5.	BOOM
 
 #### key decision points 
 	- 	ask user for permission 
@@ -522,9 +527,19 @@ i
 			- controls what happens when the user engages with the notification 
 			- handled in the service worker
 #### Push 
-	- the action of the server supllying message information to a service worker
-	- allows a service worker to handle push messages from a server 
-		- even while the app is not active (i.e. browser is not open)
+	- the action of the server suplying message information to a service worker
+	- allows a service worker to display notifications to users even when the browser is not open
+	- push service 
+		- each browser manages push notifications through their own service
+		- architecture 
+			- subscription 
+				- is specific to each browser 
+			- subscription.endpoint 
+				- the browsers push service creates an endpoint where you server can send messages to a specific user 
+				- this endpoint is to the browsers push service, which is responsible for routing messages to the user associated at this endpoint
+			- subscription.keys
+				- used to encrypt your push messages before sending to the subscription endpoint  (see webpush)
+				- you must encrypt your messages before sending to the push service as the push service may not be encrypted (https)
 
 
 
