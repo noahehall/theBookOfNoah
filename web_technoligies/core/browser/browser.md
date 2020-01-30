@@ -340,6 +340,10 @@ i
 ### Clients (worker context)
  - represnets a container for a list of Client objects
  - the mainway to access all the clients owned by the active service worker
+```js
+	clients.openWindow('http://www.example.com');
+i
+```
 #### [Claim()](https://developer.mozilla.org/en-US/docs/Web/API/Clients/claim)
   - when a serviceWorker is installad over an existing one
     - the serviceWorker can claim all pages owned by the previous service worker
@@ -404,6 +408,24 @@ i
       console.log('Registration failed with ' + error);
     });
   }
+
+
+  // does the browser support push notifications
+  if ('Notification' in window && navigator.serviceWorker) {
+	  // Display the UI to let the user toggle notifications
+  }
+
+
+  // check if the user has given permission to show notifications
+  if (Notification.permission === "granted") {
+	  /* do our magic */
+	} else if (Notification.permission === "blocked") {
+	 /* the user has previously denied push. Can't reprompt. */
+	} else {
+	  /* show a prompt to the user */
+	}
+
+   
 i
 ```
 
@@ -498,7 +520,8 @@ i
 			- handled in the service worker
 #### Push API
 	- allows a service worker to handle push messages from a server 
-		- even while the app is not active
+		- even while the app is not active (i.e. browser is not open)
+
 
 
 
@@ -511,10 +534,16 @@ i
 	// however it fetches the current registered service worker
 	// so that events triggered by itneractions 
 	// are heard by the current service worker
+
 		function displayNotification() {
 		  if (Notification.permission == 'granted') {
+
 		    navigator.serviceWorker.getRegistration().then(function(reg) {
 		    	// options are optional param
+		    	// extreme browser differences exist
+		    	// assume only the body and title are gauranteed
+		    	// assume no actions are available
+		    	// treat everything as a progressive enhancement
 			    var options = {
 			        // main description with enough info 
 				    // for the user to take action
@@ -534,6 +563,7 @@ i
 			        // contextually relevant action buttons to display with the notification
 			        // for the user to interact with our app
 			        // without having to actually open the browser
+			        // lenght of array must =< Notification.maxActions
 			        actions: [
 			          {action: 'explore', title: 'Explore this new world',
 			            icon: 'images/checkmark.png'},
