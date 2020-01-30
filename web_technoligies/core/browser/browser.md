@@ -549,11 +549,19 @@ i
 				- you must encrypt your messages before sending to the push service as the push service may not be encrypted (https)
 
 ### web push protocol
-	- designed to response th users privacy by keeping users anonymous and not requiring strong authentication between your app and the push service
+	- designed to response the users privacy by keeping users anonymous and not requiring strong authentication between your app and the push service
+	- issues with not requiring strong authentication
 		- since the push service is not authneticated, it presets a greater risk of DoS attacks
 		- any application in possession of the subscription endpoint is able to send messages to your users 
 			- never send this back up to the client, only receive it from the client and store it server side
 		- theres no way for the push service to send errors to the developer outside of the response-request-cycle
+	- VAPID
+		- resolution to the issues of not requiring strong authnetication
+		-  the publishers optionally identifies them selves via VAPID to the push service
+			- the push service can establish behaviorale expctations and contact the publisher when  these expectations are deviated from
+			- the publisher provides contact information so that the push service can contact them in case of exceptional situations 
+			- precedence is given to publishers by the push service who use their shit, mutha fuckas
+
 #### mozillas webpush nodejs library 
 	- handles both encryption and the web push protocol 
 	- makes it super easy, fucking use it
