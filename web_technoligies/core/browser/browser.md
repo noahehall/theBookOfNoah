@@ -62,8 +62,6 @@
 			// contains the state object associated with `replaceState()` and `pushState()` history methods 
 
 ```
-	
-```
 
 
 
@@ -76,6 +74,8 @@
 	let age = parseInt(params.get('age')); // is the number 18
 i
 ```
+
+
 
 # workers 
 	- [main mdn service worker api docs](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)
@@ -123,14 +123,14 @@ i
 
 ### use cases
   - act as a middleware (opportunities are limitless)
-  - enable the creation of offline experiences
+  - enable the creation 'of' offline experiences
   - intercept network request
   - react based on network availability
   - background data syncrhonization
   - responding to resource requests from other origins
   - receiving centralized updates to expensive to calculate data
   - client-side compiling and dependency management
-  - hooks for background services
+  - hooks 'for' background services
   - custom templating based on URL patterns
   - performance enhancments
     - prefecting resources, etc
@@ -138,15 +138,15 @@ i
 
 ### lifecycle
 	1. registration
-		- e.g. `workbox.register()`
-		- e.g. `navigator.serviceWorker.register('./sw-test/sw.js', {scope: './sw-test/'})`
+		- e.g. 'workbox.register()'
+		- e.g. 'navigator.serviceWorker.register('./sw-test/sw.js', {scope: './sw-test/'})'
 			- `register('./path/to/sw.js', {scope: 'relative/to/origin'})
-			- in the above example, `sw-test` is the origin
+			- in the above example, 'sw-test' is the origin
 		- A single service worker can control many pages. 
 		- Each time a page within your scope is loaded, the service worker is installed against that page and operates on it.
 		- be careful with global variables in the service worker script: each page doesn’t get its own unique worker.
 	2. download
-	3. install `oninstall` event
+	3. install oninstall event
 		- triggers
 		  - when the downloaded file is found to be new/byte-wise different
 		- use cases 
@@ -211,6 +211,10 @@ i
 
 	// events self.addEventListener('EVENT_NAME', (event) => {})
 		// event object 
+			// always use the waitUntil method to extend
+			// the lifetime of the service worker
+			// until your business logic completes
+			event.waitUntil(thisAsyncBlahIsResolved)
 			event.request[url|method|headers|body] // the request object 
 			event.respondWith() 
 				// potentially hijack the request and respond with something different
@@ -549,11 +553,11 @@ i
 		Notification.requestPermission(function(status) {
 		    console.log('Notification permission status:', status);
 		});
-	// show a notification (browser context)
+
+	// show a notification to the user (browser context)
 	// however it fetches the current registered service worker
 	// so that events triggered by itneractions 
 	// are heard by the current service worker
-
 		function displayNotification() {
 		  if (Notification.permission == 'granted') {
 
@@ -595,7 +599,17 @@ i
 		  }
 		}
 
+		// show a notification to the user (worker context)
+		// almsot exactly as in the browser context,
+		// but this time in response to a push event received by a service worker
 
-	
+		self.addEventListener('push', function(e) {
+		  var options = { seeAbove };
+
+		  //  always use event.waitUntil 
+		  e.waitUntil(
+		    self.registration.showNotification('Hello world!', options)
+		  );
+		});
 i
 ```
