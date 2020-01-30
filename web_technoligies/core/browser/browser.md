@@ -120,7 +120,7 @@ i
 ## service workers 
 	- [service worker global scope](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope)
 
-	
+
 ### todo 
 	- [fetch api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 		- especially the `request` and `response` objects
@@ -201,18 +201,29 @@ i
 
 ## API
 ### ServiceWorker
-  - Represents a service worker.
-  - Multiple browsing contexts (e.g. pages, workers, etc.) can be associated with the same ServiceWorker object.
-  -
+	- Represents a service worker.
+	- Multiple browsing contexts (e.g. pages, workers, etc.) can be associated with the same ServiceWorker object.
+	- the ServiceWorker state is not persisted across the termination/restart cycle, 
+		- so each event handler should assume it's being invoked with a bare, default global state.
+	- Once successfully registered, a service worker can and will be terminated when idle to conserve memory and processor power
+ 
+#### NOTES 
+	- `self` and `globalScope` are the same thing 
+		- get your shiz together MDN!
+	- you can react to events in two ways 
+		- `self.addEventListener('eventname', (event) => poop)
+		- `self.oneventname = (event) => poop
+
+ 
 ```js
 	// api
 	// methods are global in a worker context
 		skipWaiting()
-			// https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/skipWaiting
 		  	// when a serviceWorker is installed over an existing one
 		    // the new serviceWorker will be activated immediately
 		     // usually it waits for the old serviceWorker to not be used by an existing loaded pages
-
+		fetch()
+			// ajax bitch
 
 	// events self.addEventListener('EVENT_NAME', (event) => {})
 		// event object 
@@ -237,6 +248,8 @@ i
 		// each returns an Event of type 'name'
 		// which usually has distinct properties/methods + the ones inherited
 		// from the global Event object
+		'activate' 
+			// good place to delete/upgrade stale data data 
 		'install' // InstallEvent
 			// service worker was installed
 			// good place to poopulate idb for offline functionality
