@@ -277,6 +277,26 @@ i
 			    }
 			    if (clients.openWindow)
 			      return clients.openWindow('/');
+			  }).then(() => {
+			  	// after your notification logic is complete
+		    	  // close all notifications
+				  self.registration.getNotifications().then(function(notifications) {
+				    notifications.forEach(function(notification) {
+				      notification.close();
+				    });
+				  });
+
+				  // oor you can close a specific notification
+				  // based on its tag
+				  // close all notifications with tag of 'id1'
+				  // you can use any data within the options object
+				  // when the notification was created
+				  var options = {tag: 'id1'};
+				  self.registration.getNotifications(options).then(function(notifications) {
+				    notifications.forEach(function(notification) {
+				      notification.close();
+				    });
+				  });
 			  }));
 			});
 
@@ -345,8 +365,9 @@ i
 
 
 ### Clients (worker context)
- - represnets a container for a list of Client objects
- - the mainway to access all the clients owned by the active service worker
+	- The clients global in the service worker lists all of the active push clients on this machine.
+	- represnets a container for a list of Client objects
+	- the mainway to access all the clients owned by the active service worker
 ```js
 	clients.openWindow('http://www.example.com');
 i
@@ -713,6 +734,28 @@ i
 		    self.registration.showNotification('Hello world!', options)
 		  );
 		});
+
+
+		// if your app is already opej, do not show a notification
+		/// instead alert the user with some in-app thing, like a toast
+		self.addEventListener('push', function(e) {
+		  clients.matchAll().then(function(c) {
+		    if (c.length === 0) {
+		      // Show notification
+		      e.waitUntil(
+		        self.registration.showNotification('Push notification')
+		      );
+		    } else {
+		      // Send a message to the page to update the UI
+		    // If there are active clients it means that the user has your site open in one or more windows. 
+		    // and you should relay the message to EACH of the windows
+		    // i guess theres no way to know which window?
+		      console.log('Application is already open!');
+		    }
+		  });
+		});
+
+
 
 	// example webpush from node to push service 
 		var webPush = require('web-push');
