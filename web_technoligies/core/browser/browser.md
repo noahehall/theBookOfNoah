@@ -436,9 +436,6 @@ i
 
 
 ## push notifications 
-# bookmark https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications#using_vapid
-
-
 ### TODO (not in order, but start at the top cuz fuck it)
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
@@ -558,8 +555,8 @@ i
 		- any application in possession of the subscription endpoint is able to send messages to your users 
 			- never send this back up to the client, only receive it from the client and store it server side
 		- theres no way for the push service to send errors to the developer outside of the response-request-cycle
-	- VAPID
-		- resolution to the issues of not requiring strong authnetication
+#### VAPID
+		- resolution to the issues of the web push protocol not requiring strong authnetication
 		-  the publishers optionally identifies them selves via VAPID to the push service
 			- the push service can establish behaviorale expctations and contact the publisher when  these expectations are deviated from
 			- the publisher provides contact information so that the push service can contact them in case of exceptional situations 
