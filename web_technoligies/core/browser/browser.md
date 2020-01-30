@@ -441,6 +441,7 @@ i
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
 	- [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
 	- [experiment with notification options](https://tests.peter.sh/notification-generator/)
+	- [mozilla webpush node library is fucking mando](https://github.com/web-push-libs/web-push)
 	- [push api](https://developer.mozilla.org/en-US/docs/Web/API/Push_API)
 	- [push api intro](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications#pushapi)
 	- [PushSubscription](https://developer.mozilla.org/en-US/docs/Web/API/PushSubscription)
@@ -548,6 +549,9 @@ i
 				- you must encrypt your messages before sending to the push service as the push service may not be encrypted (https)
 
 
+### mozillas webpush nodejs library 
+	- handles both encryption and the web push protocol 
+	- makes it super easy, fucking use it
 
 
 ```js
@@ -653,5 +657,27 @@ i
 		    self.registration.showNotification('Hello world!', options)
 		  );
 		});
+
+	// example webpush from node to push service 
+		var webPush = require('web-push');
+
+		var pushSubscription = {"endpoint":"https://android.googleapis.com/gcm/send/f1LsxkKphfQ:APA91bFUx7ja4BK4JVrNgVjpg1cs9lGSGI6IMNL4mQ3Xe6mDGxvt_C_gItKYJI9CAx5i_Ss6cmDxdWZoLyhS2RJhkcv7LeE6hkiOsK6oBzbyifvKCdUYU7ADIRBiYNxIVpLIYeZ8kq_A",
+		"keys":{"p256dh":"BLc4xRzKlKORKWlbdgFaBrrPK3ydWAHo4M0gs0i1oEKgPpWC5cW8OCzVrOQRv-1npXRWk8udnW3oYhIO4475rds=", "auth":"5I2Bu2oKdyy9CwL8QVF0NQ=="}};
+
+		var payload = 'Here is a payload!';
+
+		var options = {
+		  gcmAPIKey: 'AIzaSyD1JcZ8WM1vTtH6Y0tXq_Pnuw4jgj_92yg',
+		  // in SECONDS
+		  // the time the push service keeps the push message 
+		  // by default its four weeks
+		  TTL: 60
+		};
+
+		webPush.sendNotification(
+		  pushSubscription,
+		  payload,
+		  options
+		);
 i
 ```
