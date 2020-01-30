@@ -119,6 +119,11 @@ i
 
 ## service workers 
 	- [service worker global scope](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope)
+	- [notification click has a really good example](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/notificationclick_event)
+	- [push event](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/push_event)
+	- [pushsubscriptionchange is a critical event](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/pushsubscriptionchange_event)
+
+
 
 
 ### todo 
@@ -257,15 +262,26 @@ i
 		// from the global Event object
 		'activate' 
 			// good place to delete/upgrade stale data data 
+
+
 		'install' // InstallEvent
 			// service worker was installed
 			// good place to poopulate idb for offline functionality
+
 
 		'fetch' // FetchEvent
 		  	// an ajax request occured in one of the pages under the service workers scope
 			event.respondWith(
 				// magic goes here
 			)
+
+
+		'pushsubscriptionchange'
+			// indicates a change in push subscription
+			// remember subscriptsion are volatile and unstable!
+			// always listen for this event and sync it with the server
+			// this can occur while the app is offline as well!
+			// thus push that bitch in idb with a timestamp
 
 		'notificationclose'
 			// worker context
@@ -277,6 +293,8 @@ i
 
 			  console.log('Closed notification: ' + primaryKey);
 			});
+
+
 		'notificationclick' // NotificationEvent
 			// example handling notification click 
 			self.addEventListener('notificationclick', function(event) {
@@ -633,7 +651,7 @@ i
 	// you have to pass it as a Uint8Array
 	// check that this shit is right
 	// i think the the array should be the pub key reetrieved from generateVAPIDKeys
-	const publicKey = new Uint8Array([0x4, 0x37, 0x77, 0xfe, .... ]);
+	const publicKey = new Uint8Array([0x4, 0x37, 0x77, 0xfe, ... ]);
 		serviceWorkerRegistration.pushManager.subscribe(
 		  {
 		    userVisibleOnly: true,
@@ -746,7 +764,8 @@ i
 		// but this time in response to a push event received by a service worker
 
 		self.addEventListener('push', function(e) {
-		  const body = e.data ? e.data.json() : {} // check that json works, .text() works
+		  const body = e.data ? e.data.json() : {} 
+		  	// json(), text(), I think array and some other shit
 		  var options = { seeAbove, body }; // see how we get the body from the event object above
 
 		  //  always use event.waitUntil 
