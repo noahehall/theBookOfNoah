@@ -503,11 +503,14 @@ i
 
 
 ### key APIs 
+	- push sends info to service worker 
+	- server displays notification to user
 #### service worker api 
 	- responds to push message events in the background and relays them to your application 
 	- see elseware in this doc for this shit
 
 #### Notifications API
+	- the action of the service worker sending the information to a user
 	- lets the app display system notifications to the user
 	- uses the same mechanisms as a native app (mostly)
 	- split into two non technical areaas
@@ -518,7 +521,8 @@ i
 		- Interaction API
 			- controls what happens when the user engages with the notification 
 			- handled in the service worker
-#### Push API
+#### Push 
+	- the action of the server supllying message information to a service worker
 	- allows a service worker to handle push messages from a server 
 		- even while the app is not active (i.e. browser is not open)
 
