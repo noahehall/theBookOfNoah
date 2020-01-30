@@ -209,6 +209,7 @@ i
  
 #### NOTES 
 	- `self` and `globalScope` are the same thing 
+		- but niether are required, as.... all methods attached to both objects are global
 		- get your shiz together MDN!
 	- you can react to events in two ways 
 		- `self.addEventListener('eventname', (event) => poop)
@@ -244,6 +245,11 @@ i
 				    })
 				  );
 				});
+			event.notification // the notification object 
+			event.notification.tag // ID used to group notifications
+			event.notification.renotify // BOOL, beep/vibrate/etc
+			event.notification.close() // close the notification
+			event.action // the ID of the button on the notification that was clicked
 		// event names
 		// each returns an Event of type 'name'
 		// which usually has distinct properties/methods + the ones inherited
@@ -271,12 +277,6 @@ i
 			  console.log('Closed notification: ' + primaryKey);
 			});
 		'notificationclick' // NotificationEvent
-			event.notification // the notification object 
-			
-			event.notification.tag // ID used to group notifications
-			event.notification.renotify // BOOL, beep/vibrate/etc
-			event.notification.close() // close the notification
-			event.action // the ID of the button on the notification that was clicked
 			// example handling notification click 
 			self.addEventListener('notificationclick', function(event) {
 			  console.log('On notification click: ', event.notification.tag);
