@@ -436,9 +436,6 @@ i
 
 
 ## push notifications 
-bookmark: https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications#subscribing_to_push_notifications
-
-
 ### TODO (not in order, but start at the top cuz fuck it)
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
@@ -554,62 +551,102 @@ bookmark: https://developers.google.com/web/ilt/pwa/introduction-to-push-notific
 
 
 ```js
+	// step 1 - request permission
 	// request user permission to show notifications (browser context)
-		Notification.requestPermission(function(status) {
-		    console.log('Notification permission status:', status);
+		Notification.requestPermission(function(response) {
+		    console.log('Notification permission status:', response);
 		});
 
-	// show a notification to the user (browser context)
-	// however it fetches the current registered service worker
-	// so that events triggered by itneractions 
-	// are heard by the current service worker
-		function displayNotification() {
-		  if (Notification.permission == 'granted') {
+	// step 2 - synchronize the subscription with our server
+	// only if the user gave us permissions to show notifications in step 1
+	// get the current subscription everytime the user accesses our app
+	// it is not stable and may change (why we need to keep it in sync)
+	if ('serviceWorker' in navigator) {
+		// do this on registry or when its ready
+		// navigator.serviceWorker.ready.then(function(reg) {
+		navigator.serviceWorker.register('sw.js').then(function(reg) {
+		    console.log('Service Worker Registered!', reg);
 
-		    navigator.serviceWorker.getRegistration().then(function(reg) {
-		    	// options are optional param
-		    	// extreme browser differences exist
-		    	// assume only the body and title are gauranteed
-		    	// assume no actions are available
-		    	// treat everything as a progressive enhancement
-			    var options = {
-			        // main description with enough info 
-				    // for the user to take action
-			        body: 'do this and stfu', 
-			        // attach an image to the notification
-			        // e.g. the senders avatar
-			        icon: 'images/example.png',
-			        // in milliseconds for phones
-			        // vibrate, pause, vibrate
-			        vibrate: [100, 50, 100],
-			        // sent to the service worker
-			        // upon user interaction
-			        data: {
-			          dateOfArrival: Date.now(),
-			          primaryKey: 1
-			        },
-			        // contextually relevant action buttons to display with the notification
-			        // for the user to interact with our app
-			        // without having to actually open the browser
-			        // lenght of array must =< Notification.maxActions
-			        actions: [
-			          {action: 'explore', title: 'Explore this new world',
-			            icon: 'images/checkmark.png'},
-			          {action: 'close', title: 'Close notification',
-			            icon: 'images/xmark.png'},
-			        ]
-			      };
-		      reg.showNotification('Hello world!', options);
+		    reg.pushManager.getSubscription().then(function(sub) {
+		      if (sub === null) {
+		        // Update UI to ask user to register for Push
+		        reg.pushManager.subscribe({
+		        	// the browser ensures every incoming push message 
+		        	// has a matching and visible notification
+			        userVisibleOnly: true
+			      }).then(function(sub) {
+			        console.log('Endpoint URL: ', sub.endpoint);
+			      }).catch(function(e) {
+			        if (Notification.permission === 'denied') {
+			          console.warn('Permission for notifications was denied');
+			        } else {
+			          console.error('Unable to subscribe to push', e);
+			        }
+			      });
+		      } else {
+		        // We have a subscription, update the database
+		        console.log('Subscription object: ', sub);
+		      }
 		    });
-		  }
-		}
+		  })
+		   .catch(function(err) {
+		    console.log('Service Worker registration failed: ', err);
+		  });
+	}
+
+	// displaying notifications
+		// show a notification to the user (browser context)
+		// however it fetches the current registered service worker
+		// so that events triggered by itneractions 
+		// are heard by the current service worker
+			function displayNotification() {
+			  if (Notification.permission == 'granted') {
+
+			    navigator.serviceWorker.getRegistration().then(function(reg) {
+			    	// options are optional param
+			    	// extreme browser differences exist
+			    	// assume only the body and title are gauranteed
+			    	// assume no actions are available
+			    	// treat everything as a progressive enhancement
+				    var options = {
+				        // main description with enough info 
+					    // for the user to take action
+				        body: 'do this and stfu', 
+				        // attach an image to the notification
+				        // e.g. the senders avatar
+				        icon: 'images/example.png',
+				        // in milliseconds for phones
+				        // vibrate, pause, vibrate
+				        vibrate: [100, 50, 100],
+				        // sent to the service worker
+				        // upon user interaction
+				        data: {
+				          dateOfArrival: Date.now(),
+				          primaryKey: 1
+				        },
+				        // contextually relevant action buttons to display with the notification
+				        // for the user to interact with our app
+				        // without having to actually open the browser
+				        // lenght of array must =< Notification.maxActions
+				        actions: [
+				          {action: 'explore', title: 'Explore this new world',
+				            icon: 'images/checkmark.png'},
+				          {action: 'close', title: 'Close notification',
+				            icon: 'images/xmark.png'},
+				        ]
+				      };
+			      reg.showNotification('Hello world!', options);
+			    });
+			  }
+			}
 
 		// show a notification to the user (worker context)
 		// almsot exactly as in the browser context,
 		// but this time in response to a push event received by a service worker
 
 		self.addEventListener('push', function(e) {
-		  var options = { seeAbove };
+		  const body = e.data ? e.data.json() : {} // check that json works, .text() works
+		  var options = { seeAbove, body }; // see how we get the body from the event object above
 
 		  //  always use event.waitUntil 
 		  e.waitUntil(
