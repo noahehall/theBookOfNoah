@@ -556,12 +556,16 @@ i
 			- never send this back up to the client, only receive it from the client and store it server side
 		- theres no way for the push service to send errors to the developer outside of the response-request-cycle
 #### VAPID
-		- resolution to the issues of the web push protocol not requiring strong authnetication
-		-  the publishers optionally identifies them selves via VAPID to the push service
-			- the push service can establish behaviorale expctations and contact the publisher when  these expectations are deviated from
-			- the publisher provides contact information so that the push service can contact them in case of exceptional situations 
-			- precedence is given to publishers by the push service who use their shit, mutha fuckas
-			- also allows you to not have to create a firebase project, w00p w00p
+	- resolution to the issues of the web push protocol not requiring strong authnetication
+	-  the publishers optionally identifies them selves via VAPID to the push service
+		- the push service can establish behaviorale expctations and contact the publisher when  these expectations are deviated from
+		- the publisher provides contact information so that the push service can contact them in case of exceptional situations 
+		- precedence is given to publishers by the push service who use their shit, mutha fuckas
+		- also allows you to not have to create a firebase project, w00p w00p
+	- VAPID process 
+		1. create a pub/priv key pair for your server and give the pub key to your web app
+		2. when the user accepts to receive notifications, add your pub key to the 'subscribe()' APIs options object
+		3. when your app server sends a push message, include a signed JSON web token alon gwith the public key		
 
 #### mozillas webpush nodejs library 
 	- handles both encryption and the web push protocol 
