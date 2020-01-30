@@ -91,6 +91,7 @@ i
 	- [using web workers](https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers)
 	- [VAPID docs](https://tools.ietf.org/html/rfc8292)
 	- [workbox window tut](https://medium.com/@webmaxru/workbox-4-implementing-refresh-to-update-version-flow-using-the-workbox-window-module-41284967e79c)
+	- [the super fucking important event.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil)
 
 
 ## terminology
@@ -435,6 +436,9 @@ i
 
 
 ## push notifications 
+bookmark: https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications#subscribing_to_push_notifications
+
+
 ### TODO (not in order, but start at the top cuz fuck it)
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
@@ -480,7 +484,8 @@ i
 		- describes how an application server or user agent interacts with a push service 
 	- subscription
 		- created by a service worker
-		- creates a unique endpoint that receives pushes from a backend server and proxies to the service worker that created it
+		- creates a unique endpoint + public keys that you can push data to from a backend server
+			- each browser creates their own subscription object (endpoint + public keys)
 
 ### use cases 
 	- let your app extend beyond the browser
