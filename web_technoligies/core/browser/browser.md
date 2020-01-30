@@ -223,6 +223,12 @@ i
  
 ```js
 	// api
+	// properties 
+		self.clients
+			// returns the `Clients` object controlled by this service worker
+			// @see https://developer.mozilla.org/en-US/docs/Web/API/Clients
+
+		
 	// methods are global in a worker context
 		skipWaiting()
 		  	// when a serviceWorker is installed over an existing one
