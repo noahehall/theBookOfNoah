@@ -436,6 +436,9 @@ i
 
 
 ## push notifications 
+# bookmark https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications#using_vapid
+
+
 ### TODO (not in order, but start at the top cuz fuck it)
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
@@ -561,6 +564,7 @@ i
 			- the push service can establish behaviorale expctations and contact the publisher when  these expectations are deviated from
 			- the publisher provides contact information so that the push service can contact them in case of exceptional situations 
 			- precedence is given to publishers by the push service who use their shit, mutha fuckas
+			- also allows you to not have to create a firebase project, w00p w00p
 
 #### mozillas webpush nodejs library 
 	- handles both encryption and the web push protocol 
