@@ -553,6 +553,7 @@ i
 		- since the push service is not authneticated, it presets a greater risk of DoS attacks
 		- any application in possession of the subscription endpoint is able to send messages to your users 
 			- never send this back up to the client, only receive it from the client and store it server side
+		- theres no way for the push service to send errors to the developer outside of the response-request-cycle
 #### mozillas webpush nodejs library 
 	- handles both encryption and the web push protocol 
 	- makes it super easy, fucking use it
