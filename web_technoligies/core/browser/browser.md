@@ -266,7 +266,8 @@ i
 
 		'install' // InstallEvent
 			// service worker was installed
-			// good place to poopulate idb for offline functionality
+			// good place to call `skipWaiting()` as the first thing with breakfast in the morning
+			// good place to poopulate idb for offline functionality (inside of event.waitUntil())
 
 
 		'fetch' // FetchEvent
@@ -284,9 +285,11 @@ i
 			// this can occur while the app is offline as well!
 			// thus push that bitch in idb with a timestamp
 			self.addEventListener("pushsubscriptionchange", event => {
+			  // resubscribe with old options
 			  event.waitUntil(swRegistration.pushManager.subscribe(event.oldSubscription.options)
 			    .then(subscription => {
-			    	// this should go to your backend
+			    	// sync this data with your backend 
+			    	// should check if it fails, then push to idb
 			      return fetch("register", {
 			        method: "post",
 			        headers: {
@@ -354,6 +357,20 @@ i
 				  });
 			  }));
 			});
+		'push'
+			// triggered when the service worker receives a push message
+			// see the push notification section elseware in this doc
+			self.addEventListener("push", event => {
+			let message = event.data.json();
+			switch(message.type) {
+				case "init":
+					doInit();
+					break;
+				case "shutdown":
+					doShutdown();
+					break;
+				}
+			}, false);
 
 
 	// Response object 
