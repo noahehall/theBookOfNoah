@@ -250,6 +250,7 @@ i
 			event.notification.renotify // BOOL, beep/vibrate/etc
 			event.notification.close() // close the notification
 			event.action // the ID of the button on the notification that was clicked
+			event.data // poop attached to the event by whatever triggered it
 		// event names
 		// each returns an Event of type 'name'
 		// which usually has distinct properties/methods + the ones inherited
@@ -289,6 +290,8 @@ i
 			  }).then(function(clientList) {
 			    for (var i = 0; i < clientList.length; i++) {
 			      var client = clientList[i];
+			      // the URL is arbitrary to your business logic
+			      // associated with this notification
 			      if (client.url == '/' && 'focus' in client)
 			        return client.focus();
 			    }
