@@ -436,6 +436,12 @@ i
 
 
 ## push notifications 
+### google overlords best practices 
+	- use notifications wisely, theyshould be timely, precise and relevant
+		- timeley: displayed at the right time for time sensitive events 
+		- precise: offer enough info so that the user can make a decision without clicking through to the app 
+		- relevant - make the notification relevant to the users needs
+
 ### TODO (not in order, but start at the top cuz fuck it)
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
@@ -573,6 +579,23 @@ i
 
 
 ```js
+	// VAPID - create keys via webpush library 
+	// contains { publicKey, privateKey, andOtherShit? }
+	vapidKeys = webpush.generateVAPIDKeys(); 
+	// in order to use the pub key with the subscribe method
+	// you have to pass it as a Uint8Array
+	// check that this shit is right
+	// i think the the array should be the pub key reetrieved from generateVAPIDKeys
+	const publicKey = new Uint8Array([0x4, 0x37, 0x77, 0xfe, .... ]);
+		serviceWorkerRegistration.pushManager.subscribe(
+		  {
+		    userVisibleOnly: true,
+		    // see above for generating public key
+		    applicationServerKey: publicKey
+		  }
+		);
+
+
 	// step 1 - request permission
 	// request user permission to show notifications (browser context)
 		Notification.requestPermission(function(response) {
@@ -684,8 +707,11 @@ i
 		var payload = 'Here is a payload!';
 
 		var options = {
-		  // fuck this shit
-		  gcmAPIKey: 'AIzaSyD1JcZ8WM1vTtH6Y0tXq_Pnuw4jgj_92yg',
+		  vapidDetails: {
+		  	subject: 'yourServer@emailaddress.com'
+		  	publicKey: vapidPUblicKey,
+		  	privateKey: vapidPrivateKey,
+		  },
 		  // in SECONDS
 		  // the time the push service keeps the push message 
 		  // by default its four weeks
