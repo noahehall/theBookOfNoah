@@ -374,29 +374,25 @@ i
 	// mostly worker context
 	// focuses on events
 
-		
-	// methods are global in a worker context
-		skipWaiting() // see elseware
-		fetch() // ajax bitch
+	// always use the waitUntil method to extend
+	// the lifetime of the service worker
+	// until your business logic completes
+	event.waitUntil(async () => {...})
 
-	// event object 
-		// always use the waitUntil method to extend
-		// the lifetime of the service worker
-		// until your business logic completes
-		event.waitUntil(async () => {...})
+	// potentially hijack the request and respond with something different
+	// or let it do its normal thing with fetch(event.request)
+	event.respondWith() 
 
-		event.request[url|method|headers|body] // the request object 
-		event.respondWith() 
-			// potentially hijack the request and respond with something different
-			// or let it do its normal thing with fetch(event.request)
+	// the request object contains info about the fucking event
+	event.request[url|method|headers|body]
 
-		
-		event.notification // the notification object 
-		event.notification.tag // ID used to group notifications
-		event.notification.renotify // BOOL, beep/vibrate/etc
-		event.notification.close() // close the notification
-		event.action // the ID of the button on the notification that was clicked
-		event.data // poop attached to the event by whatever triggered it
+	
+	event.notification // the notification object 
+	event.notification.tag // ID used to group notifications
+	event.notification.renotify // BOOL, beep/vibrate/etc
+	event.notification.close() // close the notification
+	event.action // the ID of the button on the notification that was clicked
+	event.data // poop attached to the event by whatever triggered it
 
 
 	// event types
@@ -621,10 +617,13 @@ i
 		- creates a unique endpoint + public keys that you can push data to from a backend server
 			- each browser creates their own subscription object (endpoint + public keys)
 
+
 ### use cases 
 	- let your app extend beyond the browser
 	- engage the user outside of the your web app
 	- permit the user (through action buttons) to engage with your site/app without needing to go back to your webpage
+
+
 ### flow 
 #### setup
 	1.	user is asked for and provides consent to receive notifications from your application (granted)
@@ -632,9 +631,11 @@ i
 	3.	service worker creates a push notification subscription and sends the endpoint & public keys it receives to your backend
 	4.	your backend saves the subscription endpoint & public keys for later use to push messages back to the service worker
 
+
 #### pushing: backend -> push service 
 	1. use the public keys to encrypt the data you want to send to the user
 	2. send the encrypted data to the subscription.endpoint
+
 
 #### receiving: push service -> user
 	1. push service routes the encrypted data to the users device 
@@ -642,6 +643,7 @@ i
 	3. the service worker handles the push event and invokes your business logic which outputs onto the app thread 
 	4.	app displays notification to user 
 	5.	BOOM
+
 
 #### key decision points 
 	- 	ask user for permission 
@@ -653,9 +655,12 @@ i
 ### key APIs 
 	- push sends info to service worker 
 	- server displays notification to user
+
+
 #### service worker api 
 	- responds to push message events in the background and relays them to your application 
 	- see elseware in this doc for this shit
+
 
 #### Notifications API
 	- the action of the service worker sending the information to a user
@@ -669,6 +674,8 @@ i
 		- Interaction API
 			- controls what happens when the user engages with the notification 
 			- handled in the service worker
+
+
 #### Push 
 	- the action of the server suplying message information to a service worker
 	- allows a service worker to display notifications to users even when the browser is not open
@@ -684,6 +691,7 @@ i
 				- used to encrypt your push messages before sending to the subscription endpoint  (see webpush)
 				- you must encrypt your messages before sending to the push service as the push service may not be encrypted (https)
 
+
 ### web push protocol
 	- designed to response the users privacy by keeping users anonymous and not requiring strong authentication between your app and the push service
 	- issues with not requiring strong authentication
@@ -691,6 +699,8 @@ i
 		- any application in possession of the subscription endpoint is able to send messages to your users 
 			- never send this back up to the client, only receive it from the client and store it server side
 		- theres no way for the push service to send errors to the developer outside of the response-request-cycle
+
+
 #### VAPID
 	- resolution to the issues of the web push protocol not requiring strong authnetication
 	-  the publishers optionally identifies them selves via VAPID to the push service
@@ -702,6 +712,7 @@ i
 		1. create a pub/priv key pair for your server and give the pub key to your web app
 		2. when the user accepts to receive notifications, add your pub key to the 'subscribe()' APIs options object
 		3. when your app server sends a push message, include a signed JSON web token alon gwith the public key		
+
 
 #### mozillas webpush nodejs library 
 	- handles both encryption and the web push protocol 
