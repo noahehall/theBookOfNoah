@@ -2,8 +2,13 @@
 	- [history api](https://developer.mozilla.org/en-US/docs/Web/API/History)
 	- [history tutorial](http://diveintohtml5.info/history.html)
 	- [onpopstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/onpopstate)
+	- [fetch api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+		- especially the `request` and `response` objects
 
 	
+
+## steal some shit 
+	- [they check for localhost](https://github.com/DennyScott/react-router-auth/blob/master/src/serviceWorker.js)
 
 
 # DOM
@@ -65,7 +70,6 @@
 ```
 
 
-
 # Request - Response
 ```js
 	// Response object 
@@ -87,7 +91,6 @@ i
 	let age = parseInt(params.get('age')); // is the number 18
 i
 ```
-
 
 
 # workers 
@@ -196,14 +199,6 @@ i
 	- [register api, good docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
 
 
-
-
-
-### todo 
-	- [fetch api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
-		- especially the `request` and `response` objects
-
-
 ### use cases
   - act as a middleware (opportunities are limitless)
   - enable the creation 'of' offline experiences
@@ -269,10 +264,6 @@ i
 		- `await clients.claim()` - force new worker to claim existing pages
 
 
-
-### steal some shit 
-	- [they check for localhost](https://github.com/DennyScott/react-router-auth/blob/master/src/serviceWorker.js)
-
 ### tools 
 	- [chrome: service workers](chrome://inspect/#service-workers)
 	- [more information than inspect](chrome://serviceworker-internals)
@@ -285,16 +276,14 @@ i
 	- you can react to events in two ways 
 		- `self.addEventListener('eventname', (event) => poop)
 		- `self.oneventname = (event) => poop
-
- 
-
-
 ```js
 	// mostly browser context
 	// focusing on handling registration
 	if ('serviceWorker' in navigator) {
 		(async () => {
 			// Register (create/update) a service worker
+			// you can call this without checking for a previous registration
+			// but is there benefits to checking?
 			// scope === used for navigation matching 
 			// only the sw whose scope matches the url will be considered 'controller'
 			// an sw cant control a parent path (think rest api paths)
@@ -302,11 +291,26 @@ i
 			// the default scope (i.e './') is the service workers location (usually at the root of the site)
 			// e.g. if you include a sw at poop.com/toilet
 			// its scope will be all paths under the toilet
-			const registration = await navigator
+			navigator
 				.serviceWorker
-				.register('relative/path/to/sw.js', { scope: ./ });
+				.register('relative/path/to/sw.js', { scope: './' })
+				.then(reg => runYourBizLogicBitch());
 
 
+			// we use await here
+			// beecause we want to halt execution until the sw is active
+			const registration = await navigator.serviceWorker.ready;
+			// rest of your business logic here that depends on an active sw
+
+
+
+			// you can also retrieve the current registration 
+			// for a scope relative to the current document url
+			const registration = await navigator.serviceWorker.getRegistration('/app');
+
+			// you can also retrieve multiple registrations 
+			// why would there be multiple? maybe it returns child scopes?
+			const regArray = await navigator.serviceWorker.getRegistrations();
 		})();
 
 		// controller === the controlling sw
@@ -317,48 +321,38 @@ i
 
 		// Then, register a handler to detect when a new or
 		// updated service worker takes control.
-		navigator.serviceWorker.oncontrollerchange = () => {
+		navigator.serviceWorker.oncontrollerchange = event => {
 			// your business logic here 
 			// if you need to do shit when a new sw claims this page
 		};
+
+		// using onmessage instead of addEventListener('message')
+		// enables the messaging flow to start immediately 
+		// without the call to startMessages()
+		navigator.serviceWorker.onmessage = event => {
+		  // ...
+		};
 	} else console.log('fuck your browser')
-  }
 
   
-  // registration 
-  if ('serviceWorker' in navigator) {
-    // url is relative to the origin
-    // scope specifies which paths is controlled by this service worker
-    navigator.serviceWorker.register('./sw-test/sw.js', {scope: './sw-test/'})
-    .then((reg) => {
-      // registration worked
-      console.log('Registration succeeded. Scope is ' + reg.scope);
-    }).catch((error) => {
-      // registration failed
-      console.log('Registration failed with ' + error);
-    });
-  }
-
-
-  // does the browser support push notifications
-  if ('Notification' in window && navigator.serviceWorker) {
-	  // Display the UI to let the user toggle notifications
-  }
-
-
-  // check if the user has given permission to show notifications
-  if (Notification.permission === "granted") {
-	  /* do our magic */
-	} else if (Notification.permission === "blocked") {
-	 /* the user has previously denied push. Can't reprompt. */
-	} else {
-	  /* show a prompt to the user */
+	// does the browser support push notifications
+	if ('Notification' in window && navigator.serviceWorker) {
+		// Display the UI to let the user toggle notifications
 	}
 
 
+	// check if the user has given permission to show notifications
+	if (Notification.permission === "granted") {
+		/* do our magic */
+	} else if (Notification.permission === "blocked") {
+		/* the user has previously denied push. Can't reprompt. */
+	} else {
+		// show a custom prompt to the user
+		// since you cant reprompt with the native prompt
+		// dont use it unless the user says yes to your fake prompt
+	}
 i
 ```
-
 
 
 ```js
@@ -527,10 +521,8 @@ i
 		}, false);
 
 
-
 i
 ```
-
 
 
 ```js
@@ -539,7 +531,7 @@ i
 		// returns the `Clients` object controlled by this service worker
 		// @see https://developer.mozilla.org/en-US/docs/Web/API/Clients
 
-
+i
 ```
 
 ### cache
