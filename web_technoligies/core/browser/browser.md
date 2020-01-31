@@ -298,29 +298,22 @@ i
 			const registration = await navigator.serviceWorker.register('/sw.js');
 
 
-		})()
+		})();
 
-	}
+		// controller === the controlling sw
+		if (navigator.serviceWorker.controller) {
+			// your business logic here
+			// if you need to interact with the current sw
+		}
 
-  // Independent of the registration, let's also display
-  // information about whether the current page is controlled
-  // by an existing service worker, and when that
-  // controller changes.
-
-  // First, do a one-off check if there's currently a
-  // service worker in control.
-  if (navigator.serviceWorker.controller) {
-    console.log('This page is currently controlled by:', navigator.serviceWorker.controller);
+		// Then, register a handler to detect when a new or
+		// updated service worker takes control.
+		navigator.serviceWorker.oncontrollerchange = () => {
+			// your business logic here 
+			// if you need to do shit when a new sw claims this page
+		};
+	} else console.log('fuck your browser')
   }
-
-  // Then, register a handler to detect when a new or
-  // updated service worker takes control.
-  navigator.serviceWorker.oncontrollerchange = function() {
-    console.log('This page is now controlled by:', navigator.serviceWorker.controller);
-  };
-} else {
-  console.log('Service workers are not supported.');
-}
 
   
   // registration 
