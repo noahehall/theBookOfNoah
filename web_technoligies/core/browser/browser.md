@@ -698,26 +698,7 @@ i
 
 ### push examples - mostly worker context
 ```js
-	// VAPID - create keys via webpush library 
-	// contains { publicKey, privateKey, andOtherShit? }
-	vapidKeys = webpush.generateVAPIDKeys(); 
-	// in order to use the pub key with the subscribe method
-	// you have to pass it as a Uint8Array
-	// check that this shit is right
-	// i think the the array should be the pub key reetrieved from generateVAPIDKeys
-	const publicKey = new Uint8Array([0x4, 0x37, 0x77, 0xfe, ... ]);
-	serviceWorkerRegistration.pushManager.subscribe({
-		userVisibleOnly: true,
-		// see above for generating public key
-		applicationServerKey: publicKey
-	});
 
-
-	// step 1 - request permission
-	// request user permission to show notifications (browser context)
-		Notification.requestPermission(function(response) {
-		    console.log('Notification permission status:', response);
-		});
 
 	// step 2 - synchronize the subscription with our server
 	// only if the user gave us permissions to show notifications in step 1
@@ -726,95 +707,101 @@ i
 	if ('serviceWorker' in navigator) {
 		(async () => {
 			// this will wait indefinitely for a sw to become active 
-			const registration = await navigator.serviceWorker.ready;
+			const reg = await navigator.serviceWorker.ready;
 			// now you can call methods that require an active sw;
 
+			const currentSub = await reg.pushManager.getSubscription();
+			if (currentSub) updateDatabaseWithSubscription();
+			else {
+				// VAPID - create keys via webpush library 
+				// contains { publicKey, privateKey, andOtherShit? }
+				// this shit happens on your server
+				// vapidKeys = webpush.generateVAPIDKeys(); 
+				
+				// in order to use the pub key with the subscribe method
+				// you have to pass it as a Uint8Array
+				// check that this shit is right
+				// i think the the array should be the pub key reetrieved from generateVAPIDKeys
+				const publicKey = new Uint8Array([0x4, 0x37, 0x77, 0xfe, ... ]);
 
+
+
+				// step 1 - ensure push permission
+				if (Notification.permission === 'granted') {
+					// we are under the assumption here
+					// that the user has granted us permission 
+					// to show push permissions
+					const newSub = await reg.pushManager.subscribe({
+						// this makes the browser ensures every incoming push message 
+						// has a matching and visible notification
+						userVisibleOnly: true,
+						// see above for generating public key
+						applicationServerKey: publicKey,
+					});
+
+
+					pushNewSubToBackEnd(newSub);
+				} else if (Notification.permission === 'denied') {
+					console.error('fuck this user', e);
+				}
+			}
 		})();
-		navigator.serviceWorker.register('sw.js').then(function(reg) {
-		    console.log('Service Worker Registered!', reg);
-
-		    reg.pushManager.getSubscription().then(function(sub) {
-		      if (sub === null) {
-		        // Update UI to ask user to register for Push
-		        reg.pushManager.subscribe({
-		        	// the browser ensures every incoming push message 
-		        	// has a matching and visible notification
-			        userVisibleOnly: true
-			      }).then(function(sub) {
-			        console.log('Endpoint URL: ', sub.endpoint);
-			      }).catch(function(e) {
-			        if (Notification.permission === 'denied') {
-			          console.warn('Permission for notifications was denied');
-			        } else {
-			          console.error('Unable to subscribe to push', e);
-			        }
-			      });
-		      } else {
-		        // We have a subscription, update the database
-		        console.log('Subscription object: ', sub);
-		      }
-		    });
-		  })
-		   .catch(function(err) {
-		    console.log('Service Worker registration failed: ', err);
-		  });
 	}
 
 	// displaying notifications
-		// show a notification to the user (browser context)
-		// however it fetches the current registered service worker
-		// so that events triggered by itneractions 
-		// are heard by the current service worker
-			function displayNotification() {
-			  if (Notification.permission == 'granted') {
+	// show a notification to the user (browser context)
+	// however it fetches the current registered service worker
+	// so that events triggered by itneractions 
+	// are heard by the current service worker
+		function displayNotification() {
+		  if (Notification.permission == 'granted') {
 
-			    navigator.serviceWorker.getRegistration().then(function(reg) {
-			    	// options are optional param
-			    	// extreme browser differences exist
-			    	// assume only the body and title are gauranteed
-			    	// assume no actions are available
-			    	// treat everything as a progressive enhancement
-				    var options = {
-				        // main description with enough info 
-					    // for the user to take action
-				        body: 'do this and stfu', 
-				        //  tag is an ID used to group notifications together
-						//  that way you dont show 1000 notifications for the same tHING
-						// but instead they are grouped together in one notfication
-						// the browser will replace a visible notification with a new  notification
-						// if they have the same tag 
-						tag: 'someId',
-				        // attach an image to the notification
-				        // e.g. the senders avatar
-				        icon: 'images/example.png',
-				        // will vibrate/beep/etc again if an existing notification
-						// is being replaced by this notification (i.e. a visible notification has the same tag as this one)
-						renotify: true,
-				        // in milliseconds for phones
-				        // vibrate, pause, vibrate
-				        vibrate: [100, 50, 100],
-				        // sent to the service worker
-				        // upon user interaction
-				        data: {
-				          dateOfArrival: Date.now(),
-				          primaryKey: 1
-				        },
-				        // contextually relevant action buttons to display with the notification
-				        // for the user to interact with our app
-				        // without having to actually open the browser
-				        // lenght of array must =< Notification.maxActions
-				        actions: [
-				          {action: 'explore', title: 'Explore this new world',
-				            icon: 'images/checkmark.png'},
-				          {action: 'close', title: 'Close notification',
-				            icon: 'images/xmark.png'},
-				        ]
-				      };
-			      reg.showNotification('Hello world!', options);
-			    });
-			  }
-			}
+		    navigator.serviceWorker.getRegistration().then(function(reg) {
+		    	// options are optional param
+		    	// extreme browser differences exist
+		    	// assume only the body and title are gauranteed
+		    	// assume no actions are available
+		    	// treat everything as a progressive enhancement
+			    var options = {
+			        // main description with enough info 
+				    // for the user to take action
+			        body: 'do this and stfu', 
+			        //  tag is an ID used to group notifications together
+					//  that way you dont show 1000 notifications for the same tHING
+					// but instead they are grouped together in one notfication
+					// the browser will replace a visible notification with a new  notification
+					// if they have the same tag 
+					tag: 'someId',
+			        // attach an image to the notification
+			        // e.g. the senders avatar
+			        icon: 'images/example.png',
+			        // will vibrate/beep/etc again if an existing notification
+					// is being replaced by this notification (i.e. a visible notification has the same tag as this one)
+					renotify: true,
+			        // in milliseconds for phones
+			        // vibrate, pause, vibrate
+			        vibrate: [100, 50, 100],
+			        // sent to the service worker
+			        // upon user interaction
+			        data: {
+			          dateOfArrival: Date.now(),
+			          primaryKey: 1
+			        },
+			        // contextually relevant action buttons to display with the notification
+			        // for the user to interact with our app
+			        // without having to actually open the browser
+			        // lenght of array must =< Notification.maxActions
+			        actions: [
+			          {action: 'explore', title: 'Explore this new world',
+			            icon: 'images/checkmark.png'},
+			          {action: 'close', title: 'Close notification',
+			            icon: 'images/xmark.png'},
+			        ]
+			      };
+		      reg.showNotification('Hello world!', options);
+		    });
+		  }
+		}
 
 		// show a notification to the user (worker context)
 		// almsot exactly as in the browser context,
