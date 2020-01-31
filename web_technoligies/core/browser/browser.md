@@ -286,12 +286,84 @@ i
 		- `self.oneventname = (event) => poop
 
  
+
+
+```js
+	// mostly browser context
+	// focusing on handling registration
+	if ('serviceWorker' in navigator) {
+		(async () => {
+			// Register a service worker hosted at the root of the
+			// site using the default scope.
+			const registration = await navigator.serviceWorker.register('/sw.js');
+
+
+		})()
+
+	}
+
+  // Independent of the registration, let's also display
+  // information about whether the current page is controlled
+  // by an existing service worker, and when that
+  // controller changes.
+
+  // First, do a one-off check if there's currently a
+  // service worker in control.
+  if (navigator.serviceWorker.controller) {
+    console.log('This page is currently controlled by:', navigator.serviceWorker.controller);
+  }
+
+  // Then, register a handler to detect when a new or
+  // updated service worker takes control.
+  navigator.serviceWorker.oncontrollerchange = function() {
+    console.log('This page is now controlled by:', navigator.serviceWorker.controller);
+  };
+} else {
+  console.log('Service workers are not supported.');
+}
+
+  
+  // registration 
+  if ('serviceWorker' in navigator) {
+    // url is relative to the origin
+    // scope specifies which paths is controlled by this service worker
+    navigator.serviceWorker.register('./sw-test/sw.js', {scope: './sw-test/'})
+    .then((reg) => {
+      // registration worked
+      console.log('Registration succeeded. Scope is ' + reg.scope);
+    }).catch((error) => {
+      // registration failed
+      console.log('Registration failed with ' + error);
+    });
+  }
+
+
+  // does the browser support push notifications
+  if ('Notification' in window && navigator.serviceWorker) {
+	  // Display the UI to let the user toggle notifications
+  }
+
+
+  // check if the user has given permission to show notifications
+  if (Notification.permission === "granted") {
+	  /* do our magic */
+	} else if (Notification.permission === "blocked") {
+	 /* the user has previously denied push. Can't reprompt. */
+	} else {
+	  /* show a prompt to the user */
+	}
+	navigator.serviceWorker.register()
+		// https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
+	  	// service worker will be downloaded to the client and installation/activiation will be attemped
+
+i
+```
+
+
+
 ```js
 	// mostly worker context
-
-	self.clients
-		// returns the `Clients` object controlled by this service worker
-		// @see https://developer.mozilla.org/en-US/docs/Web/API/Clients
+	// focuses on events
 
 		
 	// methods are global in a worker context
@@ -460,83 +532,15 @@ i
 ```
 
 
-```js
-	if ('serviceWorker' in navigator) {
-		(async () => {
-			// Register a service worker hosted at the root of the
-			// site using the default scope.
-			const registration = await navigator.serviceWorker.register('/sw.js');
-
-
-		})()
-
-	}
-
-  // Independent of the registration, let's also display
-  // information about whether the current page is controlled
-  // by an existing service worker, and when that
-  // controller changes.
-
-  // First, do a one-off check if there's currently a
-  // service worker in control.
-  if (navigator.serviceWorker.controller) {
-    console.log('This page is currently controlled by:', navigator.serviceWorker.controller);
-  }
-
-  // Then, register a handler to detect when a new or
-  // updated service worker takes control.
-  navigator.serviceWorker.oncontrollerchange = function() {
-    console.log('This page is now controlled by:', navigator.serviceWorker.controller);
-  };
-} else {
-  console.log('Service workers are not supported.');
-}
-
-  
-  // registration 
-  if ('serviceWorker' in navigator) {
-    // url is relative to the origin
-    // scope specifies which paths is controlled by this service worker
-    navigator.serviceWorker.register('./sw-test/sw.js', {scope: './sw-test/'})
-    .then((reg) => {
-      // registration worked
-      console.log('Registration succeeded. Scope is ' + reg.scope);
-    }).catch((error) => {
-      // registration failed
-      console.log('Registration failed with ' + error);
-    });
-  }
-
-
-  // does the browser support push notifications
-  if ('Notification' in window && navigator.serviceWorker) {
-	  // Display the UI to let the user toggle notifications
-  }
-
-
-  // check if the user has given permission to show notifications
-  if (Notification.permission === "granted") {
-	  /* do our magic */
-	} else if (Notification.permission === "blocked") {
-	 /* the user has previously denied push. Can't reprompt. */
-	} else {
-	  /* show a prompt to the user */
-	}
-	navigator.serviceWorker.register()
-		// https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
-	  	// service worker will be downloaded to the client and installation/activiation will be attemped
-
-i
-```
-
 
 ```js
-	clients.openWindow('http://www.example.com');
-i
+		clients.openWindow('http://www.example.com');
+		self.clients
+		// returns the `Clients` object controlled by this service worker
+		// @see https://developer.mozilla.org/en-US/docs/Web/API/Clients
+
+
 ```
-  
-
-
 
 ### cache
   - just use IDB - fuck cache
