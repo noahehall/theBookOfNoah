@@ -66,7 +66,18 @@
 
 
 
-
+# Request - Response
+```js
+	// Response object 
+		new Response('this is a simple string response');
+		new Response(
+			'this string response includess custom headers', 
+			{
+				headers: { 'Content-Type': 'text/html' }
+			}
+		);
+i
+```
 ## URL 
 
 ```js
@@ -238,193 +249,179 @@ i
 		skipWaiting() // see elseware
 		fetch() // ajax bitch
 
-	// events self.addEventListener('EVENT_NAME', (event) => {})
-		// event object 
-			// always use the waitUntil method to extend
-			// the lifetime of the service worker
-			// until your business logic completes
-			event.waitUntil(async () => {...})
+	// event object 
+		// always use the waitUntil method to extend
+		// the lifetime of the service worker
+		// until your business logic completes
+		event.waitUntil(async () => {...})
 
-			event.request[url|method|headers|body] // the request object 
-			event.respondWith() 
-				// potentially hijack the request and respond with something different
-				// or let it do its normal thing with fetch(event.request)
+		event.request[url|method|headers|body] // the request object 
+		event.respondWith() 
+			// potentially hijack the request and respond with something different
+			// or let it do its normal thing with fetch(event.request)
 
-			// example returning from cache, or network if cache fails
-				self.addEventListener('fetch', (event) => {
-				  event.respondWith(
-				    caches.match(event.request).then((response) => {
-				      return response || fetch(event.request);
-				    })
-				  );
-				});
-			event.notification // the notification object 
-			event.notification.tag // ID used to group notifications
-			event.notification.renotify // BOOL, beep/vibrate/etc
-			event.notification.close() // close the notification
-			event.action // the ID of the button on the notification that was clicked
-			event.data // poop attached to the event by whatever triggered it
-		// event names
-		// each returns an Event of type 'name'
+		
+		event.notification // the notification object 
+		event.notification.tag // ID used to group notifications
+		event.notification.renotify // BOOL, beep/vibrate/etc
+		event.notification.close() // close the notification
+		event.action // the ID of the button on the notification that was clicked
+		event.data // poop attached to the event by whatever triggered it
+
+
+	// event types
+		// each callback  receives an Event of type 'name'
 		// which usually has distinct properties/methods + the ones inherited
 		// from the global Event object
-		'install' // InstallEvent
-			self.addEventListener('install', event => {
-				// when a serviceWorker is installed over an existing one
-				// the new serviceWorker will be activated immediately
-				// usually it waits for the old serviceWorker to not be used by an existing loaded pages
-				// can be called at anytime (e.g. also in activate handler)
-				// will only have an effect if theres a new sw 
-				// that might remaing in the waiting state
-				// and forces the sw to go directly to the activate state
+		// InstallEvent
+		self.addEventListener('install', event => {
+			// when a serviceWorker is installed over an existing one
+			// enables clients loaded in the same scope
+			// to not have to reload before their fetches
+			// will go through this service worker
+			// can be called at anytime (e.g. also in activate handler)
+			// will only have an effect if theres a new sw 
+			// that might remaing in the waiting state
+			// and forces the sw to go directly to the activate state
+			self.skipWaiting();
+
+
+			// handle the rest of your install business logic
+			event.waitUntil(async () => {
+				// poop
+			})
+		});
+
+
+
+		// ActivateEvent
+		self.addEventListener('activate', event => {
+			event.waitUntil(async () => {
 				self.skipWaiting();
+				await clients.claim()
 
-
-				// handle the rest of your install business logic
-				event.waitUntil(async () => {
-					// poop
-				})
-			]);
-
-
-
-		'activate' 
-			self.addEventListener('activate', event => {
-				event.waitUntil(async () => {
-					// enables clients loaded in the same scope
-					// to not have to reload before their fetches
-					// will go through this service worker
-					self.skipWaiting();
-					await clients.claim()
-
-					// rest of your business logic
-					// e.g. delete/upgrade stale data 
-					// confirm this should occur after clients.claim()
-				});
+				// rest of your activate business logic
+				// confirm this should occur after clients.claim()
 			});
+		});
 
 
 		
 
-		'fetch' // FetchEvent
-		  	// an ajax request occured in one of the clients under the service workers scope
+		// FetchEvent
+		// ajax occurred in a client controlled by this sw
+		self.addEventListener('fetch', event => {
+			// example returning from cache, or network if cache fails
+			// fuck cache, use idb 
 			event.respondWith(
-				// magic goes here
-			)
-
-
-		'pushsubscriptionchange'
-			// indicates the current subscription has expired/changed
-			// you need to resubscribe and sync the data to your backend
-			// remember subscriptsion are volatile and unstable!
-			// always listen for this event and sync it with the server
-			// this can occur while the app is offline as well!
-			// thus push that bitch in idb with a timestamp
-			self.addEventListener("pushsubscriptionchange", event => {
-			  // resubscribe with old options
-			  event.waitUntil(swRegistration.pushManager.subscribe(event.oldSubscription.options)
-			    .then(subscription => {
-			    	// sync this data with your backend 
-			    	// should check if it fails, then push to idb
-			      return fetch("register", {
-			        method: "post",
-			        headers: {
-			          "Content-type": "application/json"
-			        },
-			        body: JSON.stringify({
-			          endpoint: subscription.endpoint
-			        })
-			      });
-			    })
-			  );
-			}, false);
-
-		'notificationclose'
-			// worker context
-			// user dismisses notification through direct action
-			// e.g. swipe 
-			self.addEventListener('notificationclose', function(e) {
-			  var notification = e.notification;
-			  var primaryKey = notification.data.primaryKey;
-
-			  console.log('Closed notification: ' + primaryKey);
-			});
-
-
-		'notificationclick' // NotificationEvent
-			// example handling notification click 
-			// you can extract alot of this shit
-			self.addEventListener('notificationclick', event => {
-				event.waitUntil(async () => {
-					// get all all options for this method
-					// focus an open window/new window
-					const allClients = await clients.matchAll({
-						//window|worker|sharedWorker|all (default)
-						type: "window", 
-						// include all clients who share the same origin
-						// as the current service worker
-						// false === only clients controlled by current sw
-						includeUncontrolled: true,
-					});
-
-					let foundClient = false;
-					for (const client of allClients) {
-						if ((new URL(client.url)).pathname === getNotiData().pathname) {
-							// Excellent, let's use it!
-							client.focus?.();
-							foundClient = client;
-							break;
-						}
-					}
-
-					if (!foundClient) 
-						// openWindow creates a new top level browsing context
-						// and loads the specified url 
-						// firefox permits this only in response to a notificationclick event
-						foundClient = await clients.openWindow(getNotiData().pathname|url|etc);
-
-					// finish your business logic 
-
-					// close this specific notification
-					event.notification.close();
-					// or maybe do this close all notifications?
-					const notis = await self.registration.getNotifications()
-					notis.forEach(noti => noti.close())
-					// or maybe close specific notifications
-					// based on some random identifying shit associated with the noti
-					// when it was created (will be part of the options object)
-					const options = {tag: 'poop'};
-				  	const notis = await self.registration.getNotifications(options);		notis.forEach(noti => noti.close())
+				caches.match(event.request).then((response) => {
+					return response || fetch(event.request);
 				})
-			});
+			);
+		});
 
 
-		'push'
-			// triggered when the service worker receives a push message
-			// see the push notification section elseware in this doc
-			self.addEventListener("push", event => {
-			let message = event.data.json();
-			switch(message.type) {
-				case "init":
-					doInit();
-					break;
-				case "shutdown":
-					doShutdown();
-					break;
+		// indicates the current subscription has expired/changed
+		// you need to resubscribe and sync the data to your backend
+		// remember subscriptsion are volatile and unstable!
+		// always listen for this event and sync it with the server
+		// this can occur while the app is offline as well!
+		// thus push that bitch in idb with a timestamp
+		self.addEventListener("pushsubscriptionchange", event => {
+		  // resubscribe with old options
+		  event.waitUntil(swRegistration.pushManager.subscribe(event.oldSubscription.options)
+		    .then(subscription => {
+		    	// sync this data with your backend 
+		    	// should check if it fails, then push to idb
+		      return fetch("register", {
+		        method: "post",
+		        headers: {
+		          "Content-type": "application/json"
+		        },
+		        body: JSON.stringify({
+		          endpoint: subscription.endpoint
+		        })
+		      });
+		    })
+		  );
+		}, false);
+
+		// worker context
+		// user dismisses notification through direct action
+		// e.g. swipe 
+		self.addEventListener('notificationclose', function(e) {
+		  var notification = e.notification;
+		  var primaryKey = notification.data.primaryKey;
+
+		  console.log('Closed notification: ' + primaryKey);
+		});
+
+
+		// NotificationEvent
+		// example handling notification click 
+		// you can extract alot of this shit
+		self.addEventListener('notificationclick', event => {
+			event.waitUntil(async () => {
+				// get all all options for this method
+				// focus an open window/new window
+				const allClients = await clients.matchAll({
+					//window|worker|sharedWorker|all (default)
+					type: "window", 
+					// include all clients who share the same origin
+					// as the current service worker
+					// false === only clients controlled by current sw
+					includeUncontrolled: true,
+				});
+
+				let foundClient = false;
+				for (const client of allClients) {
+					if ((new URL(client.url)).pathname === getNotiData().pathname) {
+						// Excellent, let's use it!
+						client.focus?.();
+						foundClient = client;
+						break;
+					}
 				}
-			}, false);
+
+				if (!foundClient) 
+					// openWindow creates a new top level browsing context
+					// and loads the specified url 
+					// firefox permits this only in response to a notificationclick event
+					foundClient = await clients.openWindow(getNotiData().pathname|url|etc);
+
+				// finish your business logic 
+
+				// close this specific notification
+				event.notification.close();
+				// or maybe do this close all notifications?
+				const notis = await self.registration.getNotifications()
+				notis.forEach(noti => noti.close())
+				// or maybe close specific notifications
+				// based on some random identifying shit associated with the noti
+				// when it was created (will be part of the options object)
+				const options = {tag: 'poop'};
+			  	const notis = await self.registration.getNotifications(options);		notis.forEach(noti => noti.close())
+			})
+		});
 
 
-	// Response object 
-		new Response('this is a simple string response');
-		new Response(
-			'this string response includess custom headers', 
-			{
-				headers: { 'Content-Type': 'text/html' }
+		// PushEvent
+		// triggered when the service worker receives a push message
+		// see the push notification section elseware in this doc
+		self.addEventListener("push", event => {
+		let message = event.data.json();
+		switch(message.type) {
+			case "init":
+				doInit();
+				break;
+			case "shutdown":
+				doShutdown();
+				break;
 			}
-		);
+		}, false);
 
-	// proper way of finding the correct window
+
+
 i
 ```
 
@@ -525,16 +522,6 @@ i
   // prepare your service worker for usage when this event fires
   // e.g. create a cache (builtin storage API) and place assets inside that youll want for running yoru app offline
 
-  // activate
-  // a good time tro clean up old caches, etc, with the previous service worker
-
-  // FetchEvent - https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent
-  // respond to requests
-
-  // FetchEvent.respondWith
-  // arbitrarily  modify the response to a FetchEvent
-  // 
-  // 
   
   // registration 
   if ('serviceWorker' in navigator) {
@@ -747,8 +734,13 @@ i
 	// get the current subscription everytime the user accesses our app
 	// it is not stable and may change (why we need to keep it in sync)
 	if ('serviceWorker' in navigator) {
-		// do this on registry or when its ready
-		// navigator.serviceWorker.ready.then(function(reg) {
+		(async () => {
+			// this will wait indefinitely for a sw to become active 
+			const registration = await navigator.serviceWorker.ready;
+			// now you can call methods that require an active sw;
+
+
+		})();
 		navigator.serviceWorker.register('sw.js').then(function(reg) {
 		    console.log('Service Worker Registered!', reg);
 
