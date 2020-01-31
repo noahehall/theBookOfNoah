@@ -193,6 +193,7 @@ i
 	- [pushsubscriptionchange is a critical event](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/pushsubscriptionchange_event)
 	- [clients object](https://developer.mozilla.org/en-US/docs/Web/API/Clients)
 	- [service worker registration](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration)
+	- [register api, good docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
 
 
 
@@ -293,9 +294,17 @@ i
 	// focusing on handling registration
 	if ('serviceWorker' in navigator) {
 		(async () => {
-			// Register a service worker hosted at the root of the
-			// site using the default scope.
-			const registration = await navigator.serviceWorker.register('/sw.js');
+			// Register (create/update) a service worker
+			// scope === used for navigation matching 
+			// only the sw whose scope matches the url will be considered 'controller'
+			// an sw cant control a parent path (think rest api paths)
+			// so only specify scope if this sw is intended to control a child path
+			// the default scope (i.e './') is the service workers location (usually at the root of the site)
+			// e.g. if you include a sw at poop.com/toilet
+			// its scope will be all paths under the toilet
+			const registration = await navigator
+				.serviceWorker
+				.register('relative/path/to/sw.js', { scope: ./ });
 
 
 		})();
@@ -345,9 +354,7 @@ i
 	} else {
 	  /* show a prompt to the user */
 	}
-	navigator.serviceWorker.register()
-		// https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
-	  	// service worker will be downloaded to the client and installation/activiation will be attemped
+
 
 i
 ```
