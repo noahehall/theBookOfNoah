@@ -753,116 +753,116 @@ i
 	// however it fetches the current registered service worker
 	// so that events triggered by itneractions 
 	// are heard by the current service worker
-		function displayNotification() {
-		  if (Notification.permission == 'granted') {
+	function displayNotification() {
+	  if (Notification.permission == 'granted') {
 
-		    navigator.serviceWorker.getRegistration().then(function(reg) {
-		    	// options are optional param
-		    	// extreme browser differences exist
-		    	// assume only the body and title are gauranteed
-		    	// assume no actions are available
-		    	// treat everything as a progressive enhancement
-			    var options = {
-			        // main description with enough info 
-				    // for the user to take action
-			        body: 'do this and stfu', 
-			        //  tag is an ID used to group notifications together
-					//  that way you dont show 1000 notifications for the same tHING
-					// but instead they are grouped together in one notfication
-					// the browser will replace a visible notification with a new  notification
-					// if they have the same tag 
-					tag: 'someId',
-			        // attach an image to the notification
-			        // e.g. the senders avatar
-			        icon: 'images/example.png',
-			        // will vibrate/beep/etc again if an existing notification
-					// is being replaced by this notification (i.e. a visible notification has the same tag as this one)
-					renotify: true,
-			        // in milliseconds for phones
-			        // vibrate, pause, vibrate
-			        vibrate: [100, 50, 100],
-			        // sent to the service worker
-			        // upon user interaction
-			        data: {
-			          dateOfArrival: Date.now(),
-			          primaryKey: 1
-			        },
-			        // contextually relevant action buttons to display with the notification
-			        // for the user to interact with our app
-			        // without having to actually open the browser
-			        // lenght of array must =< Notification.maxActions
-			        actions: [
-			          {action: 'explore', title: 'Explore this new world',
-			            icon: 'images/checkmark.png'},
-			          {action: 'close', title: 'Close notification',
-			            icon: 'images/xmark.png'},
-			        ]
-			      };
-		      reg.showNotification('Hello world!', options);
-		    });
-		  }
-		}
+	    navigator.serviceWorker.getRegistration().then(function(reg) {
+	    	// options are optional param
+	    	// extreme browser differences exist
+	    	// assume only the body and title are gauranteed
+	    	// assume no actions are available
+	    	// treat everything as a progressive enhancement
+		    var options = {
+		        // main description with enough info 
+			    // for the user to take action
+		        body: 'do this and stfu', 
+		        //  tag is an ID used to group notifications together
+				//  that way you dont show 1000 notifications for the same tHING
+				// but instead they are grouped together in one notfication
+				// the browser will replace a visible notification with a new  notification
+				// if they have the same tag 
+				tag: 'someId',
+		        // attach an image to the notification
+		        // e.g. the senders avatar
+		        icon: 'images/example.png',
+		        // will vibrate/beep/etc again if an existing notification
+				// is being replaced by this notification (i.e. a visible notification has the same tag as this one)
+				renotify: true,
+		        // in milliseconds for phones
+		        // vibrate, pause, vibrate
+		        vibrate: [100, 50, 100],
+		        // sent to the service worker
+		        // upon user interaction
+		        data: {
+		          dateOfArrival: Date.now(),
+		          primaryKey: 1
+		        },
+		        // contextually relevant action buttons to display with the notification
+		        // for the user to interact with our app
+		        // without having to actually open the browser
+		        // lenght of array must =< Notification.maxActions
+		        actions: [
+		          {action: 'explore', title: 'Explore this new world',
+		            icon: 'images/checkmark.png'},
+		          {action: 'close', title: 'Close notification',
+		            icon: 'images/xmark.png'},
+		        ]
+		      };
+	      reg.showNotification('Hello world!', options);
+	    });
+	  }
+	}
 
-		// show a notification to the user (worker context)
-		// almsot exactly as in the browser context,
-		// but this time in response to a push event received by a service worker
+	// show a notification to the user (worker context)
+	// almsot exactly as in the browser context,
+	// but this time in response to a push event received by a service worker
 
-		self.addEventListener('push', function(e) {
-		  const body = e.data ? e.data.json() : {} 
-		  	// json(), text(), I think array and some other shit
-		  var options = { seeAbove, body }; // see how we get the body from the event object above
+	self.addEventListener('push', function(e) {
+	  const body = e.data ? e.data.json() : {} 
+	  	// json(), text(), I think array and some other shit
+	  var options = { seeAbove, body }; // see how we get the body from the event object above
 
-		  //  always use event.waitUntil 
-		  e.waitUntil(
-		    self.registration.showNotification('Hello world!', options)
-		  );
-		});
+	  //  always use event.waitUntil 
+	  e.waitUntil(
+	    self.registration.showNotification('Hello world!', options)
+	  );
+	});
 
 
-		// if your app is already opej, do not show a notification
-		/// instead alert the user with some in-app thing, like a toast
-		self.addEventListener('push', function(e) {
-		  clients.matchAll().then(function(c) {
-		    if (c.length === 0) {
-		      // Show notification
-		      e.waitUntil(
-		        self.registration.showNotification('Push notification')
-		      );
-		    } else {
-		      // Send a message to the page to update the UI
-		    // If there are active clients it means that the user has your site open in one or more windows. 
-		    // and you should relay the message to EACH of the windows
-		    // i guess theres no way to know which window?
-		      console.log('Application is already open!');
-		    }
-		  });
-		});
+	// if your app is already opej, do not show a notification
+	/// instead alert the user with some in-app thing, like a toast
+	self.addEventListener('push', function(e) {
+	  clients.matchAll().then(function(c) {
+	    if (c.length === 0) {
+	      // Show notification
+	      e.waitUntil(
+	        self.registration.showNotification('Push notification')
+	      );
+	    } else {
+	      // Send a message to the page to update the UI
+	    // If there are active clients it means that the user has your site open in one or more windows. 
+	    // and you should relay the message to EACH of the windows
+	    // i guess theres no way to know which window?
+	      console.log('Application is already open!');
+	    }
+	  });
+	});
 
 
 
 	// example webpush from node to push service 
-		var webPush = require('web-push');
+	var webPush = require('web-push');
 
-		var pushSubscription = getItFromYourFuckingDatabase();
+	var pushSubscription = getItFromYourFuckingDatabase();
 
-		var payload = 'Here is a payload!';
+	var payload = 'Here is a payload!';
 
-		var options = {
-		  vapidDetails: {
-		  	subject: 'yourServer@emailaddress.com'
-		  	publicKey: vapidPUblicKey,
-		  	privateKey: vapidPrivateKey,
-		  },
-		  // in SECONDS
-		  // the time the push service keeps the push message 
-		  // by default its four weeks
-		  TTL: 60
-		};
+	var options = {
+	  vapidDetails: {
+	  	subject: 'yourServer@emailaddress.com'
+	  	publicKey: vapidPUblicKey,
+	  	privateKey: vapidPrivateKey,
+	  },
+	  // in SECONDS
+	  // the time the push service keeps the push message 
+	  // by default its four weeks
+	  TTL: 60
+	};
 
-		webPush.sendNotification(
-		  pushSubscription,
-		  payload,
-		  options
-		);
+	webPush.sendNotification(
+	  pushSubscription,
+	  payload,
+	  options
+	);
 i
 ```
