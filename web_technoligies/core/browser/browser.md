@@ -534,13 +534,6 @@ i
 ```
 
 
-
-#### SyncEvent
-  - a sync action that is dispatched on the `ServiceWorkerGlobalScope`
-
-
-
-
 ## push notifications 
 ### google overlords best practices 
 	- use notifications wisely, theyshould be timely, precise and relevant
@@ -703,7 +696,7 @@ i
 	- handles both encryption and the web push protocol 
 	- makes it super easy, fucking use it
 
-
+### push examples - mostly worker context
 ```js
 	// VAPID - create keys via webpush library 
 	// contains { publicKey, privateKey, andOtherShit? }
@@ -713,13 +706,11 @@ i
 	// check that this shit is right
 	// i think the the array should be the pub key reetrieved from generateVAPIDKeys
 	const publicKey = new Uint8Array([0x4, 0x37, 0x77, 0xfe, ... ]);
-		serviceWorkerRegistration.pushManager.subscribe(
-		  {
-		    userVisibleOnly: true,
-		    // see above for generating public key
-		    applicationServerKey: publicKey
-		  }
-		);
+	serviceWorkerRegistration.pushManager.subscribe({
+		userVisibleOnly: true,
+		// see above for generating public key
+		applicationServerKey: publicKey
+	});
 
 
 	// step 1 - request permission
