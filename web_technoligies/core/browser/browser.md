@@ -78,8 +78,9 @@
 		);
 i
 ```
-## URL 
 
+
+## URL 
 ```js
 	let params = (new URL(document.location)).searchParams;
 	let name = params.get('name'); // is the string "Jonathan Smith".
@@ -110,6 +111,7 @@ i
 	- web workers
 		- run scripts in background threads
 		- send/receive messages to the calling code
+	
 	- worker thread
 		- perform
 		  - tasks without interfering with the UI
@@ -183,12 +185,15 @@ i
 			- represnets a container for a list of Client objects
 			- the mainway to access all the clients owned by the active service worker
 
+
 ## service workers 
 	- [service worker global scope](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope)
 	- [notification click has a really good example](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/notificationclick_event)
 	- [push event](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/push_event)
 	- [pushsubscriptionchange is a critical event](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/pushsubscriptionchange_event)
 	- [clients object](https://developer.mozilla.org/en-US/docs/Web/API/Clients)
+	- [service worker registration](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration)
+
 
 
 
@@ -282,11 +287,11 @@ i
 
  
 ```js
-	// api
-	// properties 
-		self.clients
-			// returns the `Clients` object controlled by this service worker
-			// @see https://developer.mozilla.org/en-US/docs/Web/API/Clients
+	// mostly worker context
+
+	self.clients
+		// returns the `Clients` object controlled by this service worker
+		// @see https://developer.mozilla.org/en-US/docs/Web/API/Clients
 
 		
 	// methods are global in a worker context
@@ -456,6 +461,67 @@ i
 
 
 ```js
+	if ('serviceWorker' in navigator) {
+		(async () => {
+			// Register a service worker hosted at the root of the
+			// site using the default scope.
+			const registration = await navigator.serviceWorker.register('/sw.js');
+
+
+		})()
+
+	}
+
+  // Independent of the registration, let's also display
+  // information about whether the current page is controlled
+  // by an existing service worker, and when that
+  // controller changes.
+
+  // First, do a one-off check if there's currently a
+  // service worker in control.
+  if (navigator.serviceWorker.controller) {
+    console.log('This page is currently controlled by:', navigator.serviceWorker.controller);
+  }
+
+  // Then, register a handler to detect when a new or
+  // updated service worker takes control.
+  navigator.serviceWorker.oncontrollerchange = function() {
+    console.log('This page is now controlled by:', navigator.serviceWorker.controller);
+  };
+} else {
+  console.log('Service workers are not supported.');
+}
+
+  
+  // registration 
+  if ('serviceWorker' in navigator) {
+    // url is relative to the origin
+    // scope specifies which paths is controlled by this service worker
+    navigator.serviceWorker.register('./sw-test/sw.js', {scope: './sw-test/'})
+    .then((reg) => {
+      // registration worked
+      console.log('Registration succeeded. Scope is ' + reg.scope);
+    }).catch((error) => {
+      // registration failed
+      console.log('Registration failed with ' + error);
+    });
+  }
+
+
+  // does the browser support push notifications
+  if ('Notification' in window && navigator.serviceWorker) {
+	  // Display the UI to let the user toggle notifications
+  }
+
+
+  // check if the user has given permission to show notifications
+  if (Notification.permission === "granted") {
+	  /* do our magic */
+	} else if (Notification.permission === "blocked") {
+	 /* the user has previously denied push. Can't reprompt. */
+	} else {
+	  /* show a prompt to the user */
+	}
 	navigator.serviceWorker.register()
 		// https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
 	  	// service worker will be downloaded to the client and installation/activiation will be attemped
@@ -493,52 +559,6 @@ i
   - a sync action that is dispatched on the `ServiceWorkerGlobalScope`
 
 
-## TODO
-### ExtendableEvent
-### ExtendableMessageEvent
-### NavigationPreloadManager
-### NotificationEvent
-
-# examples
-```js
-  // InstallEvent https://developer.mozilla.org/en-US/docs/Web/API/InstallEvent
-  // prepare your service worker for usage when this event fires
-  // e.g. create a cache (builtin storage API) and place assets inside that youll want for running yoru app offline
-
-  
-  // registration 
-  if ('serviceWorker' in navigator) {
-    // url is relative to the origin
-    // scope specifies which paths is controlled by this service worker
-    navigator.serviceWorker.register('./sw-test/sw.js', {scope: './sw-test/'})
-    .then((reg) => {
-      // registration worked
-      console.log('Registration succeeded. Scope is ' + reg.scope);
-    }).catch((error) => {
-      // registration failed
-      console.log('Registration failed with ' + error);
-    });
-  }
-
-
-  // does the browser support push notifications
-  if ('Notification' in window && navigator.serviceWorker) {
-	  // Display the UI to let the user toggle notifications
-  }
-
-
-  // check if the user has given permission to show notifications
-  if (Notification.permission === "granted") {
-	  /* do our magic */
-	} else if (Notification.permission === "blocked") {
-	 /* the user has previously denied push. Can't reprompt. */
-	} else {
-	  /* show a prompt to the user */
-	}
-
-   
-i
-```
 
 
 ## push notifications 
