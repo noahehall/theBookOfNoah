@@ -139,6 +139,50 @@ i
 	    - usually it waits to claim pages until the old serviceWorker is not used by any existing loaded pages
 
 
+	- `Navigator.serviceWorker` (browser context)
+	  - Returns a ServiceWorkerContainer object,
+	    - provides access to the ServiceWorker objects for the associated document.
+	      - registration
+	      - removal
+	      - upgrade
+	      - communication
+	      - state
+
+	      
+
+	- ServiceWorkerRegistration
+		- represents a service worker registration
+
+	- ServiceWorkerState
+		- state of the service worker
+
+
+
+	- ServiceWorkerGlobalScope
+		- Represents the global execution context of a service worker.
+
+
+	- SyncManager
+		- provides an interface for registering  and listing sync registrations
+
+
+	- double check the following
+		- Client
+			- the scope of a client controlled by a service worker
+			- either
+				- a document in a browser context
+				- a SharedWorker
+
+		- WindowClient
+			- special type of `Client`
+			- scope of a service worker client that is a document in a browser context controlled by the active service worker
+
+
+		- Clients (worker context)
+			- The clients global in the service worker lists all of the active push clients on this machine.
+			- represnets a container for a list of Client objects
+			- the mainway to access all the clients owned by the active service worker
+
 ## service workers 
 	- [service worker global scope](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope)
 	- [notification click has a really good example](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/notificationclick_event)
@@ -221,11 +265,11 @@ i
 
 
 ### steal some shit 
- 	- [they check for localhost](https://github.com/DennyScott/react-router-auth/blob/master/src/serviceWorker.js)
+	- [they check for localhost](https://github.com/DennyScott/react-router-auth/blob/master/src/serviceWorker.js)
 
 ### tools 
-  - [chrome: service workers](chrome://inspect/#service-workers)
-  - [more information than inspect](chrome://serviceworker-internals)
+	- [chrome: service workers](chrome://inspect/#service-workers)
+	- [more information than inspect](chrome://serviceworker-internals)
 
 
 #### NOTES 
@@ -290,7 +334,7 @@ i
 			event.waitUntil(async () => {
 				// poop
 			})
-		});
+		}, false);
 
 
 
@@ -303,7 +347,7 @@ i
 				// rest of your activate business logic
 				// confirm this should occur after clients.claim()
 			});
-		});
+		}, false);
 
 
 		
@@ -318,7 +362,7 @@ i
 					return response || fetch(event.request);
 				})
 			);
-		});
+		}, false);
 
 
 		// indicates the current subscription has expired/changed
@@ -328,37 +372,28 @@ i
 		// this can occur while the app is offline as well!
 		// thus push that bitch in idb with a timestamp
 		self.addEventListener("pushsubscriptionchange", event => {
-		  // resubscribe with old options
-		  event.waitUntil(swRegistration.pushManager.subscribe(event.oldSubscription.options)
-		    .then(subscription => {
-		    	// sync this data with your backend 
+			// resubscribe with old options
+			event.waitUntil(async () => {
+				const newSub = swRegistration
+					.pushManager
+					.subscribe(event.oldSubscription.options);
+				// sync this data with your backend 
 		    	// should check if it fails, then push to idb
-		      return fetch("register", {
-		        method: "post",
-		        headers: {
-		          "Content-type": "application/json"
-		        },
-		        body: JSON.stringify({
-		          endpoint: subscription.endpoint
-		        })
-		      });
-		    })
-		  );
+				const resp = await fetch({ updateYourBackendWithNewSubscription });
+
+				if (!resp) updateIdbToSyncWithNetworkIsOnline();
+			});
 		}, false);
 
-		// worker context
-		// user dismisses notification through direct action
-		// e.g. swipe 
-		self.addEventListener('notificationclose', function(e) {
-		  var notification = e.notification;
-		  var primaryKey = notification.data.primaryKey;
 
-		  console.log('Closed notification: ' + primaryKey);
-		});
+		// user dismisses notification through direct action e.g. swipe
+		// NotificationEvent
+		self.addEventListener('notificationclose', event => {
+		  // your onclose notification logic
+		}, false);
 
 
 		// NotificationEvent
-		// example handling notification click 
 		// you can extract alot of this shit
 		self.addEventListener('notificationclick', event => {
 			event.waitUntil(async () => {
@@ -387,7 +422,7 @@ i
 					// openWindow creates a new top level browsing context
 					// and loads the specified url 
 					// firefox permits this only in response to a notificationclick event
-					foundClient = await clients.openWindow(getNotiData().pathname|url|etc);
+					foundClient = await self.clients.openWindow(getNotiData().pathname|url|etc);
 
 				// finish your business logic 
 
@@ -402,22 +437,16 @@ i
 				const options = {tag: 'poop'};
 			  	const notis = await self.registration.getNotifications(options);		notis.forEach(noti => noti.close())
 			})
-		});
+		}, false);
 
 
 		// PushEvent
 		// triggered when the service worker receives a push message
 		// see the push notification section elseware in this doc
 		self.addEventListener("push", event => {
-		let message = event.data.json();
-		switch(message.type) {
-			case "init":
-				doInit();
-				break;
-			case "shutdown":
-				doShutdown();
-				break;
-			}
+			let message = event.data.json();
+			
+			// handle your push logic
 		}, false);
 
 
@@ -425,27 +454,6 @@ i
 i
 ```
 
-### Navigator.serviceWorker
-  - Returns a ServiceWorkerContainer object,
-    - provides access to the ServiceWorker objects for the associated document.
-      - registration
-      - removal
-      - upgrade
-      - communication
-      - this occurs in a browser context (i.e. one of your application js files)
-      	- wherever you call `register()`
-
-
-### ServiceWorkerRegistration
-  - represents a service worker registration
-
-### ServiceWorkerState
-  - state of the service worker
-
-
-### ServiceWorkerContainer (`navigator.serviceWorker`)
-  - Provides facilities to register, unregister, and update service workers, and access the state of service workers and their registrations.
-  - i.e. the file js file that calls `navigator.serviceWorker.register()`
 
 ```js
 	navigator.serviceWorker.register()
@@ -454,33 +462,8 @@ i
 
 i
 ```
-#### 
-
-### ServiceWorkerGlobalScope
-  - Represents the global execution context of a service worker.
 
 
-### SyncManager
-  - provides an interface for registering  and listing sync registrations
-
-
-
-
-### Client
-  - the scope of a client controlled by a service worker
-  - either
-    - a document in a browser context
-    - a SharedWorker
-
-##### WindowClient
-  - special type of `Client`
-  - scope of a service worker client that is a document in a browser context controlled by the active service worker
-
-
-### Clients (worker context)
-	- The clients global in the service worker lists all of the active push clients on this machine.
-	- represnets a container for a list of Client objects
-	- the mainway to access all the clients owned by the active service worker
 ```js
 	clients.openWindow('http://www.example.com');
 i
