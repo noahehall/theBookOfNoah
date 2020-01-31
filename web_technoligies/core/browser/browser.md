@@ -109,19 +109,30 @@ i
 		-  a JavaScript file that can control the web-page/site that it is associated with, intercepting and modifying navigation and resource requests, and caching resources in a very granular fashion
 		-  only support HTTPS
 		-  firefox: cant be used in private browsing mode
+		- Multiple browsing contexts (e.g. pages, clients, etc.) can be associated with the same ServiceWorker object.
+		- the ServiceWorker state is not persisted across the termination/restart cycle, 
+			- so each event handler should assume it's being invoked with a bare, default global state.
+		- Once successfully registered, a service worker can and will be terminated when idle to conserve memory and processor power
+	
 	-  worker context
 		-  a service workers execution environment (e.g. browser, node, worker are all distinct contexts)
 		- fully async
 		  - cant be used with synchronous APIs like XHR and localStorage
 		- no DOM access
 		- runs a different thread than  to the main javascript browser context
+			
+	- Clients 
+		- when a serviceWorker is installad over an existing one
+	    - the serviceWorker can claim all pages owned by the previous service worker
+	    - usually it waits to claim pages until the old serviceWorker is not used by any existing loaded pages
 
-
+	    
 ## service workers 
 	- [service worker global scope](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope)
 	- [notification click has a really good example](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/notificationclick_event)
 	- [push event](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/push_event)
 	- [pushsubscriptionchange is a critical event](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/pushsubscriptionchange_event)
+	- [clients object](https://developer.mozilla.org/en-US/docs/Web/API/Clients)
 
 
 
@@ -204,14 +215,7 @@ i
   - [chrome: service workers](chrome://inspect/#service-workers)
   - [more information than inspect](chrome://serviceworker-internals)
 
-## API
-### ServiceWorker
-	- Represents a service worker.
-	- Multiple browsing contexts (e.g. pages, workers, etc.) can be associated with the same ServiceWorker object.
-	- the ServiceWorker state is not persisted across the termination/restart cycle, 
-		- so each event handler should assume it's being invoked with a bare, default global state.
-	- Once successfully registered, a service worker can and will be terminated when idle to conserve memory and processor power
- 
+
 #### NOTES 
 	- `self` and `globalScope` are the same thing 
 		- but niether are required, as.... all methods attached to both objects are global
@@ -277,7 +281,7 @@ i
 
 
 		'fetch' // FetchEvent
-		  	// an ajax request occured in one of the pages under the service workers scope
+		  	// an ajax request occured in one of the clients under the service workers scope
 			event.respondWith(
 				// magic goes here
 			)
@@ -450,10 +454,7 @@ i
 	clients.openWindow('http://www.example.com');
 i
 ```
-#### [Claim()](https://developer.mozilla.org/en-US/docs/Web/API/Clients/claim)
-  - when a serviceWorker is installad over an existing one
-    - the serviceWorker can claim all pages owned by the previous service worker
-    - usually it waits to claim pages until the old serviceWorker is not used by any existing loaded pages
+  
 
 
 
@@ -550,7 +551,7 @@ i
 ### TODO (not in order, but start at the top cuz fuck it)
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
-	- [Notification object docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification
+	- [Registration object](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration
 	- [experiment with notification options](https://tests.peter.sh/notification-generator/)
 	- [mozilla webpush node library is fucking mando](https://github.com/web-push-libs/web-push)
 	- [push api](https://developer.mozilla.org/en-US/docs/Web/API/Push_API)
