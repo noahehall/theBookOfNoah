@@ -291,8 +291,9 @@ i
 	- you can react to events in two ways 
 		- `self.addEventListener('eventname', (event) => poop)
 		- `self.oneventname = (event) => poop
+
+### service worker examples: mostly browser context
 ```js
-	// mostly browser context
 	// focusing on handling registration
 	if ('serviceWorker' in navigator) {
 		(async () => {
@@ -364,16 +365,13 @@ i
 			// dont use it unless the user says yes to your fake prompt
 		}
 	}
-
-
 i
 ```
 
 
+### service worker events: mostly worker context
+	- TODO: is it better  to use eventHandlers or onevent callbacks?
 ```js
-	// mostly worker context
-	// focuses on events
-
 	// always use the waitUntil method to extend
 	// the lifetime of the service worker
 	// until your business logic completes
@@ -395,141 +393,140 @@ i
 	event.data // poop attached to the event by whatever triggered it
 
 
-	// event types
-		// each callback  receives an Event of type 'name'
-		// which usually has distinct properties/methods + the ones inherited
-		// from the global Event object
-		// InstallEvent
-		self.addEventListener('install', event => {
-			// when a serviceWorker is installed over an existing one
-			// enables clients loaded in the same scope
-			// to not have to reload before their fetches
-			// will go through this service worker
-			// can be called at anytime (e.g. also in activate handler)
-			// will only have an effect if theres a new sw 
-			// that might remaing in the waiting state
-			// and forces the sw to go directly to the activate state
+	// each callback  receives an Event of type 'name'
+	// which usually has distinct properties/methods + the ones inherited
+	// from the global Event object
+	// InstallEvent
+	self.addEventListener('install', event => {
+		// when a serviceWorker is installed over an existing one
+		// enables clients loaded in the same scope
+		// to not have to reload before their fetches
+		// will go through this service worker
+		// can be called at anytime (e.g. also in activate handler)
+		// will only have an effect if theres a new sw 
+		// that might remaing in the waiting state
+		// and forces the sw to go directly to the activate state
+		self.skipWaiting();
+
+
+		// handle the rest of your install business logic
+		event.waitUntil(async () => {
+			// poop
+		})
+	}, false);
+
+
+
+	// ActivateEvent
+	self.addEventListener('activate', event => {
+		event.waitUntil(async () => {
 			self.skipWaiting();
+			await clients.claim()
+
+			// rest of your activate business logic
+			// confirm this should occur after clients.claim()
+		});
+	}, false);
 
 
-			// handle the rest of your install business logic
-			event.waitUntil(async () => {
-				// poop
+	
+
+	// FetchEvent
+	// ajax occurred in a client controlled by this sw
+	self.addEventListener('fetch', event => {
+		// example returning from cache, or network if cache fails
+		// fuck cache, use idb 
+		event.respondWith(
+			caches.match(event.request).then((response) => {
+				return response || fetch(event.request);
 			})
-		}, false);
+		);
+	}, false);
 
 
+	// indicates the current subscription has expired/changed
+	// you need to resubscribe and sync the data to your backend
+	// remember subscriptsion are volatile and unstable!
+	// always listen for this event and sync it with the server
+	// this can occur while the app is offline as well!
+	// thus push that bitch in idb with a timestamp
+	self.addEventListener("pushsubscriptionchange", event => {
+		// resubscribe with old options
+		event.waitUntil(async () => {
+			const newSub = swRegistration
+				.pushManager
+				.subscribe(event.oldSubscription.options);
+			// sync this data with your backend 
+	    	// should check if it fails, then push to idb
+			const resp = await fetch({ updateYourBackendWithNewSubscription });
 
-		// ActivateEvent
-		self.addEventListener('activate', event => {
-			event.waitUntil(async () => {
-				self.skipWaiting();
-				await clients.claim()
+			if (!resp) updateIdbToSyncWithNetworkIsOnline();
+		});
+	}, false);
 
-				// rest of your activate business logic
-				// confirm this should occur after clients.claim()
+
+	// user dismisses notification through direct action e.g. swipe
+	// NotificationEvent
+	self.addEventListener('notificationclose', event => {
+	  // your onclose notification logic
+	}, false);
+
+
+	// NotificationEvent
+	// you can extract alot of this shit
+	self.addEventListener('notificationclick', event => {
+		event.waitUntil(async () => {
+			// get all all options for this method
+			// focus an open window/new window
+			const allClients = await clients.matchAll({
+				//window|worker|sharedWorker|all (default)
+				type: "window", 
+				// include all clients who share the same origin
+				// as the current service worker
+				// false === only clients controlled by current sw
+				includeUncontrolled: true,
 			});
-		}, false);
 
-
-		
-
-		// FetchEvent
-		// ajax occurred in a client controlled by this sw
-		self.addEventListener('fetch', event => {
-			// example returning from cache, or network if cache fails
-			// fuck cache, use idb 
-			event.respondWith(
-				caches.match(event.request).then((response) => {
-					return response || fetch(event.request);
-				})
-			);
-		}, false);
-
-
-		// indicates the current subscription has expired/changed
-		// you need to resubscribe and sync the data to your backend
-		// remember subscriptsion are volatile and unstable!
-		// always listen for this event and sync it with the server
-		// this can occur while the app is offline as well!
-		// thus push that bitch in idb with a timestamp
-		self.addEventListener("pushsubscriptionchange", event => {
-			// resubscribe with old options
-			event.waitUntil(async () => {
-				const newSub = swRegistration
-					.pushManager
-					.subscribe(event.oldSubscription.options);
-				// sync this data with your backend 
-		    	// should check if it fails, then push to idb
-				const resp = await fetch({ updateYourBackendWithNewSubscription });
-
-				if (!resp) updateIdbToSyncWithNetworkIsOnline();
-			});
-		}, false);
-
-
-		// user dismisses notification through direct action e.g. swipe
-		// NotificationEvent
-		self.addEventListener('notificationclose', event => {
-		  // your onclose notification logic
-		}, false);
-
-
-		// NotificationEvent
-		// you can extract alot of this shit
-		self.addEventListener('notificationclick', event => {
-			event.waitUntil(async () => {
-				// get all all options for this method
-				// focus an open window/new window
-				const allClients = await clients.matchAll({
-					//window|worker|sharedWorker|all (default)
-					type: "window", 
-					// include all clients who share the same origin
-					// as the current service worker
-					// false === only clients controlled by current sw
-					includeUncontrolled: true,
-				});
-
-				let foundClient = false;
-				for (const client of allClients) {
-					if ((new URL(client.url)).pathname === getNotiData().pathname) {
-						// Excellent, let's use it!
-						client.focus?.();
-						foundClient = client;
-						break;
-					}
+			let foundClient = false;
+			for (const client of allClients) {
+				if ((new URL(client.url)).pathname === getNotiData().pathname) {
+					// Excellent, let's use it!
+					client.focus?.();
+					foundClient = client;
+					break;
 				}
+			}
 
-				if (!foundClient) 
-					// openWindow creates a new top level browsing context
-					// and loads the specified url 
-					// firefox permits this only in response to a notificationclick event
-					foundClient = await self.clients.openWindow(getNotiData().pathname|url|etc);
+			if (!foundClient) 
+				// openWindow creates a new top level browsing context
+				// and loads the specified url 
+				// firefox permits this only in response to a notificationclick event
+				foundClient = await self.clients.openWindow(getNotiData().pathname|url|etc);
 
-				// finish your business logic 
+			// finish your business logic 
 
-				// close this specific notification
-				event.notification.close();
-				// or maybe do this close all notifications?
-				const notis = await self.registration.getNotifications()
-				notis.forEach(noti => noti.close())
-				// or maybe close specific notifications
-				// based on some random identifying shit associated with the noti
-				// when it was created (will be part of the options object)
-				const options = {tag: 'poop'};
-			  	const notis = await self.registration.getNotifications(options);		notis.forEach(noti => noti.close())
-			})
-		}, false);
+			// close this specific notification
+			event.notification.close();
+			// or maybe do this close all notifications?
+			const notis = await self.registration.getNotifications()
+			notis.forEach(noti => noti.close())
+			// or maybe close specific notifications
+			// based on some random identifying shit associated with the noti
+			// when it was created (will be part of the options object)
+			const options = {tag: 'poop'};
+		  	const notis = await self.registration.getNotifications(options);		notis.forEach(noti => noti.close())
+		})
+	}, false);
 
 
-		// PushEvent
-		// triggered when the service worker receives a push message
-		// see the push notification section elseware in this doc
-		self.addEventListener("push", event => {
-			let message = event.data.json();
-			
-			// handle your push logic
-		}, false);
+	// PushEvent
+	// triggered when the service worker receives a push message
+	// see the push notification section elseware in this doc
+	self.addEventListener("push", event => {
+		let message = event.data.json();
+		
+		// handle your push logic
+	}, false);
 
 
 i
