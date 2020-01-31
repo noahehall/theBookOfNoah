@@ -235,12 +235,8 @@ i
 
 		
 	// methods are global in a worker context
-		skipWaiting()
-		  	// when a serviceWorker is installed over an existing one
-		    // the new serviceWorker will be activated immediately
-		     // usually it waits for the old serviceWorker to not be used by an existing loaded pages
-		fetch()
-			// ajax bitch
+		skipWaiting() // see elseware
+		fetch() // ajax bitch
 
 	// events self.addEventListener('EVENT_NAME', (event) => {})
 		// event object 
@@ -272,6 +268,23 @@ i
 		// each returns an Event of type 'name'
 		// which usually has distinct properties/methods + the ones inherited
 		// from the global Event object
+		'install' // InstallEvent
+			self.addEventListener('install', event => {
+				// when a serviceWorker is installed over an existing one
+				// the new serviceWorker will be activated immediately
+				// usually it waits for the old serviceWorker to not be used by an existing loaded pages
+				// can be called at anytime (e.g. also in activate handler)
+				// will only have an effect if theres a new sw 
+				// that might remaing in the waiting state
+				// and forces the sw to go directly to the activate state
+				skipWaiting();
+				event.waitUntil(async () => {
+					// handle the rest of your install business logic
+				})
+			]);
+
+
+
 		'activate' 
 			self.addEventListener('activate', event => {
 				event.waitUntil(async () => {
@@ -279,6 +292,7 @@ i
 					// to not have to reload before their fetches
 					// will go through this service worker
 					await clients.claim()
+					self.skipWaiting();
 
 					// rest of your business logic
 					// e.g. delete/upgrade stale data 
@@ -287,11 +301,7 @@ i
 			});
 
 
-		'install' // InstallEvent
-			// service worker was installed
-			// good place to call `skipWaiting()` as the first thing with breakfast in the morning
-			// good place to poopulate idb for offline functionality (inside of event.waitUntil())
-
+		
 
 		'fetch' // FetchEvent
 		  	// an ajax request occured in one of the clients under the service workers scope
