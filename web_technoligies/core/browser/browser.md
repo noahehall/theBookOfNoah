@@ -419,8 +419,9 @@ i
 
 	// ActivateEvent
 	self.addEventListener('activate', event => {
+		self.skipWaiting();
+		// does the async task need to be an IIEFFEE ro whatevr the fuck?
 		event.waitUntil(async () => {
-			self.skipWaiting();
 			await clients.claim()
 
 			// rest of your activate business logic
@@ -430,7 +431,6 @@ i
 
 
 	
-
 	// FetchEvent
 	// ajax occurred in a client controlled by this sw
 	self.addEventListener('fetch', event => {
@@ -460,7 +460,7 @@ i
 	    	// should check if it fails, then push to idb
 			const resp = await fetch({ updateYourBackendWithNewSubscription });
 
-			if (!resp) updateIdbToSyncWithNetworkIsOnline();
+			if (!resp) updateIdbToSyncWhenNetworkIsOnline();
 		});
 	}, false);
 
