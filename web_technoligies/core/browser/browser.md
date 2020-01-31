@@ -8,6 +8,7 @@
 
 # DOM
 # next up
+  - find out which file you have all your dom notes in and put them in here, or move this in there, or split these long fuckinng files into multiple
   - [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
   -
 
@@ -99,7 +100,7 @@ i
 		- run scripts in background threads
 		- send/receive messages to the calling code
 	- worker thread
-		- perfeorm
+		- perform
 		  - tasks without interfering with the UI
 		  - I/O using XMLHttpRequest
 		  -
@@ -126,7 +127,7 @@ i
 	    - the serviceWorker can claim all pages owned by the previous service worker
 	    - usually it waits to claim pages until the old serviceWorker is not used by any existing loaded pages
 
-	    
+
 ## service workers 
 	- [service worker global scope](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope)
 	- [notification click has a really good example](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/notificationclick_event)
@@ -204,7 +205,7 @@ i
 		  - The service worker will only catch requests from clients under the service worker's scope.
 		  - The max scope for a service worker is the location of the worker.
 		  - If your service worker is active on a client being served with the Service-Worker-Allowed header, you can specify a list of max scopes for that worker.
-		- `Clients.claim()` - force new worker to claim existing pages
+		- `await clients.claim()` - force new worker to claim existing pages
 
 
 
@@ -246,7 +247,8 @@ i
 			// always use the waitUntil method to extend
 			// the lifetime of the service worker
 			// until your business logic completes
-			event.waitUntil(thisAsyncBlahIsResolved)
+			event.waitUntil(async () => {...})
+
 			event.request[url|method|headers|body] // the request object 
 			event.respondWith() 
 				// potentially hijack the request and respond with something different
@@ -271,7 +273,18 @@ i
 		// which usually has distinct properties/methods + the ones inherited
 		// from the global Event object
 		'activate' 
-			// good place to delete/upgrade stale data data 
+			self.addEventListener('activate', event => {
+				event.waitUntil(async () => {
+					// enables clients loaded in the same scope
+					// to not have to reload before their fetches
+					// will go through this service worker
+					await clients.claim()
+
+					// rest of your business logic
+					// e.g. delete/upgrade stale data 
+					// confirm this should occur after clients.claim()
+				});
+			});
 
 
 		'install' // InstallEvent
@@ -327,46 +340,52 @@ i
 
 		'notificationclick' // NotificationEvent
 			// example handling notification click 
-			self.addEventListener('notificationclick', function(event) {
-			  console.log('On notification click: ', event.notification.tag);
-			  event.notification.close();
+			// you can extract alot of this shit
+			self.addEventListener('notificationclick', event => {
+				event.waitUntil(async () => {
+					// get all all options for this method
+					// focus an open window/new window
+					const allClients = await clients.matchAll({
+						//window|worker|sharedWorker|all (default)
+						type: "window", 
+						// include all clients who share the same origin
+						// as the current service worker
+						// false === only clients controlled by current sw
+						includeUncontrolled: true,
+					});
 
-			  // This looks to see if the current is already open and
-			  // focuses if it is
-			  event.waitUntil(clients.matchAll({
-			    type: "window"
-			  }).then(function(clientList) {
-			    for (var i = 0; i < clientList.length; i++) {
-			      var client = clientList[i];
-			      // the URL is arbitrary to your business logic
-			      // associated with this notification
-			      if (client.url == '/' && 'focus' in client)
-			        return client.focus();
-			    }
-			    if (clients.openWindow)
-			      return clients.openWindow('/');
-			  }).then(() => {
-			  	// after your notification logic is complete
-		    	  // close all notifications
-				  self.registration.getNotifications().then(function(notifications) {
-				    notifications.forEach(function(notification) {
-				      notification.close();
-				    });
-				  });
+					let foundClient = false;
+					for (const client of allClients) {
+						if ((new URL(client.url)).pathname === getNotiData().pathname) {
+							// Excellent, let's use it!
+							client.focus?.();
+							foundClient = client;
+							break;
+						}
+					}
 
-				  // oor you can close a specific notification
-				  // based on its tag
-				  // close all notifications with tag of 'id1'
-				  // you can use any data within the options object
-				  // when the notification was created
-				  var options = {tag: 'id1'};
-				  self.registration.getNotifications(options).then(function(notifications) {
-				    notifications.forEach(function(notification) {
-				      notification.close();
-				    });
-				  });
-			  }));
+					if (!foundClient) 
+						// openWindow creates a new top level browsing context
+						// and loads the specified url 
+						// firefox permits this only in response to a notificationclick event
+						foundClient = await clients.openWindow(getNotiData().pathname|url|etc);
+
+					// finish your business logic 
+
+					// close this specific notification
+					event.notification.close();
+					// or maybe do this close all notifications?
+					const notis = await self.registration.getNotifications()
+					notis.forEach(noti => noti.close())
+					// or maybe close specific notifications
+					// based on some random identifying shit associated with the noti
+					// when it was created (will be part of the options object)
+					const options = {tag: 'poop'};
+				  	const notis = await self.registration.getNotifications(options);		notis.forEach(noti => noti.close())
+				})
 			});
+
+
 		'push'
 			// triggered when the service worker receives a push message
 			// see the push notification section elseware in this doc
@@ -391,6 +410,8 @@ i
 				headers: { 'Content-Type': 'text/html' }
 			}
 		);
+
+	// proper way of finding the correct window
 i
 ```
 
