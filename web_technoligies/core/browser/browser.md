@@ -11,20 +11,21 @@
 	- [they check for localhost](https://github.com/DennyScott/react-router-auth/blob/master/src/serviceWorker.js)
 
 
-# DOM
-# next up
+
+
+# window
+## next up
   - find out which file you have all your dom notes in and put them in here, or move this in there, or split these long fuckinng files into multiple
   - [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
   -
 
-# DOM
+
+## DOM
   - When the browser loads the page, it transforms your HTML into a live document
     1. parses html (strings of text) into a data model (objects and nodes)
     2. preserves the HTML hierarchy by creating a tree of nodes (the DOM)
 
 
-
-# window
 ## history 
 	- enables you to use scripts to modify the URL (and related context) without triggering a page refresh
 		- i.e. manipulation of the browser session history
@@ -189,6 +190,20 @@ i
 			- the mainway to access all the clients owned by the active service worker
 
 
+## cache
+  - just use IDB - fuck cache
+  - represents the storage for request/response object pairs that are cached as part of the serviceworker lifecycle
+  - global object on the service worker that allows us to store assets delivered by responses, and keyed by their requests
+  - works in a similar way to the browser’s standard cache, but it is specific to your domain
+
+
+### CacheStorage
+  - the storage for cache objects
+  - provides
+    - a master directory of all the named caches that a ServiceWorker can access
+    - maintains a mapping of string names to corresponding Cache objects
+
+
 ## service workers 
 	- [service worker global scope](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope)
 	- [notification click has a really good example](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/notificationclick_event)
@@ -269,7 +284,7 @@ i
 	- [more information than inspect](chrome://serviceworker-internals)
 
 
-#### NOTES 
+### NOTES 
 	- `self` and `globalScope` are the same thing 
 		- but niether are required, as.... all methods attached to both objects are global
 		- get your shiz together MDN!
@@ -338,19 +353,19 @@ i
 	// does the browser support push notifications
 	if ('Notification' in window && navigator.serviceWorker) {
 		// Display the UI to let the user toggle notifications
+		// check if the user has given permission to show notifications
+		if (Notification.permission === "granted") {
+			/* do our magic */
+		} else if (Notification.permission === "blocked") {
+			/* the user has previously denied push. Can't reprompt. */
+		} else {
+			// show a custom prompt to the user
+			// since you cant reprompt with the native prompt
+			// dont use it unless the user says yes to your fake prompt
+		}
 	}
 
 
-	// check if the user has given permission to show notifications
-	if (Notification.permission === "granted") {
-		/* do our magic */
-	} else if (Notification.permission === "blocked") {
-		/* the user has previously denied push. Can't reprompt. */
-	} else {
-		// show a custom prompt to the user
-		// since you cant reprompt with the native prompt
-		// dont use it unless the user says yes to your fake prompt
-	}
 i
 ```
 
@@ -534,18 +549,6 @@ i
 i
 ```
 
-### cache
-  - just use IDB - fuck cache
-  - represents the storage for request/response object pairs that are cached as part of the serviceworker lifecycle
-  - global object on the service worker that allows us to store assets delivered by responses, and keyed by their requests
-  - works in a similar way to the browser’s standard cache, but it is specific to your domain
-
-
-### CacheStorage
-  - the storage for cache objects
-  - provides
-    - a master directory of all the named caches that a ServiceWorker can access
-    - maintains a mapping of string names to corresponding Cache objects
 
 ### Events
 #### [MessageEvent](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
@@ -567,6 +570,7 @@ i
 		- they have no context at this time
 		- find a more appropritate time to receive notifications
 		- e.g. when the user is configuring their communication settings, after the user completes a critical task, when they return to your site (after they are a known user who uses your app)
+
 
 ### TODO (not in order, but start at the top cuz fuck it)
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
