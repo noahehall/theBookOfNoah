@@ -212,6 +212,7 @@ i
 	- [clients object](https://developer.mozilla.org/en-US/docs/Web/API/Clients)
 	- [service worker registration](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration)
 	- [register api, good docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
+	- [MessageEvent](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
 
 
 ### use cases
@@ -533,19 +534,6 @@ i
 ```
 
 
-```js
-		clients.openWindow('http://www.example.com');
-		self.clients
-		// returns the `Clients` object controlled by this service worker
-		// @see https://developer.mozilla.org/en-US/docs/Web/API/Clients
-
-i
-```
-
-
-### Events
-#### [MessageEvent](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
-  - used by service workers
 
 #### SyncEvent
   - a sync action that is dispatched on the `ServiceWorkerGlobalScope`
