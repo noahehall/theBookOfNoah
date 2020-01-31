@@ -277,9 +277,12 @@ i
 				// will only have an effect if theres a new sw 
 				// that might remaing in the waiting state
 				// and forces the sw to go directly to the activate state
-				skipWaiting();
+				self.skipWaiting();
+
+
+				// handle the rest of your install business logic
 				event.waitUntil(async () => {
-					// handle the rest of your install business logic
+					// poop
 				})
 			]);
 
@@ -291,8 +294,8 @@ i
 					// enables clients loaded in the same scope
 					// to not have to reload before their fetches
 					// will go through this service worker
-					await clients.claim()
 					self.skipWaiting();
+					await clients.claim()
 
 					// rest of your business logic
 					// e.g. delete/upgrade stale data 
