@@ -317,11 +317,6 @@ i
 				.serviceWorker
 				.register('relative/path/to/sw.js', { scope: './' })
 			
-			switch (registration.scope) {
-				// if you have business logic tied
-				// tied to specific scopes, switch bitch
-				// remember scopes are unique IDs for a sw
-			}
 			// fires whenever a new worker is assigned to registration.installing
 			// i.e. if the sw has changed since the last registration
 			registration.onupdatefound = event => {
@@ -335,12 +330,10 @@ i
 
 					}
 				}
-
-
 			}
 		})();
 
-		// handles activation
+		// handles active & activating workers
 		(async () => {
 			// we use await here
 			// pick one dependent on your needs
@@ -353,6 +346,13 @@ i
 			// if nikki manages are your kinda thing
 			const regArray = await navigator.serviceWorker.getRegistrations();
 
+
+			switch (registration.scope) {
+				// if you have business logic tied
+				// tied to specific scopes, switch bitch
+				// remember scopes are unique IDs for a sw
+			}
+
 			// sw is installed, but waiting to be actived
 			if (registration.waiting) {
 				const waitingWorker = registration.waiting;
@@ -364,7 +364,12 @@ i
 			// if the client url falls within the scope of it's registration
 			if (registration.active) {
 				const activeWorker = registration.active;
-				// run your active worker business logic	
+				// run your active worker business logic
+
+
+				const subscription = await registrationg.pushManager.subscribe();
+
+				sendSubscriptionToBackend(subscription);
 			}
 		})()
 
@@ -374,6 +379,13 @@ i
 			// if you need to interact with the current sw
 		}
 
+		// on receipt of push messaage
+		this.onpush = event => {
+			// From here we can write the data to IndexedDB, send it to any open
+			// windows, display a notification, etc.
+		}
+
+		
 		// Then, register a handler to detect when a new or
 		// updated service worker takes control.
 		navigator.serviceWorker.oncontrollerchange = event => {
@@ -763,7 +775,6 @@ i
 				const publicKey = new Uint8Array([0x4, 0x37, 0x77, 0xfe, ... ]);
 
 
-
 				// step 1 - ensure push permission
 				if (Notification.permission === 'granted') {
 					// we are under the assumption here
@@ -860,7 +871,12 @@ i
 			else console.log('Application is already open!');
 		});
 	};
+i
+```
 
+
+### node examples 
+```js
 	// example webpush from node to push service 
 	var webPush = require('web-push');
 
