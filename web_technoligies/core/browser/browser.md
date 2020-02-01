@@ -111,6 +111,7 @@ i
 	- [VAPID docs](https://tools.ietf.org/html/rfc8292)
 	- [workbox window tut](https://medium.com/@webmaxru/workbox-4-implementing-refresh-to-update-version-flow-using-the-workbox-window-module-41284967e79c)
 	- [the super fucking important event.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil)
+	- [notifications object for workers + clients](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification)
 
 
 ## terminology
@@ -168,6 +169,7 @@ i
 
 	- ServiceWorkerGlobalScope
 		- Represents the global execution context of a service worker.
+		- same thing as `self`?
 
 
 	- SyncManager
@@ -297,6 +299,7 @@ i
 	- TODO 
 		- [use cases for navigation preload manager](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/navigationPreload)
 
+
 ### service worker examples: mostly browser context
 ```js
 	// focusing on handling registration
@@ -331,6 +334,8 @@ i
 					}
 				}
 			}
+			// or you can force an update whenever you want
+			if (thisThingReturnsTrue()) registration.update();
 		})();
 
 		// handles active & activating workers
@@ -448,7 +453,7 @@ i
 	// which usually has distinct properties/methods + the ones inherited
 	// from the global Event object
 	// InstallEvent
-	self.addEventListener('install', event => {
+	self.oninstall = event => {
 		// when a serviceWorker is installed over an existing one
 		// enables clients loaded in the same scope
 		// to not have to reload before their fetches
@@ -462,37 +467,44 @@ i
 
 		// handle the rest of your install business logic
 		event.waitUntil(async () => {
-			// poop
+			// populate idb for use by sw when network is offline
+			// fuck cache
 		})
-	}, false);
+	};
 
 
 
-	// ActivateEvent
-	self.addEventListener('activate', event => {
+	// occurs after sw is isntalled and AFTER the controlled client refreshes
+	self.onactivate = event => {
 		self.skipWaiting();
-		// does the async task need to be an IIEFFEE ro whatevr the fuck?
-		event.waitUntil(async () => {
-			await clients.claim()
 
-			// rest of your activate business logic
-			// confirm this should occur after clients.claim()
+		event.waitUntil(async () => {
+			await clients.claim();
+
+			const staleIdbData = checkIdbForStaleData();
+
+			if (staleIdbData.length) populateIdbWithNewData(staleIdbData);
 		});
-	}, false);
+	};
 
 
 	
 	// FetchEvent
 	// ajax occurred in a client controlled by this sw
-	self.addEventListener('fetch', event => {
+	self.onfetch = event => {
 		// example returning from cache, or network if cache fails
 		// fuck cache, use idb 
-		event.respondWith(
-			caches.match(event.request).then((response) => {
-				return response || fetch(event.request);
-			})
-		);
-	}, false);
+		event.respondWith(async () => {
+			const oldData = await pullFromIdb(event.request.url);
+
+			if (oldData) return oldData;
+			const newData = await fetch(event.request);
+
+			populateIdb(newData);
+
+			return  newData;
+		});
+	}
 
 
 	// indicates the current subscription has expired/changed
@@ -516,16 +528,30 @@ i
 	};
 
 
-	// user dismisses notification through direct action e.g. swipe
-	// NotificationEvent
-	self.addEventListener('notificationclose', event => {
-	  // your onclose notification logic
-	}, false);
+	// fired whenever register() is invoked from a client under control of this sw
+	// the attempt to sync is immediate if network is available, 
+	// or as soon as network is available
+	self.onsync = syncEvent => {
+
+	}
 
 
-	// NotificationEvent
-	// you can extract alot of this shit
-	self.addEventListener('notificationclick', event => {
+	// user dismisses notification created by registration.showNotification()
+	// notifications created on the main thread|by woekrs using the `Notifcation() coonstructor 
+	// do not receive this event 
+	// they receive  the `click` event on the Notification object itself
+	self.onnotificationclose = event => {
+		// your onclose notification logic
+		// event.notification === notification object
+	};
+
+
+	// notifications created on the main thread|by woekrs using the `Notifcation() coonstructor 
+	// do not receive this event 
+	// they receive  the `close` event on the Notification object itself
+	self.onnotificationclick = event => {
+		event.notiication.close();
+
 		event.waitUntil(async () => {
 			// get all all options for this method
 			// focus an open window/new window
@@ -552,22 +578,20 @@ i
 				// openWindow creates a new top level browsing context
 				// and loads the specified url 
 				// firefox permits this only in response to a notificationclick event
-				foundClient = await self.clients.openWindow(getNotiData().pathname|url|etc);
+				foundClient = await clients.openWindow(getNotiData().pathname|url|etc);
 
 			// finish your business logic 
-
-			// close this specific notification
-			event.notification.close();
 			// or maybe do this close all notifications?
 			const notis = await self.registration.getNotifications()
 			notis.forEach(noti => noti.close())
 			// or maybe close specific notifications
 			// based on some random identifying shit associated with the noti
 			// when it was created (will be part of the options object)
+			// think it only filters by tag
 			const options = {tag: 'poop'};
 		  	const notis = await self.registration.getNotifications(options);		notis.forEach(noti => noti.close())
 		})
-	}, false);
+	}
 
 
 	// PushEvent
@@ -583,6 +607,21 @@ i
 i
 ```
 
+
+### other client shit 
+```js
+	Notification.requestPermission(result => {
+		if (result === 'granted') doTHis();
+		else if (result === 'blocked') doThisInsteaD();
+	})
+i
+```
+### other service worker shit
+```js
+	const swClients = self.clients;
+	const registration = self.registration;
+i
+```
 
 ## push notifications 
 ### google overlords best practices 
@@ -821,9 +860,20 @@ i
 				// the browser will replace a visible notification with a new  notification
 				// if they have the same tag 
 				tag: 'someId',
-		        // attach an image to the notification
+		        // attach an icon to the notification
 		        // e.g. the senders avatar
-		        icon: 'images/example.png',
+		        icon: 'icons/example.png',
+		        // attach an image to the notification
+				image: 'images/poop.png',
+				// whether supported devices should force click/dismiss
+				requireInteraction: false|true,
+				// always add this yourself
+				// indicates the time it was created 
+				// NOT delivered
+				timestamp: new Date(),
+				// no sounds or vibrations 
+				// if TRUE and vibrate truthy will throw error
+				silent: false|true,
 		        // will vibrate/beep/etc again if an existing notification
 				// is being replaced by this notification (i.e. a visible notification has the same tag as this one)
 				renotify: true,
@@ -832,6 +882,7 @@ i
 		        vibrate: [100, 50, 100],
 		        // sent to the service worker
 		        // upon user interaction
+		        // arbitrary shit to send on notification click, swipe, etc
 		        data: {
 		          dateOfArrival: Date.now(),
 		          primaryKey: 1
@@ -841,35 +892,42 @@ i
 		        // without having to actually open the browser
 		        // lenght of array must =< Notification.maxActions
 		        actions: [
-		          {action: 'explore', title: 'Explore this new world',
-		            icon: 'images/checkmark.png'},
-		          {action: 'close', title: 'Close notification',
-		            icon: 'images/xmark.png'},
+					{
+						// string to be displayed on the notification
+						action: 'explore', 
+						// also displayed to the user
+						title: 'Explore this new world',
+						// accompany image URL
+						icon: 'images/checkmark.png'
+					},
 		        ]
 		      };
-	      reg.showNotification('Hello world!', options);
+	      self.registration.showNotification('Hello world!', options);
 	    });
 	  }
 	}
 
 	// show a notification to the user (worker context)
 	// almsot exactly as in the browser context,
-	// but this time in response to a push event received by a service worker
+	// but this time in response to a push event received by a service worker from a push server
 	self.onpush = event => {
 		const body = event.data?.json() ?? {};
 		// json(), text(), I think array and some other shit
 		const options = { seeAbove, body }; // see how we get the body from the event object above
 
-		// we only use notifications if the app is closed 
-		// else we utilize whatever in-app messaging native to the browser, e.g. toasts
-		clients.matchAll().then(function(c) {
-			// Show notification if app is closed
-			//  always use event.waitUntil 
-			if (c.length === 0) event.waitUntil(
+		(async () => {
+			// we only use notifications if the app is closed 
+			// else we utilize whatever in-app messaging native to the browser, e.g. toasts
+			// see elseware for a more robust matchAll with options
+			const clients = await clients.matchAll();
+				// Show notification if app is closed
+				//  always use event.waitUntil 
+			if (clients.length === 0) event.waitUntil(
 				self.registration.showNotification('Hello world!', options)
 			);
+			
 			else console.log('Application is already open!');
-		});
+		})();
 	};
 i
 ```
