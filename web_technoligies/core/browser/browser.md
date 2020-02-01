@@ -11,6 +11,8 @@
 	- [they check for localhost](https://github.com/DennyScott/react-router-auth/blob/master/src/serviceWorker.js)
 
 
+## almost best practices 
+	- use the event handler properties when available, because fuck it
 
 
 # window
@@ -292,11 +294,14 @@ i
 	- you can react to events in two ways 
 		- `self.addEventListener('eventname', (event) => poop)
 		- `self.oneventname = (event) => poop
+	- TODO 
+		- [use cases for navigation preload manager](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/navigationPreload)
 
 ### service worker examples: mostly browser context
 ```js
 	// focusing on handling registration
 	if ('serviceWorker' in navigator) {
+		// handles installation and updates to registration
 		(async () => {
 			// Register (create/update) a service worker
 			// you can call this without checking for a previous registration
@@ -308,27 +313,60 @@ i
 			// the default scope (i.e './') is the service workers location (usually at the root of the site)
 			// e.g. if you include a sw at poop.com/toilet
 			// its scope will be all paths under the toilet
-			navigator
+			const registration = await navigator
 				.serviceWorker
 				.register('relative/path/to/sw.js', { scope: './' })
-				.then(reg => runYourBizLogicBitch());
+			
+			switch (registration.scope) {
+				// if you have business logic tied
+				// tied to specific scopes, switch bitch
+				// remember scopes are unique IDs for a sw
+			}
+			// fires whenever a new worker is assigned to registration.installing
+			// i.e. if the sw has changed since the last registration
+			registration.onupdatefound = event => {
+				// listen for state changes when a new working is being installed
+				if (registration.installing) {
+					const installingWorker = registration.installing;
+					// run your unstallation logic
+
+					// listen for state changes to the installing sw
+					registration.installing.onstatechange = event => {
+
+					}
+				}
 
 
+			}
+		})();
+
+		// handles activation
+		(async () => {
 			// we use await here
+			// pick one dependent on your needs
 			// beecause we want to halt execution until the sw is active
 			const registration = await navigator.serviceWorker.ready;
-			// rest of your business logic here that depends on an active sw
-
-
-
 			// you can also retrieve the current registration 
 			// for a scope relative to the current document url
 			const registration = await navigator.serviceWorker.getRegistration('/app');
-
 			// you can also retrieve multiple registrations 
-			// why would there be multiple? maybe it returns child scopes?
+			// if nikki manages are your kinda thing
 			const regArray = await navigator.serviceWorker.getRegistrations();
-		})();
+
+			// sw is installed, but waiting to be actived
+			if (registration.waiting) {
+				const waitingWorker = registration.waiting;
+				// run your waiting worker business logic
+			}
+
+			//  sw is active|activating
+			// remember an active sw controls a client 
+			// if the client url falls within the scope of it's registration
+			if (registration.active) {
+				const activeWorker = registration.active;
+				// run your active worker business logic	
+			}
+		})()
 
 		// controller === the controlling sw
 		if (navigator.serviceWorker.controller) {
@@ -451,7 +489,7 @@ i
 	// always listen for this event and sync it with the server
 	// this can occur while the app is offline as well!
 	// thus push that bitch in idb with a timestamp
-	self.addEventListener("pushsubscriptionchange", event => {
+	self.onpushsubscriptionchange = event => {
 		// resubscribe with old options
 		event.waitUntil(async () => {
 			const newSub = swRegistration
@@ -463,7 +501,7 @@ i
 
 			if (!resp) updateIdbToSyncWhenNetworkIsOnline();
 		});
-	}, false);
+	};
 
 
 	// user dismisses notification through direct action e.g. swipe
@@ -806,39 +844,22 @@ i
 	// show a notification to the user (worker context)
 	// almsot exactly as in the browser context,
 	// but this time in response to a push event received by a service worker
+	self.onpush = event => {
+		const body = event.data?.json() ?? {};
+		// json(), text(), I think array and some other shit
+		const options = { seeAbove, body }; // see how we get the body from the event object above
 
-	self.addEventListener('push', function(e) {
-	  const body = e.data ? e.data.json() : {} 
-	  	// json(), text(), I think array and some other shit
-	  var options = { seeAbove, body }; // see how we get the body from the event object above
-
-	  //  always use event.waitUntil 
-	  e.waitUntil(
-	    self.registration.showNotification('Hello world!', options)
-	  );
-	});
-
-
-	// if your app is already opej, do not show a notification
-	/// instead alert the user with some in-app thing, like a toast
-	self.addEventListener('push', function(e) {
-	  clients.matchAll().then(function(c) {
-	    if (c.length === 0) {
-	      // Show notification
-	      e.waitUntil(
-	        self.registration.showNotification('Push notification')
-	      );
-	    } else {
-	      // Send a message to the page to update the UI
-	    // If there are active clients it means that the user has your site open in one or more windows. 
-	    // and you should relay the message to EACH of the windows
-	    // i guess theres no way to know which window?
-	      console.log('Application is already open!');
-	    }
-	  });
-	});
-
-
+		// we only use notifications if the app is closed 
+		// else we utilize whatever in-app messaging native to the browser, e.g. toasts
+		clients.matchAll().then(function(c) {
+			// Show notification if app is closed
+			//  always use event.waitUntil 
+			if (c.length === 0) event.waitUntil(
+				self.registration.showNotification('Hello world!', options)
+			);
+			else console.log('Application is already open!');
+		});
+	};
 
 	// example webpush from node to push service 
 	var webPush = require('web-push');
