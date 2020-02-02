@@ -4,6 +4,10 @@
 	- [onpopstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/onpopstate)
 	- [fetch api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 		- especially the `request` and `response` objects
+	- [channel messaging](https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API/Using_channel_messaging)
+	- [channel messaging api](https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API)
+
+
 
 	
 
@@ -301,6 +305,8 @@ i
 		- `self.oneventname = (event) => poop
 	- TODO 
 		- [use cases for navigation preload manager](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/navigationPreload)
+		- [common mistakes](https://developers.google.com/web/tools/workbox/modules/workbox-window#avoiding_common_mistakes)
+
 
 
 ### service worker examples: mostly browser context
@@ -333,6 +339,7 @@ i
 
 					// listen for state changes to the installing sw
 					registration.installing.onstatechange = event => {
+						// force update
 						registration.update();
 					}
 				}
@@ -343,8 +350,6 @@ i
 				const waitingWorker = registration.waiting;
 				// run your waiting worker business logic
 			}
-			// or you can force an update whenever you want
-			if (thisThingReturnsTrue()) registration.update();
 		})();
 
 		// handles active & activating workers
@@ -595,11 +600,11 @@ i
 	// PushEvent
 	// triggered when the service worker receives a push message
 	// see the push notification section elseware in this doc
-	self.addEventListener("push", event => {
+	self.onpush = event => {
 		let message = event.data.json();
 		
 		// handle your push logic
-	}, false);
+	};
 
 
 i
@@ -621,6 +626,12 @@ i
 i
 ```
 
+### client - service worker messaging 
+	- [client postmessage](https://developer.mozilla.org/en-US/docs/Web/API/Client/postMessage)
+```js 
+
+i
+```
 ## push notifications 
 ### google overlords best practices 
 	- use notifications wisely, theyshould be timely, precise and relevant
