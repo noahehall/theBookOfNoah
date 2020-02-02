@@ -73,7 +73,10 @@
 ```
 
 
-# Request - Response
+# fetch - Request - Response
+	- [response docs](https://developer.mozilla.org/en-US/docs/Web/API/Response)
+	- [fetch respond with](https://developer.mozilla.org/en-US/docs/Web/API/Fetchevent/respondWith)
+
 ```js
 	// Response object 
 		new Response('this is a simple string response');
@@ -334,6 +337,12 @@ i
 					}
 				}
 			}
+
+			// sw is installed, but waiting to be actived
+			if (registration.waiting) {
+				const waitingWorker = registration.waiting;
+				// run your waiting worker business logic
+			}
 			// or you can force an update whenever you want
 			if (thisThingReturnsTrue()) registration.update();
 		})();
@@ -358,12 +367,6 @@ i
 				// remember scopes are unique IDs for a sw
 			}
 
-			// sw is installed, but waiting to be actived
-			if (registration.waiting) {
-				const waitingWorker = registration.waiting;
-				// run your waiting worker business logic
-			}
-
 			//  sw is active|activating
 			// remember an active sw controls a client 
 			// if the client url falls within the scope of it's registration
@@ -384,11 +387,7 @@ i
 			// if you need to interact with the current sw
 		}
 
-		// on receipt of push messaage
-		this.onpush = event => {
-			// From here we can write the data to IndexedDB, send it to any open
-			// windows, display a notification, etc.
-		}
+		
 
 		
 		// Then, register a handler to detect when a new or
@@ -476,8 +475,6 @@ i
 
 	// occurs after sw is isntalled and AFTER the controlled client refreshes
 	self.onactivate = event => {
-		self.skipWaiting();
-
 		event.waitUntil(async () => {
 			await clients.claim();
 
@@ -494,16 +491,17 @@ i
 	self.onfetch = event => {
 		// example returning from cache, or network if cache fails
 		// fuck cache, use idb 
-		event.respondWith(async () => {
-			const oldData = await pullFromIdb(event.request.url);
-
-			if (oldData) return oldData;
-			const newData = await fetch(event.request);
-
-			populateIdb(newData);
-
-			return  newData;
-		});
+		// you have to invoke the async function u fucking idiot
+		event.respondWith((async () => {
+					const oldData = await pullFromIdb(event.request.url);
+		
+					if (oldData) return oldData;
+					const newData = await fetch(event.request);
+		
+					populateIdb(newData);
+		
+					return  newData;
+				})());
 	}
 
 
@@ -907,6 +905,10 @@ i
 	  }
 	}
 
+	// called whenever a message is received
+	self.onmessage = event => {
+
+	}
 	// show a notification to the user (worker context)
 	// almsot exactly as in the browser context,
 	// but this time in response to a push event received by a service worker from a push server
