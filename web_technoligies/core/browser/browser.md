@@ -303,6 +303,7 @@ i
 	- you can react to events in two ways 
 		- `self.addEventListener('eventname', (event) => poop)
 		- `self.oneventname = (event) => poop
+	-  browsers will explicitly disallow notifications not triggered in response to a user gesture.
 	- TODO 
 		- [use cases for navigation preload manager](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/navigationPreload)
 		- [common mistakes](https://developers.google.com/web/tools/workbox/modules/workbox-window#avoiding_common_mistakes)
@@ -683,6 +684,9 @@ i
 ### TODO (not in order, but start at the top cuz fuck it)
 	- [safari push notifications](https://stackoverflow.com/questions/52479412/safari-push-notifications-pushmanager-cant-register)
 		- fuck safari
+		- and android webview
+	- [push messaages](https://whatwebcando.today/push-notifications.html)
+		- fucks afari
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
 	- [Registration object](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration
