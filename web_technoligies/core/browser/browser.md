@@ -681,6 +681,8 @@ i
 
 
 ### TODO (not in order, but start at the top cuz fuck it)
+	- [safari push notifications](https://stackoverflow.com/questions/52479412/safari-push-notifications-pushmanager-cant-register)
+		- fuck safari
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
 	- [Registration object](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration
