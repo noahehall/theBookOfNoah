@@ -333,7 +333,7 @@ i
 
 					// listen for state changes to the installing sw
 					registration.installing.onstatechange = event => {
-
+						registration.update();
 					}
 				}
 			}
@@ -496,11 +496,11 @@ i
 					const oldData = await pullFromIdb(event.request.url);
 		
 					if (oldData) return oldData;
-					const newData = await fetch(event.request);
+					const response = await fetch(event.request);
 		
-					populateIdb(newData);
+					populateIdb(response);
 		
-					return  newData;
+					return  response.clone();
 				})());
 	}
 
