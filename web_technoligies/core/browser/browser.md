@@ -627,7 +627,12 @@ i
 ```
 
 ### client - service worker messaging 
-	- [client postmessage](https://developer.mozilla.org/en-US/docs/Web/API/Client/postMessage)
+	- [sw to client messaging](https://developer.mozilla.org/en-US/docs/Web/API/Client/postMessage)
+		- dont use, not supported by safari
+	- [client to sw messaging fuck ie](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerGlobalScope/message_event)
+	- [message port](https://developer.mozilla.org/en-US/docs/Web/API/MessagePort)
+		- sw can reply back to client 
+		- fuck firefox for android
 ```js 
 
 i
