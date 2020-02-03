@@ -1,3 +1,7 @@
+# todo 
+	- copy over working push examples from working app and replace pseudo code
+
+
 # links 
 	- [history api](https://developer.mozilla.org/en-US/docs/Web/API/History)
 	- [history tutorial](http://diveintohtml5.info/history.html)
@@ -13,6 +17,7 @@
 
 ## steal some shit 
 	- [they check for localhost](https://github.com/DennyScott/react-router-auth/blob/master/src/serviceWorker.js)
+	- [jack most of there shit](https://github.com/GoogleChrome/workbox/blob/v5/packages/workbox-window/Workbox.mjs)
 
 
 ## almost best practices 
@@ -76,8 +81,13 @@
 
 ```
 
+## EVENTS
+	- [event develloper guide](https://developer.mozilla.org/en-US/docs/Web/Guide/Events)
+	- [creating and triggering events guide](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events)
+	- [event handler overview](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Overview_of_Events_and_Handlers)
 
-# fetch - Request - Response
+
+## fetch - Request - Response
 	- [response docs](https://developer.mozilla.org/en-US/docs/Web/API/Response)
 	- [fetch respond with](https://developer.mozilla.org/en-US/docs/Web/API/Fetchevent/respondWith)
 
@@ -335,7 +345,6 @@ i
 			registration.onupdatefound = event => {
 				// listen for state changes when a new working is being installed
 				if (registration.installing) {
-					const installingWorker = registration.installing;
 					// run your unstallation logic
 
 					// listen for state changes to the installing sw
@@ -361,6 +370,7 @@ i
 			const registration = await navigator.serviceWorker.ready;
 			// you can also retrieve the current registration 
 			// for a scope relative to the current document url
+			// pass '/' to get the root registration
 			const registration = await navigator.serviceWorker.getRegistration('/app');
 			// you can also retrieve multiple registrations 
 			// if nikki manages are your kinda thing
@@ -482,6 +492,7 @@ i
 	// occurs after sw is isntalled and AFTER the controlled client refreshes
 	self.onactivate = event => {
 		event.waitUntil(async () => {
+			// ONLY The active worker can claim clients
 			await clients.claim();
 
 			const staleIdbData = checkIdbForStaleData();
@@ -635,6 +646,8 @@ i
 	- [message port](https://developer.mozilla.org/en-US/docs/Web/API/MessagePort)
 		- sw can reply back to client 
 		- fuck firefox for android
+		- looks like like you'll have to feature detect for this or Clients.postMessage
+			- which together cover most browsers
 ```js 
 
 	// browser context 
@@ -655,7 +668,6 @@ i
 			  case 'WAITING': {
 			    self.skipWaiting();
 
-			    await clients.claim();
 			    break;
 			  }
 
@@ -862,6 +874,7 @@ i
 				// you have to pass it as a Uint8Array
 				// check that this shit is right
 				// i think the the array should be the pub key reetrieved from generateVAPIDKeys
+				// @see this shit https://github.com/web-push-libs/web-push#using-vapid-key-for-applicationserverkey
 				const publicKey = new Uint8Array([0x4, 0x37, 0x77, 0xfe, ... ]);
 
 
@@ -921,7 +934,7 @@ i
 				// always add this yourself
 				// indicates the time it was created 
 				// NOT delivered
-				timestamp: new Date(),
+				timestamp: Date.now(),
 				// no sounds or vibrations 
 				// if TRUE and vibrate truthy will throw error
 				silent: false|true,
@@ -999,7 +1012,7 @@ i
 
 	var options = {
 	  vapidDetails: {
-	  	subject: 'yourServer@emailaddress.com'
+	  	subject: 'mailto:sender@example.com'
 	  	publicKey: vapidPUblicKey,
 	  	privateKey: vapidPrivateKey,
 	  },
