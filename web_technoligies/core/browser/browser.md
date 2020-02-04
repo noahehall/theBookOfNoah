@@ -2,6 +2,8 @@
 	- copy over working push examples from app and replace pseudo code
 
 ## things to incorporate in app 
+### events
+	- in gneral use the standard events 
 	- network events
 	- load event
 	- better use of teh error event 
@@ -100,6 +102,7 @@
 	- [creating and triggering events guide](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events)
 	- [event handler overview](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Overview_of_Events_and_Handlers)
 	- [event interface, the god event](https://developer.mozilla.org/en-US/docs/Web/API/Event)
+	- [all events](https://developer.mozilla.org/en-US/docs/Web/Events)
 
 
 ### terminology 
@@ -824,6 +827,8 @@ i
 	}
 
 	// worker context 
+	// very useful API
+	// review message port for sending shit back
 	self.onmessage = event => {
 		event.waitUntil((async () => {
 			const { type, ...rest } = event?.data ?? {};
@@ -847,7 +852,7 @@ i
 ```
 ## push notifications 
 ### google overlords best practices 
-	- use notifications wisely, theyshould be timely, precise and relevant
+	- use notifications wisely, they should be timely, precise and relevant
 		- timeley: displayed at the right time for time sensitive events 
 		- precise: offer enough info so that the user can make a decision without clicking through to the app 
 		- relevant - make the notification relevant to the users needs
@@ -987,7 +992,7 @@ i
 
 
 ### web push protocol
-	- designed to response the users privacy by keeping users anonymous and not requiring strong authentication between your app and the push service
+	- designed to respect the users privacy by keeping users anonymous and not requiring strong authentication between your app and the push service
 	- issues with not requiring strong authentication
 		- since the push service is not authneticated, it presets a greater risk of DoS attacks
 		- any application in possession of the subscription endpoint is able to send messages to your users 
