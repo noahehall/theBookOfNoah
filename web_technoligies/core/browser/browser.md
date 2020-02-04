@@ -1,5 +1,10 @@
 # todo 
-	- copy over working push examples from working app and replace pseudo code
+	- copy over working push examples from app and replace pseudo code
+
+## things to incorporate in app 
+	- network events
+	- load event
+	- better use of teh error event 
 
 
 # links 
@@ -85,8 +90,78 @@
 	- [event develloper guide](https://developer.mozilla.org/en-US/docs/Web/Guide/Events)
 	- [creating and triggering events guide](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events)
 	- [event handler overview](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Overview_of_Events_and_Handlers)
+	- [event interface, the god event](https://developer.mozilla.org/en-US/docs/Web/API/Event)
 
 
+### terminology 
+	- DOM Events 
+		- sent to notifiy code of interesting things
+		- inherits the `EventInterface` but most usually have additional fields/functions 
+	- bubble 
+		- whether an event travels up from the source to ancestors in search of love
+
+
+### event categories
+	- resource events 
+		- error 
+			- resource has failed to load 
+		- abort
+			- the loading of a resource hs been aborted 
+		- load
+			- a resource and its dependent resources have finished loadihng 
+		- beforeunload 
+			- the window, the document and its reosurces are abouut to be unloaded 
+		- unload 
+			- the document/dependnet resource is being unloaded 
+	- network events 
+		- online 
+			- the browser has gained access to the network 
+		- offline 
+			- the browser has lost access to the network
+	- focus events 
+		- focus 
+			- an element has received focus
+		- blur 
+			- a nn element has lost focus 
+	- websocket events 
+		- open 
+			- a websocket connectino has been establisbhbed 
+		- message 
+			- a message is received  through a websocket 
+		- error 
+			- a websocket connection has been close dwith prejudice 
+				- e.g. data couldnt be sent 
+		- close 
+			- a websocket connection has  been closed 
+	- session history events 
+		- pagehide 
+			- a session history entry is being traversed from 
+		- pageshow 
+			- a session history entry is being traversed to 
+		- popstate 
+			- a session history entry is being navigated to (in certain cases)
+	- css animation events 
+		- animationstart 
+			- poop 
+		- animationcancel 
+			- a css animtion has aborted 
+		- animationonend 
+			- a css animation has completed 
+		- animationiteration 
+			- a css animation is repeated 
+	- css transition events 
+		- transitionstart 
+			- a css transition has actually started (fired afer any delay)
+		- transitioncancel
+		- transitionend
+		- transitionrun
+			- a css transition has begun running (fired before any delay starts)
+		
+
+```js
+
+i
+```
 ## fetch - Request - Response
 	- [response docs](https://developer.mozilla.org/en-US/docs/Web/API/Response)
 	- [fetch respond with](https://developer.mozilla.org/en-US/docs/Web/API/Fetchevent/respondWith)
