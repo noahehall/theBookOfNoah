@@ -5,6 +5,15 @@
 	- network events
 	- load event
 	- better use of teh error event 
+	- use cases for text composition events
+	- usecases for value change events
+	- fuck lets do webvr bitch
+	- your idb installation is prehistoric, use check the database events
+	- usecases for scriptevents
+	- tabevents might be useful for sw
+	- sensor events for mobile web
+	- DOM mutation events
+	- touch events
 
 
 # links 
@@ -102,6 +111,7 @@
 
 
 ### event categories
+#### focus on these
 	- resource events 
 		- error 
 			- resource has failed to load 
@@ -156,7 +166,86 @@
 		- transitionend
 		- transitionrun
 			- a css transition has begun running (fired before any delay starts)
-		
+	- form events 
+		- reset 
+		- submit 
+	- view events 
+		- fullscreenchange 
+			- an element wax turned to fullscreen mode or back to normal mode 
+		- fullscreenerror
+			- impossible to switch to fullscreen mode for technical reasons or because the permission was denied 
+		- resize 
+			- the document view has been resized 
+		- scroll 
+			- the document view or an eement has been scrolled
+	- keyboard events 
+		- keydown 
+			- any key is pressed 
+		- keypress 
+			- any key except shift, fn, capslock is in pressed position (fired continuously)
+		- keyup
+			- any key is released
+	- mouse events 
+		- auxclick 
+			- a pointing device button (i.e. non-primary butotn) has been pressed and released n an element 
+		- click a pointing device button (any button, but soon to be primary button) has been pressed and released on an element 
+		- contextmenu 
+			- the right button of hte mouse is clicked (before the context menu is displayed)
+		- dblclick 
+		- mousedown 
+		- mouseenter
+		- mouseleave
+		- mousemove
+		- mouseover
+		- mouseout
+		- mouseup
+			- a pointing device button is released over an element 
+		- pointerlockchange
+		- pointerlockerror
+		- select
+			- text is being selected
+		- wheel
+			- a wheel button of a pointing device is rotated in any direction
+	- drag and drop events 
+		- drag 
+		- dragend
+		- dragenter
+		- dragstart
+		- dragleave
+		- dragoer
+		- drop
+	- progress events
+		- abort
+		- error
+		- load
+		- loadend
+		- loadstart
+		- progress
+		- timeout
+	- value change events 
+		- broadcast
+		- checkboxstatechange
+		- hashchange
+		- input
+		- RadioStateChange
+		- readystatechange
+		- VAlueChange
+
+#### other event categories
+	- printing events 
+		- beforeprint 
+		- afterprint 
+	- text composition events 
+		- compositionstart
+		- compositionupdate
+		- compositionend
+	- clipboard events 
+		- cut
+		- copy
+		- paste
+	- media events
+		- has a bunch of shit
+
 
 ```js
 
