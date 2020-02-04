@@ -816,14 +816,27 @@ i
 		- looks like like you'll have to feature detect for this or Clients.postMessage
 			- which together cover most browsers
 ```js 
+	// browser context
+	// create a channel for cross-context communication
+	// i.e. browser >< worker
+	const channel = new MessageChannel();
+	channel.port1.onmessage = e => console.log('\n\n got message from sw', e)
+	  
+	// get the registration for acess to the active|waiting|installed worker 
+	// whats the benefints of this over navigator.controller ?
+	const registration = await getActiveRegistration('/sw.js', '/')
 
 	// browser context 
 	// sw is installed, but waiting to be actived
+	// pass in the channel.port2 in case you need to send messages back
 	if (registration.waiting) {
-		registration.waiting.postMessage({
-			type: 'WAITING',
-			msg: 'skip that bitch'
-		});
+		registration.waiting.postMessage(
+			{
+				type: 'WAITING',
+				msg: 'skip that bitch'
+			},
+			[channel.port2]
+		);
 	}
 
 	// worker context 
@@ -836,7 +849,7 @@ i
 			switch (type) {
 			  case 'WAITING': {
 			    self.skipWaiting();
-
+			    if (event.ports?.length) event.ports[0].postMessage('sw skipped waiting')
 			    break;
 			  }
 
