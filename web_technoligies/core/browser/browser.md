@@ -167,6 +167,26 @@
 	// dispatch an event in response to some other event
 		// As the user types, the textarea inside the form dispatches/triggers the event to fire, and uses itself as the starting point
 		textarea.addEventListener('input', e => e.target.dispatchEvent(eventAwesome));
+	// dispatch an event dynamically 
+		someEl.dispatchEvent(new CustomEvent('awesome', { bubbles: true, detail: { text: () => textarea.value } }))
+
+	// disaptch built-in events 
+		function simulateClick() {
+		  var event = new MouseEvent('click', {
+		    view: window,
+		    bubbles: true,
+		    cancelable: true
+		  });
+		  var cb = document.getElementById('checkbox'); 
+		  var cancelled = !cb.dispatchEvent(event);
+		  if (cancelled) {
+		    // A handler called preventDefault.
+		    alert("cancelled");
+		  } else {
+		    // None of the handlers called preventDefault.
+		    alert("not cancelled");
+		  }
+		}
 i
 ```
 
