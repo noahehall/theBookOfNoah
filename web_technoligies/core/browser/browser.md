@@ -3,7 +3,7 @@
 	- [inheritance and prototype](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 	- [function bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
 
-	
+
 
 ## things to incorporate in app 
 ### events
@@ -1037,6 +1037,10 @@ i
 				type: 'WAITING',
 				msg: 'skip that bitch'
 			},
+			// transfer list
+			// anything here can no longer be used in the current context
+			// because ownership is transfered to whaatever context your sending it to
+			// i.e. become neutered
 			[channel.port2]
 		);
 	}
@@ -1085,6 +1089,7 @@ i
 		- fucks afari
 	- [push notifications docs](https://developers.google.com/web/ilt/pwa/introduction-to-push-notifications)
 	- [notifications api](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API)
+	- [notification interface](https://developer.mozilla.org/en-US/docs/Web/API/Notification)
 	- [Registration object](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration
 	- [experiment with notification options](https://tests.peter.sh/notification-generator/)
 	- [mozilla webpush node library is fucking mando](https://github.com/web-push-libs/web-push)
@@ -1290,6 +1295,7 @@ i
 	// so that events triggered by itneractions 
 	// are heard by the current service worker
 	function displayNotification() {
+		// granted|denied|default
 	  if (Notification.permission == 'granted') {
 
 	    navigator.serviceWorker.getRegistration().then(function(reg) {
