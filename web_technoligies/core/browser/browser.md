@@ -28,8 +28,8 @@
 		- especially the `request` and `response` objects
 	- [channel messaging](https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API/Using_channel_messaging)
 	- [channel messaging api](https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API)
-	- [read everything by this muthafucker](https://www.quirksmode.org/)
-
+	- [read everything by this muthafucker](https://www.quirksmode.org
+	- [think about this shit](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions)
 
 
 	
@@ -114,7 +114,7 @@
 	- [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
 	- [dispatch event](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent)
 	- [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
-	- [remooveEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener)
+	- [removeEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener)
 	- [introduction to events](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
 	- [accessing events](https://www.quirksmode.org/js/events_access.html)
 	
@@ -214,8 +214,9 @@
 				passive: bool,
 				mozSystemGroup: 'who the fuck codes for just one browser?'
 			},
-			// see above desc
-			// events that are bubbling upward will not trigger this listener
+			// or specify just the capture property, as a boolean
+			// specify EITHER the options object above or the boolean below
+			// also events that are bubbling upward will not trigger this listener
 			// defaults to false
 			useCaptureBoolean
 		)
@@ -223,30 +224,37 @@
 		eventTarget.removeEventListener(
 			'eventName',
 			listenerFunction,
-			useCaptureBoolean, // has to match value provided in addEventListener
+			useCaptureBoolean, // has to match value provided in addEventListener, can also be an options object
 		)
 
 
-	// create custom event (doesnt work in ie, fuck ie)
+	// create an event (doesnt work in ie, fuck ie)
+		// can be used to trigger native events?
 		const event = new Event(
 			'wtf',
-			{
+			{	
+				// add arbitrary data to be acessible in listeners
+				details: {...},
+				// does this event bubble to the root html?
 				bubbles: bool,
+				// does this event resppond to preventDefault()
 				cancelable: bool,
 				// whether the event wil; propagate across the shadow dom boundary into the standard dom
 				// all UA-disaptched events are composed, (e.g. click, touch, etc)
 				// only occurs !!bubbles
 				composed: bool,
+				// the element on which the handler is attached
+				// i.e. could be different that event.target if the handler is invoked in the capture/bubble phases through retargeting
+				currentTarget: eventTarget,
 			}
 		);
-		domEl.addEventListener('wtf', handleWtfBro);
-	// create custom event (works in ie, fuck ie)
-		// dont use this shit, fuck ie
-		// fuck companies who force people to use ie
-		// fuck you
-		const event = document.createEvent('wtf');
-		event.initEvent('wtf', true, true);
-		domEl.addEventListener('wtf', handleWtfBro);
+	// create a custom event 
+		// create event with custom data via the detail proeprty
+		// if bubbles, boomers can listen for incidences dispatched on millenials
+		const event = new CustomEvent('wtf', { ...eventOptionsFromAbove })
+
+
+
 	// dispatch the event
 		// invokes eventt handlers sycnhronously 
 		// i.e. all event handlers will execute and return BEFORE the cod econtinues on after the call to dispatch event 
@@ -255,9 +263,7 @@
 		const canceled = !domEl.dispatchEvent(event);
 		if (canceled) console.log('preventDefault was called')
 
-	// create event with custom data via the detail proeprty
-	// if bubbles, boomers can listen for incidences dispatched on millenials
-		const event = new CustomEvent('wtf', { bubbles: true|false, detail: { ...yourShitHere }})
+	
 
 	// dispatch an event in response to some other event
 		// As the user types, the textarea inside the form dispatches/triggers the event to fire, and uses itself as the starting point
