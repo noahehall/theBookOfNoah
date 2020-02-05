@@ -144,10 +144,13 @@
 			- listeners attached to thee event target
 			- will receive events before they are bubbled or able to be captured 
 			- the emitted eevents will trigger all listeners on the element in the order the listeners were registered
-		- bubble phase
-			- whether an event travels up from the source to ancestors in search of love
-		- capture phase
-			- whtehr an event is routed first to capturing listeners, then bubbles 
+		- capture and bubble 
+			- order of operations when two handlers are listening for the same event on a target that has parents
+				1. capture phase
+					- browser checks to see if any parents (starting from html on down to event.target) has a handler with capture/useCapture set true
+					- if one is found, runs it and continues until it reaches the event.target to start the bubbling the shampane
+				2. bubble phase
+					- browser 
 	
 	- create-init--dispatch process 
 		- used for dispatch events into the implementations event model 
@@ -171,8 +174,10 @@
 		- dont register event handlers until the `document` emits `DOMContentLoaded`
 
 ```js
-	// key event properties 
+	// key event properties and methods
 	event.timeStamp
+	event.target // reference to the triggering element
+	event.preventDefault() // stop the default action of the event, e.g. a form submission
 
 
 	// attach events after this shit
