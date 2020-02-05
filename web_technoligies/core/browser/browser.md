@@ -187,13 +187,6 @@
 			- 
 
 ```js
-	// key event properties and methods
-	event.timeStamp
-	event.target // reference to the triggering element
-	event.preventDefault() // stop the default action of the event, e.g. a form submission
-	event.stopPropagation() // stop the event from bubbling to the root html element
-
-
 	// attach events after this shit
 	// the html has been parsed and JS objectes created for all dom nodes
 		document.addEventListener('DOMContentLoaded', () => registerAllMyEventsBitch())
@@ -230,6 +223,9 @@
 
 	// create an event (doesnt work in ie, fuck ie)
 		// can be used to trigger native events?
+		// some of the properties are for event handlers
+		// e.g. wtf are you doing trying to set defaultPrevented on instantiation?
+		// its just easier to put all this shit here cuz wtf
 		const event = new Event(
 			'wtf',
 			{	
@@ -253,6 +249,9 @@
 				// the original target from which the event was dispatched
 				// before any retargeting due to bubbling/capture
 				target: eventTarget,
+				// event creation in milliseconds since epoch 
+				// unreliable, probably because of IE but i have no proof
+				timeStamp
 			}
 		);
 	// create a custom event 
