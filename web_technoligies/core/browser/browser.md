@@ -115,7 +115,7 @@
 	- [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
 	- [remooveEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener)
 	- [introduction to events](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
-
+	- [accessing events](https://www.quirksmode.org/js/events_access.html)
 	
 
 
@@ -173,8 +173,17 @@
 		- define a function (i.e. listener) which understands the pattern contract 
 		- register the function (i.e. listener|handler) on the javascript object which will emit the event via `addEventListener` function
 			- e.g. a dom element, document, window, or ANY object that implements the `EventListener` interface
+	- event delegation 
+		- set the event listener on a parent element with !!bubble
+			- be sure `stopPropagation()` once handled
+		- dispatch the event from any child elements 
 	- pattern best practices 
 		- dont register event handlers until the `document` emits `DOMContentLoaded`
+		- use event delegation where possible
+			- when multiple child elements invoke the same event handler
+		- use capturing handlers where appropriate 
+			- when a child element will invoke an event in an unknown/dynamic location in the dom but the handler is more effective on a parent element
+			- 
 
 ```js
 	// key event properties and methods
