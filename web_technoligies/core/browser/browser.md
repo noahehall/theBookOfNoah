@@ -150,7 +150,8 @@
 					- browser checks to see if any parents (starting from html on down to event.target) has a handler with capture/useCapture set true
 					- if one is found, runs it and continues until it reaches the event.target to start the bubbling the shampane
 				2. bubble phase
-					- browser checks if event.target has handler 
+					- browser checks if event.target has handler with !bubble 
+					- if one is found, runs it and continues until it reaches the root html element
 				3. if there arent 2/more handlers, it (practically) doesnt matter if you captre or bubble the event, as only the singel handler will be invoked 
 					- unless you like to micro optimise, and think the 1ms saving by the capture phase is worht your dumb ass time
 	
@@ -180,6 +181,7 @@
 	event.timeStamp
 	event.target // reference to the triggering element
 	event.preventDefault() // stop the default action of the event, e.g. a form submission
+	event.stopPropagation() // stop the event from bubbling to the root html element
 
 
 	// attach events after this shit
