@@ -110,6 +110,8 @@
 	- [the  godhead himself](https://www.youtube.com/watch?v=Y2Y0U-2qJMs)
 	- [how js loading works](http://ablogaboutcode.com/2011/06/14/how-javascript-loading-works-domcontentloaded-and-onload)
 	- [load and execution sequence of a web page](https://stackoverflow.com/questions/1795438/load-and-execution-sequence-of-a-web-page)
+	- [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
+
 
 
 
@@ -154,6 +156,9 @@
 		const event = new Event('wtf');
 		domEl.addEventListener('wtf', handleWtfBro);
 	// create custom event (works in ie, fuck ie)
+		// dont use this shit, fuck ie
+		// fuck companies who force people to use ie
+		// fuck you
 		const event = document.createEvent('wtf');
 		event.initEvent('wtf', true, true);
 		domEl.addEventListener('wtf', handleWtfBro);
