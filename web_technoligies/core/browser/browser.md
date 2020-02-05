@@ -111,7 +111,13 @@
 		- inherits the `EventInterface` but most usually have additional fields/functions 
 	- bubble 
 		- whether an event travels up from the source to ancestors in search of love
+	- Events 
+		- a design pattern used for the async handling of incidents which occur in the lifecycle of something
+		- the naming, characterization, and the use of 'events|incidenses' of differnet types 
+			- how the fuck do you spell incidencnes
 
+### basics 
+	- 
 
 ### event categories
 #### focus on these
@@ -806,6 +812,7 @@ i
 ```
 
 ### client - service worker messaging 
+	- [discussion about neutered ports](https://stackoverflow.com/questions/38169672/why-are-transfered-buffers-neutered-in-javascript)
 	- [sw to client messaging](https://developer.mozilla.org/en-US/docs/Web/API/Client/postMessage)
 		- dont use, not supported by safari
 		- fuck safari
