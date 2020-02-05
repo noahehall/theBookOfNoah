@@ -123,6 +123,9 @@
 		- inherits the `EventInterface` but most usually have additional fields/functions 
 	- event phases 
 		- target phase
+			- listeners attached to thee event target
+			- will receive events before they are bubbled or able to be captured 
+			- the emitted eevents will trigger all listeners on the element in the order the listeners were registered
 		- bubble phase
 			- whether an event travels up from the source to ancestors in search of love
 		- capture phase
