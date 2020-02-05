@@ -112,6 +112,10 @@
 	- [load and execution sequence of a web page](https://stackoverflow.com/questions/1795438/load-and-execution-sequence-of-a-web-page)
 	- [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
 	- [dispatch event](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent)
+	- [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
+	- [remooveEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener)
+	
+	
 
 
 
