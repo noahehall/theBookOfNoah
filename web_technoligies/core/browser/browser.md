@@ -100,6 +100,7 @@
 
 ```
 
+
 ## EVENTS
 	- [event develloper guide](https://developer.mozilla.org/en-US/docs/Web/Guide/Events)
 	- [creating and triggering events guide](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events)
@@ -118,10 +119,6 @@
 	- [introduction to events](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
 	- [accessing events](https://www.quirksmode.org/js/events_access.html)
 	
-
-
-
-
 
 ### terminology 
 	- Events 
@@ -142,9 +139,9 @@
 		- there may be mutliple event listeners, and all listeners with the matching 3 items will be removed
 	- event phases 
 		- target phase
-			- listeners attached to thee event target
+			- listeners attached to the event target
 			- will receive events before they are bubbled or able to be captured 
-			- the emitted eevents will trigger all listeners on the element in the order the listeners were registered
+			- the emitted events will trigger all listeners on the element in the order the listeners were registered
 		- capture and bubble 
 			- order of operations when two/more handlers are listening for the same event on a target that has parents
 				1. capture phase
@@ -156,7 +153,7 @@
 				3. if there arent 2/more handlers, it (practically) doesnt matter if you captre or bubble the event, as only the singel handler will be invoked 
 					- unless you like to micro optimise, and think the 1ms saving by the capture phase is worht your dumb ass time
 	
-	- create-init--dispatch process 
+	- create-init-dispatch process 
 		- used for dispatch events into the implementations event model 
 
 
@@ -164,7 +161,7 @@
 	- events and event handling pattern to react to incidents that occur
 	- web page rendering architecture: 
 		- parse -> process -> draw -> present -> loop continuously on incident occurrence
-		- ermits a page to be partially rendered even when the browser has not finished retrieving all resources
+		- emits a page to be partially rendered even when the browser has not finished retrieving all resources
 	- pattern contract
 		- the name of the event 
 		- the datastructure and key properties for a specific event type 
@@ -217,7 +214,7 @@
 		eventTarget.removeEventListener(
 			'eventName',
 			listenerFunction,
-			useCaptureBoolean, // has to match value provided in addEventListener, can also be an options object
+			useCaptureBoolean, // has to match value provided in addEventListener useCapture/capture
 		)
 
 
