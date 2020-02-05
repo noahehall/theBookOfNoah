@@ -124,13 +124,17 @@
 
 ### event design pattern 
 	- events and event handling pattern to react to incidents that occur
+	- web page rendering architecture: 
+		- parse -> process -> draw -> present -> loop continuously on incident occurrence
+		- ermits a page to be partially rendered even when the browser has not finished retrieving all resources
+	- pattern contract
+		- the name of the event 
+		- the datastructure and key properties for a specific event type 
+		- the javascript object which will 'emit' the event
+	- pattern implementation 
+		- define a function (i.e. listener) which understands the pattern contract 
+		- register the function (i.e. listener) on the javascript object which will emit the event
 
-	- basic flow 
-		- web page rendering architecture: fetch and load
-			- browsers wait until they receive all of the resources associated with ap age 
-			- once received,: parse -> process -> draw -> present -> loop continuously on incident occurrence
-
-		- event driven, reflow based page rendering 
 
 ### event categories
 #### focus on these
