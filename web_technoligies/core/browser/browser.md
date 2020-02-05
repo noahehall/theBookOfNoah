@@ -176,7 +176,7 @@
 			- e.g. a dom element, document, window, or ANY object that implements the `EventListener` interface
 	- event delegation 
 		- set the event listener on a parent element with !!bubble
-			- be sure `stopPropagation()` once handled
+			- be sure `stopPropagation|stopImmediatePropagation()` once handled
 		- dispatch the event from any child elements 
 	- pattern best practices 
 		- dont register event handlers until the `document` emits `DOMContentLoaded`
@@ -268,15 +268,11 @@
 		// you should checkif it was canceled, if thats your kind of thing
 		const canceled = !domEl.dispatchEvent(event);
 		if (canceled) console.log('preventDefault was called')
-
-	
-
 	// dispatch an event in response to some other event
 		// As the user types, the textarea inside the form dispatches/triggers the event to fire, and uses itself as the starting point
 		textarea.addEventListener('input', e => e.target.dispatchEvent(eventAwesome));
 	// dispatch an event dynamically 
 		someEl.dispatchEvent(new CustomEvent('awesome', { bubbles: true, detail: { text: () => textarea.value } }))
-
 	// disaptch built-in events 
 		function simulateClick() {
 		  var event = new MouseEvent('click', {
@@ -293,6 +289,19 @@
 		    // None of the handlers called preventDefault.
 		    alert("not cancelled");
 		  }
+		}
+
+	// handling events
+		function onPoopWipeButDontFlushAt711(e) {
+			// stop the default action
+			e.preventDefault()
+			// stop ancester handlers from being invoked, but permit sibling/concurrent eventTarget handlers
+			e.stopPropagation()
+			// stop ALL other handlers from being invoked, whether on ancestor, sibling, or this eventTarget
+			e.stopImmediatePropagation()
+			// see the path this event takes to nirvana
+			// wtf is the usecase for this?
+			e.composedPath()
 		}
 i
 ```
