@@ -179,7 +179,7 @@
 		document.addEventListener('DOMContentLoaded', () => registerAllMyEventsBitch())
 
 	// listen for events 
-		somePoop.addEventListener(
+		eventTarget.addEventListener(
 			'eventName',
 			listenerFunction,
 			{
@@ -192,11 +192,19 @@
 				passive: bool,
 				mozSystemGroup: 'who the fuck codes for just one browser?'
 			},
-			// if true, (see capture above)
-			// also, events that are bubbling upward will not trigger this listener
+			// see above desc
+			// events that are bubbling upward will not trigger this listener
 			// defaults to false
 			useCaptureBoolean
 		)
+	// stop listening for events 
+		eventTarget.removeEventListener(
+			'eventName',
+			listenerFunction,
+			useCaptureBoolean, // has to match value provided in addEventListener
+		)
+
+
 	// create custom event (doesnt work in ie, fuck ie)
 		const event = new Event(
 			'wtf',
