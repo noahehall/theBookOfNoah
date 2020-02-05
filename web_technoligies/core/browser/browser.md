@@ -121,8 +121,12 @@
 	- DOM Events 
 		- sent to notifiy code of interesting things
 		- inherits the `EventInterface` but most usually have additional fields/functions 
-	- bubble 
-		- whether an event travels up from the source to ancestors in search of love
+	- event phases 
+		- target phase
+		- bubble phase
+			- whether an event travels up from the source to ancestors in search of love
+		- capture phase
+			- whtehr an event is routed first to capturing listeners, then bubbles 
 	- Events 
 		- a design pattern used for the async handling of incidents which occur in the lifecycle of something
 		- the naming, characterization, and the use of 'events|incidenses' of differnet types 
@@ -144,7 +148,7 @@
 	- pattern implementation 
 		- define a function (i.e. listener) which understands the pattern contract 
 		- register the function (i.e. listener|handler) on the javascript object which will emit the event via `addEventListener` function
-			- e.g. a dom element, document, window, or ANY object that supports
+			- e.g. a dom element, document, window, or ANY object that implements the `EventListener` interface
 	- pattern best practices 
 		- dont register event handlers until the `document` emits `DOMContentLoaded`
 
@@ -157,6 +161,25 @@
 	// the html has been parsed and JS objectes created for all dom nodes
 		document.addEventListener('DOMContentLoaded', () => registerAllMyEventsBitch())
 
+	// listen for events 
+		somePoop.addEventListener(
+			'eventName',
+			listenerFunction,
+			{
+				// route events to this listener before sending to child elements
+				capture: bool,
+				// listener should be invoked at most ONCE, then removed
+				once: bool,
+				// indicates a passive listener, i.e. will never call preventDefault
+				// has performance improvemetns if true
+				passive: bool,
+				mozSystemGroup: 'who the fuck codes for just one browser?'
+			},
+			// if true, (see capture above)
+			// also, events that are bubbling upward will not trigger this listener
+			// defaults to false
+			useCaptureBoolean
+		)
 	// create custom event (doesnt work in ie, fuck ie)
 		const event = new Event(
 			'wtf',
