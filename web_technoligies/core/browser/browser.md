@@ -1,5 +1,9 @@
 # todo 
 	- copy over working push examples from app and replace pseudo code
+	- [inheritance and prototype](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
+	- [function bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
+
+	
 
 ## things to incorporate in app 
 ### events
