@@ -686,6 +686,12 @@ i
 	-  browsers will explicitly disallow notifications not triggered in response to a user gesture.
 	- in general horrible cross-browser feature parity 
 		- always check to see if every single fucking method works in the environment(s) your supporting
+	- in general openWindow/focus can 
+		- only be called in response to a notification click
+		- only ONE of them can be called
+		- you have 10 seconds in the notificationclick handler to run your business logic
+		- openWindow/focus must be called before your handler resolves
+			- and you must put your handler within event.waitUntil
 	
 
 	- TODO 
