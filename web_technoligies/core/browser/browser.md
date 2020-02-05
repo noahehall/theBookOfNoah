@@ -111,6 +111,7 @@
 	- [how js loading works](http://ablogaboutcode.com/2011/06/14/how-javascript-loading-works-domcontentloaded-and-onload)
 	- [load and execution sequence of a web page](https://stackoverflow.com/questions/1795438/load-and-execution-sequence-of-a-web-page)
 	- [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
+	- [dispatch event](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent)
 
 
 
@@ -126,6 +127,9 @@
 		- a design pattern used for the async handling of incidents which occur in the lifecycle of something
 		- the naming, characterization, and the use of 'events|incidenses' of differnet types 
 			- how the fuck do you spell incidencnes
+	- create-init--dispatch process 
+		- used for dispatch events into the implementations event model 
+
 
 ### event design pattern 
 	- events and event handling pattern to react to incidents that occur
@@ -140,6 +144,7 @@
 	- pattern implementation 
 		- define a function (i.e. listener) which understands the pattern contract 
 		- register the function (i.e. listener|handler) on the javascript object which will emit the event via `addEventListener` function
+			- e.g. a dom element, document, window, or ANY object that supports
 	- pattern best practices 
 		- dont register event handlers until the `document` emits `DOMContentLoaded`
 
@@ -153,7 +158,17 @@
 		document.addEventListener('DOMContentLoaded', () => registerAllMyEventsBitch())
 
 	// create custom event (doesnt work in ie, fuck ie)
-		const event = new Event('wtf');
+		const event = new Event(
+			'wtf',
+			{
+				bubbles: bool,
+				cancelable: bool,
+				// whether the event wil; propagate across the shadow dom boundary into the standard dom
+				// all UA-disaptched events are composed, (e.g. click, touch, etc)
+				// only occurs !!bubbles
+				composed: bool,
+			}
+		);
 		domEl.addEventListener('wtf', handleWtfBro);
 	// create custom event (works in ie, fuck ie)
 		// dont use this shit, fuck ie
@@ -163,7 +178,12 @@
 		event.initEvent('wtf', true, true);
 		domEl.addEventListener('wtf', handleWtfBro);
 	// dispatch the event
-		domEl.dispatchEvent(event);
+		// invokes eventt handlers sycnhronously 
+		// i.e. all event handlers will execute and return BEFORE the cod econtinues on after the call to dispatch event 
+		// is the last step in the create-init-dispatch process
+		// you should checkif it was canceled, if thats your kind of thing
+		const canceled = !domEl.dispatchEvent(event);
+		if (canceled) console.log('preventDefault was called')
 
 	// create event with custom data via the detail proeprty
 	// if bubbles, boomers can listen for incidences dispatched on millenials
