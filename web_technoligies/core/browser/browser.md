@@ -16,6 +16,8 @@
 	- sensor events for mobile web
 	- DOM mutation events
 	- touch events
+	- orientation events with 3d transforms
+	- mutatin observer
 
 
 # links 
@@ -100,9 +102,12 @@
 ## EVENTS
 	- [event develloper guide](https://developer.mozilla.org/en-US/docs/Web/Guide/Events)
 	- [creating and triggering events guide](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events)
-	- [event handler overview](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Overview_of_Events_and_Handlers)
+	- [event design pattern](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Overview_of_Events_and_Handlers)
 	- [event interface, the god event](https://developer.mozilla.org/en-US/docs/Web/API/Event)
 	- [all events](https://developer.mozilla.org/en-US/docs/Web/Events)
+	- [orientation and motion events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Orientation_and_motion_data_explained)
+	- [orientation events with 3d transforms](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Using_device_orientation_with_3D_transforms)
+
 
 
 ### terminology 
@@ -116,8 +121,7 @@
 		- the naming, characterization, and the use of 'events|incidenses' of differnet types 
 			- how the fuck do you spell incidencnes
 
-### basics 
-	- 
+### event design pattern 
 
 ### event categories
 #### focus on these
