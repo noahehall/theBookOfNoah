@@ -114,7 +114,7 @@
 	- [dispatch event](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent)
 	- [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
 	- [remooveEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener)
-	
+
 	
 
 
@@ -122,9 +122,22 @@
 
 
 ### terminology 
-	- DOM Events 
-		- sent to notifiy code of interesting things
-		- inherits the `EventInterface` but most usually have additional fields/functions 
+	- Events 
+		- a design pattern used for the async handling of incidents which occur in the lifecycle of something
+		- the naming, characterization, and the use of 'events|incidenses' of differnet types 
+			- how the fuck do you spell incidencnes
+	- triggering DOM events 
+		- user action, 
+		- automated browser processes (e.g. in the lifecycle of some arbitrary API)
+		- programmatically (e.g. someEle.click())
+		- manually (e.g. eventTarget.dispatchEvent())
+	- handling events 
+		- always use eventTarget.addEventListener, fuck IE 
+	- dishandling events 
+		- couldnt think of a more romantic term 
+		- always use eventTarget.removeEventListener 
+		- the event name, function (instance), and useCapture flag has to match 
+		- there may be mutliple event listeners, and all listeners with the matching 3 items will be removed
 	- event phases 
 		- target phase
 			- listeners attached to thee event target
@@ -134,10 +147,7 @@
 			- whether an event travels up from the source to ancestors in search of love
 		- capture phase
 			- whtehr an event is routed first to capturing listeners, then bubbles 
-	- Events 
-		- a design pattern used for the async handling of incidents which occur in the lifecycle of something
-		- the naming, characterization, and the use of 'events|incidenses' of differnet types 
-			- how the fuck do you spell incidencnes
+	
 	- create-init--dispatch process 
 		- used for dispatch events into the implementations event model 
 
