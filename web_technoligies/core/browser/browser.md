@@ -108,6 +108,9 @@
 	- [orientation and motion events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Orientation_and_motion_data_explained)
 	- [orientation events with 3d transforms](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Using_device_orientation_with_3D_transforms)
 	- [the  godhead himself](https://www.youtube.com/watch?v=Y2Y0U-2qJMs)
+	- [how js loading works](http://ablogaboutcode.com/2011/06/14/how-javascript-loading-works-domcontentloaded-and-onload)
+	- [load and execution sequence of a web page](https://stackoverflow.com/questions/1795438/load-and-execution-sequence-of-a-web-page)
+
 
 
 
@@ -146,6 +149,15 @@
 	// attach events after this shit
 	// the html has been parsed and JS objectes created for all dom nodes
 	document.addEventListener('DOMContentLoaded', () => registerAllMyEventsBitch())
+
+	// create custom event (doesnt work in ie, fuck ie)
+	const event = new Event('wtf');
+	domEl.addEventListener('wtf', handleWtfBro);
+
+	// create custom event (works in ie, fuck ie)
+	const event = document.createEvent('wtf');
+	event.initEvent('wtf', true, true);
+	domEl.addEventListener('wtf', handleWtfBro);
 i
 ```
 
