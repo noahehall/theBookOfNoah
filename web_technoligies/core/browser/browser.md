@@ -161,7 +161,8 @@
 		domEl.dispatchEvent(event);
 
 	// create event with custom data via the detail proeprty
-		const event = new CustomEvent('wtf', { detail: { ...yourShitHere }})
+	// if bubbles, boomers can listen for incidences dispatched on millenials
+		const event = new CustomEvent('wtf', { bubbles: true|false, detail: { ...yourShitHere }})
 i
 ```
 
