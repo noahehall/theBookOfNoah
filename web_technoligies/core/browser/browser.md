@@ -988,6 +988,7 @@ i
 					if (foundClient.url !== 'wtf') await foundClient.navigate('to/this/url')
 					// send a message tot he client
 					// see the other examples with passing a port from messageChannel
+					// the navigator.serviceWorker.onmessage handler will receive this 
 					foundClient.postMessage()
 				}
 			// finish your business logic 
