@@ -229,8 +229,6 @@
 		const event = new Event(
 			'wtf',
 			{	
-				// add arbitrary data to be acessible in listeners
-				details: {...},
 				// does this event bubble to the root html?
 				bubbles: bool,
 				// does this event resppond to preventDefault()
@@ -239,6 +237,18 @@
 				// all UA-disaptched events are composed, (e.g. click, touch, etc)
 				// only occurs !!bubbles
 				composed: bool,
+
+			}
+		);
+	// create a custom event 
+		// create event with custom data via the detail proeprty
+		// if bubbles, boomers can listen for incidences dispatched on millenials
+		const event = new CustomEvent(
+			'wtf', 
+			{ 
+				...eventOptionsFromAbove,
+				// add arbitrary data to be acessible in listeners
+				details: {...},
 				// the element on which the handler is attached
 				// i.e. could be different that event.target if the handler is invoked in the capture/bubble phases through retargeting
 				currentTarget: eventTarget,
@@ -251,13 +261,9 @@
 				target: eventTarget,
 				// event creation in milliseconds since epoch 
 				// unreliable, probably because of IE but i have no proof
-				timeStamp
+				timeStamp: DOMTimeStamp,
 			}
-		);
-	// create a custom event 
-		// create event with custom data via the detail proeprty
-		// if bubbles, boomers can listen for incidences dispatched on millenials
-		const event = new CustomEvent('wtf', { ...eventOptionsFromAbove })
+		)
 
 
 
