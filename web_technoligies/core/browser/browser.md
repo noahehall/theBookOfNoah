@@ -144,13 +144,15 @@
 
 
 	// attach events after this shit
+	// the html has been parsed and JS objectes created for all dom nodes
 	document.addEventListener('DOMContentLoaded', () => registerAllMyEventsBitch())
 i
 ```
 
 
 ### event categories
-#### focus on these
+#### core events
+#### other events
 	- resource events 
 		- error 
 			- resource has failed to load 
@@ -269,8 +271,7 @@ i
 		- RadioStateChange
 		- readystatechange
 		- VAlueChange
-
-#### other event categories
+#### less than other events
 	- printing events 
 		- beforeprint 
 		- afterprint 
