@@ -500,6 +500,7 @@ i
 	- [focus|openWindow behavior](https://github.com/w3c/ServiceWorker/issues/602)
 
 
+
 ## terminology
 	- web workers
 		- run scripts in background threads
@@ -693,6 +694,9 @@ i
 		- you have 10 seconds in the notificationclick handler to run your business logic
 		- openWindow/focus must be called before your handler resolves
 			- and you must put your handler within event.waitUntil
+		- thus 
+			- fuck client.focus|openwindow
+			- just show the notification if !client.focused, else show the toast
 	
 
 	- TODO 
