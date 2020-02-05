@@ -163,6 +163,10 @@
 	// create event with custom data via the detail proeprty
 	// if bubbles, boomers can listen for incidences dispatched on millenials
 		const event = new CustomEvent('wtf', { bubbles: true|false, detail: { ...yourShitHere }})
+
+	// dispatch an event in response to some other event
+		// As the user types, the textarea inside the form dispatches/triggers the event to fire, and uses itself as the starting point
+		textarea.addEventListener('input', e => e.target.dispatchEvent(eventAwesome));
 i
 ```
 
