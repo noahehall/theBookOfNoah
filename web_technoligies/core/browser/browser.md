@@ -148,16 +148,20 @@
 
 	// attach events after this shit
 	// the html has been parsed and JS objectes created for all dom nodes
-	document.addEventListener('DOMContentLoaded', () => registerAllMyEventsBitch())
+		document.addEventListener('DOMContentLoaded', () => registerAllMyEventsBitch())
 
 	// create custom event (doesnt work in ie, fuck ie)
-	const event = new Event('wtf');
-	domEl.addEventListener('wtf', handleWtfBro);
-
+		const event = new Event('wtf');
+		domEl.addEventListener('wtf', handleWtfBro);
 	// create custom event (works in ie, fuck ie)
-	const event = document.createEvent('wtf');
-	event.initEvent('wtf', true, true);
-	domEl.addEventListener('wtf', handleWtfBro);
+		const event = document.createEvent('wtf');
+		event.initEvent('wtf', true, true);
+		domEl.addEventListener('wtf', handleWtfBro);
+	// dispatch the event
+		domEl.dispatchEvent(event);
+
+	// create event with custom data via the detail proeprty
+		const event = new CustomEvent('wtf', { detail: { ...yourShitHere }})
 i
 ```
 
