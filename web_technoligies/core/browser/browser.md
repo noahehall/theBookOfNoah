@@ -107,6 +107,7 @@
 	- [all events](https://developer.mozilla.org/en-US/docs/Web/Events)
 	- [orientation and motion events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Orientation_and_motion_data_explained)
 	- [orientation events with 3d transforms](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Using_device_orientation_with_3D_transforms)
+	- [the  godhead himself](https://www.youtube.com/watch?v=Y2Y0U-2qJMs)
 
 
 
@@ -122,6 +123,14 @@
 			- how the fuck do you spell incidencnes
 
 ### event design pattern 
+	- events and event handling pattern to react to incidents that occur
+
+	- basic flow 
+		- web page rendering architecture: fetch and load
+			- browsers wait until they receive all of the resources associated with ap age 
+			- once received,: parse -> process -> draw -> present -> loop continuously on incident occurrence
+
+		- event driven, reflow based page rendering 
 
 ### event categories
 #### focus on these
