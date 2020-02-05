@@ -246,6 +246,13 @@
 				// the element on which the handler is attached
 				// i.e. could be different that event.target if the handler is invoked in the capture/bubble phases through retargeting
 				currentTarget: eventTarget,
+				// whether preventDefaulted() was invoked
+				defaultPrevented: boolean,
+				// in which phase the handler was invoked
+				eventPhase: phaseName,
+				// the original target from which the event was dispatched
+				// before any retargeting due to bubbling/capture
+				target: eventTarget,
 			}
 		);
 	// create a custom event 
