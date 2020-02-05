@@ -130,10 +130,23 @@
 	- pattern contract
 		- the name of the event 
 		- the datastructure and key properties for a specific event type 
+			- all browsers extend  from `EventPrototype`
 		- the javascript object which will 'emit' the event
 	- pattern implementation 
 		- define a function (i.e. listener) which understands the pattern contract 
-		- register the function (i.e. listener) on the javascript object which will emit the event
+		- register the function (i.e. listener|handler) on the javascript object which will emit the event via `addEventListener` function
+	- pattern best practices 
+		- dont register event handlers until the `document` emits `DOMContentLoaded`
+
+```js
+	// key event properties 
+	event.timeStamp
+
+
+	// attach events after this shit
+	document.addEventListener('DOMContentLoaded', () => registerAllMyEventsBitch())
+i
+```
 
 
 ### event categories
