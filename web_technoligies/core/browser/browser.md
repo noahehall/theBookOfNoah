@@ -602,6 +602,8 @@ i
 	- [service worker registration](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration)
 	- [register api, good docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
 	- [MessageEvent](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
+	- [open a window client](https://developer.mozilla.org/en-US/docs/Web/API/Clients/openWindow)
+	- [windowClient](https://developer.mozilla.org/en-US/docs/Web/API/WindowClient)
 
 
 ### use cases
@@ -682,9 +684,14 @@ i
 		- `self.addEventListener('eventname', (event) => poop)
 		- `self.oneventname = (event) => poop
 	-  browsers will explicitly disallow notifications not triggered in response to a user gesture.
+	- in general horrible cross-browser feature parity 
+		- always check to see if every single fucking method works in the environment(s) your supporting
+	
+
 	- TODO 
 		- [use cases for navigation preload manager](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/navigationPreload)
 		- [common mistakes](https://developers.google.com/web/tools/workbox/modules/workbox-window#avoiding_common_mistakes)
+
 
 
 
@@ -961,8 +968,17 @@ i
 				// openWindow creates a new top level browsing context
 				// and loads the specified url 
 				// firefox permits this only in response to a notificationclick event
+				// has all methods of the Client interface
 				foundClient = await clients.openWindow(getNotiData().pathname|url|etc);
-
+				if (foundClient) {
+					// give user input focus
+					if (!foundClient.focused) await foundClient.focus()
+					// loads a url into the controlled client 
+					if (foundClient.url !== 'wtf') await foundClient.navigate('to/this/url')
+					// send a message tot he client
+					// see the other examples with passing a port from messageChannel
+					foundClient.postMessage()
+				}
 			// finish your business logic 
 			// or maybe do this close all notifications?
 			const notis = await self.registration.getNotifications()
