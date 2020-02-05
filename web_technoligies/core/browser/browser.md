@@ -145,12 +145,14 @@
 			- will receive events before they are bubbled or able to be captured 
 			- the emitted eevents will trigger all listeners on the element in the order the listeners were registered
 		- capture and bubble 
-			- order of operations when two handlers are listening for the same event on a target that has parents
+			- order of operations when two/more handlers are listening for the same event on a target that has parents
 				1. capture phase
 					- browser checks to see if any parents (starting from html on down to event.target) has a handler with capture/useCapture set true
 					- if one is found, runs it and continues until it reaches the event.target to start the bubbling the shampane
 				2. bubble phase
-					- browser 
+					- browser checks if event.target has handler 
+				3. if there arent 2/more handlers, it (practically) doesnt matter if you captre or bubble the event, as only the singel handler will be invoked 
+					- unless you like to micro optimise, and think the 1ms saving by the capture phase is worht your dumb ass time
 	
 	- create-init--dispatch process 
 		- used for dispatch events into the implementations event model 
