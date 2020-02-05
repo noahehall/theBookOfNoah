@@ -179,6 +179,8 @@
 		document.addEventListener('DOMContentLoaded', () => registerAllMyEventsBitch())
 
 	// listen for events 
+		// you can either pass the options object, or the useCapture boolean
+		// but NOT both bitch
 		eventTarget.addEventListener(
 			'eventName',
 			listenerFunction,
