@@ -28,6 +28,7 @@
 		- especially the `request` and `response` objects
 	- [channel messaging](https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API/Using_channel_messaging)
 	- [channel messaging api](https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API)
+	- [read everything by this muthafucker](https://www.quirksmode.org/)
 
 
 
