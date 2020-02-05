@@ -497,6 +497,7 @@ i
 	- [workbox window tut](https://medium.com/@webmaxru/workbox-4-implementing-refresh-to-update-version-flow-using-the-workbox-window-module-41284967e79c)
 	- [the super fucking important event.waitUntil](https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent/waitUntil)
 	- [notifications object for workers + clients](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification)
+	- [focus|openWindow behavior](https://github.com/w3c/ServiceWorker/issues/602)
 
 
 ## terminology
