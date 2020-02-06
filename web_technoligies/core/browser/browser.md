@@ -1408,6 +1408,7 @@ i
 			const clients = await clients.matchAll();
 				// Show notification if app is closed
 				//  always use event.waitUntil 
+				// see elseware for options
 			if (clients.length === 0) event.waitUntil(
 				self.registration.showNotification('Hello world!', options)
 			);
