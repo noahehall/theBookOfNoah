@@ -696,6 +696,7 @@ i
 			- and you must put your handler within event.waitUntil
 		- thus 
 			- fuck client.focus|openwindow
+				- nvm, works perfectly in response to anotification click
 			- just show the notification if !client.focused, else show the toast
 	
 
