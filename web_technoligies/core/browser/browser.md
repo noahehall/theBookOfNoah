@@ -906,6 +906,18 @@ i
 		
 					return  response.clone();
 				})());
+
+		// or this 
+		event.waitUntil((async () => {
+			// exit early if we dont have access to the client
+			if (!event.clientId) return;
+			const client = await clients.get(event.clientId);
+
+			// maybe client was closed?
+			if (!client) return;
+
+			doThisAwesomeTThing();
+		})())
 	}
 
 
