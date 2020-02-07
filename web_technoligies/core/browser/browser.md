@@ -910,7 +910,12 @@ i
 		// or this 
 		event.waitUntil((async () => {
 			// exit early if we dont have access to the client
-			if (!event.clientId) return;
+			// first branch didnt work in chromium
+			// wtf is up with mdn?
+			// see elseware for getting the client by Clients.matchAll
+			const clientId = client.eventId || (event.source?.type === 'window' && event.source?.id);
+			if (!clientId) return;
+			
 			const client = await clients.get(event.clientId);
 
 			// maybe client was closed?
@@ -1111,6 +1116,10 @@ i
 i
 ```
 ## push notifications 
+	- fuck what they say, the browser has to be open to receive push events
+		- however, if a push is sent while ethe browser is not opened, once opened, it will receive the push event
+		- imperative to group the events together so a user doenst get 50mill events
+		
 ### google overlords best practices 
 	- use notifications wisely, they should be timely, precise and relevant
 		- timeley: displayed at the right time for time sensitive events 
