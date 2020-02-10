@@ -78,6 +78,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- websocket handshake 
 		- i.e. the 'web' in websocket (wtf does that even mean MDN?)
 		- nvm its the bridge from http to WebSockets (think https to http)
+		- details of the connection are negotiated, and either party can backout before completion if the terms are unfavorable
 
 	
 ## use cases 
@@ -88,6 +89,9 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 ## best practices 
 	- use a reverse proxy to detect websocket handshakes, pre-process them, and then route the clietns to a real websocket server 
 		- helps to keep the cookie/authentication logic separate from the websocket server
+	- request uris (e.g. poop.com/flush) has not defined meaning in the spec 
+		- you can use it to let one websocket server handle mutiple websocket applications 
+		- like a websocket reverse proxy
 
 ## gotchas 
 	- the websocket server may listen on any port
@@ -97,6 +101,8 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 
 ## lifecycle 
 	- the websocket server listens for incoming socket connections on a standard TCP socket
+	- client applications MUST send a GET request to begin a websocket connection to the websocket request-uri to initiate the websocket handshake
+		- the websocket details are sent as headers in the GET request
 
 
 # DOM
