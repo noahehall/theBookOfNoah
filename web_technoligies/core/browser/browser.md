@@ -30,6 +30,7 @@
 	- [channel messaging api](https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API)
 	- [read everything by this muthafucker](https://www.quirksmode.org
 	- [think about this shit](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions)
+	- [mdns bible](https://developer.mozilla.org/en-US/docs/Glossary)
 
 
 ## steal some shit 
@@ -42,9 +43,10 @@
 
 
 ## next up
-  - find out which file you have all your dom notes in and put them in here, or move this in there, or split these long fuckinng files into multiple
-  - [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
-  -
+	- [in general, this shit](https://developer.mozilla.org/en-US/docs/Web/HTTP)
+	- find out which file you have all your dom notes in and put them in here, or move this in there, or split these long fuckinng files into multiple
+	- [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+		- you have this hsit somewhere
 
 
 # WebSockets 
@@ -54,6 +56,9 @@
 	- [message event](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
 	- [writing websocket client applications](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications)
 	- [writing websocket servers](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers)
+	- [berkeley sockets](https://en.wikipedia.org/wiki/Berkeley_sockets )
+	- [socketio](https://github.com/socketio/socket.io)
+	- [websocket protocol](https://datatracker.ietf.org/doc/rfc6455/?include_text=1)
 
 
 
