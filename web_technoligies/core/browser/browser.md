@@ -81,7 +81,12 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 			- when the `Range` header is sent from the client to request only part of a resource
 	- redirects 300-399
 	- client errors 400-499
-		- 400 bad request
+		- 400 'Bad Request'
+			- the client fucked up
+		- 401 'Unauthorized'
+			- the client must authenticate to get the requested response 
+		- 403 'Forbidden'
+			- the server knows the client, but refuses to be friends, fucking racist
 	- server errors 500-599
 
 
