@@ -48,7 +48,12 @@
 
 # WebSockets 
 	- [websocket api](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
-	-
+	
+## use cases 
+	- enable two way interactive communication session between the users browser and a server 
+	- send messages to servers and receive event driven responses without having to poll the server for a reply
+
+
 
 # DOM
   - When the browser loads the page, it transforms your HTML into a live document
