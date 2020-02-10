@@ -87,6 +87,13 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 			- the client must authenticate to get the requested response 
 		- 403 'Forbidden'
 			- the server knows the client, but refuses to be friends, fucking racist
+		- 404 'Not Found'
+			- call the police
+		- 405 'Method Not Allowed'
+		- 408 'Request Timeout'
+		- 418 'Ima Teapot'
+			- the server refuses the attempt to brew coffee with a teapot
+
 	- server errors 500-599
 
 
