@@ -68,6 +68,17 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 ## responses 
 	- informational 100-199
 	- successful 200-299
+		- 200 'OK' generall success
+		- 201 'Created'
+		- 202 'Accepted'
+			- used for batch processing, etc, to let the client know something may happen in the future, but dont wait on it
+		- 203 - fuck 203
+		- 204 'No Content'
+			- when the client should review the headers for additional info
+		- 205 'Reset Content'
+			- client should reset the doc which sent the request
+		- 206 'Partial Content'
+			- when the `Range` header is sent from the client to request only part of a resource
 	- redirects 300-399
 	- client errors 400-499
 		- 400 bad request
