@@ -24,19 +24,13 @@
 	- mutatin observer
 
 
-# links 
-	- [history api](https://developer.mozilla.org/en-US/docs/Web/API/History)
-	- [history tutorial](http://diveintohtml5.info/history.html)
+# random links 
 	- [onpopstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/onpopstate)
-	- [fetch api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
-		- especially the `request` and `response` objects
 	- [channel messaging](https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API/Using_channel_messaging)
 	- [channel messaging api](https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API)
 	- [read everything by this muthafucker](https://www.quirksmode.org
 	- [think about this shit](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions)
 
-
-	
 
 ## steal some shit 
 	- [they check for localhost](https://github.com/DennyScott/react-router-auth/blob/master/src/serviceWorker.js)
@@ -47,20 +41,23 @@
 	- use the event handler properties when available, because fuck it
 
 
-# window
 ## next up
   - find out which file you have all your dom notes in and put them in here, or move this in there, or split these long fuckinng files into multiple
   - [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
   -
 
 
-## DOM
+# DOM
   - When the browser loads the page, it transforms your HTML into a live document
     1. parses html (strings of text) into a data model (objects and nodes)
     2. preserves the HTML hierarchy by creating a tree of nodes (the DOM)
 
 
-## history 
+# history 
+	- [history api](https://developer.mozilla.org/en-US/docs/Web/API/History)
+	- [history tutorial](http://diveintohtml5.info/history.html)
+
+## basics
 	- enables you to use scripts to modify the URL (and related context) without triggering a page refresh
 		- i.e. manipulation of the browser session history
 		- i.e. pages visited in the tab/frame that the current page is loaded in
@@ -105,7 +102,7 @@
 ```
 
 
-## EVENTS
+# EVENTS
 	- [event develloper guide](https://developer.mozilla.org/en-US/docs/Web/Guide/Events)
 	- [creating and triggering events guide](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events)
 	- [event design pattern](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Overview_of_Events_and_Handlers)
@@ -124,7 +121,7 @@
 	- [accessing events](https://www.quirksmode.org/js/events_access.html)
 	
 
-### terminology 
+## terminology 
 	- Events 
 		- a design pattern used for the async handling of incidents which occur in the lifecycle of something
 		- the naming, characterization, and the use of 'events|incidenses' of differnet types 
@@ -161,7 +158,7 @@
 		- used for dispatch events into the implementations event model 
 
 
-### event design pattern 
+## event design pattern 
 	- events and event handling pattern to react to incidents that occur
 	- web page rendering architecture: 
 		- parse -> process -> draw -> present -> loop continuously on incident occurrence
@@ -314,9 +311,9 @@ i
 ```
 
 
-### event categories
-#### core events
-#### other events
+## event categories
+### core events
+### other events
 	- resource events 
 		- error 
 			- resource has failed to load 
@@ -435,7 +432,7 @@ i
 		- RadioStateChange
 		- readystatechange
 		- VAlueChange
-#### less than other events
+### less than other events
 	- printing events 
 		- beforeprint 
 		- afterprint 
@@ -455,7 +452,10 @@ i
 
 i
 ```
-## fetch - Request - Response
+
+
+# fetch - Request - Response
+	- [fetch api](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 	- [response docs](https://developer.mozilla.org/en-US/docs/Web/API/Response)
 	- [fetch respond with](https://developer.mozilla.org/en-US/docs/Web/API/Fetchevent/respondWith)
 
@@ -472,7 +472,7 @@ i
 ```
 
 
-## URL 
+# URL 
 ```js
 	let params = (new URL(document.location)).searchParams;
 	let name = params.get('name'); // is the string "Jonathan Smith".
