@@ -52,7 +52,10 @@
 	- [websocket object](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
 	- [close event](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent)
 	- [message event](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
-	
+	- [writing websocket client applications](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications)
+	- [writing websocket servers](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers)
+
+
 
 	
 ## use cases 
