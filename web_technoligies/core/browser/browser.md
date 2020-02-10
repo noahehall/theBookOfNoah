@@ -66,8 +66,17 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- [berkeley sockets](https://en.wikipedia.org/wiki/Berkeley_sockets )
 	- [socketio](https://github.com/socketio/socket.io)
 	- [websocket protocol](https://datatracker.ietf.org/doc/rfc6455/?include_text=1)
+	- [realtime chat with blah and socketio](https://dzone.com/articles/using-redis-with-nodejs-and-socketio)
+	- [tcp transmission control protocol](https://developer.mozilla.org/en-US/docs/Glossary/Transmission_Control_Protocol_(TCP))
 
 
+## terminology 
+	- TCP
+		- transport layer host-to-host protocol for connection-oriented communication between two computers on an IP network 
+		- uses virtual ports to create a virtual end-to-end connection that can reuse the physical connections between two computers
+		- encapsulates higher level protocol data such as http and smtp (email)
+	- websocket handshake 
+		- i.e. the 'web' in websocket (wtf does that even mean MDN?)
 
 	
 ## use cases 
@@ -79,8 +88,14 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- use a reverse proxy to detect websocket handshakes, pre-process them, and then route the clietns to a real websocket server 
 		- helps to keep the cookie/authentication logic separate from the websocket server
 
+## gotchas 
+	- the websocket server may listen on any port
+		- however, ports other than 80|443 may have problems with firewalls|proxies 
+	- browsers generally require a secure connnection for websockets
+
+
 ## lifecycle 
-	- 
+	- the websocket server listens for incoming socket connections on a standard TCP socket
 
 
 # DOM
