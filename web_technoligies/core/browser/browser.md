@@ -77,6 +77,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 		- encapsulates higher level protocol data such as http and smtp (email)
 	- websocket handshake 
 		- i.e. the 'web' in websocket (wtf does that even mean MDN?)
+		- nvm its the bridge from http to WebSockets (think https to http)
 
 	
 ## use cases 
