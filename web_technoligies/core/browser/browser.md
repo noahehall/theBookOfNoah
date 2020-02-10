@@ -1,3 +1,7 @@
+websocket handshake 
+https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
+
+
 # todo 
 	- copy over working push examples from app and replace pseudo code
 	- [inheritance and prototype](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
@@ -67,6 +71,13 @@
 	- enable two way interactive communication session between the users browser and a server 
 	- send messages to servers and receive event driven responses without having to poll the server for a reply
 
+
+## best practices 
+	- use a reverse proxy to detect websocket handshakes, pre-process them, and then route the clietns to a real websocket server 
+		- helps to keep the cookie/authentication logic separate from the websocket server
+
+## lifecycle 
+	- 
 
 
 # DOM
