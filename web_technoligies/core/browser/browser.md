@@ -42,6 +42,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- [jack most of there shit](https://github.com/GoogleChrome/workbox/blob/v5/packages/workbox-window/Workbox.mjs)
 
 
+
 ## almost best practices 
 	- use the event handler properties when available, because fuck it
 
@@ -51,6 +52,8 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- find out which file you have all your dom notes in and put them in here, or move this in there, or split these long fuckinng files into multiple
 	- [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
 		- you have this hsit somewhere
+	- [js modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+		- you have this shit somehwere
 
 
 # WebSockets 
