@@ -46,6 +46,9 @@
   - [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
   -
 
+# WebSockets 
+	- [websocket api](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
+	-
 
 # DOM
   - When the browser loads the page, it transforms your HTML into a live document
