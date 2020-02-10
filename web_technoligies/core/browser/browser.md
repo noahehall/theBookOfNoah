@@ -7,11 +7,21 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- [inheritance and prototype](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 	- [function bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
 	- find a better fucking sublime markdown syntax htis hsit fucking sucks
+	- [cors](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 
 
 
-## things to incorporate in app 
-### events
+# random links 
+	- [onpopstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/onpopstate)
+	- [channel messaging](https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API/Using_channel_messaging)
+	- [channel messaging api](https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API)
+	- [read everything by this muthafucker](https://www.quirksmode.org)
+	- [think about this shit](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions)
+	- [mdns bible](https://developer.mozilla.org/en-US/docs/Glossary)
+
+
+
+## things to incorporate in apps 
 	- in gneral use the standard events 
 	- network events
 	- load event
@@ -29,14 +39,6 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- mutatin observer
 
 
-# random links 
-	- [onpopstate event](https://developer.mozilla.org/en-US/docs/Web/API/Window/onpopstate)
-	- [channel messaging](https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API/Using_channel_messaging)
-	- [channel messaging api](https://developer.mozilla.org/en-US/docs/Web/API/Channel_Messaging_API)
-	- [read everything by this muthafucker](https://www.quirksmode.org
-	- [think about this shit](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions)
-	- [mdns bible](https://developer.mozilla.org/en-US/docs/Glossary)
-
 
 ## steal some shit 
 	- [they check for localhost](https://github.com/DennyScott/react-router-auth/blob/master/src/serviceWorker.js)
@@ -46,6 +48,9 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 
 ## almost best practices 
 	- use the event handler properties when available, because fuck it
+	- always validate headers (but beware non browsers can fake this shit)
+		- send a 400 if any header not up to par and immediately close the connection
+		- 
 
 
 ## next up
@@ -55,6 +60,26 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 		- you have this hsit somewhere
 	- [js modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
 		- you have this shit somehwere
+
+
+# http
+	- [http response status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
+## responses 
+	- informational 100-199
+	- successful 200-299
+	- redirects 300-399
+	- client errors 400-499
+		- 400 bad request
+	- server errors 500-599
+
+
+## headers 
+	- Origin 
+		- ensure same origin, whitelist/blacklist
+	- Sec-WebSocket-Version 
+		- the websocket protocol version(s) the server understands
+
 
 
 # WebSockets 
@@ -88,11 +113,13 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 
 
 ## best practices 
-	- use a reverse proxy to detect websocket handshakes, pre-process them, and then route the clietns to a real websocket server 
+	- use a reverse proxy to detect websocket handshakes, pre-process them,  and then route the clients to a real websocket server 
 		- helps to keep the cookie/authentication logic separate from the websocket server
 	- request uris (e.g. poop.com/flush) has not defined meaning in the spec 
 		- you can use it to let one websocket server handle mutiple websocket applications 
 		- like a websocket reverse proxy
+	
+
 
 ## gotchas 
 	- the websocket server may listen on any port
@@ -108,7 +135,15 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 
 
 ```js
-
+	// standard headers to request a websocket connection
+		`
+			GET /chat HTTP/1.1
+			Host: example.com:8000
+			Upgrade: websocket
+			Connection: Upgrade
+			Sec-WebSocket-Key: s0m3fck1nGk3y
+			Sec-WebSocket-Version: 187
+		`
 i
 ```
 
