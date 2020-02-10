@@ -1,4 +1,4 @@
-websocket handshake 
+pings and pongs
 https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
 
 
@@ -18,6 +18,9 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- [read everything by this muthafucker](https://www.quirksmode.org)
 	- [think about this shit](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions)
 	- [mdns bible](https://developer.mozilla.org/en-US/docs/Glossary)
+	- [DoS](https://en.wikipedia.org/wiki/Denial-of-service_attack)
+	- [https://developer.mozilla.org/en-US/docs/Web/API/Blob]
+	- [array buffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)
 
 
 
@@ -37,12 +40,18 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- touch events
 	- orientation events with 3d transforms
 	- mutatin observer
+	- add this before implementing ws (https://github.com/creationix/http-parser-js)
+		- potential (fuck socketio)
+		- [ws](https://github.com/websockets/ws)
+		- [faye](https://github.com/faye/faye-websocket-node)
+
 
 
 
 ## steal some shit 
 	- [they check for localhost](https://github.com/DennyScott/react-router-auth/blob/master/src/serviceWorker.js)
 	- [jack most of there shit](https://github.com/GoogleChrome/workbox/blob/v5/packages/workbox-window/Workbox.mjs)
+	- [many things here to jack](https://github.com/cometchat-pro-samples/javascript-reactjs-chat-app/blob/master/src/serviceWorker.js)
 
 
 
@@ -52,8 +61,17 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 		- send a 400 if any header not up to par and immediately close the connection
 		- 
 
-
+### use cases 
+	- pushing shit 
+		- http2 push (browser level, doesnt reach application code)
+		- server sent events ( half-duplex, clients connects -> server push)
+		- web sockets (full-duplex, client conects -> server|client push)
+			- may have issues with multiple tabs, as the browser is limited to 6 websocket connections
+			- thus if your app is number 7, fuuuuuuk
+		- long polling, ajax, whatever the fk (go work for facebook with that bs)
+		- server worker Push API (unidirectional, routes msgs through browser vender)
 ## next up
+	- [http2 flow control](https://medium.com/coderscorner/http-2-flow-control-77e54f7fd518)
 	- [in general, this shit](https://developer.mozilla.org/en-US/docs/Web/HTTP)
 	- find out which file you have all your dom notes in and put them in here, or move this in there, or split these long fuckinng files into multiple
 	- [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
@@ -64,6 +82,10 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 
 # http
 	- [http response status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+	- [set cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)
+	- [headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)
+	- [http upgrade mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/Protocol_upgrade_mechanism)
+
 
 ## responses 
 	- informational 100-199
@@ -93,8 +115,12 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 		- 408 'Request Timeout'
 		- 418 'Ima Teapot'
 			- the server refuses the attempt to brew coffee with a teapot
-
+		- 426 'Upgrade Required'
+		- 428 'Precondition Required'
+		- 429 'Too many hos calling my phone'
+		- 451 'Unavailable cuz police tapping my phone'
 	- server errors 500-599
+		- ive done nothing wrong bitch
 
 
 ## headers 
@@ -103,13 +129,15 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- Sec-WebSocket-Version 
 		- the websocket protocol version(s) the server understands
 
+	- guidelines 
+		- each header line must end in `\r\n`
+		- the last header must end in `\r\n\r\n` to indicate its the last header
 
 
 # WebSockets 
 	- [websocket api](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
 	- [websocket object](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
 	- [close event](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent)
-	- [message event](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
 	- [writing websocket client applications](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications)
 	- [writing websocket servers](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers)
 	- [berkeley sockets](https://en.wikipedia.org/wiki/Berkeley_sockets )
@@ -117,6 +145,13 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- [websocket protocol](https://datatracker.ietf.org/doc/rfc6455/?include_text=1)
 	- [realtime chat with blah and socketio](https://dzone.com/articles/using-redis-with-nodejs-and-socketio)
 	- [tcp transmission control protocol](https://developer.mozilla.org/en-US/docs/Glossary/Transmission_Control_Protocol_(TCP))
+	- [XOR cipher](https://en.wikipedia.org/wiki/XOR_cipher)
+	- [weboscket protocol registries (codes, extensions, subprotocols, etc)](https://www.iana.org/assignments/websocket/websocket.xml)
+	- [websocket buffer amount](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/bufferedAmount)
+	- [the bayeux protocol used by faye](https://docs.cometd.org/current/reference/index.html#_bayeux)
+	- [pub/sub for the web](https://faye.jcoglan.com/)
+	- [faye websocket (serverside)](https://github.com/faye/faye-websocket-node)
+	- [websocket spec](https://html.spec.whatwg.org/multipage/web-sockets.html#network)
 
 
 ## terminology 
@@ -128,6 +163,37 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 		- i.e. the 'web' in websocket (wtf does that even mean MDN?)
 		- nvm its the bridge from http to WebSockets (think https to http)
 		- details of the connection are negotiated, and either party can backout before completion if the terms are unfavorable
+	- control frame 
+		- todo 
+	- websocket extensions (header)
+		- control the websocket frame and modif the payload
+		- optional and generalized (like cheese on a burger)
+	- websocket subprotocols (header)
+		- structure the websocket protocol and NEVER modify anything
+			- e.g. the json weboscket-protocol informs all parties to relay day as json
+		- mandatory and localized (i.e. specific to a usecase, e.g. chat|games)
+		- implemented on the server and cannot be externally refered to by th client
+	- close event code 
+		- sent to clients/servers using websockets when the connection is closed 
+		- 0-999 not used 
+		- 1000 normal closure 
+		- 1001 going away (e.g. due to navigation)
+		- 1002 protocol error
+		- 1003 unsupported data (e.g. sending data in the wrong format)
+		- 1005 no status received (e.g. you forgot to specify a code when closing the connection)
+		- 1006 abnormal closure (e.g. the connection was closed properly)
+		- 1007 invalid frame payload data (e.g. something was wrong with the data being sent)
+		- 1008 policy violation (e.g. watching porn at work)
+		- 1009 message too big (e.g. msg too big in data frame)
+		- 1010 missing extension (client expected server to negotiate extension, but server didnt)
+		- 1011 internal error (wtf im never at fault)
+		- 1012 service restart (e.g. hotreload baby)
+		- 1013 try again later (e.g. overloaded|too many clients|hos)
+		- 1014 bad gateway (e.g. similar to 502 http status code, server (gateway) has issue with upstream)
+		- 4000-4999 (for use by applications)
+		- 
+
+
 
 	
 ## use cases 
@@ -141,24 +207,63 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- request uris (e.g. poop.com/flush) has not defined meaning in the spec 
 		- you can use it to let one websocket server handle mutiple websocket applications 
 		- like a websocket reverse proxy
+	- keeping track of clients 
+		- after establishing a websocket connection with a client, track them!
+		- you dont want to go through the handshake process multiple times with the same client 
+		- the same client IP address can attempt connections multiple times
+			- be careful of DoS attacks if they try too many
+		- e.g. usernames/ids + websocket + other data needed to identify each connection
 	
-
 
 ## gotchas 
 	- the websocket server may listen on any port
 		- however, ports other than 80|443 may have problems with firewalls|proxies 
 	- browsers generally require a secure connnection for websockets
 	- websockets require >= HTTP 1.1
+	- socketio is NOT a websocket implementation 
+		- socketio uses WebSocket as a transport when possible 
+		- however, a websocket client CANNOT connect to a socketio server
+		- and a sockeetio server CANNOT connection a websocket client
 
 
 ## lifecycle 
 	- the websocket server listens for incoming socket connections on a standard TCP socket
-	- client applications MUST send a GET request to begin a websocket connection to the websocket request-uri to initiate the websocket handshake
-		- the websocket details are sent as headers in the GET request
+	- websockt handshake
+		- client applications MUST send a GET request to begin a websocket connection to the websocket request-uri to initiate the websocket handshake
+			- the websocket details are sent as headers in the GET request
+		- the websocket server optionally responds with various headers/requests for authentication|redirects to validate the websocket connection request
+		- finally the websocket server responds to the handshake with headers indicating the websocket protocol version to use 
+	- websocket success 
+		- bi-directional communication is now possible 
+		- communication occurs via exchanging data frames 
+			- wtf
+			- think its an http2 thing, but dunno
+			- use a library
+		- decoding the payload length 
+			- use a fucking library
+		- reading and unmasking the data 
+			- take a break, then use a library
+		- messaage fragmentation 
+			- take another break, the continue with the library
+	- keeping connection alive
+		- either side of the connection can ping the other as a health check
+		- the pong must be sent asap and include the exact same payload data received in the ping
+			- max payload length === 125
+			- if you get more than one ping, before responding, still only send response back
+	- closing the connection 
+		- either side of the websocket connection can request to close the connection 
+		- upon receipt of such request, respond with a Close frame response 
+		- the requester will then close the connection 
+		- any data received after the connection is closed should be discarded
 
 
-```js
-	// standard headers to request a websocket connection
+
+	- server side examples
+```js 
+	// websocket handshake: standard headers to request a websocket connection 
+		// have to send the Sec-Websocket-Key for the server to send back the Sec-WebSocket-Accept
+		// the client asks the server if it supports a subprotocol(s) the client understands
+		
 		`
 			GET /chat HTTP/1.1
 			Host: example.com:8000
@@ -166,13 +271,105 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 			Connection: Upgrade
 			Sec-WebSocket-Key: s0m3fck1nGk3y
 			Sec-WebSocket-Version: 187
+			Sec-WebSocket-Protocol: json, soap, wamp
 		`
+	// websocket handhskae: server response indicating the websocket protcol version
+		// Sec-Websocket-Accept header is derived from the Sec-Websocket-Key in the client request
+		// the server should pick the first websocket-protocol in the reuquest header it supports or dont send the header back at ALL (never send blank)
+		`
+			HTTP/1.1 101 Switching Protocols
+			Upgrade: websocket
+			Connection: Upgrade
+			Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
+			Sec-WebSocket-Protocol: json
+		`
+
+
 i
 ```
 
 
+	- client side examples
+```js
+	// create a websocket object
+		const insecureServerUrl = 'ws://yo.sup.com';
+		const secureServerUrl = 'wss://com.sup.yo';
+		const ws = new WebSocket(secureSeverUrl, ['json', 'soap', 'poop'])
+
+		ws.onerror = e => {
+			console.error('damn yo', e)
+		}
+		ws.onclose = closeEvent => {
+			// connection closed
+			const closeReason = closeEvent.reason;
+			const cleanClose = closeEvent.wasClean;
+			if (!cleanClose) writeBetterCodeBecause(closeReason);
+
+			runClosedLogic();
+		}
+		ws.onopen = e => {
+			console.info(`connection established with: ${ws.url}`);
+
+			const subProtocol = ws.protocol;
+			const extensions = ws.extensions;
+
+			// can send as string, Blob, ArrayBuffer
+			switch (subProtocol) {
+				case 'JSON': {
+					await ws.send(JSON.stringify({ data: 'poop' }));
+					break;
+				}
+				default: {
+					console.info('no subprotocol selected, is the connection established?')
+				}
+			}
+
+			if (webSocket.bufferedAmount === 0) {
+				console.info('closing websocket connection to server');
+
+				// cannot be longer than 123 bytes of utf-8 text (not chars)
+				const reasonForClosing = 'gotta go poop';
+				const closeCode = getHttpWebSocketCloseCode(reason);
+				ws.close(closeCode, reasonForClosing);
+			}
+			else console.info('data is queued from previous send request, dont close')
+		}
+		ws.onmessage = e => {
+			console.info(`got msg from server: ${JSON.parse(e.data)}`)
+		}
+
+		// also available as ws.POOP
+		switch (ws.readyState) {
+			// CONNECTING
+			case 0: {
+				console.info('hurry up');
+
+				break;
+			}
+			// never do this
+			// always use the onopen handler
+			// OPEN
+			case 1: {
+				ws.send('yo pick up the phone bro!')
+
+				break;
+			}
+			// CLOSING
+			case 2: {
+				break;
+			}
+			// CLOSED
+			case 3: {
+				break;	
+			}
+		}
+i
+```
 
 # DOM
+	- [message event](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
+
+## poop
   - When the browser loads the page, it transforms your HTML into a live document
     1. parses html (strings of text) into a data model (objects and nodes)
     2. preserves the HTML hierarchy by creating a tree of nodes (the DOM)
@@ -728,7 +925,6 @@ i
 	- [clients object](https://developer.mozilla.org/en-US/docs/Web/API/Clients)
 	- [service worker registration](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration)
 	- [register api, good docs](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register)
-	- [MessageEvent](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
 	- [open a window client](https://developer.mozilla.org/en-US/docs/Web/API/Clients/openWindow)
 	- [windowClient](https://developer.mozilla.org/en-US/docs/Web/API/WindowClient)
 

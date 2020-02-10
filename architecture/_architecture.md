@@ -1,7 +1,15 @@
+# todo 
+  - wtf happened to thsi file
+
+
 # links 
   - [messaging patterns](https://en.wikipedia.org/wiki/Messaging_pattern)
   - [architectural patterns](https://en.wikipedia.org/wiki/Architectural_pattern)
+  - [redis patterns for real time stream processing](https://www.infoworld.com/article/3212768/how-to-use-redis-for-real-time-stream-processing.html)
+  - [redis use cases by data type](https://scalegrid.io/blog/top-redis-use-cases-by-core-data-structure-types/)
 
+# reviews
+  - [pubsub + websockets](https://yeti.co/blog/establishing-a-websocket-pubsub-server-with-redis-and-asyncio-for-the-light-sensor/)
   
 # MARKETING
   - developer agility
