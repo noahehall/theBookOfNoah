@@ -6,6 +6,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- copy over working push examples from app and replace pseudo code
 	- [inheritance and prototype](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 	- [function bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
+	- find a better fucking sublime markdown syntax htis hsit fucking sucks
 
 
 
@@ -97,12 +98,20 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- the websocket server may listen on any port
 		- however, ports other than 80|443 may have problems with firewalls|proxies 
 	- browsers generally require a secure connnection for websockets
+	- websockets require >= HTTP 1.1
 
 
 ## lifecycle 
 	- the websocket server listens for incoming socket connections on a standard TCP socket
 	- client applications MUST send a GET request to begin a websocket connection to the websocket request-uri to initiate the websocket handshake
 		- the websocket details are sent as headers in the GET request
+
+
+```js
+
+i
+```
+
 
 
 # DOM
