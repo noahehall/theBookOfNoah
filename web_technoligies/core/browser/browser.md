@@ -46,8 +46,14 @@
   - [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
   -
 
+
 # WebSockets 
 	- [websocket api](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
+	- [websocket object](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
+	- [close event](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent)
+	- [message event](https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent)
+	
+
 	
 ## use cases 
 	- enable two way interactive communication session between the users browser and a server 
