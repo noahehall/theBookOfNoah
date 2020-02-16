@@ -134,6 +134,10 @@
         # UPDATE
             # increases hashName.keyName by 5
             hincrby hashName keyName 5 
+        # DELETE
+            # delete keyName from hashName
+            # you can specify multiple fields to delete
+            hdel hashName fieldName
 
 
     # Lists
@@ -166,6 +170,15 @@
             linsert listName after curValue newValue 
             # throws error if listName doesnt exist, else does what you think it does
             lpushx listName value 
+        # DELETE 
+            # remove the first occurrence of value from listName
+            lrem listName 1 value
+            # remove all occurences of value from listName 
+            lrem listName 0 value
+            # remove the last 3 occurences of value
+            # double check this
+            lrem listName -3 value
+
             
 
 
@@ -232,16 +245,6 @@ i
 
 ## deleting
   
-### hash
-  - hdel user name
-    + delete field name from hash user
-    + you can specify multiple fields to delete
-### lists
-  - lrem accounts 1 facebook #remove the first item whose value is facebook from accounts
-    + if there were two facebooks, 1 would still remain
-    + use 0 to remove them all matching items
-    + use negative values to remove the last X items
-    + returns # of items removed
 ### sets
   - srem colors red #remove item red from colors
 
