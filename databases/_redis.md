@@ -117,6 +117,12 @@
             # see lpush 
             # adds item to the end of the array
             rpush accounts blah blah blah
+        # READ
+            - llen accounts #get number of items in list
+            - lrange accounts 0 -1 #get all items in accounts
+            - lrange accounts 0 0 #get first item in accounts
+            - lpop accounts #returns (and deletes) the first item in accounts
+            - rpop accounts #returns (and deletes) the last item in accounts
 
 
     # regular sets
@@ -135,19 +141,13 @@
 
     # sorted sets
         # CREATE
-            # create players sorted set with two fields and values
-            zadd players 1 noah 2 prince 
+            # create players sorted set with two ranked values
+            zadd hashName 1 greater 2 smaller 
+  
 i
 ```
 
-### hash
-  
-### lists
-  - llen accounts #get number of items in list
-  - lrange accounts 0 -1 #get all items in accounts
-  - lrange accounts 0 0 #get first item in accounts
-  - lpop accounts #returns (and deletes) the first item in accounts
-  - rpop accounts #returns (and deletes) the last item in accounts
+
 ### sets
   - scard colors #returns # of items in colors
   - smembers colors #returns all items in colors
