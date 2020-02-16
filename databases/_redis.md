@@ -167,21 +167,33 @@
         # CREATE
             # create players sorted set with two ranked values
             zadd setName 1 greater 2 smaller 
-  
+
+        # READ
+            # get all values in setName sorted from least to greatest
+            zrange setName 0 -1 
+            # get all values with their scores sorted from least to greatest
+            zrange setName 0 -1 withscores 
+            # get all values from greatest to least
+            zrevrange setName 0 -1 
+            # see above, but return with scores
+            zrevrange setName 0 -1 withscores
+            # get a specific values score
+            zscore setName value 
+            # get the values with scores between 0 and 50 (inclusive)
+            zrangebyscore setName 0 50 
+            # see above
+            # double check what the withscores does for this cmd
+            zrangebyscore setName 0 50 withscores 
+            # get the number of values in setName
+            zcard setName 
+            # get the number of values with scores between 0 to 50 (inclusive)
+            zcount setName 0 50 
+
 i
 ```
 
 
-### ordered sets
-  - zrange players 0 -1 #get all items in players sorted from least to greatest
-  - zrange players 0 -1 withscores #get all items with their scores sorted from least to greatest
-  - zrevrange players 0 -1 #get all items from greatest to least
-    + you can also append withscores to get the items and scores
-  - zscore players noah #get a specific items score
-  - zrangebyscore players 0 50 #get the items with scores between 0 and 50 (inclusive)
-  - zrangebyscore players 0 50 withscores #get the items and their scores, if the item's score is between 0 and 50 (inclusive)
-  - zcard players #get the number of items in players set
-  - zcount players 0 50 #get the number of players with scores between 0 to 50 (inclusive)
+
 
 ## updating
 ### strings
