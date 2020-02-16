@@ -112,17 +112,23 @@
         # CREATE
             # create/update a list accounts with 3 values
             # adds items at beginning if already exists
-            lpush accounts twitter facebook instagram 
+            lpush listName twitter facebook instagram 
         
             # see lpush 
             # adds item to the end of the array
-            rpush accounts blah blah blah
+            rpush listName blah blah blah
         # READ
-            - llen accounts #get number of items in list
-            - lrange accounts 0 -1 #get all items in accounts
-            - lrange accounts 0 0 #get first item in accounts
-            - lpop accounts #returns (and deletes) the first item in accounts
-            - rpop accounts #returns (and deletes) the last item in accounts
+            # get number of items in list
+            llen listName 
+            # get all items in listName (starting to end because of -1)
+            lrange listName 0 -1 
+            # get first item in listName
+            # double check this
+            lrange listName 0 0 
+            # returns (and deletes) the first item in listName
+            lpop listName 
+            # returns (and deletes) the last item in listName
+            rpop listName
 
 
     # regular sets
