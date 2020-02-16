@@ -94,6 +94,19 @@
             rename keyName newKeyName 
             # throws error if keyName doesnt exist, else does what you think
             renamenx keyName newKeyName 
+        # DELETE 
+            # deletes keyName
+            del keyName
+            # delete keyName 1000 (seconds?) after epoc (1970)
+            # double check
+            expire keyName 10000 
+            # deletes keyName 1000 (seconds?) after now
+            pexpire keyName 10000 
+            # remove any expirations set on keyName
+            persist keyName 
+            # how many ms keyName has before expiring
+            #returns -1 if key name never expires
+            ttl keyName 
 
 
     # hash examples
@@ -217,23 +230,8 @@
 i
 ```
 
-
-
-
-## updating
-
-### sets
-  - srem stateTHIS_ID SOME_STATE #remove a state
-
-
 ## deleting
-### strings
-  - del name #delete key name
-  - expire name 10000 #delete name 1000 after epoc (1970)
-  - pexpire name 10000 #delete name 1000 after now
-  - persist name #remove any expirations set on key name
-  - ttl name #how many ms key name has before expiring
-    + returns -1 if key name never expires
+  
 ### hash
   - hdel user name
     + delete field name from hash user
@@ -245,7 +243,7 @@ i
     + use negative values to remove the last X items
     + returns # of items removed
 ### sets
-  - srem colors red #remote item red from colors
+  - srem colors red #remove item red from colors
 
 # [pubsub]((https://redis.io/commands/#pubsub))
   - system to subscribe to channels, and publish to channels
