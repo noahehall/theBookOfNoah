@@ -59,14 +59,29 @@
 
 ```sh
     # string examples 
-        # creates/overrites the key name
-        set name "noah" 
-        # only creates if the key name does not exist, else throws error
-        setnx name "noah" 
-        # set multiple values
-        mset key value key value key value 
-        # sets multiple values, fails if any already exist
-        msetnx key value key value 
+        # CREATE
+            # creates/overrites the key name
+            set name "noah" 
+            # only creates if the key name does not exist, else throws error
+            setnx name "noah" 
+            # set multiple values
+            mset key value key value key value 
+            # sets multiple values, fails if any already exist
+            msetnx key value key value 
+        # READ
+            # get the value associated with keyName
+            get keyName 
+            #gets length of value associated with keyName
+            strlen keyName 
+            # retrieve all keyNames in db
+            keys * 
+            # retrieve all keys starting with na
+            keys na* 
+            keys regexPattern
+            # returns 1|0 if  exists
+            exists keyName 
+            # the data type of keyName
+            type keyName 
 
 
     # hash examples
@@ -107,14 +122,7 @@ i
 
 
 ## getting
-### strings
-  - get name #get key
-  - strlen name #if name === noah, returns 4
-  - keys * #retrieve all keys in db
-    + keys regexPattern
-    + keys na* #retrieve all keys starting with na
-  - exists name #returns 1 if key name exists, 0 else
-  - type name #the data type of key name
+
 ### hash
   - hget user name #returns a specific properties value
   - hmget user
