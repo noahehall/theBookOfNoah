@@ -1,3 +1,6 @@
+# todo 
+  - update this doc to new format
+
 # DOCS
   - [bookmark](https://dictionary.udemy.com/learn-redis/learn/v4/t/lecture/1307174)
   - [all commands](http://redis.io/commands)

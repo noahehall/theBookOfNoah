@@ -204,7 +204,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 ## best practices 
 	- use a reverse proxy to detect websocket handshakes, pre-process them,  and then route the clients to a real websocket server 
 		- helps to keep the cookie/authentication logic separate from the websocket server
-	- request uris (e.g. poop.com/flush) has not defined meaning in the spec 
+	- request uris (e.g. poop.com/flush) has no defined meaning in the spec 
 		- you can use it to let one websocket server handle mutiple websocket applications 
 		- like a websocket reverse proxy
 	- keeping track of clients 
@@ -339,6 +339,8 @@ i
 		}
 
 		// also available as ws.POOP
+		// only use for checking state
+		// keep login in eventhandlers
 		switch (ws.readyState) {
 			// CONNECTING
 			case 0: {
