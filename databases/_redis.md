@@ -78,45 +78,49 @@
             # retrieve all keys starting with na
             keys na* 
             keys regexPattern
-            # returns 1|0 if  exists
+            # returns 1|0 if keyName exists
             exists keyName 
             # the data type of keyName
             type keyName 
 
 
     # hash examples
-        # set hash user with key value
-        hset user name "noah" 
-        # set multiple properties on hash at once
-        hmset user name "noah" password "bloop" 
+        # CREATE
+            # set hash user with key value
+            hset user name "noah" 
+            # set multiple properties on hash at once
+            hmset user name "noah" password "bloop" 
 
 
     # Lists
-        # create/update a list accounts with 3 values
-        # adds items at beginning if already exists
-        lpush accounts twitter facebook instagram 
+        # CREATE
+            # create/update a list accounts with 3 values
+            # adds items at beginning if already exists
+            lpush accounts twitter facebook instagram 
         
-        # see lpush 
-        # adds item to the end of the array
-        rpush accounts blah blah blah
+            # see lpush 
+            # adds item to the end of the array
+            rpush accounts blah blah blah
 
 
     # regular sets
-        # add items to the colors set
-        # returns number of items added
-        sadd colors red blue #creates/updates colors with items
-    
-        # creates a new list (coloredaccounts) 
-        # from the union of the unique values of 2/more sets
-        sunionstore coloredaccounts colors accounts 
+        # CREATE
+            # add items to the colors set
+            # returns number of items added
+            sadd colors red blue #creates/updates colors with items
+        
+            # creates a new list (coloredaccounts) 
+            # from the union of the unique values of 2/more sets
+            sunionstore coloredaccounts colors accounts 
 
-        # creates a new list (nocoloredaccounts) 
-        # from the values in colors that are not in accounts
-        sdiffstore nocoloraccounts colors accounts 
+            # creates a new list (nocoloredaccounts) 
+            # from the values in colors that are not in accounts
+            sdiffstore nocoloraccounts colors accounts 
 
     # sorted sets
-        # create players sorted set with two fields and values
-        zadd players 1 noah 2 prince 
+        # CREATE
+            # create players sorted set with two fields and values
+            zadd players 1 noah 2 prince 
 i
 ```
 
