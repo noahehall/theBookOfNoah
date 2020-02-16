@@ -135,8 +135,9 @@
         # CREATE
             # add items to the colors set
             # returns number of items added
-            sadd colors red blue #creates/updates colors with items
-        
+            # creates/updates colors with items
+            sadd colors red blue 
+
             # creates a new list (coloredaccounts) 
             # from the union of the unique values of 2/more sets
             sunionstore coloredaccounts colors accounts 
@@ -144,25 +145,33 @@
             # creates a new list (nocoloredaccounts) 
             # from the values in colors that are not in accounts
             sdiffstore nocoloraccounts colors accounts 
+        
+        # READ
+            # returns length of setName
+            scard setName
+            # returns all items in setName
+            smembers setName 
+            # returns 1|0 if value exists in setName
+            sismember setName value 
+            # returns and removes A RANDOM ITEM from setName
+            spop setName
+            # returns the combined unique values in 2/more sets
+            sunion setName1 setName2 
+            # returns the values in list 1 that are not in list 2
+            sdiff setName1 setName2 
+            # returns the items that are in 2/more lists
+            # you can check against multiple sets
+            sinter setName1 setName2 
 
     # sorted sets
         # CREATE
             # create players sorted set with two ranked values
-            zadd hashName 1 greater 2 smaller 
+            zadd setName 1 greater 2 smaller 
   
 i
 ```
 
 
-### sets
-  - scard colors #returns # of items in colors
-  - smembers colors #returns all items in colors
-  - sismember userids THIS_USER_ID #returns 1 or 0 if user id exists
-  - spop colors #returns and removes A RANDOM ITEM from colors
-  - sunion colors accounts #returns the combined unique values in 2/more sets
-  - sdiff colors accounts #returns the values in list 1 that are not in list 2
-    + you can check against multiple sets
-  - sinter colors accounts #returns the items that are in 2/more lists
 ### ordered sets
   - zrange players 0 -1 #get all items in players sorted from least to greatest
   - zrange players 0 -1 withscores #get all items with their scores sorted from least to greatest
