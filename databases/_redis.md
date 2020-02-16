@@ -213,6 +213,9 @@
             # returns the items that are in 2/more lists
             # you can check against multiple sets
             sinter setName1 setName2 
+        # DELETE 
+            # remove value from setName
+            srem setName value 
 
     # sorted sets
         # CREATE
@@ -243,10 +246,6 @@
 i
 ```
 
-## deleting
-  
-### sets
-  - srem colors red #remove item red from colors
 
 # [pubsub]((https://redis.io/commands/#pubsub))
   - system to subscribe to channels, and publish to channels
