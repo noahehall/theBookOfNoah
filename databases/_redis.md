@@ -82,6 +82,18 @@
             exists keyName 
             # the data type of keyName
             type keyName 
+        # UPDATE
+            # appends value to current value of keyName
+            append keyName " value" 
+            # increments by 1
+            incr keyName 
+            # if keyName was 1, now its 6|-4
+            # if keyName was not set or 0|, now its 5|-5
+            incrby|decrby keyName 5
+            # uhh wonder what this does
+            rename keyName newKeyName 
+            # throws error if keyName doesnt exist, else does what you think
+            renamenx keyName newKeyName 
 
 
     # hash examples
@@ -196,15 +208,7 @@ i
 
 
 ## updating
-### strings
-  - append name " hall" #name === "noah hall"
-  - incr age #increments by 1
-  - incrby|decrby age 5
-    + if age was 1, now its 6|-4
-    + if age was not set or 0|, now its 5|-5
-  - rename name fullname #changes the key name to fullname
-    + get fullname works, get name does not
-  - renamenx blah bloop #rename blah if key blah exists, else throw error
+
 ### hashes
   - hincrby user scores 5 #increases users' field scores by 5
 ### Lists
