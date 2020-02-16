@@ -61,13 +61,13 @@
     # string examples 
         # CREATE
             # creates/overrites the key name
-            set name "noah" 
+            set keyName "value" 
             # only creates if the key name does not exist, else throws error
-            setnx name "noah" 
+            setnx keyName "value" 
             # set multiple values
-            mset key value key value key value 
+            mset keyName1 value1 keyName2 value2
             # sets multiple values, fails if any already exist
-            msetnx key value key value 
+            msetnx keyName1 value keyName2 value 
         # READ
             # get the value associated with keyName
             get keyName 
@@ -87,9 +87,9 @@
     # hash examples
         # CREATE
             # set hash user with key value
-            hset user name "noah" 
+            hset hashName keyName "value" 
             # set multiple properties on hash at once
-            hmset user name "noah" password "bloop" 
+            hmset hashName keyName1 "value" keyName2 " value" 
         # READ
             # get value at hashName.keyName
             hget hashName keyName 
