@@ -145,11 +145,15 @@
             # returns (and deletes) the last item in listName
             rpop listName
         # UPDATE
-            - linsert accounts before instagram facebook #insert item facebook before item instagram
-            - linsert accounts after instagram facebook #insert item facebook after item instagram
-            + linsert throws error if pivot item does not exist
-            - lpushx accounts twitter #adds twitter to acocunts if accounts exists, else error
-            - sismember accounts facebook #returns 1/0 if facebook exists in accounts
+            # insert newValue before curValue in listName
+            # throws error in curValue doesnt exist
+            linsert listName before curValue newValue 
+            # insert newValue after curValue in listName
+            # throws error in curValue doesnt exist
+            linsert listName after curValue newValue 
+            # throws error if listName doesnt exist, else does what you think it does
+            lpushx listName value 
+            
 
 
     # regular sets
