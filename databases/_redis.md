@@ -118,6 +118,9 @@
             hkeys hashName 
             # returns all values from hashName (without the keyNames)
             hvals hashName 
+        # UPDATE
+            # increases hashName.keyName by 5
+            hincrby hashName keyName 5 
 
 
     # Lists
@@ -141,6 +144,12 @@
             lpop listName 
             # returns (and deletes) the last item in listName
             rpop listName
+        # UPDATE
+            - linsert accounts before instagram facebook #insert item facebook before item instagram
+            - linsert accounts after instagram facebook #insert item facebook after item instagram
+            + linsert throws error if pivot item does not exist
+            - lpushx accounts twitter #adds twitter to acocunts if accounts exists, else error
+            - sismember accounts facebook #returns 1/0 if facebook exists in accounts
 
 
     # regular sets
@@ -209,14 +218,6 @@ i
 
 ## updating
 
-### hashes
-  - hincrby user scores 5 #increases users' field scores by 5
-### Lists
-  - linsert accounts before instagram facebook #insert item facebook before item instagram
-  - linsert accounts after instagram facebook #insert item facebook after item instagram
-    + linsert throws error if pivot item does not exist
-  - lpushx accounts twitter #adds twitter to acocunts if accounts exists, else error
-  - sismember accounts facebook #returns 1/0 if facebook exists in accounts
 ### sets
   - srem stateTHIS_ID SOME_STATE #remove a state
 
