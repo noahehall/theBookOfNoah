@@ -51,31 +51,44 @@
 
 ## [DATA TYPES](https://redis.io/topics/data-types)
   - [string](https://redis.io/commands/#string)
-    + set keys, get value
   - [hashes](https://redis.io/commands/#hash)
-    + set key and map fields to values
   - [lists](https://redis.io/commands/#list): array of ordered and possibly duplicated values
-    + set key, get values
   - [sets](https://redis.io/commands/#set): array of unordered unique values
-    + set key, get values
   - [sorted sets](https://redis.io/commands/#sorted_set): array of unique values sorted by score
-    + set key and map fields to scores
 
-## setting/creating
+
+```sh
+    # string examples 
+        # creates/overrites the key name
+        set name "noah" 
+        # only creates if the key name does not exist, else throws error
+        setnx name "noah" 
+        # set multiple values
+        mset key value key value key value 
+        # sets multiple values, fails if any already exist
+        msetnx key value key value 
+
+
+    # hash examples
+        # set hash user with key value
+        hset user name "noah" 
+        # set multiple properties on hash at once
+        hmset user name "noah" password "bloop" 
+
+
+    ### Lists
+        # create/update a list accounts with 3 values
+        # adds items at beginning if already exists
+        lpush accounts twitter facebook instagram 
+        
+        # see lpush 
+        # adds item to the end of the array
+        rpush accounts blah blah blah
+
+i
+```
+setting/creating
 ### strings
-  - set name "noah" #creates/overrites the key name
-  - setnx name "noah" #only creates if the key name does not exist, else throws error
-  - mset key value key value key value # set multiple values
-  - msetnx key value key value #sets multiple values, fails if any already exist
-### hashes
-  - hset user name "noah" #set hash user with key value
-    + repeat to set additional keys on hash, e.g. hset user password bloop
-  - hmset user name "noah" password "bloop" #set multiple properties on hash at once
-### Lists
-  - lpush accounts twitter facebook instagram # create/update a list accounts with 3 values
-    + adds items at beginning if already exists
-  - rpush accounts blah blah blah #create/update list
-    + adds items at the end if already exists
 ### sets
   - sadd colors red blue #creates/updates colors with items
     - returns number of items added
