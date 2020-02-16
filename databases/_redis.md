@@ -90,6 +90,22 @@
             hset user name "noah" 
             # set multiple properties on hash at once
             hmset user name "noah" password "bloop" 
+        # READ
+            # get value at hashName.keyName
+            hget hashName keyName 
+            # double check this 
+            # but think it should get multiple key values 
+            hmget hashName keyName1 keyName2
+            # returns all properties of hashName
+            hgetall hashName 
+            # returns the number of fields set on hashName
+            hlen user 
+            # true if keyName exists in hashName
+            hexists hashName keyName 
+            # returns all keyNames set on hashName
+            hkeys hashName 
+            # returns all values from hashName (without the keyNames)
+            hvals hashName 
 
 
     # Lists
@@ -124,17 +140,8 @@
 i
 ```
 
-
-## getting
-
 ### hash
-  - hget user name #returns a specific properties value
-  - hmget user
-  - hgetall user #returns all properties of hash user
-  - hlen user #returns the number of fields set on user
-  - hexists user name #true if key user has field name
-  - hkeys user #returns all fields set on key user
-  - hvals user #returns all values from key user (without the field names)
+  
 ### lists
   - llen accounts #get number of items in list
   - lrange accounts 0 -1 #get all items in accounts
