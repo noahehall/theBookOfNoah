@@ -110,12 +110,20 @@
             - rank the highested voted answers for each proposed question
         - gaming app scoreboards 
             - gaming apps high score lists
-                - scores can be repeataed, but hte strings which contain the user details cannot 
+                - scores can be repeataed, but the strings which contain the user details cannot 
         - task scheduling service 
             - rank the priority of tasks in a queue 
         - geo hashing 
             - index locations based on latitude and longtitude
                 - turns multi dimensional data into linear data
+    - hashes 
+        - maps string fields to string values 
+            - containers of unique fields to values
+        - user profiles 
+        - user posts 
+            - map user photos/posts back to asingle user 
+        - multi-tenant metrics 
+            - record and store product/sales metrics in a that that guarnatees solid separation between each tenant
 
 
 
@@ -278,6 +286,7 @@
             # remove value from setName
             srem setName value 
 
+
     # sorted sets
         # CREATE
             # create players sorted set with two ranked values
@@ -309,51 +318,44 @@ i
 
 
 # [pubsub]((https://redis.io/commands/#pubsub))
-  - system to subscribe to channels, and publish to channels
-  - `subscribe` `unsubscribe` and `publish` implement the pub/sub messaging paradigm
-  - architecture 
-    - subscribers: clients whom subscribe to channel(s)
-      - cmds: `subscribe, `psubscribe, `unsubscribe, `punsubscribe, `ping, `quit
-      - when subscribing using glob style, you may receive the same message multiple times
+    - system to subscribe to channels, and publish to channels
+    - architecture 
+        - subscribers: clients whom subscribe to channel(s)
+            - when subscribing using glob style, you may receive the same message multiple times
+            - channels are auto deleted if no one is ubscribed
     - publishers: clients whom publish to channel(s)
-  - best practices 
-    - prefix your channels with stuff 
-      - news.blah.hello 
-      - testing.blah.hello
+  
+    - best practices 
+        - prefix your channels with stuff 
+          - news.blah.hello 
+          - testing.blah.hello
 
 
+```sh
+    # subscribing to stuff
+        # listen to/create 2 channels
+            subscribe channelA channelX
+        # subscribe to all existing and future channels that begin with blah
+            psubscribe blah* 
+        # leave all all channels 
+            UNSUBSCRIBE 
+        # leave channelName
+            unsubscribe channelName
+        # leave all channels starting with blah. 
+            PUNSUBSCRIBE blah.*
 
-```sh 
-  SUBSCRIBE channelA channelX
-  PUBLISH channelName msg
-  UNSUBSCRIBE # from all channels 
+    # posting msgs
+        # post a msg to chnnelName
+            PUBLISH channelName msg
 
-  PSUBSCRIBE news.* #subscribe to all channels prefixed with news.
-  PUNSUBSCRIBE news.*
+    # other 
+        # publish and subscribe to all channels
+            pubsub
+
 
 
 
 ```
-## commands
-### subscribe
-  - subscribe to/create a client to the general channel
-  - the channel is deleted if no one is subscribed
-  - psubscribe blah* #subscribe to all existing and future channels that match the pattern blah* (i.e. begins with blah)
-
-
-
-### unsubscribe
-  - unsubscribe general #unsubscribe from the general channel
-  - unsubscribe #unsubscribe from all channels
-  - punsubscribe blah* #unsubscribe from all channels that match the pattern blah*
-
-### publish
-  - publish general 'Yo G what up' #publish a message to channel general
-    + all subscribers receive the string
-
-
-### pubsub
-  - pubsub channels * #publish and subscribe to all channels
 
 
 
