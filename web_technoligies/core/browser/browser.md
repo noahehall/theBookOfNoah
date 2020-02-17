@@ -135,6 +135,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 
 
 # WebSockets 
+	- [websocket security](https://devcenter.heroku.com/articles/websocket-security)
 	- [websocket api](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
 	- [websocket object](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
 	- [close event](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent)
