@@ -10,7 +10,20 @@
   - [pub sub pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)
   - [thisdavej guide to using redis with nodejs](https://thisdavej.com/guides/redis-node/)
   - [redis data structure use cases](https://scalegrid.io/blog/top-redis-use-cases-by-core-data-structure-types/)
+  - [disque message queue, really good readup tho](https://github.com/antirez/disque)
+  - [redis for realtime metering applications](https://www.infoworld.com/article/3230455/how-to-use-redis-for-real-time-metering-applications.html)
 
+
+
+# terminology 
+    - messaging systems
+        - permits communication between processes using different queues
+        - one process sends a message to a queue, and another process(s) can listen for messages in a given queue 
+
+
+# use cases 
+    - redis can act like a database, cache, or message broker
+    - data is stored in RAM, thus i/o is lightspeed relative to disk
 
 # admin 
 ```sh 
@@ -52,6 +65,34 @@
   - [lists](https://redis.io/commands/#list): array of ordered and possibly duplicated values
   - [sets](https://redis.io/commands/#set): array of unordered unique values
   - [sorted sets](https://redis.io/commands/#sorted_set): array of unique values sorted by score
+
+### use cases 
+    - strings 
+        - can contain any data type, are binary safe, max length of 512mb
+        - session cache 
+            - caching html fragments/pages
+            - store online store cart info so buyers dont lose their info on login/out/interruptions/etc
+        - queues 
+            - any app dealing with traffic congestion, messaging, data gathering, job management, routing, etc
+            - manage que size by rate of arrival and departure for resource distributionn 
+        - usage and mtered billing
+            - realtime metering for consumption-based pricing models
+                - e.g. platforms that bill based on usage to meter their customers activity, e.g. per textmsg/minute    
+    - lists 
+        - contain strings that are sorted by insertion order 
+        - queues
+            - add priority items to head, other items to tail 
+        - event data
+            - when knowing the order of events are important,
+                - e.g. social media sites timelines/feeds
+            - customize ordered lists with most important at top
+        - ranked data 
+            - e.g. leaderboards, thumbs up/down tracking, etc
+    - sets 
+        - support intersection and unions
+        - wheneve ryou want to perform an audit and see relationships between various variables 
+        - regardless of the number of elements stored in a set, will take the same time to add/rmeove items 
+        - do not allow duplicate keys/members
 
 
 ```sh
@@ -151,8 +192,7 @@
             llen listName 
             # get all items in listName (starting to end because of -1)
             lrange listName 0 -1 
-            # get first item in listName
-            # double check this
+            # get first item in listName (start stop)
             lrange listName 0 0 
             # returns (and deletes) the first item in listName
             lpop listName 
