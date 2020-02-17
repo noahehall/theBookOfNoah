@@ -12,6 +12,8 @@
   - [redis data structure use cases](https://scalegrid.io/blog/top-redis-use-cases-by-core-data-structure-types/)
   - [disque message queue, really good readup tho](https://github.com/antirez/disque)
   - [redis for realtime metering applications](https://www.infoworld.com/article/3230455/how-to-use-redis-for-real-time-metering-applications.html)
+  - [introduction to sets](https://scalegrid.io/blog/introduction-to-redis-data-structures-sets/)
+  - [use redis for content filtering](https://dzone.com/articles/how-to-use-redis-for-content-filtering)
 
 
 
