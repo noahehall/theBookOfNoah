@@ -9,8 +9,10 @@
 ## links 
   - [pub sub pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)
   - [thisdavej guide to using redis with nodejs](https://thisdavej.com/guides/redis-node/)
+  - [redis data structure use cases](https://scalegrid.io/blog/top-redis-use-cases-by-core-data-structure-types/)
 
-# quickies 
+
+# admin 
 ```sh 
   # admin
     sudo systemctl start|restart|poop redis-server
@@ -26,11 +28,6 @@
     flushdb #delete all records from your current db
     flushall #delete all records from all dbs
     
-
-  # CRUD
-    set someKey 'some string value'
-    hmset objName someKey1 someVal1 someKeyX someValX
-    get someKey
 
 
 ```
