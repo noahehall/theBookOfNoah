@@ -88,11 +88,21 @@
             - customize ordered lists with most important at top
         - ranked data 
             - e.g. leaderboards, thumbs up/down tracking, etc
-    - sets 
+    - regular sets
         - support intersection and unions
-        - wheneve ryou want to perform an audit and see relationships between various variables 
-        - regardless of the number of elements stored in a set, will take the same time to add/rmeove items 
-        - do not allow duplicate keys/members
+            - do not allow duplicate keys/members
+            - regardless of the number of elements stored in a set, will take the same time to add/rmeove items 
+        - whenever you want to perform an audit and see relationships between various variables 
+        - scheduling jobs (e.g. cron|other background tasks)
+        - analyze ecommerce sales and arbitrary relationship management
+            - unions, intersections, subtractions (venn diagrams) to understand custom behavior
+            - e.g. patterns between geneders, products, hours of purchases (intersection)
+        - ip address tracking 
+            - analyze ip addresses that visited a specific site/post/etc (ignore the duplicates automatically with sets)
+        - inappropriate content filtering 
+            - basically add bad words to a set, and quickly determine if some TEXT conteains any words in the set
+    - sorted sets 
+        - 
 
 
 ```sh
