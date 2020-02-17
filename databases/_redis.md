@@ -5,6 +5,7 @@
   - [bookmark](https://dictionary.udemy.com/learn-redis/learn/v4/t/lecture/1307174)
   - [all commands](http://redis.io/commands)
   - [pubsub](https://redis.io/topics/pubsub)
+  - [redis indexes](https://redis.io/topics/indexes)
 
 ## links 
   - [pub sub pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)
@@ -111,7 +112,10 @@
             - gaming apps high score lists
                 - scores can be repeataed, but hte strings which contain the user details cannot 
         - task scheduling service 
-            - 
+            - rank the priority of tasks in a queue 
+        - geo hashing 
+            - index locations based on latitude and longtitude
+                - turns multi dimensional data into linear data
 
 
 
