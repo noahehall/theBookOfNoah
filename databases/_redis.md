@@ -102,7 +102,15 @@
         - inappropriate content filtering 
             - basically add bad words to a set, and quickly determine if some TEXT conteains any words in the set
     - sorted sets 
-        - 
+        - collection of weighted (i.e. score) strings 
+        - Q&A platforms 
+            - rank the highested voted answers for each proposed question
+        - gaming app scoreboards 
+            - gaming apps high score lists
+                - scores can be repeataed, but hte strings which contain the user details cannot 
+        - task scheduling service 
+            - 
+
 
 
 ```sh
