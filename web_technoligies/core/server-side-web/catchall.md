@@ -2,6 +2,10 @@
 # links 
 	- [reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy)
 
+# best practices (almost)
+	- dont trust anything in web storage because its open to js running in the browser
+	- always use the 'httpOnly' cookie flag to disallow js running in the browser from accessing it
+
 # security
 
 ## SSL/TLS
@@ -53,10 +57,11 @@ i
 		- useful for api atuhentication and authorization 
 		- encrypts payload as a base64(or other) kind of string which is set on responses and the browser attaches to future requests
 			- more secure than cookies as cookies are plain text
-		- usually contain 
+		- usually contain the following 'claims'
 			- scopes for authorization
 			- user info for authentication
 			- signature hash to verify the integrity of the token (you need the secret to decrypt it)
+
 
 
 ## session related headers
