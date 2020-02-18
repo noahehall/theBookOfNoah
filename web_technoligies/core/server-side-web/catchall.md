@@ -2,9 +2,25 @@
 # links 
 	- [reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy)
 
+# TODO 
+	- cross site scripting 
+		- inject javascript to run on your page
+	- cross site request forgery 
+		- a page forces one of its visitors to unknownling take action on a different website that they are currently authenticated with
+		- when you visit badsite.com it will load an img/javascript and post to yourbank.com and attempt to hijack your session and modify your account 
+
+
 # best practices (almost)
 	- dont trust anything in web storage because its open to js running in the browser
 	- always use the 'httpOnly' cookie flag to disallow js running in the browser from accessing it
+	- always use https 
+	- always use the 'secure' cookie flag to guarantee cookies are only sent via https
+	- plain-text cookies vs JWT
+		- JWT
+			- anything of importances/PID
+		- plain-text cookies
+			- anything not important/PID
+			- dont need to be decrypted, so faster if thats your juice
 
 # security
 
@@ -40,6 +56,8 @@ i
 	- [managing sessions in express](https://dzone.com/articles/securing-nodejs-managing-sessions-in-expressjs)
 	- [typical http session](https://developer.mozilla.org/en-US/docs/Web/HTTP/Session)
 	- [ibm session best practices, fuck java tho](https://www.ibm.com/support/knowledgecenter/en/SS7K4U_8.5.5/com.ibm.websphere.zseries.doc/ae/cprs_best_practice.html)
+	- [jwt spec](https://tools.ietf.org/html/rfc7519)
+	- [practical (oh really?) jwt guide](https://medium.com/swlh/a-practical-guide-for-jwt-authentication-using-nodejs-and-express-d48369e7e6d4)
 
 
 ## terminology
@@ -48,6 +66,7 @@ i
 	- cookies 
 		- storage for data inside a browser
 		- the browser attaches the cookies associated with a domain on each request ot that domain
+		- can only be sent to the domain which set the cookie
 	- request headers
 		- contain metadata about the request
 	- request body
@@ -60,6 +79,7 @@ i
 		- usually contain the following 'claims'
 			- scopes for authorization
 			- user info for authentication
+				- thus you dont need to store anything on your backend as you can just encode it in the jwt
 			- signature hash to verify the integrity of the token (you need the secret to decrypt it)
 
 
