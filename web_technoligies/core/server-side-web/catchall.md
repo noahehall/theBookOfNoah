@@ -37,3 +37,10 @@ i
 	- [typical http session](https://developer.mozilla.org/en-US/docs/Web/HTTP/Session)
 	- [ibm session best practices, fuck java tho](https://www.ibm.com/support/knowledgecenter/en/SS7K4U_8.5.5/com.ibm.websphere.zseries.doc/ae/cprs_best_practice.html)
 
+
+## terminology
+	- session
+		- state for http requests, permitting you to distinguish the sender of an http requests across http requests
+	- cookies 
+		- storage for data inside a browser
+		- the browser attaches the cookies associated with a domain on each request ot that domain
