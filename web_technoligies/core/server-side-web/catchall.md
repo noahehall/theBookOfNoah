@@ -40,7 +40,31 @@ i
 
 ## terminology
 	- session
-		- state for http requests, permitting you to distinguish the sender of an http requests across http requests
+		- state for http requests, permitting you to distinguish the sender of an http requests across http requests via headers set in responses which the browser attaches to future requests
 	- cookies 
 		- storage for data inside a browser
 		- the browser attaches the cookies associated with a domain on each request ot that domain
+	- request headers
+		- contain metadata about the request
+	- request body
+		- contain the request data
+	- JWT
+		- json web tokens 
+		- useful for api atuhentication and authorization 
+		- encrypts payload as a base64(or other) kind of string which is set on responses and the browser attaches to future requests
+			- more secure than cookies as cookies are plain text
+		- usually contain 
+			- scopes for authorization
+			- user info for authentication
+			- signature hash to verify the integrity of the token (you need the secret to decrypt it)
+
+
+## session related headers
+	- set-cookie (response)
+		- set on the response, the browser returns this value with future requests
+
+```js
+	
+
+
+```
