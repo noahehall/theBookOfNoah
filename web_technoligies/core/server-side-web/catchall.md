@@ -18,9 +18,13 @@
 	- plain-text cookies vs JWT
 		- JWT
 			- anything of importances/PID
+			- dont require backend storage (but try to keep your payloads small)
+			- easier to share in microservices
 		- plain-text cookies
 			- anything not important/PID
 			- dont need to be decrypted, so faster if thats your juice
+			- require backend storage (and dont use inmemory in prod)
+			- can share session info via global session store but simpler with jwt
 
 # security
 

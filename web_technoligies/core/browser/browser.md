@@ -8,6 +8,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- [function bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
 	- find a better fucking sublime markdown syntax htis hsit fucking sucks
 	- [cors](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+	- [this shit](https://github.com/philipwalton/blog/blob/master/articles/what-no-one-told-you-about-z-index.md)
 
 
 
