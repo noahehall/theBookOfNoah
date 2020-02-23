@@ -9,6 +9,8 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- find a better fucking sublime markdown syntax htis hsit fucking sucks
 	- [cors](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 	- [this shit](https://github.com/philipwalton/blog/blob/master/articles/what-no-one-told-you-about-z-index.md)
+	- [stacking context](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context)
+	- [oldi but goooodi](https://www.smashingmagazine.com/2009/09/the-z-index-css-property-a-comprehensive-look/)
 
 
 
