@@ -23,6 +23,7 @@
 	- [indexes](https://www.arangodb.com/docs/stable/indexing-index-basics.html)
 	- [libicu - used for word tokenization in fulltext indexes](https://packages.debian.org/sid/libicu-dev)
 	- [rocksdb storage engine, used by arango for backgroudn indexes](https://rocksdb.org/)
+		- by facebook, supported since arango 3.2, default since arango3.4
 	- [storage engines](https://www.arangodb.com/docs/stable/architecture-storage-engines.html)
 
 
@@ -31,7 +32,7 @@
 	- this shit is a javascript devs heaven
 	- in general read the top section first 
 		- then find the examples/quickies below as they MAY contain more information 
-			- i had duplicating shit, and sometimes its a waste of time finding the correct place to put something
+			- i hate duplicating shit, and sometimes its a waste of time finding the correct place to put something
 
 
 # best practices: my accepted best practices
@@ -165,7 +166,7 @@
 		
 		- only used if 
 			- lookups, range queries, sorting
-				- all index attributes are provide din a query 
+				- all index attributes are provided in a query 
 				- or the leftmost prefix of the index attribute is specified 
 					- i.e. the key used on the left side of the query
 			- sorting 
