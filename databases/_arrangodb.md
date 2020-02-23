@@ -8,6 +8,10 @@
 	- [arangodb performance course](https://www.arangodb.com/arangodb-performance-course/)
 	- [arangosearch](https://www.arangodb.com/docs/stable/arangosearch.html)
 	- [indexing portal](https://www.arangodb.com/docs/stable/indexing.html)
+	- [upgrading](https://www.arangodb.com/docs/stable/upgrading.html)
+	- in general, fuck arangodb docs, check the tests instead
+		- [here are many tests tests](https://github.com/arangodb/arangodb/tree/master/tests/js/common/shell)
+
 
 
 # docs 
@@ -105,6 +109,12 @@
 
 
 ### index types 
+	- this is a fucking fialure on there part , or more likely my understanding
+		- hash, skiplist and persistent are equivalent when using rocksdb
+		- then wtf have three differnet names?
+	- persistent index
+		- sorted index with persistence
+
 	- system indexes (automatically created) 
 		- primary key: _id and _key
 			- a hash index for the dockey keys of all documents in the collection 
