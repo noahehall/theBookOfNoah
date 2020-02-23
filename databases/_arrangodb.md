@@ -159,7 +159,7 @@
 			- equality lookups
 			- if all or most queries on the indexed attribute(s) are equality comparisons
 
-	- skiplist index 
+	- skiplist index (deprecated for rocksdb, however identical to persistant)
 		- properties
 			- sorted index 
 			- always created in ascending order 
