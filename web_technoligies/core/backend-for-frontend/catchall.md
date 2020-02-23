@@ -1,6 +1,7 @@
 
 # links 
 	- [reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy)
+	- [fuck nginx, use haproxy](https://www.haproxy.com/blog/using-haproxy-as-an-api-gateway-part-1/)
 
 # TODO 
 	- cross site scripting 
