@@ -25,6 +25,7 @@
 	- [rocksdb storage engine, used by arango for backgroudn indexes](https://rocksdb.org/)
 		- by facebook, supported since arango 3.2, default since arango3.4
 	- [storage engines](https://www.arangodb.com/docs/stable/architecture-storage-engines.html)
+	- [switching storage engines](https://www.arangodb.com/docs/stable/administration-engine-switch-engine.html)
 
 
 
