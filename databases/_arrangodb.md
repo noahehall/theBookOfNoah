@@ -11,6 +11,7 @@
 	- [upgrading](https://www.arangodb.com/docs/stable/upgrading.html)
 	- in general, fuck arangodb docs, check the tests instead
 		- [here are many tests tests](https://github.com/arangodb/arangodb/tree/master/tests/js/common/shell)
+	- [working with indexes](https://www.arangodb.com/docs/stable/indexing-working-with-indexes.html)
 
 
 
@@ -81,9 +82,6 @@
 	
 
 ## indexes 
-	- skipped
-		- [index database methods](https://www.arangodb.com/docs/stable/indexing-working-with-indexes.html#database-methods)
-
 	- index handle - uniquely identifies an index in the database
 		- `db.COL_NAME.index('COL_NAME/INDEX_IDENTIFIER')`
 		- `db.COL_NAME.index('COLNAME/INDEX_NAME')
@@ -109,11 +107,13 @@
 
 
 ### index types 
-	- this is a fucking fialure on there part , or more likely my understanding
-		- hash, skiplist and persistent are equivalent when using rocksdb
-		- then wtf have three differnet names?
+	- hash, skiplist and persistent are identical when using rocksdb
+		- just use the persistent index type whenever you need a hash/skiplist
+			- [see this for more clarity](https://github.com/arangodb/arangojs/issues/648#issuecomment-590080580)
+			- 
 	- persistent index
 		- sorted index with persistence
+
 
 	- system indexes (automatically created) 
 		- primary key: _id and _key
