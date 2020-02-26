@@ -104,15 +104,23 @@ i
 			- jwt structure
 				- a '.' delimited string containing 3 parts
 				- head
-					- a Base64/Base64Url encoded stringified js object
+					- a Base64Url encoded stringified js object
 					- alg - algorithm used to sign the token
 					- typ - type of token
 				- body 
-					- base64/base64Url encoded stringified js object
+					- base64Url encoded stringified js object
 					- pmay contain oauth specific members: iss, sub, auad, exp, iat, jti, etc
 				- signature
-					- verification
-		- encrypts payload as a base64(or other) kind of string which is set on responses and the browser attaches to future requests
+					- used to verify if the token is valid/authentic
+					- consists of the body+head encrypted using any hash algorithm, e.g. sha256
+			- security logic 
+				- the creator of the jwt token creates a hash string of a the jwt head and body. this hash string is the signature 
+				- on subsequent creates, the receiver of the jwt uses the signature to verify the head and body has not been tampered with 
+					- the receiver has the private key, which is used to decrypt the signature to produce the original head and body
+					- if either has been tampered with, then it wont match the expected hash 
+					- a hacker cannot create and send a new hash, as they dont have the private key
+
+
 			- more secure than cookies as cookies are plain text
 		- usually contain the following 'claims'
 			- scopes for authorization
@@ -121,6 +129,16 @@ i
 			- signature hash to verify the integrity of the token (you need the secret to decrypt it)
 
 ```js
+	// convert a jwt part to base64Url
+	// 
+	const toBase64Url = obj => Buffer.from(
+		JSON.stringify({
+			"alg": "HS256",
+			"typ": "JWT"
+		})).toString('base64')
+			.replace(/=/g, "")                               
+			.replace(/\+/g, "-")                               
+			.replace(/\//g, "_")
 
 	const jwtHead = {
 		alg: 'HS256',
@@ -130,11 +148,13 @@ i
 	const jwtBody = {
 		// oath specific
 		aud: '',
-		exp: '',
-		iat: '',
+		exp: '123456', // expiration time in seconds since epoc
+		iat: Date.now(), // creation timestamp
 		iss: '',
 		jti: '',
 		sub: '',
-	}
+	};
+
+	const jwtSignature = someEncryptionMethod(toBase64Url(jwtHead) + '.' + toBase64Url(jwtBody))
 i
 ```
