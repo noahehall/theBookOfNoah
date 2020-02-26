@@ -158,7 +158,7 @@ i
 	const jwtBody = {
 		// oath specific
 		aud: '',
-		exp: '123456', // expiration time in seconds since epoc
+		exp: (Date.now() / 1000) + 60 * 5, // expiration time in seconds since epoc, e.g. 5 minutes from now
 		iat: Date.now(), // creation timestamp
 		iss: '',
 		jti: '',
