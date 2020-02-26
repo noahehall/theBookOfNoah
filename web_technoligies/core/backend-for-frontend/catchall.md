@@ -93,10 +93,25 @@ i
 	- [jwt spec](https://tools.ietf.org/html/rfc7519)
 	- [practical (oh really?) jwt guide](https://medium.com/swlh/a-practical-guide-for-jwt-authentication-using-nodejs-and-express-d48369e7e6d4)
 	- [jwt vs html5 whorage](https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage)
+	- [jwt and oauth](https://nordicapis.com/why-cant-i-just-send-jwts-without-oauth/)
 
 ## terminology 
 	- json web tokens 
-		- useful for api atuhentication and authorization 
+		- use cases
+			- safe way to represent a set of information between two parties 
+			- useful for api atuhentication and authorization 
+		- architecture 
+			- jwt structure
+				- a '.' delimited string containing 3 parts
+				- head
+					- a Base64/Base64Url encoded stringified js object
+					- alg - algorithm used to sign the token
+					- typ - type of token
+				- body 
+					- base64/base64Url encoded stringified js object
+					- pmay contain oauth specific members: iss, sub, auad, exp, iat, jti, etc
+				- signature
+					- verification
 		- encrypts payload as a base64(or other) kind of string which is set on responses and the browser attaches to future requests
 			- more secure than cookies as cookies are plain text
 		- usually contain the following 'claims'
@@ -104,3 +119,22 @@ i
 			- user info for authentication
 				- thus you dont need to store anything on your backend as you can just encode it in the jwt
 			- signature hash to verify the integrity of the token (you need the secret to decrypt it)
+
+```js
+
+	const jwtHead = {
+		alg: 'HS256',
+		typ: 'JWT'
+	};
+
+	const jwtBody = {
+		// oath specific
+		aud: '',
+		exp: '',
+		iat: '',
+		iss: '',
+		jti: '',
+		sub: '',
+	}
+i
+```
