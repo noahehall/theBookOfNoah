@@ -56,13 +56,11 @@ i
 
 # sessions 
 	- [sessions in nodejs](https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions)
-	- [jwt vs html5 whorage](https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage)
+	
 	- [server auth basics](https://medium.com/@evangow/server-authentication-basics-express-sessions-passport-and-curl-359b7456003d)
 	- [managing sessions in express](https://dzone.com/articles/securing-nodejs-managing-sessions-in-expressjs)
 	- [typical http session](https://developer.mozilla.org/en-US/docs/Web/HTTP/Session)
 	- [ibm session best practices, fuck java tho](https://www.ibm.com/support/knowledgecenter/en/SS7K4U_8.5.5/com.ibm.websphere.zseries.doc/ae/cprs_best_practice.html)
-	- [jwt spec](https://tools.ietf.org/html/rfc7519)
-	- [practical (oh really?) jwt guide](https://medium.com/swlh/a-practical-guide-for-jwt-authentication-using-nodejs-and-express-d48369e7e6d4)
 
 
 ## terminology
@@ -76,16 +74,7 @@ i
 		- contain metadata about the request
 	- request body
 		- contain the request data
-	- JWT
-		- json web tokens 
-		- useful for api atuhentication and authorization 
-		- encrypts payload as a base64(or other) kind of string which is set on responses and the browser attaches to future requests
-			- more secure than cookies as cookies are plain text
-		- usually contain the following 'claims'
-			- scopes for authorization
-			- user info for authentication
-				- thus you dont need to store anything on your backend as you can just encode it in the jwt
-			- signature hash to verify the integrity of the token (you need the secret to decrypt it)
+	
 
 
 
@@ -96,5 +85,22 @@ i
 ```js
 	
 
-
+i
 ```
+
+
+# jwt - json web tokens
+	- [jwt spec](https://tools.ietf.org/html/rfc7519)
+	- [practical (oh really?) jwt guide](https://medium.com/swlh/a-practical-guide-for-jwt-authentication-using-nodejs-and-express-d48369e7e6d4)
+	- [jwt vs html5 whorage](https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage)
+
+## terminology 
+	- json web tokens 
+		- useful for api atuhentication and authorization 
+		- encrypts payload as a base64(or other) kind of string which is set on responses and the browser attaches to future requests
+			- more secure than cookies as cookies are plain text
+		- usually contain the following 'claims'
+			- scopes for authorization
+			- user info for authentication
+				- thus you dont need to store anything on your backend as you can just encode it in the jwt
+			- signature hash to verify the integrity of the token (you need the secret to decrypt it)
