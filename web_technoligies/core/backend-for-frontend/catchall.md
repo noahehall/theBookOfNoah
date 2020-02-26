@@ -119,6 +119,13 @@ i
 					- the receiver has the private key, which is used to decrypt the signature to produce the original head and body
 					- if either has been tampered with, then it wont match the expected hash 
 					- a hacker cannot create and send a new hash, as they dont have the private key
+			- server-client data flow 
+				- server creates the jwt token and sends it the client
+				- the client sends the jwt back to the server on subsequent requests
+					- the client can store the token in 
+						- local storage- token will be valid until it expires
+						- sessoin storage - token will be valid until browser tab is closed/token expires
+
 
 
 			- more secure than cookies as cookies are plain text
