@@ -106,6 +106,10 @@ i
 				- head
 					- a Base64Url encoded stringified js object
 					- alg - algorithm used to sign the token
+						- simmetrical algorithm: 
+							- uses a string as the secret to sign and verify the token 
+						- asymmetrical 
+							- uses a private key to sign the token and a public key to verify the token
 					- typ - type of token
 				- body 
 					- base64Url encoded stringified js object
@@ -114,17 +118,16 @@ i
 					- used to verify if the token is valid/authentic
 					- consists of the body+head encrypted using any hash algorithm, e.g. sha256
 			- security logic 
-				- the creator of the jwt token creates a hash string of a the jwt head and body. this hash string is the signature 
-				- on subsequent creates, the receiver of the jwt uses the signature to verify the head and body has not been tampered with 
-					- the receiver has the private key, which is used to decrypt the signature to produce the original head and body
-					- if either has been tampered with, then it wont match the expected hash 
-					- a hacker cannot create and send a new hash, as they dont have the private key
+				- the server creates a hash string of a the jwt head and body using a secret key. this hash string is the signature 
+				- on subsequent requests  from the client, the server of the jwt uses the signature to verify the head and body has not been tampered with 
 			- server-client data flow 
-				- server creates the jwt token and sends it the client
-				- the client sends the jwt back to the server on subsequent requests
-					- the client can store the token in 
-						- local storage- token will be valid until it expires
-						- sessoin storage - token will be valid until browser tab is closed/token expires
+				- a client sends PID to the server
+				- server creates a jwt token based on the PID and sends it the client
+				- the client send stores the jwt
+					- local storage- token will be valid until it expires
+					- sessoin storage - token will be valid until browser tab is closed/token expires
+				- on subsequent requests to the server, the client sends the jwt token in the authorization header as `Bearer ${token}`
+				- the server extracts the token from the authorization header, decrypts it using the private key, and validates the PID has not been tamperd with
 
 
 
