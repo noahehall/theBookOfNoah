@@ -94,6 +94,7 @@ i
 	- [practical (oh really?) jwt guide](https://medium.com/swlh/a-practical-guide-for-jwt-authentication-using-nodejs-and-express-d48369e7e6d4)
 	- [jwt vs html5 whorage](https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage)
 	- [jwt and oauth](https://nordicapis.com/why-cant-i-just-send-jwts-without-oauth/)
+	- [registered claim names](https://tools.ietf.org/html/rfc7519#section-4.1)
 
 ## terminology 
 	- json web tokens 
@@ -128,6 +129,9 @@ i
 					- sessoin storage - token will be valid until browser tab is closed/token expires
 				- on subsequent requests to the server, the client sends the jwt token in the authorization header as `Bearer ${token}`
 				- the server extracts the token from the authorization header, decrypts it using the private key, and validates the PID has not been tamperd with
+			- jwt claims 
+				- applicaations should define specific claims for their intended use case and when they are required/optional
+				- see examples for explanations
 
 
 
@@ -155,14 +159,33 @@ i
 		typ: 'JWT'
 	};
 
+	// i think all claims are optional
 	const jwtBody = {
-		// oath specific
-		aud: '',
-		exp: (Date.now() / 1000) + 60 * 5, // expiration time in seconds since epoc, e.g. 5 minutes from now
-		iat: Date.now(), // creation timestamp
-		iss: '',
+		// audience: the recipients that the jwt is intended for 
+		// each principal intended to process the jwt must identify itself here
+		// if the principal is not included when this property is present
+		// then the jwt must be rejected
+		// case sensitive array 
+		aud: ['poop.com'],
+		// time on/after which the jwt must NOT be accepted for processing
+		// seconds since epoc, e.g. 5 minutes from now
+		exp: (Date.now() / 1000) + 60 * 5, 
+		// creation timestamp
+		// used to determine the age of the JWT
+		iat: Date.now(), 
+		// issuer: the principal that issued the JWT
+		// OPTIONAL case sensitive string/Uri
+		iss: 'https://poop.com',
 		jti: '',
-		sub: '',
+		// subject: principal that is the subject of the jwt 
+		// claims are usually statements about this subject
+		// OPTIONAL case sensitive string/uri
+		sub: 'https://poop.com/user/toilet',
+		// maybe less useful claims below 
+
+		// not before claim
+		// the time before which the JWT must be accepted for processing
+		nbf: Date.now(),
 	};
 
 	const jwtSignature = someEncryptionMethod(toBase64Url(jwtHead) + '.' + toBase64Url(jwtBody))
