@@ -148,7 +148,14 @@ i
 	const toBase64Url = obj => Buffer.from(
 		JSON.stringify({
 			"alg": "HS256",
-			"typ": "JWT"
+			// Type header parameter 
+			// for use when values that are not JWTs could also be present 
+			// declaires the media type of the complete JWT
+			"typ": "JWT",
+
+			// other maybe less useful header parameters 
+			// content type
+			cty: '',
 		})).toString('base64')
 			.replace(/=/g, "")                               
 			.replace(/\+/g, "-")                               
@@ -175,7 +182,9 @@ i
 		iat: Date.now(), 
 		// issuer: the principal that issued the JWT
 		// OPTIONAL case sensitive string/Uri
-		iss: 'https://poop.com',
+		iss: 'https://poop.com'|'bigpoppapoop',
+		// jwt ID
+		// unique identifer used to prevent the JWT from being replayed (recreated?)
 		jti: '',
 		// subject: principal that is the subject of the jwt 
 		// claims are usually statements about this subject
