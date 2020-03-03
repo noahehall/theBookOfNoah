@@ -12,6 +12,7 @@
   - [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
   - [calc](https://developer.mozilla.org/en-US/docs/Web/CSS/calc)
   - [repeat](https://developer.mozilla.org/en-US/docs/Web/CSS/repeat)
+  - [dynamic css grid](https://oky.dk/blog/1kb-grid)
 
 # links (i think most of these should be todo)
   - [css dynamic content](https://developer.mozilla.org/en-US/docs/Web/CSS/content)
@@ -78,6 +79,8 @@
     - is generally used with 
       - selector::before|after to target the anchor element for the content to be inserted
       - attr(data-prop) to retrieve the value of the HTML DATA property and insert it as content
+  - think creatively when using `calc` and custom properties 
+    - e.g. read [this link](https://oky.dk/blog/1kb-grid)
 
 ```css
   /* 
@@ -373,6 +376,8 @@
 ```
 # LAYOUT
 ## GRID
+  - [read this when you need a dynamic (not logical) order)](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Auto-placement_in_CSS_Grid_Layout)
+    - think a puzzle layout [with this one](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow)
   - [read this first bro!](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout)
   - [then read this shit](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Relationship_of_Grid_Layout)
   - [grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
