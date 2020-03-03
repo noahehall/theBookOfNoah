@@ -319,7 +319,12 @@
      */
     grid-template-columns: repeat(3, 1fr)
 
-
+    /*
+      sets the gutters between rows and columns
+      shorthand for row-gap and column-gap
+      can be fixed/relative values
+     */
+    grid-gap: rowGap columnGap;
 
     /*
       direction of flow left->right, top->bottom
@@ -327,10 +332,7 @@
     grid-auto-flow: row|column;
 
 
-    /*
-      space between columns?
-     */
-    grid-gap: 10px;
+    
 
     /*
       defines height of rows
