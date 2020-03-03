@@ -42,6 +42,7 @@
   - [centering things](https://css-tricks.com/centering-css-complete-guide/)
   - [grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
   - [mdn css grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Auto-placement_in_CSS_Grid_Layout)
+  - [mdn grid column](https://developer.mozilla.org/en-US/docs/Glossary/grid_column)
   - [css reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
   - [color converter](https://serennu.com/colour/hsltorgb.php)
   - [css validator by w3c](http://jigsaw.w3.org/css-validator/#validate_by_input)
@@ -258,6 +259,14 @@
 
 # LAYOUT
 ## GRID
+  - [read this first bro!](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout)
+
+### terminology 
+  - track
+    - think of a race car track, can be vertical (column) or horizontol (row)
+    -
+  -
+### use cases
   - for two dimensional layouts,
     - i.e. requiring rows AND columns
     - i.e. a table
@@ -266,6 +275,7 @@
 
   - grid container `display:grid`
     - defines the container
+    - all directly children are automatically grid-items
     - specifies default dimensions for rows and columns
   - grid children
     - child placement
@@ -277,17 +287,9 @@
         -
 
 ```css
-  .grid-container {
-    /*
-      defines the grid wrapper
-      */
-    display: grid;
-
-    /*
-      defines line names and track sizing functions of grid columns
-      i.e in record in a grid can have a name
-
-      none
+  /*
+    common grid values can be used in most places
+    none
         no explicit grid, columns implicitely generated
         use with grid-auto-columns to set each columns size
       #px 
@@ -313,11 +315,37 @@
       repeat(#|auto-fill|auto-fit, #)
         i.e. a repeated fragment
         specify a pattern for auto creating columns
+        e.g. repeat(3, 1fr) creates 3 tracks, that grow equal
       subgrid
         fuck it
         only supported by firefox
+    */
+  .grid-container {
+    /*
+      defines the grid wrapper
+      */
+    display: grid;
+
+    /*
+      defines line names and track sizing functions of grid columns
+      each value specifies a single column, unless you use the repeat function
      */
-    grid-template-columns: repeat(3, 1fr)
+    grid-template-columns: repeat(3, 1fr); /*3 columns that grow equally*/
+    grid-template-columns: col1 col2 col3 etc; /*explicit*/
+    grid-template-columns: 1fr 1fr 1fr; /* 3 equal size columns that grow/shrink*/
+    grid-template-columns: 2fr 1fr 1fr; /* split into 4 parts divided into 3 columns, the first gets twice the amount as the other columns*/
+    grid-template-columns: 100px 1fr 1fr; /* explicit first column, grow/shrink remaining 2 columns*/
+    grid-template-columns: 100px repeat(2, 1fr) 10px; /* same as above, but adds another track at 10px */
+    grid-template-columns: repeat(5, 1fr 2fr); /*creates 10 columns by repeating the pattern 1fr 2fr 5 times*/
+
+    /*
+      defines height of rows
+      only used when grid-template-rows does not apply to a row
+      uses same syntax & examples as grid-template-columns
+     */
+    grid-auto-rows: 100px; /* exactly */
+    grid-auto-rows: minmax(100px, auto) /* range */
+
 
     /*
       sets the gutters between rows and columns
@@ -334,11 +362,7 @@
 
     
 
-    /*
-      defines height of rows
-     */
-    grid-auto-rows: 100px; /* exactly */
-    grid-auto-rows: minmax(100px, auto) /* range */
+    
 
   }
 
