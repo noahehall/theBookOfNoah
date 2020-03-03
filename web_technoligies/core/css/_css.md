@@ -58,6 +58,17 @@
   - review `@font-face` syntax before using them, too many gotchas
   - set the page font size on the body element, and size everything relative to that via rem, or is em?
   - always declar a `:root {}` selector set your variables, 9 times out of 8 you should be using variables mutherfucker
+  - GRID vs FLEXBOX vs WTF
+    - ROW | COLUMN - flexbox
+    - ROW & COLUMN - grid
+    - CONTENT-OUT (content forces layout) - flexbox 
+      - e.g. when placing items evenly in a container, let the size of the content decide how much individual space each item takes
+        - you can still use grid, but then the grid items will change the entire track
+    - LAYOUT-IN (layout forces content) - grid 
+      - e.g. when placing items evenly in a container, you let the available space of the layout determine how the items are placed
+    - BOX ALIGNMENT - flexbox 
+      - aligning items within a box,
+
 
 # syntax
   - property, e.g. `background-color`
@@ -129,6 +140,21 @@
   - overflow: when the content of an element overflows its absolute width/height
   - background: box backgrounds (color and images) are stacked on top of eachother
     - background-clip: determines how
+```css
+  /*
+    -on the container
+      flexbox: flex-end|start|etc
+      grid: end|start|etc
+    */
+  align-items: flex-end
+
+  /*
+    -on the children
+      flexbox: stretch|flex-start|flex-etc
+      grid: stretch|start|etc
+    */
+  align-self
+```
 
 
 # selectors
@@ -328,6 +354,8 @@
         i.e. a repeated fragment
         specify a pattern for auto creating columns
         e.g. repeat(3, 1fr) creates 3 tracks, that grow equal
+        e.g. repeat(auto-fill, 200px) create as many 200px columns as space permits
+        e.g. repeat(auto-fill, minmax(200px, 1fr)) create aws many 200px columns as space permits, and divide the rest evenly (becuase of the 1fr)
       subgrid
         fuck it
         only supported by firefox
@@ -398,6 +426,13 @@
     grid-column: 2;
     grid-row: 5;
 
+    /*
+      the grid-child acts as a grid-container
+      and its direct children take its place as grid-items
+      very USEFUL!
+      e.g. set the grid-child as display:contents, which will caue its direct children to assume its position as grid items, and obey all the rules of the grid
+      */
+    display: contents
   }
 
 ```
@@ -426,6 +461,9 @@
     - cross size: size of the flex item in the dimension it's parent flex-container cross axis
     -
 
+  - gotchas 
+    - when you wrap flex items, each new row/column becomes its own implicit flex-container
+      - thus the items wont align across rows/columns, but will align within rows/columns
 ```css
     .flex-containers {
       display: flex|inline-flex;
