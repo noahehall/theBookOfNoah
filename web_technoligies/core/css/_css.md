@@ -310,6 +310,9 @@
         the largest maximal content contribution of the grid items 
       min-content
         the largest minimal content contribution of the grid items
+      repeat(#|auto-fill|auto-fit, #)
+        i.e. a repeated fragment
+        specify a pattern for auto creating columns
      */
     grid-template-columns: repeat(3, 1fr)
 
