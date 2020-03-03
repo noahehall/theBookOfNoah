@@ -6,7 +6,6 @@
 
 # must read/eventually todo
   - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
-  - [css flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox)
   - [css units](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units)
   - [multi column layouts via fragmentation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Columns)
 
@@ -33,7 +32,6 @@
     - [media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)
     - [using media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)
   - [introduction to css box model](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model)
-  - [flexbox on csstricks](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
   - [visual formatting model](https://developer.mozilla.org/en-US/docs/Web/CSS/Visual_formatting_model)
   - [boucup?](bocoup.com)
     - think they might have blog posts or something
@@ -448,6 +446,10 @@
 
 
 ## FLEXBOX
+  - [flexbox layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout)
+  - [flexbox on csstricks](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+  - [css flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox)
+
   - one dimensional layout model (columns OR rows) with ease in distributing space between items in an interface
   - use cases
     - Vertically centering a block of content inside its parent.
