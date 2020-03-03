@@ -71,8 +71,20 @@
   - use the picture element to offer alternative versions of an image for different displays/devices
     - combine with at-rules
   - the `content:` rule is powerful, use it whenver you need to insert dynamic content via css and not js
-    - is generally used with selector::before|after to insert content before|after something
+    - is generally used with 
+      - selector::before|after to target the anchor element for the content to be inserted
+      - attr(data-prop) to retrieve the value of the HTML DATA property and insert it as content
 
+```css
+  /* 
+    example html <p data-foo="hello">world</p> 
+    renders <>hello world</>
+    */
+  [data-foo]::before {
+    content: attr(data-foo) " ";
+  }
+
+```
 
 # syntax
   - property, e.g. `background-color`
