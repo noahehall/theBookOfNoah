@@ -67,6 +67,8 @@
       - e.g. when placing items evenly in a container, you let the available space of the layout determine how the items are placed
     - BOX ALIGNMENT - flexbox 
       - aligning items within a box,
+  - use the picture element to offer alternative versions of an image for different displays/devices
+    - combine with at-rules
 
 
 # syntax
@@ -293,6 +295,33 @@
     }
   ```
 
+
+# media
+  - [object fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)
+  - [picture element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
+
+
+## images
+## video 
+```css
+  /** just play with the values, not important for me right now */
+
+  /*
+    sets how the content of replaced elements (e.g. img, or video) should be resized to fit its container
+    */
+  object-fit: fill|contain|civer|none|scale-down;
+
+  /*
+    specifies the alignment of the replace elements contents within th elements box
+    areas of the box which arent covered reveal the elements background
+  object-position: % %|top right|center bottom|etc etc;
+    */
+
+  /*
+    set the size of the elements backgroudn image
+    */
+  background-size: contain|no-repeat|cover|%|% %|# #|etc
+```
 # LAYOUT
 ## GRID
   - [read this first bro!](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout)
