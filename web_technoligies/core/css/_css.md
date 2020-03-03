@@ -129,7 +129,7 @@
       - vw, vh: 1/100th of the width/height of the viewport
     -
 
-# the box model
+# box model
   - the foundation of layout on the web
     1. content: min/max- width & height
       2. includes both text content & nested child elements
@@ -154,6 +154,20 @@
       grid: stretch|start|etc
     */
   align-self
+
+
+  /*
+    - on grand-children
+      the grid-child acts as a wrapper and becomes a container (whether grid/flex)
+      and its direct children take its place as grid-items
+      very USEFUL!
+      e.g. set the grid-child as display:contents, which will caue its direct children to assume its position as grid items, and obey all the rules of the grid
+        lvl 1 - container.grid|flex
+        lvl 2 - usually a grid|flex-item, but now you set display:contents
+          lvl 3 - are now grid|flex-items
+        lvl 2 - more grid-items, but without display:contents, act as expected
+      */
+    display: contents
 ```
 
 
@@ -426,13 +440,7 @@
     grid-column: 2;
     grid-row: 5;
 
-    /*
-      the grid-child acts as a grid-container
-      and its direct children take its place as grid-items
-      very USEFUL!
-      e.g. set the grid-child as display:contents, which will caue its direct children to assume its position as grid items, and obey all the rules of the grid
-      */
-    display: contents
+    
   }
 
 ```
