@@ -10,6 +10,7 @@
   - [multi column layouts via fragmentation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Columns)
 
 # links
+  - [css dynamic content](https://developer.mozilla.org/en-US/docs/Web/CSS/content)
   - [psuedo classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes)
   - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
   - [css variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables)
@@ -69,6 +70,8 @@
       - aligning items within a box,
   - use the picture element to offer alternative versions of an image for different displays/devices
     - combine with at-rules
+  - the `content:` rule is powerful, use it whenver you need to insert dynamic content via css and not js
+    - is generally used with selector::before|after to insert content before|after something
 
 
 # syntax
