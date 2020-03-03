@@ -58,7 +58,8 @@
   - `@import` statements must precede all other types of rules except charset and cannot be ussed inside conditional group at-rule
     - in general, review the `import` link above as there are many gotchas
   - review `@font-face` syntax before using them, too many gotchas
-  -
+  - set the page font size on the body element, and size everything relative to that via rem, or is em?
+  - always declar a `:root {}` selector set your variables, 9 times out of 8 you should be using variables mutherfucker
 
 # syntax
   - property, e.g. `background-color`
@@ -260,7 +261,7 @@
   - for two dimensional layouts,
     - i.e. requiring rows AND columns
     - i.e. a table
-  - dividing a screen into major regions or defiing the relationship in terms of size, position, layer between parts of a control built from html primitives
+  - dividing a screen into major regions or defining the relationship in terms of size, position, layer between parts of a control built from html primitives
   - grid children can position themselves so they actually overlap and layer, similar to css positioned elments
 
   - grid container `display:grid`
@@ -279,19 +280,42 @@
   .grid-container {
     /*
       defines the grid wrapper
-     */
+      */
     display: grid;
+
+    /*
+      defines line names and track sizing functions of grid columns
+      i.e in record in a grid can have a name
+
+      none
+        no explicit grid, columns implicitely generated
+        use with grid-auto-columns to set each columns size
+      #px 
+        specific size for each column
+      %px
+        relative (inline widthof grid container) size for each column
+      minmax(min#, max#)
+        range >=min&&<=max
+      auto 
+        uses available dimension (if max, uses max)
+        the only keyword that can be stretched by `align-content` and `justify-content`
+      #fr 
+        flex factor: each track (wtf is track?) takes a share of the remaining space in proportion to this number
+        shorthand for minmax(auto, #fr)
+      max-content
+        the largest maximal content contribution of the grid items 
+      min-content
+        the largest minimal content contribution of the grid items
+     */
+    grid-template-columns: repeat(3, 1fr)
+
+
 
     /*
       direction of flow left->right, top->bottom
      */
     grid-auto-flow: row|column;
 
-    /*
-      specify number of columns
-      below is 3 columns
-     */
-    grid-template-columns: repeat(3, 1fr)
 
     /*
       space between columns?

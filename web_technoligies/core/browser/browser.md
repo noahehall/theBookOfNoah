@@ -11,6 +11,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- [this shit](https://github.com/philipwalton/blog/blob/master/articles/what-no-one-told-you-about-z-index.md)
 	- [stacking context](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context)
 	- [oldi but goooodi](https://www.smashingmagazine.com/2009/09/the-z-index-css-property-a-comprehensive-look/)
+	- [localstorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 
 
 
@@ -431,6 +432,7 @@ i
 
 
 # EVENTS
+	- [comparison of event targets](https://developer.mozilla.org/en-US/docs/Web/API/Event/Comparison_of_Event_Targets)
 	- [event develloper guide](https://developer.mozilla.org/en-US/docs/Web/Guide/Events)
 	- [creating and triggering events guide](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events)
 	- [event design pattern](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Overview_of_Events_and_Handlers)
@@ -574,7 +576,7 @@ i
 			{ 
 				...eventOptionsFromAbove,
 				// add arbitrary data to be acessible in listeners
-				details: {...},
+				detail: {...},
 				// the element on which the handler is attached
 				// i.e. could be different that event.target if the handler is invoked in the capture/bubble phases through retargeting
 				currentTarget: eventTarget,
