@@ -264,7 +264,17 @@
 ### terminology 
   - track
     - think of a race car track, can be vertical (column) or horizontol (row)
-    -
+    - the grid is defined by tracks, not lines
+  - line 
+    - boundary lines of each track, a single track has two lines (i.e. left & right, or top & bottom boundaries)
+      - but tracks can share lines, e.g. in a 2 column grid there would be 3 lines, with each column sharing the middle boundary
+    - column lines = grid column tracks + 1 (i.e. a 3 column grid would have 4 column lines)
+    - row lines = grid row tracks + 1 (i.e. see above)
+  - explicit grid 
+    - any grid columns/rows defined by grid-template-columns or grid-template-rows
+  - implicit grid 
+    - any grid columns/rows not defined by gridtemplatecolumns or gridtemplaterows
+    - grid items area auto sized (fit content) or specified by grid-auto-rows and grid-auto-columns
   -
 ### use cases
   - for two dimensional layouts,
@@ -327,7 +337,8 @@
     display: grid;
 
     /*
-      defines line names and track sizing functions of grid columns
+      explicit grid columns
+      line names and track sizing functions of grid columns
       each value specifies a single column, unless you use the repeat function
      */
     grid-template-columns: repeat(3, 1fr); /*3 columns that grow equally*/
@@ -339,12 +350,16 @@
     grid-template-columns: repeat(5, 1fr 2fr); /*creates 10 columns by repeating the pattern 1fr 2fr 5 times*/
 
     /*
-      defines height of rows
-      only used when grid-template-rows does not apply to a row
-      uses same syntax & examples as grid-template-columns
+      implicit grid columns
+      see grid template columns for examples
+      */
+    grid-auto-columns: minmax(min, max);
+
+    /*
+      implicit grid rows
+      see grid template columns for examples
      */
-    grid-auto-rows: 100px; /* exactly */
-    grid-auto-rows: minmax(100px, auto) /* range */
+    grid-auto-rows: minmax(min, max);
 
 
     /*
