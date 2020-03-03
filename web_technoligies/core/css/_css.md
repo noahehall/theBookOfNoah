@@ -1,15 +1,19 @@
 # bookmark
   - [css layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout)
-  - [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
-  - [sass vs less](https://www.keycdn.com/blog/sass-vs-less/)
+  
 
 
 # must read/eventually todo
   - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
   - [css units](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units)
   - [multi column layouts via fragmentation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Columns)
+  - [filter](https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
+  - [bunch of filter functions](https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function)
+  - [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
+  - [calc](https://developer.mozilla.org/en-US/docs/Web/CSS/calc)
+  - [repeat](https://developer.mozilla.org/en-US/docs/Web/CSS/repeat)
 
-# links
+# links (i think most of these should be todo)
   - [css dynamic content](https://developer.mozilla.org/en-US/docs/Web/CSS/content)
   - [psuedo classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes)
   - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
@@ -87,13 +91,16 @@
 ```
 
 # syntax
+  - [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+
+##
   - property, e.g. `background-color`
   - value e.g. red in`background-color: red`
   - declaration: property + value e.g. `background-color: red;`
   - declaration block: one/more declarations surrounded by braces e.g. e.g. `{ background-color: red; width: 20px }`
   - rule: selector(s) + declaration block e.g. e.g. `p { background-color: red; }`
 
-# values and units
+## values and units
   - numbers e.g. `20`
   - percentage e.g. `20%`
   - absolute units
@@ -145,6 +152,25 @@
       - vw, vh: 1/100th of the width/height of the viewport
     -
 
+```css
+  /*
+    pseudo element for defining custom properties for the html document
+    */
+  :root {
+    --big-poppa: poop;
+  }
+
+
+  /*
+    use a custom property as a variable
+    if the property doesnt have a value, use the fallback value
+    if no fallback value is provided, whatever value the parent element has will be used
+    */
+  .someSelector {
+    background-color: var(--big-poppa, 'fallback value')
+  }
+
+```
 # box model
   - the foundation of layout on the web
     1. content: min/max- width & height
