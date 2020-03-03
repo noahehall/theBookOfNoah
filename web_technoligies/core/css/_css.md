@@ -313,6 +313,9 @@
       repeat(#|auto-fill|auto-fit, #)
         i.e. a repeated fragment
         specify a pattern for auto creating columns
+      subgrid
+        fuck it
+        only supported by firefox
      */
     grid-template-columns: repeat(3, 1fr)
 
