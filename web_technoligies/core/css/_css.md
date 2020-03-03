@@ -296,7 +296,11 @@
         relative (inline widthof grid container) size for each column
       minmax(min#, max#)
         range >=min&&<=max
+      fit-content(#|%)
+        i.e. min(max-content, max(auto, #|%))
+        calculated similar to auto but sizes are clamped at #|% if its greater than auto
       auto 
+        i.e. minmax(auto, max-content)
         uses available dimension (if max, uses max)
         the only keyword that can be stretched by `align-content` and `justify-content`
       #fr 
