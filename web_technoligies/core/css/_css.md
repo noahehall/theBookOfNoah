@@ -170,6 +170,14 @@
     background-color: var(--big-poppa, 'fallback value')
   }
 
+  /*
+    you can get/set the actual value from javascript 
+    const val = element.style.getPropertyValue("--my-var");
+    const val = getComputedStyle(element).getPropertyValue("--my-var");
+    element.style.setProperty("--my-var", jsVar + 4);
+
+    */
+
 ```
 # box model
   - the foundation of layout on the web
