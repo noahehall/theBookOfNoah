@@ -40,9 +40,6 @@
 
 ## important links
   - [centering things](https://css-tricks.com/centering-css-complete-guide/)
-  - [grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
-  - [mdn css grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Auto-placement_in_CSS_Grid_Layout)
-  - [mdn grid column](https://developer.mozilla.org/en-US/docs/Glossary/grid_column)
   - [css reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
   - [color converter](https://serennu.com/colour/hsltorgb.php)
   - [css validator by w3c](http://jigsaw.w3.org/css-validator/#validate_by_input)
@@ -260,6 +257,10 @@
 # LAYOUT
 ## GRID
   - [read this first bro!](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout)
+  - [then read this shit](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Relationship_of_Grid_Layout)
+  - [grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
+  - [mdn css grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Auto-placement_in_CSS_Grid_Layout)
+  - [mdn grid column](https://developer.mozilla.org/en-US/docs/Glossary/grid_column)
 
 ### terminology 
   - track
@@ -268,6 +269,7 @@
   - line 
     - boundary lines of each track, a single track has two lines (i.e. left & right, or top & bottom boundaries)
       - but tracks can share lines, e.g. in a 2 column grid there would be 3 lines, with each column sharing the middle boundary
+      - lines are numbered relative to the writing mode of the document (ltr, or rtl)
     - column lines = grid column tracks + 1 (i.e. a 3 column grid would have 4 column lines)
     - row lines = grid row tracks + 1 (i.e. see above)
   - explicit grid 
@@ -350,17 +352,20 @@
     grid-template-columns: repeat(5, 1fr 2fr); /*creates 10 columns by repeating the pattern 1fr 2fr 5 times*/
 
     /*
-      implicit grid columns
+      implicit grid columns and rows
       see grid template columns for examples
       */
     grid-auto-columns: minmax(min, max);
-
-    /*
-      implicit grid rows
-      see grid template columns for examples
-     */
     grid-auto-rows: minmax(min, max);
 
+    /*
+      position items in the grid based on the grid lines
+      if positioning two items in the same sell, use z-index for layering
+      */
+      grid-column-start: #|name;
+      grid-column-end: #|name;
+      grid-row-start: #|name;
+      grid-row-end: #|name;
 
     /*
       sets the gutters between rows and columns
