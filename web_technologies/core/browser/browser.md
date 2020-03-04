@@ -520,7 +520,6 @@ i
 	- [request idleCallback](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback)
 		- fuck safari
 	- [timing element visibility](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API/Timing_element_visibility)
-	- [usage with react ibtch](https://medium.com/the-non-traditional-developer/how-to-use-an-intersectionobserver-in-a-react-hook-9fb061ac6cb5)
 
 
 ### use cases 
@@ -539,128 +538,165 @@ i
 
 
 ```js
-	// attach events after this shit
-	// the html has been parsed and JS objectes created for all dom nodes
-		document.addEventListener('DOMContentLoaded', () => registerAllMyEventsBitch())
+	// event shit
+		// attach events after this shit
+		// the html has been parsed and JS objectes created for all dom nodes
+			document.addEventListener('DOMContentLoaded', () => registerAllMyEventsBitch())
 
-	// listen for events 
-		// you can either pass the options object, or the useCapture boolean
-		// but NOT both bitch
-		eventTarget.addEventListener(
-			'eventName',
-			listenerFunction,
-			{
-				// route events to this listener before sending to child elements
-				capture: bool,
-				// listener should be invoked at most ONCE, then removed
-				once: bool,
-				// indicates a passive listener, i.e. will never call preventDefault
-				// has performance improvemetns if true
-				passive: bool,
-				mozSystemGroup: 'who the fuck codes for just one browser?'
-			},
-			// or specify just the capture property, as a boolean
-			// specify EITHER the options object above or the boolean below
-			// also events that are bubbling upward will not trigger this listener
-			// defaults to false
-			useCaptureBoolean
-		)
-	// stop listening for events 
-		eventTarget.removeEventListener(
-			'eventName',
-			listenerFunction,
-			useCaptureBoolean, // has to match value provided in addEventListener useCapture/capture
-		)
+		// listen for events 
+			// you can either pass the options object, or the useCapture boolean
+			// but NOT both bitch
+			eventTarget.addEventListener(
+				'eventName',
+				listenerFunction,
+				{
+					// route events to this listener before sending to child elements
+					capture: bool,
+					// listener should be invoked at most ONCE, then removed
+					once: bool,
+					// indicates a passive listener, i.e. will never call preventDefault
+					// has performance improvemetns if true
+					passive: bool,
+					mozSystemGroup: 'who the fuck codes for just one browser?'
+				},
+				// or specify just the capture property, as a boolean
+				// specify EITHER the options object above or the boolean below
+				// also events that are bubbling upward will not trigger this listener
+				// defaults to false
+				useCaptureBoolean
+			)
+		// stop listening for events 
+			eventTarget.removeEventListener(
+				'eventName',
+				listenerFunction,
+				useCaptureBoolean, // has to match value provided in addEventListener useCapture/capture
+			)
 
 
-	// create an event (doesnt work in ie, fuck ie)
-		// can be used to trigger native events?
-		// some of the properties are for event handlers
-		// e.g. wtf are you doing trying to set defaultPrevented on instantiation?
-		// its just easier to put all this shit here cuz wtf
-		const event = new Event(
-			'wtf',
-			{	
-				// does this event bubble to the root html?
-				bubbles: bool,
-				// does this event resppond to preventDefault()
-				cancelable: bool,
-				// whether the event wil; propagate across the shadow dom boundary into the standard dom
-				// all UA-disaptched events are composed, (e.g. click, touch, etc)
-				// only occurs !!bubbles
-				composed: bool,
+		// create an event (doesnt work in ie, fuck ie)
+			// can be used to trigger native events?
+			// some of the properties are for event handlers
+			// e.g. wtf are you doing trying to set defaultPrevented on instantiation?
+			// its just easier to put all this shit here cuz wtf
+			const event = new Event(
+				'wtf',
+				{	
+					// does this event bubble to the root html?
+					bubbles: bool,
+					// does this event resppond to preventDefault()
+					cancelable: bool,
+					// whether the event wil; propagate across the shadow dom boundary into the standard dom
+					// all UA-disaptched events are composed, (e.g. click, touch, etc)
+					// only occurs !!bubbles
+					composed: bool,
 
+				}
+			);
+		// create a custom event 
+			// create event with custom data via the detail proeprty
+			// if bubbles, boomers can listen for incidences dispatched on millenials
+			const event = new CustomEvent(
+				'wtf', 
+				{ 
+					...eventOptionsFromAbove,
+					// add arbitrary data to be acessible in listeners
+					detail: {...},
+					// the element on which the handler is attached
+					// i.e. could be different that event.target if the handler is invoked in the capture/bubble phases through retargeting
+					currentTarget: eventTarget,
+					// whether preventDefaulted() was invoked
+					defaultPrevented: boolean,
+					// in which phase the handler was invoked
+					eventPhase: phaseName,
+					// the original target from which the event was dispatched
+					// before any retargeting due to bubbling/capture
+					target: eventTarget,
+					// event creation in milliseconds since epoch 
+					// unreliable, probably because of IE but i have no proof
+					timeStamp: DOMTimeStamp,
+				}
+			)
+
+
+
+		// dispatch the event
+			// invokes eventt handlers sycnhronously 
+			// i.e. all event handlers will execute and return BEFORE the cod econtinues on after the call to dispatch event 
+			// is the last step in the create-init-dispatch process
+			// you should checkif it was canceled, if thats your kind of thing
+			const canceled = !domEl.dispatchEvent(event);
+			if (canceled) console.log('preventDefault was called')
+		// dispatch an event in response to some other event
+			// As the user types, the textarea inside the form dispatches/triggers the event to fire, and uses itself as the starting point
+			textarea.addEventListener('input', e => e.target.dispatchEvent(eventAwesome));
+		// dispatch an event dynamically 
+			someEl.dispatchEvent(new CustomEvent('awesome', { bubbles: true, detail: { text: () => textarea.value } }))
+		// disaptch built-in events 
+			function simulateClick() {
+			  var event = new MouseEvent('click', {
+			    view: window,
+			    bubbles: true,
+			    cancelable: true
+			  });
+			  var cb = document.getElementById('checkbox'); 
+			  var cancelled = !cb.dispatchEvent(event);
+			  if (cancelled) {
+			    // A handler called preventDefault.
+			    alert("cancelled");
+			  } else {
+			    // None of the handlers called preventDefault.
+			    alert("not cancelled");
+			  }
 			}
+
+		// handling events
+			function onPoopWipeButDontFlushAt711(e) {
+				// stop the default action
+				e.preventDefault()
+				// stop ancester handlers from being invoked, but permit sibling/concurrent eventTarget handlers
+				e.stopPropagation()
+				// stop ALL other handlers from being invoked, whether on ancestor, sibling, or this eventTarget
+				e.stopImmediatePropagation()
+				// see the path this event takes to nirvana
+				// wtf is the usecase for this?
+				e.composedPath()
+			}
+
+
+
+	// intersection observer shit
+		// create the callback
+		let prevRatio = 0; // assumption is the target is below and not visible
+		const observerCb = (entries, observer) => {
+			// each entry represents an observerOption threshold that was breached (in any direction)
+			entries.forEach(({isIntersecting, intersectionRatio, ...entry}) => {
+				if (!isIntersecting) return;
+				// target moving up and into the root
+				if (intersectionRatio > prevRatio) elComingIntoViewLogic();
+				else elGoingOutOfViewLogic();
+
+				prevRatio = intersectionRatio;
+			});
+		}
+		// create an observer options object for 
+		const getObserverOptions = selector => ({
+			// if null is returned, uses viewport
+			root: document.querySelector(selector)
+			// grow/shrink the root bounding box before calculating intersections
+			// 'toppx rightpx bottompx leftpx'|'% % % %'
+			rootMargin: '0px', 
+			// % target required to be visible within root to trigger the callback
+			// [0, .25, .5, .75, 1] // invoke callback every 25%
+			threshold: 0.25, // 
+		})
+
+		// create an observer
+		const observer = new IntersectionObserver(someFknCb, getObserverOptions());
+
+		// observe an object
+		const observeElement = (selector, el = document.querySelector(selector)) => (
+			el && observer.observer(el)
 		);
-	// create a custom event 
-		// create event with custom data via the detail proeprty
-		// if bubbles, boomers can listen for incidences dispatched on millenials
-		const event = new CustomEvent(
-			'wtf', 
-			{ 
-				...eventOptionsFromAbove,
-				// add arbitrary data to be acessible in listeners
-				detail: {...},
-				// the element on which the handler is attached
-				// i.e. could be different that event.target if the handler is invoked in the capture/bubble phases through retargeting
-				currentTarget: eventTarget,
-				// whether preventDefaulted() was invoked
-				defaultPrevented: boolean,
-				// in which phase the handler was invoked
-				eventPhase: phaseName,
-				// the original target from which the event was dispatched
-				// before any retargeting due to bubbling/capture
-				target: eventTarget,
-				// event creation in milliseconds since epoch 
-				// unreliable, probably because of IE but i have no proof
-				timeStamp: DOMTimeStamp,
-			}
-		)
-
-
-
-	// dispatch the event
-		// invokes eventt handlers sycnhronously 
-		// i.e. all event handlers will execute and return BEFORE the cod econtinues on after the call to dispatch event 
-		// is the last step in the create-init-dispatch process
-		// you should checkif it was canceled, if thats your kind of thing
-		const canceled = !domEl.dispatchEvent(event);
-		if (canceled) console.log('preventDefault was called')
-	// dispatch an event in response to some other event
-		// As the user types, the textarea inside the form dispatches/triggers the event to fire, and uses itself as the starting point
-		textarea.addEventListener('input', e => e.target.dispatchEvent(eventAwesome));
-	// dispatch an event dynamically 
-		someEl.dispatchEvent(new CustomEvent('awesome', { bubbles: true, detail: { text: () => textarea.value } }))
-	// disaptch built-in events 
-		function simulateClick() {
-		  var event = new MouseEvent('click', {
-		    view: window,
-		    bubbles: true,
-		    cancelable: true
-		  });
-		  var cb = document.getElementById('checkbox'); 
-		  var cancelled = !cb.dispatchEvent(event);
-		  if (cancelled) {
-		    // A handler called preventDefault.
-		    alert("cancelled");
-		  } else {
-		    // None of the handlers called preventDefault.
-		    alert("not cancelled");
-		  }
-		}
-
-	// handling events
-		function onPoopWipeButDontFlushAt711(e) {
-			// stop the default action
-			e.preventDefault()
-			// stop ancester handlers from being invoked, but permit sibling/concurrent eventTarget handlers
-			e.stopPropagation()
-			// stop ALL other handlers from being invoked, whether on ancestor, sibling, or this eventTarget
-			e.stopImmediatePropagation()
-			// see the path this event takes to nirvana
-			// wtf is the usecase for this?
-			e.composedPath()
-		}
 i
 ```
 
