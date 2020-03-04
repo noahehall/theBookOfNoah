@@ -525,6 +525,8 @@ i
 
 ### life cycle 
 	- register a callback thats invoked whenever a target elmeent intersects with a root element (viewport/domElement)
+		- i.e. whenever elX is scrolled across Y% (intersection ratio) of elZ
+		- ie. elX is scrolled Y% relative to elZ
 
 ## mutation observer
 	- [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
