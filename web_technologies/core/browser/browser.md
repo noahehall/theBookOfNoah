@@ -520,6 +520,7 @@ i
 	- [request idleCallback](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback)
 		- fuck safari
 	- [timing element visibility](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API/Timing_element_visibility)
+		- really good example
 	- [interection observer entry props](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry)
 
 
@@ -723,6 +724,10 @@ i
 
 ## event categories
 ### core events
+	- [visibilitychange](https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event)
+		- when a document becomes visible/hidden, e.g. switching tabs
+		- use with document.visibilityState === 'visible' inside the event handler
+		- use with document.hidden ? inside the event handler
 ### other events
 	- resource events 
 		- error 
