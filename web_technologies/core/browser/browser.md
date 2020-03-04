@@ -517,6 +517,7 @@ i
 	- [intersection observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
 	- [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
 		- you have this hsit somewhere
+		- but redo anyway when needed
 	- [request idleCallback](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback)
 		- fuck safari
 	- [timing element visibility](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API/Timing_element_visibility)
