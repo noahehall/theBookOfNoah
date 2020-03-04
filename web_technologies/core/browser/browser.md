@@ -669,6 +669,9 @@ i
 		// create the callback
 		let prevRatio = 0; // assumption is the target is below and not visible
 		const observerCb = (entries, observer) => {
+			// target is out of view so we dont need to do anything
+			if (entries[0].intersectionRatio <= 0) return;
+
 			// each entry represents an observerOption threshold that was breached (in any direction)
 			entries.forEach(({isIntersecting, intersectionRatio, target, ...entry}) => {
 				// element is now intersecting with one of your thresholds
@@ -691,7 +694,7 @@ i
 		// shoudl memoize this bitch
 		const getObserverOptions = selector => ({
 			// if null is returned, uses viewport
-			root: document.querySelector(selector)
+			root: document.querySelector(selector),
 			// grow/shrink the root bounding box before calculating intersections
 			// 'toppx rightpx bottompx leftpx'|'% % % %'
 			rootMargin: '0px', 
@@ -703,10 +706,17 @@ i
 		// create an observer
 		const observer = new IntersectionObserver(someFknCb, getObserverOptions());
 
-		// observe an object
+		// start watching an element, can watch an arbitrary amount of els with the same observer
 		const observeElement = (selector, el = document.querySelector(selector)) => (
-			el && observer.observer(el)
+			el && observer.observe(el)
 		);
+		// stop watching a single element
+		const unobserveElement = (selector, el = document.querySelector(selector)) => (
+			el && observer.unobserve(el)
+		);
+		// stop watching all targets
+		const disconnectObserver = obs => runOtherCleanUpLogic() && obs.disconnect();
+
 i
 ```
 
