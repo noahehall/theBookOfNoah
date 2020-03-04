@@ -670,11 +670,15 @@ i
 		const observerCb = (entries, observer) => {
 			// each entry represents an observerOption threshold that was breached (in any direction)
 			entries.forEach(({isIntersecting, intersectionRatio, ...entry}) => {
-				if (!isIntersecting) return;
+				// element is now intersecting with one of your thresholds
+				if (isIntersecting) elComingIntoViewLogic()
+				// element was intersecting, but now isnt
+				else elGoingOutOfViewLogic();
+
+				// another way of doing the above 
 				// target moving up and into the root
 				if (intersectionRatio > prevRatio) elComingIntoViewLogic();
 				else elGoingOutOfViewLogic();
-
 				prevRatio = intersectionRatio;
 			});
 		}
