@@ -78,8 +78,6 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocke
 	- [http2 flow control](https://medium.com/coderscorner/http-2-flow-control-77e54f7fd518)
 	- [in general, this shit](https://developer.mozilla.org/en-US/docs/Web/HTTP)
 	- find out which file you have all your dom notes in and put them in here, or move this in there, or split these long fuckinng files into multiple
-	- [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
-		- you have this hsit somewhere
 	- [js modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
 		- you have this shit somehwere
 
@@ -449,6 +447,8 @@ i
 	- [removeEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener)
 	- [introduction to events](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
 	- [accessing events](https://www.quirksmode.org/js/events_access.html)
+	- [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+		- you have this hsit somewhere
 	
 
 ## terminology 
