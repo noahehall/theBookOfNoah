@@ -513,8 +513,13 @@ i
 			- when a child element will invoke an event in an unknown/dynamic location in the dom but the handler is more effective on a parent element
 			- 
 
-## intersection observer
+## observers
 	- [intersection observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
+	- [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+		- you have this hsit somewhere
+	- [request idleCallback](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback)
+		- fuck safari
+
 
 ### use cases 
 	- asynchronously observe changes i the intersection of a target element with an ancestor element/viewport
@@ -529,8 +534,6 @@ i
 		- ie. elX is scrolled Y% relative to elZ
 
 ## mutation observer
-	- [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
-		- you have this hsit somewhere
 
 ```js
 	// attach events after this shit
