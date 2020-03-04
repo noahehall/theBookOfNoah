@@ -702,7 +702,8 @@ i
 			rootMargin: '0px', 
 			// % target required to be visible within root to trigger the callback
 			// [0, .25, .5, .75, 1] // invoke callback every 25%
-			threshold: 0.25, // 
+			// here we say call when 15% and 85%
+			threshold: [.15, .85], // 
 		})
 
 		// create an observer
