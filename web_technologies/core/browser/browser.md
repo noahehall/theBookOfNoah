@@ -519,21 +519,24 @@ i
 		- you have this hsit somewhere
 	- [request idleCallback](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback)
 		- fuck safari
+	- [timing element visibility](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API/Timing_element_visibility)
+	- [usage with react ibtch](https://medium.com/the-non-traditional-developer/how-to-use-an-intersectionobserver-in-a-react-hook-9fb061ac6cb5)
 
 
 ### use cases 
-	- asynchronously observe changes i the intersection of a target element with an ancestor element/viewport
-	- lazy loading images/content as a page is scrolled
-	- infinite scrolling 
-	- reporting of visibility of advertisemnes in order to calculate ad revenues
-	- delaying tasks/animation until the result would be visible
+	- intersection observer
+		- asynchronously observe changes in the intersection of a target element with an ancestor element/viewport
+		- lazy loading images/content as a page is scrolled
+		- infinite scrolling 
+		- reporting of visibility of advertisemnes in order to calculate ad revenues
+		- delaying tasks/animation until the result would be visible
 
 ### life cycle 
-	- register a callback thats invoked whenever a target elmeent intersects with a root element (viewport/domElement)
-		- i.e. whenever elX is scrolled across Y% (intersection ratio) of elZ
-		- ie. elX is scrolled Y% relative to elZ
+	-intersectino observer
+		- register a callback thats invoked whenever a target elmeent intersects with a root element (viewport/domElement)
+			- i.e. whenever elX is scrolled across Y% (intersection ratio) of elZ
+			- ie. elX is scrolled Y% relative to elZ
 
-## mutation observer
 
 ```js
 	// attach events after this shit
