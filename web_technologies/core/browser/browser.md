@@ -515,6 +515,17 @@ i
 
 ## intersection observer
 	- [intersection observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
+
+### use cases 
+	- asynchronously observe changes i the intersection of a target element with an ancestor element/viewport
+	- lazy loading images/content as a page is scrolled
+	- infinite scrolling 
+	- reporting of visibility of advertisemnes in order to calculate ad revenues
+	- delaying tasks/animation until the result would be visible
+
+### life cycle 
+	- register a callback thats invoked whenever a target elmeent intersects with a root element (viewport/domElement)
+
 ## mutation observer
 	- [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
 		- you have this hsit somewhere
