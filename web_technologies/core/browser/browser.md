@@ -520,6 +520,7 @@ i
 	- [request idleCallback](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback)
 		- fuck safari
 	- [timing element visibility](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API/Timing_element_visibility)
+	- [interection observer entry props](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry)
 
 
 ### use cases 
@@ -669,7 +670,7 @@ i
 		let prevRatio = 0; // assumption is the target is below and not visible
 		const observerCb = (entries, observer) => {
 			// each entry represents an observerOption threshold that was breached (in any direction)
-			entries.forEach(({isIntersecting, intersectionRatio, ...entry}) => {
+			entries.forEach(({isIntersecting, intersectionRatio, target, ...entry}) => {
 				// element is now intersecting with one of your thresholds
 				if (isIntersecting) elComingIntoViewLogic()
 				// element was intersecting, but now isnt
@@ -680,9 +681,14 @@ i
 				if (intersectionRatio > prevRatio) elComingIntoViewLogic();
 				else elGoingOutOfViewLogic();
 				prevRatio = intersectionRatio;
+
+				doShitWithTheTarget(target);
 			});
 		}
 		// create an observer options object for 
+		// you need to create a new options object for each observer
+		// however each observer can monitor multiple targets
+		// shoudl memoize this bitch
 		const getObserverOptions = selector => ({
 			// if null is returned, uses viewport
 			root: document.querySelector(selector)
