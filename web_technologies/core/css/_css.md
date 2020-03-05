@@ -1,5 +1,6 @@
 # bookmark
   - [css layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout)
+  - [gotchas for grid](https://css-tricks.com/things-ive-learned-css-grid-layout/)
   
 
 
