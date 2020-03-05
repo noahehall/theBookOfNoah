@@ -671,11 +671,16 @@ i
 		// create the callback
 		let prevRatio = 0; // assumption is the target is below and not visible
 		const observerCb = (entries, observer) => {
-			// target is out of view so we dont need to do anything
-			if (entries[0].intersectionRatio <= 0) return;
+			for (
+		      const {
+		        isIntersecting,
+		        intersectionRatio,
+		        target,
+		        isVisible,
 
-			// each entry represents an observerOption threshold that was breached (in any direction)
-			entries.forEach(({isIntersecting, intersectionRatio, target, ...entry}) => {
+		        ...entry
+		      } of entries
+		    ) {
 				// element is now intersecting with one of your thresholds
 				if (isIntersecting) elComingIntoViewLogic()
 				// element was intersecting, but now isnt
