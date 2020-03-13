@@ -1,6 +1,8 @@
 # must do first 
 	- [basic crud shit](https://www.arangodb.com/docs/stable/aql/operations-insert.html)
-
+	- need to add 
+		- array of objects with indexes require a particular format when READING to ensure the index is used
+		- 
 # must do 
 	- generally all arnago courses if you decide to make arnagodb your DB of choice muther fucker 
 	- [everything in the left side bar](https://www.arangodb.com/docs/stable/data-modeling.html)
@@ -169,7 +171,7 @@
 			- equality lookups
 			- if all or most queries on the indexed attribute(s) are equality comparisons
 
-	- skiplist index (deprecated for rocksdb, however identical to persistant)
+	- skiplist index (deprecated for rocksdb, however identical to persistent)
 		- properties
 			- sorted index 
 			- always created in ascending order 
