@@ -381,43 +381,92 @@
   - [dont hate w3schools](https://www.w3schools.com/html/html_responsive.asp)
   - [csstricks design principles](https://css-tricks.com/design-principles-for-developers-processes-and-css-tips-for-better-web-design/)
   - [guide to creating innovative web layouts](https://www.htmlgoodies.com/beyond/css/css-guide-to-creating-innovative-web-layouts.html)
-## catchall
-  - type
-    - set font-size to vw (viewport width) so it scales with the viewport
-    - use repetitive styles across similar elements
-    - use hierarchy wisely 
-      - the distinction between differnet fonts, colors, size, capitalization etc
-    - choosing a font 
-      - a balance between readbility and IMPACT
-        - the length of text can help decide between the two
-    - set the line-height larger than the font size to reduce cramping
-      - dont set a unit to your line-height value, as a unitless line-height is proportional to its font-size!
-  - layout 
-    - layout movement: 
-      - how the content flows and your eyes move through the flow of the page
-      - direct a users eye in order to tell a sotry, CTAs, or encourage scrolling/navigation
-    - layout proximity: 
-      - establishes relationships between objects
-      - use repetition (Based on fontsize) to establish a spacing-schema
-        - 0.25rem, .5rem, 1rem, 2rem, 4rem
-  - color 
-    - conveys personality and calls attention
-    - gives pages life and emotion
-    - some guys process (Css tricks)
-      - determine the mood of your site to guide the development of a color pallete
-      - find your main color
-        - saturation (color intensity)
-        - brightness (how close to white or black)
-          - darker moods = darker colors
-        - hue (what most people think of as color)
-          - the hue of a color is what gives it meaning
-          - most people associate hues with ideas (see link)
-      - add 2/3 supporting colors 
-        - add additional supporting colors as needed
-        - changing the tint (mixing with white) and shade (mixing with black)
-    - ensure your theres enough contrast between foreground and background colors 
-      - the difference in saturation, brightness and hue 
-      - important for accessibility for those with low vision/color blindness
+  - [blend modes](https://developer.mozilla.org/en-US/docs/Web/CSS/Compositing_and_Blending)
+  - [css features](https://www.htmlgoodies.com/beyond/css/7-amazing-new-css-techniques-for-2019.html)
+  - [webflow layout design trends](https://webflow.com/blog/layout-design)
+
+## type
+  - set font-size to vw (viewport width) so it scales with the viewport
+  - use repetitive styles across similar elements
+  - use hierarchy wisely 
+    - the distinction between differnet fonts, colors, size, capitalization etc
+  - choosing a font 
+    - a balance between readbility and IMPACT
+      - the length of text can help decide between the two
+  - set the line-height larger than the font size to reduce cramping
+    - dont set a unit to your line-height value, as a unitless line-height is proportional to its font-size!
+## layout 
+  - layout movement: 
+    - how the content flows and your eyes move through the flow of the page
+    - direct a users eye in order to tell a sotry, CTAs, or encourage scrolling/navigation
+  - layout proximity: 
+    - establishes relationships between objects
+    - use repetition (Based on fontsize) to establish a spacing-schema
+      - 0.25rem, .5rem, 1rem, 2rem, 4rem
+## color 
+  - conveys personality and calls attention
+  - gives pages life and emotion
+  - some guys process (Css tricks)
+    - determine the mood of your site to guide the development of a color pallete
+    - find your main color
+      - saturation (color intensity)
+      - brightness (how close to white or black)
+        - darker moods = darker colors
+      - hue (what most people think of as color)
+        - the hue of a color is what gives it meaning
+        - most people associate hues with ideas (see link)
+    - add 2/3 supporting colors 
+      - add additional supporting colors as needed
+      - changing the tint (mixing with white) and shade (mixing with black)
+  - ensure your theres enough contrast between foreground and background colors 
+    - the difference in saturation, brightness and hue 
+    - important for accessibility for those with low vision/color blindness
+
+## CSS features 
+  - blend modes
+    - how content (e.g. images) blends with the background and foreground
+    - background-blend-mode
+      - setting the Container Background-Blend-Mode: Darken on background-image and background-color to get a colorizing effect. You can also create an overlay with pseudo-elements (i.e. :before and :after) on the image wrapper to get the same effect.
+    - mix-blend mode
+      - blend in the contents of the element with the contents of its direct parent background. One use of this mode is overlapped lettering instead of adjusting the opacity, which often results in loss of color vividness
+  - masking 
+    - tell the browser which elements to show/hide via Raster elements, CSS gradients and SVG elements are three ways masking can be done
+  - clipping 
+    -  the shape's boundary and defining areas of the image that shall be visible
+  - text container shapes 
+    - how text flows around its container, e.g. on the outside circle
+      - shape-outside 
+      - shape-inside
+        - both use shapes circle(), polygon(), inset() or ellipse().
+  - transform and skew
+    - use to adjust perspective
+  - animations
+  - initial letter 
+    - selects the first letter of an element and specifies the number of lines it occupies (above or below the initial line)
+  - variable fonts 
+    - set of features defined in the OpenType specification 
+    - enables font files to contain multiple variations of a font in a single file 
+      - you can then pick which variation via CSS and use variables to adjust them
+      - ital: italic
+      - wght: the fonts weight 
+      - wdth: the fonts width 
+      - opsz: adjust the optical size of the font 
+      - slnt - the slant of the font
+  - logical properties and values 
+    - css module for managing appearance of elements through logical directions and dimension mappings
+      - logical properties describe the direction which they flow 
+        - block
+          - the order in which blocks are displayed on the page
+        - inline
+          - the direction which a text line is written
+          - e.g english is left to right, top to bottom
+  - scroll snapping 
+    - determines the rigidity with which attachment poitns are applied to the scroll container 
+    - i.e. locks the viewport to certain elemnets/locations after the user has finsihed scrolling 
+      - e.g. for image galleries or full-height|width content
+  - flexbox, grid, and subgrid
+  - media queries 
+    - especially the new level 4
 
 
 .
