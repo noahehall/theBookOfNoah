@@ -413,7 +413,6 @@
     - find your main color
       - saturation (color intensity)
         - the strength/weakness of a color
-
       - brightness|value (how close to white or black)
         - darker moods = darker colors
       - hue (color, like blue or red)
@@ -431,6 +430,27 @@
     - add 2/3 supporting colors 
       - add additional supporting colors as needed
       - changing the tint (mixing with white) and shade (mixing with black)
+      - types of color palettes 
+        - monochromatic 
+          - different shades and depths of aa single hue 
+          - i.e. there there all the same color
+          - can be very boring 
+        - analogous
+          - a main color and the colors from either side of it on the color wheel
+          - do a great job of 
+            - expressing consistency and uniformity within design 
+            - limiting any distraction away from the content
+          - isnt a large differentiation in hue 
+          - contrast is struck primarily through the variations in color shade
+        - complementary 
+          - i.e. opposite colors from the color wheel
+            - red and green
+            blue and orange 
+          - great for 
+            - communicating a sense of balance 
+          - add tints & shades to expand the color pallete 
+            - helps to avoid the glaring contrasts (causes eyestrain) when two opposing colors are placed next to each other
+
   - ensure your theres enough contrast between foreground and background colors 
     - the difference in saturation, brightness and hue 
     - important for accessibility for those with low vision/color blindness
