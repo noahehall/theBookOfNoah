@@ -1,7 +1,14 @@
+# tools
+  - [color wheel](https://commons.wikimedia.org/wiki/File:RGB_color_wheel_24.svg)
+  - [premade color palletes](https://colorhunt.co/)
+  - [color pallete generator](https://coolors.co/)
+  - [another color generator but my favorite thus far](http://paletton.com/)
+  - [adobes colro wheel dope too](https://color.adobe.com/create)
+
+
 # bookmark
   - [css layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout)
   - [gotchas for grid](https://css-tricks.com/things-ive-learned-css-grid-layout/)
-  
 
 
 # must read/eventually todo
