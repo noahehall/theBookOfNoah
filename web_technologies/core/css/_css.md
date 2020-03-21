@@ -450,6 +450,29 @@
             - communicating a sense of balance 
           - add tints & shades to expand the color pallete 
             - helps to avoid the glaring contrasts (causes eyestrain) when two opposing colors are placed next to each other
+        - triadic 
+          - three colors from equidistant points ont he color whweel 
+            - e.g. red, yellow and blue 
+          - creates a diverse color pallete 
+          - requires a lot of planning and experimentation 
+      - color meanings 
+        - red
+          - energy, power, passion 
+        - orange
+          - join, enthusiasm, creativity 
+        - yellow 
+          - happiness, intellect, energy 
+        - green 
+          - ambition, growth, freshness, safety 
+        - blue 
+          - tranquility, confidence, intelligence 
+        - purple
+          - luxury, ambition, creativity 
+        - black 
+          - power, elegance, mystery 
+        - white 
+          - cleanliness, purity, perfection
+
 
   - ensure your theres enough contrast between foreground and background colors 
     - the difference in saturation, brightness and hue 
