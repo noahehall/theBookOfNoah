@@ -83,7 +83,7 @@
   - think creatively when using `calc` and custom properties 
     - e.g. read [this link](https://oky.dk/blog/1kb-grid)
 
-```css
+```js
   /* 
     example html <p data-foo="hello">world</p> 
     renders <>hello world</>
@@ -91,7 +91,7 @@
   [data-foo]::before {
     content: attr(data-foo) " ";
   }
-
+.
 ```
 
 # syntax
@@ -101,8 +101,8 @@
   - property, e.g. `background-color`
   - value e.g. red in`background-color: red`
   - declaration: property + value e.g. `background-color: red;`
-  - declaration block: one/more declarations surrounded by braces e.g. e.g. `{ background-color: red; width: 20px }`
-  - rule: selector(s) + declaration block e.g. e.g. `p { background-color: red; }`
+  - declaration block: one/more declarations surrounded by braces e.g. e.g. { background-color: red; width: 20px }
+  - rule: selector(s) 'declaration block e.g. e.g. p { background-color: red; }'
 
 ## values and units
   - numbers e.g. `20`
@@ -117,25 +117,25 @@
     - px	Pixels	1px = 1/96th of 1in
   - relative units
     - em	Font size of the parent element.
-    - ex	x-height of the element's font.
-    - ch	The advance measure (width) of the glyph "0" of the element's font.
+    - ex	x-height of the elements font.
+    - ch	The advance measure (width) of the glyph "0" of the elements font.
     - rem	Font size of the root element.
     - lh	Line height of the element.
-    - vw	1% of the viewport's width.
-    - vh	1% of the viewport's height.
-    - vmin	1% of the viewport's smaller dimension.
-    - vmax	1% of the viewport's larger dimension.
+    - vw	1% of the viewports width.
+    - vh	1% of the viewports height.
+    - vmin	1% of the viewports smaller dimension.
+    - vmax	1% of the viewports larger dimension.
   - colors
-    - keywords e.g. `red`
-    - hexadecimal e.g. `#ff0000`
+    - keywords e.g. red
+    - hexadecimal e.g. #ff0000
       - allows us to specify any of the 256 available values for each (16 x 16 = 256.)
-    - rgb e.g. `rgb(0,0,255)`
+    - rgb e.g. rgb(0,0,255)
       -  three parameters that represent the red, green and blue channel values of the colors between 0 and 255
     - hsl e.g. hsl(0,100%,50%)
       - accepts hue, saturation, and lightness values, which are used to distinguish between the 16.7 million colors
       - hue: the base shade of the color. This takes a value between 0 and 360, presenting the angles round a color wheel.
-      - saturation: how saturated is the color? This takes a value from 0-100%, where 0 is no color (it will appear as a shade of grey), and 100% is full color saturation
-      - how light or bright is the color? This takes a value from 0-100%, where 0 is no light (it will appear completely black) and 100% is full light (it will appear completely white)
+      - saturation: how saturated is the color: This takes a value from 0-100%, where 0 is no color (it will appear as a shade of grey), and 100% is full color saturation
+      - how light or bright is the color: This takes a value from 0-100%, where 0 is no light (it will appear completely black) and 100% is full light (it will appear completely white)
     - rgba & hsla
       - allow you to set an additional `transparency` dimension
         - `rgba(255,0,0,0.5);`
@@ -152,10 +152,10 @@
     - relatice units
       - em: ame as the font-size of the current element
       - ex, ch: the height of a lower case x / width o f the number 0
-      - rem: size of the default/root base font-size
+      - rem: size of the default|root base font-size
       - vw, vh: 1/100th of the width/height of the viewport
     -
-
+.
 ```css
   /*
     pseudo element for defining custom properties for the html document
@@ -181,7 +181,7 @@
     element.style.setProperty("--my-var", jsVar + 4);
 
     */
-
+.
 ```
 # box model
   - the foundation of layout on the web
@@ -194,6 +194,7 @@
   - overflow: when the content of an element overflows its absolute width/height
   - background: box backgrounds (color and images) are stacked on top of eachother
     - background-clip: determines how
+.
 ```css
   /*
     -on the container
@@ -374,8 +375,104 @@
     set the size of the elements backgroudn image
     */
   background-size: contain|no-repeat|cover|%|% %|# #|etc
+.
+```
+# DESIGN
+  - [dont hate w3schools](https://www.w3schools.com/html/html_responsive.asp)
+  - [csstricks design principles](https://css-tricks.com/design-principles-for-developers-processes-and-css-tips-for-better-web-design/)
+  - [guide to creating innovative web layouts](https://www.htmlgoodies.com/beyond/css/css-guide-to-creating-innovative-web-layouts.html)
+## catchall
+  - type
+    - set font-size to vw (viewport width) so it scales with the viewport
+    - use repetitive styles across similar elements
+    - use hierarchy wisely 
+      - the distinction between differnet fonts, colors, size, capitalization etc
+    - choosing a font 
+      - a balance between readbility and IMPACT
+        - the length of text can help decide between the two
+    - set the line-height larger than the font size to reduce cramping
+      - dont set a unit to your line-height value, as a unitless line-height is proportional to its font-size!
+  - layout 
+    - layout movement: 
+      - how the content flows and your eyes move through the flow of the page
+      - direct a users eye in order to tell a sotry, CTAs, or encourage scrolling/navigation
+    - layout proximity: 
+      - establishes relationships between objects
+      - use repetition (Based on fontsize) to establish a spacing-schema
+        - 0.25rem, .5rem, 1rem, 2rem, 4rem
+  - color 
+    - conveys personality and calls attention
+    - gives pages life and emotion
+    - some guys process (Css tricks)
+      - determine the mood of your site to guide the development of a color pallete
+      - find your main color
+        - saturation (color intensity)
+        - brightness (how close to white or black)
+          - darker moods = darker colors
+        - hue (what most people think of as color)
+          - the hue of a color is what gives it meaning
+          - most people associate hues with ideas (see link)
+      - add 2/3 supporting colors 
+        - add additional supporting colors as needed
+        - changing the tint (mixing with white) and shade (mixing with black)
+    - ensure your theres enough contrast between foreground and background colors 
+      - the difference in saturation, brightness and hue 
+      - important for accessibility for those with low vision/color blindness
+
+
+.
+```js
+  // general css 
+    // use media queries to target a various number of contexts
+  // HTML
+    // instruct the browser how to controlt he pages dimensions and scaling
+    const metaTag = '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+
+  // IMAGES
+    // set width to 100% to scale up s large as its container
+    // set max-width to 100% to scale down to to its container size or up to its orignial size
+    // use the picture element to define images for different browser window sizes
+    const picture = `
+      <picture>
+        <source srcset="img_smallflower.jpg" media="(max-width: 600px)">
+        <source srcset="img_flowers.jpg" media="(max-width: 1500px)">
+        <source srcset="flowers.jpg">
+        <img src="img_smallflower.jpg" alt="Flowers">
+      </picture>
+    )`
+
+.
 ```
 # LAYOUT
+
+## RESPONSIVE
+  - [dont hate w3schools](https://www.w3schools.com/html/html_responsive.asp)
+
+```js
+  // general css 
+    // use media queries to target a various number of contexts
+  // HTML
+    // instruct the browser how to controlt he pages dimensions and scaling
+    const metaTag = '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+
+  // IMAGES
+    // set width to 100% to scale up s large as its container
+    // set max-width to 100% to scale down to to its container size or up to its orignial size
+    // use the picture element to define images for different browser window sizes
+    const picture = `
+      <picture>
+        <source srcset="img_smallflower.jpg" media="(max-width: 600px)">
+        <source srcset="img_flowers.jpg" media="(max-width: 1500px)">
+        <source srcset="flowers.jpg">
+        <img src="img_smallflower.jpg" alt="Flowers">
+      </picture>
+    )`
+
+  // TYPE
+    // set font-size to vw (viewport width) so it scales with the viewport
+
+.
+```
 ## GRID
   - [read this when you need a dynamic (not logical) order)](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Auto-placement_in_CSS_Grid_Layout)
     - think a puzzle layout [with this one](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow)
