@@ -384,6 +384,8 @@
   - [blend modes](https://developer.mozilla.org/en-US/docs/Web/CSS/Compositing_and_Blending)
   - [css features](https://www.htmlgoodies.com/beyond/css/7-amazing-new-css-techniques-for-2019.html)
   - [webflow layout design trends](https://webflow.com/blog/layout-design)
+  - [typography for developers](https://css-tricks.com/typography-for-developers/)
+  - [choosing a color palette](https://www.invisionapp.com/inside-design/quick-guide-color-palette/)
 
 ## type
   - set font-size to vw (viewport width) so it scales with the viewport
@@ -410,11 +412,22 @@
     - determine the mood of your site to guide the development of a color pallete
     - find your main color
       - saturation (color intensity)
-      - brightness (how close to white or black)
+        - the strength/weakness of a color
+
+      - brightness|value (how close to white or black)
         - darker moods = darker colors
-      - hue (what most people think of as color)
+      - hue (color, like blue or red)
         - the hue of a color is what gives it meaning
         - most people associate hues with ideas (see link)
+      - chroma (how pure a color is)
+        - lack of whitie, black or gray added to it 
+      - tone
+        - creaated by adding gray toa  pure hue 
+      - shade 
+        - created by adding black to a pure hue
+      - tint 
+        - created by adding white to a hue
+
     - add 2/3 supporting colors 
       - add additional supporting colors as needed
       - changing the tint (mixing with white) and shade (mixing with black)
