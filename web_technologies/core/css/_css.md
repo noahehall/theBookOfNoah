@@ -485,6 +485,9 @@
       - 60% to your dominant hue 
       - 30% to secondary color 
       - 10% for accent color
+    - the best color combinations come from nature 
+      - because they will always look natural
+      - e.g. sunrise, sunsets, beach scenes, etc
 
 
 
