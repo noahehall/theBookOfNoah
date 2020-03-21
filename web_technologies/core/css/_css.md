@@ -472,6 +472,20 @@
           - power, elegance, mystery 
         - white 
           - cleanliness, purity, perfection
+  - color pallete design process 
+    - start with greyscale 
+      - ensures a focus on useability and clear navigation rather than assigning colors to elements
+      - focus on 
+        - layout out elements 
+        - optimiznig white space
+        - creating a hierarchy of type and elements
+    - develop a 60-30-10 % rule 
+      - comes from interior design when assigning colors to things 
+        - a color pallete should have no momre than 5 colors cuz some muthafucka from invionapp wrote a blog post
+      - 60% to your dominant hue 
+      - 30% to secondary color 
+      - 10% for accent color
+
 
 
   - ensure your theres enough contrast between foreground and background colors 
