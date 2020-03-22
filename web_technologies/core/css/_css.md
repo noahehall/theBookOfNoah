@@ -410,6 +410,61 @@
   - [choosing a color palette](https://www.invisionapp.com/inside-design/quick-guide-color-palette/)
   - [100 color combinations and how to use them](https://www.canva.com/learn/100-color-combinations/)
 
+## design processes 
+### designing a website 
+  - from webflow
+    - goal identification
+       - purpose of the site 
+        - primary purpose to inform ? sell ? etcs
+       - who is the site for 
+       - what do they expect to find/do 
+       - competitors and their sites
+       - tools: audience personas, creative brief, competitor anlaysis, brand attributes
+    - scope definition 
+      - what web pages and features the site requires to fullfil the goal
+      - timeline 
+      - tools: gantt charts, design contract
+    - sitemap and wireframe creation 
+      - how the content and features in the scope will interrelate and their hierarchy/relationship
+      - wireframe:
+      - tools: balsamiq, webflow, moqups, sketch, axure, slickplan, writemaps, mindnode
+    - content creation 
+      - creating content for individual pages 
+      - tools: 
+        - content creation: google docs, dropbox paper, quip, gather content,
+        - seo: google keyword planner, google trends, screaming frogs seo spider
+    - visual elements 
+      - developing the visual brand 
+      - tools 
+        - style tyles, moodboards, element collages
+        - 
+    - testing
+      - fuck your tests bitch
+
+### picking a color pallete
+  - some guys process (Css tricks)
+    - determine the mood of your site to guide the development of a color pallete
+    - find your main color
+    - add 2/3 supporting colors 
+      - add additional supporting colors as needed
+      - changing the tint (mixing with white) and shade (mixing with black)
+  - some other guy
+    - start with greyscale 
+      - ensures a focus on useability and clear navigation rather than assigning colors to elements
+      - focus on 
+        - layout out elements 
+        - optimiznig white space
+        - creating a hierarchy of type and elements
+    - develop a 60-30-10 % rule 
+      - comes from interior design when assigning colors to things 
+        - a color pallete should have no momre than 5 colors cuz some muthafucka from invionapp wrote a blog post
+      - 60% to your dominant hue 
+      - 30% to secondary color 
+      - 10% for accent color
+    - the best color combinations come from nature 
+      - because they will always look natural
+      - e.g. sunrise, sunsets, beach scenes, etc
+
 ## type
   - set font-size to vw (viewport width) so it scales with the viewport
   - use repetitive styles across similar elements
@@ -431,89 +486,63 @@
 ## color 
   - conveys personality and calls attention
   - gives pages life and emotion
-  - some guys process (Css tricks)
-    - determine the mood of your site to guide the development of a color pallete
-    - find your main color
-      - saturation (color intensity)
-        - the strength/weakness of a color
-      - brightness|value (how close to white or black)
-        - darker moods = darker colors
-      - hue (color, like blue or red)
-        - the hue of a color is what gives it meaning
-        - most people associate hues with ideas (see link)
-      - chroma (how pure a color is)
-        - lack of whitie, black or gray added to it 
-      - tone
-        - creaated by adding gray toa  pure hue 
-      - shade 
-        - created by adding black to a pure hue
-      - tint 
-        - created by adding white to a hue
-
-    - add 2/3 supporting colors 
-      - add additional supporting colors as needed
-      - changing the tint (mixing with white) and shade (mixing with black)
-      - types of color palettes (theres many more)
-        - monochromatic 
-          - different shades and depths of aa single hue 
-          - i.e. there there all the same color
-          - can be very boring 
-        - analogous
-          - a main color and the colors from either side of it on the color wheel
-          - do a great job of 
-            - expressing consistency and uniformity within design 
-            - limiting any distraction away from the content
-          - isnt a large differentiation in hue 
-          - contrast is struck primarily through the variations in color shade
-        - complementary 
-          - i.e. opposite colors from the color wheel
-            - red and green
-            blue and orange 
-          - great for 
-            - communicating a sense of balance 
-          - add tints & shades to expand the color pallete 
-            - helps to avoid the glaring contrasts (causes eyestrain) when two opposing colors are placed next to each other
-        - triadic 
-          - three colors from equidistant points ont he color whweel 
-            - e.g. red, yellow and blue 
-          - creates a diverse color pallete 
-          - requires a lot of planning and experimentation 
-      - color meanings 
-        - red
-          - energy, power, passion 
-        - orange
-          - join, enthusiasm, creativity 
-        - yellow 
-          - happiness, intellect, energy 
-        - green 
-          - ambition, growth, freshness, safety 
-        - blue 
-          - tranquility, confidence, intelligence 
-        - purple
-          - luxury, ambition, creativity 
-        - black 
-          - power, elegance, mystery 
-        - white 
-          - cleanliness, purity, perfection
-  - color pallete design process 
-    - start with greyscale 
-      - ensures a focus on useability and clear navigation rather than assigning colors to elements
-      - focus on 
-        - layout out elements 
-        - optimiznig white space
-        - creating a hierarchy of type and elements
-    - develop a 60-30-10 % rule 
-      - comes from interior design when assigning colors to things 
-        - a color pallete should have no momre than 5 colors cuz some muthafucka from invionapp wrote a blog post
-      - 60% to your dominant hue 
-      - 30% to secondary color 
-      - 10% for accent color
-    - the best color combinations come from nature 
-      - because they will always look natural
-      - e.g. sunrise, sunsets, beach scenes, etc
-
-
-
+  - saturation (color intensity)
+    - the strength/weakness of a color
+  - brightness|value (how close to white or black)
+    - darker moods = darker colors
+  - hue (color, like blue or red)
+    - the hue of a color is what gives it meaning
+    - most people associate hues with ideas (see link)
+  - chroma (how pure a color is)
+    - lack of whitie, black or gray added to it 
+  - tone
+    - creaated by adding gray toa  pure hue 
+  - shade 
+    - created by adding black to a pure hue
+  - tint 
+    - created by adding white to a hue
+  - types of color palettes (theres many more)
+    - monochromatic 
+      - different shades and depths of aa single hue 
+      - i.e. there there all the same color
+      - can be very boring 
+    - analogous
+      - a main color and the colors from either side of it on the color wheel
+      - do a great job of 
+        - expressing consistency and uniformity within design 
+        - limiting any distraction away from the content
+      - isnt a large differentiation in hue 
+      - contrast is struck primarily through the variations in color shade
+    - complementary 
+      - i.e. opposite colors from the color wheel
+        - red and green
+        blue and orange 
+      - great for 
+        - communicating a sense of balance 
+      - add tints & shades to expand the color pallete 
+        - helps to avoid the glaring contrasts (causes eyestrain) when two opposing colors are placed next to each other
+    - triadic 
+      - three colors from equidistant points ont he color whweel 
+        - e.g. red, yellow and blue 
+      - creates a diverse color pallete 
+      - requires a lot of planning and experimentation 
+  - color meanings 
+    - red
+      - energy, power, passion 
+    - orange
+      - join, enthusiasm, creativity 
+    - yellow 
+      - happiness, intellect, energy 
+    - green 
+      - ambition, growth, freshness, safety 
+    - blue 
+      - tranquility, confidence, intelligence 
+    - purple
+      - luxury, ambition, creativity 
+    - black 
+      - power, elegance, mystery 
+    - white 
+      - cleanliness, purity, perfection
   - ensure your theres enough contrast between foreground and background colors 
     - the difference in saturation, brightness and hue 
     - important for accessibility for those with low vision/color blindness
@@ -578,6 +607,9 @@
   - split screens 
     - great for large screens 
     - break up big blocks of content, where each sdie of the screen is dedicated to differnet parts of the same content, e.g header + image vs paragraph text
+  - using the foreground and background axis artistically 
+  - use cards/sliders instead of scrolling content
+
 .
 ```js
   // general css 
