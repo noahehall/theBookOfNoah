@@ -1,9 +1,24 @@
-# tools
+# tools, examples, shit like that
   - [color wheel](https://commons.wikimedia.org/wiki/File:RGB_color_wheel_24.svg)
   - [premade color palletes](https://colorhunt.co/)
   - [color pallete generator](https://coolors.co/)
   - [another color generator but my favorite thus far](http://paletton.com/)
   - [adobes colro wheel dope too](https://color.adobe.com/create)
+  - [free color schemes](https://www.canva.com/templates/)
+  - [100 color schemes](https://www.canva.com/learn/100-color-combinations/)
+  - [jack other peopels design shits](https://dribbble.com/)
+  - [style tyles](http://styletil.es/)
+  - [izmir hover effects](https://ciar4n.com/izmir/)
+  - [free illustrations of people and objects](https://fresh-folk.com/)
+  - [online image editor](https://doka.photo/)
+
+
+
+## cool fonts
+  - [recursive](https://www.recursive.design/)
+  - [bridamount](https://www.1001fonts.com/bridamount-font.html)
+  - [grifter](https://hansonmethod.com/grifter)
+  
 
 
 # bookmark
@@ -393,6 +408,7 @@
   - [webflow layout design trends](https://webflow.com/blog/layout-design)
   - [typography for developers](https://css-tricks.com/typography-for-developers/)
   - [choosing a color palette](https://www.invisionapp.com/inside-design/quick-guide-color-palette/)
+  - [100 color combinations and how to use them](https://www.canva.com/learn/100-color-combinations/)
 
 ## type
   - set font-size to vw (viewport width) so it scales with the viewport
@@ -437,7 +453,7 @@
     - add 2/3 supporting colors 
       - add additional supporting colors as needed
       - changing the tint (mixing with white) and shade (mixing with black)
-      - types of color palettes 
+      - types of color palettes (theres many more)
         - monochromatic 
           - different shades and depths of aa single hue 
           - i.e. there there all the same color
