@@ -11,6 +11,24 @@
   - [izmir hover effects](https://ciar4n.com/izmir/)
   - [free illustrations of people and objects](https://fresh-folk.com/)
   - [online image editor](https://doka.photo/)
+  - [jack webflow design templates](https://webflow.com/templates?utm_source=dashboard)
+  - [webflow animation builder](https://webflow.com/interactions-animations?utm_medium=inline-ad&utm_source=ix2)
+  - [codepen](https://codepen.io/)
+  - [codemyui](https://codemyui.com/)
+  - [whole lotta shit here](https://freebiesbug.com/)
+  - stock photos 
+    - [unspalsh](https://unsplash.com/)
+    - [high res photos](https://gratisography.com/)
+    - [picography](https://picography.co/)
+    - [whole lotta images](https://pixabay.com/)
+    - [cooler pics](https://kaboompics.com/)
+    - [fave brand thus far](https://jaymantri.com/)
+    - [food pictures](https://www.foodiesfeed.com/)
+    - [free images](https://littlevisuals.co/)
+    - [high res](https://www.lifeofpix.com/)
+    - [has an admin picked photo section](https://skitterphoto.com/)
+    - [basic stock shit](https://stocksnap.io/)
+
 
 
 
