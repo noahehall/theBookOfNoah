@@ -18,7 +18,7 @@
   - [recursive](https://www.recursive.design/)
   - [bridamount](https://www.1001fonts.com/bridamount-font.html)
   - [grifter](https://hansonmethod.com/grifter)
-  
+
 
 
 # bookmark
@@ -564,7 +564,15 @@
   - media queries 
     - especially the new level 4
 
-
+## effects, trends, etc
+  - parallax effect
+    - layering graphics, images and text while tying their moving to scroll position at differnet speeds
+    - use cases
+      - make soething more dynamic and itneresting
+  - overlapping elements
+    - e.g. solid colors, behind an imge, behind text, each artistically visible and possibly animated at different speeds/scroll positions
+  - breakup content with offset headers, subheaders and columns 
+    - instead of rigid symmetry, offset shit
 .
 ```js
   // general css 
