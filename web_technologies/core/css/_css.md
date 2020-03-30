@@ -1,22 +1,25 @@
 # tools, examples, shit like that
-  - [color wheel](https://commons.wikimedia.org/wiki/File:RGB_color_wheel_24.svg)
-  - [premade color palletes](https://colorhunt.co/)
-  - [color pallete generator](https://coolors.co/)
-  - [another color generator but my favorite thus far](http://paletton.com/)
-  - [adobes colro wheel dope too](https://color.adobe.com/create)
-  - [free color schemes](https://www.canva.com/templates/)
-  - [100 color schemes](https://www.canva.com/learn/100-color-combinations/)
-  - [jack other peopels design shits](https://dribbble.com/)
-  - [style tyles](http://styletil.es/)
-  - [izmir hover effects](https://ciar4n.com/izmir/)
-  - [free illustrations of people and objects](https://fresh-folk.com/)
-  - [online image editor](https://doka.photo/)
-  - [jack webflow design templates](https://webflow.com/templates?utm_source=dashboard)
-  - [webflow animation builder](https://webflow.com/interactions-animations?utm_medium=inline-ad&utm_source=ix2)
-  - [codepen](https://codepen.io/)
-  - [codemyui](https://codemyui.com/)
-  - [whole lotta shit here](https://freebiesbug.com/)
+  - misc
+    - [online image editor](https://doka.photo/)
+  - color shit
+    - [color wheel](https://commons.wikimedia.org/wiki/File:RGB_color_wheel_24.svg)
+    - [premade color palletes](https://colorhunt.co/)
+    - [color pallete generator](https://coolors.co/)
+    - [another color generator but my favorite thus far](http://paletton.com/)
+    - [adobes colro wheel dope too](https://color.adobe.com/create)
+    - [free color schemes](https://www.canva.com/templates/)
+    - [100 color schemes](https://www.canva.com/learn/100-color-combinations/)
+  - template shit
+    - [jack other peopels design shits](https://dribbble.com/)
+    - [style tyles](http://styletil.es/)
+    - [izmir hover effects](https://ciar4n.com/izmir/)
+    - [jack webflow design templates](https://webflow.com/templates?utm_source=dashboard)
+    - [webflow animation builder](https://webflow.com/interactions-animations?utm_medium=inline-ad&utm_source=ix2)
+    - [codepen](https://codepen.io/)
+    - [codemyui](https://codemyui.com/)
+    - [whole lotta shit here](https://freebiesbug.com/)
   - stock photos 
+    - [free illustrations of people and objects](https://fresh-folk.com/)
     - [unspalsh](https://unsplash.com/)
     - [high res photos](https://gratisography.com/)
     - [picography](https://picography.co/)
@@ -28,14 +31,10 @@
     - [high res](https://www.lifeofpix.com/)
     - [has an admin picked photo section](https://skitterphoto.com/)
     - [basic stock shit](https://stocksnap.io/)
-
-
-
-
-## cool fonts
-  - [recursive](https://www.recursive.design/)
-  - [bridamount](https://www.1001fonts.com/bridamount-font.html)
-  - [grifter](https://hansonmethod.com/grifter)
+  - cool fonts
+    - [recursive](https://www.recursive.design/)
+    - [bridamount](https://www.1001fonts.com/bridamount-font.html)
+    - [grifter](https://hansonmethod.com/grifter)
 
 
 
@@ -445,7 +444,7 @@
     - sitemap and wireframe creation 
       - how the content and features in the scope will interrelate and their hierarchy/relationship
       - wireframe:
-      - tools: balsamiq, webflow, moqups, sketch, axure, slickplan, writemaps, mindnode
+      - tools: webflow, all the other shit costs, fuck them
     - content creation 
       - creating content for individual pages 
       - tools: 
@@ -765,21 +764,24 @@
   .grid-container {
     /*
       defines the grid wrapper
+      grid|inline-grid
       */
     display: grid;
 
     /*
-      explicit grid columns
+      explicit grid columns|rows
       line names and track sizing functions of grid columns
       each value specifies a single column, unless you use the repeat function
      */
     grid-template-columns: repeat(3, 1fr); /*3 columns that grow equally*/
     grid-template-columns: col1 col2 col3 etc; /*explicit*/
     grid-template-columns: 1fr 1fr 1fr; /* 3 equal size columns that grow/shrink*/
-    grid-template-columns: 2fr 1fr 1fr; /* split into 4 parts divided into 3 columns, the first gets twice the amount as the other columns*/
+    grid-template-columns: 2fr 1fr 1fr; /* split into 3 columns, the first gets twice the amount as the other columns*/
     grid-template-columns: 100px 1fr 1fr; /* explicit first column, grow/shrink remaining 2 columns*/
     grid-template-columns: 100px repeat(2, 1fr) 10px; /* same as above, but adds another track at 10px */
     grid-template-columns: repeat(5, 1fr 2fr); /*creates 10 columns by repeating the pattern 1fr 2fr 5 times*/
+    grid-template-rows: see above;
+    grid-template-rows: [row1] 25% [row2] auto; /*with names*/
 
     /*
       implicit grid columns and rows
@@ -798,11 +800,30 @@
       grid-row-end: #|name;
 
     /*
+      grid template areas allow yous to define names for grid-template-columns and grid-template-rows
+      then assign other elements into those names
+      each name can be used in 3 diff ways for child elements
+        - someName | someName-start | someName-end
+      */
+      grid-template-areas:
+        "<someName> | "
+
+    /*
+      shorthand for setting template rows, columns and areas in one declaration
+      doesnt reset the implicit grid properties
+      use `grid:` instead (has the same syntax)
+      */
+      grid-template: rowDefs / columnDefs;
+      grid-template:
+        [row1] "header header header"  /* row def1 */
+        [row2] "footer footer footer"  /* row def2 */
+        / auto 50px 1fr; /* column defs */
+    /*
       sets the gutters between rows and columns
       shorthand for row-gap and column-gap
       can be fixed/relative values
      */
-    grid-gap: rowGap columnGap;
+      grid-gap: rowGap columnGap;
 
     /*
       direction of flow left->right, top->bottom
