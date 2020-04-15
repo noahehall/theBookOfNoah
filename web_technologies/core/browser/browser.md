@@ -1538,7 +1538,7 @@ i
 ```
 ## push notifications 
 	- fuck what they say, the browser has to be open to receive push events
-		- however, if a push is sent while ethe browser is not opened, once opened, it will receive the push event
+		- however, if a push is sent while the browser is not opened, once opened, it will receive the push event
 		- imperative to group the events together so a user doenst get 50mill events
 		
 ### google overlords best practices 
@@ -1598,8 +1598,8 @@ i
 		- a system for routing push messaages from a server to a specific client 
 		- each browser implements its own push service 
 			- wtf we have to understand this
-			- do we need to handle this distinctly for each browser
-			- remember having to code specifically for ded azz IE?
+			- do we need to handle this distinctly for each browser (duh)
+			- remember having to code specifically for ded azz IE? (fuck)
 	- web push protocol 
 		- describes how an application server or user agent interacts with a push service 
 	- subscription
@@ -1656,7 +1656,7 @@ i
 	- the action of the service worker sending the information to a user
 	- lets the app display system notifications to the user
 	- uses the same mechanisms as a native app (mostly)
-	- split into two non technical areaas
+	- split into two non technical areas
 		- Invocation API 
 			- controls how to make yoru notifications appear 
 				- styling, vibration, etc
@@ -1676,7 +1676,7 @@ i
 				- is specific to each browser 
 			- subscription.endpoint 
 				- the browsers push service creates an endpoint where you server can send messages to a specific user 
-				- this endpoint is to the browsers push service, which is responsible for routing messages to the user associated at this endpoint
+				- the browsers push service maps the endpoint to a specific client,
 			- subscription.keys
 				- used to encrypt your push messages before sending to the subscription endpoint  (see webpush)
 				- you must encrypt your messages before sending to the push service as the push service may not be encrypted (https)
