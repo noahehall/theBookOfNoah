@@ -236,7 +236,7 @@
       }
     ```
   - check if properties exists and is owned by object
-  	`	if (thisObject.hasOwnProperty('thisPropertyName')) return true;`
+  	`	if (thisObject.hasOwnProperty('thisPropertyName'));`
   - check if property exist and is owned by object or the objects prototype
   		`(if 'thisPropertyName' in thisObject) return true;`
 # TERMINOLOGY
@@ -273,7 +273,7 @@
       4. stylesheets
       5. scripts
     - add HTTP headers that allow web servers to describe the set of origins that are permitted to read
-    - for HTTP methods with server side-effects (e.g. `POST`), the spec mandates that browsers *preflight* the request to retrieve supported methods with an `HTTP OPTIONS` request method, and then upon *approval* from teh server, sending the actual request
+    - for HTTP methods with server side-effects (e.g. `POST`), the spec mandates that browsers *preflight* the request to retrieve supported methods with an `HTTP OPTIONS` request method, and then upon *approval* from the server, sending the actual request
     - servers can notify clients whether crednetials (e.g. cookies) should be sent with requests
   - TERMINOLOGY
     1. Simple requests: requests types that don't trigger a `CORS preflight`, i.e. GET, HEAD, POST
@@ -302,7 +302,7 @@
 ## javascript engine
   - https://www.quora.com/How-does-a-JavaScript-engine-work
   - general steps
-    0. source code:
+    0. source code: the asexome sht I think i do
     1. parser: takes js and generates an abstract syntax tree
     2. bytecode generator
     3. interpretor: converts the bytecode into machine code
@@ -545,7 +545,7 @@
   - REST: Representational State transfer
     - state transition: going from one state (page) to another (page)
     1. separate client from server
-    2. not hold state between requests (all information is sent with each response)
+    2. should not hold state between requests (all information is sent with each response)
     3. use HTTP and HTTP methods
   - HTTP Requests:
     1. Request: tells the server what kind of request (method) is being sent
@@ -582,7 +582,7 @@
     9. PATCH: used to apply partial modifications
 
 ## Accessibility:
-  - Accessible: everyone can access the site's content and use it's functionality functionality
+  - Accessible: everyone can access the site's content and use it's functionality
     + for users who are experiencing some time of impairment
     + the sites' content should be available to everyone
     + the sites' functionality can be operated by anyone

@@ -7,7 +7,7 @@
 			- https://www.arangodb.com/docs/3.6/indexing-index-basics.html#indexing-array-values
 
 # must do 
-	- generally all arnago courses if you decide to make arnagodb your DB of choice muther fucker 
+	- generally all arango courses if you decide to make arnagodb your DB of choice muther fucker 
 	- [everything in the left side bar](https://www.arangodb.com/docs/stable/data-modeling.html)
 		- [start here](https://www.arangodb.com/docs/stable/data-modeling-concepts.html)
 	- [arangodb performance course](https://www.arangodb.com/arangodb-performance-course/)
@@ -47,7 +47,7 @@
 
 
 # best practices: my accepted best practices
-	- any datum tht needs to be sorted should be a skiplist index
+	- any datum that needs to be sorted should be a skiplist index
   - any unique value should be a form of a hash index
   - set a docs creation time as a unix timestamp
   -  anything with an 0/1 should be a sparse index 
