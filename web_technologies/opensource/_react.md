@@ -254,7 +254,7 @@
         </>
       );
     }
-
+1
 ```
 
 ### useState
@@ -281,7 +281,7 @@
         </div>
       );
     }
-
+1
 ```
 
 
@@ -331,7 +331,7 @@
       </button>
     );
   }
-
+1
 ```
 
 
@@ -348,6 +348,7 @@
     [a, b], // only called  if one of these  are changed
   );
 
+1
 ```
 
 
@@ -362,7 +363,7 @@
 
 ```js
   const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
-
+1
 ```
 
 
@@ -395,7 +396,7 @@
       </>
     );
   }
-
+1
 ```
 
 ### useImperativeHandle
@@ -588,4 +589,5 @@
         // When you need it, call getObserver()
         // ...
       }
+1
 ```
