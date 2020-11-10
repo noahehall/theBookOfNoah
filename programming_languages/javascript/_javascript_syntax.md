@@ -258,6 +258,7 @@
     ```
 	- ADT
     ```
+      Object.fromEntries method takes a list of key-value pairs and returns a new object whose properties are given by those entries
   		Object.assign() Creates a new object by copying the values of all enumerable own properties from one or more source objects to a target object.
   		Object.create() Creates a new object with the specified prototype object and properties.
   		Object.defineProperty() Adds the named property described by a given descriptor to an object.
@@ -297,6 +298,19 @@
 			console.log('this.name', 'is my name.');
 		}
   ```
+  - easy prototype
+    ```js
+      function ParentClass() {}
+        ParentClass.prototype.inheritedMethod = function() {};
+
+        function ChildClass() {
+          this.prop = 5;
+          this.method = function() {};
+        }
+        ChildClass.prototype = new ParentClass;
+        ChildClass.prototype.prototypeMethod = function() {};
+    
+    ```
 	- get the original prototype function
 		`Object.getPrototypeOf(someFunctionHere);`
 	```create a class that uses another classes methods (this example uses arrays)
