@@ -18,7 +18,7 @@
 
 
 ## articles
-  - [react.cloneelement vs children](https://stackoverflow.com/questions/37521798/when-should-i-be-using-react-cloneelement-vs-this-props-children/50441271#50441271)
+  - [react.clonelement vs children](https://stackoverflow.com/questions/37521798/when-should-i-be-using-react-cloneelement-vs-this-props-children/50441271#50441271)
   - [transforming elements in react](https://medium.com/javascript-inside/transforming-elements-in-react-8e411c0f1bba)
   -
 #  COMPONENTS

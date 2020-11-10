@@ -700,7 +700,10 @@
   - Object.getOwnPropertySymbols() method returns an array of all symbol properties found directly upon a given object.
 
 
-
+  - sort an object by value
+    ```
+      Object.entries(obj).sort((a, b) => b[0].localeCompare(a[0]));
+    ```
 ## map
   - new Map([iterable]): The Map object holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value.
   - answer yes to any of the below, and you can justify using a map
