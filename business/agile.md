@@ -54,7 +54,7 @@
     - Regularly, the team reflects on how to become more effective, and adjusts accordingly
 
   - manifesto for agile software development: best practices for agile development
-    - individuals and interactions ove processes and tools
+    - individuals and interactions over processes and tools
       - good team of developers who communicate and collaborate well > team of experts operating in isolation
     - working software over comprehensive documentation
       - Working software > documents to clients in meetings.
@@ -82,11 +82,11 @@
 
 ## practices
   - acceptance test-driven Development
-  - agile modelling
+  - agile modeling
   - agile Testing
   - backlogs
   - behavior-driven Development
-  - business analytist designer method
+  - business analyist designer method
   - continuous Integration
   - cross-functional team
   - domain driven design
@@ -106,7 +106,7 @@
   - velocity tracking
   - project inception: One of the key objectives of a project inception is to collect requirements collaboratively.
   - Story mapping: is an engaging activity where all participants are involved in the process of building the product backlog on a wall, versus writing a dull 100-page requirement document.
-    -  tool to capture requirements during inception
+    - tool to capture requirements during inception
     - process : vision -> goals > activites -> tasks
       1. define the project vision:
       2. define goals required to achieve vision
