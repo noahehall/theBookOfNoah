@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 [alias]
 # log
 ## oneline commits with date

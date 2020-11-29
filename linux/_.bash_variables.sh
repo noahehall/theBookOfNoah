@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 export EDITOR=nano
 
 # force colours

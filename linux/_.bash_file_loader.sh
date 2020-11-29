@@ -1,16 +1,22 @@
+#!/usr/bin/env bash
+
 # clone this repository to ~/git/theBookOfNoah
 # update your ~/.bashrc
-## if [ -f ~/git/theBookOfNoah/linux/_.bash_file_loader ]; then
-##    . ~/git/theBookOfNoah/linux/_.bash_file_loader
+## if [ -f ~/git/theBookOfNoah/linux/_.bash_file_loader.sh ]; then
+##    . ~/git/theBookOfNoah/linux/_.bash_file_loader.sh
 ## fi
 
 
-if [ -f ~/git/theBookOfNoah/linux/_.bash_aliases ]; then
-    . ~/git/theBookOfNoah/linux/_.bash_aliases
+if [ -f ~/git/theBookOfNoah/linux/_.bash_aliases.sh ]; then
+    . ~/git/theBookOfNoah/linux/_.bash_aliases.sh
 fi
 
 if [ -f ~/git/theBookOfNoah/linux/qfc/bin/qfc.sh ]; then
     source ~/git/theBookOfNoah/linux/qfc/bin/qfc.sh
+fi
+
+if [ -f ~/git/theBookOfNoah/linux/_.bash_addons.sh ]; then
+    source ~/git/theBookOfNoah/linux/_.bash_addons.sh
 fi
 
 alias g='git'

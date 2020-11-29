@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 alias lessbashrc='less ~/.bashrc'
 alias nanobashrc='nano ~/.bashrc'
 alias sourcebashrc='source ~/.bashrc'
