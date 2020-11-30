@@ -11,15 +11,14 @@ if ! hash grv; then
 	echo 'thinking about installing grv to your path'
 fi
 
-if [ -f ~/git/theBookOfNoah/linux/qfc/bin/qfc.sh ]; then
-    . ~/git/theBookOfNoah/linux/qfc/bin/qfc.sh
-fi
+sourceifexists $(getpath qfc/bin/qfc.sh)
 
-if [ ! -f ~/git/theBookOfNoah/linux/_.git-completion.sh ]; then
-	(wget -qO ~/git/theBookOfNoah/linux/_.git-completion.sh \
+GITCOMPLETION=$(getpath _.git-completion.sh)
+if [ ! -f ${GITCOMPLETION} ]; then
+	(wget -qO ${GITCOMPLETION} \
 		https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash \
 		 )
 fi
-. ~/git/theBookOfNoah/linux/_.git-completion.sh
+. $GITCOMPLETION
 
 

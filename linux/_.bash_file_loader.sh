@@ -10,38 +10,8 @@
 # exit on failure
 #set -e
 
-# https://intoli.com/blog/exit-on-errors-in-bash-scripts/
-# keep track of the last executed command
-trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
-# echo an error message before exiting
-trap 'echo "\"${last_command}\" command filed with exit code $?."' EXIT
-
-
-# returns current dir or concats string to create absolute path
-function getpath() {
-    local THISDIR="$( cd "$( echo "${BASH_SOURCE[0]%/*}" )"; pwd )"
-
-    if [ -n $1 ]; then
-        echo "${THISDIR}/$1"
-    else
-        echo "${THISDIR}"
-    fi
-
-}
-
-function sourceifexists() {
-    if [ -n $1 ] && [ -f $1 ]; then
-        . $1
-    fi
-}
-
-
-# completation aware g<alias bash aliases for each git alias
-# https://gist.github.com/mwhite/6887990
-function_exists() {
-     declare -f -F $1 > /dev/null
-     return $?
-}
+# load bash functions
+. "$( cd "$( echo "${BASH_SOURCE[0]%/*}" )"; pwd )"/_.bash_functions.sh
 
 sourceifexists $(getpath _.bash_aliases.sh)
 sourceifexists $(getpath _.bash_variables.sh)
