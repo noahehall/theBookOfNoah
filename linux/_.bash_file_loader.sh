@@ -17,31 +17,23 @@ trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
 trap 'echo "\"${last_command}\" command filed with exit code $?."' EXIT
 
 
+# returns current dir or concats string to create absolute path
+function getpath() {
+    local THISDIR="$( cd "$( echo "${BASH_SOURCE[0]%/*}" )"; pwd )"
 
-if [ -f ~/git/theBookOfNoah/linux/_.bash_aliases.sh ]; then
-    . ~/git/theBookOfNoah/linux/_.bash_aliases.sh
-fi
+    if [ -n $1 ]; then
+        echo "${THISDIR}/$1"
+    else
+        echo "${THISDIR}"
+    fi
 
-if [ -f ~/git/theBookOfNoah/linux/_.bash_variables.sh ]; then
-    . ~/git/theBookOfNoah/linux/_.bash_variables.sh
-fi
+}
 
-if [ -f ~/git/theBookOfNoah/linux/_.bash_addons.sh ]; then
-    . ~/git/theBookOfNoah/linux/_.bash_addons.sh
-fi
-
-
-if [ -f ~/git/theBookOfNoah/linux/_.git_aliases ]; then
-    git config --global include.path ~/git/theBookOfNoah/linux/_.git_aliases
-fi
-
-if [ -f ~/git/theBookOfNoah/linux/_.docker_daemon.sh ]; then
-    . ~/git/theBookOfNoah/linux/_.docker_daemon.sh
-fi
-
-if [ -f ~/git/theBookOfNoah/linux/_.git-prompt.sh ]; then
-    . ~/git/theBookOfNoah/linux/_.git-prompt.sh
-fi
+function sourceifexists() {
+    if [ -n $1 ] && [ -f $1 ]; then
+        . $1
+    fi
+}
 
 
 # completation aware g<alias bash aliases for each git alias
@@ -50,6 +42,20 @@ function_exists() {
      declare -f -F $1 > /dev/null
      return $?
 }
+
+sourceifexists $(getpath _.bash_aliases.sh)
+sourceifexists $(getpath _.bash_variables.sh)
+sourceifexists $(getpath _.bash_addons.sh)
+
+
+GITALIASES=$(getpath _.git_aliases)
+[ -f ${GITALIASES} ] && git config --global include.path ${GITALIASES}
+
+
+sourceifexists $(getpath _.docker_daemon.sh)
+sourceifexists $(getpath _.git-prompt.sh)
+
+
 
 alias g='git'
 complete -o default -o nospace -F _git g
@@ -62,8 +68,4 @@ for al in `git --list-cmds=alias`; do
 done
 
 
-
-
-if [ -f ~/git/theBookOfNoah/linux/_.bash_finale.sh ]; then
-    . ~/git/theBookOfNoah/linux/_.bash_finale.sh
-fi
+sourceifexists $(getpath _.bash_finale.sh)

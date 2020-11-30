@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Leiningen: crypto-random:1.2.0">
-    <CLASSES>
-      <root url="jar://$USER_HOME$/.m2/repository/crypto-random/crypto-random/1.2.0/crypto-random-1.2.0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

@@ -15,8 +15,8 @@ if [ -z $DOCKER_DEFAULT_COMP_LOADED ]; then
 		systemctl stop docker.service
 	fi
 
-	sudo chown "$USER":"$USER" ${THISDIR}/${CONFFILE}
-	sudo chmod g+rwx ${THISDIR}/${CONFFILE}
+	#sudo chown "$USER":"$USER" ${THISDIR}/${CONFFILE}
+	#sudo chmod g+rwx ${THISDIR}/${CONFFILE}
 
 	dockerd --config-file ${THISDIR}/${CONFFILE}
 fi
