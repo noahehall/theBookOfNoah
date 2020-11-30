@@ -2,7 +2,8 @@
 
 # use bashtop if its installed
 if hash bpytop 2>/dev/null; then
-	alias top='bpytop'
+	alias oldtop='/usr/bin/top'
+	alias top='/usr/local/bin/bpytop'
 else echo 'should really use bpytop > top'
 fi
 
@@ -37,3 +38,5 @@ alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias prettyjson='python -m json.tool | less'
 
 
+# get all ufw firewall config files
+alias ufwconfigs='sudo find / -name "*.rules" -exec ls -l {} \; | grep ufw'

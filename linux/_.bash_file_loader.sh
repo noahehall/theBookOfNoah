@@ -6,6 +6,18 @@
 ##    . ~/git/theBookOfNoah/linux/_.bash_file_loader.sh
 ## fi
 
+
+# exit on failure
+#set -e
+
+# https://intoli.com/blog/exit-on-errors-in-bash-scripts/
+# keep track of the last executed command
+trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
+# echo an error message before exiting
+trap 'echo "\"${last_command}\" command filed with exit code $?."' EXIT
+
+
+
 if [ -f ~/git/theBookOfNoah/linux/_.bash_aliases.sh ]; then
     . ~/git/theBookOfNoah/linux/_.bash_aliases.sh
 fi
@@ -23,10 +35,13 @@ if [ -f ~/git/theBookOfNoah/linux/_.git_aliases ]; then
     git config --global include.path ~/git/theBookOfNoah/linux/_.git_aliases
 fi
 
+if [ -f ~/git/theBookOfNoah/linux/_.docker_daemon.sh ]; then
+    . ~/git/theBookOfNoah/linux/_.docker_daemon.sh
+fi
+
 if [ -f ~/git/theBookOfNoah/linux/_.git-prompt.sh ]; then
     . ~/git/theBookOfNoah/linux/_.git-prompt.sh
 fi
-
 
 
 # completation aware g<alias bash aliases for each git alias
@@ -45,3 +60,10 @@ for al in `git --list-cmds=alias`; do
     complete_func=_git_$(__git_aliased_command $al)
     function_exists $complete_fnc && __git_complete g$al $complete_func
 done
+
+
+
+
+if [ -f ~/git/theBookOfNoah/linux/_.bash_finale.sh ]; then
+    . ~/git/theBookOfNoah/linux/_.bash_finale.sh
+fi
