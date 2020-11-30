@@ -40,3 +40,6 @@ alias prettyjson='python -m json.tool | less'
 
 # get all ufw firewall config files
 alias ufwconfigs='sudo find / -name "*.rules" -exec ls -l {} \; | grep ufw'
+
+# groupmembers docker
+alias groupmembers='getent group'
