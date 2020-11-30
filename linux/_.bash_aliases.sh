@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# use bashtop if its installed
+if hash bpytop 2>/dev/null; then
+	alias top='bpytop'
+else echo 'should really use bpytop > top'
+fi
+
 alias lessbashrc='less ~/.bashrc'
 alias nanobashrc='nano ~/.bashrc'
 alias sourcebashrc='source ~/.bashrc'

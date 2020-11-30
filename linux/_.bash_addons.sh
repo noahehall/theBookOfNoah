@@ -6,11 +6,6 @@ else
 	echo 'neofetch not installed'
 fi
 
-# use bashtop if its installed
-if hash bashtop 2>/dev/null; then
-	alias top='bashtop'
-else echo 'should really use bashtop > top'
-fi
 
 if [ -f ~/git/theBookOfNoah/linux/qfc/bin/qfc.sh ]; then
     . ~/git/theBookOfNoah/linux/qfc/bin/qfc.sh
