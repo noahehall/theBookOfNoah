@@ -91,10 +91,6 @@ function color_my_prompt {
 # configure PROMPT_COMMAND which is executed each time before PS1 
 export PROMPT_COMMAND=color_my_prompt
 
-if [ -f ~/git/theBookOfNoah/linux/_.git-prompt.sh ]; then
-	. ~/git/theBookOfNoah/linux/_.git-prompt.sh
-fi
-
 
 history -a # record each line as it gets issued 
 export HISTSIZE=500000 
