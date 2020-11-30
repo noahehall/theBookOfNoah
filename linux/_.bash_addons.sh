@@ -6,6 +6,10 @@ else
 	echo 'neofetch not installed'
 fi
 
+# https://github.com/rgburke/grv
+if ! hash grv; then 
+	echo 'thinking about installing grv to your path'
+fi
 
 if [ -f ~/git/theBookOfNoah/linux/qfc/bin/qfc.sh ]; then
     . ~/git/theBookOfNoah/linux/qfc/bin/qfc.sh
@@ -17,4 +21,5 @@ if [ ! -f ~/git/theBookOfNoah/linux/_.git-completion.sh ]; then
 		 )
 fi
 . ~/git/theBookOfNoah/linux/_.git-completion.sh
+
 

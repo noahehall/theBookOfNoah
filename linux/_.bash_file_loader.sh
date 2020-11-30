@@ -29,7 +29,6 @@ fi
 
 
 
-
 # completation aware g<alias bash aliases for each git alias
 # https://gist.github.com/mwhite/6887990
 function_exists() {
