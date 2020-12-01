@@ -4,7 +4,34 @@
 # https://github.com/moby/moby/blob/master/contrib/init/systemd/docker.service
 # https://docs.docker.com/engine/reference/commandline/dockerd/
 
+getdockerdpid() {
+	echo "$(pidof dockerd)" || 0;
+}
 
+# need log status
+dockerdreload() {
+	local dockerdpid=$(getdockerdpid)
+	if [[ "$dockerdpid" -gt 0 ]]; then
+		echo "reloading dockerd: ${dockerdpid}"
+		"$(sudo kill -SIGUSR1 ${dockerdpid})"
+		echo $?
+	else
+		echo "unable to terminate docjkerd: whats the pid?"
+	fi
+
+}
+
+# need to log result
+dockerdown() {
+	local dockerdpid=$(getdockerdpid)
+	if [[ "$dockerdpid" -gt 0 ]]; then
+		echo "terminating dockerd: ${dockerdpid}"
+		echo "$(sudo kill -9 ${dockerdpid})"
+		echo $?
+	else
+		echo "could terminate dockerd: whats the pid?"
+	fi
+}
 dockerdup() {
 	echo 'enter your password to start dockerd'
 	# https://docs.docker.com/engine/install/linux-postinstall/

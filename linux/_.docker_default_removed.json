@@ -1,7 +1,15 @@
 # read this shit
 # https://github.com/moby/moby/issues/27105
-
+# https://www.systutorials.com/docs/linux/man/5-docker-config-json/
 {
+
+  # dont work
+  "psFormat": "table {{.ID}}\\t{{.Image}}\\t{{.Command}}\\t{{.Labels}}",
+  "imagesFormat": "table {{.ID}}\\t{{.Repository}}\\t{{.Tag}}\\t{{.CreatedAt}}"
+
+  # TODO
+  "detachKeys": "ctrl-e,e",
+
   "tlsverify": false,
   "tlscert": "",
   "tlskey": "",
