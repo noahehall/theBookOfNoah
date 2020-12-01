@@ -1,8 +1,12 @@
 {
-  "data-root": "/mnt/docker-data",
-  "experimental": true,
-  "features":{"buildkit": true},
-  "debug": true,
-  "tls": false
+	"data-root": "/mnt/docker-data",
+	"experimental": true,
+	"features":{"buildkit": true},
+	"debug": true,
+	"tls": false,
+	"hosts": [
+		"unix:///var/run/docker.sock", 
+		"tcp://127.0.0.1:2375"
+	]
 
 }
