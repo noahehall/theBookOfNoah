@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # bash/zsh completion support for core Git.
 #
 # Copyright (C) 2006,2007 Shawn O. Pearce <spearce@spearce.org>
@@ -105,7 +107,9 @@ __git ()
 # 1: The word to dequote.
 __git_dequote ()
 {
-	local rest="$1" len ch
+	local rest="$1" 
+	local len= 
+	local ch=
 
 	dequoted_word=""
 
@@ -218,7 +222,10 @@ __git_dequote ()
 
 __git_reassemble_comp_words_by_ref()
 {
-	local exclude i j first
+	local exclude= 
+	local i= 
+	local j= 
+	local first=
 	# Which word separators to exclude?
 	exclude="${1//[^$COMP_WORDBREAKS]}"
 	cword_=$COMP_CWORD
@@ -265,7 +272,10 @@ __git_reassemble_comp_words_by_ref()
 if ! type _get_comp_words_by_ref >/dev/null 2>&1; then
 _get_comp_words_by_ref ()
 {
-	local exclude cur_ words_ cword_
+	local exclude= 
+	local cur_= 
+	local words_= 
+	local cword_=
 	if [ "$1" = "-n" ]; then
 		exclude=$2
 		shift 2
@@ -303,7 +313,7 @@ __gitcomp_direct ()
 {
 	local IFS=$'\n'
 
-	COMPREPLY=($1)
+	COMPREPLY="$1"
 }
 
 # Similar to __gitcomp_direct, but appends to COMPREPLY instead.
@@ -321,7 +331,8 @@ __gitcomp_direct_append ()
 
 __gitcompappend ()
 {
-	local x i=${#COMPREPLY[@]}
+	local x=
+	local i=${#COMPREPLY[@]}
 	for x in $1; do
 		if [[ "$x" == "$3"* ]]; then
 			COMPREPLY[i++]="$2$x$4"
@@ -350,7 +361,9 @@ __gitcomp ()
 	--*=)
 		;;
 	--no-*)
-		local c i=0 IFS=$' \t\n'
+		local c= 
+		local i=0 
+		local IFS=$' \t\n'
 		for c in $1; do
 			if [[ $c == "--" ]]; then
 				continue
@@ -366,7 +379,9 @@ __gitcomp ()
 		done
 		;;
 	*)
-		local c i=0 IFS=$' \t\n'
+		local c= 
+		local i=0 
+		local IFS=$' \t\n'
 		for c in $1; do
 			if [[ $c == "--" ]]; then
 				c="--no-...${4-}"
@@ -413,11 +428,11 @@ __gitcomp_builtin ()
 	local excl="${3-}"
 
 	local var=__gitcomp_builtin_"${cmd/-/_}"
-	local options
+	local options=
 	eval "options=\${$var-}"
 
 	if [ -z "$options" ]; then
-		local completion_helper
+		local completion_helper=
 		if [ "$GIT_COMPLETION_SHOW_ALL" = "1" ]; then
 			completion_helper="--git-completion-helper-all"
 		else
@@ -526,7 +541,8 @@ __git_ls_files_helper ()
 # 3: List only paths matching this path component (optional).
 __git_index_files ()
 {
-	local root="$2" match="$3"
+	local root="$2" 
+	local match="$3"
 
 	__git_ls_files_helper "$root" "$1" "${match:-?}" |
 	awk -F / -v pfx="${2//\\/\\\\}" '{
@@ -606,7 +622,9 @@ __git_index_files ()
 # The exception is --committable, which finds the files appropriate commit.
 __git_complete_index_file ()
 {
-	local dequoted_word pfx="" cur_
+	local dequoted_word= 
+	local pfx="" 
+	local cur_=
 
 	__git_dequote "$cur"
 
@@ -629,7 +647,9 @@ __git_complete_index_file ()
 # 3: A suffix to be appended to each listed branch (optional).
 __git_heads ()
 {
-	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
+	local pfx="${1-}" 
+	local cur_="${2-}" 
+	local sfx="${3-}"
 
 	__git for-each-ref --format="${pfx//\%/%%}%(refname:strip=2)$sfx" \
 			"refs/heads/$cur_*" "refs/heads/$cur_*/**"
@@ -642,7 +662,9 @@ __git_heads ()
 # 3: A suffix to be appended to each listed branch (optional).
 __git_remote_heads ()
 {
-	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
+	local pfx="${1-}" 
+	local cur_="${2-}" 
+	local sfx="${3-}"
 
 	__git for-each-ref --format="${pfx//\%/%%}%(refname:strip=2)$sfx" \
 			"refs/remotes/$cur_*" "refs/remotes/$cur_*/**"
@@ -652,7 +674,9 @@ __git_remote_heads ()
 # Accepts the same positional parameters as __git_heads() above.
 __git_tags ()
 {
-	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
+	local pfx="${1-}" 
+	local cur_="${2-}" 
+	local sfx="${3-}"
 
 	__git for-each-ref --format="${pfx//\%/%%}%(refname:strip=2)$sfx" \
 			"refs/tags/$cur_*" "refs/tags/$cur_*/**"
@@ -666,7 +690,9 @@ __git_tags ()
 # 3: A suffix to be appended to each listed branch (optional).
 __git_dwim_remote_heads ()
 {
-	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
+	local pfx="${1-}" 
+	local cur_="${2-}" 
+	local sfx="${3-}"
 	local fer_pfx="${pfx//\%/%%}" # "escape" for-each-ref format specifiers
 
 	# employ the heuristic used by git checkout and git switch
@@ -693,10 +719,18 @@ __git_dwim_remote_heads ()
 # Use __git_complete_refs() instead.
 __git_refs ()
 {
-	local i hash dir track="${2-}"
-	local list_refs_from=path remote="${1-}"
-	local format refs
-	local pfx="${3-}" cur_="${4-$cur}" sfx="${5-}"
+	local i= 
+	local hash= 
+	local dir= 
+	local track="${2-}"
+	local list_refs=_
+	local from=path 
+	local remote="${1-}"
+	local format 
+	local refs=
+	local pfx="${3-}" 
+	local cur_="${4-$cur}" 
+	local sfx="${5-}"
 	local match="${4-}"
 	local fer_pfx="${pfx//\%/%%}" # "escape" for-each-ref format specifiers
 
@@ -776,7 +810,7 @@ __git_refs ()
 				"refs/remotes/$remote/$match*" \
 				"refs/remotes/$remote/$match*/**"
 		else
-			local query_symref
+			local query_symref=
 			case "HEAD" in
 			$match*)	query_symref="HEAD" ;;
 			esac
@@ -812,7 +846,12 @@ __git_refs ()
 #                --remote is only compatible with --mode=refs.
 __git_complete_refs ()
 {
-	local remote= dwim= pfx= cur_="$cur" sfx=" " mode="refs"
+	local remote= 
+	local dwim= 
+	local pfx= 
+	local cur_="$cur" 
+	local sfx=" " 
+	local mode="refs"
 
 	while test $# != 0; do
 		case "$1" in
@@ -851,7 +890,7 @@ __git_complete_refs ()
 # Deprecated: use __git_complete_fetch_refspecs() instead.
 __git_refs2 ()
 {
-	local i
+	local i=
 	for i in $(__git_refs "$1"); do
 		echo "$i:$i"
 	done
@@ -866,7 +905,11 @@ __git_refs2 ()
 #    space (optional).
 __git_complete_fetch_refspecs ()
 {
-	local i remote="$1" pfx="${2-}" cur_="${3-$cur}" sfx="${4- }"
+	local i= 
+	local remote="$1" 
+	local pfx="${2-}" 
+	local cur_="${3-$cur}" 
+	local sfx="${4- }"
 
 	__gitcomp_direct "$(
 		for i in $(__git_refs "$remote" "" "" "$cur_") ; do
@@ -878,7 +921,8 @@ __git_complete_fetch_refspecs ()
 # __git_refs_remotes requires 1 argument (to pass to ls-remote)
 __git_refs_remotes ()
 {
-	local i hash
+	local i= 
+	local hash=
 	__git ls-remote "$1" 'refs/heads/*' | \
 	while read -r hash i; do
 		echo "$i:refs/remotes/$1/${i#refs/heads/}"
@@ -895,7 +939,7 @@ __git_remotes ()
 # Returns true if $1 matches the name of a configured remote, false otherwise.
 __git_is_configured_remote ()
 {
-	local remote
+	local remote=
 	for remote in $(__git_remotes); do
 		if [ "$remote" = "$1" ]; then
 			return 0
@@ -935,7 +979,11 @@ __git_merge_strategy_options="ours theirs subtree subtree= patience
 
 __git_complete_revlist_file ()
 {
-	local dequoted_word pfx ls ref cur_="$cur"
+	local dequoted_word= 
+	local pfx= 
+	local ls= 
+	local ref= 
+	local cur_="$cur"
 	case "$cur_" in
 	*..?*:*)
 		return
@@ -997,8 +1045,14 @@ __git_complete_revlist ()
 
 __git_complete_remote_or_refspec ()
 {
-	local cur_="$cur" cmd="${words[1]}"
-	local i c=2 remote="" pfx="" lhs=1 no_complete_refspec=0
+	local cur_="$cur" 
+	local cmd="${words[1]}"
+	local i= 
+	local c=2 
+	local remote="" 
+	local pfx="" 
+	local lhs=1 
+	local no_complete_refspec=0
 	if [ "$cmd" = "remote" ]; then
 		((c++))
 	fi
@@ -1106,7 +1160,9 @@ __git_compute_all_commands ()
 # with the prefix removed.
 __git_get_config_variables ()
 {
-	local section="$1" i IFS=$'\n'
+	local section="$1" 
+	local i=
+	local IFS=$'\n'
 	for i in $(__git config --name-only --get-regexp "^$section\..*"); do
 		echo "${i#$section.}"
 	done
@@ -1120,7 +1176,11 @@ __git_pretty_aliases ()
 # __git_aliased_command requires 1 argument
 __git_aliased_command ()
 {
-	local cur=$1 last list word cmdline
+	local cur=${1}
+	local last=
+	local list=
+	local word=
+	local cmdline=
 
 	while [[ -n "$cur" ]]; do
 		if [[ "$list" == *" $cur "* ]]; then
@@ -1167,7 +1227,8 @@ __git_aliased_command ()
 # --show-idx: Optionally show the index of the found word in the $words array.
 __git_find_on_cmdline ()
 {
-	local word c=1 show_idx
+	local word c=1 
+	local show_idx=
 
 	while test $# -gt 1; do
 		case "$1" in
@@ -1201,7 +1262,8 @@ __git_find_on_cmdline ()
 # --show-idx: Optionally show the index of the found word in the $words array.
 __git_find_last_on_cmdline ()
 {
-	local word c=$cword show_idx
+	local word c=$cword 
+	local show_idx=
 
 	while test $# -gt 1; do
 		case "$1" in
@@ -1243,8 +1305,12 @@ __git_find_last_on_cmdline ()
 # __git_get_option_value requires 3 arguments
 __git_get_option_value ()
 {
-	local c short_opt long_opt val
-	local result= values config_key word
+	local c short_opt= 
+	local long_opt= 
+	local val=
+	local result=values 
+	local config_key= 
+	local word=
 
 	short_opt="$1"
 	long_opt="$2"
@@ -1274,7 +1340,7 @@ __git_get_option_value ()
 __git_has_doubledash ()
 {
 	local c=1
-	while [ $c -lt $cword ]; do
+	while [[ $c -lt ${cword:-} ]]; do
 		if [ "--" = "${words[c]}" ]; then
 			return 0
 		fi
@@ -1294,7 +1360,9 @@ __git_has_doubledash ()
 # __git_count_arguments requires 1 argument: the git command executed.
 __git_count_arguments ()
 {
-	local word i c=0
+	local word 
+	local i= 
+	local c=0
 
 	# Skip "git" (first argument)
 	for ((i=1; i < ${#words[@]}; i++)); do
@@ -1433,7 +1501,10 @@ __git_ref_fieldlist="refname objecttype objectsize objectname upstream push HEAD
 
 _git_branch ()
 {
-	local i c=1 only_local_ref="n" has_r="n"
+	local =i 
+	local c=1 
+	local only_local_ref="n" 
+	local has_r="n"
 
 	while [ $c -lt $cword ]; do
 		i="${words[c]}"
@@ -1496,7 +1567,8 @@ _git_bundle ()
 #
 __git_checkout_default_dwim_mode ()
 {
-	local last_option dwim_opt="--dwim"
+	local last_option= 
+	local dwim_opt="--dwim"
 
 	if [ "${GIT_COMPLETION_CHECKOUT_NO_GUESS-}" = "1" ]; then
 		dwim_opt=""
@@ -1853,7 +1925,10 @@ __git_match_ctag () {
 # --sfx=<suffix>: A suffix to be appended to each symbol name instead
 #                 of the default space.
 __git_complete_symbol () {
-	local tags=tags pfx="" cur_="${cur-}" sfx=" "
+	local tags=tags 
+	local pfx="" 
+	local cur_="${cur-}" 
+	local sfx=" "
 
 	while test $# != 0; do
 		case "$1" in
@@ -1991,11 +2066,14 @@ _git_log ()
 	__git_has_doubledash && return
 	__git_find_repo_path
 
+
 	local merge=""
+	local prev=
+	local cur=
 	if [ -f "$__git_repo_path/MERGE_HEAD" ]; then
 		merge="--merge"
 	fi
-	case "$prev,$cur" in
+	case "${prev},${cur}" in
 	-L,:*:*)
 		return	# fall back to Bash filename completion
 		;;
@@ -2365,8 +2443,8 @@ _git_stage ()
 
 _git_status ()
 {
-	local complete_opt
-	local untracked_state
+	local complete_opt=
+	local untracked_state=
 
 	case "$cur" in
 	--ignore-submodules=*)
@@ -2462,9 +2540,13 @@ _git_switch ()
 
 __git_config_get_set_variables ()
 {
-	local prevword word config_file= c=$cword
+	local prevword= 
+	local word= 
+	local config_file= 
+	local c=$cword
 	while [ $c -gt 1 ]; do
 		word="${words[c]}"
+		echo "wtf is word: ${word}"
 		case "$word" in
 		--system|--global|--local|--file=*)
 			config_file="$word"
@@ -2499,7 +2581,8 @@ __git_compute_config_vars ()
 #               word to be completed.
 __git_complete_config_variable_value ()
 {
-	local varname="$prev" cur_="$cur"
+	local varname="$prev" 
+	local cur_="$cur"
 
 	while test $# != 0; do
 		case "$1" in
@@ -2614,7 +2697,8 @@ __git_complete_config_variable_value ()
 #                 subsections) instead of the default space.
 __git_complete_config_variable_name ()
 {
-	local cur_="$cur" sfx
+	local cur_="$cur" 
+	local sfx=
 
 	while test $# != 0; do
 		case "$1" in
@@ -2745,6 +2829,9 @@ __git_complete_config_variable_name_and_value ()
 
 _git_config ()
 {
+	local prev=
+	local cur=
+
 	case "$prev" in
 	--get|--get-all|--unset|--unset-all)
 		__gitcomp_nl "$(__git_config_get_set_variables)"
@@ -3214,7 +3301,9 @@ _git_svn ()
 
 _git_tag ()
 {
-	local i c=1 f=0
+	local i= 
+	local c=1 
+	local f=0
 	while [ $c -lt $cword ]; do
 		i="${words[c]}"
 		case "$i" in
@@ -3266,7 +3355,8 @@ __git_complete_worktree_paths ()
 _git_worktree ()
 {
 	local subcommands="add list lock move prune remove unlock"
-	local subcommand subcommand_idx
+	local subcommand= 
+	local subcommand_idx=
 
 	subcommand="$(__git_find_on_cmdline --show-idx "$subcommands")"
 	subcommand_idx="${subcommand% *}"
@@ -3381,8 +3471,12 @@ __git_complete_command () {
 
 __git_main ()
 {
-	local i c=1 command __git_dir __git_repo_path
-	local __git_C_args C_args_count=0
+	local i= 
+	local c=1 
+	local command=__git_dir 
+	local __git_repo_path=
+	local __git_C_args=
+	local C_args_count=0
 
 	while [ $c -lt $cword ]; do
 		i="${words[c]}"
@@ -3461,7 +3555,7 @@ __gitk_main ()
 {
 	__git_has_doubledash && return
 
-	local __git_repo_path
+	local __git_repo_path=
 	__git_find_repo_path
 
 	local merge=""
@@ -3488,7 +3582,10 @@ fi
 
 __git_func_wrap ()
 {
-	local cur words cword prev
+	local cur= 
+	local words= 
+	local cword= 
+	local prev=
 	_get_comp_words_by_ref -n =: cur words cword prev
 	$1
 }
