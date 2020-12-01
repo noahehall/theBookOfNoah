@@ -33,10 +33,8 @@ GITALIASES="$(getpath '_.git_aliases')"
 sourceifexists "$(getpath '_.git-prompt.sh')"
 
 
-
+# sets up bash git completion
 complete -o default -o nospace -F _git g
-
-echo "staring"
 for al in $(git --list-cmds=alias); do
     alias g$al="git $al"
 
