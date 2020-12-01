@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# TODO
+# my settings are hella wack! time to update
+# wish i had I backed up
+
 export EDITOR=nano
 
 # force colours
