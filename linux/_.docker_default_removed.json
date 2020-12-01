@@ -19,7 +19,6 @@
   "dns-opts": [],
   "dns-search": [],
   "exec-opts": [],
-  "exec-root": "",
   
   "labels": [],
   "live-restore": true,
@@ -31,7 +30,7 @@
     "env": "os,customer"
   },
   "mtu": 0,
-  "pidfile": "",
+  
   "cluster-store": "",
   "cluster-store-opts": {},
   "cluster-advertise": "",

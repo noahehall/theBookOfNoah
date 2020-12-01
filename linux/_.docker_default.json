@@ -1,8 +1,10 @@
 {
 	"data-root": "/mnt/docker-data",
 	"debug": true,
+	"exec-root": "/mnt/docker-exec",
 	"experimental": true,
 	"log-level": "warn",
+	"pidfile": "/mnt/docker.pid",
 	"storage-driver": "overlay2",
 	"tls": false,
 
