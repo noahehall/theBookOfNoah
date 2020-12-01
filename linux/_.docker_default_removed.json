@@ -12,8 +12,7 @@
   "dns-search": [],
   "exec-opts": [],
   "exec-root": "",
-  "storage-driver": "overlay2",
-  "storage-opts": [],
+  
   "labels": [],
   "live-restore": true,
   "log-driver": "json-file",
@@ -33,7 +32,7 @@
   "default-shm-size": "64M",
   "shutdown-timeout": 15,
   "hosts": [],
-  "log-level": "",
+  
   
   
   "swarm-default-advertise-addr": "",

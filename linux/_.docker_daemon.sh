@@ -33,7 +33,8 @@ if [[ $status != $runstatus ]]; then
 		# docker is running and not started by dockerd
 		# likely started in another shell 
 		# indicate that we shouldnt attempt to relaunch
-		echo 'not launching docker'
+		echo 'docker is running'
+		echo $(docker ps)
 		dontlaunchdockerd=true
 	fi
 fi

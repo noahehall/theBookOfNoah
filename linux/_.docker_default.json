@@ -1,12 +1,23 @@
 {
 	"data-root": "/mnt/docker-data",
-	"experimental": true,
-	"features":{"buildkit": true},
 	"debug": true,
+	"experimental": true,
+	"log-level": "warn",
+	"storage-driver": "overlay2",
 	"tls": false,
+
+
+	"features":{
+		"buildkit": true
+	},
 	"hosts": [
 		"unix:///var/run/docker.sock", 
 		"tcp://127.0.0.1:2375"
-	]
+	],
+	"dns": [
+		"8.8.8.8", 
+		"8.8.4.4"
+	],
+	"storage-opts": []
 
 }

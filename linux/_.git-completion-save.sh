@@ -4,7 +4,6 @@
 # so i updated it and keeping this saved version just incase
 
 
-
 # bash/zsh completion support for core Git.
 #
 # Copyright (C) 2006,2007 Shawn O. Pearce <spearce@spearce.org>
