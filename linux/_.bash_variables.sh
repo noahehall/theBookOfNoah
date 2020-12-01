@@ -46,59 +46,59 @@ shopt -s huponexit 2>/dev/null
 
 # usage:
 # docker ps --format="$DOCKER_FORMAT"
-# export DOCKER_FORMAT="ID\t{{.ID}}\nNAME\t{{.Names}}\nIMAGE\t{{.Image}}\nPORTS\t{{.Ports}}\nCOMMAND\t{{.Command}}\nCREATED\t{{.CreatedAt}}\nSTATUS\t{{.Status}}\n"
+export DOCKER_FORMAT="ID\t{{.ID}}\nNAME\t{{.Names}}\nIMAGE\t{{.Image}}\nPORTS\t{{.Ports}}\nCOMMAND\t{{.Command}}\nCREATED\t{{.CreatedAt}}\nSTATUS\t{{.Status}}\n"
 
-# MAGENTA="\[\033[0;35m\]"
-# LIGHT_GRAY="\[\033[0;37m\]"
-# YELLOW="\[\033[01;32m\]"
-# BLUE="\[\033[00;34m\]"
-# CYAN="\[\033[0;36m\]"
-# GREEN="\[\033[00m\]"
-# RED="\[\033[0;31m\]"
-# VIOLET='\[\033[01;35m\]'
+MAGENTA="\[\033[0;35m\]"
+LIGHT_GRAY="\[\033[0;37m\]"
+YELLOW="\[\033[01;32m\]"
+BLUE="\[\033[00;34m\]"
+CYAN="\[\033[0;36m\]"
+GREEN="\[\033[00m\]"
+RED="\[\033[0;31m\]"
+VIOLET='\[\033[01;35m\]'
 
-# export GIT_PS1_SHOWDIRTYSTATE=true
-# export GIT_PS1_SHOWSTASHSTATE=true
-# export GIT_PS1_SHOWUNTRACKEDFILES=true
-# export GIT_PS1_SHOWUPSTREAM="auto"
-# export GIT_PS1_HIDE_IF_PWD_IGNORED=true
-# export GIT_PS1_SHOWCOLORHINTS=true
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWSTASHSTATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+export GIT_PS1_SHOWUPSTREAM="auto"
+export GIT_PS1_HIDE_IF_PWD_IGNORED=true
+export GIT_PS1_SHOWCOLORHINTS=true
 
-# function color_my_prompt {
-#   local __user_and_host="$GREEN\u@\h"
-#   local __cur_location="$BLUE\w" # capital 'W': current directory, small 'w': full file path
-#   local __git_branch_color="$GREEN"
-#   local __prompt_tail="$VIOLET$"
-#   local __user_input_color="$GREEN"
-#   local __git_branch='$(__git_ps1)';
+function color_my_prompt {
+  local __user_and_host="$GREEN\u@\h"
+  local __cur_location="$BLUE\w" # capital 'W': current directory, small 'w': full file path
+  local __git_branch_color="$GREEN"
+  local __prompt_tail="$VIOLET$"
+  local __user_input_color="$GREEN"
+  local __git_branch='$(__git_ps1)';
 
-#   # colour branch name depending on state
-#   if [[ "$(__git_ps1)" =~ "*" ]]; then # if repository is dirty
-#       __git_branch_color="$RED" 
-#   elif [[ "$(__git_ps1)" =~ "$" ]]; then # if there is something stashed
-#       __git_branch_color="$YELLOW"
-#   elif [[ "$(__git_ps1)" =~ "%" ]]; then # if there are only untracked files
-#       __git_branch_color="$LIGHT_GRAY"
-#   elif [[ "$(__git_ps1)" =~ "+" ]]; then # if there are staged files
-#       __git_branch_color="$CYAN"
-#   fi
+  # colour branch name depending on state
+  if [[ "$(__git_ps1)" =~ "*" ]]; then # if repository is dirty
+      __git_branch_color="$RED" 
+  elif [[ "$(__git_ps1)" =~ "$" ]]; then # if there is something stashed
+      __git_branch_color="$YELLOW"
+  elif [[ "$(__git_ps1)" =~ "%" ]]; then # if there are only untracked files
+      __git_branch_color="$LIGHT_GRAY"
+  elif [[ "$(__git_ps1)" =~ "+" ]]; then # if there are staged files
+      __git_branch_color="$CYAN"
+  fi
    
-#   # Build the PS1 (Prompt String)
-#   PS1="$__user_and_host $__cur_location$__git_branch_color$__git_branch $__prompt_tail$__user_input_color "
-# }
-# #PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$(__git_ps1)\[$WHITE\]\$ "
+  # Build the PS1 (Prompt String)
+  PS1="$__user_and_host $__cur_location$__git_branch_color$__git_branch $__prompt_tail$__user_input_color "
+}
+#PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$(__git_ps1)\[$WHITE\]\$ "
 
-# # configure PROMPT_COMMAND which is executed each time before PS1 
-# export PROMPT_COMMAND=color_my_prompt
+# configure PROMPT_COMMAND which is executed each time before PS1 
+export PROMPT_COMMAND=color_my_prompt
 
 
-# history -a # record each line as it gets issued 
-# export HISTSIZE=500000 
-# export HISTFILESIZE=100000
-# export HISTCONTROL="erasedups:ignoreboth" # avoid duplicate entries 
-# export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history" # don't record some commands
-# export HISTTIMEFORMAT='%F %T ' # useful timestamp format
+history -a # record each line as it gets issued 
+export HISTSIZE=500000 
+export HISTFILESIZE=100000
+export HISTCONTROL="erasedups:ignoreboth" # avoid duplicate entries 
+export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history" # don't record some commands
+export HISTTIMEFORMAT='%F %T ' # useful timestamp format
 
-# # force ssh connections to close after 5m of inactivity
-# export TMOUT=300
+# force ssh connections to close after 5m of inactivity
+export TMOUT=300
 

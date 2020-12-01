@@ -19,7 +19,7 @@ trap 'echo -e ${BASH_COMMAND} command failed with exit code ${?}' EXIT
 
 # load bash functions
 BASHFUNCS='_.bash_functions.sh'
-THISDIR="$( cd "$( echo "${BASH_SOURCE[0]%/*}" )"; pwd )"
+THISDIR="$(cd "$( echo "${BASH_SOURCE[0]%/*}" )"; pwd)"
 . "${THISDIR}/${BASHFUNCS}"
 
 sourceifexists "$(getpath '_.bash_aliases.sh')"
