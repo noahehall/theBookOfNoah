@@ -18,12 +18,17 @@ alias grepfilenames='grep -iRl'
 alias dpkgi='grep " install " /var/log/dpkg.log'
 alias apti='grep " install " /var/log/apt/history.log'
 alias installed='(dpkgi;apti) | less'
+alias whatsmyip="hostname -I | cut -d' ' -f1"
+#alias whatsmyip="ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'"
 
 ########### docker aliases ###########
+alias dockerseeme="$(echo docker run --rm -it alpine ping -c4 $(whatsmyip))"
 alias dockerps="docker ps --no-trunc -a --format 'table {{.Names}}...{{.Image}}...{{.Status}}...{{.Command}}\n'"
 alias dockerdremoteurl="sudo netstat -lntp | grep dockerd"
+alias dockerdlog="$(echo journalctl -u docker.service)"
+# get netstats (use ss on ubuntu)
+alias dockerdss="(sudo ss -asmpex | grep dockerd)"
 #echo image1 image2 three | xargall docker pull
-
 
 alias xargall='xargs -p -t -n 1'
 alias copyssh='pbcopy < ~/.ssh/id_rsa.pub'
@@ -35,7 +40,6 @@ alias numberofcores='cat /proc/cpuinfo | grep processor | wc -l'
 alias pbcopy='xclip -selection clipboard'
 alias seessh='cat ~/.ssh/id_rsa.pub'
 # alias ufwstatus='ufw status verbose'
-# alias whatsmyip="ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'"
 
 # can also add on a path at the end `sizeit ~/some/path`
 alias sizeit='du -ahc'
