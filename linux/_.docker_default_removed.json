@@ -21,7 +21,7 @@
   "exec-opts": [],
   
   "labels": [],
-  "live-restore": true,
+
   
   "log-opts": {
     "max-size": "10m",
@@ -58,13 +58,13 @@
   "init": false,
   "init-path": "/usr/libexec/docker-init",
   "ipv6": false,
-  "iptables": false,
+  
   "ip-forward": false,
   "ip-masq": false,
   "userland-proxy": false,
   "userland-proxy-path": "/usr/libexec/docker-proxy",
   "ip": "0.0.0.0",
-  "bridge": "",
+  
   "bip": "",
   "fixed-cidr": "",
   "fixed-cidr-v6": "",

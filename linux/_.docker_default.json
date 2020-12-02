@@ -10,7 +10,9 @@
 	"tls": false,
 	"iptables": true,
 	"bridge": "docker0",
-
+	"live-restore": true,
+	"group": "docker",
+	
 	"features":{
 		"buildkit": true
 	},

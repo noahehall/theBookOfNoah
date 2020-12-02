@@ -38,8 +38,10 @@ dockerdlogstacktrace() {
 	fi
 }
 
+# get logs
 alias dockerdlog="$(echo journalctl -u docker.service)"
-
+# get netstats (use ss on ubuntu)
+alias dockerdss="(sudo ss -asmpex | grep dockerd)"
 
 # need to log result
 dockerdown() {
