@@ -14,6 +14,17 @@ getdockerdpid() {
 	echo "$(pidof dockerd)" || 0;
 }
 
+dockerdcheckconfig() {
+	local checkconfigscript=$(getpath '_.docker_check_config.sh')
+	if [[ -f  "$checkconfigscript" ]]; then
+		echo 'checking dockerd config'
+		bash "$checkconfigscript" || \
+		echo "unable to check docker config"
+	fi
+
+
+}
+
 # need log status
 dockerdreload() {
 	local dockerdpid=$(getdockerdpid)

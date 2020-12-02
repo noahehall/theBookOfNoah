@@ -46,7 +46,7 @@
   "api-cors-header": "",
   "selinux-enabled": false,
   "userns-remap": "",
-  "group": "",
+  
   "cgroup-parent": "",
   "default-ulimits": {
     "nofile": {
