@@ -4,6 +4,10 @@
 # https://github.com/moby/moby/blob/master/contrib/init/systemd/docker.service
 # https://docs.docker.com/engine/reference/commandline/dockerd/
 
+# https://stackoverflow.com/questions/55344896/attempt-to-change-docker-data-root-fails-why
+# need to add a check for this
+# docker info | grep "Root Dir" === config.file.data-root
+
 getdockerdpid() {
 	echo "$(pidof dockerd)" || 0;
 }
