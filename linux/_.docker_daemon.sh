@@ -8,6 +8,8 @@
 # need to add a check for this
 # docker info | grep "Root Dir" === config.file.data-root
 
+## th9s file is way too wet
+
 getdockerdpid() {
 	echo "$(pidof dockerd)" || 0;
 }
@@ -17,13 +19,27 @@ dockerdreload() {
 	local dockerdpid=$(getdockerdpid)
 	if [[ "$dockerdpid" -gt 0 ]]; then
 		echo "reloading dockerd: ${dockerdpid}"
-		"$(sudo kill -SIGUSR1 ${dockerdpid})"
+		echo "$(sudo kill -SIGHUP ${dockerdpid})"
 		echo $?
 	else
 		echo "unable to terminate docjkerd: whats the pid?"
 	fi
-
 }
+
+# need log status
+dockerdlogstacktrace() {
+	local dockerdpid=$(getdockerdpid)
+	if [[ "$dockerdpid" -gt 0 ]]; then
+		echo "forcing full stack trace: ${dockerdpid}"
+		echo "$(sudo kill -SIGUSR1 ${dockerdpid})"
+		echo $?
+	else
+		echo "unable force log of stack trace: whats the pid?"
+	fi
+}
+
+alias dockerdlog="$(echo journalctl -u docker.service)"
+
 
 # need to log result
 dockerdown() {
