@@ -1,1 +1,0 @@
-# Opinions I adhere to
