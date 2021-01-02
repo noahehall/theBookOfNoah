@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 # enable this for a shit ton of debugging
 # set -Eouvx pipefail
