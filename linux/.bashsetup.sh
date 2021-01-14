@@ -17,6 +17,9 @@
 
 # load bash functions
 # BASHFUNCS='_.bash_functions.sh'
+#
+# TODO
+# add github/silver_searcher: used like this: ``ag -il 'findthis' ./in/this/dir
 THISDIR="$(
 	cd "$(echo "${BASH_SOURCE[0]%/*}")"
 	pwd
