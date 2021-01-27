@@ -164,8 +164,105 @@ TLDR;
         - made up of routes between participating containers and the wider network where the host is attached
     - multi-host virtual networks
         - provide an overlay where any container on a participating host can have its on routable IP address from any other container in the network
-    
+
 ```sh 
+    # create a closed container
+        
+        docker run... --net none
+
+
+    # create a bridged container (the default)
+    # `--net bridge` can be ommitted, its the default
+        
+        docker run... --net bridge 
+
+
+    # share a containers network interface with another
+        # closed container
+        docker run --name owner... --net none... 
+        # joined container
+        docker run... --net container:owner 
+
+
+    # create an open container
+        docker run... --net host
+    # provide a hostname to a container
+    # and then lookup its ip address
+
+        docker run... \
+            --hostname poop alpine nslookup poop
+
+
+    # bind container port to dynamic host port
+    # on all host interfaces
+        
+        docker run... -p 1234
+
+
+    # bind specific container (4321) and host (1234) port
+    # on all host interfaces
+        
+        docker run... -p 1234:4321
+
+
+    # bind specific container (4321) port to specific
+    # host interface on a dynamic port
+        
+        docker run... -p 123.123.123.123:4321
+
+
+    # bind specific container (4321) port to specific
+    # host interface on specific port (1234)
+        
+        docker run... -p 123.123.123.123:1234:4321
+
+
+    # create a user defined network
+    # allows inter-container communication
+    # but does note expose containers to the outside world
+    
+        docker network create SOME_NAME
+        # connect a running container to SOME_NAME
+        docker network connect SOME_NAME SOME_CONTAINER
+        # run a container and connect it to the network
+        docker run... --network SOME_NAME
+
+
+    # link containers via the oldschool method
+    # you must EXPOSE the ports in the dockerifle, or via with capital -P flag
+    # will output `ready for connections` in the `docker logs`
+    # when it is ready to be linked
+
+        docker run... --name CONT_1
+        # link this container to CONT_1
+        # you can optionally rename the linked container
+        docker run... --link CONT_1:name_inside_container
+
+
+    # set custom dns servers
+        
+        docker run... --dns 8.8.8.8
+
+
+    # set default dns-search
+    # automatically appends poop.com to hostnames
+    # without a top-level domain
+    # e.g. timeto -> timeto.poop.com
+        
+        docker run... --dns-search poop.com
+
+
+    # update the containers host file
+    # add a map from poop to some IP addr
+    # you now access it via http://poop/
+    
+        docker run... --add-host poop:127.0.0.2
+
+
+    # list all interfaces
+        
+        docker run --rm... ip addr
+
 
 ```
 
