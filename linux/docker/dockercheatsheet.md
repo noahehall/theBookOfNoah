@@ -153,6 +153,22 @@ TLDR;
 ```
 
 
+# networking 
+- types
+    + bridge network
+        + virtual network that connects multiple networks so that they can function as a single network 
+        + docker creates a bridge network to connect all of the running containers to the host computers network
+    - single-host virtual networks
+        - local virtual networks are used to provide container isolation
+        - local to the machine where docker is installed
+        - made up of routes between participating containers and the wider network where the host is attached
+    - multi-host virtual networks
+        - provide an overlay where any container on a participating host can have its on routable IP address from any other container in the network
+    
+```sh 
+
+```
+
 
 # registries 
 
@@ -210,61 +226,61 @@ TLDR;
 
 ```sh
 
-# disable inter-container communication
-# any traffic from one container will be blocked
-# by the host firewall except where explicitly permitted
+    # disable inter-container communication
+    # any traffic from one container will be blocked
+    # by the host firewall except where explicitly permitted
 
-    docker -d --icc=false...
-
-
-# define the ip addr of the  bridge network
-    
-    docker -d --bip "192.168.0.128"
+        docker -d --icc=false...
 
 
-# define the ip addr and subnet range
-# of the bridge network
-# docker0 = 192.168.0.128
-# container ip range = 192.168.0.129...255
-
-    docker -d --fixed-cdr "192.168.0.128/25"
+    # define the ip addr of the  bridge network
+        
+        docker -d --bip "192.168.0.128"
 
 
-# set the maximum size of a packet
-# from default of 1500 to 1200
+    # define the ip addr and subnet range
+    # of the bridge network
+    # docker0 = 192.168.0.128
+    # container ip range = 192.168.0.129...255
 
-    docker -d -mtu 1200
-
-
-# set the docker bridge to a custom bridge
-# you need to define it first
-
-    docker -d -b YOURBRIDGE_NAME
+        docker -d --fixed-cdr "192.168.0.128/25"
 
 
-# open the docker daemon to the world
-# e.g. to invoke docker remotely
-# shutdown docker dameon
+    # set the maximum size of a packet
+    # from default of 1500 to 1200
 
-    sudo docker stop
-
-
-# make docker available on tcp socket :2375
-# normally available on /var/run/docker.sock
-# anything that has access to your host can invoke docker
-# 0.0.0.0 makes docker listen on all public and private network interfaces
-# instead you should pick a specific IP
-
-    sudo docker daemon -H tcp://0.0.0.0:2375
+        docker -d -mtu 1200
 
 
-# export the above as an alias
-# cannot be used if you require sudo to run docker
+    # set the docker bridge to a custom bridge
+    # you need to define it first
 
-    export DOCKER_HOST=tcp://YOUR_HOST_IP:2375
+        docker -d -b YOURBRIDGE_NAME
 
-# connect to docker via the tcp socket
 
-    docker -H tcp://HOST_IP:2375 SOME_CMD
+    # open the docker daemon to the world
+    # e.g. to invoke docker remotely
+    # shutdown docker dameon
+
+        sudo docker stop
+
+
+    # make docker available on tcp socket :2375
+    # normally available on /var/run/docker.sock
+    # anything that has access to your host can invoke docker
+    # 0.0.0.0 makes docker listen on all public and private network interfaces
+    # instead you should pick a specific IP
+
+        sudo docker daemon -H tcp://0.0.0.0:2375
+
+
+    # export the above as an alias
+    # cannot be used if you require sudo to run docker
+
+        export DOCKER_HOST=tcp://YOUR_HOST_IP:2375
+
+    # connect to docker via the tcp socket
+
+        docker -H tcp://HOST_IP:2375 SOME_CMD
 
 ```

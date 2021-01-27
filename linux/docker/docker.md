@@ -1109,8 +1109,8 @@
       - enables clients to decouple from a dependency on a specific host IP and instead depend on whatever host is referred to by a known name (e.g. poop.com)
       - one of the most basic ways to change outbound communications is by creating names for IP addresses
   - network
-    - defined in the way that network interfaces are linked together
-    - the links between itnerfaces determines an interfaces IP address
+    - defined in a way that network interfaces are linked together
+    - the links between interfaces determines an interfaces IP address
     - types
       - bridge network
         - virtual network that connects multiple networks so that they can function as a single network
