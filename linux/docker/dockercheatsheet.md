@@ -23,6 +23,29 @@ TLDR;
     - attempt for some predetermined time to restart when a failure is detected
     - always restart the container regardless of the condition
 
+```sh
+    docker help
+    docker help cp
+    docker help run | grep OPTION
+
+   
+    docker ps # show running
+    docker ps -a # show all
+    docker ps -q # only show the container UIDs
+    docker ps -l # show the last created container
+    CID=$(docker ps -l -q) # save the UID of the last created container
+
+    # aggregated stream of all services
+    docker-compose ps 
+```
+
+# docker run 
+
+```sh
+    TODO
+```
+
+
 # dockerfile 
 - contains instructions for building an image 
     - can use var substitution
@@ -91,9 +114,11 @@ TLDR;
     - i.e. docker volume create
 
 ```sh
-    # run the services contained in the file
+    # TODO: docker-compose wth options
+    # build, (re)creates, starts, and attaches to containers for a service
 
-        docker-compose up
+        docker-compose up \
+            -d #detached
 
 
     # all docker-compose cmds (todo)
@@ -621,4 +646,28 @@ TLDR;
 
         docker run... \
             --lxc-config="lxc.cgroup.cpuset.cpus=0,1"...
+```
+
+
+# tricks 
+```sh
+    # create a certifcate for TLS on localhost
+    # generates a 4096-bit RSA key pair
+    # priv key file and cert output to current dir
+
+        docker run --rm \
+        -e COMMON_NAME=localhost \
+        -e KEY_NAME=localhost \
+        -v "$(pwd)":/certs centurylink/openssl
+
+
+    # use a traffic snooper (proxy) to inspect the api calls made from docker client to docker daemon
+    # -v make output readable
+    # fork ensures socat doesnt exact after the first request
+    # & run in the background
+
+        socat -v UNIX-LISTEN:/tmp/dockerapi.sock,fork \
+        UNIX-CONNECT:/var/run/docker.sock &
+        # now issue docker calls via the socat proxy
+        docker -H unix:///tmp/dockerapi.sock ...
 ```
