@@ -396,18 +396,18 @@
         - but make sure you restrict access to this container
 
 
-```sh
-  # find all files with SUID set
-  # use +2000 for SGID
-  docker run...
-    find / -perm 6000 -type -f
+          ```sh
+            # find all files with SUID set
+            # use +2000 for SGID
+            docker run...
+              find / -perm 6000 -type -f
 
-  # unset SUID and SGID for all appropriate files
-  RUN for i in \
-    $(find / -type -f\( -perm +6000 -o -perm +2000\)); \
-    do chmod ug-s $1; done
+            # unset SUID and SGID for all appropriate files
+            RUN for i in \
+              $(find / -type -f\( -perm +6000 -o -perm +2000\)); \
+              do chmod ug-s $1; done
 
-```
+          ```
 
 
 # architecture
