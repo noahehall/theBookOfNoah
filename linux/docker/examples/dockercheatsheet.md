@@ -2,6 +2,21 @@ TLDR;
 
 - so i dont have to browse through `./docker.md` huge file
 
+# general 
+- lifecycle statuses (as reported by docker ps)
+    - running
+      - docker run
+      - docker start
+      - docker restart
+      - docker unpause
+    - exited
+      - docker create
+      - docker stop
+    - paused
+      - docker pause
+    - restarting
+      - docker restart
+
 
 # images 
 

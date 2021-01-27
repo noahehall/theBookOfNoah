@@ -597,7 +597,6 @@
   docker run -d -p 5000:5000 \
     -v $HOME/registry:/var/lib/registry registry:2
 
-
 ```
 
 
@@ -897,7 +896,7 @@
 
 ## containers
   - uses existing container engines (installed in linux) to provide consistent containers built according to best practices
-    - any software run with docker is run isnide a container
+    - any software run with docker is run inside a container
     - software running inside docker containers interface directly with the hosts linux kernel
   - containers started from the same image dont share changes to their file system
   - the running state of a container is directly tied to the state of a single running process inside the container
