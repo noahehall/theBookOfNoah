@@ -220,7 +220,7 @@ TLDR;
     # create a user defined network
     # allows inter-container communication
     # but does note expose containers to the outside world
-    
+
         docker network create SOME_NAME
         # connect a running container to SOME_NAME
         docker network connect SOME_NAME SOME_CONTAINER
@@ -380,4 +380,90 @@ TLDR;
 
         docker -H tcp://HOST_IP:2375 SOME_CMD
 
+```
+
+
+# container resources 
+
+```sh
+    # limmit memory to 256 megabytes
+    # can be b, k, m, g
+
+        docker run... --memory 256m
+
+
+    # set limits on a containers CPU share
+    # relative to other containers on the host
+    # 1024 vs 512, the first gets 2 CPU cycles for every one
+    # i.e. share/total, or this/that
+
+        docker run --cpu-shares 512...
+        docker run --cpu-shares 1024...
+
+
+    # mount webcam at video0 to container
+
+        docker run --device /dev/video0:/dev/video0...
+
+
+    # share IPC namespace
+    # for containers to communicate via shared memory
+
+        docker run --name producer...
+        docker run --name consumer --ipc container:producer...
+
+
+    # share the IPC of the host
+    # beware!!
+
+        docker run --IPC host
+
+
+    # get the default user name
+    # if blank, its will run as the default root user
+    # else the user was set in image/containerr start time
+
+        docker inspect --f "{{.Config.User}}" name|id
+
+
+    #  better way to get the default username, uid, gid, and groups
+
+        # get username
+        docker run --entrypoint ""... whoami 
+        # return the uid, gid, and groups
+        docker run --entrypoint ""... id 
+
+
+    #  see all users defined in an image
+
+        docker run... awk -F: '$0=$1' /etc/passwd
+
+
+    # set default user and group
+
+        docker run... --user unameOrId:gnameOrId
+
+
+    # drop/add a capability
+
+        docker run... \
+            --cap-drop net_raw \
+            --cap-add other_thing
+
+
+    # full privileged container
+        docker run... --privileged
+
+
+    # start docker daemon with LXC enabled
+    # instead of libcontainer
+
+        docker -d --exec-driver=lxc
+
+
+    # set the LXC configuration
+    # requires daemon to have lxc driver enabled
+
+        docker run... \
+            --lxc-config="lxc.cgroup.cpuset.cpus=0,1"...
 ```
