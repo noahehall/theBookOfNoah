@@ -23,6 +23,161 @@ TLDR;
     - attempt for some predetermined time to restart when a failure is detected
     - always restart the container regardless of the condition
 
+# dockerfile 
+- contains instructions for building an image 
+    - can use var substitution
+        - ENV, ADD, COPY, WORKDIR, VOLUME, EXPOSE, USER
+        - use `docker inspect...` on the resulting image to verify vars are set correctly
+- keys
+    - FROM image:tag
+    - MAINTAINER "super@dope.com"
+    - RUN any linux cmd
+    - ONBUILD
+    - ENTRYPOINT
+    - ENV
+    - LABEL 
+    - WORKDIR 
+    - EXPOSE 
+    - USER 
+    - CMD 
+    - ARGS 
+    - COPY 
+    - ADD 
+    - VOLUME 
+- files 
+    + .dockerignore 
+    + 
+
+
+```sh
+    FROM debian:wheezy
+    # FROM debian@sha256:1234 # use the digest returned from docker pull
+    MAINTAINER noah hall "poop@your.toilet"
+    RUN ...
+    ENV THIS="/that" \
+        VERSION="400 degrees"
+        LABEL base.name="lilwayne" \
+        base.version="${VERSION}"
+
+
+```
+
+# docker-compose
+- options specified in the dockerfile are respected by default
+    - you dont need to specify them again in the compose file
+    - CMD, EXPOSE, VOLUME, ENV
+  - YAML boolean values must be enclosed in quotes
+    - true, false, yes, no, on off
+
+  - some keys accept lists or mappings
+    - lists
+      - `- key=value`
+    - mapping
+      - `key: value`
+
+
+  - service definition
+    - i.e. docker container create
+    - if build + image are specified
+      - value of image becomes image name
+    - ARGS
+      - build time arguments
+      - value lookup
+      - dockerfile -> compose file build -> env vars
+
+  - network definition
+    - i.e. docker network create
+  - volume definition
+    - i.e. docker volume create
+
+```sh
+    # run the services contained in the file
+
+        docker-compose up
+
+
+    # all docker-compose cmds (todo)
+
+        version: '3.8'
+        services:
+            SOME_SERVICE_NAME:
+                # skipped cuz f windows
+                credential_spec
+                # useful but skipped
+                cap_add:
+                - something
+                cap_drop:
+                - something
+                cgroup_parent: something
+
+                # u cannot scale a service beyond 1 container
+                # if supplying a static container name
+                container_name: poop
+
+
+                # impacts compose up and stop
+                # waits for the container to be started
+                # not for the service to be ready
+                depends_on:
+                    - servicenameX
+                    - servicenameX
+                # grant access to pre-existing configs
+                # mounted at /configname in container
+                configs:
+                    - config1
+                    - configX
+                # or long syntax
+                configs:
+                    - source: configname
+                    target: /mount/path/configname
+                    uid: 'owner'
+                    gid: 'group'
+                    mode: 0444 # default
+                # override the default cmd
+                command: any linux cmd here
+                command: ['or', 'as', 'a', 'list']
+
+                image: SOME_NAME:SOME_TAG
+                # string/object, but not both
+                build: ./dir/with/dockerfile
+                build:
+                    # path/url
+                    # path - containing dockerfile
+                    # url - git repository
+                    context: ./build/context
+                    # if specified, context required
+                    dockerfile: /path/some.dockerfile
+                    # accessible only during build process
+                    # must exist in dockerfile
+                    args:
+                        - ARGX=VALX
+                        - ARGY #take val from env
+
+                    # list of images the engine uses
+                    # for cache resolution
+                    cache_from:
+                        - alpine:latest
+                        - corp/web:123.4
+
+                    # metadata for the resulting image
+                    # best practice use reverse-DNS notation
+                    labels:
+                        - "com.SERVICENAME.LABELX=VALUE"
+                        - "com.SERVICENAME.LABEL=VALUE"
+
+                    # label this build stage
+                    # used for multi-stage builds
+                    target: prod
+
+                    # skipped
+                    SHM_SIZE: '2gb'
+                    # end build
+
+# TODO
+# docker config create
+```
+
+
 # volumes 
 - command cmds 
     + docker volume ...
