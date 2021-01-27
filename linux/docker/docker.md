@@ -923,7 +923,7 @@
 ## volumes
   - a host/containers directory tree is created by a set of mount points that describe how to piece together one/more file  systems
   - volume
-    - mount point on the containers dorectory tree where a portion of the host directory tree has been mounted
+    - mount point on the containers directory tree where a portion of the host directory tree has been mounted
     - useful for working with persistent/shared data
     - tool for segmenting and sharing data that has a scope/life cycle independent of a single container
     - enable separation of concerns and create modularity for architectural components
@@ -967,12 +967,12 @@
       - its difficult to find the location of the managed volume on the host file system
         - thus no way to share/delete a managed volume manually
       - can only be identified by the containers that use them
-      -
+      
 ### volume patterns
   - volume container
     - creating a container with an attached volume, stopping the container, then source that containers volume when creating other containers
       - when creating the container, you can issue a simple echo command to run it and exit immediately
-    - a volume container doesn t need to be running because stopped containers maintain their volume references
+    - a volume container doesnt need to be running because stopped containers maintain their volume references
     - use cases
       - sharing a set of volumes with many containers
       - can categorize a set of volumes that fit a common use case
@@ -1027,7 +1027,7 @@
   docker volume rm myvol
 
   # create a data container using an existing volume based on busybox
-  docker create -v SOMEVOL:/place/here ---name CONT_NAME busybox
+  docker create -v SOMEVOL:/place/here/in/container ---name CONT_NAME busybox
 
   # copy files from host into data container
   docker cp /some/file CONT_NAME:/place/here
