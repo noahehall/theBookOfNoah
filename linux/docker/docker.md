@@ -70,6 +70,7 @@
     - local to the machine where docker is installed
     - made up of routes between participating containers and the wider network where the host is attached
     - the connection between interfaces describe how exposed or isolated a specific network container is from the rest of the network
+
     - default stack
       - container X network
         - loopback interface
@@ -77,32 +78,35 @@
         - private (ethernet) interface
           - links to the virtual interface in the hosts namespace
           - assigned a unique private IP address
-          - not directly reachable from the external network\
+          - not directly reachable from the external network
           - docker uses kernel namespaces to create each virtual private interface
       - operating system network
         - container X virtual interface
         - docker bridge virtual interface (docker0)
           - routes connections to the external network and each container interfaces]
-            - analagous topp yur home router
+            - analagous to your home router
         - logical host interface
       - physical network interface
-  - multi-host virtual networks
-    - provide an overlay where any container on a paritcipating host can have its on routable IP address from any otsoftware dependencies
-      - installed images can reuse existing dependencies
-      - dependencies with different versions can coexist
-    - improving portability
-      - docker runs on all operating systems
-      - thus, you can use software designed for linux on any other OS that supports docker
-    - security
-      - the scope of any security threat associated with running a particular application is limited to the scope of the application itself
+    - multi-host virtual networks
+      - provide an overlay where any container on a paritcipating host can have its on routable IP address from any software dependencies
+        - installed images can reuse existing dependencies
+        - dependencies with different versions can coexist
+      - improving portability
+        - docker runs on all operating systems
+        - thus, you can use software designed for linux on any other OS that supports docker
+      - security
+        - the scope of any security threat associated with running a particular application is limited to the scope of the application itself
+  
   - limitations
-    - containers wont help much with the securiyt of programs that have to run with full access to the machine
+    - containers wont help much with the security of programs that have to run with full access to the machine
+  
   - Analogies
     - think of docker as a physical shipping container system
       - a box where you store and run an applkication and all of its dependencies
       - just as cranes, trucks, trains, etc work with shipping contaiiners
         - docker can run, copy and distribute containers with ease
       - docker images are the shipping containers
+  
   - docker engine and docker compose simplify the lives of developers and opreations personnel by abstracting the host from the contained environment
   - docker machine and docker swarm help system admins and infrastructure engineers extend those abstactions to clutered environments
 
@@ -233,8 +237,8 @@
         - current user
 
   - use base images to create common layers
-    - do not set the default user int he base otherwise all implementations will not be able to update the image
-    - however you should always create the user:group
+    - do not set the default user in the base otherwise all implementations will not be able to update the image
+    - however you should always create the user:group as soon as possible (just dont change to it)
 
   - use TLS to secure your registry
 
@@ -248,6 +252,8 @@
     - debian
       - minimal footprint for a fully featured distro
       - about 125mb
+    - alpine 
+      + seems to be the fav
 
   - dont run docker as the root user on your system
     - eliminate this by
@@ -255,7 +261,7 @@
       - setting that group as the owner of the docker socket
       - adding your user to that group
 
-  - all known container breakout tactics rely o nhaving sytem admin privileges inside the container
+  - all known container breakout tactics rely on having sytem admin privileges inside the container
     - eliminate this by either
       - set the USER instruction to a user and group with limited priveleges
       - change the user in the init script
@@ -431,6 +437,7 @@
         - each container runs as a child process of the docker daemon
         - the container, and the child process runs in its own memory subspace of the user spoace
         - programs running inside a container can access only their own memory and resources as scoped by the container
+  
   - Virtualization vs Containerization
     - VM is a virtual machine
       - installed on top of the host OS, and runs a guest operating machine
