@@ -63,15 +63,19 @@ TLDR;
         # only if you've enabled the buildkit backend
         # https://docs.docker.com/engine/reference/builder/#parser-directives
 
-    ARG VAR_NAME_ONLY
-    # value must be provided elseware
+    ARG VARNAME1=value
     # only build instruction that can appear before FROM
+    # value can only be used in the FROM statement
 
     FROM [--platform=<platform>] <image> [AS <name>]
     FROM [--platform=<platform>] <image>[:<tag>] [AS <name>]
     FROM [--platform=<platform>] <image>[@<digest>] [AS <name>]
     # FROM debian:wheezy
     # FROM debian@sha256:1234 # use the digest returned from docker pull
+    
+    ARG VARNAME1
+    # reuse the VARNAME1 value declared earlier
+    # only way to reuse the value is to redclare it
     
     ENV
     MAINTAINER "super@dope.com"
