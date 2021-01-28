@@ -131,10 +131,23 @@ TLDR;
     COPY [--chown=<user>:<group>] <src>... <dest>
     COPY [--chown=<user>:<group>] ["<src>",... "<dest>"]
     COPY --from=<see FROM syntax above>
+    
+
     VOLUME 
 
     USER 
 
+    
+    # An ENTRYPOINT allows you to configure a container that will run as an executable.
+    # 
+    ENTRYPOINT ["executable", "param1", "param2"]
+    # exec form, is preferred
+    
+    ENTRYPOINT command param1 param2
+    ENTRYPOINT exec top -b
+    # shell form 
+    # The shell form prevents any CMD or run command line arguments from being used, but has the disadvantage that your ENTRYPOINT will be started as a subcommand of /bin/sh -c, which does not pass signals. This means that the executable will not be the container’s PID 1 - and will not receive Unix signals - so your executable will not receive a SIGTERM from docker stop <container>.
+    # To ensure that docker stop will signal any long running ENTRYPOINT executable correctly, you need to remember to start it with exec
 
     STOPSIGNAL signal
     # sets the system call signal that will be sent to the container to exit. 
@@ -167,17 +180,8 @@ TLDR;
     # does var replacement
     # (shell form) 
     
-    # An ENTRYPOINT allows you to configure a container that will run as an executable.
-    # 
-    ENTRYPOINT ["executable", "param1", "param2"]
-    # exec form, is preferred
-    
-    ENTRYPOINT command param1 param2
-    ENTRYPOINT exec top -b
-    # shell form 
-    # The shell form prevents any CMD or run command line arguments from being used, but has the disadvantage that your ENTRYPOINT will be started as a subcommand of /bin/sh -c, which does not pass signals. This means that the executable will not be the container’s PID 1 - and will not receive Unix signals - so your executable will not receive a SIGTERM from docker stop <container>.
-    # To ensure that docker stop will signal any long running ENTRYPOINT executable correctly, you need to remember to start it with exec
 
+    
     ONBUILD do this \
         && and this \
         && and this
