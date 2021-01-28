@@ -64,8 +64,10 @@ TLDR;
         # https://docs.docker.com/engine/reference/builder/#parser-directives
 
     ARG VARNAME1=value
+    # build vars, do not exist at container runtime
     # only build instruction that can appear before FROM
     # value can only be used in the FROM statement
+
 
     FROM [--platform=<platform>] <image> [AS <name>]
     FROM [--platform=<platform>] <image>[:<tag>] [AS <name>]
@@ -77,7 +79,7 @@ TLDR;
     # reuse the VARNAME1 value declared earlier
     # only way to reuse the value is to redclare it
     
-    ENV
+    ENV VARNAME=value \
 
     MAINTAINER "never use this CMD use LABEL instead"
     LABEL multi.label1="value1" \
@@ -107,9 +109,17 @@ TLDR;
         do this too;
 
 
+    # can specify multiple src paths 
+    # dest is absolute path, or relative to WORKDIR
+    # Using numeric IDs requires no lookup and will not depend on container root filesystem content.
+    # 
+    ADD [--chown=<user>:<group>] <src>... <dest>
+    ADD [--chown=<user>:<group>] ["<src>",... "<dest>"]
+    # required in spaces are contained in paths
 
-    COPY 
-    ADD 
+    COPY [--chown=<user>:<group>] <src>... <dest>
+    COPY [--chown=<user>:<group>] ["<src>",... "<dest>"]
+    COPY --from=<see FROM syntax above>
     VOLUME 
 
 
