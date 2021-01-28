@@ -79,17 +79,41 @@ TLDR;
     
     ENV
     MAINTAINER "super@dope.com"
-    LABEL
+    LABEL multi.label1="value1" \
+      multi.label2="value2" \
+      other="value3"
+    WORKDIR /cd/to/this/path/for/all/following/cmds
+
+    RUN <command>
+    # executes ina shell as `RUN /bin/sh -c <command>`
+    # fuck windows 
+    RUN ["executable", "param1", "param2"]
+    # exec form
+    # The exec form is parsed as a JSON array, which means that you must use double-quotes (“) around words not single-quotes (‘).
 
     RUN any linux cmd \
-        && more cmds
-    WORKDIR 
+        && more cmds; \
+        do this too;
+
+
     EXPOSE 
     COPY 
     ADD 
     VOLUME 
+
+
     USER 
-    CMD 
+
+    # does not execute a shell so there is no var replacement
+    # is REPLACED by whatever cmd is specified in `docker run ...`
+    CMD ["executable","param1","param2"] 
+    # (exec form, this is the preferred form)
+    CMD ["param1","param2"] 
+    # (as default parameters to ENTRYPOINT)
+    
+    # does var replacement
+    CMD command param1 param2 
+    # (shell form) 
     ENTRYPOINT
     ONBUILD do this \
         && and this \
@@ -371,6 +395,12 @@ TLDR;
         docker build -t username/repository
         docker login
         docker push username/repository
+
+
+    # inspect the labels of an image 
+    
+        docker image inspect --format='' myimage
+
 
 ```
 
