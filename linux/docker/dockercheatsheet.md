@@ -48,10 +48,15 @@ TLDR;
 
 # docker build 
 - build an image from a Dockerfile and a context
+- the entire contet gets sent to the docker daemon for build
+    - keep it as empty as possible
 
 
 ```sh
+    docker build -f /path/to/a/Dockerfile /path/to/context 
 
+    -f /path/to/dockerfile 
+    -t host.com/username/repository:tag 
 
 ```
 
@@ -60,22 +65,6 @@ TLDR;
     - can use var substitution
         - ENV, ADD, COPY, WORKDIR, VOLUME, EXPOSE, USER
         - use `docker inspect...` on the resulting image to verify vars are set correctly
-- keys
-    - FROM image:tag
-    - MAINTAINER "super@dope.com"
-    - RUN any linux cmd
-    - ONBUILD
-    - ENTRYPOINT
-    - ENV
-    - LABEL 
-    - WORKDIR 
-    - EXPOSE 
-    - USER 
-    - CMD 
-    - ARGS 
-    - COPY 
-    - ADD 
-    - VOLUME 
 - files 
     + .dockerignore 
     + 
@@ -90,6 +79,26 @@ TLDR;
         VERSION="400 degrees"
         LABEL base.name="lilwayne" \
         base.version="${VERSION}"
+
+
+    FROM image:tag
+    MAINTAINER "super@dope.com"
+    RUN any linux cmd \
+        && more cmds
+    ENTRYPOINT
+    ENV
+    LABEL 
+    WORKDIR 
+    EXPOSE 
+    USER 
+    CMD 
+    ARGS 
+    COPY 
+    ADD 
+    VOLUME 
+    ONBUILD do this \
+        && and this \
+        && and this
 
 
 ```
