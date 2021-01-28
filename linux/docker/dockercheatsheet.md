@@ -93,12 +93,6 @@ TLDR;
 
     WORKDIR /cd/to/this/path/for/all/following/cmds
 
-    EXPOSE <port> [<port>/<protocol>...]
-    # specifies ports available in the container 
-    # still requires you to publish the ports
-    # serves as contract documentation between the image builder and consumer
-    # protocol tcp (default) | udp
-
     # fuck windows RUN form not included 
     
     SHELL ["executable", "parameters"]
@@ -181,7 +175,12 @@ TLDR;
     # (shell form) 
     
 
-    
+    EXPOSE <port> [<port>/<protocol>...]
+    # specifies ports available in the container 
+    # still requires you to publish the ports
+    # serves as contract documentation between the image builder and consumer
+    # protocol tcp (default) | udp
+
     ONBUILD do this \
         && and this \
         && and this
