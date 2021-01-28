@@ -46,6 +46,15 @@ TLDR;
 ```
 
 
+# docker build 
+- build an image from a Dockerfile and a context
+
+
+```sh
+
+
+```
+
 # dockerfile 
 - contains instructions for building an image 
     - can use var substitution

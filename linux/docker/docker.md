@@ -1799,6 +1799,8 @@
 # TODO
 # docker config create
 ```
+
+
 ### docker-compose scale
   - set the number of containers to run for a service
   - services will bind to the hosts ephemeral port 0
@@ -2398,7 +2400,7 @@
 ```
 
 ### docker build
-  - build an image from a Dockerfile
+  - build an image from a Dockerfile and a context
   - build specific flags
   - `--compress`
     - compress the build content using gzip
