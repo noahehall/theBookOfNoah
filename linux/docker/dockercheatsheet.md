@@ -67,6 +67,9 @@ TLDR;
     # build vars, do not exist at container runtime
     # only build instruction that can appear before FROM
     # value can only be used in the FROM statement
+    #  If a Dockerfile defines an ARG variable whose value is different from a previous build, then a “cache miss” occurs upon its first usage, not its definition
+    #  all RUN instructions following an ARG instruction use the ARG variable implicitly (as an environment variable), thus can cause a cache miss
+    #  All predefined ARG variables are exempt from caching unless there is a matching ARG statement in the Dockerfile.
 
 
     FROM [--platform=<platform>] <image> [AS <name>]
@@ -153,6 +156,8 @@ TLDR;
     ONBUILD do this \
         && and this \
         && and this
+    # adds to the image a trigger instruction to be executed at a later time, when the image is used as the base for another build. 
+    # The trigger will be executed in the context of the downstream build, as if it had been inserted immediately after the FROM instruction in the downstream Dockerfile.
 
 
 ```
@@ -178,6 +183,8 @@ TLDR;
 
     -f /path/to/dockerfile 
     -t host.com/username/repository:tag 
+    --build-arg <varname>=<value> # provide/override ARG in dockerfiles
+
 
 ```
 
@@ -219,7 +226,7 @@ TLDR;
     - i.e. docker container create
     - if build + image are specified
       - value of image becomes image name
-    - ARGS
+    - ARG
       - build time arguments
       - value lookup
       - dockerfile -> compose file build -> env vars
@@ -234,7 +241,7 @@ TLDR;
     # build, (re)creates, starts, and attaches to containers for a service
 
         docker-compose up \
-            -d #detached + only way to pass ARGS to ENTRYPOINT exec form and overrides matching ARGS in CMD
+            -d #detached + only way to pass ARG to ENTRYPOINT exec form and overrides matching ARG in CMD
 
 
     # all docker-compose cmds (todo)
