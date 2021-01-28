@@ -132,7 +132,10 @@ TLDR;
 # docker run 
 
 ```sh
-    TODO
+    docker run ....
+
+    -p map hostposrts:containerports
+    -P publish all ports `EXPOSE` in the docker image
 ```
 
 
