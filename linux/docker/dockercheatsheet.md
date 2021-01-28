@@ -101,6 +101,13 @@ TLDR;
 
     # fuck windows RUN form not included 
     
+    SHELL ["executable", "parameters"]
+    # override the default shell used for all shell cmds 
+    # Executed as cmd /S /C echo hello
+    # SHELL ["cmd", "/S", "/C"]
+    # RUN echo hello
+    
+    
     RUN <command>
     # executes ina shell as `RUN /bin/sh -c <command>`
     
@@ -126,8 +133,26 @@ TLDR;
     COPY --from=<see FROM syntax above>
     VOLUME 
 
-
     USER 
+
+
+    STOPSIGNAL signal
+    # sets the system call signal that will be sent to the container to exit. 
+    # This signal can be a valid unsigned number that matches a position in the kernel’s syscall table, for instance 9, or a signal name in the format SIGNAME, for instance SIGKILL.
+
+
+
+    HEALTHCHECK [OPTIONS] CMD command
+    # options 
+    #   --interval=DURATION (default: 30s)
+    #   --timeout=DURATION (default: 30s)
+    #   --start-period=DURATION (default: 0s)
+    #   --retries=N (default: 3)
+    # check container health by running a command inside the container
+    HEALTHCHECK NONE 
+    # disable any healthcheck inherited from the base image)
+    
+
 
     # does not execute a shell so there is no var replacement
     # is REPLACED by whatever cmd is specified in `docker run ...`
@@ -158,6 +183,7 @@ TLDR;
         && and this
     # adds to the image a trigger instruction to be executed at a later time, when the image is used as the base for another build. 
     # The trigger will be executed in the context of the downstream build, as if it had been inserted immediately after the FROM instruction in the downstream Dockerfile.
+    # may not trigger FROM or MAINTAINER instructions.
 
 
 ```
