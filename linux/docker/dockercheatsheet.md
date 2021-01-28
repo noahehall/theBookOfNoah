@@ -128,6 +128,7 @@ TLDR;
 
     # does not execute a shell so there is no var replacement
     # is REPLACED by whatever cmd is specified in `docker run ...`
+    # If CMD is defined from the base image, setting ENTRYPOINT will reset CMD to an empty value. In this scenario, CMD must be defined in the current image to have a value.
     # 
     CMD ["executable","param1","param2"] 
     # (exec form, this is the preferred form)
@@ -144,8 +145,10 @@ TLDR;
     # exec form, is preferred
     
     ENTRYPOINT command param1 param2
+    ENTRYPOINT exec top -b
     # shell form 
     # The shell form prevents any CMD or run command line arguments from being used, but has the disadvantage that your ENTRYPOINT will be started as a subcommand of /bin/sh -c, which does not pass signals. This means that the executable will not be the container’s PID 1 - and will not receive Unix signals - so your executable will not receive a SIGTERM from docker stop <container>.
+    # To ensure that docker stop will signal any long running ENTRYPOINT executable correctly, you need to remember to start it with exec
 
     ONBUILD do this \
         && and this \
