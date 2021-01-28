@@ -91,10 +91,13 @@ TLDR;
     # specifies ports available in the container 
     # still requires you to publish the ports
     # serves as contract documentation between the image builder and consumer
+    # protocol tcp (default) | udp
 
+    # fuck windows RUN form not included 
+    
     RUN <command>
     # executes ina shell as `RUN /bin/sh -c <command>`
-    # fuck windows 
+    
     RUN ["executable", "param1", "param2"]
     # exec form
     # The exec form is parsed as a JSON array, which means that you must use double-quotes (“) around words not single-quotes (‘).
@@ -123,6 +126,7 @@ TLDR;
     CMD command param1 param2 
     # (shell form) 
     ENTRYPOINT
+
     ONBUILD do this \
         && and this \
         && and this
@@ -136,6 +140,7 @@ TLDR;
 
     -p map hostposrts:containerports
     -P publish all ports `EXPOSE` in the docker image
+    --env <key>=<value> #set/replace env vars 
 ```
 
 
