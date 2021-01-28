@@ -145,6 +145,7 @@ TLDR;
     
     ENTRYPOINT command param1 param2
     # shell form 
+    # The shell form prevents any CMD or run command line arguments from being used, but has the disadvantage that your ENTRYPOINT will be started as a subcommand of /bin/sh -c, which does not pass signals. This means that the executable will not be the container’s PID 1 - and will not receive Unix signals - so your executable will not receive a SIGTERM from docker stop <container>.
 
     ONBUILD do this \
         && and this \
