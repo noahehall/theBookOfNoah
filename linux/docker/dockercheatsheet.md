@@ -102,12 +102,12 @@ TLDR;
     # fuck windows RUN form not included 
     
     SHELL ["executable", "parameters"]
-    # override the default shell used for all shell cmds 
+    # override the default shell used for all shell cmds (run, cmd, entrypoint)
     # Executed as cmd /S /C echo hello
     # SHELL ["cmd", "/S", "/C"]
     # RUN echo hello
     
-    
+
     RUN <command>
     # executes ina shell as `RUN /bin/sh -c <command>`
     
