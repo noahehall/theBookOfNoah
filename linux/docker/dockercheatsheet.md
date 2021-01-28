@@ -177,6 +177,17 @@ TLDR;
 
 ```
 
+# docker exec 
+
+```sh 
+    # see what process 1 is, and the options passed to it
+    # as well as all other shit 
+    docker exec -it someimage ps aux
+
+
+```
+
+
 # dockerfile 
 - contains instructions for building an image 
     - can use var substitution
@@ -219,7 +230,7 @@ TLDR;
     # build, (re)creates, starts, and attaches to containers for a service
 
         docker-compose up \
-            -d #detached + only way to pass ARGS to ENTRYPOINT exec form
+            -d #detached + only way to pass ARGS to ENTRYPOINT exec form and overrides matching ARGS in CMD
 
 
     # all docker-compose cmds (todo)
