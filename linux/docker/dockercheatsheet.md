@@ -80,6 +80,7 @@ TLDR;
     # only way to reuse the value is to redclare it
     
     ENV VARNAME=value \
+        ANOTHER=one
 
     MAINTAINER "never use this CMD use LABEL instead"
     LABEL multi.label1="value1" \
@@ -127,15 +128,23 @@ TLDR;
 
     # does not execute a shell so there is no var replacement
     # is REPLACED by whatever cmd is specified in `docker run ...`
+    # 
     CMD ["executable","param1","param2"] 
     # (exec form, this is the preferred form)
     CMD ["param1","param2"] 
     # (as default parameters to ENTRYPOINT)
     
-    # does var replacement
     CMD command param1 param2 
+    # does var replacement
     # (shell form) 
-    ENTRYPOINT
+    
+    # An ENTRYPOINT allows you to configure a container that will run as an executable.
+    # 
+    ENTRYPOINT ["executable", "param1", "param2"]
+    # exec form, is preferred
+    
+    ENTRYPOINT command param1 param2
+    # shell form 
 
     ONBUILD do this \
         && and this \
@@ -210,7 +219,7 @@ TLDR;
     # build, (re)creates, starts, and attaches to containers for a service
 
         docker-compose up \
-            -d #detached
+            -d #detached + only way to pass ARGS to ENTRYPOINT exec form
 
 
     # all docker-compose cmds (todo)
