@@ -40,7 +40,7 @@ TLDR;
 ```
 
 ## general cmds for dockerfile, docker-compose, etc 
-- $variable_name or ${variable_name}
+- $variable_name | ${variable_name} | ${variable:-default_value} | ${variable:+if_set_use_this_else_''}
     + ADD
     + COPY
     + ENV
