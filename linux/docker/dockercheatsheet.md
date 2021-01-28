@@ -39,6 +39,60 @@ TLDR;
     docker-compose ps 
 ```
 
+## general cmds for dockerfile, docker-compose, etc 
+- $variable_name or ${variable_name}
+    + ADD
+    + COPY
+    + ENV
+    + EXPOSE
+    + FROM
+    + LABEL
+    + STOPSIGNAL
+    + USER
+    + VOLUME
+    + WORKDIR
+    + ONBUILD
+
+```sh
+    # syntax=docker/dockerfile
+    # syntax=docker/dockerfile:1.0
+    # syntax=docker.io/docker/dockerfile:1
+    # syntax=docker/dockerfile:1.0.0-experimental
+    # syntax=example.com/user/repo:tag@sha256:abcdef...
+        # directive cmds must appear before ANYTHING (event comments) and do not add layer/appear as a build step
+        # only if you've enabled the buildkit backend
+        # https://docs.docker.com/engine/reference/builder/#parser-directives
+
+    ARG VAR_NAME_ONLY
+    # value must be provided elseware
+    # only build instruction that can appear before FROM
+
+    FROM [--platform=<platform>] <image> [AS <name>]
+    FROM [--platform=<platform>] <image>[:<tag>] [AS <name>]
+    FROM [--platform=<platform>] <image>[@<digest>] [AS <name>]
+    # FROM debian:wheezy
+    # FROM debian@sha256:1234 # use the digest returned from docker pull
+    
+    ENV
+    MAINTAINER "super@dope.com"
+    LABEL
+
+    RUN any linux cmd \
+        && more cmds
+    WORKDIR 
+    EXPOSE 
+    COPY 
+    ADD 
+    VOLUME 
+    USER 
+    CMD 
+    ENTRYPOINT
+    ONBUILD do this \
+        && and this \
+        && and this
+
+
+```
 # docker run 
 
 ```sh
@@ -68,40 +122,6 @@ TLDR;
 - files 
     + .dockerignore 
     + 
-
-
-```sh
-    FROM debian:wheezy
-    # FROM debian@sha256:1234 # use the digest returned from docker pull
-    MAINTAINER noah hall "poop@your.toilet"
-    RUN ...
-    ENV THIS="/that" \
-        VERSION="400 degrees"
-        LABEL base.name="lilwayne" \
-        base.version="${VERSION}"
-
-
-    FROM image:tag
-    MAINTAINER "super@dope.com"
-    RUN any linux cmd \
-        && more cmds
-    ENTRYPOINT
-    ENV
-    LABEL 
-    WORKDIR 
-    EXPOSE 
-    USER 
-    CMD 
-    ARGS 
-    COPY 
-    ADD 
-    VOLUME 
-    ONBUILD do this \
-        && and this \
-        && and this
-
-
-```
 
 # docker-compose
 - options specified in the dockerfile are respected by default
