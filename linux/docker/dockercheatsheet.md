@@ -78,11 +78,19 @@ TLDR;
     # only way to reuse the value is to redclare it
     
     ENV
-    MAINTAINER "super@dope.com"
+
+    MAINTAINER "never use this CMD use LABEL instead"
     LABEL multi.label1="value1" \
       multi.label2="value2" \
       other="value3"
+    LABEL maintainer="SvenDowideit@home.org.au"
+
     WORKDIR /cd/to/this/path/for/all/following/cmds
+
+    EXPOSE <port> [<port>/<protocol>...]
+    # specifies ports available in the container 
+    # still requires you to publish the ports
+    # serves as contract documentation between the image builder and consumer
 
     RUN <command>
     # executes ina shell as `RUN /bin/sh -c <command>`
@@ -96,7 +104,7 @@ TLDR;
         do this too;
 
 
-    EXPOSE 
+
     COPY 
     ADD 
     VOLUME 
@@ -398,7 +406,7 @@ TLDR;
 
 
     # inspect the labels of an image 
-    
+
         docker image inspect --format='' myimage
 
 
