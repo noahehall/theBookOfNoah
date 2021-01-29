@@ -1,6 +1,15 @@
-TLDR;
+# TLDR;
 
 - so i dont have to browse through `./docker.md` huge file
+
+# links 
+- [official docker image library](https://github.com/docker-library/official-images)
+
+# todo 
+- [tini: init for containers](https://github.com/krallin/tini)
+- [buildx:  Docker CLI plugin for extended build capabilities with BuildKit](https://github.com/docker/buildx#documentation)
+- [buildx + buildkit tut](https://medium.com/titansoft-engineering/docker-build-cache-sharing-on-multi-hosts-with-buildkit-and-buildx-eb8f7005918e)
+
 
 # general 
 - lifecycle statuses (as reported by docker ps)
@@ -39,6 +48,7 @@ TLDR;
     docker-compose ps 
 ```
 
+
 ## general cmds for dockerfile, docker-compose, etc 
 - $variable_name | ${variable_name} | ${variable:-default_value} | ${variable:+if_set_use_this_else_''}
     + ADD
@@ -52,6 +62,14 @@ TLDR;
     + VOLUME
     + WORKDIR
     + ONBUILD
+
+- best practices 
+    + stable lines come before frequently changing lines
+    + interception attacks during build
+        * verifying the source: using https where possible; 
+        * verifying author: importing PGP keys with the full fingerprint in the Dockerfile to check signatures; 
+        * verifying the content: embedding checksums directly in the Dockerfile
+
 
 ```sh
     # syntax=docker/dockerfile
@@ -125,6 +143,7 @@ TLDR;
     COPY [--chown=<user>:<group>] <src>... <dest>
     COPY [--chown=<user>:<group>] ["<src>",... "<dest>"]
     COPY --from=<see FROM syntax above>
+    # COPY instructions considers file mtime changes to be a cache bust,
     
 
     VOLUME 
@@ -197,7 +216,10 @@ TLDR;
 
     -p map hostposrts:containerports
     -P publish all ports `EXPOSE` in the docker image
-    --env <key>=<value> #set/replace env vars 
+    #set/replace env vars 
+    --env <key>=<value> 
+    # you can use it when referencing the container within a Docker network
+    --name CONTAINER_NAME
 ```
 
 
@@ -828,4 +850,20 @@ TLDR;
         UNIX-CONNECT:/var/run/docker.sock &
         # now issue docker calls via the socat proxy
         docker -H unix:///tmp/dockerapi.sock ...
+
+
+    # remove images with matching tag (foo)
+
+        docker images --format "{{.Repository}}:{{.Tag}}" | \
+        grep :foo \
+        xargs docker rmi
+
+
+    # review a containers file system (e.g. alpine)
+
+        docker pull alpine
+        docker run --name cotw-alpine alpine /bin/true
+        docker export cotw-alpine > cotw-alpine.tar
+        docker rm cotw-alpine
+        tar tfv cotw-alpine.tar | less      
 ```

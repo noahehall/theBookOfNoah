@@ -11,4 +11,7 @@
 
   # run a gui app in docker
   docker run --net=host --env="DISPLAY" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" gui-app
+
+  # is roughly the opposite of apt-get update -- it ensures that the layer doesn't include the extra ~8MB of APT package list data, and enforces appropriate apt-get update usage.)
+    rm -rf /var/lib/apt/lists/* 
 ```
