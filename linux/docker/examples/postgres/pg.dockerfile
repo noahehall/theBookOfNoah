@@ -164,13 +164,13 @@ COPY ./init-pgguidedb.sh \
     /docker-entrypoint-initdb.d 
 
 RUN chmod +x /usr/local/bin/pg-docker-entrypoint.sh \
-    && ln -s usr/local/bin/pg-docker-entrypoint.sh; \
+    && ln -s /usr/local/bin/pg-docker-entrypoint.sh; \
     chmod +x /docker-entrypoint-initdb.d/init-pgguidedb.sh; \
     chmod +x /docker-entrypoint-initdb.d/init-dvdrentaldb.sh \
     ;
 
 
-ENTRYPOINT ["/usr/local/bin/pg-docker-entrypoint.sh"]
+ENTRYPOINT ["pg-docker-entrypoint.sh"]
 
 # We set the default STOPSIGNAL to SIGINT, which corresponds to what PostgreSQL
 # calls "Fast Shutdown mode" wherein new connections are disallowed and any

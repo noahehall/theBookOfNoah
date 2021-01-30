@@ -20,8 +20,8 @@ FROM builder as redisinstall
 
 ENV REDIS_VERSION=6.0.10 \
     REDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-6.0.10.tar.gz \
-    EDIS_DOWNLOAD_SHA 79bbb894f9dceb33ca699ee3ca4a4e1228be7fb5547aeb2f99d921e86c1285bd
-    
+    REDIS_DOWNLOAD_SHA=79bbb894f9dceb33ca699ee3ca4a4e1228be7fb5547aeb2f99d921e86c1285bd
+
 RUN apk add --no-cache --virtual .build-deps \
     coreutils \
     dpkg-dev dpkg \
@@ -97,12 +97,16 @@ RUN apk add --no-cache --virtual .build-deps \
     redis-cli --version; \
     redis-server --version
 
+FROM redisinstall as redisapp
 RUN mkdir /data && chown redis:redis /data
 VOLUME /data
 WORKDIR /data
 
-COPY docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["docker-entrypoint.sh"]
+COPY redis-docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/redis-docker-entrypoint.sh \
+    && ln -s /usr/local/bin/redis-docker-entrypoint.sh; 
+
+ENTRYPOINT ["redis-docker-entrypoint.sh"]
 
 EXPOSE 6379
 CMD ["redis-server"]
