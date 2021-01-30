@@ -3,12 +3,16 @@
 - so i dont have to browse through `./docker.md` huge file
 
 # links 
+-[dockerfile search for official images](https://github.com/docker-libraryhttps://github.com/docker-library)
 - [official docker image library](https://github.com/docker-library/official-images)
-
-# todo 
+- [best practices](https://github.com/docker/docker.github.io/blob/master/develop/develop-images/dockerfile_best-practices.md)
 - [tini: init for containers](https://github.com/krallin/tini)
 - [buildx:  Docker CLI plugin for extended build capabilities with BuildKit](https://github.com/docker/buildx#documentation)
 - [buildx + buildkit tut](https://medium.com/titansoft-engineering/docker-build-cache-sharing-on-multi-hosts-with-buildkit-and-buildx-eb8f7005918e)
+- [docker file validator](https://github.com/docker-library/dockerfile-validator)
+- [docker file linter](https://github.com/hadolint/hadolint)
+    + [online version](https://hadolint.github.io/hadolint/)
++ [alpine pkg management](https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management)
 
 
 # general 
@@ -46,6 +50,16 @@
 
     # aggregated stream of all services
     docker-compose ps 
+
+
+    # naming images 
+        # IMAGE_NAME format: <host><username>/<repo-name>[:<tag>]
+        # during build
+            docker build -t IMAGE_NAME
+        # re-tagging an existing local image 
+            docker tag <existing-image> IMAGE_NAME
+        # commit current state of a container
+            docker commit <existing-container> IMAGE_NAME
 ```
 
 
@@ -69,6 +83,7 @@
         * verifying the source: using https where possible; 
         * verifying author: importing PGP keys with the full fingerprint in the Dockerfile to check signatures; 
         * verifying the content: embedding checksums directly in the Dockerfile
+    + Only the instructions RUN, COPY, ADD create layers.
 
 
 ```sh
@@ -224,17 +239,60 @@
 
 
 # docker build 
+- [docs](https://docs.docker.com/engine/reference/commandline/build/)
 - build an image from a Dockerfile and a context
 - the entire contet gets sent to the docker daemon for build
     - keep it as empty as possible
 
 
 ```sh
-    docker build -f /path/to/a/Dockerfile /path/to/context 
+
+    # install the built image to name:tag
+    # uses the dockerfile in the current dir, sets context to current dir
+        docker build -t NAME:TAG .
+
+    # use the current directory as the build context and read a Dockerfile from stdin.
+    curl example.com/remote/Dockerfile | docker build -f - .
+
+
 
     -f /path/to/dockerfile 
+    # or just -t NAME:TAG
     -t host.com/username/repository:tag 
-    --build-arg <varname>=<value> # provide/override ARG in dockerfiles
+
+
+    # suppress output and print image ID on success 
+    -q
+
+    # provide/override ARG in dockerfiles
+    --build-arg <varname>=<value> 
+    # take value from the environment
+    --build-arg VARNAME
+
+    # add other hosts into a container’s /etc/hosts file
+    --add-host=docker:10.180.0.1 .
+
+    # build a specific build stage
+    --target BUILDENV
+
+    # The built image can be used as a cache source for subsequent builds.
+    # docker build --cache-from USERNAME/REPO .
+    --build-arg BUILDKIT_INLINE_CACHE=1
+
+
+    # Images to consider as cache sources
+    --cache-from
+
+    # do not use cache during build 
+    --no-cache
+
+    # write the image ID to the file 
+    --iidfile
+
+
+    # squash an images layers into a single layer
+    # use multi-stage builds instead
+    --squash
 
 
 ```
@@ -512,7 +570,18 @@
 
 ```
 
+# docker tag 
+```sh
+    # tag a local image with ID “0e5574283393” into the “fedora” repository with “version1.0”
 
+        docker tag 0e5574283393 fedora/httpd:version1.0
+
+    # tag a local image with name “httpd” into the “fedora” repository with “version1.0”
+
+        docker tag httpd fedora/httpd:version1.0
+
+
+```
 # networking 
 - types
     + bridge network
@@ -866,4 +935,13 @@
         docker export cotw-alpine > cotw-alpine.tar
         docker rm cotw-alpine
         tar tfv cotw-alpine.tar | less      
+
+    # validate docker file 
+        docker run --rm -i hadolint/hadolint < Dockerfile
+
+    # run a gui app in docker
+      docker run --net=host --env="DISPLAY" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" gui-app
+
+    # is roughly the opposite of apt-get update -- it ensures that the layer doesn't include the extra ~8MB of APT package list data, and enforces appropriate apt-get update usage.)
+        rm -rf /var/lib/apt/lists/* 
 ```

@@ -2,45 +2,25 @@
 # https://github.com/docker-library/postgres
 # https://www.postgresql.org/
 # https://www.alpinelinux.org/
+# https://github.com/docker-library/docs/blob/master/postgres/README.md#how-to-use-this-image
 
-ARG ALPINE_V=3.13.0
-FROM alpine:${ALPINE_V}
+ARG ALPINE_V=3.13
+FROM alpine:${ALPINE_V} as builder
+
+# https://github.com/hadolint/hadolint/wiki/DL4006#correct-code
+SHELL ["/bin/ash", "-eoux", "pipefail", "-c"]
 
 # 70 is the standard uid/gid for "postgres" in Alpine
 # https://git.alpinelinux.org/aports/tree/main/postgresql/postgresql.pre-install?h=3.12-stable
-RUN set -eux; \
-    addgroup -g 70 -S postgres; \
+RUN addgroup -g 70 -S postgres; \
     adduser -u 70 -S -D -G postgres -H -h /var/lib/postgresql -s /bin/sh postgres; \
     mkdir -p /var/lib/postgresql; \
-    chown -R postgres:postgres /var/lib/postgresql
-
-# su-exec (gosu-compatible) is installed further down
-
-# make the "en_US.UTF-8" locale so postgres will be utf-8 enabled by default
-# alpine doesn't require explicit locale-file generation
-ENV LANG=en_US.utf8 \
-    PG_MAJOR=13 \
-    PG_VERSION=13.1 \
-    PG_SHA256=12345c83b89aa29808568977f5200d6da00f88a035517f925293355432ffe61f \
-    PGDATA=/var/lib/postgresql/data
-
-
-RUN mkdir /docker-entrypoint-initdb.d
-
-RUN set -eux; \
+    chown -R postgres:postgres /var/lib/postgresql; \
     \
-    wget -O postgresql.tar.bz2 "https://ftp.postgresql.org/pub/source/v$PG_VERSION/postgresql-$PG_VERSION.tar.bz2"; \
-    echo "$PG_SHA256 *postgresql.tar.bz2" | sha256sum -c -; \
-    mkdir -p /usr/src/postgresql; \
-    tar \
-        --extract \
-        --file postgresql.tar.bz2 \
-        --directory /usr/src/postgresql \
-        --strip-components 1 \
-    ; \
-    rm postgresql.tar.bz2; \
-    \
-    apk add --no-cache --virtual .build-deps \
+    mkdir /docker-entrypoint-initdb.d 
+
+# RUN apk add --no-cache --virtual .build-deps \
+RUN apk add --update-cache --virtual .build-deps \
         bison \
         coreutils \
         dpkg-dev dpkg \
@@ -67,7 +47,30 @@ RUN set -eux; \
         util-linux-dev \
         zlib-dev \
         icu-dev \
+    ;
+# su-exec (gosu-compatible) is installed further down
+
+
+
+FROM builder as pginstall
+# make the "en_US.UTF-8" locale so postgres will be utf-8 enabled by default
+# alpine doesn't require explicit locale-file generation
+ENV LANG=en_US.utf8 \
+    PG_MAJOR=13 \
+    PG_VERSION=13.1 \
+    PG_SHA256=12345c83b89aa29808568977f5200d6da00f88a035517f925293355432ffe61f \
+    PGDATA=/var/lib/postgresql/data
+
+RUN wget -O postgresql.tar.bz2 "https://ftp.postgresql.org/pub/source/v$PG_VERSION/postgresql-$PG_VERSION.tar.bz2"; \
+    echo "$PG_SHA256 *postgresql.tar.bz2" | sha256sum -c -; \
+    mkdir -p /usr/src/postgresql; \
+    tar \
+        --extract \
+        --file postgresql.tar.bz2 \
+        --directory /usr/src/postgresql \
+        --strip-components 1 \
     ; \
+    rm postgresql.tar.bz2; \
     \
     cd /usr/src/postgresql; \
     # update "DEFAULT_PGSOCKET_DIR" to "/var/run/postgresql" (matching Debian)
@@ -148,11 +151,13 @@ RUN sed -ri "s!^#?(listen_addresses)\s*=\s*\S+.*!\1 = '*'!" /usr/local/share/pos
     mkdir -p "$PGDATA" && chown -R postgres:postgres "$PGDATA" && chmod 777 "$PGDATA"
 
 
-
+FROM pginstall as pgapp
 VOLUME /var/lib/postgresql/data
 
-COPY docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["docker-entrypoint.sh"]
+COPY ./pg-docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/pg-docker-entrypoint.sh
+RUN ln -s usr/local/bin/pg-docker-entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/pg-docker-entrypoint.sh"]
 
 # We set the default STOPSIGNAL to SIGINT, which corresponds to what PostgreSQL
 # calls "Fast Shutdown mode" wherein new connections are disallowed and any

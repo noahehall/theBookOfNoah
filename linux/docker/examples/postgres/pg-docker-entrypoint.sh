@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
-# snatched from https://github.com/docker-library/postgres
 set -Eeo pipefail
 # TODO swap to -Eeuo pipefail above (after handling all potentially-unset variables)
 
+
+# snatched from https://github.com/docker-library/postgres
+# build image 
+# docker build -t localpg:pgapp -f pg.Dockerfile .
+# run postgres instance 
+# docker run -d --rm -e POSTGRES_PASSWORD=mysecretpassword --name PGAPP localpg:pgapp postgres
+# 
+# 
 # usage: file_env VAR [DEFAULT]
 #    ie: file_env 'XYZ_DB_PASSWORD' 'example'
 # (will allow for "$XYZ_DB_PASSWORD_FILE" to fill in the value of
@@ -110,35 +117,35 @@ docker_verify_minimum_env() {
   fi
   if [ -z "$POSTGRES_PASSWORD" ] && [ 'trust' != "$POSTGRES_HOST_AUTH_METHOD" ]; then
     # The - option suppresses leading tabs but *not* spaces. :)
-    cat >&2 <<-'EOE'
-      Error: Database is uninitialized and superuser password is not specified.
-             You must specify POSTGRES_PASSWORD to a non-empty value for the
-             superuser. For example, "-e POSTGRES_PASSWORD=password" on "docker run".
+cat >&2 << 'EOE'
+  Error: Database is uninitialized and superuser password is not specified.
+         You must specify POSTGRES_PASSWORD to a non-empty value for the
+         superuser. For example, "-e POSTGRES_PASSWORD=password" on "docker run".
 
-             You may also use "POSTGRES_HOST_AUTH_METHOD=trust" to allow all
-             connections without a password. This is *not* recommended.
+         You may also use "POSTGRES_HOST_AUTH_METHOD=trust" to allow all
+         connections without a password. This is *not* recommended.
 
-             See PostgreSQL documentation about "trust":
-             https://www.postgresql.org/docs/current/auth-trust.html
-    EOE
+         See PostgreSQL documentation about "trust":
+         https://www.postgresql.org/docs/current/auth-trust.html
+EOE
     exit 1
   fi
   if [ 'trust' = "$POSTGRES_HOST_AUTH_METHOD" ]; then
-    cat >&2 <<-'EOWARN'
-      ********************************************************************************
-      WARNING: POSTGRES_HOST_AUTH_METHOD has been set to "trust". This will allow
-               anyone with access to the Postgres port to access your database without
-               a password, even if POSTGRES_PASSWORD is set. See PostgreSQL
-               documentation about "trust":
-               https://www.postgresql.org/docs/current/auth-trust.html
-               In Docker's default configuration, this is effectively any other
-               container on the same system.
+cat >&2 << 'EOWARN'
+  ********************************************************************************
+  WARNING: POSTGRES_HOST_AUTH_METHOD has been set to "trust". This will allow
+           anyone with access to the Postgres port to access your database without
+           a password, even if POSTGRES_PASSWORD is set. See PostgreSQL
+           documentation about "trust":
+           https://www.postgresql.org/docs/current/auth-trust.html
+           In Docker's default configuration, this is effectively any other
+           container on the same system.
 
-               It is not recommended to use POSTGRES_HOST_AUTH_METHOD=trust. Replace
-               it with "-e POSTGRES_PASSWORD=password" instead to set a password in
-               "docker run".
-      ********************************************************************************
-    EOWARN
+           It is not recommended to use POSTGRES_HOST_AUTH_METHOD=trust. Replace
+           it with "-e POSTGRES_PASSWORD=password" instead to set a password in
+           "docker run".
+  ********************************************************************************
+EOWARN
   fi
 }
 
@@ -192,14 +199,16 @@ docker_process_sql() {
 docker_setup_db() {
   local dbAlreadyExists
   dbAlreadyExists="$(
-    POSTGRES_DB= docker_process_sql --dbname postgres --set db="$POSTGRES_DB" --tuples-only <<-'EOSQL'
-      SELECT 1 FROM pg_database WHERE datname = :'db' ;
-    EOSQL
+    POSTGRES_DB= docker_process_sql --dbname postgres --set db="$POSTGRES_DB" --tuples-only \
+<< 'EOSQL'
+  SELECT 1 FROM pg_database WHERE datname = :'db' ;
+EOSQL
   )"
   if [ -z "$dbAlreadyExists" ]; then
-    POSTGRES_DB= docker_process_sql --dbname postgres --set db="$POSTGRES_DB" <<-'EOSQL'
-      CREATE DATABASE :"db" ;
-    EOSQL
+    POSTGRES_DB= docker_process_sql --dbname postgres --set db="$POSTGRES_DB" \ 
+<< 'EOSQL'
+  CREATE DATABASE :"db" ;
+EOSQL
     echo
   fi
 }

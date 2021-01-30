@@ -2430,8 +2430,7 @@
       - compress, force-rm, no-cache, no-rm, pull, memory, build-arg, parallel, quiet
 ```sh
   # install the built image to name:tag
-  # get the build instructions from the dockerfile
-  # in the current dir
+  # get the build instructions from the dockerfile in the current dir
   docker build -t NAME:TAG .
 
   # (re)build service(s)
