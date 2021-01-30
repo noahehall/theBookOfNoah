@@ -302,7 +302,7 @@
 ```sh 
     # see what process 1 is, and the options passed to it
     # as well as all other shit 
-    docker exec -it someimage ps aux
+    docker exec -it CONTAINER_NAME ps aux
 
 
 ```
