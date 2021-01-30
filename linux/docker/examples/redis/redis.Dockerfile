@@ -97,7 +97,7 @@ RUN apk add --no-cache --virtual .build-deps \
     redis-cli --version; \
     redis-server --version
 
-FROM redisinstall as redisapp
+FROM redisinstall as redisbase
 RUN mkdir /data && chown redis:redis /data
 VOLUME /data
 WORKDIR /data
