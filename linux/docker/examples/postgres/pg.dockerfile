@@ -17,10 +17,23 @@ RUN addgroup -g 70 -S postgres; \
     mkdir -p /var/lib/postgresql; \
     chown -R postgres:postgres /var/lib/postgresql; \
     \
-    mkdir /docker-entrypoint-initdb.d 
+    mkdir /docker-entrypoint-initdb.d;
 
-# RUN apk add --no-cache --virtual .build-deps \
-RUN apk add --update-cache --virtual .build-deps \
+
+# su-exec (gosu-compatible) is installed further down
+
+
+
+FROM builder as pginstall
+# make the "en_US.UTF-8" locale so postgres will be utf-8 enabled by default
+# alpine doesn't require explicit locale-file generation
+ENV LANG=en_US.utf8 \
+    PG_MAJOR=13 \
+    PG_VERSION=13.1 \
+    PG_SHA256=12345c83b89aa29808568977f5200d6da00f88a035517f925293355432ffe61f \
+    PGDATA=/var/lib/postgresql/data 
+
+RUN apk add --no-cache --virtual .build-deps \
         bison \
         coreutils \
         dpkg-dev dpkg \
@@ -47,21 +60,8 @@ RUN apk add --update-cache --virtual .build-deps \
         util-linux-dev \
         zlib-dev \
         icu-dev \
-    ;
-# su-exec (gosu-compatible) is installed further down
-
-
-
-FROM builder as pginstall
-# make the "en_US.UTF-8" locale so postgres will be utf-8 enabled by default
-# alpine doesn't require explicit locale-file generation
-ENV LANG=en_US.utf8 \
-    PG_MAJOR=13 \
-    PG_VERSION=13.1 \
-    PG_SHA256=12345c83b89aa29808568977f5200d6da00f88a035517f925293355432ffe61f \
-    PGDATA=/var/lib/postgresql/data
-
-RUN wget -O postgresql.tar.bz2 "https://ftp.postgresql.org/pub/source/v$PG_VERSION/postgresql-$PG_VERSION.tar.bz2"; \
+    ; \
+    wget -O postgresql.tar.bz2 "https://ftp.postgresql.org/pub/source/v$PG_VERSION/postgresql-$PG_VERSION.tar.bz2"; \
     echo "$PG_SHA256 *postgresql.tar.bz2" | sha256sum -c -; \
     mkdir -p /usr/src/postgresql; \
     tar \
@@ -154,9 +154,22 @@ RUN sed -ri "s!^#?(listen_addresses)\s*=\s*\S+.*!\1 = '*'!" /usr/local/share/pos
 FROM pginstall as pgapp
 VOLUME /var/lib/postgresql/data
 
+ENV PSQLRC=/docker-entrypoint-initdb.d/.psqlrc
 COPY ./pg-docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/pg-docker-entrypoint.sh
-RUN ln -s usr/local/bin/pg-docker-entrypoint.sh
+COPY ./init-pgguidedb.sh \
+    ./init-dvdrentaldb.sh \
+    ./pgguidedb.dump \
+    ./dvdrental.tar \
+    ./.psqlrc \
+    /docker-entrypoint-initdb.d 
+
+RUN chmod +x /usr/local/bin/pg-docker-entrypoint.sh \
+    && ln -s usr/local/bin/pg-docker-entrypoint.sh; \
+    chmod +x /docker-entrypoint-initdb.d/init-pgguidedb.sh; \
+    chmod +x /docker-entrypoint-initdb.d/init-dvdrentaldb.sh \
+    ;
+
+
 ENTRYPOINT ["/usr/local/bin/pg-docker-entrypoint.sh"]
 
 # We set the default STOPSIGNAL to SIGINT, which corresponds to what PostgreSQL

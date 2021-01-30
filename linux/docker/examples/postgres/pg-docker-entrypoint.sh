@@ -7,9 +7,11 @@ set -Eeo pipefail
 # build image 
 # docker build -t localpg:pgapp -f pg.Dockerfile .
 # run postgres instance 
-# docker run -d --rm -e POSTGRES_PASSWORD=mysecretpassword --name PGAPP localpg:pgapp postgres
-# 
-# 
+# docker run -d --rm -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword --name pgapp localpg:pgapp postgres
+# connect to instance via psql 
+# docker exec -it pgapp psql -h localhost -U postgres
+
+
 # usage: file_env VAR [DEFAULT]
 #    ie: file_env 'XYZ_DB_PASSWORD' 'example'
 # (will allow for "$XYZ_DB_PASSWORD_FILE" to fill in the value of
