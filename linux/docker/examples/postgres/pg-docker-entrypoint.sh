@@ -4,12 +4,16 @@ set -Eeo pipefail
 
 
 # snatched from https://github.com/docker-library/postgres
-# build image 
-# docker build -t localpg:pgapp -f pg.Dockerfile .
+# build image with example dbs
+# docker build -t noahedwardhall/pg:exampledbs --target pgexampledbs -f pg.Dockerfile .
+
+# build image without example dbs
+# docker build -t noahedwardhall/pg:base --target pgbase -f pg.Dockerfile .
+
 # run postgres instance 
-# docker run -d --rm -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword --name pgapp localpg:pgapp postgres
+# docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword --name pgexampledbs noahedwardhall/pg:exampledbs postgres
 # connect to instance via psql 
-# docker exec -it pgapp psql -h localhost -U postgres
+# docker exec -it pgexampledbs psql -h localhost -U postgres
 
 
 # usage: file_env VAR [DEFAULT]

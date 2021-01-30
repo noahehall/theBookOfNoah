@@ -150,27 +150,14 @@ RUN sed -ri "s!^#?(listen_addresses)\s*=\s*\S+.*!\1 = '*'!" /usr/local/share/pos
     # this 777 will be replaced by 700 at runtime (allows semi-arbitrary "--user" values)
     mkdir -p "$PGDATA" && chown -R postgres:postgres "$PGDATA" && chmod 777 "$PGDATA"
 
-
-FROM pginstall as pgapp
+FROM pginstall as pgbase
 VOLUME /var/lib/postgresql/data
 
 ENV PSQLRC=/docker-entrypoint-initdb.d/.psqlrc
 COPY ./pg-docker-entrypoint.sh /usr/local/bin/
-COPY ./init-pgguidedb.sh \
-    ./init-dvdrentaldb.sh \
-    ./pgguidedb.dump \
-    ./dvdrental.tar \
-    ./.psqlrc \
-    /docker-entrypoint-initdb.d 
-
+COPY ./.psqlrc /docker-entrypoint-initdb.d 
 RUN chmod +x /usr/local/bin/pg-docker-entrypoint.sh \
-    && ln -s /usr/local/bin/pg-docker-entrypoint.sh; \
-    chmod +x /docker-entrypoint-initdb.d/init-pgguidedb.sh; \
-    chmod +x /docker-entrypoint-initdb.d/init-dvdrentaldb.sh \
-    ;
-
-
-ENTRYPOINT ["pg-docker-entrypoint.sh"]
+    && ln -s /usr/local/bin/pg-docker-entrypoint.sh;
 
 # We set the default STOPSIGNAL to SIGINT, which corresponds to what PostgreSQL
 # calls "Fast Shutdown mode" wherein new connections are disallowed and any
@@ -204,3 +191,14 @@ STOPSIGNAL SIGINT
 
 EXPOSE 5432
 CMD ["postgres"]
+ENTRYPOINT ["pg-docker-entrypoint.sh"]
+
+FROM pgbase as pgexampledbs
+COPY ./init-pgguidedb.sh \
+    ./init-dvdrentaldb.sh \
+    ./pgguidedb.dump \
+    ./dvdrental.tar \
+    /docker-entrypoint-initdb.d 
+
+RUN chmod +x /docker-entrypoint-initdb.d/init-pgguidedb.sh; \
+    chmod +x /docker-entrypoint-initdb.d/init-dvdrentaldb.sh;
