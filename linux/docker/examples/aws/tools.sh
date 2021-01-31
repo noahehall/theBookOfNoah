@@ -12,12 +12,12 @@
 # amplify
 # etc
 
-volumedir=~/volumes/aws
+volumedir="${HOME}/volumes/aws"
 awscliv=2.0.6
-mkdir -p $volumedir
+mkdir -p "$volumedir"
 
-alias aws-basic='docker run --rm -it amazon/aws-cli:"$awscliv" --profile'
-alias aws='docker run --rm -it --network "${thisnetwork:-default}" -v ~/.aws:/root/.aws -v "${volumedir}":/aws amazon/aws-cli:"$awscliv" --profile'
+alias aws-basic='docker run --rm -it amazon/aws-cli:"${awscliv}" --profile'
+alias aws='docker run --rm -it --network "${thisnetwork:-default}" -v "${HOME}"/.aws:/root/.aws -v "${volumedir}":/aws amazon/aws-cli:"$awscliv" --profile'
 
 # check these for more examples
 # https://github.com/localstack/localstack/tree/master/tests/unit
@@ -28,7 +28,7 @@ lstackaws () {
   docker network inspect lstack -f {{.Name}} > /dev/null 2>&1 || docker network create lstack
 
   local thisnetwork=lstack
-  local endpoint=http://localstack.localhost
+  local endpoint=http://lstack.localhost
   local port=4566
   # [[ "$1" = 'dynamodb' ]] && port=4569
 
