@@ -5,7 +5,7 @@
 # good readup: https://dev.to/goodidea/how-to-fake-aws-locally-with-localstack-27me
 # https://github.com/localstack/localstack/blob/master/localstack/utils/bootstrap.py
 
-set -Eoux pipefail
+# set -Eoux pipefail
 #http://www.binaryphile.com/bash/2020/01/12/determining-the-location-of-your-script-in-bash.html
 HERE=$(cd "$(dirname "$BASH_SOURCE")"; cd -P "$(dirname "$(readlink "$BASH_SOURCE" || echo "$BASH_SOURCE")")"; pwd)
 
@@ -43,7 +43,7 @@ docker run -d \
   --name $containername \
   $imagename;
 
-set +Eoux pipefail
+# set +Eoux pipefail
 # launch http://lstack.localhost:4566/ for confirmation
 # aunch http://lstack.localhost:8080 to view the dashboard
 # happy devving!
