@@ -3,6 +3,7 @@
 - so i dont have to browse through `./docker.md` huge file
 
 # links 
+-[dockerfile env](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#env)
 -[dockerfile search for official images](https://github.com/docker-libraryhttps://github.com/docker-library)
 - [official docker image library](https://github.com/docker-library/official-images)
 - [best practices](https://github.com/docker/docker.github.io/blob/master/develop/develop-images/dockerfile_best-practices.md)

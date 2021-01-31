@@ -1,5 +1,6 @@
 # snatched from https://github.com/localstack/localstack/blob/master/Dockerfile
 # good readup: https://dev.to/goodidea/how-to-fake-aws-locally-with-localstack-27me
+# https://github.com/localstack/localstack/blob/master/localstack/utils/bootstrap.py
 
 
 # build for mac
@@ -8,34 +9,27 @@
 # build for nonmacos
 # docker build -t noahedwardhall/lstack:notmacos --target lstacknotmacos -f lstack.Dockerfile .
 
+# create network
+# docker network create lstack
+
+
 # run it for macos
-# TMPDIR=/private$TMPDIR docker run -d --rm --name lstackmacos -p 4563-4599:4563-4599 -p 8080:8080 -v ${TMPDIR:-/tmp/localstack}:/tmp/localstack noahedwardhall/lstack:macos
+# TMPDIR=/private$TMPDIR docker run -d --rm --env-file ./.env.example --network lstack --network-alias localstack.localhost --name lstackmacos -p 4563-4599:4563-4599 -p 8080:8080 -v ${TMPDIR:-/tmp/localstack}:/tmp/localstack -v /var/run/docker.sock:/var/run/docker.sock noahedwardhall/lstack:macos
 
 # run it for not macos
-# docker run -d --rm --name lstacknotmacos -p 4563-4599:4563-4599 -p 8080:8080 -v ${TMPDIR:-/tmp/localstack}:/tmp/localstack noahedwardhall/lstack:notmacos
+# docker run -d --rm --env-file ./.env.example --network lstack --network-alias localstack.localhost --name lstacknotmacos -p 4563-4599:4563-4599 -p 8080:8080 -v ${TMPDIR:-/tmp/localstack}:/tmp/localstack -v /var/run/docker.sock:/var/run/docker.sock noahedwardhall/lstack:notmacos
 
-# launch http://localhost:4566/ for confirmation
+# launch http://localstack.localhost:4566/ for confirmation
+# aunch http://localstack.localhost:8080 to view the dashboard
 # happy devving!
 
-FROM localstack/localstack:0.12.5 as lstacksetup
+FROM localstack/localstack-full:0.12.5 as lstacksetup
 
-ENV PORT_WEB_UI=${PORT_WEB_UI:-8080} \
-    DOCKER_HOST=unix:///var/run/docker.sock \
-    SERVICES=${SERVICES} \
-    DEBUG=${DEBUG} \
-    DATA_DIR=${DATA_DIR} \
-    LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR} \
-    KINESIS_ERROR_PROBABILITY=0
-    
-# defined in base image
-# EXPOSE 4566 4571 ${PORT_WEB_UI}
 
 FROM lstacksetup as lstacknotmacos
 ENV TMPDIR=/tmp/localstack 
 
-VOLUME $TMPDIR
-
 
 FROM lstacksetup as lstackmacos
-ENV TMPDIR=/private$TMPDIR
-VOLUME $TMPDIR
+ENV TMPDIR=/private${TMPDIR}
+
