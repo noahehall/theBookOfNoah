@@ -19,30 +19,45 @@ mkdir -p $volumedir
 alias aws-basic='docker run --rm -it amazon/aws-cli:"$awscliv" --profile'
 alias aws='docker run --rm -it --network "${thisnetwork:-default}" -v ~/.aws:/root/.aws -v "${volumedir}":/aws amazon/aws-cli:"$awscliv" --profile'
 
-# check the tests for more examples: https://github.com/localstack/localstack/tree/master/tests/unit
-# 
+# check these for more examples
+# https://github.com/localstack/localstack/tree/master/tests/unit
+# https://baptiste.bouchereau.pro/tutorial/mock-aws-services-with-localstack/
+# https://dev.to/slimcoder/mocking-amazon-web-services-with-localstack-426e
 lstackaws () {
   # set -Eouvx pipefail
   docker network inspect lstack -f {{.Name}} > /dev/null 2>&1 || docker network create lstack
 
   local thisnetwork=lstack
+  local endpoint=http://localstack.localhost
+  local port=4566
+  # [[ "$1" = 'dynamodb' ]] && port=4569
 
-  # examples
-  # kinesis list-streams
-  # lambda list-functions
+  # examples args
   # fake multi-line comment: https://stackoverflow.com/a/43158193
   : '
-   lambda create-function --function-name myLambda \
+    s3 mb s3://local-aws-bucket
+    s3 ls
+    kinesis list-streams
+    sns list-topics
+    lambda list-functions
+    lambda create-function --function-name myLambda \
       --code S3Bucket="__local__",S3Key="/my/local/lambda/folder" \
       --handler index.myHandler \
       --runtime nodejs8.10 \
       --role whatever
+
+    dynamodb create-table \
+      --table-name table_1 \
+      --attribute-definitions AttributeName=id,AttributeType=S \
+      --key-schema AttributeName=id,KeyType=HASH \
+      --provisioned-throughput ReadCapacityUnits=20,WriteCapacityUnits=20
+    dynamodb list-tables
   '
-  echo "$@"
+
 
   # see this for api gateway: https://github.com/localstack/localstack#invoking-api-gateway
   # see this for terraform: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/custom-service-endpoints#localstack
-  aws test --endpoint-url=http://localstack.localhost:4566 "$@"
+  aws test --endpoint-url="${endpoint}":"$port" "$@"
   echo $?
   # set +Eouvx pipefail
 }
