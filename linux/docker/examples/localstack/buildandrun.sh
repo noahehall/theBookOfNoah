@@ -5,10 +5,10 @@
 # good readup: https://dev.to/goodidea/how-to-fake-aws-locally-with-localstack-27me
 # https://github.com/localstack/localstack/blob/master/localstack/utils/bootstrap.py
 
-# set -Eoux pipefail
 #http://www.binaryphile.com/bash/2020/01/12/determining-the-location-of-your-script-in-bash.html
 HERE=$(cd "$(dirname "$BASH_SOURCE")"; cd -P "$(dirname "$(readlink "$BASH_SOURCE" || echo "$BASH_SOURCE")")"; pwd)
 
+# set -Eoux pipefail
 # https://stackoverflow.com/a/28085062
 : "${imagename:=noahedwardhall/lstack:dev}" \
   "${dockerfilepath:=$HERE/lstack.Dockerfile}" \
@@ -23,7 +23,7 @@ HERE=$(cd "$(dirname "$BASH_SOURCE")"; cd -P "$(dirname "$(readlink "$BASH_SOURC
 
 
 # build
-docker build -t $imagename -f $dockerfilepath .
+docker build -t $imagename -f $dockerfilepath $HERE
 
 # create network if it doesnt exist
 docker network inspect $networkname -f {{.Name}} > /dev/null 2>&1 || docker network create $networkname
@@ -31,8 +31,10 @@ docker network inspect $networkname -f {{.Name}} > /dev/null 2>&1 || docker netw
 # bind mount ~/volumes/localstack so you dont have to worry about mac or not mac
 # requires privileged due to docker-reuse
 docker run -d \
+  -e LOCALSTACK_API_KEY \
   -p ${servicesports}:$servicesports \
   -p ${webuiport}:$webuiport \
+  -p 443:443 \
   -v ${volumepath}:/tmp/localstack \
   -v ${hostdockersock}:/var/run/docker.sock \
   --rm \
