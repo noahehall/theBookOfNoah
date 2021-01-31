@@ -19,15 +19,17 @@ mkdir -p $volumedir
 alias aws-basic='docker run --rm -it amazon/aws-cli:"$awscliv" --profile'
 alias aws='docker run --rm -it --network "${thisnetwork:-default}" -v ~/.aws:/root/.aws -v "${volumedir}":/aws amazon/aws-cli:"$awscliv" --profile'
 
+# check the tests for more examples: https://github.com/localstack/localstack/tree/master/tests/unit
+# 
 lstackaws () {
   # set -Eouvx pipefail
   docker network inspect lstack -f {{.Name}} > /dev/null 2>&1 || docker network create lstack
 
   local thisnetwork=lstack
-  echo "$@"
+
+  # examples
   # kinesis list-streams
   # lambda list-functions
-  
   # fake multi-line comment: https://stackoverflow.com/a/43158193
   : '
    lambda create-function --function-name myLambda \
@@ -36,6 +38,7 @@ lstackaws () {
       --runtime nodejs8.10 \
       --role whatever
   '
+  echo "$@"
 
   # see this for api gateway: https://github.com/localstack/localstack#invoking-api-gateway
   # see this for terraform: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/custom-service-endpoints#localstack
