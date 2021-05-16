@@ -1,7 +1,9 @@
 
 # biggest things
 ## openapi
+    - [docs](https://oai.github.io/Documentation/start-here.html)
     - phil sturgeon
+      - review this guy
 ## openapi coalition ?
 
 ## resource focused model
