@@ -1,23 +1,11 @@
-# lob 
-    - github.com/lob
 
-# stoplight
-## spectral
-    - linter
-    - parser is on JSON SCHEMA
-## prism server
-    - also used by lob
-## new JSON schema
-    - compatible with openapi 3.1
-
-
-# methodologies
+# biggest things
 ## openapi
     - phil sturgeon
 ## openapi coalition ?
 
 ## resource focused model
-# architectures
+
 ## thoughtful interaction design 
 
 ## API driven architecture
@@ -31,10 +19,22 @@
     - 
 
 
-# lob specific
+# bigger things
 ## fastly
 ## hapi
 ## koa
 ## yeoman 
 
+
+# opensource 
+    - github.com/lob
+
+# stoplight
+## spectral
+    - linter
+    - parser is on JSON SCHEMA
+## prism server
+    - also used by lob
+## new JSON schema
+    - compatible with openapi 3.1
 
