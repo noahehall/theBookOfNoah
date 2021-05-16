@@ -1,8 +1,6 @@
 
 # biggest things
 ## openapi
-    - [docs](https://oai.github.io/Documentation/start-here.html)
-    - phil sturgeon
 
 ### phil sturgeon
       - review this guy
