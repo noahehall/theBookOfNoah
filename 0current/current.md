@@ -1,6 +1,9 @@
 
 # biggest things
 ## openapi
+### design-first approach (good)
+### code-first approach (bad)
+### [api stylebook](http://apistylebook.com/design/guidelines/)
 
 ### phil sturgeon
       - review this guy

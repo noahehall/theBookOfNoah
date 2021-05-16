@@ -5,6 +5,7 @@
     - [openapi introduction](https://oai.github.io/Documentation/introduction.html)
     - [step-by-step tutorials](https://oai.github.io/Documentation/specification.html)
     - [openapi best practices](https://oai.github.io/Documentation/best-practices.html)
+    - [api stylebook](http://apistylebook.com/design/guidelines/)
 
 # openapi basics
     - http-based api designers benefit from having their api formalized in an openapi description document
@@ -35,7 +36,18 @@
       - openapi description format is readbale by both machines and humans
         - any modern description format is but hey
 
-
+## openapi best practices
+    - not limited to just openapi, but apis in general
+    - use a design-first approach (vs code-first)
+    - keep a single source of truth
+    - add openapi documents to source control 
+    - make openapi documents available to the users 
+    - refrain from writing openapi documents by hand
+    - when working with big documents 
+      - keep it DRY 
+      - split/decompose big docs into several files 
+      - organize via tags 
+    - [review the api sylebook design guidelines](http://apistylebook.com/design/guidelines/)
 
 # terminology 
     - openapi
