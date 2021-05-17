@@ -24,6 +24,7 @@
   - [rfc6838 media types](https://tools.ietf.org/html/rfc6838)
 
 ## OAS tuts
+  - [tic tac toe sample api](https://oai.github.io/Documentation/examples/tictactoe.yaml)
   - [step-by-step tutorials](https://oai.github.io/Documentation/specification.html)
   - [getting started](https://oai.github.io/Documentation/start-here.html)
   - [reusing descriptions](https://oai.github.io/Documentation/specification-components.html)
@@ -200,7 +201,50 @@
         - json features + comments,
         - syntax less rigid but also requires strict indentation, hyphens, and potentially more cumbersome than json in certain contexts
         - benefits: reduced file size, interchangable with json (yaml v1.2), is a superset of JSON (thus can be intermixed)
+  - endpoint responses descriptions
+    - described via `paths.PATH.VERB.responses.HTTPCODE.content`
+  - endpoint input dat adescriptions
+    - decribed via paths.PATH.
 
+
+  - openapi syntax map preview; check the spec for more
+    
+    - openapi object
+      - openapi, info, paths
+    - paths object 
+      - list of paths in form `/route1`, `/route2` etc
+        - each path is a path item object
+    
+    
+    - path item object
+      - get, put, post, delete, parameters
+        - each are operation objects
+    
+    - operation object 
+      - summary, description, requestBody, responses, operationId, parameters
+    
+    - responses object 
+      - list of http codes
+        - each being a response object
+
+    - response object
+      - description, content
+        - content describes the API response structure (in this context)
+          - each child-field being a specific media type, e.g. `application/json` `text/html` etc
+      
+
+    - request body object 
+      - description, content
+        - content describes the API request structure (in this context)
+    
+    
+    
+    - parameters object
+      - name, in, description, required, style, content, schema
+    - media map
+    - media type object
+    - schema object
+      - title, description, items, properties, example, type, 
 
 
 ### api endpoints
@@ -259,7 +303,7 @@
         version: 1.2.3 # string: api version, not OAS version
       paths: {} # object: empty object = no endpoints defined
 
-
+  
   # paths, path items, operatons
     poopApi:
       ...
@@ -289,7 +333,7 @@
         /wipe:
         ...
 
-  
+  `paths.PATH.OPERATION.responses.HTTPCODE.content`
   # responses object
   # mandatory field within the operations object
   # container for the expected answers the server can give to this request
@@ -297,6 +341,7 @@
   # +its value is a response object (no s)
   # ++containing details about the response
     poopApi:
+      ...
       /flush:
         get:
           # at least one response must be given
@@ -318,6 +363,7 @@
   # ++possible payloads of the response
   # ++content of queries via the parameters object (see below)
     poopApi:
+      ...
       /flush:
         "200":
           # describes the type(s) of returning content
