@@ -27,7 +27,10 @@
   - [api servers](https://oai.github.io/Documentation/specification-servers.html)
   - [response object content field](https://oai.github.io/Documentation/specification-content.html)
   - [parameters](https://oai.github.io/Documentation/specification-parameters.html)
+  - [documentation](https://oai.github.io/Documentation/specification-docs.html)
+  - [schema object](https://spec.openapis.org/oas/v3.1.0#schemaObject)
   
+
 ## OAS reference
   - [openapi specification reference](https://spec.openapis.org/oas/v3.1.0)
   - [openapi tags](https://spec.openapis.org/oas/v3.1.0#oasTags)
@@ -78,7 +81,8 @@
   - paths: aka operations, aka routes, i.e. api endpoints lol
   - path items: describes the http operations that can be performed ona path with a separate operation object for each one allowed
   - media types: map directly to RFC6838 media types
-  - 
+    - describes the structure (schema) of the content
+    - provides examples for document and mocking purposes
 
 
 
@@ -312,15 +316,25 @@
       /flush:
         "200":
           # describes the type(s) of returning content
+          # each format has its own special schema
+          # +wildcards accepted
+          # ++explicit > wildcards
           content:
-            # each format has its own special schema
-            # +described by the media type object (see spec)
-            # +wildcards accepted
-            # ++explicit > wildcards
+              # media type object
+              # describes the structure of the content
+              # +provides examples for documentation and mocking purposes
             application/json:
+              # defines a data type
+              # can be a primitive/array/object depending on its type field
+              schema:
             text/html:
             text/*:
 
+  # response object content schema field
+  # extended example as this is core 
+
+
+  
   # parameters object
 
 ```
