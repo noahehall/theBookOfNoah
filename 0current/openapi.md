@@ -62,6 +62,7 @@
     - vendor neutral description format for http-based remote APIs
     - allows the description of a remote api accessible through http or http-like protocols
     - originally based on the swagger 2.0 spec, which was donated by smartbear software in 2015
+    - does not describe every possible API; only the most common use cases
   - openapi initiative: OAI
     - maintains, evolves and promotes the OAS
     - a consortium of industry experts with an open governance structure under the linux foundation umbrella
@@ -108,6 +109,7 @@
             - since its difficult to understand the limitations upfront; by starting with openapi you wont enter a situation where you've coded an API endpoint that is undescribable in openapi descroptions
           - i.e. only use an API endpoint that can be described by openapi if your following the openapi spec; and the design-first approached enables this
             - askholz
+              - basic assumption is to use OAS for the describable parts; and leave outlier endpoitns out of the OAS descriptions
 
   - keep a single source of truth
     - information should not be duplicated in multiple places
