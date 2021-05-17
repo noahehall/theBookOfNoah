@@ -44,14 +44,22 @@
     - the provider promises not to change its API and honor it during its promised lifetime
   - API reference guide: piece of literature explaining to a developer how to use the API 
   - time sinks: the bullshit waste of time due to incomplete/inaccurate/fkboy reference guides causing devs to waste time searching for correct information
+  - api description file: aka api contract; a machine-readable specification of an API
+    - should be complete, fully-detailed, and unambiguous
+    - used to generate
+      - human-readable documentation
+      - boilerplate code (sdks) for provider/consumer applications in any programming language
+      - auto-generate mock servers for early API testing
 
 
 # introduction
   - http-based api designers benefit from having their api formalized in an openapi description document
   - format 
     - JSON/YAML
-  - openapi specification 
+  - openapi specification: OAS
+    - vendor neutral description format for http-based remote APIs
     - allows the description of a remote api accessible through http or http-like protocols
+    - originally based on the swagger 2.0 spec, which was donated by smartbear software in 2015
 
 
 ## advantages of openapi 
