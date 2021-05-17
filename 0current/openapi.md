@@ -169,6 +169,7 @@
         - benefits: reduced file size, interchangable with json (yaml v1.2), is a superset of JSON (thus can be intermixed)
 
 ```js
+  // see json/yaml md docs elseware for extended review
   // JSON format
     {
       "anObject": {
