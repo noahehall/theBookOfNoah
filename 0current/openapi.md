@@ -48,6 +48,7 @@
       - human-readable documentation
       - boilerplate code (sdks) for provider/consumer applications in any programming language
       - auto-generate mock servers for early API testing
+  - method signatures
 
 ## terminilogy: openapi specific
   - tags: a piece of metadat (unique name and an optional description) that you attach to operations
@@ -61,6 +62,9 @@
   - openapi specification: OAS
     - vendor neutral description format for http-based remote APIs
     - allows the description of a remote api accessible through http or http-like protocols
+      - restful endpoints (http)
+      - constrained application protocol CoAP
+      - websockets
     - originally based on the swagger 2.0 spec, which was donated by smartbear software in 2015
     - does not describe every possible API; only the most common use cases
   - openapi initiative: OAI
