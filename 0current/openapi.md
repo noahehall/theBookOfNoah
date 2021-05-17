@@ -327,14 +327,30 @@
               # defines a data type
               # can be a primitive/array/object depending on its type field
               schema:
+                # the type.value determines other fields available within the schema definition
+                type: # string: number|string|boolean|array|object
+                ...
             text/html:
             text/*:
 
-  # response object content schema field
-  # extended example as this is core 
+  # schema extended examples
+  ## type.value options map
+    schema:
+      # available for all types
+      # +limits available options to a specific set
+      enum:
+        - takingNumber1
+        - takingNumber2
+        - takingNumber3
+    schema:
+      type: string
+      minLength:
+      maxLength:
+    schema:
+      type: integer
+      minimum:
+      maximum:
 
-
-  
   # parameters object
 
 ```
