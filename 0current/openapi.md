@@ -218,7 +218,7 @@
 
 
   # minimal openapi document structure
-    minDocStructure:
+    poopApi:
       openapi: 1.2.3 # string: OAS version used by this doc
       info: # object
         title: api name # string
