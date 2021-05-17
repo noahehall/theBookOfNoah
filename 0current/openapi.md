@@ -22,6 +22,11 @@
   - [openapi map](https://openapi-map.apihandyman.io/)
     - check thiz out
 
+## OAS reference
+  - [paths object](https://spec.openapis.org/oas/v3.1.0#pathsObject)
+  - [path item object](https://spec.openapis.org/oas/v3.1.0#pathItemObject_)
+  - 
+  - 
 # terminology 
   - openapi
     - machine-readable api description
