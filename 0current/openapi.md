@@ -241,7 +241,7 @@
       paths: {} # object: empty object = no endpoints defined
 
 
-  # paths & path items
+  # paths, path items, operatons
     poopApi:
       ...
       # endpoint list
@@ -254,14 +254,25 @@
           # path item objects
           # each describes a single api endpoint
           get:
-            # operation objects
+            # operation object
+            # describes the operations paramaters
+            # +payload
+            # +potential server responses (mandatory field)
             summary: it aint brown let it drown
             description: it order to conserver water we only flush the tuff stuff
+            parameters:
+              ...
+            responses:
+              ...
           put:
             ...
         /wipe:
         ...
 
-      
+  
+  # responses object
+  # mandatory field within the operations object
+
+  # parameters object
 
 ```
