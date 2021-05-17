@@ -39,6 +39,12 @@
 ## openapi best practices
     - not limited to just openapi, but apis in general
     - use a design-first approach (vs code-first)
+      - code-first
+        - the api is first implemented in code and then it description is created from it 
+          - uses coe comments, code annotations or simply written from scratch
+      - design-first 
+        - the api description is writen first and then the code follows 
+        - this enables the code to already have a skeleton (the description) from which to build, and tools can automate from there
     - keep a single source of truth
     - add openapi documents to source control 
     - make openapi documents available to the users 
