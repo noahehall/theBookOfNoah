@@ -152,8 +152,11 @@
 
 ### structure of an openapi document
   - document: describes an http-like API in one/more machine-readable files
+
     - a textfile, commonly called `openapi.json  or `openapi.yaml` for the root document
+      - i.e. a single JSON/yaml object containing fields adhering to the structure defined in the [oas](https://spec.openapis.org/oas/v3.1.0)
   - document syntax
+    - object fieldnames are case-sensitive
     - JSON/YAML 
       - json: 
         - numbers, strings, booleans, nulls, arrays, objects
