@@ -30,6 +30,7 @@
   - [api servers](https://oai.github.io/Documentation/specification-servers.html)
   - [responses object](https://spec.openapis.org/oas/v3.1.0#responsesObject)
   - [response object](https://spec.openapis.org/oas/v3.1.0#responseObject)
+  - [response object content field](https://oai.github.io/Documentation/specification-content.html)
 
 
 
@@ -294,6 +295,10 @@
             "501":
               ...
 
+  # response object content field
+  # +use to describe
+  # ++possible payloads of the response
+  # ++content of queries via the parameters object
 
   # parameters object
 
