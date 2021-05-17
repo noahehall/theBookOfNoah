@@ -272,6 +272,20 @@
   
   # responses object
   # mandatory field within the operations object
+  # container for the expected answers the server can give to this request
+  # each field is an http response cod enclosed in quotation marks
+  # +its value is a response object (no s)
+  # ++containing details about the response
+    poopApi:
+      ...
+      /flush:
+        get:
+          responses:
+            "200":
+              ...
+            "501":
+              ...
+
 
   # parameters object
 
