@@ -3,6 +3,11 @@
 # TLDR 
   - search for askholz for things we need to ask holz
 
+## todo
+  - theres so many fkn options i need a real condensed view:
+    - mapping fields to their potential options
+    - links to spec for each option
+    - 
 
 # links
   - [openapi home](https://www.openapis.org/)
@@ -26,7 +31,6 @@
   - [parameters and payload of an operation](https://oai.github.io/Documentation/specification-parameters.html)
   - [api servers](https://oai.github.io/Documentation/specification-servers.html)
   - [response object content field](https://oai.github.io/Documentation/specification-content.html)
-  - [parameters](https://oai.github.io/Documentation/specification-parameters.html)
   - [documentation](https://oai.github.io/Documentation/specification-docs.html)
   - [schema object](https://spec.openapis.org/oas/v3.1.0#schemaObject)
   
@@ -80,7 +84,7 @@
   - documents: machine-readable api descriptions
   - paths: aka operations, aka routes, i.e. api endpoints lol
   - path items: describes the http operations that can be performed ona path with a separate operation object for each one allowed
-  - media types: map directly to RFC6838 media types
+  - media type objects: map directly to RFC6838 media types
     - describes the structure (schema) of the content
     - provides examples for document and mocking purposes
 
@@ -268,6 +272,7 @@
         /flush:
           # path item objects
           # each describes a single api endpoint
+          # +get, put, post, delete, etc
           get:
             # operation object
             # describes the operations paramaters
