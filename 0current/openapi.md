@@ -339,9 +339,11 @@
       # available for all types
       # +limits available options to a specific set
       enum:
-        - takingNumber1
-        - takingNumber2
-        - takingNumber3
+        - number1
+        - number2
+        - number3
+      # alternative format
+      enum: ["#1", "#2", "3"]
     schema:
       type: string
       minLength:
@@ -350,6 +352,26 @@
       type: integer
       minimum:
       maximum:
+    schema:
+      type: array
+      minItems:
+      maxItems:
+      # required for array types
+      # is also a schema object so the above applies to this
+      items:
+        type:
+        ...
+    schema:
+      type: object
+      # required for object types
+      # list the properties of the object
+      # pairing property names with a schema object
+      # +thus the above applies to this
+      properties:
+        someFieldName:
+          type: # schema object
+        otherFieldName:
+          ...
 
   # parameters object
 
