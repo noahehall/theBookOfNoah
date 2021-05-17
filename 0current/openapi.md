@@ -26,11 +26,24 @@
     - broadly adopted industry standard for describing new apis
   - tags: a piece of metadat (unique name and an optional description) that you attach to operations
     - tools then use tags to e.g. sort all your api operations by their tags
-  - 
-# openapi basics
+  - API: applicatin programming interface
+    - defines the allowed interactions between two pieces of software
+    - composed of the list of possible:
+      - methods to call (requests to make)
+      - method parameters
+      - return values
+      - data format methods require + other useful information
+  - local API: both interacting parties run on the same machine
+    - think machine apis, programming language apis, etc
+  - remote API: the interacting parties run on seperate machines and communicate over a network
+
+
+# introduction
   - http-based api designers benefit from having their api formalized in an openapi description document
   - format 
     - JSON/YAML
+  - openapi specification 
+    - allows the description of a remote api accessible through http or http-like protocols
 
 
 ## advantages of openapi 
