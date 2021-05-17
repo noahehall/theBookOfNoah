@@ -168,9 +168,24 @@
         - syntax less rigid but also requires strict indentation, hyphens, and potentially more cumbersome than json in certain contexts
         - benefits: reduced file size, interchangable with json (yaml v1.2), is a superset of JSON (thus can be intermixed)
 
-```js
-  // see json/yaml md docs elseware for extended review
-  // JSON format
+
+
+### api endpoints
+
+### content of message bodies
+
+### parameters and payload of an operation 
+
+### reusing descriptions 
+
+### providing documentation and examples
+
+### api servers
+
+# examples 
+```yaml
+  # see json/yaml md docs elseware for extended review
+  # JSON format
     {
       "anObject": {
         "aNumber": 42,
@@ -185,7 +200,7 @@
       }
     }
 
-  // YAML format
+  # YAML format
     anObject:
     aNumber: 42
     aString: This is a string
@@ -196,23 +211,19 @@
       - 2
       - 3
 
-  // YAML with json intermixed
+  # YAML with json intermixed
     anObject:
       aString: This is a string
       arrayOfNumbers: [ 1, 2, 3 ] # Abbreviated array representation
 
 
+  # minimal openapi document structure
+    minDocStructure:
+      openapi: 1.2.3 # string: OAS version used by this doc
+      info: # object
+        title: api name # string
+        version: 1.2.3 # string: api version, not OAS version
+      paths: {} # object: empty object = no endpoints defined
+      
 
 ```
-
-### api endpoints
-
-### content of message bodies
-
-### parameters and payload of an operation 
-
-### reusing descriptions 
-
-### providing documentation and examples
-
-### api servers
