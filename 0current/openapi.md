@@ -6,9 +6,7 @@
 
 # links
   - [openapi home](https://www.openapis.org/)
-  - [getting started](https://oai.github.io/Documentation/start-here.html)
   - [openapi introduction](https://oai.github.io/Documentation/introduction.html)
-  - [step-by-step tutorials](https://oai.github.io/Documentation/specification.html)
   - [openapi best practices](https://oai.github.io/Documentation/best-practices.html)
   - [api stylebook](http://apistylebook.com/design/guidelines/)
   - [validation tools](https://openapi.tools/#data-validators)
@@ -16,13 +14,15 @@
   - [openapi text editors](https://openapi.tools/#text-editors)
   - [openapi gui editors](https://openapi.tools/#gui-editors)
   - [openapi DSLs](https://openapi.tools/#dsl)
-  - [reusing descriptions](https://oai.github.io/Documentation/specification-components.html)
-  - [openapi operations](https://oai.github.io/Documentation/specification-paths.html)
   - [openapi map](https://openapi-map.apihandyman.io/)
     - check thiz out
   - [rfc6838 media types](https://tools.ietf.org/html/rfc6838)
 
 ## OAS tuts
+  - [step-by-step tutorials](https://oai.github.io/Documentation/specification.html)
+  - [getting started](https://oai.github.io/Documentation/start-here.html)
+  - [reusing descriptions](https://oai.github.io/Documentation/specification-components.html)
+  - [openapi operations](https://oai.github.io/Documentation/specification-paths.html)
   - [parameters and payload of an operation](https://oai.github.io/Documentation/specification-parameters.html)
   - [api servers](https://oai.github.io/Documentation/specification-servers.html)
   - [response object content field](https://oai.github.io/Documentation/specification-content.html)
