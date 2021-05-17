@@ -161,6 +161,7 @@
       - yaml: 
         - json features + comments,
         - syntax less rigid but also requires strict indentation, hyphens, and potentially more cumbersome than json in certain contexts
+        - benefits: reduced file size, interchangable with json (yaml v1.2), is a superset of JSON (thus can be intermixed)
 
 ```js
   // JSON format
@@ -188,6 +189,13 @@
       - 1
       - 2
       - 3
+
+  // YAML with json intermixed
+    anObject:
+      aString: This is a string
+      arrayOfNumbers: [ 1, 2, 3 ] # Abbreviated array representation
+
+
 
 ```
 
