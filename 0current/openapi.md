@@ -1,4 +1,6 @@
 
+# TLDR 
+  - search for askholz for things we need to ask holz
 # links
     - [getting started](https://oai.github.io/Documentation/start-here.html)
     - [openapi specification reference](https://spec.openapis.org/oas/v3.1.0)
@@ -51,7 +53,7 @@
             - if openapi is your poison, follow this like moses through the red sea
               - since its difficult to understand the limitations upfront; by starting with openapi you wont enter a situation where you've coded an API endpoint that is undescribable in openapi descroptions
             - i.e. only use an API endpoint that can be described by openapi if your following the openapi spec
-              - ask holz about this, 
+              - askholz
 
     - keep a single source of truth
     - add openapi documents to source control 
