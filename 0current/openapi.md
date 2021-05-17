@@ -17,11 +17,15 @@
   - [openapi DSLs](https://openapi.tools/#dsl)
   - [reusing descriptions](https://oai.github.io/Documentation/specification-components.html)
   - [openapi tags](https://spec.openapis.org/oas/v3.1.0#oasTags)
+  - [openapi operations](https://oai.github.io/Documentation/specification-paths.html)
+  - 
 
 # terminology 
   - openapi
     - machine-readable api description
     - broadly adopted industry standard for describing new apis
+  - tags: a piece of metadat (unique name and an optional description) that you attach to operations
+    - tools then use tags to e.g. sort all your api operations by their tags
   - 
 # openapi basics
   - http-based api designers benefit from having their api formalized in an openapi description document
@@ -98,6 +102,7 @@
       - use the natural hierarchy present in your api endpoints to build your file structure
         - e.g. put all routes starting with `/users` in the same file (like a sub-api)
     - organize via tags 
+      - helps  you arrange your operations and find them faster
       - 
   - [review the api sylebook design guidelines](http://apistylebook.com/design/guidelines/)
 
