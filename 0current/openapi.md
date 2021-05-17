@@ -27,6 +27,7 @@
   - [paths object](https://spec.openapis.org/oas/v3.1.0#pathsObject)
   - [path item object](https://spec.openapis.org/oas/v3.1.0#pathItemObject_)
   - [operation object](https://spec.openapis.org/oas/v3.1.0#operationObject)
+  - [api servers](https://oai.github.io/Documentation/specification-servers.html)
 
 
 
@@ -243,16 +244,17 @@
   # paths & path items
     poopApi:
       ...
-      # paths object
+      # endpoint list
       # use {} for no paths
       paths:
-        # path item objects
-        # each describing a single api endpoint
-        # can contain common properties for all operations
-        # ^ askholz: how does this look?
+        # path objects
+        # container for all operations supported by the api
+        # must start with a '/'
         /flush:
-          # operation objects
+          # path item objects
+          # each describes a single api endpoint
           get:
+            # operation objects
             summary: it aint brown let it drown
             description: it order to conserver water we only flush the tuff stuff
           put:
