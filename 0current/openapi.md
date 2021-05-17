@@ -280,6 +280,11 @@
       ...
       /flush:
         get:
+          # at least one response must be given
+          # +recommended to be the success case
+          # 5 wildcares are allowed
+          # +[1-5]xx e.g. 1xx
+          # + explicit codes > wildcards
           responses:
             "200":
               ...
