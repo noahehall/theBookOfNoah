@@ -155,6 +155,12 @@
     - a textfile, commonly called `openapi.json  or `openapi.yaml` for the root document
   - document syntax
     - JSON/YAML 
+      - json: 
+        - numbers, strings, booleans, nulls, arrays, objects
+        - syntax more rigid, less readable...
+      - yaml: 
+        - json features + comments,
+        - syntax less rigid but also requires strict indentation, hyphens, and potentially more cumbersome than json in certain contexts
 
 ```js
   // JSON format
