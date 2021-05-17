@@ -24,8 +24,6 @@
   - openapi
     - machine-readable api description
     - broadly adopted industry standard for describing new apis
-  - tags: a piece of metadat (unique name and an optional description) that you attach to operations
-    - tools then use tags to e.g. sort all your api operations by their tags
   - API: applicatin programming interface
     - defines the allowed interactions between two pieces of software
     - composed of the list of possible:
@@ -51,6 +49,10 @@
       - boilerplate code (sdks) for provider/consumer applications in any programming language
       - auto-generate mock servers for early API testing
 
+## terminilogy: openapi specific
+  - tags: a piece of metadat (unique name and an optional description) that you attach to operations
+      - tools then use tags to e.g. sort all your api operations by their tags
+  - documents: machine-readable api descriptions
 
 # introduction
   - http-based api designers benefit from having their api formalized in an openapi description document
@@ -60,6 +62,9 @@
     - vendor neutral description format for http-based remote APIs
     - allows the description of a remote api accessible through http or http-like protocols
     - originally based on the swagger 2.0 spec, which was donated by smartbear software in 2015
+  - openapi initiative: OAI
+    - maintains, evolves and promotes the OAS
+    - a consortium of industry experts with an open governance structure under the linux foundation umbrella
 
 
 ## advantages of openapi 
