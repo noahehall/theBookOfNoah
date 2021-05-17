@@ -1,6 +1,8 @@
 
 # TLDR 
   - search for askholz for things we need to ask holz
+
+
 # links
     - [getting started](https://oai.github.io/Documentation/start-here.html)
     - [openapi specification reference](https://spec.openapis.org/oas/v3.1.0)
@@ -8,6 +10,8 @@
     - [step-by-step tutorials](https://oai.github.io/Documentation/specification.html)
     - [openapi best practices](https://oai.github.io/Documentation/best-practices.html)
     - [api stylebook](http://apistylebook.com/design/guidelines/)
+    - [validation tools](https://openapi.tools/#data-validators)
+    - [openapi automated tools](https://openapi.tools/)
 
 # openapi basics
     - http-based api designers benefit from having their api formalized in an openapi description document
@@ -52,7 +56,7 @@
           - the number of apis that can be created in code is far superior to what can be described in openapi
             - if openapi is your poison, follow this like moses through the red sea
               - since its difficult to understand the limitations upfront; by starting with openapi you wont enter a situation where you've coded an API endpoint that is undescribable in openapi descroptions
-            - i.e. only use an API endpoint that can be described by openapi if your following the openapi spec
+            - i.e. only use an API endpoint that can be described by openapi if your following the openapi spec; and the design-first approached enables this
               - askholz
 
     - keep a single source of truth
