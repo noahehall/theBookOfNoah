@@ -148,6 +148,7 @@
 
 # openapi specification: OAS
 ## openapi specificaiton: intro
+  - the following provide brief introductions to the main domains within the opanpi spec
 
 ### structure of an openapi document
 
