@@ -48,8 +48,8 @@
       - which one better?
         - openapi stresses the design first approach 
           - the number of apis that can be created in code is far superior to what can be described in openapi
-            - i guess starting limited, then going all in is there approach
-              - ask holz about this
+            - if openapi is your poison, follow this
+              - since its difficult to understand the limitations upfront; by starting with openapi you wont enter a situation where you've coded an API endpoint that is undescribable in openapi descroptions
             - i.e. openapi is not capable of describing every possible http api
             - 
     - keep a single source of truth
