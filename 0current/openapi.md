@@ -207,34 +207,42 @@
   - openapi syntax map preview; check the spec for more
     
   - openapi object
-    - openapi, info, paths
+    - *openapi, info, paths*
   - paths object 
     - list of paths in form `/route1`, `/route2` etc
       - each path is a path item object
   
   
   - path item object
-    - get, put, post, delete, parameters
+    - *get, put, post, delete, parameters*
       - each are operation objects
   
   - operation object 
-    - summary, description, requestBody, responses, operationId, parameters
+    - *summary, description, requestBody, responses, operationId, parameters*
+
+  - 
   
   - responses object 
-    - list of http codes
-      - each being a response object
+    - list of http codes (i.e. response objects)
+      - *"200", "500", etc*
+
+
 
   - response object
-    - description, content
+    - *description, content*
       - content describes the API response structure (in this context)
-        - each child-field being a specific media type, e.g. `application/json` `text/html` etc
-    
+        - *application/json, text/html* etc
+          - each a specific *media type object*
 
-  - request body object 
-    - description, content
-      - content describes the API request structure (in this context)
   
-  
+  - media type object
+    - contains the *schema* field, and others i suppose
+    - schema object describing the response/request body object
+
+
+  - schema object
+    - title, description, type, items, properties, example
+
   - content subfields
     - remember content is consumed in response & request body objects
 
@@ -244,6 +252,13 @@
     - media type object
     - schema object
       - title, description, items, properties, example, type, 
+
+
+
+  - TODO: request body object 
+    - description, content
+      - content describes the API request structure (in this context)
+  
 
 
 ### api endpoints
