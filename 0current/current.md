@@ -40,6 +40,7 @@
     - parser is on JSON SCHEMA
 ## prism server
     - also used by lob
-## new JSON schema
+## JSON
     - compatible with openapi 3.1
+## YAML
 

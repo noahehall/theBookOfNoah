@@ -151,6 +151,39 @@
   - the following provide brief introductions to the main domains within the opanpi spec
 
 ### structure of an openapi document
+  - document: describes an http-like API in one/more machine-readable files
+    - a textfile, commonly called `openapi.json  or `openapi.yaml` for the root document
+  - document syntax
+    - JSON/YAML 
+
+```js
+  // JSON format
+    {
+      "anObject": {
+        "aNumber": 42,
+        "aString": "This is a string",
+        "aBoolean": true,
+        "nothing": null,
+        "arrayOfNumbers": [
+          1,
+          2,
+          3
+        ]
+      }
+    }
+
+  // YAML format
+    anObject:
+    aNumber: 42
+    aString: This is a string
+    aBoolean: true
+    nothing: null
+    arrayOfNumbers:
+      - 1
+      - 2
+      - 3
+
+```
 
 ### api endpoints
 
