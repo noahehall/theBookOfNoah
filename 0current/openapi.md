@@ -28,6 +28,8 @@
   - [path item object](https://spec.openapis.org/oas/v3.1.0#pathItemObject_)
   - [operation object](https://spec.openapis.org/oas/v3.1.0#operationObject)
   - [api servers](https://oai.github.io/Documentation/specification-servers.html)
+  - [responses object](https://spec.openapis.org/oas/v3.1.0#responsesObject)
+  - [response object](https://spec.openapis.org/oas/v3.1.0#responseObject)
 
 
 
@@ -282,12 +284,13 @@
         get:
           # at least one response must be given
           # +recommended to be the success case
-          # 5 wildcares are allowed
+          # 5 wildcards are allowed
           # +[1-5]xx e.g. 1xx
           # + explicit codes > wildcards
           responses:
             "200":
-              ...
+              # should be specific to compliment the general 200 response code
+              description: successful X if Y and Z are present
             "501":
               ...
 
