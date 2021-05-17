@@ -6,7 +6,6 @@
 
 # links
   - [getting started](https://oai.github.io/Documentation/start-here.html)
-  - [openapi specification reference](https://spec.openapis.org/oas/v3.1.0)
   - [openapi introduction](https://oai.github.io/Documentation/introduction.html)
   - [step-by-step tutorials](https://oai.github.io/Documentation/specification.html)
   - [openapi best practices](https://oai.github.io/Documentation/best-practices.html)
@@ -17,12 +16,13 @@
   - [openapi gui editors](https://openapi.tools/#gui-editors)
   - [openapi DSLs](https://openapi.tools/#dsl)
   - [reusing descriptions](https://oai.github.io/Documentation/specification-components.html)
-  - [openapi tags](https://spec.openapis.org/oas/v3.1.0#oasTags)
   - [openapi operations](https://oai.github.io/Documentation/specification-paths.html)
   - [openapi map](https://openapi-map.apihandyman.io/)
     - check thiz out
 
 ## OAS reference
+  - [openapi specification reference](https://spec.openapis.org/oas/v3.1.0)
+  - [openapi tags](https://spec.openapis.org/oas/v3.1.0#oasTags)
   - [paths object](https://spec.openapis.org/oas/v3.1.0#pathsObject)
   - [path item object](https://spec.openapis.org/oas/v3.1.0#pathItemObject_)
   - [operation object](https://spec.openapis.org/oas/v3.1.0#operationObject)
@@ -237,15 +237,23 @@
       paths: {} # object: empty object = no endpoints defined
 
 
-  # paths
+  # paths & path items
     poopApi:
       ...
       # paths object
-      # every field is a path item object
-      # describes a single api endpoint
       # use {} for no paths
       paths:
+        # path item objects
+        # each describing a single api endpoint
+        # can contain common properties for all operations
+        # ^ askholz: how does this look?
         /flush:
+          # operation objects
+          get:
+
+            ...
+          put:
+            ...
         /wipe:
         ...
 
