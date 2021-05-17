@@ -20,17 +20,24 @@
   - [openapi operations](https://oai.github.io/Documentation/specification-paths.html)
   - [openapi map](https://openapi-map.apihandyman.io/)
     - check thiz out
+  - [rfc6838 media types](https://tools.ietf.org/html/rfc6838)
 
+## OAS tuts
+  - [parameters and payload of an operation](https://oai.github.io/Documentation/specification-parameters.html)
+  - [api servers](https://oai.github.io/Documentation/specification-servers.html)
+  - [response object content field](https://oai.github.io/Documentation/specification-content.html)
+  - [parameters](https://oai.github.io/Documentation/specification-parameters.html)
+  
 ## OAS reference
   - [openapi specification reference](https://spec.openapis.org/oas/v3.1.0)
   - [openapi tags](https://spec.openapis.org/oas/v3.1.0#oasTags)
   - [paths object](https://spec.openapis.org/oas/v3.1.0#pathsObject)
   - [path item object](https://spec.openapis.org/oas/v3.1.0#pathItemObject_)
   - [operation object](https://spec.openapis.org/oas/v3.1.0#operationObject)
-  - [api servers](https://oai.github.io/Documentation/specification-servers.html)
   - [responses object](https://spec.openapis.org/oas/v3.1.0#responsesObject)
   - [response object](https://spec.openapis.org/oas/v3.1.0#responseObject)
-  - [response object content field](https://oai.github.io/Documentation/specification-content.html)
+  - [media type objects](https://spec.openapis.org/oas/v3.1.0#mediaTypeObject)
+  - [request body objects](https://spec.openapis.org/oas/v3.1.0#requestBodyObject)
 
 
 
@@ -70,6 +77,7 @@
   - documents: machine-readable api descriptions
   - paths: aka operations, aka routes, i.e. api endpoints lol
   - path items: describes the http operations that can be performed ona path with a separate operation object for each one allowed
+  - media types: map directly to RFC6838 media types
   - 
 
 
@@ -280,7 +288,6 @@
   # +its value is a response object (no s)
   # ++containing details about the response
     poopApi:
-      ...
       /flush:
         get:
           # at least one response must be given
@@ -292,13 +299,27 @@
             "200":
               # should be specific to compliment the general 200 response code
               description: successful X if Y and Z are present
+              content:
+                ...
             "501":
               ...
 
   # response object content field
   # +use to describe
   # ++possible payloads of the response
-  # ++content of queries via the parameters object
+  # ++content of queries via the parameters object (see below)
+    poopApi:
+      /flush:
+        "200":
+          # describes the type(s) of returning content
+          content:
+            # each format has its own special schema
+            # +described by the media type object (see spec)
+            # +wildcards accepted
+            # ++explicit > wildcards
+            application/json:
+            text/html:
+            text/*:
 
   # parameters object
 
