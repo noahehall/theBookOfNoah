@@ -146,3 +146,19 @@
       - 
   - [review the api sylebook design guidelines](http://apistylebook.com/design/guidelines/)
 
+# openapi specification: OAS
+## openapi specificaiton: intro
+
+### structure of an openapi document
+
+### api endpoints
+
+### content of message bodies
+
+### parameters and payload of an operation 
+
+### reusing descriptions 
+
+### providing documentation and examples
+
+### api servers
