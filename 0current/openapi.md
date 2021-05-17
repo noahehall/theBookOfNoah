@@ -56,6 +56,10 @@
   - tags: a piece of metadat (unique name and an optional description) that you attach to operations
       - tools then use tags to e.g. sort all your api operations by their tags
   - documents: machine-readable api descriptions
+  - paths: aka operations, aka routes, i.e. api endpoints lol
+    - 
+
+
 
 # introduction
   - http-based api designers benefit from having their api formalized in an openapi description document
