@@ -5,6 +5,7 @@
 
 
 # links
+  - [openapi home](https://www.openapis.org/)
   - [getting started](https://oai.github.io/Documentation/start-here.html)
   - [openapi introduction](https://oai.github.io/Documentation/introduction.html)
   - [step-by-step tutorials](https://oai.github.io/Documentation/specification.html)
@@ -26,7 +27,9 @@
   - [paths object](https://spec.openapis.org/oas/v3.1.0#pathsObject)
   - [path item object](https://spec.openapis.org/oas/v3.1.0#pathItemObject_)
   - [operation object](https://spec.openapis.org/oas/v3.1.0#operationObject)
-  - 
+
+
+
 # terminology 
   - openapi
     - machine-readable api description
@@ -250,8 +253,8 @@
         /flush:
           # operation objects
           get:
-
-            ...
+            summary: it aint brown let it drown
+            description: it order to conserver water we only flush the tuff stuff
           put:
             ...
         /wipe:
