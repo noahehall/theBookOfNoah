@@ -25,7 +25,7 @@
 ## OAS reference
   - [paths object](https://spec.openapis.org/oas/v3.1.0#pathsObject)
   - [path item object](https://spec.openapis.org/oas/v3.1.0#pathItemObject_)
-  - 
+  - [operation object](https://spec.openapis.org/oas/v3.1.0#operationObject)
   - 
 # terminology 
   - openapi
@@ -62,7 +62,8 @@
       - tools then use tags to e.g. sort all your api operations by their tags
   - documents: machine-readable api descriptions
   - paths: aka operations, aka routes, i.e. api endpoints lol
-    - 
+  - path items: describes the http operations that can be performed ona path with a separate operation object for each one allowed
+  - 
 
 
 
@@ -227,12 +228,27 @@
 
 
   # minimal openapi document structure
+  # see docs for full spec
     poopApi:
       openapi: 1.2.3 # string: OAS version used by this doc
       info: # object
         title: api name # string
         version: 1.2.3 # string: api version, not OAS version
       paths: {} # object: empty object = no endpoints defined
+
+
+  # paths
+    poopApi:
+      ...
+      # paths object
+      # every field is a path item object
+      # describes a single api endpoint
+      # use {} for no paths
+      paths:
+        /flush:
+        /wipe:
+        ...
+
       
 
 ```
