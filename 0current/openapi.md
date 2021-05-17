@@ -45,6 +45,13 @@
       - design-first 
         - the api description is writen first and then the code follows 
         - this enables the code to already have a skeleton (the description) from which to build, and tools can automate from there
+      - which one better?
+        - openapi stresses the design first approach 
+          - the number of apis that can be created in code is far superior to what can be described in openapi
+            - i guess starting limited, then going all in is there approach
+              - ask holz about this
+            - i.e. openapi is not capable of describing every possible http api
+            - 
     - keep a single source of truth
     - add openapi documents to source control 
     - make openapi documents available to the users 
