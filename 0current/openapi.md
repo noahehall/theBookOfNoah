@@ -15,6 +15,7 @@
     - [openapi text editors](https://openapi.tools/#text-editors)
     - [openapi gui editors](https://openapi.tools/#gui-editors)
     - [openapi DSLs](https://openapi.tools/#dsl)
+    - [reusing descriptions](https://oai.github.io/Documentation/specification-components.html)
 
 # openapi basics
     - http-based api designers benefit from having their api formalized in an openapi description document
@@ -83,9 +84,10 @@
       - use the available tools:
         - openapi text / gui editors: take care of repetitive tasks, reusable components, real-time preview
         - openapi DSLs: domain specific languages tailred to specific development fields; the DSL is a language that has to be learned, but hey
-        - code annotations: annotate your code from which the openapi descriptions will be generated
+        - code annotations: annotate your code from which the openapi descriptions will be generated; tools are available that parse the code annotations and generate openapi documents automatically
     - when working with big documents 
       - keep it DRY 
+        - reusable description fragments should be moved to the `components` section and reference it from other places using `$ref`
       - split/decompose big docs into several files 
       - organize via tags 
     - [review the api sylebook design guidelines](http://apistylebook.com/design/guidelines/)
