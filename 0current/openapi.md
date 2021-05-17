@@ -12,9 +12,14 @@
     - [api stylebook](http://apistylebook.com/design/guidelines/)
     - [validation tools](https://openapi.tools/#data-validators)
     - [openapi automated tools](https://openapi.tools/)
+    - [openapi text editors](https://openapi.tools/#text-editors)
+    - [openapi gui editors](https://openapi.tools/#gui-editors)
+    - [openapi DSLs](https://openapi.tools/#dsl)
 
 # openapi basics
     - http-based api designers benefit from having their api formalized in an openapi description document
+    - format 
+      - JSON/YAML
 
 
 ## advantages of openapi 
@@ -60,9 +65,25 @@
               - askholz
 
     - keep a single source of truth
+      - information should not be duplicated in multiple places
+      - e.g. using code annotations to generate an openapi description, but only commiting the openapi description to source control
+        - which one do you follow? dont do this
+        - 
     - add openapi documents to source control 
+      - openapi descriptions are not just a documentation artificat
+      - they are first-class source files that enable various automated processes 
+        - eg. boilerplate generation, unit testing, documentation rendering, CI processes, etc
+        - 
     - make openapi documents available to the users 
+      - rendered documents are useful, but even more so the openapi descriptions for power users
+        - e.g. to generate client code, build automated bindings for programming languages, etc.
+        - 
     - refrain from writing openapi documents by hand
+      - any big project should not hand-write openapi descriptions
+      - use the available tools:
+        - openapi text / gui editors: take care of repetitive tasks, reusable components, real-time preview
+        - openapi DSLs: domain specific languages tailred to specific development fields; the DSL is a language that has to be learned, but hey
+        - code annotations: annotate your code from which the openapi descriptions will be generated
     - when working with big documents 
       - keep it DRY 
       - split/decompose big docs into several files 
