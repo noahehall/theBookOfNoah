@@ -1,4 +1,5 @@
-
+# bookmark
+  - https://oai.github.io/Documentation/specification-structure.html#minimal-document-structure
 # TLDR 
   - search for askholz for things we need to ask holz
 
@@ -18,7 +19,8 @@
   - [reusing descriptions](https://oai.github.io/Documentation/specification-components.html)
   - [openapi tags](https://spec.openapis.org/oas/v3.1.0#oasTags)
   - [openapi operations](https://oai.github.io/Documentation/specification-paths.html)
-  - 
+  - [openapi map](https://openapi-map.apihandyman.io/)
+    - check thiz out
 
 # terminology 
   - openapi
