@@ -3,11 +3,7 @@
 # TLDR 
   - search for askholz for things we need to ask holz
 
-## todo
-  - theres so many fkn options i need a real condensed view:
-    - mapping fields to their potential options
-    - links to spec for each option
-    - 
+
 
 # links
   - [openapi home](https://www.openapis.org/)
@@ -207,38 +203,41 @@
     - decribed via paths.PATH.
 
 
+### openapi document schema condensed view
   - openapi syntax map preview; check the spec for more
     
-    - openapi object
-      - openapi, info, paths
-    - paths object 
-      - list of paths in form `/route1`, `/route2` etc
-        - each path is a path item object
-    
-    
-    - path item object
-      - get, put, post, delete, parameters
-        - each are operation objects
-    
-    - operation object 
-      - summary, description, requestBody, responses, operationId, parameters
-    
-    - responses object 
-      - list of http codes
-        - each being a response object
+  - openapi object
+    - openapi, info, paths
+  - paths object 
+    - list of paths in form `/route1`, `/route2` etc
+      - each path is a path item object
+  
+  
+  - path item object
+    - get, put, post, delete, parameters
+      - each are operation objects
+  
+  - operation object 
+    - summary, description, requestBody, responses, operationId, parameters
+  
+  - responses object 
+    - list of http codes
+      - each being a response object
 
-    - response object
-      - description, content
-        - content describes the API response structure (in this context)
-          - each child-field being a specific media type, e.g. `application/json` `text/html` etc
-      
+  - response object
+    - description, content
+      - content describes the API response structure (in this context)
+        - each child-field being a specific media type, e.g. `application/json` `text/html` etc
+    
 
-    - request body object 
-      - description, content
-        - content describes the API request structure (in this context)
-    
-    
-    
+  - request body object 
+    - description, content
+      - content describes the API request structure (in this context)
+  
+  
+  - content subfields
+    - remember content is consumed in response & request body objects
+
     - parameters object
       - name, in, description, required, style, content, schema
     - media map
