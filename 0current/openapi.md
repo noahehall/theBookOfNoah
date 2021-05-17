@@ -36,6 +36,14 @@
   - local API: both interacting parties run on the same machine
     - think machine apis, programming language apis, etc
   - remote API: the interacting parties run on seperate machines and communicate over a network
+  - API provider: the party offering up its services through an API
+  - API consumer: the party requesting the API providers services 
+  - API information hiding: neither side of the API (provider/consumer) know the implementation details of the other 
+    - the assumption is that both parties adhere to a strict contract
+  - API contracts: APIs sometimes called contracts as the assumption the API defintiion is binding & non-changing 
+    - the provider promises not to change its API and honor it during its promised lifetime
+  - API reference guide: piece of literature explaining to a developer how to use the API 
+  - time sinks: the bullshit waste of time due to incomplete/inaccurate/fkboy reference guides causing devs to waste time searching for correct information
 
 
 # introduction
