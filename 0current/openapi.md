@@ -236,37 +236,39 @@
     - list of http codes (i.e. response objects)
       - *"200", "500", etc*
 
-
-
   - response object
     - *description, content*
       - content describes the API response structure (in this context)
         - *application/json, text/html* etc
           - each a specific *media type object*
 
-  
   - media type object
     - contains the *schema* field, and others i suppose
     - schema object describing the response/request body object
-
 
   - schema object
     - *title, description, type, items, properties, example*
 
   - content subfields
     - remember content is consumed in response & request body objects
-
-    - parameters object
-      - subfield of *path item* and *operation* objects
-      - typically used to identify a resource
-      - *name, in, description, required, style, content, schema*
+    - parameters
     - media map
     - media type object
     - schema object
       - title, description, items, properties, example, type, 
 
-
-  
+  - parameters object
+    - subfield of *path item* and *operation* objects
+    - typically used to identify a resource
+    - *name, in, description, required, style, content, schema*
+      - in: string; required; location of parameter
+      - name: string; required; case-sensitive; unique
+      - description: string; useful for documentation
+      - required: bool(false); whether this parameter must be present
+    - subfield of pathitem 
+      - all specified parameters are shared by all operations on that path
+        - will override ndividual parameters at the operation object level but not remove them
+        - 
 
 
 ### api endpoints
