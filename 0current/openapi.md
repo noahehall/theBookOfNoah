@@ -229,8 +229,9 @@
   - request body object 
     - the message payload 
       - provides content for the resource (e.g. when updating a record in a db)
-    - *description, content*
-      - content: required
+    - *description, content, required*
+      - content: required;
+      - required: bool(false); whether the message payload is required
   
   - responses object 
     - list of http codes (i.e. response objects)
