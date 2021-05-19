@@ -42,6 +42,8 @@
   - [response object](https://spec.openapis.org/oas/v3.1.0#responseObject)
   - [media type objects](https://spec.openapis.org/oas/v3.1.0#mediaTypeObject)
   - [request body objects](https://spec.openapis.org/oas/v3.1.0#requestBodyObject)
+  - [parameter object](https://spec.openapis.org/oas/v3.1.0#parameterObject)
+  - 
 
 
 
@@ -255,6 +257,7 @@
     - remember content is consumed in response & request body objects
 
     - parameters object
+      - subfield of *path item* and *operation* objects
       - typically used to identify a resource
       - *name, in, description, required, style, content, schema*
     - media map
@@ -279,6 +282,8 @@
 ### api servers
 
 # examples 
+  - TODO: move spec shit into the condensed view
+  - TODO: this should be working examples not explanations
 ```yaml
   # see json/yaml md docs elseware for extended review
   # JSON format
