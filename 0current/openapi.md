@@ -275,8 +275,10 @@
             - form === id=1234
             - label === .1234
             - matrix === ;id=1234
+          
           - array types e.g. array.id containing 1,2,3
             - *exploded=false*
+              - used to separtae each field into a separate parameter
               - askholz: the examples did not give example of exploded field
               - simple === 1,2,3
               - form === ids=1,2,3
@@ -288,6 +290,20 @@
               - form === ids=1&ids=2&ids=3
               - label === .1.2.3
               - matrix === ;ids=1;ids=2;ids=3
+          
+          - object types e.g. object.color containing {r:1,g:2,b:3}
+            - askholz about explod again
+            - *exploded=false*
+              - simple === r,1,g,2,b,3
+              - form === color=r,1,2,b,3
+              - label === .r.1.g.2.b.3
+              - matrix === ;color=r,1,b,2,g,3
+            - *exploded=true*
+              - simple === r=1,g=2,b=3
+              - form === r=1&g=2&b=3
+              - label === .r=1.g=2.b=3
+                - askholz: when is this ever actually used
+              - matrix === ;r=1;g=2;b=3
 
       - content/schema must exist, but not both
         - schema: schema object; used to specify a parameters type (e.g. integer)
