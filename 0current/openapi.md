@@ -1,5 +1,6 @@
 # bookmark
-  - https://oai.github.io/Documentation/specification-structure.html#minimal-document-structure
+  - https://oai.github.io/Documentation/specification-components.html
+
 # TLDR 
   - search for askholz for things we need to ask holz
 
@@ -218,7 +219,8 @@
   - openapi syntax map preview; check the spec for more
     
   - openapi object
-    - *openapi, info, paths*
+    - *openapi, info, paths, components*
+  
   - paths object 
     - list of paths in form `/route1`, `/route2` etc
       - each path is a path item object
