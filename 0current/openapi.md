@@ -228,9 +228,9 @@
 
   - request body object 
     - the message payload 
-      - provides content for the resource
+      - provides content for the resource (e.g. when updating a record in a db)
     - *description, content*
-      - content describes the API request structure (in this context)
+      - content: required
   
   - responses object 
     - list of http codes (i.e. response objects)
@@ -522,8 +522,20 @@
                 minimum: 1
                 maximum: 1234
 
-  # askholz: example of header parameter
-  # +https://oai.github.io/Documentation/specification-parameters.html#parameter-location
+    # askholz: example of parameters field used in a header
+    # +https://oai.github.io/Documentation/specification-parameters.html#parameter-location
+
+  # requestBody 
+    paths:
+      /board:
+        put:
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
 
 
 
