@@ -204,7 +204,7 @@
 
 
 ### openapi document schema condensed view
-### TODO clean this hsit up
+### TODO clean this hsit up based on spec not the examples
   - openapi syntax map preview; check the spec for more
     
   - openapi object
@@ -423,7 +423,7 @@
       minItems:
       maxItems:
       # required for array types
-      # is also a schema object so the above applies to this
+      # a schema object (thus can contain schema options)
       items:
         type:
         ...
