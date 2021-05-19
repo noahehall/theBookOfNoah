@@ -250,6 +250,7 @@
     - *title, description, type, items, properties, example*
 
   - content subfields
+    - provides a single-entry map of media types to media type objects
     - remember content is consumed in response & request body objects
     - parameters
     - media map
@@ -261,17 +262,37 @@
     - can reside in various locations, e.g. *path item* and *operation* objects, indicated by the *in* field
     - typically used to identify a resource
     - *name, in, description, required, style, content*, schema*
-        - * content/schema must exist, but not both
       - in: string; required; location of parameter 
         - path: the parameter is part of the route of this operation (i.e. in th url)
         - query: parameter is appended to the query string part of the operations url
       - name: string; required; case-sensitive; unique
       - description: string; useful for documentation
       - required: bool(false); whether this parameter must be present
-      - schema: schema object; used to specify a parameters type (e.g. integer)
-        -  cant be used if content specified
-      - content: used to specify a parameters type (similar to schema)
-        - cant be used in schema specified
+      - style: defines how a parameter is to be serialized in relation to its data-type
+        - *simple, form, label, matrix*
+          - primitive types e.g. integer
+            - simple === 1234
+            - form === id=1234
+            - label === .1234
+            - matrix === ;id=1234
+          - array types e.g. array.id containing 1,2,3
+            - *exploded=false*
+              - askholz: the examples did not give example of exploded field
+              - simple === 1,2,3
+              - form === ids=1,2,3
+              - label === .1.2.3
+              - metrix === ;ids=1,2,3
+            - *exploded=true*
+              - askholz ^
+              - simple === 1,2,3
+              - form === ids=1&ids=2&ids=3
+              - label === .1.2.3
+              - matrix === ;ids=1;ids=2;ids=3
+
+      - content/schema must exist, but not both
+        - schema: schema object; used to specify a parameters type (e.g. integer)
+        - content: used to specify a parameters type (similar to schema) but in more advanced situations
+ 
     
     - subfield of pathitem 
       - all specified parameters are shared by all operations on that path
