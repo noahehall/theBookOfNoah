@@ -267,6 +267,8 @@
       - name: string; required; case-sensitive; unique
       - description: string; useful for documentation
       - required: bool(false); whether this parameter must be present
+      - schema: schema object; used to specify a parameters type (e.g. integer)
+    
     - subfield of pathitem 
       - all specified parameters are shared by all operations on that path
         - will override ndividual parameters at the operation object level but not remove them
@@ -467,9 +469,13 @@
     paths:
       /users:
         get:
+          # askholz
+          # +examples dont show an indentention under parameters
+          # +i added one anyway because duh
+          # +https://oai.github.io/Documentation/specification-parameters.html#parameter-type
           parameters:
-          - name: id
-            in: query
+            - name: id
+              in: query
 
   # askholz: example of header parameter
   # +https://oai.github.io/Documentation/specification-parameters.html#parameter-location
