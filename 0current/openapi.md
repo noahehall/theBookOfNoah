@@ -204,6 +204,7 @@
 
 
 ### openapi document schema condensed view
+### TODO clean this hsit up
   - openapi syntax map preview; check the spec for more
     
   - openapi object
