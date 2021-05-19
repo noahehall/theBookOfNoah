@@ -258,10 +258,11 @@
       - title, description, items, properties, example, type, 
 
   - parameters object
-    - subfield of *path item* and *operation* objects
+    - can reside in various locations, e.g. *path item* and *operation* objects, indicated by the *in* field
     - typically used to identify a resource
     - *name, in, description, required, style, content, schema*
-      - in: string; required; location of parameter
+      - in: string; required; location of parameter 
+        - path: the parameter is part of the route of this operation (i.e. in th url)
       - name: string; required; case-sensitive; unique
       - description: string; useful for documentation
       - required: bool(false); whether this parameter must be present
@@ -451,5 +452,13 @@
           ...
 
   # parameters object
+  paths:
+    /users/{id}: # <--- see *in* notes
+      get:
+        parameters:
+        - name: id
+          in: path #name must be delimited by curly braces in the path
+          required: true
+
 
 ```
