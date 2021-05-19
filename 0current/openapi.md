@@ -46,6 +46,11 @@
   - [parmater style field examples](https://spec.openapis.org/oas/v3.1.0#style-examples)
 
 
+# my notes
+  - openapi is all about describing a set of API endpoints in machine readable format
+    - never forget you are not only specifying the contract of the api
+      - but actually translating ANY api written in ANY language in format consumable by machines and automated tooling
+      - so when shit is like wtf, remember, your just describing an api
 
 # terminology 
   - openapi
