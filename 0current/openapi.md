@@ -84,6 +84,9 @@
   - media type objects: map directly to RFC6838 media types
     - describes the structure (schema) of the content
     - provides examples for document and mocking purposes
+  - input data 
+    - specified via parameters and requestBody fields
+    - is the additional information that complements the endpoint and the operation ot fully detail a request 
 
 
 
@@ -221,7 +224,11 @@
   - operation object 
     - *summary, description, requestBody, responses, operationId, parameters*
 
-  - 
+  - request body object 
+    - the message payload 
+      - provides content for the resource
+    - *description, content*
+      - content describes the API request structure (in this context)
   
   - responses object 
     - list of http codes (i.e. response objects)
@@ -242,23 +249,20 @@
 
 
   - schema object
-    - title, description, type, items, properties, example
+    - *title, description, type, items, properties, example*
 
   - content subfields
     - remember content is consumed in response & request body objects
 
     - parameters object
-      - name, in, description, required, style, content, schema
+      - typically used to identify a resource
+      - *name, in, description, required, style, content, schema*
     - media map
     - media type object
     - schema object
       - title, description, items, properties, example, type, 
 
 
-
-  - TODO: request body object 
-    - description, content
-      - content describes the API request structure (in this context)
   
 
 
