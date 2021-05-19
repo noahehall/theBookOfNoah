@@ -263,6 +263,7 @@
     - *name, in, description, required, style, content, schema*
       - in: string; required; location of parameter 
         - path: the parameter is part of the route of this operation (i.e. in th url)
+        - query: parameter is appended to the query string part of the operations url
       - name: string; required; case-sensitive; unique
       - description: string; useful for documentation
       - required: bool(false); whether this parameter must be present
@@ -452,13 +453,28 @@
           ...
 
   # parameters object
-  paths:
-    /users/{id}: # <--- see *in* notes
-      get:
-        parameters:
-        - name: id
-          in: path #name must be delimited by curly braces in the path
-          required: true
+  # examples of various locations a paramater can be found
+  # remember this represents an actional parameter in an API
+    paths:
+      /users/{id}: # <--- see *in* notes
+        get:
+          parameters:
+          - name: id
+            in: path #name must be delimited by curly braces in the path and required must be true
+            required: true # <-- see *in* notes
+
+    # e.g. /users?id=1234
+    paths:
+      /users:
+        get:
+          parameters:
+          - name: id
+            in: query
+
+  # askholz: example of header parameter
+  # +https://oai.github.io/Documentation/specification-parameters.html#parameter-location
+
+
 
 
 ```
