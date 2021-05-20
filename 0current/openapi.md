@@ -182,6 +182,7 @@
   - when working with big documents 
     - keep it DRY 
       - reusable description fragments should be moved to the `components` section and reference it from other places using `$ref`
+      - components object is a mechanism to remove redundancy from an openapi document by reusing portions of it
     - split/decompose big docs into several files 
       - use the natural hierarchy present in your api endpoints to build your file structure
         - e.g. put all routes starting with `/users` in the same file (like a sub-api)
@@ -222,6 +223,11 @@
   - openapi object
     - *openapi, info, paths, components*
   
+  - components object
+    - *schemas, responses, parameters*
+    - contains definitions for objects to be reused in other parts of the document
+
+
   - paths object 
     - list of paths in form `/route1`, `/route2` etc
       - each path is a path item object
