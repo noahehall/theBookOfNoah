@@ -1,5 +1,5 @@
 # bookmark
-  - https://oai.github.io/Documentation/specification-components.html
+  - https://oai.github.io/Documentation/specification-docs.html
 
 # TLDR 
   - search for askholz for things we need to ask holz
