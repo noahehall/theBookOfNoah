@@ -234,8 +234,11 @@
         - only objects listed as fields of the components object can be referenced
         - each field is a map pairing component names with objects to be reused
 
-  # refernce object
-
+  - reference object
+    - *$ref*
+    - any object of the types supported by the components objcet can be replaced by a reference object pointing to a component
+    - are actually json referneces (see links)
+      - contain a single field whose string value is a URI pointin to the renferenced objects
 
   - paths object 
     - list of paths in form `/route1`, `/route2` etc
@@ -562,9 +565,11 @@
                   maximum: 100
 
 
-  # components object
+  # components + references object
 
-    # defines two comoponents
+    # defines 
+    # +two comoponents
+    # +2 references linking to the components
     components:
       schemas:
         coordinate: # a schema component
@@ -574,7 +579,13 @@
         rowParam: # a parameter component
           name: row
           in: path
+          schema:
+            $ref: "#/components/schemas/coordinate"
           ...
+    paths:
+      /board/{row}/{column}:
+        parameters:
+          - $ref: "#/components/parameters/rowParam"
 
 
 
