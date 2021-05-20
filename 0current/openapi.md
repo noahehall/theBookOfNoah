@@ -19,6 +19,8 @@
   - [openapi map](https://openapi-map.apihandyman.io/)
     - check thiz out
   - [rfc6838 media types](https://tools.ietf.org/html/rfc6838)
+  - [json references](https://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03)
+  - 
 
 ## OAS tuts
   - [tic tac toe sample api](https://oai.github.io/Documentation/examples/tictactoe.yaml)
@@ -46,6 +48,8 @@
   - [parameter object](https://spec.openapis.org/oas/v3.1.0#parameterObject)
   - [parmater style field examples](https://spec.openapis.org/oas/v3.1.0#style-examples)
   - [components object](https://spec.openapis.org/oas/v3.1.0#componentsObject)
+  - [reference object](https://spec.openapis.org/oas/v3.1.0#referenceObject)
+  - 
 
 
 # my notes
@@ -229,6 +233,8 @@
       - most objects in a document can be replaced by a reference to a component
         - only objects listed as fields of the components object can be referenced
         - each field is a map pairing component names with objects to be reused
+
+  # refernce object
 
 
   - paths object 
