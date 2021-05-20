@@ -558,13 +558,14 @@
 
   # components object
 
+    # defines two comoponents
     components:
       schemas:
-        coordinate:
+        coordinate: # a schema component
           type: integer
           ...
       parmeters:
-        rowParam:
+        rowParam: # a parameter component
           name: row
           in: path
           ...
