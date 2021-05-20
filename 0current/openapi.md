@@ -45,6 +45,7 @@
   - [request body objects](https://spec.openapis.org/oas/v3.1.0#requestBodyObject)
   - [parameter object](https://spec.openapis.org/oas/v3.1.0#parameterObject)
   - [parmater style field examples](https://spec.openapis.org/oas/v3.1.0#style-examples)
+  - [components object](https://spec.openapis.org/oas/v3.1.0#componentsObject)
 
 
 # my notes
