@@ -226,6 +226,9 @@
   - components object
     - *schemas, responses, parameters*
     - contains definitions for objects to be reused in other parts of the document
+      - most objects in a document can be replaced by a reference to a component
+        - only objects listed as fields of the components object can be referenced
+        - each field is a map pairing component names with objects to be reused
 
 
   - paths object 
@@ -551,6 +554,20 @@
                   type: integer
                   minimum: 1
                   maximum: 100
+
+
+  # components object
+
+    components:
+      schemas:
+        coordinate:
+          type: integer
+          ...
+      parmeters:
+        rowParam:
+          name: row
+          in: path
+          ...
 
 
 
