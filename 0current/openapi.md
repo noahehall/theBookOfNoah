@@ -222,20 +222,9 @@
 
 
 ### openapi document schema condensed view
-### TODO clean this hsit up based on spec not the examples
-  - openapi syntax map preview; check the spec for more
-    
-  - openapi object
-    - *openapi, info, paths, components*
-  
-  - components object
-    - *schemas, responses, parameters*
-    - contains definitions for objects to be reused in other parts of the document
-      - most objects in a document can be replaced by a reference to a component
-        - only objects listed as fields of the components object can be referenced
-        - each field is a map pairing component names with objects to be reused
+#### TODO clean this hsit up based on spec not the examples
 
-  - common fields
+#### common fields
     - description field
       - most openapi objects accept this field
       - provides additional information for developers, beyond what cn be automatically generated from the API descriptions
@@ -254,51 +243,120 @@
       - list examples explicitly rather than embedded them within description fields
         - useful for auto-doc tools, mock servers, and special rendering of the examples within the documentation
 
-=
+
+    - reference object
+      - *$ref*
+      - any object of the types supported by the components object can be replaced by a reference object pointing to a component
+      - are actually json referneces (see links)
+        - contain a single field whose string value is a URI pointin to the renferenced objects
 
 
+    - media type object
+      - *schema*
 
-  - reference object
-    - *$ref*
-    - any object of the types supported by the components objcet can be replaced by a reference object pointing to a component
-    - are actually json referneces (see links)
-      - contain a single field whose string value is a URI pointin to the renferenced objects
+      - schema object
+        - *title, description, type, items, properties, example*
+        - schema object describing the response/request body object
 
-  - paths object 
-    - list of paths in form `/route1`, `/route2` etc
-      - each path is a path item object
+
+    - parameters object
+      - can reside in various locations, e.g. *path item* and *operation* objects, indicated by the *in* field
+      - typically used to identify a resource
+      - *name, in, description, required, style, content*, schema*
+        - in: string; required; location of parameter 
+          - path: the parameter is part of the route of this operation (i.e. in th url)
+          - query: parameter is appended to the query string part of the operations url
+        - name: string; required; case-sensitive; unique
+        - description: string; useful for documentation
+        - required: bool(false); whether this parameter must be present
+        - style: defines how a parameter is to be serialized in relation to its data-type
+          - *simple, form, label, matrix*
+            - primitive types e.g. integer
+              - simple === 1234
+              - form === id=1234
+              - label === .1234
+              - matrix === ;id=1234
+            
+            - array types e.g. array.id containing 1,2,3
+              - *exploded=false*
+                - used to separtae each field into a separate parameter
+                - askholz: the examples did not give example of exploded field
+                - simple === 1,2,3
+                - form === ids=1,2,3
+                - label === .1.2.3
+                - metrix === ;ids=1,2,3
+              - *exploded=true*
+                - askholz ^
+                - simple === 1,2,3
+                - form === ids=1&ids=2&ids=3
+                - label === .1.2.3
+                - matrix === ;ids=1;ids=2;ids=3
+            
+            - object types e.g. object.color containing {r:1,g:2,b:3}
+              - askholz about explod again
+              - *exploded=false*
+                - simple === r,1,g,2,b,3
+                - form === color=r,1,2,b,3
+                - label === .r.1.g.2.b.3
+                - matrix === ;color=r,1,b,2,g,3
+              - *exploded=true*
+                - simple === r=1,g=2,b=3
+                - form === r=1&g=2&b=3
+                - label === .r=1.g=2.b=3
+                  - askholz: when is this ever actually used
+                - matrix === ;r=1;g=2;b=3
+
+        - content/schema must exist, but not both
+          - schema: schema object; used to specify a parameters type (e.g. integer)
+          - content: used to specify a parameters type (similar to schema) but in more advanced situations
+   
+      
+      - subfield of pathitem 
+        - all specified parameters are shared by all operations on that path
+          - will override ndividual parameters at the operation object level but not remove them
+
+
+#### specific fields
+  - openapi object
+    - *openapi, info, paths, components, servers*
+  
+    - components object
+      - *schemas, responses, parameters*
+      - contains definitions for objects to be reused in other parts of the document
+        - most objects in a document can be replaced by a reference to a component
+          - only objects listed as fields of the components object can be referenced
+          - each field is a map pairing component names with objects to be reused
+
+    - paths object 
+      - list of paths in form `/route1`, `/route2` etc
+        - each path is a path item object
   
   
-  - path item object
-    - *get, put, post, delete, parameters*
-      - each are operation objects
+      - path item object
+        - *get, put, post, delete, parameters*
+          - each are operation objects
   
-  - operation object 
-    - *summary, description, requestBody, responses, operationId, parameters*
+        - operation object 
+          - *summary, description, requestBody, responses, operationId, parameters*
 
-  - request body object 
-    - the message payload 
-      - provides content for the resource (e.g. when updating a record in a db)
-    - *description, content, required*
-      - content: required;
-      - required: bool(false); whether the message payload is required
+          - request body object 
+            - the message payload 
+              - provides content for the resource (e.g. when updating a record in a db)
+            - *description, content, required*
+              - content: required;
+              - required: bool(false); whether the message payload is required
+          
+          - responses object 
+            - list of http codes (i.e. response objects)
+              - *"200", "500", etc*
+
+          - response object
+            - *description, content*
+              - content describes the API response structure (in this context)
+                - *application/json, text/html* etc
+                  - each a specific *media type object*
+
   
-  - responses object 
-    - list of http codes (i.e. response objects)
-      - *"200", "500", etc*
-
-  - response object
-    - *description, content*
-      - content describes the API response structure (in this context)
-        - *application/json, text/html* etc
-          - each a specific *media type object*
-
-  - media type object
-    - contains the *schema* field, and others i suppose
-    - schema object describing the response/request body object
-
-  - schema object
-    - *title, description, type, items, properties, example*
 
   - content subfields
     - provides a single-entry map of media types to media type objects
@@ -308,63 +366,6 @@
     - media type object
     - schema object
       - title, description, items, properties, example, type, 
-
-  - parameters object
-    - can reside in various locations, e.g. *path item* and *operation* objects, indicated by the *in* field
-    - typically used to identify a resource
-    - *name, in, description, required, style, content*, schema*
-      - in: string; required; location of parameter 
-        - path: the parameter is part of the route of this operation (i.e. in th url)
-        - query: parameter is appended to the query string part of the operations url
-      - name: string; required; case-sensitive; unique
-      - description: string; useful for documentation
-      - required: bool(false); whether this parameter must be present
-      - style: defines how a parameter is to be serialized in relation to its data-type
-        - *simple, form, label, matrix*
-          - primitive types e.g. integer
-            - simple === 1234
-            - form === id=1234
-            - label === .1234
-            - matrix === ;id=1234
-          
-          - array types e.g. array.id containing 1,2,3
-            - *exploded=false*
-              - used to separtae each field into a separate parameter
-              - askholz: the examples did not give example of exploded field
-              - simple === 1,2,3
-              - form === ids=1,2,3
-              - label === .1.2.3
-              - metrix === ;ids=1,2,3
-            - *exploded=true*
-              - askholz ^
-              - simple === 1,2,3
-              - form === ids=1&ids=2&ids=3
-              - label === .1.2.3
-              - matrix === ;ids=1;ids=2;ids=3
-          
-          - object types e.g. object.color containing {r:1,g:2,b:3}
-            - askholz about explod again
-            - *exploded=false*
-              - simple === r,1,g,2,b,3
-              - form === color=r,1,2,b,3
-              - label === .r.1.g.2.b.3
-              - matrix === ;color=r,1,b,2,g,3
-            - *exploded=true*
-              - simple === r=1,g=2,b=3
-              - form === r=1&g=2&b=3
-              - label === .r=1.g=2.b=3
-                - askholz: when is this ever actually used
-              - matrix === ;r=1;g=2;b=3
-
-      - content/schema must exist, but not both
-        - schema: schema object; used to specify a parameters type (e.g. integer)
-        - content: used to specify a parameters type (similar to schema) but in more advanced situations
- 
-    
-    - subfield of pathitem 
-      - all specified parameters are shared by all operations on that path
-        - will override ndividual parameters at the operation object level but not remove them
-        - 
 
 # examples 
   - TODO: move spec shit into the condensed view
