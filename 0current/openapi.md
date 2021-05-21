@@ -603,5 +603,37 @@
 
 
 
+  # descriptions, examples, summaries
+  #+ documentation related fields
+    # example field example
+    schema:
+      coordinate:
+        type: integer
+        minimum: 1
+        maximum: 3
+        example: 1 # must match format of parent field
+
+    # examples object example
+    responses:
+      "400":
+        description: the provided params are incorrect
+        content: 
+          text/html: # media type object
+            schema:
+              type: string
+            examples: # notice the values below are all strings, as specified above
+              illegalPoop:
+                value: "must wipe before flush"
+              illegalFlush:
+                value: "if it aint brown let it drown"
+
+
+
+    
+
+    
+
+
+
 
 ```
