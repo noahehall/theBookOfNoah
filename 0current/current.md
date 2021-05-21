@@ -1,40 +1,42 @@
 
+# askholz: need confirmation
 # biggest things
+
+## openapi
+### openapi coalition
 
 ## koa + rate limiting 
 
 ## regular expressions
 
 ## github actions
-## openapi
-### design-first approach (good)
-### code-first approach (bad)
-### [api stylebook](http://apistylebook.com/design/guidelines/)
 
-### phil sturgeon
+## [api stylebook](http://apistylebook.com/design/guidelines/)
+
+## phil sturgeon
       - review this guy
-## openapi coalition ?
 
 ## resource focused model
 
 ## thoughtful interaction design 
 
-## API driven architecture
-## api evolution
-## api design
-## api versioning/upgrades/patching/etc
+## api related 
+### API driven architecture
+### api evolution
+### api design
+### api versioning/upgrades/patching/etc
     - 4 year lts 
     - 2 year release
-## asyncapi
+### asyncapi
     - is this mainly for messaging?
 
-## regex
+
 
 
 # bigger things
 ## fastly
 ## hapi
-## koa
+
 ## yeoman 
 
 
