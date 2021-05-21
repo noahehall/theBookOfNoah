@@ -649,7 +649,21 @@
 
     
 
+  # server object
+    # askholz: no indententation server subfields?
+    servers:
+      - url: https://poop.com/v1
+        description: v1 of poop api
+      - url: https:poop.com/v2
+        description: v2 of poop api
     
+    # server with individual api endpoints
+      servers:
+        - url: https://poop.com/v3
+      paths:
+        /users:
+          get:
+          ...
 
 
 
