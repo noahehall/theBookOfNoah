@@ -668,6 +668,8 @@
 
     # multiple server arrays for a given operation
     # +the lowest level (deepest child) takes precedence
+    # +multiple servers must list the SAME API,
+    # ++e.g. testing vs production servers should be in diff documents
       servers:
         - url: https://poop.com
       paths::
