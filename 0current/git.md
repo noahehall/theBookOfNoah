@@ -14,3 +14,10 @@ only checkout files in root dir
 
 check git config 'git config --list'
 
+
+https://stackoverflow.com/questions/41464752/git-rebase-interactive-the-last-n-commits
+    git rebase -i HEAD~n
+        n === # of commits to rewrite
+
+    git rebase -i shaOfLastGoodCOmmitButNotINclude
+    git rebase -i shaOfFirstCommitToRewrite^
