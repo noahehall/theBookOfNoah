@@ -658,12 +658,23 @@
         description: v2 of poop api
     
     # server with individual api endpoints
+    # +accessed via https:/poop.com/v3/flush
       servers:
         - url: https://poop.com/v3
       paths:
-        /users:
+        /flush:
           get:
           ...
+
+    # multiple server arrays for a given operation
+    # +the lowest level (deepest child) takes precedence
+      servers:
+        - url: https://poop.com
+      paths::
+        /flush:
+          get:
+            servers:
+              - url: https://poop.com/v2 #takes precedence
 
 
 
