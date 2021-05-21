@@ -241,10 +241,22 @@
       - provides additional information for developers, beyond what cn be automatically generated from the API descriptions
         - useful for explaining the purpose of parameters, effect each value has or possible interactions with other parameters
       - auto-doc tools can then merge both into a comprehensive, strucuted reference guides
+      - permit the use of commonMark spec, e.g. basic markdown [see more](https://oai.github.io/Documentation/specification-docs.html#the-commonmark-syntax)
 
-  - summary field
-    - provides a short description (summary of description field)
-    - auto-doc tools use this in path list, page headers, etc. 
+    - summary field
+      - provides a short description (summary of description field)
+      - auto-doc tools use this in path list, page headers, etc.
+    
+    - example object
+      - *example, examples*
+        - one vs multiple examples permitted
+      - many openapi objects permit this field
+      - list examples explicitly rather than embedded them within description fields
+        - useful for auto-doc tools, mock servers, and special rendering of the examples within the documentation
+
+=
+
+
 
   - reference object
     - *$ref*

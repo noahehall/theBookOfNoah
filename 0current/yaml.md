@@ -1,3 +1,7 @@
+# links
+  - [commonMark spec](https://spec.commonmark.org/0.27/)
+    - maybe not the most appropriate place
+    - but string fields accept commonMark syntax
 
 # examples
 ```yaml
