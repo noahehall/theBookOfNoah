@@ -216,8 +216,9 @@
         - benefits: reduced file size, interchangable with json (yaml v1.2), is a superset of JSON (thus can be intermixed)
   - endpoint responses descriptions
     - described via `paths.PATH.VERB.responses.HTTPCODE.content`
-  - endpoint input dat adescriptions
+  - endpoint input data descriptions
     - decribed via paths.PATH.
+  - 
 
 
 ### openapi document schema condensed view
@@ -233,6 +234,11 @@
       - most objects in a document can be replaced by a reference to a component
         - only objects listed as fields of the components object can be referenced
         - each field is a map pairing component names with objects to be reused
+
+  - description field
+    - most openapi objects accept this field
+    - provides additional information for developers, beyond what cn be automatically generated from the API descriptions
+      - auto-doc tools can then merge both into a comprehensive, strucuted reference guide
 
   - reference object
     - *$ref*
