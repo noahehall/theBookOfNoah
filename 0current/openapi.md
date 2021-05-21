@@ -650,7 +650,8 @@
     
 
   # server object
-    # askholz: no indententation server subfields?
+    # askholz: no indententation for server array subfields?
+    # + but is for enum... perhaps just a doc error
     servers:
       - url: https://poop.com/v1
         description: v1 of poop api
@@ -677,6 +678,25 @@
           get:
             servers:
               - url: https://poop.com/v2 #takes precedence
+
+
+    # server variables
+      servers:
+        - url: https:{action}.server.com:{port}/{version}
+          variables:
+            action:
+              default: flush
+              description: never make action a subdomain
+            port:
+              enum:
+                - "8443"
+                - "443"
+              default: "443"
+            version:
+              default: v1
+
+
+
 
 
 
