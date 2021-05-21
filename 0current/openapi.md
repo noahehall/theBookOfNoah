@@ -342,19 +342,6 @@
         - will override ndividual parameters at the operation object level but not remove them
         - 
 
-
-### api endpoints
-
-### content of message bodies
-
-### parameters and payload of an operation 
-
-### reusing descriptions 
-
-### providing documentation and examples
-
-### api servers
-
 # examples 
   - TODO: move spec shit into the condensed view
   - TODO: this should be working examples not explanations
