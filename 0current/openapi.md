@@ -222,98 +222,105 @@
 
 
 ### openapi document schema condensed view
-#### TODO clean this hsit up based on spec not the examples
+  - TODO clean this hsit up based on spec not the examplesd
+  - TODO: add fields & parent sublist to each item
 
 #### common fields
-    - description field
-      - most openapi objects accept this field
-      - provides additional information for developers, beyond what cn be automatically generated from the API descriptions
-        - useful for explaining the purpose of parameters, effect each value has or possible interactions with other parameters
-      - auto-doc tools can then merge both into a comprehensive, strucuted reference guides
-      - permit the use of commonMark spec, e.g. basic markdown [see more](https://oai.github.io/Documentation/specification-docs.html#the-commonmark-syntax)
+  - description field
+    - most openapi objects accept this field
+    - provides additional information for developers, beyond what cn be automatically generated from the API descriptions
+      - useful for explaining the purpose of parameters, effect each value has or possible interactions with other parameters
+    - auto-doc tools can then merge both into a comprehensive, strucuted reference guides
+    - permit the use of commonMark spec, e.g. basic markdown [see more](https://oai.github.io/Documentation/specification-docs.html#the-commonmark-syntax)
 
-    - summary field
-      - provides a short description (summary of description field)
-      - auto-doc tools use this in path list, page headers, etc.
+  - summary field
+    - provides a short description (summary of description field)
+    - auto-doc tools use this in path list, page headers, etc.
+  
+  - example object
+    - *example, examples*
+      - one vs multiple examples permitted
+    - many openapi objects permit this field
+    - list examples explicitly rather than embedded them within description fields
+      - useful for auto-doc tools, mock servers, and special rendering of the examples within the documentation
+
+
+  - reference object
+    - *$ref*
+    - any object of the types supported by the components object can be replaced by a reference object pointing to a component
+    - are actually json referneces (see links)
+      - contain a single field whose string value is a URI pointin to the renferenced objects
+
+
+  - media type object
+    - *schema*
+
+    - schema object
+      - *title, description, type, items, properties, example*
+      - schema object describing the response/request body object
+
+
+  - parameters object
+    - can reside in various locations, e.g. *path item* and *operation* objects, indicated by the *in* field
+    - typically used to identify a resource
+    - *name, in, description, required, style, content*, schema*
+      - in: string; required; location of parameter 
+        - path: the parameter is part of the route of this operation (i.e. in th url)
+        - query: parameter is appended to the query string part of the operations url
+      - name: string; required; case-sensitive; unique
+      - description: string; useful for documentation
+      - required: bool(false); whether this parameter must be present
+      - style: defines how a parameter is to be serialized in relation to its data-type
+        - *simple, form, label, matrix*
+          - primitive types e.g. integer
+            - simple === 1234
+            - form === id=1234
+            - label === .1234
+            - matrix === ;id=1234
+          
+          - array types e.g. array.id containing 1,2,3
+            - *exploded=false*
+              - used to separtae each field into a separate parameter
+              - askholz: the examples did not give example of exploded field
+              - simple === 1,2,3
+              - form === ids=1,2,3
+              - label === .1.2.3
+              - metrix === ;ids=1,2,3
+            - *exploded=true*
+              - askholz ^
+              - simple === 1,2,3
+              - form === ids=1&ids=2&ids=3
+              - label === .1.2.3
+              - matrix === ;ids=1;ids=2;ids=3
+          
+          - object types e.g. object.color containing {r:1,g:2,b:3}
+            - askholz about explod again
+            - *exploded=false*
+              - simple === r,1,g,2,b,3
+              - form === color=r,1,2,b,3
+              - label === .r.1.g.2.b.3
+              - matrix === ;color=r,1,b,2,g,3
+            - *exploded=true*
+              - simple === r=1,g=2,b=3
+              - form === r=1&g=2&b=3
+              - label === .r=1.g=2.b=3
+                - askholz: when is this ever actually used
+              - matrix === ;r=1;g=2;b=3
+
+      - content/schema must exist, but not both
+        - schema: schema object; used to specify a parameters type (e.g. integer)
+        - content: used to specify a parameters type (similar to schema) but in more advanced situations
+ 
     
-    - example object
-      - *example, examples*
-        - one vs multiple examples permitted
-      - many openapi objects permit this field
-      - list examples explicitly rather than embedded them within description fields
-        - useful for auto-doc tools, mock servers, and special rendering of the examples within the documentation
+    - subfield of pathitem 
+      - all specified parameters are shared by all operations on that path
+        - will override ndividual parameters at the operation object level but not remove them
 
-
-    - reference object
-      - *$ref*
-      - any object of the types supported by the components object can be replaced by a reference object pointing to a component
-      - are actually json referneces (see links)
-        - contain a single field whose string value is a URI pointin to the renferenced objects
-
-
-    - media type object
-      - *schema*
-
-      - schema object
-        - *title, description, type, items, properties, example*
-        - schema object describing the response/request body object
-
-
-    - parameters object
-      - can reside in various locations, e.g. *path item* and *operation* objects, indicated by the *in* field
-      - typically used to identify a resource
-      - *name, in, description, required, style, content*, schema*
-        - in: string; required; location of parameter 
-          - path: the parameter is part of the route of this operation (i.e. in th url)
-          - query: parameter is appended to the query string part of the operations url
-        - name: string; required; case-sensitive; unique
-        - description: string; useful for documentation
-        - required: bool(false); whether this parameter must be present
-        - style: defines how a parameter is to be serialized in relation to its data-type
-          - *simple, form, label, matrix*
-            - primitive types e.g. integer
-              - simple === 1234
-              - form === id=1234
-              - label === .1234
-              - matrix === ;id=1234
-            
-            - array types e.g. array.id containing 1,2,3
-              - *exploded=false*
-                - used to separtae each field into a separate parameter
-                - askholz: the examples did not give example of exploded field
-                - simple === 1,2,3
-                - form === ids=1,2,3
-                - label === .1.2.3
-                - metrix === ;ids=1,2,3
-              - *exploded=true*
-                - askholz ^
-                - simple === 1,2,3
-                - form === ids=1&ids=2&ids=3
-                - label === .1.2.3
-                - matrix === ;ids=1;ids=2;ids=3
-            
-            - object types e.g. object.color containing {r:1,g:2,b:3}
-              - askholz about explod again
-              - *exploded=false*
-                - simple === r,1,g,2,b,3
-                - form === color=r,1,2,b,3
-                - label === .r.1.g.2.b.3
-                - matrix === ;color=r,1,b,2,g,3
-              - *exploded=true*
-                - simple === r=1,g=2,b=3
-                - form === r=1&g=2&b=3
-                - label === .r=1.g=2.b=3
-                  - askholz: when is this ever actually used
-                - matrix === ;r=1;g=2;b=3
-
-        - content/schema must exist, but not both
-          - schema: schema object; used to specify a parameters type (e.g. integer)
-          - content: used to specify a parameters type (similar to schema) but in more advanced situations
-   
-      
-      - subfield of pathitem 
-        - all specified parameters are shared by all operations on that path
-          - will override ndividual parameters at the operation object level but not remove them
+  - server object
+    - fields: *url, description, variables, ...*
+    - parent: *root openapi object, path item object, operation object*
+    - specify the server where the API can be accessed
+      - can contain multiple URLs, variable portions, etc
 
 
 #### specific fields
@@ -358,7 +365,10 @@
 
   
 
+
+  
   - content subfields
+    - TODO: common|specific field?
     - provides a single-entry map of media types to media type objects
     - remember content is consumed in response & request body objects
     - parameters
