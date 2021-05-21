@@ -49,7 +49,7 @@
   - [parmater style field examples](https://spec.openapis.org/oas/v3.1.0#style-examples)
   - [components object](https://spec.openapis.org/oas/v3.1.0#componentsObject)
   - [reference object](https://spec.openapis.org/oas/v3.1.0#referenceObject)
-  - 
+  - [server object](https://spec.openapis.org/oas/v3.1.0#serverObject)
 
 
 # my notes
@@ -319,8 +319,15 @@
   - server object
     - fields: *url, description, variables, ...*
     - parent: *root openapi object, path item object, operation object*
-    - specify the server where the API can be accessed
+    - specify the server (base urls) where the API can be accessed (is being served)
       - can contain multiple URLs, variable portions, etc
+
+    - variables map object
+      - fields: *var1, varX...*
+        - each being a *server variable object*
+        
+      - server variable object
+        - fields: *enum, default, description*
 
 
 #### specific fields
