@@ -235,10 +235,16 @@
         - only objects listed as fields of the components object can be referenced
         - each field is a map pairing component names with objects to be reused
 
-  - description field
-    - most openapi objects accept this field
-    - provides additional information for developers, beyond what cn be automatically generated from the API descriptions
-      - auto-doc tools can then merge both into a comprehensive, strucuted reference guide
+  - common fields
+    - description field
+      - most openapi objects accept this field
+      - provides additional information for developers, beyond what cn be automatically generated from the API descriptions
+        - useful for explaining the purpose of parameters, effect each value has or possible interactions with other parameters
+      - auto-doc tools can then merge both into a comprehensive, strucuted reference guides
+
+  - summary field
+    - provides a short description (summary of description field)
+    - auto-doc tools use this in path list, page headers, etc. 
 
   - reference object
     - *$ref*
@@ -372,6 +378,9 @@
     anObject:
     aNumber: 42
     aString: This is a string
+    longerString: 
+      this is a longer string
+      make sure to have a leading space
     aBoolean: true
     nothing: null
     arrayOfNumbers:
