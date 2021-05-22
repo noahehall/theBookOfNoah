@@ -7,11 +7,17 @@ sparse clone an existing repo from git to local
 
     git sparse-checkout set paths/to/download
 
+check paths included in sparse-checkout
+    git sparse-checkout list
+
+    
 only checkout files in root dir
     $ git clone --filter=blob:none --sparse https://github.com/derrickstolee/sparse-checkout-example
 
-
-
+force checking out paths ignoring sparse checkout
+e.g. to force checking out a path not matching sparse settings
+    git checkout --ignore-skip-worktree-bits -- PATHS
+--ignore-skip-worktree-bits
 check git config 'git config --list'
 
 
