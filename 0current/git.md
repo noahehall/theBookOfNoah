@@ -17,7 +17,7 @@ only checkout files in root dir
 force checking out paths ignoring sparse checkout
 e.g. to force checking out a path not matching sparse settings
     git checkout --ignore-skip-worktree-bits -- PATHS
---ignore-skip-worktree-bits
+
 check git config 'git config --list'
 
 
