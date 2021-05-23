@@ -48,7 +48,7 @@ midle of Context
   - see app.context for setup
   - ctx is passed to all middleware fns
   - many props are sugar; delegated to either request, response (etc)
-  - fields: *request, response, type, length, path, method, state, cookies*
+  - fields: *request, response, type, length, path, method, state, cookies, throw, assert, respond*
     - request: koa request
     - response: koa response
     - type: response.type
@@ -76,6 +76,9 @@ midle of Context
           - when set to true: all cookies set during the request cycle with the same name are filterd out of the `set-cookie`
     - throw(status, msg, props)
       - throw an error with a .status prop (500 default) 
+      - stale dep
+    - assert(value, status, msg, props)
+      - stale dep
 # examples
 ```js
   // koa app
@@ -144,5 +147,15 @@ midle of Context
       e.status = 400;
       e.expose = true; // send msg to client in response
       throw e;
+
+  // askholz
+  // stale dep: https://github.com/jshttp/http-assert
+  // helper to throw error when !value
+    ctx.assert(ctx.state.user, 401, 'user not found');
+
+  // bypass koas built-in response handling
+  // +not recommended, however is escape hatch 
+  // *if wanting to use fn(req, res) fns and middleware within koa
+  
 
 ```
