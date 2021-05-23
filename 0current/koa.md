@@ -107,7 +107,7 @@ midle of Context
 
   // askholz
   // https://github.com/koajs/koa/issues/1539
-  // app,keys = 'dont use this due to stale keyGrip dep'
+  // app.keys = 'dont use this due to stale keyGrip dep'
 
   // error handling
     // outputs errs to stderr unless app.silent = true
@@ -116,4 +116,8 @@ midle of Context
       // handle error
     })
 
+  // askholz
+  // stale dep: https://github.com/jed/cookies
+  // ctx.cookies{}
+  
 ```
