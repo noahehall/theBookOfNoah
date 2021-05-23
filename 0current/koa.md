@@ -14,7 +14,9 @@ midle of Context
   - designed by the express team to be smaller, more expressive and robust for building web apps and apis
   - leverages async functions to ditch callbacks
 
-
+## best practices
+  - avoid overloading *app.context* as its created per request
+  - utilize *ctx.state* for passing information through middleware|frontend views
 # api 
 ## gotchas
   - only parent apps can modify their context/settings
@@ -25,22 +27,42 @@ midle of Context
   - settings: properties on the app instance 
     - *env, proxy, subDomainOffset, silent*
   - context: the prototype from which `ctx` is created
-    - modify `ctx` via `app.context`  e.g. adding props/methods for use across the entire koa application
+    - fields: *request, response*
+    - setup `ctx` via `app.context`  e.g. adding props/methods for use across the entire koa application
       - more performant (no middleware)
-      - rmeember this object is created per request
+      - remember this object is created per request
         - keep the logic to a minimum
-  - on: event handlers
+  - on('eventName', ...)
     - *error,*
+    - event handlers
     
 
-### app errors
+### app.on('error', ...)
 
-## koa middleware
+## koa middleware app.use(midWareFn)
   - cascading: invocation flows *downstream*, then control flows back *upstream*
-
-
-### koa context
   - 
+
+
+### koa ctx
+  - see app.context for setup
+  - ctx is passed to all middleware fns
+  - many props are sugar; delegated to either request, response (etc)
+  - fields: *request, response, type, length, path, method, state*
+    - request: koa request
+    - response: koa response
+    - type: response.type
+    - length: response.length
+    - path: request.path
+    - method: request.method
+    - req: node request
+    - res: node response
+      - ypassing koas response handling is not supported
+        - refrain from using *res[statusCode|writeHead|write|end]
+    - state: object; per req|res cycle
+      - namespace (object) for passing info through middleware and to your frontend views
+    - app: koa app refernces
+
 # examples
 ```js
   // koa app
@@ -66,6 +88,8 @@ midle of Context
       // upstream logic
       // ..
     });
+
+  // 
 
 
   // listening on port
