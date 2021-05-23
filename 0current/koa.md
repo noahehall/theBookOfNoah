@@ -27,6 +27,8 @@ midle of Context
   - context: the prototype from which `ctx` is created
     - modify `ctx` via `app.context`  e.g. adding props/methods for use across the entire koa application
       - more performant (no middleware)
+      - rmeember this object is created per request
+        - keep the logic to a minimum
   - on: event handlers
     - *error,*
     
