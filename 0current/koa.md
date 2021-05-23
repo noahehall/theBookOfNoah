@@ -13,6 +13,9 @@
 
 
 # api 
+## gotchas
+  - only parent apps can modify their context/settings
+    - i.e. mounted apps inherit from their parent
 ## koa application
   - an object containing an array of middleware functions composed and executed ina stack-like manner upon request
     - content-negotiation, cache freshness, proxy support, redirection, etc
@@ -20,6 +23,7 @@
   - context: the prototype from which `ctx` is created
     - modify `ctx` via `app.context`  e.g. adding props/methods for use across the entire koa application
       - more performant (no middleware)
+    
 
 
 ## koa middleware
