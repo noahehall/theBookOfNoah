@@ -133,7 +133,9 @@ midle of Context
   // stale dep: https://github.com/jed/cookies
   // ctx.cookies{}
 
-  // throw error for koa to handle automaticcaly
+  // askholz
+  // stale dep: https://github.com/jshttp/http-errors
+  // throw error for koa to handle automaticaly
     ctx.throw(400);
     ctx.throw(400, 'name requiered');
     ctx.throw(400, 'name required', { user });
