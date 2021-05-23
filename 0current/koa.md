@@ -140,7 +140,7 @@ midle of Context
       // longform
       const e = new Error('name required');
       e.status = 400;
-      e.expose = true;
+      e.expose = true; // send msg to client in response
       throw e;
 
 ```
