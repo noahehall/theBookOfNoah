@@ -48,7 +48,7 @@ midle of Context
   - see app.context for setup
   - ctx is passed to all middleware fns
   - many props are sugar; delegated to either request, response (etc)
-  - fields: *request, response, type, length, path, method, state*
+  - fields: *request, response, type, length, path, method, state, cookies*
     - request: koa request
     - response: koa response
     - type: response.type
@@ -62,7 +62,20 @@ midle of Context
     - state: object; per req|res cycle
       - namespace (object) for passing info through middleware and to your frontend views
     - app: koa app refernces
-
+    - cookies: cookie logic
+      - get(name, options)
+      - set(name, value, prop)
+        - prop.maxAge: ms from Date.now for expiry
+        - props.signed: sign the cookie value
+        - props.expires: date for expiration
+        - props.path: '/' default
+        - props.domain
+        - secure:
+        - httpOnly: true default; server-accessible cookie
+        - overwrite: false default; whther to overwrite previously set cookies of the same name
+          - when set to true: all cookies set during the request cycle with the same name are filterd out of the `set-cookie`
+    - throw(status, msg, props)
+      - throw an error with a .status prop (500 default) 
 # examples
 ```js
   // koa app
@@ -119,5 +132,15 @@ midle of Context
   // askholz
   // stale dep: https://github.com/jed/cookies
   // ctx.cookies{}
-  
+
+  // throw error for koa to handle automaticcaly
+    ctx.throw(400);
+    ctx.throw(400, 'name requiered');
+    ctx.throw(400, 'name required', { user });
+      // longform
+      const e = new Error('name required');
+      e.status = 400;
+      e.expose = true;
+      throw e;
+
 ```
