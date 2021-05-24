@@ -257,4 +257,9 @@ midle of Context
     ctx.is('application/json'); // => 'application/json'
     ctx.is('html', 'application/*'); // => 'application/json'
 
+  // ensure valid content type of request
+    return ctx.request.is('image/*)) 
+      ? continueLogic()
+      : ctx.throw(415, 'images only'); // dont use ctx.throw (stale dep: askholz)
+
 ```
