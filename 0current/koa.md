@@ -3,6 +3,7 @@ https://koajs.com/#introduction
 midle of Context
 
 # TODO
+  - general http refresher
   - x-forwarded-host
   - app.proxy
   - ip4|6 config
@@ -15,6 +16,7 @@ midle of Context
 # links
   - [home](https://koajs.com/)
   - [http server listen](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback)
+  - [WHATWG url api](https://nodejs.org/dist/latest-v8.x/docs/api/url.html#url_the_whatwg_url_api)
 
 
 # terminology
