@@ -13,6 +13,8 @@ midle of Context
   - cache headers (and headers in general)
     - If-None-Match
     - ETag
+    - If-Modified-Since
+    - Last-Modified
 
 
 
@@ -80,15 +82,21 @@ midle of Context
         - path: request pathname, retains querystring if present
         - querystring: raq query string sans *?*
         - search: raw querystring with *?*
-        - host: Get hostname:port|X-Forwarded-Host when app.proxy === true
-        - hostname: Get hostname|X-Forwarded-Host when app.proxy === true 
+        - host: Get hostname:port|X-Forwarded-Host when !!app.proxy
+        - hostname: Get hostname|X-Forwarded-Host when !!app.proxy
           - ip6 forces koa to parse hostname via WHATWG URL API (perf impact)
         - URL: WHATWG parsed URL object
         - type: Get request Content-Type e.g. *image/png* sans parameters e.g. *charset*
         - charset
         - query: parsed querystring object (sans nested parsing)
         - fresh: check if a request cash contents have not changed (i.e. is fresh)
-          - for cache negotiating between *If-None-Match / ETag*
+          - for cache negotiating between *If-None-Match / ETag* and *If-Modified-Since & Last-Modified*
+          - referenced AFTER setting one/more aforementioned response headers
+        - stale: !request.fresh
+        - protocol: http(s)|X-Forwarded-Proto when *!!app.proxy*
+        - secure: *protocol === https*
+        - ip: Request remote address|X-Forwarded-For if !!app.proxy
+        - ips: array of IPs if *X-Forwarded-For* && !!app.proxy
     
     - response: koa response
       - fields: *body, status, message, length, type, headerSent, redirect, attachment, set, append,remove,lastModified, etag*
@@ -207,4 +215,17 @@ midle of Context
   // *if wanting to use fn(req, res) fns and middleware within koa
   
 
+  // freshness check requires status 20x or 304
+    ctx.status = 200;
+    ctx.set('ETag', '123');
+
+    // cache is ok
+    if (ctx.fresh) {
+      ctx.status = 304;
+      return;
+    }
+
+    // cache is stale
+    // fetch new data
+    ctx.body = await db.find('something');
 ```
