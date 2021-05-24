@@ -245,4 +245,16 @@ midle of Context
     app.subdomainOffset = 3
     ctx.request.subdomains === ['three']
 
+  // checking content-type of a request
+  // returns bool|null when no request body
+    // Content-Type: text/html; charset=utf-8
+    ctx.is('html') === 'html';
+    ctx.is('text/html') === 'text/html';
+    ctx.is('text/*', 'text/html') === 'text/html';
+
+    // Content-Type: application/json
+    ctx.is('json', 'urlencoded'); // => 'json'
+    ctx.is('application/json'); // => 'application/json'
+    ctx.is('html', 'application/*'); // => 'application/json'
+
 ```
