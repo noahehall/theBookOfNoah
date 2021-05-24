@@ -16,7 +16,9 @@ midle of Context
     - If-Modified-Since
     - Last-Modified
   - content negotiation 
-    - including encodings, charsets, languages
+    - Accept-Encoding: e.g. gzip, identity, etc
+    - Accept-Charsets: e.g. utf-8, utf-7, iso-8859-1;q=0.2
+    - Accept-Language: e.g. en, es, pt
 
 
 
@@ -77,13 +79,15 @@ midle of Context
     - request: koa request
       - abstraction on top of nodes request object
       - content negotiation
-        - check the request *Accept* header to see content types consumer supports
+        - check the request *Accept(-...): BLAH...* header to see content types consumer supports
           - if no types supplied: all types are supported
           - if multiple types supplied; return the best match
           - if no matches found; send a http code *406 Not Acceptable* response 
-        - all the accepts* fields
-        - if no types are supplied in 
-      
+          - for *Accept-Encoding:...* header
+            - always include *identity* (i.e. no encoding) when checking supported encodings
+              - note that *Accept-Encoding: identity;q=0* means identity is not supported
+              - 
+        - applicable to all the accepts* fields
       - fields: *header(s), method, url, origin, originalUrl, href,  path, query(string), host(name), fresh, stale, socket, protocol, search secure, ip(s), subdomains, is, accepts(Encodings|Charsets|Languages), get *
         - method: useful for implementing middleware such as *methodOverride()*
         - length: Content-Length as a number|undefined
@@ -112,11 +116,30 @@ midle of Context
         - subdomains:  array of subdomains i.e. the dot-separtaed parts of the host before the main domain (last two parts)
           - see *app.subdomainOffset*
         - is(types...): assert incoming request contains *types...* in Content-Type header field
-          - 
+        - accepts(types...): check if given type(s) are supported, returning the best match
+        - acceptsEncodings(encodings...): check if given encoding(s) are supported, returning the best match
+        - acceptsCharsets(charsets): same as above
+        - acceptsLanguages(langs): same as above
+        - idempotent: check request is idempotent
+          - if receiving the **same** response multiple times has the same **effect**
+        - socket: returns request socket
+        - get: returns request header field
     
     - response: koa response
-      - fields: *body, status, message, length, type, headerSent, redirect, attachment, set, append,remove,lastModified, etag*
-      - 
+      - abstraction on top of nodes response object
+      - fields: *body, status, message, length, type, headerSent, redirect, attachment, set, append,remove, lastModified, etag*
+        - header(s): response header object
+        - socket: request socketh
+        - status: get/set; 404 default; Get response status
+        - message: get/set; whatever the response.status is by default
+        - length: get/set; response Content-Length
+        - body: get/set; response body
+          - string|Buffer written
+            - text/html|plain charset=utf-8
+            - application/octet-stream + Content-Length
+          - stream piped
+          - Object|Array json-stringified
+          - null no content response
 
     - type: response.type
     - length: response.length
@@ -287,7 +310,7 @@ midle of Context
     }
 
 
-  // available status codes set via #
+  // available response status codes set via #
     100 "continue"
     101 "switching protocols"
     102 "processing"
@@ -346,5 +369,9 @@ midle of Context
     508 "loop detected"
     510 "not extended"
     511 "network authentication required"
+
+  // common headers
+  // TODO: should already be in one of the other files somewhere
+    Content-Length
 
 ```
