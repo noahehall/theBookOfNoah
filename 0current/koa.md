@@ -42,8 +42,10 @@ midle of Context
 ## koa application
   - an object containing an array of middleware functions composed and executed ina stack-like manner upon request
     - content-negotiation, cache freshness, proxy support, redirection, etc
-  - settings: properties on the app instance 
-    - *env, proxy, subDomainOffset, silent*
+  - set app settings directly on the app instance
+    - fields: *env, proxy, subdomainOffset, silent*
+      - see *request -> subdomains*
+  
   - context: the prototype from which `ctx` is created
     - fields: *request, response*
     - setup `ctx` via `app.context`  e.g. adding props/methods for use across the entire koa application
@@ -96,7 +98,9 @@ midle of Context
         - protocol: http(s)|X-Forwarded-Proto when *!!app.proxy*
         - secure: *protocol === https*
         - ip: Request remote address|X-Forwarded-For if !!app.proxy
-        - ips: array of IPs if *X-Forwarded-For* && !!app.proxy
+        - ips: array of IPs [upstream, > downstream] if *X-Forwarded-For* && *!!app.proxy*
+        - subdomains:  array of subdomains i.e. the dot-separtaed parts of the host before the main domain (last two parts)
+          - see *app.subdomainOffset*
     
     - response: koa response
       - fields: *body, status, message, length, type, headerSent, redirect, attachment, set, append,remove,lastModified, etag*
