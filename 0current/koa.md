@@ -10,6 +10,9 @@ midle of Context
   - http|2|3 & speedy
   - examples
   - routing
+  - cache headers (and headers in general)
+    - If-None-Match
+    - ETag
 
 
 
@@ -67,7 +70,7 @@ midle of Context
     
     - request: koa request
       - abstraction on top of nodes request object
-      - fields: *header(s), method, url, origin, originalUrl, href,  path, query(string), host(name), fresh, stale, socket, protocol, search secure, ip(s), subdomains, is, accepts(Encodings|Charsets|Languages),get*
+      - fields: *header(s), method, url, origin, originalUrl, href,  path, query(string), host(name), fresh, stale, socket, protocol, search secure, ip(s), subdomains, is, accepts(Encodings|Charsets|Languages), get *
         - method: useful for implementing middleware such as *methodOverride()*
         - length: Content-Length as a number|undefined
         - url: Get request URL
@@ -78,9 +81,14 @@ midle of Context
         - querystring: raq query string sans *?*
         - search: raw querystring with *?*
         - host: Get hostname:port|X-Forwarded-Host when app.proxy === true
-        - hostname: Get hostname|X-Forwarded-Host when app.proxy === true
-        - 
-      - 
+        - hostname: Get hostname|X-Forwarded-Host when app.proxy === true 
+          - ip6 forces koa to parse hostname via WHATWG URL API (perf impact)
+        - URL: WHATWG parsed URL object
+        - type: Get request Content-Type e.g. *image/png* sans parameters e.g. *charset*
+        - charset
+        - query: parsed querystring object (sans nested parsing)
+        - fresh: check if a request cash contents have not changed (i.e. is fresh)
+          - for cache negotiating between *If-None-Match / ETag*
     
     - response: koa response
       - fields: *body, status, message, length, type, headerSent, redirect, attachment, set, append,remove,lastModified, etag*
@@ -93,8 +101,8 @@ midle of Context
     - req: node request
     
     - res: node response
-      - ypassing koas response handling is not supported
-        - refrain from using *res[statusCode|writeHead|write|end]
+      - bypassing koas response handling is not supported
+        - refrain from using *res[statusCode|writeHead|write|end]*
     
     - state: object; per req|res cycle
       - namespace (object) for passing info through middleware and to your frontend views
