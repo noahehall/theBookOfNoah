@@ -49,19 +49,28 @@ midle of Context
   - ctx is passed to all middleware fns
   - many props are sugar; delegated to either request, response (etc)
   - fields: *request, response, type, length, path, method, state, cookies, throw, assert, respond*
+    
     - request: koa request
+      - fields: *header(s), method, url, origin, originalUrl, href,  path, query(string), host(name), fresh, stale, socket, protocol secure, ip(s), subdomains, is, accepts(Encodings|Charsets|Languages),get*
+    
     - response: koa response
+      - fields: *body, status, message, length, type, headerSent, redirect, attachment, set, append,remove,lastModified, etag*
+
     - type: response.type
     - length: response.length
     - path: request.path
     - method: request.method
     - req: node request
+    
     - res: node response
       - ypassing koas response handling is not supported
         - refrain from using *res[statusCode|writeHead|write|end]
+    
     - state: object; per req|res cycle
       - namespace (object) for passing info through middleware and to your frontend views
+    
     - app: koa app refernces
+    
     - cookies: cookie logic
       - get(name, options)
       - set(name, value, prop)
@@ -74,9 +83,11 @@ midle of Context
         - httpOnly: true default; server-accessible cookie
         - overwrite: false default; whther to overwrite previously set cookies of the same name
           - when set to true: all cookies set during the request cycle with the same name are filterd out of the `set-cookie`
+    
     - throw(status, msg, props)
       - throw an error with a .status prop (500 default) 
       - stale dep
+    
     - assert(value, status, msg, props)
       - stale dep
 # examples
