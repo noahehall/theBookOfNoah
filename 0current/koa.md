@@ -275,6 +275,18 @@ midle of Context
       : ctx.throw(415, 'images only'); // dont use ctx.throw (stale dep: askholz)
 
 
+  // check mime/types (i.e. type/extension) consumer supports via request Accept header
+    // i.e. [application/json, text/html, text/*]
+    // better to be as specific as possible 
+    // dont leave off type as below which only checks the extension
+    switch (ctx.accepts('json', 'html', 'text')) {
+      case 'json': break;
+      case 'html': break;
+      case 'text': break;
+      default: ctx.throw(406, 'json, html, or text only');
+    }
+
+
   // available status codes set via #
     100 "continue"
     101 "switching protocols"
