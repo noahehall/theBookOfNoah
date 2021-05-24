@@ -1,6 +1,14 @@
 bookmark
 https://koajs.com/#introduction
 midle of Context
+
+# TODO
+  - x-forwarded-host
+  - app.proxy
+  - ip4|6 config
+  - http|2|3 & speedy
+
+
 # links
   - [home](https://koajs.com/)
   - [http server listen](http://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback)
@@ -48,13 +56,30 @@ midle of Context
   - see app.context for setup
   - ctx is passed to all middleware fns
   - many props are sugar; delegated to either request, response (etc)
-  - fields: *request, response, type, length, path, method, state, cookies, throw, assert, respond*
+    - i would refrain from using this sugar and directly access THING via `ctx.re(quest|sponse).THING`
+  - fields: *request, response, method, state, cookies, throw, assert, respond*
+    - in general fields are *getters & setters*
     
     - request: koa request
-      - fields: *header(s), method, url, origin, originalUrl, href,  path, query(string), host(name), fresh, stale, socket, protocol secure, ip(s), subdomains, is, accepts(Encodings|Charsets|Languages),get*
+      - abstraction on top of nodes request object
+      - fields: *header(s), method, url, origin, originalUrl, href,  path, query(string), host(name), fresh, stale, socket, protocol, search secure, ip(s), subdomains, is, accepts(Encodings|Charsets|Languages),get*
+        - method: useful for implementing middleware such as *methodOverride()*
+        - length: Content-Length as a number|undefined
+        - url: Get request URL
+        - originalUrl: Get request original URL
+        - origin: Get origin of URL (includes protocol & host)
+        - href: Get full request URL
+        - path: request pathname, retains querystring if present
+        - querystring: raq query string sans *?*
+        - search: raw querystring with *?*
+        - host: Get hostname:port|X-Forwarded-Host when app.proxy === true
+        - hostname: Get hostname|X-Forwarded-Host when app.proxy === true
+        - 
+      - 
     
     - response: koa response
       - fields: *body, status, message, length, type, headerSent, redirect, attachment, set, append,remove,lastModified, etag*
+      - 
 
     - type: response.type
     - length: response.length
