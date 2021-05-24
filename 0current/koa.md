@@ -101,6 +101,8 @@ midle of Context
         - ips: array of IPs [upstream, > downstream] if *X-Forwarded-For* && *!!app.proxy*
         - subdomains:  array of subdomains i.e. the dot-separtaed parts of the host before the main domain (last two parts)
           - see *app.subdomainOffset*
+        - is(types...): assert incoming request contains *types...* in Content-Type header field
+          - 
     
     - response: koa response
       - fields: *body, status, message, length, type, headerSent, redirect, attachment, set, append,remove,lastModified, etag*
@@ -232,4 +234,15 @@ midle of Context
     // cache is stale
     // fetch new data
     ctx.body = await db.find('something');
+
+  // subdomains + subdomainOffset
+    // domain = three.two.one.com
+    // assumes main domain is last two parts by default
+    // i.e. app.subdomainOffset = 2;
+    ctx.request.subdomains === ['two', 'three']
+
+    // removed 3 from the right
+    app.subdomainOffset = 3
+    ctx.request.subdomains === ['three']
+
 ```
