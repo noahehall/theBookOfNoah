@@ -151,7 +151,19 @@ midle of Context
         - remove(header): remove header field
         - type: get/set response Content-Type void of params
           - setting accepts mime string/file extension
-          - charset is set automatically, to override use `response.set({ 'Content-Type': 'text/html' }) then set this directly
+          - charset is set automatically, to override use `response.set({ 'Content-Type': 'text/html' })` then set this directly
+            - askholz: appears *text/html* allows you to set whatever charset you want? so first set text/html then set charset?
+        - is(types...): check whether response type is one of the supplied types
+          - useful for creating middleware that maniuplate responses
+        - redirect(url, alt): perform 302 redirect
+        - attachment(filename): set *Content-Disposition* to attachment
+          - informs client to prompt for filedownload
+        - headerSent: bool; whether response header has been sent
+          - useful for seeing if client may be notified on error
+        - lastModified: get/set Last-Modified header as a Date
+        - etag: set response etag
+        - vary(field): Vary on field
+        - flushHeaders(): flush any set headers and begin the body
 
     - type: response.type
     - length: response.length
@@ -343,6 +355,42 @@ midle of Context
     ctx.type = 'image/png';
     ctx.type = '.png';
     ctx.type = 'png';
+
+  // middleware minifies all HTML responses except for streams
+    const minify = require('html-minifier');
+    app.use(async (ctx, next) => {
+      await next();
+
+      if (
+        !ctx.response.is('html')
+        || !ctx.response.body 
+        || ctx.responsebody.pipe
+      ) return;
+
+      if (Buffer.isBuffer(ctx.response.body)) 
+        ctx.response.body = minify(ctx.response.body.toString())
+    });
+
+  // perform 302 redirect
+    // back provides Referrer support
+    ctx.redirect('back');
+    ctx.redirect('back', '/index.html')
+
+    // to url
+    ctx.redirect('/login');
+    ctx.redirect('http://google.com');
+
+    // change status code & body
+      ctx.response.redirect('/cart');
+      ctx.response.status = 301;
+      ctx.response.body = 'Redirecting to shopping'; // must be after redirect()
+
+  // set Last-Modified header
+    ctx.response.lastModified = new Date();
+
+  // set response etag
+    ctx.response.etag = crypto.createHash('md5').update(ctx.body).digest('hex');
+
 
   // available response status codes set via #
     100 "continue"
