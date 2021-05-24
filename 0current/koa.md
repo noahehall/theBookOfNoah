@@ -7,6 +7,9 @@ midle of Context
   - app.proxy
   - ip4|6 config
   - http|2|3 & speedy
+  - examples
+  - routing
+
 
 
 # links
