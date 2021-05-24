@@ -43,6 +43,9 @@ midle of Context
 ## gotchas
   - only parent apps can modify their context/settings
     - i.e. mounted apps inherit from their parent
+  - [http streaming in a proxy](https://github.com/koajs/koa/pull/612)
+
+
 ## koa application
   - an object containing an array of middleware functions composed and executed ina stack-like manner upon request
     - content-negotiation, cache freshness, proxy support, redirection, etc
@@ -134,12 +137,21 @@ midle of Context
         - message: get/set; whatever the response.status is by default
         - length: get/set; response Content-Length
         - body: get/set; response body
-          - string|Buffer written
-            - text/html|plain charset=utf-8
-            - application/octet-stream + Content-Length
-          - stream piped
-          - Object|Array json-stringified
+          - string written: text/html|plain charset=utf-8
+          - Buffer written: application/octet-stream + Content-Length
+          - stream piped: application/octet-stream
+            - *.onerror* automatically added as a listener to the *error* event
+            - when the *request* is closed the stream is destroyed 
+              - dont set *response.body=stream* directly for *http streams* in a proxy as it would destroy the underlying connection
+          - Object|Array: application/json json-stringified
           - null no content response
+        - get: response header field
+        - set({ headers}): response header(s)
+        - append: append additional header fields and values
+        - remove(header): remove header field
+        - type: get/set response Content-Type void of params
+          - setting accepts mime string/file extension
+          - charset is set automatically, to override use `response.set({ 'Content-Type': 'text/html' }) then set this directly
 
     - type: response.type
     - length: response.length
@@ -309,6 +321,28 @@ midle of Context
       default: ctx.throw(406, 'json, html, or text only');
     }
 
+  // stream error handling without destroying the stream
+    const PassThrough = require('stream').PassThrough;
+    app.use(async ctx => {
+      ctx.body = someHTTPStream.on('error', ctx.onerror).pipe(PassThrough());
+    });
+
+  // req/res header manipulation
+    // set response header to single field? askholz
+    ctx.response.set('Cache-Control', 'no-cache');
+    // set response header object with multiple fields
+    // might as well always use this form
+    ctx.response.set({ poop: 'blahl' })
+
+    // append additional fields
+    // askholz: assuming this is here as the above overrides ALL headers
+    ctx.append('Link', '<http://127.0.0.1/>');
+
+  // set response content type
+    ctx.type = 'text/plain; charset=utf-8';
+    ctx.type = 'image/png';
+    ctx.type = '.png';
+    ctx.type = 'png';
 
   // available response status codes set via #
     100 "continue"
