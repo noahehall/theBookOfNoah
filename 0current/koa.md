@@ -1,6 +1,6 @@
 bookmark
-https://koajs.com/#introduction
-midle of Context
+https://github.com/koajs/koa/blob/master/docs/guide.md
+top of page
 
 # TODO
   - general http(s) protocol refresher
