@@ -95,6 +95,17 @@
   - api design approach that explores the needs, wants and wishes of users and other stakeholders to create API products that fit their needs
 
 ## outline
+### Workshop 2
+  - asset discovery and api product ideation
+  
+  - [todo](https://medium.com/api-product-management/asset-discovery-and-api-product-ideation-7f23ccde6939)
+
+### Workshop 3
+  - api production ideation and validation
+  - goals: 
+    1. understand customers' journey and pain points
+    2. generate develop and validate ideas for API products
+   
   - there are other steps, these are most relevant to me, at this time
   1. *Intro of Companies & Participants*
     - Participants get to know each other.
