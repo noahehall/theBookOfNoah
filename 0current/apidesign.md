@@ -3,6 +3,9 @@
 
 
 # links
+  - [towards a vlidated human-centered workshop design](https://www.slideshare.net/TobiasBlum/innovating-the-api-economy-towards-a-humancentered-workshop-design)
+    - master thesis by tobias blum; creator of the human-centered api methdology
+  - [human-centered api design](https://medium.com/api-product-management/design-apis-human-centered-to-build-successful-api-products-ffe35015cee5)
   - [api product ideation and validation](https://medium.com/api-product-management/api-product-ideation-and-validation-aef140db00b)
   
 ## TODO 
