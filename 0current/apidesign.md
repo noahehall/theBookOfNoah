@@ -11,6 +11,13 @@
   - [how to mke effective service blueprints](https://miro.com/guides/service-blueprints/)
 
 
+# terms
+  - out-of-the-box brainstorming: approach to contemplating completely new ideas
+    - scrabble bag it: pick a random letter from the alphabet which represents the first letter of your new idea
+    - pocket dictionary: pick a random word from the dictionary and describe your problem/solution in the context of this word
+    - opposite day: think of different ways to NOT SOLVE THE PROBLEM, or reasons why the customer SHOULDNT USE YOUR EXISTING SOLUTION
+      - lol people do this shit too much already
+
 # tools
   - api product cards
     - consists of:
@@ -73,9 +80,13 @@
   
   5. *Problem/Solution Fit*
     - Identify what pain points can be solved with API product ideas.
-    - 
+      - create API PRODUCT CARDS for each pain point that can be resolved with an existing API
+  
+
   6. *Ideation* 
     - Inspire ideas for new API products.
+    - if pain points remain without appropriate API PRODUCT CARDS, develop new API ideas
+  
   7. *Prioritization*
     - Select best ideas.
   8.  *Prototyping*
