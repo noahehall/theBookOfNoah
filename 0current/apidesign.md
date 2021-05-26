@@ -27,6 +27,9 @@
     - provide product specification for the real working system
 
 # tools
+  - product story telling
+  - product elevator pitch
+
   - out-of-the-box brainstorming: approach to contemplating completely new ideas
     - scrabble bag it: pick a random letter from the alphabet which represents the first letter of your new idea
     - pocket dictionary: pick a random word from the dictionary and describe your problem/solution in the context of this word
@@ -42,6 +45,8 @@
       3. quantity
       4. complexity
       5. cost
+
+
   - api valuation matrix
     - evaluate (rank) different api ideas
     - plot each api product card on the x-y map and focus on the ones with high potential and highviabiility
@@ -90,6 +95,7 @@
   - api design approach that explores the needs, wants and wishes of users and other stakeholders to create API products that fit their needs
 
 ## outline
+  - there are other steps, these are most relevant to me, at this time
   1. *Intro of Companies & Participants*
     - Participants get to know each other.
     - fk that ^ you should spend this time to get to know your stakeholders:
@@ -134,9 +140,17 @@
   8.  *Prototyping*
     - Create API prototypes that relieve pains or create gains.
     - use the RAPID PROTOTYPING method to test the api idea
+      - output:
+        - ultimately the prototype should reflect how the interaction with the customer changes when using the prototyped idea
+        - a testable prototype
+        - clear vision about the apis task
+        - a short story that explains the apis impact
 
 
   9.  *Presentation*
     - Create hype. Enforce quality of prototypes.
+    - use STORY TELLING and ELEVATOR PITCH
+
   10. *Wrap Up & Next Steps*
     - Review participants’ expectations and results. Define next steps and follow-ups.
+    - 
