@@ -122,18 +122,29 @@
 
 # rest api design
 ## best practices
-  - start with a stable data model before releasing a public API
-    - once the API is released, its expected to be stable 
-  
-  - versioning
-    - have a predictable and publicly available versioning scheme and update schedule
-    - version via the URL (lol1)
-    - version via HEADER fields (lol2)
-  
+  - before you do anything
+    - start with a stable data model before releasing a public API
+
 
   - structure & design: an API is a user interface for a developer
+    - use plural NOUNS (things) and not ACTIONS (http methods) in your endpoint URLs
+      - wtf is the difference between goose & geese?
+    
+    - use web standards
+    - should be explorable via a browser address bar
     - have a single source of documentation
+    
     - use restful URLs and actions
+      - structure your API into logical resources that are manipulated using HTTP methods (CRUD)
+        - e.g. a single `/users` endpoint can receive GET, PUT, POST, PUT, PATCH, etc without needing 5 different URIs
+          - GET: retrieve thing(s)
+          - POST: create thing(s)
+          - PUT: update thing(s)
+          - PATCH: partially update thing(s)
+            - arguable if PATCH should ever be used
+          - DELETE: delete thing(s)
+        - 
+    
     - return useful confirmations from POST, PATCH & PUT requests
     - only/always use (fk the rest)
       - JSON syntax (fk xml) for all HTTP methods
@@ -143,7 +154,14 @@
       - pretty print unless in unless in prod prod
     - effectively use HTTP status codes
     - define a consumable error payload
+
+
+  - versioning
+    - have a predictable and publicly available versioning scheme and update schedule
+    - version via the URL (lol1)
+    - version via HEADER fields (lol2)
   
+
   - features
     - HATEOAS
       - implement it (lol1)
