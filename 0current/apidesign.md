@@ -7,10 +7,38 @@
     - master thesis by tobias blum; creator of the human-centered api methdology
   - [human-centered api design](https://medium.com/api-product-management/design-apis-human-centered-to-build-successful-api-products-ffe35015cee5)
   - [api product ideation and validation](https://medium.com/api-product-management/api-product-ideation-and-validation-aef140db00b)
+  - [best practices for REST api design (stackoverflow.blog)](https://stackoverflow.blog/2020/03/02/best-practices-for-rest-api-design/)
+  - [best practices in API Design (swagger)](https://swagger.io/resources/articles/best-practices-in-api-design/)
+  - [RESTful web API design (microsoft)](https://docs.microsoft.com/en-us/azure/architecture/best-practices/api-design)
+  - [REST API: concepts, best practices and benefits (altexsoft)](https://www.altexsoft.com/blog/rest-api-design/)
+  - [HATEOAS driven REST APIs](https://restfulapi.net/hateoas/)
+  - [best practices for designing pragmatic RESTful apis (enchant)](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
+  - [REST (roy fielding)](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
+  - [REST (wikipedia)](https://en.m.wikipedia.org/wiki/Representational_state_transfer)
+  - [roy fielding](https://roy.gbiv.com/)
+  - 
   
 ## other links
   - [selecting a rapid prototyping process](https://engineeringproductdesign.com/rapid-prototyping-process-selection-key-factors/)
   - [rapid prototyping](https://engineeringproductdesign.com/knowledge-base/rapid-prototyping-techniques/)
+  - [CRUD](https://en.m.wikipedia.org/wiki/Create,_read,_update_and_delete)
+  - [api versioning](https://stackoverflow.com/questions/389169/best-practices-for-api-versioning)
+  - [api versioning (stripe)](https://stripe.com/docs/api/pagination/auto)
+  - 
+
+## put this shit elseware
+  - [etag](https://en.m.wikipedia.org/wiki/HTTP_ETag)
+  - [oath 2.0 authorization framework](https://datatracker.ietf.org/doc/html/rfc6750)
+  - [oath 2](https://oauth.net/2/)
+  - [stackoverflow teams](https://stackoverflow.com/teams?utm_source=so-owned&utm_medium=banner&utm_campaign=campaign-17&utm_content=blog-1)
+  - [dogfood](https://en.m.wikipedia.org/wiki/Eating_your_own_dog_food)
+  - [HEADER field definitions](https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html)
+  - [JSONP](https://en.m.wikipedia.org/wiki/JSONP)
+  - [Fetch specification](https://fetch.spec.whatwg.org/)
+  - [web linking](https://datatracker.ietf.org/doc/html/rfc5988)
+  - [HTTP status codes](https://datatracker.ietf.org/doc/html/rfc6585)
+  - [rate limiting](https://stackoverflow.com/questions/16022624/examples-of-http-api-rate-limiting-http-response-headers)
+
 
 
 ## TODO 
@@ -91,16 +119,28 @@
       1. technical depth: the lower the layer/step the more technical it is (i.e. layer 5 is more technical than layer 1)
       2. timeline: represents the customer journey, documenting each step a user takes (left > right) through a specific layer
 
+
+# rest api design
+  - 
+
 # human-centered api design
   - api design approach that explores the needs, wants and wishes of users and other stakeholders to create API products that fit their needs
 
-## outline
-### Workshop 2
+## Workshop 2
   - asset discovery and api product ideation
-  
   - [todo](https://medium.com/api-product-management/asset-discovery-and-api-product-ideation-7f23ccde6939)
+  - there are other steps, these are the most relevant to me, at this time
+  1. Beginning of Workshop. The objective is to welcome and wake up participants’s creativity. Provide overview to participants.
+  2. Data Finding. Find data assets.
+  3. Service Finding. Find service assets.
+  4. Data & Service Landscaping. Get overview and understanding of data and service landscape
+  5. Foresight Thinking. Understand what makes API successful
+  6. Prioritization. Select most important assets.
+  7. API Product Definition. Create drafts of API products.
+  8. Stakeholder Mapping. Identify stakeholders to collaborate with.
+  9. Outlook & Feedback. Review participants’ expectations and results. Define next steps and follow-ups.
 
-### Workshop 3
+## Workshop 3
   - api production ideation and validation
   - goals: 
     1. understand customers' journey and pain points
