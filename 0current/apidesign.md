@@ -1,5 +1,5 @@
 # TLDR
-  - various notes concerning API design 
+  - various copypasta concerning API design 
 
 
 # links
@@ -121,7 +121,46 @@
 
 
 # rest api design
-  - 
+## best practices
+  - start with a stable data model before releasing a public API
+    - once the API is released, its expected to be stable 
+  
+  - versioning
+    - have a predictable and publicly available versioning scheme and update schedule
+    - version via the URL (lol1)
+    - version via HEADER fields (lol2)
+  
+
+  - structure & design: an API is a user interface for a developer
+    - have a single source of documentation
+    - use restful URLs and actions
+    - return useful confirmations from POST, PATCH & PUT requests
+    - only/always use (fk the rest)
+      - JSON syntax (fk xml)
+      - camelCase (fk snake)
+      - compression (e.g. gzip) unless in test mode 
+      - pretty print unless in unless in prod prod
+    - 
+  
+  - features
+    - use query params for advanced filtering, sorting and searching
+    - provide a way to limit which fields are returned
+    - HATEOAS: implement it (lol1)
+    - HATEOAS: dont implement it (lol2)
+    - ability to switch from prod/test mode
+      - prod
+        - compressed (+gzip, -whitespace)
+        - no pretty print
+      - test
+        - opposite of prod
+    - ability to enable/disable/specify features
+      - response envelopes
+        - required by JSONP and other limited http clients
+      - version
+        - major version in the URL, minor/patch versions via HEADER fields (see stripe/enchant)
+  
+  - security
+    - use SSL everywhere
 
 # human-centered api design
   - api design approach that explores the needs, wants and wishes of users and other stakeholders to create API products that fit their needs
@@ -139,6 +178,7 @@
   7. API Product Definition. Create drafts of API products.
   8. Stakeholder Mapping. Identify stakeholders to collaborate with.
   9. Outlook & Feedback. Review participants’ expectations and results. Define next steps and follow-ups.
+
 
 ## Workshop 3
   - api production ideation and validation
