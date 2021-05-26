@@ -136,12 +136,23 @@
     
     - use restful URLs and actions
       - structure your API into logical resources that are manipulated using HTTP methods (CRUD)
-        - e.g. a single `/users` endpoint can receive GET, PUT, POST, PUT, PATCH, etc without needing 5 different URIs
+        - dont map to your data model 1v1
+          - this is likely not effective from an API consumer perspective
+          - a security risk by revealing the structure to your data modal
+          - brittle in the event your data model changes
+        - hierarchy 
+          1. if resource Y is always a child of X, then `/v1/x/:id/y
+          2. if resource Y is independent but associated: include an identifier with X where Y can be retrieved with a second API call
+          3. if resource Y is independent but always requested with X: see #1 or embed the resource within the call to retrieve X
+             - this avoid the second call with approach #2
+        - http methods have meaning: e.g. a single `/users` endpoint can receive GET, PUT, POST, PUT, PATCH, etc without needing 5 different URIs
           - GET: retrieve thing(s)
           - POST: create thing(s)
           - PUT: update thing(s)
           - PATCH: partially update thing(s)
             - arguable if PATCH should ever be used
+            - however PATCH can be used to make an ACTION on a resource appear as a FIELD ona resource
+              - e.g. ACTIVATE action could be a PATCH on a resource, even tho the backend data model supports this via other logic (and not an activate field)
           - DELETE: delete thing(s)
         - 
     
