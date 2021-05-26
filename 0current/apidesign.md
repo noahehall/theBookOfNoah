@@ -136,31 +136,41 @@
     - use restful URLs and actions
     - return useful confirmations from POST, PATCH & PUT requests
     - only/always use (fk the rest)
-      - JSON syntax (fk xml)
+      - JSON syntax (fk xml) for all HTTP methods
+        - some HTTP clients wont be supported, but fk them (unless their paying u)
       - camelCase (fk snake)
       - compression (e.g. gzip) unless in test mode 
       - pretty print unless in unless in prod prod
-    - 
+    - effectively use HTTP status codes
+    - define a consumable error payload
   
   - features
-    - use query params for advanced filtering, sorting and searching
-    - provide a way to limit which fields are returned
-    - HATEOAS: implement it (lol1)
-    - HATEOAS: dont implement it (lol2)
-    - ability to switch from prod/test mode
-      - prod
-        - compressed (+gzip, -whitespace)
-        - no pretty print
-      - test
-        - opposite of prod
-    - ability to enable/disable/specify features
-      - response envelopes
-        - required by JSONP and other limited http clients
-      - version
-        - major version in the URL, minor/patch versions via HEADER fields (see stripe/enchant)
+    - HATEOAS
+      - implement it (lol1)
+      - dont implement it (lol2)
+    - many features require extended set of options
+      - filtering
+      - sorting
+      - searching: many nouns need their own search function
+      - pagination
+        - via link headers (lol1)
+        - via query params (lol2)
+    - ability to toggle/specify specific features
+      - toggle
+        - response envelopes: required by JSONP and other limited http clients
+      - specify
+        - version: major version in the URL, minor/patch versions via HEADER fields (see stripe/enchant)
+        - returned fields: do you need every user field every time?
+    - autoloading
+    - http-method-override
+      - never on GET requests
+    - caching
+      - via response headers
   
   - security
     - use SSL everywhere
+    - token based authentication
+    - oauth2 in case delegation is required
 
 # human-centered api design
   - api design approach that explores the needs, wants and wishes of users and other stakeholders to create API products that fit their needs
