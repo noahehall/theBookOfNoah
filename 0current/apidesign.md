@@ -1,3 +1,6 @@
+bookmark
+https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
+limiting which fields are returned by the api
 # TLDR
   - various copypasta concerning API design 
 
@@ -132,11 +135,19 @@
     
     - use web standards
     - should be explorable via a browser address bar
+      - this should also include common search queries
+        - package up common sets of conditions into easily accessible endpoints
+        - e.g. recently closed could be `/tickets/recentlyclosed` versus a long as fkn filter query param
     - have a single source of documentation
+      - available without logging in
+      - not embedded (e.g. as a PDF) but by default via browser
+      - include copypasta examples
+        - im personally not using shit without a working copypasta
+        - 
     
     - use restful URLs and actions
       - structure your API into logical resources that are manipulated using HTTP methods (CRUD)
-        - dont map to your data model 1v1
+        - dont map to your data model 1to1
           - this is likely not effective from an API consumer perspective
           - a security risk by revealing the structure to your data modal
           - brittle in the event your data model changes
@@ -169,8 +180,16 @@
 
   - versioning
     - have a predictable and publicly available versioning scheme and update schedule
+      - CHANGE is coming, everyone knows it, versioning helps manage it
     - version via the URL (lol1)
+      - prevents invalid requests from hitting updated endpoints
+      - smooth transition to newer versions while sunsetting legacy endpoints
+      - ensures browser explorability across versions
+      - provides structural stability
     - version via HEADER fields (lol2)
+      - useful for specifying minor/patch versions of a major versions
+        - e.g. field deprecedations, endpoint changes, etc
+  
   
 
   - features
@@ -179,8 +198,15 @@
       - dont implement it (lol2)
     - many features require extended set of options
       - filtering
+        - use a unique query param for each field e.g. `poop?field1=yes&field2=no`
       - sorting
-      - searching: many nouns need their own search function
+        - use a generic queyr param for sorting rules e.g. poop?sort=-field1&field2
+          - unary operators -/+ indicate DESC & ASC
+      - searching: 
+        - /users?search=field1...: 
+          - some resources require SEARCH as a mechanism to filtering and retrieving matches
+        - /search?...: 
+          - a distinct endpoint for searching all resources
       - pagination
         - via link headers (lol1)
         - via query params (lol2)
@@ -198,8 +224,14 @@
   
   - security
     - use SSL everywhere
+      - encrypt communication between parties
+      - inhibit eavesdropping/impersonation if authentication credentials are hijacked
+      - enables use of access tokens instead of having to sign each API request
     - token based authentication
     - oauth2 in case delegation is required
+    - use HARD errors
+      - e.g. a client requests a non secure version of an API endpoint
+        - an automatic redirect to the SSL version could leak request params over the unencrypted endpoint
 
 # human-centered api design
   - api design approach that explores the needs, wants and wishes of users and other stakeholders to create API products that fit their needs
