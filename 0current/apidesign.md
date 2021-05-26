@@ -17,8 +17,26 @@
     - pocket dictionary: pick a random word from the dictionary and describe your problem/solution in the context of this word
     - opposite day: think of different ways to NOT SOLVE THE PROBLEM, or reasons why the customer SHOULDNT USE YOUR EXISTING SOLUTION
       - lol people do this shit too much already
+    - there are others, but these are the coolest
 
 # tools
+  - api valuation matrix
+    - evaluate (rank) different api ideas
+    - plot each api product card on the x-y map and focus on the ones with high potential and highviabiility
+      - vectors
+        - top right: the best product APIs with both high potential and viabiility
+        - top left: viable ideas but dont provide value/have great potential
+          - might be potential in the future, so return to these ideas
+        - bottom left: least (umm worse) product apis: neither viable or potential
+        - bottom right: ideas with great potential because they provide high value, however low viabiility becuase you dont have to resources to execute
+    - dimensions 
+      - potential: x axis
+        - the value the api brings to the team, organization, customers
+      - viabiility: y axis
+        - how realistic it is to build the api AND provide it to consumers based on avaiable resources, experience and reputation
+        - docs read build OR provide, but i prefer to GROUP them as one
+
+
   - api product cards
     - consists of:
       - short descriptive name
@@ -88,7 +106,9 @@
     - if pain points remain without appropriate API PRODUCT CARDS, develop new API ideas
   
   7. *Prioritization*
-    - Select best ideas.
+    - Select best api product card to work on from the previous step
+    - use the API VALUATION MATRIX to compare each idea
+    
   8.  *Prototyping*
     - Create API prototypes that relieve pains or create gains.
   9.  *Presentation*
