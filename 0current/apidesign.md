@@ -1,6 +1,9 @@
 bookmark
-https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
-limiting which fields are returned by the api
+  https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
+  limiting which fields are returned by the api
+
+  https://medium.com/api-product-management/asset-discovery-and-api-product-ideation-7f23ccde6939
+  overfiew of API workshop 2
 # TLDR
   - various copypasta concerning API design 
 
