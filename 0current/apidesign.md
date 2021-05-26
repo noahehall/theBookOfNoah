@@ -15,14 +15,28 @@
 
 
 # terms
+  - prototype: preliminary version of the end-product for:
+    - evaluating the design
+    - testing the technology
+    - analyse the working principle
+    - provide product specification for the real working system
+
+# tools
   - out-of-the-box brainstorming: approach to contemplating completely new ideas
     - scrabble bag it: pick a random letter from the alphabet which represents the first letter of your new idea
     - pocket dictionary: pick a random word from the dictionary and describe your problem/solution in the context of this word
     - opposite day: think of different ways to NOT SOLVE THE PROBLEM, or reasons why the customer SHOULDNT USE YOUR EXISTING SOLUTION
       - lol people do this shit too much already
     - there are others, but these are the coolest
-
-# tools
+  
+  - rapid prototyping 
+    - the proceess of creating prototypes quickly to visually and functionally evaluate an engineering product design
+    - key factors affecting the prototype
+      1. purpose
+      2. quality
+      3. quantity
+      4. complexity
+      5. cost
   - api valuation matrix
     - evaluate (rank) different api ideas
     - plot each api product card on the x-y map and focus on the ones with high potential and highviabiility
@@ -32,12 +46,12 @@
           - might be potential in the future, so return to these ideas
         - bottom left: least (umm worse) product apis: neither viable or potential
         - bottom right: ideas with great potential because they provide high value, however low viabiility becuase you dont have to resources to execute
-    - dimensions 
-      - potential: x axis
-        - the value the api brings to the team, organization, customers
-      - viabiility: y axis
-        - how realistic it is to build the api AND provide it to consumers based on avaiable resources, experience and reputation
-        - docs read build OR provide, but i prefer to GROUP them as one
+      - dimensions 
+        - potential: x axis
+          - the value the api brings to the team, organization, customers
+        - viabiility: y axis
+          - how realistic it is to build the api AND provide it to consumers based on avaiable resources, experience and reputation
+          - docs read build OR provide, but i prefer to GROUP them as one
 
 
   - api product cards
@@ -114,6 +128,9 @@
     
   8.  *Prototyping*
     - Create API prototypes that relieve pains or create gains.
+    - use the RAPID PROTOTYPING method to test the api idea
+
+
   9.  *Presentation*
     - Create hype. Enforce quality of prototypes.
   10. *Wrap Up & Next Steps*
