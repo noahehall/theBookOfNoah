@@ -4,6 +4,9 @@ bookmark
 
   https://medium.com/api-product-management/asset-discovery-and-api-product-ideation-7f23ccde6939
   overfiew of API workshop 2
+
+nextup
+  https://stoplight.io/api-design-guide/basics/
 # TLDR
   - various copypasta concerning API design 
 
