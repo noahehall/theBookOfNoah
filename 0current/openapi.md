@@ -89,7 +89,7 @@
   - method signatures
 
 ## terminilogy: openapi specific
-  - tags: a piece of metadat (unique name and an optional description) that you attach to operations
+  - tags: a piece of metadata (unique name and an optional description) that you attach to operations
       - tools then use tags to e.g. sort all your api operations by their tags
   - documents: machine-readable api descriptions
   - paths: aka operations, aka routes, i.e. api endpoints lol
@@ -222,14 +222,14 @@
 
 
 ### openapi document schema condensed view
-  - TODO clean this hsit up based on spec not the examplesd
+  - TODO clean this shit up based on spec not the examples
   - TODO: add fields & parent sublist to each item
 
 #### common fields
   - description field
     - most openapi objects accept this field
     - provides additional information for developers, beyond what cn be automatically generated from the API descriptions
-      - useful for explaining the purpose of parameters, effect each value has or possible interactions with other parameters
+      - useful for explaining the purpose of parameters/effect each value has or possible interactions with other parameters
     - auto-doc tools can then merge both into a comprehensive, strucuted reference guides
     - permit the use of commonMark spec, e.g. basic markdown [see more](https://oai.github.io/Documentation/specification-docs.html#the-commonmark-syntax)
 
