@@ -7,14 +7,16 @@
   - [tcp mdn](https://developer.mozilla.org/en-US/docs/Glossary/TCP)
   - [http authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
   
-  - [http headers](https://developer.mozilla.org/en-US/docs/Glossary/HTTP_header)
-    - [authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization)
-    - [www-authenticate](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate)
+  - [http headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)
+    - [response headers]()
+      - [www-authenticate](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate)
+      - 
+    - [request headers](https://developer.mozilla.org/en-US/docs/Glossary/Request_header)
+      - [authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization)
+      - [proxy authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Proxy-Authorization)
   
   - [http status codes](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
-    - response status codes
-      - [401 unauthorized](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401)
-      - [403 Forbidden](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403)
+  
 ## RFCs
   - [http authentication: RFC 7235](https://tools.ietf.org/html/rfc7235)
 
@@ -61,6 +63,8 @@
     - 405 method not allowed:
     - 406 not acceptable:
     - 407 proxy authentication required:
+      - indicates the request was rejected because it lacks valid auth credentials for a proxy server that is between the client and the server that can access the requested resource
+      - always include a `Proxy-Authenticate` header containing information on how to authorize
     - 408 request timeout:
     - 409 conflict:
     - 410 gone:
@@ -80,23 +84,32 @@
     - 503 service unavailable:
     - 504 gateway timeout:
     - 505 http version not supported:
+
 ## headers
   - header: field of an http request/response that provides additional context and metadata about the request/response
   
-  - response headers:
-    - www-authenticate: defines the authentication method that should be used to gain access to a resource. always sent along with a 401 unauthorized response
-  - representation headers: ...
-    - Content-Type:
-  - simple headers: request headers that are always considered authorized and not explicitly listed in responses to preflight request
+### response headers
+  - www-authenticate: defines the authentication method that should be used to gain access to a resource. always sent along with a 401 unauthorized response
+  - proxy-authenticate: contains information on how to authenticate. see `www-authenticate`
+
+### representation headers
+  - Content-Type:
+
+### simple headers
+  - request headers that are always considered authorized and not explicitly listed in responses to preflight request
   
-  - request headers: provide context about the request in order for the server to tailor its response
-    - Host: (required for http 1.1) specifies the host and port number of the server tow hich teh request is being sent
-      - if no port is specified, the default for the protocol is used (80, 443, etc)
-    - Accept-*: various headers indicate the allowed & preferred formats of the response
-    - Authorization: contains the credentials to authenticate a user agent with a server
-      - can be used after a server responds with `401 unauthorized` status and `WWW-Authenticate` header
-      - however, you can supply this on the initial request as well
-    - caching headers
+### request headers
+  - provide context about the request in order for the server to tailor its response
+  - Host: (required for http 1.1) specifies the host and port number of the server tow hich teh request is being sent
+    - if no port is specified, the default for the protocol is used (80, 443, etc)
+  - Accept-*: various headers indicate the allowed & preferred formats of the response
+  - Authorization: contains the credentials to authenticate a user agent with a server
+    - usually after a server responds with `401 unauthorized` status and `WWW-Authenticate` header
+    - however, you can supply this on the initial request as well
+  - Proxy-Authorization: the credentials to authenticate a user to a proxy server
+    - usually after the server responds with a `407 proxy authentication required` and the `proxy-authenticate` header
+
+### caching headers
 
 
 # CORS
@@ -183,6 +196,12 @@
     # +there is nothing the client can do(unlike a 401)
       HTTP/1.1 403 Forbidden
       Date: ....
+    
+    # to a request a proxy server refuses to pass on to another server for handling the request
+    # +the client must respond with a correct Proxy-Authorization header
+      HTTP/1.1 407 Proxy Authentication Required
+      Date: Wed, 21 Oct 2015 07:28:00 GMT
+      Proxy-Authenticate: Basic realm="Access to internal site"
   
   # headers
     # Host: host:port
