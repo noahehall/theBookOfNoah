@@ -76,6 +76,7 @@
     - 415 unsupported media type:
     - 416 requested range not satisfiable:
     - 417 expectation failed
+    - 429 too many requests
   - 5xx: indicates the server has erred/incapapble of performing the request
     - the server should ALWAYS explain the error, and whether it is a temporary/permanent condition
       - not required in response to a HEAD request
@@ -106,10 +107,15 @@
   - Transfer-Encoding: the form of encoding used to safely transfer the payload-body to the user
     - is a hop-by-hop header
     - applied to a message between two nodes, not to a resource itself
+
 ### response headers
   - provides context about the response/server providing the response
   - www-authenticate: defines the authentication method that should be used to gain access to a resource. always sent along with a 401 unauthorized response
   - proxy-authenticate: contains information on how to authenticate. see `www-authenticate`
+  - x-content-type-options: informs the client that `content-type` headers should not be changed and must be followed
+    - a way for servers to opt out of mime sniffing, e.g. when the mime type is deliberately configured
+    - requesting blocking due to nosniff for script and style
+    - enables CORB protection for html,txt,json and xml files
   
 ### request headers
   - provide context about the request (or the client) in order for the server to tailor its response
@@ -242,6 +248,12 @@
       HTTP/1.1 407 Proxy Authentication Required
       Date: Wed, 21 Oct 2015 07:28:00 GMT
       Proxy-Authenticate: Basic realm="Access to internal site"
+
+    # to too many requests
+    # +uses the retry-after header specifying how long to wait
+      HTTP/1.1 429 Too Many Requests
+      Content-Type: text/html
+      Retry-After: 3600
   
   # headers
     # Host: host:port
