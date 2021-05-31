@@ -8,6 +8,9 @@
   - 
 
 
+# terminology
+  - user agent: any tool that acts on behalf of the user
+  - load balancing: a collection of servers sharing the load of client requests. appears as a virtual single server from the client perspective
 # ip
 
 # tcp: transmission control protocol
@@ -38,6 +41,16 @@
     - request are initiated by the recipient(client) and responses sent from the server
     - communication between parties are exchanged via individual messages (as opposed to a stream of data like http2)
     - applicationn layer protocol sent over TCP/TSL 
+  - components of http based systems
+    - client >< proxy >< proxy >< proxy >< server
+    - client: the user agent; primarily performed by the web browser
+      - the browser
+        - is always the netity initiating the request
+          - sends an original request to fetch an HTML doc representing a page
+          - parses this file
+          - makes additioanl requests corresponding to the execution scripts, layout (CSS), and sub resources contained within the page (images/videos/etc)
+    - web server: serves resources requested by clients
+    - 
 ## http2
 
 ## speedy
