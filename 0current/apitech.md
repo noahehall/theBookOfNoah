@@ -38,7 +38,7 @@
     - 204 no-content:
     - 205 reset content:
     - 206 partial content:
-    - 
+  
   - 3xx: indicates that further actino needs to be taken by the user agent in order to fullfil the request
     - doesnt require user interaction ONLY IF the second request will be a GET or HEAD
     - 300 multiple choices:
@@ -47,9 +47,39 @@
     - 303 see other:
     - 304 not modified:
     - 305 use proxy:
-    - 
-  - 4xx
-  - 5xx
+    - 306 unused: never use this status code (its deprecated)
+    - 306 temporary redirect:
+
+  - 4xx: indicates the client has erred, e.g. bad formatted request, requires authorization, unallowed request type, etc
+    - the server should ALWAYS explain the error, and whether it is a temporary/permanent condition
+      - not required in response to a HEAD request
+    - 400 bad request:
+    - 401 unauthorized:
+    - 402 payment required:
+    - 403 forbidden:
+    - 404 not found:
+    - 405 method not allowed:
+    - 406 not acceptable:
+    - 407 proxy authentication required:
+    - 408 request timeout:
+    - 409 conflict:
+    - 410 gone:
+    - 411 length required:
+    - 412 preconditin failed:
+    - 413 request entity too large:
+    - 414 request-urei too long
+    - 415 unsupported media type:
+    - 416 requested range not satisfiable:
+    - 417 expectation failed
+  - 5xx: indicates the server has erred/incapapble of performing the request
+    - the server should ALWAYS explain the error, and whether it is a temporary/permanent condition
+      - not required in response to a HEAD request
+    - 500 internal server error:
+    - 501 not implemented:
+    - 502 bad gateway:
+    - 503 service unavailable:
+    - 504 gateway timeout:
+    - 505 http version not supported:
 ## headers
   - header: field of an http request/response that provides additional context and metadata about the request/response
   
