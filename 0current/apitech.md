@@ -8,6 +8,7 @@
   - [http authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
   
   - [http headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)
+    - [registry of all headers](https://www.iana.org/assignments/message-headers/message-headers.xhtml)
     - [response headers]()
       - [www-authenticate](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate)
       - 
@@ -87,6 +88,7 @@
 
 ## headers
   - header: field of an http request/response that provides additional context and metadata about the request/response
+  - custom headers generally start with `X-` but was deprecated in 2012
   
 ### response headers
   - www-authenticate: defines the authentication method that should be used to gain access to a resource. always sent along with a 401 unauthorized response
