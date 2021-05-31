@@ -6,13 +6,15 @@
   - [api doc & description guide stoplight](https://stoplight.io/api-documentation-guide/basics/)
   - [tcp mdn](https://developer.mozilla.org/en-US/docs/Glossary/TCP)
   - [http authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
+  
   - [http headers](https://developer.mozilla.org/en-US/docs/Glossary/HTTP_header)
     - [authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization)
-  - http status codes
+    - [www-authenticate](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate)
+  
+  - [http status codes](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
     - response status codes
       - [401 unauthorized](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401)
-      - [www-authenticate](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate)
-        - [authentication schemes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes)
+      - [403 Forbidden](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403)
 ## RFCs
   - [http authentication: RFC 7235](https://tools.ietf.org/html/rfc7235)
 
@@ -20,7 +22,35 @@
   - user agent: any tool that acts on behalf of the user
   - load balancing: a collection of servers sharing the load of client requests. appears as a virtual single server from the client perspective
 
-# headers
+## status codes 
+  - before using ANY of the status codes, 
+    - [make sure to read this information](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) 
+    - understand any security issues (there are many) with each status code
+    - understand any ambiguety (there are many) between similary worded statuses
+  - 1xx: indicates a provisional response
+    - servers must not send this class of response codes to an HTTP/1.0 client as that protocol did dot define this class of codes
+    - proxies must forward these type of response (unless the proxy itself genereated it)
+  - 2xx: indicates the clients request was successfully received, understood and accepted
+    - 200 ok:
+    - 201 created:
+    - 202 accepted:
+    - 203 non-authoritative information:
+    - 204 no-content:
+    - 205 reset content:
+    - 206 partial content:
+    - 
+  - 3xx: indicates that further actino needs to be taken by the user agent in order to fullfil the request
+    - doesnt require user interaction ONLY IF the second request will be a GET or HEAD
+    - 300 multiple choices:
+    - 301 moved permanently:
+    - 302 found:
+    - 303 see other:
+    - 304 not modified:
+    - 305 use proxy:
+    - 
+  - 4xx
+  - 5xx
+## headers
   - header: field of an http request/response that provides additional context and metadata about the request/response
   
   - response headers:
@@ -113,11 +143,17 @@
 
 
   # response
-    # to an authorized request:
+    # to an request that requires authorization:
     # +the client should respond with an Authorization header
-    HTTP/1.1 401 Unauthorized
-    Date: .....
-    WWW-Authenticate: Basic realm="some desc of the protected env|hostname", charset="UTF-8"
+      HTTP/1.1 401 Unauthorized
+      Date: .....
+      WWW-Authenticate: Basic realm="some desc of the protected env|hostname", charset="UTF-8"
+
+    # to a request we refuse to authorize
+    # +there is nothing the client can do(unlike a 401)
+      HTTP/1.1 403 Forbidden
+      Date: ....
+  
   # headers
     # Host: host:port
       Host: developer.mozilla.org:80
