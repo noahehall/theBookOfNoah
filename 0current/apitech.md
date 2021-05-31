@@ -89,19 +89,30 @@
 ## headers
   - header: field of an http request/response that provides additional context and metadata about the request/response
   - custom headers generally start with `X-` but was deprecated in 2012
+  - hop-by-hop headers: for a single transport-level connection 
+    - MUST NOT be retransmitted by proxies/cached
+    - set using the `connection` header
+  - end-to-end headers: MUST be transmitted to the final recipient (server/client)
+    - intermediate proxies must retransmit these headers unmodified
+    - caches must store these headers
   
+### general headers
+  - can be used in multipel settings, e.g. both request + response
+  - Keep-Alive: informs the receiver how the connection can be used to set a timeout and a maximim amount of requests
+    - cant be used with http2
+    - `Connection` header must be set for this header to have any meaning
+  - Connection: controls whether the network connection stays open after the current transaction finishes
+    - cant be used with http2 
+  - Transfer-Encoding: the form of encoding used to safely transfer the payload-body to the user
+    - is a hop-by-hop header
+    - applied to a message between two nodes, not to a resource itself
 ### response headers
+  - provides context about the response/server providing the response
   - www-authenticate: defines the authentication method that should be used to gain access to a resource. always sent along with a 401 unauthorized response
   - proxy-authenticate: contains information on how to authenticate. see `www-authenticate`
-
-### representation headers
-  - Content-Type:
-
-### simple headers
-  - request headers that are always considered authorized and not explicitly listed in responses to preflight request
   
 ### request headers
-  - provide context about the request in order for the server to tailor its response
+  - provide context about the request (or the client) in order for the server to tailor its response
   - Host: (required for http 1.1) specifies the host and port number of the server tow hich teh request is being sent
     - if no port is specified, the default for the protocol is used (80, 443, etc)
   - Accept-*: various headers indicate the allowed & preferred formats of the response
@@ -110,7 +121,23 @@
     - however, you can supply this on the initial request as well
   - Proxy-Authorization: the credentials to authenticate a user to a proxy server
     - usually after the server responds with a `407 proxy authentication required` and the `proxy-authenticate` header
+  - TE: specifies the transfer encodings the client is willing to accept
+    - askholz for example use case
 
+### representation headers
+  - provide context about the body of the resource, e.g. the mime type, encoding/compression etc
+  - Content-Type: indicate the original media type of the resource (prior to any contentn encoding applied for sending)
+    - in response: the content type of the returned content
+      - some clients do MIM sniffing and wont respect this value
+        - set `X-Content-Type-Options: nosniff` to prevent this
+    - in requests: informs the server what type of data the client is sending
+  - Content-Encoding: encodings that have been applied to the message body, and in what order
+    - informs the recipient how to decode the payload in order to obtain the original format
+    - the original media type is psecified in the `content-type` header
+    - compressing acompressed media type (e.g. zip, jpeg) may not be appropriate, as this can make the payload larger
+
+### simple headers
+  - request headers that are always considered authorized and not explicitly listed in responses to preflight request
 ### caching headers
 
 
@@ -169,25 +196,36 @@
 
 
 ```sh
-  # GET request with common headers
+  # requests
     # METHOD URI PROTOCOL
     # HEADER... one per line
-    GET poop.com/some/uri HTTP/1.1
-    Host: poop.com
-    User-Agent: Mozilla/5.0 ........
-    Accept: text/html, application/xml;q=0.9,.......
-    Accept-Language: en-US, en;q=0.5
-    Accept-Encoding: gzip, dflate, br
-    Referrer: someother.page.com/asdf
-    Connection: keep-alive
-    Upgrade-Insecure-Requests: 1
-    If-Modified-Since: Mon, 18 Jul 2016 
-    If-None-Match: "12332vasdfduash352w4c"
-    Cache-Control: max-age=0
-    Authorizaton: TYPE CREDENTIALS
+      GET poop.com/some/uri HTTP/1.1
+      Host: poop.com
+      User-Agent: Mozilla/5.0 ........
+      Accept: text/html, application/xml;q=0.9,.......
+      Accept-Language: en-US, en;q=0.5
+      Accept-Encoding: gzip, dflate, br
+      Content-Type: text/html; charset=UTF-8
+      Referrer: someother.page.com/asdf
+      Connection: keep-alive
+      Upgrade-Insecure-Requests: 1
+      If-Modified-Since: Mon, 18 Jul 2016 
+      If-None-Match: "12332vasdfduash352w4c"
+      Cache-Control: max-age=0
+      Authorizaton: TYPE CREDENTIALS
 
 
-  # response
+  # responses
+    # to a general request informing the client the max duration of the persistent connection
+      HTTP/1.1 200 OK
+      Connection: Keep-Alive
+      Content-Encoding: gzip
+      Content-Type: text/html; charset=utf-8
+      Date: Thu, 11 Aug 2016 15:23:13 GMT
+      Keep-Alive: timeout=5, max=1000
+      Last-Modified: Mon, 25 Jul 2016 04:32:39 GMT
+      Server: Apache
+
     # to an request that requires authorization:
     # +the client should respond with an Authorization header
       HTTP/1.1 401 Unauthorized
