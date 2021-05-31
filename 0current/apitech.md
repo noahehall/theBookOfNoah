@@ -13,7 +13,8 @@
       - [401 unauthorized](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401)
       - [www-authenticate](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate)
         - [authentication schemes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes)
-
+## RFCs
+  - [http authentication: RFC 7235](https://tools.ietf.org/html/rfc7235)
 
 # terminology
   - user agent: any tool that acts on behalf of the user
@@ -71,6 +72,7 @@
     - request are initiated by the recipient(client) and responses sent from the server
     - communication between parties are exchanged via individual messages (as opposed to a stream of data like http2)
     - applicationn layer protocol sent over TCP/TSL 
+  
   - components of http based systems
     - client >< proxy >< proxy >< proxy >< server
     - client: the user agent; primarily performed by the web browser
@@ -80,7 +82,12 @@
           - parses this file
           - makes additioanl requests corresponding to the execution scripts, layout (CSS), and sub resources contained within the page (images/videos/etc)
     - web server: serves resources requested by clients
-    - 
+  - authentication: how to restrict access to resources and challenge client requests
+    - challenge a client request by forcing the client to provide authentication
+      - client requests a protected resource
+      - server responds with a `401` and `www-authenticate` header containing atleast one challenge
+      - client request the previous resource with the `authorization` header including the credentials to satisfy the servers challenge
+      - server checks credentials and permits access, or resonds with `403 forbidden`
 ## http2
 
 ## speedy
