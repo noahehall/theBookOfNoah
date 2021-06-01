@@ -5,8 +5,6 @@
   - [all this shit](https://cheatsheetseries.owasp.org/Glossary.html)
     - generally check ^ for a refresher before deciding on which/whose/wtf best practice you should follow
   - [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
-  - [range request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range)
-    - askholz: generally about this
   - [content negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation)
   - [http authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
   - caching
@@ -24,7 +22,10 @@
   - HSTS
     - [hsts on mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
     - [hsts owasp](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html)
-    - 
+  - headers
+    - [x-frame-options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options)
+    - [range request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range)
+      - askholz: generally about this
 
 # links
   - [http mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP)
@@ -159,7 +160,8 @@
     - type: the general category into which the datt aype falls, e.g. video or text
       - discreet type: represent a single file/medium 
         - **application**: any kind of binary data that doesnt fall into one of the other types
-          - any type of data that is executed/interpreted/binary data that requires a specific application to use
+          - any type of data that is executed/interpreted/binary data that requires a specific application to use[range request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range)
+    - askholz: generally about this
           - subtypes: octet-stream, pdf, pkcs8, zip, ogg
         
         - **example**: reserved for use as a palceholder in examples showing how to use mime types
@@ -292,7 +294,10 @@
 # CORS
   - cross-origin resource sharing is a system, consisting of transmitting http headers, that determines whether browsers block frontend javascript code from accessing responses for cross-origin request
   - preflight request:
+
+
 # ip
+
 
 # tcp: transmission control protocol
   - network protocol that lets two hosts connect and exchange data streams
@@ -302,6 +307,7 @@
 
 
 # udp
+
 # security
 ## tls: transport layer security
   - encrypted TCP, formally known as SSL
@@ -316,6 +322,7 @@
     - ensure all data between client and server is private and secure
 
 # dns
+
 
 # http
   - client-server protocol for the fetching of resources
@@ -377,7 +384,7 @@
 ## speedy
 
 # examples
-
+  - various examples for items copypasta into this document
 
 ```sh
   # REQUEST SYNTAX
