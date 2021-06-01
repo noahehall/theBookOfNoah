@@ -2,12 +2,15 @@
   - technology supporting API 
 
 # TODO
-  - [all this shit](https://cheatsheetseries.owasp.org/Glossary.html)
-    - generally check ^ for a refresher before deciding on which/whose/wtf best practice you should follow
+## do first
+  - [MDN recommendations for secure web applications](https://infosec.mozilla.org/guidelines/web_security)
   - [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
   - [content negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation)
   - [http authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
-  - [content security policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
+  
+  - CSP
+    - [content security policy header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
+    - [content security policy explanation](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
   
   - caching
     - [cache control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
@@ -18,11 +21,16 @@
   - cookies
     - [set-cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)
     - [using http cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies)
-  
+
+
   - CORS/CORB
     - [cors](https://developer.mozilla.org/en-US/docs/Glossary/CORS)
       - [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request)
     - [corb](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/services/network/cross_origin_read_blocking_explainer.md#determining-whether-a-response-is-corb_protected)
+
+## do next
+  - [all this shit](https://cheatsheetseries.owasp.org/Glossary.html)
+    - generally check ^ for a refresher before deciding on which/whose/wtf best practice you should follow
   
   - HSTS
     - [hsts on mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
