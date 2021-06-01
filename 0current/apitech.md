@@ -224,6 +224,8 @@
 
 ## speedy
 
+# examples
+
 
 ```sh
   # GET
