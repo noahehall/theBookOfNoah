@@ -7,21 +7,27 @@
   - [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
   - [content negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation)
   - [http authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
+  - [content security policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
+  
   - caching
     - [cache control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
     - [http caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)
     - [caching tutorial](https://www.mnot.net/cache_docs/)
     - [cache control for civilians](https://csswizardry.com/2019/03/cache-control-for-civilians/)
+  
   - cookies
     - [set-cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)
     - [using http cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies)
+  
   - CORS/CORB
     - [cors](https://developer.mozilla.org/en-US/docs/Glossary/CORS)
       - [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request)
     - [corb](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/services/network/cross_origin_read_blocking_explainer.md#determining-whether-a-response-is-corb_protected)
+  
   - HSTS
     - [hsts on mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
     - [hsts owasp](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html)
+  
   - headers
     - [x-frame-options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options)
     - [range request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range)
@@ -253,6 +259,10 @@
         - other headers: content-encoding, content-type, content-range, and trailer itself
     - requires the `TE` request header to be set to *trailers*
     - askholz: use cases and best practices
+  - X-XSS-Protection: stop  pages from loading when browsers detect reflected cross-site scripting (XSS) attacks
+    - largely unnecessary in modern rowsers when sites implement strong CSP policies that disable the use of inline javascript
+    - if not supporting legacy browsers, dont use this header
+      - instead use a **strong content-security-policy** without allowing `unsafe-inline` scripts
   
 ### request headers
   - provide context about the request (or the client) in order for the server to tailor its response
@@ -345,6 +355,7 @@
       - server responds with a `401` and `www-authenticate` header containing atleast one challenge
       - client request the previous resource with the `authorization` header including the credentials to satisfy the servers challenge
       - server checks credentials and permits access, or resonds with `403 forbidden`
+  
   - Methods
     - GET: request a representation of a specific resource
     - POST: sends data to a server (usually to be created), not idempotent (because it has side effects if called multiple times with the same data)
@@ -494,6 +505,12 @@
     Content-Disposition: attachment; filename="filename.jpg" #downloaded with this name
     # as a header for a multipart body, each subpart requires a name
     Content-Disposition: form-data; name="fieldName"; filename="filename.jpg" 
+
+    # only if you support legacy browsers 
+    X-XSS-Protection: 0 # disable filtering
+    X-XSS-Protection: 1 # enables filtering + sanitize page
+    X-XSS-Protection: 1; mode=block # enable + prevent rendering
+    X-XSS-Protection: 1; report=<reporting-uri> # enable + sanitize + report
   
 
 ```
