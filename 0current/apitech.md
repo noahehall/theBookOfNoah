@@ -7,6 +7,19 @@
   - [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
   - [range request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range)
     - askholz: generally about this
+  - [content negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation)
+  - [http authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
+  - caching
+    - [cache control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
+    - [http caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)
+    - [caching tutorial](https://www.mnot.net/cache_docs/)
+    - [cache control for civilians](https://csswizardry.com/2019/03/cache-control-for-civilians/)
+  - cookies
+    - [set-cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)
+    - [using http cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies)
+  - CORS/CORB
+    - [corb](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/services/network/cross_origin_read_blocking_explainer.md#determining-whether-a-response-is-corb_protected)
+    - 
 
 # links
   - [http mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP)
@@ -25,12 +38,32 @@
   
   - [http status codes](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
   
-## RFCs
+## RFCs & specs
   - [http authentication: RFC 7235](https://tools.ietf.org/html/rfc7235)
+  - [http authentication schemes](https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml)
+  - [fetch](https://fetch.spec.whatwg.org/)
+  - 
 
 # terminology
   - user agent: any tool that acts on behalf of the user
   - load balancing: a collection of servers sharing the load of client requests. appears as a virtual single server from the client perspective
+
+## encodings
+  - chunked: dat is sent in a series of chunks
+    - `content-length` cant be used 
+      - at the beginning of each chunk you 
+        - specify the length of the current chunk in hexadecimal format 
+        - followed by `\r\n` 
+        - then the chunk itself 
+        - followed by another `\r\n`
+        - until the terminating chunk with a length of 0
+        - followed by the trailer (may contain a sequence of header fields)
+  - compress: using LZW algorithm. not used by browsers today due to a patent issue
+  - deflate: compression algorithm (RFC 1951) using zlib (RFC 1950)
+  - gzip: uses LZ77 with a32-bit CRC. servers supporting this enoding should also recognize `x-gzip` as an alias for compatibility
+  - identity: i.e. no compression/modification. should always be deemd acceptable unless explicity specified
+    - askholz: so if this is included, dont accepted? wtf?
+      - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Transfer-Encoding
 
 ## status codes 
   - before using ANY of the status codes, 
@@ -111,14 +144,21 @@
     - `Connection` header must be set for this header to have any meaning
   - Connection: controls whether the network connection stays open after the current transaction finishes
     - cant be used with http2 
+  
+
+### hop-by-hop header
+  - used by proxy servers
   - Transfer-Encoding: the form of encoding used to safely transfer the payload-body to the user
-    - is a hop-by-hop header
     - applied to a message between two nodes, not to a resource itself
+    - each segment of a multi-node connection can use different transfer-encoding values
+    - use `content-encoding` header to tcompress the data over the whole connection from end-to-end
 
 ### response headers
   - provides context about the response/server providing the response but doesnt related to the content of the message
   - www-authenticate: defines the authentication method that should be used to gain access to a resource. always sent along with a 401 unauthorized response
-  - proxy-authenticate: contains information on how to authenticate. see `www-authenticate`
+  - proxy-authenticate: contains information on how to authenticate to gain access to a resource behind a proxy server
+    - the proxy server authenticates the request before transmitting the request any further
+    - sent with a `407 proxy authentication required`
   - x-content-type-options: informs the client that `content-type` headers should not be changed and must be followed
     - a way for servers to opt out of mime sniffing, e.g. when the mime type is deliberately configured
     - requesting blocking due to nosniff for script and style
@@ -130,6 +170,16 @@
   - Age:
   - Location:
   - Server:
+  - Trailer: permits the sender to include additional fields/headers at the end of chunked messages in order to supply metadata that might be dynamically generated while the message body is sent
+    - e.g. message integrity check, digital signature, post-processing status
+      - CANT INCLUDE
+        - message framing headers: e.g. transfer-encoding, content-length
+        - routing headers: e.g. host
+        - request modifiers: e.g. controls and conditionals like cache-control, max-forwards, TE
+        - authentication headers: e.g. authorization, set-cookie
+        - other headers: content-encoding, content-type, content-range, and trailer itself
+    - requires the `TE` request header to be set to *trailers*
+    - askholz: use cases and best practices
   
 ### request headers
   - provide context about the request (or the client) in order for the server to tailor its response
@@ -144,6 +194,8 @@
   - Proxy-Authorization: the credentials to authenticate a user to a proxy server
     - usually after the server responds with a `407 proxy authentication required` and the `proxy-authenticate` header
   - TE: specifies the transfer encodings the client is willing to accept
+    - the server then uses `Trailer` in response
+    - TE and Trailer regulate the use of trailers
     - askholz for example use case
 
 ### representation headers
@@ -230,10 +282,26 @@
             - keys are specified in the `Content-Disposition` header of each part
           - text/plain
     - PUT: sends data to a server (usually to be updated), IS idempotent (because it has NO side effects if called multiple times with the same data)
-    - 
+
+## http authentication schemes
+  - basic
+  - bearer
+  - digest
+  - HOBA
+    - used with http servers/proxies
+  - mutual
+  - negotiate
+    - violates
+      - http semantics (being connection-oriented)
+      - HTTP syntax (use of syntax incompatible with ww-authneticate and authorization header field)
+  - oauth
+  - SCRAM-SHA-1
+  - SCRAM-SHA-256
+  - vapid
 
 ## http2
-
+  - doesnt support
+    - http1 chucked transfer encoding mechanism
 ## speedy
 
 # examples
