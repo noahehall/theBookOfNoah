@@ -37,12 +37,14 @@
       - [proxy authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Proxy-Authorization)
   - [http status codes](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
   - [mime types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_Types)
+    - check this before deciding which mime type to use
   
 ## RFCs & specs
   - [http authentication: RFC 7235](https://tools.ietf.org/html/rfc7235)
   - [http authentication schemes](https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml)
   - [fetch](https://fetch.spec.whatwg.org/)
   - [mime types](https://tools.ietf.org/html/rfc6838)
+  - [mime sniffing standard](https://mimesniff.spec.whatwg.org/)
   - [media types](https://www.iana.org/assignments/media-types/media-types.xhtml)
 
 # terminology
@@ -139,27 +141,37 @@
       - discreet type: represent a single file/medium 
         - **application**: any kind of binary data that doesnt fall into one of the other types
           - any type of data that is executed/interpreted/binary data that requires a specific application to use
-          - subtypes: octet-stream, pdf, pkcs8, zip
-        - audio: audio/music dat
-          - subtypes: mpeg, vorbis
+          - subtypes: octet-stream, pdf, pkcs8, zip, ogg
+        
         - **example**: reserved for use as a palceholder in examples showing how to use mime types
           - should never be used outside of sample co listings and documentation
+        
         - **font**: font/typeface data
           - subtypes: woff, ttf, otf
+        
         - **image**: image/graphical data including both bitmap and vector still images as well as animated versions of still image formats
-          - subtypes: jpeg, png, svg+xml
+          - subtypes: jpeg, png, svg+xml, apng, avif gif, webp,
+        
         - **model**: data for a 3d object or scene
           - subtypes: 3mf, vrml
+        
         - **text**: text-only data including any human-readable content, source code or textual data such as CSV
-          - subtypes: plain, csv, html
+          - subtypes: plain, csv, html, css, javscript,
+        
         - **video**: video data or files
-          - subtypes: mp4
+          - subtypes: mp4, webm, ogg
+        
+        - **audio**: audio/music dat
+          - subtypes: mpeg, vorbis, wave, wav, webm, ogg, 
+          
       - multipart: has TWO types with their own subtypes
+        
         - **message**: a message that encapsulates other messages, e.g. to represent an email that includes a forwarded message as part of its dat, or to allow sending very large message in chunks as if it were multiple messages
           - subtypes: rfc822, partial 
+        
         - **multpart**:  document comprised of multiple component parts, each of which may have its own individual mime type, or encapsulating multiple files being sent together in one transaction
           - subtypes: form-data, byteranges
-    - subtype: the exact kind of dat aof the specified type the MIME represents e.g. text/plain|html|calendar
+    - subtype: the exact kind of data of the specified type the MIME represents e.g. text/plain|html|calendar
     - param: provide additional details, e.g. `charset=UTF-8`
 
 ## headers
