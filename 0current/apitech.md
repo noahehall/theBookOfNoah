@@ -35,18 +35,20 @@
     - [request headers](https://developer.mozilla.org/en-US/docs/Glossary/Request_header)
       - [authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization)
       - [proxy authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Proxy-Authorization)
-  
   - [http status codes](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
+  - [mime types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_Types)
   
 ## RFCs & specs
   - [http authentication: RFC 7235](https://tools.ietf.org/html/rfc7235)
   - [http authentication schemes](https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml)
   - [fetch](https://fetch.spec.whatwg.org/)
-  - 
+  - [mime types](https://tools.ietf.org/html/rfc6838)
+  - [media types](https://www.iana.org/assignments/media-types/media-types.xhtml)
 
 # terminology
   - user agent: any tool that acts on behalf of the user
   - load balancing: a collection of servers sharing the load of client requests. appears as a virtual single server from the client perspective
+  - iana: responsible for the glboal coordination of the DNS Root, ip addressing and other internet protocol resources 
 
 ## encodings
   - chunked: dat is sent in a series of chunks
@@ -126,6 +128,16 @@
     - 503 service unavailable:
     - 504 gateway timeout:
     - 505 http version not supported:
+
+
+## mime types
+  - media type: a standard that indicates the nature and format of a document, file, or assortment of bytes
+    - browsers use the MIME type, not the file extension to detemrine how to aprocess a url
+    - is set in the `content-type  header
+  - TYPE/SUBTYPE;param=value
+    - type: the general category into which the datt aype falls, e.g. video or text
+    - subtype: the exact kind of dat aof the specified type the MIME represents e.g. text/plain|html|calendar
+    - param: provide additional details, e.g. `charset=utf8`
 
 ## headers
   - header: field of an http request/response that provides additional context and metadata about the request/response
@@ -405,12 +417,22 @@
       HTTP/1.1 429 Too Many Requests
       Content-Type: text/html
       Retry-After: 3600
+
+    # to a request for a file; should trigger a save-as dialog
+      200 OK
+      Content-Type: text/html; charset=utf-8
+      Content-Disposition: attachment; filename="cool.html"
+      Content-Length: 21
+
+      <HTML>Save me!</HTML>
   
   # other header examples
     Host: developer.mozilla.org:80
     Content-Disposition: inline # inside a webpage|as a webpage
     Content-Disposition: attachment # should be downloaded
     Content-Disposition: attachment; filename="filename.jpg" #downloaded with this name
+    # as a header for a multipart body, each subpart requires a name
+    Content-Disposition: form-data; name="fieldName"; filename="filename.jpg" 
   
 
 ```
