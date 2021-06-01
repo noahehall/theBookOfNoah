@@ -3,6 +3,7 @@
 
 # TODO
   - [all this shit](https://cheatsheetseries.owasp.org/Glossary.html)
+    - generally check ^ for a refresher before deciding on which/whose/wtf best practice you should follow
   - [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
   - [range request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range)
     - askholz: generally about this
