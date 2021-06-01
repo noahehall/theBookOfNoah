@@ -2,8 +2,7 @@
   - technology supporting API 
 
 # TODO
-  - [cors](https://developer.mozilla.org/en-US/docs/Glossary/CORS)
-    - [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request)
+  - [all this shit](https://cheatsheetseries.owasp.org/Glossary.html)
   - [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
   - [range request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range)
     - askholz: generally about this
@@ -18,7 +17,12 @@
     - [set-cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)
     - [using http cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies)
   - CORS/CORB
+    - [cors](https://developer.mozilla.org/en-US/docs/Glossary/CORS)
+      - [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request)
     - [corb](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/services/network/cross_origin_read_blocking_explainer.md#determining-whether-a-response-is-corb_protected)
+  - HSTS
+    - [hsts on mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
+    - [hsts owasp](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html)
     - 
 
 # links
@@ -38,6 +42,8 @@
   - [http status codes](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
   - [mime types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_Types)
     - check this before deciding which mime type to use
+    - [using the correct mime type](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Configuring_server_MIME_types)
+    - [list of all mime types](https://www.iana.org/assignments/media-types/index.html)
   
 ## RFCs & specs
   - [http authentication: RFC 7235](https://tools.ietf.org/html/rfc7235)
@@ -133,6 +139,11 @@
 
 
 ## mime types
+  - choose wisely
+    - a web browser has not way of knowing the authors intention which may cause unexpected behavior when providing the resource to the user
+    - loss of control: if the browser ignores the reported mime type, the author loses control over how hteir content is to be processed
+    - security: some content types (e.g. executables) are inherently unsafe. thus certain mime types are usually restricted in terms of what actions a browser will take when given that type of contexts
+    - 
   - media type: a standard that indicates the nature and format of a document, file, or assortment of bytes
     - browsers use the MIME type, not the file extension to detemrine how to aprocess a url
     - is set in the `content-type  header
