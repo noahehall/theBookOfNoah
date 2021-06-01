@@ -1,6 +1,13 @@
 # TLDR
   - technology supporting API 
 
+# TODO
+  - [cors](https://developer.mozilla.org/en-US/docs/Glossary/CORS)
+    - [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request)
+  - [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
+  - [range request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range)
+    - askholz: generally about this
+
 # links
   - [http mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP)
   - [api doc & description guide stoplight](https://stoplight.io/api-documentation-guide/basics/)
@@ -109,7 +116,7 @@
     - applied to a message between two nodes, not to a resource itself
 
 ### response headers
-  - provides context about the response/server providing the response
+  - provides context about the response/server providing the response but doesnt related to the content of the message
   - www-authenticate: defines the authentication method that should be used to gain access to a resource. always sent along with a 401 unauthorized response
   - proxy-authenticate: contains information on how to authenticate. see `www-authenticate`
   - x-content-type-options: informs the client that `content-type` headers should not be changed and must be followed
@@ -120,11 +127,16 @@
     - with 503: how long the service is expected to be unavailable
     - with 429: how long to wait before making a new request
     - with a redirect (e.g. 301): minimum time to wait before issueing the redirect request 
+  - Age:
+  - Location:
+  - Server:
   
 ### request headers
   - provide context about the request (or the client) in order for the server to tailor its response
   - Host: (required for http 1.1) specifies the host and port number of the server tow hich teh request is being sent
     - if no port is specified, the default for the protocol is used (80, 443, etc)
+  - Accept: advertises which content types (as mim types) the client is able to understand
+    - the server then uses `Content Negotiation` logic and selects one of the proposals as the `Content-Type` in the response
   - Accept-*: various headers indicate the allowed & preferred formats of the response
   - Authorization: contains the credentials to authenticate a user agent with a server
     - usually after a server responds with `401 unauthorized` status and `WWW-Authenticate` header
@@ -228,9 +240,12 @@
 
 
 ```sh
-  # GET
+  # REQUEST SYNTAX
     # METHOD URI PROTOCOL
     # HEADER... one per line
+    # blank line, then body
+  # GET
+    # get a resource
       GET poop.com/some/uri HTTP/1.1
       Host: poop.com
       User-Agent: Mozilla/5.0 ........
@@ -245,6 +260,15 @@
       If-None-Match: "12332vasdfduash352w4c"
       Cache-Control: max-age=0
       Authorizaton: TYPE CREDENTIALS
+    
+    # inform the server the content-types we understand
+      GET something/please HTTP/1.1
+      Accept: <MIME_type>/<MIME_subtype> #specific type
+      Accept: <MIME_type>/* #any type belonging to this class
+      Accept: */* #everything
+    # Multiple types, weighted with the quality value syntax:
+      Accept: text/html, application/xhtml+xml, application/xml;q=0.9, image/webp, */*;q=0.8
+
 
   # POST
     # askholz: when to use x-www-form-urlencoded vs multipart/form-data
