@@ -54,6 +54,13 @@
   - [mime sniffing standard](https://mimesniff.spec.whatwg.org/)
   - [media types](https://www.iana.org/assignments/media-types/media-types.xhtml)
 
+## online security testing
+  - [public-key-pins test](https://projects.dm.id.lv/Public-Key-Pins_test)
+  - [ssl/tls browser test](https://clienttest.ssllabs.com:8443/ssltest/viewMyClient.html)
+  - [various browser tests](https://badssl.com/)
+  - [revocation awareness test](https://www.grc.com/revocation.htm)
+  - 
+
 # terminology
   - user agent: any tool that acts on behalf of the user
   - load balancing: a collection of servers sharing the load of client requests. appears as a virtual single server from the client perspective
