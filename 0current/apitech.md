@@ -144,7 +144,11 @@
     - `Connection` header must be set for this header to have any meaning
   - Connection: controls whether the network connection stays open after the current transaction finishes
     - cant be used with http2 
-  - 
+  - Content-Disposition: 
+    - response (main body): indicating the content is expected to be displayed inline in the browser, i.e. as a webpage or part of a webpage, or as an attachment to be downloaded
+    - request/response: in `multipart/form-data` bodyl must be used one ach subpart of a multipart body to give information about the field it applies to 
+      - the subpart is dilimited by the boundary defined in the content-type header
+    - email: defined in the context of MIME message
   
 
 ### hop-by-hop header
@@ -402,9 +406,11 @@
       Content-Type: text/html
       Retry-After: 3600
   
-  # headers
-    # Host: host:port
-      Host: developer.mozilla.org:80
+  # other header examples
+    Host: developer.mozilla.org:80
+    Content-Disposition: inline # inside a webpage|as a webpage
+    Content-Disposition: attachment # should be downloaded
+    Content-Disposition: attachment; filename="filename.jpg" #downloaded with this name
   
 
 ```
