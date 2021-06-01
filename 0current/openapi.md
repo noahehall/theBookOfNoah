@@ -2,9 +2,6 @@
   - https://oai.github.io/Documentation/specification-docs.html
 
 # TLDR 
-  - search for askholz for things we need to ask holz
-
-
 
 # links
   - [openapi home](https://www.openapis.org/)
@@ -160,8 +157,7 @@
           - if openapi is your poison, follow this like moses through the red sea
             - since its difficult to understand the limitations upfront; by starting with openapi you wont enter a situation where you've coded an API endpoint that is undescribable in openapi descroptions
           - i.e. only use an API endpoint that can be described by openapi if your following the openapi spec; and the design-first approached enables this
-            - askholz
-              - basic assumption is to use OAS for the describable parts; and leave outlier endpoitns out of the OAS descriptions
+            
 
   - keep a single source of truth
     - information should not be duplicated in multiple places
@@ -281,20 +277,17 @@
           - array types e.g. array.id containing 1,2,3
             - *exploded=false*
               - used to separtae each field into a separate parameter
-              - askholz: the examples did not give example of exploded field
               - simple === 1,2,3
               - form === ids=1,2,3
               - label === .1.2.3
               - metrix === ;ids=1,2,3
             - *exploded=true*
-              - askholz ^
               - simple === 1,2,3
               - form === ids=1&ids=2&ids=3
               - label === .1.2.3
               - matrix === ;ids=1;ids=2;ids=3
           
           - object types e.g. object.color containing {r:1,g:2,b:3}
-            - askholz about explod again
             - *exploded=false*
               - simple === r,1,g,2,b,3
               - form === color=r,1,2,b,3
@@ -569,9 +562,6 @@
     paths:
       /users:
         get:
-          # askholz
-          # +examples dont show an indentention under parameters
-          # +i added one anyway because duh
           # +https://oai.github.io/Documentation/specification-parameters.html#parameter-type
           parameters:
             - name: id
@@ -581,7 +571,6 @@
                 minimum: 1
                 maximum: 1234
 
-    # askholz: example of parameters field used in a header
     # +https://oai.github.io/Documentation/specification-parameters.html#parameter-location
 
   # requestBody 
@@ -650,8 +639,6 @@
     
 
   # server object
-    # askholz: no indententation for server array subfields?
-    # + but is for enum... perhaps just a doc error
     servers:
       - url: https://poop.com/v1
         description: v1 of poop api

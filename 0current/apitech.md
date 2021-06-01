@@ -116,6 +116,10 @@
     - a way for servers to opt out of mime sniffing, e.g. when the mime type is deliberately configured
     - requesting blocking due to nosniff for script and style
     - enables CORB protection for html,txt,json and xml files
+  - retry-after: how long (seconds|HTTP Date) the client should wait before making a follow up request
+    - with 503: how long the service is expected to be unavailable
+    - with 429: how long to wait before making a new request
+    - with a redirect (e.g. 301): minimum time to wait before issueing the redirect request 
   
 ### request headers
   - provide context about the request (or the client) in order for the server to tailor its response
@@ -131,7 +135,8 @@
     - askholz for example use case
 
 ### representation headers
-  - provide context about the body of the resource, e.g. the mime type, encoding/compression etc
+  - provide context about the body of the resource (representation), e.g. the mime type, encoding/compression etc
+    - representation: a particular version of a resource. e.g. a resource may be available in multiple formats (xml/json) or encodings (gzip, br)
   - Content-Type: indicate the original media type of the resource (prior to any contentn encoding applied for sending)
     - in response: the content type of the returned content
       - some clients do MIM sniffing and wont respect this value
@@ -141,6 +146,8 @@
     - informs the recipient how to decode the payload in order to obtain the original format
     - the original media type is psecified in the `content-type` header
     - compressing acompressed media type (e.g. zip, jpeg) may not be appropriate, as this can make the payload larger
+  - Content-Language
+  - Content-Location
 
 ### simple headers
   - request headers that are always considered authorized and not explicitly listed in responses to preflight request
@@ -149,7 +156,7 @@
 
 # CORS
   - cross-origin resource sharing is a system, consisting of transmitting http headers, that determines whether browsers block frontend javascript code from accessing responses for cross-origin request
-  - 
+  - preflight request:
 # ip
 
 # tcp: transmission control protocol
@@ -196,6 +203,18 @@
       - server responds with a `401` and `www-authenticate` header containing atleast one challenge
       - client request the previous resource with the `authorization` header including the credentials to satisfy the servers challenge
       - server checks credentials and permits access, or resonds with `403 forbidden`
+  - Methods
+    - GET: request a representation of a specific resource
+    - POST: sends data to a server (usually to be created), not idempotent (because it has side effects if called multiple times with the same data)
+      - with a form: put the data in the `enctype` attribute of the form, or `formenctype` attribute of the input|button
+        - content types
+          - application/x-www-form-urlencoded: keys + values encoded in key-value tuples separated by `&` with `=` between key and value
+          - multipart/form-dat: each value is sent as a block of data (body part) with a client defined elimiter (boundary) separating each part
+            - keys are specified in the `Content-Disposition` header of each part
+          - text/plain
+    - PUT: sends data to a server (usually to be updated), IS idempotent (because it has NO side effects if called multiple times with the same data)
+    - 
+
 ## http2
 
 ## speedy
@@ -250,7 +269,8 @@
       Proxy-Authenticate: Basic realm="Access to internal site"
 
     # to too many requests
-    # +uses the retry-after header specifying how long to wait
+    # +uses the retry-after header specifying how long(seconds) to wait
+    # + can be used with 429, or 503
       HTTP/1.1 429 Too Many Requests
       Content-Type: text/html
       Retry-After: 3600
