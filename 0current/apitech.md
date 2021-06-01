@@ -10,6 +10,12 @@
   - [compression in http](https://developer.mozilla.org/en-US/docs/Web/HTTP/Compression)
   - [conditional requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests)
   - [http messages](https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages)
+  - [http sessions](https://developer.mozilla.org/en-US/docs/Web/HTTP/Session)
+  - [http connection management](https://developer.mozilla.org/en-US/docs/Web/HTTP/Connection_management_in_HTTP_1.x)
+  - [protocol upgrade mechanism](https://developer.mozilla.org/en-US/docs/Web/HTTP/Protocol_upgrade_mechanism)
+  - [http range request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests)
+  - [redirections in http](https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections)
+  - [feature policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Feature_Policy)
   
   - CSP
     - [content security policy header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
@@ -65,12 +71,14 @@
     - [list of all mime types](https://www.iana.org/assignments/media-types/index.html)
   
 ## RFCs & specs
+  - [HUGE list of resources and specifications](https://developer.mozilla.org/en-US/docs/Web/HTTP/Resources_and_specifications)
   - [http authentication: RFC 7235](https://tools.ietf.org/html/rfc7235)
   - [http authentication schemes](https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml)
   - [fetch](https://fetch.spec.whatwg.org/)
   - [mime types](https://tools.ietf.org/html/rfc6838)
   - [mime sniffing standard](https://mimesniff.spec.whatwg.org/)
   - [media types](https://www.iana.org/assignments/media-types/media-types.xhtml)
+  - [http2](https://datatracker.ietf.org/doc/html/rfc7540#section-8.1.2.20)
 
 ## online security testing
   - [public-key-pins test](https://projects.dm.id.lv/Public-Key-Pins_test)
@@ -83,6 +91,7 @@
   - user agent: any tool that acts on behalf of the user
   - load balancing: a collection of servers sharing the load of client requests. appears as a virtual single server from the client perspective
   - iana: responsible for the glboal coordination of the DNS Root, ip addressing and other internet protocol resources 
+  - proxy server: an 
 
 ## encodings
   - chunked: dat is sent in a series of chunks
