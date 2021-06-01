@@ -29,7 +29,7 @@
   
   - [http headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)
     - [registry of all headers](https://www.iana.org/assignments/message-headers/message-headers.xhtml)
-    - [response headers]()
+    - response headers
       - [www-authenticate](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate)
       - 
     - [request headers](https://developer.mozilla.org/en-US/docs/Glossary/Request_header)
@@ -144,6 +144,7 @@
     - `Connection` header must be set for this header to have any meaning
   - Connection: controls whether the network connection stays open after the current transaction finishes
     - cant be used with http2 
+  - 
   
 
 ### hop-by-hop header
@@ -214,7 +215,7 @@
   - Content-Location
 
 ### simple headers
-  - request headers that are always considered authorized and not explicitly listed in responses to preflight request
+  - request headers that are always considered authorized and not explicitly listed in responses to preflight request (defind by CORS)
 ### caching headers
 
 
@@ -302,6 +303,7 @@
 ## http2
   - doesnt support
     - http1 chucked transfer encoding mechanism
+    - http1 keep-alive header
 ## speedy
 
 # examples
