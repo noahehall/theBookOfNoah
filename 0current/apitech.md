@@ -7,6 +7,9 @@
   - [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
   - [content negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation)
   - [http authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
+  - [compression in http](https://developer.mozilla.org/en-US/docs/Web/HTTP/Compression)
+  - [conditional requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests)
+  - [http messages](https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages)
   
   - CSP
     - [content security policy header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
@@ -25,6 +28,7 @@
 
   - CORS/CORB
     - [cors](https://developer.mozilla.org/en-US/docs/Glossary/CORS)
+      - [cors explanation](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
       - [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request)
     - [corb](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/services/network/cross_origin_read_blocking_explainer.md#determining-whether-a-response-is-corb_protected)
 
@@ -45,8 +49,7 @@
   - [http mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP)
   - [api doc & description guide stoplight](https://stoplight.io/api-documentation-guide/basics/)
   - [tcp mdn](https://developer.mozilla.org/en-US/docs/Glossary/TCP)
-  - [http authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
-  
+
   - [http headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)
     - [registry of all headers](https://www.iana.org/assignments/message-headers/message-headers.xhtml)
     - response headers
@@ -74,7 +77,7 @@
   - [ssl/tls browser test](https://clienttest.ssllabs.com:8443/ssltest/viewMyClient.html)
   - [various browser tests](https://badssl.com/)
   - [revocation awareness test](https://www.grc.com/revocation.htm)
-  - 
+  - [observatory by mozilla](https://observatory.mozilla.org/)
 
 # terminology
   - user agent: any tool that acts on behalf of the user
