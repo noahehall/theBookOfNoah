@@ -137,25 +137,28 @@
   - TYPE/SUBTYPE;param=value
     - type: the general category into which the datt aype falls, e.g. video or text
       - discreet type: represent a single file/medium 
-        - application: any kind of binary data that doesnt fall into one of the other types
+        - **application**: any kind of binary data that doesnt fall into one of the other types
           - any type of data that is executed/interpreted/binary data that requires a specific application to use
           - subtypes: octet-stream, pdf, pkcs8, zip
         - audio: audio/music dat
           - subtypes: mpeg, vorbis
-        - example: reserved for use as a palceholder in examples showing how to use mime types
+        - **example**: reserved for use as a palceholder in examples showing how to use mime types
           - should never be used outside of sample co listings and documentation
-        - font: font/typeface data
+        - **font**: font/typeface data
           - subtypes: woff, ttf, otf
-        - image: image/graphical data including both bitmap and vector still images as well as animated versions of still image formats
+        - **image**: image/graphical data including both bitmap and vector still images as well as animated versions of still image formats
           - subtypes: jpeg, png, svg+xml
-        - model: data for a 3d object or scene
+        - **model**: data for a 3d object or scene
           - subtypes: 3mf, vrml
-        - text: text-only data including any human-readable content, source code or textual data such as CSV
+        - **text**: text-only data including any human-readable content, source code or textual data such as CSV
           - subtypes: plain, csv, html
-        - video: video data or files
+        - **video**: video data or files
           - subtypes: mp4
-      - multipart type: a document comprised of multiple component parts, each of which may have its own individual mime type, or encapsulating multiple files being sent together in one transaction
-        - 
+      - multipart: has TWO types with their own subtypes
+        - **message**: a message that encapsulates other messages, e.g. to represent an email that includes a forwarded message as part of its dat, or to allow sending very large message in chunks as if it were multiple messages
+          - subtypes: rfc822, partial 
+        - **multpart**:  document comprised of multiple component parts, each of which may have its own individual mime type, or encapsulating multiple files being sent together in one transaction
+          - subtypes: form-data, byteranges
     - subtype: the exact kind of dat aof the specified type the MIME represents e.g. text/plain|html|calendar
     - param: provide additional details, e.g. `charset=UTF-8`
 
