@@ -206,6 +206,11 @@
   - Methods
     - GET: request a representation of a specific resource
     - POST: sends data to a server (usually to be created), not idempotent (because it has side effects if called multiple times with the same data)
+      - use cases:
+        - annotation of existing resources
+        - creation of new resources
+        - providing blocks of data
+        - extending a database
       - with a form: put the data in the `enctype` attribute of the form, or `formenctype` attribute of the input|button
         - content types
           - application/x-www-form-urlencoded: keys + values encoded in key-value tuples separated by `&` with `=` between key and value
@@ -221,7 +226,7 @@
 
 
 ```sh
-  # requests
+  # GET
     # METHOD URI PROTOCOL
     # HEADER... one per line
       GET poop.com/some/uri HTTP/1.1
@@ -238,6 +243,32 @@
       If-None-Match: "12332vasdfduash352w4c"
       Cache-Control: max-age=0
       Authorizaton: TYPE CREDENTIALS
+
+  # POST
+    # askholz: when to use x-www-form-urlencoded vs multipart/form-data
+    # send as application/x-www-form-urlencoded
+      POST /test HTTP/1.1
+      Host: foo.example
+      Content-Type: application/x-www-form-urlencoded
+      Content-Length: 27
+
+      field1=value1&field2=value2
+    
+    # send as multipart/form-data
+      POST /test HTTP/1.1
+      Host: foo.example
+      Content-Type: multipart/form-data;boundary="boundary"
+
+      --boundary
+      Content-Disposition: form-data; name="field1"
+
+      value1
+      --boundary
+      Content-Disposition: form-data; name="field2"; filename="example.txt"
+
+      value2
+      --boundary--
+
 
 
   # responses
