@@ -9,12 +9,18 @@
     - didnt finish 
       - unix socket commands
         - somewhere around the prompt cmd
+      - tricks for easier configuration management 
+      - well known traps to avoid 
+      - debugging and performance issues 
+      - security considerations 
+
     - skipped
       - stopping and restarting 
       - file descriptor limitations 
       - memory management 
       - cpu usage 
       - statistics and monitoring
+      - master cli
       - 
   - [configuration guide](https://cbonte.github.io/haproxy-dconv/2.4/configuration.html)
   -
