@@ -95,13 +95,16 @@
     - http-request:
       - http-request deny: deny a incomming http request
     - server:
-    - cpu-map:
   
   - general configuration
     - mapfile: stores key/value associations in memory
       - e.g. concat & store host/path key and set the host/path value as a name for a backend to manage ACL routing rules
-    - nbproc:
-    - nbthread:
+    - nbproc: # of processes to spawn at startup 
+      - each has its own stats, stick tables, etc
+    - nbthread: # of threads to spawn at startup
+      - each share stats, stick tables, etc
+    - cpu-map: pin processes & threads to a specific cpu core 
+      - alwys use when setting nbproc/nbthread
     - option:
     - 
   
@@ -110,6 +113,13 @@
       - protect against running out of memory
     - stick-table: used for rate limiting
     - rate_abuse:
+    - timeout: when a timeout expires haproxy closes the connection; 
+      - reduces the risk of deadlocked processes tying up connections
+      - in `mode tcp`: server & client timeout should be identical; haproxy doesnt know who is speaking 
+      
+      - timeout connect: how long to wait for a tcp connection to ab ackend server to be established
+      - timeout client: measures inactivity during periods we expect the client to be speaking (e.g. sending tcp segments)
+      - timeout server: measures inactivity when we expect the backend server to be speaking
   
   - user/group related
     - group: to run as after initalizing (as root)
@@ -119,11 +129,16 @@
   - 
   
   - ssl/tls related
-    - ssl-default-bind-ciphers:
-    - ssl-default-bind-options:
+    - ssl-default-bind-ciphers: 
+    - ssl-default-bind-options: configure ssl/tls options
     - prefer-client-cipher:
   
   - arguments: appended to directives to modify behavior
+    - setting time:
+      - 10 i.e. 10 milliseconds
+      - 10s i.e. 10 seconds
+      - 10m i.e. 10 minutes
+
     - check:
     - maxconn: use the previous maxconn setting
       - TODO
@@ -165,8 +180,11 @@
 
 ## enterprise modules 
   - lb-update: read map files and refresh ACLs without reloading
+
 ## management
 
+### default file locations 
+  - /etc/haproxy/**/*someconfig.cfg
 ### security
   - is designed to run with very limited privs
   - always isolate the haproxy process in a chroot jail and drop its privs to a no-root user without any perms inside the jail
