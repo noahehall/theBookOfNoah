@@ -32,6 +32,10 @@
 ## docker
 
 
+# best practices
+  - never 
+    - connecting external consumers directly to backend services: creates tight coupling between frontend Y backen d components; difficult to manage and scale
+    - 
 ## terminology
   - section boundary:
     - global
@@ -40,6 +44,27 @@
     - listen
     - frontend
     - backend
+  - api gateway: handles load balancing, security, rate limiting, monitoring and other cross-cutting conerns for api services
+    - combines disparate APIs behind as ingle, unifying URL to consolidate the way consumers access services 
+    - a single reference point enables access to all services
+    - orchestration layer that forwards requests; enables the decoupling of frontend & backend services
+    - 
+  - 
+
+## main features 
+  - http routing: route incoming requests to services based on ANY data in the request head//body; e.g. url path, query string, headers, etc
+  - load balancing: when services are replicated (to improve performance & resilience); the api gateway routes requests between them based on some balancing strategy
+    - roundrobin: for quick and short requests
+    - leastconn: for long lives connections, e.g. websockets
+    - uri: route to services optimized to handle speicfic types of requests
+  - security
+  - rate limiting
+  - monitoring
+  - observability
+  - connection queuing
+  - authentication 
+  - device detection
+  - 
 ## management
 
 ### security
@@ -98,7 +123,12 @@
     mkdir /var/empty && chmod = /var/empty || echo "failed" # must be done first before starting haproxy
 
 
-  # common tasks
+  # debug tasks 
+  # + validate haproxy config 
+    haproxy -c -f /some/haproxy.cfg
+
+    
+  # other common tasks
 
   # + start haproxy from an init file
   # ++ force daemon mode
