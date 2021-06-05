@@ -79,14 +79,21 @@
   
   
   - observability/monitoring
-    - log:
+    - log: startup|runtime warnings & errors; specify which syslog to use (e.g. Syslog/journald)
+      - you need to setup the syslog daemon in order to read logs output by haproxy
+      - log /dev/log: traditional nix socket where Syslog & journald listen
+      - log local0: syslog facility for custom use
+      - 
     - stats:
+      - stats socket: enables the runtime api
   
   - routing 
+    - acl: 
     - bind:
     - balance:
     - use_backend:
     - http-request:
+      - http-request deny: deny a incomming http request
     - server:
     - cpu-map:
   
@@ -105,8 +112,10 @@
     - rate_abuse:
   
   - user/group related
-    - group:
-    - user:
+    - group: to run as after initalizing (as root)
+      - need to already exist
+    - user: user to run as after initializing (as root)
+      - need to already exist
   - 
   
   - ssl/tls related
@@ -118,6 +127,7 @@
     - check:
     - maxconn: use the previous maxconn setting
       - TODO
+    - deny-status: set the status when denying a request
 
 # main features 
   - dynamic configuration 
