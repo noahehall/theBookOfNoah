@@ -6,6 +6,14 @@
   - [haproxy community](https://www.haproxy.org/)
   - [haproxy community docs](https://www.haproxy.org/#docs)
   - [management guide](https://cbonte.github.io/haproxy-dconv/2.4/management.html)
+    - bookmark 
+      - statistics and monitoring
+    - skipped
+      - stopping and restarting 
+      - file descriptor limitations 
+      - memory management 
+      - cpu usage 
+      - 
   - [configuration guide](https://cbonte.github.io/haproxy-dconv/2.4/configuration.html)
   -
 
@@ -38,6 +46,8 @@
       - the activity should be logged using `sendmsg()`
         - if not: restart using strace on top of haproxy
           - if still not: something HAS (oh yea?) to be wrong with the config
+
+
 ### put somewhere else
   - cli > config options
     - you can modify runtime ops quickly without changing the config file
