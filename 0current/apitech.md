@@ -37,6 +37,21 @@
       - [cors explanation](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
       - [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request)
     - [corb](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/services/network/cross_origin_read_blocking_explainer.md#determining-whether-a-response-is-corb_protected)
+  
+  - too many tabs
+    - https://developer.mozilla.org/en-US/docs/Glossary/Proxy_server
+    - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Upgrade
+    - https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP
+    - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+    - https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview
+    - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers
+    - https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP
+    - https://github.com/stoplightio/prism
+    - https://github.com/Redocly/redoc
+    - https://github.com/Redocly/openapi-cli/graphs/contributors
+    - https://github.com/isa-group/oas-tools
+    - https://github.com/isa-group/oas-generator
+    - https://openapi-generator.tech/
 
 ## do next
   - [all this shit](https://cheatsheetseries.owasp.org/Glossary.html)
