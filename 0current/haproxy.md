@@ -3,6 +3,9 @@
 
 
 ## links
+  - [observability types with haproxy](https://www.dotconferences.com/2018/06/willy-tarreau-observability-tips-with-haproxy)
+
+### haproxy guides, docs, and specs
   - [haproxy community](https://www.haproxy.org/)
   - [haproxy community docs](https://www.haproxy.org/#docs)
   - [management guide](https://cbonte.github.io/haproxy-dconv/2.4/management.html)
@@ -66,20 +69,32 @@
   - frontend: accepts incoming (external) requests: routes requests to backends
   - backend: fulfills incoming (frontend) requests
   
-  - directives: 
-    - mapfile: stores key/value associations in memory
-      - e.g. concat & store host/path key and set the host/path value as a name for a backend to manage ACL routing rules
-    - sticktable: used for rate limiting
-    - maxconn: 
-    - log
-    - user
-    - group
-    - stats
-    - nbproc
-    - nbthread
-    - cpu-map
-    - ssl-default-bind-ciphers
-    - ssl-default-bind-options
+### directives: 
+  - statements to configure each section boundary
+    - many overlap and cascade, e.g. the same directive in global > defaults > [frontend,backend] can be overridden
+  
+  - mapfile: stores key/value associations in memory
+    - e.g. concat & store host/path key and set the host/path value as a name for a backend to manage ACL routing rules
+  
+  - balance
+  - bind
+  - cpu-map
+  - group
+  - http-requeat
+  - log
+  - maxconn: 
+  - nbproc
+  - nbthread
+  - option
+  - rate_abuse
+  - server
+  - ssl-default-bind-ciphers
+  - ssl-default-bind-options
+  - stats
+  - stick-table: used for rate limiting
+  - use_backend
+  - user
+  - 
   
   - arguments: appended to directives to modify behavior
     - check
@@ -87,21 +102,38 @@
       - TODO
 
 # main features 
+  - dynamic configuration 
+    - runtime API: a unix socket to dynamically configure a running haproxy server, 
+      - enable/disable servers, health checks, load balancing, etc
+
+
   - http routing: route incoming requests to services based on ANY data in the request head//body; e.g. url path, query string, headers, etc
+  
   - load balancing: when services are replicated (to improve performance & resilience); the api gateway routes requests between them based on some balancing strategy
     - roundrobin: for quick and short requests
     - leastconn: for long lives connections, e.g. websockets
     - uri: route to services optimized to handle speicfic types of requests
-  - security
+  
+  
   - rate limiting: limit # of requests clients can make within a period of time
     - haproxy can track clients by IP, cookies, api tokens, headers, etc
-    - daily limit: useful when creating tiered services, e.g. free -> base > premium limits
+    - daily limit: useful when creating tiered services, e.g. free > base > premium limits
     - rate of requests: useful to prevent abuse/runaway processes
-  - monitoring
-  - observability
+  
+  - monitoring: tells you HOW WELL something (doesnt) work
+    - i.e. you monitor an observable system
+  
+  - observability: helps you DETECT what is/not WORKING and WHY
+    - a measure of how well internal states of a system can be inferred from knowledge of its external outputs; i.e. WTF IS GOING ON!!! (lol @willytarreau)
+    - features
+      - statistics dashboard: html stats page, view tabular data containing metrics for each frontend, backend & bind directive
+        - hit the runtime api and get the same data as json
+      - logs: hella shit related to each API call 
+  
   - connection queuing
   - authentication 
   - device detection
+  - security
 
 ## enterprise modules 
   - lb-update: read map files and refresh ACLs without reloading
