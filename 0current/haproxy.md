@@ -42,6 +42,13 @@
     - backend
 ## management
 
+### security
+  - is designe dto run with very limited privs
+  - always isolate the haproxy process in a chroot jail and drop its privs to a no-root user without any perms inside the jail
+    - START AS ROOT and RUN AS ROOT are TWO SEP THINGS BTCH
+      - changing from the root UID prior to starting haproxy reduces the effective ecurity restrictions
+      - you NEED to START AS ROOT to set the correct restrictions
+
 ### log managent
   - set the log server ip:port in the globals section
     - this way it is centralized
