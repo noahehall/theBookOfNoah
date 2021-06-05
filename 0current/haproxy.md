@@ -87,8 +87,15 @@
     - each backend defines a group of servers to be load balanced
     
   
-  - listen
-  - peers
+  - listen: combines *backend* and *frontend* sections into one
+    - only use for simple things (if any!)
+    
+  - peers: section for syncing multiple haproxy servers
+  - mailers: section to configure mail notifications
+  - resolvers: section to configure and setup DNS resolution
+
+
+
 ### directives 
   - TODO: separate directives by the section they are permitted in?
     - or at least specify which sections that can be in (if multiple)
@@ -138,6 +145,10 @@
     - default-server:  configures defaults for any server lines that follow it
     - server: heart of the backend section; can be specified multiple times to specify settings and URI for your physical backend servers that fullfil the requests
       - each server must opt into health checks via the *check* argument on the *server* or *default-server* line
+    
+    - server-template placeholders for service discovery tools to populate *server* directives dynamically
+    
+    -  
   
   - general configuration
     - mode: 
@@ -339,6 +350,14 @@
       -- arbitrary/dir/with/files/*
 
 
+
+  # stats shit 
+  # + listen section to setup the stats page without using both frontend and backend section boundaries
+    listen stats
+      bind *:8404
+      stats enable
+      stats uri /monitor
+      stats refresh 5s
 
   # socat specific
   # + 2 methods for interacting with haproxy via soxy
