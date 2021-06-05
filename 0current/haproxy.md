@@ -77,9 +77,13 @@
   - peers
   - listen
   - frontend: accepts incoming (external) requests: routes requests to backends
+    - 
   - backend: fulfills incoming (frontend) requests
   
 ### directives: 
+  - TODO: separate directives by the section they are permitted in?
+    - or at least specify which sections that can be in (if multiple)
+    
   - statements to configure each section boundary
     - many overlap and cascade, e.g. the same directive in global > defaults > [frontend,backend] can be overridden
   
@@ -112,6 +116,9 @@
     - cpu-map: pin processes & threads to a specific cpu core 
       - alwys use when setting nbproc/nbthread
     - option:
+      - option httplog: use verbose log format in *mode http*
+      - option tcplog: use verbose log format in *mode tcp*
+    - log-option: set a custom log format
     - 
   
   - security related
