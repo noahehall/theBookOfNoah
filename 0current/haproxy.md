@@ -7,6 +7,7 @@
 
 ### haproxy guides, docs, and specs
   - [4 major sections of a haproxy config](https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/)
+    - use this to verify/update information on this page
   - [haproxy community](https://www.haproxy.org/)
   - [haproxy community docs](https://www.haproxy.org/#docs)
   - [management guide](https://cbonte.github.io/haproxy-dconv/2.4/management.html)
@@ -121,6 +122,9 @@
       - is ignored if ar equest mathes a persistence strategy 
         - (e.g. an ACL forcing a request to route to specific server based on cookie)
     - cookie: enables cookie-based peristence
+      - SERVERUSED: send this as a cookie to the client; the value is the *server* that handles the initial request; the client will always go to this server for this session
+        - the name of the server is set by the *cookie* argument on the *server* line
+        - 
     
     - use_backend: forward requests that match the ACL argument to this backend server
     - default_backend: route all requires to this server that dont match any other ACLs
@@ -144,9 +148,16 @@
       - each share stats, stick tables, etc
     - cpu-map: pin processes & threads to a specific cpu core 
       - alwys use when setting nbproc/nbthread
+    
     - option:
       - option httplog: use verbose log format in *mode http*
       - option tcplog: use verbose log format in *mode tcp*
+      - option httpchk: send layer 7 (http) health checks to backend server
+        - has to respond with 2xx|3xx to be considerd healthy
+        - tcp only has to respond (e.g. even a 5xx) to be considered health
+        - will default to send the request as *OPTIONS /* 
+        - can be used with servers in *mode tcp* if they respond with http at the route specified
+    
     - log-option: set a custom log format
     - 
   
