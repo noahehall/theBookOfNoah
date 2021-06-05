@@ -6,22 +6,22 @@
   - [haproxy community](https://www.haproxy.org/)
   - [haproxy community docs](https://www.haproxy.org/#docs)
   - [management guide](https://cbonte.github.io/haproxy-dconv/2.4/management.html)
-    - didnt finish 
+    - didnt finish
       - unix socket commands
         - somewhere around the prompt cmd
-      - tricks for easier configuration management 
-      - well known traps to avoid 
-      - debugging and performance issues 
-      - security considerations 
+      - tricks for easier configuration management
+      - well known traps to avoid
+      - debugging and performance issues
+      - security considerations
 
     - skipped
-      - stopping and restarting 
-      - file descriptor limitations 
-      - memory management 
-      - cpu usage 
+      - stopping and restarting
+      - file descriptor limitations
+      - memory management
+      - cpu usage
       - statistics and monitoring
       - master cli
-      - 
+      -
   - [configuration guide](https://cbonte.github.io/haproxy-dconv/2.4/configuration.html)
   -
 
@@ -33,7 +33,7 @@
 
 
 ## terminology
-  - section boundary: 
+  - section boundary:
     - global
     - defaults
     - peers
@@ -43,7 +43,7 @@
 ## management
 
 ### security
-  - is designe dto run with very limited privs
+  - is designed to run with very limited privs
   - always isolate the haproxy process in a chroot jail and drop its privs to a no-root user without any perms inside the jail
     - START AS ROOT and RUN AS ROOT are TWO SEP THINGS BTCH
       - changing from the root UID prior to starting haproxy reduces the effective ecurity restrictions
@@ -64,8 +64,8 @@
     - this way it is centralized
     - configure your syslog daemon to listen to udp traffic
       - some may need customization to enable this, dork it
-  - testing syslog functionality 
-    - restart haproxy: each frontend & backend logs one line indicating its restarting; if you see this, its working 
+  - testing syslog functionality
+    - restart haproxy: each frontend & backend logs one line indicating its restarting; if you see this, its working
     - run `strace -tt -s100 -etrace=sendmsg -p HAPROXY_PID`
       - perform some activity that should be logged
       - the activity should be logged using `sendmsg()`
@@ -76,7 +76,7 @@
 ### put somewhere else
   - cli > config options
     - you can modify runtime ops quickly without changing the config file
-    - 
+    -
 
 
 ```sh
@@ -89,14 +89,16 @@
   # + start haproxy loading ALL someconfig.cfg in the directory
   # + files loaded in lexical order (using LC_COLLATE=C)
   haproxy -f cfgdir
- 
+
   # security tasks (keep this shit first)
 
   # + set the chroot jail inside the config
   # ++ after creating the location on the cmd line
     chroot /var/empty
     mkdir /var/empty && chmod = /var/empty || echo "failed" # must be done first before starting haproxy
-  # common tasks 
+
+
+  # common tasks
 
   # + start haproxy from an init file
   # ++ force daemon mode
@@ -104,7 +106,7 @@
   # ++ notify old processes to finish before leaving
     haproxy -f /some/config.cfg \
       -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid) \ # ALWAYS DOOOO THIS
-      
+
 
   # + load specific configs in a specific order
     haproxy -f config1.cfg -f config2.cfg \
@@ -115,14 +117,14 @@
     haproxy -f default.cfg -f other.cfg \
       -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid) \
       -- arbitrary/dir/with/files/*
- 
 
-  
-  # socat specific 
+
+
+  # socat specific
   # + 2 methods for interacting with haproxy via soxy
   # ++ HAPROXY.sock is any sock, e.g.  /var/run/haproxy.sock
-    socat HAPROXY.sock stdio # use in scripts 
-    socat HAPROXY.sock readline # issuing cmds by hand 
+    socat HAPROXY.sock stdio # use in scripts
+    socat HAPROXY.sock readline # issuing cmds by hand
   # + example noninteractive mode
   # ++ e.g. via a script
     echo "show info; show stat; show table" | socat HAPROXY.sock stdio
@@ -148,7 +150,7 @@
     -Ws # master-worker mode + notify supportl have to build haproxy with `USE_SYSTEMD` enabled
     -S bind,opts,opts # bind a master CLI, permits access to all processes; bind the master to a local unix socket
 
-  # + lifecycle 
+  # + lifecycle
     -sf pids # finish (SIGUSR1) to old processes after new boot completion (after finishing tasks); accepts a list of pids e.g. from pidof or pgrep
     -st pids # terminate (SIGTERM) to old processes after new boot completion (without completing their tasks)
     -x socket # connect to a unix socket and retrieve listening sockets from the old process; useful to avoid missing new connections when reloading cfgs on linux; enable the stats socket using `expose-fd listeners` in the cfg
@@ -164,11 +166,11 @@
     -dV # disable ssl verify; review when debugging prod
     -dW # refuse to start if warnigns exist in cfg
     -de # disable epoll poller
-    -dk # disable kqueue poller 
-    -dp # disable poll poller 
+    -dk # disable kqueue poller
+    -dp # disable poll poller
     -dr #ignore server address resolution; using for debugging prod configs
 
-  
+
   # + edge case options
   # ++ peering
     -L name #set the local peer name when using peers replication
