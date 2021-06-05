@@ -90,7 +90,14 @@
 
   
   # socat specific 
-  
+  # + 2 methods for interacting with haproxy via soxy
+  # ++ HAPROXY.sock === /var/run/haproxy.sock
+    socat HAPROXY.sock stdio # use in scripts 
+    socat HAPROXY.sock readline # issuing cmds by hand 
+  # + example noninteractive mode
+  # ++ e.g. via a script
+    echo "show info; show stat; show table" | socat HAPROXY.sock stdio
+
   # long list of options
   # + common options
     -C dir #change to dir before loading config files
