@@ -47,7 +47,8 @@
         - use *nbthread* (threads) when resources are limited; dont scale as well as nbproc (multiple processes)
         - use *nbproc* to support multi processes; scale far superior than threads (nbthread)
   - always
-    - do these things because god
+    - each *server* should have a *maxconn* setting; even if its just a guess
+      - you can modify this to adapt to your environment
 
 
 ## companion tech 
