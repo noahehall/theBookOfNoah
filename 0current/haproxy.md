@@ -54,6 +54,10 @@
         - transparently listen to a foreign address
         - isolate itself inside a chroot jail
         - drop to another non-priviledged uid
+      - you NEED to RUN AS ROOT to (rarely required)
+        - bind to an interface for outgoing connections
+        - bind to privileged source ports for outgoing connections
+        - transparently bind to a foreign address for outgoing connections
 
 ### log managent
   - set the log server ip:port in the globals section
