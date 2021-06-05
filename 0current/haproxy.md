@@ -91,7 +91,7 @@
   
   # socat specific 
   # + 2 methods for interacting with haproxy via soxy
-  # ++ HAPROXY.sock === /var/run/haproxy.sock
+  # ++ HAPROXY.sock is any sock, e.g.  /var/run/haproxy.sock
     socat HAPROXY.sock stdio # use in scripts 
     socat HAPROXY.sock readline # issuing cmds by hand 
   # + example noninteractive mode
