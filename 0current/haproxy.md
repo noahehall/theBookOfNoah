@@ -38,6 +38,10 @@
 # best practices
   - never 
     - connecting external consumers directly to backend services: creates tight coupling between frontend Y backen d components; difficult to manage and scale
+  - somtimes
+    - add *deny_stats* argument to a *http-request deny* directive to set custom response codes when rejecting request
+  - always
+    - do these things because god
 
 
 ## companion tech 
