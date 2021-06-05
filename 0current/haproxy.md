@@ -133,7 +133,10 @@
     - http-request: access control for layer 7 requdsts
       - http-request redirect: respond with a redirect
       - http-request deny: deny a incomming http request
-    - server:
+    
+    - default-server:  configures defaults for any server lines that follow it
+    - server: heart of the backend section; can be specified multiple times to specify settings and URI for your physical backend servers that fullfil the requests
+      - each server must opt into health checks via the *check* argument on the *server* or *default-server* line
   
   - general configuration
     - mode: 
@@ -159,7 +162,9 @@
         - can be used with servers in *mode tcp* if they respond with http at the route specified
     
     - log-option: set a custom log format
-    - 
+    
+    - http-check: customize http health checks via arguments
+      - TODO
   
   - security related
     - maxconn: set the max # of connections; always set in both *global* and *defaults* section
@@ -306,9 +311,13 @@
   # other common tasks
   
   # + routing tasks
-
   # ++ route requests to a backend server NAME if path begins with /api/
     use_backend NAME if {path_beg /api/ }
+
+  # ++ specify servers to be used in a backend
+    server NAME1 IP:PORT args
+    server NAME2 domain.com:PORT args
+    server NAME3 IP:PORT check args # opt into health checking
 
   # + start haproxy from an init file
   # ++ force daemon mode
