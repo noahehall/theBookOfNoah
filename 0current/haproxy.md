@@ -73,28 +73,41 @@
   - statements to configure each section boundary
     - many overlap and cascade, e.g. the same directive in global > defaults > [frontend,backend] can be overridden
   
-  - mapfile: stores key/value associations in memory
-    - e.g. concat & store host/path key and set the host/path value as a name for a backend to manage ACL routing rules
   
-  - balance
-  - bind
-  - cpu-map
-  - group
-  - http-requeat
-  - log
-  - maxconn: 
-  - nbproc
-  - nbthread
-  - option
-  - rate_abuse
-  - server
-  - ssl-default-bind-ciphers
-  - ssl-default-bind-options
-  - stats
-  - stick-table: used for rate limiting
-  - use_backend
-  - user
+  - observability/monitoring
+    - log
+    - stats
+  
+  - routing 
+    - bind
+    - balance
+    - use_backend
+    - http-request
+    - server
+    - cpu-map
+  
+  - general configuration
+    - mapfile: stores key/value associations in memory
+      - e.g. concat & store host/path key and set the host/path value as a name for a backend to manage ACL routing rules
+    - nbproc
+    - nbthread
+    - option
+    - 
+  
+  - security related
+    - maxconn: 
+    - stick-table: used for rate limiting
+    - rate_abuse
+  
+  - user/group related
+    - group
+    - user
   - 
+  
+  - ssl/tls related
+    - ssl-default-bind-ciphers
+    - ssl-default-bind-options
+    - prefer-client-cipher
   
   - arguments: appended to directives to modify behavior
     - check
