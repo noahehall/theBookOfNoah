@@ -49,14 +49,30 @@
     -W # master-worker mode; master will monitor workers; recomennded with multiprocesses and systemd; enables reloading haproxy via SIGUSR2 to the master
     -Ws # master-worker mode + notify supportl have to build haproxy with `USE_SYSTEMD` enabled
 
+  # + dev mode
+    -dB # disable bg mode and multi-process mode; USE in dev/tests NEVER in init scripts
+
   # + debugging
     -N limit # set the per-proxy maxconn; default 2000
     -V # enable verbose mode
     -c # check configuration files and exit
     -d # enable debug mode; disables daemon mode; NEVER use in an init script
+    -dD # enable diagnostic mode; output extra warnings about suspicious cfg statements
+    -dS # use this when inspecting via strace
+    -dV # disable ssl verify; review when debugging prod
+    -dW # refuse to start if warnigns exist in cfg
+    -de # disable epoll poller
+    -dk # disable kqueue poller 
+    -dp # disable poll poller 
+    -dr #ignore server address resolution; using for debugging prod configs
+  
   # + edge case options
   # ++ peering
     -L name #set the local peer name when using peers replication
+  # ++ skipped shit
+    -dG
+    -dM
+
 
 
   # env vars
