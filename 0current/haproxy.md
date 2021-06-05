@@ -41,8 +41,21 @@
   # + start haproxy loading ALL someconfig.cfg in the directory
   # + files loaded in lexical order (using LC_COLLATE=C)
   haproxy -f cfgdir
+ 
+
+  # common tasks 
+  # + start haproxy from an init file
+  # ++ force daemon mode
+  # ++ store existing pids in a pidfile
+  # ++ notify old processes to finish before leaving
+    haproxy -f /some/config.cfg \
+      -D -p /var/run/haproxy.pid \
+      -sf $(cat /var/run/haproxy.pid)
+ 
+  
+  
   # long list of options
-  # + common uoptions
+  # + common options
     -C dir #change to dir before loading config files
     -D # start as a daemon, ALWAYS in an script to prevent a fault cfg from prevent a system unable to boot
     -q # enable quiet mode
