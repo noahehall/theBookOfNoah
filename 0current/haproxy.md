@@ -6,13 +6,14 @@
   - [haproxy community](https://www.haproxy.org/)
   - [haproxy community docs](https://www.haproxy.org/#docs)
   - [management guide](https://cbonte.github.io/haproxy-dconv/2.4/management.html)
-    - bookmark 
-      - statistics and monitoring
+    - didnt finish 
+      - unix socket commands
     - skipped
       - stopping and restarting 
       - file descriptor limitations 
       - memory management 
       - cpu usage 
+      - statistics and monitoring
       - 
   - [configuration guide](https://cbonte.github.io/haproxy-dconv/2.4/configuration.html)
   -
@@ -55,7 +56,7 @@
 
 
 ```sh
-  # view haproxy
+  # view haproxy help
   haproxy
 
   # start haproxy with X number of config files
