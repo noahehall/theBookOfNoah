@@ -75,42 +75,43 @@
   
   
   - observability/monitoring
-    - log
-    - stats
+    - log:
+    - stats:
   
   - routing 
-    - bind
-    - balance
-    - use_backend
-    - http-request
-    - server
-    - cpu-map
+    - bind:
+    - balance:
+    - use_backend:
+    - http-request:
+    - server:
+    - cpu-map:
   
   - general configuration
     - mapfile: stores key/value associations in memory
       - e.g. concat & store host/path key and set the host/path value as a name for a backend to manage ACL routing rules
-    - nbproc
-    - nbthread
-    - option
+    - nbproc:
+    - nbthread:
+    - option:
     - 
   
   - security related
-    - maxconn: 
+    - maxconn: set the max # of connections
+      - protect against running out of memory
     - stick-table: used for rate limiting
-    - rate_abuse
+    - rate_abuse:
   
   - user/group related
-    - group
-    - user
+    - group:
+    - user:
   - 
   
   - ssl/tls related
-    - ssl-default-bind-ciphers
-    - ssl-default-bind-options
-    - prefer-client-cipher
+    - ssl-default-bind-ciphers:
+    - ssl-default-bind-options:
+    - prefer-client-cipher:
   
   - arguments: appended to directives to modify behavior
-    - check
+    - check:
     - maxconn: use the previous maxconn setting
       - TODO
 
