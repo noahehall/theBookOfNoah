@@ -8,6 +8,7 @@
   - [management guide](https://cbonte.github.io/haproxy-dconv/2.4/management.html)
     - didnt finish 
       - unix socket commands
+        - somewhere around the prompt cmd
     - skipped
       - stopping and restarting 
       - file descriptor limitations 
