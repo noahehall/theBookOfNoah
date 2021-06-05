@@ -40,6 +40,10 @@
     - connecting external consumers directly to backend services: creates tight coupling between frontend Y backen d components; difficult to manage and scale
   - somtimes
     - add *deny_stats* argument to a *http-request deny* directive to set custom response codes when rejecting request
+    - place the global section in its own file to be reused between multiple instances/machines
+    - *nbproc* vs *nbthread*
+        - use *nbthread* (threads) when resources are limited; dont scale as well as nbproc (multiple processes)
+        - use *nbproc* to support multi processes; scale far superior than threads (nbthread)
   - always
     - do these things because god
 
@@ -65,6 +69,8 @@
   - each section can be in a separate file for easier reuse
 
   - global: process wide security and performance tuning at a low level
+    - all about sizing and resources
+    - other sections describe traffic and processing rules
   - defaults: helps reduce duplication 
     - apply to all frontend & backend sections that come after it
     - defaults cascade: i.e. you can group [defaults > frontend > backend] to create config types, e.g. one group for TCP layer 4 and another group for HTTP layer 7 
@@ -109,7 +115,11 @@
     - 
   
   - security related
-    - maxconn: set the max # of connections
+    - maxconn: set the max # of connections; always set in both *global* and *defaults* section
+      - in *global* at the process level
+      - in *defaults* at the *backend* or *frontend* level
+        - in which they share the total max connections set at the *global* level
+        - 
       - protect against running out of memory
     - stick-table: used for rate limiting
     - rate_abuse:
@@ -129,9 +139,9 @@
   - 
   
   - ssl/tls related
-    - ssl-default-bind-ciphers: 
+    - ssl-default-bind-ciphers: ssl & tls ciphers every bind directive will ue by default in order of preference
     - ssl-default-bind-options: configure ssl/tls options
-    - prefer-client-cipher:
+    - prefer-client-cipher: will use client ciphers over the ones specified in *ssl-default-bind-ciphers*
   
   - arguments: appended to directives to modify behavior
     - setting time:
