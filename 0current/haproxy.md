@@ -25,6 +25,19 @@
     - frontend
     - backend
 ## management
+
+### log managent
+  - set the log server ip:port in the globals section
+    - this way it is centralized
+    - configure your syslog daemon to listen to udp traffic
+      - some may need customization to enable this, dork it
+  - testing syslog functionality 
+    - restart haproxy: each frontend & backend logs one line indicating its restarting; if you see this, its working 
+    - run `strace -tt -s100 -etrace=sendmsg -p HAPROXY_PID`
+      - perform some activity that should be logged
+      - the activity should be logged using `sendmsg()`
+        - if not: restart using strace on top of haproxy
+          - if still not: something HAS (oh yea?) to be wrong with the config
 ### put somewhere else
   - cli > config options
     - you can modify runtime ops quickly without changing the config file
