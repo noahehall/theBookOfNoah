@@ -35,7 +35,7 @@
 ## docker
 
 
-# best practices
+# best practices 
   - never 
     - connecting external consumers directly to backend services: creates tight coupling between frontend Y backen d components; difficult to manage and scale
   - somtimes
@@ -52,7 +52,7 @@
   - socat: the swiss army knife for piping connectinos, connecting one thing to another
     - used to query haproxy runtime API on the cli, potentially piping it into other things
     
-# terminology
+# terminology 
   - api gateway: handles load balancing, security, rate limiting, monitoring and other cross-cutting conerns for api services
     - combines disparate APIs behind as ingle, unifying URL to consolidate the way consumers access services 
     - a single reference point enables access to all services
@@ -60,8 +60,8 @@
   - 
 
 
-## haproxy specific
-### section boundaries
+## haproxy specific 
+### section boundaries 
   - define how the server performas as a whole
     - set default settings 
     - determines how requests are received (frontend)
@@ -71,16 +71,19 @@
   - global: process wide security and performance tuning at a low level
     - all about sizing and resources
     - other sections describe traffic and processing rules
+  
   - defaults: helps reduce duplication 
     - apply to all frontend & backend sections that come after it
     - defaults cascade: i.e. you can group [defaults > frontend > backend] to create config types, e.g. one group for TCP layer 4 and another group for HTTP layer 7 
-  - peers
-  - listen
-  - frontend: accepts incoming (external) requests: routes requests to backends
-    - 
+  - frontend: when using haproxy as a reverse proxy; 
+    - accepts incoming (external) requests: routes requests to backends
+    - defines the IPs and PORTS clients can connect to
+  
   - backend: fulfills incoming (frontend) requests
   
-### directives: 
+  - listen
+  - peers
+### directives 
   - TODO: separate directives by the section they are permitted in?
     - or at least specify which sections that can be in (if multiple)
     
@@ -91,24 +94,43 @@
   - observability/monitoring
     - log: startup|runtime warnings & errors; specify which syslog to use (e.g. Syslog/journald)
       - you need to setup the syslog daemon in order to read logs output by haproxy
+      
       - log /dev/log: traditional nix socket where Syslog & journald listen
       - log local0: syslog facility for custom use
-      - 
+      - log global: informs each subsequent *frontend* to use these log settings
+    
     - stats:
       - stats socket: enables the runtime api
   
   - routing 
     - acl: 
-    - bind:
+    - bind: assigns a listener to a given IP:PORT
+      - can be specified multiple times 
+      - omit the IP to bind to all addresses
+      - port can be a single, range, or comma separated list
+      - arguments
+        - ssl: manage ssl terminations
+        - crt: manage TLS terminations
+        - process: when *nbproc* is enabled; specifies which process to use e.g. *process 1*
+    
     - balance:
-    - use_backend:
-    - http-request:
+    
+    - use_backend: forward requests that match the ACL argument to this backend server
+    - default_backend: route all requires to this server that dont match any other ACLs
+      - if a request isnt processed by a *use_backend* or *default_backend* haproxy responds with *503*
+    
+    - http-request: access control for layer 7 requdsts
+      - http-request redirect: respond with a redirect
       - http-request deny: deny a incomming http request
     - server:
   
   - general configuration
+    - mode: 
+      - mode tcp: layer 4 tcp servers; faster than http but no access to higher layer information
+      - mode http: layer 7 http servers: slower than tcp but has access to all the metadata about the request
     - mapfile: stores key/value associations in memory
       - e.g. concat & store host/path key and set the host/path value as a name for a backend to manage ACL routing rules
+    
     - nbproc: # of processes to spawn at startup 
       - each has its own stats, stick tables, etc
     - nbthread: # of threads to spawn at startup
@@ -198,11 +220,11 @@
 ## enterprise modules 
   - lb-update: read map files and refresh ACLs without reloading
 
-## management
+## management 
 
 ### default file locations 
   - /etc/haproxy/**/*someconfig.cfg
-### security
+### security 
   - is designed to run with very limited privs
   - always isolate the haproxy process in a chroot jail and drop its privs to a no-root user without any perms inside the jail
     - START AS ROOT and RUN AS ROOT are TWO SEP THINGS BTCH
@@ -219,7 +241,7 @@
         - bind to privileged source ports for outgoing connections
         - transparently bind to a foreign address for outgoing connections
 
-### log managent
+### log management  
   - set the log server ip:port in the globals section
     - this way it is centralized
     - configure your syslog daemon to listen to udp traffic
@@ -233,7 +255,7 @@
           - if still not: something HAS (oh yea?) to be wrong with the config
 
 
-### put somewhere else
+### put somewhere else 
   - cli > config options
     - you can modify runtime ops quickly without changing the config file
     -
@@ -264,6 +286,11 @@
 
 
   # other common tasks
+  
+  # + routing tasks
+
+  # ++ route requests to a backend server NAME if path begins with /api/
+    use_backend NAME if {path_beg /api/ }
 
   # + start haproxy from an init file
   # ++ force daemon mode
