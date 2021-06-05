@@ -41,19 +41,46 @@
     - combines disparate APIs behind as ingle, unifying URL to consolidate the way consumers access services 
     - a single reference point enables access to all services
     - orchestration layer that forwards requests; enables the decoupling of frontend & backend services
-    - 
-## haproxy specific
-  - section boundary:
-    - global
-    - defaults
-    - peers
-    - listen
-    - frontend
-    - backend
-  
-  - 
 
-## main features 
+
+## haproxy specific
+### section boundaries
+  - define how the server performas as a whole
+    - set default settings 
+    - determines how requests are received (frontend)
+    - determines where requests are routed (backend)
+  - each section can be in a separate file for easier reuse
+
+  - global: process wide security and performance tuning at a low level
+  - defaults: helps reduce duplication 
+    - apply to all frontend & backend sections that come after it
+    - defaults cascade: i.e. you can group [defaults > frontend > backend] to create config types, e.g. one group for TCP layer 4 and another group for HTTP layer 7 
+  - peers
+  - listen
+  - frontend: accepts incoming (external) requests: routes requests to backends
+  - backend: fulfills incoming (frontend) requests
+  
+  - directives: 
+    - mapfile: stores key/value associations in memory
+      - e.g. concat & store host/path key and set the host/path value as a name for a backend to manage ACL routing rules
+    - sticktable: used for rate limiting
+    - maxconn: 
+    - log
+    - user
+    - group
+    - stats
+    - nbproc
+    - nbthread
+    - cpu-map
+    - ssl-default-bind-ciphers
+    - ssl-default-bind-options
+  
+  - arguments: appended to directives to modify behavior
+    - check
+    - maxconn: use the previous maxconn setting
+      - TODO
+
+# main features 
   - http routing: route incoming requests to services based on ANY data in the request head//body; e.g. url path, query string, headers, etc
   - load balancing: when services are replicated (to improve performance & resilience); the api gateway routes requests between them based on some balancing strategy
     - roundrobin: for quick and short requests
