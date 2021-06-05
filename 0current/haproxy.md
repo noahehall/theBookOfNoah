@@ -90,9 +90,14 @@
   # + files loaded in lexical order (using LC_COLLATE=C)
   haproxy -f cfgdir
  
+  # security tasks (keep this shit first)
 
+  # + set the chroot jail inside the config
+  # ++ after creating the location on the cmd line
+    chroot /var/empty
+    mkdir /var/empty && chmod = /var/empty || echo "failed" # must be done first before starting haproxy
   # common tasks 
-  
+
   # + start haproxy from an init file
   # ++ force daemon mode
   # ++ store existing pids in a pidfile
