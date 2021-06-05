@@ -48,6 +48,12 @@
     - START AS ROOT and RUN AS ROOT are TWO SEP THINGS BTCH
       - changing from the root UID prior to starting haproxy reduces the effective ecurity restrictions
       - you NEED to START AS ROOT to set the correct restrictions
+        - adjust file descriptor limits
+        - bind to privileged port numbers
+        - bind to a specific network interface
+        - transparently listen to a foreign address
+        - isolate itself inside a chroot jail
+        - drop to another non-priviledged uid
 
 ### log managent
   - set the log server ip:port in the globals section
