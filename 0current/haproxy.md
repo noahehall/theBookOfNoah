@@ -6,6 +6,7 @@
   - [observability types with haproxy](https://www.dotconferences.com/2018/06/willy-tarreau-observability-tips-with-haproxy)
 
 ### haproxy guides, docs, and specs
+  - [load balancing with haproxy service discovery integration & consul](https://learn.hashicorp.com/tutorials/consul/load-balancing-haproxy)
   - [4 major sections of a haproxy config](https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/)
     - use this to verify/update information on this page
   - [haproxy community](https://www.haproxy.org/)
@@ -230,6 +231,10 @@
     - roundrobin: for quick and short requests
     - leastconn: for long lives connections, e.g. websockets
     - uri: route to services optimized to handle speicfic types of requests
+    - first: the first server with available connection slots receives the connection
+      - once a server reaches its *maxconn* value, the next is used
+    - source: the source IP address is hashed & divided by total weight of the running servers to designate which server will receive teh request
+      - the same IP address will always reach the same server while the servers stay the same
   
   
   - rate limiting: limit # of requests clients can make within a period of time
