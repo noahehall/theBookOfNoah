@@ -35,12 +35,18 @@
 # best practices
   - never 
     - connecting external consumers directly to backend services: creates tight coupling between frontend Y backen d components; difficult to manage and scale
-    - 
+
+
+## companion tech 
+  - socat: the swiss army knife for piping connectinos, connecting one thing to another
+    - used to query haproxy runtime API on the cli, potentially piping it into other things
+    
 # terminology
   - api gateway: handles load balancing, security, rate limiting, monitoring and other cross-cutting conerns for api services
     - combines disparate APIs behind as ingle, unifying URL to consolidate the way consumers access services 
     - a single reference point enables access to all services
     - orchestration layer that forwards requests; enables the decoupling of frontend & backend services
+  - 
 
 
 ## haproxy specific
@@ -87,13 +93,18 @@
     - leastconn: for long lives connections, e.g. websockets
     - uri: route to services optimized to handle speicfic types of requests
   - security
-  - rate limiting
+  - rate limiting: limit # of requests clients can make within a period of time
+    - haproxy can track clients by IP, cookies, api tokens, headers, etc
+    - daily limit: useful when creating tiered services, e.g. free -> base > premium limits
+    - rate of requests: useful to prevent abuse/runaway processes
   - monitoring
   - observability
   - connection queuing
   - authentication 
   - device detection
-  - 
+
+## enterprise modules 
+  - lb-update: read map files and refresh ACLs without reloading
 ## management
 
 ### security
