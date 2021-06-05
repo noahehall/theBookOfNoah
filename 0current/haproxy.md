@@ -45,8 +45,19 @@
   # + common uoptions
     -C dir #change to dir before loading config files
     -D # start as a daemon, ALWAYS in an script to prevent a fault cfg from prevent a system unable to boot
+    -q # enable quiet mode
+    -W # master-worker mode; master will monitor workers; recomennded with multiprocesses and systemd; enables reloading haproxy via SIGUSR2 to the master
+    -Ws # master-worker mode + notify supportl have to build haproxy with `USE_SYSTEMD` enabled
 
+  # + debugging
+    -N limit # set the per-proxy maxconn; default 2000
+    -V # enable verbose mode
+    -c # check configuration files and exit
+    -d # enable debug mode; disables daemon mode; NEVER use in an init script
   # + edge case options
+  # ++ peering
+    -L name #set the local peer name when using peers replication
+
 
   # env vars
     $HAPROXY_LOCALPEER #get the peer name when using peers replication
