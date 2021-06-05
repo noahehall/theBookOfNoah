@@ -6,6 +6,7 @@
   - [observability types with haproxy](https://www.dotconferences.com/2018/06/willy-tarreau-observability-tips-with-haproxy)
 
 ### haproxy guides, docs, and specs
+  - [4 major sections of a haproxy config](https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/)
   - [haproxy community](https://www.haproxy.org/)
   - [haproxy community docs](https://www.haproxy.org/#docs)
   - [management guide](https://cbonte.github.io/haproxy-dconv/2.4/management.html)
@@ -62,6 +63,7 @@
 
 ## haproxy specific 
 ### section boundaries 
+
   - define how the server performas as a whole
     - set default settings 
     - determines how requests are received (frontend)
@@ -79,7 +81,9 @@
     - accepts incoming (external) requests: routes requests to backends
     - defines the IPs and PORTS clients can connect to
   
-  - backend: fulfills incoming (frontend) requests
+  - backend: fulfills incoming requests accepted by frontends
+    - each backend defines a group of servers to be load balanced
+    
   
   - listen
   - peers
@@ -113,7 +117,10 @@
         - crt: manage TLS terminations
         - process: when *nbproc* is enabled; specifies which process to use e.g. *process 1*
     
-    - balance:
+    - balance: specifies load balancing strategy for a *backend*
+      - is ignored if ar equest mathes a persistence strategy 
+        - (e.g. an ACL forcing a request to route to specific server based on cookie)
+    - cookie: enables cookie-based peristence
     
     - use_backend: forward requests that match the ACL argument to this backend server
     - default_backend: route all requires to this server that dont match any other ACLs
