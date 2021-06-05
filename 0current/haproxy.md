@@ -44,14 +44,26 @@
  
 
   # common tasks 
+  
   # + start haproxy from an init file
   # ++ force daemon mode
   # ++ store existing pids in a pidfile
   # ++ notify old processes to finish before leaving
     haproxy -f /some/config.cfg \
-      -D -p /var/run/haproxy.pid \
-      -sf $(cat /var/run/haproxy.pid)
+      -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid) \ # ALWAYS DOOOO THIS
+      
+
+  # + load specific configs in a specific order
+    haproxy -f config1.cfg -f config2.cfg \
+      -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)
+
+  # + load an unknown number of files
+  # ++ ALWAYS load them after default cfgs and after --
+    haproxy -f default.cfg -f other.cfg \
+      -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid) \
+      -- arbitrary/dir/with/files/*
  
+
   
   
   # long list of options
