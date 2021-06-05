@@ -36,7 +36,13 @@
   - never 
     - connecting external consumers directly to backend services: creates tight coupling between frontend Y backen d components; difficult to manage and scale
     - 
-## terminology
+# terminology
+  - api gateway: handles load balancing, security, rate limiting, monitoring and other cross-cutting conerns for api services
+    - combines disparate APIs behind as ingle, unifying URL to consolidate the way consumers access services 
+    - a single reference point enables access to all services
+    - orchestration layer that forwards requests; enables the decoupling of frontend & backend services
+    - 
+## haproxy specific
   - section boundary:
     - global
     - defaults
@@ -44,11 +50,7 @@
     - listen
     - frontend
     - backend
-  - api gateway: handles load balancing, security, rate limiting, monitoring and other cross-cutting conerns for api services
-    - combines disparate APIs behind as ingle, unifying URL to consolidate the way consumers access services 
-    - a single reference point enables access to all services
-    - orchestration layer that forwards requests; enables the decoupling of frontend & backend services
-    - 
+  
   - 
 
 ## main features 
@@ -127,7 +129,7 @@
   # + validate haproxy config 
     haproxy -c -f /some/haproxy.cfg
 
-    
+
   # other common tasks
 
   # + start haproxy from an init file
