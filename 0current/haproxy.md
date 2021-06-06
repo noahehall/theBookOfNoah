@@ -1,5 +1,6 @@
 # haproxy
   - [we use haproxy 2.4](https://cbonte.github.io/haproxy-dconv/2.4/intro.html)
+  - [doc for search & finding information](https://www.haproxy.org/download/2.4/doc/configuration.txt)
 
 
 ## links
@@ -150,7 +151,27 @@
     - server-template placeholders for service discovery tools to populate *server* directives dynamically
     
     -  
-  
+  - environemnt & variables
+    - variables scopes
+      - proc{}: var is available during all phases
+      - sess{}: var is available during a clients entire TCP session
+      - txn{}: var is available during an entire http request-response transaction
+      - req: var is available during the http request phase only
+      - res: var is available during the http response phase only
+      
+    - setenv: set & override variables
+      - `setnenv VARNAME VALUE`
+    - presetenv: set (dont override) variables
+      - `presetenv VARNAME USETHISIFMISSING`
+    - env(): use an environment variable
+      - `env(VARNAME)`
+    - set-var(): set a variable for later use
+      - `set-var(SCOPE.KEY)`
+    - var(): use a variable previously set
+      - `var(SCOPE.KEY)` 
+      - 
+
+
   - general configuration
     - mode: 
       - mode tcp: layer 4 tcp servers; faster than http but no access to higher layer information
@@ -336,6 +357,9 @@
     server NAME2 domain.com:PORT args
     server NAME3 IP:PORT check args # opt into health checking
 
+  # + restart haproxy
+    sudo systemctl restart haproxy 
+    
   # + start haproxy from an init file
   # ++ force daemon mode
   # ++ store existing pids in a pidfile
