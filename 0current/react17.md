@@ -18,8 +18,18 @@
   
   - **GENERALLY**
     - *PureComponent* > *shouldComponentUpdate* for auto shallow comparisons
+    
     - use the setState + updator syntax if next props & state relies on prev props & state
       - or use a reducer for complex/advanced situations
+    
+    - when performing side effects 
+      - after a component has been updated
+        - *componentDidUpdate* > *static getDerivedStateFromProps*
+      - before a copmonent has been updated
+        - useEffect|useLayoutEffect
+    
+    - recomputing dat when props change
+      - any of the memoization options > controlled/uncontrolled with a key > *static getDerivedStateFromProps*
 
   - **WITH CAUTION**
     - call *setState* inside *componentDidMount* ONLY modals/tooltips need to measure other DOM nodes before rendering
@@ -31,12 +41,20 @@
         - bind methods in the constructor (u lazy bum)
         - use are functions for event handlers 
           - and this is the only reason you need autobinding anyway
+    
     - use mixins: react-team doesnt recommend it
+    
     - copy props into state
+    
     - use deep equality checks/JSON.stringify for comparisons
       - use *immutability-helper* instead
+    
     - use *constructor* if when not binding instance methods (for event handlers) or initializing state
+    
     - use the callback in *setState*; move that logic to *componentDidUpdate* as react recommends
+    
+    - use error boundaries for control flow
+      - only for recovery
   
   - **USE CASES**
     - use portals when rendering a child even when the parent has overflow hidden/z-index
@@ -48,6 +66,10 @@
 
 # terms 
   - pure components: never alter their inputs & are idempotent
+  - error boundaries 
+    - copmonents for catching errors in their children and dispplaying fallback content
+    - any component can be an error boundary by defining either *static getDerivedStateFromError* or *componentDidCatch*
+  - error handling: exceptions thrown during rendering, life cycle methhods, or constructor call
 
 
 # general
@@ -59,7 +81,21 @@
     - *constructor*
       - when being created & before mounting
       - usescases: initialize state, bind instance methods for event handlers
+    
+    - *static getDerivedStateFromError*
+      - invoked after an error is thrown in achild component
+      - no side effects allowed
+
+
     - *static getDerivedStateFromProps*
+      - right before the render method on initial and subsequent updates
+        - fired on every render! use with caution
+      - return an object to update state or null
+      - doesnt have access to the component instance
+        - move shared logic outside the class definition
+      - usecases: when state depends on changes in props over time (e.g. deciding if a component should be animated in and out)
+      - 
+    
     - *render*
       - only required method
       - return null to render nothing
@@ -71,8 +107,14 @@
   - updating: when a component instance is being rerendered; caused by a change to state/props/forceUpdate
     - *render*: see mounting section
     - *static getDerivedStateFromProps*: see mounting section
+    - 
     
     - *getSnapshotBeforeUpdate*
+      - invoked before component updates are flushed to the dom
+      - sends captured values to *componentDidUpdate* as third param
+        - return null if nothing has changed
+      - usecases: capture dom info (e.g. scroll position)
+      - 
     - *shouldComponentUpdate*
       - performance enhancement 
       - receives cur + new props to be compared
@@ -91,9 +133,9 @@
       - before being destroyed
       - usescases: remove timers, canceling shit (e.g. fetches/subscriptions)
   
-  - error handling: exception during rendering, life cycle methhods, or constructor call
-    - *static getDerivedStateFromError*
+
     - *componentDidCatch*
+
 
 # instance props & methods 
   - *setState*
