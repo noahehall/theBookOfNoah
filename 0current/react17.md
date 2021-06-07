@@ -126,7 +126,20 @@
       })
 
   // creating components
-    React.Component
+    // React.Component
+      class Poop extends React.Component {
+        constructor(props) {
+          super(props)
+
+          this.state = {}
+
+          // only required for event handlers
+          // so you can refrain from <button onClick={e => this.handler(e)}>
+          // and jsut do onClick={this.handler}
+          this.eventHandler = this.eventHandler.bind(this);
+        }
+      }
+
     React.PureComponent
     React.memo
 
