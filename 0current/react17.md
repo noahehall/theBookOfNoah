@@ -12,10 +12,15 @@
       - put other non-props variables as instance props
     - compare changes if a method receives newProps & nextProps
       - usually you receive the old props because a risk of an infinite loop exists without the comparison
+    - cancel fetches & subscriptions
+      - never FETCH or subscribe without companion logic to cancel
+    - keep render logic pure and idempotent
   
   - **GENERALLY**
     - *PureComponent* > *shouldComponentUpdate* for auto shallow comparisons
-    
+    - use the setState + updator syntax if next props & state relies on prev props & state
+      - or use a reducer for complex/advanced situations
+
   - **WITH CAUTION**
     - call *setState* inside *componentDidMount* ONLY modals/tooltips need to measure other DOM nodes before rendering
   
@@ -28,6 +33,10 @@
           - and this is the only reason you need autobinding anyway
     - use mixins: react-team doesnt recommend it
     - copy props into state
+    - use deep equality checks/JSON.stringify for comparisons
+      - use *immutability-helper* instead
+    - use *constructor* if when not binding instance methods (for event handlers) or initializing state
+    - use the callback in *setState*; move that logic to *componentDidUpdate* as react recommends
   
   - **USE CASES**
     - use portals when rendering a child even when the parent has overflow hidden/z-index
@@ -40,15 +49,23 @@
 # terms 
   - pure components: never alter their inputs & are idempotent
 
+
 # general
   - class components: have state and life cycle methods 
+
 
 # lifecycle methods (in order)
   - mounting: component instance is being created and inserted into the DOM
     - *constructor*
+      - when being created & before mounting
+      - usescases: initialize state, bind instance methods for event handlers
     - *static getDerivedStateFromProps*
     - *render*
+      - only required method
+      - return null to render nothing
     - *componentDidMount*
+      - after component is rendered to the DOM
+      - usecases: timers, async shit, interactionn with the browser
       
     
   - updating: when a component instance is being rerendered; caused by a change to state/props/forceUpdate
@@ -60,6 +77,7 @@
       - performance enhancement 
       - receives cur + new props to be compared
       - not called for initial render OR after *forceUpdate*
+      - does NOT prevent child components from rendering when THEIR props/state changes
       - 
     
     - *copmonentDidUpdate*
@@ -70,6 +88,8 @@
   
   - unmounting: when a component is being removed from the DOM and destroyed
     - *componentWillUnmount*
+      - before being destroyed
+      - usescases: remove timers, canceling shit (e.g. fetches/subscriptions)
   
   - error handling: exception during rendering, life cycle methhods, or constructor call
     - *static getDerivedStateFromError*
@@ -77,11 +97,14 @@
 
 # instance props & methods 
   - *setState*
+    - informs react state has changed & to asynchronously flush these changes to the DOM
   - *forceUpdate*
   - *defaultProps*
   - *displayName*
   - *props*
   - *state*
+  - *super(props)*
+    - MUST be first line in the constructor else props will be undefined/random bugs n shit
 # top-level api
   - React.Component: have state and life cycle methods (PureComponent doesnt)
   - React.PureComponent: no state/life cycle methods but shallow compares new & old props automatically (i.e. implement shouldComponentUpdate)
@@ -90,6 +113,18 @@
   - 
 
 ```js
+  // instance methods
+    // shallow merge a single prop into state
+      setState({onlyUpdateThis: 'withThis'})
+      setState((prevState, prevProps) => {
+        // update if change
+        if (prevState.poop !== this.state.poop) console.log('changed!')
+        if (prevProps.flush !== this.state.flush) console.log('changed'!)
+
+        // dont update
+        return;
+      })
+
   // creating components
     React.Component
     React.PureComponent
