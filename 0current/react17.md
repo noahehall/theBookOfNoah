@@ -13,6 +13,9 @@
     - compare changes if a method receives newProps & nextProps
       - usually you receive the old props because a risk of an infinite loop exists without the comparison
   
+  - **GENERALLY**
+    - *PureComponent* > *shouldComponentUpdate* for auto shallow comparisons
+    
   - **WITH CAUTION**
     - call *setState* inside *componentDidMount* ONLY modals/tooltips need to measure other DOM nodes before rendering
   
@@ -49,14 +52,21 @@
       
     
   - updating: when a component instance is being rerendered; caused by a change to state/props/forceUpdate
-    - *static getDerivedStateFromProps*
-    - *shouldComponentUpdate*
-    - *render*
+    - *render*: see mounting section
+    - *static getDerivedStateFromProps*: see mounting section
+    
     - *getSnapshotBeforeUpdate*
+    - *shouldComponentUpdate*
+      - performance enhancement 
+      - receives cur + new props to be compared
+      - not called for initial render OR after *forceUpdate*
+      - 
+    
     - *copmonentDidUpdate*
       - immediately after update occurs
       - not called for the initial render
       - usecases: operate on the DOM, network requests AFTER comparing current & next props requires a new fetch
+      - receives a third prop if *getSnapshotBeforeUpdate* is used
   
   - unmounting: when a component is being removed from the DOM and destroyed
     - *componentWillUnmount*
