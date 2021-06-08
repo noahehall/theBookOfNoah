@@ -8,13 +8,21 @@
   - **ALWAYS**
     - decompose components for reusability 
     - display names are only useful in *dev* for debugging, as they should be obsfucated in prod
-    - only use state for data change changes over time that impact rendering/data flow
+    - only use state for data that changes over time that impact rendering/data flow
       - put other non-props variables as instance props
     - compare changes if a method receives newProps & nextProps
       - usually you receive the old props because a risk of an infinite loop exists without the comparison
     - cancel fetches & subscriptions
       - never FETCH or subscribe without companion logic to cancel
     - keep render logic pure and idempotent
+    - render a fallback UI when an error occurs
+      - *static getDerivedStateFromError* > *componentDidCatch*
+        - the latter should never be used for fallback UI
+    - reading state values after update
+      - componentDidUpdate > setState w/ callback > setState regular
+        - setStage regular is asynchronous, not gauranted to have latest
+        - setState with callback works, but is a one-off
+        - aggregate all your logic related after update state values into *componentDidUpate*
   
   - **GENERALLY**
     - *PureComponent* > *shouldComponentUpdate* for auto shallow comparisons
@@ -22,14 +30,18 @@
     - use the setState + updator syntax if next props & state relies on prev props & state
       - or use a reducer for complex/advanced situations
     
-    - when performing side effects 
+    - when performing side effects (e.g. fetching, animation, etc)
       - after a component has been updated
         - *componentDidUpdate* > *static getDerivedStateFromProps*
       - before a copmonent has been updated
         - useEffect|useLayoutEffect
+      - 
     
-    - recomputing dat when props change
+    - recompute data when props change
       - any of the memoization options > controlled/uncontrolled with a key > *static getDerivedStateFromProps*
+
+    - catching errors for logging 
+      - *componentDidCatch* > *static getDerivedStateFromEror*
 
   - **WITH CAUTION**
     - call *setState* inside *componentDidMount* ONLY modals/tooltips need to measure other DOM nodes before rendering
@@ -84,7 +96,8 @@
     
     - *static getDerivedStateFromError*
       - invoked after an error is thrown in achild component
-      - no side effects allowed
+      - no side effects allowed (e.g. fetches)
+      - for updating state 
 
 
     - *static getDerivedStateFromProps*
@@ -135,6 +148,7 @@
   
 
     - *componentDidCatch*
+      - for logging errors (e.g. console|another system)
 
 
 # instance props & methods 
