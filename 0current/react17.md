@@ -202,6 +202,9 @@
     - doesnt shallow merge old & new state like setstate
       - it *REPLACES* the entire state!
     - can & should be declared multiple times to keep state simple when using this hook
+    - pass a fn to setState fn if 
+      - *new* state depends on the *prev* state
+      - initial state is the result of an expensive computation
   
   - *useEffect*
     - for dat afetching, subscriptions, changing dom elements, i.e any side asynchronous side effect
@@ -211,12 +214,19 @@
       - always return a function to handle cleanup when the component unmounts
       - use multiple effect hooks for each side effect
     - usecases:
+      - any side effect, e.g. mutations, timers, logging, etc
       - *componentDidMount*
       - *componentDidUpdate*
       - *componentWillUpdate*
     -  
   
   - *useLayoutEffect*
+    - synchronous version of *useEffect*
+    - allows you to memoize effects but requires all dependent variables used inside the effect hook to be listed as a dep
+    - usecases:
+      - see *useEffect*
+    -  
+
   - *useContext*
   - *useReducer*
   - *useCallback*
