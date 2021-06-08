@@ -24,9 +24,13 @@ bookmark: https://reactjs.org/docs/concurrent-mode-intro.html
         - setStage regular is asynchronous, not gauranted to have latest
         - setState with callback works, but is a one-off
         - aggregate all your logic related after update state values into *componentDidUpate*
+    - 
   
   - **GENERALLY**
     - *PureComponent* > *shouldComponentUpdate* for auto shallow comparisons
+    
+    - add a *useDebugValue* inside custom hook definitions to support dev experience 
+      - react doesnt recommend it for *EVERY* custom hook, but when did we ever follow directions?
     
     - use the setState + updator syntax if next props & state relies on prev props & state
       - or use a reducer for complex/advanced situations
