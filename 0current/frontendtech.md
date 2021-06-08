@@ -5,11 +5,13 @@
       - cross-browser compatibility
       - performance
       - web standards
+      - consise JS snippets
 
 
 # links 
     - [comparison of accessibility tools](https://medium.com/pulsar/which-accessibility-testing-tool-should-you-use-e5990e6ef0a)
     - [web standards def = links](https://developer.mozilla.org/en-US/docs/Glossary/Web_standards)
+    - [eloquent javascript 3rd 2018](https://eloquentjavascript.net/)
 
 
 ## specs and stuff
@@ -19,6 +21,8 @@
     - [ARIA: accessible rich internet applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
     - [WAI: web accessibility initiative](https://www.w3.org/WAI/)
     - [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/s)
+    - [ecmascript 2020 standard](https://262.ecma-international.org/11.0/)
+    - [mdn javascript reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
 
 
 ## accessibility tools
@@ -32,4 +36,8 @@
     - web standards: rules established by international standards bodies and defining how the web works
       - IETF: internet engineering taskforce: govern setup and use of URIs, HTTP, and MIME
       - W3C: specifications for markup language (HTML), style definitions (CSS), DOM, and accessibility
+      - IANA: internet assigned numbers authority: naame and number registries
+      - Ecma Intl: scripting standards, prominently for javascript
+      - ISO: international organization for standardization; standards governing a diverse array of aspects, e.g. character encodings, website management and UI design
     - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
+    - 
