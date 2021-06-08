@@ -1,9 +1,10 @@
+# links
+  - [react docs](https://reactjs.org/docs/getting-started.html)
+  - [react top level api ref](https://reactjs.org/docs/react-api.html)
 # TLDR
   - a complete react17 study guide
   - often required when switching context, e.g. 2 weeks on the backend, now all of sudden we have to do some frontend shit
 
-## react specs, ref
-  - [react top level api ref](https://reactjs.org/docs/react-api.html)
 
 
 # best practices
