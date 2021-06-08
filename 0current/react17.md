@@ -234,11 +234,14 @@ bookmark: https://reactjs.org/docs/concurrent-mode-intro.html
     -  
   
   - *useLayoutEffect*
-    - synchronous version of *useEffect*
+    - synchronous version of *useEffect* that fires synchronously after all DOM mutations but before the browser has a chance to paint
+      - in comparison to *useEffect* that fires asynchronously
     - allows you to memoize effects but requires all dependent variables used inside the effect hook to be listed as a dep
+    - prefer *useEffect* as this hook blocks visual updates (because its sync and when it fires)
     - usecases:
       - see *useEffect*
-    -  
+      - *componentDidMount*, *componentDidUpdate*
+      - read layout information from the DOM and synchronously re-render (e.g. updating scroll position)
 
   - *useContext*
     - for global state thats accessible to any child component
