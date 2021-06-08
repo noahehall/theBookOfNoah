@@ -29,7 +29,7 @@ bookmark: https://reactjs.org/docs/concurrent-mode-intro.html
   - **GENERALLY**
     - *PureComponent* > *shouldComponentUpdate* for auto shallow comparisons
     
-    - add a *useDebugValue* inside custom hook definitions to support dev experience 
+    - add a *useDebugValue* inside custom hook definitions to support dev experience but *ALWAYS* add a second formatting parm to defer expensive operations unless the hook is inspected
       - react doesnt recommend it for *EVERY* custom hook, but when did we ever follow directions?
     
     - use the setState + updator syntax if next props & state relies on prev props & state
