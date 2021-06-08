@@ -10,7 +10,7 @@
 # best practices
   - **ALWAYS**
     - decompose components for reusability 
-    - *displayName* is only useful in *dev* for debugging, as they should be obsfucated in prod
+    - *displayName* are only useful in *dev* for debugging, as they should be obsfucated in prod
     - only use state for data that changes over time that impact rendering/data flow
       - put other non-props variables as instance props
     - compare changes if a method receives newProps & nextProps
