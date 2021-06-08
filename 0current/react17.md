@@ -1,5 +1,6 @@
-bookmark: https://reactjs.org/docs/concurrent-mode-intro.html
-  - couple sections left, check items with no description/content
+# TLDR
+  - a complete react17 study guide
+  - often required when switching context, e.g. 2 weeks on the backend, now all of sudden we have to do some frontend shit
 
 ## react specs, ref
   - [react top level api ref](https://reactjs.org/docs/react-api.html)
