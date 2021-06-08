@@ -208,6 +208,8 @@
     - runs on every render soo make sure to:
       - add used vars in the dependency array
       - use an if condition before invoking side effect logic
+      - always return a function to handle cleanup when the component unmounts
+      - use multiple effect hooks for each side effect
     - usecases:
       - *componentDidMount*
       - *componentDidUpdate*
