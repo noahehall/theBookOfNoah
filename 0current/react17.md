@@ -277,6 +277,12 @@ bookmark: https://reactjs.org/docs/concurrent-mode-intro.html
     - 
   
   - *useImperativeHandle*
+    - customizes the instance value expsosed to parent components when using *ref*
+    - should be used with *forwardRef* when exporting *ANY* component that implements this hook
+      - permits any consuming component to call `poop.current* to get a handle to the ref created in the component definition
+    - react generally recommends staying away from this hook
+    - usescases: whenever you need to write imperative code related to a *ref* object, e.g. a handle on a input dom element to handle focus
+
   - *useDebugValue*
 
 
