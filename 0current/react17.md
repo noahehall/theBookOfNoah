@@ -176,6 +176,7 @@
   - *state*
   - *super(props)*
     - MUST be first line in the constructor else props will be undefined/random bugs n shit
+
 # top-level api
   - *React.Component*: have state and life cycle methods (PureComponent doesnt)
   
@@ -187,6 +188,25 @@
   
   - 
   - 
+
+
+# hooks 
+  - let you into react life cycle features from a functional component
+  - dont work inside classes
+  - only at the top level of functional components 
+  - dont call inside loops, conditions or nested functions
+  - react tracks hooks via the order they are invoked
+
+  - *useState*
+  - *useEffect*
+  - *useLayoutEffect*
+  - *useContext*
+  - *useReducer*
+  - *useCallback*
+  - *useMemo*
+  - useRef*
+  - *useImperativeHandle*
+
 
 ```js
   // instance methods
