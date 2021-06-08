@@ -148,7 +148,13 @@
   
 
     - *componentDidCatch*
-      - for logging errors (e.g. console|another system)
+      - after an error has been thrown by a child component
+      - called during commit phase & allows side effects
+        - for logging errors (e.g. console|another system)
+      - in dev
+        - errors bubble up to window and can be handled by window.onerror/addeventListener
+      - in prod
+        - errors **DO NOT** bubble and you must catch them for logging  
 
 
 # instance props & methods 
