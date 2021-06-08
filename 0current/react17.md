@@ -160,7 +160,16 @@
 # instance props & methods 
   - *setState*
     - informs react state has changed & to asynchronously flush these changes to the DOM
+    - queues a rerender for the calling component & its descendants
+    - update the UI in response to events
+    - react batches updates for performance; this is a **REQUSTE**
+    - call setState **ONLY** when it differes from the previous state
+  
   - *forceUpdate*
+    - use when the render method depends on data external to props/state
+    - skips any checks in *shouldComponentUpdate* in the component and the components descendants
+      - forces the entire component hierarchy to rerender
+  
   - *defaultProps*
   - *displayName*
   - *props*
@@ -168,9 +177,14 @@
   - *super(props)*
     - MUST be first line in the constructor else props will be undefined/random bugs n shit
 # top-level api
-  - React.Component: have state and life cycle methods (PureComponent doesnt)
-  - React.PureComponent: no state/life cycle methods but shallow compares new & old props automatically (i.e. implement shouldComponentUpdate)
-  - Portals: render children into a dom node that exist outside the hierarchy of the parent component
+  - *React.Component*: have state and life cycle methods (PureComponent doesnt)
+  
+  - *React.PureComponent*: no state/life cycle methods but shallow compares new & old props automatically (i.e. implement shouldComponentUpdate)
+  
+  - *ReactDOM.createPortal*: render children into a dom node that exist outside the hierarchy of the parent component
+    - event bubbling still occurs in the parent components hierarchy regardless of where the child element exists in the brownser DOM hierarchy
+    - 
+  
   - 
   - 
 
