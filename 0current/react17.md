@@ -198,7 +198,22 @@
   - react tracks hooks via the order they are invoked
 
   - *useState*
+    - add local state to functional copmonents
+    - doesnt shallow merge old & new state like setstate
+      - it *REPLACES* the entire state!
+    - can & should be declared multiple times to keep state simple when using this hook
+  
   - *useEffect*
+    - for dat afetching, subscriptions, changing dom elements, i.e any side asynchronous side effect
+    - runs on every render soo make sure to:
+      - add used vars in the dependency array
+      - use an if condition before invoking side effect logic
+    - usecases:
+      - *componentDidMount*
+      - *componentDidUpdate*
+      - *componentWillUpdate*
+    -  
+  
   - *useLayoutEffect*
   - *useContext*
   - *useReducer*
