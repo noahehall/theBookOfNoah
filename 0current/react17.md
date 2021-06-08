@@ -1,4 +1,5 @@
-# links 
+bookmark: https://reactjs.org/docs/concurrent-mode-intro.html
+  - couple sections left, check items with no description/content
 
 ## react specs, ref
   - [react top level api ref](https://reactjs.org/docs/react-api.html)
@@ -86,6 +87,14 @@
 
 # general
   - class components: have state and life cycle methods 
+
+## DOM elements
+
+## SyntheticEvent
+
+## Concurrent Mode
+
+## Testing
 
 
 # lifecycle methods (in order)
@@ -177,16 +186,20 @@
   - *super(props)*
     - MUST be first line in the constructor else props will be undefined/random bugs n shit
 
-# top-level api
+# React; top-level api
   - *React.Component*: have state and life cycle methods (PureComponent doesnt)
   
   - *React.PureComponent*: no state/life cycle methods but shallow compares new & old props automatically (i.e. implement shouldComponentUpdate)
   
-  - *ReactDOM.createPortal*: render children into a dom node that exist outside the hierarchy of the parent component
-    - event bubbling still occurs in the parent components hierarchy regardless of where the child element exists in the brownser DOM hierarchy
-    - 
   
-  - 
+  - *React.children*
+  - *cloneElement*
+  - *isValidElement*
+  - *React.Fragment*
+  - *React.createRef*
+  - *React.forwardRef*
+  - *React.lazy*
+  - *React.Suspense*
   - 
 
 
@@ -228,13 +241,65 @@
     -  
 
   - *useContext*
+    - for global state thats accessible to any child component
+    - forcibly rerenders all child components on update
+    - can be at multiple levelsand the frist context.provider can intercept & handle it
+      - think of the normal event bubbling logic
+  
   - *useReducer*
+    - alternative to *useState* for:
+      - complex objects
+      - lazy initialization of state 
+      - advanced initialization of state
+      - when next state depends on prev state
+      - optimizing performance for components that trigger deep updates by passing a *dispatch* function instead of callbacks
+  
   - *useCallback*
+    - returns a memoized callback to calculate a new value when its dependencies change 
+    - alternative to *useMemo* which provide the memoized value instead 
+    - usecases:
+      - a child component needs the dispatch because it controls the dependency values
+      - 
+  
   - *useMemo*
-  - useRef*
+    - returns a memoized vlaue when its dependencies change 
+    - runs during rendering
+      - so **NO** side effects 
+    - 
+  
+  - *useRef*
+    - returns a mutable ref object that exist sfor the lifetime of the component 
+    - gives you the *SAME* ref via *Object.is* logic
+    - usecases:
+      - needing to access a child imperetively; e.g. a dom node to set focus
+      - keeping any mutable value around across renders
+        - as it doesnt trigger a rerender when its value is mutated
+    - 
+  
   - *useImperativeHandle*
+  - *useDebugValue*
 
 
+# ReactDOM: top level api
+  - *render*
+  - *hydrate*
+  - *unmountComponentAtNode*
+  - *findDOMNode*
+  - *createPortal*
+  
+  - *ReactDOM.createPortal*: render children into a dom node that exist outside the hierarchy of the parent component
+    - event bubbling still occurs in the parent components hierarchy regardless of where the child element exists in the brownser DOM hierarchy
+    - 
+
+
+# ReactDOMServer: top level api
+  - *renderToString*
+  - *renderToStaticMarkup*
+  - *renderToNodeStream*
+  - *renderToSTaticNodeStream*
+  - 
+
+# 
 ```js
   // instance methods
     // shallow merge a single prop into state
