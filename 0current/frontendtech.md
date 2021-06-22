@@ -21,6 +21,7 @@
     - [components of web accessibility](https://www.w3.org/WAI/fundamentals/components/)
     - [UAAG: user agent accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/uaag/)
     - [ATAG: authoring tool accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/atag/)
+    - [WCAG: understanding conformance](https://www.w3.org/WAI/WCAG21/Understanding/conformance)
     - [mdn learn accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility)
     - [ARIA: accessible rich internet applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
     - [WAI: web accessibility initiative](https://www.w3.org/WAI/)
@@ -54,7 +55,8 @@
 
 # accessibility
   - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
-  - WCAG 2: Web Content Accessibility Guidelines
+  
+  - WCAG: Web Content Accessibility Guidelines
     - defines how to make web content more accessible to people with disabilities
       - visual:
       - auditory:
@@ -64,7 +66,18 @@
       - language:
       - learning:
       - neurological:
-      - 
+    - WCAG guidance dimensions 
+      1. principles: 4 principles provide the foundation for web accessibility 
+        - perceivable:
+        - operable:
+        - understandable:
+        - robust:
+      2. guidelines: 13 guidelines provide the basic goals in order to make content more accessible to users with different disabilities 
+      3. success criteria: for each of the 13 guidelines, exist *testable success criteria* for *requirements* and *conformance* **testing** 
+         - design specification
+         - purchasing 
+         - regulation
+         - contractual agreements 
   
 
 
