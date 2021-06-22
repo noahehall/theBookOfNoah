@@ -72,8 +72,13 @@ next up
 
 # accessibility
 ## terms 
-  - mainstream user agents: e.g. common web browsers built for people without disabilities
+  - mainstream user agents: e.g. common web browsers built for people without disabilities, or targeting broad and diverse audiences that usually include people without disabilities
+    - provide important functionality to support assistive technologies
+      - retrieving web content from program objects
+      - parsing markup into identifiable bundles
+  
   - [assistive technologies](https://www.w3.org/TR/WCAG21/#dfn-assistive-technologies): 
+    - target narrowly defined populations of users with specific disabilities
     - hardware/software that acts as a user agent, or along with a mainstream user agent, to provide functionality to meet the requirements of users with disabilities that go beyond those offered by mainstream user agents
     - features:
       - alternative presentations:
