@@ -53,3 +53,9 @@
     - thus images maintain their dimensions as the height scales with the width, which scales smaller but never larger
   
   - media queries
+    - tests browser resolution, and viewport dimensions for targeting css rules
+    - breakpoints: the point at which a media query takes affect is known as the breakpoint
+    - mobile first design: create a single-column layou for narrow devices (e.g. mobile phones) then expand to more complex layouts for larger devices
+
+  - flexible grids: the layout scales up to a point, then media queries are introduced to readjust the base design for to scale further, possibly in a different dimension where the breakpoint takes affect
+    - e.g. a single column may scale up to a point, then become a double column which scales on an additional axis
