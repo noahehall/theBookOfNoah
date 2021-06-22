@@ -15,14 +15,21 @@
 
 
 ## specs and stuff
-  - [WCA 2.1G: web content accessibility guidelines](https://www.w3.org/TR/WCAG21/)
-  - [responsive design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
-  - [mdn learn accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility)
-  - [ARIA: accessible rich internet applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
-  - [WAI: web accessibility initiative](https://www.w3.org/WAI/)
-  - [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/s)
-  - [ecmascript 2020 standard](https://262.ecma-international.org/11.0/)
-  - [mdn javascript reference](https://developer.mozilla.org/en-US/docs/Web/gJavaScript/Reference)
+  - accessibility
+    - [WCA 2.1G: web content accessibility guidelines](https://www.w3.org/TR/WCAG21/)
+    - [mdn learn accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility)
+    - [ARIA: accessible rich internet applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
+    - [WAI: web accessibility initiative](https://www.w3.org/WAI/)
+    - [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/s)
+  
+  - javascript 
+    - [ecmascript 2020 standard](https://262.ecma-international.org/11.0/)
+    - [mdn javascript reference](https://developer.mozilla.org/en-US/docs/Web/gJavaScript/Reference)
+  
+  - layouts
+    - [css layout introduction](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Introduction)
+    - [responsive design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
+    - [layout comprehension assessment](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Fundamental_Layout_Comprehension)
 
 
 ## accessibility tools
@@ -62,8 +69,6 @@
   - responsive images: `picture` + `img` elements
     - utilizes `srcset` and `sizes` to provide sets of images targeted at various screen sizes and the browser is responsible for choosing which image the user will download
     - overcomes the downsides of using fluid images
-
-
   
   - media queries
     - tests browser resolution, and viewport dimensions for targeting css rules
@@ -81,6 +86,13 @@
     - e.g. convert a pixel based layout to floats: target (element width) / context (total width) = result (element width in %)
     - considered legacy, I consider it aged like wine
   
+  - positioning techniques 
+    - static positioning 
+    - relative positioning 
+    - absolute positioning 
+    - fixed positioning 
+    - sticky positioning
+
   - multicol
     - column-count: specify a `column-count` indicating the # of columns the content will be split into and the browser is responsible for sizing these based on screen width
     - column-width: specify a minimum width for each column and the browser will create as many columns that comfortably fit into the screen width and share any extra space between all columns
@@ -91,9 +103,15 @@
     -  `flex-grow` how siblings grow and distirbute space
 
 
+
   - css grid
     - specify the distribution of space across grid tracks
+    - - utilizing `display: grid` `grid-template-columns` and `grid-template-rows
     - `fr` unit specifying how to distribute space and the number of tracks in the grid
+
+
+  - css tables 
+    - utilizing `display: table`, `table-row` and `table-cell`
 
 
   - viewport meta tag 
