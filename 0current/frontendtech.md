@@ -49,18 +49,26 @@
       - create a layout that can respond to the device being used: in terms of dimensions and resolution and capabilities
 
 ## key techniques
-  - fluid images: setting hte max-width property to 100%; images will scale down smaller if their containers width is smaller, but never grow larger than 100% of the images intrinsic width even when their contianer is larger 
+  - fluid images: 
+    - setting hte max-width property to 100%; images will scale down smaller if their containers width is smaller, but never grow larger than 100% of the images intrinsic width even when their contianer is larger 
     - thus images maintain their dimensions as the height scales with the width, which scales smaller but never larger
+    - downsides
+      - users may download an image thats too big for their device (i.e. image scales down so why not just send a super huge 10000px image)
+      - relative difficulty in adjusting aspect ratio of images 
+        - (e.g. widthxheight likely should be different if mobile vs desktop)
+        - i.e. square image for mobile and landscape for desktop
   
   - media queries
     - tests browser resolution, and viewport dimensions for targeting css rules
     - breakpoints: the point at which a media query takes affect is known as the breakpoint
     - mobile first design: create a single-column layou for narrow devices (e.g. mobile phones) then expand to more complex layouts for larger devices
 
-  - flexible grids: the layout scales up to a point, then media queries are introduced to readjust the base design for to scale further, possibly in a different dimension where the breakpoint takes affect
+  - flexible grids: 
+    - the layout scales up to a point, then media queries are introduced to readjust the base design for to scale further, possibly in a different dimension where the breakpoint takes affect
     - e.g. a single column may scale up to a point, then become a double column which scales on an additional axis
   
-  - floats: flexible floated layouts gives each element a percentage of total width, and ensuring the totaly width of all floats never exceeds 100%
+  - floats: 
+    - flexible floated layouts gives each element a percentage of total width, and ensuring the totaly width of all floats never exceeds 100%
     - e.g. convert a pixel based layout to floats: target (element width) / context (total width) = result (element width in %)
     - considered legacy, I consider it aged like wine
   
