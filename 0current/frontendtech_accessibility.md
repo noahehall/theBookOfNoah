@@ -107,7 +107,17 @@ next up
   
   - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
 
-## WCAG
+## WCAG: quick reference 
+### principle 1: perceivable 
+	
+### principle 2: operable
+
+### principle 3: understandable 
+
+### principle 4: robust
+
+
+## WCAG: in depth
   - WCAG: Web Content Accessibility Guidelines
     - defines how to make web content more accessible to people with disabilities
       - visual:
