@@ -1,6 +1,9 @@
 bookmark: `guideline 1.2 time-based media`
 https://www.w3.org/TR/WCAG21/
 
+bookmark: just started
+https://www.w3.org/WAI/WCAG21/quickref/
+
 next up
   check out the dope shit list in this doc
 
@@ -98,6 +101,7 @@ next up
       - additional orientation mechanisms
       - content transformations
         - make tables more accessible
+    
     - capabilities 
       - monitoring mainstream user agents API invocations (e.g. the HTML5 audio api) to provide alternatives
   
@@ -138,7 +142,7 @@ next up
               - [time-based media](https://www.w3.org/TR/WCAG21/#time-based-media): at least provide descriptive identification of the content
               - test or exercise: if unable to provide a text alternative, at least provide a descriptive identificatoin of the non-text content
               - [sensory experiences](https://www.w3.org/TR/WCAG21/#dfn-specific-sensory-experience): text alternatives provide descriptive identification of the non-text content
-              - CAPTCHA: if hte purpose it so confirm that content is being accessed by a person rather than a computer (i.e. a normal fkn captcha),  text alternatives should identify and describe the non-text content are provided, and alternative forms of captcha using different types of sensory perception are provided to accomodate different disabilities
+              - CAPTCHA: if the purpose it so confirm that content is being accessed by a person rather than a computer (i.e. a normal fkn captcha),  text alternatives should identify and describe the non-text content are provided, and alternative forms of captcha using different types of sensory perception are provided to accomodate different disabilities
               - Decoration, formatting, invisible: if non-text content is pure decoration, used only for visual formatting/not presented t users. then it is implemented in a way that it can be ignored by assistive technology
         
         - operable:
