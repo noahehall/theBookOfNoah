@@ -46,8 +46,22 @@
     - IANA: internet assigned numbers authority: naame and number registries
     - Ecma Intl: scripting standards, prominently for javascript
     - ISO: international organization for standardization; standards governing a diverse array of aspects, e.g. character encodings, website management and UI design
+
+
+# accessibility
   - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
-  - responsive web design: RWD; set of practices that allow web pages to alter their layout and appearance to suit different screen widths, resolutions, etc
+  - WCAG 2: Web Content Accessibility Guidelines
+    - defines how to make web content more accessible to people with disabilities
+      - visual:
+      - auditory:
+      - physical:
+      - speech: 
+      - cognitive:
+      - language:
+      - learning:
+      - neurological:
+      - 
+  
 
 
 # responsive web design RWD
