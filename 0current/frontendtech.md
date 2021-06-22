@@ -59,3 +59,7 @@
 
   - flexible grids: the layout scales up to a point, then media queries are introduced to readjust the base design for to scale further, possibly in a different dimension where the breakpoint takes affect
     - e.g. a single column may scale up to a point, then become a double column which scales on an additional axis
+  
+  - floats: flexible floated layouts gives each element a percentage of total width, and ensuring the totaly width of all floats never exceeds 100%
+    - e.g. convert a pixel based layout to floats: target (element width) / context (total width) = result (element width in %)
+    - 
