@@ -7,7 +7,12 @@ https://www.w3.org/WAI/WCAG21/quickref/
 next up
   check out the dope shit list in this doc
 
-
+# quick search 
+	- quickly finding things, search for:
+  	- *failures* for things **not** to do 
+  	- *advisory techniques* best things to do 
+  	- *sufficient techniques* where to start 
+		
 # links 
   - [comparison of accessibility tools](https://medium.com/pulsar/which-accessibility-testing-tool-should-you-use-e5990e6ef0a)
   - [microsoft silverlight](https://www.microsoft.com/silverlight/)
@@ -190,8 +195,20 @@ next up
 	1.3 adaptable
 		- create content that can be presented in different ways without losing information/structure
 		- examples: simpler layout
-		
-		1. info and relationships
+
+		1. info and relationships (LEVEL A)
+   		- information, structure, and relationships conveyed through presentation can be programmatically determined/are available in text
+   		- failures
+     		- using changes in text presentation to convey information without using the appropriate markup or text
+     		- using white space characters to create multiple columns in plain text content
+     		- using white space characters to format tables in plain text content
+     		- emulating links
+     		- using structural markup in a way that does not represent relationships in the content
+     		- using th elements, layout tables
+     		- 
+   		- advisory techniques
+   		- sufficient techniques
+
 		2. meaningful sequence
 		3. sensory characteristics
 		4. orientation
