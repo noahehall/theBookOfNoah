@@ -23,6 +23,11 @@
       - [WCAG: understanding conformance](https://www.w3.org/WAI/WCAG21/Understanding/conformance)
       - [WCAG: techniques for success criteria](https://www.w3.org/WAI/WCAG21/Understanding/understanding-techniques)
       - [WCAG: understanding metadata](https://www.w3.org/WAI/WCAG21/Understanding/understanding-metadata)
+      - [WCAG: understanding 2.2 ](https://www.w3.org/WAI/WCAG21/Understanding/)
+      - dope shit
+        - [WCAG: how to meet WCAG quick reference](https://www.w3.org/WAI/WCAG21/quickref/)
+        - [WCAG: techniques for WCAG 2.2](https://www.w3.org/WAI/WCAG21/Techniques/)
+        - [WCAG: document relation, explains where to go for what?](https://www.w3.org/WAI/standards-guidelines/wcag/docs/)
     
     - other 
       - [UAAG: user agent accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/uaag/)
