@@ -62,4 +62,18 @@
   
   - floats: flexible floated layouts gives each element a percentage of total width, and ensuring the totaly width of all floats never exceeds 100%
     - e.g. convert a pixel based layout to floats: target (element width) / context (total width) = result (element width in %)
-    - 
+    - considered legacy, I consider it aged like wine
+  
+  - multicol
+    - column-count: specify a `column-count` indicating the # of columns the content will be split into and the browser is responsible for sizing these based on screen width
+    - column-width: specify a minimum width for each column and the browser will create as many columns that comfortably fit into the screen width and share any extra space between all columns
+
+  - flexbox 
+    -  flex items shrink & grow and distribute space between siblings according to the space in their container 
+    -  `flex-grow` how siblings shrink and distribute space
+    -  `flex-grow` how siblings grow and distirbute space
+
+
+  - css grid
+    - specify the distribution of space across grid tracks
+    - `fr` unit specifying how to distribute space and the number of tracks in the grid
