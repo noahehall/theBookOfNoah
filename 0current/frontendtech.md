@@ -79,6 +79,10 @@
          - purchasing 
          - regulation
          - contractual agreements 
+         - conformance levels: rough thresholds to assess how well web content meet the success levels
+           - A: lowest success 
+           - AA: medium success
+           - AAA: the gold standard!
       4. sufficient and advisory techniques: for each *guideline* and *success criteria* a number of techniques are documented.
          - techniques sufficient for *meeting* success crtieria
          - techniques sufficient for *meeting* and **go beyond** (these are *advisory techniques*)
