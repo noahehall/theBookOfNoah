@@ -10,6 +10,7 @@ next up
 
 # links 
   - [comparison of accessibility tools](https://medium.com/pulsar/which-accessibility-testing-tool-should-you-use-e5990e6ef0a)
+  - [microsoft silverlight](https://www.microsoft.com/silverlight/)
 
 
   - accessibility
@@ -52,6 +53,7 @@ next up
       - i.e. what is the purpose of this user interface item: how is this purpose fulfilled for people who cant read/see/perceive colors/ hear/ etc.
     - questions to ask when crafting accessible content
       - what is the information component or user interface component
+        - is it text-content or non-text content
       - what is its purpose
       - what is the situation
       - what are the alternative techniques for success in this situation
@@ -138,6 +140,18 @@ next up
 				- situation B: i.e. not situation A; a short description **can not** serve the same purpose *or* present the same information as te non-text content
     			- examples: charts, diagrams
     			- TODO: alternative techniques
+  			
+				- situation C: non-text content is a control/accepts user input 
+    			- TODO: alternative techniques
+  			
+				- situation D: if non-text content is time-based media, a test/exercise that would be invalid if present in text, or primarily intended to create a specific sensory experience
+    			- examples: live video-only and live audio-only
+    			- TODO: alternative techniques
+
+				- situation E: if non-text content is a captcha:
+  				- TODO: technique
+
+				- situation F: if non-text content should be ignored by assistive technology 
 	
 	1.2 time-based media 
 		1. audio-only and video-only (prerecorded)
