@@ -45,6 +45,18 @@ next up
 
 
 # accessibility
+## big things popping
+    - [apply name, role and value to all user interface components](https://www.w3.org/TR/WCAG21/#name-role-value)
+    - always provide descriptive identifications of content that cannot be made accessible in a meaningful way
+    - think: what purpose is this serving, and how do I serve this purpose in another form
+      - i.e. what is the purpose of this user interface item: how is this purpose fulfilled for people who cant read/see/perceive colors/ hear/ etc.
+    - questions to ask when crafting accessible content
+      - what is the information component or user interface component
+      - what is its purpose
+      - what is the situation
+      - what are the alternative techniques for success in this situation
+
+
 ## terms 
 	- user interface components:
 	- information components:
@@ -119,6 +131,13 @@ next up
 		- examples: large print, braille, speech, symbols, simpler language
 		
 		1.non-text content 
+			- sufficient techniques
+  			- situation A: if a short description can serve the same purpose and present the same information as the non-text content
+    			- TODO: alternative techniques
+  			
+				- situation B: i.e. not situation A; a short description **can not** serve the same purpose *or* present the same information as te non-text content
+    			- examples: charts, diagrams
+    			- TODO: alternative techniques
 	
 	1.2 time-based media 
 		1. audio-only and video-only (prerecorded)
@@ -240,11 +259,6 @@ next up
       - learning:
       - neurological:
     
-    - big things popping
-      - [apply name, role and value to all user interface components](https://www.w3.org/TR/WCAG21/#name-role-value)
-      - always provide descriptive identifications of content that cannot be made accessible in a meaningful way
-      - think: what purpose is this serving, and how do I serve this purpose in another form
-        - i.e. what is the purpose of this user interface item: how is this purpose fulfilled for people who cant read/see/perceive colors/ hear/ etc.
     
     - WCAG guidance dimensions 
       1. principles: 4 principles provide the foundation for web accessibility 
