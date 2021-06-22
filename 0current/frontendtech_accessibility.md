@@ -134,7 +134,7 @@ next up
 		- provide text alternatives for any non-text content
 		- examples: large print, braille, speech, symbols, simpler language
 		
-		1.non-text content 
+		1.non-text content (LEVEL A)
 			- failures
   			- using CSS to include images that convey important information
   			- text alternatives that do not include information that is conveyed by color differences in the image
@@ -175,6 +175,8 @@ next up
 				- situation F: if non-text content should be ignored by assistive technology 
 	
 	1.2 time-based media 
+		- provide alternatives for time-based media
+		
 		1. audio-only and video-only (prerecorded)
 		2. captions (prerecorded)
 		3. audio description or media laternative (prerecorded)
@@ -186,6 +188,9 @@ next up
 		9. audio-only (live) 
 	
 	1.3 adaptable
+		- create content that can be presented in different ways without losing information/structure
+		- examples: simpler layout
+		
 		1. info and relationships
 		2. meaningful sequence
 		3. sensory characteristics
