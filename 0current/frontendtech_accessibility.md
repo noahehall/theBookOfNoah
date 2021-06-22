@@ -125,6 +125,8 @@ next up
   - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
 
 ## WCAG: quick reference 
+	- link in `specs and stuff` for more information on this section
+
 ### principle 1: perceivable 
 	- information and user interface components must be presentable to users in ways they can perceive
 	
@@ -133,6 +135,22 @@ next up
 		- examples: large print, braille, speech, symbols, simpler language
 		
 		1.non-text content 
+			- failures
+  			- using CSS to include images that convey important information
+  			- text alternatives that do not include information that is conveyed by color differences in the image
+  			- not updating text alternatives when changes to non-text content occur
+  			- using text alternatives that are **not** alternatives
+    			- examples: filenames, placeholder texts
+  			- not marking up decorative images in HTML in a way that permits assistive technology to ignore them 
+  			- providing a text alternative that is **not null** for images that should be ignored by assistive technology 
+    			- examples: `alt='spacer'` `alt='image'`
+  			- omitting the alt attribute or text alternative on `img`, `area`, and `input.type=image` elements
+  			- providing long descriptions for non-text content that does not serve the same purpose/does not present the same information
+  			- using text look-alikes to represent text without providing a text alternative
+  			- using ASCII art without providing a text alternative
+			
+			- advisory techniques
+			
 			- sufficient techniques
   			- situation A: if a short description can serve the same purpose and present the same information as the non-text content
     			- TODO: alternative techniques
