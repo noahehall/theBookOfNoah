@@ -86,23 +86,29 @@ next up
     
     - big things popping
       - [apply name, role and value to all user interface components](https://www.w3.org/TR/WCAG21/#name-role-value)
-      - always provide descriptive identifications of content that cannot be made acessible in a meaningful way
+      - always provide descriptive identifications of content that cannot be made accessible in a meaningful way
+      - think: what purpose is this serving, and how do I serve this purpose in another form
+        - i.e. what is the purpose of this user interface item: how is this purpose fulfilled for people who cant read/see/perceive colors/ hear/ etc.
     
     - WCAG guidance dimensions 
       1. principles: 4 principles provide the foundation for web accessibility 
         - perceivable: information and user interface components must be presentable to users in ways they can perceive
           - text alternatives: for any non-text content to be perceivable by users in other forms
-            - common forms:
+            
+            - common (sensory perception) forms:
               - print
               - braille
               - speech
               - symbols
               - simpler language
+            
             - content types (potentially) not available in other forms and how to adapt them
               - controls/input: [must have a name attribute to describe its purpose](https://www.w3.org/TR/WCAG21/#dfn-name)
               - [time-based media](https://www.w3.org/TR/WCAG21/#time-based-media): at least provide descriptive identification of the content
               - test or exercise: if unable to provide a text alternative, at least provide a descriptive identificatoin of the non-text content
               - [sensory experiences](https://www.w3.org/TR/WCAG21/#dfn-specific-sensory-experience): text alternatives provide descriptive identification of the non-text content
+              - CAPTCHA: if hte purpose it so confirm that content is being accessed by a person rather than a computer (i.e. a normal fkn captcha),  text alternatives should identify and describe the non-text content are provided, and alternative forms of captcha using different types of sensory perception are provided to accomodate different disabilities
+              - Decoration, formatting, invisible: if non-text content is pure decoration, used only for visual formatting/not presented t users. then it is implemented in a way that it can be ignored by assistive technology
         
         - operable:
         
