@@ -18,6 +18,9 @@
   - accessibility
     - [WCAG 2.1: web content accessibility guidelines](https://www.w3.org/TR/WCAG21/)
     - [WCAG overview](https://www.w3.org/WAI/standards-guidelines/wcag/)
+    - [components of web accessibility](https://www.w3.org/WAI/fundamentals/components/)
+    - [UAAG: user agent accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/uaag/)
+    - [ATAG: authoring tool accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/atag/)
     - [mdn learn accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility)
     - [ARIA: accessible rich internet applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
     - [WAI: web accessibility initiative](https://www.w3.org/WAI/)
