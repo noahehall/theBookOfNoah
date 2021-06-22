@@ -95,6 +95,9 @@
       4. sufficient and advisory techniques: for each *guideline* and *success criteria* a number of techniques are documented.
          - techniques sufficient for *meeting* success crtieria
          - techniques sufficient for *meeting* and **go beyond** (these are *advisory techniques*)
+    - WCAG versions 
+      - each version *builds on* and *meets* the guidelines set by the previous version
+      - thus 2.2 meets and expands on 2.1, which does the same for 2.0, etc
   
 
 
