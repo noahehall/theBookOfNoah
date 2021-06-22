@@ -96,6 +96,16 @@
     - `fr` unit specifying how to distribute space and the number of tracks in the grid
 
 
+  - viewport meta tag 
+    - instructs browsers how to set the browser width in relaton to the viewport width
+      - `<meta name="viewport" content="width=device-width,initial-scale=1">`
+        - set browser width to device width, and scale 100%
+    - `initial-scale` initial zoom of te page, e.g. `1`
+    - `height` speicific height for the viewport
+    - `minimum-scale` minimum zoom level
+    - `maximum-scale` maximum zoom level
+    - `user-scalable` prevent zooming if set to `no`
+  
   - repsonsive units 
     - `vw`: viewpoint unit; `1vw` is equal to 1% of the viewport width
       - useful in responsive typography when paired with a fixed with unit (e.g. em/rem)
