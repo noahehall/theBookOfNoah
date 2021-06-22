@@ -1,3 +1,10 @@
+bookmark: search for 'capta' under success criterion 1.1.1 non-text-content
+https://www.w3.org/TR/WCAG21/
+
+next up
+  check out the dope shit list in this doc
+
+  
 # TLDR 
   - catch all for
     - accessibility
@@ -77,11 +84,30 @@
       - learning:
       - neurological:
     
+    - big things popping
+      - [apply name, role and value to all user interface components](https://www.w3.org/TR/WCAG21/#name-role-value)
+      - always provide descriptive identifications of content that cannot be made acessible in a meaningful way
+    
     - WCAG guidance dimensions 
       1. principles: 4 principles provide the foundation for web accessibility 
         - perceivable: information and user interface components must be presentable to users in ways they can perceive
+          - text alternatives: for any non-text content to be perceivable by users in other forms
+            - common forms:
+              - print
+              - braille
+              - speech
+              - symbols
+              - simpler language
+            - content types (potentially) not available in other forms and how to adapt them
+              - controls/input: [must have a name attribute to describe its purpose](https://www.w3.org/TR/WCAG21/#dfn-name)
+              - [time-based media](https://www.w3.org/TR/WCAG21/#time-based-media): at least provide descriptive identification of the content
+              - test or exercise: if unable to provide a text alternative, at least provide a descriptive identificatoin of the non-text content
+              - [sensory experiences](https://www.w3.org/TR/WCAG21/#dfn-specific-sensory-experience): text alternatives provide descriptive identification of the non-text content
+        
         - operable:
+        
         - understandable:
+        
         - robust:
       
       2. guidelines: 13 guidelines provide the basic goals in order to make content more accessible to users with different disabilities 
