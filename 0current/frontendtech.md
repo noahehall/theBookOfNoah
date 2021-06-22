@@ -71,8 +71,28 @@ next up
 
 
 # accessibility
-  - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
+## terms 
+  - mainstream user agents: e.g. common web browsers built for people without disabilities
+  - [assistive technologies](https://www.w3.org/TR/WCAG21/#dfn-assistive-technologies): 
+    - hardware/software that acts as a user agent, or along with a mainstream user agent, to provide functionality to meet the requirements of users with disabilities that go beyond those offered by mainstream user agents
+    - features:
+      - alternative presentations:
+        - synthesized speech
+        - magnified content
+        - ...
+      - alternative input methods 
+        - voice
+        - ...
+      - additional navigation 
+      - additional orientation mechanisms
+      - content transformations
+        - make tables more accessible
+    - capabilities 
+      - monitoring mainstream user agents API invocations (e.g. the HTML5 audio api) to provide alternatives
   
+  - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
+
+## WCAG
   - WCAG: Web Content Accessibility Guidelines
     - defines how to make web content more accessible to people with disabilities
       - visual:
