@@ -98,4 +98,6 @@
 
   - repsonsive units 
     - `vw`: viewpoint unit; `1vw` is equal to 1% of the viewport width
-      - useful in responsive typography
+      - useful in responsive typography when paired with a fixed with unit (e.g. em/rem)
+        - this is the only way to allow the text to be zoomable (as `vw` disables text responding to zoom)
+        - i.e. `font-size: calc(1.5rem + 3vw)`
