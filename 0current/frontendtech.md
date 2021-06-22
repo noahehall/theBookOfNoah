@@ -76,13 +76,16 @@
       - language:
       - learning:
       - neurological:
+    
     - WCAG guidance dimensions 
       1. principles: 4 principles provide the foundation for web accessibility 
-        - perceivable:
+        - perceivable: information and user interface components must be presentable to users in ways they can perceive
         - operable:
         - understandable:
         - robust:
+      
       2. guidelines: 13 guidelines provide the basic goals in order to make content more accessible to users with different disabilities 
+      
       3. success criteria: for each of the 13 guidelines, exist *testable success criteria* for *requirements* and *conformance* **testing** 
          - design specification
          - purchasing 
@@ -92,9 +95,11 @@
            - A: lowest success 
            - AA: medium success
            - AAA: the gold standard!
+      
       4. sufficient and advisory techniques: for each *guideline* and *success criteria* a number of techniques are documented.
          - techniques sufficient for *meeting* success crtieria
          - techniques sufficient for *meeting* and **go beyond** (these are *advisory techniques*)
+    
     - WCAG versions 
       - each version *builds on* and *meets* the guidelines set by the previous version
       - thus 2.2 meets and expands on 2.1, which does the same for 2.0, etc
