@@ -80,6 +80,42 @@ next up
   - [assistive technologies](https://www.w3.org/TR/WCAG21/#dfn-assistive-technologies): 
     - target narrowly defined populations of users with specific disabilities
     - hardware/software that acts as a user agent, or along with a mainstream user agent, to provide functionality to meet the requirements of users with disabilities that go beyond those offered by mainstream user agents
+    - categories:
+      - visual reading assistance:
+        - target population: people with visual, perceptual and physical print disabilities 
+        - purpose: 
+          - change text font, size, sacing, color, synchronization with speech, etc
+          - improve the visual readability of rendered text and images
+        - examples: screen magnifiers
+      - screen readers 
+        - target population: people who are blind 
+        - purpose: 
+          - read textual information through syntesized speech or braille
+          - examples:
+      - text-to-speech software 
+        - target population: people with cognitive, language and learning disabilities 
+        - purpose:
+          - convert text into synthetic speech 
+        - examples:
+      - speech recognition software 
+        - target population: people with physical disabilities 
+        - purpose: 
+        - examples
+      - alternative keyboards
+        - target population: people with physical disabilities 
+        - purpose 
+          - simulate a normal keyboard
+        - examples 
+          - head pointers 
+          - single switches
+          - sip/puff/other special input devices 
+      - alternative pointing devices 
+        - target population: people with physical disabilities 
+        - purpose:
+          - simulate mouse pointing 
+          - simulate button activations 
+        - examples
+    
     - features:
       - alternative presentations:
         - synthesized speech
