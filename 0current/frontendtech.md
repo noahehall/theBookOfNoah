@@ -16,17 +16,21 @@
 
 ## specs and stuff
   - accessibility
-    - [WCAG 2.1: web content accessibility guidelines](https://www.w3.org/TR/WCAG21/)
-    - [WCAG overview](https://www.w3.org/WAI/standards-guidelines/wcag/)
-    - [components of web accessibility](https://www.w3.org/WAI/fundamentals/components/)
-    - [UAAG: user agent accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/uaag/)
-    - [ATAG: authoring tool accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/atag/)
-    - [WCAG: understanding conformance](https://www.w3.org/WAI/WCAG21/Understanding/conformance)
-    - [WCAG: techniques for success criteria](https://www.w3.org/WAI/WCAG21/Understanding/understanding-techniques)
-    - [mdn learn accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility)
-    - [ARIA: accessible rich internet applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
-    - [WAI: web accessibility initiative](https://www.w3.org/WAI/)
-    - [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/s)
+    - WCAG
+      - [WCAG 2.1: web content accessibility guidelines](https://www.w3.org/TR/WCAG21/)
+      - [WCAG overview](https://www.w3.org/WAI/standards-guidelines/wcag/)
+      - [components of web accessibility](https://www.w3.org/WAI/fundamentals/components/)
+      - [WCAG: understanding conformance](https://www.w3.org/WAI/WCAG21/Understanding/conformance)
+      - [WCAG: techniques for success criteria](https://www.w3.org/WAI/WCAG21/Understanding/understanding-techniques)
+      - [WCAG: understanding metadata](https://www.w3.org/WAI/WCAG21/Understanding/understanding-metadata)
+    
+    - other 
+      - [UAAG: user agent accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/uaag/)
+      - [ATAG: authoring tool accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/atag/)
+      - [mdn learn accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility)
+      - [ARIA: accessible rich internet applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
+      - [WAI: web accessibility initiative](https://www.w3.org/WAI/)
+      - [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/s)
   
   - javascript 
     - [ecmascript 2020 standard](https://262.ecma-international.org/11.0/)
