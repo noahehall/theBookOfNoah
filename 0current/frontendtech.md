@@ -16,7 +16,8 @@
 
 ## specs and stuff
   - accessibility
-    - [WCA 2.1G: web content accessibility guidelines](https://www.w3.org/TR/WCAG21/)
+    - [WCAG 2.1: web content accessibility guidelines](https://www.w3.org/TR/WCAG21/)
+    - [WCAG overview](https://www.w3.org/WAI/standards-guidelines/wcag/)
     - [mdn learn accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility)
     - [ARIA: accessible rich internet applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
     - [WAI: web accessibility initiative](https://www.w3.org/WAI/)
