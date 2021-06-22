@@ -22,7 +22,7 @@
   - [WAI: web accessibility initiative](https://www.w3.org/WAI/)
   - [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/s)
   - [ecmascript 2020 standard](https://262.ecma-international.org/11.0/)
-  - [mdn javascript reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
+  - [mdn javascript reference](https://developer.mozilla.org/en-US/docs/Web/gJavaScript/Reference)
 
 
 ## accessibility tools
@@ -44,4 +44,12 @@
 
 
 # responsive web design RWD
-  - 
+  - responsive design 
+    - describes an approach to webdesign utilizing a set of best practices
+      - create a layout that can respond to the device being used: in terms of dimensions and resolution and capabilities
+
+## key techniques
+  - fluid images: setting hte max-width property to 100%; images will scale down smaller if their containers width is smaller, but never grow larger than 100% of the images intrinsic width even when their contianer is larger 
+    - thus images maintain their dimensions as the height scales with the width, which scales smaller but never larger
+  
+  - media queries
