@@ -12,7 +12,7 @@ next up
   	- *failures* for things **not** to do 
   	- *advisory techniques* best things to do 
   	- *sufficient techniques* where to start 
-		
+
 # links 
   - [comparison of accessibility tools](https://medium.com/pulsar/which-accessibility-testing-tool-should-you-use-e5990e6ef0a)
   - [microsoft silverlight](https://www.microsoft.com/silverlight/)
@@ -204,7 +204,12 @@ next up
      		- using white space characters to format tables in plain text content
      		- emulating links
      		- using structural markup in a way that does not represent relationships in the content
-     		- using th elements, layout tables
+     		- using `th` elements, layout tables
+     		- using `pre` element to markup tabular information
+     		- inserting non-decorative content by using `:before`or `:after` elements or the `content` property in css
+     		- incorrectly associating table headers and content via the `header` and `id` attributes
+     		- not correctly marking up table headers
+     		- use of `role` presentation on content which conveys semantic information
      		- 
    		- advisory techniques
    		- sufficient techniques
