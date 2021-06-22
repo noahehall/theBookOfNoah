@@ -49,7 +49,7 @@
       - create a layout that can respond to the device being used: in terms of dimensions and resolution and capabilities
 
 ## key techniques
-  - fluid images: 
+  - responsive images: fluid images
     - setting hte max-width property to 100%; images will scale down smaller if their containers width is smaller, but never grow larger than 100% of the images intrinsic width even when their contianer is larger 
     - thus images maintain their dimensions as the height scales with the width, which scales smaller but never larger
     - downsides
@@ -57,6 +57,11 @@
       - relative difficulty in adjusting aspect ratio of images 
         - (e.g. widthxheight likely should be different if mobile vs desktop)
         - i.e. square image for mobile and landscape for desktop
+
+
+  - responsive images: `picture` + `img` elements
+    - utilizes `srcset` and `sizes` to provide sets of images targeted at various screen sizes and the browser is responsible for choosing which image the user will download
+    - overcomes the downsides of using fluid images
   
   - media queries
     - tests browser resolution, and viewport dimensions for targeting css rules
