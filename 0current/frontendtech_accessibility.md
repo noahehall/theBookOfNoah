@@ -109,13 +109,29 @@ next up
 
 ## WCAG: quick reference 
 ### principle 1: perceivable 
-	
+	1.1 text alternatives 
+	1.2 time-based media 
+	1.3 adaptable
+	1.4 distinguishable
+
+
 ### principle 2: operable
+	2.1 keyboard accessible
+	2.2 enough time 
+	2.3 seizures and physical reactions
+	2.4 navigable
+	2.5 input modalities 
+
 
 ### principle 3: understandable 
+	3.1 readable
+	3.2 predictable
+	3.3 input assitance
 
-### principle 4: robust
 
+### principle 4: robust 
+	4.1 compatible
+	
 
 ## WCAG: in depth
   - WCAG: Web Content Accessibility Guidelines
