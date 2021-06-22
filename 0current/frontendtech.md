@@ -62,11 +62,15 @@
   - responsive images: `picture` + `img` elements
     - utilizes `srcset` and `sizes` to provide sets of images targeted at various screen sizes and the browser is responsible for choosing which image the user will download
     - overcomes the downsides of using fluid images
+
+
   
   - media queries
     - tests browser resolution, and viewport dimensions for targeting css rules
     - breakpoints: the point at which a media query takes affect is known as the breakpoint
     - mobile first design: create a single-column layou for narrow devices (e.g. mobile phones) then expand to more complex layouts for larger devices
+    - responsive typography: changing the font sizes within media queries to reflect the screen real estate
+
 
   - flexible grids: 
     - the layout scales up to a point, then media queries are introduced to readjust the base design for to scale further, possibly in a different dimension where the breakpoint takes affect
@@ -90,3 +94,8 @@
   - css grid
     - specify the distribution of space across grid tracks
     - `fr` unit specifying how to distribute space and the number of tracks in the grid
+
+
+  - repsonsive units 
+    - `vw`: viewpoint unit; `1vw` is equal to 1% of the viewport width
+      - useful in responsive typography
