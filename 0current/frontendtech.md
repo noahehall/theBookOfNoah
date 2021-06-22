@@ -1,4 +1,4 @@
-bookmark: search for 'capta' under success criterion 1.1.1 non-text-content
+bookmark: `guideline 1.2 time-based media`
 https://www.w3.org/TR/WCAG21/
 
 next up
