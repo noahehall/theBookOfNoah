@@ -110,28 +110,115 @@ next up
 ## WCAG: quick reference 
 ### principle 1: perceivable 
 	1.1 text alternatives 
+		1.non-text content 
+	
 	1.2 time-based media 
+		1. audio-only and video-only (prerecorded)
+		2. captions (prerecorded)
+		3. audio description or media laternative (prerecorded)
+		4. captions (live)
+		5. audio description (prerecorded)
+		6. sign language (prerecorded)
+		7. extended audio description (prerecorded)
+		8. media laternative (prerecorded)
+		9. audio-only (live) 
+	
 	1.3 adaptable
+		1. info and relationships
+		2. meaningful sequence
+		3. sensory characteristics
+		4. orientation
+		5. identify input purpose
+		6. identify purpose 
+
 	1.4 distinguishable
+		1. use of color
+		2. audio control
+		3. contrast (minimum)
+		4. resize text
+		5. images of text
+		6. contrast (enhanced)
+		7. low or no background audio
+		8. visual presentation
+		9. images of text (no exception)
+		10. reflow
+		11. non-text contrast
+		12. text spacing
+		13. content on hover/focus
 
 
 ### principle 2: operable
 	2.1 keyboard accessible
+		1. keyboard
+		2. no keyboard trap
+		3. keyboard (no exception)
+		4. character key shortcuts
+
 	2.2 enough time 
+		1. timing adjustable
+		2. pause, stop, hide
+		3. no timing
+		4. interruptions
+		5. re-authenticating
+		6. timeouts
+
 	2.3 seizures and physical reactions
+		1. three flashes or below threshold
+		2. three flashes
+		3. animation from interactions
+
 	2.4 navigable
+		1. bypass blocks
+		2. page titled
+		3. focus order
+		4. link purpose (in context)
+		5. multiple ways
+		6. headings and labels
+		7. focus visible
+		8. location
+		9. link purpose (link only)
+		10. section headings
+
 	2.5 input modalities 
+		1. pointer gestures
+		2. pointer cancellation
+		3. label in name
+		4. motion actuation
+		5. target size
+		6. concurrent input mechanisms
 
 
 ### principle 3: understandable 
 	3.1 readable
+		1. language of page
+		2. language of parts
+		3. unusual words
+		4. abbreviations
+		5. reading level
+		6. pronunciation
+
 	3.2 predictable
+		1. on focus
+		2. on input
+		3. consistent navigation
+		4. consistent identification
+		5. change on request
+
 	3.3 input assitance
+		1. error identification
+		2. labels or instructions
+		3. error suggestion
+		4. error prevention (legal, financial, data)
+		5. help
+		6. error prevention (all)
 
 
 ### principle 4: robust 
 	4.1 compatible
-	
+		1. parsing
+		2. name, role, value
+		3. status messages
+
 
 ## WCAG: in depth
   - WCAG: Web Content Accessibility Guidelines
