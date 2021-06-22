@@ -150,6 +150,9 @@ next up
   			- using ASCII art without providing a text alternative
 			
 			- advisory techniques
+  			- using `noembed` with `embed`
+  			- using css margin and padding rules instead of spacer images for layout design
+  			- providing user instructions with `AutomationProperties.HelpText` in silverlight
 			
 			- sufficient techniques
   			- situation A: if a short description can serve the same purpose and present the same information as the non-text content
