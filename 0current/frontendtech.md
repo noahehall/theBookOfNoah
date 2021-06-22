@@ -22,6 +22,7 @@
     - [UAAG: user agent accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/uaag/)
     - [ATAG: authoring tool accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/atag/)
     - [WCAG: understanding conformance](https://www.w3.org/WAI/WCAG21/Understanding/conformance)
+    - [WCAG: techniques for success criteria](https://www.w3.org/WAI/WCAG21/Understanding/understanding-techniques)
     - [mdn learn accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility)
     - [ARIA: accessible rich internet applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
     - [WAI: web accessibility initiative](https://www.w3.org/WAI/)
@@ -78,6 +79,9 @@
          - purchasing 
          - regulation
          - contractual agreements 
+      4. sufficient and advisory techniques: for each *guideline* and *success criteria* a number of techniques are documented.
+         - techniques sufficient for *meeting* success crtieria
+         - techniques sufficient for *meeting* and **go beyond** (these are *advisory techniques*)
   
 
 
