@@ -18,6 +18,7 @@ next up
       - [WCAG overview](https://www.w3.org/WAI/standards-guidelines/wcag/)
       - [components of web accessibility](https://www.w3.org/WAI/fundamentals/components/)
       - [WCAG: understanding conformance](https://www.w3.org/WAI/WCAG21/Understanding/conformance)
+      - [WCAG: understanding techniques for WCAG success criteria](https://www.w3.org/TR/2014/NOTE-UNDERSTANDING-WCAG20-20140916/understanding-techniques.html)
       - [WCAG: techniques for success criteria](https://www.w3.org/WAI/WCAG21/Understanding/understanding-techniques)
       - [WCAG: understanding metadata](https://www.w3.org/WAI/WCAG21/Understanding/understanding-metadata)
       - [WCAG: understanding 2.2 ](https://www.w3.org/WAI/WCAG21/Understanding/)
@@ -45,6 +46,8 @@ next up
 
 # accessibility
 ## terms 
+	- user interface components:
+	- information components:
   - mainstream user agents: e.g. common web browsers built for people without disabilities, or targeting broad and diverse audiences that usually include people without disabilities
     - provide important functionality to support assistive technologies
       - retrieving web content from program objects
@@ -109,7 +112,12 @@ next up
 
 ## WCAG: quick reference 
 ### principle 1: perceivable 
+	- information and user interface components must be presentable to users in ways they can perceive
+	
 	1.1 text alternatives 
+		- provide text alternatives for any non-text content
+		- examples: large print, braille, speech, symbols, simpler language
+		
 		1.non-text content 
 	
 	1.2 time-based media 
