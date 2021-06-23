@@ -255,7 +255,14 @@ next up
         - using the silverligh defualt tab seuqence and altering tab sequences with properties
 
 		3. sensory characteristics (LEVEL A)
-      - instructions provided for understanding and operating content do not rely solely on sensory characteristics of components
+      - instructions provided for understanding and operating content do not rely solely on sensory characteristics of components (see terms)
+      
+      - failures
+        - identifying content only by its shape or location
+        - using a graphical symbol alone to convey information
+
+      - sufficient techniques 
+        - providing textual identification of items that otherwise rely only on sensory infomration to be understood
 
 
 		4. orientation
