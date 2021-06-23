@@ -265,9 +265,33 @@ next up
         - providing textual identification of items that otherwise rely only on sensory infomration to be understood
 
 
-		4. orientation
-		5. identify input purpose
-		6. identify purpose 
+		4. orientation (LEVEL AA)
+      - content does not restrict its view and operation to a single display orientation, e.g. portrait/landscape, unless a specific display orientation is essential
+      
+      - failures 
+        - locking the orientation to landscape/portrait view
+      
+      - sufficient techniques 
+        - using CSS to set the orientation to allow both landscape and portrait
+        - use of show/hide controls to allow access to content in different orientations  
+   		
+    5. identify Input Purpose (LEVEL AA)
+      - the purpose of each input field collecting information about the user can be programmatically determined when: 
+        - input field serves a purpose identified in the `input purposes for user interface components setion`
+        - the content is implemented using technologies with support for identifying the expected meaning for form input data 
+    
+		5. identify purpose (LEVEL AAA)
+      - in content implemented using markup languages, the purpose of user interface components, icons and regions can be prorammatically determined
+      
+      - advisory techniques
+        - enable user agents to find the version of the content that best fits their needs
+        - using semantics to identify important features `coga-simplification=simplest`
+        - use of `aria-invalid` and `aria-required`
+
+      - sufficient techniques
+        - using aria landmarks to identify regions of a page
+        - using microdata to markup user interface components (future link)
+        
 
 	1.4 distinguishable
 		1. use of color
