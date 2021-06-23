@@ -210,9 +210,13 @@ next up
      		- incorrectly associating table headers and content via the `header` and `id` attributes
      		- not correctly marking up table headers
      		- use of `role` presentation on content which conveys semantic information
-     		- 
+     		
    		- advisory techniques
-     		- 
+     		- using css to control visual presentation of text
+     		- positioning labels to maximize predictability of relationships
+     		- using the `aria-describedby` property to provide a descriptive label for user interface controls
+     		- identifying a required field with the aria-required property
+     		- organizing a page using headings
    		
        - sufficient techniques
 
