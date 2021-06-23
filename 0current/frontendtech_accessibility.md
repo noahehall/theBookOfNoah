@@ -212,7 +212,9 @@ next up
      		- use of `role` presentation on content which conveys semantic information
      		- 
    		- advisory techniques
-   		- sufficient techniques
+     		- 
+   		
+       - sufficient techniques
 
 		2. meaningful sequence
 		3. sensory characteristics
