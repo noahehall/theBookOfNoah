@@ -128,6 +128,13 @@ next up
       - monitoring mainstream user agents API invocations (e.g. the HTML5 audio api) to provide alternatives
   
   - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
+  - sensory characteristics: aspects of UI components, e.g. 
+    - shape
+    - color
+    - size
+    - visual location
+    - orientation
+    - sound
 
 ## WCAG: quick reference 
 	- link in `specs and stuff` for more information on this section
@@ -219,9 +226,38 @@ next up
      		- organizing a page using headings
    		
        - sufficient techniques
+         - situation A: the technology provides a semantic structure to make information and relatinships conveyed through resentation programmatically determinable
+           - TODO: alternative techniques
+         
+         - situation B: the technology in use does not provide the semantic structure to make the information and relationships conveyed through presentation programmatically determinable 
+           - TODO: alternative techniques
+         
+		2. meaningful sequence (LEVEL A)
+   		- when the sequence in which content is presented affects its meaning, a correct reading sequence can be programmatically determined
+   		
+      - failures
+        - using white space characters to format tables in plain text content
+        - using white space characters to create multiple columns in plain text content
+        - using white space chracters to control spacing within a word
+        - using an HTML layout table that does not make sense when linearized 
+        - changing the meaning of content by positioning information with CSS
 
-		2. meaningful sequence
-		3. sensory characteristics
+      - sufficient techniques 
+        - ordering the content in a meaningful sequence
+          - using a unicode `right-to-left` mark (RLM) or `left-to-right` mark (LRM) to mix text direction inline
+          - using the `dir attribute on an inline element to resolve problems with nested directional runs
+          - positioning context based on structural markup
+          - using css `letter-spacing` to control spacing within a word
+        - making the DOM order match the visual order
+        - using the tabindex property to specify a logical reading order and a logical tab order in flash
+          - fk flash 
+        - ensuring correct tab and reading order in PDF documents
+        - using the silverligh defualt tab seuqence and altering tab sequences with properties
+
+		3. sensory characteristics (LEVEL A)
+      - instructions provided for understanding and operating content do not rely solely on sensory characteristics of components
+
+
 		4. orientation
 		5. identify input purpose
 		6. identify purpose 
