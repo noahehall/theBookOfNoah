@@ -5,6 +5,7 @@ bookmark: just started
 https://www.w3.org/WAI/WCAG21/quickref/
 
 bookmark: just tsarted, but continue on this before the other shit
+section -> States and Properties
 https://www.lullabot.com/articles/what-heck-aria-beginners-guide-aria-accessibility
 
 next up
@@ -159,23 +160,38 @@ next up
     - sound
   
   
+
+
 ## ARIA
   - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
     - web accessibility issues cannot be managed with native HTML, ARIA bridges the gap between HTML and assistive technologies
 
   - main concepts
     - `roles`: used to define a typ eof user interface element, e.g. `role=ROLE_NAME`
+      
       - `abstract roles`: utilized by user agents (e.g. browsers) and should not be used in code
         - give `roles` their meanings behind the scenes
+      
       - `document structure roles`: arent normally interactive, but isntead provide descriptions for sections wihtin a page
         - e.g. `role='img|document|heading|list|listitem|toolbar'`
         - used to identify ontent while navigating a page
         - provides context of the context their viewing 
         - the most robust choice is to use `document structure roles` and `html5 semantic elements` together
+      
       - `landmark roles`: for easier navigation, identify eachh section of content within a page
         - e.g. `role='banner|contentinfo|form|main|navigation|search'`
-      - 
+        - assistive technologies will announce the start and end of each landmark role set on a page and display list of these roles/regions (e.g. screen readers do this)
+      
+      - widget roles: add semantic meaning to elements and user interfaces
+        - e.g. standalone widgets `role='alert|button|checkbox|link|menuitem|tab|tabpanel`
+        - e.g. composite widgets `role='combobox|grid|listbox|menu|radiogroup|tablist`
+        - widge roles are for elements users interact with to get things done
+          - e.g. completing forms, open/closing tabs/panels, navigating a main/sidebar menu
+    - states
+
+    - properties
   
+
 ## WCAG: quick reference 
 	- link in `specs and stuff` for more information on this section
 
