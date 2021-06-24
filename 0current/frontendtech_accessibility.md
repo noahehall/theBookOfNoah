@@ -80,9 +80,26 @@ next up
 # accessibility
 
 ## best practices 
+  - use a button instead of a link when 
+    - the link is empty/has no `href` attribute
+    - the link has an `onclick` handler
+  
+  - dont add redundant aria `landmark` roles to html5 semantic elements
+    - `role='banner'` === `<header>`
+    - `role='complementary'` === `<aside>`
+    - `role='contentinfo'` === `<footer>`
+    - `role='form'` === `<form>`
+    - `role='main`' === `<main>`
+    - `role='navigation'` === `<nav>`
+    - `role='region'` === `<section>`
+    - 
+
 
 ## gotchas
-
+  - dont confuse `button` with `a.role='button'`
+    - links activated via `enter` and `return` 
+    - buttons activated via `spacebar`
+    - `role='button'` do not add `spacebar` listeners to its element
 
 ## the accessibility mindset
     - [apply name, role and value to all user interface components](https://www.w3.org/TR/WCAG21/#name-role-value)
