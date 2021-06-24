@@ -195,15 +195,25 @@ next up
         - e.g. `checkbox[aria-checked|disabled]`
       - `properties` rarely changed once set
         - e.g. `div[class='fakeinput'][aria-labelledby|describedby]`
+      - common states and props
+        - `aria-describedby|haspopup|hidden|label|labeledby
       
       - drag-and-drop attributes
-        - TODO
+        - conveyes information to assistive technologies about drag-and-drop elements, including draggable elmenets and their drop targets
+        - e.g. `aria-dropeffect|grabbed`
       
       - live region attributes
-        - TODO
+        - indicates changes in content for a users assistive technology, 
+        - these elements dont need to have focus and can include infomration on how the user should proceed
+          - e.g. whether a message will be read aloud with the flow of content (`aria-alive='polite'`) 
+          - e.g. wheter a message will inerrupt the flow of ocntent and be read aloud immediately (`aria-live='assertive'`)
+          - e.g. `aria-atomic|busy|live`
       
       - relationship attributes
-        - TODO
+        - add relationships between elements that cant be determined otherwise
+        - for understanding how informatin is related when nevaginat the page and gathering additional data from various elements like forms, menus, tabs/panels
+        - e.g. `aria-describedby|labeledby`
+        - 
       
       - widget attributes
         - TODO
