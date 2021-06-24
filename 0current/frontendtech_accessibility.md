@@ -78,6 +78,12 @@ next up
 
 
 # accessibility
+
+## best practices 
+
+## gotchas
+
+
 ## big things popping
     - [apply name, role and value to all user interface components](https://www.w3.org/TR/WCAG21/#name-role-value)
     - always provide descriptive identifications of content that cannot be made accessible in a meaningful way
