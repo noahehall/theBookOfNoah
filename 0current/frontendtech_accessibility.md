@@ -46,6 +46,8 @@ next up
       - [accessibility of wai-aria](https://alistapart.com/article/the-accessibility-of-wai-aria/)
       - [browser and assistive technolgy tests redux](https://www.tpgi.com/browser-assistive-technology-tests-redux/)
       - dope shit
+        - [wai-aria 1.3](https://w3c.github.io/aria/)
+          - make sure you scroll down to mid-screen for the full list
         - [lullabot fundamentals](https://www.lullabot.com/articles/what-heck-aria-beginners-guide-aria-accessibility)
         - [html5 & wai-aria](https://zufelt.ca/blog/are-you-confused-html5-and-wai-aria-yet)
         - [aria attribute support](https://a11ysupport.io/)
@@ -147,13 +149,7 @@ next up
     
     - capabilities 
       - monitoring mainstream user agents API invocations (e.g. the HTML5 audio api) to provide alternatives
-  
-  
-
-## ARIA
-  - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
-    - web accessibility issues cannot be managed with native HTML, ARIA bridges the gap between HTML and assistive technologies
-
+    - 
   - sensory characteristics: aspects of UI components, e.g. 
     - shape
     - color
@@ -161,8 +157,25 @@ next up
     - visual location
     - orientation
     - sound
+  
+  
+## ARIA
+  - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
+    - web accessibility issues cannot be managed with native HTML, ARIA bridges the gap between HTML and assistive technologies
 
-
+  - main concepts
+    - `roles`: used to define a typ eof user interface element, e.g. `role=ROLE_NAME`
+      - `abstract roles`: utilized by user agents (e.g. browsers) and should not be used in code
+        - give `roles` their meanings behind the scenes
+      - `document structure roles`: arent normally interactive, but isntead provide descriptions for sections wihtin a page
+        - e.g. `role='img|document|heading|list|listitem|toolbar'`
+        - used to identify ontent while navigating a page
+        - provides context of the context their viewing 
+        - the most robust choice is to use `document structure roles` and `html5 semantic elements` together
+      - `landmark roles`: for easier navigation, identify eachh section of content within a page
+        - e.g. `role='banner|contentinfo|form|main|navigation|search'`
+      - 
+  
 ## WCAG: quick reference 
 	- link in `specs and stuff` for more information on this section
 
