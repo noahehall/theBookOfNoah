@@ -55,6 +55,7 @@ next up
         - [html5 & wai-aria](https://zufelt.ca/blog/are-you-confused-html5-and-wai-aria-yet)
         - [aria attribute support](https://a11ysupport.io/)
         - [html5 accessibility support](https://www.html5accessibility.com/)
+        - [using aria](https://w3c.github.io/using-aria/)
           - make sure to click into each element screen
         - [html5 landmarks exposed](https://www.scottohara.me/blog/2019/04/05/landmarks-exposed.html)
         - [jaws aria role support](https://freedomscientific.gith>ub.io/VFO-standards-support/aria.html)
@@ -168,7 +169,7 @@ next up
   - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
     - web accessibility issues cannot be managed with native HTML, ARIA bridges the gap between HTML and assistive technologies
 
-  - main concepts
+  - main concepts and brief examples
     - `roles`: used to define a typ eof user interface element, e.g. `role=ROLE_NAME`
       
       - `abstract roles`: utilized by user agents (e.g. browsers) and should not be used in code
@@ -196,7 +197,7 @@ next up
       - `properties` rarely changed once set
         - e.g. `div[class='fakeinput'][aria-labelledby|describedby]`
       - common states and props
-        - `aria-describedby|haspopup|hidden|label|labeledby
+        - `aria-describedby|haspopup|hidden|label|labeledby`
       
       - drag-and-drop attributes
         - conveyes information to assistive technologies about drag-and-drop elements, including draggable elmenets and their drop targets
@@ -216,7 +217,9 @@ next up
         - 
       
       - widget attributes
-        - TODO
+        - for common UI elements that receive input from users while processing those actions and information
+        - for avoiding confusion and easily utilizing interactive UI elements like forms, overlays/modals/popups
+        - e.g. `aria-autocomplete|checked|disabled|label|required`
   
 
 ## WCAG: quick reference 
