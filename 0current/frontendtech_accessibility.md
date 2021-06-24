@@ -4,9 +4,7 @@ https://www.w3.org/TR/WCAG21/
 bookmark: just started
 https://www.w3.org/WAI/WCAG21/quickref/
 
-bookmark: just tsarted, but continue on this before the other shit
-section -> States and Properties
-https://www.lullabot.com/articles/what-heck-aria-beginners-guide-aria-accessibility
+
 
 next up
   check out the dope shit list in this doc
@@ -92,7 +90,7 @@ next up
     - `role='main`' === `<main>`
     - `role='navigation'` === `<nav>`
     - `role='region'` === `<section>`
-    - 
+
 
 
 ## gotchas
