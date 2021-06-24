@@ -222,6 +222,22 @@ next up
         - e.g. `aria-autocomplete|checked|disabled|label|required`
   
 
+  - rules of aria
+    - rule 1
+      - dont use aria if there a native HTML element already provides the accessibility support
+        - [check the html element here](https://www.html5accessibility.com/)
+      - exceptions 
+        - the design doenst allow for a specific native element because of limitations on styling
+        - the desired accessibility feature isnt uspported by native html
+          - [check the accessibility feature status here](https://www.tpgi.com/aria-in-html-there-goes-the-neighborhood/#html5na)
+    
+    -  rule 2
+       -  do not change the native HTML semantics unless you absolutely have to 
+          - ARIA does not get added to the DOM immediately
+            - so first get the DOM semantically correct, then add ARIA
+            - e.g. instead of `span.role=button` just use a friggin `button`
+
+
 ## WCAG: quick reference 
 	- link in `specs and stuff` for more information on this section
 
