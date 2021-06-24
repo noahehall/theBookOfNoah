@@ -131,6 +131,9 @@ next up
     - capabilities 
       - monitoring mainstream user agents API invocations (e.g. the HTML5 audio api) to provide alternatives
   
+  
+
+## ARIA
   - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
   - sensory characteristics: aspects of UI components, e.g. 
     - shape
@@ -139,6 +142,7 @@ next up
     - visual location
     - orientation
     - sound
+
 
 ## WCAG: quick reference 
 	- link in `specs and stuff` for more information on this section
