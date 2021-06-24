@@ -16,11 +16,71 @@ next up
   	- *sufficient techniques* where to start 
 
 # links 
-  - [comparison of accessibility tools](https://medium.com/pulsar/which-accessibility-testing-tool-should-you-use-e5990e6ef0a)
-  - [microsoft silverlight](https://www.microsoft.com/silverlight/)
+  - tools
+    - [comparison of accessibility tools](https://medium.com/pulsar/which-accessibility-testing-tool-should-you-use-e5990e6ef0a)
+    - [microsoft silverlight](https://www.microsoft.com/silverlight/)
+    - [JAWS screen reader tool](https://freedomscientific.github.io/VFO-standards-support/)
+    - [nvda screen reader for windows](https://github.com/nvaccess/nvda)
+    - [html codesniffer](https://github.com/squizlabs/HTML_CodeSniffer)
+    - [color palette](https://github.com/dequelabs/color-palette)
+    - [webaim contrast checker](https://webaim.org/resources/contrastchecker/)
+      - [CLI check example](https://webaim.org/resources/contrastchecker/?fcolor=0000FF&bcolor=AB131B&api)
+    - [big list of bookmarklets](https://github.com/pauljadam/bookmarklets)
+      - google how to use them for your particular browser
+    - [text spacing bookmarklet](https://cdpn.io/stevef/debug/YLMqbo)
+    - [website accessibility checklist pt2](https://www.lullabot.com/articles/accessibility-checklist-your-website-part-2)
+    - [webiste accessibility checklist pt1](https://www.lullabot.com/articles/5-steps-more-accessible-website)
+    - [colorzilla](https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp?hl=en)
+    - [magnifying glass](https://chrome.google.com/webstore/detail/magnifying-glass-hover-zo/gfcbebjdigncefnokoncehghgfndjcgn?hl=en)
+    - [font finder](https://chrome.google.com/webstore/detail/font-finder/bhiichidigehdgphoambhjbekalahgha/related?hl=en)https://chrome.google.com/webstore/detail/whatfont/jabopobgcpjmedljpbcaablpmlmfcogm?hl=en
+    - [what font](https://chrome.google.com/webstore/detail/whatfont/jabopobgcpjmedljpbcaablpmlmfcogm?hl=en)
+    - [google accessibility checker via lovely api](https://lovelyapi.com/accessibility)
+    - [accessibility insights](https://chrome.google.com/webstore/detail/accessibility-insights-fo/pbjjkligggfmakdaogkfomddhfmpjeni?hl=en)
+    - [axe devtools by deque](https://chrome.google.com/webstore/detail/axe-devtools-web-accessib/lhdoppojpmngadmnindnejefpokejbdd?hl=en)
+    - [siteimprove accessibility checker](https://chrome.google.com/webstore/detail/siteimprove-accessibility/efcfolpjihicnikpmhnmphjhhpiclljc?hl=en)
+    - [arc toolkit](https://chrome.google.com/webstore/detail/arc-toolkit/chdkkkccnlfncngelccgbgfmjebmkmce)
+    - [wave evaluation tool](https://chrome.google.com/webstore/detail/wave-evaluation-tool/jbbplnpkjmmeebjpijfedlgcdilocofh/related?hl=en-US)
+    - [web developer extension](https://chrome.google.com/webstore/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm?hl=en)
+    - [web disability simulator](https://chrome.google.com/webstore/detail/web-disability-simulator/olioanlbgbpmdlgjnnampnnlohigkjla?hl=en)
+    - [lighthouse](https://developers.google.com/web/tools/lighthouse/)
+    - [nv access](https://www.nvaccess.org/)
+    - [color contrast analyser](https://www.tpgi.com/color-contrast-checker/)
+    - [PEAT: photosensitive epilepsy analysis tool](https://trace.umd.edu/peat/)
+    - [lighthouse](https://github.com/GoogleChrome/lighthouse)
+    - [axe: accessibility testing engine](https://github.com/dequelabs/axe-core)
+  
+    - mac specific
+      - [voiceover user guide](https://support.apple.com/guide/voiceover/welcome/10) 
+      - [voice control](https://support.apple.com/en-us/HT210539)
+      - [hover text](https://support.apple.com/en-gb/guide/mac-help/mchlb203bc78/mac)
+      - [text-to-speech](https://support.apple.com/en-in/guide/mac-help/mh27448/mac)
+      - [dark mode](https://support.apple.com/en-us/HT208976)
+      - [dictation](https://support.apple.com/en-ie/guide/mac-help/mh40584/mac)
+      - [zoom](https://support.apple.com/en-us/HT210978)
+    
+    - windows specific
+      - [narrator screen reader](https://support.microsoft.com/en-us/windows/hear-text-read-aloud-with-narrator-040f16c1-4632-b64e-110a-da4a0ac56917)
+      - [magnifier](https://support.microsoft.com/en-us/windows/use-magnifier-to-make-things-on-the-screen-easier-to-see-414948ba-8b1c-d3bd-8615-0e5e32204198)
+      - [curosr & mouse pointer size](https://www.howtogeek.com/427263/how-to-change-the-mouse-pointer-color-and-size-on-windows-10/)
+      - [spech recognition](https://support.microsoft.com/en-us/windows/how-to-use-speech-recognition-in-windows-d7ab205a-1f83-eba1-d199-086e4a69a49a)
+      - [high contrast](https://support.microsoft.com/en-us/windows/turn-high-contrast-mode-on-or-off-in-windows-909e9d89-a0f9-a3a9-b993-7a6dcee85025)
+      - [read in braille](https://support.microsoft.com/en-us/windows/chapter-8-using-narrator-with-braille-3e5f065b-1c9d-6eb2-ec6d-1d07c9e94b20)
+      - [color filters](https://support.microsoft.com/en-us/windows/use-color-filters-in-windows-10-43893e44-b8b3-2e27-1a29-b0c15ef0e5ce)
+    
+    - the best OS ever made in the universe
+      - [gnome screen reader](https://help.gnome.org/users/orca/stable/)
 
 
   - accessibility
+    - general
+      - [accessibility definitions and acronyms](https://www.lullabot.com/articles/web-accessibility-definitions-and-acronyms)
+
+
+    - user agents
+      - [accessibility object model oldie-but-goodie tutorial](https://tink.uk/playing-with-the-accessibility-object-model-aom/)
+      - [WICG accessibility object modal explainer](https://github.com/WICG/aom/blob/gh-pages/explainer.md)
+      - [WICG aom github](https://github.com/WICG/aom)
+
     - WCAG
       - [WCAG 2.1: web content accessibility guidelines](https://www.w3.org/TR/WCAG21/)
       - [WCAG overview](https://www.w3.org/WAI/standards-guidelines/wcag/)
@@ -44,8 +104,13 @@ next up
       - [wai-aria accessibility feature support](https://caniuse.com/?search=aria)
       - [accessibility of wai-aria](https://alistapart.com/article/the-accessibility-of-wai-aria/)
       - [browser and assistive technolgy tests redux](https://www.tpgi.com/browser-assistive-technology-tests-redux/)
+      - [html accessibility taskforce](https://www.w3.org/WAI/PF/html-task-force)
+      - [wikipedia assistive technology](https://en.wikipedia.org/wiki/Assistive_technology)
       
       - dope shit
+        - [mdn using roles, states, and properties](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques)
+        - [google introduction to aria](https://developers.google.com/web/fundamentals/accessibility/semantics-aria/)
+        - [aria in html](https://www.w3.org/TR/html-aria/)
         - [aria in html](https://www.tpgi.com/aria-in-html-there-goes-the-neighborhood/)
         - [wai-aria 1.3](https://w3c.github.io/aria/)
           - make sure you scroll down to mid-screen for the full list
@@ -66,14 +131,6 @@ next up
       - [UAAG: user agent accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/uaag/)
       - [ATAG: authoring tool accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/atag/)
   
-
-## accessibility tools
-  - [lighthouse](https://github.com/GoogleChrome/lighthouse)
-  - [webaim: web accessibhttps://developer.mozilla.org/en-US/docs/Learn/Accessibilityility in mind](https://wave.webaim.org/extension/)
-    - #!@#!! their CLI .25 fee
-    - but the extensions are an absolute necessity
-  - [axe: accessibility testing engine](https://github.com/dequelabs/axe-core)
-
 
 # accessibility
 
@@ -270,39 +327,57 @@ next up
       - give all interactive elements an accessible name
         - i.e. apply an label element or `aria-label` attribute to all interactive elements (e.g. inputs)  
     
-    - common aria use-cases 
-      
-      - semantics 
-        - use appropriate html5 and then aria roles & attributes to provide effective semantic meaning to content 
-      
-      - descriptive labels
-        - whenever you need to provide additional context to HTML elements like buttons or links
-          - `aria-label='your extended description'`
-      
-      - alerts
-        - inform assistive technologies of important events in response to user interactions or application life cycles by adding aria `live regions` and `alert messages` to HTML elements
-          - `<div class='alert-message' role='alert'>something happened!</div>` 
-          - `aria-live=assert`
-      
-      - relationships
-        - use aria attributes on elements who are related
-          - e.g. `aria-controls=someid.id=controllerid` && `someelement.id=someid.aria-labeledby=controllerid`
-      
-      - forms
-        - add aria attributes to form elements to support screen readers and other assistive technologies
+  - common aria use-cases 
+    
+    - semantics 
+      - use appropriate html5 and then aria roles & attributes to provide effective semantic meaning to content 
+    
+    - descriptive labels
+      - whenever you need to provide additional context to HTML elements like buttons or links
+        - `aria-label='your extended description'`
+    
+    - alerts
+      - inform assistive technologies of important events in response to user interactions or application life cycles by adding aria `live regions` and `alert messages` to HTML elements
+        - `<div class='alert-message' role='alert'>something happened!</div>` 
+        - `aria-live=assert`
+    
+    - relationships
+      - use aria attributes on elements who are related
+        - e.g. `aria-controls=someid.id=controllerid` && `someelement.id=someid.aria-labeledby=controllerid`
+    
+    - forms
+      - structure
         - organized related sections of a form into fieldsets
+      - labeling
+        - add aria attributes to form elements to support screen readers and other assistive technologies
+      - events
         - use inline form errors that appear next to form control that causes the error
           - e.g. `aria-required` for controls and `aria-autocomplete`
-      
-      - taborder 
-        - some elements must automaically receive keyboard focus
-          - `skip to main content` links 
-          - ...TODO
-        - some application states require specific tab order restraints
-          - when a modal/popup/etc is open taborder should be constrained to elements within the component and not be permitted on lower dimensions
-      
-      - high contrast
-      - text resize
+    
+    - taborder 
+      - some elements must automaically receive keyboard focus
+        - `skip to main content` links 
+        - ...TODO
+      - some application states require specific tab order restraints
+        - when a modal/popup/etc is open taborder should be constrained to elements within the component and not be permitted on lower dimensions
+    
+    - color contrast & intensity
+    
+    - navigation
+      - skip navigation
+    
+    - image handling
+    
+    - text resize
+    
+    - search form and presentation
+    
+    - drag and drop
+    
+    - html5 vs aria
+      - remove duplicate tags
+      - remove null tags
+
 
 
 ## WCAG: quick reference 
