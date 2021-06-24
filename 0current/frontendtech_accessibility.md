@@ -248,6 +248,16 @@ next up
     - rule 5
       - give all interactive elements an accessible name
         - i.e. apply an label element or `aria-label` attribute to all interactive elements (e.g. inputs)  
+    
+    - common aria use-cases 
+      
+      - descriptive labels
+        - whenever you need to provide additional context to HTML elements like buttons or links
+          - `aria-label='your extended description'`
+      
+      - alerts
+        - inform assistive technologies of important events in response to user interactions or application life cycles by adding aria `live regions` and `alert messages` to HTML elements
+          - `<div class='alert-message' role='alert'>something happened!</div>` 
 
 
 ## WCAG: quick reference 
