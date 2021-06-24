@@ -231,11 +231,23 @@ next up
         - the desired accessibility feature isnt uspported by native html
           - [check the accessibility feature status here](https://www.tpgi.com/aria-in-html-there-goes-the-neighborhood/#html5na)
     
-    -  rule 2
-       -  do not change the native HTML semantics unless you absolutely have to 
+    - rule 2
+       - do not change the native HTML semantics unless you absolutely have to 
           - ARIA does not get added to the DOM immediately
             - so first get the DOM semantically correct, then add ARIA
             - e.g. instead of `span.role=button` just use a friggin `button`
+    
+    - rule 3
+      - all interactive ARIA controls must be keyboard accessible 
+        - add `tabindex='0'` to force them into the logical tab order and able to receive keyboard focus
+
+    - rule 4
+      - never add `role='presentation'` or `aria-hidden='true'` to a focusable element
+        - this will cause them to lose focasibility and be removed from the logical taborder
+    
+    - rule 5
+      - give all interactive elements an accessible name
+        - i.e. apply an label element or `aria-label` attribute to all interactive elements (e.g. inputs)  
 
 
 ## WCAG: quick reference 
