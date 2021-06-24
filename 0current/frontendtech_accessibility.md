@@ -274,6 +274,14 @@ next up
           - e.g. `aria-required` for controls and `aria-autocomplete`
       
       - taborder 
+        - some elements must automaically receive keyboard focus
+          - `skip to main content` links 
+          - ...TODO
+        - some application states require specific tab order restraints
+          - when a modal/popup/etc is open taborder should be constrained to elements within the component and not be permitted on lower dimensions
+      
+      - high contrast
+      - text resize
 
 
 ## WCAG: quick reference 
