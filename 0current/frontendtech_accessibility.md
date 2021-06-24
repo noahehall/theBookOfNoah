@@ -32,14 +32,18 @@ next up
         - [WCAG: how to meet WCAG quick reference](https://www.w3.org/WAI/WCAG21/quickref/)
         - [WCAG: techniques for WCAG 2.2](https://www.w3.org/WAI/WCAG21/Techniques/)
         - [WCAG: document relation, explains where to go for what?](https://www.w3.org/WAI/standards-guidelines/wcag/docs/)
-    
-    - other 
-      - [UAAG: user agent accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/uaag/)
-      - [ATAG: authoring tool accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/atag/)
-      - [mdn learn accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility)
+        
+    - aria
       - [ARIA: accessible rich internet applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
       - [WAI: web accessibility initiative](https://www.w3.org/WAI/)
       - [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/s)
+      - dope shit
+        - https://www.lullabot.com/articles/what-heck-aria-beginners-guide-aria-accessibility
+
+    - other 
+      - [mdn learn accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility)
+      - [UAAG: user agent accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/uaag/)
+      - [ATAG: authoring tool accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/atag/)
   
 
 ## accessibility tools
@@ -294,6 +298,7 @@ next up
         
 
 	1.4 distinguishable
+    - make it easier for user sto see and hear content including separating foreground from back
 		1. use of color
 		2. audio control
 		3. contrast (minimum)
