@@ -57,7 +57,7 @@ next up
         - [html5 accessibility support](https://www.html5accessibility.com/)
           - make sure to click into each element screen
         - [html5 landmarks exposed](https://www.scottohara.me/blog/2019/04/05/landmarks-exposed.html)
-        - [jaws aria role support](https://freedomscientific.github.io/VFO-standards-support/aria.html)
+        - [jaws aria role support](https://freedomscientific.gith>ub.io/VFO-standards-support/aria.html)
         - [web apps and aria FAQ](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Web_applications_and_ARIA_FAQ)
         - [power mapper wai-aria](https://www.powermapper.com/tests/screen-readers/aria/)
         - [w3c tools and techniques](https://www.w3.org/WAI/people-use-web/tools-techniques/)
@@ -190,7 +190,11 @@ next up
         - widge roles are for elements users interact with to get things done
           - e.g. completing forms, open/closing tabs/panels, navigating a main/sidebar menu
     - states and properties
-      - TODO
+      - used together to suppor ARIA roles existing on a page
+      - `states` change based on user interaction or state of UI components via JS event handlers
+        - e.g. `checkbox[aria-checked|disabled]`
+      - `properties` rarely changed once set
+        - e.g. `div[class='fakeinput'][aria-labelledby|describedby]`
       
       - drag-and-drop attributes
         - TODO
