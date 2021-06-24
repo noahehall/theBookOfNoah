@@ -251,6 +251,9 @@ next up
     
     - common aria use-cases 
       
+      - semantics 
+        - use appropriate html5 and then aria roles & attributes to provide effective semantic meaning to content 
+      
       - descriptive labels
         - whenever you need to provide additional context to HTML elements like buttons or links
           - `aria-label='your extended description'`
@@ -258,6 +261,19 @@ next up
       - alerts
         - inform assistive technologies of important events in response to user interactions or application life cycles by adding aria `live regions` and `alert messages` to HTML elements
           - `<div class='alert-message' role='alert'>something happened!</div>` 
+          - `aria-live=assert`
+      
+      - relationships
+        - use aria attributes on elements who are related
+          - e.g. `aria-controls=someid.id=controllerid` && `someelement.id=someid.aria-labeledby=controllerid`
+      
+      - forms
+        - add aria attributes to form elements to support screen readers and other assistive technologies
+        - organized related sections of a form into fieldsets
+        - use inline form errors that appear next to form control that causes the error
+          - e.g. `aria-required` for controls and `aria-autocomplete`
+      
+      - taborder 
 
 
 ## WCAG: quick reference 
