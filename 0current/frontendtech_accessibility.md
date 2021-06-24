@@ -4,6 +4,9 @@ https://www.w3.org/TR/WCAG21/
 bookmark: just started
 https://www.w3.org/WAI/WCAG21/quickref/
 
+bookmark: just tsarted, but continue on this before the other shit
+https://www.lullabot.com/articles/what-heck-aria-beginners-guide-aria-accessibility
+
 next up
   check out the dope shit list in this doc
 
@@ -34,11 +37,25 @@ next up
         - [WCAG: document relation, explains where to go for what?](https://www.w3.org/WAI/standards-guidelines/wcag/docs/)
         
     - aria
+      - [how people use the web](https://www.w3.org/WAI/people-use-web/)
       - [ARIA: accessible rich internet applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
       - [WAI: web accessibility initiative](https://www.w3.org/WAI/)
       - [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/s)
+      - [WAI-ARIA overview](https://www.w3.org/WAI/standards-guidelines/aria/)
+      - [wai-aria accessibility feature support](https://caniuse.com/?search=aria)
+      - [accessibility of wai-aria](https://alistapart.com/article/the-accessibility-of-wai-aria/)
+      - [browser and assistive technolgy tests redux](https://www.tpgi.com/browser-assistive-technology-tests-redux/)
       - dope shit
-        - https://www.lullabot.com/articles/what-heck-aria-beginners-guide-aria-accessibility
+        - [lullabot fundamentals](https://www.lullabot.com/articles/what-heck-aria-beginners-guide-aria-accessibility)
+        - [html5 & wai-aria](https://zufelt.ca/blog/are-you-confused-html5-and-wai-aria-yet)
+        - [aria attribute support](https://a11ysupport.io/)
+        - [html5 accessibility support](https://www.html5accessibility.com/)
+          - make sure to click into each element screen
+        - [html5 landmarks exposed](https://www.scottohara.me/blog/2019/04/05/landmarks-exposed.html)
+        - [jaws aria role support](https://freedomscientific.github.io/VFO-standards-support/aria.html)
+        - [web apps and aria FAQ](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Web_applications_and_ARIA_FAQ)
+        - [power mapper wai-aria](https://www.powermapper.com/tests/screen-readers/aria/)
+        - [w3c tools and techniques](https://www.w3.org/WAI/people-use-web/tools-techniques/)
 
     - other 
       - [mdn learn accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility)
@@ -135,6 +152,8 @@ next up
 
 ## ARIA
   - ARIA: accessible rich internet applications; set of attributes that define ways to make web content and applications more accessible to people with disabilities
+    - web accessibility issues cannot be managed with native HTML, ARIA bridges the gap between HTML and assistive technologies
+
   - sensory characteristics: aspects of UI components, e.g. 
     - shape
     - color
