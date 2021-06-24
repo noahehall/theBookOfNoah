@@ -46,7 +46,9 @@ next up
       - [wai-aria accessibility feature support](https://caniuse.com/?search=aria)
       - [accessibility of wai-aria](https://alistapart.com/article/the-accessibility-of-wai-aria/)
       - [browser and assistive technolgy tests redux](https://www.tpgi.com/browser-assistive-technology-tests-redux/)
+      
       - dope shit
+        - [aria in html](https://www.tpgi.com/aria-in-html-there-goes-the-neighborhood/)
         - [wai-aria 1.3](https://w3c.github.io/aria/)
           - make sure you scroll down to mid-screen for the full list
         - [lullabot fundamentals](https://www.lullabot.com/articles/what-heck-aria-beginners-guide-aria-accessibility)
@@ -187,9 +189,20 @@ next up
         - e.g. composite widgets `role='combobox|grid|listbox|menu|radiogroup|tablist`
         - widge roles are for elements users interact with to get things done
           - e.g. completing forms, open/closing tabs/panels, navigating a main/sidebar menu
-    - states
-
-    - properties
+    - states and properties
+      - TODO
+      
+      - drag-and-drop attributes
+        - TODO
+      
+      - live region attributes
+        - TODO
+      
+      - relationship attributes
+        - TODO
+      
+      - widget attributes
+        - TODO
   
 
 ## WCAG: quick reference 
