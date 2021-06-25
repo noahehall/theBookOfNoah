@@ -14,6 +14,7 @@ next up
   	- *failures* for things **not** to do 
   	- *advisory techniques* best things to do 
   	- *sufficient techniques* where to start 
+  	- generaly any `accessibility` topic, use either *topic* or `topic`
   	- copy paste searches
     	- `tab order` `tabindex` `best practices`
 
@@ -728,7 +729,7 @@ next up
    *
    */
 
-   
+
   /**
    * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets
    * 
