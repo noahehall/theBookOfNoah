@@ -16,7 +16,7 @@ next up
   	- *sufficient techniques* where to start 
   	- generaly any `accessibility` topic, use either *topic* or `topic`
   	- copy paste searches
-    	- `tab order` `tabindex` `best practices`
+    	- `tab order` `tabindex` `best practices` `examples`
 
 # links 
   - tools
@@ -690,6 +690,8 @@ next up
   
 
 ```js
+  // @examples 
+  
   /**
    * interactive elements
    *
