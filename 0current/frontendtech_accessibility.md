@@ -15,7 +15,7 @@ next up
   	- *advisory techniques* best things to do 
   	- *sufficient techniques* where to start 
   	- copy paste searches
-    	- `tab order` `tabindex`
+    	- `tab order` `tabindex` `best practices`
 
 # links 
   - tools
@@ -136,7 +136,7 @@ next up
 
 # accessibility
 
-## best practices 
+## `best practices` 
   - use a button instead of a link when 
     - the link is empty/has no `href` attribute
     - the link has an `onclick` handler
@@ -704,7 +704,7 @@ next up
    */
 
   /**
-   * managing focus best practices
+   * managing focus `best practices`
    *
    * Do not use createEvent(), initEvent() and dispatchEvent() to send focus to an element. 
    * Use element.focus() instead.
@@ -718,14 +718,17 @@ next up
 
 
   /**
-   * keyboard navigation best practices
+   * keyboard navigation `best practices`
 
-   *The Tab key should provide focus to the widget as a whole. For example, tabbing to a menu bar should NOT put focus on the menu's first element.
-    The arrow keys should allow for selection or navigation within the widget. For example, using the left and right arrow keys should move focus to the previous and next menu items.
-    When the widget is not inside a form, both the Enter and Spacebar keys should select or activate the control.
-    Within a form, the Spacebar key should select or activate the control, while the Enter key should submit the form's default action.
-    If in doubt, mimic the standard desktop behavior of the control you are creating.
+   * The Tab key should provide focus to the widget as a whole. and not to its child elements
+   * + widget children should be navigatable/selectable via arrow keysFor example, tabbing to a menu bar should NOT put focus on the menu's first element.
+   * + outside `<form>`: `spacebar` and `enter` should select/activate the control
+   * + inside `<form>`: `spacebar` select/activate, `enter` submit
+   * + generally you should mimic the standard desktop behavior
+   *
+   */
 
+   
   /**
    * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets
    * 
