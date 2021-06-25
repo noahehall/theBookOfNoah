@@ -692,7 +692,7 @@ next up
 ```js
   /**
    * @examples 
-   * `interactive` elements
+   * `interactive` elements and related `events`
    */
 
   /**
@@ -709,6 +709,14 @@ next up
    * `choice` `tab` `cell` `row`
    */
 
+  /**
+   * events
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
+   */
+```
+
+
+```js
   /**
    * managing focus `best practices`
    *
@@ -740,6 +748,9 @@ next up
    * + elements programmatically focused
    * ++ fk IE: they dont datomatically draw te focus outline for these items
    *
+   * prevent handled key events from performing browser fns
+   * + return false from your event handler to stop propagation
+   * + use `stopPropagation` or `stopImmediatePropagation` or whatever it is
    *
    * UX
    * +`keyboard` and `mouse` should offer the same experience
