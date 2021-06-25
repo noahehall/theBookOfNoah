@@ -14,6 +14,8 @@ next up
   	- *failures* for things **not** to do 
   	- *advisory techniques* best things to do 
   	- *sufficient techniques* where to start 
+  	- copy paste searches
+    	- `tab order` `tabindex`
 
 # links 
   - tools
@@ -290,9 +292,8 @@ next up
       
       - relationship attributes
         - add relationships between elements that cant be determined otherwise
-        - for understanding how informatin is related when nevaginat the page and gathering additional data from various elements like forms, menus, tabs/panels
-        - e.g. `aria-describedby|labeledby`
-        - 
+        - for understanding how informatin is related when nevaginat the page and gathering additional data from various elements like forms, menus, tabs/panels 
+        - e.g. `aria-describedby|labeledby` 
       
       - widget attributes
         - for common UI elements that receive input from users while processing those actions and information
@@ -315,9 +316,9 @@ next up
             - so first get the DOM semantically correct, then add ARIA
             - e.g. instead of `span.role=button` just use a friggin `button`
     
-    - rule 3
+    - rule 3 `tab order` `tabindex`
       - all interactive ARIA controls must be keyboard accessible 
-        - add `tabindex='0'` to force them into the logical tab order and able to receive keyboard focus
+        - add `tabindex='0'` to force them into the logical `tab order` and able to receive keyboard focus
 
     - rule 4
       - never add `role='presentation'` or `aria-hidden='true'` to a focusable element
@@ -354,11 +355,11 @@ next up
         - use inline form errors that appear next to form control that causes the error
           - e.g. `aria-required` for controls and `aria-autocomplete`
     
-    - taborder 
+    - `tab order` `tabindex`
       - some elements must automaically receive keyboard focus
         - `skip to main content` links 
         - ...TODO
-      - some application states require specific tab order restraints
+      - some application states require specific `tab order` restraints
         - when a modal/popup/etc is open taborder should be constrained to elements within the component and not be permitted on lower dimensions
     
     - color contrast & intensity
@@ -476,7 +477,7 @@ next up
          - situation B: the technology in use does not provide the semantic structure to make the information and relationships conveyed through presentation programmatically determinable 
            - TODO: alternative techniques
          
-		2. meaningful sequence (LEVEL A)
+		2. meaningful sequence `level a` `tab order` tabindex`
    		- when the sequence in which content is presented affects its meaning, a correct reading sequence can be programmatically determined
    		
       - failures
@@ -687,3 +688,26 @@ next up
       - thus 2.2 meets and expands on 2.1, which does the same for 2.0, etc
   
 
+```js
+  /**
+    * interactive elements
+    *
+    * `<a>` `<input>` `<select>`
+    */
+
+  /**
+    * `tab order` `tabindex`
+    *
+    * 0. for all non-disabled elements, user agents cycle through source order by defualt 
+    * ++ except for elements `tabIndex` > 0 which are prioritized
+    * 1. first cycles through elements with a positive tabIndex
+    * 2. then elements with `tabIndex=0` or `getElementById('poop').tabIndex = 0` or interactive elements (which have an intrinsic `tabIndex=0`)\
+    *
+    * + elements with `tabIndex=-1` are not focusable by keyboard, 
+    * + but are focusable by script (i.e. el.focus()) in response to arrow/other key presses
+    *
+    */
+
+
+
+```
