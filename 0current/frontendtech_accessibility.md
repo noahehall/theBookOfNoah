@@ -696,16 +696,37 @@ next up
     */
 
   /**
+   * grouping controls
+   * `menus` `tablists` `grids` `tree views`
+   * 
+   * choice elements (i.e. children of grouping controls)
+   * `choice` `tab` `cell` `row`
+   */
+
+
+  /**
+    * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets
+    * 
     * `tab order` `tabindex`
     *
+    * 0. set all `disabled` elements to `tabindex=-1`
     * 0. for all non-disabled elements, user agents cycle through source order by defualt 
     * ++ except for elements `tabIndex` > 0 which are prioritized
     * 1. first cycles through elements with a positive tabIndex
     * 2. then elements with `tabIndex=0` or `getElementById('poop').tabIndex = 0` or interactive elements (which have an intrinsic `tabIndex=0`)\
     *
-    * + elements with `tabIndex=-1` are not focusable by keyboard, 
+    * + elements with `tabindex=-1` are not focusable by keyboard, 
     * + but are focusable by script (i.e. el.focus()) in response to arrow/other key presses
     *
+    * grouping controls
+    *
+    * 0. parent element === `tabindex=0` 
+    * 1. choice elements === `tabindex=-1`
+    * ++ remove from tab order
+    * ++ but should be navigatable by array keys
+    *
+    * UX
+    * + I can tab to the parent element, and navigate to choice elements via arrow keys
     */
 
 
