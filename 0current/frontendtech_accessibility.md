@@ -691,7 +691,8 @@ next up
 
 ```js
   // @examples 
-  
+  // `interactive` elements
+
   /**
    * interactive elements
    *
@@ -731,6 +732,12 @@ next up
    *
    */
 
+  /**
+   * visibility changes `best practices`
+   *
+   * visibility states
+   * + element visible ? `aria-hidden=true` : `aria-hidden=false`
+   * + [aria-hidden="true"] { display: none }
 
   /**
    * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets
