@@ -690,8 +690,10 @@ next up
   
 
 ```js
-  // @examples 
-  // `interactive` elements
+  /**
+   * @examples 
+   * `interactive` elements
+   */
 
   /**
    * interactive elements
@@ -733,12 +735,19 @@ next up
    * use `onkeydown` to trap key events
    * + never use `onkeypress`
    *
+   * programmatically apply styles to:
+   * + elements with `tabindex=-1` and elements receiving 
+   * + elements programmatically focused
+   * ++ fk IE: they dont datomatically draw te focus outline for these items
+   *
+   *
    * UX
    * +`keyboard` and `mouse` should offer the same experience
    * ++ thus duplicate logic across `keypress` and `click` handlers
    * ++ i.e. these event handlers are cross-cutting concerns for `keypress` `click` events
    * +++ `el.onclick=someFn()` `el.onkeydown=return event.keyCode != 13 || someFn()`
    *
+
    */
 
   /**
@@ -787,5 +796,21 @@ next up
    */
 
 
+```
 
+```js
+  /**
+   * @examples
+   * `css`
+   */
+
+  /**
+   * `dotted` borders
+   *  
+   * when appylying a dotted border programmatically
+   * + first appy an invisible 1px border
+   * + then apply the dotted border
+   * ++ fk IE: they dont support CSS outlines, so you have to use a border
+   * +++ borders take up space, and you need to do this so the element doesnt grow
+   *
 ```
