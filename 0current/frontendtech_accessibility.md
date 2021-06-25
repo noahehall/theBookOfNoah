@@ -690,10 +690,10 @@ next up
 
 ```js
   /**
-    * interactive elements
-    *
-    * `<a>` `<input>` `<select>`
-    */
+   * interactive elements
+   *
+   * `<a>` `<input>` `<select>`
+   */
 
   /**
    * grouping controls
@@ -718,40 +718,50 @@ next up
 
 
   /**
-    * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets
-    * 
-    * `tab order` `tabindex` `roving tabindex` `aria-activedescendant`
-    *
-    * 0. set all `disabled` elements to `tabindex=-1`
-    * 0. for all non-disabled elements, user agents cycle through source order by defualt 
-    * ++ except for elements `tabIndex` > 0 which are prioritized
-    * 1. first cycles through elements with a positive tabIndex
-    * 2. then elements with `tabIndex=0` or `getElementById('poop').tabIndex = 0` or interactive elements (which have an intrinsic `tabIndex=0`)\
-    *
-    * + elements with `tabindex=-1` are not focusable by keyboard, 
-    * + but are focusable by script (i.e. el.focus()) in response to arrow/other key presses
-    *
-    * grouping controls
-    * 
-    * 0. parent element === `tabindex=0` 
-    * 1. choice elements === `tabindex=-1`
-    * ++ remove from tab order
-    * ++ but should be navigatable by array keys
-    * 2. when tabbing away and returning, focus should return to the previous active choice element
-    *
-    * roving tab index
-    * technique1
-    * ** @see https://files.paciellogroup.com/training/WWW2012/samples/Samples/aria/tree/index.html
-    * ++ `fnRovingIndex = () => focusedEl.tabindex=0` && previousEl.tabindex=-1`
-    * ++ `arrowKey.onpress=fnRovingIndex()`
-    * technique 2
-    * ++ @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/An_overview_of_accessible_web_applications_and_widgets
-    
-    * 
-    * UX
-    * + I can tab to the parent element, and navigate to choice elements via arrow keys
-    * + if I tab away and return, the previous active choice element is focused
-    */
+   * keyboard navigation best practices
+
+   *The Tab key should provide focus to the widget as a whole. For example, tabbing to a menu bar should NOT put focus on the menu's first element.
+    The arrow keys should allow for selection or navigation within the widget. For example, using the left and right arrow keys should move focus to the previous and next menu items.
+    When the widget is not inside a form, both the Enter and Spacebar keys should select or activate the control.
+    Within a form, the Spacebar key should select or activate the control, while the Enter key should submit the form's default action.
+    If in doubt, mimic the standard desktop behavior of the control you are creating.
+
+  /**
+   * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets
+   * 
+   * `tab order` `tabindex` `roving tabindex` `aria-activedescendant`
+   *
+   * 0. set all `disabled` elements to `tabindex=-1`
+   * 0. for all non-disabled elements, user agents cycle through source order by defualt 
+   * ++ except for elements `tabIndex` > 0 which are prioritized
+   * 1. first cycles through elements with a positive tabIndex
+   * 2. then elements with `tabIndex=0` or `getElementById('poop').tabIndex = 0` or interactive elements (which have an intrinsic `tabIndex=0`)\
+   *
+   * notes
+   * + elements with `tabindex=-1` are not focusable by keyboard, 
+   * + but are focusable by script (i.e. el.focus()) in response to arrow/other key presses
+   *
+   * grouping controls
+   * 
+   * 0. parent element === `tabindex=0` 
+   * 1. choice elements === `tabindex=-1`
+   * ++ remove from tab order
+   * ++ but should be navigatable by array keys
+   * 2. when tabbing away and returning, focus should return to the previous active choice element
+   *
+   * roving tab index
+   * technique1
+   * + @see https://files.paciellogroup.com/training/WWW2012/samples/Samples/aria/tree/index.html
+   * ++ `fnRovingIndex = () => focusedEl.tabindex=0` && previousEl.tabindex=-1`
+   * ++ `arrowKey.onpress=fnRovingIndex()`
+   * technique 2
+   * + @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/An_overview_of_accessible_web_applications_and_widgets
+   *
+   * 
+   * UX
+   * + I can tab to the parent element, and navigate to choice elements via arrow keys
+   * + if I tab away and return, the previous active choice element is focused
+   */
 
 
 
