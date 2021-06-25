@@ -730,6 +730,15 @@ next up
    * + inside `<form>`: `spacebar` select/activate, `enter` submit
    * + generally you should mimic the standard desktop behavior
    *
+   * use `onkeydown` to trap key events
+   * + never use `onkeypress`
+   *
+   * UX
+   * +`keyboard` and `mouse` should offer the same experience
+   * ++ thus duplicate logic across `keypress` and `click` handlers
+   * ++ i.e. these event handlers are cross-cutting concerns for `keypress` `click` events
+   * +++ `el.onclick=someFn()` `el.onkeydown=return event.keyCode != 13 || someFn()`
+   *
    */
 
   /**
@@ -769,7 +778,8 @@ next up
    * ++ `arrowKey.onpress=fnRovingIndex()`
    * technique 2
    * + @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/An_overview_of_accessible_web_applications_and_widgets
-   *
+   * + `fn.ManagingVirutalFocus()=el[aria-activedescendant]=nextChildControl && nextChildControl.focus()``
+   * `groupingElement.onArroKeyPress=manageVirtualFocus()`
    * 
    * UX
    * + I can tab to the parent element, and navigate to choice elements via arrow keys
