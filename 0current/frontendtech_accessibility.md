@@ -703,11 +703,24 @@ next up
    * `choice` `tab` `cell` `row`
    */
 
+  /**
+   * managing focus best practices
+   *
+   * Do not use createEvent(), initEvent() and dispatchEvent() to send focus to an element. 
+   * Use element.focus() instead.
+   *
+   * track focus using 
+   * ++ focus state changes: `onfocus` `onblur` 
+   * ++ currently focused element: `document.activeElement` 
+   + ** current document: `document.hasFocus`
+   * can be used with any element
+   */
+
 
   /**
     * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets
     * 
-    * `tab order` `tabindex`
+    * `tab order` `tabindex` `roving tabindex` `aria-activedescendant`
     *
     * 0. set all `disabled` elements to `tabindex=-1`
     * 0. for all non-disabled elements, user agents cycle through source order by defualt 
@@ -719,14 +732,25 @@ next up
     * + but are focusable by script (i.e. el.focus()) in response to arrow/other key presses
     *
     * grouping controls
-    *
+    * 
     * 0. parent element === `tabindex=0` 
     * 1. choice elements === `tabindex=-1`
     * ++ remove from tab order
     * ++ but should be navigatable by array keys
+    * 2. when tabbing away and returning, focus should return to the previous active choice element
     *
+    * roving tab index
+    * technique1
+    * ** @see https://files.paciellogroup.com/training/WWW2012/samples/Samples/aria/tree/index.html
+    * ++ `fnRovingIndex = () => focusedEl.tabindex=0` && previousEl.tabindex=-1`
+    * ++ `arrowKey.onpress=fnRovingIndex()`
+    * technique 2
+    * ++ @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/An_overview_of_accessible_web_applications_and_widgets
+    
+    * 
     * UX
     * + I can tab to the parent element, and navigate to choice elements via arrow keys
+    * + if I tab away and return, the previous active choice element is focused
     */
 
 
