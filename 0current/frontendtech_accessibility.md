@@ -770,7 +770,13 @@ next up
   /**
    * interactive elements
    *
-   * `<a>` `<button>` `<details>` `<input>` `<select>` `<textarea>`
+   * `<a href='has to be set'>` 
+   * `<audio controls=has to be set'>`
+   * `<img usemap='has to be set'>`
+   * `<input type='cannot be hidden'>`
+   * `<video controls='has to be set'>`
+   * `<button>` `<details>` `<embed>` `<iframe>``<input>` 
+   * `<label>` `<select>` `<textarea>`
    */
 
   /**
