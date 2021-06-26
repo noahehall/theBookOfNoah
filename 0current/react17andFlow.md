@@ -339,6 +339,24 @@
   - *renderToSTaticNodeStream*
   - 
 
+# FLOW!
+  - flow has all the benefits of typescript with 0 of the limitations
+  - fk typescript 
+
+## flow config
+  - [include]
+    - a path per line, accepts `*` and `**` globs
+    - including a parent directory includes all child descendant directories
+  - [ignore]
+    - a path per line, accepts OCaml regular expressoins
+    - match against absolute paths so start each path with `.*`
+    - processed after & override anything in `[include]` section
+  - [untyped]
+  - [libs]
+  - [lints]
+  - [options]
+  - [verion]
+  - [declarations]
 # 
 ```js
   // synthetic events
