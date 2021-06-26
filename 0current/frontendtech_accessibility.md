@@ -86,6 +86,21 @@ next up
       - dope shit
         - [links html standard](https://html.spec.whatwg.org/multipage/links.html)
         - [picture, source, img](https://html.spec.whatwg.org/multipage/embedded-content.html)
+        - [images specifically](https://html.spec.whatwg.org/multipage/images.html)
+        - [map, area](https://html.spec.whatwg.org/multipage/image-maps.html)
+        - [tabular data](https://html.spec.whatwg.org/multipage/tables.html)
+        - [forms](https://html.spec.whatwg.org/multipage/forms.html)
+        - [input](https://html.spec.whatwg.org/multipage/input.html)
+        - [button](https://html.spec.whatwg.org/multipage/form-elements.html)
+        - [form controls](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html)
+        - [interactive elements](https://html.spec.whatwg.org/multipage/interactive-elements.html)
+        - [scripting](https://html.spec.whatwg.org/multipage/scripting.html)
+        - [canvas](https://html.spec.whatwg.org/multipage/canvas.html)
+        - [custom element](https://html.spec.whatwg.org/multipage/custom-elements.html)
+        - [common idioms](https://html.spec.whatwg.org/multipage/semantics-other.html)
+        - [microdata](https://html.spec.whatwg.org/multipage/microdata.html)
+        - [user interaction](https://html.spec.whatwg.org/multipage/interaction.html)
+        - [drag and drop](https://html.spec.whatwg.org/multipage/dnd.html)
         - 
       
     - general
