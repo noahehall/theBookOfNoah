@@ -773,11 +773,16 @@ next up
    * html attributes
    *
    * `tabindex` 
+   *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex
    * indicates an element can be focused, and where it participates in sequential keyboard navigation
    * potential values
    * + `=-1` not reachable via sequential keyboard navigation, but can be focused with js/mouse click
-   * ++ use cases: creating acessible widgets with js; content that appears in response to events, trapping/managing keyboard navigation with js in response to `onkeydown`
+   * ++ use cases: creating acessible widgets with js; content that appears in response to events, trapping/managing keyboard navigation with js in response to `onkeydown`; removing elements from sequential navigation
+   *
+   * + `=0` element should e focusable in seuqnetial keyboard navigation, after any other elements with a higher value, sequence then defined by document source order
+   * ++ use cases: adding non interactive elements to sequential navigation
+   * 
 
    */
 
