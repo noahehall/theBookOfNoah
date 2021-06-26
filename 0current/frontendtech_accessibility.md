@@ -76,7 +76,9 @@ next up
 
   - accessibility
     - html
+      - [html spec](https://html.spec.whatwg.org/multipage/dom.html#interactive-content-0)
       - [dont use tabindex > 0](https://adrianroselli.com/2014/11/dont-use-tabindex-greater-than-0.html)
+      - [using the tabindex atribute](https://www.tpgi.com/using-the-tabindex-attribute/)
       
     - general
       - [accessibility definitions and acronyms](https://www.lullabot.com/articles/web-accessibility-definitions-and-acronyms)
