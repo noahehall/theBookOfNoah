@@ -3,12 +3,13 @@
   - [react top level api ref](https://reactjs.org/docs/react-api.html)
   - [handling events](https://reactjs.org/docs/handling-events.html)
   - [synthetic events](https://reactjs.org/docs/events.html)
+  - [forms](https://reactjs.org/docs/forms.html)
 
 
 # TLDR
   - a complete react17 study guide
   - often required when switching context
-  - pairs well with [our frontendtech accessibility referece](./frontendtech_accessibility.md)
+  - pairs well with [our frontendtech accessibility referece](./frontendtech_accessibility.md) and our *todo: updated javascript reference*
 
 
 
