@@ -788,6 +788,27 @@ next up
    */
 
   /**
+   * metadata content
+   *
+   * base, link, meta, noscript, script, style, template, title
+   */
+
+  /**
+   * flow content
+   *
+   * area // if descendant of a map element
+   * link // if its in the body
+   * main // if its a hierarchically correct main element
+   * meta // if `itemprop` is set
+   * a, abbr, address, article, aside, audio, b, bdi, bdo, blockquote, br, button
+   * canvas, cite, code, data, datalist, del, details, dfn, dialog, div, dl, em
+   * embed, fieldset, figure, footer, form, h1,h2,h3,h4,h5,h6, header, hgroup, hr
+   * i, iframe, img, input, ins, kbd, label, map, mark, menu, meter, nav, noscript,
+   * object, ol, output, p, picture, pre, progress, q, ruby, s, samp, script, section,
+   * select, slot, small, span, strong, sub, sup, svg, table, template, textarea
+   * time, u, ul, var, video, autonomous custom elements, text
+
+  /**
    * html attributes
    *
    * `tabindex` 
