@@ -334,23 +334,69 @@
 # 
 ```js
   // synthetic events
-    eventHandler = e => {
-      e.bubbles 
-      e.cancelable
-      e.currentTarget // DOMEventTarget
-      e.defaultPrevented
-      e.eventPhase
-      e.isDefaultPrevented()
-      e.isPropagationStopped()
-      e.isTrusted
-      e.nativeEvent // DOMEvent
-      e.persist() // deprecated in 17
-      e.preventDefault()
-      e.stopPropagation()
-      e.target // DOMEventTarget
-      e.timeStamp
-      e.type
-    }
+    // contract
+      eventHandler = e => {
+        e.bubbles 
+        e.cancelable
+        e.currentTarget // DOMEventTarget
+        e.defaultPrevented
+        e.eventPhase
+        e.isDefaultPrevented()
+        e.isPropagationStopped()
+        e.isTrusted
+        e.nativeEvent // DOMEvent
+        e.persist() // deprecated in 17
+        e.preventDefault()
+        e.stopPropagation()
+        e.target // DOMEventTarget
+        e.timeStamp
+        e.type
+      }
+    // types
+      // clipboard events
+        onCopy|Cut|Paste
+          .clipboardData
+      // composition events
+        onCopisitionEnd|Start|Update
+          .data
+      // keyboard events
+        onKeyDown|Press|Up
+          .altKey|charCode|ctrlKey|
+          .getModifierStatE(key)
+          .key // acepts any values in the DOM level 3 Events spec
+          .keyCode|locale|location|metaKey
+          .repeat|shiftKey|which
+      // focus events
+        // called when the parent/descendant receives/loses focus
+        onFous|onBlur 
+          .relatedTarget
+    // examples
+      // detecting whether the element, or one of its decendents 
+      // received/lost focus
+        onFocus={(e) => {
+          if (e.currentTarget === e.target) {
+            console.log('focused self');
+          } else {
+            console.log('focused child', e.target);
+          }
+          if (!e.currentTarget.contains(e.relatedTarget)) {
+            // Not triggered when swapping focus between children
+            console.log('focus entered self');
+          }
+        }}
+        onBlur={(e) => {
+          if (e.currentTarget === e.target) {
+            console.log('unfocused self');
+          } else {
+            console.log('unfocused child', e.target);
+          }
+          if (!e.currentTarget.contains(e.relatedTarget)) {
+            // Not triggered when swapping focus between children
+            console.log('focus left self');
+          }
+        }}
+      
+
   // instance methods
     // shallow merge a single prop into state
       setState({onlyUpdateThis: 'withThis'})
