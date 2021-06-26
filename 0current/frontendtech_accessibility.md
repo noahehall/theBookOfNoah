@@ -689,36 +689,16 @@ next up
       - thus 2.2 meets and expands on 2.1, which does the same for 2.0, etc
   
 
-```js
-  /**
-   * @examples 
-   * `interactive` elements and related `events`
-   */
 
-  /**
-   * interactive elements
-   *
-   * `<a>` `<input>` `<select>`
-   */
-
-  /**
-   * grouping controls
-   * `menus` `tablists` `grids` `tree views`
-   * 
-   * choice elements (i.e. children of grouping controls)
-   * `choice` `tab` `cell` `row`
-   */
-
-  /**
-   * events
-   * @see https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
-   */
-```
 
 
 ```js
   /**
-   * managing focus `best practices`
+   * best practices
+   */
+
+  /**
+   * managing `focus`
    *
    * Do not use createEvent(), initEvent() and dispatchEvent() to send focus to an element. 
    * Use element.focus() instead.
@@ -732,7 +712,7 @@ next up
 
 
   /**
-   * keyboard navigation `best practices`
+   * `keyboard navigation`
 
    * The Tab key should provide focus to the widget as a whole. and not to its child elements
    * + widget children should be navigatable/selectable via arrow keysFor example, tabbing to a menu bar should NOT put focus on the menu's first element.
@@ -758,16 +738,50 @@ next up
    * ++ i.e. these event handlers are cross-cutting concerns for `keypress` `click` events
    * +++ `el.onclick=someFn()` `el.onkeydown=return event.keyCode != 13 || someFn()`
    *
-
    */
 
   /**
-   * visibility changes `best practices`
+   * `visibility` changes
    *
    * visibility states
    * + element visible ? `aria-hidden=true` : `aria-hidden=false`
    * + [aria-hidden="true"] { display: none }
+```
 
+
+```js
+  /**
+   * @examples 
+   * elements and common attributes
+   */
+
+  /**
+   * interactive elements
+   *
+   * `<a>` `<input>` `<select>`
+   */
+
+  /**
+   * grouping controls
+   * `menus` `tablists` `grids` `tree views`
+   * 
+   * choice elements (i.e. children of grouping controls)
+   * `choice` `tab` `cell` `row`
+   */
+
+```
+
+
+```js
+  /**
+   * events
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
+   */
+
+```
+
+
+```js
   /**
    * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets
    * 
