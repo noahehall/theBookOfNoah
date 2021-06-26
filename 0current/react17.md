@@ -398,6 +398,34 @@
         onLostPointerCapture
           .pointerId|width|height|pressure|tangentialPressure
           .tiltX|tiltY|twist|pointerType|isPrimary
+      // selection events
+        onSelect
+      // touch events
+        onTouchCancel|End|Move|Start
+          .altKey|changedTouches|ctrlKey
+          .getModiferState(key)
+          .metaKey|shiftKey|targetTouches|touches
+      // ui events
+        onScroll // does not bubble in react 17 to match UA behavior
+          .detail|view
+      // wheel events
+        onWheel
+          .deltaMode|X|Y|Z
+      // media events
+        onAbort|CanPlay|CanPlayThrough|DurationChange|Emptied
+        onEncrypted|Ended|Error|LoadedData|LoadedMetadata|LoadStart
+        onPause|Play|Playing|Progress|RateChange|Seeked|Seeking
+        onStalled|Suspend|TimeUpdate|VolumeChange|Waiting
+      // image events
+        onLoad|Error
+      // animation events
+        onAnimationStart|End|Iteration
+          .animationName|pseudoElement|elapsedTime
+      // transition events
+        onTransitionEnd
+          .propertyName|pseudoElement|elapsedTime
+      // other events
+        onToggle
 
     
     
