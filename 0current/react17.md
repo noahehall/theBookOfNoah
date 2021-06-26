@@ -2,6 +2,7 @@
   - [react docs](https://reactjs.org/docs/getting-started.html)
   - [react top level api ref](https://reactjs.org/docs/react-api.html)
   - [handling events](https://reactjs.org/docs/handling-events.html)
+  - [synthetic events](https://reactjs.org/docs/events.html)
 
 
 # TLDR
@@ -29,7 +30,10 @@
         - setStage regular is asynchronous, not gauranted to have latest
         - setState with callback works, but is a one-off
         - aggregate all your logic related after update state values into *componentDidUpate*
-    - 
+    - bind event handlers in the constructor or use class fields syntax with an arrow function 
+      - never use arrow functions directly in the callback as 
+        - the component receives a new fn each time, 
+        - if passed to child components, will cause axtra rerenders
   
   - **GENERALLY**
     - *PureComponent* > *shouldComponentUpdate* for auto shallow comparisons
@@ -348,6 +352,16 @@
           // so you can refrain from <button onClick={e => this.handler(e)}>
           // and jsut do onClick={this.handler}
           this.eventHandler = this.eventHandler.bind(this);
+          eventHandler = () => 'class fields syntax'
+
+          unboundHandler () {
+            // can bind in event handler 
+          }
+          render () {
+            return (
+              <button onClick={this.unboundHandler.bind(this)} />
+            )
+          }
         }
       }
 
