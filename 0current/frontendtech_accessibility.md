@@ -804,7 +804,7 @@ next up
    * object, output, p, pre, progress, q, ruby, s, samp, section, select, small, span, strong
    * sub, sup, svg, table, textarea, time, u, var, video, 
    */
-   
+
   /**
    * grouping controls
    * `menus` `tablists` `grids` `tree views`
@@ -880,16 +880,52 @@ next up
    */
 
   /**
-   * 
-
+   * script supporting elements
+   * + do not represent anything themselves
+   * + used to support scripts
+   *
+   * script, template
+   */
 
 
   /**
+   * transparent content models
+   * skipped
+   * @see https://html.spec.whatwg.org/multipage/dom.html
+   */
+
+  /**
+   * paragraphs
+   * skipped
+   * @see https://html.spec.whatwg.org/multipage/dom.html
+   */
+
+```
+
+
+```js
+  /**
    * html attributes
-   *
+   */
+
+  /**
+   * global attributes
+   * + can be specified on all html elements
+   
+   * defined in HTML SPEC
+   * accesskey, autocapitalize, autofocus, contenteditable, dir, draggable, enterkeyhint
+   * hidden, inputmode, is, itemid, itemprop, itemref, itemscope, itemtype, lang, nonce
+   * spellcheck, style, tabindex, title, traslate, 
+  
+   * defined in DOM spec
+   * class // comma separated tokens
+   * id // unique identifier
+   * slot // assign a slot to an element
+   
+  
    * `tabindex` 
-   *
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex
+   *
    * indicates an element can be focused, and where it participates in sequential keyboard navigation
    * potential values
    * + `=-1` not reachable via sequential keyboard navigation, but can be focused with js/mouse click
@@ -912,6 +948,63 @@ next up
   /**
    * events
    */
+
+  /**
+   * global event handlers
+   * + can be specified on any HTML element
+   *
+   * common global event handlers
+   * onblur //
+   * onchange // 
+   * onclick //
+   * onclose //
+   * ondblclick //
+   * ondrag //
+   * ondragend //
+   * ondragenter //
+   * ondragleave //
+   * ondragover //
+   * ondragover //
+   * ondragstart //
+   * ondrop //
+   * onerror //
+   * onfocus //
+   * onformdata //
+   * oninput //
+   * oninvalid //
+   * onkeydown
+   * onkeypress
+   * onkeyup
+   * onload
+   * onloadeddata
+   * onloadedmetadata
+   * onloadstart
+   * onmousedown
+   * onmouseenter
+   * onmouseleave
+   * onmousemove
+   * onmouseout
+   * onmouseover
+   * onmouseup
+   * onprogress,
+   * onreset
+   * onresize
+   * onscroll
+   * onsecuritypolicyviolation
+   * onselect,
+   * onslotchange
+   * onstalled
+   * onsubmit
+   * ontoggle,
+   * onvolumechange,
+   * onwheel
+   *
+   * uncommon global event handlers
+   * onauxclick, oncancel, oncanplay, oncanplaythrough,oncontextmenu, oncopy, oncuechange
+   * oncut, ondurationchange, onemptied, onended, onpaste, onpause, onplay, onplaying,
+   * onratechange, onseeked, onseeking, onsuspend, ontimeupdate, onwaiting
+
+
 
   // @see https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
 ```
