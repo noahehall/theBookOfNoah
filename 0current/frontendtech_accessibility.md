@@ -775,13 +775,18 @@ next up
 ```js
   /**
    * events
-   * @see https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
    */
 
+  // @see https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
 ```
 
 
 ```js
+  /**
+   * @examples
+   * keyboard related accessibility situations
+   */
+
   /**
    * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets
    * 
@@ -826,7 +831,7 @@ next up
 ```js
   /**
    * @examples
-   * `css`
+   * css related accessibility situations
    */
 
   /**
