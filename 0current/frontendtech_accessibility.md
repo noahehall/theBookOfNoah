@@ -767,7 +767,7 @@ next up
 ```js
   /**
    * @examples 
-   * elements and common attributes
+   * elements
    */
 
   /**
@@ -905,6 +905,7 @@ next up
 
 ```js
   /**
+   * @examples
    * html attributes
    */
 
@@ -922,6 +923,11 @@ next up
    * id // unique identifier
    * slot // assign a slot to an element
    
+   * data-attributes
+   * + store custom data, state, annotations, etc. 
+   * + specific to the page
+   *
+   * `data-KEY=value`
   
    * `tabindex` 
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex
@@ -934,7 +940,11 @@ next up
    * + `=0` element should e focusable in seuqnetial keyboard navigation, after any other elements with a higher value, sequence then defined by document source order
    * ++ use cases: adding non interactive elements to sequential navigation
    * 
-   * 
+   
+   * `title`*dont use*
+   * + advisory information for the element
+   * + usecases: tooltips, links, images, paragraphs, label/instructions for interactive elements
+   * ++ many user agents dont expose the `title` in an accessible manner
    */
 
 
