@@ -792,12 +792,15 @@ next up
    * + sets up presentation/behavior of the rest of the content
    * + sets up the relationship of the document with other documents
    * + conveys other 'out of band' information
-   
+   *
+   *
    * base, link, meta, noscript, script, style, template, title
    */
 
   /**
    * flow content
+   * + elements used in the body of docs and applications
+   *
    *
    * area // if descendant of a map element
    * link // if its in the body
@@ -811,6 +814,14 @@ next up
    * select, slot, small, span, strong, sub, sup, svg, table, template, textarea
    * time, u, ul, var, video, autonomous custom elements, text
    */
+
+   /**
+    * sectioning content
+    * + content that defines the scope of headings & footers
+    * + each element below potentially has a heading & outline
+    *
+    * `<article>` `<aside>` `<nav>` `<section>`
+    */
 
   /**
    * html attributes
