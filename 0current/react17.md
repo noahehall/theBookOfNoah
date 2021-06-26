@@ -97,6 +97,10 @@
   - by default all event handlers are trigged in the `bubbling` phase
     - to register event handlers for the capture phase, append `Capture`
       - e.g. `onClick` === `onClickCapture`
+  - pointer events are
+    - not cross-browser compatible (like a normal SyntheticEvent)
+    - not polyfilled
+    - recommended to only be used via a third party pointer event polyfill
 
 # terms 
   - pure components: never alter their inputs & are idempotent
@@ -369,8 +373,34 @@
           .repeat|shiftKey|which
       // focus events
         // called when the parent/descendant receives/loses focus
-        onFous|onBlur 
+        onFocus|Blur 
           .relatedTarget
+      // form events
+        onChange|Input|Invalid|Reset|Submit
+        // TODO: see forms link
+      // generic events
+        onError|Load
+      // mouse events
+        onClick|ContextMenu|DoubleClick|Drag|DragEnd|DragEnter
+        onDragExit|DragLeave|DragOver|DragStart|Drop|MouseDown
+        onMouseEnter|MouseLeave|MouseMove|MouseOut|MouseOver|MouseUp
+          .altKey|button|buttons|clientX|clientY|ctrlKey|
+          .getModifierState(key)
+          .metaKey|pageX|pageY|relatedTarget
+          .screenX|screenY|shiftKey
+      // pointer events 1
+        // propagate from el.exited > el.entering
+        // no capture phase
+        onPointerEnter|Leave 
+      // pointer events 2
+        onPointerDown|Move|Up|Cancel|Over|Out
+        onGotPointerCapture
+        onLostPointerCapture
+          .pointerId|width|height|pressure|tangentialPressure
+          .tiltX|tiltY|twist|pointerType|isPrimary
+
+    
+    
     // examples
       // detecting whether the element, or one of its decendents 
       // received/lost focus
