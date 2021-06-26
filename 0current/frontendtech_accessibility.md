@@ -732,6 +732,10 @@ next up
    * + return false from your event handler to stop propagation
    * + use `stopPropagation` or `stopImmediatePropagation` or whatever it is
    *
+   * avoid using `tabindex` > 0
+   * + makes it diffiulct for assistive technologies to navigate & operate page content
+   * + instead structure the document source with elements in a logical sequence
+   *
    * UX
    * +`keyboard` and `mouse` should offer the same experience
    * ++ thus duplicate logic across `keypress` and `click` handlers
@@ -783,7 +787,7 @@ next up
    * + `=0` element should e focusable in seuqnetial keyboard navigation, after any other elements with a higher value, sequence then defined by document source order
    * ++ use cases: adding non interactive elements to sequential navigation
    * 
-
+   * 
    */
 
 
