@@ -350,8 +350,14 @@
   - [ignore]
     - a path per line, accepts OCaml regular expressoins
     - match against absolute paths so start each path with `.*`
+      - <PROJECT_ROOT> === the project root, use in `ignore` section and dont use `.*`
     - processed after & override anything in `[include]` section
+    - any file ignored must be `import`ed using `flow-typed`
+      - instead add this files to `untyped` section
   - [untyped]
+    - a path per line
+    - files to not typecheck
+    - throw away types and treat modules as `any`
   - [libs]
   - [lints]
   - [options]
