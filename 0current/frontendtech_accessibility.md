@@ -827,6 +827,31 @@ next up
     */
 
   /**
+   * heading content
+   * + defines the header of a section
+   *
+   * h1, h2, h3, h4, h5, h6, hgroup
+   */
+
+ /**
+  * phrasing content
+  * + the text of the document
+  * + & element sthat markup that text at the intra-paragraph lefel
+  *
+  * area // if descendant of map element
+  * link // if allowed in body
+  * meta // if itemprop attribute is set
+  * a, abbr,audio, b, bdi, bdo, br, button, canvas, cite, code, data, datalist, del,
+  * dfn, em, embed, i, iframe, img, input, ins, kbd, label, map, mark, math, 
+  * meter, noscript, object, output, picture, progress, q, ruby, s, samp, script,
+  * select, slot, small, span, strong, sub, sup, svg, template, textarea, time, u, var
+  * video, wbr
+  */
+
+
+
+  
+  /**
    * html attributes
    *
    * `tabindex` 
