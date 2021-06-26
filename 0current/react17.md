@@ -1,9 +1,12 @@
 # links
   - [react docs](https://reactjs.org/docs/getting-started.html)
   - [react top level api ref](https://reactjs.org/docs/react-api.html)
+  - [handling events](https://reactjs.org/docs/handling-events.html)
+
+
 # TLDR
   - a complete react17 study guide
-  - often required when switching context, e.g. 2 weeks on the backend, now all of sudden we have to do some frontend shit
+  - often required when switching context
 
 
 
@@ -81,7 +84,10 @@
 
 # gotchas
   - defaultProps only used for undefined props; e.g. null props will still be null (and wont use the value assigned in defaultprops)
-  - 
+  - react events are camelCase and not lowercase
+      - e.g. `onclick` === `onClick`
+    - cannot return false to prevent default behavior 
+      - must call `preventDefault` explicitly
 
 # terms 
   - pure components: never alter their inputs & are idempotent
@@ -97,6 +103,8 @@
 ## DOM elements
 
 ## SyntheticEvent
+  - gotchas 
+    
 
 ## Concurrent Mode
 
