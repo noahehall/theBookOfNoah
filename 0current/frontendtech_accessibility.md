@@ -75,6 +75,9 @@ next up
 
 
   - accessibility
+    - html
+      - [dont use tabindex > 0](https://adrianroselli.com/2014/11/dont-use-tabindex-greater-than-0.html)
+      
     - general
       - [accessibility definitions and acronyms](https://www.lullabot.com/articles/web-accessibility-definitions-and-acronyms)
 
@@ -736,6 +739,9 @@ next up
    * + makes it diffiulct for assistive technologies to navigate & operate page content
    * + instead structure the document source with elements in a logical sequence
    *
+   * interactice components authored using non-interactive elements are not listed in the accessibility tree
+   * + instead always use semantically correct elements to describe the content
+   * +
    * UX
    * +`keyboard` and `mouse` should offer the same experience
    * ++ thus duplicate logic across `keypress` and `click` handlers
@@ -762,7 +768,7 @@ next up
   /**
    * interactive elements
    *
-   * `<a>` `<input>` `<select>`
+   * `<a>` `<button>` `<details>` `<input>` `<select>` `<textarea>`
    */
 
   /**
