@@ -8,6 +8,7 @@
 # TLDR
   - a complete react17 study guide
   - often required when switching context
+  - pairs well with [our frontendtech accessibility referece](./frontendtech_accessibility.md)
 
 
 
@@ -92,6 +93,9 @@
       - e.g. `onclick` === `onClick`
     - cannot return false to prevent default behavior 
       - must call `preventDefault` explicitly
+  - by default all event handlers are trigged in the `bubbling` phase
+    - to register event handlers for the capture phase, append `Capture`
+      - e.g. `onClick` === `onClickCapture`
 
 # terms 
   - pure components: never alter their inputs & are idempotent
@@ -107,7 +111,8 @@
 ## DOM elements
 
 ## SyntheticEvent
-  - gotchas 
+  - evenhandlers receive instances of `SyntheticEvnet`
+  - cross-browser wrapper around the UA native event 
     
 
 ## Concurrent Mode
@@ -328,6 +333,24 @@
 
 # 
 ```js
+  // synthetic events
+    eventHandler = e => {
+      e.bubbles 
+      e.cancelable
+      e.currentTarget // DOMEventTarget
+      e.defaultPrevented
+      e.eventPhase
+      e.isDefaultPrevented()
+      e.isPropagationStopped()
+      e.isTrusted
+      e.nativeEvent // DOMEvent
+      e.persist() // deprecated in 17
+      e.preventDefault()
+      e.stopPropagation()
+      e.target // DOMEventTarget
+      e.timeStamp
+      e.type
+    }
   // instance methods
     // shallow merge a single prop into state
       setState({onlyUpdateThis: 'withThis'})
@@ -357,9 +380,11 @@
           unboundHandler () {
             // can bind in event handler 
           }
+
+          poop = 'flush'
           render () {
             return (
-              <button onClick={this.unboundHandler.bind(this)} />
+              <button onClick={this.unboundHandler.bind(this, this.poop)} />
             )
           }
         }

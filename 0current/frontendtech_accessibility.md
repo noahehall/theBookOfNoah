@@ -1014,7 +1014,7 @@ next up
 
 ```js
   /**
-   * events
+   * `events`
    */
 
   /**
@@ -1071,9 +1071,14 @@ next up
    * onauxclick, oncancel, oncanplay, oncanplaythrough,oncontextmenu, oncopy, oncuechange
    * oncut, ondurationchange, onemptied, onended, onpaste, onpause, onplay, onplaying,
    * onratechange, onseeked, onseeking, onsuspend, ontimeupdate, onwaiting
+   */
 
-
-
+  /**
+   * `Event`
+   * 
+   * stopPropagation()
+   * preventDefault()
+   * stopImmediatePropagation()
   // @see https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
 ```
 
