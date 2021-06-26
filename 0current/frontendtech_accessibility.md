@@ -789,7 +789,10 @@ next up
 
   /**
    * metadata content
-   *
+   * + sets up presentation/behavior of the rest of the content
+   * + sets up the relationship of the document with other documents
+   * + conveys other 'out of band' information
+   
    * base, link, meta, noscript, script, style, template, title
    */
 
@@ -807,6 +810,7 @@ next up
    * object, ol, output, p, picture, pre, progress, q, ruby, s, samp, script, section,
    * select, slot, small, span, strong, sub, sup, svg, table, template, textarea
    * time, u, ul, var, video, autonomous custom elements, text
+   */
 
   /**
    * html attributes
