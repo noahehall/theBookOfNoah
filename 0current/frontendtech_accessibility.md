@@ -1,3 +1,6 @@
+bookmark: `3.2.5.2.3 sectioning content`
+https://html.spec.whatwg.org/multipage/dom.html#interactive-content-0
+
 bookmark: `guideline 1.2 time-based media`
 https://www.w3.org/TR/WCAG21/
 
@@ -14,7 +17,7 @@ next up
   	- *failures* for things **not** to do 
   	- *advisory techniques* best things to do 
   	- *sufficient techniques* where to start 
-  	- generaly any `accessibility` topic, use either *topic* or `topic`
+  	- generaly any `accessibility` topic should be `ctrl +f-able`
   	- copy paste searches
     	- `tab order` `tabindex` `best practices` `examples`
 
