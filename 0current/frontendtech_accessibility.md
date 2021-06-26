@@ -82,6 +82,11 @@ next up
       - [html spec](https://html.spec.whatwg.org/multipage/dom.html#interactive-content-0)
       - [dont use tabindex > 0](https://adrianroselli.com/2014/11/dont-use-tabindex-greater-than-0.html)
       - [using the tabindex atribute](https://www.tpgi.com/using-the-tabindex-attribute/)
+      - [bcp 47 language tags](https://tools.ietf.org/search/bcp47)
+      - dope shit
+        - [links html standard](https://html.spec.whatwg.org/multipage/links.html)
+        - [picture, source, img](https://html.spec.whatwg.org/multipage/embedded-content.html)
+        - 
       
     - general
       - [accessibility definitions and acronyms](https://www.lullabot.com/articles/web-accessibility-definitions-and-acronyms)
@@ -945,7 +950,27 @@ next up
    * + advisory information for the element
    * + usecases: tooltips, links, images, paragraphs, label/instructions for interactive elements
    * ++ many user agents dont expose the `title` in an accessible manner
-   */
+   
+   * `lang`
+   * + the primary language for the elements content
+   * + the primary language for the elements attributes that contain text
+   * + must be a valid BCP 47 language tag or empty string
+
+   * `translate`
+   * + specify whether an elements attribute values and text nodes should be translated 
+   * ++ when the page is localed 
+   * 
+   * values
+   * `=no` do not translate
+   * `=yes` translate
+
+   * `style`
+   * @see css
+   
+   * innerText
+   * outerText
+
+  
 
 
   /**
