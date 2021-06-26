@@ -778,10 +778,33 @@ next up
    * `<img usemap='has to be set'>`
    * `<input type='cannot be hidden'>`
    * `<video controls='has to be set'>`
-   * `<button>` `<details>` `<embed>` `<iframe>``<input>` 
+   * `<button>` `<details>` `<embed>` `<iframe>`
    * `<label>` `<select>` `<textarea>`
    */
 
+  /**
+   * palpable content
+   * + makes an element non-empty by providing either:
+   * ++ descendant non-empty text
+   * ++ something users can hear (audio)
+   * ++ something users can view (video/img/canvas)
+   * ++ something users can interact with (form controls)
+   *
+   *
+   * audio // if controls attribute is set
+   * dl // if children include atleast one name-value group
+   * input // if type attribute is not hidden
+   * menu // if chilren include at least one li element
+   * ol // if children include at least one li element
+   * ul // if children include at least one li element
+   * text // that is not inter-element whitespace
+   * a, abbre, address, article, aside, b, bdi, bdo, blockquote, button, canvas, cite, code
+   * data, details, dfn, div,em embed, fieldset, figure, footer, form, h1,h2,h3,h4,h5,h6
+   * header, hgroup, i, iframe, img, ins, kbd, label, main, map, mark, math, meter, nav,
+   * object, output, p, pre, progress, q, ruby, s, samp, section, select, small, span, strong
+   * sub, sup, svg, table, textarea, time, u, var, video, 
+   */
+   
   /**
    * grouping controls
    * `menus` `tablists` `grids` `tree views`
@@ -848,9 +871,19 @@ next up
   * video, wbr
   */
 
+  /**
+   * embedded content
+   * + content that imports another resource into the document
+   * + content from another vocabulary that is inserted into the document
+   *
+   * audio, canvas, embed, iframe, img, math, object, picture, svg, video*
+   */
+
+  /**
+   * 
 
 
-  
+
   /**
    * html attributes
    *
