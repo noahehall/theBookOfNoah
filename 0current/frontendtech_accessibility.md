@@ -22,6 +22,7 @@ next up
     	- `tab order` `tabindex` `best practices` `examples`
 
 # links 
+  - [search here for anything HTML](https://html.spec.whatwg.org/multipage/indices.html)
   - tools
     - [comparison of accessibility tools](https://medium.com/pulsar/which-accessibility-testing-tool-should-you-use-e5990e6ef0a)
     - [microsoft silverlight](https://www.microsoft.com/silverlight/)
@@ -101,7 +102,24 @@ next up
         - [microdata](https://html.spec.whatwg.org/multipage/microdata.html)
         - [user interaction](https://html.spec.whatwg.org/multipage/interaction.html)
         - [drag and drop](https://html.spec.whatwg.org/multipage/dnd.html)
-        - 
+        - [loading web pages](https://html.spec.whatwg.org/multipage/browsers.html)
+        - [window](https://html.spec.whatwg.org/multipage/window-object.html)
+        - [origin](https://html.spec.whatwg.org/multipage/origin.html)
+        - [session histry and navigation](https://html.spec.whatwg.org/multipage/history.html)
+        - [browsing the web](https://html.spec.whatwg.org/multipage/browsing-the-web.html)
+        - [web application apis](https://html.spec.whatwg.org/multipage/webappapis.html)
+        - [dynami markup insertion](https://html.spec.whatwg.org/multipage/dynamic-markup-insertion.html)
+        - [timers](https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html)
+        - [system state and capabilities](https://html.spec.whatwg.org/multipage/system-state.html)
+        - [communication](https://html.spec.whatwg.org/multipage/comms.html)
+        - [server sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html)
+        - [web sockets](https://html.spec.whatwg.org/multipage/web-sockets.html)
+        - [cross document messaging](https://html.spec.whatwg.org/multipage/web-messaging.html)
+        - [web workers](https://html.spec.whatwg.org/multipage/workers.html)
+        - [web storage](https://html.spec.whatwg.org/multipage/webstorage.html)
+        - [named character references](https://html.spec.whatwg.org/multipage/named-characters.html)
+        - [rendering](https://html.spec.whatwg.org/multipage/rendering.html)
+        - [iana considerations](https://html.spec.whatwg.org/multipage/iana.html)
       
     - general
       - [accessibility definitions and acronyms](https://www.lullabot.com/articles/web-accessibility-definitions-and-acronyms)
