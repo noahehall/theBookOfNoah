@@ -11,6 +11,10 @@
     - [library definitions](https://flow.org/en/docs/libdefs/)
     - [linting](https://flow.org/en/docs/linting/)
     - [types-first](https://flow.org/en/docs/lang/types-first/)
+    - [react types](https://flow.org/en/docs/react/types/)
+    - [how to type styled components](https://medium.com/maxime-heckel/https-medium-com-maximeheckel-how-to-efficiently-type-your-styled-components-with-flow-f43930a0dd2b)
+    - 
+    - 
   
   - [vscodium > vscode](https://github.com/VSCodium/vscodium/releases)
   - [disable unused builting extensions](https://stackoverflow.com/questions/48852007/type-aliases-can-only-be-used-in-a-ts-file/51034421) 
@@ -49,6 +53,9 @@
   
   - **GENERALLY**
     - *PureComponent* > *shouldComponentUpdate* for auto shallow comparisons
+    - import namespaces, [who the fk knows if it hinders/helps treeshaking?](https://github.com/airbnb/javascript/issues/1487)
+      - [but it supremely saves us type with flow](https://flow.org/en/docs/react/types/)
+    - You don’t need to annotate the return type of either your render() method or a stateless functional component
     
     - add a *useDebugValue* inside custom hook definitions to support dev experience but *ALWAYS* add a second formatting parm to defer expensive operations unless the hook is inspected
       - react doesnt recommend it for *EVERY* custom hook, but when did we ever follow directions?
@@ -396,15 +403,43 @@
 ## 
 
 # 
+
 ```js
-  // $FlowFixMe
-  // $FlowIssue[incompatible-type]
-  /* $FlowIgnore[prop-missing] some other text here */
-  /* $FlowFixMe[incompatible-cast] this
-      is a multi-line
-      comment */
-  { /* $FlowIssue this is how you suppress errors inside JSX */ }
-  
+  /**
+   * Flow
+   */
+
+  // handling errors
+    // $FlowFixMe
+    // $FlowIssue[incompatible-type]
+    /* $FlowIgnore[prop-missing] some other text here */
+    /* $FlowFixMe[incompatible-cast] this
+        is a multi-line
+        comment */
+    { /* $FlowIssue this is how you suppress errors inside JSX */ }
+    someCode('with errors, all previous lines applied to this')
+
+  // React type reference
+  // this is how facebook does it, follow their lead or create your own framework
+  // and namespaces should no longer hinder treeshaking
+    import * as React from 'react';
+
+  // any node that can be rnedered in a react application
+  // use this and move on with your life
+    React.Node
+    // i.e.
+      type Node = React.ChildrenArray<void | null | boolean | string | number | React.Element<any>>;
+
+
+
+
+
+```
+```js
+  /**
+   * React
+   */
+
   // synthetic events
     // contract
       eventHandler = e => {
