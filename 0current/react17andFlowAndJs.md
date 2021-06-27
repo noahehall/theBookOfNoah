@@ -1,3 +1,7 @@
+bookmark: https://flow.org/en/docs/react/types/
+  see js where we left off
+
+
 # links
   - react
     - [react docs](https://reactjs.org/docs/getting-started.html)
@@ -13,8 +17,10 @@
     - [types-first](https://flow.org/en/docs/lang/types-first/)
     - [react types](https://flow.org/en/docs/react/types/)
     - [how to type styled components](https://medium.com/maxime-heckel/https-medium-com-maximeheckel-how-to-efficiently-type-your-styled-components-with-flow-f43930a0dd2b)
-    - 
-    - 
+    - [HOC](https://flow.org/en/docs/react/hoc/#toc-supporting-defaultprops-with-react-elementconfig)
+    - [context](https://flow.org/en/docs/react/context/)
+    - [children](https://flow.org/en/docs/react/children/)
+    - [event handling](https://flow.org/en/docs/react/events/)
   
   - [vscodium > vscode](https://github.com/VSCodium/vscodium/releases)
   - [disable unused builting extensions](https://stackoverflow.com/questions/48852007/type-aliases-can-only-be-used-in-a-ts-file/51034421) 
@@ -475,15 +481,26 @@
     // i.e.
       React.Element<React.ElementType>
 
-      
   // type of a react stateless fn component
   React.StatelessFunctionalComponent<Props>
     // i.e.
       type StatelessFunctionalComponent<Props> = (props: Props) => React.Node;
 
+  // key props
+  React.Key
+    type Key = string | number;
 
+  // type of ref prop on rect elments, i.e. string/fn
+  React.Ref<typeof Component>
+    // i.e.
+    type Ref<C> =
+      | string
+      | (instance: React.ElementRef<C> | null) => mixed;
 
-
+  React.ElementProps<typeof Component>
+  React.ElementConfig<typeof Component>
+  React.ElementRef<typeof Component>
+  React.Config<Props, DefaultProps>
 
 
 
