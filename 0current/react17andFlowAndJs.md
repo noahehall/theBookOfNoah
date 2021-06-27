@@ -417,7 +417,7 @@
         is a multi-line
         comment */
     { /* $FlowIssue this is how you suppress errors inside JSX */ }
-    someCode('with errors, all previous lines applied to this')
+    someCode('with errors, all previous lines apply only to this line')
 
   // React type reference
   // this is how facebook does it, follow their lead or create your own framework
@@ -426,9 +426,62 @@
 
   // any node that can be rnedered in a react application
   // use this and move on with your life
-    React.Node
+  React.Node
     // i.e.
       type Node = React.ChildrenArray<void | null | boolean | string | number | React.Element<any>>;
+    // class component
+      class MyComponent extends React.Component<{}> {
+        render(): React.Node { /*render here */}
+      }
+    // fn component
+      function MyComponent(props: {}): React.Node { /* some code... */}
+
+  // the type of jsx element
+  // e.g. returned from React.createElement()
+  React.Element
+    const element: React.Element<'div'> = <div />;
+
+
+  //can be a single/nested array to any level
+  React.ChildrenArray<T> 
+    const children: React.ChildrenArray<number> = 42;
+    const children: React.ChildrenArray<number> = [[1, 2], 3, [4, 5]];
+    const array: Array<number> = React.Children.toArray(children); // flatten the array
+
+  // need a better example
+  // this is the ost abstract representation of a react component
+  // useful for HOCs and library definitions
+  React.AbstractComponent<Config, Instance> 
+
+
+  // alwys use for  class/fns that receive/return react components
+  // doesnt include strings, @see React.ElementType
+  React.ComponentType<Props>
+    const StyledAnchor: React.ComponentType<any> = styled(Clickable)`css declarations`
+    // i.e.
+    type ComponentType<Props> =
+      | React.StatelessFunctionalComponent<Props>
+      | Class<React.Component<Props, any>>;
+
+  // same as React.ComponentType but includes renderable strings
+  React.ElementType
+    // i.e.
+    type ElementType = | string | React.ComponentType<any>;
+
+  // the most general type of all react elmenets
+  // similar to `mixed` for all values
+  React.MixedElement
+    const element: React.MixedElement = <div />;
+    // i.e.
+      React.Element<React.ElementType>
+
+      
+  // type of a react stateless fn component
+  React.StatelessFunctionalComponent<Props>
+    // i.e.
+      type StatelessFunctionalComponent<Props> = (props: Props) => React.Node;
+
+
 
 
 
