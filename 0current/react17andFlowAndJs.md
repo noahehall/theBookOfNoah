@@ -5,8 +5,15 @@
     - [handling events](https://reactjs.org/docs/handling-events.html)
     - [synthetic events](https://reactjs.org/docs/events.html)
     - [forms](https://reactjs.org/docs/forms.html)
+ 
   - flow
     - [getting started](https://flow.org/en/docs/getting-started/)
+    - [library definitions](https://flow.org/en/docs/libdefs/)
+    - [linting](https://flow.org/en/docs/linting/)
+    - [types-first](https://flow.org/en/docs/lang/types-first/)
+  
+  - [vscodium > vscode](https://github.com/VSCodium/vscodium/releases)
+  - [disable unused builting extensions](https://stackoverflow.com/questions/48852007/type-aliases-can-only-be-used-in-a-ts-file/51034421) 
 
 
 # TLDR
@@ -343,6 +350,16 @@
   - flow has all the benefits of typescript with 0 of the limitations
   - fk typescript 
 
+## flow usage
+  - `// @flow` typecheck this file
+  - `// @noflow` do not typecheck this file
+  - ignore the next line strategies
+    - `// FlowFixMe` for type errors yo uintend to fix later
+    - `// $FlowIssue` for type errors you think are flows fault
+    - `// @FlowExpetedError` when you expect a type error
+    - `// @FlowIgnore` when you want to ignore your code
+
+
 ## flow config
   - [include]
     - a path per line, accepts `*` and `**` globs
@@ -352,19 +369,42 @@
     - match against absolute paths so start each path with `.*`
       - <PROJECT_ROOT> === the project root, use in `ignore` section and dont use `.*`
     - processed after & override anything in `[include]` section
-    - any file ignored must be `import`ed using `flow-typed`
-      - instead add this files to `untyped` section
+    - any file ignored must be `import|require`ed using `flow-typed`
+      - instead add these to files to `untyped|declarations` section
   - [untyped]
     - a path per line
-    - files to not typecheck
+    - matched against absolute paths so start each with `.*`
+    - files to not typecheck, but still make requireable and importable
     - throw away types and treat modules as `any`
+    - 
   - [libs]
+    - a path per line
+    - each pointing to type definitions
   - [lints]
+    - TODO: see linting link
   - [options]
-  - [verion]
+    - 1 option per line
+    - omitted options use their default values
+  - [version]
+    - specify support flow version
   - [declarations]
+    - path per line
+    - use type information from thirdparty libraries without typing checking their contents
+    - does not typecheck files
+    - uses the signatures of all function, classes, etc. when checking other code
+
+## 
+
 # 
 ```js
+  // $FlowFixMe
+  // $FlowIssue[incompatible-type]
+  /* $FlowIgnore[prop-missing] some other text here */
+  /* $FlowFixMe[incompatible-cast] this
+      is a multi-line
+      comment */
+  { /* $FlowIssue this is how you suppress errors inside JSX */ }
+  
   // synthetic events
     // contract
       eventHandler = e => {
