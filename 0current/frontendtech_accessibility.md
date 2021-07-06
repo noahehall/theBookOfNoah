@@ -18,8 +18,8 @@ next up
   	- *advisory techniques* best things to do 
   	- *sufficient techniques* where to start 
   	- generaly any `accessibility` topic should be `ctrl +f-able`
-  	- copy paste searches
-    	- `tab order` `tabindex` `best practices` `examples`
+  	- searches I use all the time
+    	- `tab order` `tabindex` `best practices` `examples` `@examples`
 
 # links 
   - [search here for anything HTML](https://html.spec.whatwg.org/multipage/indices.html)
@@ -157,6 +157,7 @@ next up
       - [wikipedia assistive technology](https://en.wikipedia.org/wiki/Assistive_technology)
       
       - dope shit
+        - [1.2 authoring practices](https://w3c.github.io/aria-practices/)
         - [mdn using roles, states, and properties](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques)
         - [google introduction to aria](https://developers.google.com/web/fundamentals/accessibility/semantics-aria/)
         - [aria in html](https://www.w3.org/TR/html-aria/)
@@ -408,6 +409,7 @@ next up
         - ...TODO
       - some application states require specific `tab order` restraints
         - when a modal/popup/etc is open tab order should be constrained to elements within the component and not be permitted on lower dimensions
+          - set `tabindex=-1` on those elements, and use a third-party module to trap focus within the open widget component
     
     - color contrast & intensity
     
@@ -524,7 +526,7 @@ next up
          - situation B: the technology in use does not provide the semantic structure to make the information and relationships conveyed through presentation programmatically determinable 
            - TODO: alternative techniques
          
-		2. meaningful sequence `level a` `tab order` tabindex`
+		2. meaningful sequence `level a` `tab order` `tabindex`
    		- when the sequence in which content is presented affects its meaning, a correct reading sequence can be programmatically determined
    		
       - failures
@@ -770,7 +772,7 @@ next up
    * + never use `onkeypress`
    *
    * programmatically apply styles to:
-   * + elements with `tabindex=-1` and elements receiving 
+   * + elements with `tabindex=-1` and elements receiving ..(what was suppose to finish this sentence?)
    * + elements programmatically focused
    * ++ fk IE: they dont automatically draw the focus outline for these items
    *
@@ -975,7 +977,7 @@ next up
    * + `=-1` not reachable via sequential keyboard navigation, but can be focused with js/mouse click
    * ++ use cases: creating acessible widgets with js; content that appears in response to events, trapping/managing keyboard navigation with js in response to `onkeydown`; removing elements from sequential navigation
    *
-   * + `=0` element should e focusable in seuqnetial keyboard navigation, after any other elements with a higher value, sequence then defined by document source order
+   * + `=0` element should be focusable in sequential keyboard navigation, after any other elements with a higher value; sequence is then defined by document source order
    * ++ use cases: adding non interactive elements to sequential navigation
    * 
    
@@ -1095,10 +1097,11 @@ next up
    * `tab order` `tabindex` `roving tabindex` `aria-activedescendant`
    *
    * 0. set all `disabled` elements to `tabindex=-1`
-   * 0. for all non-disabled elements, user agents cycle through source order by defualt 
+   * + avoid setting tabindex on noninteractive elements, instead use a button (e.g. wherever you're using a div)
+   * 1. for all non-disabled elements, user agents cycle through source order by defualt 
    * ++ except for elements `tabIndex` > 0 which are prioritized
-   * 1. first cycles through elements with a positive tabIndex
-   * 2. then elements with `tabIndex=0` or `getElementById('poop').tabIndex = 0` or interactive elements (which have an intrinsic `tabIndex=0`)\
+   * 2. first cycles through elements with a positive tabIndex
+   * 3. then elements with `tabIndex=0` or `getElementById('poop').tabIndex = 0` or interactive elements (which have an intrinsic `tabIndex=0`)\
    *
    * notes
    * + elements with `tabindex=-1` are not focusable by keyboard, 
