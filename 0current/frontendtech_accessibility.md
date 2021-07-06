@@ -11,6 +11,8 @@ https://www.w3.org/WAI/WCAG21/quickref/
 
 next up
   check out the dope shit list in this doc
+  MUST DO
+    - [aria design patterns](https://w3c.github.io/aria-practices/#aria_ex)
 
 # quick search 
 	- quickly finding things, search for:
@@ -761,7 +763,9 @@ next up
 
   /**
    * `keyboard navigation`
+   * recommended reading
    * @see https://w3c.github.io/aria-practices/#keyboard
+   * @see https://w3c.github.io/aria-practices/#TreeView 
 
    * The Tab key should provide focus to the widget as a whole. and not to its child elements
    * + widget children should be navigatable/selectable via arrow keys, tabbing to a menu bar should NOT put focus on the menu's first element.
