@@ -369,7 +369,7 @@ next up
 
     - rule 4
       - never add `role='presentation'` or `aria-hidden='true'` to a focusable element
-        - this will cause them to lose focasibility and be removed from the logical taborder
+        - this will cause them to lose focasibility and be removed from the logical tab order
     
     - rule 5
       - give all interactive elements an accessible name
@@ -407,7 +407,7 @@ next up
         - `skip to main content` links 
         - ...TODO
       - some application states require specific `tab order` restraints
-        - when a modal/popup/etc is open taborder should be constrained to elements within the component and not be permitted on lower dimensions
+        - when a modal/popup/etc is open tab order should be constrained to elements within the component and not be permitted on lower dimensions
     
     - color contrast & intensity
     
@@ -761,7 +761,7 @@ next up
    * `keyboard navigation`
 
    * The Tab key should provide focus to the widget as a whole. and not to its child elements
-   * + widget children should be navigatable/selectable via arrow keysFor example, tabbing to a menu bar should NOT put focus on the menu's first element.
+   * + widget children should be navigatable/selectable via arrow keys, tabbing to a menu bar should NOT put focus on the menu's first element.
    * + outside `<form>`: `spacebar` and `enter` should select/activate the control
    * + inside `<form>`: `spacebar` select/activate, `enter` submit
    * + generally you should mimic the standard desktop behavior
@@ -772,7 +772,7 @@ next up
    * programmatically apply styles to:
    * + elements with `tabindex=-1` and elements receiving 
    * + elements programmatically focused
-   * ++ fk IE: they dont datomatically draw te focus outline for these items
+   * ++ fk IE: they dont automatically draw the focus outline for these items
    *
    * prevent handled key events from performing browser fns
    * + return false from your event handler to stop propagation
@@ -1112,7 +1112,7 @@ next up
    * ++ but should be navigatable by array keys
    * 2. when tabbing away and returning, focus should return to the previous active choice element
    *
-   * roving tab index
+   * roving tabindex
    * technique1
    * + @see https://files.paciellogroup.com/training/WWW2012/samples/Samples/aria/tree/index.html
    * ++ `fnRovingIndex = () => focusedEl.tabindex=0` && previousEl.tabindex=-1`
