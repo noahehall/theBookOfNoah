@@ -761,6 +761,7 @@ next up
 
   /**
    * `keyboard navigation`
+   * @see https://w3c.github.io/aria-practices/#keyboard
 
    * The Tab key should provide focus to the widget as a whole. and not to its child elements
    * + widget children should be navigatable/selectable via arrow keys, tabbing to a menu bar should NOT put focus on the menu's first element.
