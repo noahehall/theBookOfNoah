@@ -8,7 +8,13 @@
   - [built in cmds](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_01_03.html#sect_01_03_02)
   - [the bash environment](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_03.html)
   - [conditionals](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_07.html)
+  - [aliases](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_05.html)
+  - [variables](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_10.html)
+  - [catching user input](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_08_02.html)
 
+
+# my favorite searches
+  - `[` `[[`
 
 # best Practices    
   - always trap signals
@@ -72,3 +78,9 @@
     - shift
     - trap
     - unset
+
+
+# conditionals
+  - `[[`
+  - `test`
+  - `[`
