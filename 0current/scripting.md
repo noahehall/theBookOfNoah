@@ -6,12 +6,14 @@
   - [trapping signals](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_12.html)
   - [shell expansion](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html)
   - [built in cmds](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_01_03.html#sect_01_03_02)
+  - [the bash environment](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_03.html)
+  - [conditionals](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_07.html)
 
 
 # best Practices    
   - always trap signals
   - use builtin cmds > everything else (quicker)
-  - always enable POSIX mode
+  - always enable POSIX mode (see notes about POSIX special buitins)
 
 # builtin cmds
   - `sh`
