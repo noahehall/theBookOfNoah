@@ -1,3 +1,4 @@
+bookmark: https://flow.org/en/docs/types/
 bookmark: https://flow.org/en/docs/react/types/
   see js where we left off
 
@@ -24,6 +25,8 @@ bookmark: https://flow.org/en/docs/react/types/
   
   - [vscodium > vscode](https://github.com/VSCodium/vscodium/releases)
   - [disable unused builting extensions](https://stackoverflow.com/questions/48852007/type-aliases-can-only-be-used-in-a-ts-file/51034421) 
+  - [components](https://flow.org/en/docs/react/components/)
+  - 
 
 
 # TLDR

@@ -1,0 +1,1 @@
+# quick notes, see linux dir for massive amounts of information
