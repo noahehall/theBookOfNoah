@@ -1,3 +1,6 @@
+# todo 
+  - transcribe written notes to this doc
+  - 
 # quick notes, see linux dir for massive amounts of information
 
 # links
