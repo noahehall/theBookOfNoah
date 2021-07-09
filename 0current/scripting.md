@@ -11,9 +11,15 @@
   - [aliases](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_05.html)
   - [variables](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_10.html)
   - [catching user input](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_08_02.html)
+  - [quoting chars](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html)
+  - [displaying/setting bash options](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_06.html)
+  - [bash variables](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_02.html)
+  - [functions](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_11.html)
+  - 
+  - 
 
 
-# my favorite searches
+# my favorite searchesf
   - `[` `[[`
 
 # best Practices    
@@ -81,6 +87,6 @@
 
 
 # conditionals
-  - `[[`
-  - `test`
+  - `[[` compound command
+  - `test` 
   - `[`
