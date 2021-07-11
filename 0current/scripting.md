@@ -261,19 +261,16 @@
 # important programs
   - if a program has a description elsewar, its not listed here (so dont assume these are the only important programs)
   
+  - `sh`
+  
   - `type` see whether a program is a builtin or not, for non builtins it prints the location
   - `sh`
   - `ssh`
-  - `which`
-  - `command` runs a command with args suppressing hte normal shell function lookup
-    - only builtin commands/those found in the `PATH` are executed
-    - useful when you want to bypass normal function lookup, an go straight to either builtsins or cmds in your `PATH`
+  
     - 
   - `huponexit` determines if background jobs will be terminated n `SIGHUP`
   - `read`
   - `exec`
-  - `hash` tracks all commands used in the current shell environment, and the number of times each was used
-    - invoke `hash` without args to see the list
   - `date` 
   - `init`
   - `inittab`
@@ -326,11 +323,19 @@
       - can also be used to open/close files for the current shell execution environment
     - using & when to use `restricted` shells
 
-## getting help on commands
+## getting help 
   - `man` CMD
     - the original wya to create and consume documentation on linux. use `info` instead if its available for the cmd your researching
   - `info` CMD
     - the `gnu project` recommended way to create and consume documentation on linux
+  - `which` prints the path of the executable (unless its a builtin)
+  - `type` see whether a program is a builtin or not, for non builtins it prints the location
+  - `whereis` prints the binary, source and man files for the specified command
+  - `command` runs a command with args suppressing hte normal shell function lookup
+    - only builtin commands/those found in the `PATH` are executed
+    - useful when you want to bypass normal function lookup, an go straight to either builtsins or cmds in your `PATH`
+  - `hash` tracks all commands used in the current shell environment, and the number of times each was used
+    - invoke `hash` without args to see the list
 
 ## bash startup files 
   - interactive login shells / shells started with `--login`
