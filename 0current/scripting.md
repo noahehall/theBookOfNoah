@@ -170,6 +170,19 @@
         - file descriptor N is checked
       - else if the file argument is in the form `/dev/std[in|out|err]` 
         - file desriptor 0, 1, or 2 is checked
+  - command control: testing exit status of a cmd in order to determine whether a portion of the program should be executed
+  - conditional branch: logical point in the program when a conditin determines what happens next
+  - logic flow: the overall design of hte program; determines the logical sequence of tasks so that te result is successful and controlled
+  - loop: part of the program that is performed zero/more times
+  - user input: information provided by an external source while the program is running; can be stored and recalled when needed
+  - shebang: the `#!` starting each script file, containing the absolute path of the shell interpreter responsible for executing hte script
+  - init script: starts system services, 
+    - e.g. `system log daemon` `power management daemon` `name daemon` `mail daemon` are all started by init scripts
+  - run level: a configuration of processes
+    - user run level: for performing administrative tasks like recovering files from a backup
+    - reboot run level:
+    - shutdown run level:
+  - bash: the gnu shell, is compatible wiht the bourne shell
 
 # how things work
 ## interactive shell behavior
