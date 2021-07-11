@@ -20,6 +20,8 @@
   - [functions](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_11.html)
   - [pgrep](https://man7.org/linux/man-pages/man1/pgrep.1.html)
   - [writing interactive scripts](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_08.html)
+  - [advanced if usage](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_02.html)
+  - [bash best practices](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html)
 
   
 ## quickies
@@ -92,7 +94,7 @@
     - readonly
     - return
     - set
-    - shift
+    - shifts
     - trap
     - unset
 
@@ -101,3 +103,41 @@
   - `[[` compound command
   - `test` 
   - `[`
+
+# locations: files & directories
+  - `/bin`
+  - `/boot`
+  - `/dev`
+  - `/etc`
+  - `/etc/shells` file containing list of installed shells
+  - `/etc/passwd` where your defualt shelll is stored
+  - `/home`
+  - `/lib`
+  - `/media`
+  - `/mnt`
+  - `/opt`
+  - `/proc`
+  - `/root`
+  - `/run`
+  - `/sbin`
+  - `/srv`
+  - `/tmp`
+  - `/usr/bin`
+  - `/usr/include`
+  - `/usr/lib`
+  - `/usr/local`
+  - `/usr/sbin`
+  - `/usr/share/doc`
+  - `/usr/share`
+  - `/usr/src`
+  - `/usr`
+  - `/var/cache`
+  - `/var/lib`
+  - `/var/log`
+  - `/var/run`
+  - `/var/spool`
+  - `/var/tmp`
+  - `/var`
+
+# workflows 
+  -
