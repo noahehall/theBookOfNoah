@@ -32,13 +32,15 @@
   - [check if file/dir exists](https://linuxize.com/post/bash-check-if-file-exists/)
   
 
-# my favorite searchesf
+# my favorite searches
   - `[` `[[`
 
 # best Practices    
   - always trap signals
   - use builtin cmds > everything else (quicker)
   - always enable POSIX mode (see notes about POSIX special buitins)
+  - never use any remote tools (e.g. `r-tools`, `rcp`, `rsh` etc) without knowing the security implications
+  - only use `ssh` for remote execution
 
 # builtin cmds
   - `sh`
@@ -140,4 +142,28 @@
   - `/var`
 
 # workflows 
-  -
+  - bash startup files 
+    - interactive login shells / shells started with `--login`
+      1. `/etc/profile`
+      2. the first found file:
+         - `~/.bash_profile`
+         - `~/.bash_login`
+         - `~/.profile`
+         - 
+      3. `~/.bash_logout`
+    - interactive non-login shells
+      1. `~/.bash_rc`
+    - non interactive shells
+      1. `BASH_ENV`
+    - shells invoked with `sh` command
+      1. `/etc/profile`
+      2. `~/.profile`
+      3. `ENV` variable (empty on my ubuntu 21.04), but supposedly reads this when `sh` is invoked interactively
+    -  invoked rmeotely (e.g. via `r-tools`, `rshd` `rlogin` `rsh` `rcp`)
+
+
+# important programs
+  - `sh`
+  - `ssh`
+  - `which`
+  - `command`
