@@ -207,7 +207,7 @@
     1. no startup files are read
 
 
-## all about variables
+## workflows & programs related to variables, shell arguments, etc
   - see a variables value `echo $NAME`
   - normal variables
     - scope: only available inside the shell in which it is defined
@@ -237,12 +237,14 @@
   - `command`
   - `env` see `env` elseware
   - `export` see `export` elseware
+  - `huponexit` determines if background jobs will be terminated n `SIGHUP`
 
 
 
 # shell options
   - you enable an option via `set -o OPTION` and disable it via `set +o OPTION`
   - `posix` comply with posix standard for shells
+
 
 # env vars
   - see the current value via `echo $VAR_NAME`
