@@ -325,10 +325,24 @@
       - can also be used to open/close files for the current shell execution environment
     - using & when to use `restricted` shells
 
-## creating scripts
+## creating, debugging, and executing scripts
   - ensure the script is executable via `chmod u+x NAME`
   - view the permissions of a file `ls -l NAME`
-  - 
+  - you can explicitly choose which shell interprete to use, and it will be executed in a subshell
+    - `rbash NAME`
+    - `sh NAME`
+    - `BASH -x NAME`
+    - etc
+  - you can execute the script in the current shell by sourcing it
+    - `. NAME` uses the bourn shell builtin 
+    - `source NAME` uses the bash builtin (which uses the bourne shell builtin)
+  - always include a `shebang` at the start of the script
+    - and preferable use `#!/bin/env SHELLNAME` so you dont have to guess where the user installed the shell interpreter
+    - 
+## comments
+  ```bash
+    # this is a single line comment
+  ```
 ## getting help 
   - `man` CMD
     - the original wya to create and consume documentation on linux. use `info` instead if its available for the cmd your researching
