@@ -18,9 +18,16 @@
   - [displaying/setting bash options](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_06.html)
   - [bash variables](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_02.html)
   - [functions](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_11.html)
+  - [pgrep](https://man7.org/linux/man-pages/man1/pgrep.1.html)
   - 
   - 
-
+## quickies
+  - [pgrep](https://linuxize.com/post/pgrep-command-in-linux/)
+  - [excluding in grep](https://linuxize.com/post/grep-exclude/)
+  - [regular expressions in grep](https://linuxize.com/post/regular-expressions-in-grep/)
+  - [bash aliases](https://linuxize.com/post/how-to-create-bash-aliases/)
+  - [check if file/dir exists](https://linuxize.com/post/bash-check-if-file-exists/)
+  - 
 
 # my favorite searchesf
   - `[` `[[`
