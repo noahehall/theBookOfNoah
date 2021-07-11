@@ -59,6 +59,15 @@
   - always enable POSIX mode (see notes about POSIX special buitins)
   - never use any remote tools (e.g. `r-tools`, `rcp`, `rsh` etc) without knowing the security implications
   - only use `ssh` for remote execution
+  - redirect `stdout` and `stderr` in `non-interactive` scripts
+    - `stdout` may not be available and would cause your script to fail if used
+
+# gotchas
+  - bash reads at least one complete line before executing any cmds on that line
+  - bash invokes shell scripts in `non-interactive` shells
+    - unless invoked without `-c` or `-s`
+      - need to confirm this note, maybe it should say `unless invoked with`
+
 
 # builtin cmds
   - `sh`
