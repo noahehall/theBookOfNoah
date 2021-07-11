@@ -45,6 +45,8 @@
   - [positional parameters in a shell script](https://www.theunixschool.com/2011/01/positional-parameters-in-shell-script.html)
   - [tmout explanation](https://www.thegeekstuff.com/2010/05/tmout-exit-bash-shell-when-no-activity/)
   - [man vs info cmds](https://itectec.com/ubuntu/ubuntu-the-difference-between-man-and-info-documentation/)
+  - [best command explanation ive seen yet](https://askubuntu.com/questions/512770/what-is-use-of-command-command)
+  - [enable keyword in bash](https://datacadamia.com/lang/bash/enable)
   
 
 # my favorite searches
@@ -163,10 +165,14 @@
 
 
 # important programs
+  - `type` see whether a program is a builtin or not, for non builtins it prints the location
   - `sh`
   - `ssh`
   - `which`
-  - `command` suppresses the shell function lookup in the search command order
+  - `command` runs a command with args suppressing hte normal shell function lookup
+    - only builtin commands/those found in the `PATH` are executed
+    - useful when you want to bypass normal function lookup, an go straight to either builtsins or cmds in your `PATH`
+    - 
   - `env` see `env` elseware
   - `huponexit` determines if background jobs will be terminated n `SIGHUP`
   - `read`
@@ -179,6 +185,9 @@
   - `popd` see elseware
   - `hash` tracks all commands used in the current shell environment, and the number of times each was used
     - invoke `hash` without args to see the list
+  - `date` 
+  - `init`
+  - `inittab`
 
 
 
@@ -293,14 +302,7 @@
     - `popd` removes the last directory from the dirstack and cds into it
     - 
 
-## workflows & programs related to variables, shell arguments, etc
-  - `echo` echos whatever follows it followed by a new line
-    - `echo $SOMEVAR` will print the value of $SOMEVAR
-  
-  - `printf` echos whatever folows it, not followed by a new line, but does allow you to have formatted strings
-    - `printf $SOMEVAR` will print the value of $SOMEVAR
-  
-
+## workflows & programs related to variables, shell arguments, env vars,  etc
   - normal variables
     - scope: only available inside the shell in which it is defined
       - i.e. not avaliable to shell/process invoked from the original shell (as its in its own process now)
@@ -314,17 +316,32 @@
     - create an environment variable via `export` `export NAME=value` or jsut `export NAME`
   
   - related programs
+    - `echo` echos whatever follows it followed by a new line, and always exits 0
+      - `echo $SOMEVAR` will print the value of $SOMEVAR
+  
+    - `printf` echos whatever folows it, not followed by a new line, but does allow you to have formatted strings, and will exit without failure
+      - `printf $SOMEVAR` will print the value of $SOMEVAR
+    
     - `set` used to set a local variable in `c` and `tc` shells
       - type `set` to see current variables
+    - `unset` only way to remove a variable
+
     - `setenv` used to set an environment variable in `c` and `tc` shells
     - `export` used to set and environment variable in `bash` and `sh` shells
       - tye `export` to see 
     - `env` 
       - type `env` to see current variables
+    - `enable` enable, disable, and print builtin shell commands
+      - issue with out args to see all builtin commands
+      - `enable -n NAME` disable NAME
+      - `enable -n` list all disabled builtins
+      - `enable -a` list all builtins, and indicate which ones are disabled
+      - `enable -s` list all `posix` special builtins
+      - 
 
-# effectively sing pkg related commands
+## effectively sing pkg related commands
   - `apt-get update`  update the package index files so that any other pkg related commands are using the latest values
-  
+
   - `dpkg --list` see all installed pkgs
 
 
@@ -338,6 +355,7 @@
     - `apt-cache policy PKGNAME` get information about a specific package
     - `apt-cache policy` see your installed sources?
   - 
+
 
 
 # shell options
