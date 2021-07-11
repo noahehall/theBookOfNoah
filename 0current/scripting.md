@@ -1,13 +1,8 @@
-
-
-
 # TLDR
   - focuses on `bash` scripting, but should work in general for other shells
   - includes other concepts supporting effective bash scripting, e.g. installing packages and finding information about the os
   - if you need more than this, check out my other scripting related docs in the linux directory inside this repo
   - 
-  
-# quick notes, see linux dir for massive amounts of information
 
 # links
 ## refs and specs
@@ -33,7 +28,7 @@
   - [the builtin command command](https://datacadamia.com/lang/bash/command_builtin)
 
   
-## quickies
+## tutorials and things like that
   - [pgrep](https://linuxize.com/post/pgrep-command-in-linux/)
   - [excluding in grep](https://linuxize.com/post/grep-exclude/)
   - [regular expressions in grep](https://linuxize.com/post/regular-expressions-in-grep/)
@@ -50,9 +45,6 @@
   - [[ vs [[ vs ( vs ((](https://unix.stackexchange.com/questions/306111/what-is-the-difference-between-the-bash-operators-vs-vs-vs)
   
 
-# my favorite searches
-  - `[` `[[`
-
 # best Practices    
   - always trap signals
   - use builtin cmds > everything else (quicker)
@@ -61,6 +53,26 @@
   - only use `ssh` for remote execution
   - redirect `stdout` and `stderr` in `non-interactive` scripts
     - `stdout` may not be available and would cause your script to fail if used
+  - a script should run without errors
+  - program logic should always be clearly defined and apparent
+  - a program shouldnt do unnecessary work
+  - every program should be reusable
+  - always focus on having correct logic, flow control and efficiency
+    - useful to itemize the list of tasks involved in the program
+  - questions to ask yourself before starting a new script
+    - will i be needing information from the user/environment
+    - how will i store information
+    - will i need to create files
+      - where?
+      - with which permissions?
+      - which user/groups shall own them?
+    - what commands will i use?
+      - which systems will i support?
+      - do these systems have the cmds and required versions preinstalled?
+    - does the user need notifications?
+      - when?
+      - how and what type of notifications?
+    - 
 
 # gotchas
   - bash reads at least one complete line before executing any cmds on that line
