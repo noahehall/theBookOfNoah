@@ -41,6 +41,7 @@
   - [export vs set vs setenv](https://www.theunixschool.com/2010/04/what-is-difference-between-export-set.html)
   - [getopts: pass cli optoins to a shell script](https://www.theunixschool.com/2012/08/getopts-how-to-pass-command-line-options-shell-script-Linux.html)
   - [positional parameters in a shell script](https://www.theunixschool.com/2011/01/positional-parameters-in-shell-script.html)
+  - [tmout explanation](https://www.thegeekstuff.com/2010/05/tmout-exit-bash-shell-when-no-activity/)
   
 
 # my favorite searches
@@ -137,6 +138,53 @@
     - a variable without an assigned value is given `null`
     - 
 
+# how things work
+## interactive shell behavior
+  - startup fies are read
+  - job control enabled
+  - `PS1` and `PS2` prompts are set
+  - cmds read from cmd line using `readline`
+  - interprets `ignoreeof` instead of exiting when reaching `EOF`
+  - cmd history and history expansion enabled and history saved
+  - `alias expansion` enabled
+  - signal `SIGTERM` is ignored, still catchable by `traps` tho
+  - signal `SIGINT` is caught and handled (i.e. `ctrl c`) unless handled by `traps
+  - cmds executed on read
+  - periodically checks for `mail`
+  - exit on unreferenced variables, disabled for interactive shells
+  - `redirection` errors encountered for builtin cmds do not cause exists
+  - special builtins returning errors in `posix` dont cause exits
+  - parser syntax errors dont cause exits
+  - spell check for `cd` is enabled
+  - automatic exit base don `tmout` is enabled
+
+# important programs
+  - `sh`
+  - `ssh`
+  - `which`
+  - `command`
+  - `env` see `env` elseware
+  - `ex## interactive shell behavior
+  - startup fies are read
+  - job control enabled
+  - `PS1` and `PS2` prompts are set
+  - cmds read from cmd line using `readline`
+  - interprets `ignoreeof` instead of exiting when reaching `EOF`
+  - cmd history and history expansion enabled and history saved
+  - `alias expansion` enabled
+  - signal `SIGTERM` is ignored, still catchable by `traps` tho
+  - signal `SIGINT` is caught and handled (i.e. `ctrl c`) unless handled by `traps
+  - cmds executed on read
+  - periodically checks for `mail`
+  - exit on unreferenced variables, disabled for interactive shells
+  - `redirection` errors encountered for builtin cmds do not cause exists
+  - special builtins returning errors in `posix` dont cause exits
+  - parser syntax errors dont cause exits
+  - spell check for `cd` is enabled
+  - automatic exit base don `tmout` is enabledport` see `export` elseware
+  - `huponexit` determines if background jobs will be terminated n `SIGHUP`
+  - `readline`
+  - `cd`
 
 
 # conditionals
@@ -183,6 +231,9 @@
 
 
 # workflows 
+
+
+
 ## bash startup files 
   - interactive login shells / shells started with `--login`
     1. `/etc/profile`
@@ -229,16 +280,6 @@
       - tye `export` to see 
     - `env` 
       - type `env` to see current variables
-
-# important programs
-  - `sh`
-  - `ssh`
-  - `which`
-  - `command`
-  - `env` see `env` elseware
-  - `export` see `export` elseware
-  - `huponexit` determines if background jobs will be terminated n `SIGHUP`
-
 
 
 # shell options
