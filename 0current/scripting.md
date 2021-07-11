@@ -158,33 +158,20 @@
   - spell check for `cd` is enabled
   - automatic exit base don `tmout` is enabled
 
+
 # important programs
   - `sh`
   - `ssh`
   - `which`
   - `command`
   - `env` see `env` elseware
-  - `ex## interactive shell behavior
-  - startup fies are read
-  - job control enabled
-  - `PS1` and `PS2` prompts are set
-  - cmds read from cmd line using `readline`
-  - interprets `ignoreeof` instead of exiting when reaching `EOF`
-  - cmd history and history expansion enabled and history saved
-  - `alias expansion` enabled
-  - signal `SIGTERM` is ignored, still catchable by `traps` tho
-  - signal `SIGINT` is caught and handled (i.e. `ctrl c`) unless handled by `traps
-  - cmds executed on read
-  - periodically checks for `mail`
-  - exit on unreferenced variables, disabled for interactive shells
-  - `redirection` errors encountered for builtin cmds do not cause exists
-  - special builtins returning errors in `posix` dont cause exits
-  - parser syntax errors dont cause exits
-  - spell check for `cd` is enabled
-  - automatic exit base don `tmout` is enabledport` see `export` elseware
   - `huponexit` determines if background jobs will be terminated n `SIGHUP`
   - `readline`
   - `cd`
+  - `alias`
+  - `unalias`
+  - `pushd` see elseware
+  - `popd` see elseware
 
 
 # conditionals
@@ -231,9 +218,6 @@
 
 
 # workflows 
-
-
-
 ## bash startup files 
   - interactive login shells / shells started with `--login`
     1. `/etc/profile`
@@ -257,6 +241,20 @@
   - when `uid` !==  `euid`
     1. no startup files are read
 
+## how to use alias and unalias effectively
+
+## using the directry stack effectively
+  - generally you should be using `pushd` and `popd` over `cd` just for the fact that you can easily see all the directories you've visited via `dirs`
+  
+  - related vars
+    - `PWD` prints the working directory
+    - `dirs` prints all the directories in the stack, dependent on using `pushd` and `popd`
+    - echo `DIRSTACK` prints the current working directoy ?
+  
+  - related programs
+    - `pushd` cds to and adds the path to the dirstack
+    - `popd` removes the last directory from the dirstack and cds into it
+    - 
 
 ## workflows & programs related to variables, shell arguments, etc
   - see a variables value `echo $NAME`
@@ -272,7 +270,7 @@
     - normal/local variables that are exported to the environment and are now available to all shells/subprocesses invoked from the original shell
     - create an environment variable via `export` `export NAME=value` or jsut `export NAME`
   
-  - variable related programs
+  - related programs
     - `set` used to set a local variable in `c` and `tc` shells
       - type `set` to see current variables
     - `setenv` used to set an environment variable in `c` and `tc` shells
