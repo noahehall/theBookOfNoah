@@ -193,7 +193,7 @@
   - `-r` and `-d` are disabled for `enable`
   - a default `PATH` cannot be set with `command`
   - turning off `restricted` mode is disabled
-# how bash parses input
+## how bash parses input
   1. shell reads input (file, `stdin`, terminal)
   2. input broken up into workds and operators obeying the quoting rules
     - `alias expansion` is performed
@@ -203,7 +203,32 @@
   5. `redirection` is performed if necessary; then all `redirection` operators and there operands are removed from the argument list
   6. commands are executed
   7. the shell waits for cmds to complete and collects the status on exit
-
+## executing cmds
+  1. occurs after the parser parses a line
+  2. tokens marked as variable assignments are removed
+  3. `redirections` saved for later reference
+  4. remaining tokens are expanded
+  5. the first token is considered the cmd, and the rest considered arguments
+  6. previous found `rediretions` are performed
+  7. strings assigned to variables are expanded
+## finding cmds to execute
+  1. if the first word does not contain a slash, check if it matches a name in the `function list`
+    - if not in the `function list` check if its a `builtin` cmd
+    - if not a `builtin` cmd, check if its in a `PATH` directory
+    - if still not found, bash prints error and returns `exit 127`
+  2. bash executes the found cmd in a separate execution environment
+    - can be a function, builtin, or an executable in the path list
+  3. if execution fails because the file is not executable/not a directory it is assumed to be a shell script
+  4. if the cmd was not begun asyncrhonously, the shell waits for the cmd to complete and collects the exit status
+## shell expansion
+  - `brace expansion`
+  - `tilde expansion`
+  - `parameter expansion`
+  - `variable epansion`
+  - `command substitution`
+  - `arithmetic expansion`
+  - `word splitting`
+  - `filename expansion`
 
 # important programs
   - if a program has a description elsewar, its not listed here (so dont assume these are the only important programs)
