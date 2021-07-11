@@ -266,8 +266,7 @@
   - `type` see whether a program is a builtin or not, for non builtins it prints the location
   - `sh`
   - `ssh`
-  
-    - 
+  - `clear` clear the screen, useful to run at the beginning of a script
   - `huponexit` determines if background jobs will be terminated n `SIGHUP`
   - `read`
   - `exec`
@@ -328,7 +327,9 @@
     - the original wya to create and consume documentation on linux. use `info` instead if its available for the cmd your researching
   - `info` CMD
     - the `gnu project` recommended way to create and consume documentation on linux
+  
   - `which` prints the path of the executable (unless its a builtin)
+    - `which -a NAME` prints all locations of a program
   - `type` see whether a program is a builtin or not, for non builtins it prints the location
   - `whereis` prints the binary, source and man files for the specified command
   - `command` runs a command with args suppressing hte normal shell function lookup
