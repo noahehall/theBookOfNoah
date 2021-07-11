@@ -37,6 +37,8 @@
   - [regular expressions in grep](https://linuxize.com/post/regular-expressions-in-grep/)
   - [bash aliases](https://linuxize.com/post/how-to-create-bash-aliases/)
   - [check if file/dir exists](https://linuxize.com/post/bash-check-if-file-exists/)
+  - [ignoreef vs IGNOREEOF](https://www.theunixschool.com/2012/09/ignoreeof-prevent-terminal-close-user-logout.html?m=1)
+  - [export vs set vs setenv](https://www.theunixschool.com/2010/04/what-is-difference-between-export-set.html)
   
 
 # my favorite searches
@@ -216,4 +218,16 @@
 # env vars
   - see the current value via `echo $VAR_NAME`
   - `PS1` the interactive prompt
-  - `PS
+  - `PS2` enabled fo rmultiline commands/when the shell thinks youve entered an unfinished cm
+    - e.g. forgetting the closing quote and pressing enter
+  - `ignoreeof`  used by `ksh` shell; see `IGNOREEOF` for more information
+  - `IGNOREEOF` prevent logging out from the user account, set this to the amount of times to ignore `ctrl d`
+    - e.g.  if 2 === the shell will ignore the first 2 `ctrl d` and show a warning message, but will log the user out the third time
+    - the default value is 10
+    - used by `bash` and `bourne` shells
+  - 
+
+
+# keyboard shortcuts
+  - `ctrl d` the `EOF` character, logs the user out of the current terminal
+  - 
