@@ -270,6 +270,9 @@
   - `unalias` 
     - remove a previously set `alias`
 
+## keyboard shortcuts
+  - `ctrl a` move to the start of the line in CLI
+
 
 ## conditionals
   - `[[` compound command
@@ -318,6 +321,23 @@
       - tye `export` to see 
     - `env` 
       - type `env` to see current variables
+
+# effectively sing pkg related commands
+  - `apt-get update`  update the package index files so that any other pkg related commands are using the latest values
+  
+  - `dpkg --list` see all installed pkgs
+
+
+  - `apt search PKGNAME` search for a pkg
+    - veyr useful to do `apt search ^PKGNAME` to get only pkgs starting with the PKGNAME
+  
+  - `apt-cache` query the apt cache, issue without args to see a very helpful summary
+    - `apt-cache pkgnames` get the list of installable pkgs
+    - `apt-cache search KEYWORD` keyword can be a name, or word in the pkg description
+    - `apt-cache search .` see all pkgs
+    - `apt-cache policy PKGNAME` get information about a specific package
+    - `apt-cache policy` see your installed sources?
+  - 
 
 
 # shell options
