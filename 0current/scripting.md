@@ -39,6 +39,8 @@
   - [check if file/dir exists](https://linuxize.com/post/bash-check-if-file-exists/)
   - [ignoreef vs IGNOREEOF](https://www.theunixschool.com/2012/09/ignoreeof-prevent-terminal-close-user-logout.html?m=1)
   - [export vs set vs setenv](https://www.theunixschool.com/2010/04/what-is-difference-between-export-set.html)
+  - [getopts: pass cli optoins to a shell script](https://www.theunixschool.com/2012/08/getopts-how-to-pass-command-line-options-shell-script-Linux.html)
+  - [positional parameters in a shell script](https://www.theunixschool.com/2011/01/positional-parameters-in-shell-script.html)
   
 
 # my favorite searches
@@ -110,6 +112,33 @@
     - unset
 
 
+
+# terms
+  - interactive: menas you can enter cmds, shell is not running because a script has been clicked upon
+  - non-interactive: all scripts use non-interactive shells, i.e. programmed to only do what tey are told
+  - login shell: you got the shell after authenticating to the system, e.g. with username & password
+  - non login shell: you did not authenticate to the system, e.g. when opening a terminal via an icon, or menu item
+  - traps: error handling code, enables custom responses to signals (which cause a script to exit)
+  - signals:
+    - SIGTERM: `kill -15`
+    - SIGINT: `kill -2` quit interactive shells, sent on `ctrl-c`
+    - SIGHUP: `kill -1` signals all jobs to exit, see `huponexit`
+  - restricted shells: limited but functional shell enviroments
+  - forking: bash makes an exact copy of itself & the PId is incremented. alwayss used for builtin cmds
+  - fork-and-exec: workflow bash uses to preserve the previous environment when creating (forking)
+  - command types
+    - simple commands: a program name followed by a list of spadce delimited args
+    - compound commands: simple cmds glued togther in various ways, e.g. in a `pipeline` `loop` `conditional` or other grouping mechanism
+  - functions: group cms by name for later execution
+    - are executed in the current shell context, i.e. no new process is created
+  - parameters: entity that stores values; 
+  - values: a name, number or special value
+  - variables: a paramter that stores a name, it has a value and 0/more attributes,
+    - a variable without an assigned value is given `null`
+    - 
+
+
+
 # conditionals
   - `[[` compound command
   - `test` 
@@ -152,62 +181,62 @@
 
 
 
-# terms
-  - interactive: menas you can enter cmds, shell is not running because a script has been clicked upon
-  - non-interactive: all scripts use non-interactive shells, i.e. programmed to only do what tey are told
-  - login shell: you got the shell after authenticating to the system, e.g. with username & password
-  - non login shell: you did not authenticate to the system, e.g. when opening a terminal via an icon, or menu item
-  - traps: error handling code, enables custom responses to signals (which cause a script to exit)
-  - signals:
-    - SIGTERM: `kill -15`
-    - SIGINT: `kill -2` quit interactive shells, sent on `ctrl-c`
-    - SIGHUP: `kill -1` signals all jobs to exit, see `huponexit`
-  - restricted shells: limited but functional shell enviroments
-  - forking: bash makes an exact copy of itself & the PId is incremented. alwayss used for builtin cmds
-  - fork-and-exec: workflow bash uses to preserve the previous environment when creating (forking)
-  - command types
-    - simple commands: a program name followed by a list of spadce delimited args
-    - compound commands: simple cmds glued togther in various ways, e.g. in a `pipeline` `loop` `conditional` or other grouping mechanism
-  - functions: group cms by name for later execution
-    - are executed in the current shell context, i.e. no new process is created
-  - parameters: entity that stores values; 
-  - values: a name, number or special value
-  - variables: a paramter that stores a name, it has a value and 0/more attributes,
-    - a variable without an assigned value is given `null`
-    - 
-
 
 # workflows 
-  - bash startup files 
-    - interactive login shells / shells started with `--login`
-      1. `/etc/profile`
-      2. the first found file:
-         - `~/.bash_profile`
-         - `~/.bash_login`
-         - `~/.profile`
-         - 
-      3. `~/.bash_logout`
-    - interactive non-login shells
-      1. `~/.bash_rc`
-    - non interactive shells
-      1. `BASH_ENV`
-    - shells invoked with `sh` command
-      1. `/etc/profile`
-      2. `~/.profile`
-      3. `env` variable, reads this when `sh` is invoked interactively
-         - type `env` to see it
-    -  invoked rmeotely (e.g. via `r-tools`, `rshd` `rlogin` `rsh` `rcp`)
-      1. `~/bash_rc`
-    - when `uid` !==  `euid`
-      1. no startup files are read
+## bash startup files 
+  - interactive login shells / shells started with `--login`
+    1. `/etc/profile`
+    2. the first found file:
+       - `~/.bash_profile`
+       - `~/.bash_login`
+       - `~/.profile`
+       - 
+    3. `~/.bash_logout`
+  - interactive non-login shells
+    1. `~/.bash_rc`
+  - non interactive shells
+    1. `BASH_ENV`
+  - shells invoked with `sh` command
+    1. `/etc/profile`
+    2. `~/.profile`
+    3. `env` variable, reads this when `sh` is invoked interactively
+       - type `env` to see it
+  -  invoked rmeotely (e.g. via `r-tools`, `rshd` `rlogin` `rsh` `rcp`)
+    1. `~/bash_rc`
+  - when `uid` !==  `euid`
+    1. no startup files are read
 
+
+## all about variables
+  - see a variables value `echo $NAME`
+  - normal variables
+    - scope: only available inside the shell in which it is defined
+      - i.e. not avaliable to shell/process invoked from the original shell (as its in its own process now)
+    - set a normal variable via `NAME=value`
+
+  - local variables
+    - scope: only avable to the function/script/shell in which its defined
+
+  - environment variables
+    - normal/local variables that are exported to the environment and are now available to all shells/subprocesses invoked from the original shell
+    - create an environment variable via `export` `export NAME=value` or jsut `export NAME`
+  
+  - variable related programs
+    - `set` used to set a local variable in `c` and `tc` shells
+      - type `set` to see current variables
+    - `setenv` used to set an environment variable in `c` and `tc` shells
+    - `export` used to set and environment variable in `bash` and `sh` shells
+      - tye `export` to see 
+    - `env` 
+      - type `env` to see current variables
 
 # important programs
   - `sh`
   - `ssh`
   - `which`
   - `command`
-  - `env`
+  - `env` see `env` elseware
+  - `export` see `export` elseware
 
 
 
