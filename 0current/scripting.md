@@ -165,6 +165,8 @@
 
 
 # important programs
+  - if a program has a description elsewar, its not listed here (so dont assume these are the only important programs)
+  
   - `type` see whether a program is a builtin or not, for non builtins it prints the location
   - `sh`
   - `ssh`
@@ -173,16 +175,9 @@
     - only builtin commands/those found in the `PATH` are executed
     - useful when you want to bypass normal function lookup, an go straight to either builtsins or cmds in your `PATH`
     - 
-  - `env` see `env` elseware
   - `huponexit` determines if background jobs will be terminated n `SIGHUP`
   - `read`
   - `exec`
-  - `alias` see elseware
-  - `cd`
-  - `alias`
-  - `unalias`
-  - `pushd` see elseware
-  - `popd` see elseware
   - `hash` tracks all commands used in the current shell environment, and the number of times each was used
     - invoke `hash` without args to see the list
   - `date` 
@@ -294,6 +289,7 @@
   
   - related vars
     - `PWD` prints the working directory
+    - `OLDPWD` the previous dir if there is one
     - `dirs` prints all the directories in the stack, dependent on using `pushd` and `popd`
     - echo `DIRSTACK` prints the current working directoy ?
   
@@ -337,7 +333,8 @@
       - `enable -n` list all disabled builtins
       - `enable -a` list all builtins, and indicate which ones are disabled
       - `enable -s` list all `posix` special builtins
-      - 
+    - `BASH_ENV`
+    - `SHELLOPTS`
 
 ## effectively sing pkg related commands
   - `apt-get update`  update the package index files so that any other pkg related commands are using the latest values
@@ -365,6 +362,9 @@
 
 # env vars
   - see the current value via `echo $VAR_NAME`
+
+  - `SHELL` path to your current shell executable
+  - `PATH` list of directories storing global executables
   - `PS1` the interactive prompt
   - `PS2` enabled fo rmultiline commands/when the shell thinks youve entered an unfinished cm
     - e.g. forgetting the closing quote and pressing enter
@@ -373,9 +373,14 @@
     - e.g.  if 2 === the shell will ignore the first 2 `ctrl d` and show a warning message, but will log the user out the third time
     - the default value is 10
     - used by `bash` and `bourne` shells
+  - `HISTFILE` where to save bash history
   - 
 
 
 # keyboard shortcuts
   - `ctrl d` the `EOF` character, logs the user out of the current terminal
-  - 
+
+
+# how tos
+  - determine if your in an interactive shell
+    - `echo $-` if it returns anything youre in an interactive shell, as in non-interactive shells `PS1` is unset
