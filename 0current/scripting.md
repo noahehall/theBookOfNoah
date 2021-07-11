@@ -185,6 +185,9 @@
   - bash: the gnu shell, is compatible wiht the bourne shell
 
 # how things work
+## init process
+  1. the init process reads its configuration files
+  2. determines which services to start/stop in each `run level`
 ## interactive shell behavior
   - startup fies are read
   - job control enabled
