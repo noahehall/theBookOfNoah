@@ -47,6 +47,7 @@
   - [man vs info cmds](https://itectec.com/ubuntu/ubuntu-the-difference-between-man-and-info-documentation/)
   - [best command explanation ive seen yet](https://askubuntu.com/questions/512770/what-is-use-of-command-command)
   - [enable keyword in bash](https://datacadamia.com/lang/bash/enable)
+  - [[ vs [[ vs ( vs ((](https://unix.stackexchange.com/questions/306111/what-is-the-difference-between-the-bash-operators-vs-vs-vs)
   
 
 # my favorite searches
@@ -185,9 +186,6 @@
   - `inittab`
 
 
-
-
-
 # locations: files & directories
   - `/bin`
   - `/boot`
@@ -278,11 +276,36 @@
   - `ctrl a` move to the start of the line in CLI
 
 
-## conditionals
-  - `[[` compound command
-  - `test` 
-  - `[`
-  - 
+## conditionals and flow control
+  - `if cmd` can also be used, tho you dont see it generally, its not required ot use any of the below constructs
+  
+  - `[[` compound command originally from `ksh` thats supported by all major shells
+    - an upgraded version of `test`
+    - usecases 
+      - test whether a string matches a wildcard pattern
+
+    
+  - `test` and `[` are the same thing
+    - the only `posix` standard construct
+  
+  - `(` runs command in a subshell
+    - usecases
+      - limiting side effects of the cmd if the cmd sets variables/other changes to the shells environment, as subshells cannot affect the environment of parent shells
+
+  - `((` arithmetic command originally from `ksh` thats supported by most major shells
+
+  ```bash
+    # if statement structure
+      if
+        command-list1
+      then
+        command-list2
+      else 
+        command-list3
+      fi
+    
+
+  ```
 ## using the directry stack effectively
   - generally you should be using `pushd` and `popd` over `cd` just for the fact that you can easily see all the dirbefor ea cmd is executed, its input & output can be redirected
     - can also be used to open/cectories you've visited via `dirs`
