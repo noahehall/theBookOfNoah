@@ -1,9 +1,10 @@
-# todo 
-  - transcribe written notes to this doc
+
 
 
 # TLDR
   - focuses on `bash` scripting, but should work in general for other shells
+  - includes other concepts supporting effective bash scripting, e.g. installing packages and finding information about the os
+  - if you need more than this, check out my other scripting related docs in the linux directory inside this repo
   - 
   
 # quick notes, see linux dir for massive amounts of information
@@ -29,6 +30,7 @@
   - [bash best practices](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html)
   - [the set cmd](https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html)
   - [setting optoins in bash](https://tldp.org/LDP/abs/html/options.html)
+  - [the builtin command command](https://datacadamia.com/lang/bash/command_builtin)
 
   
 ## quickies
@@ -42,6 +44,7 @@
   - [getopts: pass cli optoins to a shell script](https://www.theunixschool.com/2012/08/getopts-how-to-pass-command-line-options-shell-script-Linux.html)
   - [positional parameters in a shell script](https://www.theunixschool.com/2011/01/positional-parameters-in-shell-script.html)
   - [tmout explanation](https://www.thegeekstuff.com/2010/05/tmout-exit-bash-shell-when-no-activity/)
+  - [man vs info cmds](https://itectec.com/ubuntu/ubuntu-the-difference-between-man-and-info-documentation/)
   
 
 # my favorite searches
@@ -163,21 +166,23 @@
   - `sh`
   - `ssh`
   - `which`
-  - `command`
+  - `command` suppresses the shell function lookup in the search command order
   - `env` see `env` elseware
   - `huponexit` determines if background jobs will be terminated n `SIGHUP`
-  - `readline`
+  - `read`
+  - `exec`
+  - `alias` see elseware
   - `cd`
   - `alias`
   - `unalias`
   - `pushd` see elseware
   - `popd` see elseware
+  - `hash` tracks all commands used in the current shell environment, and the number of times each was used
+    - invoke `hash` without args to see the list
 
 
-# conditionals
-  - `[[` compound command
-  - `test` 
-  - `[`
+
+
 
 # locations: files & directories
   - `/bin`
@@ -218,6 +223,20 @@
 
 
 # workflows 
+  - TODO
+    - modifying `prompt` in all its glory
+    - output `redirection`
+      - `>` `>|` `><` `>&` `&<` `>>`
+      - befor ea cmd is executed, its input & output can be redirected
+      - can also be used to open/close files for the current shell execution environment
+    - using & when to use `restricted` shells
+
+## getting help on commands
+  - `man` CMD
+    - the original wya to create and consume documentation on linux. use `info` instead if its available for the cmd your researching
+  - `info` CMD
+    - the `gnu project` recommended way to create and consume documentation on linux
+
 ## bash startup files 
   - interactive login shells / shells started with `--login`
     1. `/etc/profile`
@@ -241,10 +260,25 @@
   - when `uid` !==  `euid`
     1. no startup files are read
 
-## how to use alias and unalias effectively
+## using alias, unalias, and shell functions effectively
+  - shell `functions`
+  - `alias` 
+    - a string substituted for a word, when it is used as the first word of a simple cmd
+    - invoke it without args to see the current set of aliases
+    - aliases are expanded when a cmd is read, not executed
+      - thus an alias definition on a line has no effect on any cmds that follow it on the same line
+  - `unalias` 
+    - remove a previously set `alias`
 
+
+## conditionals
+  - `[[` compound command
+  - `test` 
+  - `[`
+  - 
 ## using the directry stack effectively
-  - generally you should be using `pushd` and `popd` over `cd` just for the fact that you can easily see all the directories you've visited via `dirs`
+  - generally you should be using `pushd` and `popd` over `cd` just for the fact that you can easily see all the dirbefor ea cmd is executed, its input & output can be redirected
+    - can also be used to open/cectories you've visited via `dirs`
   
   - related vars
     - `PWD` prints the working directory
@@ -257,7 +291,13 @@
     - 
 
 ## workflows & programs related to variables, shell arguments, etc
-  - see a variables value `echo $NAME`
+  - `echo` echos whatever follows it followed by a new line
+    - `echo $SOMEVAR` will print the value of $SOMEVAR
+  
+  - `printf` echos whatever folows it, not followed by a new line, but does allow you to have formatted strings
+    - `printf $SOMEVAR` will print the value of $SOMEVAR
+  
+
   - normal variables
     - scope: only available inside the shell in which it is defined
       - i.e. not avaliable to shell/process invoked from the original shell (as its in its own process now)
