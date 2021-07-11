@@ -72,7 +72,9 @@
     - does the user need notifications?
       - when?
       - how and what type of notifications?
-    - 
+  - generally you should always execute scripts in a `subshell`
+    - variables, functions and aliases created in a subshell are only known to that particular bash session of that subhsell
+    - when the shell exits and the parent shell regains control, everything is clean up and all changes made by the script to the state of the shell are forgotten
 
 # gotchas
   - bash reads at least one complete line before executing any cmds on that line
@@ -258,7 +260,8 @@
   - `word splitting`
   - `filename expansion`
 
-# important programs
+# important programs, files, and locations
+## programs
   - if a program has a description elsewar, its not listed here (so dont assume these are the only important programs)
   
   - `sh`
@@ -275,7 +278,7 @@
   - `inittab`
 
 
-# locations: files & directories
+## directories and files
   - `/bin`
   - `/boot`
   - `/dev`
@@ -322,6 +325,10 @@
       - can also be used to open/close files for the current shell execution environment
     - using & when to use `restricted` shells
 
+## creating scripts
+  - ensure the script is executable via `chmod u+x NAME`
+  - view the permissions of a file `ls -l NAME`
+  - 
 ## getting help 
   - `man` CMD
     - the original wya to create and consume documentation on linux. use `info` instead if its available for the cmd your researching
