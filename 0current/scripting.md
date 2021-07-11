@@ -142,7 +142,13 @@
   - values: a name, number or special value
   - variables: a paramter that stores a name, it has a value and 0/more attributes,
     - a variable without an assigned value is given `null`
-    - 
+  - expressions: 
+    - unary: often used to examine the status of a file, requires 1 object to work
+    - binary: require 2 objects to work
+      - if the file argument is in the form `/dev/fd/N`
+        - file descriptor N is checked
+      - else if the file argument is in the form `/dev/std[in|out|err]` 
+        - file desriptor 0, 1, or 2 is checked
 
 # how things work
 ## interactive shell behavior
@@ -278,7 +284,7 @@
 
 ## conditionals and flow control
   - `if cmd` can also be used, tho you dont see it generally, its not required ot use any of the below constructs
-  
+
   - `[[` compound command originally from `ksh` thats supported by all major shells
     - an upgraded version of `test`
     - usecases 
