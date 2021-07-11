@@ -1,6 +1,11 @@
 # todo 
   - transcribe written notes to this doc
+
+
+# TLDR
+  - focuses on `bash` scripting, but should work in general for other shells
   - 
+  
 # quick notes, see linux dir for massive amounts of information
 
 # links
@@ -160,6 +165,9 @@
       2. `~/.profile`
       3. `ENV` variable (empty on my ubuntu 21.04), but supposedly reads this when `sh` is invoked interactively
     -  invoked rmeotely (e.g. via `r-tools`, `rshd` `rlogin` `rsh` `rcp`)
+      1. `~/bash_rc`
+    - when `uid` !==  `euid`
+      1. no startup files are read
 
 
 # important programs
