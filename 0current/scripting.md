@@ -178,6 +178,31 @@
   - parser syntax errors dont cause exits
   - spell check for `cd` is enabled
   - automatic exit base don `tmout` is enabled
+## restricted shell behavior
+  - restricted shells are invoked via `rbah` `--retricted` or `-r` options
+
+  - `cd` is disabled
+  - modifying `SHELL` `PATH` `ENV` `BASH_ENV` are disabled
+  - cmd names cant contain slases
+  - cant source filenames with slashes
+  - hashes dont accept slaches without the `-p` option
+  - cant import functions at startup
+  - `SHELLOPTS` is ignored at startup
+  - output `redirection` via `>` `>|` `><` `>&` `&<` `>>` is disabled
+  - `exec` is disabled
+  - `-r` and `-d` are disabled for `enable`
+  - a default `PATH` cannot be set with `command`
+  - turning off `restricted` mode is disabled
+# how bash parses input
+  1. shell reads input (file, `stdin`, terminal)
+  2. input broken up into workds and operators obeying the quoting rules
+    - `alias expansion` is performed
+  3. shell parses (analyzes and substitutes) the tokens into simple and compound commands
+  4. `shell expansion` is performed
+    - breaking the expanded tokens into lists of filenames, commands and arguments
+  5. `redirection` is performed if necessary; then all `redirection` operators and there operands are removed from the argument list
+  6. commands are executed
+  7. the shell waits for cmds to complete and collects the status on exit
 
 
 # important programs
