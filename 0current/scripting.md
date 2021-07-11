@@ -27,6 +27,8 @@
   - [writing interactive scripts](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_08.html)
   - [advanced if usage](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_02.html)
   - [bash best practices](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html)
+  - [the set cmd](https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html)
+  - [setting optoins in bash](https://tldp.org/LDP/abs/html/options.html)
 
   
 ## quickies
@@ -146,6 +148,33 @@
   - `/var/tmp`
   - `/var`
 
+
+
+# terms
+  - interactive: menas you can enter cmds, shell is not running because a script has been clicked upon
+  - non-interactive: all scripts use non-interactive shells, i.e. programmed to only do what tey are told
+  - login shell: you got the shell after authenticating to the system, e.g. with username & password
+  - non login shell: you did not authenticate to the system, e.g. when opening a terminal via an icon, or menu item
+  - traps: error handling code, enables custom responses to signals (which cause a script to exit)
+  - signals:
+    - SIGTERM: `kill -15`
+    - SIGINT: `kill -2` quit interactive shells, sent on `ctrl-c`
+    - SIGHUP: `kill -1` signals all jobs to exit, see `huponexit`
+  - restricted shells: limited but functional shell enviroments
+  - forking: bash makes an exact copy of itself & the PId is incremented. alwayss used for builtin cmds
+  - fork-and-exec: workflow bash uses to preserve the previous environment when creating (forking)
+  - command types
+    - simple commands: a program name followed by a list of spadce delimited args
+    - compound commands: simple cmds glued togther in various ways, e.g. in a `pipeline` `loop` `conditional` or other grouping mechanism
+  - functions: group cms by name for later execution
+    - are executed in the current shell context, i.e. no new process is created
+  - parameters: entity that stores values; 
+  - values: a name, number or special value
+  - variables: a paramter that stores a name, it has a value and 0/more attributes,
+    - a variable without an assigned value is given `null`
+    - 
+
+
 # workflows 
   - bash startup files 
     - interactive login shells / shells started with `--login`
@@ -163,7 +192,8 @@
     - shells invoked with `sh` command
       1. `/etc/profile`
       2. `~/.profile`
-      3. `ENV` variable (empty on my ubuntu 21.04), but supposedly reads this when `sh` is invoked interactively
+      3. `env` variable, reads this when `sh` is invoked interactively
+         - type `env` to see it
     -  invoked rmeotely (e.g. via `r-tools`, `rshd` `rlogin` `rsh` `rcp`)
       1. `~/bash_rc`
     - when `uid` !==  `euid`
@@ -175,3 +205,15 @@
   - `ssh`
   - `which`
   - `command`
+  - `env`
+
+
+
+# shell options
+  - you enable an option via `set -o OPTION` and disable it via `set +o OPTION`
+  - `posix` comply with posix standard for shells
+
+# env vars
+  - see the current value via `echo $VAR_NAME`
+  - `PS1` the interactive prompt
+  - `PS
