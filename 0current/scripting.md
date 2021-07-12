@@ -1,3 +1,5 @@
+bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
+
 # TLDR
   - focuses on `bash` scripting, but should work in general for other shells
   - includes other concepts supporting effective bash scripting, e.g. installing packages and finding information about the os
