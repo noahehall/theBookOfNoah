@@ -348,7 +348,7 @@
   - `PS1` the interactive prompt
   - `PS2` enabled fo rmultiline commands/when the shell thinks youve entered an unfinished cm
     - e.g. forgetting the closing quote and pressing enter
-  - `PS3` the alue is used as the prompt for the `select` command
+  - `PS3` t# he alue is used as the prompt for the `select` command
   - `PS4` value is the prompt printed before the command line is echoed when the `-x` option is set
     - defaults to `+ `
   - `PROMPT_COMMAND` if set, the vlaue is used as the command to execute before printing of each primary prompt `PS1`
@@ -379,6 +379,7 @@
     - `OSTYPE` describes the operating system bash is running on
     - `PIPESTATUS` array variable listing the exit statusus of processes in the most recently executed foregroup pipeline
     - `POSIXLY_CORRECT` if set when bash starts, the shell enters `posix` mode
+    
     
     
   ```bash
@@ -484,7 +485,7 @@
   
   - useful variables
     - `EUID` the numeric effective user id of hte current user
-    - `UID` 
+    - `UID` the numeric, real user ID of the current user
     - `GROUPS` the numeric group ids of the current user
 
   - useful programs
@@ -596,8 +597,9 @@
       - `enable -s` list all `posix` special builtins
     
     
+  - useful variables
     - `BASH_ENV` the value is expanded and uses as the name of a startup file to read before executing a script 
-    - `SHELLOPTS`
+    - `SHELLOPTS` colion separated list of enabled shell options
     - `BASH_VERSION`
     - `COMP_LINE` the current command line being executed 
     - `COMP_WORDS` the words in the current command line being executed
@@ -644,7 +646,9 @@
   - `IFS`
   - `OPTARG`
   - `OPTIND`
-  - 
+  - `RANDOM` returns a random number between 0 and 32767 each time its referenced
+    - you can assign a value to seed this number
+  - `TMOUT` if set to a number, the shell will terminate after that many seconds of inactivity
 
 
 # keyboard shortcuts
