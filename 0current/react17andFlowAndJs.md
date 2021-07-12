@@ -565,6 +565,9 @@ bookmark: https://flow.org/en/docs/react/types/
   - flow has all the benefits of typescript with 0 of the limitations
   - fk typescript 
 
+## terms
+  - refinement: the ability for a static type checker to be able to tell the type of variable a mixed/any/etc type is. usually occurs within an if/case statement before use of the variable
+
 ## flow usage
   - `// @flow` typecheck this file
   - `// @noflow` do not typecheck this file
@@ -723,8 +726,9 @@ bookmark: https://flow.org/en/docs/react/types/
       // { propName?: type }
       // { propName!: type }
 
-    // as one/more from a set of types
+    // union types: as one/more from a set of types
       const x: number | string = 'hello';
+      const literalType: 'sucess' | 'warnning' = 'success';
 
     // variables and types
       const x: number = 42;
@@ -741,14 +745,42 @@ bookmark: https://flow.org/en/docs/react/types/
         const y: symbol = x;
       else
         const y: number = x;
-        
+
     // basic function 
       function add(a: number, b: number): number {}
       // optional params can their set type, void, but NOT null
       function add(a?: number, b?: number): number | void {}
       // with default values, can be their set type, void, but NOT null
       function add(a: number = 2) {}
-    
+      // the return type is the same as whatever is passed into the function
+      function identity<T> (value: T): T {}
+      // the mixed type, use sparingly as it accepts anything!
+      // you must 'refine' the type before returning a value else it throws
+      function whatever(value: mixed) {
+        switch (typeof value) {
+          case 'string':
+          // ...etc
+        }
+
+        // or like this
+        if (Array.isArray(value))
+        else if (value instanceof Event))
+        // ...etc
+
+        // or refine objects
+        type A = { type: 'A' }
+        type B = { type: 'B' }
+        function blah(value: A | B ) {
+          if (value.type === 'A')
+          else // must be B
+          // be careful when passing a refined type to another function
+          // without types
+          // it will invalidate the refinement as the other function doesnt verify type
+          // instead store the value before passing
+        }
+      }
+
+
     // object properties
       // optional props can be their set type, void, but NOT null
       { propName: type, optionalProp?: type }
