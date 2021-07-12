@@ -341,6 +341,8 @@
     - `source NAME` uses the bash builtin (which uses the bourne shell builtin)
   - always include a `shebang` at the start of the script
     - and preferable use `#!/bin/env SHELLNAME` so you dont have to guess where the user installed the shell interpreter
+  - if editing a file, always save the old version first
+    - then you can `diff somefile somefile_old` to see the changes youve made
 
 
   ```bash
@@ -669,6 +671,14 @@
     ```
   - common `~/.bashrc` script
     ```bash
-
+      # ~/.bashrc 
+      # sourced automatically in non-login shells (e.g. logging grpahically using xterminal windows)
+      # should be source from login shell initialization scripts as well
+      # check out the bash package for examples
+    ```
+  - common `~/.bash_logout` script
+    ```bash
+      # ~/.bash_logout
+      # executed when you log out of the shell
 
     ```
