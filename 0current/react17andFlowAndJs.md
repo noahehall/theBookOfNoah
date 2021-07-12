@@ -718,29 +718,39 @@ bookmark: https://flow.org/en/docs/react/types/
       // null for null
       // void for undefined
       // Array<subtype>
+      // symbol for Symbol
       // { propName: type }
       // { propName?: type }
       // { propName!: type }
 
     // as one/more from a set of types
-    const x: number | string = 
+      const x: number | string = 'hello';
 
     // variables and types
-    const x: number = 42;
-    const y: string = 'hello';
-    const z: boolean = true;
-    const a: ?number = null;
-    const b: number | undefined = 10;
-    const c: Array<number> = [1, 2, 3];
-    const b: Object
+      const x: number = 42;
+      const y: string = 'hello';
+      const z: boolean = true;
+      const a: ?number = null;
+      const b: number | undefined = 10;
+      const c: Array<number> = [1, 2, 3];
+      const b: Object
 
+    // verifying types
+      const x: symbol | number = Symbol();
+      if (typeof x === 'symbol')
+        const y: symbol = x;
+      else
+        const y: number = x;
+        
     // basic function 
       function add(a: number, b: number): number {}
-      // optional params can their set type, undefined, void, but NOT null
+      // optional params can their set type, void, but NOT null
       function add(a?: number, b?: number): number | void {}
+      // with default values, can be their set type, void, but NOT null
+      function add(a: number = 2) {}
     
     // object properties
-      // optional props can be their set type, void, undefined, but NOT null
+      // optional props can be their set type, void, but NOT null
       { propName: type, optionalProp?: type }
     
   ```
