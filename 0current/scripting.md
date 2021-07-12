@@ -336,12 +336,22 @@
 
 # workflows 
   - TODO
-    - modifying `prompt` in all its glory
     - output `redirection`
       - `>` `>|` `><` `>&` `&<` `>>`
       - befor ea cmd is executed, its input & output can be redirected
       - can also be used to open/close files for the current shell execution environment
     - using & when to use `restricted` shells
+
+## prompt
+  - TODO
+
+  - `PS1` the interactive prompt
+  - `PS2` enabled fo rmultiline commands/when the shell thinks youve entered an unfinished cm
+    - e.g. forgetting the closing quote and pressing enter
+  - `PS3` the alue is used as the prompt for the `select` command
+  - `PS4` value is the prompt printed before the command line is echoed when the `-x` option is set
+    - defaults to `+ `
+  - `PROMPT_COMMAND` if set, the vlaue is used as the command to execute before printing of each primary prompt `PS1`
 
 ## creating, debugging, and executing scripts
   - ensure the script is executable via `chmod u+x NAME`
@@ -359,7 +369,18 @@
   - if editing a file, always save the old version first
     - then you can `diff somefile somefile_old` to see the changes youve made
 
+  - useful programs
 
+  - useful variables
+    - `PPID` the process id of the parent process
+    - `LINENO` the line number in the script/shell function currently executing
+    - `MACHTYPE` fully describes the system type on which bash is executing
+    - `OPTERR` if set to 1, bash displays error messages genreated by the `getopts` builtin
+    - `OSTYPE` describes the operating system bash is running on
+    - `PIPESTATUS` array variable listing the exit statusus of processes in the most recently executed foregroup pipeline
+    - `POSIXLY_CORRECT` if set when bash starts, the shell enters `posix` mode
+    
+    
   ```bash
     #!/bin/env bash
     #!/bin/env -xv bash 
@@ -425,7 +446,7 @@
     
     -  invoked rmeotely (e.g. via `r-tools`, `rshd` `rlogin` `rsh` `rcp`)
       1. `~/.bashrc`
-    - when `uid` !==  `euid`
+    - when `UID` !==  `EUID`
       1. no startup files are read
   
   - definitions
@@ -437,9 +458,12 @@
       - sometimes pointers to other configuration files are set here
         - `/etc/inputrc` 
           - the system-wide readline initalization file where you can configure te command line `bell-style`
+          - can be overridden by setting `INPUTRC` env variable to the path of a different file
         - `/etc/profile.d` directory
           - contains files configuring system-wide behavior of specific programs
         - 
+  
+
 
 ## using alias, unalias, and shell functions effectively
   - shell `functions`
@@ -451,10 +475,20 @@
   - `unalias` 
     - remove a previously set `alias`
 
-## managing/inspecting users, permissions, and ownership
+  - useful variables
+    - `FUNCNAME` the name of any currently executing function
+
+## users, permissions, and ownership
   - `id` prints information about the given/current user or the process running the cmd if no user is specified
     - `id -un` only print the current user|process invoking the command
-  - 
+  
+  - useful variables
+    - `EUID` the numeric effective user id of hte current user
+    - `UID` 
+    - `GROUPS` the numeric group ids of the current user
+
+  - useful programs
+    - `groups` lists the gorups the current user is a member of
 
 ## keyboard shortcuts
   - `ctrl a` move to the start of the line in CLI
@@ -499,7 +533,7 @@
     - `PWD` prints the working directory
     - `OLDPWD` the previous dir if there is one
     - `dirs` prints all the directories in the stack, dependent on using `pushd` and `popd`
-    - echo `DIRSTACK` prints the current working directoy ?
+  - `DIRSTACK` array variable containing the current ocntents of the directory stack
   
   - related programs
     - `pushd` cds to and adds the path to the dirstack
@@ -523,6 +557,7 @@
     - normal/local variables that are exported to the environment and are now available to all shells/subprocesses invoked from the original shell
     - create an environment variable via `export NAME=value` or export a previous set variable via `export NAME`
     - `subshells` can modify global variables, but those modifications do not impact the parent environment
+    - [check this file for default global variables and their defualt values](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_02.html)
   
   - related programs
     - `echo` 
@@ -561,8 +596,11 @@
       - `enable -s` list all `posix` special builtins
     
     
-    - `BASH_ENV`
+    - `BASH_ENV` the value is expanded and uses as the name of a startup file to read before executing a script 
     - `SHELLOPTS`
+    - `BASH_VERSION`
+    - `COMP_LINE` the current command line being executed 
+    - `COMP_WORDS` the words in the current command line being executed
 
 ## effectively sing pkg related commands
   - `apt-get update`  update the package index files so that any other pkg related commands are using the latest values
@@ -593,16 +631,20 @@
 
   - `SHELL` path to your current shell executable
   - `PATH` list of directories storing global executables
-  - `PS1` the interactive prompt
-  - `PS2` enabled fo rmultiline commands/when the shell thinks youve entered an unfinished cm
-    - e.g. forgetting the closing quote and pressing enter
   - `ignoreeof`  used by `ksh` shell; see `IGNOREEOF` for more information
-  - `IGNOREEOF` prevent logging out from the user account, set this to the amount of times to ignore `ctrl d`
+  - `IGNOREEOF` 
+    - controls the action of the shell on receipt of an `eof` character as the sole input
+    - prevent logging out from the user account, set this to the amount of times to ignore `ctrl d`
     - e.g.  if 2 === the shell will ignore the first 2 `ctrl d` and show a warning message, but will log the user out the third time
     - the default value is 10
     - used by `bash` and `bourne` shells
   - `HISTFILE` where to save bash history
   - `HOSTNAME` the hostname of the computer
+  - `HOME`
+  - `IFS`
+  - `OPTARG`
+  - `OPTIND`
+  - 
 
 
 # keyboard shortcuts
