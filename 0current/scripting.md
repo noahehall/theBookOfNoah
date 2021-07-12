@@ -11,7 +11,7 @@
   - [shell expansion](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html)
   - [built in cmds](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_01_03.html#sect_01_03_02)
   - [the bash environment](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_03.html)
-  - [conditionals](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_07.html)
+  - [conditional statements](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_07.html)
   - [aliases](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_05.html)
   - [variables](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_10.html)
   - [catching user input](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_08_02.html)
@@ -27,6 +27,7 @@
   - [setting optoins in bash](https://tldp.org/LDP/abs/html/options.html)
   - [the builtin command command](https://datacadamia.com/lang/bash/command_builtin)
   - [awk programming language](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_06.html)
+  - [the shift builtin](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_09_07.html)
 
   
 ## tutorials and things like that
@@ -88,6 +89,8 @@
     - globals should be in all caps 
     - locals should be all lowercase and snake cased
     - always quote the value to reduce errors
+    - you most likely want to use `$@` and not `$*` in scripts
+    - always set your variables at the top of script, never manually type ANYTHING and always reference things by variables
 
 ## gotchas
   - bash reads at least one complete line before executing any cmds on that line
@@ -267,7 +270,8 @@
   2. bash executes the found cmd in a separate execution environment
     - can be a function, builtin, or an executable in the path list
   3. if execution fails because the file is not executable/not a directory it is assumed to be a shell script
-  4. if the cmd was not begun asyncrhonously, the shell waits for the cmd to complete and collects the exit status
+  4. if the cmd was not begun asyncrhonously (i.e. in the background), the shell waits for the cmd to complete and collects the exit status
+
 ## shell expansion
   - `brace expansion`
   - `tilde expansion`
@@ -603,8 +607,29 @@
     - `BASH_VERSION`
     - `COMP_LINE` the current command line being executed 
     - `COMP_WORDS` the words in the current command line being executed
+    
+    - `$*` expands to the positional parameters, starting from one.
+      - when used within double quotes, expands to a single word with the value of each parameter separated by the first character ofthe `IFS` variable
+    - `$@` expands to the positional parameters, starting from one
+      - when the expansion occurs within double quotes, each parameter expands to a separate word
+    - `$#` expands to the number of positiona parametres in decimal
+    - `$?` expands to the exit status of the most recenty executed foreground pipeline
+    - `$-` expands to the current option flags as specified upon invocation, by the `set` builtin, or those set by the shell itself (such as `-i`)
+    - `$$` expands to the current process ID
+    - `$!` expands to the process ID of the most recently executed background (asynchronous) command
+    - `$0` expands ot the name of the shell/shell script
+    - `$_` set at shell startup and contains the absolute filename of the shell/script executed as passed int he argument list
+      - after that, it expands to the last argument to the previous command after expansion
+      - after that it is set to the full pathname of each command executed and placed int he environment exported to that command
 
-## effectively sing pkg related commands
+  ```bash
+
+
+
+  ```
+
+
+## effectively using pkg related commands
   - `apt-get update`  update the package index files so that any other pkg related commands are using the latest values
 
   - `dpkg --list` see all installed pkgs
