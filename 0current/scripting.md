@@ -24,7 +24,7 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
   - [pgrep](https://man7.org/linux/man-pages/man1/pgrep.1.html)
   - [writing interactive scripts](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_08.html)
   - [advanced if usage](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_02.html)
-  - [bash best practices](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html)
+  - [shell expansion](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html)
   - [the set cmd](https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html)
   - [setting optoins in bash](https://tldp.org/LDP/abs/html/options.html)
   - [the builtin command command](https://datacadamia.com/lang/bash/command_builtin)
