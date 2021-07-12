@@ -44,6 +44,9 @@
   - [enable keyword in bash](https://datacadamia.com/lang/bash/enable)
   - [[ vs [[ vs ( vs ((](https://unix.stackexchange.com/questions/306111/what-is-the-difference-between-the-bash-operators-vs-vs-vs)
   
+## useful links
+  - [bash debugger, also available for vscode](http://bashdb.sourceforge.net/)
+
 
 # best Practices    
   - always trap signals
@@ -338,11 +341,32 @@
     - `source NAME` uses the bash builtin (which uses the bourne shell builtin)
   - always include a `shebang` at the start of the script
     - and preferable use `#!/bin/env SHELLNAME` so you dont have to guess where the user installed the shell interpreter
-    - 
-## comments
+
+
   ```bash
+    #!/bin/env bash
+    #!/bin/env -xv bash 
+      # options enabled/not on the shebang line affect the entire script
+
+
     # this is a single line comment
+    # TODO: add heredoc for multi line comments
+
+    set -x # print command traces before executing each command
+    # its useful to place an echo statement before each line within this block
+    # to easier locate where the traces are at in your script
+    set +x # disable it
+
+    set -f # disable file name generation using metacharacters (globbing)
+    set +f # enable it
+
+    set -v # print shell input lines as they are used
+    set +v # disable it
+
+    
   ```
+
+
 ## getting help 
   - `man` CMD
     - the original wya to create and consume documentation on linux. use `info` instead if its available for the cmd your researching
@@ -461,7 +485,12 @@
     - `printf` echos whatever folows it, not followed by a new line, but does allow you to have formatted strings, and will exit without failure
       - `printf $SOMEVAR` will print the value of $SOMEVAR
     
-    - `set` used to set a local variable in `c` and `tc` shells
+    - `set` 
+      - used to 
+        - set a local variable in `c` and `tc` shells
+        - enable/disable options in bash scripts e.g. `set -|+x` to enable/disable debugging
+          - `-` enables
+          - `+` disables
       - type `set` to see current variables
     - `unset` only way to remove a variable
 
