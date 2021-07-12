@@ -35,8 +35,8 @@ bookmark: https://flow.org/en/docs/react/types/
   - pairs well with [our frontendtech accessibility referece](./frontendtech_accessibility.md) and our *todo: updated javascript reference*
 
 
-
-# best practices
+# react
+## best practices
   - **ALWAYS**
     - decompose components for reusability 
     - *displayName* are only useful in *dev* for debugging, as they should be obsfucated in prod
@@ -114,7 +114,7 @@ bookmark: https://flow.org/en/docs/react/types/
     - use portals when rendering a child even when the parent has overflow hidden/z-index
       - e.g. dialogs, tooltips, modals, etc
 
-# gotchas
+## gotchas
   - defaultProps only used for undefined props; e.g. null props will still be null (and wont use the value assigned in defaultprops)
   - react events are camelCase and not lowercase
       - e.g. `onclick` === `onClick`
@@ -128,7 +128,7 @@ bookmark: https://flow.org/en/docs/react/types/
     - not polyfilled
     - recommended to only be used via a third party pointer event polyfill
 
-# terms 
+## terms 
   - pure components: never alter their inputs & are idempotent
   - error boundaries 
     - copmonents for catching errors in their children and dispplaying fallback content
@@ -136,22 +136,22 @@ bookmark: https://flow.org/en/docs/react/types/
   - error handling: exceptions thrown during rendering, life cycle methhods, or constructor call
 
 
-# general
+## general
   - class components: have state and life cycle methods 
 
-## DOM elements
+### DOM elements
 
-## SyntheticEvent
+### SyntheticEvent
   - evenhandlers receive instances of `SyntheticEvnet`
   - cross-browser wrapper around the UA native event 
     
 
-## Concurrent Mode
+### Concurrent Mode
 
-## Testing
+### Testing
 
 
-# lifecycle methods (in order)
+## lifecycle methods (in order)
   - mounting: component instance is being created and inserted into the DOM
     - *constructor*
       - when being created & before mounting
@@ -220,7 +220,7 @@ bookmark: https://flow.org/en/docs/react/types/
         - errors **DO NOT** bubble and you must catch them for logging  
 
 
-# instance props & methods 
+## instance props & methods 
   - *setState*
     - informs react state has changed & to asynchronously flush these changes to the DOM
     - queues a rerender for the calling component & its descendants
@@ -240,7 +240,7 @@ bookmark: https://flow.org/en/docs/react/types/
   - *super(props)*
     - MUST be first line in the constructor else props will be undefined/random bugs n shit
 
-# React; top-level api
+## React; top-level api
   - *React.Component*: have state and life cycle methods (PureComponent doesnt)
   
   - *React.PureComponent*: no state/life cycle methods but shallow compares new & old props automatically (i.e. implement shouldComponentUpdate)
@@ -257,7 +257,7 @@ bookmark: https://flow.org/en/docs/react/types/
   - 
 
 
-# hooks 
+## hooks 
   - let you into react life cycle features from a functional component
   - dont work inside classes
   - only at the top level of functional components 
@@ -343,7 +343,7 @@ bookmark: https://flow.org/en/docs/react/types/
   - *useDebugValue*
 
 
-# ReactDOM: top level api
+## ReactDOM: top level api
   - *render*
   - *hydrate*
   - *unmountComponentAtNode*
@@ -355,7 +355,7 @@ bookmark: https://flow.org/en/docs/react/types/
     - 
 
 
-# ReactDOMServer: top level api
+## ReactDOMServer: top level api
   - *renderToString*
   - *renderToStaticMarkup*
   - *renderToNodeStream*
