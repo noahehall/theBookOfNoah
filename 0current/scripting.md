@@ -63,6 +63,7 @@
   - every program should be reusable
   - always focus on having correct logic, flow control and efficiency
     - useful to itemize the list of tasks involved in the program
+  
   - questions to ask yourself before starting a new script
     - will i be needing information from the user/environment
     - how will i store information
@@ -76,19 +77,28 @@
     - does the user need notifications?
       - when?
       - how and what type of notifications?
+  
   - generally you should always execute scripts in a `subshell`
     - variables, functions and aliases created in a subshell are only known to that particular bash session of that subhsell
     - when the shell exits and the parent shell regains control, everything is clean up and all changes made by the script to the state of the shell are forgotten
   - use echo statements in any files impacting the current environment
     - if an error is introduced, you know which file the is likely the culprit
+  
+  - variables
+    - globals should be in all caps 
+    - locals should be all lowercase and snake cased
+    - always quote the value to reduce errors
 
-# gotchas
+## gotchas
   - bash reads at least one complete line before executing any cmds on that line
   - bash invokes shell scripts in `non-interactive` shells
     - unless invoked without `-c` or `-s`
       - need to confirm this note, maybe it should say `unless invoked with`
   - shell scripts execute in a previate environemnt,
     - variables are not inherited by child processes (unless exported), so you have to `source` the file their defined in or `export` them from the parent shell
+  - variables
+    - are case sensitive
+    - cannot start with a digit, but can contain digits
 
 
 # builtin cmds
@@ -480,6 +490,7 @@
     
 
   ```
+
 ## using the directry stack effectively
   - generally you should be using `pushd` and `popd` over `cd` just for the fact that you can easily see all the dirbefor ea cmd is executed, its input & output can be redirected
     - can also be used to open/cectories you've visited via `dirs`
@@ -495,24 +506,23 @@
     - `popd` removes the last directory from the dirstack and cds into it
     - 
 
-## workflows & programs related to variables, shell arguments, env vars, etc
+## all about local and global variables, shell arguments, etc
   - variable types based on the value they contain
     - string variables
     - integer variables
     - constant variables
     - array variables
 
-  - normal variables
+  - local/normal variables
     - scope: only available inside the shell in which it is defined
-      - i.e. not avaliable to shell/process invoked from the original shell (as its in its own process now)
+      - i.e. not avaliable to shell/process/subshells invoked from the original shell (as its in its own process now)
     - set a normal variable via `NAME=value`
 
-  - local variables
-    - scope: only avable to the function/script/shell in which its defined
 
-  - global|environment variables
+  - global/environment variables
     - normal/local variables that are exported to the environment and are now available to all shells/subprocesses invoked from the original shell
-    - create an environment variable via `export` `export NAME=value` or jsut `export NAME`
+    - create an environment variable via `export NAME=value` or export a previous set variable via `export NAME`
+    - `subshells` can modify global variables, but those modifications do not impact the parent environment
   
   - related programs
     - `echo` 
