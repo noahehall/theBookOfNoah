@@ -362,6 +362,205 @@ bookmark: https://flow.org/en/docs/react/types/
   - *renderToSTaticNodeStream*
   - 
 
+## react examples
+  ```js
+    /**
+    * React
+    */
+
+    // synthetic events
+      // contract
+        eventHandler = e => {
+          e.bubbles 
+          e.cancelable
+          e.currentTarget // DOMEventTarget
+          e.defaultPrevented
+          e.eventPhase
+          e.isDefaultPrevented()
+          e.isPropagationStopped()
+          e.isTrusted
+          e.nativeEvent // DOMEvent
+          e.persist() // deprecated in 17
+          e.preventDefault()
+          e.stopPropagation()
+          e.target // DOMEventTarget
+          e.timeStamp
+          e.type
+        }
+      // types
+        // clipboard events
+          onCopy|Cut|Paste
+            .clipboardData
+        // composition events
+          onCopisitionEnd|Start|Update
+            .data
+        // keyboard events
+          onKeyDown|Press|Up
+            .altKey|charCode|ctrlKey|
+            .getModifierStatE(key)
+            .key // acepts any values in the DOM level 3 Events spec
+            .keyCode|locale|location|metaKey
+            .repeat|shiftKey|which
+        // focus events
+          // called when the parent/descendant receives/loses focus
+          onFocus|Blur 
+            .relatedTarget
+        // form events
+          onChange|Input|Invalid|Reset|Submit
+          // TODO: see forms link
+        // generic events
+          onError|Load
+        // mouse events
+          onClick|ContextMenu|DoubleClick|Drag|DragEnd|DragEnter
+          onDragExit|DragLeave|DragOver|DragStart|Drop|MouseDown
+          onMouseEnter|MouseLeave|MouseMove|MouseOut|MouseOver|MouseUp
+            .altKey|button|buttons|clientX|clientY|ctrlKey|
+            .getModifierState(key)
+            .metaKey|pageX|pageY|relatedTarget
+            .screenX|screenY|shiftKey
+        // pointer events 1
+          // propagate from el.exited > el.entering
+          // no capture phase
+          onPointerEnter|Leave 
+        // pointer events 2
+          onPointerDown|Move|Up|Cancel|Over|Out
+          onGotPointerCapture
+          onLostPointerCapture
+            .pointerId|width|height|pressure|tangentialPressure
+            .tiltX|tiltY|twist|pointerType|isPrimary
+        // selection events
+          onSelect
+        // touch events
+          onTouchCancel|End|Move|Start
+            .altKey|changedTouches|ctrlKey
+            .getModiferState(key)
+            .metaKey|shiftKey|targetTouches|touches
+        // ui events
+          onScroll // does not bubble in react 17 to match UA behavior
+            .detail|view
+        // wheel events
+          onWheel
+            .deltaMode|X|Y|Z
+        // media events
+          onAbort|CanPlay|CanPlayThrough|DurationChange|Emptied
+          onEncrypted|Ended|Error|LoadedData|LoadedMetadata|LoadStart
+          onPause|Play|Playing|Progress|RateChange|Seeked|Seeking
+          onStalled|Suspend|TimeUpdate|VolumeChange|Waiting
+        // image events
+          onLoad|Error
+        // animation events
+          onAnimationStart|End|Iteration
+            .animationName|pseudoElement|elapsedTime
+        // transition events
+          onTransitionEnd
+            .propertyName|pseudoElement|elapsedTime
+        // other events
+          onToggle
+
+      
+      
+      // examples
+        // detecting whether the element, or one of its decendents 
+        // received/lost focus
+          onFocus={(e) => {
+            if (e.currentTarget === e.target) {
+              console.log('focused self');
+            } else {
+              console.log('focused child', e.target);
+            }
+            if (!e.currentTarget.contains(e.relatedTarget)) {
+              // Not triggered when swapping focus between children
+              console.log('focus entered self');
+            }
+          }}
+          onBlur={(e) => {
+            if (e.currentTarget === e.target) {
+              console.log('unfocused self');
+            } else {
+              console.log('unfocused child', e.target);
+            }
+            if (!e.currentTarget.contains(e.relatedTarget)) {
+              // Not triggered when swapping focus between children
+              console.log('focus left self');
+            }
+          }}
+        
+
+    // instance methods
+      // shallow merge a single prop into state
+        setState({onlyUpdateThis: 'withThis'})
+        setState((prevState, prevProps) => {
+          // update if change
+          if (prevState.poop !== this.state.poop) console.log('changed!')
+          if (prevProps.flush !== this.state.flush) console.log('changed'!)
+
+          // dont update
+          return;
+        })
+
+    // creating components
+      // React.Component
+        class Poop extends React.Component {
+          constructor(props) {
+            super(props)
+
+            this.state = {}
+
+            // only required for event handlers
+            // so you can refrain from <button onClick={e => this.handler(e)}>
+            // and jsut do onClick={this.handler}
+            this.eventHandler = this.eventHandler.bind(this);
+            eventHandler = () => 'class fields syntax'
+
+            unboundHandler () {
+              // can bind in event handler 
+            }
+
+            poop = 'flush'
+            render () {
+              return (
+                <button onClick={this.unboundHandler.bind(this, this.poop)} />
+              )
+            }
+          }
+        }
+
+      React.PureComponent
+      React.memo
+
+    // Transforming components
+      React.cloneElement
+      React.isValidElement
+      React.children
+
+    // rendering
+      React.Fragment
+        <></>
+
+    // refs
+      React.createRef
+      React.forwardRef
+
+    // lazyLoading
+      React.lazy
+      React.Suspense
+
+    // Hooks - common
+      React.useState
+      React.useEffect
+      React.useContext
+
+    // Hooks - supplemental
+      React.useReducer
+      React.useCallback
+      React.useMemo
+      React.useRef
+      React.useImperativeHandle
+      React.useLayoutEffect
+      React.useDebugValue
+
+  ```
+
 # FLOW!
   - flow has all the benefits of typescript with 0 of the limitations
   - fk typescript 
@@ -409,299 +608,141 @@ bookmark: https://flow.org/en/docs/react/types/
     - does not typecheck files
     - uses the signatures of all function, classes, etc. when checking other code
 
-## 
 
-# 
+## examples
+### errors and react types
+  ```js
+    // handling errors
+      // $FlowFixMe
+      // $FlowIssue[incompatible-type]
+      /* $FlowIgnore[prop-missing] some other text here */
+      /* $FlowFixMe[incompatible-cast] this
+          is a multi-line
+          comment */
+      { /* $FlowIssue this is how you suppress errors inside JSX */ }
+      someCode('with errors, all previous lines apply only to this line')
 
-```js
-  /**
-   * Flow
-   */
+    // React type reference
+    // this is how facebook does it, follow their lead or create your own framework
+    // and namespaces should no longer hinder treeshaking
+      import * as React from 'react';
 
-  // handling errors
-    // $FlowFixMe
-    // $FlowIssue[incompatible-type]
-    /* $FlowIgnore[prop-missing] some other text here */
-    /* $FlowFixMe[incompatible-cast] this
-        is a multi-line
-        comment */
-    { /* $FlowIssue this is how you suppress errors inside JSX */ }
-    someCode('with errors, all previous lines apply only to this line')
-
-  // React type reference
-  // this is how facebook does it, follow their lead or create your own framework
-  // and namespaces should no longer hinder treeshaking
-    import * as React from 'react';
-
-  // any node that can be rnedered in a react application
-  // use this and move on with your life
-  React.Node
-    // i.e.
-      type Node = React.ChildrenArray<void | null | boolean | string | number | React.Element<any>>;
-    // class component
-      class MyComponent extends React.Component<{}> {
-        render(): React.Node { /*render here */}
-      }
-    // fn component
-      function MyComponent(props: {}): React.Node { /* some code... */}
-
-  // the type of jsx element
-  // e.g. returned from React.createElement()
-  React.Element
-    const element: React.Element<'div'> = <div />;
-
-
-  //can be a single/nested array to any level
-  React.ChildrenArray<T> 
-    const children: React.ChildrenArray<number> = 42;
-    const children: React.ChildrenArray<number> = [[1, 2], 3, [4, 5]];
-    const array: Array<number> = React.Children.toArray(children); // flatten the array
-
-  // need a better example
-  // this is the ost abstract representation of a react component
-  // useful for HOCs and library definitions
-  React.AbstractComponent<Config, Instance> 
-
-
-  // alwys use for  class/fns that receive/return react components
-  // doesnt include strings, @see React.ElementType
-  React.ComponentType<Props>
-    const StyledAnchor: React.ComponentType<any> = styled(Clickable)`css declarations`
-    // i.e.
-    type ComponentType<Props> =
-      | React.StatelessFunctionalComponent<Props>
-      | Class<React.Component<Props, any>>;
-
-  // same as React.ComponentType but includes renderable strings
-  React.ElementType
-    // i.e.
-    type ElementType = | string | React.ComponentType<any>;
-
-  // the most general type of all react elmenets
-  // similar to `mixed` for all values
-  React.MixedElement
-    const element: React.MixedElement = <div />;
-    // i.e.
-      React.Element<React.ElementType>
-
-  // type of a react stateless fn component
-  React.StatelessFunctionalComponent<Props>
-    // i.e.
-      type StatelessFunctionalComponent<Props> = (props: Props) => React.Node;
-
-  // key props
-  React.Key
-    type Key = string | number;
-
-  // type of ref prop on rect elments, i.e. string/fn
-  React.Ref<typeof Component>
-    // i.e.
-    type Ref<C> =
-      | string
-      | (instance: React.ElementRef<C> | null) => mixed;
-
-  React.ElementProps<typeof Component>
-  React.ElementConfig<typeof Component>
-  React.ElementRef<typeof Component>
-  React.Config<Props, DefaultProps>
-
-
-
-```
-```js
-  /**
-   * React
-   */
-
-  // synthetic events
-    // contract
-      eventHandler = e => {
-        e.bubbles 
-        e.cancelable
-        e.currentTarget // DOMEventTarget
-        e.defaultPrevented
-        e.eventPhase
-        e.isDefaultPrevented()
-        e.isPropagationStopped()
-        e.isTrusted
-        e.nativeEvent // DOMEvent
-        e.persist() // deprecated in 17
-        e.preventDefault()
-        e.stopPropagation()
-        e.target // DOMEventTarget
-        e.timeStamp
-        e.type
-      }
-    // types
-      // clipboard events
-        onCopy|Cut|Paste
-          .clipboardData
-      // composition events
-        onCopisitionEnd|Start|Update
-          .data
-      // keyboard events
-        onKeyDown|Press|Up
-          .altKey|charCode|ctrlKey|
-          .getModifierStatE(key)
-          .key // acepts any values in the DOM level 3 Events spec
-          .keyCode|locale|location|metaKey
-          .repeat|shiftKey|which
-      // focus events
-        // called when the parent/descendant receives/loses focus
-        onFocus|Blur 
-          .relatedTarget
-      // form events
-        onChange|Input|Invalid|Reset|Submit
-        // TODO: see forms link
-      // generic events
-        onError|Load
-      // mouse events
-        onClick|ContextMenu|DoubleClick|Drag|DragEnd|DragEnter
-        onDragExit|DragLeave|DragOver|DragStart|Drop|MouseDown
-        onMouseEnter|MouseLeave|MouseMove|MouseOut|MouseOver|MouseUp
-          .altKey|button|buttons|clientX|clientY|ctrlKey|
-          .getModifierState(key)
-          .metaKey|pageX|pageY|relatedTarget
-          .screenX|screenY|shiftKey
-      // pointer events 1
-        // propagate from el.exited > el.entering
-        // no capture phase
-        onPointerEnter|Leave 
-      // pointer events 2
-        onPointerDown|Move|Up|Cancel|Over|Out
-        onGotPointerCapture
-        onLostPointerCapture
-          .pointerId|width|height|pressure|tangentialPressure
-          .tiltX|tiltY|twist|pointerType|isPrimary
-      // selection events
-        onSelect
-      // touch events
-        onTouchCancel|End|Move|Start
-          .altKey|changedTouches|ctrlKey
-          .getModiferState(key)
-          .metaKey|shiftKey|targetTouches|touches
-      // ui events
-        onScroll // does not bubble in react 17 to match UA behavior
-          .detail|view
-      // wheel events
-        onWheel
-          .deltaMode|X|Y|Z
-      // media events
-        onAbort|CanPlay|CanPlayThrough|DurationChange|Emptied
-        onEncrypted|Ended|Error|LoadedData|LoadedMetadata|LoadStart
-        onPause|Play|Playing|Progress|RateChange|Seeked|Seeking
-        onStalled|Suspend|TimeUpdate|VolumeChange|Waiting
-      // image events
-        onLoad|Error
-      // animation events
-        onAnimationStart|End|Iteration
-          .animationName|pseudoElement|elapsedTime
-      // transition events
-        onTransitionEnd
-          .propertyName|pseudoElement|elapsedTime
-      // other events
-        onToggle
-
-    
-    
-    // examples
-      // detecting whether the element, or one of its decendents 
-      // received/lost focus
-        onFocus={(e) => {
-          if (e.currentTarget === e.target) {
-            console.log('focused self');
-          } else {
-            console.log('focused child', e.target);
-          }
-          if (!e.currentTarget.contains(e.relatedTarget)) {
-            // Not triggered when swapping focus between children
-            console.log('focus entered self');
-          }
-        }}
-        onBlur={(e) => {
-          if (e.currentTarget === e.target) {
-            console.log('unfocused self');
-          } else {
-            console.log('unfocused child', e.target);
-          }
-          if (!e.currentTarget.contains(e.relatedTarget)) {
-            // Not triggered when swapping focus between children
-            console.log('focus left self');
-          }
-        }}
-      
-
-  // instance methods
-    // shallow merge a single prop into state
-      setState({onlyUpdateThis: 'withThis'})
-      setState((prevState, prevProps) => {
-        // update if change
-        if (prevState.poop !== this.state.poop) console.log('changed!')
-        if (prevProps.flush !== this.state.flush) console.log('changed'!)
-
-        // dont update
-        return;
-      })
-
-  // creating components
-    // React.Component
-      class Poop extends React.Component {
-        constructor(props) {
-          super(props)
-
-          this.state = {}
-
-          // only required for event handlers
-          // so you can refrain from <button onClick={e => this.handler(e)}>
-          // and jsut do onClick={this.handler}
-          this.eventHandler = this.eventHandler.bind(this);
-          eventHandler = () => 'class fields syntax'
-
-          unboundHandler () {
-            // can bind in event handler 
-          }
-
-          poop = 'flush'
-          render () {
-            return (
-              <button onClick={this.unboundHandler.bind(this, this.poop)} />
-            )
-          }
+    // any node that can be rnedered in a react application
+    // use this and move on with your life
+    React.Node
+      // i.e.
+        type Node = React.ChildrenArray<void | null | boolean | string | number | React.Element<any>>;
+      // class component
+        class MyComponent extends React.Component<{}> {
+          render(): React.Node { /*render here */}
         }
-      }
+      // fn component
+        function MyComponent(props: {}): React.Node { /* some code... */}
 
-    React.PureComponent
-    React.memo
+    // the type of jsx element
+    // e.g. returned from React.createElement()
+    React.Element
+      const element: React.Element<'div'> = <div />;
 
-  // Transforming components
-    React.cloneElement
-    React.isValidElement
-    React.children
 
-  // rendering
-    React.Fragment
-      <></>
+    //can be a single/nested array to any level
+    React.ChildrenArray<T> 
+      const children: React.ChildrenArray<number> = 42;
+      const children: React.ChildrenArray<number> = [[1, 2], 3, [4, 5]];
+      const array: Array<number> = React.Children.toArray(children); // flatten the array
 
-  // refs
-    React.createRef
-    React.forwardRef
+    // need a better example
+    // this is the ost abstract representation of a react component
+    // useful for HOCs and library definitions
+    React.AbstractComponent<Config, Instance> 
 
-  // lazyLoading
-    React.lazy
-    React.Suspense
 
-  // Hooks - common
-    React.useState
-    React.useEffect
-    React.useContext
+    // alwys use for  class/fns that receive/return react components
+    // doesnt include strings, @see React.ElementType
+    React.ComponentType<Props>
+      const StyledAnchor: React.ComponentType<any> = styled(Clickable)`css declarations`
+      // i.e.
+      type ComponentType<Props> =
+        | React.StatelessFunctionalComponent<Props>
+        | Class<React.Component<Props, any>>;
 
-  // Hooks - supplemental
-    React.useReducer
-    React.useCallback
-    React.useMemo
-    React.useRef
-    React.useImperativeHandle
-    React.useLayoutEffect
-    React.useDebugValue
+    // same as React.ComponentType but includes renderable strings
+    React.ElementType
+      // i.e.
+      type ElementType = | string | React.ComponentType<any>;
 
-```
+    // the most general type of all react elmenets
+    // similar to `mixed` for all values
+    React.MixedElement
+      const element: React.MixedElement = <div />;
+      // i.e.
+        React.Element<React.ElementType>
+
+    // type of a react stateless fn component
+    React.StatelessFunctionalComponent<Props>
+      // i.e.
+        type StatelessFunctionalComponent<Props> = (props: Props) => React.Node;
+
+    // key props
+    React.Key
+      type Key = string | number;
+
+    // type of ref prop on rect elments, i.e. string/fn
+    React.Ref<typeof Component>
+      // i.e.
+      type Ref<C> =
+        | string
+        | (instance: React.ElementRef<C> | null) => mixed;
+
+    React.ElementProps<typeof Component>
+    React.ElementConfig<typeof Component>
+    React.ElementRef<typeof Component>
+    React.Config<Props, DefaultProps>
+
+
+
+  ```
+
+
+### basic JS types
+  ```js
+    // modifiers
+      // append to propName instead for function params and object props
+      // prepend ? to type to make it optional
+      // prepend ! to type to make it not nullable
+
+    // list of types
+      // number
+      // string
+      // boolean
+      // null for null
+      // void for undefined
+      // Array<subtype>
+      // { propName: type }
+      // { propName?: type }
+      // { propName!: type }
+
+    // as one/more from a set of types
+    const x: number | string = 
+
+    // variables and types
+    const x: number = 42;
+    const y: string = 'hello';
+    const z: boolean = true;
+    const a: ?number = null;
+    const b: number | undefined = 10;
+    const c: Array<number> = [1, 2, 3];
+    const b: Object
+
+    // basic function 
+      function add(a: number, b: number): number {}
+      // optional params can their set type, undefined, void, but NOT null
+      function add(a?: number, b?: number): number | void {}
+    
+    // object properties
+      // optional props can be their set type, void, undefined, but NOT null
+      { propName: type, optionalProp?: type }
+    
+  ```
+
+###
