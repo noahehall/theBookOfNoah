@@ -383,28 +383,46 @@
   - `hash` tracks all commands used in the current shell environment, and the number of times each was used
     - invoke `hash` without args to see the list
 
-## bash startup files 
-  - interactive login shells / shells started with `--login`
-    1. `/etc/profile`
-    2. the first found file:
-       - `~/.bash_profile`
-       - `~/.bash_login`
-       - `~/.profile`
-       - 
-    3. `~/.bash_logout`
-  - interactive non-login shells
-    1. `~/.bash_rc`
-  - non interactive shells
-    1. `BASH_ENV`
-  - shells invoked with `sh` command
-    1. `/etc/profile`
-    2. `~/.profile`
-    3. `env` variable, reads this when `sh` is invoked interactively
-       - type `env` to see it
-  -  invoked rmeotely (e.g. via `r-tools`, `rshd` `rlogin` `rsh` `rcp`)
-    1. `~/bash_rc`
-  - when `uid` !==  `euid`
-    1. no startup files are read
+## bash initialization (startup) files
+  - which files are used when
+    - interactive login shells / shells started with `--login`
+      1. `/etc/profile`
+      2. the first found file:
+         - `~/.bash_profile`
+         - `~/.bash_login`
+         - `~/.profile`
+         - 
+      3. `~/.bash_logout`
+    
+    - interactive non-login shells
+      1. `~/.bash_rc`
+    
+    - non interactive shells
+      1. `BASH_ENV`
+    
+    - shells invoked with `sh` command
+      1. `/etc/profile`
+      2. `~/.profile`
+      3. `env` variable, reads this when `sh` is invoked interactively
+         - type `env` to see it
+    
+    -  invoked rmeotely (e.g. via `r-tools`, `rshd` `rlogin` `rsh` `rcp`)
+      1. `~/bash_rc`
+    - when `uid` !==  `euid`
+      1. no startup files are read
+  
+  - definitions
+    - `/etc/profile`
+      - use cases
+        - any settings you want to apply to ALL user environments
+      - usually sets the shell variables `PATH` `USER` `MAIL` `HOSTNAME` `HISTSIZE`
+      - sometimes the `umask` value is also set here
+      - sometimes pointers to other configuration files are set here
+        - `/etc/inputrc` 
+          - the system-wide readline initalization file where you can configure te command line `bell-style`
+        - `/etc/profile.d` directory
+          - contains files configuring system-wide behavior of specific programs
+        - 
 
 ## using alias, unalias, and shell functions effectively
   - shell `functions`
@@ -415,6 +433,11 @@
       - thus an alias definition on a line has no effect on any cmds that follow it on the same line
   - `unalias` 
     - remove a previously set `alias`
+
+## managing/inspecting users, permissions, and ownership
+  - `id` prints information about the given/current user or the process running the cmd if no user is specified
+    - `id -un` only print the current user|process invoking the command
+  - 
 
 ## keyboard shortcuts
   - `ctrl a` move to the start of the line in CLI
@@ -546,7 +569,7 @@
     - the default value is 10
     - used by `bash` and `bourne` shells
   - `HISTFILE` where to save bash history
-  - 
+  - `HOSTNAME` the hostname of the computer
 
 
 # keyboard shortcuts
@@ -556,3 +579,50 @@
 # how tos
   - determine if your in an interactive shell
     - `echo $-` if it returns anything youre in an interactive shell, as in non-interactive shells `PS1` is unset
+
+
+
+# copypasta scripts
+  - common `/etc/profile` script
+    ```bash
+      # /etc/profile
+      # @see https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_01.html
+
+      # System wide environment and startup programs, for login setup
+
+      PATH=$PATH:/usr/X11R6/bin
+
+      # No core files by default
+      ulimit -S -c 0 > /dev/null 2>&1
+
+      USER="`id -un`"
+      LOGNAME=$USER
+      MAIL="/var/spool/mail/$USER"
+
+      HOSTNAME=`/bin/hostname`
+      HISTSIZE=1000
+
+      # Keyboard, bell, display style: the readline config file:
+      if [ -z "$INPUTRC" -a ! -f "$HOME/.inputrc" ]; then
+          INPUTRC=/etc/inputrc
+      fi
+
+      PS1="\u@\h \W"
+
+      export PATH USER LOGNAME MAIL HOSTNAME HISTSIZE INPUTRC PS1
+
+      # Source initialization files for specific programs (ls, vim, less, ...)
+      for i in /etc/profile.d/*.sh ; do
+          if [ -r "$i" ]; then
+              . $i
+          fi
+      done
+
+      # Settings for program initialization
+      source /etc/java.conf
+      export NPX_PLUGIN_PATH="$JRE_HOME/plugin/ns4plugin/:/usr/lib/netscape/plugins"
+
+      PAGER="/usr/bin/less"
+
+      unset i
+    ```
