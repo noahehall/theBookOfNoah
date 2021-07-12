@@ -395,7 +395,7 @@
       3. `~/.bash_logout`
     
     - interactive non-login shells
-      1. `~/.bash_rc`
+      1. `~/.bashrc`
     
     - non interactive shells
       1. `BASH_ENV`
@@ -407,7 +407,7 @@
          - type `env` to see it
     
     -  invoked rmeotely (e.g. via `r-tools`, `rshd` `rlogin` `rsh` `rcp`)
-      1. `~/bash_rc`
+      1. `~/.bashrc`
     - when `uid` !==  `euid`
       1. no startup files are read
   
@@ -585,7 +585,9 @@
 # copypasta scripts
   - common `/etc/profile` script
     ```bash
-      # /etc/profile
+      # /etc/profile script
+      # applied to all user environments
+      # dont put bash specific stuff here as its read by ALL types of shells
       # @see https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_01.html
 
       # System wide environment and startup programs, for login setup
@@ -625,4 +627,48 @@
       PAGER="/usr/bin/less"
 
       unset i
+    ```
+  - common `/etc/bashrc` script
+    ```bash
+      # /etc/bashrc
+      # bashrc defaults that should affect all users BASH environment
+      # this file should be sourced from ~/.bashrc
+      # useful for containing system-wide definitions for shell functions and alias
+
+      pskill()
+      {
+        local pid
+
+        pid=$(ps -ax | grep $1 | grep -v grep | gawk '{ print $1 }')
+        echo -n "killing $1 (process $pid)..."
+        kill -9 $pid
+        echo "slaughtered."
+      }
+    ```
+  - common `~/.bash_profile` script
+    ```bash
+      # .bash_profile
+      # preferred configuration file for configuring individual user environments
+
+      source ~/.bashrc
+      source ~/.bash_login
+    ```
+  - common `~/.bash_login` script
+    ```bash
+      # .bash_login
+      # commands to perform from the bash shell at login time
+      # should only be sourced from ~/.bash_profile
+      # executed from the bash shell when you login if ~/.bash_profile is missing
+
+      # file protection
+      umask 002 # all to me, read to group and others
+
+      # misc
+      w # shows current logged in users everytime this user loggs into the system
+      cal `date +"%m"` `date +"%Y"` # shows current month and year, be careful cal isnt installed by defualt
+    ```
+  - common `~/.bashrc` script
+    ```bash
+
+
     ```
