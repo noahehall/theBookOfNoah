@@ -26,6 +26,7 @@
   - [the set cmd](https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html)
   - [setting optoins in bash](https://tldp.org/LDP/abs/html/options.html)
   - [the builtin command command](https://datacadamia.com/lang/bash/command_builtin)
+  - [awk programming language](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_06.html)
 
   
 ## tutorials and things like that
@@ -78,12 +79,16 @@
   - generally you should always execute scripts in a `subshell`
     - variables, functions and aliases created in a subshell are only known to that particular bash session of that subhsell
     - when the shell exits and the parent shell regains control, everything is clean up and all changes made by the script to the state of the shell are forgotten
+  - use echo statements in any files impacting the current environment
+    - if an error is introduced, you know which file the is likely the culprit
 
 # gotchas
   - bash reads at least one complete line before executing any cmds on that line
   - bash invokes shell scripts in `non-interactive` shells
     - unless invoked without `-c` or `-s`
       - need to confirm this note, maybe it should say `unless invoked with`
+  - shell scripts execute in a previate environemnt,
+    - variables are not inherited by child processes (unless exported), so you have to `source` the file their defined in or `export` them from the parent shell
 
 
 # builtin cmds
@@ -490,7 +495,13 @@
     - `popd` removes the last directory from the dirstack and cds into it
     - 
 
-## workflows & programs related to variables, shell arguments, env vars,  etc
+## workflows & programs related to variables, shell arguments, env vars, etc
+  - variable types based on the value they contain
+    - string variables
+    - integer variables
+    - constant variables
+    - array variables
+
   - normal variables
     - scope: only available inside the shell in which it is defined
       - i.e. not avaliable to shell/process invoked from the original shell (as its in its own process now)
@@ -499,15 +510,17 @@
   - local variables
     - scope: only avable to the function/script/shell in which its defined
 
-  - environment variables
+  - global|environment variables
     - normal/local variables that are exported to the environment and are now available to all shells/subprocesses invoked from the original shell
     - create an environment variable via `export` `export NAME=value` or jsut `export NAME`
   
   - related programs
-    - `echo` echos whatever follows it followed by a new line, and always exits 0
+    - `echo` 
+      - echos whatever follows it followed by a new line, and always exits 0
       - `echo $SOMEVAR` will print the value of $SOMEVAR
   
-    - `printf` echos whatever folows it, not followed by a new line, but does allow you to have formatted strings, and will exit without failure
+    - `printf` 
+      - echos whatever folows it, not followed by a new line, but does allow you to have formatted strings, and will exit without failure
       - `printf $SOMEVAR` will print the value of $SOMEVAR
     
     - `set` 
@@ -516,20 +529,28 @@
         - enable/disable options in bash scripts e.g. `set -|+x` to enable/disable debugging
           - `-` enables
           - `+` disables
-      - type `set` to see current variables
+      - type `set` to see current local and global variables and functions
     - `unset` only way to remove a variable
 
-    - `setenv` used to set an environment variable in `c` and `tc` shells
-    - `export` used to set and environment variable in `bash` and `sh` shells
-      - tye `export` to see 
+    - `setenv` 
+      - used to set an environment variable in `c` and `tc` shells
+    - `export` 
+      - used to set and environment variable in `bash` and `sh` shells
+      - type `export` to see 
+    
     - `env` 
-      - type `env` to see current variables
+      - type `env` to see global (environment) variables
+    - `printenv`
+      - prints global (environment) variables 
+    
     - `enable` enable, disable, and print builtin shell commands
       - issue with out args to see all builtin commands
       - `enable -n NAME` disable NAME
       - `enable -n` list all disabled builtins
       - `enable -a` list all builtins, and indicate which ones are disabled
       - `enable -s` list all `posix` special builtins
+    
+    
     - `BASH_ENV`
     - `SHELLOPTS`
 
