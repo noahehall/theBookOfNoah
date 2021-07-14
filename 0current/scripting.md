@@ -106,7 +106,8 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
     - cannot start with a digit, but can contain digits
 
 
-# builtin cmds
+# basics
+## builtin cmds
   - `sh`
     - break
     - cd
@@ -166,7 +167,7 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
 
 
 
-# terms
+## terms
   - interactive: menas you can enter cmds, shell is not running because a script has been clicked upon
   - non-interactive: all scripts use non-interactive shells, i.e. programmed to only do what tey are told
   - login shell: you got the shell after authenticating to the system, e.g. with username & password
@@ -209,11 +210,11 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
     - shutdown run level:
   - bash: the gnu shell, is compatible wiht the bourne shell
 
-# how things work
-## init process
+## how things work
+### init process
   1. the init process reads its configuration files
   2. determines which services to start/stop in each `run level`
-## interactive shell behavior
+### interactive shell behavior
   - startup fies are read
   - job control enabled
   - `PS1` and `PS2` prompts are set
@@ -231,7 +232,7 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
   - parser syntax errors dont cause exits
   - spell check for `cd` is enabled
   - automatic exit base don `tmout` is enabled
-## restricted shell behavior
+### restricted shell behavior
   - restricted shells are invoked via `rbah` `--retricted` or `-r` options
 
   - `cd` is disabled
@@ -246,7 +247,7 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
   - `-r` and `-d` are disabled for `enable`
   - a default `PATH` cannot be set with `command`
   - turning off `restricted` mode is disabled
-## how bash parses input
+### how bash parses input
   1. shell reads input (file, `stdin`, terminal)
   2. input broken up into workds and operators obeying the quoting rules
     - `alias expansion` is performed
@@ -256,7 +257,7 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
   5. `redirection` is performed if necessary; then all `redirection` operators and there operands are removed from the argument list
   6. commands are executed
   7. the shell waits for cmds to complete and collects the status on exit
-## executing cmds
+### executing cmds
   1. occurs after the parser parses a line
   2. tokens marked as variable assignments are removed
   3. `redirections` saved for later reference
@@ -264,7 +265,7 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
   5. the first token is considered the cmd, and the rest considered arguments
   6. previous found `rediretions` are performed
   7. strings assigned to variables are expanded
-## finding cmds to execute
+### finding cmds to execute
   1. if the first word does not contain a slash, check if it matches a name in the `function list`
     - if not in the `function list` check if its a `builtin` cmd
     - if not a `builtin` cmd, check if its in a `PATH` directory
@@ -274,7 +275,7 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
   3. if execution fails because the file is not executable/not a directory it is assumed to be a shell script
   4. if the cmd was not begun asyncrhonously (i.e. in the background), the shell waits for the cmd to complete and collects the exit status
 
-## shell expansion
+### shell expansion
   - `brace expansion`
   - `tilde expansion`
   - `parameter expansion`
@@ -284,8 +285,8 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
   - `word splitting`
   - `filename expansion`
 
-# important programs, files, and locations
-## programs
+## important programs, files, and locations
+### programs
   - if a program has a description elsewar, its not listed here (so dont assume these are the only important programs)
   
   - `sh`
@@ -302,7 +303,7 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
   - `inittab`
 
 
-## directories and files
+### directories and files
   - `/bin`
   - `/boot`
   - `/dev`
