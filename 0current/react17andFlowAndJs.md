@@ -565,6 +565,12 @@ bookmark: https://flow.org/en/docs/react/types/
   - flow has all the benefits of typescript with 0 of the limitations
   - fk typescript 
 
+## gotchas
+  - the `?` before the type marks the type as maybe, i.e. null|undefined|type
+  - the `?` before the `:` in an object prop definition marks the prop as optional, i.e. can be missing from the object
+    - `someObj = { optionalProp?: ?number}`
+      - the prop is optional and can be missing
+      - the value can be null|undefined|number
 ## terms
   - refinement: the ability for a static type checker to be able to tell the type of variable a mixed/any/etc type is. usually occurs within an if/case statement before use of the variable
 
@@ -806,4 +812,14 @@ bookmark: https://flow.org/en/docs/react/types/
     
   ```
 
-###
+### catchall 
+  ```js
+    // refining maybe types
+    function poop(value: ?number) {
+      // this checks both null && undefined
+      if (value != null) return value * 2;
+      // or more readable but less expressive in my opinion
+      if (typeof value === 'number') return * 2;
+    }
+
+  ```
