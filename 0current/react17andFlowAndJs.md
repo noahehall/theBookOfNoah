@@ -1,6 +1,4 @@
-bookmark: https://flow.org/en/docs/types/
-bookmark: https://flow.org/en/docs/react/types/
-  see js where we left off
+bookmark: https://flow.org/en/docs/types/functions/
 
 
 # links
@@ -581,7 +579,9 @@ bookmark: https://flow.org/en/docs/react/types/
     - flow tracks all previously assigned types to its type
       - `let foo = 42, foo = 'hello;` 
       - `let isOneOf: number | string = foo` <-- is true because of the previous assignments
-      - 
+  - arrow functions may not have a this parameter annotation, as these functions bind their this parameter at the definition site, rather than the call site.
+
+
 ## terms
   - refinement: the ability for a static type checker to be able to tell the type of variable a mixed/any/etc type is. usually occurs within an if/case statement before use of the variable
 
@@ -845,7 +845,7 @@ bookmark: https://flow.org/en/docs/react/types/
     // enforces that every branch of your function returns the same type
       function method(): string {} 
       // async implies promise, so must always return a promise
-      async function method(): Promise {}
+      async function method(): Promise<number> {}
 
     // function this context
       
