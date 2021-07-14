@@ -880,10 +880,25 @@ bookmark: https://flow.org/en/docs/types/functions/
       // accessing a prop nt efined on an object usually returns undefined
       // in flow it throws
       const obj1: {
-        prop1: string,
+        prop1: string, // required
+        prop2?: number, // optional prop: missing|undefined|type
+        prop3: ?number, // optional value: prop is required, but value undefined|null|type
+
         // ..etc
       } = {
         prop1: 'hello',
+
+        // ...etc
+      }
+
+      // objects with methods
+      const obj2: {
+        meth1: (string, number) => string
+      } = {
+        // this can be redefined later
+        meth1: (a, b) => a,
+        // this cannot be redefined due to using method syntax
+        meth1(a, b) { return a },
       }
   ```
 
