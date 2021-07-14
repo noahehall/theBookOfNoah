@@ -775,8 +775,17 @@ bookmark: https://flow.org/en/docs/react/types/
           else // must be B
           // be careful when passing a refined type to another function
           // without types
-          // it will invalidate the refinement as the other function doesnt verify type
-          // instead store the value before passing
+          // it will invalidate the refinement ai the other function doesnt verify type
+          // instead store the value before passing to silence flow errs if they occur
+        }
+
+        // save prop after refinement else flow throws err
+        function method(value: { prop?: string }) {
+          if (value.prop) {
+            var prop = value.prop; // without this
+            otherMethod(); // because of this 
+            prop.charAt(0); // <-- throws err here 
+          }
         }
       }
 
