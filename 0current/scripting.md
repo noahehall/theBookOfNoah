@@ -379,6 +379,25 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
 
     
 ## quoting
+  - quoting is used for
+    - remove special meaning of metacharacters/words
+    - disable special treament of metacharacters
+    - prevent reserved words from being recognized
+    - disable parameter expansion
+
+  - `single quotes`
+    - preverse the literal value of each character
+      - thus `\` dont work, thus you cant include a single quote within single quotes
+      - no expansion occurs, e.g. variables become literal text and arent substituted
+
+    ```bash
+      date=`date`
+      echo $date # Tue Jul 13 etc
+      echo '$date' # $date
+
+    ```
+
+  - `double quotes`
 
 ## restricted shells
   - using & when to use `restricted` shells
