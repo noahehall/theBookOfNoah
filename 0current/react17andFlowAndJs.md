@@ -877,7 +877,7 @@ bookmark: https://flow.org/en/docs/types/functions/
       }
       
     // objects
-      // accessing a prop nt efined on an object usually returns undefined
+    // accessing a prop undefined on an object usually returns undefined, it flow it throws
       // in flow it throws
       const obj1: {
         prop1: string, // required
@@ -900,6 +900,32 @@ bookmark: https://flow.org/en/docs/types/functions/
         // this cannot be redefined due to using method syntax
         meth1(a, b) { return a },
       }
+
+      // objects created with properties are sealed objects, so you cant add props after creation
+      const obj3 = { a, b}
+      // objects created without properties are unsleaed objects
+      const obj4 = {}
+
+      // exact object types cannot be used to annotate objects with extra propreties
+      type ExactObject: {| foo: string, bar: number |}
+      // inact object types can be used to annotate objects with extra properties
+      type InExactObject: { foo: string, bar: number }
+      type InExactObject: { foo: string, ...} // preferred as its explicit we expect additional props
+        const objError: ExactObject = { foo, bar, extraProp }
+        const objOk: InExactObject = { foo, bar, extraProp }
+
+      // type combinations
+        type a: number;
+        type b: string
+        type c: a | b;
+
+        type obj1: {| foo: string |}
+        type obj2: {| bar: string |}
+        type objErr1: obj1 & obj2;; // throws, use spread instead
+        type obj3: {| ...obj1, ...obj2 |} // always do this for object intersectinos
+
+        type d: a & b
+
   ```
 
 
