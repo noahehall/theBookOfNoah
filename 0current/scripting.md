@@ -372,14 +372,19 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
   - `ctrl d` the `EOF` character, logs the user out of the current terminal
 
 
-# workflows 
-  - TODO
-    - output `redirection`
-      - `>` `>|` `><` `>&` `&<` `>>`
-      - befor ea cmd is executed, its input & output can be redirected
-      - can also be used to open/close files for the current shell execution environment
-    - using & when to use `restricted` shells
 
+# workflows 
+
+    
+
+## restricted shells
+  - using & when to use `restricted` shells
+
+## redirection
+  - output `redirection`
+    - `>` `>|` `><` `>&` `&<` `>>`
+    - befor ea cmd is executed, its input & output can be redirected
+    - can also be used to open/close files for the current shell execution environment
 ## prompt
   - TODO
 
