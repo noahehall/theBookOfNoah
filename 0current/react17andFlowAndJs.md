@@ -571,6 +571,13 @@ bookmark: https://flow.org/en/docs/react/types/
     - `someObj = { optionalProp?: ?number}`
       - the prop is optional and can be missing
       - the value can be null|undefined|number
+  - when you assign a type to a mutable variable (i.e. let|var)
+    - you can only mutate the value to a compatible type
+  - when you dont assign a type to a mutable variable (i.e. let|var)
+    - flow tracks all previously assigned types to its type
+      - `let foo = 42, foo = 'hello;` 
+      - `let isOneOf: number | string = foo` <-- is true because of the previous assignments
+      - 
 ## terms
   - refinement: the ability for a static type checker to be able to tell the type of variable a mixed/any/etc type is. usually occurs within an if/case statement before use of the variable
 
