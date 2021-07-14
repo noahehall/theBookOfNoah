@@ -21,6 +21,7 @@ bookmark: https://flow.org/en/docs/types/objects/
     - [context](https://flow.org/en/docs/react/context/)
     - [children](https://flow.org/en/docs/react/children/)
     - [event handling](https://flow.org/en/docs/react/events/)
+    - [use exact-by-default object type syntax](https://medium.com/flow-type/how-to-upgrade-to-exact-by-default-object-type-syntax-7aa44b4d08ab)
   
   - [vscodium > vscode](https://github.com/VSCodium/vscodium/releases)
   - [disable unused builting extensions](https://stackoverflow.com/questions/48852007/type-aliases-can-only-be-used-in-a-ts-file/51034421) 
@@ -915,17 +916,17 @@ bookmark: https://flow.org/en/docs/types/objects/
         const objError: ExactObject = { foo, bar, extraProp }
         const objOk: InExactObject = { foo, bar, extraProp }
 
-      // type combinations
-        type a: number;
-        type b: string
-        type c: a | b;
+    // type combinations
+      type a: number;
+      type b: string
+      type c: a | b;
 
-        type obj1: {| foo: string |}
-        type obj2: {| bar: string |}
-        type objErr1: obj1 & obj2;; // throws, use spread instead
-        type obj3: {| ...obj1, ...obj2 |} // always do this for object intersectinos
+      type obj1: {| foo: string |}
+      type obj2: {| bar: string |}
+      type objErr1: obj1 & obj2;; // throws, use spread instead
+      type obj3: {| ...obj1, ...obj2 |} // always do this for object intersectinos
 
-        type d: a & b
+      type d: a & b
 
   ```
 
