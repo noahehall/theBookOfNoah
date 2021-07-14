@@ -1,4 +1,15 @@
 bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html
+notes
+  we need to hurry up and get to these
+    https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_07.html
+    https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_08.html
+    https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_09.html
+    https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_10.html
+    https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_11.html
+    https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_12.html
+    https://tldp.org/LDP/Bash-Beginners-Guide/html/x7243.html
+    https://tldp.org/LDP/Bash-Beginners-Guide/html/x7369.html
+
 
 # TLDR
   - focuses on `bash` scripting, but should work in general for other shells
@@ -11,6 +22,7 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html
 # links
 ## refs and specs
   - [longest beginners guide known to man](https://tldp.org/LDP/Bash-Beginners-Guide/html/f32.html)
+  - [very useful index for a quick ctrl+f](https://tldp.org/LDP/Bash-Beginners-Guide/html/glossary.html)
   - [trapping signals](https://tldp.org/LDP/Bash-Beginners-Guide/html/chap_12.html)
   - [shell expansion](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html)
   - [built in cmds](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_01_03.html#sect_01_03_02)
@@ -97,6 +109,8 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html
     - always set your variables at the top of script, never manually type ANYTHING and always reference things by variables
     
   - always set your locale, just do this every where
+  
+  - Aliases are looked up after functions and thus resolving is slower. While aliases are easier to understand, shell functions are preferred over aliases for almost every purpose.
 
 ## gotchas
   - bash reads at least one complete line before executing any cmds on that line
@@ -108,9 +122,13 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html
   - variables
     - are case sensitive
     - cannot start with a digit, but can contain digits
+  - aliases
+    - Bourne shell (sh) does not recognize aliases.
+    - Aliases are not inherited by child processes
 
 
 # basics
+
 ## builtin cmds
   - `sh`
     - break
