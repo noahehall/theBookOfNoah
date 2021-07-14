@@ -1,4 +1,5 @@
-bookmark: https://flow.org/en/docs/types/functions/
+bookmark: https://flow.org/en/docs/types/objects/
+  explicit inexact object types
 
 
 # links
