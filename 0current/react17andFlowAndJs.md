@@ -565,6 +565,10 @@ bookmark: https://flow.org/en/docs/react/types/
   - flow has all the benefits of typescript with 0 of the limitations
   - fk typescript 
 
+## best practices
+  - fk mutations, use a immutable helper library
+
+
 ## gotchas
   - the `?` before the type marks the type as maybe, i.e. null|undefined|type
   - the `?` before the `:` in an object prop definition marks the prop as optional, i.e. can be missing from the object
@@ -764,6 +768,8 @@ bookmark: https://flow.org/en/docs/react/types/
         const y: number = x;
 
     // basic function 
+      function method(str: string, bool?: boolean, ...nums: Array<number>): void {}
+      let method = (str: string, bool?: boolean, ...nums: Array<number>): void => {}
       function add(a: number, b: number): number {}
       // optional params can their set type, void, but NOT null
       function add(a?: number, b?: number): number | void {}
@@ -818,6 +824,34 @@ bookmark: https://flow.org/en/docs/react/types/
       { propName: type, optionalProp?: type }
     
   ```
+### writing types
+  ```js
+    // function types
+      (str: string, bool?: boolean, ...nums: Array<number>) => void
+      // same thing but without names
+      (string, boolean | void, Array<number>) => void
+      // using it for a callback type
+      function method(callback: (error: Error | null, value: string | null) => void) {}
+
+    // functions with params
+      function method(param1: string, param2: boolean) {}
+      // optional param ad ?: == missing|undefined|type but not null
+      function method(optionalValue?: string) {}
+    
+    // rest params
+      function method(...args: Array<number>) {}
+    
+    // function return type goes before the open braces
+    // enforces that every branch of your function returns the same type
+      function method(): string {} 
+      // async implies promise, so must always return a promise
+      async function method(): Promise {}
+
+    // function this context
+      
+
+  ```
+
 
 ### catchall 
   ```js
