@@ -1,4 +1,4 @@
-bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
+bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html
 
 # TLDR
   - focuses on `bash` scripting, but should work in general for other shells
@@ -409,11 +409,14 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
 ## restricted shells
   - using & when to use `restricted` shells
 
-## redirection
+## redirection & command substitution
   - output `redirection`
     - `>` `>|` `><` `>&` `&<` `>>`
     - befor ea cmd is executed, its input & output can be redirected
     - can also be used to open/close files for the current shell execution environment
+
+## expansion & word splitting
+
 ## prompt
   - TODO
 
