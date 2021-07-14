@@ -4,8 +4,9 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
   - focuses on `bash` scripting, but should work in general for other shells
   - includes other concepts supporting effective bash scripting, e.g. installing packages and finding information about the os
   - if you need more than this, check out my other scripting related docs in the linux directory inside this repo
-  - [our linux readme](../linux/_linux.md)
-  - [our cmd line readme](../linux/cmdline.md)
+    - [our linux dir as hella shiznit](../linux)
+    - [our linux readme](../linux/_linux.md)
+    - [our cmd line readme](../linux/cmdline.md)
 
 # links
 ## refs and specs
