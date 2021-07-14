@@ -824,8 +824,17 @@ bookmark: https://flow.org/en/docs/types/functions/
       { propName: type, optionalProp?: type }
     
   ```
+
 ### writing types
   ```js
+    // types
+      // general types are capitlized
+      // the below can be used to annotate a function, that has a .bar property
+      type CallableObj = {
+        (number, number): number,
+        bar: string,
+      }
+
     // function types
       (str: string, bool?: boolean, ...nums: Array<number>) => void
       // same thing but without names
@@ -833,7 +842,13 @@ bookmark: https://flow.org/en/docs/types/functions/
       // using it for a callback type
       function method(callback: (error: Error | null, value: string | null) => void) {}
 
+
     // functions with params
+      // a function that accepts arbitrary functions
+      function method(func: (...args: Array<any>) => any) {
+        // func() can be called here with anything,
+      }
+
       function method(param1: string, param2: boolean) {}
       // optional param ad ?: == missing|undefined|type but not null
       function method(optionalValue?: string) {}
@@ -848,8 +863,28 @@ bookmark: https://flow.org/en/docs/types/functions/
       async function method(): Promise<number> {}
 
     // function this context
-      
+      // the first param must be this, and must have a type
+      function method<T>(this: { x: T }) : T {
+        return this.x;
+      }
 
+    // predicate functions
+      // useful when for utility functions, e.g. that run assertions on params
+      // the body must be expressions, i.e. no variable declarations
+      // but may call other predicate functions
+      function truthy(a, b): boolean %checks {
+        return !!a && !!b;
+      }
+      
+    // objects
+      // accessing a prop nt efined on an object usually returns undefined
+      // in flow it throws
+      const obj1: {
+        prop1: string,
+        // ..etc
+      } = {
+        prop1: 'hello',
+      }
   ```
 
 
