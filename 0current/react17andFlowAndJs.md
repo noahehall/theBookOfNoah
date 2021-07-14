@@ -734,11 +734,14 @@ bookmark: https://flow.org/en/docs/react/types/
       const a: number = 42;
       const b: string = 'hello';
       const c: boolean = true;
-      const d: ?number = null;
       const e: number | undefined = 10;
       const f: Array<number> = [1, 2, 3];
       const g: mixed = z; // you must refine this type via typeof or some other checker before usig
       const h: any = 1; // op out of all type checking,  refrain from this as best you can
+        // ^ very careful when using this with an object, as all of obj props will now be any (leak!)
+        // ^ guard against this by declaring the obj.prop values to a type for assignment
+      const d: ?number = null; // ? == maybe type, can be the declared|null|undefined
+
 
     // verifying types
       const x: symbol | number = Symbol();
@@ -755,6 +758,12 @@ bookmark: https://flow.org/en/docs/react/types/
       function add(a: number = 2) {}
       // the return type is the same as whatever is passed into the function
       function identity<T> (value: T): T {}
+      // required obj.value but but the value maybe null|undefined but must be declared
+      // i.e. you have to pass the obj with value.type === numer|null|undefined
+      function({ value }: { value: ?number })
+      // to get around the issue, make the object.value optional, as well its type being the 'maybe'
+      // lol dont let this catch u up bro!
+      function({ value }: { value?: ?number })
       // the mixed type, use sparingly as it accepts anything!
       // you must 'refine' the type before returning a value else it throws
       function whatever(value: mixed) {
