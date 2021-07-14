@@ -340,6 +340,37 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
 
 
 
+### shell options
+  - you enable an option via `set -o OPTION` and disable it via `set +o OPTION`
+  - `posix` comply with posix standard for shells
+
+
+### env vars
+  - see the current value via `echo $VAR_NAME`
+
+  - `SHELL` path to your current shell executable
+  - `PATH` list of directories storing global executables
+  - `ignoreeof`  used by `ksh` shell; see `IGNOREEOF` for more information
+  - `IGNOREEOF` 
+    - controls the action of the shell on receipt of an `eof` character as the sole input
+    - prevent logging out from the user account, set this to the amount of times to ignore `ctrl d`
+    - e.g.  if 2 === the shell will ignore the first 2 `ctrl d` and show a warning message, but will log the user out the third time
+    - the default value is 10
+    - used by `bash` and `bourne` shells
+  - `HISTFILE` where to save bash history
+  - `HOSTNAME` the hostname of the computer
+  - `HOME`
+  - `IFS`
+  - `OPTARG`
+  - `OPTIND`
+  - `RANDOM` returns a random number between 0 and 32767 each time its referenced
+    - you can assign a value to seed this number
+  - `TMOUT` if set to a number, the shell will terminate after that many seconds of inactivity
+
+
+### keyboard shortcuts
+  - `ctrl d` the `EOF` character, logs the user out of the current terminal
+
 
 # workflows 
   - TODO
@@ -650,37 +681,6 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
   - 
 
 
-
-# shell options
-  - you enable an option via `set -o OPTION` and disable it via `set +o OPTION`
-  - `posix` comply with posix standard for shells
-
-
-# env vars
-  - see the current value via `echo $VAR_NAME`
-
-  - `SHELL` path to your current shell executable
-  - `PATH` list of directories storing global executables
-  - `ignoreeof`  used by `ksh` shell; see `IGNOREEOF` for more information
-  - `IGNOREEOF` 
-    - controls the action of the shell on receipt of an `eof` character as the sole input
-    - prevent logging out from the user account, set this to the amount of times to ignore `ctrl d`
-    - e.g.  if 2 === the shell will ignore the first 2 `ctrl d` and show a warning message, but will log the user out the third time
-    - the default value is 10
-    - used by `bash` and `bourne` shells
-  - `HISTFILE` where to save bash history
-  - `HOSTNAME` the hostname of the computer
-  - `HOME`
-  - `IFS`
-  - `OPTARG`
-  - `OPTIND`
-  - `RANDOM` returns a random number between 0 and 32767 each time its referenced
-    - you can assign a value to seed this number
-  - `TMOUT` if set to a number, the shell will terminate after that many seconds of inactivity
-
-
-# keyboard shortcuts
-  - `ctrl d` the `EOF` character, logs the user out of the current terminal
 
 
 # how tos
