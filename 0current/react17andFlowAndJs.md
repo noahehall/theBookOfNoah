@@ -731,13 +731,14 @@ bookmark: https://flow.org/en/docs/react/types/
       const literalType: 'sucess' | 'warnning' = 'success';
 
     // variables and types
-      const x: number = 42;
-      const y: string = 'hello';
-      const z: boolean = true;
-      const a: ?number = null;
-      const b: number | undefined = 10;
-      const c: Array<number> = [1, 2, 3];
-      const b: Object
+      const a: number = 42;
+      const b: string = 'hello';
+      const c: boolean = true;
+      const d: ?number = null;
+      const e: number | undefined = 10;
+      const f: Array<number> = [1, 2, 3];
+      const g: mixed = z; // you must refine this type via typeof or some other checker before usig
+      const h: any = 1; // op out of all type checking,  refrain from this as best you can
 
     // verifying types
       const x: symbol | number = Symbol();
