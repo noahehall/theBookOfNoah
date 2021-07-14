@@ -95,6 +95,8 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
     - always quote the value to reduce errors
     - you most likely want to use `$@` and not `$*` in scripts
     - always set your variables at the top of script, never manually type ANYTHING and always reference things by variables
+    
+  - always set your locale, just do this every where
 
 ## gotchas
   - bash reads at least one complete line before executing any cmds on that line
@@ -398,6 +400,11 @@ bookmark: https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_03.html
     ```
 
   - `double quotes`
+    - literal value of all characters are preserved except:
+      - dollar sign
+      - backticks
+      - backslash when followed dollar, backtick, double quote, backslash, newline
+    - you can use double quotes within doublequotes by scaping inner double quotes via backslash
 
 ## restricted shells
   - using & when to use `restricted` shells
