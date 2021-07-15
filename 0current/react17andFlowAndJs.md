@@ -567,6 +567,7 @@ bookmark: https://flow.org/en/docs/types/objects/
 
 ## best practices
   - fk mutations, use a immutable helper library
+  - when using an object as a map, always use flows `indexer property`
 
 
 ## gotchas
@@ -827,7 +828,7 @@ bookmark: https://flow.org/en/docs/types/objects/
     
   ```
 
-### writing types
+### function typing
   ```js
     // types
       // general types are capitlized
@@ -878,6 +879,18 @@ bookmark: https://flow.org/en/docs/types/objects/
         return !!a && !!b;
       }
       
+    
+
+    // type combinations
+      type a: number;
+      type b: string
+      type c: a | b;
+      type d: a & b
+
+  ```
+
+### object typing
+  ```js
     // objects
     // accessing a prop undefined on an object usually returns undefined, it flow it throws
       // in flow it throws
@@ -916,20 +929,13 @@ bookmark: https://flow.org/en/docs/types/objects/
         const objError: ExactObject = { foo, bar, extraProp }
         const objOk: InExactObject = { foo, bar, extraProp }
 
-    // type combinations
-      type a: number;
-      type b: string
-      type c: a | b;
-
       type obj1: {| foo: string |}
       type obj2: {| bar: string |}
       type objErr1: obj1 & obj2;; // throws, use spread instead
       type obj3: {| ...obj1, ...obj2 |} // always do this for object intersectinos
 
-      type d: a & b
 
   ```
-
 
 ### catchall 
   ```js
