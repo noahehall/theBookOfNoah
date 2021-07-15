@@ -23,11 +23,12 @@ bookmark: https://flow.org/en/docs/types/aliases/
     - [use exact-by-default object type syntax](https://medium.com/flow-type/how-to-upgrade-to-exact-by-default-object-type-syntax-7aa44b4d08ab)
     - [utility types, definitely want to read this!](https://flow.org/en/docs/types/utilities/)
     - [generics](https://flow.org/en/docs/types/generics/)
+    - [nominal & structural typing](https://flow.org/en/docs/lang/nominal-structural/#toc-nominal-typing)
+    - [components](https://flow.org/en/docs/react/components/)
   
-  - [vscodium > vscode](https://github.com/VSCodium/vscodium/releases)
-  - [disable unused builting extensions](https://stackoverflow.com/questions/48852007/type-aliases-can-only-be-used-in-a-ts-file/51034421) 
-  - [components](https://flow.org/en/docs/react/components/)
-  - [nominal & structural typing](https://flow.org/en/docs/lang/nominal-structural/#toc-nominal-typing)
+  - dont know where these are suppose to go
+    - [vscodium > vscode](https://github.com/VSCodium/vscodium/releases)
+    - [disable unused builting extensions](https://stackoverflow.com/questions/48852007/type-aliases-can-only-be-used-in-a-ts-file/51034421) 
 
 
 # TLDR
