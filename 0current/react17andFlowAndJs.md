@@ -907,6 +907,13 @@ bookmark: https://flow.org/en/docs/types/objects/
         // ...etc
       }
 
+      // generic object type
+      const someObj: {}
+      const someObj: {[key: string]: any}
+      // example fn that accepts an object, e.g. props in react
+        function method(props: {}) {};
+        function method(props: {[key: string]: any }) {};
+        
       // objects with methods
       const obj2: {
         meth1: (string, number) => string
@@ -938,6 +945,7 @@ bookmark: https://flow.org/en/docs/types/objects/
     // indexer property
     // use whenever you dont know what the key name will be
     // but expect heavy i/o
+    // be careful there is no type checking on indexer property values!
       // string is the indexer property
       // permits i/o on any key that is a string, and its value is a number
       const someObj: { [string]: number } = {}
