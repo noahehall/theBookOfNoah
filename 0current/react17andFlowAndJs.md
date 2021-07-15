@@ -570,6 +570,9 @@ bookmark: https://flow.org/en/docs/types/aliases/
   - fk mutations, use a immutable helper library
   - when using an object as a map, always use flows `indexer property`
     - it allows reads and writes using any key that matches the indexer key type
+  - generally you want to define your type separately from the object your annotating
+    - as a `type` alias for exporting, e.g. in tests
+    - as an `opaque` for internal use
 
 
 ## gotchas
