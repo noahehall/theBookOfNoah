@@ -1,5 +1,4 @@
-bookmark: https://flow.org/en/docs/types/objects/
-  explicit inexact object types
+bookmark: https://flow.org/en/docs/types/arrays/
 
 
 # links
@@ -913,7 +912,7 @@ bookmark: https://flow.org/en/docs/types/objects/
       // example fn that accepts an object, e.g. props in react
         function method(props: {}) {};
         function method(props: {[key: string]: any }) {};
-        
+
       // objects with methods
       const obj2: {
         meth1: (string, number) => string
