@@ -938,7 +938,7 @@ bookmark: https://flow.org/en/docs/types/arrays/
 
       type obj1: {| foo: string |}
       type obj2: {| bar: string |}
-      type objErr1: obj1 & obj2;; // throws, use spread instead
+      type objErr1: obj1 & obj2; // throws, use spread instead
       type obj3: {| ...obj1, ...obj2 |} // always do this for object intersectinos
 
     // indexer property
@@ -956,6 +956,18 @@ bookmark: https://flow.org/en/docs/types/arrays/
         someObj[1] = 'b'
 
   ```
+
+
+### array typing
+  ```js
+    // arrays
+    // array type is just an array of any type
+    // can be empty or not
+      const arr: Array<number | string boolean> = [] // i like this one better, or wtf use flow for?
+      const arr: Array<mixed> = ['a', 1, false] // be more specific when you can, see above
+
+  ```
+
 
 ### catchall 
   ```js
