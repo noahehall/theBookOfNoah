@@ -584,6 +584,8 @@ bookmark: https://flow.org/en/docs/types/classes/
       - `let foo = 42, foo = 'hello;` 
       - `let isOneOf: number | string = foo` <-- is true because of the previous assignments
   - arrow functions may not have a this parameter annotation, as these functions bind their this parameter at the definition site, rather than the call site.
+  - Classes operate as values & types
+    - i.e. you can use a class name wherever you would a type definition
 
 
 ## terms
@@ -893,6 +895,13 @@ bookmark: https://flow.org/en/docs/types/classes/
       type b: string
       type c: a | b;
       type d: a & b
+
+  ```
+
+### class typing
+  ```js
+    class MyClass {}
+    const myInstance: MyClass = new MyClass()
 
   ```
 
