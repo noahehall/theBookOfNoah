@@ -574,6 +574,7 @@ bookmark: https://flow.org/en/docs/types/aliases/
     - when using an object as a map, always use flows `indexer property`
       - it allows reads and writes using any key that matches the indexer key type
     - stuff always to do
+  
   - generally
     - you want to define your type separately from the object your annotating
       - as a `type` alias for exporting, e.g. in tests
@@ -582,6 +583,10 @@ bookmark: https://flow.org/en/docs/types/aliases/
       - use super type for ALL of the params they contain
       - use opaque type subclass for the values you use
         - I hate not knowing both sets of values, ignorance is not bliss
+    - when you think you want a Class type, you likely want an Interface
+      - more benefits... no negatives? (at least that I now of)
+        - I might slightly extra work so the cost increases, but still worth it
+  
   - sometimes
     - may be appropriate, but not generally
 
@@ -1143,7 +1148,7 @@ bookmark: https://flow.org/en/docs/types/aliases/
 
   ```
 
-  
+
 ### catchall 
   ```js
     // refining maybe types
