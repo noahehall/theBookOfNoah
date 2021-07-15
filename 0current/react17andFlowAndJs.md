@@ -583,13 +583,16 @@ bookmark: https://flow.org/en/docs/types/aliases/
       - use super type for ALL of the params they contain
       - use opaque type subclass for the values you use
         - I hate not knowing both sets of values, ignorance is not bliss
-    - when you think you want a Class type, you likely want an Interface
-      - more benefits... no negatives? (at least that I now of)
-        - I might slightly extra work so the cost increases, but still worth it
+    - when you think you want a Class type, you likely want an Interface + implements
+      - more benefits... cheap negatives
+        - slightly extra work so the cost increases, but still worth it
     - you want to use generics
   
   - sometimes
     - may be appropriate, but not generally
+  
+  - never
+    - use anonymouse interfaces - just dont
 
 
 ## gotchas
@@ -612,7 +615,8 @@ bookmark: https://flow.org/en/docs/types/aliases/
 ## terms
   - refinement: the ability for a static type checker to be able to tell the type of variable a mixed/any/etc type is. usually occurs within an if/case statement before use of the variable
   - covariant: a type that is more specific that another type
-  - invariant: 
+  - invariant: s type that is less speicfic than another type (confirm this def)
+  - contravariance:
   - tuple: a list with a limited set of items
     - tuples always have a fixed length based on its length when instantiated
     - are not a subtype of arrays, thus cant be used where one is expected & vice versa
@@ -932,9 +936,9 @@ bookmark: https://flow.org/en/docs/types/aliases/
 
   ```
 
-### class typing
+### class/interface typing
   ```js
-    // Class
+  // Class
     // this inside the class doesnt require type annotation
     // ^ but if a type is provided, it must be one of:
     // ^^ super type of the class
@@ -951,7 +955,6 @@ bookmark: https://flow.org/en/docs/types/aliases/
       // even tho the definition is added outside the class
       static definedElseware: (number) => number;
       evenOnPrototype: number => number;
-
     }
     MyClass.definedElseware = someOtherFuncMatchingTypeDefinition;
     MyClass.prototype.evenOnPrototype = anotherFuncMatchingTypeDefinition;
@@ -976,6 +979,33 @@ bookmark: https://flow.org/en/docs/types/aliases/
       constructor(a: A, b: B, c: C) {}
     }
     const myInstance2: MyClass<number, string, boolean> = new MyClass(1, '2', true);
+
+  // interfaces allow you to reuse type definitions across classes
+  // to annotate their structure: methods & props
+    interface Serializable {
+      serialize(): string;
+    }
+    class Foo {
+      serialize() { return '[Foo]'; }
+    }
+
+    class Bar {
+      serialize() { return '[Bar]'; }
+    }
+    const foo: Serializable = new Foo(); // Works!
+    const bar: Serializable = new Bar(); // Works!
+
+    // always use implements 
+    // unless you need an escape hatch to make methods/props not match the interface
+      class Foo implements Serializable {
+        serialize() { return '[Foo]'; } // Works!
+      }
+    // but then again you just implement multiple interfaces
+      class Foo implements Bar, Baz {}
+
+
+    // refrain from anonymous interfaces
+      (new Foo() : interface { a : number });
 
   ```
 
