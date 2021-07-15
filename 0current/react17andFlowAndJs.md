@@ -1076,9 +1076,9 @@ bookmark: https://flow.org/en/docs/types/aliases/
   ```
 
 
-### other types
+### aliase and opaque alias types
   ```js
-    // type aliases
+  // type aliases
     // for creating reusable types use the `type` keyword
       type someType = {
         foo: number,
@@ -1098,7 +1098,7 @@ bookmark: https://flow.org/en/docs/types/aliases/
         bax: 'three',
       }
 
-    // opaque type aliases
+  // opaque type aliases
     // do not allow access ot their underlying type
     // outside the file their defined (but they still can be exported)
       opaque type someType = {}
@@ -1114,8 +1114,8 @@ bookmark: https://flow.org/en/docs/types/aliases/
       opaque type AliasAlias: ObjectAlias = ObjectAlias;
       opaque type VeryOpaque: AliasAlias = ObjectAlias;
 
-      // subtyping constraint allows the opaque type to be used as a supertype (i.e. nominal type/argument)
-      // when imported into other files
+    // subtyping constraint allows the opaque type to be used as a supertype (i.e. nominal type/argument)
+    // when imported into other files
       export opaque type ID: string = string; 
         // without subtyping all of the following throw
           (0: NumberAlias) // Error: 0 is not a NumberAlias!
@@ -1129,10 +1129,21 @@ bookmark: https://flow.org/en/docs/types/aliases/
           function toID(x: string): ID {
               return x; // Error: strings are not IDs.
           }
-
+    // can also have their own generics
+      opaque type MyObject<A, B, C>: { foo: A, bar: B } = {
+        foo: A,
+        bar: B,
+        baz: C,
+      };
   ```
 
 
+### interface types
+  ```js
+
+  ```
+
+  
 ### catchall 
   ```js
     // refining maybe types
