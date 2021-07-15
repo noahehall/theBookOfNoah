@@ -924,6 +924,8 @@ bookmark: https://flow.org/en/docs/types/classes/
     MyClass.prototype.evenOnPrototype = anotherFuncMatchingTypeDefinition;
 
     const myInstance: MyClass = new MyClass()
+    (MyClass: MyClass); // Error - you must instantiate it
+    (new MyClass(): MyClass); // Ok
 
     // class methods cannot be unound/rebound from the class on which they are defined
     const c = new MyClass();
