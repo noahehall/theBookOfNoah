@@ -1,15 +1,3 @@
-# links
-	- [make your linux faster](http://www.makeuseof.com/tag/linux-in-overdrive-how-to-get-every-drop-of-performance-out-of-your-system/)
-bookmark:
-	lynda
-		http://www.lynda.com/Mac-OS-X-tutorials/cut-Cutting-select-text-portions/78546/83682-4.html?autoplay=true
-		ubuntu desktop
-			http://www.lynda.com/Ubuntu-tutorials/Navigating-Unity-Dash/159637/179564-4.html?srchtrk=index%3a1%0alinktypeid%3a2%0aq%3aubuntu%0apage%3a1%0as%3arelevance%0asa%3atrue%0aproducttypeid%3a2
-	youtube:
-		https://www.youtube.com/watch?v=ls5cGi12kGw&index=14&list=PLtK75qxsQaMLZSo7KL-PmiRarU7hrpnwK
-	linux tutorials
-		view system info
-			http://www.tecmint.com/commands-to-collect-system-and-hardware-information-in-linux/?utm_source=feedburner&utm_medium=email&utm_campaign=Feed%3A+tecmint+%28Tecmint%3A+Linux+Howto%27s+Guide%29
 
 # NEW: need to file
 ## bash
@@ -25,6 +13,7 @@ bookmark:
 			4. sudo chmod 770 /var/lib/redis
 	- [use tmpfs to store files/directories in memory](https://www.howtoforge.com/storing-files-directories-in-memory-with-tmpfs)
 		- another link: https://www.howtoforge.com/tutorial/how-to-install-nginx-and-google-pagespeed-on-ubuntu-16-04/
+
 ## links
 	[linux on mac](http://www.macworld.co.uk/how-to/mac/how-install-linux-on-mac-3637265/):
 	  1. use virutalization Software
@@ -120,25 +109,32 @@ need to file
 	- :q! #exit without saving changes
 	-	:wq #exit and save
 	- `esc` #finish input to current command
+
 ## text commands
 	- i #insert text at beginning of curser
 	- I #insert at beginning of current line
 	- esc:%s/replace this text/with this text/
+
 ## search for text
 	- /text #find text
 	- n #find next occurrence
 	- N #find prev cocurence
-customize your environment
-	bash initialization for login
-		#only runs on first login
-		/etc/profile #default commands all users get
-		~/.bash_profile, ~/.bash_login, ~/.profile, ~/.login #personal customizations per user,
-		#the first file found will be used
-	bash initialization for subshells
-		#runs after login, e.g. if you open up multiple shells
-		~/.bashrc
-		#whats available in bash_profile, is not available in bashrc
-	bash logout customizations
+
+
+# customize your environment
+	- bash initialization for login
+		- only runs on first login
+		- /etc/profile 
+  		- default commands all users get
+		- ~/.bash_profile, ~/.bash_login, ~/.profile, ~/.login 
+  		- personal customizations per user,
+			- the first file found will be used
+	
+	- bash initialization for subshells
+		- runs after login, e.g. if you open up multiple shells
+		- ~/.bashrc
+			- whats available in bash_profile, is not available in bashrc
+	- bash logout customizations
 		~/.bash_logout #commands that run on user logout
 	command aliases
 		alias #returns all of your aliases
