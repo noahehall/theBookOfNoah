@@ -1,3 +1,5 @@
+# TODO: this entire fkn file, its not even markdown
+
 
 # NEW: need to file
 ## bash
