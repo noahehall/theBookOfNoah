@@ -614,9 +614,16 @@ bookmark: https://flow.org/en/docs/types/aliases/
 
 ## terms
   - refinement: the ability for a static type checker to be able to tell the type of variable a mixed/any/etc type is. usually occurs within an if/case statement before use of the variable
-  - covariant: a type that is more specific that another type
-  - invariant: s type that is less speicfic than another type (confirm this def)
-  - contravariance:
+  - invariant: a type that is less speicfic than another type 
+    - does not accept `supertypes` or `subtypes`
+  - covariance: a type that is more specific that another type
+    - does not accept `supertypes`
+    - accepts `subtypes`
+  - contravariance
+    - accepts `supertypes`
+    - does not accept `subtypes`
+  - bivariance
+    - accepts `supertypes` and `subtypes`
   - tuple: a list with a limited set of items
     - tuples always have a fixed length based on its length when instantiated
     - are not a subtype of arrays, thus cant be used where one is expected & vice versa
@@ -984,6 +991,10 @@ bookmark: https://flow.org/en/docs/types/aliases/
   // to annotate their structure: methods & props
     interface Serializable {
       serialize(): string;
+      property: string;
+      property?: string;
+      [key: string]: number; // indexer property
+
     }
     class Foo {
       serialize() { return '[Foo]'; }
@@ -1006,6 +1017,18 @@ bookmark: https://flow.org/en/docs/types/aliases/
 
     // refrain from anonymous interfaces
       (new Foo() : interface { a : number });
+
+    // interface generics are parameterized
+      interface MyInterface<A, B, C> {
+        property: A;
+        method(val: B): C;
+      }
+    // so make sure you pass the parameters it defines
+    const val: MyInterface<number, boolean, string> = {
+      foo: 1,
+      bar: true,
+      baz: 'three',
+    };
 
   ```
 
