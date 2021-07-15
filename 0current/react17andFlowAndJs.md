@@ -610,6 +610,9 @@ bookmark: https://flow.org/en/docs/types/aliases/
   - arrow functions may not have a this parameter annotation, as these functions bind their this parameter at the definition site, rather than the call site.
   - Classes operate as values & types
     - i.e. you can use a class name wherever you would a type definition
+  - flow accepts
+    - contravariant inputs: less specific types passed in
+    - covariant outputs: more specific types returned
 
 
 ## terms
