@@ -427,13 +427,13 @@ notes
 ## restricted shells
   - using & when to use `restricted` shells
 
-## redirection & command substitution
+## redirection
   - output `redirection`
     - `>` `>|` `><` `>&` `&<` `>>`
     - befor ea cmd is executed, its input & output can be redirected
     - can also be used to open/close files for the current shell execution environment
 
-## expansion & word splitting
+## expansion & command substitution
 
 ## prompt
   - TODO
