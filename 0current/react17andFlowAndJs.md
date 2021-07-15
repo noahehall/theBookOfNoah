@@ -967,10 +967,12 @@ bookmark: https://flow.org/en/docs/types/arrays/
       const arr: Array<mixed> = ['a', 1, false] // be more specific when you can, see above
     // shorthand
       const arr: number[] = [1, 2, 3]
-      const arr: ?number[] = [] // optional array
-        const arr: ?Array<number> = [] // optional array, see as above
-      const arr: (?number)[] = []
-        const arr: Array<?number> = [] // same as above,
+      // optional array, but array elements cannot be null, while the the array itself can be
+        const arr: ?number[] = [] 
+          const arr: ?Array<number> = [] // same as above
+      // array cannot be null, but its elements can be
+        const arr: (?number)[] = []
+          const arr: Array<?number> = [] // same as above,
   ```
 
 
