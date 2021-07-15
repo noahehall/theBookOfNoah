@@ -27,7 +27,7 @@ bookmark: https://flow.org/en/docs/types/aliases/
   - [vscodium > vscode](https://github.com/VSCodium/vscodium/releases)
   - [disable unused builting extensions](https://stackoverflow.com/questions/48852007/type-aliases-can-only-be-used-in-a-ts-file/51034421) 
   - [components](https://flow.org/en/docs/react/components/)
-  - 
+  - [nominal & structural typing](https://flow.org/en/docs/lang/nominal-structural/#toc-nominal-typing)
 
 
 # TLDR
@@ -1089,6 +1089,16 @@ bookmark: https://flow.org/en/docs/types/aliases/
       opaque type someType = {}
       // can have a super type, super useful
       opaque type someType: SuperType = {}
+      // helpful extended example
+      opaque type StringAlias = string;
+      opaque type ObjectAlias = {
+        property: string,
+        method(): number,
+      };
+      opaque type UnionAlias = 1 | 2 | 3;
+      opaque type AliasAlias: ObjectAlias = ObjectAlias;
+      opaque type VeryOpaque: AliasAlias = ObjectAlias;
+
   ```
 
 
