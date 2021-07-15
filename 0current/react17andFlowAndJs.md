@@ -1,5 +1,4 @@
-bookmark: https://flow.org/en/docs/types/arrays/
-  $ReadOnly<T>
+bookmark: https://flow.org/en/docs/types/classes/
 
 
 # links
@@ -592,6 +591,9 @@ bookmark: https://flow.org/en/docs/types/arrays/
   - covariant: a type that is more specific that another type
   - invariant: 
   - tuple: a list with a limited set of items
+    - tuples always have a fixed length based on its length when instantiated
+    - are not a subtype of arrays, thus cant be used where one is expected & vice versa
+    - only posses immutable array methods
 
 ## flow usage
   - `// @flow` typecheck this file
@@ -990,6 +992,7 @@ bookmark: https://flow.org/en/docs/types/arrays/
 
     // tuples
     // any array defined as [type, type, type] is a tuple
+    // if you mutate the tuple, the new value must match the index type
       let tup1: [number] = [1];
       let tup2: [number, boolean] = [1, 2]
         // etc with up to 3 items
