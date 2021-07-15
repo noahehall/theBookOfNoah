@@ -568,6 +568,7 @@ bookmark: https://flow.org/en/docs/types/objects/
 ## best practices
   - fk mutations, use a immutable helper library
   - when using an object as a map, always use flows `indexer property`
+    - it allows reads and writes using any key that matches the indexer key type
 
 
 ## gotchas
@@ -934,6 +935,18 @@ bookmark: https://flow.org/en/docs/types/objects/
       type objErr1: obj1 & obj2;; // throws, use spread instead
       type obj3: {| ...obj1, ...obj2 |} // always do this for object intersectinos
 
+    // indexer property
+    // use whenever you dont know what the key name will be
+    // but expect heavy i/o
+      // string is the indexer property
+      // permits i/o on any key that is a string, and its value is a number
+      const someObj: { [string]: number } = {}
+        someObj['a'] = 1;
+        someObj['b'] = 2;
+      // you can optional label the indexer key for documentation purposes
+      const someObj: = [i: number]: string } = {}
+        someObj[0] = 'a'
+        someObj[1] = 'b'
 
   ```
 
