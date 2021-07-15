@@ -589,6 +589,8 @@ bookmark: https://flow.org/en/docs/types/arrays/
 
 ## terms
   - refinement: the ability for a static type checker to be able to tell the type of variable a mixed/any/etc type is. usually occurs within an if/case statement before use of the variable
+  - covariant: a type that is more specific that another type
+  - invariant: 
 
 ## flow usage
   - `// @flow` typecheck this file
@@ -975,6 +977,14 @@ bookmark: https://flow.org/en/docs/types/arrays/
       // array cannot be null, but its elements can be
         const arr: (?number)[] = []
           const arr: Array<?number> = [] // same as above,
+    
+    // $ReadOnlyArray<T>
+    // supertype of all arrays, tuples
+    // a readonly array is a type that cannot be modified, but can be passed around!
+    // generally use $ReadOnlyArray<T> wherever you appreciate immutability
+      const readonlyArray: $ReadOnlyArray<{x: number}> = [{x: 1}];
+      readonlyArray[0] = {x: 42}; // Error!
+      readonlyArray[0].x = 42; // OK
   ```
 
 
