@@ -965,7 +965,10 @@ bookmark: https://flow.org/en/docs/types/arrays/
     // can be empty or not
       const arr: Array<number | string boolean> = [] // i like this one better, or wtf use flow for?
       const arr: Array<mixed> = ['a', 1, false] // be more specific when you can, see above
-
+    // shorthand
+      const arr: number[] = [1, 2, 3]
+      const arr: ?number[] = [] // optional array
+      const arr: ?Array<number> = [] // optional array, see as above
   ```
 
 
