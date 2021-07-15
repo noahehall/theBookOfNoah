@@ -907,7 +907,21 @@ bookmark: https://flow.org/en/docs/types/classes/
     // ^^ class type (for static methods)
     class MyClass {
       method(this: interface{ x: string}) void {} // errors since x is not defined in the class
+      prop: number;
+      meth2() { this.prop = 42 }
+
+      static someNum: number;
+      static func: (number) => number;
+
+      // must be typed within the class
+      // even tho the definition is added outside the class
+      static definedElseware: (number) => number;
+      evenOnPrototype: number => number;
+
     }
+    MyClass.definedElseware = someOtherFuncMatchingTypeDefinition;
+    MyClass.prototype.evenOnPrototype = anotherFuncMatchingTypeDefinition;
+
     const myInstance: MyClass = new MyClass()
 
     // class methods cannot be unound/rebound from the class on which they are defined
