@@ -1,5 +1,5 @@
-bookmark: https://flow.org/en/docs/types/aliases/
-
+bookmark: https://flow.org/en/docs/types/interfaces/
+  Interface property variance (read-only and write-only)
 
 # links
   - react
