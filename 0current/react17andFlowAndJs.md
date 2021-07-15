@@ -25,6 +25,7 @@ bookmark: https://flow.org/en/docs/types/aliases/
     - [generics](https://flow.org/en/docs/types/generics/)
     - [nominal & structural typing](https://flow.org/en/docs/lang/nominal-structural/#toc-nominal-typing)
     - [components](https://flow.org/en/docs/react/components/)
+    - [eventually read all the links on this screen](https://flow.org/en/docs/lang/)
   
   - dont know where these are suppose to go
     - [vscodium > vscode](https://github.com/VSCodium/vscodium/releases)
