@@ -567,12 +567,17 @@ bookmark: https://flow.org/en/docs/types/aliases/
   - fk typescript 
 
 ## best practices
-  - fk mutations, use a immutable helper library
-  - when using an object as a map, always use flows `indexer property`
-    - it allows reads and writes using any key that matches the indexer key type
-  - generally you want to define your type separately from the object your annotating
-    - as a `type` alias for exporting, e.g. in tests
-    - as an `opaque` for internal use
+  - always
+    - fk mutations, use a immutable helper library
+    - when using an object as a map, always use flows `indexer property`
+      - it allows reads and writes using any key that matches the indexer key type
+    - stuff always to do
+  - generally
+    - you want to define your type separately from the object your annotating
+      - as a `type` alias for exporting, e.g. in tests
+      - as an `opaque` for internal use
+  - sometimes
+    - may be appropriate, but not generally
 
 
 ## gotchas
@@ -1049,6 +1054,30 @@ bookmark: https://flow.org/en/docs/types/aliases/
       let tup1: [number] = [1];
       let tup2: [number, boolean] = [1, 2]
         // etc with up to 3 items
+  ```
+
+
+### other types
+  ```js
+    // type aliases
+    // for creating reusable types us ethe `type` keyword
+    type someType = {
+      foo: number,
+      // ...etc
+    }
+    const someThing: someType = {}
+
+    // generic aliases
+    type someType<A,B,C> = {
+      foo: A,
+      bar: C,
+      baz: C
+    }
+    const someThing: someType<number, string, boolean> = {
+      foo: 1,
+      bar: true,
+      bax: 'three',
+    }
   ```
 
 
