@@ -1,4 +1,5 @@
 bookmark: https://flow.org/en/docs/types/arrays/
+  $ReadOnly<T>
 
 
 # links
@@ -21,6 +22,7 @@ bookmark: https://flow.org/en/docs/types/arrays/
     - [children](https://flow.org/en/docs/react/children/)
     - [event handling](https://flow.org/en/docs/react/events/)
     - [use exact-by-default object type syntax](https://medium.com/flow-type/how-to-upgrade-to-exact-by-default-object-type-syntax-7aa44b4d08ab)
+    - [utility types, definitely want to read this!](https://flow.org/en/docs/types/utilities/)
   
   - [vscodium > vscode](https://github.com/VSCodium/vscodium/releases)
   - [disable unused builting extensions](https://stackoverflow.com/questions/48852007/type-aliases-can-only-be-used-in-a-ts-file/51034421) 
