@@ -576,6 +576,10 @@ bookmark: https://flow.org/en/docs/types/aliases/
     - you want to define your type separately from the object your annotating
       - as a `type` alias for exporting, e.g. in tests
       - as an `opaque` for internal use
+    - to document external data
+      - use super type for ALL of the params they contain
+      - use opaque type subclass for the values you use
+        - I hate not knowing both sets of values, ignorance is not bliss
   - sometimes
     - may be appropriate, but not generally
 
@@ -1060,24 +1064,31 @@ bookmark: https://flow.org/en/docs/types/aliases/
 ### other types
   ```js
     // type aliases
-    // for creating reusable types us ethe `type` keyword
-    type someType = {
-      foo: number,
-      // ...etc
-    }
-    const someThing: someType = {}
+    // for creating reusable types use the `type` keyword
+      type someType = {
+        foo: number,
+        // ...etc
+      }
+      const someThing: someType = {}
 
-    // generic aliases
-    type someType<A,B,C> = {
-      foo: A,
-      bar: C,
-      baz: C
-    }
-    const someThing: someType<number, string, boolean> = {
-      foo: 1,
-      bar: true,
-      bax: 'three',
-    }
+    // generic type aliases
+      type someType<A,B,C> = {
+        foo: A,
+        bar: C,
+        baz: C
+      }
+      const someThing: someType<number, string, boolean> = {
+        foo: 1,
+        bar: true,
+        bax: 'three',
+      }
+
+    // opaque type aliases
+    // do not allow access ot their underlying type
+    // outside the file their defined (but they still can be exported)
+      opaque type someType = {}
+      // can have a super type, super useful
+      opaque type someType: SuperType = {}
   ```
 
 
