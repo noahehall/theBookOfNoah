@@ -1,4 +1,4 @@
-bookmark: https://flow.org/en/docs/types/classes/
+bookmark: https://flow.org/en/docs/types/aliases/
 
 
 # links
