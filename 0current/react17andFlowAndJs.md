@@ -1213,4 +1213,34 @@ bookmark: https://flow.org/en/docs/types/aliases/
       if (typeof value === 'number') return * 2;
     }
 
+    // *variance* examples
+    // speghetti bless javascript: we can do what we want due to weak typing
+    // InvariantOf does not exist, only for explanation, see flowdocs for more info
+      // invariance
+      function method(value: InvariantOf<City>) {...}
+      method(new City());         // okay
+      method(new Noun());         // error... no supertypes
+      method(new SanFrancisco()); // error... no subtypes
+
+      // covariance
+      function method(value: CovariantOf<City>) {...}
+      method(new City());         // okay
+      method(new SanFrancisco()); // okay
+      method(new Noun());         // error... no supertypes
+
+      // contravariance
+      function method(value: ContravariantOf<City>) {...}
+      method(new Noun());         // okay
+      method(new City());         // okay
+      method(new SanFrancisco()); // error... no subtypes
+
+      // bivariance
+      function method(value: BivariantOf<City>) {...}
+      method(new Noun());         // okay
+      method(new City());         // okay
+      method(new SanFrancisco()); // okay
+
+
+
+
   ```
