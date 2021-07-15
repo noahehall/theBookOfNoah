@@ -22,6 +22,7 @@ bookmark: https://flow.org/en/docs/types/classes/
     - [event handling](https://flow.org/en/docs/react/events/)
     - [use exact-by-default object type syntax](https://medium.com/flow-type/how-to-upgrade-to-exact-by-default-object-type-syntax-7aa44b4d08ab)
     - [utility types, definitely want to read this!](https://flow.org/en/docs/types/utilities/)
+    - [generics](https://flow.org/en/docs/types/generics/)
   
   - [vscodium > vscode](https://github.com/VSCodium/vscodium/releases)
   - [disable unused builting extensions](https://stackoverflow.com/questions/48852007/type-aliases-can-only-be-used-in-a-ts-file/51034421) 
@@ -929,6 +930,17 @@ bookmark: https://flow.org/en/docs/types/classes/
       c.method; // ers
       const { method } = c; // errs
       c.method.bind({}); // errs
+
+    // generics are parameterize for classes
+    // you must pass a value for each parameeter
+    class MyClass<A, B, C> {
+      propA: A;
+      method(val: B): C {}
+
+      // or more likely
+      constructor(a: A, b: B, c: C) {}
+    }
+    const myInstance2: MyClass<number, string, boolean> = new MyClass(1, '2', true);
 
   ```
 
