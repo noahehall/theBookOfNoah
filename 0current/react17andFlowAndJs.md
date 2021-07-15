@@ -968,7 +968,9 @@ bookmark: https://flow.org/en/docs/types/arrays/
     // shorthand
       const arr: number[] = [1, 2, 3]
       const arr: ?number[] = [] // optional array
-      const arr: ?Array<number> = [] // optional array, see as above
+        const arr: ?Array<number> = [] // optional array, see as above
+      const arr: (?number)[] = []
+        const arr: Array<?number> = [] // same as above,
   ```
 
 
