@@ -611,6 +611,7 @@ bookmark: https://flow.org/en/docs/types/aliases/
     - tuples always have a fixed length based on its length when instantiated
     - are not a subtype of arrays, thus cant be used where one is expected & vice versa
     - only posses immutable array methods
+  - nominal types: hides the implementation details of a type, and only exposes the public interface
 
 ## flow usage
   - `// @flow` typecheck this file
@@ -657,6 +658,18 @@ bookmark: https://flow.org/en/docs/types/aliases/
 
 
 ## examples
+### importing/exporting
+  ```js
+    // exporting behaves as expected
+    export opaque type NumberAlias = number;
+    export type OtherType = string;
+    export opaque type ID: string = string; // subtyping constraint
+    // you need to import both keyword `type` and the specific type( i.g. numberalias) ?
+    import type { NumberAlias, OtherType } from './exports';
+    
+
+  ```
+
 ### errors and react types
   ```js
     // handling errors
@@ -1100,6 +1113,22 @@ bookmark: https://flow.org/en/docs/types/aliases/
       opaque type UnionAlias = 1 | 2 | 3;
       opaque type AliasAlias: ObjectAlias = ObjectAlias;
       opaque type VeryOpaque: AliasAlias = ObjectAlias;
+
+      // subtyping constraint allows the opaque type to be used as a supertype (i.e. nominal type/argument)
+      // when imported into other files
+      export opaque type ID: string = string; 
+        // without subtyping all of the following throw
+          (0: NumberAlias) // Error: 0 is not a NumberAlias!
+          function convert(x: NumberAlias): number {
+            return x; // Error: x is not a number!
+          }
+        // with subtyping everything is okay
+          function formatID(x: ID): string {
+              return "ID: " + x; // Ok! IDs are strings.
+          }
+          function toID(x: string): ID {
+              return x; // Error: strings are not IDs.
+          }
 
   ```
 
