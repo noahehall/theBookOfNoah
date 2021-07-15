@@ -586,6 +586,7 @@ bookmark: https://flow.org/en/docs/types/aliases/
     - when you think you want a Class type, you likely want an Interface
       - more benefits... no negatives? (at least that I now of)
         - I might slightly extra work so the cost increases, but still worth it
+    - you want to use generics
   
   - sometimes
     - may be appropriate, but not generally
