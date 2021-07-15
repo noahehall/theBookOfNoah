@@ -900,8 +900,21 @@ bookmark: https://flow.org/en/docs/types/classes/
 
 ### class typing
   ```js
-    class MyClass {}
+    // Class
+    // this inside the class doesnt require type annotation
+    // ^ but if a type is provided, it must be one of:
+    // ^^ super type of the class
+    // ^^ class type (for static methods)
+    class MyClass {
+      method(this: interface{ x: string}) void {} // errors since x is not defined in the class
+    }
     const myInstance: MyClass = new MyClass()
+
+    // class methods cannot be unound/rebound from the class on which they are defined
+    const c = new MyClass();
+      c.method; // ers
+      const { method } = c; // errs
+      c.method.bind({}); // errs
 
   ```
 
