@@ -1046,18 +1046,23 @@ bookmark: https://flow.org/en/docs/types/interfaces/
     // covariant & contravariant interface props
     interface Invariant {  property: number | string }
     interface Covariant { +readOnly: number | string }
-      // you cannot write to a covariant interface property
-        function method2(value: Covariant) {
-          value.readOnly;        // Works!
-          // $ExpectError
-          value.readOnly = 3.14; // Error!
+      // coveriant explanation
+        // you cannot write to a covariant interface property
+          function method2(value: Covariant) {
+            value.readOnly;        // Works!
+            value.readOnly = 3.14; // Error!
+          }
+        // you cannot assign a less specific type to a more specific type
+          var x : { property : number } = { property : 42 };
+          var y : { readOnly : number } = { readOnly : 42 };
+          var value1: Invariant = x; // Error! both are invariant, but different types
+          var value2: Covariant = y; // Works! both are covariant, but why is less specific (only number, while the interface is number|string)
+      // contravariant explanation
+        // you can read a contravariant interface property
+        function method2(value: Contravariant) {
+          value.writeOnly;        // Error! cant read!
+          value.writeOnly = 3.14; // Works! can write!
         }
-      // you cannot assign a less specific type to a more specific type
-        var x : { property : number } = { property : 42 };
-        var y : { readOnly : number } = { readOnly : 42 };
-        var value1: Invariant = x; // Error! both are invariant, but but different types
-        var value2: Covariant = y; // Works! both are covariant, but why is less specific (only number, while the interface is number|string)
-    
 
 
   ```
