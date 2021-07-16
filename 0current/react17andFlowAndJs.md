@@ -588,6 +588,8 @@ bookmark: https://flow.org/en/docs/types/interfaces/
         - slightly extra work so the cost increases, but still worth it
       - interfaces allow to set readOnly (covariant) props
         - helps with immutability! #easyWin
+      - interfaces allow you to set writeOnly (contravariant) props
+        - helps with loosening types, e.g. during chaos engineering/monkey testing/api development! #easyWin
     - you want to use generics
   
   - sometimes
