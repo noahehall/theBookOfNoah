@@ -573,7 +573,7 @@ bookmark: https://flow.org/en/docs/types/interfaces/
     - fk mutations, use a immutable helper library
     - when using an object as a map, always use flows `indexer property`
       - it allows reads and writes using any key that matches the indexer key type
-    - stuff always to do
+
   
   - generally
     - you want to define your type separately from the object your annotating
@@ -586,6 +586,8 @@ bookmark: https://flow.org/en/docs/types/interfaces/
     - when you think you want a Class type, you likely want an Interface + implements
       - more benefits... cheap negatives
         - slightly extra work so the cost increases, but still worth it
+      - interfaces allow to set readOnly (covariant) props
+        - helps with immutability! #easyWin
     - you want to use generics
   
   - sometimes
@@ -600,7 +602,7 @@ bookmark: https://flow.org/en/docs/types/interfaces/
   - the `?` before the `:` in an object prop definition marks the prop as optional, i.e. can be missing from the object
     - `someObj = { optionalProp?: ?number}`
       - the prop is optional and can be missing
-      - the value can be null|undefined|number
+      - the value can be null|undefined|numbercovarian
   - when you assign a type to a mutable variable (i.e. let|var)
     - you can only mutate the value to a compatible type
   - when you dont assign a type to a mutable variable (i.e. let|var)
@@ -950,7 +952,7 @@ bookmark: https://flow.org/en/docs/types/interfaces/
 
   ```
 
-### class/interface typing
+### class typig & interface typing
   ```js
   // Class
     // this inside the class doesnt require type annotation
@@ -1001,6 +1003,8 @@ bookmark: https://flow.org/en/docs/types/interfaces/
       property: string;
       property?: string;
       [key: string]: number; // indexer property
+      +readOnlyProp: number | string; // covariant
+      -writeOnlyProp: number | string; // contravariant
 
     }
     class Foo {
@@ -1204,10 +1208,7 @@ bookmark: https://flow.org/en/docs/types/interfaces/
   ```
 
 
-### interface types
-  ```js
 
-  ```
 
 
 ### catchall 
