@@ -70,6 +70,7 @@
     - local to the machine where docker is installed
     - made up of routes between participating containers and the wider network where the host is attached
     - the connection between interfaces describe how exposed or isolated a specific network container is from the rest of the network
+
     - default stack
       - container X network
         - loopback interface
@@ -77,32 +78,35 @@
         - private (ethernet) interface
           - links to the virtual interface in the hosts namespace
           - assigned a unique private IP address
-          - not directly reachable from the external network\
+          - not directly reachable from the external network
           - docker uses kernel namespaces to create each virtual private interface
       - operating system network
         - container X virtual interface
         - docker bridge virtual interface (docker0)
           - routes connections to the external network and each container interfaces]
-            - analagous topp yur home router
+            - analagous to your home router
         - logical host interface
       - physical network interface
-  - multi-host virtual networks
-    - provide an overlay where any container on a paritcipating host can have its on routable IP address from any otsoftware dependencies
-      - installed images can reuse existing dependencies
-      - dependencies with different versions can coexist
-    - improving portability
-      - docker runs on all operating systems
-      - thus, you can use software designed for linux on any other OS that supports docker
-    - security
-      - the scope of any security threat associated with running a particular application is limited to the scope of the application itself
+    - multi-host virtual networks
+      - provide an overlay where any container on a paritcipating host can have its on routable IP address from any software dependencies
+        - installed images can reuse existing dependencies
+        - dependencies with different versions can coexist
+      - improving portability
+        - docker runs on all operating systems
+        - thus, you can use software designed for linux on any other OS that supports docker
+      - security
+        - the scope of any security threat associated with running a particular application is limited to the scope of the application itself
+  
   - limitations
-    - containers wont help much with the securiyt of programs that have to run with full access to the machine
+    - containers wont help much with the security of programs that have to run with full access to the machine
+  
   - Analogies
     - think of docker as a physical shipping container system
       - a box where you store and run an applkication and all of its dependencies
       - just as cranes, trucks, trains, etc work with shipping contaiiners
         - docker can run, copy and distribute containers with ease
       - docker images are the shipping containers
+  
   - docker engine and docker compose simplify the lives of developers and opreations personnel by abstracting the host from the contained environment
   - docker machine and docker swarm help system admins and infrastructure engineers extend those abstactions to clutered environments
 
@@ -233,8 +237,8 @@
         - current user
 
   - use base images to create common layers
-    - do not set the default user int he base otherwise all implementations will not be able to update the image
-    - however you should always create the user:group
+    - do not set the default user in the base otherwise all implementations will not be able to update the image
+    - however you should always create the user:group as soon as possible (just dont change to it)
 
   - use TLS to secure your registry
 
@@ -248,6 +252,8 @@
     - debian
       - minimal footprint for a fully featured distro
       - about 125mb
+    - alpine 
+      + seems to be the fav
 
   - dont run docker as the root user on your system
     - eliminate this by
@@ -255,7 +261,7 @@
       - setting that group as the owner of the docker socket
       - adding your user to that group
 
-  - all known container breakout tactics rely o nhaving sytem admin privileges inside the container
+  - all known container breakout tactics rely on having sytem admin privileges inside the container
     - eliminate this by either
       - set the USER instruction to a user and group with limited priveleges
       - change the user in the init script
@@ -390,18 +396,18 @@
         - but make sure you restrict access to this container
 
 
-```sh
-  # find all files with SUID set
-  # use +2000 for SGID
-  docker run...
-    find / -perm 6000 -type -f
+          ```sh
+            # find all files with SUID set
+            # use +2000 for SGID
+            docker run...
+              find / -perm 6000 -type -f
 
-  # unset SUID and SGID for all appropriate files
-  RUN for i in \
-    $(find / -type -f\( -perm +6000 -o -perm +2000\)); \
-    do chmod ug-s $1; done
+            # unset SUID and SGID for all appropriate files
+            RUN for i in \
+              $(find / -type -f\( -perm +6000 -o -perm +2000\)); \
+              do chmod ug-s $1; done
 
-```
+          ```
 
 
 # architecture
@@ -431,6 +437,7 @@
         - each container runs as a child process of the docker daemon
         - the container, and the child process runs in its own memory subspace of the user spoace
         - programs running inside a container can access only their own memory and resources as scoped by the container
+  
   - Virtualization vs Containerization
     - VM is a virtual machine
       - installed on top of the host OS, and runs a guest operating machine
@@ -589,7 +596,6 @@
   # to your daemon options on all hosts that are connecting to it
   docker run -d -p 5000:5000 \
     -v $HOME/registry:/var/lib/registry registry:2
-
 
 ```
 
@@ -890,7 +896,7 @@
 
 ## containers
   - uses existing container engines (installed in linux) to provide consistent containers built according to best practices
-    - any software run with docker is run isnide a container
+    - any software run with docker is run inside a container
     - software running inside docker containers interface directly with the hosts linux kernel
   - containers started from the same image dont share changes to their file system
   - the running state of a container is directly tied to the state of a single running process inside the container
@@ -917,7 +923,7 @@
 ## volumes
   - a host/containers directory tree is created by a set of mount points that describe how to piece together one/more file  systems
   - volume
-    - mount point on the containers dorectory tree where a portion of the host directory tree has been mounted
+    - mount point on the containers directory tree where a portion of the host directory tree has been mounted
     - useful for working with persistent/shared data
     - tool for segmenting and sharing data that has a scope/life cycle independent of a single container
     - enable separation of concerns and create modularity for architectural components
@@ -961,12 +967,12 @@
       - its difficult to find the location of the managed volume on the host file system
         - thus no way to share/delete a managed volume manually
       - can only be identified by the containers that use them
-      -
+      
 ### volume patterns
   - volume container
     - creating a container with an attached volume, stopping the container, then source that containers volume when creating other containers
       - when creating the container, you can issue a simple echo command to run it and exit immediately
-    - a volume container doesn t need to be running because stopped containers maintain their volume references
+    - a volume container doesnt need to be running because stopped containers maintain their volume references
     - use cases
       - sharing a set of volumes with many containers
       - can categorize a set of volumes that fit a common use case
@@ -1021,7 +1027,7 @@
   docker volume rm myvol
 
   # create a data container using an existing volume based on busybox
-  docker create -v SOMEVOL:/place/here ---name CONT_NAME busybox
+  docker create -v SOMEVOL:/place/here/in/container ---name CONT_NAME busybox
 
   # copy files from host into data container
   docker cp /some/file CONT_NAME:/place/here
@@ -1103,8 +1109,8 @@
       - enables clients to decouple from a dependency on a specific host IP and instead depend on whatever host is referred to by a known name (e.g. poop.com)
       - one of the most basic ways to change outbound communications is by creating names for IP addresses
   - network
-    - defined in the way that network interfaces are linked together
-    - the links between itnerfaces determines an interfaces IP address
+    - defined in a way that network interfaces are linked together
+    - the links between interfaces determines an interfaces IP address
     - types
       - bridge network
         - virtual network that connects multiple networks so that they can function as a single network
@@ -1706,6 +1712,7 @@
     - i.e. docker network create
   - volume definition
     - i.e. docker volume create
+
 ```sh
   # quickies
   docker-compose up
@@ -1792,6 +1799,8 @@
 # TODO
 # docker config create
 ```
+
+
 ### docker-compose scale
   - set the number of containers to run for a service
   - services will bind to the hosts ephemeral port 0
@@ -2391,7 +2400,7 @@
 ```
 
 ### docker build
-  - build an image from a Dockerfile
+  - build an image from a Dockerfile and a context
   - build specific flags
   - `--compress`
     - compress the build content using gzip
@@ -2421,8 +2430,7 @@
       - compress, force-rm, no-cache, no-rm, pull, memory, build-arg, parallel, quiet
 ```sh
   # install the built image to name:tag
-  # get the build instructions from the dockerfile
-  # in the current dir
+  # get the build instructions from the dockerfile in the current dir
   docker build -t NAME:TAG .
 
   # (re)build service(s)

@@ -7,6 +7,7 @@ if hash bpytop 2>/dev/null; then
 else echo 'should really use bpytop > top'
 fi
 
+alias pathis='echo $PATH | tr -s ":" "\n"'
 alias g='git'
 alias lessbashrc='less ~/.bashrc'
 alias nanobashrc='nano ~/.bashrc'
