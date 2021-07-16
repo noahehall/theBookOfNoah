@@ -613,6 +613,7 @@ bookmark: https://flow.org/en/docs/types/interfaces/
   - flow accepts
     - contravariant inputs: less specific types passed in
     - covariant outputs: more specific types returned
+  - interfaces properties can be covariant | contravariant
 
 
 ## terms
