@@ -592,7 +592,7 @@ bookmark: https://flow.org/en/docs/types/interfaces/
     - may be appropriate, but not generally
   
   - never
-    - use anonymouse interfaces - just dont
+    - use anonymouse interfaces - just dont or die and go to hell where they code java with JSP
 
 
 ## gotchas
@@ -613,7 +613,10 @@ bookmark: https://flow.org/en/docs/types/interfaces/
   - flow accepts
     - contravariant inputs: less specific types passed in
     - covariant outputs: more specific types returned
-  - interfaces properties can be covariant | contravariant
+  - interfaces properties can be 
+    - invariant: read + write
+    - covariant: read-only
+    - contravariant: write-only
 
 
 ## terms
@@ -1243,8 +1246,5 @@ bookmark: https://flow.org/en/docs/types/interfaces/
       method(new Noun());         // okay
       method(new City());         // okay
       method(new SanFrancisco()); // okay
-
-
-
 
   ```
