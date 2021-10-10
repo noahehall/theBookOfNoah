@@ -1,0 +1,2037 @@
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [links](#links)
+- [Terms](#terms)
+- [Best Practices](#best-practices)
+	- [app code and environment](#app-code-and-environment)
+	- [Microservices Architecture](#microservices-architecture)
+	- [API Gateways](#api-gateways)
+	- [External User Administration](#external-user-administration)
+	- [Application Reliability](#application-reliability)
+		- [health-check endpoints](#health-check-endpoints)
+		- [Logging](#logging)
+		- [error handling](#error-handling)
+		- [Testing](#testing)
+	- [DevOps](#devops)
+		- [SecDevOps](#secdevops)
+	- [Application Security](#application-security)
+		- [Data](#data)
+	- [Migrating to the cloud](#migrating-to-the-cloud)
+- [GCP PRODUCTS](#gcp-products)
+	- [development](#development)
+		- [cloud source repositories (i.e. git)](#cloud-source-repositories-ie-git)
+		- [cloud functions](#cloud-functions)
+	- [deployment](#deployment)
+		- [deployment manager](#deployment-manager)
+	- [monitoring](#monitoring)
+		- [Stackdriver](#stackdriver)
+- [GCP Platform Administration](#gcp-platform-administration)
+	- [Managing resources](#managing-resources)
+		- [Web Console:](#web-console)
+			- [Cloud Shell:](#cloud-shell)
+		- [Google Cloud SDK:](#google-cloud-sdk)
+		- [Google API client library:](#google-api-client-library)
+		- [Cloud Client Libraries:](#cloud-client-libraries)
+		- [firebase sdk:](#firebase-sdk)
+		- [Mobile App](#mobile-app)
+	- [GCP Regions and Zones](#gcp-regions-and-zones)
+	- [resource hierarchy:](#resource-hierarchy)
+	- [IAM: Cloud Identity and Access Management](#iam-cloud-identity-and-access-management)
+		- [IAM Users: The WHO](#iam-users-the-who)
+		- [IAM roles: the WHAT](#iam-roles-the-what)
+	- [Security](#security)
+- [Core Products](#core-products)
+	- [Cloud Launcher](#cloud-launcher)
+	- [Virtual Private Cloud](#virtual-private-cloud)
+		- [interconnect with networks external to GCP](#interconnect-with-networks-external-to-gcp)
+		- [cloud load balancing: load balance inbound traffic](#cloud-load-balancing-load-balance-inbound-traffic)
+		- [Cloud DNS:](#cloud-dns)
+		- [Cloud CDN:](#cloud-cdn)
+	- [compute infrastructure for applications](#compute-infrastructure-for-applications)
+		- [Compute Engine](#compute-engine)
+		- [kubernetes](#kubernetes)
+		- [app engine](#app-engine)
+	- [API management tools](#api-management-tools)
+		- [cloud endpoints](#cloud-endpoints)
+		- [apigee edge](#apigee-edge)
+	- [Storage](#storage)
+		- [Caching](#caching)
+		- [Cloud Storage](#cloud-storage)
+		- [Cloud Datastore](#cloud-datastore)
+		- [Big Table](#big-table)
+		- [Cloud SQL and Google Cloud Spanner](#cloud-sql-and-google-cloud-spanner)
+			- [Cloud SQL](#cloud-sql)
+			- [Cloud Spanner](#cloud-spanner)
+	- [Big Data and Machine Learning](#big-data-and-machine-learning)
+		- [Big Data](#big-data)
+		- [Cloud dataproc](#cloud-dataproc)
+		- [cloud dataflow](#cloud-dataflow)
+		- [BigQuery](#bigquery)
+		- [Microsoft SQL Server](#microsoft-sql-server)
+- [Storage options for mobile](#storage-options-for-mobile)
+		- [cloud pub/sub](#cloud-pubsub)
+		- [cloud datalab](#cloud-datalab)
+	- [Machine Learning Platform](#machine-learning-platform)
+			- [TensorFlow](#tensorflow)
+			- [Cloud ML](#cloud-ml)
+			- [Machine Learning APIs](#machine-learning-apis)
+- [OLD: LinkedIn (Lynda) Learning](#old-linkedin-lynda-learning)
+- [basics](#basics)
+- [services](#services)
+	- [Compute: virtual machines](#compute-virtual-machines)
+	- [storage: files and databases](#storage-files-and-databases)
+	- [Big Data](#big-data)
+	- [other services: networking, ML, etc.](#other-services-networking-ml-etc)
+		- [Identity & Security](#identity-security)
+		- [Management & Monitoring](#management-monitoring)
+		- [Developer Tools](#developer-tools)
+	- [Machine Learning](#machine-learning)
+- [architecture](#architecture)
+
+<!-- /TOC -->
+
+# links
+  - [lynda GCP essential training](https://www.lynda.com/Google-Cloud-Platform-tutorials/Google-Cloud-Platform-Essential-Training/540539-2.html)
+  - [gcloud architect exam guide](https://cloud.google.com/certification/guides/cloud-architect/)
+  - [coursera GCP fundamentals](https://www.coursera.org/learn/gcp-fundamentals)
+  - [links for transform based programming model](https://scholar.google.com/scholar?q=transform+based+programming+model&hl=en&as_sdt=0&as_vis=1&oi=scholart)
+  - [stream analytics](http://www.dataversity.net/streaming-analytics-101/)
+  - [project jupyter: the jupyter notebook](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html)
+  - [martin fowler serverless architectures](https://martinfowler.com/articles/serverless.html)
+  - [nosql wide column store](https://www.forbes.com/sites/metabrown/2018/03/31/get-the-basics-on-nosql-databases-wide-column-store-databases/#453e9a4b6e50)
+  - [types of relational and nosql dbs](https://www.forbes.com/sites/metabrown/2018/03/31/get-to-know-relational-and-nosql-databases-that-power-big-data-analytics/#725169291943)
+  - [Google Cloud: Application Development Coursera Course](https://www.coursera.org/learn/getting-started-app-development/home/welcome)
+  - [the worker pattern](https://gist.github.com/ryandotsmith/1660752)
+  - [user auth/password management](https://cloud.google.com/blog/products/gcp/12-best-practices-for-user-account)
+  - [google cloud client libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+  - [Cloud pub/sub notifications for cloud storage](https://cloud.google.com/storage/docs/pubsub-notifications)
+
+# Terms
+  - cloud computing:
+    - on demand self service: no human intervention to get resources
+    - broad network access from anywhere
+    - resource pooling: provider shares resources to customers
+    - rapid elasticity: if you need more resources you can get more or if you need less you can reduce usage
+    - measured service: pay only for what you use
+  - virtualization: managing services separately from the hardware
+  - GCP Computing Architectures
+    - IaaS: infrastructure as a service
+      - provide raw, compute, storage, and network
+      - you pay for what you allocate
+      - e.g. compute engine
+    - Hybrid: incorporating aspects of Iaas and PaaS
+      - e.g. Kubernetes
+    - PaaS: platform as a service
+      - bind application code you write to libraries that give access to infrastructure your application needs
+      - you pay for what you use
+      - e.g. app engine
+    - SaaS: Software as a Service
+      - applications consumed directly over the internet by end users
+      - e.g. gmail
+  - git: used to store and manage their source code trees whether on-premise or hosted
+  - serverless:
+    - applications that significantly or fully incorporate third party, cloud-hosted applications and services to manage server-side logic and state
+    - applications where server-side logic is written by the application developer, but run in stateless compute containers that are event-triggered, ephemeral and fully managed by a third party
+    - you dont have to provision compute instances to run your jobs
+  - integrated platform: products on the platform can seamlessly commmunicate with eachother
+  - stream analytics: stream processing analyzes and performs actions on real-time data through the use of continuous queries
+    - connects to external data sources, enabling applications to integrate certain data into th eapplication flow, or to update an external database with processed information
+  - pub/sub model:
+    - pub: the publisher who posts messages to specific topics
+    - sub: the subscriber who listens for messages about specific topics
+    - push vs pull
+      - push: subscribers are pushed messages when they arrive
+      - pull: subscribes poll/check for new messages at arbitrary intervals
+  - metadata: information that describes data
+  - database architectures
+    - relational:
+      - use metadata to provide information about the data source, data collection methods, and meaning
+      - tabular structure keeps data well organized and accessible
+      - exact kind and quanitity of data is always known
+    - NoSQL
+      - dont use normalized data model found in dbs,
+        - dont organize data in tables, rows and columns
+      - use cases
+        - data has little/inconsistent structure
+        - data must be distributed across more than one emachine
+        - speed is more important than accuracy
+        - application requires data types or analysis methods that common relational dbs handle poorly
+      - types
+        - content store: aka content repository: large, complex data formats like video, audio
+        - document store: semi-structure data like registration forms, business correspondence, articles
+        - event store: tracking events in real time
+        - graph: finding connections among people and things
+        - key value: associative array, data structure, dictionary, hash,
+          - simple structure,
+          - flexibility
+          - scalability
+        - multivalue: NF2, non-first normal form systems
+          - complex data structures with schemas similar to relational dbs
+        - navigational: hierarchical (one to many) or network (many to many) data structure
+        - object oriented: model data as objects, similar to OOP
+        - RDF store: resource description fraemwork, semantic graph dbs, or triple stores
+          - information processing in applications that connect multiple data sources
+        - search engine: finding information in documents
+        - time series: time series data
+        - wide column storea: manage data that wont fit on one computer; aka column families, columnar databases, column-oriented DBS
+          - columns: related facts
+          - column families: groups of columns that have content and function similar to tables in a relational database
+        - XML: native XML db or native XML dbms
+          - data in xml format or varied copmlex formats like audio or video
+  - setting up your environment
+    - imperative approach: figure out the commands you need to setup/change from the old state to the new
+    - declarative: use a template to specify what the environment should look like
+	- strongly consistent: when you perform an operation and receive a success response, the object is immediately available
+	- eventually consistent: when you perform an operation, the effect is not immediately available
+	- truncated exponential backoff: error handling strategy for networking applications
+		- a client periodically retries failed requests with increasing delays between requests
+	- hot keys: situations where proportionately large chunks of your input get mapped to the same cluster in a distributed system
+    - e.g. in map/reduce transformations
+
+# Best Practices
+  - Cloud Native Application Goals
+    - global reach and can handle high traffic volumes reliably
+    - scalability
+    - high availability
+    - security
+    - loosely coupled
+    - resiliency
+    - repeatable & rollbackable deployments
+    - build and release systems that enable continuous integration and delivery
+    - debugging, monitoring and performance-tuning are crucial for running robust applications
+  - understand your data storage needs to and storage options
+    - storage needs
+      - high volumes of flat structured data
+      - relational data
+      - multimedia
+  - interleaved ttable: a table that you declare to be a child of another table you want the rows of the child table to be physically stored together with the associated parent row
+
+## app code and environment
+  - code repository
+    - all code should be stored in a repository
+    - enables you to track changes and setup systems for continuous integration and delivery
+  - use a dependency manager
+    - this allows you to never store external packages in your repository
+    - each version of your application should explicity list its dependencies
+  - configuration settings
+    - separate config settings from coder
+    - never store config settings as constants
+    - specify config settings as env variables
+      - allows you to easily modify settings in differeent environments
+
+## Microservices Architecture
+  - enables you to structure your application in relation to your business boundaries
+  - designed for loosely coupled services
+    - this makes them resiliant to spikes, failures, and changes to traffic (load)
+    - use pub/sub model
+      - a cloud pub/sub topic can be the message queue
+        - enabling perform asynchronous processing, and buffer requests during spikes in traffic
+    - consumers of HTTP apis should bind loosely with publisher payloads
+      - never attempt to bind with all fields in the payload
+      - this enables the publisher to modify the API in a backwards compatibld manner
+  - implement stateless components for scalability
+    - never store state internally or access shared state
+      - shared states are a common bottleneck for scalability
+    - each component should focus on compute tasks only
+      - enables you to implement the worker pattern in order to add/remove additional instances of the component for scalability
+    - components should startup & shutdown quickly to enable efficient scaling
+  - cache application data/content
+    - improves performance and lowers network latency
+    - anything that is computationally intensive to calculate
+    - anything that is frequently accessed
+    - never cache private/personal data
+    - always follow modern cache strategies
+    - store data in a cache service like memcached/redis
+    - store webpages/static content in a CDN
+  - each service is monitored and can fail gracely on error
+  - each service lives as a distinct application that can be updated, deployed and scaled indepdendently of each other
+    - perfect for handling feature changes and bug fixes
+  - far more easier to understand where code needs to be changed compared to a monolithic application
+  - each service has distinct dependencies (vs the tangled dependencies in large monoliths)
+  - things to watch out for
+    - remote operations can be unpredictable and response times can make your app seem slow
+      - keep ui responsive
+      - always perform backend operations asynchronously
+      - keep operations on the user thread at a minimum
+      - use event-driven processing where possible
+  -
+
+## API Gateways
+  - enables backend functionality to be available to consumer applications
+  - if your backend cannot be moved to the cloud
+    - the API can still serve as a facade or adapter link instead of communicating with the legacy backend using outdated protocols or desparate interfaces
+      - each consumer can then invoke a modern cloud API which then invokes the legacy backend
+
+## External User Administration
+  - use federated identity management
+    - minimizes effort for user administration
+  - whether using FIM or building inhouse, always:
+    - implement secure solution for authenticating & authorizing users
+    - use strong cryptographic hash for passwords
+    - allow for third party identity providers
+    - separate the concept of user identity and user account
+      - users are not an email address, phone number, etc.
+      - users are a columnation of their unique personalized data and experience within your service
+    - maintain low coupling and high cohesion between different parts of a user's profile
+    - allow multiple identities to link to a single user account
+    - don't block long/complex passwords
+    - don't impose unreasonable ruules for usernames
+    - allow users to change their username
+    - permit users to delete their accounts
+    - make a consious decision on session length
+    - use 2-step verification
+    - make user IDs case insensitive
+    - build a secure auth system
+
+## Application Reliability
+### health-check endpoints
+  - monitor the status of your app and services via a Health Monitoring Agent (e.g. a load balancer)
+    - periodically sends requests tot he health check endpoint
+  - ensure they are available and performing optimally
+  - setup alerts to devOps at thresholds
+  - the health-check handler should check the health of:
+    - all critical dependencies
+      - storage
+      - database
+      - network connections
+      - etc
+    - all infrastructure components required for the service to function properly
+### Logging
+  - monitoring your app's performance
+    - debugging
+    - error reporting
+    - tracing
+    - logs-based metrics
+    - monitoring
+  - treat your logs as event streams: logs constitute a continous stream of events that keep occuring as long as the app is running
+  - never manage your log files in your application
+    - write to an event stream, e.g. standard out and let the underlying infrastructure collate all events for later analysis and storage
+  - setup logs-baased metrics and trace requests across different services in you rapplication
+### error handling
+  - handle transient and long-lasting errors gracefully
+  - transient errors: retry with exponential backoff
+  - service availability errors: implement a circuit breaker
+  - each UI component should degrade gracefully
+  - for errors that propagate back to the user
+    - consider degrading the application gracefully instead of explicity displaying the error message
+      - this can help with security
+### Testing
+  - setup high availability tests
+  - setup functional tests
+  - setup performance tests
+  - setup tabletop tests
+    - teams discuss how they will respond in failure scenarios but dont perform any real actions
+  - setup canary testing
+  - identify failure scenarios and simulate them in your development environment to test the efficacy of your disaster recovery plans
+    - connectivity failiure
+    - on-premises data center / other cloud provider failure
+    - zone/region failure
+    - deployment rollback
+    - data corruption caused by network / application issues
+  - develop disaster recovery plans
+    - people are notified
+    - traffic is rerouted using redundant routes
+    - make sure data was not corrupted during failure & recovery process
+    - ensure all services/processes are restored ina timely manner
+    - processes
+    - tools
+
+## DevOps
+  - devops model
+    - should be fullly automated
+    - continouosly integrated
+    - continuously deployed
+  - code repo -> build system -> deploy system ->
+    - test environments: execute integration, security, and performance tests
+    - production environment: monitor performance with metrics and alerts
+  - integrate and deliver small changes vs big changes
+    - lowers risk of regression
+    - debug issues faster
+    - rollback to the last stable build
+### SecDevOps
+  - consider security throughout the continuous integration and delivery process
+  - automate security checks
+    - confirm your using the most secure version of third party dependencies
+    - scan code for security vulnerabilities
+    - confirm resources have permissions based on principle of least privilege
+    - detecting errors in production
+
+## Application Security
+### Data
+  - data sovereignty
+    - some regions and industry segments have strict compliance requirements for data protection and consu mer privacy
+    - Areas to consider
+      - processing user data
+      - storing user data
+      - sharing user data
+      - review the industry segment and region where your users live and your services will be located
+
+## Migrating to the cloud
+  - implement the strangler pattern: incremently replace components of the old application with new services
+    -
+
+# GCP PRODUCTS
+
+## development
+### cloud source repositories (i.e. git)
+    - keep code private to a GCP project
+    - IAM permissions used to protect the code
+    - fully featured git repositories
+    - source viewer: browser and view repo files within the GCP console
+    - allow external users
+  - supported platforms
+### cloud functions
+    - create single-purpose functions that respond to events without a server/runtime
+    - written in javascript, execute in managed node.js environment on GCP
+    - triggers
+      - you choose what events you care about
+      - you attach javascript functions to your event triggers
+      - supported platforms
+        - cloud storage events
+        - cloud pub/sub events
+        - http calls
+    - use cases
+      - breakapart an existing monolithic application into microservices with little developer effort
+      - enhance existing applications without having to worry about scaling
+      - enhance an event-driven application without having to provision additional compute resources
+    - cost
+      - pay when function runs in 100ms intervals
+
+## deployment
+	- reliable services require reliable release processes
+	- automate build test and release processes
+	- build pipelines: use container registry + builder
+	- continuous integration:
+		- code: frequently pull from master branch and commit changes to a feature branch in a repo (github/cloud source repository)
+		- build: commit triggers (jenkins/circleci) a build and stores a new application image (container builder) and stores it in an artifact repository (container registry)
+		- deploy: deployment system (spinnaker, chef, puppet, ansible, terraform) deploys the artifact(s) in your cloud environment
+			- deployment manager stands up any resources your application needs
+		- test: your application is now running and you can test
+			- if tests are successful merge your changes back into master
+	- continuous delivery: triggered when changes are pushed to master repository
+		- code
+		- build
+		- deploy: (this time to staging)
+		- test: if all tests pass then the build is tagged as a release candidate build
+			- successful builds are marked as release candidates
+		- release: release candidate approvals can trigger automatic deployment as a canary or blue/green release
+		- monitor: monitor (stackdriver) production environment and switch over entire traffic to this release or rollback to last stable release
+	- continous deployment: automatically deploys release candidates to production environment
+### deployment manager
+  - infrastructure as code
+  - automates the creation and management of your GCP resources via templates
+  - you can version control your templates in cloud source repos
+  - workflow
+    - create a template file in YAML/Python that describes what you want the components of your environment to look like
+    - deployment manager executes your template to create the environment described
+    - to make changes, edit the template and deployment manager will update your environment automatically
+### cloud container registry
+	- container image: complate package that contains the app binary and software required for the app to run
+		- you should deploy the same container image to all your environments to ensure you app performs correctly
+	- create build triggers for trigger types for building different types of artifacts
+		- trigger type: specifies whether builds should be triggered by commits to which branch / tag
+		- build configuration yaml/json file: specifies the steps in the build pipeline
+			- steps: each step is a docker container that is invoked by container builder when the build is executed; analogous to cmd/scripts executed to build the application
+				- name: identifies the continer to invoke for that build step
+					- e.g. gcr.io/cloud-builders/docker
+				- images: the name of the container image to be created by this build configuration
+					- e.g. gcr.io/$PROJECT_ID/cd-demo-img
+	- triggers new builds in container builder
+
+### cloud container builder
+	- fully managed service to setup build pipelines
+		- create a docker container image for application and push it to cloud container registry
+	- workflow
+		- retrieves source code and build configuration from repo
+		- pushes new container image to container registry
+	-
+## monitoring
+  - you cant run an application stably without monitoring
+  - use cases
+    - understanding if the changes made good / bad ?
+    - respond with information vs panic when end-users complain
+### Stackdriver
+  - insight into your applications health, performance and availability, diagnostics, and various other metrics
+  - gives you access to many signals:
+    - infrastructure platforms
+    - virtual machines
+    - containers
+    - middleware
+    - application tier
+  - core components
+    - monitoring: checks the endpoints of applications and other internet accessible services running in GCP
+      - platform, system and application metrics
+      - uptime/health checks: associated with URLS, groups, or resources
+      - alerts: on any criteria/condition and integration with popular notification tools
+      - dashboards: visualize state of app
+    - logging: view logs from applications
+      - define metrics based on log content
+      - export to bigquery, cloud storage, and cloud pubsub
+      - platform, system, and application logs
+      - log search, view, filter, and export
+    - error reporting: tracks and groups errors in cloud applications and notifies you when new errors are detected
+      - error notifications
+      - error dashboard
+    - debugging: connects your application's production data to your source code for you to inspect the state of your app at any code location in production
+      - view the app state without adding logging statements
+      - works best when your app source code is available
+        - cloud source repos
+        - other repos
+    - Trace: sample the latency of app engine applications and report per-url statistics
+      - latency reporting and sampling
+      - per-url latency and statistics
+  -
+
+# GCP Platform Administration
+  - principal of least privilege: users only receive permissions to do what they are required to do
+
+## Managing resources
+### Web Console:
+  - web based admin
+    - view and manage projects and their resources
+    - enable and disable and explore API of GCP resources
+  - API Explorer: testing google cloud APIs in a sandbox
+#### Cloud Shell:
+  - CLI to access GCP resources from your browser
+    - built-in authorization to cloud platofrm console proejcts and resources
+    -
+  - a temp VM instance
+    - 5gb of persistent disk
+    - pre-intsalled google cloud sdk
+  - features
+    - web preview: start a web browser on an arbitrary port to the connected resource
+    - built-in code editor
+### Google Cloud SDK:
+  - manage resources and applications, is available as a docker image
+    - useful for writing scripts
+  - has 3 tools
+    - gcloud: all services except cloud storage and bq
+      - perform common tasks on GCP
+      - create and manage GCP resources
+      - script/automate gcloud commands
+      - use gcloud interactive shell
+    - gsutil: for cloud storage
+      - create and manage buckets
+      - upload, download and delete objects
+      - move, copy and rename objects
+      - manage access to stored objects
+    - bq: BigQuery
+      - manage datasets, tables, and other BigQuery entities
+      - allows you to run queries
+### Google API client library:
+  - should only be used if your programming language does not have a a Google Client Library
+    - does not support gRPC
+    - use JSON as an interchange format
+    - uses OAuth 2.0 for authentication and authorization
+    - each API is enabled through console
+    - include daily quotas and rates that can be raised by request
+    - API Explorer: interactive tool to easily try google APIs using a browser
+      - see Docs
+      - execute requests for any method and see responses in real time
+      - make authenticated and authorized API calls
+### Cloud Client Libraries:
+  - API Client libraries: open source generated supporting various languages
+    - handle low level communication with the server, including authentication with google
+    - installed using familiar package managers
+    - provide retry login for failed requests automatically
+    - gRPC: google remote procedure call APIs
+      - makes it easier to build connected systems by enabling client and server applications to communicate transparently
+      - makes it
+  - recommended method to invoke google cloud API
+  - architecture
+    - every package uses a client as a base for interacting with an API
+      - authentication
+        - if your app is on app/compute engine authentication will just work
+        - if you dont explicitly provide credentials, the client will reuse the credentials from the gcloud tool if it has already been setup
+        -
+### Mobile App
+    - manage virtual machines and DB instances
+    - manage apps in google app engine
+    - manage billing
+    - visualize projects via customizable dashboards
+
+## GCP Regions and Zones
+  - Zone: deployment area for GCP resources like a VM in Compute Engine
+    - you generally spread resources across multiple zones in a region to build a fault tolerant application to protect against unexpected failures
+    - e.g. europe-west2-a
+  - Regions: independent geographic areas
+    - all zones in tbe same region have fast network latencies under 5 ms
+    - Multi-region: storing your data in multiple regions for redundancy
+
+## resource hierarchy:
+  - policies can be defined at each level
+  - policies are inherited downward
+    1. org node: the top node that allows you to have visibility into all of your folders and projects
+    2. folders: groups projects into logical units
+    3. projects: organize your resources, and group resources that have a common business objective
+      - all GCP resources belong to a project
+      - are the basis for enabling and using GCP services like APIs, billing, collaborates, etc
+      - each project is a separate compartment
+      - billed separately and managed separately
+      - identifying a project
+        - ID: immutable & globally unique and chosen by you
+        - name: mutable & chosen by you
+        - number: immutable globally unique and chosen by GCP
+    4. resources: e.g. storage, VM
+      - inherit policies of their parent resource
+      - parent policies cant take away access thats granted at a lower level
+
+## IAM: Cloud Identity and Access Management
+  - IAM: manage access control by defining WHO (members) has ACCESS (roles) to  WHAT (resources)
+  - best practices
+	  - always use the principle of least privilege
+	  - use external keys for use from outside GCP
+		  - you are responsible for the security of the private key and other management operations such as key rotation
+		  - manage via: IAM API, gcloud CLI, service accounts page in GCP Console
+	  - use API keys for GCP APIs that do not need to access private user data
+		  - browser/mobile apps that dont have a backend server
+		  - used to track API requests associated with your project for quota and billing
+	  - service accounts:
+			- for authenticating to a GCP API so users aren't directly involved
+		  - represent each microservice by its own distinct service account
+
+### OAuth 2.0
+	  - your app needs to access data that belongs to a user
+	  - your app needs to authenticate as a user to act on their behalf
+		- steps
+			1. your app requests access to the resource
+			2. the user will be prompted for consent
+			3. the app will request creds from an authorization server
+			4. the app will then use those creds to access the resources on behalf of the user
+	  -
+### IAP: Cloud identity-aware proxy
+	- controls access to your cloud apps running on GCP
+		- apps and resources protected by IAP can only be accessed via the proxy by users and groups with the correct cloud IAM role
+		- verifies a user's identity without requiring a VPN
+		- determines whether that user should be allowed access to the app
+		- end users use a URL to access IAP secured apps without a VPN
+	- flow:
+		- users request resource
+		- routed to IAP proxy
+			- authenticate: identity verified
+			- authorize: roles + permission to access resource
+			- identify not verified
+	- Best practices
+		- configure your firewalla nd load balancer to protect against traffic that doesnt come from the serving infrastructure
+		- use signed headers or the app engine standard environment users API
+	- use cases
+		- establish a central authorization layer for your apps accessed by HTTPS
+		- adopt an application level access control model instead of relying on network level firewalls
+### firebase sdk for authentication
+	- google's federated authentication supporting end user signin at the client app using third-party creds (e.g. google/facebook)
+  - firebase: mobile and web app dev platform
+    - ios, android, web, c++, unity, nodejs
+   - flow
+	   - get auth creds from the user
+	   - pass the creds to firebase authentication sdk
+	   - firebase backend services verify creds and return a response to the client
+	   - after successfuly sign in
+		   - access users profile
+		   - control the users access to data stored in other firebase products
+		   - use provided auth token to verify identify of users in your own backend services
+   - cost
+	   - price
+		   - spark plan: free
+		   - flame plan 25/month
+		   - blaze plan: pay as you go
+	   - auth
+		   - spark plan: free
+		   - flame plan: free
+		   - blaze plan: free
+	   - phone auth
+		   - spark plan: 10k auth/month
+		   - flame: 10k auth/month
+		   - blaze: 0.01/verification (use, canada, india) 0.06 (all other countries)
+  - use cases
+    - implement federated identity management with firebase authentication
+    - firebase sdk for cloud storage stores files directly in google cloud storage buckets
+    - use app engine api to share data between firebase and app engine
+    - cloud functions for firebase lets you run backend code in respond to events triggered by firebase features and http requests
+    -
+### IAM Members: The WHO
+	- ADC: application default credentials
+  - types
+    1. a google account or cloud identity users e.g. blah@gmail.com
+	    - a developer, administrator, or a person who interactions with GCP
+		2. a google service account: provision an ID to control server-to-server interactions in a project
+			- belong to an app/VM
+			- identified by a unique email address
+			- associated with a key pair
+			- supported by all GCP APIs
+			- authentication:
+		    - use cryptographic keys
+		    - can be assigned custom or predefine roles
+		  - identified by an email address
+		    - PROJECT_NUMBER-compute@developer.gserviceaccount.com
+		    - PROJECT_ID@appspot.gserviceaccount.com
+			- steps
+				1. create service account via console
+				2. generate and download cred file
+				3. set an env var to provide creds to your app
+					```sh
+						export GOOGLE_APPLICATION_CREDENTIALS=<path_to_file>
+					```
+				4. authenticate in your code with default creds (find example code for your language)
+					1. if you dont specify the credentials, the client library will look for credentials in the environment (step 3)
+					2. if the env isnt set, ADC will use a default service account that compute engine, container engine, app engine, and cloud functions provide (if your app runs those services)
+					3. if neither 1 or 2 are available, an error is trhown
+			- use cases:
+		    - control privileges used by resources for applications to perform actions on behalf of authenticated end users
+		    - authenticate one service to another
+				- can have up to 10 keys associated with them to faciliate key rotation (done daily by google)
+				- enable authentication and authorization: you can assign specific IAM roles to a service account
+    3. a google group e.g. test@googlegroups.com
+	    - named collection of google accounts & service accounts
+	    - apply an access policy to a group of users
+	    - cannot be used to establish identity
+    4. a G suite domain e.g. username@yourdomain.com
+	    - a virtual group of all the members in an organization
+	    - cannot be used to establish idenity
+		5. cloud identity domain
+			- a virtual group of all members in an organization
+			- does not provide access to g suite applications and features
+### IAM Roles: the ACCESS
+	- permissions: what operations are allowed on resources,
+		- cannot be assigned to users, you must assign permissions to roles, and roles to users
+		- usually correspond one-to-one with REST methods
+			- the caller of the method needs the associated permissions to call that method
+		- syntax: `SERVICE.RESOURCE.VERB`
+			- pubsub.subscripts.consume
+			- storage.objects.list
+  - role: a collection of permissions that can be granted to a user, group, or service account
+  - types of roles
+    - primitive role: apply across all GCP services in a project using the Cloud Console, API or gcloud CLI
+			- viewer: read only actions that preserve state
+			- editor: viewer + actions that modify state
+				- deploy apps, modify code, configure services\
+      - owner: editor permissions + manage project (and its resources) access control + setup billing
+				- project: invite, remove, delete,
+				- does not contain any permission for the organization resource
+      - billing admin: manage billing, add & remove admins
+    - predefined roles: IAM fine-grained permissions tailored for specific services
+	    - e.g. compute.instanceAdmin, storage.objectAdmin, logging.viewer
+    - custom roles: define a role with a specific set of permissions to help implement a principal of least for projects and organizations
+      - cant be used for folders
+### IAM Resources: the WHAT
+	- examples
+		- GCP projects
+		- compute engine instances
+		- cloud storage buckets
+		- pub/sub topics
+	- resources are organized hierarchically
+		- organization
+		- projects
+		- resources: each has exactly one parent
+	- policy: consists of a list of bindings that are attached to a resource and is used to enforce access control whenever that resource is accessed
+		- bindings: binds a list of members to a role
+		- syntax:
+			```js
+				{
+					"role": "roles/owner", // policy owners
+					"members": [
+						"user:blah@blah.com",
+						"group:admins@blah.com",
+						"domain:blah.com",
+						"serviceAccount:blah@appspot.gserviceaccount.com"
+					]
+				}
+			```
+	- API Methods
+	  - setIAMPolicy: set policies on resources
+	  - getIAMPolicy: get a policy that was previously set
+	  - testIamPermissions: test if the caller has the specified permissions for a resource
+## Security
+ - customer responsibility
+   - content
+   - access policies
+   - usage
+   - deployment
+   - web app security
+   - identity
+ - google responsibility
+   - operations
+   - access and auth
+   - network security
+   - os, data and content
+   - audit logging
+   - network
+   - storage and encryption
+   - hardware
+ - levels
+  - operational security: intrusion detection systems; techniques to reduce insider risk; employee U2F use;
+  - internet communication: Google Front End service; designed-in denial of service protection
+  - storage services: encryption at rest;
+  - user identity: centrial identity service with support for U2F;
+  - service deployment; encryption of inter-service communication;
+  - hardwaare infrastructure; hardware design and provenance; secure boot stack; premises security
+  - googles infrastructure provides cryptographic privacy and integrity for remote procedures called data-on-the-network, which is how google services communicate with each other
+    - automatically encrypts PC traffic in transit between data centers
+    - GFE: the google front end:
+
+# Core Products
+
+## Cloud Launcher
+  - tool for quickly deploying functional software packages to GCP
+    - marketplace containing prepackaged ready to deploy solutions
+    - some created by google (free), other by third party vendors (could cost)
+    -
+
+## Virtual Private Cloud
+  - generally the first step is to define a VPC for a project
+  - connects GCP rsources to each other and the internet
+  - VPC Peering: interconnect networks in GCP projects
+  - shared VPC:  share a network or individual subnets with other GCP projects
+  - Characteristics
+    - networks are global
+    - subnets are regional
+      - different zones can be part of the same subnet
+      - can dynamically increase the size of a subnet by expanding the ranges of IPs allocated to it
+    - routing tables: used to forward traffic from one instance to another within the same network without requiring an external IP address
+    - firewall: are globally distributed, you can restrict access to instances both incoming and outging traffic
+      - metadata tags on compute engines
+### interconnect with networks external to GCP
+  - VPN: secure multi-Gbps connection over VPN tunnels
+    - use cloud router to make it dynamic
+  - direct peering: private connection between you and google for hybrid cloud workloads
+  - carrier peering: connection through larget partner network of service providers
+  - dediated interconnect: connect N X 10G transpart circuits for private cloud traffic to google cloud at google POPs
+    - when you need a service level agreement
+    - requires you to use the providers network typology
+### cloud load balancing: load balance inbound traffic
+  1.  http and https inbound traffic
+    - global http(s): layer 7 load balanced based on load
+      - route different urls to different back ends
+      - put your application behind a single & global anycast IP to the entire internet
+      - load balances traffic among all your backend instances
+      - integrated with GCP CDN
+  2. non http/https inbound traffic
+    - global ssl proxy: layer 4 load balancing of no https ssl traffic based on load
+      - supported on specific port numbers
+    - global tcp proxy: layer 4 load balancing of non ssl tcp traffic
+      - supported on specific port numbers
+  3. for UDP traffic and TCP(non ssl) traffic
+    - regional: load balancing of tcp (non ssl), udp on any port numbers
+      - supported on any port number
+  4. for internal tiers of multi-tier applications
+    - regional internal: load balancing of traffic inside a vpc
+      - use for the internal tiers of multi tier applications
+    - accepts traffic on a GCP internal IP address and load balances it across compute engine VMs
+### Cloud DNS:
+  - create managed zones, then add, edit, delete DNS records
+  - programmatically manage zones and records using restful APIs or CLI or console
+### Cloud CDN:
+  - distributed edge caches to cache content close to end users
+
+## compute infrastructure for applications
+  - cloud architectures: from managed infrastructure to dynamic infrastructure
+    1. IaaS: infrastructure as a service
+      - compute engine: general computing workloads
+        - deploy your app in virtual machines
+    2. Hybrid: incorporates IaaS and PaaS
+      - kubernetes engine: container based workloads
+        - deployr app in containers
+    3. PaaS: platform as a service: google provides the infrastructure for your app so you can focus on your code
+      - app engine: focus on code and with less responsibility for managing infrastructure/provisioning
+        - flex: use any runtime you want with full control over the environment
+          - web and mobile applications
+          - container based workloads
+        - standard: use one of the supported runtimes with finer grain scaling
+          - web and mobile applications
+    4. Serverless: no responsibility for managing infrastructure
+      - BaaS: Backend as a service
+        - database services
+        - authentication services
+      - FaaS: functions as a service
+        - cloud functions: you supply chunks of code for business logic triggered by events
+          -
+### Compute Engine
+  - run a VM
+    - OS
+    - memory
+    - # of virtual CPUs
+    - persistant storage
+      - standard
+      - ssd
+      - attach a local SSD that doesnt last when the VM is terminated
+  - types of VMs
+    - preemptible VM: give compute engine permission to terminate it if its resources are needed elseware
+    -
+### kubernetes
+  - Container Based virtualization is different than hypervisor (regular VM) based virtualization
+    - container: app -> lib -> container runtime -> host OS + kernel -> hardware
+      - give processes their own namespace
+      - each container does not have
+      - consistenc yacross dev, testing, prod env
+      - loose coupling between app and operating system layers
+      - simplified migration between on premis and cloud envs
+      -
+    - hypervisor: app -> lib -> guest OS -> hypervisor -> hardwar
+  - kubernetes: orchestration layer for containers
+    - uses the docker container
+    - POD: a group of containers that can be deployed together
+      - you can perform rolling updates, which incrementally replaces containers in pods with new ones without downtime
+    - cluster: a group of machines where kubernetes can schedule containers
+      - node: a machine
+      -
+  - kubernetes engine: managed service, a hybrid IaaS and PaaS (sits in the middle)
+    - build manage and delete a  cluster with arbitrary requirements
+    - give kubernetes a description of the application config, and kubernetes manages
+  - google cloud container builder: create docker container images from app code in google cloud storage
+  - google container registry: docker image storage for a specific project
+### app engine
+  - cost
+    - standard environment: pay per instance class after daily free use with automatic shutdown
+    - flexible environment: pay for resource allocation per hour, no automatic shutdown
+  - manages the hardware and networking infrastructure required to run your app
+  - you give app engine your code, and it handles the rest
+    - nosql dbs
+    - in-memory caching
+    - load balancing
+    - health checks
+    - logging
+    - user authentication
+    - auto scaling based on traffic
+  - characteristics
+    - you pay for resources you use
+    - for apps where the workload is highly variable  or unpredictable like web apps and mobile backends
+  - standard environment
+    - no ssh
+    - instance starts up in milliseconds
+    - network access only via app engine services
+    - simple deployment experience
+    - fine grained auto scale
+    - free daily usage quota for some services
+      - low utilization apps may run at no charge
+      - runtime: the executable environment to run your application
+        - python
+        - java
+        - php
+        - GO
+    - sdks
+      - multiple SDK kits in various languages
+      - simple commands for deployment
+    - sandbox
+      - your code must run in a sandbox
+      - independent of hte hardware, operating system, or phsyical locatino of the server your app is running on
+      - constraints
+        - app cant write to the local file system
+          - must use a db service
+        - all requests have a 60 second timeout
+        - you cant install arbitrary third party software
+    - workflow
+      1. dev and test locally
+      2. use SDK to deploy to app engine
+      3. app engine automatically scales and reliable serves the application
+        - app engine can access a variaty of services using dedicated apis
+          - nosql datastore
+          - caching via memcache
+          - searching
+          - logging
+          - task queues
+          - scheduled tasks
+          -
+  - flexible environment
+    - lets you specify the container your app engine runs in
+      - no sandbox model like standard environment
+      - docker containers run in compute engine machine VMs
+    - build and deploy apps with a click
+    - can access app engine resources
+    - instances startup in minutes
+    - can turn on SSH but its off by default
+    - can write to local disk for scratch space
+    - can make calls to network without going through app engine
+    - supports any language
+    - use case
+      - web and mobile applications
+      - container based workloads
+      -
+  - notes
+    - app engine has a development environment
+      - activate cloud shell
+      - git clone git clone https://github.com/GoogleCloudPlatform/appengine-guestbook-python
+      - click web preview in cloud shell port `:8080`
+  - YAML: templating language used by many google cloud services
+  - disabling deployed applications
+    - App Engine offers no option to undeploy an application. After an application is deployed, it remains deployed, although you could instead replace the application with a simple page that says something like "not in service."
+      - However, you can disable the application, which causes it to no longer be accessible to users.
+      - `home -> app engine -> settings -> disable application`
+
+## API management tools
+  - have a well defined interface that abstracts away needless details
+  - documented interface
+  - the underlying implementation can change as long as the interface doesnt
+  - when you have to change an API
+    - always version your API
+    - consumers should be able to specify the API version they want to use
+### cloud endpoints
+  - develop, deploy, protect and monitor APIs based ont he open APIs specification or GRPC
+  - distributed api management through api console
+  - expose the api using a restful interface
+  - control access and validate calls with json web tokens and google api keys
+  - identify web, mobile users with Auth0 and firebase
+  - generate client libraries
+  - monitor and log use
+  - deploys a proxy infront of your application
+  - support
+    - app engine flexible environment: support android clients
+    - kubernetes engine: supports ios clients
+    - compute engine: supports javascript clients
+    -
+### apigee edge
+  - design, secure, analyze and scale your APIs for legacy backends
+  - platform for making APIs available to your customers and partners
+  - containers analytics, monetization, and a developer portal
+  - use cases
+    - replaing a legacy application
+      - use apigee to standup microservices that replace the legacy applications services one by one
+
+## Storage
+  - comparisons
+    - cloud storage
+      - binary/object store
+      - large or rarely accessed unstructured data
+      - read write latency: medium
+      - typical size: any
+      - storage type: object
+      - NOT FOR: structured data, building fast apps
+    - datastore:
+      - scalable store for structured data
+      - GAE apps,
+      - structured pure-serve use cases
+      - read wriet latency: medium
+      - typical size: less than 200 tb
+      - storage type: document
+      - NOT FOR: relational or analytic data
+    - Bigtable:
+      - high volume, low latency database
+      - flat, heavy read/write, analytic data
+      - read wriet latency: low
+      - typical size: 2tb-10tb
+      - storage type: key value
+      - NOT FOR: high structure or transactional data
+    - CloudSQL
+      - well-understored VM Based RDBMS
+      - web frameworks
+      - existing applications
+      - read write latency: low
+      - typical size: less than 10 tb
+      - storage type: relational
+      - NOT FOR: scaling, analytics, heavy writes
+    - Spanner:
+      - relational DB service
+      - low latency, tansactional systems
+      - read write latency: low
+      - typical size: any
+      - storage type: relational
+      - NOT FOR: analytic data
+    - Bigquery
+      - autoscaling analytic data warehouse
+      - interactive analysis of static datsets
+      - read write latency: high
+      - typical size: any
+      - storage type: columnar
+      - NOT FOR: building fast apps
+  - choosing a storage option
+    - based on application type
+    - based on workload
+  - object storage: storage of BYTES that are addressed with a unique key, e.g. URLs
+    -
+  - file storage: hierarchy of folders
+  - block storage: OS manages data as chunks of disk
+  - cost
+    - cost per GB of data stored per month
+    - egress & data transfer harges
+    - nearline + coldline storage has access fee per GB of data read
+  - uploading data
+    - storage transfer service: schedule and manage batch transfers from other cloud providers, other regions, http endpoints
+    - transfer appliance: hardware google sends you to load up data, and ship it back to google
+      - up to a petabyte of data
+    - online transfer: using GSUTIL or google console drag n drop
+  - syncing with other GCP services
+    - bigquery: import and export tables
+    - app engine: object storage, logs, and datastore backups
+    - compute engine: startup scripts, general object storage
+    - cloud sql: import and export tables
+### Caching
+  - redis labs
+  - memcached cloud
+### Cloud Storage
+	- for file (object) storage
+  - unified object storage allowing you to serve, analyze and archive data/objects/blobs
+  - built for availability, durability, scalability, and consistency
+  - full managed scalable service
+    - no need to provision capacity ahead of time
+    - data encrypt at rest and in transit
+  - online and offline import services
+  - buckets and objects
+	  - strongly consistent operations
+		  - read-after-write
+		  - read-after-metadata-update
+		  - read-after-delete
+		  - bucket listing
+		  - object listing
+		  - granting access to resources
+	  - eventually consistent operations
+		  - revoking access from objects
+			  - can take up to a minute for the relocation has taken place
+		  - accessing publicly readable cached objects
+			  - if the object is in the cache when it is updated/deleted
+				  - doesnt take effect until its cache lifetime has expired
+	  - Buckets: basic cloud storage container
+	  - objects: individual pieces of data
+		  - petabytes of data, maximum unit size of 5 terabytes per object
+	    - has metadata but is treated as just bytes with no structure
+	      - the only key is the object name
+	    - versioning:
+	      - history of all changes to an object
+	      - can list objects, restore objects to an older state, or permanently delete versions
+	    - accessed via HTTP
+	      - includes ranged gets to retrieve portions of data
+	- cloud storage API access
+		- always use truncated exponential backoff for all requests to cloud storage that return HTTP 5xx and 429 error codes
+			- including uploads & downloads of data/metadata
+			- the cloud platform console sends requests on your behalf and will handle any necessary backoff
+		- accessible through 3 endpoints/URIs
+			- all support secure sockets layer, SSL encryption for HTTP/HTTPS
+				- XML:
+					- storage.googleapies.com/<bucket>/<object>
+					- <bucket>.storage.googleapis.com/<object>
+				- JSON
+					- www.googleapis.com/download/storage/v1/b/<bucket>/o/<object-encoded-as-url-path-segment>?alt=media
+		- CNAME redirects: use a URI from your own domain to access a resource bucket & bucket without revealing the google cloud storage uri
+			- HTTP only
+			- you create a CNAME for the bucket/object and map it to the cloud storage URI
+			- use c.storage.googleapis.com portion of your CNAME record
+				- <bucket>.<domain>.com/<object>
+		- authenticated browser downloads
+			- if you are signed into your gaccount and granted read permission using cookie-based authnetications you can download via your browser
+			- HTTPS only
+			- https://storage.cloud.google.com/<bucket>/<object>
+		- content-based load balancing: route requests for static content to a storage bucket
+			- requests to URI-PATH that begin with */static*
+				- all other requests sent to VM instances
+			- create a backend bucket for your cloud storage bucket and modify the *web-map* uri-map and fetch resources using the below http/https URIs
+			- http://[IP_ADDRESS]/static/[OBJECT_NAME]
+			- https://[IP_ADDRESS]/static/[OBJECT_NAME]
+  - NOT FOR
+    - block storage
+  - Permissions
+    - IAM roles: project -> bucket -> object
+    - ACL: access control Lists
+      - scope: WHO can perform specific actions
+      - permission: WHAT can they do
+  - Storage classes
+    - all have consistent APIs with millisecond access
+    - cost: high to low
+      - storage
+        - multi-regional
+        - regional
+        - nearline
+        - coldline
+      - retrieval
+        - coldline
+        - nearline
+        - regional
+        - multi-regional
+    - multi-regional:
+	    - use case
+	      - content storage and delivery
+	      - most frequently accessed data
+	      - serving website content
+	      - streaming videos
+	      - mobile apps
+      - SLA: 99.95% availability
+      - stored in broad geographical locations, e.g. US or ASIA
+        - cloud storage will store your data in at least 2 regions within the geographical location
+    - regional:
+	    - use case
+		    - data analytics
+	      - in-region analytics, transcoding
+	      - accessed frequently within a region, e.g. data closer to compute engine or kubernetes clusters
+      - 99.90%
+      - stored in a specific region
+    - nearline storage:
+	    - use case
+		    - backups
+	      - long-tail content multi-media content
+	      - low cost, highly durable, for infrequently accessed data
+	      - for read/writes for once a month or less
+      - SLA: 99% availability
+      - 30-day minimum storage duration
+    - cold line storage:
+	    - use case
+	      - archiving, disaster recovery, backups
+	      - low cost, highly durable, for data achiving, online backup, and disaster recovery
+	      - accessed at most once per year
+      - SLA: 99% availability
+      - 90 day minimum storage duration, cost per data access,
+	- best practices
+		- naming bucket names are public and must be globally unique
+			- DO:
+				- use globally unique bucket names
+				- use GUIDs when a lot of buckets are required
+				- conform to standard DNS naming conventions
+					- bucket names can appear in a DNS record as part of a CNAME redirect
+			- DONT
+				- use personally identifiable information (PII)
+				- use user IDs, emails, project names/IDs
+				- use IP address notation
+				- use the google prefix/include any spelling similar to google
+					- e.g. goog, gogle, etc
+		- cloud storage traffic:
+			- consider :
+				- operations per second
+				- bandwidth
+				- cache control
+					- if specified in object metadata:
+						- read latency will be lowered on hot/frequently accessed objects
+			- design to minimize spikes in traffic
+			- spread updates through the day
+			- always use exponential backoff when retrying failed requests
+			- requests
+				- > 1000 write requests per second or 500 read requests per second
+					- start with a request rate below/near threshold
+					- double request rate no faster than every 20 minutes
+				- < than the above
+					- no ramp up is needed
+		- location and availability
+			- store data in a region closest to your application users
+			- for analytics workloads, store data in regional buckets to reduce network charges and better performance (compared to multi-regional)
+			- consider compliance requirements when choosing data location
+			- storage optoins
+		- bucket security
+			- access control
+				- IAM: identity and access management permissions
+					- access to buckets
+					- bulk access to bucket's objects
+				- ACLs: access control lists
+					- only when you need fine grained control
+					- read/write access to users for individual buckets/objects
+					- access when fine-grained control over individual objects is required
+				- Signed URLs: query string authentication
+					- provide time-limited read/write access to an object through a generated URL
+					- can be created using gsutil/programmatically
+				- Signed Policy Documents
+					- specify what can be uploaded toa  bucket
+					- control size, content type, and other upload characteristics
+					- only work with forum posts
+					- for website owners to allow visitors to uplaod files to cloud storage
+				- Firebase security rules
+					- granular, attribute-based access control to mobile & weeb apps using firebase SDKs for cloud storage
+			- use TLS (HTTPS) to transport data
+			- use an https library that validates server certificates
+			- revoke authnetication credentials to applications that no longer need access to data
+			- securely store credentials
+			- use groups isntead of large numbers of users
+			- bucket and object ACLs are independent of each other
+				- make sure default bucket permissions are valid before uploading objects
+				- a user denied to a bucket can still access objects inside the bucket if they have permissions
+			- avoid making buckets publicly readable / writable
+		- XMLHttpRequests
+			- when using XHR callbacks for progress updates
+				- do not close/reopen connection
+				- it creaes a bad positive feedback loop during times of congestion
+					- when the network congested, XHR callbacks get backlog behind the acnowledgement activity from the upload stream
+		- upload traffic
+			- make the request to create the resumable upload URL from the same region as the bucket and upload location
+				- colocate compute engine instances and cloud storage buckets
+				- use a geo-ip service to pick the compute engine region to which you route customer request
+					- helps keep traffic localized to a geo region
+			- set reasonable long timeouts for upload traffic
+			- avoid breaking tansfers into smaller chunks
+			- avoid uploading content that has both:
+				- content-encoding gzip
+				- content-type that is compressed
+		- gsutil for cloud storage
+			- gsutil -D will include oauth2 refresh and access tokens in the output
+				- make sure to redact this information
+			- gsutil --trace-token will include oauth2 tokens and the contents of any files accessed during the trace
+			- .boto config file
+				- customer-supplied encryption key information
+				- proxy configuration information
+					- host and port number for proxy
+					- may include user/pass info
+			- in a product environment, use a service account for gsutil
+				- never use user creds
+		- validate your data
+			- corruption during upload/download
+				- noisy network links
+				- memory errors
+					- client computer
+					- server computers
+					- routers along the path
+				- software bugs
+			- validate data during transport
+				- CRC32c Hash
+					- available for all cloud storage objects
+					- gsutil automatically performs integrity checks on all uploads and downloads
+				- MD5 Hash
+					- supported for non-composite objects
+					- cannot be used for partial downloads caused by performing a range get
+				- specify a specific bucket for scripts hosted in cloud storage accessing static resources in websites external to cloud storage
+	- Use cases
+		- use storage classes for object life cycle management
+			- store and archive data based on frequency of access
+	  - storing/retrieving large # of files, or multi-terabyte file exports and data dumps for data analytics pipelines
+		  - images, videos,
+			- objects and blobs,
+			- any unstructured data,
+			- static website hosting (html css js),
+				- automatically authenticates users
+				- supports cross-origin resource sharing
+				- no need for compute engine VMs
+				- automatic scaling
+			- backups
+	    - includes end-user uploaded content
+	  - for structured/unstructured binary and immutable large object storage
+	    - each object is given a URL
+	    - objects are organized in buckets, in geographic locations
+	  - immutable blobs larger than 10 megabytes e.g. images/movies
+	  - combine up to 32 objects into a new single object without transferring additional object data
+		  - great for recovering for network failures during uploads
+	  - parallel uploads: divide an object into multiple pieces
+		  - great for speeding up uploads
+		  - upload the pieces to a temporary location simultaneously
+			- compose the original object from these temp pieces
+			- delete the temporary pieces
+		- object composition: uploading an object in parallel
+			- dividing your data and uploading each chunk into a distinct object
+				- compose your final object
+				- deleting temporary objects
+			-
+
+### Cloud Datastore
+	- for structured/semi-structured data
+  - fully managed NoSQL horizontally scalable document store
+	  - built on top of BigTable
+  - designed to automatically scale to very large datasets, sharding, and replication
+    - terabytes of capacity
+    - maximum unit size of one megabyte per entity
+    - offers transactions that affet multiple db rows
+    - can scale from 0 to millions of requests per second without any user management
+	    - write scale: automatically distributing data
+	    - read scale: only supports queries whose performance scales with the size of the result set
+			  - does not support
+				  - join operations
+				  - inequality filtering on multiple properties
+				  - filtering on data based on results of subqueries
+	- concepts
+		- difference with relational DBs
+			- object: KIND vs TABLE
+			- one object: ENTITY vs ROW
+			- object datum: PROPERTY vs FIELD
+			- object unique ID: KEY vs PRIMARY KEY
+		- files
+			- *index.yaml*: the config file for datastore
+		- indexes
+			- only for properties needed for a query
+				- uneccesary indexes result in increased latency and storage costs
+			- do not index properties with monotonicallyincreasing values, e.g. date/timestamps
+			- types
+				- built-in:
+					- automaticlly pre-define an index for each property of an entity kind
+					- are suitable for simple types of queries
+				- composite indexes:
+					- index multiple property values for indexed entity
+					- support for complex queries
+					- defined in an index configuration file
+					- are viewable not editable in the web console
+		- entities: data objects
+			- properties: entities are made up of properties
+			- key: uniquely identifies an entity
+				- for numeric keys:
+					- dont use a negative number
+					- do not use 0
+					- sequential numeric IDs creates bigtable hot spots
+						- impacts cloud datastore latency
+						- get a block of IDs using the allocateIds() method to assign your own numeric IDs
+							- generates well distributed sequences of numeric IDs
+					- avoid monotonically increasing values, especiialy for apps with large traffic
+						- this creates a bigtable hotspot
+							- writes to new entities are always occuring at the end of the row key space
+								- prevents bigtable from effectively distributing writes
+			- namespace:
+			- kind: the entity type, e.g. Customer
+			- identifier: string/numeric id
+			- ancestor ID: optional
+				- root entity: an entity without an ancestor (parent)
+				- ancestor path: the sequence of entities from a root entity to child entity forms the ancestor path
+					- entity groups: the group of entities connected by the ancestor path
+						- queries of entity groups give you a consistent view of your data
+						- all related entities can be updated in a single transaction
+			- transactions: operations on one/more entities
+				- are atomic
+	- best practices
+		- use UTF-8 characters for
+			- namespace names
+			- kind names
+			- property names
+			- key names
+		- avoid forward slash */*
+			- in kind names
+			- in custom key names
+		- avoid storing sensitive information in a cloud project ID
+		- read/writes/deletes
+			- traffic: ramp up gradually with the 555 rule
+				- 500 writes per second and increase by 50% every 5 minutes
+				- distribute writes across a key range
+			- batch operations: use for read, writes and deletes
+				- allow you to perform multiple operations with the same overhead as a single operation
+			- transactions: set of datastore operations on one/more entities
+				- should always be idempotent:
+					- if you repeat a transaction, the end result will be the same
+					- no side effects if it is called more than once with the same input parameters
+				- are atomic: either all are applied or none are applied
+				- max time of 60 seconds
+					- but transactions over 30 seconds will be terminated if idle for 10 seconds/more
+				- rollback failed transactions to minimize retry latency for concurrent requests for the same resource in a transaction
+					- dont retry rollbacks that throw an exception
+				- can fail when
+					- too many concurrent modifications attempted on the same entity group
+					- exceed resource limits
+					- datastore has internal error
+					- datastore operations in a transaction operate on more than 25 entity groups
+			- requests
+				- always use asynchronous calls to minimize latency impact
+			- queries
+				- types:
+					- keys only:
+						- `select key from task`
+						- retrieve only the key
+						- return results at lower latency and cost
+					- projection:
+						- `select one, two from task`
+						- retrieve specific properties from an entity
+						- retrieve only the properties included in the query filter
+						- return results at lower latency and cost
+					- ancestor:
+						- `select one, two from task where has ancestor key(tasklist, 'defualt')`
+						- return strongly consistent results
+						- requires your data to be structured for strong consistency
+					- entity:
+						- `select * from task where done = true`
+						- retrieve an entity kind, zero or more filters, and zero or more sort orders
+				- latency: use cursors > offsets
+					- integer offsets:
+						- doesnt return skipped entities to your app but it still retrieves the entities internally
+							- cause your app to be billed for read operations
+					- query cursors:
+						- retrieve a query's results in convenient batches
+						- don't incur the overhead of a  query offset
+			- maximum transaction throughput is limited to 1 write per second per entity group
+				- split frequently updated entities across multiple kinds
+				- if you update an entity group too rapidly
+					- higher latency
+					- timeouts
+					- and other contention errors
+			- avoid high read/writes to keys that are lexicographically close
+			- gradually ramp up traffic to new cloud datastore kinds/portions of the keyspace
+				- gives bigtable sufficient time to shard (split) tables as the traffic grows
+			- avoid deleting large numbers of cloud datastore entities across a small range of keys
+				- compaction: rewriting tables to remove deleted entries and reorganizing data so that reads & writes are more efficient
+			- for hot cloud datastore keys
+				- use sharding to write to a portion of the key range at a higher rate
+					- sharding: splits a single entity into many,
+						- e.g. Customer KIND may have 100 entities, the first 50 stored in one key range, the next 50 stored in another
+						- you can shard manually if the number of your application writes exceeds the bigtable limits
+						- shard counters to avoid contention with high writes
+							- build a sharded counter: break the counter up into N different counters
+								- pick a shard at random to increment the counter
+								- increasing the number of shards will increase the throughput you will have for increments on your counter
+				- use replication to read a portion of the key range at a higher rate than big table permits
+					- store N copies of the same entity, allowing an N times higher rate of reads
+						- e.g. a static config file that gets loaded per request, when loading your app will pick a random number between 0 and N and
+		- handling errors
+			- 4xx or 5xx response codes
+			- do not retry without fixing the problem
+				- ALREADY_EXISTS
+				- FAILED_PRECONDITION
+				- INVALID_ARGUMENT
+				- NOT_FOUND
+				- PERMISSION_DENIED
+				- RESOURCE_EXHAUSTED
+				- UNAUTHENTICATED
+			- retry using exponential backoff
+				- DEADLINE_EXCEEDED
+				- UNAVAILABLE
+			- do not retry this request more than once
+				- INTERNAL
+			- for a non transactional commit: retry the request/structure your enitties to reduce contention
+				- ABORTED
+			- for requests that are part of a transactional commit: retry th eentire transaction/structure your entities to reduce contention
+				- ABORTED
+  - use cases
+    - for durable key-value data
+    - best choice for high value application data
+      - user profiles, shopping carts, orders, etc.
+    - store structured / semi-structured or hierarchical data
+    - managing multiple indexes over each entity
+    - support for crossroad transactions
+    - integration point for app engine and compute engine with cloud
+
+
+### Big Table
+	- high volume, low latency database
+  - big data sparsely populated nosql wide column
+    - petabytes of capacity
+    - maximum unit size of 10 megabytes per call and 100 megabytes per row
+  - same open soruce API as HBase (the native DB for hadoop)
+  - can increase your machine count without any downtime
+  - handles upgrades and restarts transparently
+  - data is encrypted both in flight and at rest
+  - built for fast key-value lookup and scanning over a defined key range
+    - similar to a spreadsheet that gives you access to anyset of columns from continuous rows by searching only the value in the first column, the key
+    - updates to individual rows are atomic
+  - concepts
+	  - scaling:
+		  - scales by sharding rows onto separate tables where each row is lexicographically ordered by key
+  - use cases
+    - operational/analytical applications
+      - user analytics or, financial data analysis, internet of things
+      - for analytical data with heavy read/write events like adtech/financial or iot data
+    - storing large amounts of single-keyed data (e.g. a hash table)
+    - mapReduce operations
+  - NOT FOR
+    - if you need multi-row transactions
+
+### Cloud SQL and Google Cloud Spanner
+  - spanner uses real primary keys and interleaved child records instead of forein keys
+    - Cloud SQL has foreign keys
+  - offers mysql and postgresql dbs as a service
+  - characteristics
+    - transactions: a set of database changes as all or nothing, either they all get made or none get made
+    - provide several replica services like read, fallover, and external replicas
+    - can replicate data between zones with automatic failover
+    - can scale both vertically by changing the machine type
+    - can scale horizontally via read replicas
+    - include network firewalls, and customer data is encrypted when on googles internal networks
+    - supports sql workbench, toad, etc.
+#### Cloud SQL
+	- for mysql and postgresql
+  - managed service providing replication, failover, backups
+    - can replicate a master instance to one/more read-replicas
+    - failover to make your data highly available
+    - enable automated backup that contains data you need to protect from loss/damage
+  - terabytes of capacity
+  - cloud SQL Proxy
+    - proxy allows for secure access to your cloud SQL second gen instances without whitelisting or configure SSL
+      - uses cloud sql API to communicate with GCP
+        - must provide a valid user account
+    - create a proxy (client) that runs in your local environment
+    - your app communicates with the proxy using a standard db protocol used by your database
+    - the proxy uses a secure tunnel to communicate with its companion process running on the cloud server
+  - use cases
+    - best for web frameworks and existing applications
+    - storing user creds and customer orders
+    - structured data
+    - OLTP (online transaction processing) workloads
+    - applications using mysql/pgs
+#### Cloud Spanner
+  - fully mannaged relational db service
+    - strong consistency
+    - horizontal scalability
+    - automatic synchronous replication for high avialiabilty
+    - multi-region replication
+    - transactional consistency at a global scale, schemas, SQL,
+  - petabytes of dapacity
+    - divides data among servers by key ranges
+  - considerations
+    - avoid monotonically increasing/decreasing keys
+      - instead hash the key and spread the rights among n-shards
+    - make sure writes are well distributed and load the data using multiple workers
+    - use interleaved tables to establish hierarchy
+    - don't create non-interleaved indexes on columns with monotonically increasing or decreasing keys
+      - this causes all your inserts to be directed to a single instance
+      - always created indexes after you bulk upload your data
+  - use cases
+    - mission critical OLTP (online transaction processing) applications
+    - if you have outgrown any relational dbs
+    - are sharding your databases for throughput high performance
+    - need transactional consistency
+    - for large scale applications that are larger than two terabytes
+    - full sql support for  system
+    - whenever high I/O global consistency is required
+### Cloud dataproc
+  - fast way to run data mining and analysis in datasets of known size
+  - you have to request a Hadoop cluster
+    - built in 90 seconds
+    - uses compute engine virtual machines (you specify the type and number of VMs)
+    - can scale up and down
+    - can customize the default configuration
+    - monitor using stackdriver
+  - cost
+    - pay for what you use per hour for the lifetime of the cluster
+    - all cloud dataproc clusters are built in one second clock time increments: and you pay for the time it takes to build (1 minute minimum)
+      - save money on the cost of the cluster by configuring the build process to use preemptible compute engine instances for your batch processing
+        - requires that your jobs can be restarted cleanly if they're terminated
+        - around 80% cheaper
+  - managed services
+    - apache hadoop: open source framework for big data based on the mapreduce programming model
+    - mapreduce: one function 'the map' runs in parallel with a massive dataset to produce intermediate results, another function the 'reduce' builds a final result set based on all of the intermediate results
+    - spark & spark sql:
+      - do data mining
+      - MLliB: machine learning libraries to run classification algorithms to discover patterns through machine learning
+    - pig,
+    - hive
+  - other use cases (extension of use cases for the managed services above)
+    - when you have a dataset of known size
+      - NOT when your data shows up in real time
+    - when you want to manage your dataset yourself
+### cloud dataflow
+  - unified programming model and managed service to build data pipelines for batch and streaming/continous data
+    - transform-based programming model
+  - develop and execute various data processing patterns
+  - ETL (extract, transform, and load)
+  - batch computation
+  - continuous computation
+  - full automates the management of whatever processing resources are required
+    - no need to spin up a cluster or size instances
+    - takes responsibility for operational tasks like resource management and performance optimization
+  - use cases
+    - when you have real time data
+    - your data has an unpredictable size or rate
+  - example
+    - each step below is elastically scaled, i.e. the service provides all resources on demand
+      - has automated and optimized worked partitioning built in which can dynamically rebalance lagging work
+      - no need to manage/scale
+    1. dataflow pipeline reads data from a source (e.g. a BigQuery table)
+    2. transforms/processes the data in a variety of ways
+      - map operations
+      - reduce operations
+    3. writes its output to a sink (e.g. cloud storage)
+  - use cases
+    - ETL: extract/transform/load pipelines to move, filter, enrich and shape data
+    - data analysis: batch or continuous computation using streaming
+      - fraud detection
+      - iot analytics
+      - health care
+      - logistics
+      - click stream
+      - point of sale
+      - segmentation analysis
+    - orchestration: create pipelines that coordinate internal/external services
+    - real time applications
+      - personalizing user expeeriences
+### BigQuery
+  - fuly managed data warehouse for analytics
+  - can scan terabytes in seconds and petabytes in minutes
+  - provides near real-time interactive (adhoc) analysis (SQL 2011) of massive datasets (hundreds of TBs)
+  - stream data at 100k rows per second
+  - no cluster maintenance
+  - SLA: 99.9% availibility
+  - Data stored in is highly durable. Google stores your data in a replicated manner by default and at no additional charge for replicas.
+  - data can be kept in any region
+    - compute and storage are separated with a terabit network in between
+  - getting data into bigquery
+    - stream it at 100k rows per second
+    - cloud storage
+    - cloud datastore
+  - datasets can be shared with people in different projects
+  - cost
+    - free monthly quotas
+    - separate costs for storage and computation (queries)
+      - storage:
+        - automatic discount for long-term data storage automatically
+        - sharing does NOT impact your cost or performance
+          - but those users will be charged for running queries
+      - queries: incur charges based on the amount of data they process:
+        - when you submit a query, you pay for the compute nodes only for the duration of that query.
+        - don't have to pay to keep a compute cluster up and running.
+  - terms
+    - Datasets: a grouping mechanism that holds zero or more tables.
+      - the lowest level unit of access control
+      - owned by GCP projects.
+      - Each dataset can be shared with individual users.
+    - Tables: a row-column structure that contains actual data.
+      - Each table has a schema that describes strongly typed columns of values.
+      - Each table belongs to a dataset.
+  - use cases
+	  - execute adhoc queries on adhoc datasets without predefined indexes
+    - big data analystics warehousing, analytics, and processing
+    - OLAP (online analytic processing) workloads
+    - big data exploration and processing
+    - reporting via BI tools
+    - read and write data via cloud dataflow, hadoop, or spark
+    - run microsoft SQL
+### Microsoft SQL Server
+  - you can run SQL Server images on Google Compute Engine
+    - can be preloaded with SQL Server
+  - supported versions
+    - SQL Server Standard, Web, and Enterprise
+  - NOT a managed service
+### Storage options for mobile
+  - Cloud storage for firebase
+    - overview
+      - stores user generated data and files to google cloud storage
+      - mobile and web access to google cloud storage
+      - serverless third0party authentication and authorization
+    - use cases
+      - images, pictures, and videos
+      - objects and  blobs
+      - unstructured data
+  - firebase realtime database
+    - store and sync data with Firebase's NoSQL Cloud database
+    - overview
+      - realtime
+      - NoSQL JSON database
+    - use cases
+      - offline responsiveness
+      - mobile and web applications
+      - real time
+  - Fire base Hosting
+    - fore static resources for web apps
+    -
+    - overview
+      - mobile and web content hosting
+      - production grade
+    - use cases
+      - automic release management
+      - URL rewriting
+      - JS App support
+      - firebase instegration
+      -
+### cloud pub/sub
+  - scalable and flexible enterprise messaging architecture for events in realtime and stream analytics
+    - on demand scalability beyond one million messages per second
+	  - application components make push/pull subscriptions to topics
+	  - provides at least once delivery
+	    - theres a small chance some messages might be delivered more than once
+  - concepts
+	  - publisher: application that publishes messages to a topic
+	  - subscriber: creates a subscription to a topic
+		  - execution environments
+			  - cloud functions: triggered whenever a new message is received
+				  - serverless approach
+			  - deploy a subscriber application on computer/container/ appengine flexible environment
+				  - multiple instances can spinup and process the messages in the topic and split the workload
+				  - instances can be auto shutdown when there are few messages
+					  - autoscale using stackdriver metrics
+	  - subscription: a subscriber push/pull messages from a topic
+		  - pull: subscribers calls pull method to request messages and receives a message and acknowledgement ID
+			  - default subscription
+				  - enables batch delivery and acknowledgements and parallel consumption
+			  - subscribers
+					- control rate of delivery and acknowledgement deadline
+					- multiple subscribers can pull from the same subscription
+				  - can be any app using gcloud client libraries
+				- message delivery: messages are delivered to each subscription at least once
+					- subscriber sends acknowledgement of receipt to the pub/sub service
+					- if subscriber doesnt acknowledge receipt of message before the acknowledgement deadline, it will receive the message again
+		  - push: subscribers dont need to implement gcloud client libraries to retrieve and process messages
+			  - message delivery
+				  - pubsub service sends each message as an http request to the subscriber at a preconfigured http endpoint
+					  - e.g. a load balancer / appengine standard app
+					  - the http endpoint acknowledges receipt by reutrning an http success status code
+						  - failure response indicates the message should be sent again
+						  - pubsub dynamically adjusts the rate of pushes based on the rate it receives success responses
+  - use cases
+	  - message ordering is NOT guaranteed
+	  - pull subscription
+		  - process large volumes of messages with high throughput
+	  - push subscription
+		  - whenever gcloud credentials/client libraries cant be configured
+		  - multiple topics must be processed by the same webhook
+		  - when an http endpoint will be envoked by pubsub and other apps
+			  - the subscriber should be able to process message payloads for each consumer of the endpoint
+	  - use topics as a buffer for incoming data
+		  - data generating services acts as publishers
+		  - downstream services acts as a subscriber and consume the data at a reasonable pace
+	  - real time gaming apps, click stream data injection/processing, device/sensor data procesing for healthcare/manufacturing, integrating data sources in financial apps
+	  - supports offline consumers
+	  - loosely coupled microservices
+    - decoupling applications/systems: allow each to send/receive messages permitting you to then scale them independently
+    - support multi-cloud/hybrid apps
+    - many-to-many asynchronous messaging
+    - when your data arrives at high and unpredictable rates
+    - analyzing streaming data (e.g. with cloud dataflow)
+    - push notifications for cloud-based applications
+    - connect applications across GCP (e.g. push/pull between compute and app engine)
+  - cost
+    -
+### cloud datalab
+  - managed service: interactive tool for large-scale data exploration, transformation, analysis and visualization
+    - built on `jupyter notebook` which lets you create web based notebooks containing python code that can be run interactively and view the results
+  - runs in a compute engine VM
+  - intersperse data anlsysis with comments about the results
+  - workflow
+    1. specify the VM type you want and what GCP region it should run in
+    2. when it launches, presents an interactive python environment thats ready to use
+      - orchestrates multiple GCP services automatially
+    3. visualize your data with google charts or map plot line
+      - many existing packages for statistics, machine learning, and others
+  - cost
+    - only pay for the resources you use
+    - no charge for datalab itself
+  - integrations
+    - BigQuery: analyze and deploy models
+    - compute engine
+    - cloud storage:
+  - languages
+    - python
+    - sql
+    - javascript
+
+## Machine Learning Platform
+  - Machine Learning: one branch in the field of AI
+    - a way of solving problems without explicity coding the solution
+    - human coders build systems that improve themselves over time through repeated exposure to sample (training) data
+  - examples
+    - youtube
+    - photos
+    - google mobile app
+    - google translate
+  - google provides a platform to generate your own training models or use pre-trained models built by google
+    - use cases:
+      - for structured data:
+        - classification and regression tasks
+          - customer churn analysis
+          - product diagnostics
+          - forecasting
+        - recommendation engine for content personalization and cross/up-sales
+        - anomaly detection
+          - fraud detection
+          - sensor diagnostics
+          - log metrics
+      - for unstructured data:
+        - image and video analytics
+          - identifying
+            - damanged shipment
+            - styles
+          - flagging content
+        - text analytics
+          - call centers
+          - blog analysis
+          - language identification
+          - topic classification
+          - sentiment analysis
+### TensorFlow
+  - open source tool to build and run neural network models
+  - platform support:
+    - CPU:
+    - GPU:
+    - mobile:
+    - server:
+    - cloud:
+  - Tensor processing units: hardware devices designed to accelerate machine learning workloads with TensorFlow
+    - available with compute engine VMs
+      - each cloud TPU provides up to 180 teraflops of performance
+  - cost:
+    - pay only for what you use
+### Cloud ML
+  - fully managed machine learning service
+    - works on any type of data of any size
+    - can take any tensorflow model and perform large-scale training on a managed cluster
+  - familiar notebook-based developer experience
+  - optimized for google infrastructure
+  - Integrations
+    - BigQuery
+    - cloud storage
+### pre-trained machine learning apis
+ 	- models built by google made available through APIs
+  - speech api: stream results in real time, detects 110 languages and variants
+    - accessible from any device
+    - highly accurate even in noisy environments
+    - use cases
+      - convert audio to text in real time
+      - enable command and control through voice
+  - vision API: analyze and identify objects, landmarks, text, and content with a simple API
+    - quickly classifies images into thousands of categories
+    - detects individual objects within images
+    - finds and reads printed words contained within images
+    - detect inapropriate content
+    - image sentiment analysis
+    - extract text
+  - translate api: language translation including detection
+    - translate arbitrary strings between thousands of language pairs
+    - programtically detect a documents language
+  - natural language api: offers a variety of natural language understanding technologies
+    - supported languages:
+      - english
+      - spanish
+      - japanese
+    - use cases
+      - syntax analysis: breaking down sentences into tokens: identifying the noun, verbs and other parts of speach to figure out the relationship between words and reveal the structure and meaning of text
+      - entity recognition: parse text and flag mentions of people, organizations, etc, to extract information about items mentioned in text documents, new articles and blog posts
+  - video intelligence API:
+    - annotate videos in a variety of formats
+    - use cases:
+      - detect scene changes
+      - flag inapropriate content
+      - identify key entities (nouns) within your video and when they occur
+        - make video content searchable and discoverable
+
+
+
+
+
+
+# OLD: LinkedIn (Lynda) Learning
+# basics
+  - GCP: google cloud Platform
+  - GCP Resources:
+    - physical assets: computers, hard disk drives
+    - virtual resources: VMs
+    - Google data centers:
+      - located in a global region: Central US, w. Europe, E. Asia
+      - each reach has multiple zones  which are isolated from each other
+        - asia-east1-a
+    - global resources:  can be accessed by any other resource, across regions and zones. These global resources include
+      - preconfigured disk images,
+      - disk snapshots, and
+      - networks
+    - regional resources: static external IP addresses.
+      - , you wouldn't want to attach a disk in one region to a computer in a different region because the latency you'd introduce would make for very poor performance. Thankfully, GCP won't let you do that; disks can only be attached to computers in the same zone.
+    - zonal resources: VM instances, their types and disks
+  - GCP Projects: Any GCP resources that you allocate and use must belong to a project. You can think of a project as the organizing entity for what you're building
+    - project is made up of the settings, permissions, and other metadata that describe your applications
+      - A project name, which you provide.
+      - A project ID, which you can provide or GCP can provide for you.
+      - A project number, which GCP provides.
+    - The resources that each project contains remain separate across project boundaries; you can only interconnect them through an external network connection.
+  - Services
+    -
+# services
+  - GCP gives you three basic ways to interact with the services and resources.
+      - GUI
+    - GCP console
+    - CLI
+      - Google cloud SDK provides gcloud cl tool
+      - cloud shell: browser-based interactive shell environment
+    - client libraries
+      -
+## Compute: virtual machines
+  - Compute Engine: Virtual Machines
+  - App Engine: PaaS for apps and backends
+  - Kubernetes engine: containers
+  - cloud functions: event driven serverless compute platform
+  - Containers & Container Management
+  - Functions and Lambdas (serverless)
+  -
+## storage: files and databases
+  - Storing
+    - cloud storage for firebase hot files: frequently accessed
+    - cloud filestore: cold files: archival
+    - Persistent Disk: block storage for VMs: (also a type of hot file)
+  - Data Services
+    - NoSQL: highly available and eventually consistent
+      - cloud bigtable: wide-column db service
+      - cloud datastore: nosql document db service
+    - RDBMS:
+      - Cloud SQL: mysql + postgres
+      - cloud spanner:
+    - Hadoop & Spark
+## Big Data
+  - data pipelines: ability to string together different data services as you process data across different workloads
+  - data warehouses: very large data storage for read only / infrequently updated enterprise reporting
+  - data science notebooks:
+    - jupiter notebooks, interactive webpages that allow computation & analysis & visualizations, pairs very well with ML
+## other services: networking, ML, etc.
+### Identity & Security
+  - IM: Identity & Access Permissions
+### Management & Monitoring
+  - stack driver
+### Developer Tools
+  - Gcloud: scripting tool
+  - IDE Integrations:
+    - java
+    - visual studio (.net)
+## Machine Learning
+# architecture
+  - what are the business requirements?
+    - buusiness use cases and product strategy
+    - cost optimization
+    - supporting the application design
+    - integration
+    - movement of data
+    - tradeoffs
+    - build, buy or modify
+    - success measurements (e.g., Key Performance Indicators (KPI), Return on Investment (ROI), metrics)
+  - Designing a solution infrastructure that meets technical requirements. Considerations include:
+    - high availability and failover design
+    - elasticity of cloud resources
+    - scalability to meet growth requirements
+  - Designing network, storage, and compute resources. Considerations include:
+    - integration with on premises/multi-cloud environments
+    - identification of data storage needs and mapping to storage systems
+    - data flow diagrams
+    - storage system structure (e.g., Object, File, RDBMS, NoSQL, New SQL)
+    - mapping compute needs to platform products
+  - 1.4 Creating a migration plan (i.e., documents and architectural diagrams). Considerations include:
+	 - integrating solution with existing systems
+	 - migrating systems and data to support the solution
+	 - licensing mapping
+	 - network and management planning
+	 - testing and proof-of-concept
+ - 1.5 Envisioning future solution improvements. Considerations include:
+	 - cloud and technology improvements
+	 - business needs evolution
+	 - evangelism and advocacy
+ - Section 2: Managing and provisioning solution Infrastructure
+	 - 2.1 Configuring network topologies. Considerations include:
+  	 - extending to on-premises (hybrid networking)
+  	 - extending to a multi-cloud environment
+  	 - security
+  	 - data protection
+	 - 2.2 Configuring individual storage systems. Considerations include:
+	 -
+  	 - data storage allocation
+  	 - data processing/compute provisioning
+  	 - security and access management
+  	 - network configuration for data transfer and latency
+  	 - data retention and data lifecycle management
+  	 - data growth management
+	 - 2.3	Configuring compute systems. Considerations include:
+	 -
+  	 - compute system provisioning
+  	 - compute volatility configuration (preemptible vs. standard)
+  	 - network configuration for compute nodes
+  	 - orchestration technology configuration (e.g. Chef/Puppet/Kubernetes)
+  	 - Section 3: Designing for security and compliance
+	 -
+	 - 3.1	Designing for security. Considerations include:
+	 -
+  	 - Identity and Access Management (IAM)
+  	 - data security
+  	 - penetration testing
+  	 - Separation of Duties (SoD)
+  	 - security controls
+	 - 3.2 Designing for legal compliance. Considerations include:
+	 -
+  	 - legislation (e.g., Health Insurance Portability and Accountability Act (HIPAA), Children’s Online Privacy Protection Act (COPPA), etc.)
+  	 - audits
+  	 - certification (e.g., Information Technology Infrastructure Library (ITIL) framework)
+ - Section 4: Analyzing and optimizing technical and business processes
+	 -
+	 - 4.1 Analyzing and defining technical processes. Considerations include:
+	 -
+  	 - Software Development Lifecycle Plan (SDLC)
+  	 - continuous integration / continuous deployment
+  	 - troubleshooting / post mortem analysis culture
+  	 - testing and validation
+  	 - IT enterprise process (e.g. ITIL)
+  	 - business continuity and disaster recovery
+	 - 4.2 Analyzing and defining business processes. Considerations include:
+	 -
+  	 - stakeholder management (e.g. Influencing and facilitation)
+  	 - change management
+  	 - decision making process
+  	 - customer success management
+	 - 4.3 Developing procedures to test resilience of solution in production (e.g., DiRT and Chaos Monkey)
+	 -
+ - Section 5: Managing implementation
+	 -
+	 - 5.1 Advising development/operation team(s) to ensure successful deployment of the solution. Considerations include:
+	 -
+  	 - application development
+  	 - API best practices
+  	 - testing frameworks (load/unit/integration)
+  	 - data and system migration tooling
+	 - Section 6: Ensuring solution and operations reliability
+	 -
+  	 - 6.1 Monitoring/Logging/Alerting solution
+  	 -
+  	 - 6.2 Deployment and release management
+  	 -
+  	 - 6.3	Supporting operational troubleshooting
+  	 -
+  	 - 6.4	Evaluating quality control measures

@@ -1,0 +1,28 @@
+{
+	"data-root": "/mnt/docker-data",
+	"debug": true,
+	"exec-root": "/mnt/docker-exec",
+	"experimental": true,
+	"log-driver": "json-file",
+	"log-level": "warn",
+	"pidfile": "/mnt/docker.pid",
+	"storage-driver": "overlay2",
+	"tls": false,
+	"iptables": true,
+	"bridge": "docker0",
+	"live-restore": true,
+	"group": "docker",
+	
+	"features":{
+		"buildkit": true
+	},
+	"hosts": [
+
+	],
+	"dns": [
+		"8.8.8.8", 
+		"8.8.4.4"
+	],
+	"storage-opts": []
+
+}

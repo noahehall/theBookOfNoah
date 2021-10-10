@@ -1,0 +1,66 @@
+# links
+  - [software design pattern](https://en.wikipedia.org/wiki/Software_design_pattern)
+
+
+# terminology
+  - software design pattern: a general resuable solution to a commonly occuring problem within a given context
+
+# patterns
+  - creational patterns
+    - abstract factory
+    - Builder
+    - dependency injection
+    - factory method
+    - lazy initialization
+    - multition
+    - object pool
+    - prototype
+    - resource acquisition initialization
+    - singleton
+  - structural patterns
+    - adapter/wrapper/translator
+    - bridge
+    - composite
+    - decorator
+    - extension object
+    - facade
+    - flyweight
+    - front controller
+    - marker
+    - module
+    - proxy
+    - twin
+  - behavioral patterns
+    - blackboard
+    - chain of responsibilty
+    - command
+    - interpreter
+    - iterator
+    - mediator
+    - memento
+    - null object
+    - observer or publish/subscribe
+    - servant
+    - specification
+    - state
+    - strategy
+    - template method
+    - visitor
+    -
+  - concurrency patterns
+    - active object
+    - balking
+    - binding properties
+    - blockchain
+    - double-checked locking
+    - event-based asynchronous
+    - guarded suspension
+    - join
+    - lock
+    - messaging design pattern (MDP)
+    - monitor object
+    - reactor
+    - read-write-lock
+    - scheduler
+    - thread pool
+    - thread-specific storage

@@ -1,0 +1,97 @@
+# read this shit
+# https://github.com/moby/moby/issues/27105
+# https://www.systutorials.com/docs/linux/man/5-docker-config-json/
+{
+
+  # dont work
+  "psFormat": "table {{.ID}}\\t{{.Image}}\\t{{.Command}}\\t{{.Labels}}",
+  "imagesFormat": "table {{.ID}}\\t{{.Repository}}\\t{{.Tag}}\\t{{.CreatedAt}}"
+
+  # TODO
+  "detachKeys": "ctrl-e,e",
+
+  "tlsverify": false,
+  "tlscert": "",
+  "tlskey": "",
+  "tlscacert": "",
+  "authorization-plugins": [],
+  "dns": [],
+  "dns-opts": [],
+  "dns-search": [],
+  "exec-opts": [],
+  
+  "labels": [],
+
+  
+  "log-opts": {
+    "max-size": "10m",
+    "max-file":"5",
+    "labels": "somelabel",
+    "env": "os,customer"
+  },
+  "mtu": 0,
+  
+  "cluster-store": "",
+  "cluster-store-opts": {},
+  "cluster-advertise": "",
+  "max-concurrent-downloads": 3,
+  "max-concurrent-uploads": 5,
+  "default-shm-size": "64M",
+  "shutdown-timeout": 15,
+  "hosts": [],
+  
+  
+  
+  "swarm-default-advertise-addr": "",
+  "api-cors-header": "",
+  "selinux-enabled": false,
+  "userns-remap": "",
+  
+  "cgroup-parent": "",
+  "default-ulimits": {
+    "nofile": {
+      "Name": "nofile",
+      "Hard": 64000,
+      "Soft": 64000
+    }
+  },
+  "init": false,
+  "init-path": "/usr/libexec/docker-init",
+  "ipv6": false,
+  
+  "ip-forward": false,
+  "ip-masq": false,
+  "userland-proxy": false,
+  "userland-proxy-path": "/usr/libexec/docker-proxy",
+  "ip": "0.0.0.0",
+  
+  "bip": "",
+  "fixed-cidr": "",
+  "fixed-cidr-v6": "",
+  "default-gateway": "",
+  "default-gateway-v6": "",
+  "icc": false,
+  "raw-logs": false,
+  "allow-nondistributable-artifacts": [],
+  "registry-mirrors": [],
+  "seccomp-profile": "",
+  "insecure-registries": [],
+  "no-new-privileges": false,
+  "default-runtime": "runc",
+  "oom-score-adjust": -500,
+  "node-generic-resources": ["NVIDIA-GPU=UUID1", "NVIDIA-GPU=UUID2"],
+  "runtimes": {
+    "cc-runtime": {
+      "path": "/usr/bin/cc-runtime"
+    },
+    "custom": {
+      "path": "/usr/local/bin/my-runc-replacement",
+      "runtimeArgs": [
+        "--debug"
+      ]
+    }
+  },
+  "default-address-pools":[
+    {"base":"172.80.0.0/16","size":24},
+    {"base":"172.90.0.0/16","size":24}
+  ]

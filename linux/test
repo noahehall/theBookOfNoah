@@ -1,0 +1,50 @@
+#!/bin/bash
+
+echo hello
+
+count=10
+
+function simpleloop {
+	while [ $count -gt 0 ]; do
+		echo "count is: $count"
+		count=$[ $count - 1 ]
+	done
+}
+
+funcwitharray () {
+	local arr=$@
+
+	# how to return an array
+	echo ${arr[*]}
+}
+arr=(1 2 3 4 5)
+
+function echoarray {
+	newarr=$(funcwitharray ${arr[*]})
+	echo "new arr is: $newarr"
+}
+
+function testmenu {
+	PS3="Enter Option..."
+	while [ 1 ]; do
+		select opt in \
+			"Run Loop" \
+			"Echo Array"\
+		; do
+			case $opt in
+				"Run Loop")
+					clear
+					echo -e "\n simpleloop"
+					;;
+				"Echo Array")
+					clear
+					echo -e "\n echoarray"
+					;;
+				*)
+					echo -e "\n you did not enter a valid option"
+			esac
+		done
+	done
+}
+
+testmenu

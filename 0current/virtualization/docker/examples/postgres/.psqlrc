@@ -1,0 +1,25 @@
+-- \pset format wrapped
+-- \set HISTCONTROL ignoredups
+-- \set PROMPT2 '[more] %R > '
+-- \setenv LESS '-iMFXSx4R'
+\encoding UTF8
+\pset columns 0
+\pset format aligned
+\pset linestyle unicode
+\pset null '(null)'
+\pset pager off
+\pset unicode_border_linestyle single
+\pset unicode_column_linestyle single
+\pset unicode_header_linestyle double
+\set AUTOCOMMIT off
+\set COMP_KEYWORD_CASE upper
+\set HISTCONTROL ignoreboth
+\set HISTFILE ~/.psql_history- :DBNAME
+\set ON_ERROR_ROLLBACK interactive
+\set ON_ERROR_STOP on
+\set PROMPT1 '%[%033[1m%]%M %n@%/%R%[%033[0m%]%# '
+\set PROMPT2 ''
+\set VERBOSITY verbose
+\setenv ECHO errors
+\timing
+\x auto
