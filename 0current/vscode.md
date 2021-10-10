@@ -17,3 +17,75 @@
 - [more extensions](https://dev.to/bhagatparwinder/my-top-10-vs-code-extensions-1ikg)
 - [vscode tips and tricks](https://code.visualstudio.com/docs/getstarted/tips-and-tricks)
 - [optimize vs code and choosing extensions](https://www.freecodecamp.org/news/optimize-vscode-performance-best-extensions/)
+
+
+```jsonc
+//default settings
+{
+  "editor.acceptSuggestionOnEnter": "smart",
+  "editor.fontSize": 18,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.insertSpaces": true,
+  "editor.linkedEditing": true,
+  "editor.minimap.enabled": false,
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "editor.wordWrapColumn": 80,
+  "editor.wrappingIndent": "same",
+  "editor.rulers": [40, 80, 120],
+  "editor.autoIndent": "advanced",
+
+  "workbench.editor.enablePreview": true,
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.editor.showTabs": true,
+  "workbench.editor.closeEmptyGroups":true,
+  "workbench.sideBar.location": "right",
+
+  "outline.icons":true,
+  "outline.problems.enabled":true,
+  "outline.problems.badges":true,
+  "outline.problems.colors":true,
+  "terminal.integrated.allowChords": false,
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.fontsize": 18,
+  "terminal.integrated.sendKeybindingsToShell": true,
+
+  "explorer.sortOrder": "default",
+  "files.autosave": false,
+  "files.trimFinalNewlines": true,
+  "files.associations": {
+      ".json": "json",
+      ".jsonc": "jsonc",
+  },
+
+
+  "redhat.telemetry.enabled": false,
+
+  "sync.autoDownload": true,
+  "sync.autoUpload": true,
+  "sync.forceDownload": true,
+  "sync.gist": "33f60c724f51bde9afa2c2a9e540d094",
+  "window.title": "${dirty} ${activeEditorMedium}",
+  "window.zoomLevel": 1,
+
+
+  // language customizations 
+  "[markdown]": {},
+  "[css]": {},
+  "[dockerfile]": {},
+  "[html]": {},
+  "[javascript]": {},
+  "[javascriptreact]": {},
+  "[json]": {},
+  "[scss]": {},
+  "[sql]": {},
+  "[typescript]": {},
+  "[typescriptreact]": {},
+  "[xml]": {},
+  "[yaml]": {},
+  "[yaml-frontmatter]": {}
+
+}
+```
