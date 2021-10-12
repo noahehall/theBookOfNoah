@@ -15,6 +15,9 @@ move all my binaries to /usr/local/bin
 - install local deb file
   - `sudo dpkg -i package_file.deb`
 
+- find your display manager
+  - `grep '/usr/s\?bin' /etc/systemd/system/display-manager.service`
+    - e.g. `gdm3`
 - [disable webcam](https://askubuntu.com/questions/166809/how-can-i-disable-my-webcam)
   - find the cam from the list of devices `lsusb -t`
   - get some tape from one of your kitchen drawers

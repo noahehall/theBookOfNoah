@@ -39,7 +39,7 @@
   "editor.wordWrap": "wordWrapColumn",
   "editor.wordWrapColumn": 80,
   "editor.wrappingIndent": "same",
-  "editor.fontFamily": "Fira Code SemiBold, Consolas, 'Courier New', monospace",
+  "editor.fontFamily": "Ubuntu Mono,Input, Consolas, monospace",
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
