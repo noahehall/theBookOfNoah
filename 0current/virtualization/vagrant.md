@@ -10,15 +10,17 @@
 - [uninstalling vagrant](https://www.vagrantup.com/docs/installation/uninstallation)
 - [cli reference](https://www.vagrantup.com/docs/cli)
 - [vagrant cloud: public boxes](https://app.vagrantup.com/boxes/search)
+- plugins/contrib
+  - [vagrant/contrib - must get their bash completion](https://github.com/hashicorp/vagrant/tree/main/contrib)
 - boxes
   - [vagrant cloud signup](https://app.vagrantup.com/)
+  - [generic](https://app.vagrantup.com/generic)
+    - [bunches of boxes via roboxes](https://roboxes.org/)
+    - grab one of their alpine boxes and move on with your life
   - [geeringuy](https://app.vagrantup.com/geerlingguy)
     - [author of ansible for devops](https://www.ansiblefordevops.com/)
     - [slim ubuntu 16](https://app.vagrantup.com/geerlingguy/boxes/ubuntu1604)
     - [slim ubuntu 18](https://app.vagrantup.com/geerlingguy/boxes/ubuntu2004)
-  - [generic](https://app.vagrantup.com/generic)
-    - [bunches of boxes via roboxes](https://roboxes.org/)
-    - grab one of their alpine boxes and move on with your life
 - tuts
   - [getting started](https://learn.hashicorp.com/collections/vagrant/getting-started)
 
@@ -32,7 +34,10 @@
 
 ## terminilogy
 
-- vagrant boxes: the base img/starting point of a development environment
+- vagrant boxes: the base img/starting point of a development environment; used to clone a virtual environment instead of creating one from scratch
+  - stored globally for hte current user
+  - each project uses an initial box to clone from, and never modifies the actual base image (thus their respective guest machines stay isolated)
+  -
 - vagrant providers:
 
 ## important files & locations
@@ -43,7 +48,17 @@
 ## quickies
 
 ```sh
-  # create a dev env on a slim ubuntu 16
+  # setup bash completion (e.g. for bash)
+    sudo wget https://raw.githubusercontent.com/hashicorp/vagrant/main/contrib/bash/completion.sh -O /etc/bash_completion.d/vagrant
+  # ^ update your bashrc
+    # vagrant bash completion
+    if [ -f /etc/bash_completion.d/vagrant ]; then
+            source /etc/bash_completion.d/vagrant
+    fi
+  # ^ reload bash
+    . ~/bashrc
+
+  # create and start a dev env on a slim ubuntu 16
   vagrant init geerlingguy/ubuntu1604 # similar to git init
   vagrant up
 
@@ -54,5 +69,16 @@
   vagrant ssh # in
   logout # duh
   vagrant destroy
+
+```
+
+## vagrant file
+
+```rb
+
+  Vagrant.configure("2") do |config|
+    config.vm.box = "generic/alpine314"
+    # config.vm.box_version = "1.0.282" # if you need to specify a version
+    # config.vm.box_url = "https://vagrantcloud.com/hashicorp/bionic64" # if appropriate
 
 ```
