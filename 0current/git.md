@@ -9,10 +9,22 @@
 - [git getting started](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
 - [git config](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration)
 - [git book](https://git-scm.com/book/en/v2)
+- [installing git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [first time setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)
+- repo related cmds
+  - [getting a git repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
 
 ## terminology
 
 - git: i'm always talking about git-scm.com
+- three states of git
+  - working directory: uncommited changes
+    - single checkout of one version of the project; pulled out of the compressed database (the .git directory) and place on disk fo ryou to use/modify
+  - staging area: changes you've commited
+    - stores information about what will go into your next commit (the index)
+  - .git directory: changes pushed to github
+    - where git stores the metadata and object database for your project
+    - what is copied when you `clone` a repository from another computer
 
 ## background
 
@@ -25,14 +37,96 @@
 
 ## configuration
 
-```sh
+- types
+  - system: `/etc/gitconfig` for every user on the system and all repositories
+  - user: `~/.gitconfig/` | `~/.config/git/config` for a specific user on the system
+    - this is whats modified when using the `--global` option
+  - local: `[somerepo]/.git/config` specific to a repository
+    - this is whats modified when using the `--local` option
 
+### first time git setup
+
+```sh
+ # install
+ sudo apt install git-all
+ sudo apt install install-info # for debian (e.g. ubuntu), only if installed from source
+
+ # git-config - setup once on each computer
+ # ^ see current config and where they are located (system|global|local)
+ git config --list --show-origin
+ git config --list # dont show origin
+  git config user.name # see what your username is
+ git config --show-origin user.name # see where the value for user.name is coming from
+
+ # ^ set user name and email address
+ git config --global user.name "poop"
+ git config --global user.email "poop@users.noreply.github.com" # always use the noreply, thank me later
+ # ^ set your editor
+ git config --global core.editor vscode # or nano, but why arent you using vscode for everything?
+ # ^ default branch for new repositories
+ git config --global init.defaultBranch develop
+ #
+
+
+ # gpg signature verification for your user
+  # in github webconsole, your email will be SOMEID+name@users.noreply.github.com
+  # however in gitconfig, you cant use SOMEID, so use name@users.noreply.github.com in gpg
+  # as well as in git config --global user.email "name@users.noreply.github.com
+  # make sure you sign commits, `git commit -S -m 'poop'
+  # ^^^^^^
+
+  # check for existing keys
+  gpg --list-secret-keys --keyid-format=long
+
+  # genereate new key
+  gpg --full-generate-key
+    make sure its 4096 long
+    see note about private emails above
+
+  # retrieve the long format
+  gpg --list-secret-keys --keyid-format=long
+
+  # get ASCII armor format https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key
+  gpg --armor --export GPG_KEY_ID
+
+  # add the above output to your ssh & gpg keys in github console
+  # go to settings -> SSH & GPG keys -> Add SSH key
+
+  # associate the key with your github account
+  git config --global user.signingkey GPG_KEY_ID
+
+ # setup your .gitignore
+  # Blank lines or lines starting with # are ignored.
+  # Standard glob patterns work, and will be applied recursively throughout the entire working tree.
+  # You can start patterns with a forward slash (/) to avoid recursivity.
+  # You can end patterns with a forward slash (/) to specify a directory.
+  # You can negate a pattern by starting it with an exclamation point (!).
+  # An asterisk (*) matches zero or more characters;
+ # [abc] matches any character inside the brackets (in this case a, b, or c);
+ # a question mark (?) matches a single character;
+ # brackets enclosing characters separated by a hyphen ([0-9]) matches any character between them (in this case 0 through 9).
+  # two asterisks to match nested directories; a/**/z would match a/z, a/b/z, a/b/c/z, and so on.
 
 ```
 
-# TODO
+### recommendations
 
-- fix all below
+```sh
+ # use these
+ git status -s # short status
+ [staging][workingtree] FILENAME
+ ?? somefile # untracked
+ A somfile # staged
+   M somefile # modified in working directory but not yet staged
+ M somefile # modified and staged
+ MM somefile # modified, staged, then modified again
+
+```
+
+## TODO
+
+- categorize all below
+- anything under this line i wouldnt trust
 
 sparse clone an existing repo from git to local
     git clone --filter=blob:none --no-checkout git/url/to/clone
@@ -65,37 +159,3 @@ check git config 'git config --list'
 <https://stackoverflow.com/questions/6127328/how-can-i-delete-all-git-branches-which-have-been-merged>
     git branch --merged | egrep -v "(^\*|dev)" | xargs git branch -d
     git remote prune origin
-
-## gpg signature verification
-
-```sh
-  # rebasing with protected branches cannt be done autoamtically
-    $ git checkout poop
-    $ git rebase otherbranch
-    $ git push
-  # in github webconsole, your email will be SOMEID+name@users.noreply.github.com
-  # however in gitconfig, you cant use SOMEID, so use name@users.noreply.github.com in gpg
-  # as well as in git config --global user.email "name@users.noreply.github.com
-  # make sure you sign commits, `git commit -S -m 'poop'
-  # ^^^^^^
-
-  # check for existing keys
-  gpg --list-secret-keys --keyid-format=long
-
-  # genereate new key
-  gpg --full-generate-key
-    make sure its 4096 long
-    see note about private emails above
-
-  # retrieve the long format
-  gpg --list-secret-keys --keyid-format=long
-
-  # get ASCII armor format https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key
-  gpg --armor --export GPG_KEY_ID
-
-  # add the above output to your ssh & gpg keys in github console
-  # go to settings -> SSH & GPG keys -> Add SSH key
-
-  # associate the key with your github account
-  git config --global user.signingkey GPG_KEY_ID
-```
