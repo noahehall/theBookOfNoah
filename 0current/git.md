@@ -11,6 +11,8 @@
 - [git book](https://git-scm.com/book/en/v2)
 - [installing git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [first time setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)
+- references|copypasta
+  - [gitignore files](https://github.com/github/gitignore)
 - repo related cmds
   - [getting a git repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
 
@@ -58,6 +60,8 @@
   git config user.name # see what your username is
  git config --show-origin user.name # see where the value for user.name is coming from
 
+ # edit all global options at once
+ git config --global -e
  # ^ set user name and email address
  git config --global user.name "poop"
  git config --global user.email "poop@users.noreply.github.com" # always use the noreply, thank me later
@@ -106,20 +110,42 @@
  # a question mark (?) matches a single character;
  # brackets enclosing characters separated by a hyphen ([0-9]) matches any character between them (in this case 0 through 9).
   # two asterisks to match nested directories; a/**/z would match a/z, a/b/z, a/b/c/z, and so on.
+ # examples
+ # ignore all .a files
+ *.a
+ # but do track lib.a, even though you're ignoring .a files above
+ !lib.a
+ # only ignore the TODO file in the current directory, not subdir/TODO
+ /TODO
+ # ignore all files in any directory named build
+ build/
+ # ignore doc/notes.txt, but not doc/server/arch.txt
+ doc/*.txt
+ # ignore all .pdf files in the doc/ directory and any of its subdirectories
+ doc/**/*.pdf
 
+
+ # enforce nano as your editor, merge & difftool
+ git config --global --unset core.editor # reset something to the default
+ git config --global diff.tool nano
+ git config --global core.editor nano
+ git config --global merge.tool nano
 ```
 
 ### recommendations
 
 ```sh
- # use these
  git status -s # short status
- [staging][workingtree] FILENAME
- ?? somefile # untracked
- A somfile # staged
-   M somefile # modified in working directory but not yet staged
- M somefile # modified and staged
- MM somefile # modified, staged, then modified again
+ # [staging][workingtree] FILENAME
+ # ?? somefile # untracked
+ # A somfile # staged
+ #  M somefile # modified in working directory but not yet staged
+ # M somefile # modified and staged
+ # MM somefile # modified, staged, then modified again
+
+ git diff  # everything unstaged (not added)
+ git diff --staged  # everything added, but not staged (commited)
+
 
 ```
 
