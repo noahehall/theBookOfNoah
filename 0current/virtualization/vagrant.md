@@ -8,8 +8,11 @@
 - [vagrant vs docker](https://www.vagrantup.com/intro/vs/docker)
 - [installing vagrant](https://www.vagrantup.com/docs/installation)
 - [uninstalling vagrant](https://www.vagrantup.com/docs/installation/uninstallation)
-- [cli reference](https://www.vagrantup.com/docs/cli)
 - [vagrant cloud: public boxes](https://app.vagrantup.com/boxes/search)
+- references
+  - [cli reference](https://www.vagrantup.com/docs/cli)
+  - [vagrant box](https://www.vagrantup.com/docs/cli/box)
+  - [synced folders](https://www.vagrantup.com/docs/synced-folders)
 - plugins/contrib
   - [vagrant/contrib - must get their bash completion](https://github.com/hashicorp/vagrant/tree/main/contrib)
 - boxes
@@ -44,6 +47,7 @@
 
 - `Vagrantfile` created via `vagrant init some/type/of/img`
   - purpose: this is your buildfile; every person working with the project uses this file to build their dev env
+  - the `parent/Vagrantfile` directory is considered the project directory, and stored in the guest machine at `/vagrant`
 
 ## quickies
 
@@ -53,7 +57,7 @@
   # ^ update your bashrc
     # vagrant bash completion
     if [ -f /etc/bash_completion.d/vagrant ]; then
-            source /etc/bash_completion.d/vagrant
+      source /etc/bash_completion.d/vagrant
     fi
   # ^ reload bash
     . ~/bashrc
@@ -67,9 +71,12 @@
 
   # login/out of the created VM
   vagrant ssh # in
-  logout # duh
+  logout # same as exit
   vagrant destroy
 
+  # handy box cmds
+  vagrnat box list
+  vagrant box remove NAME
 ```
 
 ## vagrant file
