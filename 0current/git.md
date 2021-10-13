@@ -6,6 +6,29 @@
 - [git feature branch workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow)
 - [bitbucket git tutorials landing page](https://www.atlassian.com/git/tutorials)
 - [git workflow comparison](https://www.atlassian.com/git/tutorials/comparing-workflows)
+- [git getting started](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
+- [git config](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration)
+- [git book](https://git-scm.com/book/en/v2)
+
+## terminology
+
+- git: i'm always talking about git-scm.com
+
+## background
+
+- high level
+  - snapshots, not differences: other git systems (e.g. subversion) store data as a set of diffs, git stores data as snapshots
+  - nearly every operation is local: many other git systems require network connecion, however git almost doesnt
+    - since you have the entire histoyr of the project on your local disk, most operations seem instantaneous
+  - integrity: everything in git is checksummed before it is stored; and then only referred to by that checksum
+    - i.e. its impossible to change the contents of a file/directory without git knowing about it
+
+## configuration
+
+```sh
+
+
+```
 
 # TODO
 
@@ -46,33 +69,33 @@ check git config 'git config --list'
 ## gpg signature verification
 
 ```sh
-  # rebasing with protected branches cannt be done autoamtically 
+  # rebasing with protected branches cannt be done autoamtically
     $ git checkout poop
     $ git rebase otherbranch
-    $ git push 
+    $ git push
   # in github webconsole, your email will be SOMEID+name@users.noreply.github.com
-  # however in gitconfig, you cant use SOMEID, so use name@users.noreply.github.com in gpg 
-  # as well as in git config --global user.email "name@users.noreply.github.com 
+  # however in gitconfig, you cant use SOMEID, so use name@users.noreply.github.com in gpg
+  # as well as in git config --global user.email "name@users.noreply.github.com
   # make sure you sign commits, `git commit -S -m 'poop'
   # ^^^^^^
 
-  # check for existing keys 
+  # check for existing keys
   gpg --list-secret-keys --keyid-format=long
 
-  # genereate new key 
+  # genereate new key
   gpg --full-generate-key
-    make sure its 4096 long 
+    make sure its 4096 long
     see note about private emails above
 
-  # retrieve the long format 
+  # retrieve the long format
   gpg --list-secret-keys --keyid-format=long
 
   # get ASCII armor format https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key
   gpg --armor --export GPG_KEY_ID
 
-  # add the above output to your ssh & gpg keys in github console 
+  # add the above output to your ssh & gpg keys in github console
   # go to settings -> SSH & GPG keys -> Add SSH key
 
-  # associate the key with your github account 
+  # associate the key with your github account
   git config --global user.signingkey GPG_KEY_ID
 ```
