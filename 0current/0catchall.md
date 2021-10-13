@@ -35,3 +35,6 @@ lsb_release -cs
 
 exec su -l $USER
   reload group assignments without relogging
+
+find the name of your hypervisor
+  lsmod | grep kvm
