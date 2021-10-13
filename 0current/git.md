@@ -1,3 +1,5 @@
+<https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History>
+
 # LINKS
 
 - [git flight rules](https://github.com/k88hudson/git-flight-rules/blob/master/README.md)
@@ -146,7 +148,11 @@
  git diff  # everything unstaged (not added)
  git diff --staged  # everything added, but not staged (commited)
 
+ git commit -a -m 'ur msg' # but be sure you want to add all changed files
 
+ git rm --cached dont/track/this/file/and/remove/from/staging
+
+ git mv prevname newname # better than doing a linux mv
 ```
 
 ## TODO
