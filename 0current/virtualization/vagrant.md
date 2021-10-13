@@ -12,7 +12,13 @@
 - [vagrant cloud: public boxes](https://app.vagrantup.com/boxes/search)
 - boxes
   - [vagrant cloud signup](https://app.vagrantup.com/)
-  - [slim ubuntu 16](https://app.vagrantup.com/geerlingguy/boxes/ubuntu1604)
+  - [geeringuy](https://app.vagrantup.com/geerlingguy)
+    - [author of ansible for devops](https://www.ansiblefordevops.com/)
+    - [slim ubuntu 16](https://app.vagrantup.com/geerlingguy/boxes/ubuntu1604)
+    - [slim ubuntu 18](https://app.vagrantup.com/geerlingguy/boxes/ubuntu2004)
+  - [generic](https://app.vagrantup.com/generic)
+    - [bunches of boxes via roboxes](https://roboxes.org/)
+    - grab one of their alpine boxes and move on with your life
 - tuts
   - [getting started](https://learn.hashicorp.com/collections/vagrant/getting-started)
 
