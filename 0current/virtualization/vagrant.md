@@ -50,6 +50,15 @@
 - `Vagrantfile` created via `vagrant init some/type/of/img`
   - purpose: this is your buildfile; every person working with the project uses this file to build their dev env
   - the `parent/Vagrantfile` directory is considered the project directory, and stored in the guest machine at `/vagrant`
+    - however always confirm as this worked for me on an ubuntu box, but not an alpine box
+    - you may have to set it specificlay (see vagrant file down below)
+
+  - loading order and merging
+    - Vagrantfile packaged with the box that is to be used for a given machine.
+    - Vagrantfile in your Vagrant home directory (defaults to ~/.vagrant.d). This lets you specify some defaults for your system user.
+    - Vagrantfile from the project directory. This is the Vagrantfile that you will be modifying most of the time.
+    - Multi-machine overrides if any.
+    - Provider-specific overrides, if any.
 
 ## quickies
 
@@ -84,7 +93,9 @@
 ## vagrant file
 
 ```rb
+  Vagrant.require_version ">= 2.2" # require atleast 2.2 to run this vagrant file
 
+  # 2 ===  vagrant version
   Vagrant.configure("2") do |config|
     config.vm.box = "generic/alpine314"
     # config.vm.box_version = "1.0.282" # if you need to specify a version
