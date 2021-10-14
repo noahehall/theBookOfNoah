@@ -13,8 +13,13 @@
   - [cli reference](https://www.vagrantup.com/docs/cli)
   - [vagrant box](https://www.vagrantup.com/docs/cli/box)
   - [synced folders](https://www.vagrantup.com/docs/synced-folders)
+  - [tips & tricks](https://www.vagrantup.com/docs/vagrantfile/tips)
+    - TODO: ^^^^ must do
+  - [config.vm machine settings](https://www.vagrantup.com/docs/vagrantfile/machine_settings)
 - plugins/contrib
-  - [vagrant/contrib - must get their bash completion](https://github.com/hashicorp/vagrant/tree/main/contrib)
+  - [vagrant/contrib](https://github.com/hashicorp/vagrant/tree/main/contrib)
+  - [sync local * guest files](https://learn.hashicorp.com/tutorials/vagrant/getting-started-synced-folders?in=vagrant/getting-started)
+    - the defaults work, but find the optimial settings for ubuntu
 - boxes
   - [vagrant cloud signup](https://app.vagrantup.com/)
   - [generic](https://app.vagrantup.com/generic)
@@ -76,6 +81,7 @@
   # create and start a dev env on a slim ubuntu 16
   vagrant init geerlingguy/ubuntu1604 # similar to git init
   vagrant up
+  vagrant up --provision # reruns any changes you've made to the vagrantfile/privsion files
 
   # install a box without creating a dev env
   vagrant box add some/img/name
