@@ -39,6 +39,15 @@
   - integrity: everything in git is checksummed before it is stored; and then only referred to by that checksum
     - i.e. its impossible to change the contents of a file/directory without git knowing about it
 
+## OOPS
+
+```sh
+  # reset SOMEBRANCH to whatever is upstream
+  git checkout SOMEBRANCH
+  git reset --hard origin/SOMEBRANCH
+
+```
+
 ## configuration
 
 - types

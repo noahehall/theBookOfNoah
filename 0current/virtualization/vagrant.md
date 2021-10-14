@@ -27,6 +27,8 @@
 - tuts
   - [getting started](https://learn.hashicorp.com/collections/vagrant/getting-started)
 
+  -
+
 ## high level
 
 - Vagrant is a tool focused for managing development environments
