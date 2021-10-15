@@ -3,6 +3,7 @@ bookmark: <https://wiki.alpinelinux.org/wiki/Setting_up_a_new_user>
 # TLDR
 
 - everything alpine (except desktop), nuff said
+  - never say never on switching to alpine for desktop
 
 ## links
 
@@ -13,6 +14,11 @@ bookmark: <https://wiki.alpinelinux.org/wiki/Setting_up_a_new_user>
   - [newbie apk packages](https://wiki.alpinelinux.org/wiki/Alpine_newbie_apk_packages)
   - [connecting to wifi](https://wiki.alpinelinux.org/wiki/Connecting_to_a_wireless_access_point)
   - [users](https://wiki.alpinelinux.org/wiki/Setting_up_a_new_user)
+  - [newbie desktop config](https://wiki.alpinelinux.org/wiki/Alpine_newbie_desktops)
+  - [newbie fullstack web config](https://wiki.alpinelinux.org/wiki/Alpine_newbie_developer:_full_stack_web)
+  - [alpine deploy in production](https://wiki.alpinelinux.org/wiki/Alpine_production_deploy)
+- examples
+  - [apk build nodejs](https://wiki.alpinelinux.org/wiki/APKBUILD_examples:JavaScript)
 
 ## high level
 
@@ -54,14 +60,14 @@ bookmark: <https://wiki.alpinelinux.org/wiki/Setting_up_a_new_user>
   - apache:x:81: Need if you will perfom development as normal user and want to publish locally on web server
   - usb:x:85: Need to access to special usb devices, deprecated group
   - users:x:100:games If you plan to used common files for all users, mandatory as desktop usage
+  - wheel:x:10:root Administrator group, members can use sudo to run commands as root if enabled in the sudo configuration.
 
 ## quickies
 
+### cmd reference
+
 ```sh
 
-
-
-  apk update
   # package management
   apk search PKG # query for the pkg named PKG
   apk add PKG1 PKG2 3 # add 2 pkgs
@@ -69,9 +75,28 @@ bookmark: <https://wiki.alpinelinux.org/wiki/Setting_up_a_new_user>
   apk del PKG1 PKG2 # del 2 pkgs
   apk upgrade -U -a # upgrade pkgs
   apk update # update cache e.g. after adding a new repository URI
+
+  # adduser
+  adduser [OPTIONS] USER [GROUP]
+    #   Create new user, or add USER to GROUP
+    #  -h --home DIR           Home directory
+    #  -g --gecos GECOS        GECOS field
+    #  -s --shell SHELL        Login shell named SHELL by example /bin/bash
+    #  -G --ingroup GRP        Group (by name)
+    #  -S --system             Create a system user
+    #  -D --disabled-password  Don't assign a password, so cannot login
+    #  -H --no-create-home     Don't create home directory
+    #  -u --uid UID            User id
+    #  -k SKEL                 Skeleton directory (/etc/skel)
+
+  # addgroup
+  addgroup [-g GID] [-S] [USER] GROUP
+    # Create a group or add a user to a group
+    # -g --gid GID    Group id
+    # -s --system     Create a system group
 ```
 
-## recommended configuration
+### recommended configuration
 
 ```sh
 
@@ -107,7 +132,7 @@ EOF
 
 ```
 
-## recommended tools
+### recommended tools
 
 ```sh
   # minimal system tools
@@ -127,7 +152,7 @@ EOF
 
 ```
 
-## file locations
+### file locations
 
 ```sh
   /usr/share/fonts # system font directory
@@ -137,7 +162,7 @@ EOF
 
 ```
 
-## user management
+### user management
 
 ```sh
   # ssh prevents remote management directly with the root account
@@ -191,5 +216,18 @@ for u in $(ls /home); do for g in disk lp floppy audio cdrom dialout video netde
   # setting the default shell
   lchsh # current user
   lchsh SOMEOTHERUSER # set another user, run as admin|root
+
+  # creating a user and enabling user access to the root account via doas pkg
+  adduser -g "<username>" <username>
+  adduser <username> wheel
+  apk add doas
+  apk add nano
+  nano /etc/doas.conf
+
+  # using sudo instead of doas to control root access
+  apk add sudo
+  NEWUSER='yourUserName'
+  adduser -d "${NEWUSER}" $NEWUSER
+  echo "$NEWUSER ALL=(ALL) ALL" > /etc/sudoers.d/$NEWUSER && chmod 0440 /etc/sudoers.d/$NEWUSER
 
 ```
