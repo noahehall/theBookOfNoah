@@ -17,6 +17,7 @@ bookmark: <https://wiki.alpinelinux.org/wiki/Setting_up_a_new_user>
   - [newbie desktop config](https://wiki.alpinelinux.org/wiki/Alpine_newbie_desktops)
   - [newbie fullstack web config](https://wiki.alpinelinux.org/wiki/Alpine_newbie_developer:_full_stack_web)
   - [alpine deploy in production](https://wiki.alpinelinux.org/wiki/Alpine_production_deploy)
+  - [high performance webpack](https://wiki.alpinelinux.org/wiki/High_Availability_High_Performance_Web_Cache)
 - examples
   - [apk build nodejs](https://wiki.alpinelinux.org/wiki/APKBUILD_examples:JavaScript)
 

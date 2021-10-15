@@ -15,7 +15,9 @@
   - [synced folders](https://www.vagrantup.com/docs/synced-folders)
   - [tips & tricks](https://www.vagrantup.com/docs/vagrantfile/tips)
     - TODO: ^^^^ must do
+  - [vagrant networking](https://www.vagrantup.com/docs/networking)
   - [config.vm machine settings](https://www.vagrantup.com/docs/vagrantfile/machine_settings)
+  - [virtual box provider setup](https://www.vagrantup.com/docs/providers/virtualbox/boxes)
 - plugins/contrib
   - [vagrant/contrib](https://github.com/hashicorp/vagrant/tree/main/contrib)
   - [sync local * guest files](https://learn.hashicorp.com/tutorials/vagrant/getting-started-synced-folders?in=vagrant/getting-started)
@@ -33,6 +35,40 @@
   - [getting started](https://learn.hashicorp.com/collections/vagrant/getting-started)
 
   -
+
+## TODO (ouch)
+
+```sh
+autocomplete    manages autocomplete installation on host
+     box             manages boxes: installation, removal, etc.
+     cloud           manages everything related to Vagrant Cloud
+     destroy         stops and deletes all traces of the vagrant machine
+     global-status   outputs status Vagrant environments for this user
+     halt            stops the vagrant machine
+     help            shows the help for a subcommand
+     init            initializes a new Vagrant environment by creating a Vagrantfile
+     login
+     package         packages a running vagrant environment into a box
+     plugin          manages plugins: install, uninstall, update, etc.
+     port            displays information about guest port mappings
+     powershell      connects to machine via powershell remoting
+     provision       provisions the vagrant machine
+     push            deploys code in this environment to a configured destination
+     rdp             connects to machine via RDP
+     reload          restarts vagrant machine, loads new Vagrantfile configuration
+     resume          resume a suspended vagrant machine
+     snapshot        manages snapshots: saving, restoring, etc.
+     ssh             connects to machine via SSH
+     ssh-config      outputs OpenSSH valid configuration to connect to the machine
+     status          outputs status of the vagrant machine
+     suspend         suspends the machine
+     up              starts and provisions the vagrant environment
+     upload          upload to machine via communicator
+     validate        validates the Vagrantfile
+     version         prints current and latest Vagrant version
+     winrm           executes commands on a machine via WinRM
+     winrm-config    outputs WinRM configuration to connect to the machine
+```
 
 ## high level
 
@@ -80,8 +116,9 @@
 
   # create and start a dev env on a slim ubuntu 16
   vagrant init geerlingguy/ubuntu1604 # similar to git init
-  vagrant up
-  vagrant up --provision # reruns any changes you've made to the vagrantfile/privsion files
+  vagrant up # only when initially setting up the machine
+  vagrant reload # if you've made changes to the Vagrantfile
+  vagrant reload --provision # if you've made changes to any provisioning scripts
 
   # install a box without creating a dev env
   vagrant box add some/img/name
@@ -108,3 +145,19 @@
     # config.vm.box_url = "https://vagrantcloud.com/hashicorp/bionic64" # if appropriate
 
 ```
+
+## installation
+
+```sh
+  # after install virtualbox, ensure to install guest additions for increased performance
+  # ^ @see https://www.vagrantup.com/docs/providers/virtualbox/boxes
+  # ^ linux headers & devtools
+  sudo apt-get install linux-headers-$(uname -r) build-essential dkms
+  # ^ virtual box guest additions: done for virtualbox 6.1.26
+  wget http://download.virtualbox.org/virtualbox/6.1.26/VBoxGuestAdditions_6.1.26.iso
+  sudo mkdir /media/VBoxGuestAdditions
+  sudo mount -o loop,ro VBoxGuestAdditions_6.1.26.iso /media/VBoxGuestAdditions
+  sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
+  rm VBoxGuestAdditions_6.1.26.iso
+  sudo umount /media/VBoxGuestAdditions
+  sudo rmdir /media/VBoxGuestAdditions

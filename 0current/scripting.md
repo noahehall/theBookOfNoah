@@ -128,9 +128,10 @@ notes
 - generally
   - arithmetic expressions
       -`$[ EXPRESSION ]` >>> `$(( EXPRESSIN ))`
-          - unless you need to do tests
+        - unless you need to do tests
   - conditionals
     - `test` >>> `[`
+      - its just easier to read
 
 - sometimes
   - maybe maybe not
@@ -155,6 +156,7 @@ notes
 
   - questions to ask yourself before starting a new script
     - will i be needing information from the user/environment
+    -
     - how will i store information
     - will i need to create files
       - where?
@@ -245,6 +247,7 @@ notes
   - typeset
   - ulimit
   - unalias
+
 - POSIX (special builtins)
   - 3 differences with specials
     - special builtins are found before shell functions during cmd lookup
@@ -833,6 +836,7 @@ notes
         - unless you set `.*` as one of the patterns in `GLOBIGNORE`
       - each matching file name that also matches one of the patterns in `GLOBIGNORE` is removed from the list of matches
       - file names `.` and `..` are always ignored
+
       -
 
 ## prompt
