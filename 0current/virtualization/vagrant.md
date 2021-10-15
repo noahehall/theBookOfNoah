@@ -151,6 +151,8 @@ autocomplete    manages autocomplete installation on host
 ```sh
   # after install virtualbox, ensure to install guest additions for increased performance
   # ^ @see https://www.vagrantup.com/docs/providers/virtualbox/boxes
+  # ^ @see https://download.virtualbox.org/virtualbox/
+  # ^^ check that for the correct version number of your virtualbox installation
   # ^ linux headers & devtools
   sudo apt-get install linux-headers-$(uname -r) build-essential dkms
   # ^ virtual box guest additions: done for virtualbox 6.1.26
