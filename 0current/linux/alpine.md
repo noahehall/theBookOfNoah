@@ -188,5 +188,8 @@ touch /etc/default/useradd
   # ^ second: change some defualts and add the user to desired groups to access devices/perform connections
 for u in $(ls /home); do for g in disk lp floppy audio cdrom dialout video netdev games users; do addgroup $u $g; done;done
 
+  # setting the default shell
+  lchsh # current user
+  lchsh SOMEOTHERUSER # set another user, run as admin|root
 
 ```
