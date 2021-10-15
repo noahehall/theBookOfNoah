@@ -28,6 +28,12 @@
       - stores all downloaded `apacks` in `etc/apk/cache` from the repositories before it unpacks and puts the package files compiled into the installed system
         - this is why you often see the `--no cache` thing in docker
         - as you dont want the cache, just the configuration files and program files
+    - three types
+      - main packages: software that have direct support and updates from the alpine core and main team and always have releases (or substitutions) for every version
+      - contribution packages: user software made by end-users with support with support from the official alpine developers
+        - i.e. supported by user contributions
+      - testing packages: new packages come into testing repos of edge alpine version and are those made by any contirbute or man power on alpine
+        - i.e. edge is the unstable current dev
 
 ## quickies
 
