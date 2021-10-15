@@ -15,6 +15,20 @@
 
 - due to the great popularity of Docker, Alpine Linux is one of the most deployed operating systems currently in use, because within every other operating system that uses docker, the docker image it uses is almost always Alpine Linux.
 
+# terminology
+
+- packages: aka `apacks` - digitalized signed tar.gz archives containing programs, configuration files and dependency metadata
+  - have the extension `.apk`
+  - two sources:
+    - repository: http://<host>/alpine/<version>/<branch>
+      - URI that can be invoked with `apk` listed in `/etc/apk/repositories` file
+    - original upstream sources: those compiles as unix-like in the traditional way
+      - managed with the `apk` located at `sbin/apk`
+      - uses `/etc/apk` for configuration files
+      - stores all downloaded `apacks` in `etc/apk/cache` from the repositories before it unpacks and puts the package files compiled into the installed system
+        - this is why you often see the `--no cache` thing in docker
+        - as you dont want the cache, just the configuration files and program files
+
 ## quickies
 
 ```sh
