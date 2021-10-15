@@ -91,6 +91,12 @@ EOF
   # fonts & fonts configuration
   apk add terminus-font ttf-inconsolata ttf-dejavu font-bitstream-* font-noto font-noto-* ttf-font-awesome font-noto-extra
 
+  # sound via alsa
+  apk add alsa-utils alsa-utils-doc alsa-lib alsaconf
+  # ^ start it and add it to rc
+  rc-service alsa start
+  rc-update add alsa
+
 ```
 
 ## file locations
