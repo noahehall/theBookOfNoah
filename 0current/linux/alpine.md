@@ -10,6 +10,7 @@
   - [newbie alpine ecosystem](https://wiki.alpinelinux.org/wiki/Newbie_Alpine_Ecosystem)
   - [newbie apk packages](https://wiki.alpinelinux.org/wiki/Alpine_newbie_apk_packages)
   - [connecting to wifi](https://wiki.alpinelinux.org/wiki/Connecting_to_a_wireless_access_point)
+  - [users](https://wiki.alpinelinux.org/wiki/Setting_up_a_new_user)
 
 ## high level
 
@@ -54,6 +55,14 @@
 ## recommended configuration
 
 ```sh
+
+  # set root password
+  cat > /root/.cshrc << EOF
+unsetenv DISPLAY || true
+HISTCONTROL=ignoreboth
+EOF
+  cp /root/.cshrc /root/.profile
+  echo "secret_new_root_password" | chpasswd
 
   # set the hostname to identify the machine on a network
   echo 'poop' > /etc/hostname
@@ -106,5 +115,36 @@ EOF
   ~/.font # user font directory
   ~/.Xresources # configurations by X server
 
+
+```
+
+## TODO
+
+```sh
+  # ssh prevents remote management directly with the root account
+  # ^ so setup a remote connection user acocunt and use the su cmd once your connected
+  # ^ below `remote` and `general` below are user accounts
+  # remote has sudo access, general does not
+mkdir -p /etc/skel/
+
+cat > /etc/skel/.logout << EOF
+history -c
+/bin/rm -f /opt/remote/.mysql_history
+/bin/rm -f /opt/remote/.history
+/bin/rm -f /opt/remote/.bash_history
+EOF
+
+cat > /etc/skel/.cshrc << EOF
+set autologout = 30
+set prompt = "\$ "
+set history = 0
+set ignoreeof
+EOF
+
+cp /etc/skel/.cshrc /etc/skel/.profile
+adduser -D --home /opt/remote --shell /bin/ash remote
+echo "secret_new_remote_user_password" | chpasswd
+adduser -D --shell /bin/bash general
+echo "secret_new_general_user_password" | chpasswd
 
 ```
