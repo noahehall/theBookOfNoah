@@ -36,6 +36,23 @@
       - testing packages: new packages come into testing repos of edge alpine version and are those made by any contirbute or man power on alpine
         - i.e. edge is the unstable current dev
 
+- default alpine user groups
+  - disk:x:6:root,adm Only if need usage vith virtual machines and access to other partitions over new disks for
+  - lp:x:7:lp IF will need to use printing services and printers management
+  - floppy:x:11:root Backguard compatible group, use only if need access to external special devices
+  - audio:x:18: Need for audio listening and management of sound volumes as normal user
+  - cdrom:x:19: For access to disck writers and mounting DVD, BR or CD rom disk as normal user
+  - dialout:x:20:root Need for dial private connections and use of modems as normal users
+  - tape:x:26:root Need have into this if plan to use special devices for backup.. rarelly in no servers
+  - video:x:27:root For usage of cameras, mor thant one GPU special features, as normal user
+  - netdev:x:28: For network connections management as normal user
+  - kvm:x:34:kvm Only if as normal user will manage graphically virtual machines.. rarelly on no servers
+  - games:x:35: Need if you want to play games also specially need if will share score between users
+  - cdrw:x:80: To write RW-DVD, RW-BR or RW-CD disk on a disk writing device
+  - apache:x:81: Need if you will perfom development as normal user and want to publish locally on web server
+  - usb:x:85: Need to access to special usb devices, deprecated group
+  - users:x:100:games If you plan to used common files for all users, mandatory as desktop usage
+
 ## quickies
 
 ```sh
@@ -118,13 +135,12 @@ EOF
 
 ```
 
-## TODO
+## user management
 
 ```sh
   # ssh prevents remote management directly with the root account
   # ^ so setup a remote connection user acocunt and use the su cmd once your connected
   # ^ below `remote` and `general` below are user accounts
-  # remote has sudo access, general does not
 mkdir -p /etc/skel/
 
 cat > /etc/skel/.logout << EOF
@@ -146,5 +162,29 @@ adduser -D --home /opt/remote --shell /bin/ash remote
 echo "secret_new_remote_user_password" | chpasswd
 adduser -D --shell /bin/bash general
 echo "secret_new_general_user_password" | chpasswd
+
+
+  # managing users with the libuser pkg (by default alpine uses busybox)
+  # ^ first add the test repository and install libuser
+cat > /etc/apk/repositories << EOF; $(echo)
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
+http://mirror.math.princeton.edu/pub/alpinelinux/edge/testing/
+EOF
+
+apk update
+apk add libuser
+cat > /etc/apk/repositories << EOF; $(echo)
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
+EOF
+
+apk update
+touch /etc/login.defs
+touch /etc/default/useradd
+
+  # ^ second: change some defualts and add the user to desired groups to access devices/perform connections
+for u in $(ls /home); do for g in disk lp floppy audio cdrom dialout video netdev games users; do addgroup $u $g; done;done
+
 
 ```
