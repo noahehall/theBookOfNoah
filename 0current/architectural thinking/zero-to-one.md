@@ -1,5 +1,5 @@
 bookmark:
-  reading: top of chapter 6
+  reading: pg 99 - the world according to convention
   copying: somewere at the bottom of page 10
 
 # TLDR
@@ -25,7 +25,7 @@ peter thiel with blake masters
   - because every innovation is ne and unique, and no authority can prescribe in concrete terms how to be innovative
 - the most powerful pattern is that successful people find value in unexpected places
   - and thinking about business from first principles instead of formulas
-  
+
 ## chapter 1: the challenge of the future
 
 - what important truth do very few people agree with you on?
