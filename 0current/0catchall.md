@@ -38,3 +38,7 @@ exec su -l $USER
 
 find the name of your hypervisor
   lsmod | grep kvm
+
+get your IP (either should work)
+  hostname -I
+  ifconfig | grep inet

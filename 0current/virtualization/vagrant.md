@@ -18,6 +18,7 @@
   - [vagrant networking](https://www.vagrantup.com/docs/networking)
   - [config.vm machine settings](https://www.vagrantup.com/docs/vagrantfile/machine_settings)
   - [virtual box provider setup](https://www.vagrantup.com/docs/providers/virtualbox/boxes)
+  - [NFS setup](https://www.vagrantup.com/docs/synced-folders/nfs)
 - plugins/contrib
   - [vagrant/contrib](https://github.com/hashicorp/vagrant/tree/main/contrib)
   - [sync local * guest files](https://learn.hashicorp.com/tutorials/vagrant/getting-started-synced-folders?in=vagrant/getting-started)
@@ -33,8 +34,7 @@
     - [slim ubuntu 18](https://app.vagrantup.com/geerlingguy/boxes/ubuntu2004)
 - tuts
   - [getting started](https://learn.hashicorp.com/collections/vagrant/getting-started)
-
-  -
+  - [mount NFS shares on a running guest machine](https://www.stevenrombauts.be/2018/01/mount-nfs-shares-on-a-running-vagrant-box/)
 
 ## TODO (ouch)
 
@@ -151,6 +151,7 @@ autocomplete    manages autocomplete installation on host
 ```sh
   # after install virtualbox, ensure to install guest additions for increased performance
   # ^ @see https://www.vagrantup.com/docs/providers/virtualbox/boxes
+  # ^ @see https://www.virtualbox.org/manual/ch04.html
   # ^ @see https://download.virtualbox.org/virtualbox/
   # ^^ check that for the correct version number of your virtualbox installation
   # ^ linux headers & devtools
@@ -163,3 +164,15 @@ autocomplete    manages autocomplete installation on host
   rm VBoxGuestAdditions_6.1.26.iso
   sudo umount /media/VBoxGuestAdditions
   sudo rmdir /media/VBoxGuestAdditions
+
+  # NFS
+  # ^ best performance for ubuntu
+  # ^ for windows try this: http://freenfs.sourceforge.net/
+  # install needed tools
+  sudo apt install nfs-kernel-server nfs-common rpcbind
+  systemctl start nfs-kernel-server
+  http://10.0.2.15/# see exports file which maps directories to the IPs that can access them over the network
+  cat /etc/exports
+
+
+```

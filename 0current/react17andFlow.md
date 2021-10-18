@@ -4,7 +4,7 @@ bookmark: <https://flow.org/en/docs/types/utilities/#toc-readonly>
 reference1: <https://github.com/facebook/react/blob/main/packages/shared/ReactTypes.js>
 reference2: <https://flow.org/en/docs/react/types/>
 
-# TODO
+# TODOz
 
 - [enabling indexed access types](https://flow.org/en/docs/types/indexed-access/)
   - i generally dislike prettier, but im not going to fight this battle
@@ -17,7 +17,7 @@ reference2: <https://flow.org/en/docs/react/types/>
 - other
   - [meaning of set difference](https://mathworld.wolfram.com/SetDifference.html)
   - [complement set, identical to set difference](https://mathworld.wolfram.com/ComplementSet.html)
-  
+
 - react
   - [react docs](https://reactjs.org/docs/getting-started.html)
   - [react top level api ref](https://reactjs.org/docs/react-api.html)
@@ -51,7 +51,7 @@ reference2: <https://flow.org/en/docs/react/types/>
   - [type variance](https://flow.org/en/docs/lang/variance/)
   - [union types](https://flow.org/en/docs/types/unions/)<https://flow.org/en/docs/types/typeof/>
   - [typeof types](https://flow.org/en/docs/types/typeof/)
-  
+
 # TLDR
 
 - a complete react17 study guide
@@ -90,7 +90,7 @@ reference2: <https://flow.org/en/docs/react/types/>
     - never use arrow functions directly in the callback as
       - the component receives a new fn each time,
       - if passed to child components, will cause axtra rerenders
-  
+
 - **GENERALLY**
   - *PureComponent* > *shouldComponentUpdate* for auto shallow comparisons
   - import namespaces, [who the fk knows if it hinders/helps treeshaking?](https://github.com/airbnb/javascript/issues/1487)
@@ -118,7 +118,7 @@ reference2: <https://flow.org/en/docs/react/types/>
 
 - **WITH CAUTION**
   - call *setState* inside *componentDidMount* ONLY modals/tooltips need to measure other DOM nodes before rendering
-  
+
 - **NEVER**
   - dont use `create-react-class` as it autobinds methods which has a performance hit
     - instead use
@@ -140,7 +140,7 @@ reference2: <https://flow.org/en/docs/react/types/>
 
   - use error boundaries for control flow
     - only for recovery
-  
+
 - **USE CASES**
   - use portals when rendering a child even when the parent has overflow hidden/z-index
     - e.g. dialogs, tooltips, modals, etc
@@ -234,12 +234,12 @@ reference2: <https://flow.org/en/docs/react/types/>
     - not called for the initial render
     - usecases: operate on the DOM, network requests AFTER comparing current & next props requires a new fetch
     - receives a third prop if *getSnapshotBeforeUpdate* is used
-  
+
 - unmounting: when a component is being removed from the DOM and destroyed
   - *componentWillUnmount*
     - before being destroyed
     - usescases: remove timers, canceling shit (e.g. fetches/subscriptions)
-  
+
   - *componentDidCatch*
     - after an error has been thrown by a child component
     - called during commit phase & allows side effects
@@ -247,7 +247,7 @@ reference2: <https://flow.org/en/docs/react/types/>
     - in dev
       - errors bubble up to window and can be handled by window.onerror/addeventListener
     - in prod
-      - errors **DO NOT** bubble and you must catch them for logging  
+      - errors **DO NOT** bubble and you must catch them for logging
 
 ## instance props & methods
 
@@ -257,12 +257,12 @@ reference2: <https://flow.org/en/docs/react/types/>
   - update the UI in response to events
   - react batches updates for performance; this is a **REQUSTE**
   - call setState **ONLY** when it differes from the previous state
-  
+
 - *forceUpdate*
   - use when the render method depends on data external to props/state
   - skips any checks in *shouldComponentUpdate* in the component and the components descendants
     - forces the entire component hierarchy to rerender
-  
+
 - *defaultProps*
 - *displayName*
 - *props*
@@ -273,9 +273,9 @@ reference2: <https://flow.org/en/docs/react/types/>
 ## React; top-level api
 
 - *React.Component*: have state and life cycle methods (PureComponent doesnt)
-  
+
 - *React.PureComponent*: no state/life cycle methods but shallow compares new & old props automatically (i.e. implement shouldComponentUpdate)
-  
+
 - *React.children*
 - *cloneElement*
 - *isValidElement*
@@ -303,7 +303,7 @@ reference2: <https://flow.org/en/docs/react/types/>
   - pass a fn to setState fn if
     - *new* state depends on the *prev* state
     - initial state is the result of an expensive computation
-  
+
 - *useEffect*
   - for dat afetching, subscriptions, changing dom elements, i.e any side asynchronous side effect
   - runs on every render soo make sure to:
@@ -316,8 +316,8 @@ reference2: <https://flow.org/en/docs/react/types/>
     - *componentDidMount*
     - *componentDidUpdate*
     - *componentWillUpdate*
-  -  
-  
+  -
+
 - *useLayoutEffect*
   - synchronous version of *useEffect* that fires synchronously after all DOM mutations but before the browser has a chance to paint
     - in comparison to *useEffect* that fires asynchronously
@@ -333,7 +333,7 @@ reference2: <https://flow.org/en/docs/react/types/>
   - forcibly rerenders all child components on update
   - can be at multiple levelsand the frist context.provider can intercept & handle it
     - think of the normal event bubbling logic
-  
+
 - *useReducer*
   - alternative to *useState* for:
     - complex objects
@@ -341,20 +341,20 @@ reference2: <https://flow.org/en/docs/react/types/>
     - advanced initialization of state
     - when next state depends on prev state
     - optimizing performance for components that trigger deep updates by passing a *dispatch* function instead of callbacks
-  
+
 - *useCallback*
   - returns a memoized callback to calculate a new value when its dependencies change
   - alternative to *useMemo* which provide the memoized value instead
   - usecases:
     - a child component needs the dispatch because it controls the dependency values
     -
-  
+
 - *useMemo*
   - returns a memoized vlaue when its dependencies change
   - runs during rendering
     - so **NO** side effects
   -
-  
+
 - *useRef*
   - returns a mutable ref object that exist sfor the lifetime of the component
   - gives you the *SAME* ref via *Object.is* logic
@@ -363,7 +363,7 @@ reference2: <https://flow.org/en/docs/react/types/>
     - keeping any mutable value around across renders
       - as it doesnt trigger a rerender when its value is mutated
   -
-  
+
 - *useImperativeHandle*
   - customizes the instance value expsosed to parent components when using *ref*
   - should be used with *forwardRef* when exporting *ANY* component that implements this hook
@@ -380,7 +380,7 @@ reference2: <https://flow.org/en/docs/react/types/>
 - *unmountComponentAtNode*
 - *findDOMNode*
 - *createPortal*
-  
+
 - *ReactDOM.createPortal*: render children into a dom node that exist outside the hierarchy of the parent component
   - event bubbling still occurs in the parent components hierarchy regardless of where the child element exists in the brownser DOM hierarchy
 
@@ -405,7 +405,7 @@ reference2: <https://flow.org/en/docs/react/types/>
     // synthetic events
       // contract
         eventHandler = e => {
-          e.bubbles 
+          e.bubbles
           e.cancelable
           e.currentTarget // DOMEventTarget
           e.defaultPrevented
@@ -437,7 +437,7 @@ reference2: <https://flow.org/en/docs/react/types/>
             .repeat|shiftKey|which
         // focus events
           // called when the parent/descendant receives/loses focus
-          onFocus|Blur 
+          onFocus|Blur
             .relatedTarget
         // form events
           onChange|Input|Invalid|Reset|Submit
@@ -455,7 +455,7 @@ reference2: <https://flow.org/en/docs/react/types/>
         // pointer events 1
           // propagate from el.exited > el.entering
           // no capture phase
-          onPointerEnter|Leave 
+          onPointerEnter|Leave
         // pointer events 2
           onPointerDown|Move|Up|Cancel|Over|Out
           onGotPointerCapture
@@ -491,10 +491,10 @@ reference2: <https://flow.org/en/docs/react/types/>
         // other events
           onToggle
 
-      
-      
+
+
       // examples
-        // detecting whether the element, or one of its decendents 
+        // detecting whether the element, or one of its decendents
         // received/lost focus
           onFocus={(e) => {
             if (e.currentTarget === e.target) {
@@ -518,7 +518,7 @@ reference2: <https://flow.org/en/docs/react/types/>
               console.log('focus left self');
             }
           }}
-        
+
 
     // instance methods
       // shallow merge a single prop into state
@@ -547,7 +547,7 @@ reference2: <https://flow.org/en/docs/react/types/>
             eventHandler = () => 'class fields syntax'
 
             unboundHandler () {
-              // can bind in event handler 
+              // can bind in event handler
             }
 
             poop = 'flush'
@@ -650,10 +650,10 @@ reference2: <https://flow.org/en/docs/react/types/>
       - This way you can keep the behavior of generics while only allowing certain types to be used.
     - if you instead choose type refinements, why bother with generics?
       - type refinements may still be useful for third-party code
-  
+
 - sometimes
   - may be appropriate, but not generally
-  
+
 - never
   - use anonymouse interfaces - just dont or die and go to hell where they code java with JSP
 
@@ -776,20 +776,14 @@ reference2: <https://flow.org/en/docs/react/types/>
   const ComponentProps = {
     children: React$Element,
   }
+
+  // exporting behaves as expected
+  export opaque type NumberAlias = number;
+  export type OtherType = string;
+  export opaque type ID: string = string; // subtyping constraint
+  // you need to import both keyword `type` and the specific type( i.g. numberalias) ?
+  import type { NumberAlias, OtherType } from './exports';
 ```
-
-### importing/exporting
-
-  ```js
-    // exporting behaves as expected
-    export opaque type NumberAlias = number;
-    export type OtherType = string;
-    export opaque type ID: string = string; // subtyping constraint
-    // you need to import both keyword `type` and the specific type( i.g. numberalias) ?
-    import type { NumberAlias, OtherType } from './exports';
-    
-
-  ```
 
 ### errors and react types
 
@@ -828,7 +822,7 @@ reference2: <https://flow.org/en/docs/react/types/>
 
 
     //can be a single/nested array to any level
-    React.ChildrenArray<T> 
+    React.ChildrenArray<T>
       const children: React.ChildrenArray<number> = 42;
       const children: React.ChildrenArray<number> = [[1, 2], 3, [4, 5]];
       const array: Array<number> = React.Children.toArray(children); // flatten the array
@@ -836,7 +830,7 @@ reference2: <https://flow.org/en/docs/react/types/>
     // need a better example
     // this is the ost abstract representation of a react component
     // useful for HOCs and library definitions
-    React.AbstractComponent<Config, Instance> 
+    React.AbstractComponent<Config, Instance>
 
 
     // alwys use for  class/fns that receive/return react components
@@ -889,9 +883,11 @@ reference2: <https://flow.org/en/docs/react/types/>
 
   ```js
     // modifiers
-      // append to propName instead for function params and object members
-      // prepend ? to type to make it optional
-      // prepend ! to type to make it not nullable
+      // append to propName function params and object members
+      // prepend ? to type to make it optional (type|null|void)
+        // i.e. maybe types
+        // ?number === number|null|void
+      // prepend ! to type to make it not nullable (type|void)
 
     // list of types
       // number
@@ -899,7 +895,7 @@ reference2: <https://flow.org/en/docs/react/types/>
       // boolean
       // null for null
       // void for undefined
-      // Array<subtype>
+      // Array<subtype> subtype[] e.g. string[]
       // symbol for Symbol
       // mixed for anything (but must be refined...see elseware for clarity)
       // { propName: type }
@@ -930,7 +926,7 @@ reference2: <https://flow.org/en/docs/react/types/>
       else
         const y: number = x;
 
-    // basic function 
+    // basic function
       function method(str: string, bool?: boolean, ...nums: Array<number>): void {}
       let method = (str: string, bool?: boolean, ...nums: Array<number>): void => {}
       function add(a: number, b: number): number {}
@@ -975,8 +971,8 @@ reference2: <https://flow.org/en/docs/react/types/>
         function method(value: { prop?: string }) {
           if (value.prop) {
             var prop = value.prop; // without this
-            otherMethod(); // because of this 
-            prop.charAt(0); // <-- throws err here 
+            otherMethod(); // because of this
+            prop.charAt(0); // <-- throws err here
           }
         }
       }
@@ -986,7 +982,7 @@ reference2: <https://flow.org/en/docs/react/types/>
       type b: string
       type c: a | b;
       type d: a & b
-    
+
   ```
 
 ### function typing
@@ -1017,13 +1013,13 @@ reference2: <https://flow.org/en/docs/react/types/>
       function method(param1: string, param2: boolean) {}
       // optional param ad ?: == missing|undefined|type but not null
       function method(optionalValue?: string) {}
-    
+
     // rest params
       function method(...args: Array<number>) {}
-    
+
     // function return type goes before the open braces
     // enforces that every branch of your function returns the same type
-      function method(): string {} 
+      function method(): string {}
       // async implies promise, so must always return a promise
       async function method(): Promise<number> {}
 
@@ -1040,8 +1036,8 @@ reference2: <https://flow.org/en/docs/react/types/>
       function truthy(a, b): boolean %checks {
         return !!a && !!b;
       }
-      
-    
+
+
 
   ```
 
@@ -1105,7 +1101,7 @@ reference2: <https://flow.org/en/docs/react/types/>
       (makeStore(ExtendedStore): Store);
       (makeStore(Model): Model); // error
       (makeStore(ExtendedStore): Model); // Flow infers the return type
-      
+
       // for classes that take type params
       // ^ you must also provide the params
         class ParamStore<T> {
@@ -1143,7 +1139,7 @@ reference2: <https://flow.org/en/docs/react/types/>
     const foo: Serializable = new Foo(); // Works!
     const bar: Serializable = new Bar(); // Works!
 
-    // always use implements 
+    // always use implements
     // unless you need an escape hatch to make methods/props not match the interface
       class Foo implements Serializable {
         serialize() { return '[Foo]'; } // Works!
@@ -1187,7 +1183,7 @@ reference2: <https://flow.org/en/docs/react/types/>
         interface Invariant {  property: number }
         var value1: Invariant     = { property: numberOrString };  // Error! it is more specific than invariant of only number
         var value2: Contravariant = { writeOnly: numberOrString }; // Works! it is less specific than contravariant, cant be mutated after instantiatian of only number
-    
+
 
 
   ```
@@ -1266,7 +1262,7 @@ reference2: <https://flow.org/en/docs/react/types/>
       const someObj: = [i: number]: string } = {}
         someObj[0] = 'a'
         someObj[1] = 'b'
-    
+
     // $ReadOnly<T>
       // only for object types, @see $ReadOnlyArray
       // represents the read-only version of a given object type
@@ -1311,11 +1307,11 @@ reference2: <https://flow.org/en/docs/react/types/>
       setProps({ name: 'foo' });
       setProps({ name: 'foo', age: 42, baz: false }); // you can pass extra props too
       setProps({ age: 42 }); // error, name is required
-      
-      // with optional props 
+
+      // with optional props
       type A = $Diff<{}, {nope: number}>; // Error
       type B = $Diff<{}, {nope: number | void}>; // OK
-    
+
     // $Rest<A, B>
     // the runtime object rest operation
     // e.g. const {foo, ...rest} = obj
@@ -1328,7 +1324,7 @@ reference2: <https://flow.org/en/docs/react/types/>
       const {age, ...otherProps} = props;
       (otherProps: $Rest<Props, {|age: number|}>);
       otherProps.age;  // Error
-    
+
     // $Shape<T>
     // T is some object type
     // ^ that can be assined objects O
@@ -1336,7 +1332,7 @@ reference2: <https://flow.org/en/docs/react/types/>
     // ^^ the definition goes on into set theory
     // ^^ @see https://flow.org/en/docs/types/utilities/#toc-shape if thats your thing
     // but basically object type O must match all props & types in object type T
-    // ^ i.e. must have the same shape, 
+    // ^ i.e. must have the same shape,
     // ^^ but object O does not need all the properties of type T
       type Person = {
         age: number,
@@ -1357,7 +1353,7 @@ reference2: <https://flow.org/en/docs/react/types/>
       // deprecated
       // use indexed access types instead
       // $PropertyType<T, 'k'> is now T['k'].
-    
+
     // $ElementType<T, K>
       // deprecated
       // use indexed access types instead
@@ -1377,12 +1373,12 @@ reference2: <https://flow.org/en/docs/react/types/>
     // shorthand
       const arr: number[] = [1, 2, 3]
       // optional array, but array elements cannot be null, while the the array itself can be
-        const arr: ?number[] = [] 
+        const arr: ?number[] = []
           const arr: ?Array<number> = [] // same as above
       // array cannot be null, but its elements can be
         const arr: (?number)[] = []
           const arr: Array<?number> = [] // same as above,
-    
+
     // $ReadOnlyArray<T>
     // supertype of all arrays, tuples
     // a readonly array is a type that cannot be modified, but can be passed around!
@@ -1436,7 +1432,7 @@ reference2: <https://flow.org/en/docs/react/types/>
     // can have an arbitrary amount of extra props on the value objects
       // must be keyed of the EXACT same property, e.g. `success`
         type Success = { success: true, value: boolean };
-        type Failed = { success: false, error: string }; 
+        type Failed = { success: false, error: string };
         type Almost = { ignored: true, reason: string } // will throw err because theres no `success` if used as a type part of a disjoint union
         type Response = Success | Failed;
         function handleResponse(response: Response) {
@@ -1555,7 +1551,7 @@ reference2: <https://flow.org/en/docs/react/types/>
 
     // subtyping constraint allows the opaque type to be used as a supertype (i.e. nominal type/argument)
     // when imported into other files
-      export opaque type ID: string = string; 
+      export opaque type ID: string = string;
         // without subtyping all of the following throw
           (0: NumberAlias) // Error: 0 is not a NumberAlias!
           function convert(x: NumberAlias): number {
@@ -1581,7 +1577,7 @@ reference2: <https://flow.org/en/docs/react/types/>
   ```js
     // generic types
     // generally genreic type syntax is explained
-    // next to the particular data type 
+    // next to the particular data type
     // hwever this contains a general overview
     // can be used wihtin fns, fn types, classes, type alias, and interfaces
 
@@ -1602,7 +1598,7 @@ reference2: <https://flow.org/en/docs/react/types/>
         const bad: IdentityWrapper = { func: identity }; // Error! identity has no type annotation
         const good: IdentityWrapper = { func: genericIdentity }; // Works!
 
-      
+
     // generic classes
     // place the type parameter list before the class body
       class SomeClass<T> {
@@ -1646,7 +1642,7 @@ reference2: <https://flow.org/en/docs/react/types/>
         // generics can be named anything
         // and the gneeric list can contain an arbitrary amount
         function identity<A, B, POOP> (x: A, z: B, flush: POOP) {}
-      
+
       // generic values are tracked
       // everywhere you use them flow asserts the correct type
         function identity<T> (value: T): T {
@@ -1665,14 +1661,14 @@ reference2: <https://flow.org/en/docs/react/types/>
       // relies on type refinements
       function logFoo<T>(obj: T): T {
         console.log(obj.foo); // Error! because .foo is not a property of T
-        
+
         if (obj && obj.foo) {
           console.log(obj.foo); // Works. because of the && type refinement
         }
       }
       // adds a type to the generic
       function logFoo<T: { foo: string }>(obj: T): T {
-        console.log(obj.foo); // Works! because of added type T.foo 
+        console.log(obj.foo); // Works! because of added type T.foo
         return obj;
       }
       logFoo({ foo: 'foo', bar: 'bar' });  // Works! T.foo is typed
@@ -1701,7 +1697,7 @@ reference2: <https://flow.org/en/docs/react/types/>
         }
         identity('bar');
 
-    // Parameterized generics 
+    // Parameterized generics
     // allow you to pass types in like arguments to a function
       // polymorphic object type, aka type alias
         type Item<T> = {
@@ -1729,7 +1725,7 @@ reference2: <https://flow.org/en/docs/react/types/>
         (Item.prototype: HasProp<string>); // Works! because HasProp.T generic is given a type of string which matches class.Item.prop type
         // $ExpectError
         (Item.prototype: HasProp); // Error! because HasProp.T generic doesn thave a type, while class.Item.prop is a string
-      
+
       // parameterized generic defaults
         type Item<T: number = 1> = { // default type + value
           prop: T,
@@ -1803,7 +1799,7 @@ reference2: <https://flow.org/en/docs/react/types/>
     // type casting expressions
     // asserting and casting values to different types
     // can appear anywhere an expression can appear
-    // values can only be casted 
+    // values can only be casted
       (value: Type); // value is now Type
       // let obj = { prop: (value: Type) };
       // let arr = ([ (value:Type), (value: Type) ]: Array<Type>);
@@ -1817,7 +1813,7 @@ reference2: <https://flow.org/en/docs/react/types/>
       let newValue = (value: number);
       (newValue: 42); // Error: new value is less specific number
       ((newValue: any): string); // Works; first casting to any allows you to subseqently cast to anything
-      
+
 
 
 
@@ -1853,7 +1849,7 @@ reference2: <https://flow.org/en/docs/react/types/>
       // the following are equivalent
       import typeof * as T from 'my-module';
       type T = $Exports<'my-module'>;
-      // however, $Exports allows you to export th type 
+      // however, $Exports allows you to export th type
       // ^ on the same line
       export type T = $Exports<'my-module'>;
 
@@ -1966,7 +1962,7 @@ reference2: <https://flow.org/en/docs/react/types/>
         (run(o).b: boolean); // Nope, b is a string
         // $ExpectError
         run(o).c;            // Nope, c was not in the original object
-    
+
     // $OjMapi<T, F>
     // similar to ObjMap<T,F >
     // + but fn F will be called with both the key and value types of the object type T
@@ -1990,7 +1986,7 @@ reference2: <https://flow.org/en/docs/react/types/>
     // $TupleMap<T, F>
     // takes an iterable type (e.g. Tuple|Array)
     // and returns the iterable type obtained by mapping
-    // ^ the type of each value in the iterable with the 
+    // ^ the type of each value in the iterable with the
     // ^^ provided fn type
     // analogous to js fn Map
       // e.g. if the aforementioned run fn takes an array
@@ -2102,7 +2098,7 @@ reference2: <https://flow.org/en/docs/react/types/>
       $SuperType<T>
       $Subtype<T>
       (*) // existential type
-      
+
     // refining maybe types
     function poop(value: ?number) {
       // this checks both null && undefined
@@ -2160,7 +2156,7 @@ reference2: <https://flow.org/en/docs/react/types/>
         // as the internal typeof obj also gets this annotation
         // which defeats the purpose of type casting to any
         function cloneObject(obj: { [key: string]: mixed }) { }
-        
+
         // the correct way to annotate the cloneObject fn
         // you no longer need the internal type cast on object props
         function cloneObject<T: { [key: string]: mixed }>(obj: T): $Shape<T> {}
