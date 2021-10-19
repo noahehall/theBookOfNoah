@@ -884,9 +884,10 @@ reference2: <https://flow.org/en/docs/react/types/>
   ```js
     // modifiers
       // append to propName function params and object members
-      // prepend ? to type to make it optional (type|null|void)
+      // prepend ? to type to make it optional (type|void)
         // i.e. maybe types
-        // ?number === number|null|void
+        // ?number === number|undefined
+        // { propertyName?: string } == {poop: undefined} but not { poop:null}
       // prepend ! to type to make it not nullable (type|void)
 
     // list of types

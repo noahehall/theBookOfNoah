@@ -1,68 +1,75 @@
 # links
-  - [accessing a DB](https://www.postgresql.org/docs/current/static/tutorial-accessdb.html)
-  - [postgres cheatsheet](https://gist.github.com/Kartones/dd3ff5ec5ea238d4c546)
-  - [general sql cheatsheet](https://gist.github.com/janikvonrotz/6e27788f662fcdbba3fb)
-  - [getting started postgresql server mac osx](https://www.codementor.io/devops/tutorial/getting-started-postgresql-server-mac-osx)
-  - [postgresql tut](http://www.postgresqltutorial.com/)
-    - todo sections: 4, 5, 6, 9, 10, 11, 12, 13, 14, 15,
-  - [setup postgresql on ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
-  - [postgres roles and permissions](https://www.digitalocean.com/community/tutorials/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2)
-  - [formatting CLI responses](https://stackoverflow.com/questions/9604723/alternate-output-format-for-psql)
-  - [managing db tables](https://www.digitalocean.com/community/tutorials/how-to-create-remove-manage-tables-in-postgresql-on-a-cloud-server)
-  - [upsert tut](http://www.postgresqltutorial.com/postgresql-upsert/)
 
+- [accessing a DB](https://www.postgresql.org/docs/current/static/tutorial-accessdb.html)
+- [postgres cheatsheet](https://gist.github.com/Kartones/dd3ff5ec5ea238d4c546)
+- [general sql cheatsheet](https://gist.github.com/janikvonrotz/6e27788f662fcdbba3fb)
+- [getting started postgresql server mac osx](https://www.codementor.io/devops/tutorial/getting-started-postgresql-server-mac-osx)
+- [postgresql tut](http://www.postgresqltutorial.com/)
+  - todo sections: 4, 5, 6, 9, 10, 11, 12, 13, 14, 15,
+- [setup postgresql on ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
+- [postgres roles and permissions](https://www.digitalocean.com/community/tutorials/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2)
+- [formatting CLI responses](https://stackoverflow.com/questions/9604723/alternate-output-format-for-psql)
+- [managing db tables](https://www.digitalocean.com/community/tutorials/how-to-create-remove-manage-tables-in-postgresql-on-a-cloud-server)
+- [upsert tut](http://www.postgresqltutorial.com/postgresql-upsert/)
 
 # research
-  - User-defined types
-  - Table inheritance
-  - Sophisticated locking mechanism
-  - Foreign key referential integrity
-  - Views, rules, subquery
-  - Nested transactions (savepoints)
-  -
-  - Asynchronous replication
-  - Tablespaces
-  - Point-in-time recovery
+
+- User-defined types
+- Table inheritance
+- Sophisticated locking mechanism
+- Foreign key referential integrity
+- Views, rules, subquery
+- Nested transactions (savepoints)
+-
+- Asynchronous replication
+- Tablespaces
+- Point-in-time recovery
 
 # terminology
-  - PostgreSQL: general purpose and object-relational database management system, the most advanced open source database system
-    - allows you to add custom functions developed using different programming
-    - define your own data types, index types, functional languages, etc.
-    - develop a custom plugin to enhance it to meet your requirements e.g., adding a new optimizer.
-  - Multi-version concurrency control (MVCC):
-    - known as snapshot isolation in Oracle
+
+- PostgreSQL: general purpose and object-relational database management system, the most advanced open source database system
+  - allows you to add custom functions developed using different programming
+  - define your own data types, index types, functional languages, etc.
+  - develop a custom plugin to enhance it to meet your requirements e.g., adding a new optimizer.
+- Multi-version concurrency control (MVCC):
+  - known as snapshot isolation in Oracle
 
 # server and db objects
-  - server service: You can install multiple PostgreSQL servers on a physical server using different ports and having different locations to store data.
-  - database: container of other objects such as tables, views, functions, indexes, etc
-  - table: used to store the data
-  - table inheritance: a table (child table) can inherit from another table (parent table) so when you query data from the child table, the data from parent table is also showing up.
-  - schema: logical container of tables and other objects inside a database.
-    - Each PostgreSQL database may have multiple schemas.
-  - tablespace:  where PostgreSQL stores the data
-    - enables you to move your data to different physical location across drivers easily by using simple commands.
-    - pg_default: for storing user’s data
-    - pg_global: for storing system data.
-  - view: a virtual table that is used to simplify complex queries and to apply security for a set of records.
-    - updatable views:
-  - function:  a block reusable SQL code that returns a scalar value of a list of records
-  - operator:  a symbolic function.
-  - cast: enable you to convert one data type into another data type.
-    - You can also create your own casts to override the default casting provided by PostgreSQL.
-  - sequence:  used to manage auto-increment columns that defined in a table as a serial column.
-  - extension:  wrap other objects including types, casts, indexes, functions, etc into a single unit.
-    -  The purpose of extensions is to make it easier to maintain.
-  - subquery: a query nested inside another query, e.g. in the where clause with the in operator
+
+- server service: You can install multiple PostgreSQL servers on a physical server using different ports and having different locations to store data.
+- database: container of other objects such as tables, views, functions, indexes, etc
+- table: used to store the data
+- table inheritance: a table (child table) can inherit from another table (parent table) so when you query data from the child table, the data from parent table is also showing up.
+- schema: logical container of tables and other objects inside a database.
+  - Each PostgreSQL database may have multiple schemas.
+- tablespace:  where PostgreSQL stores the data
+  - enables you to move your data to different physical location across drivers easily by using simple commands.
+  - pg_default: for storing user’s data
+  - pg_global: for storing system data.
+- view: a virtual table that is used to simplify complex queries and to apply security for a set of records.
+  - updatable views:
+- function:  a block reusable SQL code that returns a scalar value of a list of records
+- operator:  a symbolic function.
+- cast: enable you to convert one data type into another data type.
+  - You can also create your own casts to override the default casting provided by PostgreSQL.
+- sequence:  used to manage auto-increment columns that defined in a table as a serial column.
+- extension:  wrap other objects including types, casts, indexes, functions, etc into a single unit.
+  - The purpose of extensions is to make it easier to maintain.
+- subquery: a query nested inside another query, e.g. in the where clause with the in operator
 
 # installing on buntu 18.04
-  - install commands
+
+- install commands
+
     ```sql
       sudo apt update
       sudo apt install postgresql postgresql-contrib
     ```
-  - post install
-    - installation process creates a user account called `postgres` that is associated wiht the default postgres role
-      - in order to use postgres, you can log into that account
+
+- post install
+  - installation process creates a user account called `postgres` that is associated wiht the default postgres role
+    - in order to use postgres, you can log into that account
+
       ```sql
         -- option 1: switch over to postgres account via intermediary bash shell
           sudo -i -u postgres -- switch to postgres linux user
@@ -77,7 +84,9 @@
       -- setup formatting so responses fit to the width of the screen
         \x auto
       ```
+
 # admin
+
   ```sql
     -- locations
       config file: /etc/postgresql/9.3/main/postgresql.conf
@@ -147,14 +156,16 @@
       \du -- list all users
 
   ```
+
 ## roles/users
-  - roles: handle authentication and authorization
-    - similar to unix-style accounts
-    - roles do not distinguish between users and groups
-      - roles: users that cannot login
-      - users: roles with LOGIN permission
-    - can be members of other roles, allowing them to take on the permission characteristics of previously defined roles.
-    - can also own objects and control access to those object for other roles.
+
+- roles: handle authentication and authorization
+  - similar to unix-style accounts
+  - roles do not distinguish between users and groups
+    - roles: users that cannot login
+    - users: roles with LOGIN permission
+  - can be members of other roles, allowing them to take on the permission characteristics of previously defined roles.
+  - can also own objects and control access to those object for other roles.
 
   ```sql
     -- creating a new user (same as role) from the CLI
@@ -197,8 +208,11 @@
         -- | USER role_name [, ...]
         -- | SYSID uid
   ```
+
 ## permissions
-  - hen a database or table is created, usually only the role that created it (not including roles with superuser status) has permission to modify it.
+
+- when a database or table is created, usually only the role that created it (not including roles with superuser status) has permission to modify it.
+
   ```sql
     -- grant permission to role for a table
       GRANT permission_type ON table_name TO role_name;
@@ -232,17 +246,20 @@
     -- view all grant table (all granted permissions)
       \z
   ```
+
 ## Authentication
-  - types of authentication
-    - ident: associates postgres roles with a matching unix/linux system account
-      - if a role exists within postgress, a unix/linux username with the same name is able to sign in as that role
-      - Another assumption that the Postgres authentication system makes by default is that for any role used to log in, that role will have a database with the same name which it can access.
-    - accessing database
-      - Logging in
-        - users are only allowed to login locally if the system username matches the PostgreSQL username.
-          - an get around this by either:
-            - changing the login type
-            - or by specifying that PostgreSQL should use the loopback network interface, which would change the connection type to remote, even though it is actually a local connection.
+
+- types of authentication
+  - ident: associates postgres roles with a matching unix/linux system account
+    - if a role exists within postgress, a unix/linux username with the same name is able to sign in as that role
+    - Another assumption that the Postgres authentication system makes by default is that for any role used to log in, that role will have a database with the same name which it can access.
+  - accessing database
+    - Logging in
+      - users are only allowed to login locally if the system username matches the PostgreSQL username.
+        - an get around this by either:
+          - changing the login type
+          - or by specifying that PostgreSQL should use the loopback network interface, which would change the connection type to remote, even though it is actually a local connection.
+
   ```sql
     -- login with username and pass to a specific DB and IP
       psql -U user_name -d database_name -h 127.0.0.1 -W
@@ -251,9 +268,8 @@
       \password test_user
   ```
 
-
-
 ## databases and tables
+
   ```sql
     -- create a table
       CREATE TABLE demo (
@@ -269,18 +285,22 @@
       \d
 
   ```
+
 # statements
+
 ## select
-  - Select distinct rows by using `DISTINCT` operator.
-  - Filter rows by using `WHERE` clause.
-  - Sort rows by using `ORDER` BY clause.
-  - Select rows based on various operators such as `BETWEEN`, `IN` and `LIKE`.
-  - Group rows into groups using `GROUP BY` clause
-  - Apply conditions for groups using `HAVING` clause.
-  - Join a table to other tables using `INNER JOIN`, `LEFT JOIN`, `FULL OUTER JOIN`, `CROSS JOIN` clauses.
-  - To construct a subquery, we put the second query in brackets and use it in the WHERE clause as an expression
+
+- Select distinct rows by using `DISTINCT` operator.
+- Filter rows by using `WHERE` clause.
+- Sort rows by using `ORDER` BY clause.
+- Select rows based on various operators such as `BETWEEN`, `IN` and `LIKE`.
+- Group rows into groups using `GROUP BY` clause
+- Apply conditions for groups using `HAVING` clause.
+- Join a table to other tables using `INNER JOIN`, `LEFT JOIN`, `FULL OUTER JOIN`, `CROSS JOIN` clauses.
+- To construct a subquery, we put the second query in brackets and use it in the WHERE clause as an expression
 
 ### retrieval
+
   ```sql
     -- basic retrieval
       select * from tablename;
@@ -323,14 +343,17 @@
   ```
 
 ### builtin functions
+
   ```sql
     select avg (col) from tablename;
   ```
 
 ### sub queries
-  - First, executes the subquery.
-  - Second, gets the result and passes it to the outer query.
-  - Third, executes the outer query.
+
+- First, executes the subquery.
+- Second, gets the result and passes it to the outer query.
+- Third, executes the outer query.
+
   ```sql
     -- basic subquery
       select * from tablename where col > (
@@ -344,61 +367,65 @@
   ```
 
 # tables
-  - temporary table: exists for the duration of a db session
+
+- temporary table: exists for the duration of a db session
+
 ## creating and modifying
-  - primary key: field(s) used to uniquely identify a record
-    - default name is tablename_pk
-    - Technically, a primary key constraint is the combination of a not-null constraint and a UNIQUE constraint.
-    - A table can have one and only one primary key.
-    - good practice to add a primary key to every table.
-  - foreign key: field(s) in one table record that uniquely identify the primary key of a record in another table
-    - default name is tablename__colname_fk
-    - referencing/child table: the table that contains the foreign key
-    - referenced/parent table: the table whose primary key is referenced by the child table
-    - a foreign key constraint maintains referential integrity between child and parent tables
-  - column keywords:
-    - primary key (col1, colX)
-      - can be one/more columns
-    - not null
-  - data types: serial, numeric, int,
-    - character
-      - char(n) - fixed length blank padded
-      - varchar(n) variable length
-      - text
-        - text has unlimited length
-    - numeric:
-      - integers
-        - smallint int serial
-          - int4 | int8
-            - research this
-          - serial is auto generated & incremented
-      - floating point
-        - float(n) real float8 numeric numeric(p,s)
-          - float(n) where n = number of decimal places
-          - numeric(p,s)
-            - p = number of digits before the decimal
-            - s = number of digits after the decimal
-    - temporal/time
-      - date time timestamp timestampz interval
-        - timestampz = stores both timestamp and timezone
-        - interval = periods of time
-    - bool:
-      - truthy: true, t, yes, y, 1
-      - falsy: false, f, no, n, 0
-    - arrays: array of other data types, e.g. for storing days of week
-    - json: plain json data that requires reparsing later on
-    - jsonb: json in binary format for faster processing but slower insert
-      - supports indexing
-    - uuid: store uuid values defined by RFC 4122
-      - guarantee a better uniqueness than serial
-      - can be used to hide sensitive data
-    - box: rectangular box
-    - line: a set of points
-    - point: geometric pair of numbers
-    - lseg: line segment
-    - polygon: closed geometric
-    - inet: ip4 address
-    - macaddr: a mac address
+
+- primary key: field(s) used to uniquely identify a record
+  - default name is tablename_pk
+  - Technically, a primary key constraint is the combination of a not-null constraint and a UNIQUE constraint.
+  - A table can have one and only one primary key.
+  - good practice to add a primary key to every table.
+- foreign key: field(s) in one table record that uniquely identify the primary key of a record in another table
+  - default name is tablename__colname_fk
+  - referencing/child table: the table that contains the foreign key
+  - referenced/parent table: the table whose primary key is referenced by the child table
+  - a foreign key constraint maintains referential integrity between child and parent tables
+- column keywords:
+  - primary key (col1, colX)
+    - can be one/more columns
+  - not null
+- data types: serial, numeric, int,
+  - character
+    - char(n) - fixed length blank padded
+    - varchar(n) variable length
+    - text
+      - text has unlimited length
+  - numeric:
+    - integers
+      - smallint int serial
+        - int4 | int8
+          - research this
+        - serial is auto generated & incremented
+    - floating point
+      - float(n) real float8 numeric numeric(p,s)
+        - float(n) where n = number of decimal places
+        - numeric(p,s)
+          - p = number of digits before the decimal
+          - s = number of digits after the decimal
+  - temporal/time
+    - date time timestamp timestampz interval
+      - timestampz = stores both timestamp and timezone
+      - interval = periods of time
+  - bool:
+    - truthy: true, t, yes, y, 1
+    - falsy: false, f, no, n, 0
+  - arrays: array of other data types, e.g. for storing days of week
+  - json: plain json data that requires reparsing later on
+  - jsonb: json in binary format for faster processing but slower insert
+    - supports indexing
+  - uuid: store uuid values defined by RFC 4122
+    - guarantee a better uniqueness than serial
+    - can be used to hide sensitive data
+  - box: rectangular box
+  - line: a set of points
+  - point: geometric pair of numbers
+  - lseg: line segment
+  - polygon: closed geometric
+  - inet: ip4 address
+  - macaddr: a mac address
+
   ```sql
     create table tablename (
       col1 TYPE keyword1 keyword2 keywordX,
@@ -451,15 +478,20 @@
 
 
   ```
+
 ## deleting tables
+
   ```sql
     drop table tablename
     drop table if exists tablename -- dont throw error if table doesnt exist
     drop table cascade -- drop and remove all dependent objects (views, references, etc)
     drop table restrict -- dont drop if any references exist
   ```
+
 # updating records
-  - 'upsert: update if it exists, else inserts it'
+
+- 'upsert: update if it exists, else inserts it'
+
   ```sql
     insert into tablename (col1, colX)
     values
@@ -506,9 +538,11 @@
   ```
 
 # deleting records
-  - truncate: remove all data from a large table
-    - does not remove any child tables unless you specify `cascade`
-  - delete: scans the table before deleting records (usually because of where clause)
+
+- truncate: remove all data from a large table
+  - does not remove any child tables unless you specify `cascade`
+- delete: scans the table before deleting records (usually because of where clause)
+
   ```sql
     delete from tablename where CONDITION
     -- delete based on values from othertablename
@@ -529,7 +563,9 @@
       truncate table tablename cascade
 
   ```
+
 # prepared statements
+
   ```sql
     -- create a prepared statement that accepts an argument
       prepare statementname(arg1)
@@ -539,6 +575,7 @@
   ```
 
 # handy queries
+
   ```sql
     -- Query analysis:
       EXPLAIN __query__ -- see the query plan for the given query
@@ -617,6 +654,7 @@
   ```
 
 # get foreign key constraints
+
   ```sql
   -- get specific table foreign key constraints
     SELECT
