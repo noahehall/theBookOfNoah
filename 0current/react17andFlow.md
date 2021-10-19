@@ -1831,9 +1831,10 @@ reference2: <https://flow.org/en/docs/react/types/>
         // @flow <-- make sure this is at the top of each file
         export default class Foo {};
         export type MyObject: {};
-        export interfahttps://flow.org/en/docs/types/modules/ce MyInterface {}
+        // https://flow.org/en/docs/types/modules/
+        export interface MyInterface {}
         // in some other file
-        import type Foo, { MyObject, MyInterfacE } from './poop.mjs';
+        import type Foo, { MyObject, MyInterface } from './poop.mjs';
 
       // importing & exporting values
       // the type of values using flows typeof operator

@@ -12,7 +12,9 @@
 - [managing db tables](https://www.digitalocean.com/community/tutorials/how-to-create-remove-manage-tables-in-postgresql-on-a-cloud-server)
 - [upsert tut](http://www.postgresqltutorial.com/postgresql-upsert/)
 
-# research
+# basics
+
+## research
 
 - User-defined types
 - Table inheritance
@@ -25,7 +27,7 @@
 - Tablespaces
 - Point-in-time recovery
 
-# terminology
+## terminology
 
 - PostgreSQL: general purpose and object-relational database management system, the most advanced open source database system
   - allows you to add custom functions developed using different programming
@@ -34,7 +36,7 @@
 - Multi-version concurrency control (MVCC):
   - known as snapshot isolation in Oracle
 
-# server and db objects
+## server and db objects
 
 - server service: You can install multiple PostgreSQL servers on a physical server using different ports and having different locations to store data.
 - database: container of other objects such as tables, views, functions, indexes, etc
@@ -57,7 +59,7 @@
   - The purpose of extensions is to make it easier to maintain.
 - subquery: a query nested inside another query, e.g. in the where clause with the in operator
 
-# installing on buntu 18.04
+## installing on buntu 18.04
 
 - install commands
 
@@ -85,7 +87,9 @@
         \x auto
       ```
 
-# admin
+# must know
+
+## admin
 
   ```sql
     -- locations
