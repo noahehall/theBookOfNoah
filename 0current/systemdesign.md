@@ -41,6 +41,9 @@ various components exist when designing a system, understanding the specific com
 - version control
 - CI
 - CD
+- provisioning
+- access control
+- DNS
 
 ## multi-tier applicaitons
 

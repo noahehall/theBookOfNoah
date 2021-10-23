@@ -41,6 +41,9 @@
       - each config should be independent with its own:
         - output variables to publish information
         - remote state resources to access output data from other workspaces
+      - each team determines who can
+        - develop terraform plans e.g. access to git repositories
+        - apply terraform plans to infrastructure e.g. access to AWS
 
 ### terminology
 
