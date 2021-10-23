@@ -1,3 +1,6 @@
+bookmark: <https://www.google.com/search?q=architectural+patterns>
+  be sure to set the time to last 1 year
+
 # TLDR
 
 - find where the old version of this file exists and copy everything here
@@ -42,9 +45,33 @@ you cant talk about system design without talking about the people involed
   - usually dont have authority to make changes to production, but can to dev, UAT and staging
   - can edit a subset of global application variables and/or apply personal variables to non-production environments for testing
 
+## key questions
+
+before you can design a system, you need to understand the business requirements, existing infrastructure, and capabilities of the IT determine to manage and iterate
+
+- whats the level of technical maturity: example for automation & infrastructure as code (terraform)
+  - manual
+    - infrastructre is provisioned through a UI/CLI
+    - configuration changes do not leave a traceable history, and arent always visible
+    - limited or no naming standards in place
+
+  - semi-automated
+    - infrastructure provisioned thorugh a combination of UI/CLI, IaaC and scripts/config management
+    - traceability is limited, e.g. different record-keeping methods used across the organization
+    - rollbacks hard to achieve due to differing record-keeping methods
+
+  - infrastructure as code
+    - provisioned via a tool (e.g. Terraform)
+    - provisioning and deployment processes are automated
+    - infrastructure configuration is consistent, with all necessary details fully documented (nothing siloed in sysadmins head)
+    - source files stored in version control to record editing history, and if necessary, rollback to older versions
+    - configuration is split into modules to promote consistent reuse of organizations common architectural patterns
+
 ## components
 
 various components exist when designing a system, understanding the specific components in isolation and planning how they should holistically work together to meet business requirements is the main goal of system design
+
+- components can/should be global|differentiated across the organization
 
 - application layer
   - frontend:
@@ -57,6 +84,8 @@ various components exist when designing a system, understanding the specific com
 - load balancers
 - observability
   - the ability to monitor signals, and which signals are important enough to be monitored
+
+- tracing/traceability/change tracking
 
 - monitoring
   - single dashboard to view the status and compliance of all infrastructure and deployed resources
@@ -71,6 +100,8 @@ various components exist when designing a system, understanding the specific com
 - CI
 - CD
 - provisioning
+  - provisioned resources should be rollbackable
+
 - access control
 - DNS
 
