@@ -1,5 +1,5 @@
 bookmark:
-  reading: pg 99 - the world according to convention
+  reading: pg 106
   copying: somewere at the bottom of page 10
 
 # TLDR
