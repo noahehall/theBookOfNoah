@@ -10,6 +10,22 @@
 
 ## basics
 
+### best practices
+
+- ALWAYS
+  - workspaces
+    - should be named with both their component and their env, e.g. appname-dev, appname-staging
+    - use per-workspace access controls and delegate ownership of components and regulate code promotion across envs
+      - e.g. appname-dev is owned by one tam, and to promote to appname-staging another team is responsible (or perhaps the same lead) for approving infrastructure changes
+
+- NEVER
+  - workspaces
+    - dont use a single terraform workspace to manage everything that makes up production/staging/etc
+      - instead make smaller workspaces that are easy to delegate and drop
+        - e.g. UAT doesnt make sense for security infrastructure
+
+### about
+
 - terraform: IaC tool for building, changing, and versioning infrastructure
   - e.g. compute instances, storage and networking, DNS entries, SaaS features
 
@@ -48,8 +64,19 @@
 ### terminology
 
 - remote state resources: enables access to infrastructure variables (e.g. URI of RDS, etc) from indepedent terraform workspaces
-- terraform workspace
 - output variables
+
+### core components
+
+- terraform workspace: main unit of organization and primary tool for delegating control
+  - workspace structure should match your organization permissions structure
+    - e.g. one workspace for each environment of a given component (i.e. configurations * env = workspaces)
+  - collection of everything terraform needs to run
+    - configuration files
+    - values for configuration variables
+    - state data to keep track of operations between runs
+      - local: a state file on disk
+      - cloud: peristent shared resources that can be assigned own controls, monitor run states, etc
 
 ### core workflow
 

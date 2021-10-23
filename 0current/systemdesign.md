@@ -21,7 +21,7 @@
 - fault-tolerance
 - single dashboard view
 - streamlined way to promote changes between environments and across domains
-- interface to securely store and share variables
+- interface to securely store, share and apply variables across environments and resources
 
 ## key people & roles
 
