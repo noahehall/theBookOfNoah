@@ -19,6 +19,7 @@ bookmark: <https://www.google.com/search?q=architectural+patterns>
 
 - UAT: user acceptance testing
 - VCS: version control system, e.g. git
+- CAB: change advisory board
 
 - self serve infrastructure: instead a of a global operations team managing the entire infrastructure, each specific team are responsibile for their devstack via tools provided by the central operations team
 - software defined netowrking: SDN: provides more control to operators & developers and allows netowrking to better support the applications urnnin on top
@@ -159,9 +160,12 @@ before you can design a system, you need to understand the business requirements
     - manual changelog: users manually write down their changes in a shared document
     - logging all API calls to an audit trail/log management service (e.g. cloudtrail, loggly, splunk)
 
-- how is access of former eployees revoked
-
-    -
+  - how is access of former eployees revoked
+    - immediately, manually
+    - delayed, as part of the next release
+      - e.g. when your release process is extremely coupled and most security changes pass through a CAB meeting in order to be executed in production
+    - immdiately, writing a hot-fix in the infrastructure as code
+      - the most secure option and should occur before employee leaves the building
 
 ## components
 
