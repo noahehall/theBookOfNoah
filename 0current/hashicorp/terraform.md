@@ -1,3 +1,5 @@
+<https://learn.hashicorp.com/collections/terraform/docker-get-started>
+
 # TLDR
 
 ## links
@@ -20,12 +22,13 @@
   - [all preparation for associate certification](https://learn.hashicorp.com/collections/terraform/certification)
   - [all aws tutorials](https://learn.hashicorp.com/collections/terraform/aws-get-started)
   - [all associate tuturials](https://learn.hashicorp.com/collections/terraform/certification-associate-tutorials)
-  -
+  - [terraform + docker](https://learn.hashicorp.com/collections/terraform/docker-get-started)
   - [terraform + aws](https://learn.hashicorp.com/collections/terraform/aws-get-started)
   - [automating terraform](https://learn.hashicorp.com/tutorials/terraform/automate-terraform?in=terraform/automation)
   - [build aws infrastructure](https://learn.hashicorp.com/tutorials/terraform/aws-build)
 
 - providers
+  - [all providers](https://registry.terraform.io/browse/providers)
   - [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc)
   - [vault](https://registry.terraform.io/providers/hashicorp/vault/latest/docs)
 
