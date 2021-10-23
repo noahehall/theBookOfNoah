@@ -2,22 +2,32 @@
 
 ## links
 
+- [terraform cloud](https://app.terraform.io/app/getting-started)
+  - they offer free accounts for opensource
 - [install](https://www.terraform.io/docs/cli/install/apt.html)
 - [evaluating existing infrastructure](https://www.terraform.io/docs/cloud/guides/recommended-practices/part2.html)
+- [aws provider examples on github](https://github.com/hashicorp/terraform-provider-aws/tree/master/examples)
 
 - specs
   - [remote state](https://www.terraform.io/docs/language/state/remote-state-data.html)
   - [output values](https://www.terraform.io/docs/language/values/outputs.html)
   - [providers](https://www.terraform.io/docs/language/providers/index.html)
   - [terraform registry publishing](https://www.terraform.io/docs/registry/index.html)
+  - [terraform .tf syntax](https://www.terraform.io/docs/language/index.html)
+    - [terraform modules](https://www.terraform.io/docs/language/modules/develop/index.html)
 
 - tuts
-  - [terraform .tf syntax](https://www.terraform.io/docs/language/index.html)
+  - [all preparation for associate certification](https://learn.hashicorp.com/collections/terraform/certification)
+  - [all aws tutorials](https://learn.hashicorp.com/collections/terraform/aws-get-started)
+  - [all associate tuturials](https://learn.hashicorp.com/collections/terraform/certification-associate-tutorials)
+  -
   - [terraform + aws](https://learn.hashicorp.com/collections/terraform/aws-get-started)
   - [automating terraform](https://learn.hashicorp.com/tutorials/terraform/automate-terraform?in=terraform/automation)
+  - [build aws infrastructure](https://learn.hashicorp.com/tutorials/terraform/aws-build)
 
 - providers
   - [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc)
+  - [vault](https://registry.terraform.io/providers/hashicorp/vault/latest/docs)
 
 ## basics
 

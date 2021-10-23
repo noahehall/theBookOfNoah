@@ -1,9 +1,6 @@
 bookmark: <https://www.google.com/search?q=architectural+patterns>
   be sure to set the time to last 1 year
 
-<https://www.terraform.io/docs/cloud/guides/recommended-practices/part2.html>
-  collaborative infrastructure as code
-
 # TLDR
 
 - find where the old version of this file exists and copy everything here
@@ -14,6 +11,13 @@ bookmark: <https://www.google.com/search?q=architectural+patterns>
 - [OSI modal explained](https://www.networkworld.com/article/3239677/the-osi-model-explained-and-how-to-easily-remember-its-7-layers.html)
 - [terraform docs](https://www.terraform.io/docs/cloud/guides/recommended-practices/part2.html)
   - generally the entire terraform doc is dope af for an entrance into system design
+- [aws well-architected framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
+- [aws architecture center](https://aws.amazon.com/architecture/)
+- [azure architecture patterns](https://docs.microsoft.com/en-us/azure/architecture/browse/)
+- [azure architecture center](https://docs.microsoft.com/en-us/azure/architecture/)
+- [GCP patterns for scalablee and resilient apps](https://cloud.google.com/architecture/scalable-and-resilient-apps)
+
+-
 
 ## terminology
 
