@@ -774,7 +774,7 @@ reference2: <https://flow.org/en/docs/react/types/>
 
 ```js
   const ComponentProps = {
-    children: React$Element,
+    children: ElementReact$,
   }
 
   // exporting behaves as expected

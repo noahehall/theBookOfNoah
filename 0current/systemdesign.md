@@ -9,6 +9,8 @@
 
 ## terminology
 
+- UAT: user acceptance testing
+
 - self serve infrastructure: instead a of a global operations team managing the entire infrastructure, each specific team are responsibile for their devstack via tools provided by the central operations team
 - software defined netowrking: SDN: provides more control to operators & developers and allows netowrking to better support the applications urnnin on top
   - most have a control layer and infrastructure layer
@@ -17,6 +19,26 @@
 
 - redundancy
 - fault-tolerance
+- single dashboard view
+- streamlined way to promote changes between environments and across domains
+- interface to securely store and share variables
+
+## key people & roles
+
+you cant talk about system design without talking about the people involed
+
+- central IT: responsible for defining common infrastructure practices, enforcing policy across teams and maintaining shared services
+
+- organization architect: define how global infrastructure is divided and delegated to the teams within the business unit
+  - enables connectivity between resources, applications, and workspaces by defining the APIs each one must expose, and sets organization-wide variables and policies
+
+- application, resource and workspace owners:
+  - responsibile for owning & managing each *thing*, e.g. the health/status, change lifecycle through dev, UAT, staging and production
+  - main approver of changes to production within their domain
+
+- contributor: submits changes to resources/applications/domains/etc by making updates to the underlying code/infrastructure
+  - usually dont have authority to make changes to production, but can to dev, UAT and staging
+  - can edit a subset of global application variables and/or apply personal variables to non-production environments for testing
 
 ## components
 
@@ -32,7 +54,12 @@ various components exist when designing a system, understanding the specific com
 - routing meshes
 - load balancers
 - observability
+  - the ability to monitor signals, and which signals are important enough to be monitored
+
 - monitoring
+  - single dashboard to view the status and compliance of all infrastructure and deployed resources
+    - analize, identify, and quickly fix misconfigurations and malfunctions
+
 - storage
   - public
   - private (e.g. API keys, SSL Cert Pairs)
