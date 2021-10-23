@@ -68,15 +68,24 @@
 
 ### core components
 
-- terraform workspace: main unit of organization and primary tool for delegating control
-  - workspace structure should match your organization permissions structure
-    - e.g. one workspace for each environment of a given component (i.e. configurations * env = workspaces)
-  - collection of everything terraform needs to run
-    - configuration files
-    - values for configuration variables
-    - state data to keep track of operations between runs
-      - local: a state file on disk
-      - cloud: peristent shared resources that can be assigned own controls, monitor run states, etc
+### terraform workspace
+
+main unit of organization and primary tool for delegating control
+
+- workspace structure should match your organization permissions structure
+  - e.g. one workspace for each environment of a given component (i.e. configurations * env = workspaces)
+- collection of everything terraform needs to run
+  - configuration files
+  - values for configuration variables
+  - state data to keep track of operations between runs
+    - local: a state file on disk
+    - cloud: peristent shared resources that can be assigned own controls, monitor run states, etc
+
+- access controls
+  - teams that manage a component cna start terraform runs and edit vars in dev/staging
+  - owners/senior contributors of a component can start terraform runs in production, after reviewing other contributors work
+  - central IT/organization architects can administer permissions on all workspaces, to ensure everyone has what they need to work
+  - teams that have no role in managing a given component dont have access to its workspaces
 
 ### core workflow
 
