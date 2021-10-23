@@ -3,10 +3,21 @@
 ## links
 
 - [install](https://www.terraform.io/docs/cli/install/apt.html)
+- [evaluating existing infrastructure](https://www.terraform.io/docs/cloud/guides/recommended-practices/part2.html)
+
+- specs
+  - [remote state](https://www.terraform.io/docs/language/state/remote-state-data.html)
+  - [output values](https://www.terraform.io/docs/language/values/outputs.html)
+  - [providers](https://www.terraform.io/docs/language/providers/index.html)
+  - [terraform registry publishing](https://www.terraform.io/docs/registry/index.html)
+
 - tuts
   - [terraform .tf syntax](https://www.terraform.io/docs/language/index.html)
+  - [terraform + aws](https://learn.hashicorp.com/collections/terraform/aws-get-started)
+  - [automating terraform](https://learn.hashicorp.com/tutorials/terraform/automate-terraform?in=terraform/automation)
 
--
+- providers
+  - [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc)
 
 ## basics
 
