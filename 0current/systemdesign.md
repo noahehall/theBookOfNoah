@@ -6,6 +6,8 @@
 
 - [haproy layer 4 & 7 proxy mode](https://www.haproxy.com/blog/layer-4-and-layer-7-proxy-mode/)
 - [OSI modal explained](https://www.networkworld.com/article/3239677/the-osi-model-explained-and-how-to-easily-remember-its-7-layers.html)
+- [terraform docs](https://www.terraform.io/docs/cloud/guides/recommended-practices/part2.html)
+  - generally the entire terraform doc is dope af for an entrance into system design
 
 ## terminology
 
