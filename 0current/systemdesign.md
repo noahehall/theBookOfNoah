@@ -1,6 +1,9 @@
 bookmark: <https://www.google.com/search?q=architectural+patterns>
   be sure to set the time to last 1 year
 
+<https://www.terraform.io/docs/cloud/guides/recommended-practices/part2.html>
+  collaborative infrastructure as code
+
 # TLDR
 
 - find where the old version of this file exists and copy everything here
