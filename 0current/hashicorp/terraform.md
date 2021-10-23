@@ -206,7 +206,7 @@ This core workflow is a loop; the next time you want to make changes, you start 
 - api reference
 
   ```sh
-    # initialize terraform
+    # initialize terraform whenever you create/checkout a configuration
     # ^ by default uses main.tf in pwd
     # ^ will also install any required plugins
     terraform init
@@ -251,6 +251,8 @@ This core workflow is a loop; the next time you want to make changes, you start 
     // ^ the prefix of the type maps to the providers name
     // ^ each being a component of your infrastructure
     resource "docker_image" "nginx" {
+      // vailable settings specified in the provider docs
+      // https://www.terraform.io/docs/providers/index.html
       name         = "nginx:latest"
       keep_locally = false
     }
