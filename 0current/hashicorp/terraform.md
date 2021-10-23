@@ -92,7 +92,7 @@
 
 ### core components
 
-### terraform workspace
+#### terraform workspace
 
 main unit of organization and primary tool for delegating control
 
@@ -106,15 +106,42 @@ main unit of organization and primary tool for delegating control
     - cloud: peristent shared resources that can be assigned own controls, monitor run states, etc
 
 - access controls
-  - teams that manage a component cna start terraform runs and edit vars in dev/staging
+  - teams that manage a component can start terraform runs and edit vars in dev/staging
   - owners/senior contributors of a component can start terraform runs in production, after reviewing other contributors work
   - central IT/organization architects can administer permissions on all workspaces, to ensure everyone has what they need to work
   - teams that have no role in managing a given component dont have access to its workspaces
+
+#### terraform configuration
+
+- the set of files used to describe infrastructure
+  - can be just a single `main.tf` or split into multiple files
+  - each configuration must be in its own working directory
+
+#### terraform providers
+
+- a plugin that terraform uses to create and manage resources
+  - multiple providers blocks can be used in a single ocnfiguration to manage resources from different providers
+
+##### terraform resources
+
+- each resource defines a component of your infrastructure
+  - physical
+  - virtual (e.g. docker container)
+  - logical (e.g. heroku application)
+- resource ID
+  - each resource type is mapped directly to a providers name
+    - e.g. provider === docker
+      - `docker_image`
+      - `docker_container`
+  - the resource name can be anything, e.g. `nginx`
+  - together the resource TYPE & NAME must be distinct and provide the ID to the resource
+    - e.g. `docker_image.nginx`
 
 ### core workflow
 
 This core workflow is a loop; the next time you want to make changes, you start the process over from the beginning.
 
+- scope: identify the infratsructure for a project
 - write: author infrastructure as code
 
   ```sh
@@ -130,7 +157,8 @@ This core workflow is a loop; the next time you want to make changes, you start 
     terraform init
   ```
 
-- plan: preview changes before applying: involves iterating on your `main.tf` and dependent files
+- initialize: install the plugins terraform needs to manage the infrastructure
+- plan: preview changes terraform will make to match your configuration: involves iterating on your `main.tf` and dependent files
   - when you are satisfied with the current plan, always commit your changes
 
 - apply: provision reproducible infrastructure
@@ -159,21 +187,80 @@ This core workflow is a loop; the next time you want to make changes, you start 
 
   ```
 
-## command reference
+## terraform cmd reference
+
+### quickies
 
 ```sh
-  # initialize terraform, by default uses main.tf in pwd
-  terraform init
+  # get help
+  terraform -help
+    plan
+    apply
 
-  # review the infrastructure plan
-  # ^ use this as check
-  terroform plan
-
-  # displays the final plan before making any changes
-  # ^ use this for the final review
-  terraform apply
-
-  # dunno
-  terraform workspace
-    select APP_NAME
+  # install cmdlin completion
+  terraform -install-autocomplete
 ```
+
+### reference
+
+- api reference
+
+  ```sh
+    # initialize terraform
+    # ^ by default uses main.tf in pwd
+    # ^ will also install any required plugins
+    terraform init
+
+    # review the infrastructure plan
+    # ^ use this as check
+    terroform plan
+      -out=main.plan # save plan to main.plan
+
+    # displays the final plan before making any changes
+    # ^ use this for the final review
+    terraform apply # apply based on main.tf
+      "main.plan" # use the plan in file "main.plan"
+
+    # dunno
+    terraform workspace
+      select APP_NAME
+  ```
+
+- terrform configuration reference
+
+  ```js
+    // all terraform settings and required providers
+    terrform {
+      // terraform uses these to provision your infrastructure
+      // ^ installs from the terraform registry by default
+      required_providers {
+        docker = {
+          // i.e. registry.terraform.io/kreuzwerker/docker
+          source = "kreuzwerker/docker"
+          // specify version, else it installs latest
+          version = "~> 2.13.0"
+        }
+      }
+    }
+
+    // configure the docker provider
+    // ^ set to empty to use defualt settings
+    provider "docker" {}
+
+    // all resources specified as TYPE NAME
+    // ^ the prefix of the type maps to the providers name
+    // ^ each being a component of your infrastructure
+    resource "docker_image" "nginx" {
+      name         = "nginx:latest"
+      keep_locally = false
+    }
+
+    resource "docker_container" "nginx" {
+      image = docker_image.nginx.latest
+      name  = "tutorial"
+      ports {
+        internal = 80
+        external = 8000
+      }
+    }
+  ```
