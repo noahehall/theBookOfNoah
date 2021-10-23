@@ -52,7 +52,7 @@ you cant talk about system design without talking about the people involed
 
 before you can design a system, you need to understand the business requirements, existing infrastructure, and capabilities of the IT determine to manage and iterate
 
-- whats the level of technical maturity: example for automation & infrastructure as code (terraform)
+- whats the current level of technical maturity: example for automation & infrastructure as code (terraform)
   - manual
     - infrastructre is provisioned through a UI/CLI
     - configuration changes do not leave a traceable history, and arent always visible
@@ -69,6 +69,12 @@ before you can design a system, you need to understand the business requirements
     - infrastructure configuration is consistent, with all necessary details fully documented (nothing siloed in sysadmins head)
     - source files stored in version control to record editing history, and if necessary, rollback to older versions
     - configuration is split into modules to promote consistent reuse of organizations common architectural patterns
+
+  - collaborative infrastructure as code
+    - users across the organization can safely provision infrastructure, without conflicts and with clear understanding of their access permissions
+    - expert users can produce standardized infrastructure templates, and beginners can consume those to follow infrastructure best practices
+    - access controls per application-environment pair helps committers and approvers on workspaces protect production environments
+    - functional gorups that dont directly develop infrastructure code have visibility into infrastructure status and changes
 
 ## components
 
