@@ -33,6 +33,9 @@ dpkg --print-architecture
 lsb_release -cs
     e.g. impish
 
+dpkg --print-architecture
+  e.g. amd64|arm64
+
 exec su -l $USER
   reload group assignments without relogging
 
