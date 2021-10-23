@@ -13,6 +13,11 @@
 - software defined netowrking: SDN: provides more control to operators & developers and allows netowrking to better support the applications urnnin on top
   - most have a control layer and infrastructure layer
 
+## key goals
+
+- redundancy
+- fault-tolerance
+
 ## components
 
 various components exist when designing a system, understanding the specific components in isolation and planning how they should holistically work together to meet business requirements is the main goal of system design
@@ -26,6 +31,16 @@ various components exist when designing a system, understanding the specific com
 - caching servers
 - routing meshes
 - load balancers
+- observability
+- monitoring
+- storage
+  - public
+  - private (e.g. API keys, SSL Cert Pairs)
+- discovery
+- messaging
+- version control
+- CI
+- CD
 
 ## multi-tier applicaitons
 
@@ -33,3 +48,12 @@ various components exist when designing a system, understanding the specific com
   - 2-tier:
     - examples
       - pool of web servers with a dtabase tier
+
+## microservices
+
+## environments
+
+- local
+- cloud
+- multi-cloud
+- hybrid-cloud
