@@ -96,12 +96,12 @@ todo
 ### terminology
 
 - remote state resources: enables access to infrastructure variables (e.g. URI of RDS, etc) from indepedent terraform workspaces
-- output variables
+- output values: organize data to be easily queried and displayed to the terraform user
 - input variables: values that end users can assign to customize the terraform configuration
 
-### core components
+## core components
 
-#### terraform workspace
+### terraform workspace
 
 main unit of organization and primary tool for delegating control
 
@@ -120,19 +120,19 @@ main unit of organization and primary tool for delegating control
   - central IT/organization architects can administer permissions on all workspaces, to ensure everyone has what they need to work
   - teams that have no role in managing a given component dont have access to its workspaces
 
-#### terraform configuration
+### terraform configuration
 
 - the set of files used to describe infrastructure
   - can be just a single `main.tf` or split into multiple files
     - terraform loads all `.tf` files so it doesnt matter what you name them
   - each configuration must be in its own working directory
 
-#### terraform providers
+### terraform providers
 
 - a plugin that terraform uses to create and manage resources
   - multiple providers blocks can be used in a single configuration to manage resources from different providers
 
-##### terraform resources
+#### terraform resources
 
 - each resource defines a component of your infrastructure
   - physical
@@ -147,7 +147,7 @@ main unit of organization and primary tool for delegating control
   - together the resource TYPE & NAME must be distinct and provide the ID to the resource
     - e.g. `docker_image.nginx`
 
-### core workflow
+## core workflow
 
 This core workflow is a loop; the next time you want to make changes, you start the process over from the beginning.
 
@@ -180,7 +180,7 @@ This core workflow is a loop; the next time you want to make changes, you start 
     - what should you watch for as you're applying the change?
     - who needs to be notified that this change is happening?
 
-#### terraform cloud workflow
+### terraform cloud workflow
 
 - write: terraform cloud provides a centrlized locatin for storing input variables and state
 
@@ -217,6 +217,7 @@ This core workflow is a loop; the next time you want to make changes, you start 
   terraform validate # validate syntax
   terraform apply # (re)provision resources
   terraform show # review statefile after provisioning
+  terraform output # review output values specified in the `outputs.tf` file
   terraform destroy # destroy all resources
 ```
 
@@ -225,12 +226,12 @@ This core workflow is a loop; the next time you want to make changes, you start 
 - files and locations
 
   ```sh
-    # the main configuration file
-    main.tf
+    #################################### recommended file names
+    main.tf # the main configuration file
+    variables.tf # for input variables
+    outputs.tf # for output values that can be queried via `terraform output`
 
-    # downloaded providers and other things
-    .terraform/
-
+    #################################### auto-generated files
     # exact provider versions to use
     # ^ dont modify versions here, use the main.tf file
     .terrform.lock.hcl
@@ -244,6 +245,13 @@ This core workflow is a loop; the next time you want to make changes, you start 
     # ^ can be viewed in terminal via terraform show
     # ^ any value in the state file can be referenced in configuration, even if its not known until after provisioning
     terrform.tfstate
+
+    #################################### auto-generated directoreis
+    # downloaded providers and other things
+    .terraform/
+
+
+
 
   ```
 
@@ -277,6 +285,7 @@ This core workflow is a loop; the next time you want to make changes, you start 
     # ^^ terraform manages the shutdown and restart
     terraform apply # apply based on main.tf
       "main.plan" # use the plan in file "main.plan"
+      -var "key=value" # set input var on the fly, not saved to stated
 
     # review the statefile created by terraform apply
     terraform show
