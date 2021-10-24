@@ -2,9 +2,22 @@
 
 todo
 
-- <https://learn.hashicorp.com/tutorials/terraform/cloud-migrate?in=terraform/cloud>
-- <https://www.terraform.io/docs/language/settings/backends/index.html>
-- <https://www.terraform.io/docs/language/providers/index.html>
+- in order
+  - <https://learn.hashicorp.com/collections/terraform/cli>
+  - <https://learn.hashicorp.com/tutorials/terraform/module>
+  - <https://learn.hashicorp.com/collections/terraform/configuration-language>
+  - <https://learn.hashicorp.com/collections/terraform/provision>
+  - <https://learn.hashicorp.com/collections/terraform/cloud-get-started>
+  - <https://learn.hashicorp.com/collections/terraform/cloud>
+  - <https://learn.hashicorp.com/collections/terraform/aws-get-started>
+  - <https://learn.hashicorp.com/collections/terraform/state>
+- potential
+  - <https://learn.hashicorp.com/collections/terraform/certification-associate-tutorials>
+    - do this one last and get the certification
+  - <https://learn.hashicorp.com/collections/terraform/gcp-get-started>
+  - <https://learn.hashicorp.com/tutorials/terraform/cloud-migrate?in=terraform/cloud>
+  - <https://www.terraform.io/docs/language/settings/backends/index.html>
+  - <https://www.terraform.io/docs/language/providers/index.html>
 
 # TLDR
 
@@ -17,6 +30,7 @@ todo
 - [aws provider examples on github](https://github.com/hashicorp/terraform-provider-aws/tree/master/examples)
 
 - specs
+  - [all terraform docs](https://www.terraform.io/docs/index.html)
   - [remote state](https://www.terraform.io/docs/language/state/remote-state-data.html)
   - [output values](https://www.terraform.io/docs/language/values/outputs.html)
   - [providers](https://www.terraform.io/docs/language/providers/index.html)
@@ -49,6 +63,9 @@ todo
     - should be named with both their component and their env, e.g. appname-dev, appname-staging
     - use per-workspace access controls and delegate ownership of components and regulate code promotion across envs
       - e.g. appname-dev is owned by one tam, and to promote to appname-staging another team is responsible (or perhaps the same lead) for approving infrastructure changes
+  - output values
+    - always specify an `outputs.tf` file specifying which runtime values need to be available for other infrastructure components
+      - this is how you connect terraform projects with ohter parts of your infrastructure, or with other terraform projects
 
 - NEVER
   - workspaces
