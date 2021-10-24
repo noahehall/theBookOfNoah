@@ -1,6 +1,18 @@
 # TLDR
 
-- [full cmd reference](https://awscli.amazonaws.com/v2/documentation/api/latest/index.html)
+## links
+
+- [test permissions on the command line](https://docs.aws.amazon.com/AmazonS3/latest/userguide/policy-eval-walkthrough-download-awscli.html)
+- [configuring credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html)
+- [getting setup on th AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)
+  - [configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
+- [AWS product (e.g. s3, rds) cmd reference](https://awscli.amazonaws.com/v2/documentation/api/latest/index.html)
+- [s3 cmd reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3/index.html)
+  - [s3control plane actions reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3control/index.html)
+  - [s3api reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3api/index.html)
+- [s3 glacier reference](https://docs.aws.amazon.com/cli/latest/reference/glacier/index.html)
+- tuts
+  - [aws-cli & s3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/setup-aws-cli.html)
 
 ## LOCATIONS
 
@@ -26,7 +38,10 @@
 
 ```sh
 # global options
-  --profile SOMENAME # configure/use creds + config of a profile
+  --profile SOMENAME # configure/use creds + config of a profile, specify this LAST
+    # so you dont have to use the --profile on each cmd
+    export AWS_DEFAULT_PROFILE=AccountAadmin
+
   --region us-east-1 # specify the region
 
 # admin
@@ -57,8 +72,16 @@ aws SERVICENAME COMMAND OPTIONS
 
 # cmd reference
 aws s3
-  cp, mv, rm # file actions
-  sync, mb, rb, ls # directory actions
+  # file actions
+  cp
+  mv
+  rm
+  # directory actions
+  sync
+  mb
+  rb
+  ls # list buckets
+
 aws s3api
 
 ```

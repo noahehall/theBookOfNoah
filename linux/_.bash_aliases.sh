@@ -3,7 +3,7 @@
 # use bashtop if its installed
 if hash bpytop 2>/dev/null; then
 	alias oldtop='/usr/bin/top'
-	alias top='/usr/local/bin/bpytop'
+	alias top='/usr/bin/bpytop'
 else echo 'should really use bpytop > top'
 fi
 

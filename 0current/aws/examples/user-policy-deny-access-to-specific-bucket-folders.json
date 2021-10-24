@@ -1,0 +1,9 @@
+{
+   "Sid": "ExplicitlyDenyAnyRequestsForAllOtherFoldersExceptDevelopment",
+   "Action": ["s3:ListBucket"],
+   "Effect": "Deny",
+   "Resource": ["arn:aws:s3:::companybucket"],
+   "Condition":{  "StringNotLike": {"s3:prefix":["Development/*",""] },
+                  "Null"         : {"s3:prefix":false }
+    }
+}

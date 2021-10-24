@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 # TODO
-# my settings are hella wack! time to update
-# wish i had I backed up
+# @see https://bashrcgenerator.com/
 
 export EDITOR=nano
 
@@ -28,7 +27,7 @@ bind "set mark-symlinked-directories on"
 bind "set colored-completion-prefix on"
 bind "set menu-complete-display-prefix on"
 
-# append to the history file, don't overwrite it 
+# append to the history file, don't overwrite it
 shopt -s histappend
 
 # save multi-line commands as one command
@@ -78,7 +77,7 @@ function color_my_prompt {
 
   # colour branch name depending on state
   if [[ "$(__git_ps1)" =~ "*" ]]; then # if repository is dirty
-      __git_branch_color="$RED" 
+      __git_branch_color="$RED"
   elif [[ "$(__git_ps1)" =~ "$" ]]; then # if there is something stashed
       __git_branch_color="$YELLOW"
   elif [[ "$(__git_ps1)" =~ "%" ]]; then # if there are only untracked files
@@ -86,23 +85,23 @@ function color_my_prompt {
   elif [[ "$(__git_ps1)" =~ "+" ]]; then # if there are staged files
       __git_branch_color="$CYAN"
   fi
-   
-  # Build the PS1 (Prompt String)
-  PS1="$__user_and_host $__cur_location$__git_branch_color$__git_branch $__prompt_tail$__user_input_color "
-}
-#PS1="${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$(__git_ps1)\[$WHITE\]\$ "
 
-# configure PROMPT_COMMAND which is executed each time before PS1 
+
+  # Build the PS1 (Prompt String)
+  # old version:   PS1="$__user_and_host $__cur_location$__git_branch_color$__git_branch $__prompt_tail$__user_input_color "
+    PS1="\n\[$(tput sgr0)\]\[\033[38;5;1m\]\u\[$(tput sgr0)\]\[\033[38;5;11m\]@\[$(tput sgr0)\]\[\033[38;5;1m\]\H\[$(tput sgr0)\]:\w\n\[$(tput sgr0)\]\[\033[38;5;1m\]\@\[$(tput sgr0)\]$__git_branch_color$__git_branch $__prompt_tail \[$(tput sgr0)\]"
+}
+
+# configure PROMPT_COMMAND which is executed each time before PS1
 export PROMPT_COMMAND=color_my_prompt
 
 
-history -a # record each line as it gets issued 
-export HISTSIZE=500000 
+history -a # record each line as it gets issued
+export HISTSIZE=500000
 export HISTFILESIZE=100000
-export HISTCONTROL="erasedups:ignoreboth" # avoid duplicate entries 
+export HISTCONTROL="erasedups:ignoreboth" # avoid duplicate entries
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history" # don't record some commands
 export HISTTIMEFORMAT='%F %T ' # useful timestamp format
 
 # force ssh connections to close after 5m of inactivity
 export TMOUT=300
-

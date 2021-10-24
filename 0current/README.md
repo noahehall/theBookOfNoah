@@ -1,2 +1,1 @@
-TODO:
-merge this shit with all the matching docs elseware in this repo. 
+pinky - this is everything we need to take over the world

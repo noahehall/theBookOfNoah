@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+  <Owner>
+   ...
+  </Owner>
+  <AccessControlList>
+    <Grant>
+        ...
+    </Grant>
+    <Grant>
+       <Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Group">
+        <URI>http://acs.amazonaws.com/groups/s3/LogDelivery</URI>
+       </Grantee>
+       <Permission>WRITE</Permission>
+    </Grant>
+  </AccessControlList>
+</AccessControlPolicy>

@@ -1,3 +1,9 @@
+# TLDR
+
+- **HECC-YA** system modeling: **h**ardware **e**nvironment **c**omponent **c**ommunication **y**ielding **a**rchitecture
+  - I want to create (yield) a world (environment) for a set of living things (components) to live hostically (hardware) and socially (communication)
+  - read more in [architectural thinking](/0current/architectural%20thinking/systemdesign.md#hecc-ya-system-modeling)
+
 # about
 
 - started as notes to various things i've learned in my career
@@ -27,7 +33,7 @@
 - check out the [0current directory](./0current)
 - wish I had extra time to learn rust, rust is the fucking future
 - I am 70% done with my 1000 millionth startup, do you think this one is going to work?
-  
+
 # remember
 
 - forever junior engineer
