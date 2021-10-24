@@ -3,14 +3,15 @@
 todo
 
 - in order
+  - <https://learn.hashicorp.com/collections/terraform/cloud-get-started>
+  - <https://learn.hashicorp.com/collections/terraform/cloud>
   - <https://learn.hashicorp.com/tutorials/terraform/module>
   - <https://learn.hashicorp.com/collections/terraform/cli>
   - <https://learn.hashicorp.com/collections/terraform/configuration-language>
   - <https://learn.hashicorp.com/collections/terraform/provision>
-  - <https://learn.hashicorp.com/collections/terraform/cloud-get-started>
-  - <https://learn.hashicorp.com/collections/terraform/cloud>
   - <https://learn.hashicorp.com/collections/terraform/state>
   - <https://www.terraform.io/docs/language/settings/backends/index.html>
+  - <https://www.terraform.io/docs/cloud/workspaces/index.html>
 - then do these
   - <https://learn.hashicorp.com/collections/terraform/certification-associate-tutorials>
     - do this one last and get the certification
@@ -37,6 +38,7 @@ todo
   - [terraform registry publishing](https://www.terraform.io/docs/registry/index.html)
   - [terraform .tf syntax](https://www.terraform.io/docs/language/index.html)
     - [terraform modules](https://www.terraform.io/docs/language/modules/develop/index.html)
+    - [terraform input variables](https://www.terraform.io/docs/language/values/variables.html)
   - [terraform state](https://www.terraform.io/docs/cli/commands/state/index.html)
 
 - tuts
@@ -223,45 +225,46 @@ main unit of organization and primary tool for delegating control
 
 This core workflow is a loop; the next time you want to make changes, you start the process over from the beginning.
 
+```sh
+  # login to terraform cloud
+  terraform login # will open browser to retrieve token, saved to ~/.terraform.d/credentials.tfrc.json
+
+  # Create repository
+  # Initialized empty Git repository in /.../my-infra/.git/
+  git init my-infra && cd my-infra
+
+  # Write initial config
+  vim main.tf
+
+  # get help
+  terraform -help
+    plan
+    apply
+
+  # install cmdlin completion
+  terraform -install-autocomplete
+
+  # general workflow
+  terraform init # always when creating/checking out from git; will install provider plugins and store state in any remote backends
+    # ^ make sure to delete any local statefiles if using a remote backend (as thats where it should be stored)
+  terraform fmt # lint files
+  terraform validate # validate syntax
+  terraform plan # review while iterating
+  terraform apply # (re)provision resources and update outputs.tf if it exists
+  terraform show # review statefile after provisioning
+  terraform state list # list provisioned resource names
+  terraform output # review output values specified in the `outputs.tf` file generated via `terraform apply`
+  terraform destroy # destroy all resources
+```
+
+- workspace: the basic unit of terraform cloud infrastructure configuration
+  - contains terraform config files, env vars, input vars, and state files
+    - everything needed to managed a given collection of infrastructure
 - scope: identify the infratsructure for a project
 - write: author infrastructure as code
-
-  ```sh
-    # login to terraform cloud
-    terraform login # will open browser to retrieve token, saved to ~/.terraform.d/credentials.tfrc.json
-
-    # Create repository
-    # Initialized empty Git repository in /.../my-infra/.git/
-    git init my-infra && cd my-infra
-
-    # Write initial config
-    vim main.tf
-
-    # get help
-    terraform -help
-      plan
-      apply
-
-    # install cmdlin completion
-    terraform -install-autocomplete
-
-    # general workflow
-    terraform init # always when creating/checking out from git; will install provider plugins and store state in any remote backends
-      # ^ make sure to delete any local statefiles if using a remote backend (as thats where it should be stored)
-    terraform fmt # lint files
-    terraform validate # validate syntax
-    terraform plan # review while iterating
-    terraform apply # (re)provision resources and update outputs.tf if it exists
-    terraform show # review statefile after provisioning
-    terraform state list # list provisioned resource names
-    terraform output # review output values specified in the `outputs.tf` file generated via `terraform apply`
-    terraform destroy # destroy all resources
-  ```
-
 - initialize: install the plugins terraform needs to manage the infrastructure
 - plan: preview changes terraform will make to match your configuration: involves iterating on your `main.tf` and dependent files
   - when you are satisfied with the current plan, always commit your changes
-
 - apply: provision reproducible infrastructure
   - provision the resources and do a final commit
   - always include the terraform plan output in the description for the PR
@@ -270,6 +273,39 @@ This core workflow is a loop; the next time you want to make changes, you start 
     - any part of the execution plan is high risk?
     - what should you watch for as you're applying the change?
     - who needs to be notified that this change is happening?
+
+    -
+
+### VCS-driven workflow
+
+- UI
+  - runs: list of all the plan and apply actions that have been executed
+  - states: state of the workspace after each successful run
+  - variables: configure terraform & environment variables
+  - settings: all the terraform cloud settings for the workspace
+    - destroy infra
+    - speculate plans: show you the changes terraform would make if you perge a pull requests
+      - plan-only runs: cannot apply the propose infrastructure until you merge the PR
+      - temporary: will not appear in cloud logs
+      - individual: can only access them from a direct link on a github PR
+      - non-destructive: no action is taken, infrastructure is not provisioned
+  - lock icon: if locked, no one can trigger runs
+  - actions: lock the workspace/trigger new runs
+    - e.g. if you change vars defined in the UI, you can execute a plan to refresh the provisioned resources
+
+- write: create/update config files
+- commit: commit config files to github
+- workspace: connect the git repo to a new/existing terraform cloud workspace
+- variables: define terraform and environment variables
+  - anything you want end users to customize, credentials, and other sensitive values
+  - variables marked `sensitive` are write only, and not displayed in the terraform UI
+  - terraform variables: will be injected as input variables into terraforms configuration language
+    - use them to customize the infrastructure that terraform creates
+  - environment variables: are taken from the environment
+    - enables you to specify env vars in the UI, and override them in localhost
+      - e.g. specifying private creds in the UI, but developers can use their own creds locally
+- plan & apply: execute terraform cloud runs to manage infrastructure
+  - either via terraform cloud UI/opening pull requests in your VCS
 
 ## terraform cmd reference
 
@@ -350,7 +386,8 @@ This core workflow is a loop; the next time you want to make changes, you start 
     # ^ do this e.g. instead of docker stop ...
     # ^^ if you managed everything with terraform, your better able to see the changes between provisions
     terraform destroy
-    # dunno
+
+    # manage workspaces
     terraform workspace
       select APP_NAME
   ```
