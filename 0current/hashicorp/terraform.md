@@ -4,8 +4,6 @@ todo
 
 - in order
   - <https://learn.hashicorp.com/tutorials/terraform/module>
-  - <https://learn.hashicorp.com/collections/terraform/aws-get-started>
-    - have to do module + aws in parallel as modules require aws authentication
   - <https://learn.hashicorp.com/collections/terraform/cli>
   - <https://learn.hashicorp.com/collections/terraform/configuration-language>
   - <https://learn.hashicorp.com/collections/terraform/provision>
@@ -45,10 +43,12 @@ todo
   - [all preparation for associate certification](https://learn.hashicorp.com/collections/terraform/certification)
   - [all aws tutorials](https://learn.hashicorp.com/collections/terraform/aws-get-started)
   - [all associate tuturials](https://learn.hashicorp.com/collections/terraform/certification-associate-tutorials)
-  - [terraform + docker](https://learn.hashicorp.com/collections/terraform/docker-get-started)
   - [terraform + aws](https://learn.hashicorp.com/collections/terraform/aws-get-started)
   - [automating terraform](https://learn.hashicorp.com/tutorials/terraform/automate-terraform?in=terraform/automation)
   - [build aws infrastructure](https://learn.hashicorp.com/tutorials/terraform/aws-build)
+  - completed
+    - [terraform + docker](https://learn.hashicorp.com/collections/terraform/docker-get-started)
+    - [aws getting started](https://learn.hashicorp.com/collections/terraform/aws-get-started)
 
 - providers
   - [all providers](https://registry.terraform.io/browse/providers)
@@ -199,6 +199,26 @@ main unit of organization and primary tool for delegating control
 
 ### terraform remote backends
 
+- execution mode
+  - remote: plans and applies occur on terraform cloud
+    - e.g. if setup as VCS, apply/plan runs on git commit/merge
+  - local: plans and applies occur on users computer
+    - i.e. in your console
+
+  ```js
+    terraform {
+      // remote indicates terraform cloud
+      backend "remote" {
+
+        organization = "my-org"
+        workspaces {
+          prefix = "my-app-"
+        }
+      }
+    }
+
+  ```
+
 ## workflow
 
 This core workflow is a loop; the next time you want to make changes, you start the process over from the beginning.
@@ -207,6 +227,9 @@ This core workflow is a loop; the next time you want to make changes, you start 
 - write: author infrastructure as code
 
   ```sh
+    # login to terraform cloud
+    terraform login # will open browser to retrieve token, saved to ~/.terraform.d/credentials.tfrc.json
+
     # Create repository
     # Initialized empty Git repository in /.../my-infra/.git/
     git init my-infra && cd my-infra
@@ -223,7 +246,8 @@ This core workflow is a loop; the next time you want to make changes, you start 
     terraform -install-autocomplete
 
     # general workflow
-    terraform init # always when creating/checking out from git; will install provider plugins
+    terraform init # always when creating/checking out from git; will install provider plugins and store state in any remote backends
+      # ^ make sure to delete any local statefiles if using a remote backend (as thats where it should be stored)
     terraform fmt # lint files
     terraform validate # validate syntax
     terraform plan # review while iterating
@@ -246,23 +270,6 @@ This core workflow is a loop; the next time you want to make changes, you start 
     - any part of the execution plan is high risk?
     - what should you watch for as you're applying the change?
     - who needs to be notified that this change is happening?
-
-### terraform cloud workflow
-
-- write: terraform cloud provides a centrlized locatin for storing input variables and state
-
-  ```js
-    terraform {
-      // remote indicates terraform cloud
-      backend "remote" {
-        organization = "my-org"
-        workspaces {
-          prefix = "my-app-"
-        }
-      }
-    }
-
-  ```
 
 ## terraform cmd reference
 
