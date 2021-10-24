@@ -24,6 +24,9 @@ bookmark: <https://www.google.com/search?q=architectural+patterns>
 - UAT: user acceptance testing
 - VCS: version control system, e.g. git
 - CAB: change advisory board
+- GDPR:
+- IaaS: infrastructure as a service
+- FaaS: functions as a service (serverless)
 
 - self serve infrastructure: instead a of a global operations team managing the entire infrastructure, each specific team are responsibile for their devstack via tools provided by the central operations team
 - software defined netowrking: SDN: provides more control to operators & developers and allows netowrking to better support the applications urnnin on top
@@ -40,6 +43,19 @@ bookmark: <https://www.google.com/search?q=architectural+patterns>
 - single dashboard view
 - streamlined way to promote changes between environments and across domains
 - interface to securely store, share and apply variables across environments and resources
+- a system where contributors can efficiently
+  - build, manage and scale platform architecture
+  - respond to and address alerts regarding infrastructure
+  - configure and manage service discovery
+  - setup and manage service level performance metrics
+  - network tasks like configuring a VPC, managing IP addresses/creating ingresses for applications
+  - connecting workloads across multiple cloud providers, regions and/or multiple k8s clusters
+  - connect onprem and cloud networks
+  - various security tasks
+    - hardening infrastructure, policies and governance
+    - manage and administer IAM
+
+    -
 
 ## key people & roles
 
