@@ -97,6 +97,7 @@ todo
 
 - remote state resources: enables access to infrastructure variables (e.g. URI of RDS, etc) from indepedent terraform workspaces
 - output variables
+- input variables: values that end users can assign to customize the terraform configuration
 
 ### core components
 
@@ -123,12 +124,13 @@ main unit of organization and primary tool for delegating control
 
 - the set of files used to describe infrastructure
   - can be just a single `main.tf` or split into multiple files
+    - terraform loads all `.tf` files so it doesnt matter what you name them
   - each configuration must be in its own working directory
 
 #### terraform providers
 
 - a plugin that terraform uses to create and manage resources
-  - multiple providers blocks can be used in a single ocnfiguration to manage resources from different providers
+  - multiple providers blocks can be used in a single configuration to manage resources from different providers
 
 ##### terraform resources
 
