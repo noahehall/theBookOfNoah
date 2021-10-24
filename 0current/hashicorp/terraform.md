@@ -12,12 +12,12 @@ todo
   - <https://learn.hashicorp.com/collections/terraform/cloud-get-started>
   - <https://learn.hashicorp.com/collections/terraform/cloud>
   - <https://learn.hashicorp.com/collections/terraform/state>
-- potential
+  - <https://www.terraform.io/docs/language/settings/backends/index.html>
+- then do these
   - <https://learn.hashicorp.com/collections/terraform/certification-associate-tutorials>
     - do this one last and get the certification
   - <https://learn.hashicorp.com/collections/terraform/gcp-get-started>
   - <https://learn.hashicorp.com/tutorials/terraform/cloud-migrate?in=terraform/cloud>
-  - <https://www.terraform.io/docs/language/settings/backends/index.html>
   - <https://www.terraform.io/docs/language/providers/index.html>
 
 # TLDR
@@ -266,6 +266,7 @@ This core workflow is a loop; the next time you want to make changes, you start 
   terraform plan # review while iterating
   terraform apply # (re)provision resources
   terraform show # review statefile after provisioning
+  terraform state list # list provisioned resource names
   terraform output # review output values specified in the `outputs.tf` file
   terraform destroy # destroy all resources
 ```
