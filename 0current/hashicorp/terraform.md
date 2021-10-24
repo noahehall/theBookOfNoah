@@ -4,6 +4,9 @@ todo
 
 - in order
   - <https://learn.hashicorp.com/collections/terraform/cloud-get-started>
+    - skipp (due to costs)
+      - enforce a policy
+      - control costs with policies
   - <https://learn.hashicorp.com/collections/terraform/cloud>
   - <https://learn.hashicorp.com/tutorials/terraform/module>
   - <https://learn.hashicorp.com/collections/terraform/cli>
@@ -227,7 +230,9 @@ This core workflow is a loop; the next time you want to make changes, you start 
 
 ```sh
   # login to terraform cloud
-  terraform login # will open browser to retrieve token, saved to ~/.terraform.d/credentials.tfrc.json
+  # ^ will open browser to retrieve token, saved to ~/.terraform.d/credentials.tfrc.json
+  # ^ if browser doenst open, go here: https://app.terraform.io/app/settings/token?source=terraform-login
+  terraform login
 
   # Create repository
   # Initialized empty Git repository in /.../my-infra/.git/
@@ -278,12 +283,17 @@ This core workflow is a loop; the next time you want to make changes, you start 
 
 ### VCS-driven workflow
 
+- you must specify a `remote backend` block, e.g. in the `main|versions.tf` file
+
 - UI
   - runs: list of all the plan and apply actions that have been executed
   - states: state of the workspace after each successful run
   - variables: configure terraform & environment variables
   - settings: all the terraform cloud settings for the workspace
     - destroy infra
+      - queue destroy plan: destroys all infrastructure manaed by the workspace
+      - delete from terraform cloud: deletes workspace form terraform cloud
+        - WITHOUT destroying infrastructure, i.e. any aws resources will still exist
     - speculate plans: show you the changes terraform would make if you perge a pull requests
       - plan-only runs: cannot apply the propose infrastructure until you merge the PR
       - temporary: will not appear in cloud logs
@@ -298,6 +308,7 @@ This core workflow is a loop; the next time you want to make changes, you start 
 - workspace: connect the git repo to a new/existing terraform cloud workspace
 - variables: define terraform and environment variables
   - anything you want end users to customize, credentials, and other sensitive values
+    - be warned, UI variables override local variables defined in any `*.tf` files
   - variables marked `sensitive` are write only, and not displayed in the terraform UI
   - terraform variables: will be injected as input variables into terraforms configuration language
     - use them to customize the infrastructure that terraform creates
@@ -306,6 +317,8 @@ This core workflow is a loop; the next time you want to make changes, you start 
       - e.g. specifying private creds in the UI, but developers can use their own creds locally
 - plan & apply: execute terraform cloud runs to manage infrastructure
   - either via terraform cloud UI/opening pull requests in your VCS
+  - you can run plan locally
+  - you can run apply only via UI/github PR on merge
 
 ## terraform cmd reference
 
