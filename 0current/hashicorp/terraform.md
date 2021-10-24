@@ -140,7 +140,7 @@ todo
 - input variables: values that end users can assign to customize the terraform configuration
 - modules: sharable configuration for independent logical infrastructure components in a single directory
 
-## core components
+## components
 
 ### terraform workspace
 
@@ -196,7 +196,7 @@ main unit of organization and primary tool for delegating control
   - together the resource TYPE & NAME must be distinct and provide the ID to the resource
     - e.g. `docker_image.nginx`
 
-## core workflow
+## workflow
 
 This core workflow is a loop; the next time you want to make changes, you start the process over from the beginning.
 
@@ -211,9 +211,24 @@ This core workflow is a loop; the next time you want to make changes, you start 
     # Write initial config
     vim main.tf
 
-    # Initialize Terraform
-    # Initializing provider plugins...
-    terraform init
+    # get help
+    terraform -help
+      plan
+      apply
+
+    # install cmdlin completion
+    terraform -install-autocomplete
+
+    # general workflow
+    terraform init # always when creating/checking out from git; will install provider plugins
+    terraform fmt # lint files
+    terraform validate # validate syntax
+    terraform plan # review while iterating
+    terraform apply # (re)provision resources
+    terraform show # review statefile after provisioning
+    terraform state list # list provisioned resource names
+    terraform output # review output values specified in the `outputs.tf` file
+    terraform destroy # destroy all resources
   ```
 
 - initialize: install the plugins terraform needs to manage the infrastructure
@@ -247,29 +262,6 @@ This core workflow is a loop; the next time you want to make changes, you start 
   ```
 
 ## terraform cmd reference
-
-### quickies
-
-```sh
-  # get help
-  terraform -help
-    plan
-    apply
-
-  # install cmdlin completion
-  terraform -install-autocomplete
-
-  # general workflow
-  terraform init # always when creating/checking out from git
-  terraform fmt # lint files
-  terraform validate # validate syntax
-  terraform plan # review while iterating
-  terraform apply # (re)provision resources
-  terraform show # review statefile after provisioning
-  terraform state list # list provisioned resource names
-  terraform output # review output values specified in the `outputs.tf` file
-  terraform destroy # destroy all resources
-```
 
 ### reference
 
