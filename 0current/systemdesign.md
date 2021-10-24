@@ -1,5 +1,6 @@
-bookmark: <https://www.google.com/search?q=architectural+patterns>
+<https://www.google.com/search?q=architectural+patterns>
   be sure to set the time to last 1 year
+<https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html>
 
 # TLDR
 
@@ -17,7 +18,10 @@ bookmark: <https://www.google.com/search?q=architectural+patterns>
 - [azure architecture center](https://docs.microsoft.com/en-us/azure/architecture/)
 - [GCP patterns for scalablee and resilient apps](https://cloud.google.com/architecture/scalable-and-resilient-apps)
 
--
+### tools
+
+- [AWS well architected tool](http://aws.amazon.com/well-architected-tool/?ref=wellarchitected-wp)
+  - service in the cloud that provides a consistent process for you to review and measure your architecture usig the AWS well-architected framework
 
 ## terminology
 
@@ -66,6 +70,9 @@ you cant talk about system design without talking about the people involed
 - organization architect: define how global infrastructure is divided and delegated to the teams within the business unit
   - enables connectivity between resources, applications, and workspaces by defining the APIs each one must expose, and sets organization-wide variables and policies
 
+- solutions architect (e.g. aws)
+  - architect solutions across a wide variety of business verticals and use cases
+  -
 - application, resource and workspace owners:
   - responsibile for owning & managing each *thing*, e.g. the health/status, change lifecycle through dev, UAT, staging and production
   - main approver of changes to production within their domain
@@ -233,18 +240,26 @@ various components exist when designing a system, understanding the specific com
 - access control
 - DNS
 
-## multi-tier applicaitons
-
-- N-Tier
-  - 2-tier:
-    - examples
-      - pool of web servers with a dtabase tier
-
-## microservices
-
 ## environments
 
 - local
 - cloud
 - multi-cloud
 - hybrid-cloud
+
+-
+
+## architectural patterns
+
+- the process for reviewing an architecture is a constructive conversation about architectural decisions, and is not an audit mechanism
+
+-
+
+### multi-tier applicaitons
+
+- N-Tier
+  - 2-tier:
+    - examples
+      - pool of web servers with a dtabase tier
+
+### microservices
