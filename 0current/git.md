@@ -146,22 +146,27 @@
 ### recommendations
 
 ```sh
- git status -s # short status
- # [staging][workingtree] FILENAME
- # ?? somefile # untracked
- # A somfile # staged
- #  M somefile # modified in working directory but not yet staged
- # M somefile # modified and staged
- # MM somefile # modified, staged, then modified again
+  git status -s # short status
+  # [staging][workingtree] FILENAME
+  # ?? somefile # untracked
+  # A somfile # staged
+  #  M somefile # modified in working directory but not yet staged
+  # M somefile # modified and staged
+  # MM somefile # modified, staged, then modified again
 
- git diff  # everything unstaged (not added)
- git diff --staged  # everything added, but not staged (commited)
+  git diff  # everything unstaged (not added)
+  git diff --staged  # everything added, but not staged (commited)
 
- git commit -a -m 'ur msg' # but be sure you want to add all changed files
+  git commit -a -m 'ur msg' # but be sure you want to add all changed files
 
- git rm --cached dont/track/this/file/and/remove/from/staging
+  git rm --cached dont/track/this/file/and/remove/from/staging
 
- git mv prevname newname # better than doing a linux mv
+  git mv prevname newname # better than doing a linux mv
+
+  # debugging
+    git ls-files # information about files in the index and working tree
+    git cat-file # content/type+size info about repository objects
+      -p HEAD:file_or_directory_path
 ```
 
 ## TODO

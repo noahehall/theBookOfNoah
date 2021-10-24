@@ -107,6 +107,7 @@
       sudo service postgresql restart
 
 
+
     -- server
       select version(); -- show postgres version
       \c DBNAME -- connect to db

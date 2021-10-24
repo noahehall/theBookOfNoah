@@ -29,7 +29,8 @@ todo
 - [install](https://www.terraform.io/docs/cli/install/apt.html)
 - [evaluating existing infrastructure](https://www.terraform.io/docs/cloud/guides/recommended-practices/part2.html)
 - [aws provider examples on github](https://github.com/hashicorp/terraform-provider-aws/tree/master/examples)
-
+- [hashicorp github terroform example](https://github.com/hashicorp/tfc-guide-example)
+-
 - specs
   - [all terraform docs](https://www.terraform.io/docs/index.html)
   - [remote state](https://www.terraform.io/docs/language/state/remote-state-data.html)
@@ -196,6 +197,8 @@ main unit of organization and primary tool for delegating control
   - together the resource TYPE & NAME must be distinct and provide the ID to the resource
     - e.g. `docker_image.nginx`
 
+### terraform remote backends
+
 ## workflow
 
 This core workflow is a loop; the next time you want to make changes, you start the process over from the beginning.
@@ -224,10 +227,10 @@ This core workflow is a loop; the next time you want to make changes, you start 
     terraform fmt # lint files
     terraform validate # validate syntax
     terraform plan # review while iterating
-    terraform apply # (re)provision resources
+    terraform apply # (re)provision resources and update outputs.tf if it exists
     terraform show # review statefile after provisioning
     terraform state list # list provisioned resource names
-    terraform output # review output values specified in the `outputs.tf` file
+    terraform output # review output values specified in the `outputs.tf` file generated via `terraform apply`
     terraform destroy # destroy all resources
   ```
 
