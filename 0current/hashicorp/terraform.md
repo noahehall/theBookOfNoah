@@ -3,13 +3,14 @@
 todo
 
 - in order
-  - <https://learn.hashicorp.com/collections/terraform/cli>
   - <https://learn.hashicorp.com/tutorials/terraform/module>
+  - <https://learn.hashicorp.com/collections/terraform/aws-get-started>
+    - have to do module + aws in parallel as modules require aws authentication
+  - <https://learn.hashicorp.com/collections/terraform/cli>
   - <https://learn.hashicorp.com/collections/terraform/configuration-language>
   - <https://learn.hashicorp.com/collections/terraform/provision>
   - <https://learn.hashicorp.com/collections/terraform/cloud-get-started>
   - <https://learn.hashicorp.com/collections/terraform/cloud>
-  - <https://learn.hashicorp.com/collections/terraform/aws-get-started>
   - <https://learn.hashicorp.com/collections/terraform/state>
 - potential
   - <https://learn.hashicorp.com/collections/terraform/certification-associate-tutorials>
@@ -50,7 +51,8 @@ todo
 
 - providers
   - [all providers](https://registry.terraform.io/browse/providers)
-  - [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc)
+  - [all aws documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
+    - [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc)
   - [vault](https://registry.terraform.io/providers/hashicorp/vault/latest/docs)
   - [docker provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest)
 
@@ -66,6 +68,27 @@ todo
   - output values
     - always specify an `outputs.tf` file specifying which runtime values need to be available for other infrastructure components
       - this is how you connect terraform projects with ohter parts of your infrastructure, or with other terraform projects
+
+- SOMETIMES
+  - split out configuration into multiple files and module directories
+    - the amount of files & modules depends on your strategy for managing the complexity technically, and socially with your team
+    - SINGLE `main.tf`  file: things to watch for
+      - understanding and navigating the ocnfig files will become increasingly difficult
+      - updating configuration will be more risky: as an update to one sectin may cause unintended consequences in otther parts of the configuration
+      - there will be increased duplication of similar blocks of configuration, e.g. when creating dev/staging/productin environments
+      - sharing parts of the config between projects and teams will involve a lot of copypasta
+    - modules:
+      - use cases
+        - organization configuration: easier to navigate, understand, update and organize configuration into logical components
+        - encapsulate configuration: into distinct logical components; prevents leakage, e.g. a change to one part of the config causing changes to other parts;
+        - re-use ocnfiguration: moduels can be re-used across teams, projects, and organizations (if they publish modules to the cloud)
+        - provide consistency and best practices: by re-using modules, you ensure you can leverage the right practices used by more experiences devs
+      - recommendations
+        - name your provider `terraform-PROVIDER-NAME` (must be folowed to publish this to terraform cloud/enterprise registries)
+        - write your configuration with modules in mind
+        - use local modules to organize & encapsulate your code,
+          - even if you arent publishing remote modules, by starting with modules its easier to maintain and update while the project is new than transforming an existing monolith
+        - rely on modules from public registry (as you would in any other setting) and dont reinvent the wheel
 
 - NEVER
   - workspaces
@@ -115,6 +138,7 @@ todo
 - remote state resources: enables access to infrastructure variables (e.g. URI of RDS, etc) from indepedent terraform workspaces
 - output values: organize data to be easily queried and displayed to the terraform user
 - input variables: values that end users can assign to customize the terraform configuration
+- modules: sharable configuration for independent logical infrastructure components in a single directory
 
 ## core components
 
@@ -143,6 +167,14 @@ main unit of organization and primary tool for delegating control
   - can be just a single `main.tf` or split into multiple files
     - terraform loads all `.tf` files so it doesnt matter what you name them
   - each configuration must be in its own working directory
+
+### terraform modules
+
+- set of config files ina single directory
+- root module: the root directory containing the configuration files, and any child module directories
+- child modules
+  - terraform will only use the confg files from a single directory,
+  - however, using the `module {}` blocks in a configuration will cause terraform to use configuration in other directories
 
 ### terraform providers
 
