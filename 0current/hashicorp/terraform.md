@@ -261,9 +261,9 @@ This core workflow is a loop; the next time you want to make changes, you start 
 
   # general workflow
   terraform init # always when creating/checking out from git
-  terraform plan # review while iterating
   terraform fmt # lint files
   terraform validate # validate syntax
+  terraform plan # review while iterating
   terraform apply # (re)provision resources
   terraform show # review statefile after provisioning
   terraform output # review output values specified in the `outputs.tf` file
