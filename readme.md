@@ -2,7 +2,7 @@
 
 - **HECC-YA** system modeling: **h**ardware **e**nvironment **c**omponent **c**ommunication **y**ielding **a**rchitecture
   - I want to create (yield) a world (environment) for a set of living things (components) to live hostically (hardware) and socially (communication)
-  - read more in [architectural thinking](/0current/architectural%20thinking/systemdesign.md#hecc-ya-system-modeling)
+  - read more in [architectural thinking](/0current/architectural%20thinking/heccya.md#hecc-ya-system-modeling)
 
 # about
 
