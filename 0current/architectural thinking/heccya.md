@@ -398,8 +398,9 @@ various components exist when designing a system, understanding the specific com
 - I also feel the extraction of the communication layer decision from the environment and component pattern selection is a useful 3rd dimension to think through separatly, however, not in isolation
   - this permits you to brainstorm the environment and component in a perfect world with the naive expectation that communication will occur at the speed of light
 
-- hardware: local/cloud/virutalization/hybrid
+- hardware: the types of physical machines located in local/cloud/virutalization/hybrid context
 - yeilding: provisioning any part of the model
+- architecture: the set of all decisions that describes the physics of your product
 
 - now who decides what constitutes the environment domain and what constitutes the component domain?
   - I would say the business & product context: the environment for a product like AWS is far different than the environment for a product like facebook
