@@ -383,7 +383,7 @@ various components exist when designing a system, understanding the specific com
 ## HECC-YA system modeling
 
 - **H**ardware (cloud/metal)
-- **E**nvironment (system)
+- **E**nvironment (infrastructure)
 - **C**omponent (application)
 - **C**ommunication (messaging)
 - **Y**ielding (provisioning)
