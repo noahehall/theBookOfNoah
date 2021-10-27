@@ -5,7 +5,7 @@
   Your teams need to have a shared understanding
 
 <https://www.redhat.com/architect/5-essential-patterns-software-architecture>
-  REST, SOAP, or GraphQL
+  Layered pattern
 
 <https://www.youtube.com/watch?app=desktop&v=kNv2PlqmsAc>
   grab all her references
@@ -20,7 +20,6 @@
 - [haproy layer 4 & 7 proxy mode](https://www.haproxy.com/blog/layer-4-and-layer-7-proxy-mode/)
 - [OSI modal explained](https://www.networkworld.com/article/3239677/the-osi-model-explained-and-how-to-easily-remember-its-7-layers.html)
 - [terraform docs](https://www.terraform.io/docs/cloud/guides/recommended-practices/part2.html)
-  - generally the entire terraform doc is dope af for an entrance into system design
 - [aws architecture center](https://aws.amazon.com/architecture/)
 - [azure architecture patterns](https://docs.microsoft.com/en-us/azure/architecture/browse/)
 - [azure architecture center](https://docs.microsoft.com/en-us/azure/architecture/)
@@ -28,6 +27,9 @@
 - [AWS leadership principles](https://www.amazon.jobs/en/principles?ref=wellarchitected-wp)
 - [red-hat 5 essential architecture patterns](https://www.redhat.com/architect/5-essential-patterns-software-architecture)
 - [EETimes techpapers](https://www.techonline.com/?s=Fundamentals&content-type=techpapers)
+- [software architecture patterns](https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/)
+- [architecture patterns and tctics](http://home.eng.iastate.edu/~othmanel/files/SE339/Module%205.4%20-%20Architecture%20Patterns%20and%20Tactics.pdf)
+- [list of software architecture styles and patterns](https://en.wikipedia.org/wiki/List_of_software_architecture_styles_and_patterns)
 
 - frameworks & deliverables
   - [aws well-architected framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
@@ -39,6 +41,7 @@
   - [microservices: martin fowler](https://martinfowler.com/articles/microservices.html)
   - [microservices: patterns for distributed transactions](https://developers.redhat.com/blog/2018/10/01/patterns-for-distributed-transactions-within-a-microservices-architecture#)
   - [microservices: free ebooks by redhat](https://developers.redhat.com/topics/microservices#assembly-field-sections-1005)
+  - [layered architecture](https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/ch01.html)
 
 - tools
   - [AWS well architected tool](http://aws.amazon.com/well-architected-tool/?ref=wellarchitected-wp)
@@ -409,6 +412,12 @@ various components exist when designing a system, understanding the specific com
   - continue to think through this distinction
   - i've yet to see it put in terms this way
 
+### types of patterns
+
+- distributed: components can be fully decoupled with heavy reliance on the communication channel
+- centralized:
+- decentralized:
+
 ```sh
   # copypaste this structure for all
   #### name_of_pattern
@@ -421,7 +430,7 @@ various components exist when designing a system, understanding the specific com
   - examples:
 ```
 
-### environment: system design patterns
+### environment: infrastructure patterns
 
 - software architecture: describes the design and collection of components into systems that make up the building blocks of software
   - i.e. the principle that defines the software organization schema for these systems
@@ -444,7 +453,7 @@ various components exist when designing a system, understanding the specific com
 - disadvantages
   - complexity in the network layer (discovery) and implementation
 
-#### multi-tier pattern
+#### multi-tier/layered pattern
 
 - substacks services based on the flow of data, each stack/tier/layer exists at a different level of abstraction
   - tier: represents a unit of submodules that produces a cohesive set of services,
@@ -458,12 +467,6 @@ various components exist when designing a system, understanding the specific com
       - pool of web servers with a dtabase tier
   - 3-tier
   - etc
-
-#### types of patterns
-
-- distributed: components can be fully decoupled with heavy reliance on the communication channel
-- centralized:
-- decentralized:
 
 #### model-view-controller
 
@@ -558,6 +561,10 @@ various components exist when designing a system, understanding the specific com
 - disadvantages:
 - examples
 
+#### event-driven
+
+#### space/cloud-based
+
 ### component: application design patterns
 
 - aggregator pattern
@@ -570,6 +577,46 @@ various components exist when designing a system, understanding the specific com
 - interface oriented design
 
 ### communication: messaging patterns
+
+- Open Systems Interconnection (OSI) model: a conceptual framework that describes the functions of a networking or tellecommunication system
+  - uses layers to describe a particular networking system
+  - used to guide vendors and developers so communication about products and softwar eprograms interoperate (have a common language)
+  - helps frame discussions of protocols and contrast of various technologies
+
+- Layer 7: Application
+  - closest to the end user and receives information directly from users and displays incoming data to the user
+  - applications themselves do not live at this layer (sit on top of it)
+  - facilitates communication through lower layers in order to establish connections
+    - e.g. web browsers, telnet and FTP sit on top of layer 7
+- Layer 6: presentation
+  - independent of data representation at the application layer
+    - i.e. preparation/translation of application data format to network data format (and vice-versa)
+  - it presents data to the application, or to the network
+    - e.g. encryption & decryption of data for secure transmission
+- Layer 5: Session
+  - when two servers need to speak with one another, a session has to be created
+  - i.e. setup, coordination (wait time) and termination between applications at each end of the session
+- Layer 4: Transport
+  - coordination of the data transfers between systems and hosts
+  - i.e. how much data to send, at what rate to send it, where it goes, etc
+    - e.g. TCP or UDP
+- Layer 3: Network
+  - most of the router functionality networking professions care about
+  - responsibile for packet forwarding and routing through different routers
+    - e.g. which route does your computer in Miami take to get to the bart station in SF
+  - switches that support virtual LANs than span more than one switch subnet
+    - because this requires routing capabilities between the physical and virtual LANs
+- Layer 2: Data Link
+  - provides node-to-node data transfer between two directly connected nodes
+  - handles error correction from the physical layer
+  - most switches operate at this level
+  - sublayers
+    - Media Access Control Layer (MAC): (i.e. your MAC address)
+    - Logical Link Control (LLC):
+- Layer 1: Physical
+  - represents the electrical & physical system
+  - everything from the cable type, radio frequency link (e.g. 802.11 wireless) the layout of pins, voltages, etc
+  - e.g. you operate at Layer 1 when you check that cables are firmly connected and the power plug hasnt been pulled out the modem
 
 - REST
 - SOAP
