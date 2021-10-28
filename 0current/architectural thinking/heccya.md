@@ -395,7 +395,7 @@ various components exist when designing a system, understanding the specific com
 - **Y**ielding (provisioning)
 - **A**rchitecture (system model)
 
-- I want to create (yield) a world (environment) for a set of living things (applications) to live hostically (hardware) and socially (communication)
+- I want to create (yield) a world (environment) for a set of living things (applications) to live holistically (hardware) and socially (communication)
 
 - I personally think through the distinction of environment (infrastructure) and component (application) design/architecture patterns
   - environment: the context of an application or service
