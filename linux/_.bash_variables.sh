@@ -103,5 +103,5 @@ export HISTCONTROL="erasedups:ignoreboth" # avoid duplicate entries
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history" # don't record some commands
 export HISTTIMEFORMAT='%F %T ' # useful timestamp format
 
-# force ssh connections to close after 5m of inactivity
-export TMOUT=300
+# force ssh connections to close after some time
+export TMOUT=3000
