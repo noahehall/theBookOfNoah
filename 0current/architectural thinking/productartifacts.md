@@ -7,6 +7,7 @@ keeping track of product artifacts that usually drive tech decisions
 - [8 key product artifacts](https://salamkhanau.medium.com/8-key-product-artefacts-to-make-visible-on-your-agile-physical-wall-e6f44e97cd1)
 - [key artifacts product managers should maintain](https://uxplanet.org/5-key-documents-product-management-should-prepare-de018a185d10)
 - [ultimate guide to agile product management](https://www.productplan.com/learn/agile-product-management/)
+- [guide to customer journey mapping](https://delighted.com/blog/guide-to-customer-journey-mapping)
 
 ## main artifacts
 
@@ -39,7 +40,14 @@ keeping track of product artifacts that usually drive tech decisions
 - accessibility
 - behaviour & interaction: which features are used the most & least
 - competition
-- customer journeys
+- customer journey map: visual storyline of every engagement the customer has with your service, brand or product
+  - meant for discovery & understanding how the user enters and exists your experience
+  - what are the pain points/opportunities?
+
+- user story map (MVP/user stories)
+  - meant for planning and implementation
+  - breaking down key pain points & opportunities (i.e. a specific item) from the user journey map into a step-by-step buildable feature
+
 - customer personas
 - define success
 - intended user
@@ -51,5 +59,4 @@ keeping track of product artifacts that usually drive tech decisions
 - references
 - requirements
 - rollout/release plan
-- user story map (MVP/user stories)
 - wireframes / designs
