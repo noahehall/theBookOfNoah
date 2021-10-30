@@ -20,6 +20,7 @@ amazon relational database service
   - [postgres on rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html)
   - [setting up for RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SettingUp.html)
   - [security group for db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SettingUp.html#CHAP_SettingUp.SecurityGroup)
+  - [working with a DB instance in a vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html#Overview.RDSVPC.Create)
 
 ## basics
 
@@ -51,7 +52,7 @@ amazon relational database service
 
 ## worfklows
 
-- determining db instance requirements
+- **determining db instance requirements**
   - resource reqs:
     - memory?
     - cpu?
@@ -63,4 +64,5 @@ amazon relational database service
       - user defined VPC: must be created before you setup the DB instance
         - create a VPC security group that authorizes connections from the app/service to RDS db instance
         - configure the VPC to host DB instances
-          - atleats 2 subnets each in distinct availablity zones
+          - atleast 2 subnets each in distinct availablity zones
+        - specify a DB subnet group  that defines which subnets in that VPC can be used by the DB instance
