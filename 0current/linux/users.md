@@ -16,6 +16,7 @@ managing users across debian & arch
   - `/etc/group`
   - `/etc/gshadow`
   - `/etc/skel` skeleton files copied when creating a user + home directory
+  - `/etc/login.defs` default login settings for users & groups
 
 ```sh
   # inspection
@@ -26,6 +27,7 @@ managing users across debian & arch
     grep USERNAME /etc/passwd # see user settings
     chage -l USERNAME # see user account/passwd expiration info
     less /etc/passwd # see all users
+
   # useradd
     # uses default settings in /etc/default/useradd
     # ^ updates /etc/{passwd,shaddow,group,gshadow}
@@ -44,6 +46,22 @@ managing users across debian & arch
 
   # groupadd
     groupadd OPTS GROUPNAME # create group
+      -g NUM # set GROUPNAME to have a specific id
+      -o # permitting creating a group with a duplicate GID (i.e. enable multiple groups with the same ID)
+      -r # create a system group
+      -p STR # set a password for the group
+
+  # groupdel
+    groupdel OPTS GROUPNAME # delete a group
+
+  # usermod
+    usermod OPTS USERNAME # modify a user account
+      -a -G GROUP_LIST USERNAME # add username to group1,groupX (or just 1 group)
+      -g GROUPNAME USERNAME # change a users primary group
+
+  # gpasswd
+    gpasswd -d USERNAME GROUPNAME # remove user from group
+
 
 
 
