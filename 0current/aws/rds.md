@@ -20,9 +20,11 @@ amazon relational database service
   - [postgres on rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html)
   - [setting up for RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SettingUp.html)
   - [working with a DB instance in a vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html)
+  - [IAM for rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAM.html)
 
 ## basics
 
+- az: availablity zone; distinct data center in a specific region; reach region has at least two AZs
 - RDS: web service to setup, operate and scale a relational database in the AWS cloud
   - managed db service: responsibile for most managmeent tasks
 
@@ -65,3 +67,14 @@ amazon relational database service
         - configure the VPC to host DB instances
           - atleast 2 subnets each in distinct availablity zones
         - specify a DB subnet group  that defines which subnets in that VPC can be used by the DB instance
+  - high availability
+    - failover support in production & testing runbooks: a Multi-AZ deployment creates a primary & secondary (standby) db instance in another az for failover support
+  - iam policies: ensure you have account policies that grant the permissions needed to perform RDS operations
+  - open ports: ensure the TCP/IP port your db uses is accessible through your companies firewall policies
+  - AWS region: ensure your DB is provisioned in the region closes to your sers
+  - DB disk subsystem: determine the type of storag eyou need
+    - magnetic (standard): i.e. disk-based; most cost-effect; ideal for applications with light/burst I/O reqs
+    - general purpose (SSD): i.e. gp2; faster access than disk-based
+    - provisioned IOPS (PIOPS): the fastest; ideal for I/O-intensive workloads requireing storage performance and consistency in random I/O throughput
+
+    -
