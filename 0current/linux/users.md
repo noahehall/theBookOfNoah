@@ -19,11 +19,13 @@ managing users across debian & arch
 
 ```sh
   # inspection
-    id USERNAME # see userID, primary group, and secondary group
+    id USERNAME # see userID, primary group, and secondary group of USERNAME
       -gn # get primary group
+    groups # see all groups
+      USERNAME # see all groups USERNAME belongs to
     grep USERNAME /etc/passwd # see user settings
     chage -l USERNAME # see user account/passwd expiration info
-
+    less /etc/passwd # see all users
   # useradd
     # uses default settings in /etc/default/useradd
     # ^ updates /etc/{passwd,shaddow,group,gshadow}
@@ -40,6 +42,8 @@ managing users across debian & arch
       -D # see useradd defaults/file locations, do not specify any other options/username
       -D OPTS # change defaults for any aforementioned option, do not specify username
 
+  # groupadd
+    groupadd OPTS GROUPNAME # create group
 
 
 
