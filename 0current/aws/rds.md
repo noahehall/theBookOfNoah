@@ -5,15 +5,27 @@ amazon relational database service
 ## links
 
 - [user guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
+- ref
+  - [db instance classes](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html)
+  - [aws-cli for rds](https://docs.aws.amazon.com/cli/latest/reference/rds/index.html)
+  - [db instance billing](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/User_DBInstanceBilling.html)
+  - [rds billing](https://aws.amazon.com/rds/pricing)
+
 - tuts
   - [running dbs on AWS](http://aws.amazon.com/running_databases/)
-
-  -
+  - [rds & vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.html)
+  - [security on rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html)
+  - [high availability multi-az for rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html)
+  - [monitoring RDS db instances](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html)
+  - [postgres on rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html)
+  - [setting up for RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SettingUp.html)
+  - [security group for db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SettingUp.html#CHAP_SettingUp.SecurityGroup)
 
 ## basics
 
 - RDS: web service to setup, operate and scale a relational database in the AWS cloud
   - managed db service: responsibile for most managmeent tasks
+
   - use cases
     - cost-efficient, resizable capacity for industry standard relation db
     - manages common admin tasks
@@ -32,4 +44,23 @@ amazon relational database service
 - db engines: the specific database product software that runs on the db instance
   - mysql, mariadb, postgresql, oracle, microsfot sql server
 
-  -
+- db instance class: determines the ocmputation and memory capacity of a db instance oferring different compute, memory and torage capabilities
+- NTP: network time protocol is used to sync time on db instances
+  - you also use this ubuntu to sync time (e.g. when fkn slack fks up the time you run this)
+  - security group: controls access to the db instance by permitting access to IP ranges/ec2 instances you specify
+
+## worfklows
+
+- determining db instance requirements
+  - resource reqs:
+    - memory?
+    - cpu?
+  - VPC, subnet and security group:
+    - security group rules: based on type of VPC and region
+      - default VPC: automatically configured to support db instances
+        - create a VPC security group that authorizes connection fro the application/service to RDS db instance
+        - specify the default DB subnet group
+      - user defined VPC: must be created before you setup the DB instance
+        - create a VPC security group that authorizes connections from the app/service to RDS db instance
+        - configure the VPC to host DB instances
+          - atleats 2 subnets each in distinct availablity zones
