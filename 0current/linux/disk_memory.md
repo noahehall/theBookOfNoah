@@ -8,6 +8,7 @@
 - [disks & storage guides](https://help.ubuntu.com/stable/ubuntu-help/disk.html.en)
 - tuts
   - [add swap space on ubuntu 20.04](https://linuxize.com/post/how-to-add-swap-space-on-ubuntu-20-04/)
+  - [linux perf - swap space](https://haydenjames.io/linux-performance-almost-always-add-swap-space/)
 - tools
   - [Ubuntu Disks](https://manpages.ubuntu.com/manpages/cosmic/man1/gnome-disks.1.html)
 
