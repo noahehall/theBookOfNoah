@@ -125,7 +125,6 @@ everything about postgresql
     -- once connected
     \x -- toggle enhanced view for display query results
     \a -- toggle aligned/non aligned column output
-    \c DBNAME -- connect to db
     \s -- display command history
     \s /path/to/file -- save cmd history to file
     \i /path/to/file -- execute psql cmds from file
@@ -133,13 +132,35 @@ everything about postgresql
     \h CMD -- get help on a specific cmd
     \timing -- toggle the display of query execution time
     \g -- execute previous command
-    \du __username__ -- List a username if present.
+
 
   -- quick admin-level cmds
-    create role __test1__ -- Create a role with an existing username.
-    create role __test2__ noinherit login password __passsword__; -- Create a role with username and password.
-    set role __test__; -- Change role for current session to __test__.
-    grant __test2__ to __test1__; -- Allow __test1__ to set its role as __test2__.
+    -- user admin
+      \du -- List users
+      \du __username__ -- List a username if present.
+      create role __test1__ -- Create a role with an existing username.
+      create role __test2__ noinherit login password __passsword__; -- Create a role with username and password.
+      set role __test__; -- Change role for current session to __test__.
+      grant __test2__ to __test1__; -- Allow __test1__ to set its role as __test2__.
+
+    -- db admin
+      select version(); -- show postgres version
+      \c DBNAME -- Connect to a database
+      \c dbname username -- connect to db as user
+      \l -- list all dbs
+      \dn -- list all schema of current db
+      \df -- list all available functions of current db
+      create database NAME -- create
+      alter database dbname rename to newname -- rename db
+      pg_restore -U USERNAME -d DBNAME -l /path/to/db_data.tar -- load data into a db
+
+    -- table admin
+      select pg_relation_size('dbname'); -- returns the size of the table in bytes, not included indexes or additional objects.
+      select pg_total_relation_size('dbname'); -- returns the size of the table in bytes, including indexes or additional objects.
+      SELECT pg_size_pretty (pg_relation_size('actor')); -- convert bytes to kb/mb/gb/tb
+      \dt -- list all tables in current db
+      \d+ -- describe table
+      \dv -- list all views
 ```
 
 ## reference
@@ -165,8 +186,6 @@ everything about postgresql
 
 
     -- server
-      select version(); -- show postgres version
-
       psql -U username --connect to local db server
         -- default username is postgres
       psql -d databasename -U username -W
@@ -176,37 +195,9 @@ everything about postgresql
       psql -U username -h hostname "dbname=db sslmode=require"
         -- connect to remote db via SSL
       \q -- Quit/Exit
-
       \H -- toggle html output format
-
-      \timing -- toggle the display of query execution time
       \e -- use the program defined by the EDITOR env var to execute a cmd
       \ef functioname -- edit a function with default text editor
-
-    -- user admin
-      \du -- List users
-
-
-
-    -- db admin
-      create database NAME -- create
-      alter database dbname rename to newname -- rename db
-      pg_restore -U USERNAME -d DBNAME -l /path/to/db_data.tar -- load data into a db
-      \c DBNAME -- Connect to a database
-      \c dbname username -- connect to db as user
-      \l -- list all dbs
-
-    -- table admin
-      select pg_relation_size('dbname'); -- returns the size of the table in bytes, not included indexes or additional objects.
-      select pg_total_relation_size('dbname'); -- returns the size of the table in bytes, including indexes or additional objects.
-      SELECT pg_size_pretty (pg_relation_size('actor')); -- convert bytes to kb/mb/gb/tb
-      \dt -- list all tables in current db
-      \d+ -- describe table
-      \dn -- list all schema of current db
-      \df -- list all available functions of current db
-      \dv -- list all views
-      \du -- list all users
-
   ```
 
 ### roles/users
