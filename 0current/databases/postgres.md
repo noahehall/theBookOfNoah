@@ -17,21 +17,28 @@ everything about postgresql
 
 ## links
 
-- [accessing a DB](https://www.postgresql.org/docs/current/static/tutorial-accessdb.html)
-- [postgres cheatsheet](https://gist.github.com/Kartones/dd3ff5ec5ea238d4c546)
-- [general sql cheatsheet](https://gist.github.com/janikvonrotz/6e27788f662fcdbba3fb)
-- [getting started postgresql server mac osx](https://www.codementor.io/devops/tutorial/getting-started-postgresql-server-mac-osx)
-- [postgresql tut](http://www.postgresqltutorial.com/)
-  - todo sections: 4, 5, 6, 9, 10, 11, 12, 13, 14, 15,
-- [setup postgresql on ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
-- [postgres roles and permissions](https://www.digitalocean.com/community/tutorials/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2)
-- [formatting CLI responses](https://stackoverflow.com/questions/9604723/alternate-output-format-for-psql)
-- [managing db tables](https://www.digitalocean.com/community/tutorials/how-to-create-remove-manage-tables-in-postgresql-on-a-cloud-server)
-- [upsert tut](http://www.postgresqltutorial.com/postgresql-upsert/)
 - postgres
-  - [version 14 docs](https://www.postgresql.org/docs/14/index.html)
+  - ref
+    - [version 14 docs](https://www.postgresql.org/docs/14/index.html)
+  - tuts
+    - [create db examples](https://www.guru99.com/postgresql-create-database.html)
+    - [create db if it doesnt exist](https://stackoverflow.com/questions/18389124/simulate-create-database-if-not-exists-for-postgresql)
+
 - docker
   - [postgres docker docs](https://hub.docker.com/_/postgres)
+
+- categorize the following
+  - [accessing a DB](https://www.postgresql.org/docs/current/static/tutorial-accessdb.html)
+  - [postgres cheatsheet](https://gist.github.com/Kartones/dd3ff5ec5ea238d4c546)
+  - [general sql cheatsheet](https://gist.github.com/janikvonrotz/6e27788f662fcdbba3fb)
+  - [getting started postgresql server mac osx](https://www.codementor.io/devops/tutorial/getting-started-postgresql-server-mac-osx)
+  - [postgresql tut](http://www.postgresqltutorial.com/)
+    - todo sections: 4, 5, 6, 9, 10, 11, 12, 13, 14, 15,
+  - [setup postgresql on ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
+  - [postgres roles and permissions](https://www.digitalocean.com/community/tutorials/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2)
+  - [formatting CLI responses](https://stackoverflow.com/questions/9604723/alternate-output-format-for-psql)
+  - [managing db tables](https://www.digitalocean.com/community/tutorials/how-to-create-remove-manage-tables-in-postgresql-on-a-cloud-server)
+  - [upsert tut](http://www.postgresqltutorial.com/postgresql-upsert/)
 
 ## basics
 
@@ -184,7 +191,6 @@ everything about postgresql
     -- systemct
       sudo systemctl stop postgresql.service -- etc
 
-
     -- server
       psql -U username --connect to local db server
         -- default username is postgres
@@ -223,7 +229,6 @@ everything about postgresql
 
     -- alter roles
       ALTER ROLE role_name WITH permissions
-
 
     -- DELETE roles
       DROP ROLE role_name; --errors if role does not exist
@@ -283,8 +288,6 @@ everything about postgresql
 
     -- remove all public/super-user permissions from table
       REVOKE INSERT ON table_name FROM PUBLIC|ALL;
-
-
 
     -- view all grant table (all granted permissions)
       \z
