@@ -1,8 +1,9 @@
-todo
-
-- <https://aws.amazon.com/tools/>
 
 # TLDR
+
+- todo
+  - <https://aws.amazon.com/tools/>
+  - supported compliance standards: <http://aws.amazon.com/compliance/>
 
 things that generally apply to all services
 

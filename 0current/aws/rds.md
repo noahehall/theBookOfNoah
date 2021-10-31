@@ -104,3 +104,24 @@ amazon relational database service
       - generally you should limit outbound to the set of APIs you'll be providing data too
 - if your using the default VPC, a default subnet group spanning all VPCs subnets is created for you
   - you can select the default VPC to use
+
+### postgres on RDS
+
+- managed service running specific version of postgresql
+- use cases
+  - create db instances & snapshots
+  - point-in-time restores & backups
+  - multi-az deployments
+  - read replicas
+  - provisioned IOPS
+  - security by provisioning instances within a VPC
+  - ue SSL to connect to a db instance
+
+#### connecting to db instance
+
+- notes
+  - rds doesnt permit host access to the DB instance (e.g. via telnet / ssh)
+  - restricts access to certain system procedures & tables that requir advanced privileges
+  -
+- via pgadmin
+- via psql
