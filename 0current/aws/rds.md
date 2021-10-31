@@ -82,6 +82,9 @@ amazon relational database service
 - database preview environment: try out new postrel versions & extensions before they are fully supported by creating a db instance in the database preview environment
   - endpoint for api/cli: `rds-preview.us-east-2.amazonaws.com`
 
+- modules: i.e. postgres extensions
+  - see modules available for your current version after logging into psql `SHOW rds.extensions;`
+
 ## worfklows
 
 ### determining db instance requirements
