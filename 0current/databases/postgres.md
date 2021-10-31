@@ -93,7 +93,23 @@ everything about postgresql
 
 ## quickies
 
-- TODO: put some quickies here
+```sh
+  # quick docker on postgres for local development
+    # get the IP of the running postgres instance
+    docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' CONTAINER_NAME
+    # run a shell script in the running docker container
+    docker exec -it CONTAINER_NAME /bin/bash path/to/some/file/in/container/poop.sh
+    # specifying options via docker-compose file
+      docker compose \
+        -f ./somedir/docker-compose.yml \
+        --env-file ./.env \
+        CMD
+        # ^ usefule cmds see # docker compose help
+          up # start all services
+          start SERVICE_NAME # start a specific servic in the file
+
+
+```
 
 ## reference
 
