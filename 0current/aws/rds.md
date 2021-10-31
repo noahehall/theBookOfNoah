@@ -15,6 +15,7 @@ amazon relational database service
 
 - [user guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
 - [database preview environment](https://us-east-2.console.aws.amazon.com/rds-preview/home?region=us-east-2#)
+- [aws simple monthly calculator](http://calculator.s3.amazonaws.com/index.html)
 
 - ref
   - [db instance classes](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html)
@@ -129,6 +130,21 @@ amazon relational database service
 - if your using the default VPC, a default subnet group spanning all VPCs subnets is created for you
   - you can select the default VPC to use
 
+```sh
+  # example from defualt vpc + subnets
+    # default vpc
+      ipv4 CIDR: 172.31.0.0/16
+      route table: configured
+      main network ACL: configured
+      DHCP options set: configured
+    # 4 subnets
+      172.31.320/20
+      172.31.48.0/20
+      172.31.0.0/20
+      172.31.16.0/20
+
+```
+
 ### postgres on RDS
 
 - managed service running specific version of postgresql
@@ -150,9 +166,23 @@ amazon relational database service
 - notes
   - rds doesnt permit host access to the DB instance (e.g. via telnet / ssh)
   - restricts access to certain system procedures & tables that requir advanced privileges
-  -
-- via pgadmin
-- via psql
+
+  - database authentication schemes
+    - password: i.e. database paswords
+    - password + IAM database authentication: auth using db password + user creds through AWS IAM users and roles
+    - password + kerberos auth: choose a directory in which you want to allow authorized users to authenticate with this DB instance using kerberos authentication
+
+  - instance types
+    - standard: m classes; e.g. `db.m6g.large`
+    - memory optimized: r & x classes; e.g. `db.r6g.large`
+    - burstable: t classes; e.g. `db.t3.micro`
+  - storage types
+    - megnetic
+    - general purpose SSD (gp2)
+    - provisioned IPS SSD (io1)
+    -
+- connect via pgadmin
+- connect via psql
 
 ## quickies
 
