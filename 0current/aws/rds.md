@@ -21,6 +21,7 @@ amazon relational database service
   - [setting up for RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SettingUp.html)
   - [working with a DB instance in a vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html)
   - [IAM for rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAM.html)
+  - [regions, AZ and local zones for RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html)
 
 ## basics
 
@@ -53,28 +54,44 @@ amazon relational database service
 
 ## worfklows
 
-- **determining db instance requirements**
-  - resource reqs:
-    - memory?
-    - cpu?
-  - VPC, subnet and security group:
-    - security group rules: based on type of VPC and region
-      - default VPC: automatically configured to support db instances
-        - create a VPC security group that authorizes connection fro the application/service to RDS db instance
-        - specify the default DB subnet group
-      - user defined VPC: must be created before you setup the DB instance
-        - create a VPC security group that authorizes connections from the app/service to RDS db instance
-        - configure the VPC to host DB instances
-          - atleast 2 subnets each in distinct availablity zones
-        - specify a DB subnet group  that defines which subnets in that VPC can be used by the DB instance
-  - high availability
-    - failover support in production & testing runbooks: a Multi-AZ deployment creates a primary & secondary (standby) db instance in another az for failover support
-  - iam policies: ensure you have account policies that grant the permissions needed to perform RDS operations
-  - open ports: ensure the TCP/IP port your db uses is accessible through your companies firewall policies
-  - AWS region: ensure your DB is provisioned in the region closes to your sers
-  - DB disk subsystem: determine the type of storag eyou need
-    - magnetic (standard): i.e. disk-based; most cost-effect; ideal for applications with light/burst I/O reqs
-    - general purpose (SSD): i.e. gp2; faster access than disk-based
-    - provisioned IOPS (PIOPS): the fastest; ideal for I/O-intensive workloads requireing storage performance and consistency in random I/O throughput
+### determining db instance requirements
 
-    -
+- resource reqs:
+  - memory?
+  - cpu?
+- VPC, subnet and security group:
+  - security group rules: based on type of VPC and region
+    - default VPC: automatically configured to support db instances
+      - create a VPC security group that authorizes connection fro the application/service to RDS db instance
+      - specify the default DB subnet group
+    - user defined VPC: must be created before you setup the DB instance
+      - create a VPC security group that authorizes connections from the app/service to RDS db instance
+      - configure the VPC to host DB instances
+        - atleast 2 subnets each in distinct availablity zones
+      - specify a DB subnet group  that defines which subnets in that VPC can be used by the DB instance
+- high availability
+  - failover support in production & testing runbooks: a Multi-AZ deployment creates a primary & secondary (standby) db instance in another az for failover support
+- iam policies: ensure you have account policies that grant the permissions needed to perform RDS operations
+- open ports: ensure the TCP/IP port your db uses is accessible through your companies firewall policies
+- AWS region: ensure your DB is provisioned in the region closes to your sers
+- DB disk subsystem: determine the type of storag eyou need
+  - magnetic (standard): i.e. disk-based; most cost-effect; ideal for applications with light/burst I/O reqs
+  - general purpose (SSD): i.e. gp2; faster access than disk-based
+  - provisioned IOPS (PIOPS): the fastest; ideal for I/O-intensive workloads requireing storage performance and consistency in random I/O throughput
+
+### create a VPC security group to provide access to your db instance
+
+- if youre not using the default VPC, do the following to create a security group for a user-defined VPC
+  - go the VPC console > security groups > create
+  - give a name, description
+  - select the VPC you want to creat eyour DB instance in
+  - setup rules
+    - inbound (repeat if you need multiple access rules, e.g. for different users/applications)
+      - type: custom TCP
+      - port range: value for your db instance
+      - source: security groupname/ID address range (CIDR value) from where you access the db istance
+        - ip address: permits ccess to the db instance from the IP address detected in your browser
+    - outbound: default all outbound connections permitted
+      - generally you should limit outbound to the set of APIs you'll be providing data too
+- if your using the default VPC, a default subnet group spanning all VPCs subnets is created for you
+  - you can select the default VPC to use
