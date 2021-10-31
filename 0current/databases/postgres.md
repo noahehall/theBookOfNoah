@@ -23,6 +23,7 @@ everything about postgresql
   - tuts
     - [create db examples](https://www.guru99.com/postgresql-create-database.html)
     - [create db if it doesnt exist](https://stackoverflow.com/questions/18389124/simulate-create-database-if-not-exists-for-postgresql)
+    - [create table if ot exists](https://stackoverflow.com/questions/1766046/postgresql-create-table-if-not-exists)
 
 - docker
   - [postgres docker docs](https://hub.docker.com/_/postgres)
