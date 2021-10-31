@@ -1,9 +1,11 @@
+
 # TLDR
 
 ## links
 
 - [working with VPCs](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html)
 - [reachability analyzer](https://docs.aws.amazon.com/vpc/latest/reachability/what-is-reachability-analyzer.html)
+- [vpc costs](https://aws.amazon.com/vpc/pricing/)
 
 ## basics
 
