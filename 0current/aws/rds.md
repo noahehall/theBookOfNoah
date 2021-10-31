@@ -50,6 +50,7 @@ amazon relational database service
       - scalability: use read replicas to increase read scaling
       - security: via IAM (create users access) and provision behind a VPC
     - use commoon db products: mysql, mariadb, postgres, oracle & microsoft sql server
+
 - db instance: isolated DB enviornment in AWS cloud; the basic building block of rds
   - contain one/more user-created dbs
   - access via same tools & apps you would normally
@@ -61,6 +62,8 @@ amazon relational database service
 - NTP: network time protocol is used to sync time on db instances
   - you also use this ubuntu to sync time (e.g. when fkn slack fks up the time you run this)
   - security group: controls access to the db instance by permitting access to IP ranges/ec2 instances you specify
+
+- database preview environment: try out new postrel versions & extensions before they are fully supported by creating a db instance in the database preview environment
 
 ## worfklows
 
@@ -130,3 +133,14 @@ amazon relational database service
   -
 - via pgadmin
 - via psql
+
+## quickies
+
+```sh
+  # always set the default profile
+    export AWS_DEFAULT_PROFILE=someprofile
+
+  # see supported postgres versions
+    aws rds describe-db-engine-versions --default-only --engine postgres
+
+```

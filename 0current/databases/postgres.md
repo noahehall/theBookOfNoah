@@ -48,6 +48,8 @@ everything about postgresql
 
 ## basics
 
+- if supporting rds on aws, make sure your local postgres version matches the available rds versions
+
 ### terminology
 
 - PostgreSQL: general purpose and object-relational database management system, the most advanced open source database system
