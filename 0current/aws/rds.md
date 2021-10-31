@@ -14,11 +14,14 @@ amazon relational database service
 ## links
 
 - [user guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
+- [database preview environment](https://us-east-2.console.aws.amazon.com/rds-preview/home?region=us-east-2#)
+
 - ref
   - [db instance classes](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html)
   - [aws-cli for rds](https://docs.aws.amazon.com/cli/latest/reference/rds/index.html)
   - [db instance billing](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/User_DBInstanceBilling.html)
   - [rds billing](https://aws.amazon.com/rds/pricing)
+  - [supported postgres versions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts.General.DBVersions)
 
 - tuts
   - [running dbs on AWS](http://aws.amazon.com/running_databases/)
@@ -39,6 +42,12 @@ amazon relational database service
 - RDS: web service to setup, operate and scale a relational database in the AWS cloud
   - managed db service: responsibile for most managmeent tasks
 
+  - limitations
+    - up to 40 postgresql db instances
+    - storage limits (see storage link)
+    - max connections: rds requires 3 connections for system maintenance
+      - if you set a value for user connections, always `add 3` to account for rds system management connections
+
   - use cases
     - cost-efficient, resizable capacity for industry standard relation db
     - manages common admin tasks
@@ -50,6 +59,13 @@ amazon relational database service
       - scalability: use read replicas to increase read scaling
       - security: via IAM (create users access) and provision behind a VPC
     - use commoon db products: mysql, mariadb, postgres, oracle & microsoft sql server
+
+  - recommended version: postgres 13.4
+    - [all extensions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts.General.FeatureSupport.Extensions.13x)
+      - [spi model](https://www.postgresql.org/docs/13/contrib-spi.html)
+      - [pgrouting](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_Partitions.html)
+      - [pglogical](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_Partitions.html)
+      - [postgis](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.PostGIS.html#CHAP_PostgreSQL.Extensions.PostGIS)
 
 - db instance: isolated DB enviornment in AWS cloud; the basic building block of rds
   - contain one/more user-created dbs
@@ -64,6 +80,7 @@ amazon relational database service
   - security group: controls access to the db instance by permitting access to IP ranges/ec2 instances you specify
 
 - database preview environment: try out new postrel versions & extensions before they are fully supported by creating a db instance in the database preview environment
+  - endpoint for api/cli: `rds-preview.us-east-2.amazonaws.com`
 
 ## worfklows
 
