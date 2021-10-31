@@ -28,6 +28,10 @@ everything about postgresql
 - [formatting CLI responses](https://stackoverflow.com/questions/9604723/alternate-output-format-for-psql)
 - [managing db tables](https://www.digitalocean.com/community/tutorials/how-to-create-remove-manage-tables-in-postgresql-on-a-cloud-server)
 - [upsert tut](http://www.postgresqltutorial.com/postgresql-upsert/)
+- postgres
+  - [version 14 docs](https://www.postgresql.org/docs/14/index.html)
+- docker
+  - [postgres docker docs](https://hub.docker.com/_/postgres)
 
 ## basics
 
@@ -97,6 +101,11 @@ everything about postgresql
   # quick docker on postgres for local development
     # get the IP of the running postgres instance
     docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' CONTAINER_NAME
+    # connect to the running container
+    docker exec -it CONTAINER_NAME /bin/bash
+      # now you can run your normal *nix cmds e.g.
+      psql -U pgadmin -d db_name_if_not_pgadmin
+
     # run a shell script in the running docker container
     docker exec -it CONTAINER_NAME /bin/bash path/to/some/file/in/container/poop.sh
     # specifying options via docker-compose file
