@@ -1,4 +1,21 @@
-# links
+# TLDR
+
+everything about postgresql
+
+- TODO
+  - find the other postgres doc(s) and put it all in here
+  - research
+    - User-defined types
+    - Table inheritance
+    - Sophisticated locking mechanism
+    - Foreign key referential integrity
+    - Views, rules, subquery
+    - Nested transactions (savepoints)
+    - Asynchronous replication
+    - Tablespaces
+    - Point-in-time recovery
+
+## links
 
 - [accessing a DB](https://www.postgresql.org/docs/current/static/tutorial-accessdb.html)
 - [postgres cheatsheet](https://gist.github.com/Kartones/dd3ff5ec5ea238d4c546)
@@ -12,22 +29,9 @@
 - [managing db tables](https://www.digitalocean.com/community/tutorials/how-to-create-remove-manage-tables-in-postgresql-on-a-cloud-server)
 - [upsert tut](http://www.postgresqltutorial.com/postgresql-upsert/)
 
-# basics
+## basics
 
-## research
-
-- User-defined types
-- Table inheritance
-- Sophisticated locking mechanism
-- Foreign key referential integrity
-- Views, rules, subquery
-- Nested transactions (savepoints)
--
-- Asynchronous replication
-- Tablespaces
-- Point-in-time recovery
-
-## terminology
+### terminology
 
 - PostgreSQL: general purpose and object-relational database management system, the most advanced open source database system
   - allows you to add custom functions developed using different programming
@@ -36,7 +40,7 @@
 - Multi-version concurrency control (MVCC):
   - known as snapshot isolation in Oracle
 
-## server and db objects
+### server and db objects
 
 - server service: You can install multiple PostgreSQL servers on a physical server using different ports and having different locations to store data.
 - database: container of other objects such as tables, views, functions, indexes, etc
@@ -59,7 +63,7 @@
   - The purpose of extensions is to make it easier to maintain.
 - subquery: a query nested inside another query, e.g. in the where clause with the in operator
 
-## installing on buntu 18.04
+### installing on buntu 18.04
 
 - install commands
 
@@ -87,9 +91,13 @@
         \x auto
       ```
 
-# must know
+## quickies
 
-## admin
+- TODO: put some quickies here
+
+## reference
+
+### admin
 
   ```sql
     -- locations
@@ -105,7 +113,8 @@
       sudo service postgresql stop
       sudo service postgresql start
       sudo service postgresql restart
-
+    -- systemct
+      sudo systemctl stop postgresql.service -- etc
 
 
     -- server
@@ -162,7 +171,7 @@
 
   ```
 
-## roles/users
+### roles/users
 
 - roles: handle authentication and authorization
   - similar to unix-style accounts
@@ -214,7 +223,7 @@
         -- | SYSID uid
   ```
 
-## permissions
+### permissions
 
 - when a database or table is created, usually only the role that created it (not including roles with superuser status) has permission to modify it.
 
@@ -252,7 +261,7 @@
       \z
   ```
 
-## Authentication
+### Authentication
 
 - types of authentication
   - ident: associates postgres roles with a matching unix/linux system account
@@ -273,7 +282,7 @@
       \password test_user
   ```
 
-## databases and tables
+### databases and tables
 
   ```sql
     -- create a table
@@ -291,9 +300,9 @@
 
   ```
 
-# statements
+### statements
 
-## select
+#### select
 
 - Select distinct rows by using `DISTINCT` operator.
 - Filter rows by using `WHERE` clause.
@@ -304,7 +313,7 @@
 - Join a table to other tables using `INNER JOIN`, `LEFT JOIN`, `FULL OUTER JOIN`, `CROSS JOIN` clauses.
 - To construct a subquery, we put the second query in brackets and use it in the WHERE clause as an expression
 
-### retrieval
+#### retrieval
 
   ```sql
     -- basic retrieval
@@ -347,13 +356,13 @@
         first_name ILIKE 'BAR%'; -- case insensitive
   ```
 
-### builtin functions
+#### builtin functions
 
   ```sql
     select avg (col) from tablename;
   ```
 
-### sub queries
+#### sub queries
 
 - First, executes the subquery.
 - Second, gets the result and passes it to the outer query.
@@ -371,11 +380,11 @@
       );
   ```
 
-# tables
+### tables
 
 - temporary table: exists for the duration of a db session
 
-## creating and modifying
+#### creating and modifying
 
 - primary key: field(s) used to uniquely identify a record
   - default name is tablename_pk
@@ -484,7 +493,7 @@
 
   ```
 
-## deleting tables
+#### deleting tables
 
   ```sql
     drop table tablename
@@ -493,7 +502,7 @@
     drop table restrict -- dont drop if any references exist
   ```
 
-# updating records
+#### updating records
 
 - 'upsert: update if it exists, else inserts it'
 
@@ -542,7 +551,7 @@
 
   ```
 
-# deleting records
+#### deleting records
 
 - truncate: remove all data from a large table
   - does not remove any child tables unless you specify `cascade`
@@ -569,7 +578,7 @@
 
   ```
 
-# prepared statements
+### prepared statements
 
   ```sql
     -- create a prepared statement that accepts an argument
@@ -579,7 +588,9 @@
       execute statename(val1)
   ```
 
-# handy queries
+### copy pasta
+
+#### debugging
 
   ```sql
     -- Query analysis:
@@ -658,7 +669,7 @@
       LIMIT 5;
   ```
 
-# get foreign key constraints
+#### get foreign key constraints
 
   ```sql
   -- get specific table foreign key constraints

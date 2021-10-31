@@ -31,6 +31,7 @@ amazon relational database service
   - [working with a DB instance in a vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html)
   - [IAM for rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAM.html)
   - [regions, AZ and local zones for RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html)
+  - [importing data into postgres on rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL.Procedural.Importing.html)
 
 ## basics
 
@@ -115,7 +116,11 @@ amazon relational database service
   - read replicas
   - provisioned IOPS
   - security by provisioning instances within a VPC
-  - ue SSL to connect to a db instance
+  - use SSL to connect to a db instance
+  - application types
+    - HIPAA-compliance apps to store healthcare related information
+    - protected health information (PHI) under a completed business associate agreement (BAA) wth AWS
+    - federal risk & authorization  management program (FedRAMP) security requirements
 
 #### connecting to db instance
 
