@@ -102,6 +102,10 @@ amazon relational database service
       - create a VPC security group that authorizes connections from the app/service to RDS db instance
       - configure the VPC to host DB instances
         - atleast 2 subnets each in distinct availablity zones
+        - if db instance is publicly accessible,
+          - requires an internet gateway attached to the vpc
+          - support DNS resolution, DNS hostnames
+            - go to the vpc console > select vpc > actoins > drop through each one
       - specify a DB subnet group  that defines which subnets in that VPC can be used by the DB instance
 - high availability
   - failover support in production & testing runbooks: a Multi-AZ deployment creates a primary & secondary (standby) db instance in another az for failover support
@@ -138,10 +142,10 @@ amazon relational database service
       main network ACL: configured
       DHCP options set: configured
     # 4 subnets
-      172.31.320/20
-      172.31.48.0/20
       172.31.0.0/20
       172.31.16.0/20
+      172.31.48.0/20
+      172.31.320.0/20
 
 ```
 
