@@ -14,12 +14,17 @@ everything about postgresql
     - Asynchronous replication
     - Tablespaces
     - Point-in-time recovery
+  - read
+    - <https://www.enterprisedb.com/blog/8-cool-interesting-facts-things-postgresql-can-do>
+    - <https://talkpostgresql.com/hide-column-values-postgresql-33>
+    - <http://blog.codinghorror.com/youre-probably-storing-passwords-incorrectly/>
 
 ## links
 
 - postgres
   - ref
     - [version 14 docs](https://www.postgresql.org/docs/14/index.html)
+    - [insert into](https://www.postgresql.org/docs/14/sql-insert.html)
   - tuts
     - [create db examples](https://www.guru99.com/postgresql-create-database.html)
     - [create db if it doesnt exist](https://stackoverflow.com/questions/18389124/simulate-create-database-if-not-exists-for-postgresql)
@@ -106,6 +111,11 @@ everything about postgresql
 ## quickies
 
 ```sh
+  # pgadmin
+  # ^ right click everything to see the menus
+  # ^ you prolly cant remember where the fk to find
+  # ^^ servers > databases > shemas > public > tables > TABLENAME
+
   # quick docker on postgres for local development
     # get the IP of the running postgres instance
     docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' CONTAINER_NAME
@@ -124,7 +134,6 @@ everything about postgresql
         # ^ usefule cmds see # docker compose help
           up # start all services
           start SERVICE_NAME # start a specific servic in the file
-
 ```
 
 ```sql
@@ -172,6 +181,203 @@ everything about postgresql
 ```
 
 ## reference
+
+### tables
+
+- temporary table: exists for the duration of a db session
+
+#### tables: CRUD
+
+- primary key: field(s) used to uniquely identify a record
+  - default name is tablename_pk
+  - Technically, a primary key constraint is the combination of a not-null constraint and a UNIQUE constraint.
+  - A table can have one and only one primary key.
+  - good practice to add a primary key to every table.
+- foreign key: field(s) in one table record that uniquely identify the primary key of a record in another table
+  - default name is tablename__colname_fk
+  - referencing/child table: the table that contains the foreign key
+  - referenced/parent table: the table whose primary key is referenced by the child table
+  - a foreign key constraint maintains referential integrity between child and parent tables
+- column keywords:
+  - primary key (col1, colX)
+    - can be one/more columns
+  - not null
+- data types: serial, numeric, int,
+  - character
+    - char(n) - fixed length blank padded
+    - varchar(n) variable length
+    - text
+      - text has unlimited length
+  - numeric:
+    - integers
+      - smallint int serial
+        - int4 | int8
+          - research this
+        - serial is auto generated & incremented
+    - floating point
+      - float(n) real float8 numeric numeric(p,s)
+        - float(n) where n = number of decimal places
+        - numeric(p,s)
+          - p = number of digits before the decimal
+          - s = number of digits after the decimal
+  - temporal/time
+    - date time timestamp timestampz interval
+      - timestampz = stores both timestamp and timezone
+      - interval = periods of time
+  - bool:
+    - truthy: true, t, yes, y, 1
+    - falsy: false, f, no, n, 0
+  - arrays: array of other data types, e.g. for storing days of week
+  - json: plain json data that requires reparsing later on
+  - jsonb: json in binary format for faster processing but slower insert
+    - supports indexing
+  - uuid: store uuid values defined by RFC 4122
+    - guarantee a better uniqueness than serial
+    - can be used to hide sensitive data
+  - box: rectangular box
+  - line: a set of points
+  - point: geometric pair of numbers
+  - lseg: line segment
+  - polygon: closed geometric
+  - inet: ip4 address
+  - macaddr: a mac address
+
+  ```sql
+    -- creating tables
+      create table tablename (
+        col1 TYPE keyword1 keyword2 keywordX,
+        col2 etc,
+        col3 primary key, -- default name is tablename_pk
+        constraint NAME primary key(col4) -- give the pkey a name
+        colX etc,
+        foreign key(col1) references othertablename(colid) -- this gives the foreign key a name
+        col3 TYPE references othertablename(colid2) -- references keyword defines the foreign key constraint, doesnt give the foreign key a name
+        col4 type references othertablename(colid3) ON DELETE RESTRICT -- the parent table record will not be deleted until all references are deleted
+        col5 type references othertablename(colid4) ON DELETE CASCADE -- all child records are deleted if the parent record is deleted
+        FOREIGN KEY (c2, c3) REFERENCES parent_table (p1, p2) -- group of columns as foreign keys
+        unique(col2)
+        unique(col3, col4) --unique combination
+      );
+
+    -- add primary key to a table without one
+      alter table tablename add primary key (colX)
+    -- add auto incremented primary key
+      alter table tablename add column colx serial primary key
+    -- remove primary key
+      alter table tablename drop constraint pkname
+
+    -- add foreign key constraint to existing table
+      ALTER TABLE child_table ADD CONSTRAINT constraint_name
+        FOREIGN KEY (c1) REFERENCES parent_table (p1);
+
+    -- remove a constraint from a table
+      ALTER TABLE child_table DROP CONSTRAINT constraint_fkey;
+    -- add index based on two columns
+      create index indexname on tablename(col1, col2)
+    -- add unique index to col1 to table and name the index indexname
+      create unique index concurrently indexname
+        on tablename (col1)
+    -- add a unique constraint to a table using an index name
+      alter table tablename
+        add constrain contraintname
+        unique using index indexname;
+
+    -- create a table with the same schema as another
+      create table tablename (like othertablename)
+
+    -- add column to existing table
+      alter table tablename add column col1 type;
+    -- set default value for column
+      alter table tablename alter column col1 set default value
+    -- rename column
+      ALTER TABLE table_name
+      RENAME COLUMN column_name TO new_column_name;
+
+    -- deleting tables
+      drop table tablename
+      drop table if exists tablename -- dont throw error if table doesnt exist
+      drop table cascade -- drop and remove all dependent objects (views, references, etc)
+      drop table restrict -- dont drop if any references exist
+  ```
+
+#### records: CRUD
+
+  ```sql
+    -- create
+    -- ^ not specifying a column will implicitly use the default value
+    -- ^ \d+ to describe the table first
+      -- separately column names & values separately
+        insert into tablename
+          (col1Name, col2name, colXName, ...)
+        values
+          (col1Value, default, colXValue, ...); -- use the default value for the column
+      -- specifying values without column names, relying on the column order used when the table was created
+        insert into tablename values (col1Value, default, colXValue, ...)
+
+      -- insert and return some cols value e.g. its id
+        insert into tablename (col1, colX)
+          values(val1, valx)
+          returning id
+
+      -- insert rows from another table
+        insert into tablename (col1, colX)
+        select col2, col3
+        from othertablename where CONDITIONS
+
+    -- updating
+      update tablename set col1 = val1, colX = valX where CONDITION;
+        set col1 = col2 - col3 * col3
+    -- update all by not using where clause
+      update tablename set col1 = val1;
+    -- update one table with values from another table
+      update tablename set col1 = othertablename.col1
+        from othertablename
+        where tablename.id = othertablename.id
+
+    -- upserting
+      insert into tablename(col1, colX)
+        values(val1, valX)
+        on conflict target action
+          -- targets
+            on (col1)
+            on constraint constraintname
+            on a where clause with a predicate -- research this
+          -- actions
+            do nothing -- do nothing if row already exists
+            do update set col1 = val1 where CONDITION -- update fields with these values on conflict
+    -- upsert: do nothing example
+      insert into ... values ...
+        on conflict on constraint constraintname
+        do nothing
+
+  ```
+
+#### deleting records
+
+- truncate: remove all data from a large table
+  - does not remove any child tables unless you specify `cascade`
+- delete: scans the table before deleting records (usually because of where clause)
+
+  ```sql
+    delete from tablename where CONDITION
+    -- delete based on values from othertablename
+      delete from tablename
+        using othertablename
+        where tablename.id = othertablename.id
+      delete from tablename where tablename.id = (
+        select id from othertablename
+      ) -- same as above
+    -- delete all records from tablename
+      delete from tablename;
+
+    -- truncate table
+      truncate table tablename1, tablename2
+    -- truncate and remove reset sequence generator
+      truncate table tablename reset identity
+    -- truncate table and remove records from all child tables if any
+      truncate table tablename cascade
+
+  ```
 
 ### admin
 
@@ -411,204 +617,6 @@ everything about postgresql
       select * from tablename where exists (
         select 1 from tablename where CONDITIONS
       );
-  ```
-
-### tables
-
-- temporary table: exists for the duration of a db session
-
-#### creating and modifying
-
-- primary key: field(s) used to uniquely identify a record
-  - default name is tablename_pk
-  - Technically, a primary key constraint is the combination of a not-null constraint and a UNIQUE constraint.
-  - A table can have one and only one primary key.
-  - good practice to add a primary key to every table.
-- foreign key: field(s) in one table record that uniquely identify the primary key of a record in another table
-  - default name is tablename__colname_fk
-  - referencing/child table: the table that contains the foreign key
-  - referenced/parent table: the table whose primary key is referenced by the child table
-  - a foreign key constraint maintains referential integrity between child and parent tables
-- column keywords:
-  - primary key (col1, colX)
-    - can be one/more columns
-  - not null
-- data types: serial, numeric, int,
-  - character
-    - char(n) - fixed length blank padded
-    - varchar(n) variable length
-    - text
-      - text has unlimited length
-  - numeric:
-    - integers
-      - smallint int serial
-        - int4 | int8
-          - research this
-        - serial is auto generated & incremented
-    - floating point
-      - float(n) real float8 numeric numeric(p,s)
-        - float(n) where n = number of decimal places
-        - numeric(p,s)
-          - p = number of digits before the decimal
-          - s = number of digits after the decimal
-  - temporal/time
-    - date time timestamp timestampz interval
-      - timestampz = stores both timestamp and timezone
-      - interval = periods of time
-  - bool:
-    - truthy: true, t, yes, y, 1
-    - falsy: false, f, no, n, 0
-  - arrays: array of other data types, e.g. for storing days of week
-  - json: plain json data that requires reparsing later on
-  - jsonb: json in binary format for faster processing but slower insert
-    - supports indexing
-  - uuid: store uuid values defined by RFC 4122
-    - guarantee a better uniqueness than serial
-    - can be used to hide sensitive data
-  - box: rectangular box
-  - line: a set of points
-  - point: geometric pair of numbers
-  - lseg: line segment
-  - polygon: closed geometric
-  - inet: ip4 address
-  - macaddr: a mac address
-
-  ```sql
-    create table tablename (
-      col1 TYPE keyword1 keyword2 keywordX,
-      col2 etc,
-      col3 primary key, -- default name is tablename_pk
-      constraint NAME primary key(col4) -- give the pkey a name
-      colX etc,
-      foreign key(col1) references othertablename(colid) -- this gives the foreign key a name
-      col3 TYPE references othertablename(colid2) -- references keyword defines the foreign key constraint, doesnt give the foreign key a name
-      col4 type references othertablename(colid3) ON DELETE RESTRICT -- the parent table record will not be deleted until all references are deleted
-      col5 type references othertablename(colid4) ON DELETE CASCADE -- all child records are deleted if the parent record is deleted
-      FOREIGN KEY (c2, c3) REFERENCES parent_table (p1, p2) -- group of columns as foreign keys
-      unique(col2)
-      unique(col3, col4) --unique combination
-    );
-
-    -- add primary key to a table without one
-      alter table tablename add primary key (colX)
-    -- add auto incremented primary key
-      alter table tablename add column colx serial primary key
-    -- remove primary key
-      alter table tablename drop constraint pkname
-
-    -- add foreign key constraint to existing table
-      ALTER TABLE child_table ADD CONSTRAINT constraint_name
-        FOREIGN KEY (c1) REFERENCES parent_table (p1);
-
-    -- remove a constraint from a table
-      ALTER TABLE child_table DROP CONSTRAINT constraint_fkey;
-    -- add index based on two columns
-      create index indexname on tablename(col1, col2)
-    -- add unique index to col1 to table and name the index indexname
-      create unique index concurrently indexname
-        on tablename (col1)
-    -- add a unique constraint to a table using an index name
-      alter table tablename
-        add constrain contraintname
-        unique using index indexname;
-
-    -- create a table with the same schema as another
-      create table tablename (like othertablename)
-
-    -- add column to existing table
-      alter table tablename add column col1 type;
-    -- set default value for column
-      alter table tablename alter column col1 set default value
-    -- rename column
-      ALTER TABLE table_name
-      RENAME COLUMN column_name TO new_column_name;
-
-
-  ```
-
-#### deleting tables
-
-  ```sql
-    drop table tablename
-    drop table if exists tablename -- dont throw error if table doesnt exist
-    drop table cascade -- drop and remove all dependent objects (views, references, etc)
-    drop table restrict -- dont drop if any references exist
-  ```
-
-#### updating records
-
-- 'upsert: update if it exists, else inserts it'
-
-  ```sql
-    insert into tablename (col1, colX)
-    values
-      (col1Value, colXValue),
-      (col1Value, colXValue),
-      (col1Value, default); -- use the default value for the column
-
-    -- insert and return some cols value e.g. its id
-      insert into tablename (col1, colX)
-        values(val1, valx)
-        returning id
-
-    -- insert rows from another table
-      insert into tablename (col1, colX)
-      select col2, col3
-      from othertablename where CONDITIONS
-
-    -- updating
-      update tablename set col1 = val1, colX = valX where CONDITION;
-        set col1 = col2 - col3 * col3
-    -- update all by not using where clause
-      update tablename set col1 = val1;
-    -- update one table with values from another table
-      update tablename set col1 = othertablename.col1
-        from othertablename
-        where tablename.id = othertablename.id
-
-    -- upserting
-      insert into tablename(col1, colX)
-        values(val1, valX)
-        on conflict target action
-          -- targets
-            on (col1)
-            on constraint constraintname
-            on a where clause with a predicate -- research this
-          -- actions
-            do nothing -- do nothing if row already exists
-            do update set col1 = val1 where CONDITION -- update fields with these values on conflict
-    -- upsert: do nothing example
-      insert into ... values ...
-        on conflict on constraint constraintname
-        do nothing
-
-  ```
-
-#### deleting records
-
-- truncate: remove all data from a large table
-  - does not remove any child tables unless you specify `cascade`
-- delete: scans the table before deleting records (usually because of where clause)
-
-  ```sql
-    delete from tablename where CONDITION
-    -- delete based on values from othertablename
-      delete from tablename
-        using othertablename
-        where tablename.id = othertablename.id
-      delete from tablename where tablename.id = (
-        select id from othertablename
-      ) -- same as above
-    -- delete all records from tablename
-      delete from tablename;
-
-    -- truncate table
-      truncate table tablename1, tablename2
-    -- truncate and remove reset sequence generator
-      truncate table tablename reset identity
-    -- truncate table and remove records from all child tables if any
-      truncate table tablename cascade
-
   ```
 
 ### prepared statements
