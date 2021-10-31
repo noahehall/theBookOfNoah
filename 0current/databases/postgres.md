@@ -117,7 +117,29 @@ everything about postgresql
           up # start all services
           start SERVICE_NAME # start a specific servic in the file
 
+```
 
+```sql
+  -- quick psql cmds
+    psql -U somename -d somedb -- connect to db as user
+    -- once connected
+    \x -- toggle enhanced view for display query results
+    \a -- toggle aligned/non aligned column output
+    \c DBNAME -- connect to db
+    \s -- display command history
+    \s /path/to/file -- save cmd history to file
+    \i /path/to/file -- execute psql cmds from file
+    \? -- list all available cmds
+    \h CMD -- get help on a specific cmd
+    \timing -- toggle the display of query execution time
+    \g -- execute previous command
+    \du __username__ -- List a username if present.
+
+  -- quick admin-level cmds
+    create role __test1__ -- Create a role with an existing username.
+    create role __test2__ noinherit login password __passsword__; -- Create a role with username and password.
+    set role __test__; -- Change role for current session to __test__.
+    grant __test2__ to __test1__; -- Allow __test1__ to set its role as __test2__.
 ```
 
 ## reference
@@ -144,7 +166,7 @@ everything about postgresql
 
     -- server
       select version(); -- show postgres version
-      \c DBNAME -- connect to db
+
       psql -U username --connect to local db server
         -- default username is postgres
       psql -d databasename -U username -W
@@ -154,26 +176,17 @@ everything about postgresql
       psql -U username -h hostname "dbname=db sslmode=require"
         -- connect to remote db via SSL
       \q -- Quit/Exit
-      \x -- toggle enhanced view for display query results
-      \a -- toggle aligned/non aligned column output
+
       \H -- toggle html output format
-      \g -- execute previous command
-      \s -- display command history
-      \s /path/to/file -- save cmd history to file
-      \i /path/to/file -- execute psql cmds from file
-      \? -- list all available cmds
-      \h CMD -- get help on a specific cmd
+
       \timing -- toggle the display of query execution time
       \e -- use the program defined by the EDITOR env var to execute a cmd
       \ef functioname -- edit a function with default text editor
 
     -- user admin
       \du -- List users
-      \du __username__ -- List a username if present.
-      create role __test1__ -- Create a role with an existing username.
-      create role __test2__ noinherit login password __passsword__; -- Create a role with username and password.
-      set role __test__; -- Change role for current session to __test__.
-      grant __test2__ to __test1__; -- Allow __test1__ to set its role as __test2__.
+
+
 
     -- db admin
       create database NAME -- create
