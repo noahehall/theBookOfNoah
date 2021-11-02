@@ -32,7 +32,8 @@ todo
 - [evaluating existing infrastructure](https://www.terraform.io/docs/cloud/guides/recommended-practices/part2.html)
 - [aws provider examples on github](https://github.com/hashicorp/terraform-provider-aws/tree/master/examples)
 - [hashicorp github terroform example](https://github.com/hashicorp/tfc-guide-example)
--
+- blogs
+  - [updating rds using terraform](https://medium.com/hashicorp-engineering/upgrading-aurora-rds-using-terraform-3836a62757f)
 - specs
   - [all terraform docs](https://www.terraform.io/docs/index.html)
   - [remote state](https://www.terraform.io/docs/language/state/remote-state-data.html)
