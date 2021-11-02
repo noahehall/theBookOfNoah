@@ -79,7 +79,7 @@ todo
   - split out configuration into multiple files and module directories
     - the amount of files & modules depends on your strategy for managing the complexity technically, and socially with your team
     - SINGLE `main.tf`  file: things to watch for
-      - understanding and navigating the ocnfig files will become increasingly difficult
+      - understanding and navigating the config files will become increasingly difficult
       - updating configuration will be more risky: as an update to one sectin may cause unintended consequences in otther parts of the configuration
       - there will be increased duplication of similar blocks of configuration, e.g. when creating dev/staging/productin environments
       - sharing parts of the config between projects and teams will involve a lot of copypasta
@@ -90,7 +90,7 @@ todo
         - re-use ocnfiguration: moduels can be re-used across teams, projects, and organizations (if they publish modules to the cloud)
         - provide consistency and best practices: by re-using modules, you ensure you can leverage the right practices used by more experiences devs
       - recommendations
-        - name your provider `terraform-PROVIDER-NAME` (must be folowed to publish this to terraform cloud/enterprise registries)
+        - name your provider `terraform-PROVIDER-NAME` (must be followed to publish this to terraform cloud/enterprise registries)
         - write your configuration with modules in mind
         - use local modules to organize & encapsulate your code,
           - even if you arent publishing remote modules, by starting with modules its easier to maintain and update while the project is new than transforming an existing monolith
@@ -108,7 +108,7 @@ todo
   - e.g. compute instances, storage and networking, DNS entries, SaaS features
 
   - key features
-    - DSL: human readable & declarative config files
+    - DSL: human readable & declarative config files utilizing hashicorp HCL
     - execution plans: describes what it will do and asks for approval before making any infrastructure CRUD changes
     - resource graph: creates a resource graph then creates|modifies non-dependent resources in parallel
     - change automation: can apply complex changesets to infrastructure wiht minimal human interaction
@@ -125,8 +125,8 @@ todo
       - can be used in layers: setup physical infrastructure running the scheudlers as well as provisioning onto the shceduled grid
 
   - opinions & paradigms
-    - technical complexity: different providers use different interaces for provisioning new resources (e.g. aws vs gcp), terraform addresses this by:
-      - separating the provisioning workload via a single core engine to read configurations and dtermine the relationships between resources
+    - technical complexity: different providers use different interfaces for provisioning new resources (e.g. aws vs gcp), terraform addresses this by:
+      - separating the provisioning workload via a single core engine to read configurations and determine the relationships between resources
       - uses provider plugins to create, modify and destroy resources on the infratstructure providers (e.g. aws, gcp, github, dnsimple, etc)
 
     - organizational complexity: large organizations often have multiple teams relying on the same resources, terraform addresses this by:
@@ -141,7 +141,7 @@ todo
 
 ### terminology
 
-- remote state resources: enables access to infrastructure variables (e.g. URI of RDS, etc) from indepedent terraform workspaces
+- remote state resources: enables access to infrastructure variables (e.g. URI of RDS, etc) from independent terraform workspaces
 - output values: organize data to be easily queried and displayed to the terraform user
 - input variables: values that end users can assign to customize the terraform configuration
 - modules: sharable configuration for independent logical infrastructure components in a single directory
@@ -176,7 +176,7 @@ main unit of organization and primary tool for delegating control
 
 ### terraform modules
 
-- set of config files ina single directory
+- set of config files in a single directory
 - root module: the root directory containing the configuration files, and any child module directories
 - child modules
   - terraform will only use the confg files from a single directory,
