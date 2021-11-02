@@ -124,3 +124,16 @@ peter thiel with blake masters
   - ask yourself
     - how much of what you know abou business is shapred by mistaken reacts to past mistakes
     - the most contrarian thing of all is not to oppose the crowd but to think for yourself
+
+## chapter 2: party like its 1999
+
+- if you can identify a delusional popular belief; you can find what lies hidden behind it: the contrarian truth
+  - conventional beliefs only ever come to appear arbitrary, and wrong in retrospect
+  - whenever one collapses, we call the old belief a bubble
+- the first step to thinking clealry is to question what we think we know about the past
+- foolery before the dot com crash & burn
+  - every week: doezens of new startups compete to throw the most lavish launch party
+    - but landing parties are more rare
+  - the most `successful` companies seemed to embrace a sort of anti-business model where they lost money as they grew
+
+  -
