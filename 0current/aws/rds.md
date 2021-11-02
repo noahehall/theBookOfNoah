@@ -40,6 +40,7 @@ amazon relational database service
   - [create a db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateDBInstance.html)
   - [create a VPC for use with a db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateVPC.html)
   - [scenarios for accessing a DB instance in a vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.Scenarios.html)
+  - [create an ec2 instance to connect to a db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateWebServer.html)
 
 ## basics
 
@@ -179,6 +180,8 @@ amazon relational database service
     # create a DB subnet (in the rds console)
     # ^ require either 2 priv or 2 pub, go with 2 priv
     # now you can finally create your db instance as normal
+    # then you can create an ec2 server to connect to your db instance
+    # ^ make sure the ec2 instance has the correct security group you created earlier (the public one)
 
 
 
