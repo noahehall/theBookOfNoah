@@ -20,6 +20,8 @@ things that generally apply to all services
 - [available AWS condition keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html)
 - [enabling access anlyzer](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html#access-analyzer-enabling)
   - [access analyzer APIs](https://docs.aws.amazon.com/access-analyzer/latest/APIReference/Welcome.html)
+- tools
+  - [get your public IP](https://checkip.amazonaws.com/)
 
 ## terminology
 

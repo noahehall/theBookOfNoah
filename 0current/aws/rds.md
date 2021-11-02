@@ -37,6 +37,7 @@ amazon relational database service
   - [regions, AZ and local zones for RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html)
   - [importing data into postgres on rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL.Procedural.Importing.html)
   - [upgrading postgres major/minor versions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.PostgreSQL.html)
+  - [create a db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateDBInstance.html)
   - [create a VPC for use with a db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateVPC.html)
   - [scenarios for accessing a DB instance in a vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.Scenarios.html)
 
@@ -149,11 +150,12 @@ amazon relational database service
       172.31.16.0/20
       172.31.48.0/20
       172.31.320.0/20
-  # scenario vpc + 1 pub subnet + 1 priv subnet
+
+  # scenario vpc + 1 pub subnet + 1 priv subnet + db instance
   # ^ generally you want to launch the `vpc wizard` from the vpc dashboard instead of doing it by hand
     # ec2 elastic IP
     # ^ create one and take note of allocation ID
-      network bordre group: default vlaue
+      network border group: default vlaue
       public IPv4 address pool: amazons pool of ipv4 addresses
     # vpc
       ipv4 CIDR: 10.0.0.0/16
@@ -165,11 +167,20 @@ amazon relational database service
     # any additional subnets
     # ^ ensure any additional priv subnets use the same routing table as the first one above
       ipv4 CIDR: 10.0.2.0/24 # note the incremented value
-    # nat gateway
+    # nat gateway (auto created via wizard)
       choose elastic IP Address
       enable DNS hostnames: yes
       hardware tenancy: default
-    # public security group: e.g. a web server
+    # public security group: e.g. a web server,
+      inbound rule 1: http, :80, 0.0.0.0/0
+      inbound rule 2: ssh, :22, your ip (https://checkip.amazonaws.com/)
+    # priv security group: e.g. for db instance
+      inbound rule 1: PostGreSQL, :5432, the public security group ID
+    # create a DB subnet (in the rds console)
+    # ^ require either 2 priv or 2 pub, go with 2 priv
+    # now you can finally create your db instance as normal
+
+
 
 
 
