@@ -135,5 +135,3 @@ peter thiel with blake masters
   - every week: doezens of new startups compete to throw the most lavish launch party
     - but landing parties are more rare
   - the most `successful` companies seemed to embrace a sort of anti-business model where they lost money as they grew
-
-  -
