@@ -1,6 +1,6 @@
 bookmark:
   reading: top of chapter 12
-  copying: somewere at the bottom of page 10
+  copying: top of page 18
 
 # TLDR
 
