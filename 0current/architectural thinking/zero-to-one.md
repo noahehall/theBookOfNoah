@@ -1,5 +1,5 @@
 bookmark:
-  reading: pg 106
+  reading: top of chapter 11
   copying: somewere at the bottom of page 10
 
 # TLDR

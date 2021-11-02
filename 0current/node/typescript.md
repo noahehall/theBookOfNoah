@@ -6,6 +6,9 @@
 ## quickies
 
 ```js
+
+export const SOME_OBJ: { poop: string } = { poop: 'value' };
+
 import React, { FC, ReactElement } from 'react';
 
 export interface PropDef {

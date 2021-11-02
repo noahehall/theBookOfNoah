@@ -36,6 +36,7 @@ amazon relational database service
   - [IAM for rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAM.html)
   - [regions, AZ and local zones for RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html)
   - [importing data into postgres on rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL.Procedural.Importing.html)
+  - [upgrading postgres major/minor versions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.PostgreSQL.html)
 
 ## basics
 
@@ -164,6 +165,43 @@ amazon relational database service
     - HIPAA-compliance apps to store healthcare related information
     - protected health information (PHI) under a completed business associate agreement (BAA) wth AWS
     - federal risk & authorization  management program (FedRAMP) security requirements
+
+#### postgres upgrading major/minor versions
+
+- types of upgrades
+  - operating system upgrades: the underlying opreating system of the DB instance for secuirty fixes/OS changes
+  - database engine upgrades: moving to a newer version of a database engine
+    - major upgrades: usually aren't backward compatible with existing applications
+      - must be manually performed
+      - RDS will also upgrade all of the in-region read replicas along with the primary db instance
+    - minor upgrades: usually are backward compatible with existing applications
+      - can be set to `auto` for amazon to handle this
+      - if using read-replicas, the read replicas must be upgraded before the primary db instance
+    - notes
+      - You experience an outage until the upgrade is complete.
+      - after the upgrade is complete, you cannot revert to the previous version of the db instance
+      - extensions
+        - `POSTGIS` pre pg 12
+          - upgrade to the most recent minor version, then upgrade to 12, then upgrade to version after 12
+        - `pgRouting` pre pg 11
+          - drop the extension, then upgrade, then reinstlal the extensions
+        - `tsearch2` and `chkpass` arent supported pg >= 11
+      - if your backup retention policy > 0
+        - amazon takes 2 snapshots during the upgrade process
+          - snapshot 1: before the upgrade (so you can rollback if any issues)
+          - snapshot 2: after the upgrade completes
+        - if it isnt, you should change the backup retention policy by modifying the RDS DB instance
+      - if your DB instance is in a Multi-AZ dpeloyment
+        - both the primary writer DB instance & stand DB instaces are upgraded (at the same time)
+
+```sh
+  # identify valid upgrade targets for a version
+    aws rds describe-db-engine-versions \
+    --engine postgres \
+    --engine-version 10.11 \ # change 10.11 to your current pg version
+    --query "DBEngineVersions[*].ValidUpgradeTarget[*].{EngineVersion:EngineVersion}" --output text
+
+```
 
 #### connecting to db instance
 

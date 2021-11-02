@@ -37,6 +37,11 @@
 - [command completion](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html)
 
 ```sh
+# configure help
+  aws configure
+    list # see current profile
+    list-profiles # see available profiles
+    get KEY # get the current value of the current profiles config, (anything from list)
 # global options
   --profile SOMENAME # configure/use creds + config of a profile, specify this LAST
     # so you dont have to use the --profile on each cmd
