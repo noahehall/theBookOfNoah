@@ -71,6 +71,11 @@ peter thiel with blake masters
   - big organizations
     - its hard to develop new things in big orgnaizations;
     - its even harder to
+  - a startup is the largest group of people you can convince of a plan to build a different future
+    - a new company's most important strength is new thinking; even more important than nimblness
+    - small size affords space to think
+    - understand what questions you must ask and answer to succeed in the business of doing new things
+      - that is what a startup has to do: question received ideas and rethink business from scratch
 - if you can identify a delusional popular belief,e yo can find what lies hidden behind it: the contrarian truth
   - conventional beliefs only ever come to appear arbitrary and wrong in retrospect
   - whenever one collapses, we call the old belief a bublbe
