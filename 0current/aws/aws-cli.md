@@ -11,6 +11,8 @@
   - [s3control plane actions reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3control/index.html)
   - [s3api reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3api/index.html)
 - [s3 glacier reference](https://docs.aws.amazon.com/cli/latest/reference/glacier/index.html)
+- references
+  - [aws ec2 ref](https://docs.aws.amazon.com/cli/latest/reference/ec2/)
 - tuts
   - [aws-cli & s3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/setup-aws-cli.html)
 
