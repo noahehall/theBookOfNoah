@@ -149,6 +149,29 @@ amazon relational database service
       172.31.16.0/20
       172.31.48.0/20
       172.31.320.0/20
+  # scenario vpc + 1 pub subnet + 1 priv subnet
+  # ^ generally you want to launch the `vpc wizard` from the vpc dashboard instead of doing it by hand
+    # ec2 elastic IP
+    # ^ create one and take note of allocation ID
+      network bordre group: default vlaue
+      public IPv4 address pool: amazons pool of ipv4 addresses
+    # vpc
+      ipv4 CIDR: 10.0.0.0/16
+      ipv6 CIDR: none
+    # pub subnet
+      ipv4 CIDR: 10.0.0.0/24
+    # priv subnet
+      ipv4 CIDR: 10.0.1.0/24
+    # any additional subnets
+    # ^ ensure any additional priv subnets use the same routing table as the first one above
+      ipv4 CIDR: 10.0.2.0/24 # note the incremented value
+    # nat gateway
+      choose elastic IP Address
+      enable DNS hostnames: yes
+      hardware tenancy: default
+    # public security group: e.g. a web server
+
+
 
 ```
 

@@ -54,6 +54,8 @@ things that generally apply to all services
 
 - region
 - tags
+  - to ensure tags are shown in dashboard columns, they must be case-sensitive
+    - i.e. `Name` [dashboard] !== `name` [tag]
 - encryption
 - user policies:  use IAM to manage access to resources on AWS,
   - i.e. create IAM users, groups and roles and attach access policies to them to grant access to resources
