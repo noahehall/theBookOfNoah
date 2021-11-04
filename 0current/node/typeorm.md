@@ -68,7 +68,7 @@
         //...
     }
 
-  // relations
+  // relations -------------------------
     import { OneToOne, JoinColumn } from "typeorm";
     // import { Parent, Child, Sibling, Junction } ./depends/on/what/your/doing
     @Entity()
@@ -148,32 +148,61 @@
           parents: Parent[];
     }
 
-  // saving a one-to-one relation
-    // create a photo
-    let photo = new Photo();
-    // ...
-    photo.isPublished = true;
+  // CRUD ------------------------------
+    // CREATE --------------------------
+        // save a single instance
+          const profile = new Profile();
+          profile.gender = "male";
+          await connection.manager.save(profile);
+        // then you can save any relations without cascade
+          const user = new User();
+          user.profile = profile;
+          await connection.manager.save(user);
+        // in one-to-many, save each child then the parent
+        // ^ you can also do the inverse, but this is less code
+          const photo1 = new Photo();
+          await connection.manager.save(photo1);
+          const photo2 = new Photo();
+          await connection.manager.save(photo2);
+        // now save the parent
+          const user = new User();
+          user.name = "John";
+          user.photos = [photo1, photo2];
+          await connection.manager.save(user);
 
-    // create a photo metadata
-    let metadata = new PhotoMetadata();
-    // ...
-    metadata.photo = photo; // this way we connect them
-    // ^^ not needed if we've set cascade:true on photo entity
+    // READ ----------------------------
+        const userRepository = connection.getRepository(User);
+        // also retrieve a one-to-one relationship
+        const users = await userRepository.find({ relations: ["profile"] });
+        // or a one-to-many
+        const users = await userRepository.find({ relations: ["photos"] });
+        // or all in one go with query builder
+        // if bidrectional you can also do the inverse
+        const users = await connection
+          .getRepository(User)
+          .createQueryBuilder("user")
+          .leftJoinAndSelect("user.profile", "profile")
+          .leftJoinAndSelect("user.photos", "photo")
+          .getMany();
 
-    // get entity repositories
-    let photoRepository = connection.getRepository(Photo);
-    let metadataRepository = connection.getRepository(PhotoMetadata);
+    // UPDATE --------------------------
+    // ^ see save
 
-    // first we should save a photo
-    await photoRepository.save(photo);
+    // DELETE --------------------------
+      // retrieve > filter > save
+      const question = getRepository(Question);
+      question.categories = question.categories.filter(category => {
+          return category.id !== categoryToRemove.id
+      })
+      await connection.manager.save(question)
 
-    // photo is saved. Now we need to save a photo metadata
-    await metadataRepository.save(metadata);
-    // ^^ or if weve setup cascade:true on photo
-        // photo.metadata = metadata // link them directly here, instead of metadata.photo = photo
-        // await photoRepository.save(photo);
+      // or if cascade is true, you can soft delete
+      // ^ will delete all relations from newQuestion, without having to filter on the other side
+      await connection.manager.softRemove(newQuestion);
 
-  // example express controller
+
+  // OTHER -----------------------------
+    // example express controller
     // use Repository instead of EntityManager. Each entity has its own repository which handles all operations with its entity. When you deal with entities a lot, Repositories are more convenient to use than EntityManagers:
     // ^ also available via connection.getRepository(new Poop())
     import {getRepository} from "typeorm";
