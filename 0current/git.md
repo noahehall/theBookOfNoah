@@ -146,6 +146,9 @@
 ### recommendations
 
 ```sh
+  # commit diff between two branches
+  git log --oneline --graph --decorate --abbrev-commit master..develop
+
   git status -s # short status
   # [staging][workingtree] FILENAME
   # ?? somefile # untracked
