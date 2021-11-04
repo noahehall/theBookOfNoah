@@ -61,47 +61,91 @@
         @Column()
         firstName: string;
 
-        //...
-    }
-
-  // one-to-one relation
-    import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
-    import { Photo } from "./Photo";
-
-    @Entity()
-    export class PhotoMetadata {
-
-        @PrimaryGeneratedColumn()
-        id: number;
-
         // can specify the column type supported by your db platform
         @Column("int")
         height: number;
 
-        // ...
+        //...
+    }
 
-        // function that returns the class of the entity with which we want to make our relationship
-        // ^ can also write it as () => Photo, but we use type => Photo as a convention to increase code readability
-        // ^ unidirectional relation
-        // ^^ first argument specifies the parent side of the relationship
-        @OneToOne(type => Photo)
-        //  indicates that this side of the relationship will own the relationship
-        // ^ Using @JoinColumn decorator is required on the owner side of the relationship
-        // ^^ i.e. the table that should have a column containing the foreign key
-        @JoinColumn()
-        photo: Photo;
+  // relations
+    import { OneToOne, JoinColumn } from "typeorm";
+    // import { Parent, Child, Sibling, Junction } ./depends/on/what/your/doing
+    @Entity()
+    export class Parent {
+      // ONE-TO-ONE unidirectional
+      // ^ you can only retrieve children from parents, i.e. select parent left join child on child.parent = parent
+          // function that returns the class of the entity with which we want to make our relationship
+          // ^ can also write it as () => Photo, but we use type => Photo as a convention to increase code readability
+          // ^ unidirectional relation
+          // ^^ first argument specifies the parent side of the relationship
+          @OneToOne(type => Child)
+          //  indicates that this side of the relationship will own the relationship
+          // ^ Using @JoinColumn decorator is required on the owner side of the relationship
+          // ^^ i.e. the table that should have a column containing the foreign key
+          // ^^ e.g. create parent(user) > create child(profile) > user.profile = profile  > save(user)
+          @JoinColumn()
+          child: Child;
 
+      // ONE-TO-ONE bidirectional
+      // ^ only you to retrieve children from parents, and the parent of a child
+          // i.e. specify the where the parent is stored on the child as the second param
+          @OneToOne(type => Child, child => profile.parent)
+          @JoinColum()
+          child: Child;
+
+
+          // ^ set cascade:true to always save the child object, whenever saving the parent
+          // ^^ e.g. whenever we save User, we will also save profile
+          // ^^ imo should only be used if updating parent will always update child
+          @OneToOne(type => Child, child => child.parent, { cascade: true})
+          @JoinColumn()
+          child: Child;
+
+      // ONE-TO-MANY (one parent has many chlidren)
+      // have to create a ManyToOne on the child (see child)
+          // e.g. a User having multiple comments
+          @OneToMany(type => Child, child => child.parent)
+          childs: Child[];
+
+      // MAMY-TO-MANY unidirectional
+      // ^ only specified on the owning side, even tho both sides can have many instances of the other
+          // ^^ e.g. users have roles, roles have users, but users should own their roles
+          // ^^ delete the relationship only deletes the record in the junction table,
+          @ManyToMany(() => Child)
+          @JoinTable()
+          childs: Child[];
+
+      // MAMY-TO-MANY bidirectional
+          // ^ decorators on both sides
+          @ManyToMany(() => Child, child => child.parents)
+          @JoinTable()
+          childs: Child[];
+
+      // MANY-TO-MANY with custom properties
+      // @see https://typeorm.io/#/many-to-many-relations/many-to-many-relations-with-custom-properties
+    }
+    @Entity()
+    export class Child {
+      // ONE-TO-ONE bidrectional
         // ^ bidiretional relationship
         // ^^ second argument is a function that returns the name of the inverse side of the relation
-        // ^^ could alternatively simply pass a string as a second param, like "metadata". But we used this function-typed approach to make our refactoring easier.
-        @OneToOne(type => Photo, photo => photo.metadata)
-        @JoinColumn()
-        photo: Photo;
-          /**
-            ^ this goes on the other entity
-            @OneToOne(type => PhotoMetadata, photoMetadata => photoMetadata.photo)
-            metadata: PhotoMetadata;
-            */
+        // ^^ could pass a string as a second param, like "parent". But we used this function-typed approach to make our refactoring easier.
+        // ^^ i.e. specify where the child  is stored on the parent
+        @OneToOne(type => Parent, parent => parent.Child)
+        parent: Parent;
+
+
+      // MANY-TO-ONE (many children have one parent)
+      // ^ creates a many-to-one, doenst matter if there is a one-to-many specifed on the parent
+      // ^ always creates a `relation id` and `foreign key` on the parent
+          @ManyToOne(type, Parent, parent => parent.childs)
+          parent: Parent;
+
+      // MANY-TO-MANY (roles have multiple permissions)
+          // ^ only required on child if its bidirectional
+          @ManyToMany(type => Parent, parent => parent.childs)
+          parents: Parent[];
     }
 
   // saving a one-to-one relation
@@ -114,6 +158,7 @@
     let metadata = new PhotoMetadata();
     // ...
     metadata.photo = photo; // this way we connect them
+    // ^^ not needed if we've set cascade:true on photo entity
 
     // get entity repositories
     let photoRepository = connection.getRepository(Photo);
@@ -124,6 +169,9 @@
 
     // photo is saved. Now we need to save a photo metadata
     await metadataRepository.save(metadata);
+    // ^^ or if weve setup cascade:true on photo
+        // photo.metadata = metadata // link them directly here, instead of metadata.photo = photo
+        // await photoRepository.save(photo);
 
   // example express controller
     // use Repository instead of EntityManager. Each entity has its own repository which handles all operations with its entity. When you deal with entities a lot, Repositories are more convenient to use than EntityManagers:
