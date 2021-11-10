@@ -155,6 +155,14 @@
     }
 
   // CRUD ------------------------------
+    // raw query, e.g. how we used pgcrypto to salt a hashed pw before storing in db
+      entityManager.query(
+        `
+          some sql statement
+            where poop = $1
+        `,
+        [bindVar1]
+      )
     // CREATE --------------------------
         // save a single instance
           const profile = new Profile();
