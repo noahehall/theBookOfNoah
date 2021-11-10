@@ -30,6 +30,7 @@ alias dockerdlog="$(echo journalctl -u docker.service)"
 # get netstats (use ss on ubuntu)
 alias dockerdss="(sudo ss -asmpex | grep dockerd)"
 #echo image1 image2 three | xargall docker pull
+alias dockerinspect="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
 
 alias xargall='xargs -p -t -n 1'
 alias copyssh='pbcopy < ~/.ssh/id_rsa.pub'

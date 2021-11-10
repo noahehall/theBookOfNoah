@@ -69,6 +69,11 @@
     }
 
   // relations -------------------------
+    // options - third parameter on owning side of relationship
+      {
+        eager: bool, // children automatically loaded
+        cascade: bool, // children automatically deleted
+      }
     import { OneToOne, JoinColumn } from "typeorm";
     // import { Parent, Child, Sibling, Junction } ./depends/on/what/your/doing
     @Entity()
@@ -84,7 +89,7 @@
           // ^ Using @JoinColumn decorator is required on the owner side of the relationship
           // ^^ i.e. the table that should have a column containing the foreign key
           // ^^ e.g. create parent(user) > create child(profile) > user.profile = profile  > save(user)
-          @JoinColumn()
+          @JoinColumn({ name: 'thistablescolname', referencedColumnName: 'otherTablesIdcolumnName'})
           child: Child;
 
       // ONE-TO-ONE bidirectional
@@ -119,6 +124,7 @@
       // MAMY-TO-MANY bidirectional
           // ^ decorators on both sides
           @ManyToMany(() => Child, child => child.parents)
+          // @see https://typeorm.io/#/relations/jointable-options
           @JoinTable()
           childs: Child[];
 
@@ -139,7 +145,7 @@
       // MANY-TO-ONE (many children have one parent)
       // ^ creates a many-to-one, doenst matter if there is a one-to-many specifed on the parent
       // ^ always creates a `relation id` and `foreign key` on the parent
-          @ManyToOne(type, Parent, parent => parent.childs)
+          @ManyToOne(type => Parent, parent => parent.childs)
           parent: Parent;
 
       // MANY-TO-MANY (roles have multiple permissions)
@@ -176,6 +182,7 @@
         const users = await userRepository.find({ relations: ["profile"] });
         // or a one-to-many
         const users = await userRepository.find({ relations: ["photos"] });
+        const photos = await users.photos; // since photos are lazy loaded, you have to load explicity
         // or all in one go with query builder
         // if bidrectional you can also do the inverse
         const users = await connection
