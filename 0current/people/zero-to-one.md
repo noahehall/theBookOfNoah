@@ -1,5 +1,5 @@
 bookmark:
-  reading: top of chapter 12
+  reading: page 160: the people question
   copying: top of page 18
 
 # TLDR
