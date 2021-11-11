@@ -11,6 +11,7 @@
   - [column options](https://typeorm.io/#/entities/column-options)
 - [postgres connection optoins](https://github.com/typeorm/typeorm/blob/master/src/driver/postgres/PostgresConnectionOptions.ts)
 - [find* methods](https://typeorm.io/#/find-options/)
+- [fkn query builder](https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md)
 
 ## basic
 
@@ -155,6 +156,93 @@
     }
 
   // CRUD ------------------------------
+    // first off, get a handle on the fkn table
+    // ^ all are the same? not sure of the technical difference
+    // ^ but note the syntax
+        // import { getConnection } from 'typeorm'
+          const user = await getConnection()
+            .createQueryBuilder()
+            .select("user")
+            .from(User, "user") // user is the table alias
+            .additionalStuff()
+        // import { getManager } from 'typeorm'
+          const user = await getManager()
+            .createQueryBuilder(User, "user") // alias again
+            .additionalStuff()
+        // import { getRepository } from 'typeorm'
+          const user = await getRepository(User)
+            .createQueryBuilder("user") // alias here too
+            .additionalStuff()
+    // types of queryBuilders
+      .createQueryBuilder()
+        // select some data
+        .select('tablename')
+        // insert new data
+        .insert().into(SomeEntity)
+          .values([
+              { firstName: "Timber", lastName: "Saw" },
+              { firstName: "Phantom", lastName: "Lancer" }
+          ])
+        // update existing data
+        .update(SomeEntity)
+          .set({ firstName: "Timber", lastName: "Saw" })
+        // delete some data
+        .delete().from(SomeEntity)
+
+    // retrieval
+      .blah().blah().getOne|getMany|getOneOrFail|getRawOne()
+    // insert/update/delete
+      .blah().blah().execute()
+
+    // select the perfect syntax
+      // all require getRawOne()
+      .select("SUM(user.photosCount)", "sum")
+      // the 'sum' is the column alias to use
+      .select("user.id")
+        .addSelect("SUM(user.photosCount)", "sum")
+        .groupBy("user.id")
+
+
+    // the what, why and how of WHERE
+      // user is the table alias defined in the query type
+      .where("user.id = :id", { id: 1 })
+      .where("user.id = :id OR user.name = :name", { id: 1, name: "Timber" })
+      .where("user.name IN (:...names)", { names: [ "Timber", "Cristal", "Lina" ] })
+      .andWhere("user.lastName = :lastName", { lastName: "Saw" });
+      .orWhere("user.lastName = :lastName", { lastName: "Saw" });
+      // this one needs additional comments
+      .andWhere(new Brackets(qb => {
+        qb.where("user.firstName = :firstName", { firstName: "Timber" })
+          .orWhere("user.lastName = :lastName", { lastName: "Saw" })
+      }))
+      // i.e.
+        // SELECT ... FROM users user WHERE user.registered = true AND (
+          // user.firstName = 'Timber' OR user.lastName = 'Saw')
+    // HAVING
+      .having("user.name = :name", { name: "Timber" })
+      .andHaving("user.lastName = :lastName", { lastName: "Saw" });
+      .orHaving("user.lastName = :lastName", { lastName: "Saw" });
+    // additional stuffisisis
+      .orderBy("user.id", "DESC") // or ASC
+      .addOrderBy("user.id");
+      .orderBy({ "user.name": "ASC", "user.id": "DESC" });
+      .groupBy("user.id")
+      .addGroupBy("user.id");
+      .limit(10)
+      .offset(10)
+    // postgres only
+      // distinct expression must match the leftmost order-by if used together like below
+      .distinctOn(["user.id"]).orderBy("user.id")
+
+    // relations
+      .leftJoinAndSelect('user.linkedSheep', 'linkedSheep')
+      .leftJoinAndSelect('user.linkedCow', 'linkedCow')
+      .where('user.linkedSheep = :sheepId', { sheepId })
+      .andWhere('user.linkedCow = :cowId', { cowId });
+
+
+
+
     // raw query, e.g. how we used pgcrypto to salt a hashed pw before storing in db
       entityManager.query(
         `
