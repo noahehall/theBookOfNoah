@@ -176,7 +176,8 @@
     // types of queryBuilders
       .createQueryBuilder()
         // select some data
-        .select('tablename')
+        .select('tablename') // full record
+        .select(["user.id","user.name"]) // only specific attributes
         // insert new data
         .insert().into(SomeEntity)
           .values([
@@ -190,9 +191,12 @@
         .delete().from(SomeEntity)
 
     // retrieval
-      .blah().blah().getOne|getMany|getOneOrFail|getRawOne()
+      .blah().blah().getOne|getMany|getOneOrFail|getRawOne|getRawMany|stream()
     // insert/update/delete
       .blah().blah().execute()
+    // or for inspection
+      .getSql();
+      .printSql().getMany() // getMany or any of hte others
 
     // select the perfect syntax
       // all require getRawOne()
@@ -235,10 +239,18 @@
       .distinctOn(["user.id"]).orderBy("user.id")
 
     // relations
+      .leftJoinAndSelect("entity.foreignColumnName", "column alias") // column alias is now available everywhere
       .leftJoinAndSelect('user.linkedSheep', 'linkedSheep')
       .leftJoinAndSelect('user.linkedCow', 'linkedCow')
       .where('user.linkedSheep = :sheepId', { sheepId })
       .andWhere('user.linkedCow = :cowId', { cowId });
+      // add conditions directly without using where method
+      .leftJoinAndSelect("user.photos", "photo", "photo.isRemoved = :isRemoved", { isRemoved: false })
+      // example with innerJoin
+      .innerJoinAndSelect("user.photos", "photo", "photo.isRemoved = :isRemoved", { isRemoved: false })
+    // bookmark
+      // start here: https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md#join-without-selection
+      // another good one: https://github.com/typeorm/typeorm/blob/master/docs/select-query-builder.md#using-subqueries
 
 
 
