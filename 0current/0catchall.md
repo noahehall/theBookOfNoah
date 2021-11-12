@@ -64,5 +64,7 @@ lshw list hardware and settings and stuff
 # $ command -v foo >/dev/null 2>&1
 # $ type foo >/dev/null 2>&1
 # $ hash foo 2>/dev/null
+# 2>/dev/null # only redirct errs
+# &> /dev/null # redirect erything
 ########################################
 ```
