@@ -1,6 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # ^ you really want that to point to /bin/dash, but whatev
 
-[ -f .bash_aliases.sh ] && . .bash_aliases.sh
-[ -f .bash_functions.sh ] && . .bash_functions.sh
-[ -f .bash_variables.sh ] && . .bash_variables.sh
+THISDIR="$(
+	cd "$(echo "${BASH_SOURCE[0]%/*}")" || exit
+	pwd
+)"
+
+[ -f "$THISDIR"/.bash_aliases.sh ] && . "$THISDIR"/.bash_aliases.sh
+[ -f "$THISDIR"/.bash_functions.sh ] && . "$THISDIR"/.bash_functions.sh
+[ -f "$THISDIR"/.bash_variables.sh ] && . "$THISDIR"/.bash_variables.sh
