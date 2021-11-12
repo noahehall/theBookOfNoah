@@ -10,3 +10,4 @@ THISDIR="$(
 [ -f "$THISDIR"/.bash_aliases.sh ] && . "$THISDIR"/.bash_aliases.sh
 [ -f "$THISDIR"/.bash_functions.sh ] && . "$THISDIR"/.bash_functions.sh
 [ -f "$THISDIR"/.bash_variables.sh ] && . "$THISDIR"/.bash_variables.sh
+[ -f "$THISDIR"/.bash_addons.sh ] && . "$THISDIR"/.bash_addons.sh
