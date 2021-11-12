@@ -22,8 +22,3 @@ if type neofetch 2>/dev/null; then neofetch
 else
 	echo 'neofetch not installed'
 fi
-
-# https://github.com/rgburke/grv
-# if ! hash grv; then
-# 	echo 'thinking about installing grv to your path'
-# fi
