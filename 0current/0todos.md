@@ -1,0 +1,2 @@
+- remove hub & use cli
+  - <https://github.com/cli/cli/blob/trunk/docs/gh-vs-hub.md>
