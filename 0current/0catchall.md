@@ -42,3 +42,9 @@ find the name of your hypervisor
 get your IP (either should work)
   hostname -I
   ifconfig | grep inet
+
+# <https://github.com/github/hub>
+
+git config --list
+GIT_TRACE=1 some git
+lshw list hardware and settings and stuff
