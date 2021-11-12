@@ -48,3 +48,21 @@ get your IP (either should work)
 git config --list
 GIT_TRACE=1 some git
 lshw list hardware and settings and stuff
+
+```sh
+# I always forget how to do this #######
+# posix compliant
+# if ! type poop &> /dev/null; then
+# then
+#     echo "poop could not be found"
+#     exit
+# fi
+########################################
+# other ways, but use the one above
+# https://stackoverflow.com/questions/592620/how-can-i-check-if-a-program-exists-from-a-bash-script
+# https://unix.stackexchange.com/questions/86012/what-is-the-purpose-of-the-hash-command
+# $ command -v foo >/dev/null 2>&1
+# $ type foo >/dev/null 2>&1
+# $ hash foo 2>/dev/null
+########################################
+```
