@@ -31,6 +31,18 @@ focusing on keyboard > mouse usage for getting things done
 - windows: each window is basically a running application
 - workspaces: groups of windows
 
+### interface components
+
+- XOrg x11: display server
+- i3-gaps: window manager
+- Rofi: application launcher
+- i3bar: bar
+- i3xrocks: bar script scheduler, based on i3blocks
+- Rofication: notification system
+- Remontoire shurtcut window
+- gdm3 desktop session manager
+- gnome-flashback: gnome session manager
+
 ## quickies
 
 ```sh
@@ -38,6 +50,7 @@ focusing on keyboard > mouse usage for getting things done
   super
     # big things
       # manging fkn windows (i.e open applications)
+        space # view all apps
         ctrl space # see all windows (i.e open apps)
         arrowkey # move focus between windows
         shift arrowkey # move window to new slot in tiles
