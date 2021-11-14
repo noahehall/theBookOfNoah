@@ -1,5 +1,5 @@
 bookmark
-  <https://regolith-linux.org/docs/interface/>
+  <https://regolith-linux.org/docs/interface/advanced//>
 
 # TLDR
 
@@ -21,6 +21,7 @@ focusing on keyboard > mouse usage for getting things done
 - [i3 gaps for controlling window behavior](https://github.com/Airblader/i3)
 - [customize regolith](https://regolith-linux.org/docs/customize/)
 - [i3 user guide](https://i3wm.org/docs/userguide.html)
+- [rofication](https://github.com/DaveDavenport/Rofication)
 
 ## basics
 
@@ -43,6 +44,35 @@ focusing on keyboard > mouse usage for getting things done
 - gdm3 desktop session manager
 - gnome-flashback: gnome session manager
 
+#### gnome-control center
+
+- ctrl c: only for basic stuff
+
+#### i3-wm
+
+- the heart of regolith configuration
+- i3 window manager: not of gnome so you have to configure it via file and then reload i3 to make changes
+  - /etc/regolith/i3/config: the main i3 config
+  - ~/.config/regolith/i3/config: where you specify your overrides
+    - warning: maintaining a user copy of the i3 config requires more work when upgrading regolith
+    - ^ recommended to rely on [XResources overrides](https://regolith-linux.org/docs/howtos/override-xres/)
+
+#### i3bar
+
+- main i3bar config is defined in the i3 config file (see above)
+- ^ but to change what information is displayed in the bar, check `/etc/regolith/i3xrocks/conf.d
+  - each file in the directory maps to a specific i3bar item
+  - [view docs to customize](https://regolith-linux.org/docs/howtos/add-remove-blocklets/)
+
+#### look
+
+- theme is configured via XResources
+- ^ check /etc/regolith/styles and the [customize documentation](https://regolith-linux.org/docs/customize/)
+
+#### session
+
+- when regolith is initially loaded, a script runs and ocnfigures the system then launches `i3-wm`
+
 ## quickies
 
 ```sh
@@ -57,6 +87,7 @@ focusing on keyboard > mouse usage for getting things done
         r # resize windows with arrow keys, press esc when done
         shift r # i think this is reset
         backspace # toggle vertical/horiztaon layouts for the next window launched
+        t # toggle through different layout modes in current workspace
 
         tab # go to next workspace
         shift tab # go to previous workspace
@@ -69,7 +100,10 @@ focusing on keyboard > mouse usage for getting things done
 
       # app quickies
         w # configure wifi
-        n # notifications, very useful
+        n # notifications, very useful,
+          # when notitficaiton window is open
+          shift delete # delete all low priority notfications
+          delete # delete selected notification
         enter # open (another) terminal
         shift enter # browser
         alt space # files
