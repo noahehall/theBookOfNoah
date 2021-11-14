@@ -17,39 +17,47 @@
 - [common ufw firewall rules](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
 - [upgrading bash on mac](https://itnext.io/upgrading-bash-on-macos-7138bd1066ba)
 
-## my ubuntu setup
+## fresh install
 
-- download & login to firefox dev edition
-- setup github
-  - [github cli](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
-- setup vscode
-- setup ubuntu
-  - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
-  - dconf-editor
-  - shutter
-  - synaptic package manager
-  - bleachbit
-  - gnome extensions
-  - apt-updatoer
-  - neofetch
-  - system-monitor
-  - apt-transport-https
-  - [allota shit from here](http://packages.azlux.fr/)
-  - setup bash
-  - damn my skillz is fallin off
-  - rclone
-  - oha
-  - gping
-  - duf
-  - dockly
-  - bpytop
-  - htpo
-  - grv
-  - setup dev
-  - docker
-- [setup chromium](https://linuxize.com/post/how-to-install-chromium-web-browser-on-ubuntu-20-04/)
+### dev
 
-## my macbook setup
+1. download & login to firefox dev edition
+2. setup github
+   - [github cli](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
+   - [verify your commits](https://docs.github.com/en/authentication/managing-commit-signature-verification)
+3. setup vscode
+   - [vscode settings](https://gist.github.com/noahehall/33f60c724f51bde9afa2c2a9e540d094)
+
+#### ubuntu:dev
+
+1. setup ubuntu
+   - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
+   - dconf-editor
+   - shutter
+   - synaptic package manager
+   - bleachbit
+   - gnome extensions
+   - apt-updatoer
+   - neofetch
+   - system-monitor
+   - apt-transport-https
+   - [allota shit from here](http://packages.azlux.fr/)
+   - setup bash
+   - damn my skillz is fallin off
+   - rclone
+   - oha
+   - gping
+   - duf
+   - dockly
+   - bpytop
+   - htpo
+   - grv
+   - setup dev
+   - docker
+
+5. [setup chromium](https://linuxize.com/post/how-to-install-chromium-web-browser-on-ubuntu-20-04/)
+
+#### mac:dev
 
 - xcode install
 - $ touch ~/.bashrc
@@ -60,7 +68,7 @@
 - [macports](https://www.scrim.psu.edu/support/userspace-macports.html)
 - continue with ubuntu setup
 
-## remote server setup
+### remote server setup
 
   1. setup non root user with sudo priv
   2. configure ssh key-based authentication
