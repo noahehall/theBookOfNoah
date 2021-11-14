@@ -30,14 +30,18 @@
      - [source this file in your bashrc](linux/_sourceme_.sh)
 3. setup vscode
    - [vscode settings](https://gist.github.com/noahehall/33f60c724f51bde9afa2c2a9e540d094)
-4. docker
+4. [sdkman](https://sdkman.io/install)
+5. [nim](https://nim-lang.org/install_unix.html)
+6. [pnpm](https://pnpm.io/installation)
+7. docker
+   - [compose](https://docs.docker.com/compose/install/)
    - [dive](https://github.com/wagoodman/dive)
    - [ctop](https://github.com/bcicen/ctop)
    - [dockly](https://github.com/lirantal/dockly)
-5. [vagrant](https://www.vagrantup.com/)
-6. chromium
+8. [vagrant](https://www.vagrantup.com/)
    - sudo apt install chromium-browser
-7. [sdkman](https://sdkman.io/install)
+9. [k8s](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+10. chromium
 
 #### ubuntu:dev
 
