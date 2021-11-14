@@ -5,6 +5,14 @@
 
 # links
 
+- [nginx http module](http://nginx.org/en/docs/http/ngx_http_core_module.html)
+- [how nginx processes a request](http://nginx.org/en/docs/http/request_processing.html)
+- [nginx init scripts](https://www.nginx.com/resources/wiki/start/topics/examples/initscripts/)
+- [nginx pitfalls and mistakes](https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/)
+- [build ngx_pagespeed from source](https://modpagespeed.com/doc/build_ngx_pagespeed_from_source)
+- [install nginx with pagespeed](https://modpagespeed.com/doc/build_ngx_pagespeed_from_source)
+- [initial ubuntu server setup](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)
+- [secure nginx with lets encrypt](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
 - [install instructions for ubuntu](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/#installing-a-prebuilt-ubuntu-package-from-an-ubuntu-repository)
 - [install instructions for alpine](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/#installing-prebuilt-alpine-linux-packages)
 - [available nginx distros for ubuntu](https://nginx.org/packages/mainline/ubuntu/dists/)
@@ -72,6 +80,7 @@
     - when the connection is good the viewer gets higher quality content
     - when the connection quality deterorates, a lower data rate is opted for
     - requires dedicated streaming software
+
     -
 
 # nginx
@@ -338,6 +347,7 @@
     - --with-http_MODULE_NAME
   - can be disabled via
     - --without-http_MODULE_NAME
+
   -
 
 # workflows
@@ -359,6 +369,7 @@
     - run sudo make install
 - enable nginx server on reboot
   - installing from source does not create the init script that autostarts the nginx process after server reboot
+
   -
 
 # CLI
