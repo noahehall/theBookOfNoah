@@ -26,14 +26,28 @@
 2. setup github
    - [github cli](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
    - [verify your commits](https://docs.github.com/en/authentication/managing-commit-signature-verification)
+   - git clone git@github.com:noahehall/theBookOfNoah.git
+     - [source this file in your bashrc](linux/_sourceme_.sh)
 3. setup vscode
    - [vscode settings](https://gist.github.com/noahehall/33f60c724f51bde9afa2c2a9e540d094)
-4. [source this file in your bashrc](linux/_sourceme_.sh)
+4. docker
+   - [dive](https://github.com/wagoodman/dive)
+   - [ctop](https://github.com/bcicen/ctop)
+   - [dockly](https://github.com/lirantal/dockly)
+5. [vagrant](https://www.vagrantup.com/)
+6. chromium
+   - sudo apt install chromium-browser
+7. [sdkman](https://sdkman.io/install)
 
 #### ubuntu:dev
 
+```sh
+# setup azlux's repo
+echo "deb http://packages.azlux.fr/debian/ buster main" | sudo tee /etc/apt/sources.list.d/azlux.list
+wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
+```
+
 1. setup ubuntu
-   - always installs
    - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
    - [stacer](https://github.com/oguzhaninan/Stacer)
    - [dconf-editor](https://wiki.gnome.org/Apps/DconfEditor)
@@ -51,6 +65,7 @@
        - sound input & output device chooser
        - user themes
        - workspace indicator
+   - [switch to regolith & restart](https://regolith-linux.org/docs/getting-started/)
    - [shutter](https://shutter-project.org/)
      - [install steps](https://launchpad.net/~shutter/+archive/ubuntu/ppa)
      - [x11 server error](https://askubuntu.com/questions/1353360/ubuntu-21-04-shutter-did-not-work-without-x11-server)
@@ -61,29 +76,19 @@
      - $ sudo apt install neofetch
    - [bpytop](https://github.com/aristocratos/bpytop)
      - sudo apt install bpytop
-
-   - setup bash
-   - damn my skillz is fallin off
-   - rclone
-   - oha
-   - gping
-   - duf
-   - dockly
-   - bpytop
-   - htpo
-   - grv
-   - setup dev
-   - docker
-     - [dive](https://github.com/wagoodman/dive)
-     - [ctop](https://github.com/bcicen/ctop)
+   - [sss](https://github.com/azlux/gnos-sockets)
+   - [oha](https://github.com/hatoo/oha)
+   - [gping](https://github.com/orf/gping)
+   - [duf](https://github.com/muesli/duf)
+     - sudo apt install duf
+   - [dog](https://github.com/ogham/dog)
 
    - maybe installs
      - [opensnitch](https://github.com/evilsocket/opensnitch)
      - [signal](https://signal.org/en/download/)]
        - has e2e encryption for chats by default, telegram doesnt
      - [broot](https://github.com/Canop/broot)
-
-2. [setup chromium](https://linuxize.com/post/how-to-install-chromium-web-browser-on-ubuntu-20-04/)
+     - [rclone](https://github.com/rclone/rclone)
 
 #### mac:dev
 
@@ -92,7 +97,6 @@
 - $ echo ". ~/.bashrc" > ~/.bash_profile
 - upgrade bash (apple refuses to update pass bash v3.2) cuz fk apple
 - setup bash as defualt shell (FCK ZSH)
-- switch to iterm2
 - [macports](https://www.scrim.psu.edu/support/userspace-macports.html)
 - continue with ubuntu setup
 
