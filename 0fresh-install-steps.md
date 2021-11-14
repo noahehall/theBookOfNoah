@@ -6,7 +6,8 @@
 ## TODO
 
 - automate this shiz like the guy did his with ansible
-- [checkout what their doing @ spack](https://spack-tutorial.readthedocs.io/en/latest/)
+- [checkout spack](https://spack-tutorial.readthedocs.io/en/latest/)
+- [checkout nix](https://nixos.org/)
 
 ## links
 
@@ -20,7 +21,7 @@
 
 - download & login to firefox dev edition
 - setup github
-  - [github cli](https://github.com/cli/cli#installation)
+  - [github cli](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
 - setup vscode
 - setup ubuntu
   - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
