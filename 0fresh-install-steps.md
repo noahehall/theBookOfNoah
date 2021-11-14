@@ -16,6 +16,7 @@
 - [configure ssh key based authentication and disable password authentication](https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server)
 - [common ufw firewall rules](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
 - [upgrading bash on mac](https://itnext.io/upgrading-bash-on-macos-7138bd1066ba)
+- [some cool pkgs](http://packages.azlux.fr/)
 
 ## fresh install
 
@@ -27,6 +28,7 @@
    - [verify your commits](https://docs.github.com/en/authentication/managing-commit-signature-verification)
 3. setup vscode
    - [vscode settings](https://gist.github.com/noahehall/33f60c724f51bde9afa2c2a9e540d094)
+4. [source this file in your bashrc](linux/_sourceme_.sh)
 
 #### ubuntu:dev
 
@@ -36,14 +38,8 @@
    - [stacer](https://github.com/oguzhaninan/Stacer)
    - [dconf-editor](https://wiki.gnome.org/Apps/DconfEditor)
      - $ sudo apt install dconf-editor
-   - [shutter](https://shutter-project.org/)
-     - [install steps](https://launchpad.net/~shutter/+archive/ubuntu/ppa)
-     - [x11 server error](https://askubuntu.com/questions/1353360/ubuntu-21-04-shutter-did-not-work-without-x11-server)
-   - [bleachbit](https://www.bleachbit.org/features)
-     - $ sudo apt install bleachbit
-     - cleaner wayyy better than the one by stacer
    - [gnome extensions](https://extensions.gnome.org/)
-     - it doesnt save your extensions across computers so you have to reinstall
+     - extensions are by computer, not per login so you have to reinstall
        - [basic steps with some good ext](https://thelinuxuser.com/install-gnome-shell-extensions/)
        - cafeeine
        - clipboard indactor
@@ -55,11 +51,17 @@
        - sound input & output device chooser
        - user themes
        - workspace indicator
-   - neofetch
+   - [shutter](https://shutter-project.org/)
+     - [install steps](https://launchpad.net/~shutter/+archive/ubuntu/ppa)
+     - [x11 server error](https://askubuntu.com/questions/1353360/ubuntu-21-04-shutter-did-not-work-without-x11-server)
+   - [bleachbit](https://www.bleachbit.org/features)
+     - $ sudo apt install bleachbit
+     - cleaner wayyy better than the one by stacer
+   - [neofetch](https://github.com/dylanaraps/neofetch)
      - $ sudo apt install neofetch
-   - system-monitor
-   - apt-transport-https
-   - [allota shit from here](http://packages.azlux.fr/)
+   - [bpytop](https://github.com/aristocratos/bpytop)
+     - sudo apt install bpytop
+
    - setup bash
    - damn my skillz is fallin off
    - rclone
@@ -72,9 +74,14 @@
    - grv
    - setup dev
    - docker
+     - [dive](https://github.com/wagoodman/dive)
+     - [ctop](https://github.com/bcicen/ctop)
+
    - maybe installs
      - [opensnitch](https://github.com/evilsocket/opensnitch)
-     - synaptic package manager
+     - [signal](https://signal.org/en/download/)]
+       - has e2e encryption for chats by default, telegram doesnt
+     - [broot](https://github.com/Canop/broot)
 
 2. [setup chromium](https://linuxize.com/post/how-to-install-chromium-web-browser-on-ubuntu-20-04/)
 
