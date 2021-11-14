@@ -8,6 +8,12 @@ focusing on keyboard > mouse usage to get things done
 - [basic usage](https://regolith-linux.org/docs/getting-started/basics/)
 - [what is i3](https://www.omgubuntu.co.uk/2019/06/install-regolith-linux-i3-gaps-ubuntu)
 - [remontoire: shurtcut application](https://github.com/regolith-linux/remontoire)
+- [big list of howtos](https://regolith-linux.org/docs/howtos/)
+
+## basics
+
+- windows: each window is basically a running application
+- workspaces: groups of windows
 
 ## quickies
 
@@ -17,11 +23,17 @@ focusing on keyboard > mouse usage to get things done
     # big things
       # manging fkn windows (i.e open applications)
         ctrl space # see all windows (i.e open apps)
-        shift q # close focused window
+        arrowkey # move focus between windows
+        shift arrowkey # move window to new slot in tiles
         r # resize windows with arrow keys, press esc when done
-        shift arrowkey # move focused window
-        arrowkey # focus a window
+        shift r # i think this is reset
+
+        tab # go to next workspace
+        shift tab # go to previous workspace
         0-9 # go to a specific workspace, dont use the 10key
+
+        shift q # quit focused window
+        alt q # force quit focused window
         ctrl tilda # create and move to a new workspace
 
       # app quickies
@@ -38,17 +50,12 @@ focusing on keyboard > mouse usage to get things done
         shift ? # remontoire: opens the shortcut application
         backspace # toggle vertical/horiztaon layouts
         shift e # logout regolution
+
     # other things
-      # workspaces
-        tab # go to next workspace
-        shift tab # go to previous workspace
-
-      # other
-
 
   # applications
     apt search regolith-look- # see available themes
-      sudo apt install regolith-dracula
+      sudo apt install regolith-look-dracula
       regolith-look set dracula
       regolith-look refresh
   # locations
