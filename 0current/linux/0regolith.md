@@ -51,15 +51,17 @@ focusing on keyboard > mouse usage for getting things done
     # big things
       # manging fkn windows (i.e open applications)
         space # view all apps
-        ctrl space # see all windows (i.e open apps)
+        ctrl space # see & select open windows (i.e open apps)
         arrowkey # move focus between windows
         shift arrowkey # move window to new slot in tiles
         r # resize windows with arrow keys, press esc when done
         shift r # i think this is reset
-q
+        backspace # toggle vertical/horiztaon layouts for the next window launched
+
         tab # go to next workspace
         shift tab # go to previous workspace
         0-9 # go to a specific workspace, dont use the 10key
+        shift 0-9 # move active window to specific workspace
 
         shift q # quit focused window
         alt q # force quit focused window
@@ -77,7 +79,6 @@ q
         space # all applications
         shift space # commands
         shift ? # remontoire: opens the shortcut application
-        backspace # toggle vertical/horiztaon layouts
         shift e # logout regolution
 
   # regolith look
