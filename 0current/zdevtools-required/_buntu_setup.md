@@ -7,11 +7,7 @@
   5. setup firewall (usually ufw) to block everything except 80, 443, and 22 initially and define your default policies
   6. install openssl `sudo apt-get install libssl-dev`
 
-# TODOs
-
-- categorize this shit
-
-# Dope ubuntu tutorials to help you with the above steps
+## Dope ubuntu tutorials to help you with the above steps
 
 - [initial server setup](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)
 - [point domain name to your servers ip](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-host-name-with-digitalocean)
