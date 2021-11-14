@@ -1,3 +1,6 @@
+bookmark
+  <https://regolith-linux.org/docs/interface/>
+
 # TLDR
 
 modern ubuntu desktop based on i3
