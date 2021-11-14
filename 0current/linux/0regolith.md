@@ -15,30 +15,35 @@ focusing on keyboard > mouse usage to get things done
   # keyboard bindings
   super
     # big things
-      c # settings: opens gnome-control-center
-      space # all applications
-      shift space # commands
-      ctrl space # windows
-      enter # terminal
-      shift enter # browser
-      shift q # quick focused applicatoin
-      alt q # force quick focused applicatoin
-      alt space # files
-      shift ? # remontoire: opens the shortcut application
-      w # configure wifi
-      shift arrowkey # move window
-      backspace # toggle vertical/horiztaon layouts
-      r # resize windows with arrow keys, press esc when done
-      shift e # logout regolution
+      # manging fkn windows (i.e open applications)
+        ctrl space # see all windows (i.e open apps)
+        shift q # close focused window
+        r # resize windows with arrow keys, press esc when done
+        shift arrowkey # move focused window
+        arrowkey # focus a window
+        0-9 # go to a specific workspace, dont use the 10key
+        ctrl tilda # create and move to a new workspace
+
+      # app quickies
+        w # configure wifi
+        n # notifications, very useful
+        enter # open (another) terminal
+        shift enter # browser
+        alt space # files
+
+      # other things
+        c # settings: opens gnome-control-center
+        space # all applications
+        shift space # commands
+        shift ? # remontoire: opens the shortcut application
+        backspace # toggle vertical/horiztaon layouts
+        shift e # logout regolution
     # other things
       # workspaces
-        ctrl tilda # create and move to a new workspace
-        0-9 # go to a specific workspace
         tab # go to next workspace
         shift tab # go to previous workspace
 
       # other
-        n # notifications
 
 
   # applications
