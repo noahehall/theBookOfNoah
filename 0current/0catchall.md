@@ -68,3 +68,5 @@ lshw list hardware and settings and stuff
 # &> /dev/null # redirect erything
 ########################################
 ```
+
+$ whereis somecmd # see all its paths
