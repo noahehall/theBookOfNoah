@@ -30,8 +30,9 @@ move all my binaries to /usr/local/bin
 dpkg --print-architecture
     e.g. amd64
 
-lsb_release -cs
-    e.g. impish
+lsb_release
+  -cs # e.g. impish
+  -a # all info
 
 exec su -l $USER
   reload group assignments without relogging

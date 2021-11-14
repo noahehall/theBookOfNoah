@@ -21,7 +21,7 @@
 
 ### dev
 
-1. download & login to firefox dev edition
+1. [download & login to firefox dev edition](https://www.mozilla.org/en-US/firefox/developer/)
 2. setup github
    - [github cli](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
    - [verify your commits](https://docs.github.com/en/authentication/managing-commit-signature-verification)
@@ -31,14 +31,32 @@
 #### ubuntu:dev
 
 1. setup ubuntu
+   - always installs
    - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
-   - dconf-editor
-   - shutter
-   - synaptic package manager
-   - bleachbit
-   - gnome extensions
-   - apt-updatoer
+   - [stacer](https://github.com/oguzhaninan/Stacer)
+   - [dconf-editor](https://wiki.gnome.org/Apps/DconfEditor)
+     - $ sudo apt install dconf-editor
+   - [shutter](https://shutter-project.org/)
+     - [install steps](https://launchpad.net/~shutter/+archive/ubuntu/ppa)
+     - [x11 server error](https://askubuntu.com/questions/1353360/ubuntu-21-04-shutter-did-not-work-without-x11-server)
+   - [bleachbit](https://www.bleachbit.org/features)
+     - $ sudo apt install bleachbit
+     - cleaner wayyy better than the one by stacer
+   - [gnome extensions](https://extensions.gnome.org/)
+     - it doesnt save your extensions across computers so you have to reinstall
+       - [basic steps with some good ext](https://thelinuxuser.com/install-gnome-shell-extensions/)
+       - cafeeine
+       - clipboard indactor
+       - disconnect wifi
+       - extension list
+       - just perfection
+       - privacy settings
+       - removable drive menu
+       - sound input & output device chooser
+       - user themes
+       - workspace indicator
    - neofetch
+     - $ sudo apt install neofetch
    - system-monitor
    - apt-transport-https
    - [allota shit from here](http://packages.azlux.fr/)
@@ -54,8 +72,11 @@
    - grv
    - setup dev
    - docker
+   - maybe installs
+     - [opensnitch](https://github.com/evilsocket/opensnitch)
+     - synaptic package manager
 
-5. [setup chromium](https://linuxize.com/post/how-to-install-chromium-web-browser-on-ubuntu-20-04/)
+2. [setup chromium](https://linuxize.com/post/how-to-install-chromium-web-browser-on-ubuntu-20-04/)
 
 #### mac:dev
 
