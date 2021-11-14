@@ -1,7 +1,7 @@
 # TLDR
 
 modern ubuntu desktop based on i3
-focusing on keyboard > mouse usage to get things done
+focusing on keyboard > mouse usage for getting things done
 
 ## links
 
@@ -9,9 +9,18 @@ focusing on keyboard > mouse usage to get things done
 - [what is i3](https://www.omgubuntu.co.uk/2019/06/install-regolith-linux-i3-gaps-ubuntu)
 - [remontoire: shurtcut application](https://github.com/regolith-linux/remontoire)
 - [big list of howtos](https://regolith-linux.org/docs/howtos/)
+- [xresources keybindings](https://regolith-linux.org/docs/reference/xresources/)
+- [staging regolith config](https://regolith-linux.org/docs/howtos/stage-configs/)
+  - always do this so you can modify regolith without fking everything up, but see overriding
+- [overriding xresources](https://regolith-linux.org/docs/howtos/override-xres/)
+  - recommended way for modifing regolith, but see staging
 
 ## basics
 
+- regolith
+  - super fast way to get an i3 desktop experience with sane defualts
+    - based on i3, refer to their docs if regolith fails
+  - you definitely need to remember the keybindings
 - windows: each window is basically a running application
 - workspaces: groups of windows
 
@@ -27,7 +36,7 @@ focusing on keyboard > mouse usage to get things done
         shift arrowkey # move window to new slot in tiles
         r # resize windows with arrow keys, press esc when done
         shift r # i think this is reset
-
+q
         tab # go to next workspace
         shift tab # go to previous workspace
         0-9 # go to a specific workspace, dont use the 10key
@@ -51,12 +60,15 @@ focusing on keyboard > mouse usage to get things done
         backspace # toggle vertical/horiztaon layouts
         shift e # logout regolution
 
-    # other things
+  # regolith look
 
   # applications
     apt search regolith-look- # see available themes
       sudo apt install regolith-look-dracula
       regolith-look set dracula
+      regolith-look refresh
+    apt search i3xrocks- # see available blocklets (status indicators)
+      sudo apt install i3xrocks-wifi
       regolith-look refresh
   # locations
     /etc/regolith/i3/config # where you managed your i3 config settings
