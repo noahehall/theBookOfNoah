@@ -14,6 +14,10 @@ focusing on keyboard > mouse usage for getting things done
   - always do this so you can modify regolith without fking everything up, but see overriding
 - [overriding xresources](https://regolith-linux.org/docs/howtos/override-xres/)
   - recommended way for modifing regolith, but see staging
+- [all regolith config file locations](https://regolith-linux.org/docs/reference/configurations/)
+- [i3 gaps for controlling window behavior](https://github.com/Airblader/i3)
+- [customize regolith](https://regolith-linux.org/docs/customize/)
+- [i3 user guide](https://i3wm.org/docs/userguide.html)
 
 ## basics
 
@@ -61,6 +65,9 @@ q
         shift e # logout regolution
 
   # regolith look
+    xrdb -query # see which values can be overriden
+      xrdb -query | grep position
+    regolith-look refresh # apply any changes to this session without relogging
 
   # applications
     apt search regolith-look- # see available themes
@@ -70,11 +77,15 @@ q
     apt search i3xrocks- # see available blocklets (status indicators)
       sudo apt install i3xrocks-wifi
       regolith-look refresh
+
   # locations
     /etc/regolith/i3/config # where you managed your i3 config settings
-    # ^ copy the folder from etc to ~/.config/
-    # ^ then make your changes in ~/.config/config
-
+      # ^ copy the folder from etc to ~/.config/
+      # ^ then make your changes in ~/.config/config
+    ~/.Xresources #  optional: Y Intended for non-Regolith settings
+    ~/.Xresources-regolith # optional: Y A global override to replace all Regolith settings
+    /etc/regolith/styles/root # optional: N The default Regolith Xresources file if ~/.Xresources-regolith does not exist
+    ~/.config/regolith/Xresources # optional: Y Applies specific overrides to Xresources defaults
 
 
 ```
