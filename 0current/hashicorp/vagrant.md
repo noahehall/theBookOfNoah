@@ -43,6 +43,8 @@
     - [slim ubuntu 18](https://app.vagrantup.com/geerlingguy/boxes/ubuntu2004)
 - tuts
   - [getting started](https://learn.hashicorp.com/collections/vagrant/getting-started)
+  - [vagrant + kali linux](https://www.kali.org/blog/announcing-kali-for-vagrant/)
+  - [automating red team homelabs](https://www.secureideas.com/blog/2018/09/automating-red-team-homelabs-part-1-kali-automation.html)
   - [disposable local dev envs with vagrant, docker and arkade](https://iximiuz.com/en/posts/how-to-setup-development-environment/)
   - [mount NFS shares on a running guest machine](https://www.stevenrombauts.be/2018/01/mount-nfs-shares-on-a-running-vagrant-box/)
   - [hackr.io: list of vagrant tuts](https://hackr.io/tutorials/learn-vagrant)
