@@ -24,6 +24,15 @@
         - with docker
         - with terraform?
 
+  - Peers: vagrant BFFs
+    - virtualbox
+    - docker
+    - out of scope
+      - chef
+      - puppet
+      - packer
+      - ansible
+
 - interesting things you can do
   - [vagrant share](https://www.vagrantup.com/docs/share)
     - share your vagrant env with anyone in the world
