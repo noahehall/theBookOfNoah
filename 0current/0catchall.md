@@ -71,3 +71,7 @@ lshw list hardware and settings and stuff
 ```
 
 $ whereis somecmd # see all its paths
+
+~/.local/share/CMD
+  prioritize this over /opt
+  as /opt is generally owned by root
