@@ -4,14 +4,18 @@
 - Topic: Why Vagrant? Nov18?
 - $(whoami): @noahedwardhall|engineer
 
+## TODO
+
+- need to get inr powerpoint deck and convert this file
+
 ## table of contents
 
 - level set
   - who am I?:
   - why am I?:
   - dont take notes: everything is here
-    - [this file: https://github.com/noahehall/theBookOfNoah/blob/master/1presentations/vagrant.md](https://github.com/noahehall/theBookOfNoah/blob/master/1presentations/vagrant.md)
-    - [indepth vagrant notes: https://github.com/noahehall/theBookOfNoah/blob/master/0current/hashicorp/vagrant.md](https://github.com/noahehall/theBookOfNoah/blob/master/0current/hashicorp/vagrant.md)
+    - [markdown version of prezi: https://github.com/noahehall/theBookOfNoah/blob/master/1presentations/vagrant.md](https://github.com/noahehall/theBookOfNoah/blob/master/1presentations/vagrant.md)
+    - [indepth vagrant cheatsheet: https://github.com/noahehall/theBookOfNoah/blob/master/0current/hashicorp/vagrant.md](https://github.com/noahehall/theBookOfNoah/blob/master/0current/hashicorp/vagrant.md)
     - [vagrant docs: https://www.vagrantup.com/intro](https://www.vagrantup.com/intro)
 
 - high level
