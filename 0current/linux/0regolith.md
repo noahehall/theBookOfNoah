@@ -78,43 +78,46 @@ focusing on keyboard > mouse usage for getting things done
 ```sh
   # keyboard bindings
   super
-    # big things
-      # manging fkn windows (i.e open applications)
-        arrowkey # move focus between windows
-        shift arrowkey # move window to new slot in tiles
-        r # resize windows with arrow keys, press esc when done
+    # dont press
+      p shift # power off?
+      r shift # reset session?
 
-        0-9 # go to a specific workspace, dont use the 10key
-        shift 0-9 # move active window to specific workspace
-        tab # go to next workspace
+    # manging fkn windows (i.e open applications)
+      arrowkey # move focus between windows
+      arrowkey shift # move window to new slot in tiles
+      r # resize windows with arrow keys, press esc when done
 
-        shift tab # go to previous workspace
-        backspace # toggle vertical/horiztaon layouts for the next window launched
-        t # toggle through different layout modes in current workspace
+      0-9 shift # move active window to specific workspace
+      0-9 # go to a specific workspace, dont use the 10key
+      tab # go to next workspace
+      tab shift # go to previous workspace
 
-        space # view all apps
-        ctrl space # see & select open windows (i.e open apps)
+      backspace # toggle vertical/horiztaon layouts for the next window launched
+      t # toggle through different layout modes in current workspace
 
-        shift q # quit focused window
-        alt q # force quit focused window
-        ctrl tilda # create and move to a new workspace
+      shift q # quit focused window
+      alt q # force quit focused window
+      ctrl tilda # create and move to a new workspace
 
-      # app quickies
-        w # configure wifi
-        enter # open (another) terminal
-        shift space # view and run command
-        shift enter # browser
-        alt space # files
-        c # settings: opens gnome-control-center
-        n # notifications, very useful,
-          # when notitficaiton window is open
-          shift delete # delete all low priority notfications
-          delete # delete selected notification
+    # app quickies
+      space # view all apps
+      space ctrl # see & select open windows (i.e open apps)
 
-      # other things
-        shift ? # remontoire: opens the shortcut application
-        shift e # logout regolution
-        shift r # i think this is reset
+      w # configure wifi
+      enter # open (another) terminal
+      shift space # view and run command
+      shift enter # browser
+      alt space # files
+      c # settings: opens gnome-control-center
+      n # notifications, very useful,
+        # when notitficaiton window is open
+        shift delete # delete all low priority notfications
+        delete # delete selected notification
+
+    # other things
+      shift ? # remontoire: opens the shortcut application
+      shift e # logout regolution
+      shift r # i think this is reset
 
   # regolith look
     xrdb -query # see which values can be overriden
