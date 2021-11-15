@@ -33,6 +33,9 @@
       - packer
       - ansible
 
-- interesting things you can do
+- demos of interesting things you can do
+  - virtualbox: dev env
+  - docker: prod env
   - [vagrant share](https://www.vagrantup.com/docs/share)
     - share your vagrant env with anyone in the world
+  - kali linux, metasploit, pentesting
