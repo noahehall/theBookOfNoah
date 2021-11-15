@@ -79,3 +79,7 @@ binaries vs git pkgs
     sudo ln -s ~/git/whatev /opt/bin
   ^ allows you to keep /opt/bin owned by root, while keeping track of wtf you've downloaded as thats whats /opt is for
   ^ I think the recommened approach is to download to /opt directly, but whatev
+  ^ or directly in /usr/local for opt packages, but fkn linux history n shit
+
+find large files
+  find ~/.local -type f -size +100k

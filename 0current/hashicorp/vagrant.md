@@ -42,6 +42,8 @@
 - tuts
   - [getting started](https://learn.hashicorp.com/collections/vagrant/getting-started)
   - [mount NFS shares on a running guest machine](https://www.stevenrombauts.be/2018/01/mount-nfs-shares-on-a-running-vagrant-box/)
+  - [hackr.io: list of vagrant tuts](https://hackr.io/tutorials/learn-vagrant)
+  - [serversforhackers.com: 3 quick run vids](https://serversforhackers.com/s/vagrant)
 
 ## TODO (ouch)
 
