@@ -72,6 +72,10 @@ lshw list hardware and settings and stuff
 
 $ whereis somecmd # see all its paths
 
-~/.local/share/CMD
-  prioritize this over /opt
-  as /opt is generally owned by root
+binaries vs git pkgs
+  place binaries directly in ~/.local/share and symlink to /opt/bin
+    sudo ln -s ~/.local/share/CMD /opt/bin
+  place git repos in your git dir, make, and symlink to /opt/bin
+    sudo ln -s ~/git/whatev /opt/bin
+  ^ allows you to keep /opt/bin owned by root, while keeping track of wtf you've downloaded as thats whats /opt is for
+  ^ I think the recommened approach is to download to /opt directly, but whatev
