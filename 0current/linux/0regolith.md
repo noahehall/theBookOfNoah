@@ -84,24 +84,26 @@ focusing on keyboard > mouse usage for getting things done
 
     # manging fkn windows (i.e open applications)
       arrowkey # move focus between windows
-      arrowkey shift # move window to new slot in tiles
+      arrowkey shift # reposition window in workspace layout
       r # resize windows with arrow keys, press esc when done
 
       0-9 shift # move active window to specific workspace
       0-9 # go to a specific workspace, dont use the 10key
+
+      ctrl space # see & select open windows (i.e open apps)
+      ctrl tilda # create and move to a new workspace
+
       tab # go to next workspace
       tab shift # go to previous workspace
 
       backspace # toggle vertical/horiztaon layouts for the next window launched
       t # toggle through different layout modes in current workspace
 
-      shift q # quit focused window
-      alt q # force quit focused window
-      ctrl tilda # create and move to a new workspace
+      q shift # quit focused window
+      q alt # force quit focused window
 
     # app quickies
       space # view all apps
-      space ctrl # see & select open windows (i.e open apps)
 
       w # configure wifi
       enter # open (another) terminal
