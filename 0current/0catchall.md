@@ -83,3 +83,6 @@ binaries vs git pkgs
 
 find large files
   find ~/.local -type f -size +100k
+
+see which ssh key is in use
+  ssh-add -l

@@ -13,7 +13,8 @@
 - [awesome vagrant](https://github.com/iJackUA/awesome-vagrant)
 - references
   - [cli reference](https://www.vagrantup.com/docs/cli)
-  - [vagrant box](https://www.vagrantup.com/docs/cli/box)
+  - [vagrant cli box](https://www.vagrantup.com/docs/cli/box)
+  - [vagrant boxes](https://www.vagrantup.com/docs/boxes)
   - [synced folders](https://www.vagrantup.com/docs/synced-folders)
   - [tips & tricks](https://www.vagrantup.com/docs/vagrantfile/tips)
     - TODO: ^^^^ must do
@@ -22,6 +23,7 @@
   - [virtual box provider setup](https://www.vagrantup.com/docs/providers/virtualbox/boxes)
   - [NFS setup](https://www.vagrantup.com/docs/synced-folders/nfs)
 - plugins/contrib/tools
+  - [plugins listed on wiki](https://github.com/hashicorp/vagrant/wiki/Available-Vagrant-Plugins)
   - [ngrok: required for vagrant share](https://dashboard.ngrok.com/get-started/setup)
   - [veewee vm exporter](https://github.com/jedi4ever/veewee)
   - [vagrant/contrib](https://github.com/hashicorp/vagrant/tree/main/contrib)
@@ -41,9 +43,12 @@
     - [slim ubuntu 18](https://app.vagrantup.com/geerlingguy/boxes/ubuntu2004)
 - tuts
   - [getting started](https://learn.hashicorp.com/collections/vagrant/getting-started)
+  - [disposable local dev envs with vagrant, docker and arkade](https://iximiuz.com/en/posts/how-to-setup-development-environment/)
   - [mount NFS shares on a running guest machine](https://www.stevenrombauts.be/2018/01/mount-nfs-shares-on-a-running-vagrant-box/)
   - [hackr.io: list of vagrant tuts](https://hackr.io/tutorials/learn-vagrant)
   - [serversforhackers.com: 3 quick run vids](https://serversforhackers.com/s/vagrant)
+  - [scotch.io: vagrant share](https://scotch.io/tutorials/sharing-your-virtual-machine-on-the-web-with-vagrant-share)
+  - [stdoutin: getting started](http://stdout.in/en/post/getting_started_with_vagrant_automated_dev_servers_deploy_and_provisioning)
 
 ## TODO (ouch)
 
@@ -122,6 +127,9 @@ autocomplete    manages autocomplete installation on host
 ```sh
   # setup bash completion (e.g. for bash)
     sudo wget https://raw.githubusercontent.com/hashicorp/vagrant/main/contrib/bash/completion.sh -O /etc/bash_completion.d/vagrant
+  # setup reqs
+    sudo apt install libarchive-tools curl
+      # ^ bsdtar is in libarchive-tools
   # ^ update your bashrc
     # vagrant bash completion
     if [ -f /etc/bash_completion.d/vagrant ]; then
