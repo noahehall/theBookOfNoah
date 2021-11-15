@@ -24,4 +24,6 @@
         - with docker
         - with terraform?
 
-  -
+- interesting things you can do
+  - [vagrant share](https://www.vagrantup.com/docs/share)
+    - share your vagrant env with anyone in the world

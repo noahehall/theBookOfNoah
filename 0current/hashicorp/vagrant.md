@@ -9,6 +9,8 @@
 - [installing vagrant](https://www.vagrantup.com/docs/installation)
 - [uninstalling vagrant](https://www.vagrantup.com/docs/installation/uninstallation)
 - [vagrant cloud: public boxes](https://app.vagrantup.com/boxes/search)
+- [where to store VMs](https://serverfault.com/questions/54200/whats-the-best-file-system-for-storing-virtual-machine-images)
+- [awesome vagrant](https://github.com/iJackUA/awesome-vagrant)
 - references
   - [cli reference](https://www.vagrantup.com/docs/cli)
   - [vagrant box](https://www.vagrantup.com/docs/cli/box)
@@ -19,15 +21,20 @@
   - [config.vm machine settings](https://www.vagrantup.com/docs/vagrantfile/machine_settings)
   - [virtual box provider setup](https://www.vagrantup.com/docs/providers/virtualbox/boxes)
   - [NFS setup](https://www.vagrantup.com/docs/synced-folders/nfs)
-- plugins/contrib
+- plugins/contrib/tools
+  - [ngrok: required for vagrant share](https://dashboard.ngrok.com/get-started/setup)
+  - [veewee vm exporter](https://github.com/jedi4ever/veewee)
   - [vagrant/contrib](https://github.com/hashicorp/vagrant/tree/main/contrib)
   - [sync local * guest files](https://learn.hashicorp.com/tutorials/vagrant/getting-started-synced-folders?in=vagrant/getting-started)
     - the defaults work, but find the optimial settings for ubuntu
 - boxes
   - [vagrant cloud signup](https://app.vagrantup.com/)
-  - [generic](https://app.vagrantup.com/generic)
-    - [bunches of boxes via roboxes](https://roboxes.org/)
-    - grab one of their alpine boxes and move on with your life
+  - [bento boxes](https://app.vagrantup.com/bento)
+    - [bento github](https://github.com/chef/bento#current-baseboxes)
+  - [vangrantbox.es](https://www.vagrantbox.es/)
+  - [roboxes](https://roboxes.org/)
+    - [generic by roboxes](https://app.vagrantup.com/generic)
+    - [robox github](https://github.com/lavabit/robox)
   - [geeringuy](https://app.vagrantup.com/geerlingguy)
     - [author of ansible for devops](https://www.ansiblefordevops.com/)
     - [slim ubuntu 16](https://app.vagrantup.com/geerlingguy/boxes/ubuntu1604)
@@ -78,7 +85,7 @@ autocomplete    manages autocomplete installation on host
 - If you are an operations engineer or DevOps engineer, Vagrant gives you a disposable environment and consistent workflow for developing and testing infrastructure management scripts.
 - If you are a designer, Vagrant will automatically set everything up that is required for that web app in order for you to focus on doing what you do best: design
 
-## terminilogy
+### terminilogy
 
 - vagrant boxes: the base img/starting point of a development environment; used to clone a virtual environment instead of creating one from scratch
   - stored globally for hte current user
@@ -86,7 +93,7 @@ autocomplete    manages autocomplete installation on host
   -
 - vagrant providers:
 
-## important files & locations
+### important files & locations
 
 - `Vagrantfile` created via `vagrant init some/type/of/img`
   - purpose: this is your buildfile; every person working with the project uses this file to build their dev env
@@ -100,6 +107,13 @@ autocomplete    manages autocomplete installation on host
     - Vagrantfile from the project directory. This is the Vagrantfile that you will be modifying most of the time.
     - Multi-machine overrides if any.
     - Provider-specific overrides, if any.
+
+## best practices
+
+- always
+  - do this stuff
+- never
+  - do this stuff
 
 ## quickies
 
@@ -129,7 +143,7 @@ autocomplete    manages autocomplete installation on host
   vagrant destroy
 
   # handy box cmds
-  vagrnat box list
+  vagrant box list
   vagrant box remove NAME
 ```
 
