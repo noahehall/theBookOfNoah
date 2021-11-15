@@ -16,6 +16,7 @@
 
 - high level
   - use cases: why and when of using vagrant
+
   - wtf: what the facts?
     - google map the tech stack
       - TODO: finish the drawio

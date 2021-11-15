@@ -80,19 +80,20 @@ focusing on keyboard > mouse usage for getting things done
   super
     # big things
       # manging fkn windows (i.e open applications)
-        space # view all apps
-        ctrl space # see & select open windows (i.e open apps)
         arrowkey # move focus between windows
         shift arrowkey # move window to new slot in tiles
         r # resize windows with arrow keys, press esc when done
-        shift r # i think this is reset
+
+        0-9 # go to a specific workspace, dont use the 10key
+        shift 0-9 # move active window to specific workspace
+        tab # go to next workspace
+
+        shift tab # go to previous workspace
         backspace # toggle vertical/horiztaon layouts for the next window launched
         t # toggle through different layout modes in current workspace
 
-        tab # go to next workspace
-        shift tab # go to previous workspace
-        0-9 # go to a specific workspace, dont use the 10key
-        shift 0-9 # move active window to specific workspace
+        space # view all apps
+        ctrl space # see & select open windows (i.e open apps)
 
         shift q # quit focused window
         alt q # force quit focused window
@@ -100,20 +101,20 @@ focusing on keyboard > mouse usage for getting things done
 
       # app quickies
         w # configure wifi
+        enter # open (another) terminal
+        shift space # view and run command
+        shift enter # browser
+        alt space # files
+        c # settings: opens gnome-control-center
         n # notifications, very useful,
           # when notitficaiton window is open
           shift delete # delete all low priority notfications
           delete # delete selected notification
-        enter # open (another) terminal
-        shift enter # browser
-        alt space # files
 
       # other things
-        c # settings: opens gnome-control-center
-        space # all applications
-        shift space # commands
         shift ? # remontoire: opens the shortcut application
         shift e # logout regolution
+        shift r # i think this is reset
 
   # regolith look
     xrdb -query # see which values can be overriden
