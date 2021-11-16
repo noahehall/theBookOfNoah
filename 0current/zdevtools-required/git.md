@@ -1,7 +1,12 @@
 <https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History>
 
-# LINKS
+# TLDR
 
+long list of git
+
+## LINKS
+
+- [environment vars](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables)
 - [git flight rules](https://github.com/k88hudson/git-flight-rules/blob/master/README.md)
 - [git town cli plugin](https://www.git-town.com/)
 - [issues with git flow](https://scottchacon.com/2011/08/31/github-flow.html)
@@ -18,7 +23,9 @@
 - repo related cmds
   - [getting a git repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
 
-## terminology
+## Basics
+
+### terminology
 
 - git: i'm always talking about git-scm.com
 - three states of git
@@ -30,7 +37,7 @@
     - where git stores the metadata and object database for your project
     - what is copied when you `clone` a repository from another computer
 
-## background
+### background
 
 - high level
   - snapshots, not differences: other git systems (e.g. subversion) store data as a set of diffs, git stores data as snapshots
@@ -39,12 +46,14 @@
   - integrity: everything in git is checksummed before it is stored; and then only referred to by that checksum
     - i.e. its impossible to change the contents of a file/directory without git knowing about it
 
-## OOPS
+## quickies
 
 ```sh
   # reset SOMEBRANCH to whatever is upstream
-  git checkout SOMEBRANCH
-  git reset --hard origin/SOMEBRANCH
+    git fetch SOMEBRANCH
+    git reset --hard origin/SOMEBRANCH
+  # other shit
+    git config --list
 
 ```
 
