@@ -6,20 +6,24 @@ long list of git
 
 ## LINKS
 
-- [environment vars](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables)
-- [git flight rules](https://github.com/k88hudson/git-flight-rules/blob/master/README.md)
-- [git town cli plugin](https://www.git-town.com/)
-- [issues with git flow](https://scottchacon.com/2011/08/31/github-flow.html)
-- [git feature branch workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow)
-- [bitbucket git tutorials landing page](https://www.atlassian.com/git/tutorials)
-- [git workflow comparison](https://www.atlassian.com/git/tutorials/comparing-workflows)
-- [git getting started](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
-- [git config](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration)
-- [git book](https://git-scm.com/book/en/v2)
-- [installing git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [first time setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)
-- references|copypasta
+- refrence
+  - [environment vars](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables)
+  - [git flight rules](https://github.com/k88hudson/git-flight-rules/blob/master/README.md)
+  - [git town cli plugin](https://www.git-town.com/)
+  - [issues with git flow](https://scottchacon.com/2011/08/31/github-flow.html)
+  - [git feature branch workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow)
+  - [bitbucket git tutorials landing page](https://www.atlassian.com/git/tutorials)
+  - [git workflow comparison](https://www.atlassian.com/git/tutorials/comparing-workflows)
+  - [git getting started](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
+  - [git config](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration)
+  - [git book](https://git-scm.com/book/en/v2)
+  - [installing git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+  - [first time setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)
+
+- copypasta
   - [gitignore files](https://github.com/github/gitignore)
+  - [rebasing](https://stackoverflow.com/questions/41464752/git-rebase-interactive-the-last-n-commits)
+
 - repo related cmds
   - [getting a git repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
 
@@ -52,8 +56,56 @@ long list of git
   # reset SOMEBRANCH to whatever is upstream
     git fetch SOMEBRANCH
     git reset --hard origin/SOMEBRANCH
+    git reset --soft HEAD^
+    # other options
+      git reset --soft HEAD^ # undo commits, but leave staged
+      git reset HEAD^ # undo commits & staged, but leave work tree
+      git reset --hard HEAD^ # undo everthing
+
   # other shit
     git config --list
+    git config --list --show-origin
+    git config --global -e # edit global config in default editor
+
+  # rebasing
+    git rebase -i shaOfFirstCommitToRewrite^ # use this and move on
+    git rebase -i shaOfLastGoodCOmmitButNotINclude
+    git rebase -i HEAD~n
+        n === # of commits to rewrite
+
+  # commit diff between two branches
+  git log --oneline --graph --decorate --abbrev-commit master..develop
+
+  git status -s # short status
+  # [staging][workingtree] FILENAME
+  # ?? somefile # untracked
+  # A somfile # staged
+  #  M somefile # modified in working directory but not yet staged
+  # M somefile # modified and staged
+  # MM somefile # modified, staged, then modified again
+
+  git diff  # everything unstaged (not added)
+  git diff --staged  # everything added, but not staged (commited)
+
+  git commit -a -m 'ur msg' # but be sure you want to add all changed files
+
+  git rm --cached dont/track/this/file/and/remove/from/staging
+
+  git mv prevname newname # better than doing a linux mv
+
+  # debugging
+    git ls-files # information about files in the index and working tree
+    git cat-file # content/type+size info about repository objects
+      -p HEAD:file_or_directory_path
+    git log -n 5 #show the recent 5 commits
+    git log --since=2016-01-15 #show commits since january 15 2016
+    git log --author="noahehall" #all commits by noahehall
+
+  # managing remotes
+    git clone <url> <newname>
+    git remote -v # check where git push will send the files
+    git remote rm origin # disconnect your local dir from the remote repo, e.g. if 4. your changing the remote url
+    git remote add origin <url> # add a remote repo to your local dir
 
 ```
 
@@ -73,16 +125,10 @@ long list of git
  sudo apt install git-all
  sudo apt install install-info # for debian (e.g. ubuntu), only if installed from source
 
- # git-config - setup once on each computer
- # ^ see current config and where they are located (system|global|local)
- git config --list --show-origin
- git config --list # dont show origin
   git config user.name # see what your username is
  git config --show-origin user.name # see where the value for user.name is coming from
 
- # edit all global options at once
- git config --global -e
- # ^ set user name and email address
+
  git config --global user.name "poop"
  git config --global user.email "poop@users.noreply.github.com" # always use the noreply, thank me later
  # ^ set your editor
@@ -152,35 +198,6 @@ long list of git
  git config --global merge.tool nano
 ```
 
-### recommendations
-
-```sh
-  # commit diff between two branches
-  git log --oneline --graph --decorate --abbrev-commit master..develop
-
-  git status -s # short status
-  # [staging][workingtree] FILENAME
-  # ?? somefile # untracked
-  # A somfile # staged
-  #  M somefile # modified in working directory but not yet staged
-  # M somefile # modified and staged
-  # MM somefile # modified, staged, then modified again
-
-  git diff  # everything unstaged (not added)
-  git diff --staged  # everything added, but not staged (commited)
-
-  git commit -a -m 'ur msg' # but be sure you want to add all changed files
-
-  git rm --cached dont/track/this/file/and/remove/from/staging
-
-  git mv prevname newname # better than doing a linux mv
-
-  # debugging
-    git ls-files # information about files in the index and working tree
-    git cat-file # content/type+size info about repository objects
-      -p HEAD:file_or_directory_path
-```
-
 ## TODO
 
 - categorize all below
@@ -204,15 +221,6 @@ only checkout files in root dir
 force checking out paths ignoring sparse checkout
 e.g. to force checking out a path not matching sparse settings
     git checkout --ignore-skip-worktree-bits -- PATHS
-
-check git config 'git config --list'
-
-<https://stackoverflow.com/questions/41464752/git-rebase-interactive-the-last-n-commits>
-    git rebase -i HEAD~n
-        n === # of commits to rewrite
-
-    git rebase -i shaOfLastGoodCOmmitButNotINclude
-    git rebase -i shaOfFirstCommitToRewrite^
 
 <https://stackoverflow.com/questions/6127328/how-can-i-delete-all-git-branches-which-have-been-merged>
     git branch --merged | egrep -v "(^\*|dev)" | xargs git branch -d

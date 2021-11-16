@@ -33,3 +33,31 @@ binaries vs git pkgs
   ^ allows you to keep /opt/bin owned by root, while keeping track of wtf you've downloaded as thats whats /opt is for
   ^ I think the recommened approach is to download to /opt directly, but whatev
   ^ or directly in /usr/local for opt packages, but fkn linux history n shit
+
+-- randomness
+permission explanations
+   r: read 4
+   w: write 2
+   x: execute 1
+    read,write & execute = 7
+    read & write: 6
+    read & execute: 5
+  permission segments for users
+
+   owners: who created the file
+   group membership
+   anonymous:
+
+   For files:
+    r = read
+    w = write
+    x = execute
+   For directories:
+    r = list (read directory contents)
+    w = write
+    x = can access the directory (i.e., cd to the directory)
+
+  breakdown of ls-l
+   drwxr-x---
+    d = directory
+    - = file (if there is no d, it will start with -)

@@ -41,8 +41,10 @@ various easy to forget things
 
 - ssh
   - `eval \`ssh-agent -s\`` start the ssh agent
-  - `ssh-add` add identities in `~/.ssh`
+  - `ssh-add` add identities in `~/.ssh` can also append a specific private key
   - `ssh-add -l` list identities
+  - `id_rsa.pub` == your public key (share this)
+  - `id_rsa` === your private key
 
 - terminal
   - `sudo apt install terminator` thank me later
