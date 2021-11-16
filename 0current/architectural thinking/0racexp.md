@@ -3,7 +3,7 @@
 
 - **R**ealistic **A**gile **C**oncepts for **EX**treme **P**rogramming
 
-![@nodeproto RACE:XP](/doc/racexp.png)
+![@nodeproto RACE:XP](./images/racexp.png)
 
 uses the `race [car|team] metaphor` as the ontology of rapid prototyping/product development
 
