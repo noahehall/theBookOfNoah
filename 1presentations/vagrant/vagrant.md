@@ -10,7 +10,7 @@
 
 ## table of contents
 
-- level set
+- preface
   - who am I?:
   - why am I?:
   - dont take notes: everything is here
@@ -19,7 +19,7 @@
     - [vagrant docs: https://www.vagrantup.com/intro](https://www.vagrantup.com/intro)
     - [vagrant github: https://github.com/hashicorp/vagrant](https://github.com/hashicorp/vagrant)
 
-- high level
+- Part 1: background
   - use cases: why and when of using vagrant
 
   - wtfacts?
@@ -38,9 +38,10 @@
       - ansible
       - terraform
 
-- demos of interesting things you can do
-  - virtualbox: dev env
-  - docker: prod env
-  - [vagrant share](https://www.vagrantup.com/docs/share)
-    - share your vagrant env with anyone in the world
-  - kali linux, metasploit, pentesting
+- part 2: playground
+  - demos of interesting things you can do
+    - virtualbox: dev env
+    - docker: prod env
+    - [vagrant share](https://www.vagrantup.com/docs/share)
+      - share your vagrant env with anyone in the world
+    - kali linux, metasploit, pentesting

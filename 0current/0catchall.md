@@ -86,3 +86,18 @@ find large files
 
 see which ssh key is in use
   ssh-add -l
+
+create: tar -czvf as_this_file.tar.gz from_this_file
+unzip: tar xvzf unzip_this_file.tar.gz -C to/this/dir
+
+terminal quickies
+  blah just use terminator
+    sudo apt install terminator
+  ctrl shift t # new tab
+  sudo update-alternatives --config x-terminal-emulator
+      ^ presents a list for you to select default terminal
+
+reset git to upstream
+  <https://stackoverflow.com/questions/1146973/how-do-i-revert-all-local-changes-in-git-managed-project-to-previous-state>
+  git fetch
+  git reset --hard origin/branchname

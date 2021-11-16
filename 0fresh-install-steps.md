@@ -23,25 +23,29 @@
 ### dev
 
 1. [download & login to firefox dev edition](https://www.mozilla.org/en-US/firefox/developer/)
-2. setup github
+2. terminator
+   - sudo apt install terminator
+3. setup github
    - [github cli](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
    - [verify your commits](https://docs.github.com/en/authentication/managing-commit-signature-verification)
    - git clone git@github.com:noahehall/theBookOfNoah.git
      - [source this file in your bashrc](linux/_sourceme_.sh)
-3. setup vscode
+4. setup vscode
    - [vscode settings](https://gist.github.com/noahehall/33f60c724f51bde9afa2c2a9e540d094)
-4. [sdkman](https://sdkman.io/install)
-5. [nim](https://nim-lang.org/install_unix.html)
-6. [pnpm](https://pnpm.io/installation)
-7. docker
+5. [sdkman](https://sdkman.io/install)
+6. [nim](https://nim-lang.org/install_unix.html)
+7. [pnpm](https://pnpm.io/installation)
+8. docker
    - [compose](https://docs.docker.com/compose/install/)
    - [dive](https://github.com/wagoodman/dive)
    - [ctop](https://github.com/bcicen/ctop)
    - [dockly](https://github.com/lirantal/dockly)
-8. [vagrant](https://www.vagrantup.com/)
-   - sudo apt install chromium-browser
-9. [k8s](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
-10. chromium
+9. [vagrant](https://www.vagrantup.com/)
+
+- sudo apt install chromium-browser
+
+11. [k8s](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+12. chromium
 
 #### ubuntu:dev
 
