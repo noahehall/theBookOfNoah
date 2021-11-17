@@ -130,22 +130,12 @@ winrm-config    outputs WinRM configuration to connect to the machine
 ## quickies
 
 ```sh
-  # setup bash completion (e.g. for bash)
-    sudo wget https://raw.githubusercontent.com/hashicorp/vagrant/main/contrib/bash/completion.sh -O /etc/bash_completion.d/vagrant
-  # setup reqs
-    sudo apt install libarchive-tools curl
-      # ^ bsdtar is in libarchive-tools
-  # ^ update your bashrc
-    # vagrant bash completion
-    if [ -f /etc/bash_completion.d/vagrant ]; then
-      source /etc/bash_completion.d/vagrant
-    fi
-  # ^ reload bash
-    . ~/bashrc
+
 
   # create and start a dev env on a slim ubuntu 16
   vagrant init geerlingguy/ubuntu1604 # similar to git init
-  vagrant up # only when initially setting up the machine
+  vagrant status # see whatsup
+  vagrant up # to (re)start a suspended/halted machine
   vagrant reload # if you've made changes to the Vagrantfile
   vagrant reload --provision # if you've made changes to any provisioning scripts
 
@@ -178,6 +168,19 @@ winrm-config    outputs WinRM configuration to connect to the machine
 ## installation
 
 ```sh
+  # setup bash completion (e.g. for bash)
+    sudo wget https://raw.githubusercontent.com/hashicorp/vagrant/main/contrib/bash/completion.sh -O /etc/bash_completion.d/vagrant
+  # setup reqs
+    sudo apt install libarchive-tools curl
+      # ^ bsdtar is in libarchive-tools
+  # ^ update your bashrc
+    # vagrant bash completion
+    if [ -f /etc/bash_completion.d/vagrant ]; then
+      source /etc/bash_completion.d/vagrant
+    fi
+  # ^ reload bash
+    . ~/bashrc
+
   # after install virtualbox, ensure to install guest additions for increased performance
   # ^ @see https://www.vagrantup.com/docs/providers/virtualbox/boxes
   # ^ @see https://www.virtualbox.org/manual/ch04.html

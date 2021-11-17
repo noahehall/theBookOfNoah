@@ -1,0 +1,10 @@
+# TLDR
+
+## links
+
+## quickies
+
+```sh
+
+
+```

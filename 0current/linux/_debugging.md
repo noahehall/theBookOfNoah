@@ -38,6 +38,20 @@ various easy to forget things
 - networking
   - `hostname -I` your ip
   - `ifconfig | grep inet` all your ips
+  - [whats on 80](https://www.tecmint.com/find-out-which-process-listening-on-a-particular-port/)
+    - `lsof -i :80`
+      - sudo apt install lsof
+    - `netstat -ltnp | grep -w :80`
+    - `netstat -ltnp | grep -E ':80 |:443 '`
+      - ^ notice the spaces, works better than the first
+    - sudo apt install net-tools
+    - `fuser 80/tcp`
+      - sudo apt install psmisc
+      - the most concise
+    - `ps -p THE_PID -o comm=`
+      - get the name of the process
+    - `cat /proc/net/tcp`
+      - for embedded devices
 
 - ssh
   - `eval \`ssh-agent -s\`` start the ssh agent
@@ -62,3 +76,7 @@ various easy to forget things
         - `/some/path/to/actual/cmd` is the path to the actual cmd
         - `20` is the priority of the alternative
           - repeat this for each cmd you want to use
+
+- aws
+  - `export AWS_DEFAULT_PROFILE=poop`
+  - `aws configure list` safely list current aws config
