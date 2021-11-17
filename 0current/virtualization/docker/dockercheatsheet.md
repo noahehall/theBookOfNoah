@@ -2,8 +2,9 @@
 
 - so i dont have to browse through `./docker.md` huge file
 
-# links
+## links
 
+- [docker cheatsheet](https://www.docker.com/sites/default/files/d8/2019-09/docker-cheat-sheet.pdf)
 - [dockerfile env](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#env)
 - [dockerfile search for official images](https://github.com/docker-libraryhttps://github.com/docker-library)
 - [docker compose reference](https://docs.docker.com/compose/reference/)
@@ -19,13 +20,9 @@
 
 - [alpine pkg management](https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management)
 
-## quickies
+## basics
 
-```sh
-
-```
-
-# general
+### general
 
 - lifecycle statuses (as reported by docker ps)
   - running
@@ -47,6 +44,8 @@
   - attempt for some predetermined time to restart when a failure is detected
   - always restart the container regardless of the condition
 
+## quickies
+
 ```sh
     docker help
     docker help cp
@@ -60,7 +59,7 @@
     CID=$(docker ps -l -q) # save the UID of the last created container
 
     # aggregated stream of all services
-    docker-compose ps
+    docker compose ps
 
 
     # naming images

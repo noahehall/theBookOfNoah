@@ -61,3 +61,19 @@ permission explanations
    drwxr-x---
     d = directory
     - = file (if there is no d, it will start with -)
+
+- [which processes on which ports](https://www.tecmint.com/find-out-which-process-listening-on-a-particular-port/)
+
+<https://docs.aws.amazon.com/cli/latest/reference/configure/get.html>
+aws configure get aws_access_key_id
+
+<https://www.tutorialworks.com/container-networking/>
+docker network ls
+docker inspect network some_network
+^ see containers in network
+
+<https://www.tecmint.com/find-out-which-process-listening-on-a-particular-port/>
+
+<https://samuelsson.dev/update-nvm-installed-node-version-and-keep-globally-installed-packages/>
+
+<https://muffinman.io/blog/nvm-updating-npm/>
