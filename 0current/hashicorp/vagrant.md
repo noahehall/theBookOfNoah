@@ -52,41 +52,43 @@
   - [scotch.io: vagrant share](https://scotch.io/tutorials/sharing-your-virtual-machine-on-the-web-with-vagrant-share)
   - [stdoutin: getting started](http://stdout.in/en/post/getting_started_with_vagrant_automated_dev_servers_deploy_and_provisioning)
 
-## TODO (ouch)
+## basics
+
+### TODO (ouch)
 
 ```sh
 autocomplete    manages autocomplete installation on host
-     box             manages boxes: installation, removal, etc.
-     cloud           manages everything related to Vagrant Cloud
-     destroy         stops and deletes all traces of the vagrant machine
-     global-status   outputs status Vagrant environments for this user
-     halt            stops the vagrant machine
-     help            shows the help for a subcommand
-     init            initializes a new Vagrant environment by creating a Vagrantfile
-     login
-     package         packages a running vagrant environment into a box
-     plugin          manages plugins: install, uninstall, update, etc.
-     port            displays information about guest port mappings
-     powershell      connects to machine via powershell remoting
-     provision       provisions the vagrant machine
-     push            deploys code in this environment to a configured destination
-     rdp             connects to machine via RDP
-     reload          restarts vagrant machine, loads new Vagrantfile configuration
-     resume          resume a suspended vagrant machine
-     snapshot        manages snapshots: saving, restoring, etc.
-     ssh             connects to machine via SSH
-     ssh-config      outputs OpenSSH valid configuration to connect to the machine
-     status          outputs status of the vagrant machine
-     suspend         suspends the machine
-     up              starts and provisions the vagrant environment
-     upload          upload to machine via communicator
-     validate        validates the Vagrantfile
-     version         prints current and latest Vagrant version
-     winrm           executes commands on a machine via WinRM
-     winrm-config    outputs WinRM configuration to connect to the machine
+box             manages boxes: installation, removal, etc.
+cloud           manages everything related to Vagrant Cloud
+destroy         stops and deletes all traces of the vagrant machine
+global-status   outputs status Vagrant environments for this user
+halt            stops the vagrant machine
+help            shows the help for a subcommand
+init            initializes a new Vagrant environment by creating a Vagrantfile
+login
+package         packages a running vagrant environment into a box
+plugin          manages plugins: install, uninstall, update, etc.
+port            displays information about guest port mappings
+powershell      connects to machine via powershell remoting
+provision       provisions the vagrant machine
+push            deploys code in this environment to a configured destination
+rdp             connects to machine via RDP
+reload          restarts vagrant machine, loads new Vagrantfile configuration
+resume          resume a suspended vagrant machine
+snapshot        manages snapshots: saving, restoring, etc.
+ssh             connects to machine via SSH
+ssh-config      outputs OpenSSH valid configuration to connect to the machine
+status          outputs status of the vagrant machine
+suspend         suspends the machine
+up              starts and provisions the vagrant environment
+upload          upload to machine via communicator
+validate        validates the Vagrantfile
+version         prints current and latest Vagrant version
+winrm           executes commands on a machine via WinRM
+winrm-config    outputs WinRM configuration to connect to the machine
 ```
 
-## high level
+### high level
 
 - Vagrant is a tool focused for managing development environments
 - Vagrant lowers development environment setup time, increases production parity, and makes the "works on my machine" excuse a relic of the past
@@ -97,9 +99,8 @@ autocomplete    manages autocomplete installation on host
 ### terminilogy
 
 - vagrant boxes: the base img/starting point of a development environment; used to clone a virtual environment instead of creating one from scratch
-  - stored globally for hte current user
+  - stored globally for the current user
   - each project uses an initial box to clone from, and never modifies the actual base image (thus their respective guest machines stay isolated)
-  -
 - vagrant providers:
 
 ### important files & locations
@@ -120,6 +121,8 @@ autocomplete    manages autocomplete installation on host
 ## best practices
 
 - always
+  - do this stuff
+- somtimes
   - do this stuff
 - never
   - do this stuff
