@@ -4,6 +4,10 @@
   - I want to create (yield) a world (environment) for a set of living things (components) to live holistically (hardware) and socially (communication)
   - read more in [architectural thinking](/0current/architectural%20thinking/0heccya.md#hecc-ya-system-modeling)
 
+- **RACEXP** product management paradigm: **R**ealistic **A**gile **C**oncepts for **EX**tream **P**rogramming
+  - ![@noahedwardhall RACE:XP](/0current/architectural%20thinking/images/racexp.png)
+  - read more in [architectural thinking](//0current/architectural%20thinking/0racexp.md)
+
 # about
 
 - started as notes to various things i've learned in my career

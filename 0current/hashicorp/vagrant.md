@@ -123,7 +123,7 @@ winrm-config    outputs WinRM configuration to connect to the machine
 - always
   - do this stuff
 - somtimes
-  - do this stuff
+  - update [in] virtualbox settings to store images on a separate drive
 - never
   - do this stuff
 
