@@ -23,6 +23,7 @@ long list of git
 - copypasta
   - [gitignore files](https://github.com/github/gitignore)
   - [rebasing](https://stackoverflow.com/questions/41464752/git-rebase-interactive-the-last-n-commits)
+  - [deleting branches](https://www.freecodecamp.org/news/how-to-delete-a-git-branch-both-locally-and-remotely/)
 
 - repo related cmds
   - [getting a git repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
@@ -53,6 +54,9 @@ long list of git
 ## quickies
 
 ```sh
+  # delete a branch locally & remote
+    git branch -d BRANCH_NAME
+    git push origin --delete BRANCH_NAME
   # reset SOMEBRANCH to whatever is upstream
     git fetch SOMEBRANCH
     git reset --hard origin/SOMEBRANCH
