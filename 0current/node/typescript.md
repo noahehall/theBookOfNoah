@@ -7,6 +7,8 @@
 
 ```js
 
+someFn(myRating as unknown as number)
+const someObj: any { things: 'hello'} as OtherThing
 export const SOME_OBJ: { poop: string } = { poop: 'value' };
 
 import React, { FC, ReactElement } from 'react';

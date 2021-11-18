@@ -77,3 +77,5 @@ docker inspect network some_network
 <https://samuelsson.dev/update-nvm-installed-node-version-and-keep-globally-installed-packages/>
 
 <https://muffinman.io/blog/nvm-updating-npm/>
+
+<https://stackoverflow.com/questions/19109912/yaml-do-i-need-quotes-for-strings-in-yaml>
