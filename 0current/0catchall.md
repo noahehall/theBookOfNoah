@@ -79,3 +79,17 @@ docker inspect network some_network
 <https://muffinman.io/blog/nvm-updating-npm/>
 
 <https://stackoverflow.com/questions/19109912/yaml-do-i-need-quotes-for-strings-in-yaml>
+
+<https://stackoverflow.com/questions/48859169/js-types-can-only-be-used-in-a-ts-file-visual-studio-code-using-ts-check>
+
+<https://devhints.io/flow>
+
+nvm
+  nvm deactivate # deactivate for current shell only
+  nvm alias default system # set default ot whatever is in system, e.g. pnpm env use --global 17
+
+<https://jestjs.io/docs/expect>
+
+<https://jestjs.io/docs/api>
+
+<https://vitux.com/test-your-internet-speed-through-ubuntu-command-line/>
