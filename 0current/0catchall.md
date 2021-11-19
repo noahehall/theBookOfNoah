@@ -96,3 +96,7 @@ nvm
   ^ put in computer setup
   ^ <https://www.minim.com/blog/how-do-i-interpret-my-wifi-speed-test-results>
   $ speedtest-cli
+
+/*eslint-disable*/
+// eslint-disable-next-line
+// eslint-disable-line
