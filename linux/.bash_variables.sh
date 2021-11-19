@@ -89,7 +89,7 @@ function color_my_prompt {
 
   # Build the PS1 (Prompt String)
   # old version:   PS1="$__user_and_host $__cur_location$__git_branch_color$__git_branch $__prompt_tail$__user_input_color "
-    PS1="\n\[$(tput sgr0)\]\[\033[38;5;1m\]\u\[$(tput sgr0)\]\[\033[38;5;11m\]@\[$(tput sgr0)\]\[\033[38;5;1m\]\H\[$(tput sgr0)\]:\w\n\[$(tput sgr0)\]\[\033[38;5;1m\]\@\[$(tput sgr0)\]$__git_branch_color$__git_branch $__prompt_tail \[$(tput sgr0)\]\n\[$(tput sgr0)\]"
+    PS1="\n\[$(tput sgr0)\]\[\033[38;5;1m\]\u\[$(tput sgr0)\]\[\033[38;5;11m\]@\[$(tput sgr0)\]\[\033[38;5;1m\]\H\[$(tput sgr0)\]:\w\n\[$(tput sgr0)\]\[\033[38;5;1m\]\@\[$(tput sgr0)\]$__git_branch_color$__git_branch \[$(tput sgr0)\]\n\[$(tput sgr0)\]$__prompt_tail "
 }
 
 # configure PROMPT_COMMAND which is executed each time before PS1
