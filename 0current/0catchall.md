@@ -94,3 +94,5 @@ nvm
 
 <https://vitux.com/test-your-internet-speed-through-ubuntu-command-line/>
   ^ put in computer setup
+  ^ <https://www.minim.com/blog/how-do-i-interpret-my-wifi-speed-test-results>
+  $ speedtest-cli
