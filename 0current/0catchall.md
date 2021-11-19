@@ -93,3 +93,4 @@ nvm
 <https://jestjs.io/docs/api>
 
 <https://vitux.com/test-your-internet-speed-through-ubuntu-command-line/>
+  ^ put in computer setup
