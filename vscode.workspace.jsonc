@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "path": "abs/path/to/folder"
+    },
+  ],
+  "settings": {
+    "git.ignoreLimitWarning": true,
+    "eslint.nodePath": "node_modules/.bin/eslint",
+    "eslint.workingDirectories": [
+      {
+        "pattern": "./packages/*/"
+      }
+    ]
+  }
+}

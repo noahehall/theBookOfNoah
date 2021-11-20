@@ -57,7 +57,7 @@ permission explanations
     w = write
     x = can access the directory (i.e., cd to the directory)
 
-  breakdown of ls-l
+  breakdown of ls -l
    drwxr-x---
     d = directory
     - = file (if there is no d, it will start with -)
