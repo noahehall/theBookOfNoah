@@ -15,6 +15,7 @@ sudo rm -rf /usr/bin/{node,nodejs,corepack,npm,npx,pnpm}
 sudo rm -rf /usr/local/bin/{node,nodejs,corepack,npm,npx,pnpm}
 sudo rm -rf ~/.node
 sudo rm -rf ~/.local/share/pnpm-global
+sudo rm -rf ~/.nvm
 
 sudo mkdir -p "$NODE_DIR"
 sudo chown $(whoami):$(whoami) $NODE_DIR
@@ -35,5 +36,13 @@ echo -e "setting symlink: $NODE_BIN"
 sudo ln -ns $NODE_BIN/* /usr/local/bin
 
 # install pnpm & yarn via corepack
-sudo corepack enable
-corepack prepare pnpm@6.22.2 --activate
+sudo corepack enable # requires sudo for /usr/local/bin
+corepack prepare --activate --all # npm, pnpm, yarn
+
+# now install nvm to manage node versions
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+# setup nvm to manage node versions
+source ~/.bashrc > /dev/null
+nvm alias default system
+nvm install node --reinstall-packages-from=node
