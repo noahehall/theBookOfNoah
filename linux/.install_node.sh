@@ -34,5 +34,5 @@ echo -e "setting symlink: $NODE_BIN"
 sudo ln -ns $NODE_BIN/* /usr/local/bin
 
 # install pnpm
-# corepack enable
-# corepack prepare pnpm@6.22.2 --activate
+sudo corepack enable
+corepack prepare pnpm@6.22.2 --activate
