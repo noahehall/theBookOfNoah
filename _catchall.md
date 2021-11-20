@@ -39,6 +39,7 @@ binaries vs git pkgs
   - <https://docs.aws.amazon.com/cli/latest/reference/configure/get.html>
   - <https://vitux.com/test-your-internet-speed-through-ubuntu-command-line/>
     - <https://www.minim.com/blog/how-do-i-interpret-my-wifi-speed-test-results>
-  <https://shripadk.github.io/react/docs/jsx-gotchas.html>
-  <https://iterationinsights.com/article/where-to-start-with-the-4-types-of-analytics/>
-  <https://stackoverflow.com/questions/6656324/check-for-current-node-version>
+  - <https://shripadk.github.io/react/docs/jsx-gotchas.html>
+  - <https://iterationinsights.com/article/where-to-start-with-the-4-types-of-analytics/>
+  - <https://stackoverflow.com/questions/6656324/check-for-current-node-version>
+  - <https://www.redhat.com/sysadmin/linux-environment-variables>
