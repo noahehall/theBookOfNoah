@@ -21,7 +21,7 @@ sudo chown $(whoami):$(whoami) $NODE_DIR
 
 curl -o node.tar.xz https://nodejs.org/dist/v17.1.0/$NODE_VER-$DISTRO.tar.xz
 
-sudo tar -xJvf node.tar.xz -C "$NODE_DIR"
+tar -xJvf node.tar.xz -C "$NODE_DIR"
 
 rm node.tar.xz
 
@@ -36,5 +36,4 @@ sudo ln -ns $NODE_BIN/* /usr/local/bin
 
 # install pnpm & yarn via corepack
 sudo corepack enable
-# corepack prepare pnpm@6.22.2 --activate
-# ^ doesnt activate
+corepack prepare pnpm@6.22.2 --activate
