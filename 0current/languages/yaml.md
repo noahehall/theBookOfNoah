@@ -5,6 +5,7 @@
   - maybe not the most appropriate place
   - but string fields accept commonMark syntax
 - [array of objects](https://stackoverflow.com/questions/33989612/yaml-equivalent-of-array-of-objects-in-json)
+- [do you need to quote strings](https://stackoverflow.com/questions/19109912/yaml-do-i-need-quotes-for-strings-in-yaml)
 
 # examples
 
@@ -12,7 +13,7 @@
 
   dangerString: this a string without quotes, be careful
   safeString: "this is a string: can accept colons and whatnot"
-  multiLineString: 
+  multiLineString:
     this is a string
     requires a leading space
   literalString: |
@@ -20,7 +21,7 @@
     line spaces and extra line feeds
   foldedString: >
     the > collapses extra line feeds
-    and spaces 
+    and spaces
 
 
   arrayOfObjects:

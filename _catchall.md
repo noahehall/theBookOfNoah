@@ -24,7 +24,7 @@
 ########################################
 ```
 
-TODO: still not happy with this setup
+TODO: still not happy with this setup; incorporate `update-alternatives`
 binaries vs git pkgs
   [read this for the fkery](https://unix.stackexchange.com/questions/11544/what-is-the-difference-between-opt-and-usr-local)
   place binaries directly in ~/.local/share and symlink to /opt/bin
@@ -35,79 +35,10 @@ binaries vs git pkgs
   ^ I think the recommened approach is to download to /opt directly, but whatev
   ^ or directly in /usr/local for opt packages, but fkn linux history n shit
 
--- randomness
-permission explanations
-   r: read 4
-   w: write 2
-   x: execute 1
-    read,write & execute = 7
-    read & write: 6
-    read & execute: 5
-  permission segments for users
-
-   owners: who created the file
-   group membership
-   anonymous:
-
-   For files:
-    r = read
-    w = write
-    x = execute
-   For directories:
-    r = list (read directory contents)
-    w = write
-    x = can access the directory (i.e., cd to the directory)
-
-  breakdown of ls -l
-   drwxr-x---
-    d = directory
-    - = file (if there is no d, it will start with -)
-
-- [which processes on which ports](https://www.tecmint.com/find-out-which-process-listening-on-a-particular-port/)
-
-<https://docs.aws.amazon.com/cli/latest/reference/configure/get.html>
-aws configure get aws_access_key_id
-
-<https://www.tutorialworks.com/container-networking/>
-docker network ls
-docker inspect network some_network
-^ see containers in network
-
-<https://www.tecmint.com/find-out-which-process-listening-on-a-particular-port/>
-
-<https://samuelsson.dev/update-nvm-installed-node-version-and-keep-globally-installed-packages/>
-
-<https://muffinman.io/blog/nvm-updating-npm/>
-
-<https://stackoverflow.com/questions/19109912/yaml-do-i-need-quotes-for-strings-in-yaml>
-
-<https://stackoverflow.com/questions/48859169/js-types-can-only-be-used-in-a-ts-file-visual-studio-code-using-ts-check>
-
-<https://devhints.io/flow>
-
-nvm
-  nvm deactivate # deactivate for current shell only
-  nvm alias default system # set default ot whatever is in system, e.g. pnpm env use --global 17
-
-<https://jestjs.io/docs/expect>
-
-<https://jestjs.io/docs/api>
-
-<https://vitux.com/test-your-internet-speed-through-ubuntu-command-line/>
-  ^ put in computer setup
-  ^ <https://www.minim.com/blog/how-do-i-interpret-my-wifi-speed-test-results>
-  $ speedtest-cli
-
-/*eslint-disable*/
-// eslint-disable-next-line
-// eslint-disable-line
-
-<https://stackoverflow.com/questions/19699059/representing-directory-file-structure-in-markdown-syntax>
-sudo apt install tree
-tree --dirsfirst --charset=ascii SOME_DIR
-
-<https://www.toptal.com/designers/htmlarrows/symbols/black-flag/>
-
-<https://shripadk.github.io/react/docs/jsx-gotchas.html>
-
-<https://iterationinsights.com/article/where-to-start-with-the-4-types-of-analytics/>
+- todos
+  - <https://docs.aws.amazon.com/cli/latest/reference/configure/get.html>
+  - <https://vitux.com/test-your-internet-speed-through-ubuntu-command-line/>
+    - <https://www.minim.com/blog/how-do-i-interpret-my-wifi-speed-test-results>
+  <https://shripadk.github.io/react/docs/jsx-gotchas.html>
+  <https://iterationinsights.com/article/where-to-start-with-the-4-types-of-analytics/>
+  <https://stackoverflow.com/questions/6656324/check-for-current-node-version>

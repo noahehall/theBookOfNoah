@@ -1,14 +1,30 @@
 # TLDR
 
-various easy to forget things
+easy to forget things
 
 ## linux
 
 - [increasing file descriptors]<https://docs.oracle.com/cd/E19476-01/821-0505/file-descriptor-requirements.html>
   - `$ ulimit -aH` see humand readabile limits
 
-- users and groups
+- users, groups, and permissions
   - `exec su -l $USER` reload session, e.g. to reload group assignments
+  - x: execute 1
+  - w: write 2
+  - r: read 4
+  - and...
+    - read & execute: 5
+    - read & write: 6
+    - read & write & execute = 7
+  - what it means
+    - For files:
+      - r = read
+      - w = write
+      - x = execute
+    - For directories:
+      - r = list (read directory contents)
+      - w = write
+      - x = can access the directory (i.e., cd to the directory)
 
 - system info (just use neofetch, but these are useful for scripting)
   - `lsb_release -a` all info
@@ -31,7 +47,7 @@ various easy to forget things
 
 - repos/packages
   - `sudo add-apt-repository -r ppa:remove/this/ppa`
-  - `sudo add-apt-repository ppa:oguzhaninan/stacer`
+  - `sudo add-apt-repository ppa:add/this/ppa`
   - `sudo dpkg -i installme.deb`
   - `whereis somecmd` binary, source & man pages for a cmd
 
@@ -61,8 +77,8 @@ various easy to forget things
   - `id_rsa` === your private key
 
 - terminal
-  - `sudo apt install terminator` thank me later
   - `ctrl shift t` new tab
+  - `tree --dirsfirst --charset=ascii SOME_DIR` show tree of dir
 
 - settings
   - `sudo update-alternatives --config` [choose the default cmd](https://linuxhint.com/update_alternatives_ubuntu/)
@@ -80,3 +96,13 @@ various easy to forget things
 - aws
   - `export AWS_DEFAULT_PROFILE=poop`
   - `aws configure list` safely list current aws config
+  - `aws configure get aws_access_key_id` show the world your access key
+
+- [docker networking](https://www.tutorialworks.com/container-networking/)
+  - docker network ls
+  - docker inspect network some_network
+
+- eslint
+  - /*eslint-disable*/
+  - // eslint-disable-next-line
+  - // eslint-disable-line

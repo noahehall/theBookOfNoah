@@ -15,6 +15,7 @@ reference2: <https://flow.org/en/docs/react/types/>
 # links
 
 - other
+  - [flowcheatsheet](https://devhints.io/flow)
   - [meaning of set difference](https://mathworld.wolfram.com/SetDifference.html)
   - [complement set, identical to set difference](https://mathworld.wolfram.com/ComplementSet.html)
 
@@ -51,6 +52,7 @@ reference2: <https://flow.org/en/docs/react/types/>
   - [type variance](https://flow.org/en/docs/lang/variance/)
   - [union types](https://flow.org/en/docs/types/unions/)<https://flow.org/en/docs/types/typeof/>
   - [typeof types](https://flow.org/en/docs/types/typeof/)
+  - [managing flow & typescript in vscode](https://stackoverflow.com/questions/48859169/js-types-can-only-be-used-in-a-ts-file-visual-studio-code-using-ts-check)
 
 # TLDR
 

@@ -7,11 +7,12 @@ if hash bpytop 2>/dev/null; then
 else echo 'should really use bpytop > top'
 fi
 
-alias pathis='echo $PATH | tr -s ":" "\n"'
-alias g='git'
+# random cli
+alias echopath='echo $PATH | tr -s ":" "\n"'
 alias lessbashrc='less ~/.bashrc'
 alias nanobashrc='nano ~/.bashrc'
 alias sourcebashrc='source ~/.bashrc'
+alias treedir='tree --dirsfirst --charset=ascii'
 
 # show just file names
 alias grepfilenames='grep -iRl'
@@ -54,3 +55,12 @@ alias ufwconfigs='sudo find / -name "*.rules" -exec ls -l {} \; | grep ufw'
 
 # groupmembers docker
 alias groupmembers='getent group'
+
+# node aliases #########################
+alias npmglobals='npm list -g --depth=0'
+alias nvminstalled='nvm ls'
+alias nvmlatest='nvm ls-remote | grep -i latest'
+alias nvmlatestinstall='nvm install node --reinstall-packages-from=node'
+alias nvmlatestnpm='nvm install-latest-npm'
+alias nvmdefualtsystem='nvm alias default system'
+alias nvmstop='nvm deactivate' # only for current shell

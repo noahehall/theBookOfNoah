@@ -3,7 +3,7 @@
 - bookmarks
   <https://docs.npmjs.com/cli/v7/using-npm/developers>
   <https://web.dev/serve-modern-code-to-modern-browsers/>
-  
+
   <https://github.com/marcelmokos/eslint-config-with-prettier/blob/master/.eslintrc.yml>
   <https://eslint.org/docs/user-guide/getting-started>
   <https://github.com/gajus/eslint-plugin-flowtype>
@@ -278,7 +278,7 @@
     - .eslintrc.yaml -> .yml
     - .eslintrc.json - permit json comments
     - package.json.eslint
-  
+
   - config loading strategy
     - eslint automatically loads and merges all config files
     - will take the first file found in the current dir of the current file being linted
@@ -291,7 +291,7 @@
     - plugins and presets, they are replaced based on the identity of the plugin/preset object/function itself combined with the name of the entry.
       - thus ensure you are using the same name across files
         - `["pluginname", "options"]`
-  
+
   - complete configuration hierarchy (in order of precedence)
     - `/* eslint-disable */` && `/* eslint-enable */`
     - `/* global */`
@@ -302,7 +302,7 @@
     - --env
     - -c && --config
     - then the config loading stratey
-  
+
   - extending config files
     - behavior
       - inherits all the traits of another config file
@@ -326,7 +326,7 @@
           - etc
         - e.g. in plugins property: `eslint-plugin-react` || `react` (identical)
         - e.g. in extends `plugin:react/recommended`
-  
+
   - overrides
     - derived configs overriding base configs
       - enabling rules
@@ -396,9 +396,14 @@
 
 # nvm
 
+- [managing versions with nvm](https://samuelsson.dev/update-nvm-installed-node-version-and-keep-globally-installed-packages/)
+
 ```bash
   nvm install 16.5
   nvm alias default 16.5
+  nvm ls-remote --lts | grep -i latest
+
+
 
 ```
 
@@ -504,3 +509,8 @@
       yarn
       yarn install
     ```
+
+# jest
+
+- [expect](https://jestjs.io/docs/expect)
+- [api](https://jestjs.io/docs/api)

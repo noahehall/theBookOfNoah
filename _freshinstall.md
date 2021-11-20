@@ -23,8 +23,7 @@
 ### dev
 
 1. [download & login to firefox dev edition](https://www.mozilla.org/en-US/firefox/developer/)
-2. terminator
-   - sudo apt install terminator
+2. terminator: sudo apt install terminator
 3. setup github
    - [github cli](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
    - [verify your commits](https://docs.github.com/en/authentication/managing-commit-signature-verification)
@@ -40,12 +39,11 @@
    - [dive](https://github.com/wagoodman/dive)
    - [ctop](https://github.com/bcicen/ctop)
    - [dockly](https://github.com/lirantal/dockly)
+   - [k8s](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+     - todo: I suck at k8s
 9. [vagrant](https://www.vagrantup.com/)
-
-- sudo apt install chromium-browser
-
-11. [k8s](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
-12. chromium
+10. chromium: sudo apt install chromium-browser
+11. speedtest-cli
 
 #### ubuntu:dev
 
@@ -90,6 +88,9 @@ wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
    - [duf](https://github.com/muesli/duf)
      - sudo apt install duf
    - [dog](https://github.com/ogham/dog)
+   - tree
+     - sudo apt install tree
+     - tree --dirsfirst --charset=ascii SOME_DIR
 
    - maybe installs
      - [opensnitch](https://github.com/evilsocket/opensnitch)
