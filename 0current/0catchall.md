@@ -100,3 +100,13 @@ nvm
 /*eslint-disable*/
 // eslint-disable-next-line
 // eslint-disable-line
+
+<https://stackoverflow.com/questions/19699059/representing-directory-file-structure-in-markdown-syntax>
+sudo apt install tree
+tree --dirsfirst --charset=ascii SOME_DIR
+
+<https://www.toptal.com/designers/htmlarrows/symbols/black-flag/>
+
+<https://shripadk.github.io/react/docs/jsx-gotchas.html>
+
+<https://iterationinsights.com/article/where-to-start-with-the-4-types-of-analytics/>

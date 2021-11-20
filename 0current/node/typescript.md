@@ -6,7 +6,10 @@
 ## quickies
 
 ```js
+https://www.carlrippon.com/react-children-with-typescript/
 
+https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components
+const fncomponent = (): JSX.Element => <div>yolo worl</div>
 someFn(myRating as unknown as number)
 const someObj: any { things: 'hello'} as OtherThing
 export const SOME_OBJ: { poop: string } = { poop: 'value' };
