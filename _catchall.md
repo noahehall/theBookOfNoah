@@ -24,6 +24,7 @@
 ########################################
 ```
 
+TODO: still not happy with this setup
 binaries vs git pkgs
   [read this for the fkery](https://unix.stackexchange.com/questions/11544/what-is-the-difference-between-opt-and-usr-local)
   place binaries directly in ~/.local/share and symlink to /opt/bin

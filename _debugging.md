@@ -10,7 +10,7 @@ various easy to forget things
 - users and groups
   - `exec su -l $USER` reload session, e.g. to reload group assignments
 
-- system info (just use neofetch)
+- system info (just use neofetch, but these are useful for scripting)
   - `lsb_release -a` all info
   - `lsb_release -cs` e.g impish
   - `dpkg-architecture -q DEB_BUILD_ARCH` e.g. amd64, but can be used to query anything
