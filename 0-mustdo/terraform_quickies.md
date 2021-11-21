@@ -4,6 +4,11 @@ todo:
 
 - move all of this into terraform.md
 - [aws license manager](https://console.aws.amazon.com/license-manager)
+- aws
+  - netowrking
+    - load balancing
+      - [application load balancer (v2)](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html)
+      - [elastic load balancer (v1)](https://docs.aws.amazon.com/elasticloadbalancing/index.html)
 
 ## links
 
@@ -149,7 +154,29 @@ todo:
       ]
 
   # aws resource types
-    # resource "type" "name" {attributes...}
+    resource "providerName_type" "externalName" {
+      name = "internal name"
+
+      tags = {
+        Terraform = "true"
+        Name = "internal name"
+      }
+    }
+
+    # using defaults -------------------
+    # ^ 2 default subnets in the defualt vpc
+    "aws_default_subnet" "default_az1" {
+      availability_zone = "us-west-2a"
+    }
+    "aws_default_subnet" "default_az2" {
+      availability_zone = "us-west-2b"
+    }
+    "aws_default_vpc" "default" {}
+
+    # creating new ---------------------
+    aws_elb
+      name
+      subnets = []
     aws_s3_bucket
       bucket
       acl
