@@ -178,9 +178,23 @@ todo:
         terminate_at
 
 
-    aws_eip # elastic ip
+    # elastic ip
+
+    # ^ but doesnt scale
+    aws_eip
+      # use this when your assigning it directly
+      # else remove this attribute and use aws_eip_association block
       instance
       vpc
+    # associate an eip with resources
+    # use this when you need to scale
+    # ^ e.g. create an eip for each instance
+    aws_eip_association
+      instance_id = aws_instance.instance.id
+      allocation_id = aws_eip.RESOURCENAME.id
+      network_interface_id
+      private_ip_address
+      public_ip
 
   # global attributes
     name
