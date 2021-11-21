@@ -256,6 +256,10 @@ todo:
     -type plan|plan-destroy|apply|validate|input|refresh
     -draw-cycles
 
+  # examples
+    terraform graph | grep -v -e 'meta' -e 'close' # filter out things youre not interested in
+     # add -e 's3' -e 'vpc' -e 'etc' # to continue to filter  out things y
+
 ```
 
 ### terraform plan
@@ -274,7 +278,7 @@ todo:
     # always end cmds with this
     # then always use, e.g. terraform apply "plan.tfplan"
     # then later you can inspect, terraform show plan.tfplan
-    -out ENV_NAME.tfplan
+    -out NAME.tfplan # use separate names for plan & destroy
     -auto-approve # dont ask for confirmation
     -destroy # see whats going to be removed
 ```
