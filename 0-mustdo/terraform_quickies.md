@@ -53,15 +53,29 @@ todo: move all of this into terraform.md
 
 ## quickies (in order of memorization)
 
+### aws cli
+
+```sh
+  aws configure list-profiles
+  export AWS_DEFAULT_PROFILE=poop
+  aws configure list
+  aws configure get aws_access_key_id
+
+  aws ec2 create-default-vpc
+```
+
 ## terraform syntax
 
 - conventions
+  - terraform filenames
+    - `component-env-region-etc.tf`
+      - ^ `specific-to-general-decription.tf`
   - readiability first
-  - always `terraform fmt`
-  - 2 spaces
-  - simple meta-arguments first `poop = flush`
-  - block meta-arguments last `{...}`
-  - blank lines between things
+    - always `terraform fmt`
+    - 2 spaces
+    - simple meta-arguments first `poop = flush`
+    - block meta-arguments last `{...}`
+    - blank lines between things
 
 - meta-arguments: i.e. attributes
 - `resource`: building blocks of terraform; define the `what` of your infrastructure
@@ -80,6 +94,13 @@ todo: move all of this into terraform.md
         error_document
 
     aws_default_vpc
+      cidr_block
+      enable_dns_support
+      enable_dns_hostnames
+      instance_tenancy
+      # use the defualt vpc
+      # "aws_default_vpc" "default {}
+
 
     aws_security_group
       ingress {} # what to allow in
@@ -119,12 +140,6 @@ todo: move all of this into terraform.md
       bucket-owner-full-control
       log-delivery-write
 
-```
-
-### aws cli
-
-```sh
-aws configure list-profiles
 ```
 
 ### aws terraform user
