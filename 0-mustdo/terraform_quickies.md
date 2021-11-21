@@ -58,6 +58,23 @@ aws configure list-profiles
 - whats the minimal IAM policy
   - [read through this](https://github.com/hashicorp/terraform/issues/2834)
 
+### terraform state
+
+- terraform state
+  - state file: `terraform.tfstate`
+    - what terraform knows about the infrastructure (ips, names, tags, etc)
+  - state of provisioned resources
+    - whats actually exists
+    - always refresh the state file to ensure they're insync
+
+```sh
+
+  # see what terraform knows about resources
+  # never commit to git
+  cat terraform.tfstate
+
+```
+
 ### terraform plan
 
 - always plan before applying anything
@@ -91,5 +108,24 @@ aws configure list-profiles
 
   terraform apply "somename.tfplan"
 
+
+```
+
+### backends
+
+- remote storage of state
+- allow teams to delegate and share resources
+  - e.g. some users can read
+  - e.g. some users can write
+
+```sh
+
+  terraform state
+    --help
+    list # get a list of all resources
+    pull # pull & console resource state from cloud
+    push # update remote state, dont do this
+    replace-provider
+    show nameFromListCmd # show the state of a resource
 
 ```
