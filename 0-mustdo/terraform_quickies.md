@@ -59,6 +59,12 @@ todo:
 
 ## quickies (in order of memorization)
 
+### gotchas
+
+- networking
+  - aws load balancers cant use elastic ip addresses
+    - have to use dns names
+
 ### aws
 
 #### amis
@@ -111,8 +117,12 @@ todo:
   - readiability first
     - always `terraform fmt`
     - 2 spaces
-    - simple meta-arguments first `poop = flush`
+    - meta-arguments first `poop = flush`
+      - things for terraform
+    - simple arguments `poop = flush`
+      - single assignments for providers
     - block meta-arguments last `{...}`
+      - block arguments for providers
     - blank lines between things
   - variables
     - most things should be, but other things shouldnt (even tho they can)
@@ -123,6 +133,14 @@ todo:
 - `provider`: where the resources live/should go
 
 ```sh
+  # basics
+    # point to a single reosurce
+    argument = provider_resource_type.resource_name.attribute
+    # can also use poop.INT.attribute
+    # point to a single resource out of many
+    argument = provider_resource_type.resource_name[0].attribute
+    # point to all resources out of many
+    argument = provider_resource_type.resource_name[*].attribute
   # dependencies
   # ^ link resources by subscribing one to another
     # link an ec2 resource to an security group resource
@@ -166,6 +184,7 @@ todo:
       }
 
     aws_instance # ec2
+      count = 1 # number of instances (e.g. autoscaling)
       ami
       instance_type
       vpc_security_group_ids
