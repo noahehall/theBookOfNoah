@@ -7,6 +7,7 @@ todo: move all of this into terraform.md
 - [webgraphviz](http://webgraphviz.com/)
   - if your dumb enough to use this
   - copypasta `terraform graph` output into it
+- [aws tag best practices](https://cloudacademy.com/blog/what-are-best-practices-for-tagging-aws-resources/)
 
 ## basics
 
@@ -52,6 +53,74 @@ todo: move all of this into terraform.md
 
 ## quickies (in order of memorization)
 
+## terraform syntax
+
+- conventions
+  - readiability first
+  - always `terraform fmt`
+  - 2 spaces
+  - simple meta-arguments first `poop = flush`
+  - block meta-arguments last `{...}`
+  - blank lines between things
+
+- meta-arguments: i.e. attributes
+- `resource`: building blocks of terraform; define the `what` of your infrastructure
+  - all resource share the same syntx, but different providers have different settings
+- `provider`: where the resources live/should go
+
+```sh
+  # aws resource types
+    # resource "type" "name" {attributes...}
+    aws_s3_bucket
+      bucket
+      acl
+      policy
+      website
+        index_document
+        error_document
+
+    aws_default_vpc
+
+    aws_security_group
+      ingress {} # what to allow in
+      egress {} # what to allow out
+
+    aws_instance # ec2
+      ami
+      instance_type
+      network_interface
+        device_index
+        security_groups
+      lifecycle
+        create_before_destroy
+        terminate_at
+
+
+    aws_eip # elastic ip
+      instance
+      vpc
+
+  # global attributes
+    tags # common tags to apply
+      Name
+      Description
+      Owner
+      Environment
+      Project
+      OwnerEmail
+      OwnerPhone
+
+    aws acls
+      private
+      public-read
+      public-read-write
+      authenticated-read
+      bucket-owner-read
+      bucket-owner-full-control
+      log-delivery-write
+
+```
+
 ### aws cli
 
 ```sh
@@ -61,7 +130,7 @@ aws configure list-profiles
 ### aws terraform user
 
 - iam > create user > programmatic access (no console access)
-- whats the minimal IAM policy
+- whats the minimal IAM policy for terraform
   - [read through this](https://github.com/hashicorp/terraform/issues/2834)
 
 ### terraform state
@@ -117,6 +186,7 @@ aws configure list-profiles
     # then always use, e.g. terraform apply "plan.tfplan"
     # then later you can inspect, terraform show plan.tfplan
     -out ENV_NAME.tfplan
+    -auto-approve # dont ask for confirmation
     -destroy # see whats going to be removed
 ```
 
