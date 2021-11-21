@@ -1,6 +1,9 @@
 # TLDR
 
-todo: move all of this into terraform.md
+todo:
+
+- move all of this into terraform.md
+- [aws license manager](https://console.aws.amazon.com/license-manager)
 
 ## links
 
@@ -8,6 +11,9 @@ todo: move all of this into terraform.md
   - if your dumb enough to use this
   - copypasta `terraform graph` output into it
 - [aws tag best practices](https://cloudacademy.com/blog/what-are-best-practices-for-tagging-aws-resources/)
+- [aws ami marketplace prefconfigured free search](https://aws.amazon.com/marketplace/search/?sort=AVERAGE_CUSTOMER_RATING-DESCENDING&PRICING_MODEL=FREE&FULFILLMENT_OPTION_TYPE=AMAZON_MACHINE_IMAGE&AMI_ARCHITECTURE=x86_64&AMI_INSTANCE_TYPE=t2.small%2Ct2.micro&AMI_OPERATING_SYSTEM=AMAZON_LINUX%2CUBUNTU%2CDEBIAN%2CCENT_OS%2CRHEL%2COTHER_LINUX%2CFREE_BSD&AVERAGE_CUSTOMER_RATING=4..5&filters=PRICING_MODEL%2CFULFILLMENT_OPTION_TYPE%2CAMI_ARCHITECTURE%2CAMI_INSTANCE_TYPE%2CAMI_OPERATING_SYSTEM%2CAVERAGE_CUSTOMER_RATING)
+- tuts
+  - [terrform aws networking](https://www.bogotobogo.com/DevOps/Terraform/Terraform-VPC-Subnet-ELB-RouteTable-SecurityGroup-Apache-Server-1.php)
 
 ## basics
 
@@ -53,7 +59,27 @@ todo: move all of this into terraform.md
 
 ## quickies (in order of memorization)
 
-### aws cli
+### aws
+
+#### amis
+
+- [see your subscriptions](https://console.aws.amazon.com/marketplace/home/subscriptions?#/subscriptions)
+- find one in the marketplace > subscribe > grab the ami id on the configuration page (but dont launch)
+
+```sh
+  # free -------------------------------
+    # Sentry Error Tracker created by Momate
+      # https://aws.amazon.com/marketplace/pp/prodview-pmduc6rbmju76?sr=0-2&ref_=beagle&applicationId=AWSMPContessa
+          Sentry 9.1.2
+          nginx 1.14.0
+          Redis 4.0.11
+          PostgreSQL 10.9
+          Separate 4G swap disk
+          System tuning optimizations
+
+```
+
+#### aws cli
 
 ```sh
   aws configure list-profiles
@@ -62,9 +88,21 @@ todo: move all of this into terraform.md
   aws configure get aws_access_key_id
 
   aws ec2 create-default-vpc
+
+  # cidr blocks
+  "0.0.0.0/0" # any ip
+  "1.2.3.4/32" # single ip
 ```
 
-## terraform syntax
+## terraform errors
+
+```sh
+  resource already exists..you already own it
+  # ^ just rerun terraform apply
+
+```
+
+### terraform syntax
 
 - conventions
   - terraform filenames
@@ -76,6 +114,8 @@ todo: move all of this into terraform.md
     - simple meta-arguments first `poop = flush`
     - block meta-arguments last `{...}`
     - blank lines between things
+  - variables
+    - most things should be, but other things shouldnt (even tho they can)
 
 - meta-arguments: i.e. attributes
 - `resource`: building blocks of terraform; define the `what` of your infrastructure
@@ -83,6 +123,13 @@ todo: move all of this into terraform.md
 - `provider`: where the resources live/should go
 
 ```sh
+  # dependencies
+  # ^ link resources by subscribing one to another
+    # link an ec2 resource to an security group resource
+      vpc_security_group_ids = [
+        aws_security_group.RESOURCENAME.id
+      ]
+
   # aws resource types
     # resource "type" "name" {attributes...}
     aws_s3_bucket
@@ -103,12 +150,26 @@ todo: move all of this into terraform.md
 
 
     aws_security_group
-      ingress {} # what to allow in
-      egress {} # what to allow out
+      ingress { # what to allow in, one per port/range
+        from_port
+        to_port
+        protocol
+        cidr_blocks
+        security_groups
+      }
+      egress {
+        from_port # 0 for all
+        to_port # 0 for all
+        protocol # "-1" for all
+        cidr_blocks
+        security_groups
+      }
 
     aws_instance # ec2
       ami
       instance_type
+      vpc_security_group_ids
+
       network_interface
         device_index
         security_groups
@@ -122,7 +183,11 @@ todo: move all of this into terraform.md
       vpc
 
   # global attributes
+    name
+    description
+
     tags # common tags to apply
+      Terraform = "true" # always add this tag
       Name
       Description
       Owner
@@ -169,6 +234,15 @@ todo: move all of this into terraform.md
 
 ```
 
+### terraform show
+
+- review a terraform state/plan file
+
+```sh
+
+  terraform show someplan.tfplan
+```
+
 ### terraform graph
 
 - outputs the execution plan visually, super useful
@@ -203,13 +277,6 @@ todo: move all of this into terraform.md
     -out ENV_NAME.tfplan
     -auto-approve # dont ask for confirmation
     -destroy # see whats going to be removed
-```
-
-### terraform show
-
-```sh
-
-  terraform show someplan.tfplan
 ```
 
 ### terraform apply
