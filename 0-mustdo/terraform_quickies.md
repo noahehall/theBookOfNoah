@@ -2,6 +2,12 @@
 
 todo: move all of this into terraform.md
 
+## links
+
+- [webgraphviz](http://webgraphviz.com/)
+  - if your dumb enough to use this
+  - copypasta `terraform graph` output into it
+
 ## basics
 
 - infrastructure management tool
@@ -44,7 +50,7 @@ todo: move all of this into terraform.md
   - id: e.g. the username
   - key: e.g. the pass
 
-## quickies
+## quickies (in order of memorization)
 
 ### aws cli
 
@@ -68,10 +74,29 @@ aws configure list-profiles
     - always refresh the state file to ensure they're insync
 
 ```sh
+  terraform state
+    --help
+    list # get a list of all resources
+    pull # pull & console resource state from cloud
+    push # update remote state, dont do this
+    replace-provider
+    show nameFromListCmd # show the state of a resource
+      -json # useful for consuming in scripts
 
-  # see what terraform knows about resources
-  # never commit to git
-  cat terraform.tfstate
+```
+
+### terraform graph
+
+- outputs the execution plan visually, super useful
+  - uses dot syntax: common way to define graphs
+
+```sh
+
+  terraform graph
+    --help
+    -plan someplan.tfplan
+    -type plan|plan-destroy|apply|validate|input|refresh
+    -draw-cycles
 
 ```
 
@@ -117,15 +142,3 @@ aws configure list-profiles
 - allow teams to delegate and share resources
   - e.g. some users can read
   - e.g. some users can write
-
-```sh
-
-  terraform state
-    --help
-    list # get a list of all resources
-    pull # pull & console resource state from cloud
-    push # update remote state, dont do this
-    replace-provider
-    show nameFromListCmd # show the state of a resource
-
-```
