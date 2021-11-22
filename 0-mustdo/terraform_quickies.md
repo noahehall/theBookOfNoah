@@ -7,6 +7,7 @@ todo:
 - aws
   - netowrking
     - load balancing
+      - dns names + cnames
       - [application load balancer (v2)](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html)
       - [elastic load balancer (v1)](https://docs.aws.amazon.com/elasticloadbalancing/index.html)
 
@@ -155,11 +156,11 @@ todo:
 
   # aws resource types
     resource "providerName_type" "externalName" {
-      name = "internal name"
+      name = "internal-name"
 
       tags = {
         Terraform = "true"
-        Name = "internal name"
+        Name = "internal-name"
       }
     }
 
@@ -176,7 +177,15 @@ todo:
     # creating new ---------------------
     aws_elb
       name
-      subnets = []
+      instances = aws_instance.NAME[*].id
+      subnets = [
+        aws_default_subnet.default_az1.id,
+        aws_default_subnet.default_az2.id
+      ]
+      security_groups = [
+        aws_security_group.default.id
+      ]
+
     aws_s3_bucket
       bucket
       acl
@@ -246,7 +255,7 @@ todo:
     name
     description
 
-    tags # common tags to apply
+    tags = {} # common tags to apply
       Terraform = "true" # always add this tag
       Name
       Description
