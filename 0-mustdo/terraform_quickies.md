@@ -30,13 +30,13 @@ todo:
 ## basics
 
 - infrastructure management tool
-  - define infrastructure as code
-  - use data from one resource, to define another resource
-    - manages the provisioning, so that dependencies are created in the correct order
-- provisision management & maintain cloud resources
+- provisision, manage & maintain cloud resources
+  - the base infrastructure, but not changing whats running on the server once its deployed
+- define infrastructure as code
+- use data from one resource, to define another resource
+- dependencies are created in the correct order
 - a languauge for describing infrastructure
-- managing the base infrastructure, but not changing whats running on the server once its deployed
-  - config management tool can then be used to manage the apps on the deployed resources
+- config management tool can then be used to manage the apps on the deployed resources
   - i.e. terraform sets up the canvas
   - i.e. config manage (e.g. packer) paints the picture
     - can be handled by provisioners
@@ -46,8 +46,11 @@ todo:
 - always
 - sometimes
   - terraform should deply premade images with all the configuration already set or retrieved at runtime
-
-  -
+- never
+- gotchas
+  - networking
+    - aws load balancers cant use elastic ip addresses
+      - have to use dns names
 
 ### bffs
 
@@ -69,13 +72,7 @@ todo:
   - id: e.g. the username
   - key: e.g. the pass
 
-## quickies (in order of memorization)
-
-### gotchas
-
-- networking
-  - aws load balancers cant use elastic ip addresses
-    - have to use dns names
+## quickies
 
 ### aws
 
@@ -139,7 +136,7 @@ todo:
   - variables
     - most things should be, but other things shouldnt (even tho they can)
 
-- meta-arguments: i.e. attributes
+- meta-arguments: attributes for terraform, not the providers
 - `resource`: building blocks of terraform; define the `what` of your infrastructure
   - all resource share the same syntx, but different providers have different settings
 - `provider`: where the resources live/should go
@@ -161,7 +158,7 @@ todo:
       ]
 
   # aws resource types
-    resource "providerName_type" "externalName" {
+    resource "providerName_componentName" "externalName" {
       name = "internal-name"
 
       tags = {

@@ -7,23 +7,24 @@ if hash bpytop 2>/dev/null; then
 else echo 'should really use bpytop > top'
 fi
 
-# random cli
+# random cli ---------------------------
 alias echopath='echo $PATH | tr -s ":" "\n"'
 alias lessbashrc='less ~/.bashrc'
 alias nanobashrc='nano ~/.bashrc'
 alias sourcebashrc='source ~/.bashrc'
 alias treedir='tree --dirsfirst --charset=ascii'
 
-# show just file names
+# grep ---------------------------------
 alias grepfilenames='grep -iRl'
-# see installed packages
+
+# pkgs ---------------------------------
 alias dpkgi='grep " install " /var/log/dpkg.log'
 alias apti='grep " install " /var/log/apt/history.log'
 alias installed='(dpkgi;apti) | less'
 alias whatsmyip="hostname -I | cut -d' ' -f1"
 #alias whatsmyip="ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'"
 
-########### docker aliases ###########
+# docker -------------------------------
 alias dockerseeme="$(echo docker run --rm -it alpine ping -c4 $(whatsmyip))"
 alias dockerps="docker ps --no-trunc -a --format 'table {{.Names}}...{{.Image}}...{{.Status}}...{{.Command}}\n'"
 alias dockerdremoteurl="sudo netstat -lntp | grep dockerd"
@@ -56,7 +57,7 @@ alias ufwconfigs='sudo find / -name "*.rules" -exec ls -l {} \; | grep ufw'
 # groupmembers docker
 alias groupmembers='getent group'
 
-# node aliases #########################
+# node ---------------------------------
 alias npmglobals='npm list -g --depth=0'
 alias nvminstalled='nvm ls'
 alias nvmlatest='nvm ls-remote | grep -i latest'
@@ -64,3 +65,14 @@ alias nvmlatestinstall='nvm install node --reinstall-packages-from=node'
 alias nvmlatestnpm='nvm install-latest-npm'
 alias nvmdefualtsystem='nvm alias default system'
 alias nvmstop='nvm deactivate' # only for current shell
+
+# terraform ----------------------------
+alias tfplan='terraform plan -out tfplan'
+alias tfapply='terraform apply tfplan'
+alias tfshow='terraform show tfplan'
+alias tfgraph='terraform graph -plan tfplan'
+alias tfdestroy='terraform destroy'
+alias tffmt='terraform fmt'
+alias tfvalidate='terraform validate'
+alias tfstatelist='terraform state list'
+alias tfstatepull='terraform state pull'
