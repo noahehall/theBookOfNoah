@@ -26,6 +26,8 @@ todo:
 - [aws ami marketplace prefconfigured free search](https://aws.amazon.com/marketplace/search/?sort=AVERAGE_CUSTOMER_RATING-DESCENDING&PRICING_MODEL=FREE&FULFILLMENT_OPTION_TYPE=AMAZON_MACHINE_IMAGE&AMI_ARCHITECTURE=x86_64&AMI_INSTANCE_TYPE=t2.small%2Ct2.micro&AMI_OPERATING_SYSTEM=AMAZON_LINUX%2CUBUNTU%2CDEBIAN%2CCENT_OS%2CRHEL%2COTHER_LINUX%2CFREE_BSD&AVERAGE_CUSTOMER_RATING=4..5&filters=PRICING_MODEL%2CFULFILLMENT_OPTION_TYPE%2CAMI_ARCHITECTURE%2CAMI_INSTANCE_TYPE%2CAMI_OPERATING_SYSTEM%2CAVERAGE_CUSTOMER_RATING)
 - tuts
   - [terrform aws networking](https://www.bogotobogo.com/DevOps/Terraform/Terraform-VPC-Subnet-ELB-RouteTable-SecurityGroup-Apache-Server-1.php)
+- ref
+  - [autoscaling](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group)
 
 ## basics
 
@@ -49,6 +51,9 @@ todo:
   - just name the plan `tfplan` and move on with your life
 - never
 - gotchas
+  - dependencies
+  - syntax
+    - aws only supports alphanumeric + dashes
   - networking
     - aws load balancers cant use elastic ip addresses
       - have to use dns names
@@ -179,6 +184,10 @@ todo:
     "aws_default_vpc" "default" {}
 
     # creating new ---------------------
+
+    # when using a launch template
+    # ^ make sure to remove any configuration from resources
+    # ^ that will be applied via the launch template
     aws_launch_template
       name_prefix
       image_id
