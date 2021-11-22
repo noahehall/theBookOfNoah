@@ -323,10 +323,10 @@ todo:
     --help
     list # get a list of all resources
     pull # pull & console resource state from cloud
+      -json # useful for consuming in scripts
     push # update remote state, dont do this
     replace-provider
     show nameFromListCmd # show the state of a resource
-      -json # useful for consuming in scripts
 
 ```
 
