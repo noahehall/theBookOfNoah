@@ -17,7 +17,7 @@ todo:
       - [application load balancer (v2)](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html)
       - [elastic load balancer (v1)](https://docs.aws.amazon.com/elasticloadbalancing/index.html)
 
-https://www.terraform.io/docs/language/values/variables.html
+<https://www.terraform.io/docs/language/values/variables.html>
 
 ## links
 
@@ -48,6 +48,8 @@ https://www.terraform.io/docs/language/values/variables.html
 ### best practices
 
 - always
+  - put priv vars in the `.tfvars` file
+  - put pub vars in the `.vars.tf` file
 - sometimes
   - terraform should deply premade images with all the configuration already set or retrieved at runtime
   - just name the plan `tfplan` and move on with your life
@@ -203,6 +205,11 @@ https://www.terraform.io/docs/language/values/variables.html
       launch_template
         id
         version
+      # different syntx, as it applies to all components it launches
+      tag
+        key
+        value
+        propagate_at_launch = true # assign at launch
 
     aws_elb
       name
