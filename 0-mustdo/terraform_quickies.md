@@ -178,6 +178,20 @@ todo:
     "aws_default_vpc" "default" {}
 
     # creating new ---------------------
+    aws_launch_template
+      name_prefix
+      image_id
+      instance_type
+
+    aws_autoscaling_group
+      availability_zones = []
+      desired_capacity
+      max_size
+      min_size
+      launch_template
+        id
+        version
+
     aws_elb
       name
       instances = aws_instance.NAME[*].id
