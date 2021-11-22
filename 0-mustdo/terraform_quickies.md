@@ -17,6 +17,8 @@ todo:
       - [application load balancer (v2)](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html)
       - [elastic load balancer (v1)](https://docs.aws.amazon.com/elasticloadbalancing/index.html)
 
+https://www.terraform.io/docs/language/values/variables.html
+
 ## links
 
 - [webgraphviz](http://webgraphviz.com/)
