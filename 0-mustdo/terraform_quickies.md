@@ -5,6 +5,12 @@ todo:
 - move all of this into terraform.md
 - [aws license manager](https://console.aws.amazon.com/license-manager)
 - aws
+  - architecture
+    - autoscaling groups (ASG)
+      - vpc_zone_identifier for autoscaling groups
+        - use the subne ids
+      - launch template
+      - autoscaling
   - netowrking
     - load balancing
       - dns names + cnames
