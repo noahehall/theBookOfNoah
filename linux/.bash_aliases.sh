@@ -68,10 +68,11 @@ alias nvmstop='nvm deactivate' # only for current shell
 
 # terraform ----------------------------
 alias tfplan='terraform plan -out tfplan'
+alias tfplandestroy='terraform plan -destroy -out destroy.tfplan'
 alias tfapply='terraform apply tfplan'
 alias tfshow='terraform show tfplan'
 alias tfgraph='terraform graph -plan tfplan'
-alias tfdestroy='terraform destroy'
+alias tfdestroy='terraform apply destroy.tfplan'
 alias tffmt='terraform fmt'
 alias tfvalidate='terraform validate'
 alias tfstatelist='terraform state list'
