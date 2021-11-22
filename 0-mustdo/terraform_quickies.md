@@ -46,6 +46,7 @@ todo:
 - always
 - sometimes
   - terraform should deply premade images with all the configuration already set or retrieved at runtime
+  - just name the plan `tfplan` and move on with your life
 - never
 - gotchas
   - networking
@@ -326,7 +327,7 @@ todo:
 
 ```sh
 
-  terraform show someplan.tfplan
+  terraform show tfplan
 ```
 
 ### terraform graph
@@ -338,7 +339,7 @@ todo:
 
   terraform graph
     --help
-    -plan someplan.tfplan
+    -plan tfplan
     -type plan|plan-destroy|apply|validate|input|refresh
     -draw-cycles
 
@@ -362,9 +363,9 @@ todo:
   terraform plan
     --help
     # always end cmds with this
-    # then always use, e.g. terraform apply "plan.tfplan"
-    # then later you can inspect, terraform show plan.tfplan
-    -out NAME.tfplan # use separate names for plan & destroy
+    # then always use, e.g. terraform apply "tfplan"
+    # then later you can inspect, terraform show tfplan
+    -out tfplan # use separate names for plan & destroy
     -auto-approve # dont ask for confirmation
     -destroy # see whats going to be removed
 ```
@@ -373,7 +374,7 @@ todo:
 
 ```sh
 
-  terraform apply "somename.tfplan"
+  terraform apply "tfplan"
 
 
 ```
