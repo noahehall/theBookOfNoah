@@ -504,8 +504,8 @@ todo:
 
 - best practices
   - root module vs child module
-    - root: should be applied to all environments
-    - child: should be defined per environment
+    - root: should be applied to all environments (generally not configurable)
+    - child: should be defined per environment (configurable, put in a module!)
   - put child modules in `/modules/thing`
   - conventions:
     - `main.tf` file as the index
