@@ -31,4 +31,5 @@ export const fetchSomething (): Promise<PropDef> {
 }
 const arrayOfObjects: PropDef[] = [propDef1, propDefX...s]
 SomeEl = ({ }: SomeElProps): JSX.Element
+Promise<{ [x: string]: string }>
 ```

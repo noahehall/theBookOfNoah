@@ -156,6 +156,14 @@
     }
 
   // CRUD ------------------------------
+    // relations
+    // setting many-to-many
+      const results = await getRepository(Entity)
+        .createQueryBuilder()
+        .relation(Entity, 'relationColName')
+        .of({ entityIdColumn: theIdValue })
+        .add({ relationColName: relationIdValue });
+
     // first off, get a handle on the fkn table
     // ^ all are the same? not sure of the technical difference
     // ^ but note the syntax
@@ -179,7 +187,9 @@
         .select('tablename') // full record
         .select(["user.id","user.name"]) // only specific attributes
         // insert new data
-        .insert().into(SomeEntity)
+        .insert()
+        // .returning('*') // return everything
+        // .into(SomeEntity) // not needed if its the same as the repository
           .values([
               { firstName: "Timber", lastName: "Saw" },
               { firstName: "Phantom", lastName: "Lancer" }
@@ -187,6 +197,7 @@
         // update existing data
         .update(SomeEntity)
           .set({ firstName: "Timber", lastName: "Saw" })
+          // .returning('*') // return everything
         // delete some data
         .delete().from(SomeEntity)
 
