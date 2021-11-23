@@ -506,11 +506,16 @@ todo:
   - root module vs child module
     - root: should be applied to all environments
     - child: should be defined per environment
-  - all modules should have a:
+  - put child modules in `/modules/thing`
+  - conventions:
     - `main.tf` file as the index
     - `variables.tf` file to define input vars
     - `outputs.tf` file to define the output vars
     - `README.md` to describe the module
+    - ^ i dont agree with most of this shiz
+      - always scope your files to the fkn component
+        - who the fk knows whats its `main.tf` by scanning the dir?
+        - how fkn long will your `{variables,outputs}.tf` files be? shiz iz studip
 - combine code into a logical group that can be managed holistically
 - pass in arguments for that block
 - all code is actually a module
