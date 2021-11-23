@@ -81,6 +81,7 @@ alias tfstateshow='terraform state show'
 alias tfrefresh='terraform apply -refresh-only'
 
 # git ----------------------------------
+alias gita='git add -A'
 alias gitb='git branch'
 alias gitc='git commit -a -m'
 alias gitl='git log --oneline'
