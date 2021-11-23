@@ -6,6 +6,12 @@ todo:
 - get a list of common AWS output vars
 - terraform
   - [modules](https://www.terraform.io/docs/language/modules/index.html)
+    - remote modules (e.g. git/registry.terraform.io)
+      - always review existing modules on registry.terraform.io before creating your own
+    - versioning
+    - providers and provider versions
+      - generally you dont want to set this
+      - as they modules inherit everything from the root module
   - [output vars](https://www.terraform.io/docs/language/values/outputs.html)
   - [state file in depth](https://www.terraform.io/docs/language/state/index.html)
   - [functions in depth](https://www.terraform.io/docs/language/functions/index.html)
@@ -496,18 +502,21 @@ todo:
 
 ### modules
 
+- best practices
+  - root module vs child module
+    - root: should be specific to this environment
+    - child: should be available to all environments
+  - all modules should have a:
+    - `main.tf` file as the index
+    - `variables.tf` file to define input vars
+    - `outputs.tf` file to define the output vars
+    - `README.md` to describe the module
 - combine code into a logical group that can be managed holistically
 - pass in arguments for that block
 - all code is actually a module
   - known as `root`
   - and all your var definitions are passed as `input vars` into the root module
 - you cant access data from a module unless you output it specifically
-- best practices
-  - all modules should have a:
-    - `main.tf` file as the index
-    - `variables.tf` file to define input vars
-    - `outputs.tf` file to define the output vars
-    - `README.md` to describe the module
 
 ```sh
   # best practices
