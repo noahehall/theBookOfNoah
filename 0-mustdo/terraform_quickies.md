@@ -3,6 +3,7 @@
 todo:
 
 - move all of this into terraform.md
+- get a list of common AWS output vars
 - terraform
   - [modules](https://www.terraform.io/docs/language/modules/index.html)
   - [output vars](https://www.terraform.io/docs/language/values/outputs.html)
@@ -489,6 +490,51 @@ todo:
 ```sh
 
   terraform apply "tfplan"
+
+
+```
+
+### modules
+
+- combine code into a logical group that can be managed holistically
+- pass in arguments for that block
+- all code is actually a module
+  - known as `root`
+  - and all your var definitions are passed as `input vars` into the root module
+- you cant access data from a module unless you output it specifically
+
+```sh
+  # best practices
+  # ^ all modules should have a `main.tf` file as the index
+  module "some_name" {
+    source = "./some/dir"
+
+    # input vars
+    poop = "yes"
+    flush = false
+
+    # output vars
+    output "something" {
+      value = aws_instance.someName.public_ip
+    }
+    output "something_else" {
+      value = aws_s3_bucket.someName.bucket
+    }
+  }
+  # within ./some/dir/file.tf
+  # define the input vars it expects
+    variable "poop" {
+      default = "yes"
+    }
+    variable "flush" {
+      default = true
+    }
+  # within an another module (anywhere)
+  # ^ define the input vars it expects to be output from another module
+  resource "providerThing" "someName" {
+    poop = module.moduleName.varName
+  }
+
 
 
 ```
