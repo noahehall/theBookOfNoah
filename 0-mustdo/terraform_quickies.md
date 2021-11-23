@@ -504,8 +504,8 @@ todo:
 
 - best practices
   - root module vs child module
-    - root: should be specific to this environment
-    - child: should be available to all environments
+    - root: should be applied to all environments
+    - child: should be defined per environment
   - all modules should have a:
     - `main.tf` file as the index
     - `variables.tf` file to define input vars
