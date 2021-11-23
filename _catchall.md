@@ -1,6 +1,7 @@
 # todos
 
 - [editor config](https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties)
+- optimizing eero
 
 # <https://github.com/github/hub>
 

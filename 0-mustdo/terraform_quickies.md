@@ -3,6 +3,13 @@
 todo:
 
 - move all of this into terraform.md
+- terraform
+  - [modules](https://www.terraform.io/docs/language/modules/index.html)
+  - [output vars](https://www.terraform.io/docs/language/values/outputs.html)
+  - [state file in depth](https://www.terraform.io/docs/language/state/index.html)
+  - [functions in depth](https://www.terraform.io/docs/language/functions/index.html)
+    - <https://www.terraform.io/docs/language/functions/can.html>
+    - <https://www.terraform.io/docs/language/functions/regex.html>
 - [aws license manager](https://console.aws.amazon.com/license-manager)
 - aws
   - architecture
@@ -30,6 +37,7 @@ todo:
   - [terrform aws networking](https://www.bogotobogo.com/DevOps/Terraform/Terraform-VPC-Subnet-ELB-RouteTable-SecurityGroup-Apache-Server-1.php)
 - ref
   - [autoscaling](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group)
+  - [variables](https://www.terraform.io/docs/language/values/variables.html)
 
 ## basics
 
@@ -45,11 +53,17 @@ todo:
   - i.e. config manage (e.g. packer) paints the picture
     - can be handled by provisioners
 
+- use cases
+  - provisioning automation
+  - provider documentation of your infrastructure in the form of code
+    - so keep it simple
+
 ### best practices
 
 - always
   - put priv vars in the `.tfvars` file
   - put pub vars in the `.vars.tf` file
+  - protect your fkn state file
 - sometimes
   - terraform should deply premade images with all the configuration already set or retrieved at runtime
   - just name the plan `tfplan` and move on with your life
@@ -101,6 +115,7 @@ todo:
           PostgreSQL 10.9
           Separate 4G swap disk
           System tuning optimizations
+    # bitnami nginx ....
 
 ```
 
@@ -109,21 +124,23 @@ todo:
 ```sh
   aws configure list-profiles
   export AWS_DEFAULT_PROFILE=poop
-  aws configure list
-  aws configure get aws_access_key_id
+  aws configure list # safe to execute publicly
+  aws configure get aws_access_key_id # dont do this if others can see your log
 
-  aws ec2 create-default-vpc
+  aws ec2 create-default-vpc # incase you've deleted it thnking your dope
 
   # cidr blocks
   "0.0.0.0/0" # any ip
   "1.2.3.4/32" # single ip
 ```
 
-## terraform errors
+### terraform errors
 
 ```sh
-  resource already exists..you already own it
+  `resource already exists..you already own it`
   # ^ just rerun terraform apply
+  `tags not expected here...
+  # ^ are you using `tags = {}` or `tags {}`
 
 ```
 
@@ -158,8 +175,10 @@ todo:
     # can also use poop.INT.attribute
     # point to a single resource out of many
     argument = provider_resource_type.resource_name[0].attribute
+    # ^ also poop.flush.0.attribute
     # point to all resources out of many
     argument = provider_resource_type.resource_name[*].attribute
+    # ^ also poop.flush.*.attribute
   # dependencies
   # ^ link resources by subscribing one to another
     # link an ec2 resource to an security group resource
@@ -176,6 +195,83 @@ todo:
         Name = "internal-name"
       }
     }
+
+    # variables
+    # ^ defined in files/cli
+    # ^^ any file ending in .tf obviously
+    # ^^ Files named exactly terraform.tfvars or terraform.tfvars.json.
+    # ^^ Any files with names ending in .auto.tfvars or .auto.tfvars.json.
+    # ^^ precedence, in increasing order
+      # Environment variables
+      # The terraform.tfvars file, if present.
+      # The terraform.tfvars.json file, if present.
+      # Any *.auto.tfvars or *.auto.tfvars.json files, processed in lexical order of their filenames.
+      # Any -var and -var-file options on the command line, in the order they are provided. (This includes variables set by a Terraform Cloud workspace.)
+    # terraform apply -var-file="testing.tfvars"
+    # ^ only contain name assignments
+      # in hcl
+        poop = true
+        flush = false
+      # in json
+        {
+          "image_id": "ami-abc123",
+          "availability_zone_names": ["us-west-1a", "us-west-1c"]
+        }
+      # as env vars
+      # ^ anything prefixed with TF_VAR_
+        export TF_VAR_image_id=ami-abc123
+    # ^ types
+      string # "flush"
+      number # 0
+      bool # true
+      any # can be anything
+      set (TYPE)
+      map (TYPE)
+      object { varName = TYPE }
+      tuple [TYPE, ...]
+      list(string) # ["flush"]
+      list(object({ poop = string })) # [ { poop = "flush" }]
+    # ^ validation
+      validation {
+        # can only refer to var the condition applies to
+        condition     = length(var.image_id) > 4 && substr(var.image_id, 0, 4) == "ami-"
+        error_message = "The image_id value must be a valid AMI id, starting with \"ami-\"."
+      }
+    # sensitive (i.e. private)
+    # ^ dont log in plan/apply output
+    # ^^ or other vars that depend on it
+    # ^^ A provider error could disclose a value if that value is included in the error messag
+    # ^ but are still available in the state file, protect your state file
+    # ^ definition
+      variable "something" {
+        type = "string"
+        default = "value" # static value, cannot be dynamic
+        description = "whatev"
+        validation =
+        sensitive = true
+      }
+      # ^ var.something
+      # ^ terraform apply -var="something=poop"
+
+    # data sources
+    # ^ files/retrieved from elseware (aws, another tf config, etc)
+    # ^ the attributes are query parameters
+    # ^ it will query the provider_component for matching resources
+    # ^ and return whatever it finds
+      data "provider_component" "something" {
+        most_recent = true
+        # or a canonical ID of a user (if not current user)
+        owners = ["self"]
+        tags = {
+          poop = "flush"
+        }
+        filter {
+          name = "name"
+          values = ["some/value"]
+        }
+      }
+        # ^ e.g. data.aws_ami.something.id
+
 
     # using defaults -------------------
     # ^ 2 default subnets in the defualt vpc
