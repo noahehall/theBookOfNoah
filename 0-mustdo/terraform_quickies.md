@@ -502,6 +502,12 @@ todo:
   - known as `root`
   - and all your var definitions are passed as `input vars` into the root module
 - you cant access data from a module unless you output it specifically
+- best practices
+  - all modules should have a:
+    - `main.tf` file as the index
+    - `variables.tf` file to define input vars
+    - `outputs.tf` file to define the output vars
+    - `README.md` to describe the module
 
 ```sh
   # best practices
