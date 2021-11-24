@@ -148,6 +148,8 @@ todo:
   # ^ just rerun terraform apply
   `tags not expected here...
   # ^ are you using `tags = {}` or `tags {}`
+  `invalid reference`
+  # ^ youve defined a variable it cant find
 
 ```
 
@@ -194,9 +196,9 @@ todo:
       ]
 
   # aws resource types
-    resource "providerName_componentName" "externalName" {
-      name = "internal-name"
-
+    resource "providerName_componentName" "internalName" { # e.g. "this" i.e. this thing
+      name = "external-name" # e.g. its name in aws console
+      name = "${var.someName}-dev" # generally you should do something like this
       tags = {
         Terraform = "true"
         Name = "internal-name"

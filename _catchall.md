@@ -44,3 +44,25 @@ binaries vs git pkgs
   - <https://iterationinsights.com/article/where-to-start-with-the-4-types-of-analytics/>
   - <https://stackoverflow.com/questions/6656324/check-for-current-node-version>
   - <https://www.redhat.com/sysadmin/linux-environment-variables>
+
+expect(some).toHaveBeenCalledWith(
+        expect.objectContaining(someObject)
+      );
+
+import * as poop from '../some/folder'
+jest.Mock('../some/folder');
+<https://jestjs.io/docs/mock-functions>
+poop.someFn.mockImplementation(async () => 'return this')
+
+@see <https://stackoverflow.com/questions/4937792/using-variables-inside-a-bash-heredoc>
+bash fn to curl some endpoint
+register_no_pass() {
+  curl -X POST $SOME_URL \
+  -H 'Content-Type: application/json; charset=utf-8' \
+  -d @- << EOF
+    {
+      "field1": "value"
+      "field2": "$ANOTHER_VAR"
+    }
+EOF
+}
