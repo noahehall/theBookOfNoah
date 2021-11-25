@@ -3,18 +3,9 @@ apps software-properties-common htop curl apt-transport-https wget
 check type of graphics driver system is using: sudo lshw -c video
  install gnome-shell-extensionns: apt install gnome-shell-extensions
 
-sudo apt install vlc
-    and these
-        $ sudo apt install vlc-plugin-access-extra libbluray-bdj libdvdcss2
-        vlc-plugin-svg
-        vlc-plugin-video-output
-
 sudo apt install conky-all
     cp /etc/conky/conky.conf ~/.conkrc
     [check this](https://linuxconfig.org/ubuntu-20-04-system-monitoring-with-conky-widgets)
-
-get your external ip addr
-    curl -w "\n" -s <https://api.ipify.org>
 
 [graphics driver](https://linuxconfig.org/ubuntu-20-04-tricks-and-things-you-might-not-know#h6-internet)
 
@@ -45,9 +36,6 @@ ubuntu
   - $ qjackctl
 
 - optomizations
-  - sudo apt install preload
   - free -m #amout of free memory
   - sudo lshw -c memory # type and speed of ram
-  - <https://oguzhaninan.github.io/Stacer-Web/>
-    - sudo apt install stacer
   - sudo apt install lubuntu-desktop

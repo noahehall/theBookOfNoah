@@ -22,7 +22,7 @@ alias dpkgi='grep " install " /var/log/dpkg.log'
 alias apti='grep " install " /var/log/apt/history.log'
 alias installed='(dpkgi;apti) | less'
 alias whatsmyip="hostname -I | cut -d' ' -f1"
-#alias whatsmyip="ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'"
+alias whatsmyipexternal='curl -s http://ipecho.net/plain'
 
 # docker -------------------------------
 alias dockerseeme="$(echo docker run --rm -it alpine ping -c4 $(whatsmyip))"

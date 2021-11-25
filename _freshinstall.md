@@ -60,6 +60,7 @@ wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
    - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
    - chromium: sudo apt install chromium-browser
    - [switch to regolith & restart](https://regolith-linux.org/docs/getting-started/)
+   - sudo apt install preload
    - [stacer](https://github.com/oguzhaninan/Stacer)
    - [dconf-editor](https://wiki.gnome.org/Apps/DconfEditor)
      - $ sudo apt install dconf-editor
@@ -95,6 +96,9 @@ wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
    - tree
      - sudo apt install tree
      - tree --dirsfirst --charset=ascii SOME_DIR
+   - vlc
+     - sudo apt install vlc
+     - sudo apt install vlc-plugin-access-extra libbluray-bdj libdvdcss2 vlc-plugin-svg vlc-plugin-video-output
 
    - maybe installs
      - [opensnitch](https://github.com/evilsocket/opensnitch)
