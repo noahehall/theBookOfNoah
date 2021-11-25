@@ -30,7 +30,7 @@
    - update your git config
      - `git config --global -e`
      - setup private email
-     - [include this file](linux/.git_config)
+     - [include this file](linux/.gitconfig)
 4. setup vscode
    - [vscode settings](https://gist.github.com/noahehall/33f60c724f51bde9afa2c2a9e540d094)
 5. [sdkman](https://sdkman.io/install)

@@ -7,10 +7,15 @@
 
 [core]
   editor = nano
+  autocrlf = input
+
+[color]
+  ui = true
 
 [merge]
   ff = only
   conflictstyle = diff3
+
 
 [commit]
   gpgSign = true
@@ -18,6 +23,9 @@
 [push]
   default = simple
   followTags = true
+
+[pull]
+  rebase = true
 
 [status]
   showUntrackedFiles = all
