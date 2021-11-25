@@ -1,7 +1,4 @@
-# TLDR
-
-- fucked up my lubuntu to oblivion
-- should have written this years ago
+# box setup
 
 ## TODO
 
