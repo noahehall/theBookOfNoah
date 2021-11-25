@@ -1,5 +1,7 @@
 # see https://gist.github.com/scottnonnenberg/fefa3f65fdb3715d25882f3023b31c29
 # [user]
+# name=noah edward
+# user.email=noahehall@users.noreply.github.com
 # signingkey = whatever comes from
 # ^ gpg --list-secret-keys --keyid-format=long
 
