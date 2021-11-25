@@ -26,6 +26,11 @@
    - [verify your commits](https://docs.github.com/en/authentication/managing-commit-signature-verification)
    - git clone git@github.com:noahehall/theBookOfNoah.git
      - [source this file in your bashrc](linux/_sourceme_.sh)
+   - [git icdiff](https://github.com/jeffkaufman/icdiff)
+   - update your git config
+     - `git config --global -e`
+     - setup private email
+     - [include this file](linux/.git_config)
 4. setup vscode
    - [vscode settings](https://gist.github.com/noahehall/33f60c724f51bde9afa2c2a9e540d094)
 5. [sdkman](https://sdkman.io/install)
@@ -41,6 +46,7 @@
 9. [vagrant](https://www.vagrantup.com/)
 10. chromium: sudo apt install chromium-browser
 11. speedtest-cli
+12. [obs studio](https://obsproject.com/wiki/install-instructions#ubuntumint-installation)
 
 #### ubuntu:dev
 
@@ -52,6 +58,7 @@ wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
 
 1. setup ubuntu
    - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
+   - [switch to regolith & restart](https://regolith-linux.org/docs/getting-started/)
    - [stacer](https://github.com/oguzhaninan/Stacer)
    - [dconf-editor](https://wiki.gnome.org/Apps/DconfEditor)
      - $ sudo apt install dconf-editor
@@ -68,7 +75,6 @@ wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
        - sound input & output device chooser
        - user themes
        - workspace indicator
-   - [switch to regolith & restart](https://regolith-linux.org/docs/getting-started/)
    - [shutter](https://shutter-project.org/)
      - [install steps](https://launchpad.net/~shutter/+archive/ubuntu/ppa)
      - [x11 server error](https://askubuntu.com/questions/1353360/ubuntu-21-04-shutter-did-not-work-without-x11-server)

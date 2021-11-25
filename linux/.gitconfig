@@ -1,0 +1,31 @@
+# see https://gist.github.com/scottnonnenberg/fefa3f65fdb3715d25882f3023b31c29
+# [user]
+# signingkey = whatever comes from
+# ^ gpg --list-secret-keys --keyid-format=long
+
+[core]
+  editor = nano
+
+[merge]
+  ff = only
+  conflictstyle = diff3
+
+[commit]
+  gpgSign = true
+
+[push]
+  default = simple
+  followTags = true
+
+[status]
+  showUntrackedFiles = all
+
+[transfer]
+  fsckobjects = true
+
+[diff]
+  tool = icdiff
+[difftool]
+  prompt = false
+[difftool "icdiff"]
+  cmd = icdiff --line-numbers $LOCAL $REMOTE

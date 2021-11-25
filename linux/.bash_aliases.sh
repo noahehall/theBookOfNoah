@@ -81,6 +81,7 @@ alias tfstateshow='terraform state show'
 alias tfrefresh='terraform apply -refresh-only'
 
 # git ----------------------------------
+## quick
 alias gita='git add -A'
 alias gitb='git branch'
 alias gitc='git commit -a -m'
@@ -90,6 +91,7 @@ alias gitpf='git push --force'
 alias gitpl='git pull'
 alias gitplf='git pull --force'
 alias gits='git status -sb'
+## extended
 alias gitconfig='git config --list'
 alias gitconfigedit='git config --global -e'
 alias gitdiffdevelop='git diff origin/develop --stat'
@@ -100,3 +102,4 @@ alias gitloglast='git log -1 HEAD --stat'
 alias gitstash='git stash -u'
 alias gitstashlist='git stash list'
 alias gitstashpop='git stash pop'
+alias gprune='git fetch --prune'
