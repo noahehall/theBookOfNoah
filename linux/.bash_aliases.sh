@@ -112,7 +112,8 @@ alias gitamend='git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
 alias aptrefresh='sudo apt update && sudo apt upgrade'
 alias aptfixbroken='sudo apt install --fix-broken'
 alias aptfixconfigure='sudo dpkg --configure --force-overwrite -a'
-
+alias aptsearchi3='sudo apt search ^i3xrocks'
+alias aptsearchlooks='sudo apt search ^regolith-look-'
 # aws ----------------------------------
 alias awsconfig='sudo aws configure'
 alias awsconfiglist='aws configure list'

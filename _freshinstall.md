@@ -65,6 +65,12 @@ wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
 - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
 - chromium: sudo apt install chromium-browser
 - [switch to regolith & restart](https://regolith-linux.org/docs/getting-started/)
+  - `sudo apt search ^i3xrocks`
+    - install some plugins
+  - `sudo apt search ^regolith-look-`
+    - install a new theme
+    - super alt !
+      - ^ switch to theme
 - sudo apt install preload
 - [stacer](https://github.com/oguzhaninan/Stacer)
 - [dconf-editor](https://wiki.gnome.org/Apps/DconfEditor)
