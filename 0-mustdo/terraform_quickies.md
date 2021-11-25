@@ -113,6 +113,8 @@
 - terraform.io
   - hosted version of terraform
   - connects to version control (git{hub,lab})
+- architectural diagrams
+  - from an ops perspective, gives you the information about how the system is built, so you can configure the current cloud components
 
 ### terms
 

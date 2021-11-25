@@ -31,20 +31,7 @@
      - `git config --global -e`
      - setup private email
      - [include this file](linux/.gitconfig)
-4. setup vscode
-   - [vscode settings](https://gist.github.com/noahehall/33f60c724f51bde9afa2c2a9e540d094)
-5. [sdkman](https://sdkman.io/install)
-6. [nim](https://nim-lang.org/install_unix.html)
-7. [pnpm](https://pnpm.io/installation)
-8. docker
-   - [compose](https://docs.docker.com/compose/install/)
-   - [dive](https://github.com/wagoodman/dive)
-   - [ctop](https://github.com/bcicen/ctop)
-   - [dockly](https://github.com/lirantal/dockly)
-   - [k8s](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
-     - todo: I suck at k8s
-9. [vagrant](https://www.vagrantup.com/)
-10. speedtest-cli
+
 11. [obs studio](https://obsproject.com/wiki/install-instructions#ubuntumint-installation)
 12. [install node via this script](linux/.install_node.sh)
 13. [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cliv2-linux-install)
@@ -61,61 +48,80 @@ echo "deb http://packages.azlux.fr/debian/ buster main" | sudo tee /etc/apt/sour
 wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
 ```
 
-1. setup ubuntu
-   - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
-   - chromium: sudo apt install chromium-browser
-   - [switch to regolith & restart](https://regolith-linux.org/docs/getting-started/)
-   - sudo apt install preload
-   - [stacer](https://github.com/oguzhaninan/Stacer)
-   - [dconf-editor](https://wiki.gnome.org/Apps/DconfEditor)
-     - $ sudo apt install dconf-editor
-   - [setup iplink archur & alpha 1900](https://github.com/aircrack-ng/rtl8814au)
-     - [read this first](https://docs.alfa.com.tw/Support/Linux/RTL8814AU/#ubuntu)
-     - [read this first](https://miloserdov.org/?p=5493)
-   - [gnome extensions](https://extensions.gnome.org/)
-     - maybe not since we are now using regloith
-     - extensions are by computer, not per login so you have to reinstall
-       - [basic steps with some good ext](https://thelinuxuser.com/install-gnome-shell-extensions/)
-       - cafeeine
-       - clipboard indactor
-       - disconnect wifi
-       - extension list
-       - just perfection
-       - privacy settings
-       - removable drive menu
-       - sound input & output device chooser
-       - user themes
-       - workspace indicator
-   - [shutter](https://shutter-project.org/)
-     - [install steps](https://launchpad.net/~shutter/+archive/ubuntu/ppa)
-     - [x11 server error](https://askubuntu.com/questions/1353360/ubuntu-21-04-shutter-did-not-work-without-x11-server)
-   - [bleachbit](https://www.bleachbit.org/features)
-     - $ sudo apt install bleachbit
-     - cleaner wayyy better than the one by stacer
-   - [neofetch](https://github.com/dylanaraps/neofetch)
-     - $ sudo apt install neofetch
-   - [bpytop](https://github.com/aristocratos/bpytop)
-     - sudo apt install bpytop
-   - [sss](https://github.com/azlux/gnos-sockets)
-   - [oha](https://github.com/hatoo/oha)
-   - [gping](https://github.com/orf/gping)
-   - [duf](https://github.com/muesli/duf)
-     - sudo apt install duf
-   - [dog](https://github.com/ogham/dog)
-   - tree
-     - sudo apt install tree
-     - tree --dirsfirst --charset=ascii SOME_DIR
-   - vlc
-     - sudo apt install vlc
-     - sudo apt install vlc-plugin-access-extra libbluray-bdj libdvdcss2 vlc-plugin-svg vlc-plugin-video-output
-   - [brightness controller](https://techstoriesindia.blogspot.com/2020/05/reduce-external-monitor-brightness-ubuntu-linux.html)
+- setup vscode
+  - [vscode settings](https://gist.github.com/noahehall/33f60c724f51bde9afa2c2a9e540d094)
+- [sdkman](https://sdkman.io/install)
+- [nim](https://nim-lang.org/install_unix.html)
+- [pnpm](https://pnpm.io/installation)
+- docker
+  - [compose](https://docs.docker.com/compose/install/)
+  - [dive](https://github.com/wagoodman/dive)
+  - [ctop](https://github.com/bcicen/ctop)
+  - [dockly](https://github.com/lirantal/dockly)
+- [k8s](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+  - todo: I suck at k8s
+- [vagrant](https://www.vagrantup.com/)
+- speedtest-cli
+- [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
+- chromium: sudo apt install chromium-browser
+- [switch to regolith & restart](https://regolith-linux.org/docs/getting-started/)
+- sudo apt install preload
+- [stacer](https://github.com/oguzhaninan/Stacer)
+- [dconf-editor](https://wiki.gnome.org/Apps/DconfEditor)
+  - $ sudo apt install dconf-editor
+- [usb wifi]
+  - [morrownr](https://github.com/morrownr/8814au)
+    - use this, one line and it worked
+  - [aircrack](https://github.com/aircrack-ng/rtl8814au)
+  - [read this first](https://docs.alfa.com.tw/Support/Linux/RTL8814AU/#ubuntu)
+  - [read this first](https://miloserdov.org/?p=5493)
+  - basic steps
+    - `sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev`
+    -
+- [gnome extensions](https://extensions.gnome.org/)
+  - maybe not since we are now using regloith
+  - extensions are by computer, not per login so you have to reinstall
+    - [basic steps with some good ext](https://thelinuxuser.com/install-gnome-shell-extensions/)
+    - cafeeine
+    - clipboard indactor
+    - disconnect wifi
+    - extension list
+    - just perfection
+    - privacy settings
+    - removable drive menu
+    - sound input & output device chooser
+    - user themes
+    - workspace indicator
+- [shutter](https://shutter-project.org/)
+  - [install steps](https://launchpad.net/~shutter/+archive/ubuntu/ppa)
+  - [x11 server error](https://askubuntu.com/questions/1353360/ubuntu-21-04-shutter-did-not-work-without-x11-server)
+- [bleachbit](https://www.bleachbit.org/features)
+  - $ sudo apt install bleachbit
+  - cleaner wayyy better than the one by stacer
+- [neofetch](https://github.com/dylanaraps/neofetch)
+  - $ sudo apt install neofetch
+- [bpytop](https://github.com/aristocratos/bpytop)
+  - sudo apt install bpytop
+- [sss](https://github.com/azlux/gnos-sockets)
+- [oha](https://github.com/hatoo/oha)
+- [gping](https://github.com/orf/gping)
+- [duf](https://github.com/muesli/duf)
+  - sudo apt install duf
+- [dog](https://github.com/ogham/dog)
+- tree
+  - sudo apt install tree
+  - tree --dirsfirst --charset=ascii SOME_DIR
+- vlc
+  - sudo apt install vlc
+  - sudo apt install vlc-plugin-access-extra libbluray-bdj libdvdcss2 vlc-plugin-svg vlc-plugin-video-output
+- [brightness controller](https://techstoriesindia.blogspot.com/2020/05/reduce-external-monitor-brightness-ubuntu-linux.html)
 
-   - maybe installs
-     - [opensnitch](https://github.com/evilsocket/opensnitch)
-     - [signal](https://signal.org/en/download/)]
-       - has e2e encryption for chats by default, telegram doesnt
-     - [broot](https://github.com/Canop/broot)
-     - [rclone](https://github.com/rclone/rclone)
+- maybe installs
+  - [opensnitch](https://github.com/evilsocket/opensnitch)
+  - [signal](https://signal.org/en/download/)]
+    - has e2e encryption for chats by default, telegram doesnt
+  - [broot](https://github.com/Canop/broot)
+  - [rclone](https://github.com/rclone/rclone)
 
 #### mac:dev
 

@@ -106,3 +106,11 @@ easy to forget things
   - /*eslint-disable*/
   - // eslint-disable-next-line
   - // eslint-disable-line
+
+# wifi
+
+dkms status
+sudo dkms remove 8814au -v 5.8.5.1 -k $(uname -r)
+sudo dkms uninstall rtl8814au -v 5.8.5.1
+sudo rm -rf /usr/src/rtl8814au-5.8.5.1/
+sudo rm -rf /usr/src/8814au-5.8.5.1/
