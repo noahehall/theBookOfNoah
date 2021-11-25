@@ -10,6 +10,7 @@
   - to understand the slash `/bits` in ip addresses
 - [ipv4 reserved addresses](https://www.tutorialspoint.com/ipv4/ipv4_reserved_addresses.htm)
 - [subnet cheatsheet](https://www.dnsstuff.com/subnet-ip-subnetting-guide)
+- [understanding CIDR subnet mask notation](https://docs.netgate.com/pfsense/en/latest/network/cidr.html)
 
 ## ipv4
 
@@ -57,6 +58,26 @@
   192.168.1.152 # host ip
   255.255.255.0 # router subnet mask
   192.168.1.0 # network address: ip + mask is ANDed
+
+
+  # common  cidr subnet masks
+  # @see https://docs.netgate.com/pfsense/en/latest/network/cidr.html
+  # usable ips: total ips: cidr prefix
+  /0 all ips are available
+  1:1:/32
+  2:2:/31
+  2:4:/30
+  6:8:/29
+  14:16:/28
+  30:32:/27
+  62:64:/26
+  126:128/25
+  254:256:/24
+  510:512:/23
+  1022:1024:/22
+  2046:2048:/21
+  4094:4096:/20
+
 
 
 ```
