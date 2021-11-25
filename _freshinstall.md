@@ -44,10 +44,9 @@
    - [k8s](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
      - todo: I suck at k8s
 9. [vagrant](https://www.vagrantup.com/)
-10. chromium: sudo apt install chromium-browser
-11. speedtest-cli
-12. [obs studio](https://obsproject.com/wiki/install-instructions#ubuntumint-installation)
-13. [install node via this script](linux/.install_node.sh)
+10. speedtest-cli
+11. [obs studio](https://obsproject.com/wiki/install-instructions#ubuntumint-installation)
+12. [install node via this script](linux/.install_node.sh)
 
 #### ubuntu:dev
 
@@ -59,6 +58,7 @@ wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
 
 1. setup ubuntu
    - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
+   - chromium: sudo apt install chromium-browser
    - [switch to regolith & restart](https://regolith-linux.org/docs/getting-started/)
    - [stacer](https://github.com/oguzhaninan/Stacer)
    - [dconf-editor](https://wiki.gnome.org/Apps/DconfEditor)

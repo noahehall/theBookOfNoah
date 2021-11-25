@@ -106,3 +106,8 @@ alias gitstashlist='git stash list'
 alias gitstashpop='git stash pop'
 alias gitprune='git fetch --prune'
 alias gitamend='git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend'
+
+# apt ----------------------------------
+alias aptrefresh='sudo apt update && sudo apt upgrade'
+alias aptfixbroken='sudo apt install --fix-broken'
+alias aptfixconfigure='sudo dpkg --configure --force-overwrite -a'
