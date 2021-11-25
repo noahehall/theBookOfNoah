@@ -47,6 +47,7 @@
 10. chromium: sudo apt install chromium-browser
 11. speedtest-cli
 12. [obs studio](https://obsproject.com/wiki/install-instructions#ubuntumint-installation)
+13. [install node via this script](linux/.install_node.sh)
 
 #### ubuntu:dev
 
