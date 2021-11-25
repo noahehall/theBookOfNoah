@@ -11,3 +11,7 @@ THISDIR="$(
 [ -f "$THISDIR"/.bash_functions.sh ] && . "$THISDIR"/.bash_functions.sh
 [ -f "$THISDIR"/.bash_variables.sh ] && . "$THISDIR"/.bash_variables.sh
 [ -f "$THISDIR"/.bash_addons.sh ] && . "$THISDIR"/.bash_addons.sh
+
+mkdir -p "$HOME"/.local/bin
+
+export PATH=/opt:/"$HOME"/.local/bin:"$PATH"
