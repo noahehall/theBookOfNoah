@@ -9,16 +9,19 @@
 - [ipv4 vlsm](https://www.tutorialspoint.com/ipv4/ipv4_vlsm.htm)
   - to understand the slash `/bits` in ip addresses
 - [ipv4 reserved addresses](https://www.tutorialspoint.com/ipv4/ipv4_reserved_addresses.htm)
+- [subnet cheatsheet](https://www.dnsstuff.com/subnet-ip-subnetting-guide)
 
-## basics
+## ipv4
 
+- ip address: identifier for any device connected to a network
+  - uses 32 binary bits spplit into 4 groups of eight, each group represented as a decimal number
 - broadcast address: `255.255.255.255`
 - addressing modes:
   - unicast: data is sent only to one destined host; ip contains 32-bit ip address of host
   - broadcast: data is addressed to all hosts in the network
   - multicast: mix of unicast + broadcast; destination starts with `244.x.x.x`
 
-## ip4 address scheme
+### ip4 address scheme
 
 - uses hierarchical addressing scheme
 
@@ -35,3 +38,5 @@
 
 
 ```
+
+## ipv6
