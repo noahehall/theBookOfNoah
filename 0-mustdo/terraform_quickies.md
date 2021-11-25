@@ -1,6 +1,6 @@
 # TLDR
 
-todo:
+## todo
 
 - move all of this into terraform.md
 - get a list of common AWS output vars
@@ -36,10 +36,12 @@ todo:
 ## links
 
 - [webgraphviz](http://webgraphviz.com/)
-  - if your dumb enough to use this
+  - never use this for anyting private
   - copypasta `terraform graph` output into it
-- [aws tag best practices](https://cloudacademy.com/blog/what-are-best-practices-for-tagging-aws-resources/)
-- [aws ami marketplace prefconfigured free search](https://aws.amazon.com/marketplace/search/?sort=AVERAGE_CUSTOMER_RATING-DESCENDING&PRICING_MODEL=FREE&FULFILLMENT_OPTION_TYPE=AMAZON_MACHINE_IMAGE&AMI_ARCHITECTURE=x86_64&AMI_INSTANCE_TYPE=t2.small%2Ct2.micro&AMI_OPERATING_SYSTEM=AMAZON_LINUX%2CUBUNTU%2CDEBIAN%2CCENT_OS%2CRHEL%2COTHER_LINUX%2CFREE_BSD&AVERAGE_CUSTOMER_RATING=4..5&filters=PRICING_MODEL%2CFULFILLMENT_OPTION_TYPE%2CAMI_ARCHITECTURE%2CAMI_INSTANCE_TYPE%2CAMI_OPERATING_SYSTEM%2CAVERAGE_CUSTOMER_RATING)
+- [github repo with examples](https://github.com/noahehall/advanced-terraform-2823489)
+- aws
+  - [aws tag best practices](https://cloudacademy.com/blog/what-are-best-practices-for-tagging-aws-resources/)
+  - [aws ami marketplace prefconfigured free search](https://aws.amazon.com/marketplace/search/?sort=AVERAGE_CUSTOMER_RATING-DESCENDING&PRICING_MODEL=FREE&FULFILLMENT_OPTION_TYPE=AMAZON_MACHINE_IMAGE&AMI_ARCHITECTURE=x86_64&AMI_INSTANCE_TYPE=t2.small%2Ct2.micro&AMI_OPERATING_SYSTEM=AMAZON_LINUX%2CUBUNTU%2CDEBIAN%2CCENT_OS%2CRHEL%2COTHER_LINUX%2CFREE_BSD&AVERAGE_CUSTOMER_RATING=4..5&filters=PRICING_MODEL%2CFULFILLMENT_OPTION_TYPE%2CAMI_ARCHITECTURE%2CAMI_INSTANCE_TYPE%2CAMI_OPERATING_SYSTEM%2CAVERAGE_CUSTOMER_RATING)
 - tuts
   - [terrform aws networking](https://www.bogotobogo.com/DevOps/Terraform/Terraform-VPC-Subnet-ELB-RouteTable-SecurityGroup-Apache-Server-1.php)
 - ref
@@ -60,8 +62,23 @@ todo:
   - i.e. config manage (e.g. packer) paints the picture
     - can be handled by provisioners
 
+- configuration: independently deployable collection of hashicorp HCL files
+  - i.e. you can execute plan & apply in a single folder
+- HCL: DSL: used to describe terraform (and other) configuration
+  - way better than yaml/json
+  - supports vars, loops, conditions, etc
+- deployment: the set of resources created by a terraform configuration
+- provider: a cloud/system-specific terraform plugin that upports resource creation for that system
+- resource: a thing that can be created in the cloud
+  - each resource is scoped to the provider
+  - i.e. aws and gcp providers have different types for resources
+- module: an isolated, reusable sub-configuration
+  - cant be deployed on its own, but can be included in other configs
+  - input vars are used to define module behavior
+
 - use cases
   - provisioning automation
+    - i.e. create instances of resources in the cloud
   - provider documentation of your infrastructure in the form of code
     - so keep it simple
 
