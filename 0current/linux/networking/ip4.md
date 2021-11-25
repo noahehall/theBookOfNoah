@@ -35,8 +35,10 @@
 - subnet: portion of the networkin within class A, B or C
   - create and usesubnets to organize/categorize your network
   - ^ e.g. using specific ip address blocks for different types of network requests/biz depts
+
 - subnetting: way to divide an ip address block into smaller portions, so fewer ip addresses are waisted
   - `ipaddress/number` the number divides the ipaddress block into fewer ip addresses (down from 254)
+  - i.e. `number` from the host to create a new `subnetwork`
 
 - subnet masks: way of identifying which part of the ip address relates to the network vs the host
 

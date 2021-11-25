@@ -49,6 +49,9 @@
 12. [install node via this script](linux/.install_node.sh)
 13. [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cliv2-linux-install)
     1. [aws command completion](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html)
+14. [dbeaver](https://dbeaver.io/download/?start&os=linux&arch=x86_64&dist=deb)
+    1. [get some plugins](https://dbeaver.com/docs/wiki/Optional-extensions)
+       1. especially the ssh one
 
 #### ubuntu:dev
 
