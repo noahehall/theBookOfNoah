@@ -47,6 +47,8 @@
 10. speedtest-cli
 11. [obs studio](https://obsproject.com/wiki/install-instructions#ubuntumint-installation)
 12. [install node via this script](linux/.install_node.sh)
+13. [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cliv2-linux-install)
+    1. [aws command completion](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html)
 
 #### ubuntu:dev
 
@@ -64,7 +66,11 @@ wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
    - [stacer](https://github.com/oguzhaninan/Stacer)
    - [dconf-editor](https://wiki.gnome.org/Apps/DconfEditor)
      - $ sudo apt install dconf-editor
+   - [setup iplink archur & alpha 1900](https://github.com/aircrack-ng/rtl8814au)
+     - [read this first](https://docs.alfa.com.tw/Support/Linux/RTL8814AU/#ubuntu)
+     - [read this first](https://miloserdov.org/?p=5493)
    - [gnome extensions](https://extensions.gnome.org/)
+     - maybe not since we are now using regloith
      - extensions are by computer, not per login so you have to reinstall
        - [basic steps with some good ext](https://thelinuxuser.com/install-gnome-shell-extensions/)
        - cafeeine
@@ -99,6 +105,7 @@ wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
    - vlc
      - sudo apt install vlc
      - sudo apt install vlc-plugin-access-extra libbluray-bdj libdvdcss2 vlc-plugin-svg vlc-plugin-video-output
+   - [brightness controller](https://techstoriesindia.blogspot.com/2020/05/reduce-external-monitor-brightness-ubuntu-linux.html)
 
    - maybe installs
      - [opensnitch](https://github.com/evilsocket/opensnitch)

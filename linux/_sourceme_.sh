@@ -15,3 +15,7 @@ THISDIR="$(
 mkdir -p "$HOME"/.local/bin
 
 export PATH=/opt:/"$HOME"/.local/bin:"$PATH"
+
+# AWS ----------------------------------
+# ^ enable command completion
+complete -C '/usr/local/bin/aws_completer' aws

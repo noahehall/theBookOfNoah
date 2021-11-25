@@ -4,7 +4,7 @@
 # returns current dir or concats string to create absolute path
 function getpath() {
     # https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself
-    local THISDIR="$( cd "$( echo "${BASH_SOURCE[0]%/*}" )"; pwd )"
+    local THISDIR="$( cd "$( echo "${BASH_SOURCE[0]%/*}" )" || exit; pwd )"
 
     if [[ $# -lt 1 ]]; then
         # no filename
@@ -28,4 +28,11 @@ function sourceifexists() {
 function_exists() {
      declare -f -F "$1" > /dev/null
      return $?
+}
+
+# aws ----------------------------------
+awsprofileset() {
+    if [[ $# -eq 1 ]]; then
+        export AWS_DEFAULT_PROFILE="$1"
+    fi
 }
