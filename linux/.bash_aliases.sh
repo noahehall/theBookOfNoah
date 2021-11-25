@@ -85,6 +85,7 @@ alias tfrefresh='terraform apply -refresh-only'
 ## quick
 alias gita='git add -A'
 alias gitb='git branch'
+alias gitba='git branch -a'
 alias gitc='git commit -a -m'
 alias gitl='git log --oneline'
 alias gitp='git push'
