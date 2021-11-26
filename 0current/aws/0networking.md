@@ -36,6 +36,10 @@ vpc, gateways, route tables, subnets, load balancers
 
 ### gotchas
 
+- securing traffic
+  - public internet > internet gateway > VPC > NACL > public subnet > route table > security group > some resource
+    - simplified^
+
 - subbnets
   - aws reserves the first 3 ips in every subnet for internal routing purposes
   - subnets not explicitly associated with a route table, end up in the VPCs main route table
@@ -187,6 +191,18 @@ vpc, gateways, route tables, subnets, load balancers
     - e.g. domain name, domain name server, etc
   - e.g. specify your own DNS servers
   - a VPC can only have 1 DHCP option set
+
+- network access control lists (pronounced NACL) (are real firewalls unlike security groups)
+  - are specific to a single VPC
+  - have 1:M relationship with subnets, 1 nacle: many subnets
+  - are stateless: rules to allow network traffic must be explicitly configured
+    - have allow & deny traffic rules (unlike security groups which only allow)
+    - have an implicit deny
+      - so for each inbound allow, you may have to create an outbound allow as well (and vice versa)
+  - rules are processed in numerical order
+    - the first successful rule stops the processing chain
+  - default NACL created with a new vpc
+    - permit all traffic in both directions (encourages use of security groups)
 
 ### default VPC
 
