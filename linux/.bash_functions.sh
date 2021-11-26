@@ -50,7 +50,7 @@ awscreatekeypair() {
 
 }
 
-awscreatesubnettest() {
+awscreatesubnet() {
     if [[ $# -eq 4 ]]; then
         echo 'subnet creation dry-run'
         echo 'ec2 create-subnet --dry-run --vpc-id "$1" --cidr-block "$2" --availability-zone "$3" --profile "$4"'
@@ -66,4 +66,14 @@ awscreatesubnettest() {
         echo '$4 profile'
         echo '$5 truthy: create resource'
     fi
+}
+
+awscreatetags() {
+    # $1 reource ids
+    # $2 tagKey e.g. Name
+    # $3 tagValue e.g. poop-dev
+    # $4 profile
+
+    # aws ec2 create-tags --resources $1 --tags Key=$2,Value=$3 --profile $4
+    echo 'not setup'
 }
