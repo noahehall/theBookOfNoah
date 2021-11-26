@@ -40,6 +40,7 @@ vpc, gateways, route tables, subnets, load balancers
 ## vpc
 
 - vpc: isolated network within your aws account in a specific region
+  - as big as a /16 and as small as a /28
 
 - subnets: a range (subset) of ips within a vpc
   - the larger the cidr, the smaller the number of ips
