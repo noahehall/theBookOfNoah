@@ -56,11 +56,14 @@ awscreatesubnettest() {
         echo 'ec2 create-subnet --dry-run --vpc-id "$1" --cidr-block "$2" --availability-zone "$3" --profile "$4"'
 
         aws ec2 create-subnet --dry-run --vpc-id "$1" --cidr-block "$2" --availability-zone "$3" --profile "$4"
+    elif [[ $# -eq 5 ]]; then
+        aws ec2 create-subnet --vpc-id "$1" --cidr-block "$2" --availability-zone "$3" --profile "$4"
     else
         echo 'expected params'
         echo '$1 vpc-id'
         echo '$2 cidr-block'
         echo '$3 az'
         echo '$4 profile'
+        echo '$5 truthy: create resource'
     fi
 }
