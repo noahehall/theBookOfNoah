@@ -40,6 +40,27 @@ todo: should be in order
 ## security groups
 
 - like a virtual firewal for various resources to control inbound/outbound traffic
+- work at the instance level: only apply to the resources they are assigned to
+- have separate inbound & outbound rules
+  - only suppors allow rules (i.e. you block traffic)
+  - by default, all outbound is permitted, and all inbound is blocked
+- are stateful
+  - if you send a request from an instance, the response is allowed to flow in regardless of rules
+    - so make sure you dont connect to vulnerable hosts
+
+### security group considerations
+
+- type
+- protocol
+- port range
+- source
+
+## keypairs
+
+- public key cryptography: asymmetric cryptography
+  - the key used to encrypt the data, cannot be used to decrypt (thats why you need two)
+- public key: used to encrypt data
+- private key: used to decrypt data
 
 ## IAM
 
