@@ -2,7 +2,9 @@
   top of page, then just keep fkn clicking next at the bottom
   ^ this shit iz massive
 
-# everything s3
+# TLDR
+
+s3, ebs volumes
 
 ## links
 
@@ -181,7 +183,7 @@
         - public bucket policy
         - bucket ACL grants `WRITE|FULL_CONTROL` to `All Users` group or `anonymous user` specifically
 
-## workflows
+### workflows
 
 ### CRUD
 
@@ -267,3 +269,13 @@
   - s3 block public access: enable/disable public access
   - AWS IAM: provide access to specific users in your account
   - bucket policies
+
+## ebs volumes
+
+- elastic block storre
+  - block level storage volumes for use with ec2 instances
+  - raw unformated storage volumes (i.e. no file system)
+  - ec2 can have multiple volumes, but only one volume can be attached to one instance
+    - many to one
+    - volume & instance must be in the same AZ
+  - can persist beyond the life of the ec2

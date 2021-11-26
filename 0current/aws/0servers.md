@@ -28,7 +28,7 @@
 
 ### terms
 
-- ami: operating system images
+- ami: images containing operating system, applications, configuration
 - security groups: virtual firewalls
 
 - instance ID: the unique identifier for a specific ec2 instance
