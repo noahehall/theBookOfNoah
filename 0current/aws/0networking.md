@@ -45,9 +45,36 @@ vpc, gateways, route tables, subnets, load balancers
 
 - virtual private gateway: enable external resources to connect privately to resources within a vpc
 
-- transit gateway: simplify network management across multiple VPCs &/ local data centers
+- transit gateway: simplify network management across multiple VPCs &/ on premise data centers
+  - e.g. an on premis
+
+- customer gateway: CG: on premise; physical networking appliance, to which all aws bound network traffic is anchored
+  - you buy it from like cisco
+  - it creates the IPsec tunnel
+
+- virtual private gateway: VPG: the virtual counterpart to a customer gateway; resides in aws; the anchor point for all customer gateway network traffic
+
+- site-to-site vpn: enables machines in a local data center (e.g. within a customer gateway) to connect to aws resources (e.g. via a virtual private gateway)
+  - network traffic flows securely over a vpn tunnel
+
+- IPsec tunnel: internet protocol security vpn tunnel
+  - needs an anchor configured on both sides to work
+    - within aws: use a VPG and attach it to resources within AWS
+    - on premise: use a CG:
+    - the traffice is routed over the public internet
+
+- direct connect: alternative to the IPsec tunnel architecture
+  - purchased from AWS
+  - dedicated network connection to AWS
+  - establishes a physical link from the router you own, and an AWS direct connect router
+    - the traffic is routed over AWS network (not the public)
 
 - peering connection: establish connections between VPCs
+
+- vpc peering: connect privately between AWS VPCs within different organizations
+  - doesnt need a gateway/vpn connection
+  - makes use of internal AWS routing infrastructure
+  - connections can span regions
 
 - DHCP option set: create your own DHCP options
   - e.g. specify your own DNS servers
