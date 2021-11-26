@@ -15,6 +15,16 @@ vpc, gateways, route tables, subnets, load balancers
   - tuts
     - [deleting a VPC](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html#VPC_Deleting)
 
+## basics
+
+### best practices / gotchas
+
+- always
+  - create your own vpc
+- sometimes
+- never
+- gotchas
+
 ## vpc
 
 - vpc: isolated network within your aws account in a specific region
@@ -46,7 +56,7 @@ vpc, gateways, route tables, subnets, load balancers
 - virtual private gateway: enable external resources to connect privately to resources within a vpc
 
 - transit gateway: simplify network management across multiple VPCs &/ on premise data centers
-  - e.g. an on premis
+  - Transit Gateway connects on-premises resources to VPCs using a centralized hub. VPC Peering connects VPCs with each other, DirectConnect provides dedicated bandwidth, and a site-to-site VPN is a software approach for securing traffic.
 
 - customer gateway: CG: on premise; physical networking appliance, to which all aws bound network traffic is anchored
   - you buy it from like cisco
@@ -80,6 +90,39 @@ vpc, gateways, route tables, subnets, load balancers
   - e.g. specify your own DNS servers
   - a VPC can only have 1 DHCP option set
 
+### default VPC
+
+- components
+  - vpc cidr block: `172.31.0.0/16` 65k ips
+    - for all default vpcs in all regions
+  - creates a subnet in each availability zone in its each region
+    - has a cidr of `/20` 4k usable ips
+  - internet gateway
+  - route table:
+    - single rule that sends all outband traffic to the internet gateway
+  - security group:
+  - network ACL: allows all in/out traffic
+
+- use cases: where all ec2 instances get dumped if they arent assigned to a vpc
+
 ## route 53
 
 - dns & traffic flow management
+- name address resolution: nirv.ai > 123.123.123.123
+
+- DNS failover: can detect website outage and redirect requests to a different IP
+  - sends people to regionA, when it detects traffic failure, it can reroute to regionB
+
+- global traffic management: create traffic policies that optimize network flow
+  - weighted round robin: i.e send 60% of traffic to regionA, and 40% to regionB
+  - latency-base routing: each DNS query will take the originating IP into account, compare the latency to available regions, and direct traffic to the one with the lowest latency
+  - geolocation (geo dns) routing: route traffic to regions based on the originating IP
+    - you have to configure a `default record resource set`
+    - e.g. make application inaccessible from a specific country.
+
+- private DNS for within AWS VPC
+- cloudfront as the zone apex within route53
+  - zone apex: a root domain (e.g. www.mycompany.com)
+- s3 as the zone apex
+- ELB as the zone apex
+  - route53 will handle the health checks for each instance behind the ELB

@@ -37,6 +37,7 @@ repeat the last video; too many distractions
 
 ## links
 
+- [all aws resources](https://registry.terraform.io/providers/hashicorp/aws/latest)
 - [webgraphviz](http://webgraphviz.com/)
   - never use this for anyting private
   - copypasta `terraform graph` output into it
