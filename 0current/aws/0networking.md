@@ -35,6 +35,7 @@ vpc, gateways, route tables, subnets, load balancers
     - if you do, [recreate it via the cli](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#create-default-vpc)
 - gotchas
   - aws reserves the first 3 ips in every subnet for internal routing purposes
+  - subnets not explicitly associated with a route table, end up in the VPCs main route table
 
 ## vpc
 
@@ -48,9 +49,10 @@ vpc, gateways, route tables, subnets, load balancers
     - public: for public resources
       - should point to the internet gateway
 
-- route tables: specify how traffic flows in/out of subnets
-  - i.e. a router: directs traffic between subnets
+- route tables: specify how vpc traffic flows in/out of subnets
+  - controls subnet routing directs traffic between subnets
     - e.g. specify how a resource in a private subnet can connect to something in a public subnet
+  - default route table: can be modified but not deleted
 
 - internet gateway: allows resources within a VPC access to the public internet
 
@@ -132,14 +134,16 @@ vpc, gateways, route tables, subnets, load balancers
   - ipv4 cidr block
   - ipv6 cidr block
   - tenancy
-- route table
+
+- route table (main)
 - network acl (pronounced NACL)
 - subnets
   - public
     - internet gateway
+    - route table
   - private
     - nat gateway
-    - y
+    - route table
   - vpc
   - availability zone
   - ipv4 cidr block
