@@ -29,6 +29,7 @@ vpc, gateways, route tables, subnets, load balancers
     - vpc: provides a holistic view of all VPC components in all regions
       - can also drill down to a specific region
 - sometimes
+  - you can permit TCP outbound traffic on ports 32768-61000 to catch all linux ephemeral ports
 - never
   - delete the default VPC
     - renders some services unusable
@@ -37,8 +38,7 @@ vpc, gateways, route tables, subnets, load balancers
 ### gotchas
 
 - securing traffic
-  - public internet > internet gateway > VPC > NACL > public subnet > route table > security group > some resource
-    - simplified^
+  - public internet > internet gateway > VPC > NACL > subnet > route table > security group > some resource
 
 - subbnets
   - aws reserves the first 3 ips in every subnet for internal routing purposes
@@ -192,7 +192,7 @@ vpc, gateways, route tables, subnets, load balancers
   - e.g. specify your own DNS servers
   - a VPC can only have 1 DHCP option set
 
-- network access control lists (pronounced NACL) (are real firewalls unlike security groups)
+- network ACL: access control lists (pronounced NACL) (are real firewalls unlike security groups)
   - are specific to a single VPC
   - have 1:M relationship with subnets, 1 nacle: many subnets
   - are stateless: rules to allow network traffic must be explicitly configured
