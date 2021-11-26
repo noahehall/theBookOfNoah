@@ -52,38 +52,6 @@ todo: should be in order
 
 ### gotchas
 
-- security groups are region specific
-
-## security groups
-
-- tool to control inbound & outbound network traffic to resources in AWS
-- work at the component level: only apply to the specific resources they are assigned to (e.g. a specific ec2 instance)
-- like a virtual firewall for various resources to control inbound/outbound traffic
-  - have separate inbound & outbound rules
-    - by default
-      - all outbound is permitted
-      - and all inbound is blocked
-  - only suppors allow rules (i.e. you block traffic)
-  - are stateful
-    - if you send a request from an instance, the response is allowed to flow in regardless of rules
-      - so make sure you dont connect to vulnerable hosts
-  - performance considerations: the more rules you apply, the greater the impact
-    - defaults
-      - 2500 security groups per VPC
-      - 5 security groups per network interface
-      - each security group can have 60 inbound + 60 outbound rules (total 120)
-        - caleculated independnetly for ipv4 and ipv6
-
-### security group considerations
-
-- type
-- protocol
-- port range
-- source
-
-- ec2
-  - to connect to instances, ensure ssh is enabled
-
 ## keypairs
 
 - public key cryptography: asymmetric cryptography

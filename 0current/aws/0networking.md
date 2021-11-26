@@ -17,7 +17,7 @@ vpc, gateways, route tables, subnets, load balancers
 
 ## basics
 
-### best practices / gotchas
+### best practices
 
 - always
   - never use any of the default resources (vpc, subnets, security groups, etc)
@@ -33,9 +33,50 @@ vpc, gateways, route tables, subnets, load balancers
   - delete the default VPC
     - renders some services unusable
     - if you do, [recreate it via the cli](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#create-default-vpc)
-- gotchas
+
+### gotchas
+
+- subbnets
   - aws reserves the first 3 ips in every subnet for internal routing purposes
   - subnets not explicitly associated with a route table, end up in the VPCs main route table
+  - you cannot alter the default route table that allows traffic on the same subnet
+    - so any resource to resource connectivity problems must be at the security group level
+- security groups
+  - are region specific
+  - treats internal AWS resources as external resources if the traffic flows on the public internet
+    - thus you need to specifically allow other AWS resources (even in the same VPC) access via the security groups
+      - do this by adding linking security groups, each attached to the resources you want to connect, add an inbound rule to the one receiving the connection, permitting the security group sending the connection
+    - or you can connect them (e.g. via PrivateLink) using the internal AWS network
+
+## security groups
+
+- tool to control inbound & outbound network traffic to resources in AWS
+- work at the component level: only apply to the specific resources they are assigned to (e.g. a specific ec2 instance)
+- like a virtual firewall for various resources to control inbound/outbound traffic
+  - have separate inbound & outbound rules
+    - by default
+      - all outbound is permitted
+      - and all inbound is blocked
+  - only suppors allow rules (i.e. you block traffic)
+  - are stateful
+    - if you send a request from an instance, the response is allowed to flow in regardless of rules
+      - so make sure you dont connect to vulnerable hosts
+  - performance considerations: the more rules you apply, the greater the impact
+    - defaults
+      - 2500 security groups per VPC
+      - 5 security groups per network interface
+      - each security group can have 60 inbound + 60 outbound rules (total 120)
+        - caleculated independnetly for ipv4 and ipv6
+
+### security group considerations
+
+- type
+- protocol
+- port range
+- source
+
+- ec2
+  - to connect to instances, ensure ssh is enabled
 
 ## vpc
 
@@ -162,7 +203,7 @@ vpc, gateways, route tables, subnets, load balancers
 
 - use cases: where all ec2 instances get dumped if they arent assigned to a vpc
 
-## creating VPCs
+### creating VPCs
 
 - vpc templates: click `launch vpc wizard` on the vpc dashboard
   - `vpc with a single subnet`
