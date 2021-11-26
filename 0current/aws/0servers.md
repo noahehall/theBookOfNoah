@@ -46,6 +46,33 @@
     - oracle: ec2-user
     - bitname: bitname
 
+### considerations
+
+- ec2
+  - ami
+  - type: e.g. micro/nano
+  - number of instances
+  - spot instances
+  - network
+  - subnet
+  - public ip
+  - hostname type
+  - dns hostname
+  - placement group
+  - capacity reservation
+  - domain join directory
+  - iam role
+  - shutdown bheavior
+  - stop -hiernate behavior
+  - termination protection
+  - monitoring
+  - tenancy
+  - elastic inference
+  - credit specification
+  - file system
+  - storage
+  - security group
+
 ## workflows
 
 ### quickies
