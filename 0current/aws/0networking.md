@@ -17,6 +17,8 @@ vpc, gateways, route tables, subnets, load balancers
 
 ## basics
 
+- bastion host: a server that provides access to a private network from an external network (e.g. the internet)
+
 ### best practices
 
 - always
@@ -59,6 +61,10 @@ vpc, gateways, route tables, subnets, load balancers
     - thus you need to specifically allow other AWS resources (even in the same VPC) access via the security groups
       - do this by adding linking security groups, each attached to the resources you want to connect, add an inbound rule to the one receiving the connection, permitting the security group sending the connection
     - or you can connect them (e.g. via PrivateLink) using the internal AWS network
+- vpc peering
+  - The IP space cannot overlap.
+  - after creating the VPC peer in one VPC, you have to accept the request in the other
+  - basic workflow: Configure VPC peering and the appropriate security group/NACL/route table settings.
 
 ## security groups
 
@@ -168,6 +174,20 @@ vpc, gateways, route tables, subnets, load balancers
 
 - transit gateway: simplify network management across multiple VPCs &/ on premise data centers
   - Transit Gateway connects on-premises resources to VPCs using a centralized hub. VPC Peering connects VPCs with each other, DirectConnect provides dedicated bandwidth, and a site-to-site VPN is a software approach for securing traffic.
+  - use cases
+    - centralizes & simplifies regional network management for a given region in single hub
+      - ^ implements a HUB (the transit gateway) and SPOKE (vpcs, on premise data centers, etc) model
+    - everything is connected to the HUB which manages the route configuration
+    - works with multiple VPCs to manage traffic between them
+    - can be peered across multiple AWS accounts
+    - works with multiple VPN connections
+    - works with AWS direct connect gateway
+    - improved security posture
+      - uses AWS internal infrastructure so all connections are private
+      - peered connection traffic is encrypted
+      - highly available
+    - billed per hour, & per gb
+      - only use for complex setups
 
 - customer gateway: CG: on premise; physical networking appliance, to which all aws bound network traffic is anchored
   - you buy it from like cisco
@@ -189,8 +209,6 @@ vpc, gateways, route tables, subnets, load balancers
   - dedicated network connection to AWS
   - establishes a physical link from the router you own, and an AWS direct connect router
     - the traffic is routed over AWS network (not the public)
-
-- peering connection: establish connections between VPCs
 
 - vpc peering: connect privately between AWS VPCs (within same/diff accounts/organizations)
   - doesnt need a gateway/vpn connection
@@ -277,6 +295,15 @@ vpc, gateways, route tables, subnets, load balancers
     - allocate a section of the VPC cidr
     - you generally need more IPs for private subnets
   - vpc endpoints
+
+- transit gateway
+  - attachment: what can be connected
+  - route table
+    - 1:M with attachment
+  - associations
+  - route propagation
+    - routes dynamically propagated to route tables
+    - ^ but vpcs require static routes with transit gateways
 
 ## route 53
 
