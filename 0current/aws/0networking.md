@@ -32,8 +32,8 @@ vpc, gateways, route tables, subnets, load balancers
   - setup new Network ACL on your VPCs to deny traffic on ports your not using, from IPs your not expecting
     - NACLs are the only way to set deny rules, and take precedence over security groups
     - ^ especiialy deny inbound traffic to databases & internal apps
+    - you can permit TCP outbound traffic on ports `32768-61000` to catch all linux ephemeral ports
 - sometimes
-  - you can permit TCP outbound traffic on ports 32768-61000 to catch all linux ephemeral ports
 - never
   - delete the default VPC
     - renders some services unusable
