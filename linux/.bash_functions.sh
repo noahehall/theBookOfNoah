@@ -77,6 +77,17 @@ awscreateroutetable() {
     echo 'not setup'
 }
 
+awscreateroutetableroute() {
+    # $1 route table ID (make sure its the one attached to the subnet you want)
+    # $2 destination (ip cidr range)
+    # $3 this links it to an internet gateway
+    # ^ may have to update this fn in the future to specify a different target
+    # $4 profile name
+
+    # aws ec2 create-route --route-table-id $1 --destination-cidr-block $2 --gateway-id $3 --profile $4
+    echo 'not setup'
+}
+
 awscreateinternetgateway() {
     # $1 profile
     # aws ec2 create-internet-gateway --profile $1
@@ -98,5 +109,13 @@ awslinkroutetable() {
     # $2 subnet-id
     # $3 profile
     # aws ec2 associate-route-table --route-table-id $1 --subnet-id $2 --profile $3
+    echo 'not setup'
+}
+
+awslinkinternetgateway() {
+    # $1 gateway id
+    # $2 vpc id
+    # $3 profile
+    # aws ec2 attach-internet-gateway --internet-gateway-id $1 --vpc-id $2 --profile $3
     echo 'not setup'
 }
