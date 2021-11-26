@@ -55,6 +55,10 @@ vpc, gateways, route tables, subnets, load balancers
   - default route table: can be modified but not deleted
 
 - internet gateway: allows resources within a VPC access to the public internet
+  - redundancy built in
+  - highly available (i.e. you only need 1 per vpc)
+  - configure subnet route tables to use the internet gateway
+  - provides NAT for instances with a public IP
 
 - NAT gateway: enable resources in a private subnet to initiate & connect to the public internet
   - network address translation
@@ -135,7 +139,12 @@ vpc, gateways, route tables, subnets, load balancers
   - ipv6 cidr block
   - tenancy
 
-- route table (main)
+- internet gateway
+  - vpc
+
+- route table
+  - destination (ip addr range e.g. 0.0.0.0/0)
+  - target (resource e.g. internet gateway id)
 - network acl (pronounced NACL)
 - subnets
   - public

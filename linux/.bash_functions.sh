@@ -72,16 +72,14 @@ awscreatesubnet() {
 
 awscreateroutetable() {
     # $1 vpc-id
-    # $1 profile
-    # aws ec2 create-route-table --vpc-id $1 --profile
+    # $2 profile
+    # aws ec2 create-route-table --vpc-id $1 --profile $2
     echo 'not setup'
 }
 
-awslinkroutetable() {
-    # $1 route table id
-    # $2 subnet-id
-    # $3 profile
-    # aws ec2 associate-route-table --route-table-id $1 --subnet-id $2 --profile $3
+awscreateinternetgateway() {
+    # $1 profile
+    # aws ec2 create-internet-gateway --profile $1
     echo 'not setup'
 }
 
@@ -92,5 +90,13 @@ awscreatetags() {
     # $4 profile
 
     # aws ec2 create-tags --resources $1 --tags Key=$2,Value=$3 --profile $4
+    echo 'not setup'
+}
+
+awslinkroutetable() {
+    # $1 route table id
+    # $2 subnet-id
+    # $3 profile
+    # aws ec2 associate-route-table --route-table-id $1 --subnet-id $2 --profile $3
     echo 'not setup'
 }

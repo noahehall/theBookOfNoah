@@ -1,16 +1,20 @@
 
 # TLDR
 
-- todo
-  - <https://aws.amazon.com/tools/>
-  - supported compliance standards: <http://aws.amazon.com/compliance/>
+cli, regions, azs, etc
+
+## todo
+
+- <https://aws.amazon.com/tools/>
+- supported compliance standards: <http://aws.amazon.com/compliance/>
 
 things that generally apply to all services
 
-- lot of things about IAM in here, move it into the IAM file
+- lot of things about IAM in here, move it into the 0security file
 
 ## links
 
+- [all cli cmds](https://docs.aws.amazon.com/cli/latest/reference/)
 - [aws docs index](https://docs.aws.amazon.com/index.html)
   - also probably the best overview of all services
 - [AWS glossary](https://docs.aws.amazon.com/general/latest/gr/glos-chap.html)
