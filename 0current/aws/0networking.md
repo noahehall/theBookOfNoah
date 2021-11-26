@@ -20,9 +20,16 @@ vpc, gateways, route tables, subnets, load balancers
 ### best practices / gotchas
 
 - always
-  - create your own vpc
+  - never use any of the default resources (vpc, subnets, security groups, etc)
+    - except the default `dhcp options set`
+      - this is the aws dns config
+    - go in an and set a name `default-dont-use`
+  -
 - sometimes
 - never
+  - delete the default VPC
+    - renders some services unusable
+    - if you do, [recreate it via the cli](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#create-default-vpc)
 - gotchas
 
 ## vpc
@@ -86,7 +93,9 @@ vpc, gateways, route tables, subnets, load balancers
   - makes use of internal AWS routing infrastructure
   - connections can span regions
 
-- DHCP option set: create your own DHCP options
+- DHCP option set: dynamic host configuration protocol
+  - pass config info to hosts on a TCP/IP network
+    - e.g. domain name, domain name server, etc
   - e.g. specify your own DNS servers
   - a VPC can only have 1 DHCP option set
 
@@ -104,6 +113,15 @@ vpc, gateways, route tables, subnets, load balancers
   - network ACL: allows all in/out traffic
 
 - use cases: where all ec2 instances get dumped if they arent assigned to a vpc
+
+## creating VPCs
+
+- vpc templates: create VPC architecture based on almost any network design
+  - click `launch vpc wizard` on the vpc dashboard
+  - `vpc with a single subnet`
+  - `vpc with public and private subnets`
+  - `vpc with public and private subnets and hardware vpn access`
+  - `vpc with a private subnet only and hardware vpn access`
 
 ## route 53
 
