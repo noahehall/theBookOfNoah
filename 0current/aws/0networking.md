@@ -87,9 +87,25 @@ vpc, gateways, route tables, subnets, load balancers
 
 - egress-only internet gateway: allows VPC ipv6 outbound (but denies inbound)
 
-- VPC endpoints: enable private access to other aws services without traversing the internet
-  - uses the AWS internal network
-    - e.g. to allow a public facing S3 bucket to connect to an app server in a private VPC subnet without using the public internet
+- VPC endpoints: enable resources within a VPC to privately access other AWS services without traversing the public internet
+  - PrivateLink: uses the internal aws network instead of the public internet
+    - per hourly charges
+    - per GB charges
+  - use cases
+    - private access: if one vpc service needs to talk to another service, just use privatelink
+    - simplifies network configuration (dont need an internet gateway)
+    - improved secuirty posture (less configuration, no public internet)
+  - types
+    - interface:
+      - powered by AWS PriateLink
+      - use an elastic interface (ENI) as an entry point for traffice destined to the service
+      - typically accessed using public/private dns name associated with the service
+    - gateway load balancer
+      - powered by AWS PriateLink
+      - use an elastic interface (ENI) as an entry point for traffice destined to the service
+      - serve as a target for a route in a route table for traffic destined for the service
+    - gateway
+      - serve as a target for a route in a route table for traffic destined for the service
 
 - virtual private gateway: enable external resources to connect privately to resources within a vpc
 
@@ -163,6 +179,15 @@ vpc, gateways, route tables, subnets, load balancers
 - internet gateway
   - vpc
 
+- vpc endpoints
+  - type
+  - aws service
+  - vpc
+  - route table
+  - subnets
+  - policy: what type of permissions do you want to provide to services using this endpoint to have for the AWS service the endpoint is associated with
+    - never do the default policy (which is full access)
+
 - route table
   - destination (ip addr range e.g. 0.0.0.0/0)
   - target (resource e.g. internet gateway id)
@@ -179,6 +204,7 @@ vpc, gateways, route tables, subnets, load balancers
   - ipv4 cidr block
     - allocate a section of the VPC cidr
     - you generally need more IPs for private subnets
+  - vpc endpoints
 
 ## route 53
 
