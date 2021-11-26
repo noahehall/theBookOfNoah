@@ -49,3 +49,18 @@ awscreatekeypair() {
     fi
 
 }
+
+awscreatesubnettest() {
+    if [[ $# -eq 4 ]]; then
+        echo 'subnet creation dry-run'
+        echo 'ec2 create-subnet --dry-run --vpc-id "$1" --cidr-block "$2" --availability-zone "$3" --profile "$4"'
+
+        aws ec2 create-subnet --dry-run --vpc-id "$1" --cidr-block "$2" --availability-zone "$3" --profile "$4"
+    else
+        echo 'expected params'
+        echo '$1 vpc-id'
+        echo '$2 cidr-block'
+        echo '$3 az'
+        echo '$4 profile'
+    fi
+}

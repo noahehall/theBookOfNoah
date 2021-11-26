@@ -4,6 +4,8 @@ repeat the last video; too many distractions
 
 ## todo
 
+- [terraform import](https://www.terraform.io/docs/cli/import/usage.html)
+  - can only import one resource at a time (e.g. not an entire vpc)
 - move all of this into terraform.md
 - get a list of common AWS output vars
 - terraform

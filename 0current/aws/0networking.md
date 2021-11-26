@@ -24,19 +24,23 @@ vpc, gateways, route tables, subnets, load balancers
     - except the default `dhcp options set`
       - this is the aws dns config
     - go in an and set a name `default-dont-use`
-  -
+  - pick the right vpc cidr block (it cant be changed later), e.g. use `192.168.0.0/22` (or another ip, but /22 is good)
+  - review the dashboards:
+    - vpc: provides a holistic view of all VPC components in all regions
+      - can also drill down to a specific region
 - sometimes
 - never
   - delete the default VPC
     - renders some services unusable
     - if you do, [recreate it via the cli](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#create-default-vpc)
 - gotchas
+  - aws reserves the first 3 ips in every subnet for internal routing purposes
 
 ## vpc
 
 - vpc: isolated network within your aws account in a specific region
 
-- subnets: a range of ips within a vpc
+- subnets: a range (subset) of ips within a vpc
   - the larger the cidr, the smaller the number of ips
   - can contain public/private resources
     - private: for private resources
@@ -116,12 +120,31 @@ vpc, gateways, route tables, subnets, load balancers
 
 ## creating VPCs
 
-- vpc templates: create VPC architecture based on almost any network design
-  - click `launch vpc wizard` on the vpc dashboard
+- vpc templates: click `launch vpc wizard` on the vpc dashboard
   - `vpc with a single subnet`
   - `vpc with public and private subnets`
   - `vpc with public and private subnets and hardware vpn access`
   - `vpc with a private subnet only and hardware vpn access`
+
+### vpc considerations
+
+- vpc
+  - ipv4 cidr block
+  - ipv6 cidr block
+  - tenancy
+- route table
+- network acl (pronounced NACL)
+- subnets
+  - public
+    - internet gateway
+  - private
+    - nat gateway
+    - y
+  - vpc
+  - availability zone
+  - ipv4 cidr block
+    - allocate a section of the VPC cidr
+    - you generally need more IPs for private subnets
 
 ## route 53
 

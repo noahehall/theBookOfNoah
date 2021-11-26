@@ -11,6 +11,14 @@
 - ami
   - [getting started](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html#finding-quick-start-ami)
 
+## basics
+
+### best practices
+
+- always
+  - view the dashboards
+    - [ec2 global dashboard](https://console.aws.amazon.com/ec2globalview/home)
+
 ## ec2
 
 ### use cases
