@@ -1,5 +1,7 @@
 # TLDR
 
+repeat the last video; too many distractions
+
 ## todo
 
 - move all of this into terraform.md
@@ -126,7 +128,27 @@
 
 ### aws
 
-#### amis
+#### security groups
+
+- basic firewall, assigned to many aws sources
+  - define which ips can connect to resource ips & ports
+
+#### vpc
+
+- isolated software defined network
+  - dont use the default one, just create one
+  - its more manageable
+
+- internet gateway
+  - routes requests from the public internet to the vpc and the vpc subnets
+
+- route tables
+  - routes traffic from the gateway t the vpc
+
+#### ec2s
+
+- FYI
+  - all ec2s must be assigned to a subnet
 
 - [see your subscriptions](https://console.aws.amazon.com/marketplace/home/subscriptions?#/subscriptions)
 - find one in the marketplace > subscribe > grab the ami id on the configuration page (but dont launch)
@@ -460,6 +482,15 @@
     push # update remote state, dont do this
     replace-provider
     show nameFromListCmd # show the state of a resource
+
+```
+
+### terraform data
+
+- data sources: allow a config to query for external query
+
+```sh
+
 
 ```
 
