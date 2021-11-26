@@ -114,3 +114,5 @@ sudo dkms remove 8814au -v 5.8.5.1 -k $(uname -r)
 sudo dkms uninstall rtl8814au -v 5.8.5.1
 sudo rm -rf /usr/src/rtl8814au-5.8.5.1/
 sudo rm -rf /usr/src/8814au-5.8.5.1/
+
+[sync computer & network time](https://www.howtogeek.com/tips/how-to-sync-your-linux-server-time-with-network-time-servers-ntp/)

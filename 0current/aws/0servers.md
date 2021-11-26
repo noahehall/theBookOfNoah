@@ -2,14 +2,31 @@
 
 ## links
 
-- reference
+- ec2
   - [ec2 instance IP addressing](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html)
 - tuts
   - [3 ways to connect to ec2 instances from linux](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html)
   - [ec2 key pairs & linux instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
   - [prereqs for connecting to an e2 instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connection-prereqs.html)
+- ami
+  - [getting started](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html#finding-quick-start-ami)
 
 ## basic
+
+### use cases
+
+- secure; resizable compute capacity in the cloud
+
+### best practices/gotchas
+
+- gotchas
+  - AMIs are region specific
+    - so an AMI ID for us-east-1 (nyc) wont work in us-west-2 (oregon)
+
+### terms
+
+- ami: operating system images
+- security groups: virtual firewalls
 
 - instance ID: the unique identifier for a specific ec2 instance
 - public DNS: the external DNS hostname e.g. `ec2-000-000-00-00.REGION_NAME.compute.amazonaws.com
