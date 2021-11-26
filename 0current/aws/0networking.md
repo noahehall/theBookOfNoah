@@ -61,8 +61,29 @@ vpc, gateways, route tables, subnets, load balancers
   - provides NAT for instances with a public IP
 
 - NAT gateway: enable resources in a private subnet to initiate & connect to the public internet
+  - requires an EIP
+    - useful for providing a consistent resource for apps & end users
+    - if an ec2/etc fails, you can reassign the IP
   - network address translation
   - has to be contained in a public subnet
+  - map multiple private hosts to a single internet routable IP address
+  - nat instance
+    - you create an ec2 within a public subnet,
+    - have to manage the server yourself: updates, patches, security, etc
+    - more operational responsbility & flexibility
+    - use cases
+      - able to specify a private IP
+      - supports port forwarding
+      - acts as a bastion host
+  - nat gateway (the managed service)
+    - you dont have to do anything
+    - use cases
+      - bandwidth can burst up to 456bps
+      - aws auto assigns a private IP from the subnet pool
+        - your infrastructure design should not be dependent on specific private IPs anyway
+      - does not support port forwarding
+      - inbound SSH via nat isnt supported
+      - more expensive (but think about the time saved too)
 
 - egress-only internet gateway: allows VPC ipv6 outbound (but denies inbound)
 
@@ -151,7 +172,7 @@ vpc, gateways, route tables, subnets, load balancers
     - internet gateway
     - route table
   - private
-    - nat gateway
+    - nat instance|natgateway
     - route table
   - vpc
   - availability zone
