@@ -15,7 +15,10 @@
 
 ### use cases
 
-- secure; resizable compute capacity in the cloud
+- ec2
+  - secure; resizable compute capacity in the cloud
+  - virtual machines you run in the cloud
+  - configure cpu, memory, storage & networking capabilities
 
 ### best practices/gotchas
 

@@ -45,10 +45,18 @@ things that generally apply to all services
       - [manage private keys (pem)](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-keypairs.html)
       - [import an existing key pair into aws](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-key-pair.html#examples)
 
+## basics
+
+### best practices/gotchas
+
+- gotchas
+  - not all services are available in all regions
+  - not all services cost the same in all regions
+- picking a region
+  - service availability, pricing, latency, compliance (law), SLAs
+
 ## terminology
 
-- region: a name set of AWS resources in the same geogrpahical area: contains at least 2 availability zones
-- availability zone: distinct location within a region thats insulated from failures in other availability zones
 - canonical ID: identifies a specific user/account/resource across all of AWS
   - anonymouse user: 65a011a29cdf8ec533ec3d1ccaae921c
 - groups
@@ -76,7 +84,6 @@ things that generally apply to all services
     - `arn:partition:service:::relative-id`
       - notice the region & namespace are missing
 
-- region
 - tags
   - to ensure tags are shown in dashboard columns, they must be case-sensitive
     - i.e. `Name` [dashboard] !== `name` [tag]
@@ -121,6 +128,18 @@ things that generally apply to all services
         - e.g. { StringEquals: { "conditionkey": "id=some-account-or-user"}}
           - grants the permission, if conditionKey === value
           - usually the conditionKey & value are specified in the header of the request
+
+## regions & azs
+
+- region: a geographic area
+  - a name set of AWS resources in the same geogrpahical area: contains at least 2 availability zones
+  - each region is isolated from each other
+  - each region has atleast 2 availability zones
+  - represented by `name-name-number`
+- availability zone: a distinct data center (or set of data centers) in a region
+  - distinct location within a region thats insulated from failures in other availability zones
+  - each AZ within are connected through low-latency links
+  - represented by a `letter`
 
 ## locations
 

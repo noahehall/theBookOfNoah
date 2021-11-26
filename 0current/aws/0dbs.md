@@ -1,16 +1,5 @@
 # TLDR
 
-amazon relational database service
-
-- todo
-  - ondemand db instances <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_OnDemandDBInstances.html>
-  - db instance billing <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/User_DBInstanceBilling.html>
-  - reserved db instances <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithReservedDBInstances.html>
-  - multi-az <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html>
-  - regions, avialability, local zones <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html>
-  - db instance storage <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html>
-  - db instance classes <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html>
-
 ## links
 
 - [user guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
@@ -43,7 +32,24 @@ amazon relational database service
   - [create an ec2 instance to connect to a db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateWebServer.html)
   - [local pgadmin connect to rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToPostgreSQLInstance.html)
 
-## basics
+  -
+
+## aurora
+
+Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, starting at <$1/day. Aurora supports up to 64TB of auto-scaling storage capacity, 6-way replication across three availability zones, and 15 low-latency read replicas
+
+## rds
+
+- todo
+  - ondemand db instances <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_OnDemandDBInstances.html>
+  - db instance billing <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/User_DBInstanceBilling.html>
+  - reserved db instances <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithReservedDBInstances.html>
+  - multi-az <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html>
+  - regions, avialability, local zones <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html>
+  - db instance storage <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html>
+  - db instance classes <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html>
+
+### basics
 
 - az: availablity zone; distinct data center in a specific region; reach region has at least two AZs
 - RDS: web service to setup, operate and scale a relational database in the AWS cloud
@@ -92,9 +98,9 @@ amazon relational database service
 - modules: i.e. postgres extensions
   - see modules available for your current version after logging into psql `SHOW rds.extensions;`
 
-## worfklows
+### worfklows
 
-### determining db instance requirements
+#### determining db instance requirements
 
 - resource reqs:
   - memory?
@@ -123,7 +129,7 @@ amazon relational database service
   - general purpose (SSD): i.e. gp2; faster access than disk-based
   - provisioned IOPS (PIOPS): the fastest; ideal for I/O-intensive workloads requireing storage performance and consistency in random I/O throughput
 
-### create a VPC security group to provide access to your db instance
+#### create a VPC security group to provide access to your db instance
 
 - if youre not using the default VPC, do the following to create a security group for a user-defined VPC
   - go the VPC console > security groups > create
@@ -190,7 +196,7 @@ amazon relational database service
 
 ```
 
-### postgres on RDS
+#### postgres on RDS
 
 - managed service running specific version of postgresql
 - use cases
@@ -206,7 +212,7 @@ amazon relational database service
     - protected health information (PHI) under a completed business associate agreement (BAA) wth AWS
     - federal risk & authorization  management program (FedRAMP) security requirements
 
-#### postgres upgrading major/minor versions
+##### postgres upgrading major/minor versions
 
 - types of upgrades
   - operating system upgrades: the underlying opreating system of the DB instance for secuirty fixes/OS changes
@@ -243,7 +249,7 @@ amazon relational database service
 
 ```
 
-#### connecting to db instance
+##### connecting to db instance
 
 - notes
   - rds doesnt permit host access to the DB instance (e.g. via telnet / ssh)
@@ -266,7 +272,7 @@ amazon relational database service
 - connect via pgadmin
 - connect via psql
 
-## quickies
+### quickies
 
 ```sh
   # always set the default profile
