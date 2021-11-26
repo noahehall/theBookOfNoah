@@ -22,17 +22,26 @@ vpc, gateways, route tables, subnets, load balancers
 - subnets: a range of ips within a vpc
   - the larger the cidr, the smaller the number of ips
   - can contain public/private resources
+    - private: for private resources
+      - should point to the NAT GATEWAY in the public subnet
+    - public: for public resources
+      - should point to the internet gateway
 
 - route tables: specify how traffic flows in/out of subnets
+  - i.e. a router: directs traffic between subnets
+    - e.g. specify how a resource in a private subnet can connect to something in a public subnet
 
-- internet gateway: allows VPCs access to the public internet
+- internet gateway: allows resources within a VPC access to the public internet
 
-- NAT gateway: enable resources in a private subnet connect to the public internet
+- NAT gateway: enable resources in a private subnet to initiate & connect to the public internet
   - network address translation
+  - has to be contained in a public subnet
 
 - egress-only internet gateway: allows VPC ipv6 outbound (but denies inbound)
 
 - VPC endpoints: enable private access to other aws services without traversing the internet
+  - uses the AWS internal network
+    - e.g. to allow a public facing S3 bucket to connect to an app server in a private VPC subnet without using the public internet
 
 - virtual private gateway: enable external resources to connect privately to resources within a vpc
 
