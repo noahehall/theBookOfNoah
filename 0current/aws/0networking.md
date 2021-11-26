@@ -94,6 +94,9 @@ vpc, gateways, route tables, subnets, load balancers
 
 - vpc: isolated network within your aws account in a specific region
   - as big as a /16 and as small as a /28
+    - the vpc cidr/block is called the `super net`, as it contains all IPs for all subnets, and thus all resources
+    - ^ e.g *the 10.0 super net*, or the *198.0 super net*
+      - ^ as *192.0.1* would be a specific subnet, and *192.0.1.0* would be a specific host
 
 - subnets: a range (subset) of ips within a vpc
   - the larger the cidr, the smaller the number of ips
