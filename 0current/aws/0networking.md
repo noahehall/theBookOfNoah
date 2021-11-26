@@ -43,7 +43,11 @@ vpc, gateways, route tables, subnets, load balancers
 
 - securing traffic
   - public internet > internet gateway > VPC > NACL > subnet > route table > security group > some resource
-
+- network traffic
+  - in a public/private subnet?
+  - how are subnet routetables configured?
+  - how are network ACLs configured?
+  - how are the security group configured?
 - subbnets
   - aws reserves the first 3 ips in every subnet for internal routing purposes
   - subnets not explicitly associated with a route table, end up in the VPCs main route table
@@ -185,10 +189,10 @@ vpc, gateways, route tables, subnets, load balancers
 
 - peering connection: establish connections between VPCs
 
-- vpc peering: connect privately between AWS VPCs within different organizations
+- vpc peering: connect privately between AWS VPCs (within same/diff accounts/organizations)
   - doesnt need a gateway/vpn connection
   - makes use of internal AWS routing infrastructure
-  - connections can span regions
+  - connections can span regions, accounts, organizations
 
 - DHCP option set: dynamic host configuration protocol
   - pass config info to hosts on a TCP/IP network
@@ -237,6 +241,9 @@ vpc, gateways, route tables, subnets, load balancers
   - ipv4 cidr block
   - ipv6 cidr block
   - tenancy
+  - vpc peering
+    - subnet
+      - route table
 
 - internet gateway
   - vpc

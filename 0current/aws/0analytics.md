@@ -7,6 +7,8 @@ cloudtrail, cloudwatch, VPC flow logs
 - created per VPC
   - viewing: vpc > flow logs tab in middle (not left sidebar) click the destination > click the ENI from the list
   - [good text filter patterns](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html#matching-terms-events)]
+    - REJECT
+    - ACCEPT
   - creating: vpc > click vpc > actions drop down
 - capture all VPC network interfaces at 15 minute intervals
 - are stored in cloudwatch
