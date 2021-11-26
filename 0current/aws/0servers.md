@@ -11,7 +11,7 @@
 - ami
   - [getting started](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html#finding-quick-start-ami)
 
-## basic
+## ec2
 
 ### use cases
 
@@ -19,6 +19,7 @@
   - secure; resizable compute capacity in the cloud
   - virtual machines you run in the cloud
   - configure cpu, memory, storage & networking capabilities
+  - spot instances: launched via unused e2 capacity at a reduced price
 
 ### best practices/gotchas
 
@@ -45,7 +46,7 @@
     - oracle: ec2-user
     - bitname: bitname
 
-### considerations
+### ec2 considerations
 
 - ec2
   - ami
@@ -57,11 +58,11 @@
   - public ip
   - hostname type
   - dns hostname
-  - placement group
+  - placement group: logical group of instances providing low latency & high throughput
   - capacity reservation
   - domain join directory
   - iam role
-  - shutdown bheavior
+  - shutdown behavior
   - stop -hiernate behavior
   - termination protection
   - monitoring
@@ -72,11 +73,4 @@
   - storage
   - security group
 
-## workflows
-
-### quickies
-
-```sh
-
-
-```
+- always change the default user password if using public AMIs

@@ -33,6 +33,22 @@ todo: should be in order
 
 ## basics
 
+### best practices
+
+- ALWAYS
+  - create an account-level analyzer in IAM Access Analyzer on a per-Region basis.
+  - create users with NO ATTACHED POLICIES to incrementally test policies as youre creating them
+    - once you have verified the policy, you can then force the new user to reset their password
+- SOMETIMES
+  - TBD
+- NEVER
+  - user the root account for common tasks
+  - make changes (like the following) in critical, high-avialaibity code paths since IAM is eventually consistent and takes time to replicate across servers
+    - creating updating users, groups or policies
+    - instead:
+      - make IAM changes in a serpate initialization/setup routing that you run less frequently
+      - verify changes have been propagated before production workflows depend on them
+
 ### gotchas
 
 - security groups are region specific
@@ -55,12 +71,18 @@ todo: should be in order
 - port range
 - source
 
+- ec2
+  - to connect to instances, ensure ssh is enabled
+
 ## keypairs
 
 - public key cryptography: asymmetric cryptography
   - the key used to encrypt the data, cannot be used to decrypt (thats why you need two)
 - public key: used to encrypt data
+  - is also stored on instances (e.g. ec2)
 - private key: used to decrypt data
+  - required to access instances (e.g. ec2)
+  - are regional:
 
 ## IAM
 
@@ -110,22 +132,11 @@ todo: should be in order
     - API/CLI: access key + secret key
       - any o the above could require MFA
 
-##### STS
+### IAM considerations
+
+- for ec2
+  - what is the ec2 doing? create a role that enables the ec2 to connect with other resources at the necessary permission levels
+
+## STS
 
 - STS: Security Token Service
-
-#### best practices
-
-- ALWAYS
-  - create an account-level analyzer in IAM Access Analyzer on a per-Region basis.
-  - create users with NO ATTACHED POLICIES to incrementally test policies as youre creating them
-    - once you have verified the policy, you can then force the new user to reset their password
-- SOMETIMES
-  - TBD
-- NEVER
-  - user the root account for common tasks
-  - make changes (like the following) in critical, high-avialaibity code paths since IAM is eventually consistent and takes time to replicate across servers
-    - creating updating users, groups or policies
-    - instead:
-      - make IAM changes in a serpate initialization/setup routing that you run less frequently
-      - verify changes have been propagated before production workflows depend on them
