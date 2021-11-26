@@ -24,16 +24,8 @@ alias installed='(dpkgi;apti) | less'
 alias whatsmyip="hostname -I | cut -d' ' -f1"
 alias whatsmyipexternal='curl -s http://ipecho.net/plain'
 
-# docker -------------------------------
-alias dockerseeme="$(echo docker run --rm -it alpine ping -c4 $(whatsmyip))"
-alias dockerps="docker ps --no-trunc -a --format 'table {{.Names}}...{{.Image}}...{{.Status}}...{{.Command}}\n'"
-alias dockerdremoteurl="sudo netstat -lntp | grep dockerd"
-alias dockerdlog="$(echo journalctl -u docker.service)"
-# get netstats (use ss on ubuntu)
-alias dockerdss="(sudo ss -asmpex | grep dockerd)"
-#echo image1 image2 three | xargall docker pull
-alias dockerinspect="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
 
+# random
 alias xargall='xargs -p -t -n 1'
 alias copyssh='pbcopy < ~/.ssh/id_rsa.pub'
 alias getwifi='sudo iwlist wlp3s0 scan | grep ESSID'
@@ -43,6 +35,7 @@ alias npmglobals='npm list -g --depth=0'
 alias numberofcores='cat /proc/cpuinfo | grep processor | wc -l'
 alias pbcopy='xclip -selection clipboard'
 alias seessh='cat ~/.ssh/id_rsa.pub'
+alias groupmembers='getent group'
 # alias ufwstatus='ufw status verbose'
 
 # can also add on a path at the end `sizeit ~/some/path`
@@ -54,8 +47,15 @@ alias prettyjson='python -m json.tool | less'
 # get all ufw firewall config files
 alias ufwconfigs='sudo find / -name "*.rules" -exec ls -l {} \; | grep ufw'
 
-# groupmembers docker
-alias groupmembers='getent group'
+# docker -------------------------------
+alias dockerseeme="$(echo docker run --rm -it alpine ping -c4 $(whatsmyip))"
+alias dockerps="docker ps --no-trunc -a --format 'table {{.Names}}...{{.Image}}...{{.Status}}...{{.Command}}\n'"
+alias dockerdremoteurl="sudo netstat -lntp | grep dockerd"
+alias dockerdlog="$(echo journalctl -u docker.service)"
+# get netstats (use ss on ubuntu)
+alias dockerdss="(sudo ss -asmpex | grep dockerd)"
+#echo image1 image2 three | xargall docker pull
+alias dockerinspect="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
 
 # node ---------------------------------
 alias npmglobals='npm list -g --depth=0'
@@ -114,8 +114,10 @@ alias aptfixbroken='sudo apt install --fix-broken'
 alias aptfixconfigure='sudo dpkg --configure --force-overwrite -a'
 alias aptsearchi3='sudo apt search ^i3xrocks'
 alias aptsearchlooks='sudo apt search ^regolith-look-'
+
 # aws ----------------------------------
 alias awsconfig='sudo aws configure'
 alias awsconfiglist='aws configure list'
 alias awsconfigprofiles='aws configure list-profiles'
 alias awsaccounts='aws iam list-account-aliases'
+alias awswhoami='aws sts get-caller-identity'
