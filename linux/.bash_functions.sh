@@ -36,3 +36,16 @@ awsprofileset() {
         export AWS_DEFAULT_PROFILE="$1"
     fi
 }
+
+awsregionset() {
+    if [[ $# -eq 1 ]]; then
+        export AWS_DEFAULT_REGION="$1"
+    fi
+}
+
+awscreatekeypair() {
+    if [[ $# -eq 1 ]]; then
+        aws ec2 create-key-pair --key-name "$1" --query 'KeyMaterial' --output text > "$1".pem
+    fi
+
+}
