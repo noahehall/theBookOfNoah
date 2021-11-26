@@ -31,6 +31,8 @@ function_exists() {
 }
 
 # aws ----------------------------------
+# @see https://github.com/donnemartin/saws
+
 awsprofileset() {
     if [[ $# -eq 1 ]]; then
         export AWS_DEFAULT_PROFILE="$1"
@@ -66,6 +68,21 @@ awscreatesubnet() {
         echo '$4 profile'
         echo '$5 truthy: create resource'
     fi
+}
+
+awscreateroutetable() {
+    # $1 vpc-id
+    # $1 profile
+    # aws ec2 create-route-table --vpc-id $1 --profile
+    echo 'not setup'
+}
+
+awslinkroutetable() {
+    # $1 route table id
+    # $2 subnet-id
+    # $3 profile
+    # aws ec2 associate-route-table --route-table-id $1 --subnet-id $2 --profile $3
+    echo 'not setup'
 }
 
 awscreatetags() {
