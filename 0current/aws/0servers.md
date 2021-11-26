@@ -29,7 +29,6 @@
 ### terms
 
 - ami: images containing operating system, applications, configuration
-- security groups: virtual firewalls
 
 - instance ID: the unique identifier for a specific ec2 instance
 - public DNS: the external DNS hostname e.g. `ec2-000-000-00-00.REGION_NAME.compute.amazonaws.com

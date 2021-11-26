@@ -279,3 +279,11 @@ s3, ebs volumes
     - many to one
     - volume & instance must be in the same AZ
   - can persist beyond the life of the ec2
+
+### considerations
+
+- size
+- volume type
+- IOPS
+- throughput
+- encryption
