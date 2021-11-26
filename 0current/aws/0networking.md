@@ -17,9 +17,32 @@ vpc, gateways, route tables, subnets, load balancers
 
 ## vpc
 
-- vpc: isolated network within your aws account
+- vpc: isolated network within your aws account in a specific region
+
 - subnets: a range of ips within a vpc
   - the larger the cidr, the smaller the number of ips
+  - can contain public/private resources
+
+- route tables: specify how traffic flows in/out of subnets
+
+- internet gateway: allows VPCs access to the public internet
+
+- NAT gateway: enable resources in a private subnet connect to the public internet
+  - network address translation
+
+- egress-only internet gateway: allows VPC ipv6 outbound (but denies inbound)
+
+- VPC endpoints: enable private access to other aws services without traversing the internet
+
+- virtual private gateway: enable external resources to connect privately to resources within a vpc
+
+- transit gateway: simplify network management across multiple VPCs &/ local data centers
+
+- peering connection: establish connections between VPCs
+
+- DHCP option set: create your own DHCP options
+  - e.g. specify your own DNS servers
+  - a VPC can only have 1 DHCP option set
 
 ## route 53
 
