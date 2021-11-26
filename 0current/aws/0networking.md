@@ -23,11 +23,15 @@ vpc, gateways, route tables, subnets, load balancers
   - never use any of the default resources (vpc, subnets, security groups, etc)
     - except the default `dhcp options set`
       - this is the aws dns config
-    - go in an and set a name `default-dont-use`
+    - go in an and set a name `default-dont-use` to all resources
   - pick the right vpc cidr block (it cant be changed later), e.g. use `192.168.0.0/22` (or another ip, but /22 is good)
   - review the dashboards:
     - vpc: provides a holistic view of all VPC components in all regions
       - can also drill down to a specific region
+    - ec2: the deashboard also provides a hostlic view
+  - setup new Network ACL on your VPCs to deny traffic on ports your not using, from IPs your not expecting
+    - NACLs are the only way to set deny rules, and take precedence over security groups
+    - ^ especiialy deny inbound traffic to databases & internal apps
 - sometimes
   - you can permit TCP outbound traffic on ports 32768-61000 to catch all linux ephemeral ports
 - never
