@@ -39,6 +39,7 @@ todo: should be in order
   - create an account-level analyzer in IAM Access Analyzer on a per-Region basis.
   - create users with NO ATTACHED POLICIES to incrementally test policies as youre creating them
     - once you have verified the policy, you can then force the new user to reset their password
+  - define your security groups broadly, so you dont have to manage hundreds/thousands of them per vpc
 - SOMETIMES
   - TBD
 - NEVER
@@ -55,14 +56,23 @@ todo: should be in order
 
 ## security groups
 
-- like a virtual firewal for various resources to control inbound/outbound traffic
-- work at the instance level: only apply to the resources they are assigned to
-- have separate inbound & outbound rules
+- tool to control inbound & outbound network traffic to resources in AWS
+- work at the component level: only apply to the specific resources they are assigned to (e.g. a specific ec2 instance)
+- like a virtual firewall for various resources to control inbound/outbound traffic
+  - have separate inbound & outbound rules
+    - by default
+      - all outbound is permitted
+      - and all inbound is blocked
   - only suppors allow rules (i.e. you block traffic)
-  - by default, all outbound is permitted, and all inbound is blocked
-- are stateful
-  - if you send a request from an instance, the response is allowed to flow in regardless of rules
-    - so make sure you dont connect to vulnerable hosts
+  - are stateful
+    - if you send a request from an instance, the response is allowed to flow in regardless of rules
+      - so make sure you dont connect to vulnerable hosts
+  - performance considerations: the more rules you apply, the greater the impact
+    - defaults
+      - 2500 security groups per VPC
+      - 5 security groups per network interface
+      - each security group can have 60 inbound + 60 outbound rules (total 120)
+        - caleculated independnetly for ipv4 and ipv6
 
 ### security group considerations
 
