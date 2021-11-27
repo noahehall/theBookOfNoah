@@ -396,9 +396,81 @@ vpc, gateways, route tables, subnets, load balancers
   - edge computing: customize how an application behaves based on location
     - also requires lambda
   - deep integration with other AWS services
+  - data from other aws services (e.g. s3 webhosting) into cloud front is at no cost
 - origin server: where cloudfront copies source resources (e.g. s3/ec2)
   - but can be external to AWS (but it costs more)
 - origin group: a primary + secondary origin servers
 - cache policy: how frequently cloudfront checks with the origin server for updates
 - price classes: each edge location has different prices
 - delivered logs to s3/kinesis data stream
+
+- reporting
+  - cache statistics
+    - select your cdn
+    - good reports
+      - total requests
+      - percentage of viewer requests by type
+  - popular objects
+    - select your cdn
+    - the right most columns containing the 2xx,3xx, etc are wher eyou hould focuse
+  - top referers
+    - select your cdn
+    - not specified: direct hits (e.g. a curl or typing the domain directly)
+  - usage
+    - select your cdn
+    - number of requests
+    - data transfered by protocol
+      - (drives cost)
+  - viewers section
+    - select your cdn
+    - devices tab
+    - browsers tab
+    - locations tab
+    - operating systems tab
+
+- blocking requests by location
+  - go to a distribution
+  - restrictions tab
+  - enable geo restriction
+    - no additional cost
+    - whitelist / blacklist specific countries
+
+### cloudfront considerations
+
+- origin
+  - origin domain
+  - origin path: e.g. subdir in an s3 bucket
+  - name: e.g. an s3 bucket
+  - s3 bucket access
+  - custom headers
+  - origin shield: additional caching layer
+  - connection attempts: i.e. to origin server content
+  - connection timeout: i.e. to origin server content
+  - response timeout
+  - keep-alive timeout
+- default cache behavior
+  - path pattern
+  - compress objects automatically
+- viewer
+  - viewer protocol policy
+  - allowed http methods
+  - restrict viewer access
+- cache key and origin requests
+  - cache policy and origin request policy
+    - cache policy: e.g. cachingOptmized for s3
+    - origin request policy: e.g. cors-s3origin
+  - legacy cache settings
+    - dont use this one unless necessary
+- response headers policy: e.g. cors with preflight + security headers policy
+- smooth streaming
+- field-level encryption
+- realtime logs
+- function associations (lambda)
+- price class
+- amazon WAF web ACL
+- alternative domain name
+- custom SSL ert
+- supported HTTP versions
+- default root object: e.g. an index.html
+- standard loggin
+- ipv6

@@ -1,6 +1,6 @@
 # TLDR
 
-security groups, key pairs, IAM, STS and Access Analyzer
+security groups, key pairs, IAM, STS, Access Analyzer, certifact manager
 
 <https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html>
   authorization

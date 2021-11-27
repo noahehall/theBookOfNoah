@@ -13,29 +13,26 @@
 
 ## basics
 
-### best practices
+### best practices / gotchas
 
 - always
   - view the dashboards
     - [ec2 global dashboard](https://console.aws.amazon.com/ec2globalview/home)
-
-## ec2
-
-### use cases
-
-- ec2
-  - secure; resizable compute capacity in the cloud
-  - virtual machines you run in the cloud
-  - configure cpu, memory, storage & networking capabilities
-  - spot instances: launched via unused e2 capacity at a reduced price
-
-### best practices/gotchas
-
+- sometimes
+- never
 - gotchas
   - AMIs are region specific
     - so an AMI ID for us-east-1 (nyc) wont work in us-west-2 (oregon)
 
-### terms
+## ec2
+
+- instance connect: connect to an instance from the browser
+
+- use cases
+  - secure; resizable compute capacity in the cloud
+  - virtual machines you run in the cloud
+  - configure cpu, memory, storage & networking capabilities
+  - spot instances: launched via unused e2 capacity at a reduced price
 
 - ami: images containing operating system, applications, configuration
 
