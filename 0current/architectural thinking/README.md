@@ -4,6 +4,8 @@
 
 ## quickies
 
+- [fault tolerance](https://en.wikipedia.org/wiki/Fault_tolerance)
+- [high availability](https://en.wikipedia.org/wiki/High_availability)
 - [101 guide to creating user flow diagrams](https://creately.com/blog/diagrams/user-flow-diagram/)
 - [KISS](https://en.wikipedia.org/wiki/KISS_principle)
 - [minimimalism](https://en.wikipedia.org/wiki/Minimalism#Software_and_UI_design)

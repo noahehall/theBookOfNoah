@@ -63,7 +63,8 @@
 - IaaS: infrastructure as a service
 - FaaS: functions as a service (serverless)
 
-- high availability
+- high availability: how long a given system functions in a specified period of time
+  - nothing works forever, so the period of time under consideration is important
 - eventually consistent
 - replication types
 - service mesh
@@ -111,7 +112,10 @@
 ### key goals
 
 - redundancy
-- fault-tolerance
+- fault tolerance: the degree to which a system operates in the presense of failing components
+  - load balancing
+  - state management
+  - redundancy
 - single dashboard view
 - streamlined way to promote changes between environments and across domains
 - interface to securely store, share and apply variables across environments and resources

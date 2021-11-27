@@ -59,10 +59,12 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
       - what type of Public IP? e.g. is it an EIP?
     - what are the security group settings?
       - they have to allow the protocol & port your using
+      - also confirm theres an outbound rule thats appropriate
     - what are the NACLs?
       - the nacle has to explicitly allow (both in and out) your protocol and port
     - what are the route tables?
       - there needs to be a route whose destination is the public internet & target is an internet gateway
+    - load balancer health checks?
   - useful tools
     - vpc flow logs
     - cloudwatch logs (for load balancers)
