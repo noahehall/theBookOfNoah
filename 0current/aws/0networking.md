@@ -383,3 +383,22 @@ vpc, gateways, route tables, subnets, load balancers
 - can be moved across VPCs
   - helpful for blue/green deployments
 - cannot be moved across regions
+
+## cloud front
+
+- content delivery network
+  - caches resources in AWS global edge network
+  - helps make regional resources (e.g. objects in s3) globally available
+- use cases
+  - low latency performance on a global scale
+  - integrated security
+    - shield advance + web application firewall
+  - edge computing: customize how an application behaves based on location
+    - also requires lambda
+  - deep integration with other AWS services
+- origin server: where cloudfront copies source resources (e.g. s3/ec2)
+  - but can be external to AWS (but it costs more)
+- origin group: a primary + secondary origin servers
+- cache policy: how frequently cloudfront checks with the origin server for updates
+- price classes: each edge location has different prices
+- delivered logs to s3/kinesis data stream
