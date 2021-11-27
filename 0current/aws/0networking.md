@@ -62,7 +62,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
     - what are the NACLs?
       - the nacle has to explicitly allow (both in and out) your protocol and port
     - what are the route tables?
-      - there needs to be a route outbound to the internet gateway
+      - there needs to be a route whose destination is the public internet & target is an internet gateway
   - useful tools
     - vpc flow logs
     - cloudwatch logs (for load balancers)
