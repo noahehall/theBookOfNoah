@@ -47,6 +47,26 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 
 ### gotchas
 
+- troubleshooting connectivity
+  - connecting to AWS resources
+    - anything in your local environment?
+      - firewalls, network settings, etc
+    - private subnet?
+      - you need a bastion host/private tunnel into the private subnet
+    - must be in a public subnet?
+      - does the resouce have a public IP?
+        - remember, the internal IP is only for internal AWS
+      - what type of Public IP? e.g. is it an EIP?
+    - what are the security group settings?
+      - they have to allow the protocol & port your using
+    - what are the NACLs?
+      - the nacle has to explicitly allow (both in and out) your protocol and port
+    - what are the route tables?
+      - there needs to be a route outbound to the internet gateway
+  - useful tools
+    - vpc flow logs
+    - cloudwatch logs (for load balancers)
+
 - securing traffic
   - public internet > internet gateway > VPC > NACL > subnet > route table > security group > some resource
 - network traffic
@@ -498,9 +518,11 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
     - use the AWS global network to facilitate speed
   - accelerator
     - uses the aws global network to provide consistent network experience (i.e stable network paths & hops)
+    - uses edge locations as an entry point to the AWS internal network.
     - **sends traffic directly to the origin service with no caching**
   - cloudfront
     - caches assets at edge locations
+    - CloudFront distributes content via edge locations,
     - **reduces load on the origin service via caching**
 
 - architecture
@@ -527,10 +549,52 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - ports
   - protocol
   - clientaffinity
-- endpoint groups
-  - region
-  - traffic dials
-- endpoints
-  - endpoint type (i.e. load balancers, ec2, eip)
-  - endpoint info
-  - weight
+  - endpoint groups
+    - region
+    - traffic dials
+  - endpoints
+    - endpoint type (i.e. load balancers, ec2, eip)
+    - endpoint info
+    - weight
+
+## api gateway
+
+- homogenous access to resource endpoints
+- route arbitrary (http/https/websocket) inbound requests to arbitrary aws services
+- front serverless (lambda) rest APIs behind an api gateway
+- front EBS behind an api gateway
+- api version management (via stages)
+- caching
+- costs
+  - super cheap inbound ($5/millions of requests)
+  - pricier for outbound (per gb)
+- setup restrictions based on
+  - rate limits
+  - access controls
+  - authorization via api keys
+- fault tolerant component to accomodate thousands of concurrent requests
+- htttp
+  - query string params
+  - request headers
+  - json
+  - xml
+  - etc
+- api keys
+
+### api gateway considerations
+
+- api type (http/s/websocket)
+- region
+- configure api gateway endpoint & resource
+- stages (e.g. dev, staging, prod)
+  - auto deploy
+- logging
+  - access logging
+  - cloudwatch log group
+- protect
+  - route throttling
+  - account throttling
+  - both
+    - rate limit
+    - burst limit
+- Route53 health checks
