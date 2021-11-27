@@ -122,6 +122,7 @@
 - single dashboard view
 - streamlined way to promote changes between environments and across domains
 - interface to securely store, share and apply variables across environments and resources
+- desigining for failure through high availability, redundancy and fault tolerance at every level of the stack (dns, server, dbs, storage, etc)
 
 - a system where contributors can efficiently
   - build, manage and scale platform architecture

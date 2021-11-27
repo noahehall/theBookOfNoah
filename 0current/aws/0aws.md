@@ -133,7 +133,19 @@ things that generally apply to all services
           - grants the permission, if conditionKey === value
           - usually the conditionKey & value are specified in the header of the request
 
+## key goal & design concepts
+
+- high availablity
+  - route 53 dns config
+  - regional load balancing across AZs
+  - elastic IP swapping across AZs in the event of failure
+  - Autoscaling with appropriate triggers
+
+- fault tolerance
+
 ## global architecture
+
+- aws divides the world into regions, azs, and edge locations
 
 ### regions & azs
 
@@ -146,6 +158,9 @@ things that generally apply to all services
   - distinct location within a region thats insulated from failures in other availability zones
   - each AZ within are connected through low-latency links
   - represented by a `letter`
+- edge locations
+  - independent of region & azs
+  - power cloudfront CDN
 
 ## file locations
 
