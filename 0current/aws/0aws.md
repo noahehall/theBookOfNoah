@@ -59,7 +59,7 @@ things that generally apply to all services
 - picking a region
   - service availability, pricing, latency, compliance (law), SLAs
 
-## terminology
+### terminology
 
 - canonical ID: identifies a specific user/account/resource across all of AWS
   - anonymouse user: 65a011a29cdf8ec533ec3d1ccaae921c
@@ -133,7 +133,9 @@ things that generally apply to all services
           - grants the permission, if conditionKey === value
           - usually the conditionKey & value are specified in the header of the request
 
-## regions & azs
+## global architecture
+
+### regions & azs
 
 - region: a geographic area
   - a name set of AWS resources in the same geogrpahical area: contains at least 2 availability zones
@@ -145,7 +147,7 @@ things that generally apply to all services
   - each AZ within are connected through low-latency links
   - represented by a `letter`
 
-## locations
+## file locations
 
 ```sh
 

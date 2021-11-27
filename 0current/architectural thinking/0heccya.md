@@ -64,7 +64,10 @@
 - FaaS: functions as a service (serverless)
 
 - high availability: how long a given system functions in a specified period of time
-  - nothing works forever, so the period of time under consideration is important
+  - everything fails all the time, so the period of time under consideration is important
+  - usually expressed in 9s, e.g. 99.99999999999999%
+  - ^ the more 9s, the more expensive
+    - see image in this directory
 - eventually consistent
 - replication types
 - service mesh
