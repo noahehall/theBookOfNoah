@@ -478,7 +478,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 - standard loggin
 - ipv6
 
-## global accerator
+## global accelerator
 
 - use cases
   - for national/global infrastructure
@@ -515,3 +515,22 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
     - network load balancers
     - eips
     - ec instances
+
+### global accelerator considerations
+
+- name
+- type
+  - standard
+  - custom routing
+- ip address type
+- listeners
+  - ports
+  - protocol
+  - clientaffinity
+- endpoint groups
+  - region
+  - traffic dials
+- endpoints
+  - endpoint type (i.e. load balancers, ec2, eip)
+  - endpoint info
+  - weight

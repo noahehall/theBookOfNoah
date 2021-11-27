@@ -30,6 +30,16 @@ function_exists() {
      return $?
 }
 
+timeresponse() {
+    if [[ $# -eq 1 ]]; then
+        while true; do
+            time curl "$1"
+            sleep 1
+        done
+    else
+        echo "\$1 === url"
+    fi
+}
 # aws ----------------------------------
 # @see https://github.com/donnemartin/saws
 
