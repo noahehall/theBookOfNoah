@@ -36,6 +36,7 @@ vpc, gateways, route tables, subnets, load balancers
     - ^ especiialy deny inbound traffic to databases & internal apps
     - you can permit TCP outbound traffic on ports `32768-61000` to catch all linux ephemeral ports
 - sometimes
+  - enable ssh & ICMP from anywhere while debugging
 - never
   - delete the default VPC
     - renders some services unusable
@@ -265,6 +266,7 @@ vpc, gateways, route tables, subnets, load balancers
   - vpc peering
     - subnet
       - route table
+  - private dns (route 53)
 
 - internet gateway
   - vpc
@@ -320,9 +322,64 @@ vpc, gateways, route tables, subnets, load balancers
     - you have to configure a `default record resource set`
     - e.g. make application inaccessible from a specific country.
 
-- private DNS for within AWS VPC
+- private DNS for a VPC: dns level routing
+  - domains can have public, and multiple private hosted zones
+    - public: for public internet traffic
+    - private: for internal AWS traffic
+      - e.g. if you want an alternative version of a site for IPs originating from a VPC
+      - a single domain routing requests to multiple VPCs/different resources in the same VPC
+      - `enableDnsHostnames` and `enableDnsSupport` must be true in the VPC config
+  - use cases
+    - setting up prod, dev, staging at the *same* domain
+    - let you test new application version without affecting production
+  - steps
+    - create a private hosted zone that points to a VPC
+    - create a simple A record pointing to a **private** IP address within the VPC
+
 - cloudfront as the zone apex within route53
   - zone apex: a root domain (e.g. www.mycompany.com)
 - s3 as the zone apex
 - ELB as the zone apex
   - route53 will handle the health checks for each instance behind the ELB
+
+- hosted zones: all the domains you managed with route 53
+  - SOA: start of authority
+  - NS: name records
+  - record sets: where should the domain be routed? for what type of request?
+    - A: ipv4 address
+      - create an EIP
+      - associate it with an ec2 instance
+      - update the A record(s) to point to this new EIP
+      - wait for DNS to propagate
+    - CNAME: canonical name
+    - MX: mail exchange
+    - AAAA: ipv6 address
+    - TXT: text
+    - PTR: pointer
+    - SRV: service locator
+    - SPF: sender policy fframework
+    - NAPTR: name authority pointer
+    - CAA: certification authority authorization
+    - NS: name server
+
+- Alias resource record set: aws specific extension to DNS
+  - alias cant point to any of the following (quick create record > a record > alias radio button)
+    - s3 bucket thats configured to host a static website
+    - elastic load balancer: e.g. when you have multiple ec2 instances behind the elb
+      - make app level changes, alter azs, incorporate autoscaling groups, etc. without reconfiguring DNS
+    - cloudfront distribution
+    - elastic beanstalk environment
+    - api gateway
+    - VPC interface endpoint
+  - manage the domain in route53
+
+## elastic ip
+
+- free if used with a running instance
+  - you just pay for the instance
+- static IP that can be associated with an ec2 instance
+- can move eip from one ec2 to another
+  - software defined networking (SDN) at its finest
+- can be moved across VPCs
+  - helpful for blue/green deployments
+- cannot be moved across regions

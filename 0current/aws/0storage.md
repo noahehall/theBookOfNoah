@@ -185,6 +185,14 @@ s3, ebs volumes
 
 ### workflows
 
+- static website hosting
+  - very useful if you setup route 53 alias record set (that points to the s3 bucket)
+  - steps
+    - verify s3 object permissions
+      - appropriate flies should be publicly available
+    - verify bucket permissions
+    - configure route53 alias record
+
 ### CRUD
 
 - prereqs
