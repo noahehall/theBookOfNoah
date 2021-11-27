@@ -1,6 +1,6 @@
 # TLDR
 
-vpc, gateways, route tables, subnets, load balancers
+vpc, gateways, route tables, subnets, load balancers, cloudfront, global accelerator, security groups, network acls, route53, elastic ip,
 
 ## links
 
@@ -35,8 +35,11 @@ vpc, gateways, route tables, subnets, load balancers
     - NACLs are the only way to set deny rules, and take precedence over security groups
     - ^ especiialy deny inbound traffic to databases & internal apps
     - you can permit TCP outbound traffic on ports `32768-61000` to catch all linux ephemeral ports
+
 - sometimes
   - enable ssh & ICMP from anywhere while debugging
+  - put an EIP infront of services to enable blue/green deployments and immutable infrastructure
+  - for absolute speed & security, stay off the public internet
 - never
   - delete the default VPC
     - renders some services unusable
@@ -474,3 +477,41 @@ vpc, gateways, route tables, subnets, load balancers
 - default root object: e.g. an index.html
 - standard loggin
 - ipv6
+
+## global accerator
+
+- use cases
+  - for national/global infrastructure
+  - isolate your infrastructure from general internet traffic patterns
+  - routes network traffic using AWS global network
+  - faster/more consistent network performance
+  - you get 2 static IP addresses to direct all your endpoint traffic through
+  - pay for access to a limited-access, relatively uncongested network highway
+    - a flat hourly fee
+    - cost per GB: which every direct has more % traffic
+      - outbound traffic
+      - inbound traffic
+      - per region?
+
+- global accelerator vs cloudfront
+  - both
+    - use the AWS global network to facilitate speed
+  - accelerator
+    - uses the aws global network to provide consistent network experience (i.e stable network paths & hops)
+    - **sends traffic directly to the origin service with no caching**
+  - cloudfront
+    - caches assets at edge locations
+    - **reduces load on the origin service via caching**
+
+- architecture
+  - accelerator: basically a load balancer
+  - listener: listens to inbound connections to the accelerator
+    - specify the ports & protocols
+  - endpoint groups: logical container for reosurces behind the accelerator
+    - specify the regions where the resources exist
+  - endpoints
+    - application load balancers
+    - elastic load balancers
+    - network load balancers
+    - eips
+    - ec instances
