@@ -14,6 +14,9 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
 - observability: properties of a system that can be monitored and provided as data for analytics
   - a measure of how well internal states of a system can be inferred from knowledge of its external outputs
 
+- protocols
+  - tcp = 6
+
 ## vpc flow logs
 
 - created per VPC
