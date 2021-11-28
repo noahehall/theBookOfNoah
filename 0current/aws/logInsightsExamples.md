@@ -20,4 +20,9 @@
 
 # hourly packet transfer in bytes
   stats sum(bytes) by bin(60m)
+
+# top 50 sources of traffic
+  stats sum(bytes) as totalTraffic by srcAddr
+    | sort totalTraffic desc
+    | limit 50
 ```

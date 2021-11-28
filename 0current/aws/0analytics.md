@@ -163,6 +163,8 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
 
 - cloudwatch dashboards
   - unified view for selected metrics & alarms
+  - assess the health of resources & application across one/more regions
+  - are global and no limit on how many to create
 
 ### cloudwatch considerations
 
@@ -203,3 +205,10 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
   - metrics to capture
   - method of instlaling & configuring agent on each server
     - you want to automate this in autoscaling scenarios
+
+- cloudwatch dashboards
+  - name of dashboard
+  - add widgets (types of graphs)
+  - namespaces (type of data, e.g. ec2, billing, etc)
+    - metrics
+      - color, label, statistic type (e.g. average, sum), sampling period
