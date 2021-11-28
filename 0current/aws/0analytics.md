@@ -2,6 +2,10 @@
 
 cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs
 
+## links
+
+- [all billing reports](https://console.aws.amazon.com/cost-management/home?#/reports/overview)
+
 ## basics
 
 - monitoring: process of observing systems in the present tense
@@ -58,10 +62,21 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs
   - post to sns topics
   - trigger lambda fns
   - supports automated elasticity
+  - billing alerts
+    - have to enable it in IAM
 - cloudwatch events: i.e. Amazon EventBridge
   - continuously monitor events patterns
   - trigger remediation actions via lambda fns
-
+- cloudwatch logs: collect & store logs from aws resources, applications & services in near realtime
+  - centralize logs in one place
+  - search, sort, filter & query for patterns
+  - group by specific fields
+  - visualize them in dashboads
+  - set a retention period
+  - log group
+    - a group of log streams that share the same retention & access control settings
+  - log streams
+    - sequence of log events that share the same source, e.g. the same ec2
 - namespace: isolated container for metrics
   - naming convention: AWS/Service, e.g. AWS/EC2
 - metrics: variables used to monitor a service
@@ -91,3 +106,30 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs
     - initiate ec2 autoscaling actions
     - etc
   - get a unified view
+    - billing
+
+### cloudwatch considerations
+
+- alarms
+  - type: billing, insufficient data, ok, etc
+  - metric name
+  - statistic
+  - period
+  - conditions
+    - type
+      - static
+      - anomaly detection
+    - threshold type
+      - >|>=|<=|<
+      - value
+    - datapoints to alarm: i.e. how many times to the condition must be true before the alarm executes
+  - actions
+    - alarm state trigger: the state of the condition when the alarm should activate
+      - in alarm: i.e. condition breached
+      - ok: condition is not breached
+      - insufficient data: i.e. theres not enough data to calculate the condition expression
+    - email endpoints: who receives the alarm, comma separated
+    - sns topic
+    - auto scaling action
+    - ec2 action
+    - systems management action
