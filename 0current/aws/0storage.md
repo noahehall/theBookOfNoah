@@ -4,7 +4,7 @@
 
 # TLDR
 
-s3, ebs volumes
+s3, ebs elastic block storage, efs elastic file system, amazon FSx
 
 ## links
 
@@ -278,20 +278,34 @@ s3, ebs volumes
   - AWS IAM: provide access to specific users in your account
   - bucket policies
 
-## ebs volumes
+## ebs
 
-- elastic block storre
-  - block level storage volumes for use with ec2 instances
+- elastic block storage
+  - block level storage volumes directly attached to an ec2 instance
+    - its like adding an extra harddrive to your laptop
   - raw unformated storage volumes (i.e. no file system)
   - ec2 can have multiple volumes, but only one volume can be attached to one instance
     - many to one
     - volume & instance must be in the same AZ
   - can persist beyond the life of the ec2
 
-### considerations
+### ebs considerations
 
 - size
 - volume type
 - IOPS
 - throughput
 - encryption
+- snapshots
+  - useful for creating AMIs
+
+## efs elastic file system
+
+- networked file system for linux machines
+- enables thousands of EC2 instances can concurrently accesss the same file system
+
+## amazon FSx
+
+- networked file system for windows machines/high performance workloads with using the luster filer system
+
+-

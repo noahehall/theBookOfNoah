@@ -1,5 +1,7 @@
 # TLDR
 
+dynamodb, rds, aurora (proprietary mysql), elasticache, keyspaces, neptune
+
 ## links
 
 - [user guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
@@ -282,3 +284,23 @@ Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, s
     aws rds describe-db-engine-versions --default-only --engine postgres
 
 ```
+
+## aurora
+
+- proprietary mysql
+
+## dynamodb
+
+- nosql db
+
+## elasticache
+
+- for in memory data, supports both redis & memcache
+
+## keyspaces
+
+- i.e. cassandra
+
+## neptune
+
+- a graph database

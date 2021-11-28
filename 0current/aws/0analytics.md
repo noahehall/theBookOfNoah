@@ -2,6 +2,14 @@
 
 cloudtrail, cloudwatch, VPC flow logs
 
+## basics
+
+- monitoring: process of observing systems in the present tense
+- analytics: turning data into insights
+- diagnostics: process of figuring out whats going wrong
+- observability: properties of a system that can be monitored and provided as data for analytics
+  - a measure of how well internal states of a system can be inferred from knowledge of its external outputs
+
 ## vpc flow logs
 
 - created per VPC

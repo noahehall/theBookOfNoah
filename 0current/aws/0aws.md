@@ -140,12 +140,17 @@ things that generally apply to all services
   - regional load balancing across AZs
   - elastic IP swapping across AZs in the event of failure
   - Autoscaling with appropriate triggers
+  - snapshots
+  - AMIs
 
 - fault tolerance
+  - appropriate storage & backup (s3, ebs elastic block storage)
+  - autoscaling: scale ec2 capacity up/down based on triggers
 
 ## global architecture
 
 - aws divides the world into regions, azs, and edge locations
+- operates at the hypervisor layer
 
 ### regions & azs
 

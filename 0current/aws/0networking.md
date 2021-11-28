@@ -562,6 +562,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 ## api gateway
 
 - homogenous access to resource endpoints
+- facilitates management of API performance
 - route arbitrary (http/https/websocket) inbound requests to arbitrary aws services
 - front serverless (lambda) rest APIs behind an api gateway
 - front EBS behind an api gateway
