@@ -48,11 +48,57 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
       - or select `FlowLogsRole` or something like that if it exists
       - use the one aws creates for you while you go through the workflow
 
-## cloud trail
+## cloudtrail
 
-- track user activity and API usage
-- monitor events occuring in AWS services, and keep logs in an s3 bucket
-- log and retain account activity enabling governance, compliance and risk auditing across your AWS infrastructure
+- cloudtrail vs cloudwatch logs
+  - cloudtrail
+    - captures events from all services
+    - requires no configuration to view events
+    - CloudTrail Event History shows events from the past 90 days.
+  - cloudwatch logs
+    - only a few services publish to cloudwatch logs
+    - requires log group configuration
+
+- track user activity and API usage for actions performed through:
+  - aws management console
+  - aws sdks
+  - command-line tools
+  - other AWS services
+- identify:
+  - who did what
+  - to what resources
+  - when the action occured
+- use cases
+  - track changes on resources
+  - perform security analysis
+  - identify unusual activity
+  - troubleshoot issues
+  - enabling governance, compliance and risk auditing across your AWS infrastructure
+  - create cloudtrails to store events in s3 buckets, cloudwatch logs
+    - definitely send to cloudwatch logs to support taking remidiation actions and analyzing trail data on cloudwatch dashboards
+
+- trail: configuration that enables the delivery of cloudtrail events to an s3 bucket, cloudwatch logs
+
+### cloud trail considerations
+
+- trail configuration
+  - name
+  - all regions? (default)
+  - all accounts in organization (for multi account organizations)
+  - s3 bucket
+  - KMS server side encryption (for sensitive log data)
+  - log file validation (via digest files)
+  - sns notification (each time a new log is created in an s3 bucket)
+  - send to cloudwatch logs?
+    - need this to use the trail data to create custom metrics, alarms, dashboards, etc
+  - always add tags
+    - trail name
+    - s3 buckets
+  - event types
+    - management events: control pane operations, e.g. security, routing, user logging
+    - data events: on/within a resource
+    - insight events: identify unusually activity by analyzing management events
+      - these events defer significantly from normal usuage patterns
 
 ## cloudwatch
 
@@ -165,6 +211,8 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
   - unified view for selected metrics & alarms
   - assess the health of resources & application across one/more regions
   - are global and no limit on how many to create
+  - dashboard source code can be copied and recreated (useful to use as templates)
+    - actions > copy source or something like that
 
 ### cloudwatch considerations
 
