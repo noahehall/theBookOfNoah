@@ -19,7 +19,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 
 - bastion host: a server that provides access to a private network from an external network (e.g. the internet)
 
-### best practices
+### best practices / gotchas
 
 - always
   - never use any of the default resources (vpc, subnets, security groups, etc)
@@ -45,7 +45,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
     - renders some services unusable
     - if you do, [recreate it via the cli](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#create-default-vpc)
 
-### gotchas
+#### gotchas
 
 - troubleshooting connectivity
   - connecting to AWS resources
@@ -91,6 +91,13 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - The IP space cannot overlap.
   - after creating the VPC peer in one VPC, you have to accept the request in the other
   - basic workflow: Configure VPC peering and the appropriate security group/NACL/route table settings.
+
+- [route 53, s3, and cloudfront](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/RoutingToS3Bucket.html)
+  - s3 buckets must be configured correctly
+  - sometimes you need a CDN in front of the s3 bucket(s) and point route53 to it
+- [route53 & cdns](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-to-cloudfront-distribution.html)
+  - the cdn distribution must contain an alternate domain name matching the one in route53
+  - To add an alternate domain name (CNAME) to a CloudFront distribution, you must attach a trusted certificate that validates your authorization to use the domain name
 
 ## security groups
 
@@ -397,6 +404,41 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
     - api gateway
     - VPC interface endpoint
   - manage the domain in route53
+
+- health checks
+  - failover
+    - active
+    - passive
+  - 3 types
+    - endpoint health check: domain name/ip address
+      - based on http with/out string matching/tcp
+      - responses
+        - tcp: must be received in 10 seconds
+        - http/s: must be received in 6 seconds
+          - 4s allocated for establishing a connection
+          - 2s for receiving a valid status code (2|3xx)
+          - string matching: contained within the first 5120 bytes
+            - optional
+      - failure rates
+        - user defined based on regions
+        - valid: if > 18% agents evaluate as healthy
+    - calculated health check: monitors other health checks
+      - a parent health check monitors up to 255 child health checks
+      - configurable logic as to what constitutes as a lack of health
+        - e.g. an API thats dependent on another external API, you want BOTH apis to be successful
+    - cloudwatch alarm: useful when failing over to another resource based on an preconfigured alarm
+      - what are the conditions for triggering an unhealthy check?
+        - is cloudwatch okay === rute53 health check is okay
+        - if cloudwatch alarm === route53 is bad
+        - if cloudwatch is insufficient === you can configure if the route53 health check is good/bad
+
+### route 53 considerations
+
+- health checks
+  - sns: create alarms by posting to an sns topic
+- dns records
+  - active (route requests here)
+  - backup (route requests here if active dns records have bad health checks)
 
 ## elastic ip
 
