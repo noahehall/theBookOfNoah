@@ -1,6 +1,6 @@
 # TLDR
 
-cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs
+cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log insights, log groups
 
 ## links
 
@@ -53,48 +53,6 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs
 
 ## cloudwatch
 
-- monitor resources and applications
-- enables you to view data from all AWS services in a single console
-- data from different services are organized into namespaces
-  - is a repository of resource metrics for each AWS ervice
-  - can create your own metrics
-- cloudwatch alarms: notifications when critical metrics breach predefined thresholds
-  - post to sns topics
-  - trigger lambda fns
-  - supports automated elasticity
-  - billing alerts
-    - have to enable it in IAM
-- cloudwatch events: i.e. Amazon EventBridge
-  - continuously monitor events patterns
-  - trigger remediation actions via lambda fns
-- cloudwatch logs: collect & store logs from aws resources, applications & services in near realtime
-  - centralize logs in one place
-  - search, sort, filter & query for patterns
-  - group by specific fields
-  - visualize them in dashboads
-  - set a retention period
-  - log group
-    - a group of log streams that share the same retention & access control settings
-  - log streams
-    - sequence of log events that share the same source, e.g. the same ec2
-- namespace: isolated container for metrics
-  - naming convention: AWS/Service, e.g. AWS/EC2
-- metrics: variables used to monitor a service
-  - are per region
-  - cannot be deleted; but are auto-deleted after 15 months of no data
-  - must be associated with a timestamp `YYY-MM-DDTHH:MM:SSZ`
-  - resolutions
-    - standard: one-minute granularity (default)
-    - high: one-secon granularity
-- integrates with IAM
-  - but its all or nothing
-  - ^ i.e. a user has to have access to ALL of cloudwatch, or none (cant limit to specific resources)
-- data points: metric values
-  - cpu utilization of ec2
-  - read/write of ebs volumes
-  - size of s3 buckets
-  - etc
-
 - use cases
   - monitor applications
   - optimize utilization
@@ -107,6 +65,90 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs
     - etc
   - get a unified view
     - billing
+- basics
+  - monitor resources and applications
+  - enables you to view data from all AWS services in a single console
+  - data from different services are organized into namespaces
+    - is a repository of resource metrics for each AWS ervice
+    - can create your own metrics
+  - integrates with IAM
+    - but its all or nothing
+    - ^ i.e. a user has to have access to ALL of cloudwatch, or none (cant limit to specific resources)
+
+- cloudwatch alarms: notifications when critical metrics breach predefined thresholds
+  - post to sns topics
+  - trigger lambda fns
+  - supports automated elasticity
+  - billing alerts
+    - have to enable it in IAM
+
+- cloudwatch events: i.e. Amazon EventBridge
+  - continuously monitor events patterns
+  - trigger remediation actions via lambda fns
+
+- cloudwatch logs: collect & store logs from aws resources, applications & services in near realtime
+  - centralize logs in one place
+  - search, sort, filter & query for patterns
+  - group by specific fields
+  - visualize them in dashboads
+  - set a retention period
+  - log group
+    - a group of log streams that share the same retention & access control settings
+    - always create a VPC flow log and point it to a log group
+      - this ensures:
+        - all ENIs in the VPC will publish to the log group
+        - each ENI will have a distinct log stream
+  - log streams
+    - sequence of log events that share the same source, e.g. the same ec2
+  - metric filters: `[field, field, field="value"]`
+    - get the field names from aws docs
+      - e.g. `${version} ${account-id} ${interface-id} ${srcaddr} ${dstaddr} ${srcport} ${dstport} ${protocol} ${packets} ${bytes} ${start} ${end} ${action} ${log-status}`
+      - but remember to convert to camelCase
+    - can be used in cloudwatch alarms
+
+- namespace: isolated container for metrics
+  - naming convention: AWS/Service, e.g. AWS/EC2
+
+- metrics: variables used to monitor a service
+  - are per region
+  - cannot be deleted; but are auto-deleted after 15 months of no data
+  - must be associated with a timestamp `YYY-MM-DDTHH:MM:SSZ`
+  - resolutions
+    - standard: one-minute granularity (default)
+    - high: one-secon granularity
+
+- data points: metric values
+  - cpu utilization of ec2
+  - read/write of ebs volumes
+  - size of s3 buckets
+  - etc
+
+- log insights
+  - search and analyze data interactively
+  - automatically generates fields form logsand provides ability to query those fields
+    - any field prefixed with `@` is auto generated
+    - @message: raw unparsed log event
+    - @timestamp
+    - @ingestionTime: when the event was received
+    - @logStream: the name of the stream containing hte event
+    - @log: the log group identifier
+    - vpc flow logs
+      - version
+      - accountId
+      - interfaceId
+      - srcAddr
+      - dstAddr
+      - srcPort
+      - dstPort
+      - protocol
+      - packets
+      - bytes
+      - etc
+    - lambda
+      - @type
+      - @requestId
+      - @duration
+      - @etc
 
 ### cloudwatch considerations
 
@@ -133,3 +175,9 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs
     - auto scaling action
     - ec2 action
     - systems management action
+- metric filters
+  - query fields & values
+  - metric name
+  - namespace (group of metrics)
+  - metric value (usually you want 1 here)
+  - dimension name & value
