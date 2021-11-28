@@ -1,6 +1,6 @@
 # TLDR
 
-cloudtrail, cloudwatch, VPC flow logs
+cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs
 
 ## basics
 
@@ -45,7 +45,49 @@ cloudtrail, cloudwatch, VPC flow logs
 
 - track user activity and API usage
 - monitor events occuring in AWS services, and keep logs in an s3 bucket
+- log and retain account activity enabling governance, compliance and risk auditing across your AWS infrastructure
 
 ## cloudwatch
 
 - monitor resources and applications
+- enables you to view data from all AWS services in a single console
+- data from different services are organized into namespaces
+  - is a repository of resource metrics for each AWS ervice
+  - can create your own metrics
+- cloudwatch alarms: notifications when critical metrics breach predefined thresholds
+  - post to sns topics
+  - trigger lambda fns
+  - supports automated elasticity
+- cloudwatch events: i.e. Amazon EventBridge
+  - continuously monitor events patterns
+  - trigger remediation actions via lambda fns
+
+- namespace: isolated container for metrics
+  - naming convention: AWS/Service, e.g. AWS/EC2
+- metrics: variables used to monitor a service
+  - are per region
+  - cannot be deleted; but are auto-deleted after 15 months of no data
+  - must be associated with a timestamp `YYY-MM-DDTHH:MM:SSZ`
+  - resolutions
+    - standard: one-minute granularity (default)
+    - high: one-secon granularity
+- integrates with IAM
+  - but its all or nothing
+  - ^ i.e. a user has to have access to ALL of cloudwatch, or none (cant limit to specific resources)
+- data points: metric values
+  - cpu utilization of ec2
+  - read/write of ebs volumes
+  - size of s3 buckets
+  - etc
+
+- use cases
+  - monitor applications
+  - optimize utilization
+  - respond to changes
+    - send an email via SNS
+    - evoke a lambda fn
+    - route events to an SQS queue
+    - start/stop/terminate ec2 instances
+    - initiate ec2 autoscaling actions
+    - etc
+  - get a unified view
