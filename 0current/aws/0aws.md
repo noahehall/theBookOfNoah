@@ -1,7 +1,7 @@
 
 # TLDR
 
-cli, regions, azs, etc
+cli, regions, azs, service quotas
 
 ## todo
 
@@ -66,7 +66,7 @@ things that generally apply to all services
 - groups
 - CORS: JSON configuration defines a way for servers from domain X to interact with resources on domain Y
 
-- ARN: amazon resource name
+- ARN: amazon resource name: identifier for a specific resource
   - can use wildcards as part of the resource ARN
     - `*` represents any combination of zero/more characers
     - `?` represents any single character
@@ -174,6 +174,18 @@ things that generally apply to all services
 ~/.aws/{credentials, config}
 
 ```
+
+## service quotas
+
+- [main page](https://console.aws.amazon.com/servicequotas/home?region=us-east-1#)
+
+- see all quotas related to every AWS service
+  - current limit
+  - default limit
+  - if its adjustable
+  - click a quota name to request an increase
+  - create cloud watch alarms for certain quotas
+- can have a max of 9 cards on the dashboard for important services
 
 ## cli
 

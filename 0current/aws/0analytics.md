@@ -102,6 +102,12 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
 
 ## cloudwatch
 
+- cloudwatch vs aws health
+  - cloudwatch
+    - monitor at the resource level
+  - aws health
+    - monitor at the service level
+
 - use cases
   - monitor applications
   - optimize utilization
@@ -134,7 +140,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
   - billing alerts
     - have to enable it in IAM
 
-- cloudwatch events: i.e. Amazon EventBridge
+- cloudwatch events: precursor to Amazon EventBridge
   - continuously monitor events patterns
   - trigger remediation actions via lambda fns
 
@@ -260,3 +266,31 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
   - namespaces (type of data, e.g. ec2, billing, etc)
     - metrics
       - color, label, statistic type (e.g. average, sum), sampling period
+
+## aws health (personal health)
+
+- [home page](https://phd.aws.amazon.com/phd/home#/dashboard/open-issues)
+- monitor health at the service level
+- continuous visibility into resource performance & availability of aws services
+- publish events about how service & resource changes might affect your applications
+- requires no configuration
+
+## eventbridge
+
+- [homepage](https://console.aws.amazon.com/events/home?region=us-east-1#/rules)
+
+### eventbridge considerations
+
+- source
+  - type
+    - event pattern
+    - schedule
+  - service name
+  - event type
+  - (service level)
+    - any service
+    - specific services
+  - (event level)
+    - any event type category
+    - specific event type category
+      - e.g. service issues

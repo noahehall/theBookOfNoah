@@ -7,14 +7,17 @@ THISDIR="$(
 	pwd
 )"
 
-[ -f "$THISDIR"/.bash_aliases.sh ] && . "$THISDIR"/.bash_aliases.sh
 [ -f "$THISDIR"/.bash_functions.sh ] && . "$THISDIR"/.bash_functions.sh
+[ -f "$THISDIR"/.bash_aliases.sh ] && . "$THISDIR"/.bash_aliases.sh
 [ -f "$THISDIR"/.bash_variables.sh ] && . "$THISDIR"/.bash_variables.sh
 [ -f "$THISDIR"/.bash_addons.sh ] && . "$THISDIR"/.bash_addons.sh
 
-mkdir -p "$HOME"/.local/bin
+# update path
+USER_LOCAL_BIN="$HOME"/.local/bin
 
-export PATH=/opt:/"$HOME"/.local/bin:"$PATH"
+mkdir -p "$USER_LOCAL_BIN"
+
+export PATH=/opt:"$USER_LOCAL_BIN":"$PATH"
 
 # AWS ----------------------------------
 # ^ enable command completion

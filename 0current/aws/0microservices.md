@@ -26,3 +26,39 @@
 ## SNS simple notification service
 
 - push based messaging system
+- manages the delivery & sending of msgs to subscribin endpoints & clients
+  - app to app|person
+- clients
+  - publishers: send async msgs to a topic
+    - cloudwatch alarms
+  - subscribers: pull msgs from a topic
+    - lambda
+    - sqs queues
+    - http/s endpoints
+    - event fork pipelines
+    - kinesis data firehose delivery streams
+    - mobile apps
+    - phone numbers
+    - email addrs
+- topics: logical access point & communication channel
+  - publishers: create topics/get push permissions
+
+- service quotas
+  - quotas: resources, actions and items have defined limits
+    - breaching a limit will always increase costs or cause components to fail
+  - monitor and manage quotas for any AWS service
+
+### sns considerations
+
+- type
+  - standard: when msg order & duplication isnt important
+  - FIFO: msg order & duplication is important (must use SQS)
+- access policy: who can publish & subscribe
+  - topic owner
+  - everyone
+  - specific AWS accounts
+  - requests from specific endpoints
+- encryption: server side encryption
+- delivery retry policy: retry failed deliveries for http/s
+- delivery status logging: only for specific protols (lambda, sqs, etc)
+- IAM roles
