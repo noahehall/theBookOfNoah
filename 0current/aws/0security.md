@@ -110,6 +110,13 @@ todo: should be in order
     - API/CLI: access key + secret key
       - any o the above could require MFA
 
+- common roles you should create
+  - cloud watch roles
+    - cloudWatchAgentServerRole
+      - policies
+        - coudWatchAgentServerPolicy: permissions to write logs to cloudwatch
+      - attach to ec2 instance you want to monitor with cloud agent
+
 ### IAM considerations
 
 - for ec2

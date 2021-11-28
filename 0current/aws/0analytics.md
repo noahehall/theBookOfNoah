@@ -68,6 +68,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
     - etc
   - get a unified view
     - billing
+
 - basics
   - monitor resources and applications
   - enables you to view data from all AWS services in a single console
@@ -77,6 +78,8 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
   - integrates with IAM
     - but its all or nothing
     - ^ i.e. a user has to have access to ALL of cloudwatch, or none (cant limit to specific resources)
+  - only has visibility at the instance level,
+    - use a cloudwatch agent to get system & application level data
 
 - cloudwatch alarms: notifications when critical metrics breach predefined thresholds
   - post to sns topics
@@ -93,7 +96,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
   - centralize logs in one place
   - search, sort, filter & query for patterns
   - group by specific fields
-  - visualize them in dashboads
+  - visualize them in dashboards
   - set a retention period
   - log group
     - a group of log streams that share the same retention & access control settings
@@ -153,6 +156,14 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
       - @duration
       - @etc
 
+- cloudwatch agents
+  - collect metrics from ec2 instances & on-premsise servers
+  - stored in `CWAgent` namespace
+  - you have to install the agent on your servers manually
+
+- cloudwatch dashboards
+  - unified view for selected metrics & alarms
+
 ### cloudwatch considerations
 
 - alarms
@@ -178,9 +189,17 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
     - auto scaling action
     - ec2 action
     - systems management action
+
 - metric filters
   - query fields & values
   - metric name
   - namespace (group of metrics)
   - metric value (usually you want 1 here)
   - dimension name & value
+
+- cloudwatch agent
+  - operating system
+  - iam role
+  - metrics to capture
+  - method of instlaling & configuring agent on each server
+    - you want to automate this in autoscaling scenarios

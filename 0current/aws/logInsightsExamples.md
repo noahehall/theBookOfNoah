@@ -1,5 +1,15 @@
 # TLDR
 
+- common queries
+
+## TODO
+
+- find a good set of common queries, no need to create your own
+
+## basics
+
+- line & stacked require you to group by time `bin(60m)` for an hr
+
 ```sh
 
 # top 50 tcp src ips
@@ -8,4 +18,6 @@
     | sort numberOfSessions desc
     | limit 50
 
+# hourly packet transfer in bytes
+  stats sum(bytes) by bin(60m)
 ```
