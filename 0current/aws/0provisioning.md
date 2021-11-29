@@ -17,6 +17,7 @@ cloudformation, config
 
 ## config
 
+- A summarized view of AWS and non-AWS resources and the compliance status of the rules and the resources in each AWS Region.
 - managed service  providing an inventory of AWS resources, config history, and change notifcations to
 - use cases
   - enable security & governance
@@ -45,3 +46,16 @@ cloudformation, config
   - rule evaluations occur when:
     - a configuration change occurs
     - periodically based on selected frequency
+
+- supported resource types
+  - ec2, s3, vpc, iam, lambda, cloudformation, cloudwatch, cloudtrail
+
+### config considerations
+
+- resource types: all/specific
+  - resource category
+  - reource type
+- IAM role (use a default provided by aws)
+- s3 bucket (to store config items)
+- sns topic (to stream config changes & notifications)
+- rules (for remediation)

@@ -294,3 +294,4 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
     - any event type category
     - specific event type category
       - e.g. service issues
+  - target: e.g. lambda fn, sns topic, sqs queue
