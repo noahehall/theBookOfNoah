@@ -1,6 +1,6 @@
 # TLDR
 
-cloudformation, config
+cloudformation, config, systems manager
 
 ## cloudformation
 
@@ -46,6 +46,9 @@ cloudformation, config
   - rule evaluations occur when:
     - a configuration change occurs
     - periodically based on selected frequency
+  - rule types:
+    - managed rules: predefined rules you can customize
+    - custom: rules you create
 
 - supported resource types
   - ec2, s3, vpc, iam, lambda, cloudformation, cloudwatch, cloudtrail
@@ -59,3 +62,44 @@ cloudformation, config
 - s3 bucket (to store config items)
 - sns topic (to stream config changes & notifications)
 - rules (for remediation)
+  - custom rules
+    - must be associated with an AWS Lambda fn to perform the required actions
+  - managed rules
+    - search & select one
+    - name
+    - description
+    - trigger
+      - type: determines when the eveluation occurs
+        - all changes: when any resource is created, changed, deleted
+        - resources: when a resource matching the type you specify is created, changd, or deleted
+        - tags: when a resource with the specified tag is created, changed or deleted
+    - resources
+    - parameters: the attributs for which the resources will be evaluated
+      - key: get this key
+      - value: compare it to this value
+- manage remediation (select a rule > actions)
+  - type
+    - automatic
+    - manual
+  - action (via AWS Systems Manager Automation)
+    - select an action that will bring the resource back into compliance
+  - resource ID
+  - parameter: the desired value for non compliance resources
+
+## systems manager
+
+- view operatoinal data from multiple services & automate operation tasks
+- use cases
+  - centrally define the configuration options & policies for managed instances
+  - identify resources that are out of compliance and take corrective action
+  - automate variety of maintence tasks (e.g. ec2 patching)
+  - create runbook style docs that define the actions to perform on managed instances
+  - group AWS resources together using various attributes
+  - automatically collect inventory information about amazon EC2 and on-premise managed instances
+
+- automation types
+  - operations managemnet
+  - application management
+  - change management
+  - node management
+  - shared resources

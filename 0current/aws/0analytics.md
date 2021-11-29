@@ -143,6 +143,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
 - cloudwatch events: precursor to Amazon EventBridge
   - continuously monitor events patterns
   - trigger remediation actions via lambda fns
+  - @see event bridge section
 
 - cloudwatch logs: collect & store logs from aws resources, applications & services in near realtime
   - centralize logs in one place
@@ -278,6 +279,44 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
 ## eventbridge
 
 - [homepage](https://console.aws.amazon.com/events/home?region=us-east-1#/rules)
+
+- serverless event bus service that connects your applications with data from different sources
+- use cases
+  - connect sources: custom apps, sass apps, or other AWS services to data within AWS
+  - routes sources to AWS Lambda, amazon kinesis, or another event bus
+  - build decoupled applications
+  - allow operations teams to respond quickly to changes and take corrective actions
+- events: changes in an environment
+  - AWS resource
+  - external SaaS product
+  - or your application
+- rules: matches incoming events and routes them to targets for processing
+  - a single rule could route to multiple targets in parallel
+- targets: responsible for processing events
+  - lambda fns
+  - sns topics
+  - kinensis data stream
+  - SQS Queue
+- Event Bus: receives events
+  - after creating a rule, you associate it with an event bus, and the rule only processes events with that event bus
+
+### eventbridge considerations
+
+- event bus
+  - never use the default
+- rules
+  - name
+  - description
+  - pattern type
+    - event pattern: for things that can happen anytime
+      - matching pattern
+        - service provider: e.g. aws
+        - service name: e.g. ec2
+        - event type: e.g. state change (i.e. stopped)
+        - resource
+          - specific instance
+          - any instance
+    - schedule: for things with schedules
 
 ### eventbridge considerations
 

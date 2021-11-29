@@ -12,7 +12,25 @@
 
 ## lamda
 
-- event drivent, stateless business logic
+- event drivent, stateless (serverless) business logic
+- compute service to run code without managing servers
+- use cases
+  - target of an event bridge rule
+
+### lambda considerations
+
+- fn type
+  - author from scratch
+  - use a blueprint
+  - container image
+  - select from serverless app repository
+- name
+- runtime (e.g. nodejs/python)
+- permissions
+  - execution role
+    - select a predefined role that provides permissions necessary for the fns business logic
+- memory (e.g. 256mb)
+- timeout (e.g. 10seconds)
 
 ## fargate
 
