@@ -6,6 +6,8 @@
 - isos
   - [windows 10](https://www.microsoft.com/en-us/software-download/windows10ISO)
   - [kali linux](https://www.kali.org/get-kali/#kali-virtual-machines)
+  - [guest additions](https://download.virtualbox.org/virtualbox/)
+    - you have to match it to your version
 
 ## basics
 
@@ -63,6 +65,9 @@
 
 ### host resources
 
+- to adjust an existing VM resources
+  - make sure its in the POWERD OFF state
+  - file > closed > poweroff
 - processor: allocating CPU resources
   - how many processor cores to give to the host
 - memory (RAM)
@@ -100,6 +105,7 @@
       - size: 80gb is good for long term machines
 
 - managing existing: everything is left/right clickable
+  - ensure your guest is shutdown to modify all settings
   - settings: alternatively you can click an option in the main screen
   - start: after you configure the VM settings, click to start the machine
     - normal: with a display
@@ -109,14 +115,28 @@
     - storage:
       - optical drive: cd-rom
         - this is where you attach the ISO you downloaded, or other cdroms
+  - storage:
+    - where you add/remove/modify harddisks attachd to the VM
+    - after creating a new disk, log into the VM and add a filesystem to it
 
-- running VM
+- a specific VM
+
   - file
-  - machine
-  - view
-  - input
+    - preferences: for virtualbox manager
+  - machine: specific to this VM
+    - snapshot: current machine state
+    - session info: config & runtime details of the VM
+    - pause: temporarily freeze the VM
+    - reset: restart the machine
+    - ACPI shutdown: shutdown gracefull (the recommended safe way to shutdown the machine)
+    - view: appearance of the window
   - devices
     - generally you want to insert the guest additions and install it on the guest OS
+  - settings: go through all of these while the VM is off
+    - system:
+    - display:
+      - graphics controller:
+        - vbsvga: best for newer windows
 
 ## quickies
 
