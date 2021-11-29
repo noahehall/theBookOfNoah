@@ -52,11 +52,11 @@
 
 - guest editions: set of drivers for guest OS to make the experienc better
   - VB by defualt provides emulated hardware, but sometimes it isnt enough
-  - guest additions as additional drivers
+  - guest additions has additional drivers
     - share folders & clipboards
     - video drivers
     - etc
-    - available to the guest OS as a vitual CD-ROM
+    - once you start the guest OS, insert the guest additions as a CD-ROM into an optical drive, and install it on the guest OS
 - extension pack:
   - enable support for USB 2, 3, disk encryption, PXE boot, etc
   - has a separate license
@@ -116,7 +116,7 @@
   - view
   - input
   - devices
-    - generally you want to insert the guest additions
+    - generally you want to insert the guest additions and install it on the guest OS
 
 ## quickies
 
