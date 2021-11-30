@@ -23,6 +23,19 @@
     - storage
     - communication
 
+- appliances: virtual machines packaged for distribution
+  - setup a base VM then xport it
+    - file > export appliance
+
+- snapshots: save the state of a vitual machine at any point in time
+  - can roll back to a previous snapshot
+  - useful for testing different changes
+  - but arent appropriate for backups
+
+- clones: full copy of a virtual machine
+  - creates an identical but independent copy of a VM
+  - useful for creating base VMs
+
 ### GUI
 
 - virutal box manager: the interface to create, modify virtual machines
@@ -118,9 +131,46 @@
   - storage:
     - where you add/remove/modify harddisks attachd to the VM
     - after creating a new disk, log into the VM and add a filesystem to it
+  - networking
+    - with all modes, you still need to setup port forwarding on the host to enable inbound communicatoin from the host to VM
+    - can mix n match
+      - global setting in VB manager
+      - settings in a specific VM
+
+    - NAT:
+      - allows the guest to access the internet and systems on hosts network
+      - prevents other VMs on the host from initiating communication with the guest
+      - default private: 10.0.2.15
+      - default public: 10.0.2.2 (as seen from host)
+        - each VM gets the same defaults, hence the issue with NAT and multiple VMs
+
+    - NAT Network
+      - still uses NAT mode, but creates a virtual network for ALL guests to share
+        - then you add guets to the virtual network so they can communicate with each other, as well as the internet
+        - need to create one first
+          - VB manager > preferences > network
+          - ensure each guests has a different mac address
+      - default nat cidr: 10.0.2.0/24
+      - default DHCP server: 10.0.2.3
+      - default gateway: 10.0.2.1
+      - HOST: 10.0.2.2 (as seen from VMs)
+      - each VM gets: 10.0.2.#
+
+    - Bridged mode: enable VMs to participate as machines on the host network
+      - joins the guests to the same network as the HOST, by sharing the hosts network interface
+      - enables bridged guests to communiate with the host, each other, and machines on the host network
+      - the IP addresses for all systems will be in the same range
+        - i.e. they share the cidr of the HOSTS DHCP server
+
+    - internal
+      - VMs can communicate with each other but not with the host/internet
+      - need to have their own addressing schemes setup manually on each guest
+        - i.e. like you do on a network without a DHCP server
+    - host only network
+      - same as internal, but includes the HOST in the guest network
+      - guests have no access to the hosts network or internet
 
 - a specific VM
-
   - file
     - preferences: for virtualbox manager
   - machine: specific to this VM
@@ -137,6 +187,26 @@
     - display:
       - graphics controller:
         - vbsvga: best for newer windows
+
+- port forwarding
+  - useful for development tasks on a specific port
+  - bridged mode:
+    - automatically available on the host because its participating in the HOST network
+    - no need for port forwarding
+  - other network modes
+    - forward a port from the GUEST to a port on the HOST
+    - NAT
+      - VM > network > advanced > port forwarding
+    - nat network
+      - VB manager > file > preferences > network > find the port forwarding option
+    - port forwarding options
+      - protocl: tcp/udp
+      - host port
+      - guest port: above 1024 on linux, anything on windows
+      - guest IPusually 10.0.2.4, or 10.0.2.15
+        - just get it from command line
+
+      -
 
 ## quickies
 

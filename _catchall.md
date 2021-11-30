@@ -66,3 +66,6 @@ register_no_pass() {
     }
 EOF
 }
+
+wifi
+  iw dev # see network interfaces and what hteir connected to
