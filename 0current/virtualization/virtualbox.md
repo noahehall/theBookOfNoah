@@ -206,7 +206,15 @@
       - guest IPusually 10.0.2.4, or 10.0.2.15
         - just get it from command line
 
-      -
+- shared folders (specific instance)
+  - settings > shared folders
+  - folder path: on host
+  - name: filesystem safe name on guest
+  - readonly
+  - auto-mount (need to restart the guest)
+  - make permanent
+    - yes: shows up under machine folders
+    - no: shows up under transient folders
 
 ## quickies
 
