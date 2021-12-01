@@ -1,5 +1,7 @@
 # TLDR
 
+intellij is dreamweaver that just wont fkn die
+
 ## LINKS
 
 - [toolbox](https://www.jetbrains.com/toolbox-app/download/download-thanks.html?platform=linux)
@@ -14,6 +16,10 @@
 
 - jetbrains-toolbox: jetbrains app to install all of their expensive stuff
   - save to /opt
+
+- LightEdit: simple text editor; open files outside of intellij
+  - automatically installed with intellij
+  - doesnt havent any of the main editor plugins (e.g. build, run)
 
 ### gotchas
 
