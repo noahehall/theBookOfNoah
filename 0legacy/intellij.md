@@ -34,8 +34,18 @@
   - kotlin (designed by jetbrains)
   - scala
 
-- project settings: welcome screen > gearbox in bottom left
-  - click a new project > pick ONE of the options for the type of project
+- project settings: always review this, especially in an existing project
+  - new project
+    - welcome screen > gearbox in bottom left
+    - click a new project > pick ONE of the options for the type of project
+  - open project
+    - file > settings
+  - areas to focus
+    - appearance
+    - editor
+    - plugins
+    - tools
+    - version control: use the cli, fk intellij
 
 - version: help about > YYYY.major.minor
 - update
