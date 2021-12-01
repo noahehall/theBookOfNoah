@@ -11,6 +11,11 @@ but i always end up in situations where I have to uset his crap
 
 ## java language
 
+### java project structure
+
+- depends on the type of project, and the project configurations
+  - java project: the package translates to dependency structure
+
 ### syntax
 
 ```java

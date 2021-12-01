@@ -15,6 +15,12 @@
 - jetbrains-toolbox: jetbrains app to install all of their expensive stuff
   - save to /opt
 
+### gotchas
+
+- empty package directories will be compressed
+  - fkn gets me every time `poop.flush` is two directories, not one
+  - click the gear icon in the top right of hte project window and disable that dumb azz shiz
+
 ## intellij community
 
 - install via toolbox and move on with your life
@@ -40,12 +46,13 @@
     - click a new project > pick ONE of the options for the type of project
   - open project
     - file > settings
-  - areas to focus
+  - areas to focus (just always review this)
     - appearance
     - editor
     - plugins
     - tools
     - version control: use the cli, fk intellij
+    - language & frameworks
 
 - version: help about > YYYY.major.minor
 - update
@@ -59,6 +66,9 @@
 
 ## GUI buttons
 
+- top bar
+  - view
+    - tool windows: many plugin/tool has a window, toggle it here (e.g. build, run, project, etc)
 - top right
   - play: run the code
   - hammer: build the code
