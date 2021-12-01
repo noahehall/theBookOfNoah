@@ -21,11 +21,15 @@ intellij is dreamweaver that just wont fkn die
   - automatically installed with intellij
   - doesnt havent any of the main editor plugins (e.g. build, run)
 
+### best practices
+
+- right click everything
+
 ### gotchas
 
 - empty package directories will be compressed
   - fkn gets me every time `poop.flush` is two directories, not one
-  - click the gear icon in the top right of hte project window and disable that dumb azz shiz
+  - click the gear icon in the top right of the project window and disable that dumb azz shiz
 
 ## intellij community
 
@@ -52,7 +56,13 @@ intellij is dreamweaver that just wont fkn die
     - click a new project > pick ONE of the options for the type of project
   - open project
     - file > settings
+    - file > project structure
+      - platform settings > documentation paths
+        - always fkn set the documentation path
+          - sdkman use the default
+          - else might have to google it based on the version of the java jDK youre using
   - areas to focus (just always review this)
+    - keymap: set to visual studio
     - appearance
     - editor
     - plugins
@@ -70,11 +80,22 @@ intellij is dreamweaver that just wont fkn die
 - either file > settings, or intellij > preferences
   - mac is intellij > preferences
 
+## window layout
+
+- drag n drop to change layout
+- or click the gear icon and select move to & select location
+
 ## GUI buttons
 
 - top bar
   - view
     - tool windows: many plugin/tool has a window, toggle it here (e.g. build, run, project, etc)
+      - see common ones in the extreme bottom left, hover over the cube icon
+      - Project
+        - click the down arrow next to 'Project' to change the scope: determines whta files are shown in the project files list
+      - run
+      - structure: structure of current class
+      - problems: code-level issues
 - top right
   - play: run the code
   - hammer: build the code

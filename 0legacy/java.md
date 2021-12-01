@@ -9,7 +9,12 @@ but i always end up in situations where I have to uset his crap
   - where source code lives
   - and how you import/export from other code
 
-## java language
+## java languages
+
+- groovy
+- scala
+- kotlin
+- etc
 
 ### java project structure
 
@@ -21,7 +26,7 @@ but i always end up in situations where I have to uset his crap
     - useful for finding where classes are stored
   - root > project name, e.g. `com.poop` poop === root
     - poop.iml: specifies locations to all other files, use this to change what file is being used
-    - .idea > config files
+    - .idea > project config files managed by intellij
       - the `.xml` files are the ones your interested in
     - src > source code
     - out > dist
@@ -29,8 +34,11 @@ but i always end up in situations where I have to uset his crap
 ### syntax
 
 ```java
-  // use double quotes
+  // basics
   "i am a string"
+
+  // type annotations
+    String[] poop
 
 ```
 
