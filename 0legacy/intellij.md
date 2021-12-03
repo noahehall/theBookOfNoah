@@ -30,6 +30,10 @@ intellij is dreamweaver that just wont fkn die
 - empty package directories will be compressed
   - fkn gets me every time `poop.flush` is two directories, not one
   - click the gear icon in the top right of the project window and disable that dumb azz shiz
+- java culture
+  - its all about intellij & the gui;
+    - intellij comes with a bunch of interconnected workflows to keep you out of the CLI
+  - try to stay within the boundaries of intellij automation, even if it makes you dumber
 
 ## intellij community
 
@@ -99,3 +103,9 @@ intellij is dreamweaver that just wont fkn die
 - top right
   - play: run the code
   - hammer: build the code
+
+## GUI right click
+
+- project dir list > right click where you want the `thing` to go
+  - new (sub)package: package name > right click > new package
+  - new component: package name > right click new class|interface|record|enum|annotation
