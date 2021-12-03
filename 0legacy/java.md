@@ -138,7 +138,8 @@ but i always end up in situations where I have to use this crap
     String
 
   // var annotations
-    String[] poop
+    string poop = "flush"
+    String[] poop = ["flush"]
     int age;
 
   // class annotations

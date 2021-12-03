@@ -206,15 +206,31 @@
       - guest IPusually 10.0.2.4, or 10.0.2.15
         - just get it from command line
 
-- shared folders (specific instance)
-  - settings > shared folders
-  - folder path: on host
-  - name: filesystem safe name on guest
-  - readonly
-  - auto-mount (need to restart the guest)
-  - make permanent
-    - yes: shows up under machine folders
-    - no: shows up under transient folders
+- sharing
+  - shared folders (specific instance)
+    - settings > shared folders
+    - folder path: on host
+    - name: filesystem safe name on guest
+    - readonly
+      - always for security
+    - auto-mount (need to restart the guest)
+      - easiest option so you dont need to manually mount
+    - make permanent
+      - yes: shows up under machine folders
+      - no: shows up under transient folders
+    - mounting shared folders in guests
+      - windows: `net use x:\\vboxsvr\sharename`
+      - linux:
+        - `mkdir /mnt/sharepath`
+        - `mount - vboxsf sharename /mnt/sharepath`
+        - `usermod -aG vboxsf $(whoami)`
+
+  - clipboard (specific instance)
+    - start machine > devices > clipboard > select option
+    - always host to guest for security
+  - drag and drop
+    - start machine > devices > drag n drop > select optoin
+    - always host to guest for security
 
 ## quickies
 

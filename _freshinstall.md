@@ -79,6 +79,7 @@ wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
   - [morrownr](https://github.com/morrownr/8814au)
     - use this, one line and it worked
   - [aircrack](https://github.com/aircrack-ng/rtl8814au)
+    - ^ dont fkn install this one, but read its notes
   - [read this first](https://docs.alfa.com.tw/Support/Linux/RTL8814AU/#ubuntu)
   - [read this first](https://miloserdov.org/?p=5493)
   - basic steps
