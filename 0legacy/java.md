@@ -5,6 +5,8 @@ but i always end up in situations where I have to use this crap
 
 ## links
 
+- [java is on codewars](https://www.codewars.com/)
+  - dizzam i need to bug these guys to add nim
 - [oracle OOP concepts](https://docs.oracle.com/javase/tutorial/java/concepts/)
 - [java history on wikipedia](https://en.wikipedia.org/wiki/Java_version_history)
 - [princeton java cheatsheet](https://introcs.cs.princeton.edu/java/11cheatsheet/)
