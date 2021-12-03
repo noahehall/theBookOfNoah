@@ -23,9 +23,52 @@ intellij is dreamweaver that just wont fkn die
 
 ### best practices
 
+- snippets (live templates): > settings > editor > livetemplates
+  - `sout` `System.out.println();`
+
+- running code:
+  - the play button
+  - debug mode (the bug button)
+    - useful when your iterating via `sout`
+
 - right click everything
 - keymaps
   - shift shift > search everywhere
+  - alt f7 > find usages of currently selected thing
+  - ctrl space > auto import the current thing
+
+- scratch files
+  - create code butbut store it your user profile
+  - your scratches are available in project dir window > scratches & consoles
+
+- building projects: compile java code into java class files
+  - class files go into root > out > production
+    - delete the `out` dir and rebuild to get a clean state
+
+- dependency management:
+  - jar files: precompiled archive file
+    - should be placed in `root/lib/poop.jar`
+      - ^ right click > add as library
+  - maven: by apache
+    - ensure the project your working is configured for maven
+      - there will be a `root/MavenProject` dir
+      - or check in `file > project structure > modules`
+        - also an easy way to add/remove dependencies
+      - or look for a maven window in the editor
+  - gradle:
+
+- distributing projects: package your code into a jar file
+  - file > project structure > artifacts
+    - click + > JAR file > from modules with dependencies
+  - build > build artifacts > build
+  - out > artifacts > see your jar file
+    - right click > open in > terminal
+      - `$ java -jar poop.jar`
+
+- javadoc: generate documentation
+  - same workflow as jsdocs
+  - tools > generate javadoc
+    - make sure to set an output directory
 
 ### gotchas
 
@@ -40,10 +83,19 @@ intellij is dreamweaver that just wont fkn die
     - workflows you should get use to
       - using git from the GUI
       - reliance on boilerplate code generation (snippets)
-        - topbar > code >
-          - generally get in a long term relationship with the code menu
-          - generate
-          - reformat code|file
+        - topbar >
+          - file
+            - project structure
+            - new
+              - module: create a `com.modulename`
+          - code >
+            - generate
+            - reformat code|file
+            - inspect code (under analyze in some intellij versions)
+      - project dir window > right click on something
+        - find usages
+        - new (class|interface|blah)
+        - refactor
 
 ## intellij community
 

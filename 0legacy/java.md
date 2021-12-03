@@ -7,6 +7,12 @@ but i always end up in situations where I have to use this crap
 
 - [oracle OOP concepts](https://docs.oracle.com/javase/tutorial/java/concepts/)
 - [java history on wikipedia](https://en.wikipedia.org/wiki/Java_version_history)
+- [princeton java cheatsheet](https://introcs.cs.princeton.edu/java/11cheatsheet/)
+- [groovy](https://groovy.apache.org/download.html)
+  - extract to /opt
+- [scala jvm compatibility matrix](https://docs.scala-lang.org/overviews/jdk-compatibility/overview.html)
+- [kotlin jvm compatability](https://kotlinlang.org/docs/faq.html#which-versions-of-jvm-does-kotlin-target)
+  - use 17 if your project permits
 
 ## basics
 
@@ -17,18 +23,58 @@ but i always end up in situations where I have to use this crap
 ### best practices
 
 - heavy use of mixins, e.g. always `@Override` the `toString` method
+- focus on the positives
+  - many enterprises use java, if thats your thing
+  - comformity is a core port of the java culture
+    - moving from one project to another is seamless
+  - its a fundamental language
+    - you wont be on the bleeding edge, or any edge for that matter
 
 #### gotchas
 
 - java came out when OOP was the hot new thing
   - this kind of thinking still permeates all of java
 - line length doesnt really matter
+- name of the constructor must match the name of the class
+- always need a `main` method
 
-## java languages
+## java JVM languages
 
-- groovy
-- scala
-- kotlin
+- groovy: by apache
+  - new project > groovy
+    - if no groovy libraries exist, you have to download & extract (e.g. to /opt)
+      - ^ then click create and select the version you downloaded
+    - make sure to set the project SDK to java 8
+      - dont fkn use intellij, for this, use sdkman
+        - get an identifier `$ sdk list java`
+        - `$ IDENTIFER=8.0.312-tem && sdk install java $IDENTIFER`
+        - you can always switch java versions via sdk `$ sdk use java 11.0.0-open`
+    - creating new stuff
+      - ^ e.g. a class: project dir window > right click src > new > groovy script
+
+- scala: pronounced `scaela`, but still say it as `scaula` cuz thats how it fkn looks
+  - file > settings > plugins > install scala
+  - pick a template: new project > scala >
+    - sbt
+    - lightbend project start
+    - IDEA: IDEA based scala project
+    - intellij platform plugin
+  - jdk: check the scala compatability table link up ^
+  - scala sdk: download the latest
+  - project dir window > right click src > new class > pick Object > call it `Main`
+
+- kotlin: by jetbrains
+  - file > settings >
+    - plugins > kotlin
+    - languages & frameworks > kotlin
+  - file > new project
+    - template: console application
+    - build system
+      - intellij
+      - gradle kotlin|gradle|maven
+  - tools > kotlin > show kotlin bytecode > decompile
+    - ^ see the equivalent java code (from kotlin source code)
+    - ^ if its grayed out, make sure the editor cursor is on some kotlin code
 - etc
 
 ### java project structure
@@ -51,6 +97,11 @@ but i always end up in situations where I have to use this crap
 ```java
   // basics
   "i am a string"
+
+  // types
+  String
+  Date
+  double
 
   // type annotations
     String[] poop
