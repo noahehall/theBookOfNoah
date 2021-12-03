@@ -9,6 +9,18 @@
   - [guest additions](https://download.virtualbox.org/virtualbox/)
     - you have to match it to your version
 
+## best practices
+
+- generally you want to group machines (select some and right click)
+- removing a VM from vbox manager does not delete the files on the host
+  - you can later readd them
+- delete vms if you want to remove the VB from vbox manager & delete the files from host
+- check resource monitor in a running guest to troubleshoot performance issues
+  - then you know what resource you need to allocate more of
+- the guest USB controller needs to match whatever type of usb device your attaching to it
+- ensure when you clone a machine, the MAC addresses are different
+- bridged network ties the guest network adapter to a specific host network adapter, so make sure the host NAT hasnt changed
+
 ## basics
 
 - acts as a hypervisor
@@ -254,7 +266,20 @@
 
   # main service
   # ^ see linux/.bash_aliases.sh for stuff
+  # ^ required to expand the disk a vm is currently using
+  # ^^ still need to expand the filesystem within the guest
   vboxmanage
+    # find the path in the vbox manager
+    # you then need to log into the guest
+    # ^ confirm the disk size has been updated
+    # ^ unmount the partition on the disk
+    # ^ resize the partition on the disk
+    # ^ resize the filesystem on the partition thats on the disk
+    # ^ remount the partition on the disk
+    # ^^ make sure you mount under /media/ so it shows up in the file browser
+    modifyhd pathToDiskOnHost.vdi --resize newSizeInMB
+
+
 
 
 

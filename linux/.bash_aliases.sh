@@ -127,10 +127,11 @@ alias nanocreds='sudo nano ~/.aws/credentials'
 # virtualbox
 # --help will always console help, even if invalid for the cmd
 alias vb='VBoxManage'
-alias vbstart='VBoxManage startvm'
 alias vbctrl='VBoxManage controlvm'
+alias vbctrolcmds='\vbctrl nameOfMachine pause|resume|reset|poweroff|savestate|etc'
+alias vbguest='VBoxManage guestcontrol'
+alias vbguestcmds='VBoxManage guestcontrol --help' # execute cmds in guest from host cli, e.g. to run a program
+alias vbhostcmds='VBoxManage hostonlyif --help'
 alias vblistall='VBoxManage list vms'
 alias vbrunning='VBoxManage list runningvms'
-alias vbguest='VBoxManage guestcontrol'
-alias vbguestcmds='VBoxManage guestcontrol --help'
-alias vbhostcmds='VBoxManage hostonlyif --help'
+alias vbstart='VBoxManage startvm'
