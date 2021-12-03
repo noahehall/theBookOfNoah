@@ -16,6 +16,9 @@ but i always end up in situations where I have to use this crap
 - [kotlin jvm compatability](https://kotlinlang.org/docs/faq.html#which-versions-of-jvm-does-kotlin-target)
   - use 17 if your project permits
 
+- bffs
+  - [lombok](https://projectlombok.org/features/all)
+
 ## basics
 
 - base package: `com.POOP`
@@ -32,6 +35,9 @@ but i always end up in situations where I have to use this crap
   - its a fundamental language
     - you wont be on the bleeding edge, or any edge for that matter
 
+- conventions
+  - java file names === class names, `Poop.java` === `public class Poop {}`
+
 #### gotchas
 
 - java came out when OOP was the hot new thing
@@ -39,6 +45,15 @@ but i always end up in situations where I have to use this crap
 - line length doesnt really matter
 - name of the constructor must match the name of the class
 - always need a `main` method
+
+### terms
+
+- use sdkman for all of these
+  - JRE: java runtime environment: required to run java programs
+  - JDK: java development kit: required to build & develop java programs
+    - includes the JRE
+    - is OS specific
+  - java SE: JDK standard edition
 
 ## java JVM languages
 
@@ -94,6 +109,17 @@ but i always end up in situations where I have to use this crap
     - src > source code
     - out > dist
 
+### java shell
+
+```sh
+
+  # compile Poop.java into Poop.class & run it
+    javac Poop.java && java Poop
+
+
+
+```
+
 ### syntax
 
 ```java
@@ -101,11 +127,17 @@ but i always end up in situations where I have to use this crap
   "i am a string"
 
   // types
-  String
-  Date
-  double
+  // ^ primitive types
+    boolean // true|false
+    char // single letter
+    double // decimals
+    int // whole number
 
-  // type annotations
+  // ^ reference types
+    Date
+    String
+
+  // var annotations
     String[] poop
     int age;
 
@@ -115,9 +147,16 @@ but i always end up in situations where I have to use this crap
     private int age;
   }
 
+  public class HelloWorld {
+    // entry point to every java program/class etc
+    public static void main(String[] args) {
+
+    }
+  }
+
 ```
 
-### cmds
+### native cmds
 
 ```java
   // common templates (expand when you tab out)

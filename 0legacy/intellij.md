@@ -25,6 +25,8 @@ intellij is dreamweaver that just wont fkn die
 
 - snippets (live templates): > settings > editor > livetemplates
   - `sout` `System.out.println();`
+  - `main` `public static void main(String[] args) {}`
+  - `tostring` `@Override \n public String toString () {}`
 
 - running code:
   - the play button
@@ -36,10 +38,14 @@ intellij is dreamweaver that just wont fkn die
   - shift shift > search everywhere
   - alt f7 > find usages of currently selected thing
   - ctrl space > auto import the current thing
+  - ctrl alt / > comment selected code
 
 - scratch files
   - create code butbut store it your user profile
   - your scratches are available in project dir window > scratches & consoles
+
+- external libraries
+  - always check within project dir window > external libraries
 
 - building projects: compile java code into java class files
   - class files go into root > out > production
