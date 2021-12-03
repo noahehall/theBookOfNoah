@@ -249,4 +249,14 @@
     P # Pause
     HOME + popup menu
 
+
+  # command line tools: preinstalled with vb
+
+  # main service
+  # ^ see linux/.bash_aliases.sh for stuff
+  vboxmanage
+
+
+
+
 ```

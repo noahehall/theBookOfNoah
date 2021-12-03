@@ -123,3 +123,14 @@ alias awsaccounts='aws iam list-account-aliases'
 alias awswhoami='aws sts get-caller-identity'
 alias nanoconfig='sudo nano ~/.aws/config'
 alias nanocreds='sudo nano ~/.aws/credentials'
+
+# virtualbox
+# --help will always console help, even if invalid for the cmd
+alias vb='VBoxManage'
+alias vbstart='VBoxManage startvm'
+alias vbctrl='VBoxManage controlvm'
+alias vblistall='VBoxManage list vms'
+alias vbrunning='VBoxManage list runningvms'
+alias vbguest='VBoxManage guestcontrol'
+alias vbguestcmds='VBoxManage guestcontrol --help'
+alias vbhostcmds='VBoxManage hostonlyif --help'
