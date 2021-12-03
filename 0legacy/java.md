@@ -1,13 +1,28 @@
 # TLDR
 
 ive deletd my java notes millions of times...
-but i always end up in situations where I have to uset his crap
+but i always end up in situations where I have to use this crap
+
+## links
+
+- [oracle OOP concepts](https://docs.oracle.com/javase/tutorial/java/concepts/)
+- [java history on wikipedia](https://en.wikipedia.org/wiki/Java_version_history)
 
 ## basics
 
 - base package: `com.POOP`
   - where source code lives
   - and how you import/export from other code
+
+### best practices
+
+- heavy use of mixins, e.g. always `@Override` the `toString` method
+
+#### gotchas
+
+- java came out when OOP was the hot new thing
+  - this kind of thinking still permeates all of java
+- line length doesnt really matter
 
 ## java languages
 
@@ -39,6 +54,13 @@ but i always end up in situations where I have to uset his crap
 
   // type annotations
     String[] poop
+    int age;
+
+  // class annotations
+  private class Person {
+    private String firstName;
+    private int age;
+  }
 
 ```
 
