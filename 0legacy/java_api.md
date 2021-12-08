@@ -25,3 +25,11 @@
 
 
 ```
+
+## internals
+
+```java
+  Math
+    .pow(2, 5)
+    .abs(-10)
+```

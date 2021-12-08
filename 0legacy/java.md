@@ -44,7 +44,9 @@ but i always end up in situations where I have to use this crap
   - this kind of thinking still permeates all of java
 - line length doesnt really matter
 - name of the constructor must match the name of the class
-- always need a `main` method: this fn is automatically called when a program is executed
+- when do you need a `main` method:
+  - this fn is automatically called when a program is executed
+  - if you're not running the `thing` as a program (e.g. a Class doesnt need a main method), dont add it
 
 ### terms
 
