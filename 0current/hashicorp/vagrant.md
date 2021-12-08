@@ -19,6 +19,7 @@
   - [vagrant cloud: public boxes](https://app.vagrantup.com/boxes/search)
   - [where to store VMs](https://serverfault.com/questions/54200/whats-the-best-file-system-for-storing-virtual-machine-images)
   - [awesome vagrant](https://github.com/iJackUA/awesome-vagrant)
+
   - references
     - [cli reference](https://www.vagrantup.com/docs/cli)
     - [vagrant cli box](https://www.vagrantup.com/docs/cli/box)
@@ -30,6 +31,7 @@
     - [config.vm machine settings](https://www.vagrantup.com/docs/vagrantfile/machine_settings)
     - [virtual box provider setup](https://www.vagrantup.com/docs/providers/virtualbox/boxes)
     - [NFS setup](https://www.vagrantup.com/docs/synced-folders/nfs)
+
   - plugins/contrib/tools
     - [plugins listed on wiki](https://github.com/hashicorp/vagrant/wiki/Available-Vagrant-Plugins)
     - [ngrok: required for vagrant share](https://dashboard.ngrok.com/get-started/setup)
@@ -37,6 +39,7 @@
     - [vagrant/contrib](https://github.com/hashicorp/vagrant/tree/main/contrib)
     - [sync local * guest files](https://learn.hashicorp.com/tutorials/vagrant/getting-started-synced-folders?in=vagrant/getting-started)
       - the defaults work, but find the optimial settings for ubuntu
+
   - boxes
     - [vagrant cloud signup](https://app.vagrantup.com/)
     - [bento boxes](https://app.vagrantup.com/bento)
@@ -49,6 +52,7 @@
       - [author of ansible for devops](https://www.ansiblefordevops.com/)
       - [slim ubuntu 16](https://app.vagrantup.com/geerlingguy/boxes/ubuntu1604)
       - [slim ubuntu 18](https://app.vagrantup.com/geerlingguy/boxes/ubuntu2004)
+
   - tuts
     - [getting started](https://learn.hashicorp.com/collections/vagrant/getting-started)
     - [vagrant + kali linux](https://www.kali.org/blog/announcing-kali-for-vagrant/)
@@ -106,11 +110,35 @@ winrm-config    outputs WinRM configuration to connect to the machine
 
 ### terminilogy
 
+#### context
+
 - virtualization: isolated sandboxes to reduce hardware requirements
+- virtual machine: an operating system that runs independently from the underlying hardware
+
 - hypervisors: aka virutal machine monitor or VMM
-  - softwrae that creates & runs virutal machines
+  - software that creates & runs virutal machines
   - enables one host computer to support multiple guest VMs by sharing host resources, e.g. memory & processing
+  - suppor the creation & managmeent of virutal machines by abstracting a computers software away from its hardware
+
   - types of hypervisors
+    - type 1: aka bare metal
+      - acts like a lightweight operating system and runs dirctly on the hosts hardware
+      - is installed on the computer hardware next to the operating system
+      - use cases
+        - extremely secure
+        - generally perform better and more efficient than hosted hypervisors
+        - useful in data center computing requirements
+
+    - type 2: aka hosted aka client hypervisors
+      - runs as a software layer on an operating system, like other computer programs
+      - is installed on top of the operating system, next to other software
+      - comparison with type 1 hypervisors
+        - latency is higher: communication between hardware and type 2 hypervisor must pass through the hosts OS
+      - use cases
+        - installing other operating systems
+        - end user/software testing
+
+#### vagrant terminology
 
 - vagrant boxes: the base img/starting point of a development environment; used to clone a virtual environment instead of creating one from scratch
   - stored globally for the current user
