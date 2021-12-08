@@ -44,7 +44,7 @@ but i always end up in situations where I have to use this crap
   - this kind of thinking still permeates all of java
 - line length doesnt really matter
 - name of the constructor must match the name of the class
-- always need a `main` method
+- always need a `main` method: this fn is automatically called when a program is executed
 
 ### terms
 
@@ -122,9 +122,14 @@ but i always end up in situations where I have to use this crap
 
 ### syntax
 
+- scopes
+  - variables are block scoped
+
 ```java
   // basics
   "i am a string"
+  // operators
+    // same as js
 
   // types
   // ^ primitive types
@@ -135,25 +140,57 @@ but i always end up in situations where I have to use this crap
 
   // ^ reference types
     Date
-    String
+    String // sequence of chars, in double quotes
 
   // var annotations
     String poop = "flush"
     String[] poop = ["flush"]
     int age;
 
-  // class annotations
-  private class Person {
-    private String firstName;
-    private int age;
-  }
+  // function annotations
+    public static void someFn(boolean somevar) {
+      // visibility
+        public
+        private
 
-  public class HelloWorld {
-    // entry point to every java program/class etc
-    public static void main(String[] args) {
+      // scope
+        static
 
+      // return type
+        void
+        String
+        etc
     }
-  }
+
+  // class annotations
+    private class Person {
+      private String firstName;
+      private int age;
+    }
+
+    public class HelloWorld {
+      // entry point to every java program/class etc
+      public static void main(String[] args) {
+
+      }
+    }
+
+  // control flow
+  // ^ if statements
+    if (someNum < 5) {
+      // stuff
+    } else {
+      // stuff
+    }
+
+  // ^ while loop
+    boolean isTrue = true;
+    while(isTrue) {
+      // stuff
+      if (someOtherThing) {
+        isTrue = false;
+      }
+    }
 
 ```
 
@@ -164,5 +201,13 @@ but i always end up in situations where I have to use this crap
     // sout > System.out.println()
 
   // easy stuff
-  System.out.println('console this string');
+  System.out.println("console this string");
+
+  // getting user in put
+    System.out.println("respond to this text");
+    Scanner userInput = new Scanner(System.in)
+    double response1 = input.nextDouble();
+    int response2 = input.nextInt()
+    String response3 = input.next();
+
 ```

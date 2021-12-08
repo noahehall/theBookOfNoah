@@ -38,6 +38,7 @@ intellij is dreamweaver that just wont fkn die
   - shift shift > search everywhere
   - alt f7 > find usages of currently selected thing
   - ctrl space > auto import the current thing
+  - alt enter > import the current thing
   - ctrl alt / > comment selected code
 
 - scratch files
