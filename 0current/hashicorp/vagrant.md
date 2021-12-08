@@ -8,53 +8,57 @@
 
 ## links
 
-- [start here](https://www.vagrantup.com/intro)
-- [vagrant vs docker](https://www.vagrantup.com/intro/vs/docker)
-- [installing vagrant](https://www.vagrantup.com/docs/installation)
-- [uninstalling vagrant](https://www.vagrantup.com/docs/installation/uninstallation)
-- [vagrant cloud: public boxes](https://app.vagrantup.com/boxes/search)
-- [where to store VMs](https://serverfault.com/questions/54200/whats-the-best-file-system-for-storing-virtual-machine-images)
-- [awesome vagrant](https://github.com/iJackUA/awesome-vagrant)
-- references
-  - [cli reference](https://www.vagrantup.com/docs/cli)
-  - [vagrant cli box](https://www.vagrantup.com/docs/cli/box)
-  - [vagrant boxes](https://www.vagrantup.com/docs/boxes)
-  - [synced folders](https://www.vagrantup.com/docs/synced-folders)
-  - [tips & tricks](https://www.vagrantup.com/docs/vagrantfile/tips)
-    - TODO: ^^^^ must do
-  - [vagrant networking](https://www.vagrantup.com/docs/networking)
-  - [config.vm machine settings](https://www.vagrantup.com/docs/vagrantfile/machine_settings)
-  - [virtual box provider setup](https://www.vagrantup.com/docs/providers/virtualbox/boxes)
-  - [NFS setup](https://www.vagrantup.com/docs/synced-folders/nfs)
-- plugins/contrib/tools
-  - [plugins listed on wiki](https://github.com/hashicorp/vagrant/wiki/Available-Vagrant-Plugins)
-  - [ngrok: required for vagrant share](https://dashboard.ngrok.com/get-started/setup)
-  - [veewee vm exporter](https://github.com/jedi4ever/veewee)
-  - [vagrant/contrib](https://github.com/hashicorp/vagrant/tree/main/contrib)
-  - [sync local * guest files](https://learn.hashicorp.com/tutorials/vagrant/getting-started-synced-folders?in=vagrant/getting-started)
-    - the defaults work, but find the optimial settings for ubuntu
-- boxes
-  - [vagrant cloud signup](https://app.vagrantup.com/)
-  - [bento boxes](https://app.vagrantup.com/bento)
-    - [bento github](https://github.com/chef/bento#current-baseboxes)
-  - [vangrantbox.es](https://www.vagrantbox.es/)
-  - [roboxes](https://roboxes.org/)
-    - [generic by roboxes](https://app.vagrantup.com/generic)
-    - [robox github](https://github.com/lavabit/robox)
-  - [geeringuy](https://app.vagrantup.com/geerlingguy)
-    - [author of ansible for devops](https://www.ansiblefordevops.com/)
-    - [slim ubuntu 16](https://app.vagrantup.com/geerlingguy/boxes/ubuntu1604)
-    - [slim ubuntu 18](https://app.vagrantup.com/geerlingguy/boxes/ubuntu2004)
-- tuts
-  - [getting started](https://learn.hashicorp.com/collections/vagrant/getting-started)
-  - [vagrant + kali linux](https://www.kali.org/blog/announcing-kali-for-vagrant/)
-  - [automating red team homelabs](https://www.secureideas.com/blog/2018/09/automating-red-team-homelabs-part-1-kali-automation.html)
-  - [disposable local dev envs with vagrant, docker and arkade](https://iximiuz.com/en/posts/how-to-setup-development-environment/)
-  - [mount NFS shares on a running guest machine](https://www.stevenrombauts.be/2018/01/mount-nfs-shares-on-a-running-vagrant-box/)
-  - [hackr.io: list of vagrant tuts](https://hackr.io/tutorials/learn-vagrant)
-  - [serversforhackers.com: 3 quick run vids](https://serversforhackers.com/s/vagrant)
-  - [scotch.io: vagrant share](https://scotch.io/tutorials/sharing-your-virtual-machine-on-the-web-with-vagrant-share)
-  - [stdoutin: getting started](http://stdout.in/en/post/getting_started_with_vagrant_automated_dev_servers_deploy_and_provisioning)
+- other
+  - [vmware: hypervisor topic](https://www.vmware.com/topics/glossary/content/hypervisor)
+
+- vagrant
+  - [start here](https://www.vagrantup.com/intro)
+  - [vagrant vs docker](https://www.vagrantup.com/intro/vs/docker)
+  - [installing vagrant](https://www.vagrantup.com/docs/installation)
+  - [uninstalling vagrant](https://www.vagrantup.com/docs/installation/uninstallation)
+  - [vagrant cloud: public boxes](https://app.vagrantup.com/boxes/search)
+  - [where to store VMs](https://serverfault.com/questions/54200/whats-the-best-file-system-for-storing-virtual-machine-images)
+  - [awesome vagrant](https://github.com/iJackUA/awesome-vagrant)
+  - references
+    - [cli reference](https://www.vagrantup.com/docs/cli)
+    - [vagrant cli box](https://www.vagrantup.com/docs/cli/box)
+    - [vagrant boxes](https://www.vagrantup.com/docs/boxes)
+    - [synced folders](https://www.vagrantup.com/docs/synced-folders)
+    - [tips & tricks](https://www.vagrantup.com/docs/vagrantfile/tips)
+      - TODO: ^^^^ must do
+    - [vagrant networking](https://www.vagrantup.com/docs/networking)
+    - [config.vm machine settings](https://www.vagrantup.com/docs/vagrantfile/machine_settings)
+    - [virtual box provider setup](https://www.vagrantup.com/docs/providers/virtualbox/boxes)
+    - [NFS setup](https://www.vagrantup.com/docs/synced-folders/nfs)
+  - plugins/contrib/tools
+    - [plugins listed on wiki](https://github.com/hashicorp/vagrant/wiki/Available-Vagrant-Plugins)
+    - [ngrok: required for vagrant share](https://dashboard.ngrok.com/get-started/setup)
+    - [veewee vm exporter](https://github.com/jedi4ever/veewee)
+    - [vagrant/contrib](https://github.com/hashicorp/vagrant/tree/main/contrib)
+    - [sync local * guest files](https://learn.hashicorp.com/tutorials/vagrant/getting-started-synced-folders?in=vagrant/getting-started)
+      - the defaults work, but find the optimial settings for ubuntu
+  - boxes
+    - [vagrant cloud signup](https://app.vagrantup.com/)
+    - [bento boxes](https://app.vagrantup.com/bento)
+      - [bento github](https://github.com/chef/bento#current-baseboxes)
+    - [vangrantbox.es](https://www.vagrantbox.es/)
+    - [roboxes](https://roboxes.org/)
+      - [generic by roboxes](https://app.vagrantup.com/generic)
+      - [robox github](https://github.com/lavabit/robox)
+    - [geeringuy](https://app.vagrantup.com/geerlingguy)
+      - [author of ansible for devops](https://www.ansiblefordevops.com/)
+      - [slim ubuntu 16](https://app.vagrantup.com/geerlingguy/boxes/ubuntu1604)
+      - [slim ubuntu 18](https://app.vagrantup.com/geerlingguy/boxes/ubuntu2004)
+  - tuts
+    - [getting started](https://learn.hashicorp.com/collections/vagrant/getting-started)
+    - [vagrant + kali linux](https://www.kali.org/blog/announcing-kali-for-vagrant/)
+    - [automating red team homelabs](https://www.secureideas.com/blog/2018/09/automating-red-team-homelabs-part-1-kali-automation.html)
+    - [disposable local dev envs with vagrant, docker and arkade](https://iximiuz.com/en/posts/how-to-setup-development-environment/)
+    - [mount NFS shares on a running guest machine](https://www.stevenrombauts.be/2018/01/mount-nfs-shares-on-a-running-vagrant-box/)
+    - [hackr.io: list of vagrant tuts](https://hackr.io/tutorials/learn-vagrant)
+    - [serversforhackers.com: 3 quick run vids](https://serversforhackers.com/s/vagrant)
+    - [scotch.io: vagrant share](https://scotch.io/tutorials/sharing-your-virtual-machine-on-the-web-with-vagrant-share)
+    - [stdoutin: getting started](http://stdout.in/en/post/getting_started_with_vagrant_automated_dev_servers_deploy_and_provisioning)
 
 ## basics
 
@@ -101,6 +105,12 @@ winrm-config    outputs WinRM configuration to connect to the machine
 - If you are a designer, Vagrant will automatically set everything up that is required for that web app in order for you to focus on doing what you do best: design
 
 ### terminilogy
+
+- virtualization: isolated sandboxes to reduce hardware requirements
+- hypervisors: aka virutal machine monitor or VMM
+  - softwrae that creates & runs virutal machines
+  - enables one host computer to support multiple guest VMs by sharing host resources, e.g. memory & processing
+  - types of hypervisors
 
 - vagrant boxes: the base img/starting point of a development environment; used to clone a virtual environment instead of creating one from scratch
   - stored globally for the current user
