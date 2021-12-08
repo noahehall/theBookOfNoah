@@ -1,6 +1,10 @@
-# TLDR
+# VAGRANT
 
 - dont forget about vagrant, its for development, and we are developers
+
+## TLDR
+
+- all about vagrant, from basic to advanced
 
 ## links
 
