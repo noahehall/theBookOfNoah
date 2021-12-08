@@ -9,7 +9,8 @@
 ## links
 
 - other
-  - [vmware: hypervisor topic](https://www.vmware.com/topics/glossary/content/hypervisor)
+  - [vmware glossary (dope snazzle)](https://www.vmware.com/topics/glossary/)
+    - [hypervisor topic](https://www.vmware.com/topics/glossary/content/hypervisor)
 
 - vagrant
   - [start here](https://www.vagrantup.com/intro)
@@ -116,9 +117,8 @@ winrm-config    outputs WinRM configuration to connect to the machine
 - virtual machine: an operating system that runs independently from the underlying hardware
 
 - hypervisors: aka virutal machine monitor or VMM
-  - software that creates & runs virutal machines
-  - enables one host computer to support multiple guest VMs by sharing host resources, e.g. memory & processing
-  - suppor the creation & managmeent of virutal machines by abstracting a computers software away from its hardware
+  - software that creates, runs & manages virutal machines by abstracting a computers software away from its hardware
+  - enables one host computer to support multiple guest VMs by sharing host resources, e.g. memory, storage & compute
 
   - types of hypervisors
     - type 1: aka bare metal
@@ -128,6 +128,7 @@ winrm-config    outputs WinRM configuration to connect to the machine
         - extremely secure
         - generally perform better and more efficient than hosted hypervisors
         - useful in data center computing requirements
+        - run multiple operating systems on a single set of hardware
 
     - type 2: aka hosted aka client hypervisors
       - runs as a software layer on an operating system, like other computer programs
@@ -135,8 +136,19 @@ winrm-config    outputs WinRM configuration to connect to the machine
       - comparison with type 1 hypervisors
         - latency is higher: communication between hardware and type 2 hypervisor must pass through the hosts OS
       - use cases
-        - installing other operating systems
+        - install multiple isolated OS on top of one standard operating system
         - end user/software testing
+
+- containers: allow applications to run independently of an operating system
+  - use cases
+    - run any application on any operating system through a container engine
+    - extremely portable applications
+
+- containers vs hypervisors
+  - hypervisors
+    - create & run isolated VMs (i.e. operating systems)
+  - containers
+    - create and run isolated applications (i.e. software)
 
 #### vagrant terminology
 
