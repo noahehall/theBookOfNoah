@@ -268,11 +268,11 @@ winrm-config    outputs WinRM configuration to connect to the machine
     fi
   # ^^ reload bash
     . ~/bashrc
-  # change where vagrant stores its base boxes
-  # ^ by defualt its ~/.vagrant.d/boxes
-    export VAGRANT_HOME=/some/other/place/vagranthome
+  # change vagrants home dir, boxes are stored in $VAGRANT_HOME/boxes
+  # ^ by defualt its ~/.vagrant.d
+    export VAGRANT_HOME=/some/other/place/.vagrant.d
     mkdir -p $VAGRANT_HOME
-  # disable shared folders by default
+  # globally disable shared folders by default
     export VAGRANT_DISABLE_VBOXSYMLINKCREATE=1
 
 
@@ -323,4 +323,8 @@ winrm-config    outputs WinRM configuration to connect to the machine
     # ^ downloads the box via orgName/boxName from vagrant cloud
     # ^ review the files downloaded via tree $VAGRANT_HOME
     vagrant up
+    # review the downloaded contents
+    # note your local vagrantfile overrides the box vagrantfile where conflicted
+    tree $VAGRANT_HOME && cd $VAGRANT_HOME
+    cat boxes/blah/blah/virtualbox/{metadata.json,Vagrantfile}
 ```
