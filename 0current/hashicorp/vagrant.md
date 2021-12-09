@@ -152,6 +152,12 @@ winrm-config    outputs WinRM configuration to connect to the machine
 
 #### vagrant terminology
 
+- use cases
+  - application appliances
+  - isolated sandboxes
+  - reduce hardware requirements
+  - reducing complexity of various hypervisors via a single command line utility
+
 - vagrant boxes: the base img/starting point of a development environment; used to clone a virtual environment instead of creating one from scratch
   - stored globally for the current user
   - each project uses an initial box to clone from, and never modifies the actual base image (thus their respective guest machines stay isolated)
@@ -222,17 +228,20 @@ winrm-config    outputs WinRM configuration to connect to the machine
 ## installation
 
 ```sh
-  # setup bash completion (e.g. for bash)
+  # setup cmd completion
+    vagrant autocomplete install
+    . ~/.bashrc
+  # ^ if that doesnt work, do it manually
+  # ^^ setup bash completion (e.g. for bash)
     sudo wget https://raw.githubusercontent.com/hashicorp/vagrant/main/contrib/bash/completion.sh -O /etc/bash_completion.d/vagrant
-  # setup reqs
+  # ^^ setup reqs
     sudo apt install libarchive-tools curl
       # ^ bsdtar is in libarchive-tools
-  # ^ update your bashrc
-    # vagrant bash completion
+  # ^^ update your bashrc
     if [ -f /etc/bash_completion.d/vagrant ]; then
       source /etc/bash_completion.d/vagrant
     fi
-  # ^ reload bash
+  # ^^ reload bash
     . ~/bashrc
 
   # after install virtualbox, ensure to install guest additions for increased performance
