@@ -86,6 +86,7 @@ wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
     - `sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev`
     -
 - [gnome extensions](https://extensions.gnome.org/)
+  - dont use this if using regolith
   - maybe not since we are now using regloith
   - extensions are by computer, not per login so you have to reinstall
     - [basic steps with some good ext](https://thelinuxuser.com/install-gnome-shell-extensions/)

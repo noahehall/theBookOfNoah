@@ -13,6 +13,7 @@
     - [hypervisor topic](https://www.vmware.com/topics/glossary/content/hypervisor)
 
 - vagrant
+  - [where vagrant stores boxes](https://stackoverflow.com/questions/10155708/where-does-vagrant-download-its-box-files-to)
   - [start here](https://www.vagrantup.com/intro)
   - [vagrant vs docker](https://www.vagrantup.com/intro/vs/docker)
   - [installing vagrant](https://www.vagrantup.com/docs/installation)
@@ -267,6 +268,13 @@ winrm-config    outputs WinRM configuration to connect to the machine
     fi
   # ^^ reload bash
     . ~/bashrc
+  # change where vagrant stores its base boxes
+  # ^ by defualt its ~/.vagrant.d/boxes
+    export VAGRANT_HOME=/some/other/place/vagranthome
+    mkdir -p $VAGRANT_HOME
+  # disable shared folders by default
+    export VAGRANT_DISABLE_VBOXSYMLINKCREATE=1
+
 
   # after install virtualbox, ensure to install guest additions for increased performance
   # ^ @see https://www.vagrantup.com/docs/providers/virtualbox/boxes
@@ -294,4 +302,25 @@ winrm-config    outputs WinRM configuration to connect to the machine
   cat /etc/exports
 
 
+```
+
+## demo
+
+```sh
+  # ensure env is setup
+    vagrant -v
+    vb -v
+    docker -v
+    echo $VAGRANT_HOME
+
+  # start an ubuntu 16.04 env
+    # create a dir to contain the env
+    mkdir -p /some/dir/ubuntu-16-04
+    cd /some/dir/ubuntu-16-04
+    # create the isolated vagrant env based on some box
+    vagrant init bento/ubuntu-16.04
+    # start the VM
+    # ^ downloads the box via orgName/boxName from vagrant cloud
+    # ^ review the files downloaded via tree $VAGRANT_HOME
+    vagrant up
 ```
