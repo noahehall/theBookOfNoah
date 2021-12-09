@@ -111,7 +111,7 @@ winrm-config    outputs WinRM configuration to connect to the machine
 
 ### terminilogy
 
-#### context
+#### virtualization terms
 
 - virtualization: isolated sandboxes to reduce hardware requirements
 - virtual machine: an operating system that runs independently from the underlying hardware
@@ -150,18 +150,42 @@ winrm-config    outputs WinRM configuration to connect to the machine
   - containers
     - create and run isolated applications (i.e. software)
 
-#### vagrant terminology
+#### vagrant terms
 
 - use cases
   - application appliances
+  - development environments:
+    - frozen in time with a specific set of hardware & software versions
   - isolated sandboxes
+    - testing & experimentation
   - reduce hardware requirements
   - reducing complexity of various hypervisors via a single command line utility
 
-- vagrant boxes: the base img/starting point of a development environment; used to clone a virtual environment instead of creating one from scratch
+- vagrant cli: used to start & stop vagrant VMs, initalize new & manage running VMs
+
+- vagrant file: small programs written in ruby to define & run a VM
+  - can support multi-machine configurations:
+    - e.g. when an application env is distributed across multiple virtual machines
+
+- vagrant cloud: online marketplace for VMs
+
+- vagrant boxes: i.e. a VM
+  - the base img/starting point of a development environment;
+  - the base BOX is cloned (i.e. reusable) instead of creating one from scratch
   - stored globally for the current user
   - each project uses an initial box to clone from, and never modifies the actual base image (thus their respective guest machines stay isolated)
-- vagrant providers:
+
+- vagrant providers: plugins that provide support for a specific hypervisor
+
+- vagrant provisioners: run the first time a VM is started; installs software and setting configurations
+
+### vagrant workflows
+
+- connecting to a VM via SSH
+
+- folder synchronization: bidirectional host >< guest
+
+- networking: multiple network topologies
 
 ### important files & locations
 
