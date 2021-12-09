@@ -135,3 +135,13 @@ alias vbhostcmds='VBoxManage hostonlyif --help'
 alias vblistall='VBoxManage list vms'
 alias vbrunning='VBoxManage list runningvms'
 alias vbstart='VBoxManage startvm'
+
+# vagrant, overriding vg i'll never use it
+alias vg='vagrant'
+alias vgup='vagrant up'
+alias vgssh='vagrant ssh'
+alias vgstatus='vagrant status'
+alias vgprovision='vagrant provision'
+alias vgdestroy='vagrant destroy'
+alias vghalt='vagrant halt'
+alias vgstatusall='vagrant global-status'

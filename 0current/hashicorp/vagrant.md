@@ -327,4 +327,8 @@ winrm-config    outputs WinRM configuration to connect to the machine
     # note your local vagrantfile overrides the box vagrantfile where conflicted
     tree $VAGRANT_HOME && cd $VAGRANT_HOME
     cat boxes/blah/blah/virtualbox/{metadata.json,Vagrantfile}
+    # check the status of the vm in the current dir
+    vagrant status
+    # check the status of all vms
+    vagrant global-status
 ```
