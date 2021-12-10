@@ -312,6 +312,7 @@ winrm-config    outputs WinRM configuration to connect to the machine
     vb -v
     docker -v
     echo $VAGRANT_HOME
+    alias | grep vg # see all vagrant aliases ive setup
 
   # start an ubuntu 16.04 env
     # create a dir to contain the env
@@ -322,6 +323,9 @@ winrm-config    outputs WinRM configuration to connect to the machine
     # start the VM
     # ^ downloads the box via orgName/boxName from vagrant cloud
     # ^ review the files downloaded via tree $VAGRANT_HOME
+    # ^ by default runs in headless mode
+    # ^^ todo: add demo of GUI mode
+    # ^^ @see https://stackoverflow.com/questions/23926945/specify-headless-or-gui-from-command-line
     vagrant up
     # review the downloaded contents
     # note your local vagrantfile overrides the box vagrantfile where conflicted
@@ -331,4 +335,21 @@ winrm-config    outputs WinRM configuration to connect to the machine
     vagrant status
     # check the status of all vms
     vagrant global-status
+    # connect to the box & explore
+    vagrant ssh
+    ifconfig # internet
+    lspci # pci devices, e.g. usb ports, graphic cards, network adapters
+    uname -a # system
+    sudo lshw -short # hardware
+    lscpu # cpu
+    lsblk # block storage
+    lsusb # usb controllers
+    sudo fdisk -l # file system
+    sudo dmidecode -t bios # bios
+    # shutdown the vm
+    vagrant halt
+
+
+
+
 ```
