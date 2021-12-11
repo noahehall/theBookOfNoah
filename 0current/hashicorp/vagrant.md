@@ -215,8 +215,6 @@ winrm-config    outputs WinRM configuration to connect to the machine
 ## quickies
 
 ```sh
-
-
   # create and start a dev env on a slim ubuntu 16
   vagrant init geerlingguy/ubuntu1604 # similar to git init
   vagrant status # see whatsup
@@ -346,7 +344,8 @@ winrm-config    outputs WinRM configuration to connect to the machine
     lsusb # usb controllers
     sudo fdisk -l # file system
     sudo dmidecode -t bios # bios
-    # shutdown the vm
+    # exit & shutdown the vm
+    exit
     vagrant halt
 
 

@@ -13,6 +13,7 @@ alias lessbashrc='less ~/.bashrc'
 alias nanobashrc='nano ~/.bashrc'
 alias sourcebashrc='source ~/.bashrc'
 alias treedir='tree --dirsfirst --charset=ascii'
+alias cdmedia="cd /media/$(whoami)/"
 
 # grep ---------------------------------
 alias grepfilenames='grep -iRl'
@@ -114,6 +115,7 @@ alias aptfixbroken='sudo apt install --fix-broken'
 alias aptfixconfigure='sudo dpkg --configure --force-overwrite -a'
 alias aptsearchi3='sudo apt search ^i3xrocks'
 alias aptsearchlooks='sudo apt search ^regolith-look-'
+alias aptsearchpkgs='sudo apt-cache search --names-only '
 
 # aws ----------------------------------
 alias awsconfig='sudo aws configure'
@@ -137,11 +139,11 @@ alias vbrunning='VBoxManage list runningvms'
 alias vbstart='VBoxManage startvm'
 
 # vagrant, overriding vg i'll never use it
-alias vg='vagrant'
-alias vgup='vagrant up'
-alias vgssh='vagrant ssh'
-alias vgstatus='vagrant status'
-alias vgprovision='vagrant provision'
-alias vgdestroy='vagrant destroy'
-alias vghalt='vagrant halt'
-alias vgstatusall='vagrant global-status'
+alias vgt='vagrant'
+alias vgtup='vagrant up'
+alias vgtssh='vagrant ssh'
+alias vgtstatus='vagrant status'
+alias vgtprovision='vagrant provision'
+alias vgtdestroy='vagrant destroy'
+alias vgthalt='vagrant halt'
+alias vgtstatusall='vagrant global-status'
