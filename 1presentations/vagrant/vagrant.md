@@ -1,7 +1,7 @@
 # TLDR
 
 - prezi for IR linkedin lightning talk
-- Topic: Why Vagrant? Nov18?
+- Topic: Why Vagrant? Dec16?
 - $(whoami): @noahedwardhall|engineer
 
 ## TODO
@@ -18,6 +18,13 @@
     - [indepth vagrant cheatsheet: https://github.com/noahehall/theBookOfNoah/blob/master/0current/hashicorp/vagrant.md](https://github.com/noahehall/theBookOfNoah/blob/master/0current/hashicorp/vagrant.md)
     - [vagrant docs: https://www.vagrantup.com/intro](https://www.vagrantup.com/intro)
     - [vagrant github: https://github.com/hashicorp/vagrant](https://github.com/hashicorp/vagrant)
+
+- part 0: sensemaking
+  - my opinions
+    - vagrant should be an engineering first principle
+    - vagrant cloud vs private repo for sharing
+  - hardfacts
+    - vagrant cloud: public boxes
 
 - Part 1: background
   - use cases: why and when of using vagrant

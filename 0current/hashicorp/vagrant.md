@@ -122,6 +122,11 @@ winrm-config    outputs WinRM configuration to connect to the machine
   - enables one host computer to support multiple guest VMs by sharing host resources, e.g. memory, storage & compute
   - e.g.
 
+  - [list of emulators & hypervisors](https://en.wikipedia.org/wiki/Comparison_of_platform_virtualization_software)
+    - a hypervisor is a kind of emulator
+  - [list of type 1 & type 2 hypervisors](https://vapour-apps.com/what-is-hypervisor/)
+    - use this info in demo, make sure to cite source
+
   - types of hypervisors
     - type 1: aka bare metal
       - acts like a lightweight operating system and runs dirctly on the hosts hardware
@@ -131,9 +136,6 @@ winrm-config    outputs WinRM configuration to connect to the machine
         - generally perform better and more efficient than hosted hypervisors
         - useful in data center computing requirements
         - run multiple operating systems on a single set of hardware
-      - [common type1 hypervisors](https://www.actualtechmedia.com/io/top-5-enterprise-type-1-hypervisors/)
-      - [list of emulators & hypervisors](https://en.wikipedia.org/wiki/Comparison_of_platform_virtualization_software)
-        - a hypervisor is a kind of emulator
 
     - type 2: aka hosted aka client hypervisors
       - runs as a software layer on an operating system, like other computer programs
@@ -210,6 +212,7 @@ winrm-config    outputs WinRM configuration to connect to the machine
 ### vagrant cloud
 
 - search for `bento` to see all the chef software boxes
+- repo of public boxes for a variety of providers
 
 ## best practices
 
