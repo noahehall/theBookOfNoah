@@ -114,7 +114,7 @@ winrm-config    outputs WinRM configuration to connect to the machine
 
 ### terminilogy
 
-- port: a number between 1 and 65555 assigned to a tcp packet
+- port: a number (i.e. a channel) between 1 and 65555 assigned to a tcp packet
 
 #### virtualization terms
 
@@ -198,8 +198,10 @@ winrm-config    outputs WinRM configuration to connect to the machine
   - by default, the synced folder is `/vagrant` within the guestos
 
 - networking: multiple network topologies
-  - port forwarding
+  - port forwarding: forward requests from host:port to guest:port
+    - e.g. access guest:8080, via host:9090
   - private networks
+    - uses `dhcp`
   - public networks
     - make sure you secure your box before configuring a public network
 
