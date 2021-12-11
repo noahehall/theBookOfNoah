@@ -120,6 +120,7 @@ winrm-config    outputs WinRM configuration to connect to the machine
 - hypervisors: aka virutal machine monitor or VMM
   - software that creates, runs & manages virutal machines by abstracting a computers software away from its hardware
   - enables one host computer to support multiple guest VMs by sharing host resources, e.g. memory, storage & compute
+  - e.g.
 
   - types of hypervisors
     - type 1: aka bare metal
@@ -130,6 +131,9 @@ winrm-config    outputs WinRM configuration to connect to the machine
         - generally perform better and more efficient than hosted hypervisors
         - useful in data center computing requirements
         - run multiple operating systems on a single set of hardware
+      - [common type1 hypervisors](https://www.actualtechmedia.com/io/top-5-enterprise-type-1-hypervisors/)
+      - [list of emulators & hypervisors](https://en.wikipedia.org/wiki/Comparison_of_platform_virtualization_software)
+        - a hypervisor is a kind of emulator
 
     - type 2: aka hosted aka client hypervisors
       - runs as a software layer on an operating system, like other computer programs
@@ -202,6 +206,10 @@ winrm-config    outputs WinRM configuration to connect to the machine
     - Vagrantfile from the project directory. This is the Vagrantfile that you will be modifying most of the time.
     - Multi-machine overrides if any.
     - Provider-specific overrides, if any.
+
+### vagrant cloud
+
+- search for `bento` to see all the chef software boxes
 
 ## best practices
 
