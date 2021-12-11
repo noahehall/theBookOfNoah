@@ -22,8 +22,6 @@
     String flush = "then wipe"
 
     String poopAndFlush = poop + " " + flush;
-
-
 ```
 
 ## internals

@@ -65,6 +65,8 @@
     - [serversforhackers.com: 3 quick run vids](https://serversforhackers.com/s/vagrant)
     - [scotch.io: vagrant share](https://scotch.io/tutorials/sharing-your-virtual-machine-on-the-web-with-vagrant-share)
     - [stdoutin: getting started](http://stdout.in/en/post/getting_started_with_vagrant_automated_dev_servers_deploy_and_provisioning)
+    - [import vagrantfile in another](https://stackoverflow.com/questions/46460383/is-it-possible-to-load-a-vagrantfile-config-from-within-another-vagrantfile)
+    - [templating vagrantfiles](https://stackoverflow.com/questions/35767649/how-to-template-vagrantfile-using-ruby)
 
 ## basics
 

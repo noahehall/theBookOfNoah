@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 
+# random stuff -----------------------------------------------------------------
 
-# returns current dir or concats string to create absolute path
+# refresh shell
+# @see https://askubuntu.com/questions/19772/how-to-reinitialize-a-terminal-window-instead-of-closing-it-and-starting-a-new-o
+refreshshell(){
+  reset
+  exec sudo --login --user "$USER" /bin/sh -c "cd '$PWD'; exec '$SHELL' -l"
+}
+# returns current dir of this script, optionally appending a path
 function getpath() {
     # https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself
     local THISDIR="$( cd "$( echo "${BASH_SOURCE[0]%/*}" )" || exit; pwd )"
@@ -30,6 +37,7 @@ function_exists() {
      return $?
 }
 
+# networking -------------------------------------------------------------------
 timeresponse() {
     if [[ $# -eq 1 ]]; then
         while true; do
@@ -40,7 +48,8 @@ timeresponse() {
         echo "\$1 === url"
     fi
 }
-# aws ----------------------------------
+# aws --------------------------------------------------------------------------
+
 # @see https://github.com/donnemartin/saws
 
 awsprofileset() {

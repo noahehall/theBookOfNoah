@@ -16,8 +16,7 @@ Vagrant.require_version ">= 2.2"
   # base box
   # config.vm.box = "orgName/boxVersion"
 
-  # If you disable this
-  # then boxes will only be checked for updates when the user runs
+  # check for box updates on start
   # config.vm.box_check_update = true
 
   # Share an additional folder to the guest VM. The first argument is
