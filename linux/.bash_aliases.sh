@@ -61,6 +61,10 @@ alias listallservices='systemctl list-unit-files --type=service'
 alias listalltimers='systemctl list-units --type=timer'
 alias listmemory='free -h'
 alias listmemoryfull='vmstat -s'
+alias listcpus='lscpu'
+alias listcpusfull='cat /proc/cpuinfo'
+alias listdisks='duf -all'
+alias listfilesystem='df -ha'
 
 # docker -------------------------------
 alias dockerseeme="$(echo docker run --rm -it alpine ping -c4 $(whatsmyip))"
