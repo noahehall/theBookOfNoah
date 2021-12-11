@@ -26,22 +26,27 @@ Vagrant.require_version ">= 2.2"
   # config.vm.box_check_update = true
 
   # folder syncing -------------------------------------------------------------
-
   # host path is relative to the Vagrantfile
-  # ^ basic, e.g. with virtualbox provider
+
+  # disable defualt shared dir
+  # config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  # normally works
   # config.vm.synced_folder "../host", "/absolute/path/on/guest",
-  # ^ provider specific, e.g. docker
+
+  # extra settings for docker
   # config.vm.synced_folder "../host/dir1", "/guest/dir1", docker_consistency: "cached"
   # config.vm.synced_folder "../host/dir2", "/guest/dir2", docker_consistency: "delegated"
 
   # provisioning settings -----------------------------------------------------
+  # @see https://stackoverflow.com/questions/22643177/ssh-onto-vagrant-box-with-different-username
+
   # run scripts when the box starts the first/every time
   # via shell, Ansible, Chef, Docker, Puppet and Salt
-  # e.g. to install packages, to configure the box, to install apps, etc.
 
   # config.vm.provision "shell", inline: <<-SHELL
   #   apt-get update
-  #   apt-get install -y apache2
+  #   apt-get upgrade -y
   # SHELL
 
   # network settings ----------------------------------------------------------
@@ -62,14 +67,16 @@ Vagrant.require_version ">= 2.2"
 
   # virtualbox provider --------------------------------------------------------
   # todo: move to virtualbox.vagrantfile
-
   # @see https://www.vagrantup.com/docs/providers/virtualbox
+  # @see @see https://phoenixnap.com/kb/how-to-install-a-gui-on-ubuntu
+
   # config.vm.provider "virtualbox" do |vb|
     # disable gui for headless mode
     # vb.gui = false
     # vb.name = "use a specific name instead of folder name + timestamp"
-    # vb.linked_clone: true # clone the basebox, dont import for better perf
+    # vb.linked_clone = true # clone the basebox, dont import for better perf
     # vb.check_guest_additions = true # disable to speed up provisioning
+
     # Customize via shortcuts, dont use these so we can group them below
     # vb.memory = "1024" in MB
     # vb.cpus = 2
@@ -86,10 +93,12 @@ Vagrant.require_version ">= 2.2"
     # vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"] # dns
     # vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"] # dns proxy
     # vb.customize ["modifyvm", :id, "--rtcuseutc", "on"] # host machine's clock
+    # vb.customize ["modifyvm", :id, "--vram", "16"] # video memory
   # end
 
   # docker provider ---- -------------------------------------------------------
-  # If the system cannot run Linux containers natively,
+  # i.e. vagrant up --provider docker
+  # ^ If the system cannot run Linux containers natively,
   # ^ Vagrant automatically spins up a "host VM" to run Docker.
   # todo: move to docker.vagrantfile
 
