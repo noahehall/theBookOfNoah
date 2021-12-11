@@ -7,6 +7,7 @@ if hash bpytop 2>/dev/null; then
 else echo 'should really use bpytop > top'
 fi
 
+
 # random cli ---------------------------
 alias echopath='echo $PATH | tr -s ":" "\n"'
 alias lessbashrc='less ~/.bashrc'
@@ -49,14 +50,17 @@ alias prettyjson='python -m json.tool | less'
 alias ufwconfigs='sudo find / -name "*.rules" -exec ls -l {} \; | grep ufw'
 
 # inspection -------------------------------------------------------------------
-alias listallfiles='find . -type f -ls'
-alias listallfolders='find . -type d -ls'
 alias listallsymlinks='find . -type l -ls'
 alias listallmounts='mount'
 alias listallprocesses='ps -ef'
 alias listallusers='cat /etc/passwd'
 alias listallgroups='cat /etc/group'
 alias listallnetworks='netstat -tulanp'
+alias listallports='netstat -tulanp | grep LISTEN'
+alias listallservices='systemctl list-unit-files --type=service'
+alias listalltimers='systemctl list-units --type=timer'
+alias listmemory='free -h'
+alias listmemoryfull='vmstat -s'
 
 # docker -------------------------------
 alias dockerseeme="$(echo docker run --rm -it alpine ping -c4 $(whatsmyip))"
