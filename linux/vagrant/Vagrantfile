@@ -100,4 +100,8 @@ Vagrant.require_version ">= 2.2"
     # not required if the host already has docker installed
     # d.vagrant_vagrantfile = "../path/to/Vagrantfile"
   # end
+
+  # k8ts + ansible -------------------------------------------------------------
+  # @see https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant/
+
 # end
