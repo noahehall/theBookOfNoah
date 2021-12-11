@@ -114,6 +114,8 @@ winrm-config    outputs WinRM configuration to connect to the machine
 
 ### terminilogy
 
+- port: a number between 1 and 65555 assigned to a tcp packet
+
 #### virtualization terms
 
 - virtualization: isolated sandboxes to reduce hardware requirements
@@ -193,8 +195,19 @@ winrm-config    outputs WinRM configuration to connect to the machine
 - connecting to a VM via SSH
 
 - folder synchronization: bidirectional host >< guest
+  - by default, the synced folder is `/vagrant` within the guestos
 
 - networking: multiple network topologies
+  - port forwarding
+  - private networks
+  - public networks
+    - make sure you secure your box before configuring a public network
+
+- box security
+  - ssh keys
+  - uname + pword
+
+- provisioning scripts
 
 ### important files & locations
 
@@ -228,8 +241,10 @@ winrm-config    outputs WinRM configuration to connect to the machine
 ## quickies
 
 ```sh
+  # @see thisrepo/linux/.bash_aliases.sh for my aliases
+
   # create and start a dev env on a slim ubuntu 16
-  vagrant init geerlingguy/ubuntu1604 # similar to git init
+  vagrant init geerlingguy/ubuntu1604 # create new vagrant env with this box
   vagrant status # see whatsup
   vagrant up # to (re)start a suspended/halted machine
   vagrant reload # if you've made changes to the Vagrantfile
@@ -241,24 +256,11 @@ winrm-config    outputs WinRM configuration to connect to the machine
   # login/out of the created VM
   vagrant ssh # in
   logout # same as exit
-  vagrant destroy
+  vagrant destroy # delete all vagrant env files except the Vagrantfile
 
   # handy box cmds
   vagrant box list
   vagrant box remove NAME
-```
-
-## vagrant file
-
-```rb
-  Vagrant.require_version ">= 2.2" # require atleast 2.2 to run this vagrant file
-
-  # 2 ===  vagrant version
-  Vagrant.configure("2") do |config|
-    config.vm.box = "generic/alpine314"
-    # config.vm.box_version = "1.0.282" # if you need to specify a version
-    # config.vm.box_url = "https://vagrantcloud.com/hashicorp/bionic64" # if appropriate
-
 ```
 
 ## installation

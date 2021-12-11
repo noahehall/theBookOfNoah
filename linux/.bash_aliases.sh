@@ -113,9 +113,9 @@ alias gitamend='git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
 alias aptrefresh='sudo apt update && sudo apt upgrade'
 alias aptfixbroken='sudo apt install --fix-broken'
 alias aptfixconfigure='sudo dpkg --configure --force-overwrite -a'
-alias aptsearchi3='sudo apt search ^i3xrocks'
-alias aptsearchlooks='sudo apt search ^regolith-look-'
-alias aptsearchpkgs='sudo apt-cache search --names-only '
+alias aptsearchi3='apt search ^i3xrocks'
+alias aptsearchlooks='apt search ^regolith-look-'
+alias aptsearchpkgs='apt-cache search --names-only '
 
 # aws ----------------------------------
 alias awsconfig='sudo aws configure'
@@ -141,9 +141,10 @@ alias vbstart='VBoxManage startvm'
 # vagrant, overriding vg i'll never use it
 alias vgt='vagrant'
 alias vgtdestroy='vagrant destroy' # delete everything, but keep vagrantfile
-alias vgtstop='vagrant halt'
 alias vgtprovision='vagrant provision'
+alias vgtrestart='vagrant reload'
 alias vgtrunning='vagrant status'
 alias vgtrunningall='vagrant global-status'
 alias vgtssh='vagrant ssh'
-alias vgtup='vagrant up'
+alias vgtstart='vagrant up'
+alias vgtstop='vagrant halt'

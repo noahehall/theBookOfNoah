@@ -8,6 +8,7 @@ refreshshell(){
   reset
   exec sudo --login --user "$USER" /bin/sh -c "cd '$PWD'; exec '$SHELL' -l"
 }
+
 # returns current dir of this script, optionally appending a path
 function getpath() {
     # https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself
