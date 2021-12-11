@@ -1,0 +1,103 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# this file contains reference of all available configuration settings
+# ^ with my opinionated defaults
+
+# @see https://docs.vagrantup.com
+# @see boxes at https://vagrantcloud.com/search
+
+ENV["LC_ALL"] = "en_US.UTF-8"
+Vagrant.require_version ">= 2.2"
+
+# Vagrant.configure("2") do |config|
+  # box settings --------------------------------------------------------------
+
+  # base box
+  # config.vm.box = "orgName/boxName"
+
+  # if you need to force a version of the config.vm.box
+  # config.vm.box_version = "1.0.282"
+
+  # if not sourcing from vagrant cloud
+  # config.vm.box_url = "https://some/other/repo"
+
+  # check for box updates on start
+  # config.vm.box_check_update = true
+
+  # folder syncing -------------------------------------------------------------
+
+  # host path is relative to the Vagrantfile
+  # ^ basic, e.g. with virtualbox provider
+  # config.vm.synced_folder "../host", "/absolute/path/on/guest",
+  # ^ provider specific, e.g. docker
+  # config.vm.synced_folder "../host/dir1", "/guest/dir1", docker_consistency: "cached"
+  # config.vm.synced_folder "../host/dir2", "/guest/dir2", docker_consistency: "delegated"
+
+  # provisioning settings -----------------------------------------------------
+  # run scripts when the box starts the first/every time
+  # via shell, Ansible, Chef, Docker, Puppet and Salt
+  # e.g. to install packages, to configure the box, to install apps, etc.
+
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   apt-get update
+  #   apt-get install -y apache2
+  # SHELL
+
+  # network settings ----------------------------------------------------------
+
+  # public network
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # public network, private access
+  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+
+  # private network
+  # config.vm.network "private_network", ip: "192.168.33.10"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network "public_network"
+
+  # virtualbox provider --------------------------------------------------------
+  # todo: move to virtualbox.vagrantfile
+
+  # @see https://www.vagrantup.com/docs/providers/virtualbox
+  # config.vm.provider "virtualbox" do |vb|
+    # disable gui for headless mode
+    # vb.gui = false
+    # vb.name = "use a specific name instead of folder name + timestamp"
+    # vb.linked_clone: true # clone the basebox, dont import for better perf
+    # vb.check_guest_additions = true # disable to speed up provisioning
+    # Customize via shortcuts, dont use these so we can group them below
+    # vb.memory = "1024" in MB
+    # vb.cpus = 2
+
+    # @see https://www.virtualbox.org/manual/ch08.html
+    # ^ call any command against VBoxManage just prior to booting the machine
+    # ^ are executed in order
+    # vb.customize ["modifyvm", :id, "--cableconnected1", "on"] # usb
+    # vb.customize ["modifyvm", :id, "--clipboardmode", "bidirectional"]
+    # vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"] # cpu cap
+    # vb.customize ["modifyvm", :id, "--cpus", "2"] # cores
+    # vb.customize ["modifyvm", :id, "--memory", "2048"] # in MB
+    # vb.customize ["modifyvm", :id, "--mousemode", "host"] # mouse
+    # vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"] # dns
+    # vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"] # dns proxy
+    # vb.customize ["modifyvm", :id, "--rtcuseutc", "on"] # host machine's clock
+  # end
+
+  # docker provider ---- -------------------------------------------------------
+  # If the system cannot run Linux containers natively,
+  # ^ Vagrant automatically spins up a "host VM" to run Docker.
+  # todo: move to docker.vagrantfile
+
+  # config.vm.provider "docker" do |d|
+    # d.image = "foo/bar"
+
+    # optinally specify a host VM to run the container in
+    # not required if the host already has docker installed
+    # d.vagrant_vagrantfile = "../path/to/Vagrantfile"
+  # end
+# end

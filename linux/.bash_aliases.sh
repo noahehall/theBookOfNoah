@@ -38,7 +38,7 @@ alias numberofcores='cat /proc/cpuinfo | grep processor | wc -l'
 alias pbcopy='xclip -selection clipboard'
 alias seessh='cat ~/.ssh/id_rsa.pub'
 alias groupmembers='getent group'
-# alias ufwstatus='ufw status verbose'
+alias ufwstatus='sudo ufw status verbose'
 
 # can also add on a path at the end `sizeit ~/some/path`
 alias sizeit='du -ahc'
