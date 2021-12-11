@@ -138,3 +138,29 @@
   2. configure ssh key-based authentication
   3. disable password authentication and enable ufw with ssh enabled
   4. setup firewall (usually ufw) to block everything except 80, 443, and 22 initially and define your default policies
+
+## old notes
+
+sudo apt install conky-all
+    cp /etc/conky/conky.conf ~/.conkrc
+    [check this](https://linuxconfig.org/ubuntu-20-04-system-monitoring-with-conky-widgets)
+
+[graphics driver](https://linuxconfig.org/ubuntu-20-04-tricks-and-things-you-might-not-know#h6-internet)
+
+list all services
+    $ systemctl list-units --all --type=service --no-pager
+list all systemd unit files
+    systemctl list-unit files --no-pager
+get services in specific status
+    $ systemctl list-units --all --type=service --no-pager | grep running|dead
+get enabled/disabled systemd service unit states
+    $ systemctl list-unit-files | grep enabled|disabled
+set service status
+    systemctl start|stop|enable|disable servicename
+
+- [tor](https://2019.www.torproject.org/docs/debian.html.en)
+- [multi audio sources](https://linuxconfig.org/how-to-enable-multiple-simultaneous-audio-outputs-on-pulseaudio-in-linux)
+  - pulseaudio -k
+  - pulseaudio -D
+- sudo apt install jackd qjackctl
+  - $ qjackctl
