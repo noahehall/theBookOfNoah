@@ -48,6 +48,16 @@ alias prettyjson='python -m json.tool | less'
 # get all ufw firewall config files
 alias ufwconfigs='sudo find / -name "*.rules" -exec ls -l {} \; | grep ufw'
 
+# inspection -------------------------------------------------------------------
+alias listallfiles='find . -type f -ls'
+alias listallfolders='find . -type d -ls'
+alias listallsymlinks='find . -type l -ls'
+alias listallmounts='mount'
+alias listallprocesses='ps -ef'
+alias listallusers='cat /etc/passwd'
+alias listallgroups='cat /etc/group'
+alias listallnetworks='netstat -tulanp'
+
 # docker -------------------------------
 alias dockerseeme="$(echo docker run --rm -it alpine ping -c4 $(whatsmyip))"
 alias dockerps="docker ps --no-trunc -a --format 'table {{.Names}}...{{.Image}}...{{.Status}}...{{.Command}}\n'"

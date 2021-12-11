@@ -70,40 +70,6 @@
 
 ## basics
 
-### TODO (ouch)
-
-```sh
-autocomplete    manages autocomplete installation on host
-box             manages boxes: installation, removal, etc.
-cloud           manages everything related to Vagrant Cloud
-destroy         stops and deletes all traces of the vagrant machine
-global-status   outputs status Vagrant environments for this user
-halt            stops the vagrant machine
-help            shows the help for a subcommand
-init            initializes a new Vagrant environment by creating a Vagrantfile
-login
-package         packages a running vagrant environment into a box
-plugin          manages plugins: install, uninstall, update, etc.
-port            displays information about guest port mappings
-powershell      connects to machine via powershell remoting
-provision       provisions the vagrant machine
-push            deploys code in this environment to a configured destination
-rdp             connects to machine via RDP
-reload          restarts vagrant machine, loads new Vagrantfile configuration
-resume          resume a suspended vagrant machine
-snapshot        manages snapshots: saving, restoring, etc.
-ssh             connects to machine via SSH
-ssh-config      outputs OpenSSH valid configuration to connect to the machine
-status          outputs status of the vagrant machine
-suspend         suspends the machine
-up              starts and provisions the vagrant environment
-upload          upload to machine via communicator
-validate        validates the Vagrantfile
-version         prints current and latest Vagrant version
-winrm           executes commands on a machine via WinRM
-winrm-config    outputs WinRM configuration to connect to the machine
-```
-
 ### high level
 
 - Vagrant is a tool focused for managing development environments
@@ -115,6 +81,8 @@ winrm-config    outputs WinRM configuration to connect to the machine
 ### terminilogy
 
 - port: a number (i.e. a channel) between 1 and 65555 assigned to a tcp packet
+- virtualbox: from oracle
+- hyper-v: from microsoft
 
 #### virtualization terms
 
@@ -200,10 +168,19 @@ winrm-config    outputs WinRM configuration to connect to the machine
 - networking: multiple network topologies
   - port forwarding: forward requests from host:port to guest:port
     - e.g. access guest:8080, via host:9090
-  - private networks
-    - uses `dhcp`
+
+  - private networks via `type: "dhcp"`
+    - creates a dhcp server in the providers virtual network
+    - assigns the box a private non-routable ip
+      - non routable ip address cannot be accessed from any other subnet
+      - useful for security & testing purposes
+    - get the boxes private ip via `ifconfig`
+
   - public networks
-    - make sure you secure your box before configuring a public network
+    - make sure to secure your box before configuring a public network
+
+- providers: define a box for a paritcular hypervisor
+  - preconfigured providers for `virtualbox` and `hyper-v`
 
 - box security
   - ssh keys
