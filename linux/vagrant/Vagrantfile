@@ -25,7 +25,7 @@ Vagrant.require_version ">= 2.2"
   # check for box updates on start
   # config.vm.box_check_update = true
 
-  # folder syncing -------------------------------------------------------------
+  # sync folders -------------------------------------------------------------
   # host path is relative to the Vagrantfile
 
   # disable defualt shared dir
@@ -68,24 +68,24 @@ Vagrant.require_version ">= 2.2"
   # docker provisioner
   # install docker, pull containres, configure containers to run on boot
   # @see https://www.vagrantup.com/docs/provisioning/docker
-  config.vm.provision "docker" do |d|
-    images: ["ubuntu", "vagrant"]
-    d.build_image "/vagrant/app",
-      args "-t poop:latest"
-    d.run "someImage",
-      cmd: "bash -l",
-      args: "-v '/vagrant:/var/www'",
-      auto_assign_name: true,
-      daemonize: true, # run in background via -d
-      restart: 'always' # restart on every boot
-    # also run multiple dbs by setting name to db-1 & db-2
-    d.run "db-1", image: "user/mysql"
-    d.run "db-2", image: "user/mysql"
-    # customize /etc/default/docker
-    d.post_install_provision "shell",
-      inline:"echo export http_proxy='http://127.0.0.1:3128/' >> /etc/default/docker"
+  # config.vm.provision "docker" do |d|
+  #   images: ["ubuntu", "vagrant"]
+  #   d.build_image "/vagrant/app",
+  #     args "-t poop:latest"
+  #   d.run "someImage",
+  #     cmd: "bash -l",
+  #     args: "-v '/vagrant:/var/www'",
+  #     auto_assign_name: true,
+  #     daemonize: true, # run in background via -d
+  #     restart: 'always' # restart on every boot
+  #   # also run multiple dbs by setting name to db-1 & db-2
+  #   d.run "db-1", image: "user/mysql"
+  #   d.run "db-2", image: "user/mysql"
+  #   # customize /etc/default/docker
+  #   d.post_install_provision "shell",
+  #     inline:"echo export http_proxy='http://127.0.0.1:3128/' >> /etc/default/docker"
 
-  end
+  # end
   # network settings -----------------------------------------------------------
 
   # public network

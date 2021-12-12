@@ -46,6 +46,7 @@ sudo corepack enable # requires sudo for /usr/local/bin
 corepack prepare --activate --all
 
 # install nvm
+touch ~/.bashrc
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 
 # setup nvm to manage node versions
