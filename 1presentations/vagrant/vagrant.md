@@ -23,6 +23,9 @@
   - my opinions
     - vagrant should be an engineering first principle
     - vagrant cloud vs private repo for sharing
+    - use cases
+      - keeping your box clean, and attack surface low
+        - less things you install natively, the better
   - hardfacts
     - vagrant cloud: public boxes
 

@@ -28,6 +28,7 @@
     - [vagrant boxes](https://www.vagrantup.com/docs/boxes)
     - [synced folders](https://www.vagrantup.com/docs/synced-folders)
     - [tips & tricks](https://www.vagrantup.com/docs/vagrantfile/tips)
+    - [provisioning](https://www.vagrantup.com/docs/provisioning)
       - TODO: ^^^^ must do
     - [vagrant networking](https://www.vagrantup.com/docs/networking)
     - [config.vm machine settings](https://www.vagrantup.com/docs/vagrantfile/machine_settings)
@@ -186,7 +187,9 @@
   - ssh keys
   - uname + pword
 
-- provisioning scripts
+- provision scripts
+  - for moifying the base box to match your environment requirements
+  - by default only runs the first time the box is started
 
 ### important files & locations
 

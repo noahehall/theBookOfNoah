@@ -38,18 +38,55 @@ Vagrant.require_version ">= 2.2"
   # config.vm.synced_folder "../host/dir1", "/guest/dir1", docker_consistency: "cached"
   # config.vm.synced_folder "../host/dir2", "/guest/dir2", docker_consistency: "delegated"
 
-  # provisioning settings -----------------------------------------------------
-  # @see https://stackoverflow.com/questions/22643177/ssh-onto-vagrant-box-with-different-username
-
+  # provision scripts ----------------------------------------------------------
   # run scripts when the box starts the first/every time
   # via shell, Ansible, Chef, Docker, Puppet and Salt
+  # @see https://www.vagrantup.com/docs/provisioning
+  # @see https://stackoverflow.com/questions/22643177/ssh-onto-vagrant-box-with-different-username
 
+  # inline provision script
   # config.vm.provision "shell", inline: <<-SHELL
   #   apt-get update
   #   apt-get upgrade -y
   # SHELL
 
-  # network settings ----------------------------------------------------------
+  # external provision script
+  # ^ Path is relative to the project Vagrantfile or a url
+  # config.vm.provision "shell", path: "./provision.sh"
+  # run provision scripts on every boot
+  # config.vm.provision "shell", path: "./provision.sh", run: "always"
+
+  # upload file from host to guest
+  # config.vm.provision "file", source: "~/.gitconfig", destination: ".gitconfig"
+
+  # upload dir & all children from host to guest
+  # config.vm.provision "file", source: "~/path/to/host/folder", destination: "$HOME/remote/newfolder"
+
+  # upload all files in dir (but not dir) from host to guest
+  # config.vm.provision "file", source: "/otherfolder", destination: "/remote/otherlocation"
+
+  # docker provisioner
+  # install docker, pull containres, configure containers to run on boot
+  # @see https://www.vagrantup.com/docs/provisioning/docker
+  config.vm.provision "docker" do |d|
+    images: ["ubuntu", "vagrant"]
+    d.build_image "/vagrant/app",
+      args "-t poop:latest"
+    d.run "someImage",
+      cmd: "bash -l",
+      args: "-v '/vagrant:/var/www'",
+      auto_assign_name: true,
+      daemonize: true, # run in background via -d
+      restart: 'always' # restart on every boot
+    # also run multiple dbs by setting name to db-1 & db-2
+    d.run "db-1", image: "user/mysql"
+    d.run "db-2", image: "user/mysql"
+    # customize /etc/default/docker
+    d.post_install_provision "shell",
+      inline:"echo export http_proxy='http://127.0.0.1:3128/' >> /etc/default/docker"
+
+  end
+  # network settings -----------------------------------------------------------
 
   # public network
   # config.vm.network "forwarded_port", guest: 80, host: 8080
