@@ -51,5 +51,8 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 
 # setup nvm to manage node versions
 source ~/.bashrc > /dev/null
-nvm alias default system # set defualt nvm node to version we installed above
-nvm install node --reinstall-packages-from=node --latest-npm
+if hash nvm 2>/dev/null; then
+  nvm alias default system # set defualt nvm node to version we installed above
+  nvm install node --reinstall-packages-from=node --latest-npm
+else echo 'could not install nvm'
+fi
