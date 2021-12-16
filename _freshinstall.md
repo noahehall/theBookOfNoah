@@ -30,6 +30,8 @@
         - ^ switch to theme
 
 - essential
+  - [mozilla vpn](https://support.mozilla.org/en-US/kb/how-install-mozilla-vpn-linux-computer)
+  - resolvconf
   - terminator
   - [azlux repo](https://packages.azlux.fr/)
   - [firefox dev](https://www.mozilla.org/en-US/firefox/developer/)
