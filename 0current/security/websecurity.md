@@ -56,10 +56,13 @@
   - internet layer
     - IPv4
     - IPv6
-  - trasport layer
+  - transport layer
     - TCP
     - UDP
   - application Layer
+    - TLS
+    - SSL
+    - SSL
     - DNS
     - FTP
     - HTTP
@@ -99,6 +102,19 @@
   - commonly used with video/situations where dropped data packets are expected/msg guarantee isnt required, but the data packets can be streamed at a constant rate
 
 ##### Application Layer Protocols
+
+- TLS: transport layer security
+  - arguable what fkn layer this is actually in
+  - method of encryption that provides both privacy and data integry
+  - ensures that
+    - privacy: packets intercepted by a third party can be decrypted without the appropriate encryption keys
+    - data integrity: any attempt to tamper with the packets will be detectable
+
+  - workflow
+    - HTTP conversations using TLS are called HTTP secure
+    - HTTPS requires the client & server to perform a TLS handshake
+    - both parties agree on an encyption method (cypher) and exchange encryption keys
+    - any subsequent data packets (request & responses) will be opaque to outsiders
 
 - SMTP: simple mail transport protocol
   - for sending emails
