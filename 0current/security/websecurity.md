@@ -2,6 +2,9 @@
 
 - PAGE 10, hypertext transfer protocol
 
+- todo
+  - move the security related stuff in the old azz webtech file into this file
+
 ## basics
 
 ### links
@@ -103,8 +106,15 @@
   - instant messaging
 - FTP: file transfer protocol
   - downloading files from servers
+
 - HTTP: hypertext transfer protocol
-  - PAGE 10
+  - transport webpages and their resources to user agents like web browsers
+
+  - workflow: general
+    - user agents generate requests for specific resources
+    - web servers expecting those requests, return responses containing either the requested resource, or an error code
+    - both requests & responses are plain text msgs, but can be delivered as compressed &/ encrypted
+    - the majority of web exploits use http in some fashion
 
 - DNS: domain name system
   - a global directory that translated IP addrs to unique human readable domains e.g. nirv.ai
@@ -123,8 +133,18 @@
     - MX: mail exchange records
       - help route email
 
+## http focus
+
+- http requests
+  - method: akak verb; the action that the user agent wants the server to perform
+  - URL: universal resource locator: describes the resource being manipulated/fetched
+  - Headers: metadata; e.g. type of content the user agent is epcting/whether it accepts compressed responses
+  - Body: optional component contains any extra data that needs to be sent to the server
+
 ## attack vectors
 
 ### DNS poisoning
 
 - a local DNS cache is deliberately corrupted so that data is routed to a server controlled by an attacker
+
+### cross-site request forgery
