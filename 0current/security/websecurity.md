@@ -137,14 +137,62 @@
 
 - http requests
   - method: akak verb; the action that the user agent wants the server to perform
+    - GET: fetch
+    - POST: create/update
+    - PUT: update/upload
+    - PATCH: edit
+    - DELETE: delete
+    - HEAD: retrieves same info as GET, but instructs the server to return the response without a body
+    - CONNECT: initiates two-way comms; e.g. connecting through a proxy
+    - OPTIONS: lets a user agent ask what other methods are supported by a resource
+    - TRACE: will contain an exact copy of the original HTTP request, for the user agent to see what (if any) alterations were made by intermediate servers
+
   - URL: universal resource locator: describes the resource being manipulated/fetched
+
   - Headers: metadata; e.g. type of content the user agent is epcting/whether it accepts compressed responses
+
   - Body: optional component contains any extra data that needs to be sent to the server
 
+- HTTP responses
+  - protocol:
+  - code: 3 digit status code
+    - 2xx: understood, accepted, and responded to
+    - 3xx: redirect
+    - 4xx: client error; user agent genreated an invalid request
+    - 5xx: server error; request was valid, but the server was unable to fullfil the request
+
+  - msg: status msg
+  - headers: instruct the user agent how to treat the content
+    - content-type
+    - cache-control
+
+  - body: if a resource was requested
+
+- stateful connections:
+  - when a client and server perform a handhsake and continue to send packets back n fourth until one of the communicate parties decides to terminate
+
+- http session: the entire conversation (stateless/stateful) between a specific user agent & server
+  - server could send a set-cookie header in the initial HTTP response containing data that identifies the user agent
+    - the user agent will store & send back the same cookie on each subsequent response
+
+- encryption:
+  - method of desguising the contents of messages from prying eyes by encoding them during transmission
+
 ## attack vectors
+
+- need to flush out
+  - TRACE requests
+    - can allow javascript injected into a page to access cookies that have been deliberately made inaccessible to javascript
+  - session cookies
+    - enables an attacker to impersonate a user agent to a web server
+  - man in the middle attacks
+    - plain text msgs an be read by anyone intercepting the data packets
 
 ### DNS poisoning
 
 - a local DNS cache is deliberately corrupted so that data is routed to a server controlled by an attacker
 
 ### cross-site request forgery
+
+- exposure
+  - using GET requests for anything other than retrieving resources
