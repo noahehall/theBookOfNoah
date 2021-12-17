@@ -41,7 +41,41 @@
 - internet protocol suite: dictates how computers exchange data over the web
   - there are over 20 protocols collectively under this umbrella
 
+- internet protocol layers
+  - network layer
+    - ARP
+    - MAC
+    - NDP
+    - OSPF
+    - PPP
+  - internet layer
+    - IPv4
+    - IPv6
+  - trasport layer
+    - TCP
+    - UDP
+  - application Layer
+    - DNS
+    - FTP
+    - HTTP
+    - IMAP
+    - POP
+    - SMTP
+    - SSH
+    - XMPP
+
+##### internet layer
+
+- IP: internet protocol addresses
+  - destination for data packets
+  - unique binary numbers assigned to individual internet-connected computers
+  - IPv4: 2x32 addresses
+  - IPv6: represented as 8 groups of 4 hexadecimal digits separated by colons
+
+##### Transport Layer Protocols
+
 - TCP: transmission control protocol
+  - enables two computers to reliably exchange data over the internet
   - created in response to ARPANET (predecessor to the internet)
   - the first msg sent (was on ARPANET) was a LOGIN command destined for a remote computer at stanford university, but crashed after the first two letters (reason for TCP)
 
@@ -56,10 +90,30 @@
     - this send & receipt workflow guarantees msg delivery
 
 - UDP: User Dataram Protocol
+  - newer than TCP
   - commonly used with video/situations where dropped data packets are expected/msg guarantee isnt required, but the data packets can be streamed at a constant rate
 
-- IP: internet protocol addresses
-  - destination for data packets
-  - unique binary numbers assigned to individual internet-connected computers
-  - IPv4: 2x32 addresses
-  - IPv6: represented as 8 groups of 4 hexadecimal digits separated by colons
+##### Application Layer Protocols
+
+- DNS: domain name system
+  - a global directory that translated IP addrs to unique human readable domains e.g. nirv.ai
+  - domain registrars: private organizations that register domains before they can be used in DNS
+
+  - workflow
+    - when a browser encounters a domain for the first time
+      - check the local domain name server (typically hosted by an ISP) to get the associated IP (and various other data) and cache the result
+
+  - terms
+    - TTL: time to live: how long a domain name server will cache the IP addr associated with a domain
+      - i.e. DNS caching
+    - CNAME: canonical name records
+      - i.e. aliases for domain names
+      - enable multiple domain names to point ot the same IP address
+    - MX: mail exchange records
+      - help route email
+
+## attack vectors
+
+### DNS poisoning
+
+- a local DNS cache is deliberately corrupted so that data is routed to a server controlled by an attacker
