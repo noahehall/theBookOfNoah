@@ -28,15 +28,22 @@
 - black hat: hoard exploits to maximize the time windows during which they can use vulnerabilities
 - dark web: websites available oly via special network nodes that anonymize incoming IP address
 
+- ICANN: internet corporation for assigned names and numbers
+  - alotts blocks of IP addresses to regional authorities
+- regional authorities
+  - grant blocks of addresses to internet service prviders and hosting companies within their region
+  - when you connect to the net, your ISP assigned an IP to your computer
+    - however the IP is rotated periodically
+  - similary: companies that host content are assigned an IP for each server they connect to the network
+
 #### internet protocol suite
 
 - internet protocol suite: dictates how computers exchange data over the web
   - there are over 20 protocols collectively under this umbrella
 
 - TCP: transmission control protocol
-  - background
-    - created in response ARPANET (predecessor to the internet)
-    - the first msg sent was a LOGIN command destined for a remote computer at stanford university, but crashed after the first two letters
+  - created in response to ARPANET (predecessor to the internet)
+  - the first msg sent (was on ARPANET) was a LOGIN command destined for a remote computer at stanford university, but crashed after the first two letters (reason for TCP)
 
   - high level workflow
     - messages sent via TCP are split into data packets
@@ -49,4 +56,10 @@
     - this send & receipt workflow guarantees msg delivery
 
 - UDP: User Dataram Protocol
-  - commonly used with video/situations where dropped data packets are expected/msg guarantee isnt required
+  - commonly used with video/situations where dropped data packets are expected/msg guarantee isnt required, but the data packets can be streamed at a constant rate
+
+- IP: internet protocol addresses
+  - destination for data packets
+  - unique binary numbers assigned to individual internet-connected computers
+  - IPv4: 2x32 addresses
+  - IPv6: represented as 8 groups of 4 hexadecimal digits separated by colons
