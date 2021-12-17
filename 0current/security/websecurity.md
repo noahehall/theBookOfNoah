@@ -194,6 +194,23 @@
 - encryption:
   - method of desguising the contents of messages from prying eyes by encoding them during transmission
 
+- user agents
+  - web browsers
+    - browser security model
+      - rendering pipeline: software component within a web browser responsible for transforming  HTML into its visual representation
+        - parse the HTML
+          - tokenize
+        - generate the DOM
+          - an in-memory data structure that represents the browsers understanding of how the page is structured
+        - generate the CSSOM
+          - styling rules applied to each DOM element
+        - DRAW
+          - draws the webpage on screen
+        - EXECUTE JS
+          - this step is actually interwoven between generation of the DOM and DRAW
+          - the browser will load & execute any JS it comes across as it constructs the DOM
+          - and the JS can dynamically make changes to the DOM and styling rules, either before the page is rendered or in response to user actions
+
 ## attack vectors
 
 - need to flush out
