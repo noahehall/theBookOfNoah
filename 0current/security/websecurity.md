@@ -1,5 +1,7 @@
 # web security
 
+- PAGE 10, hypertext transfer protocol
+
 ## basics
 
 ### links
@@ -94,6 +96,15 @@
   - commonly used with video/situations where dropped data packets are expected/msg guarantee isnt required, but the data packets can be streamed at a constant rate
 
 ##### Application Layer Protocols
+
+- SMTP: simple mail transport protocol
+  - for sending emails
+- XMPP: extensible messaging and presence protocol
+  - instant messaging
+- FTP: file transfer protocol
+  - downloading files from servers
+- HTTP: hypertext transfer protocol
+  - PAGE 10
 
 - DNS: domain name system
   - a global directory that translated IP addrs to unique human readable domains e.g. nirv.ai
