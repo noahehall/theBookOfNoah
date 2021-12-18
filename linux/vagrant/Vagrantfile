@@ -6,6 +6,7 @@
 
 # @see https://docs.vagrantup.com
 # @see boxes at https://vagrantcloud.com/search
+# @see https://github.com/hashicorp/vagrant/wiki/Available-Vagrant-Plugins
 
 ENV["LC_ALL"] = "en_US.UTF-8"
 Vagrant.require_version ">= 2.2"

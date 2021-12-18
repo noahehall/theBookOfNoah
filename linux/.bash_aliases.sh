@@ -160,6 +160,9 @@ alias vbrunning='VBoxManage list runningvms'
 alias vbstart='VBoxManage startvm'
 
 # vagrant, overriding vg i'll never use it
+alias vagrantreload='vagrant reload' # like restarting your comp
+alias vagrantresume='vagrant resume' # like waking up your comp
+alias vagrantsuspend='vagrant suspend' # like hibernating your comp
 alias vgt='vagrant'
 alias vgtdestroy='vagrant destroy' # delete everything, but keep vagrantfile
 alias vgtlistboxes='vagrant box list'
