@@ -148,6 +148,8 @@
 
   - can support multi-machine configurations:
     - e.g. when an application env is distributed across multiple virtual machines
+    - e.g. web server (haproxy), application server (node), and db server (arangodb) multi machine vagrant file
+      - ^ my preferred stack
 
 - vagrant cloud: online marketplace for VMs
 

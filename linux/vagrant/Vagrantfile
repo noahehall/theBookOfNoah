@@ -39,7 +39,7 @@ Vagrant.require_version ">= 2.2"
   # config.vm.synced_folder "../host/dir2", "/guest/dir2", docker_consistency: "delegated"
 
   # provision scripts ----------------------------------------------------------
-  # run scripts when the box starts the first/every time
+  # run scripts (in order) when the box starts the first/every time
   # via shell, Ansible, Chef, Docker, Puppet and Salt
   # @see https://www.vagrantup.com/docs/provisioning
   # @see https://stackoverflow.com/questions/22643177/ssh-onto-vagrant-box-with-different-username

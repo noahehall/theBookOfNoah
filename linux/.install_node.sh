@@ -4,6 +4,8 @@
 # ^ you dont have any globally installed pkgs
 # ^ you use bash
 # ^ linux os
+# @see https://github.com/nodesource/distributions
+# @see https://deb.nodesource.com/setup_17.x
 
 # defaults when installing via apt
 # /usr/bin/node # default binary
