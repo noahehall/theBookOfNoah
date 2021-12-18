@@ -9,12 +9,10 @@
 ## links
 
 - other
-
   - [vmware glossary (dope snazzle)](https://www.vmware.com/topics/glossary/)
     - [hypervisor topic](https://www.vmware.com/topics/glossary/content/hypervisor)
 
 - vagrant
-
   - [where vagrant stores boxes](https://stackoverflow.com/questions/10155708/where-does-vagrant-download-its-box-files-to)
   - [start here](https://www.vagrantup.com/intro)
   - [vagrant vs docker](https://www.vagrantup.com/intro/vs/docker)
@@ -25,7 +23,6 @@
   - [awesome vagrant](https://github.com/iJackUA/awesome-vagrant)
 
   - references
-
     - [cli reference](https://www.vagrantup.com/docs/cli)
     - [vagrant cli box](https://www.vagrantup.com/docs/cli/box)
     - [vagrant boxes](https://www.vagrantup.com/docs/boxes)
@@ -39,7 +36,6 @@
     - [NFS setup](https://www.vagrantup.com/docs/synced-folders/nfs)
 
   - plugins/contrib/tools
-
     - [plugins listed on wiki](https://github.com/hashicorp/vagrant/wiki/Available-Vagrant-Plugins)
     - [ngrok: required for vagrant share](https://dashboard.ngrok.com/get-started/setup)
     - [veewee vm exporter](https://github.com/jedi4ever/veewee)
@@ -48,7 +44,6 @@
       - the defaults work, but find the optimial settings for ubuntu
 
   - boxes
-
     - [vagrant cloud signup](https://app.vagrantup.com/)
     - [bento boxes](https://app.vagrantup.com/bento)
       - [bento github](https://github.com/chef/bento#current-baseboxes)
@@ -104,13 +99,10 @@
   - [list of emulators & hypervisors](https://en.wikipedia.org/wiki/Comparison_of_platform_virtualization_software)
     - a hypervisor is a kind of emulator
   - [list of type 1 & type 2 hypervisors](https://vapour-apps.com/what-is-hypervisor/)
-
     - use this info in demo, make sure to cite source
 
   - types of hypervisors
-
     - type 1: aka bare metal
-
       - acts like a lightweight operating system and runs dirctly on the hosts hardware
       - is installed on the computer hardware next to the operating system
       - use cases
@@ -129,7 +121,6 @@
         - end user/software testing
 
 - containers: allow applications to run independently of an operating system
-
   - use cases
     - run any application on any operating system through a container engine
     - extremely portable applications
@@ -143,7 +134,6 @@
 #### vagrant terms
 
 - use cases
-
   - application appliances
   - development environments:
     - frozen in time with a specific set of hardware & software versions
@@ -177,18 +167,14 @@
 - connecting to a VM via SSH
 
 - folder synchronization: bidirectional host >< guest
-
   - by default, the synced folder is `/vagrant` within the guestos
     symlinks dont work in shared folders
 
 - networking: multiple network topologies
-
   - port forwarding: forward requests from host:port to guest:port
-
     - e.g. access guest:8080, via host:9090
 
   - private networks via `type: "dhcp"`
-
     - creates a dhcp server in the providers virtual network
     - assigns the box a private non-routable ip
       - non routable ip address cannot be accessed from any other subnet
@@ -199,11 +185,9 @@
     - make sure to secure your box before configuring a public network
 
 - providers: define a box for a paritcular hypervisor
-
   - preconfigured providers for `virtualbox` and `hyper-v`
 
 - box security
-
   - ssh keys
   - uname + pword
 
@@ -214,10 +198,9 @@
 ### important files & locations
 
 - `Vagrantfile` created via `vagrant init some/type/of/img`
-
   - purpose: this is your buildfile; every person working with the project uses this file to build their dev env
-  - the `parent/Vagrantfile` directory is considered the project directory, and stored in the guest machine at `/vagrant`
 
+  - the `parent/Vagrantfile` directory is considered the project directory, and stored in the guest machine at `/vagrant`
     - however always confirm as this worked for me on an ubuntu box, but not an alpine box
     - you may have to set it specificlay (see vagrant file down below)
 
