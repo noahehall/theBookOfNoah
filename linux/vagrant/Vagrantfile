@@ -126,7 +126,6 @@ Vagrant.require_version ">= 2.2"
     # vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"] # cpu cap
     # vb.customize ["modifyvm", :id, "--cpus", "2"] # cores
     # vb.customize ["modifyvm", :id, "--memory", "2048"] # in MB
-    # vb.customize ["modifyvm", :id, "--mousemode", "host"] # mouse
     # vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"] # dns
     # vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"] # dns proxy
     # vb.customize ["modifyvm", :id, "--rtcuseutc", "on"] # host machine's clock

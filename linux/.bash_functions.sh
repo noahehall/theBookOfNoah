@@ -49,6 +49,24 @@ timeresponse() {
         echo "\$1 === url"
     fi
 }
+
+waitforserviceonport () {
+    if [[ $# -eq 2 ]]; then
+        while true; do
+            if [[ $(netstat -tulanp | grep "$2" | grep LISTEN) ]]; then
+                echo "$1 is up on port $2"
+                break
+            else
+                echo "$1 is not up on port $2"
+                sleep 1
+            fi
+        done
+    else
+        echo "\$1 === service name"
+        echo "\$2 === port"
+    fi
+}
+
 # aws --------------------------------------------------------------------------
 
 # @see https://github.com/donnemartin/saws
