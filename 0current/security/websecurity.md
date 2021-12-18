@@ -1,6 +1,6 @@
 # web security
 
-- PAGE 10, hypertext transfer protocol
+- PAGE 17, the DOM
 
 - todo
   - move the security related stuff in the old azz webtech file into this file
@@ -198,14 +198,20 @@
   - web browsers
     - browser security model
       - rendering pipeline: software component within a web browser responsible for transforming  HTML into its visual representation
+
         - parse the HTML
           - tokenize
+
         - generate the DOM
           - an in-memory data structure that represents the browsers understanding of how the page is structured
+          - PAGE 17
+
         - generate the CSSOM
           - styling rules applied to each DOM element
-        - DRAW
+
+        - DRAW/PAINT
           - draws the webpage on screen
+
         - EXECUTE JS
           - this step is actually interwoven between generation of the DOM and DRAW
           - the browser will load & execute any JS it comes across as it constructs the DOM
@@ -220,12 +226,28 @@
     - enables an attacker to impersonate a user agent to a web server
   - man in the middle attacks
     - plain text msgs an be read by anyone intercepting the data packets
+  - comprimising authentication
+  - permissions
+  - information leaks
+  - encryption
+  - third-party code
+  - unwitting accessories
 
 ### DNS poisoning
 
 - a local DNS cache is deliberately corrupted so that data is routed to a server controlled by an attacker
 
+### injection attacks
+
+### cross-site scripting
+
 ### cross-site request forgery
 
 - exposure
   - using GET requests for anything other than retrieving resources
+
+### session hijacking
+
+### XML attacks
+
+### denial-of-service attacks
