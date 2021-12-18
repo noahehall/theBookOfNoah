@@ -51,7 +51,7 @@ timeresponse() {
 }
 
 waitforserviceonport () {
-    if [[ $# -eq 2 ]]; then
+    if test $# -eq 2; then
         while true; do
             if [[ $(netstat -tulanp | grep "$2" | grep LISTEN) ]]; then
                 echo "$1 is up on port $2"
