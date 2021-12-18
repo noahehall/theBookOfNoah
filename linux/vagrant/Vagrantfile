@@ -14,6 +14,9 @@ Vagrant.require_version ">= 2.2"
   # box settings --------------------------------------------------------------
 
   # create an additional kali linux vm
+  # ^ I recommend always defining boxes, and never directly within config
+
+  # connect via the name: i.e.vagrant ssh kali
   # config.vm.define "kali" do |kali|
     # kali.vm.box = "kalilinux/rolling"
     # kali.vm.box_check_update = true

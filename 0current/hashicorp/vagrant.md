@@ -197,6 +197,15 @@
   - for moifying the base box to match your environment requirements
   - by default only runs the first time the box is started
 
+- creating base boxes
+  - within a vagrant env, create a new Vagrantfile you want to use that provides defualt settings when your box is created
+  - `vagrant package --vagrantfile mynewbox/defaults/Vagrantfile --output mynewbox.box`
+    - see vagrantfile loading order, this is the file packaged with the box
+  - add your new box to your local box cache
+    - `vagrant box add testingmybox mynewbox.box`
+  - test your new box
+    - `mkdir testbox && cd testbox && vagrant init testingmybox && vagrant up`
+
 ### important files & locations
 
 - `Vagrantfile` created via `vagrant init some/type/of/img`
@@ -351,6 +360,7 @@
     # exit & shutdown the vm
     exit
     vagrant halt
+
 
 
 

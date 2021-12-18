@@ -161,6 +161,7 @@ alias vbstart='VBoxManage startvm'
 
 # vagrant, overriding vg i'll never use it
 alias vgt='vagrant'
+alias vgtboxes='vagrant box list'
 alias vgtdestroy='vagrant destroy' # delete everything, but keep vagrantfile
 alias vgtprovision='vagrant provision'
 alias vgtrestart='vagrant reload'
