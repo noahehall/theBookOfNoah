@@ -132,6 +132,7 @@ alias gitamend='git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
 
 # apt ----------------------------------
 alias aptrefresh='sudo apt update && sudo apt upgrade'
+alias aptupgradable='sudo apt list --upgradable'
 alias aptfixbroken='sudo apt install --fix-broken'
 alias aptfixconfigure='sudo dpkg --configure --force-overwrite -a'
 alias aptsearchi3='apt search ^i3xrocks'
