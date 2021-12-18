@@ -13,7 +13,26 @@ Vagrant.require_version ">= 2.2"
 # Vagrant.configure("2") do |config|
   # box settings --------------------------------------------------------------
 
-  # base box
+  # create an additional kali linux vm
+  # config.vm.define "kali" do |kali|
+    # kali.vm.box = "kalilinux/rolling"
+    # kali.vm.box_check_update = true
+    # kali.vm.synced_folder ".", "/vagrant", disabled: true
+
+    # enable other boxes to connect to this via IP on private network
+    # kali.vm.network "private_network", ip: "192.168.33.20"
+    # kali.vm.provider "virtualbox" do |vb|
+      # vb.gui = true
+      # vb.linked_clone = true # clone the basebox, dont import for better perf
+      # vb.check_guest_additions = true # disable to speed up provisioning
+      # vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"] # cpu cap
+      # vb.customize ["modifyvm", :id, "--cpus", "1"] # cores
+      # vb.customize ["modifyvm", :id, "--memory", "512"] # in MB
+      # vb.customize ["modifyvm", :id, "--vram", "32"] # video memory
+    # end
+  # end
+
+  # base box if not using multi-machine
   # config.vm.box = "orgName/boxName"
 
   # if you need to force a version of the config.vm.box
