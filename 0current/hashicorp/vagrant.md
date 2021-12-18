@@ -206,6 +206,13 @@
   - test your new box
     - `mkdir testbox && cd testbox && vagrant init testingmybox && vagrant up`
 
+- vagrant snapshots
+  - saving a vagrant env at a specific point in time
+  - useful for iterating changes from a certain commit
+    - especially when you have extensiving provisioners that take years to run
+  - `vagrant snapshot save nameOfYourSnapshot`
+  - `vagrant snapshot restore switchToThisSnapshot`
+
 ### important files & locations
 
 - `Vagrantfile` created via `vagrant init some/type/of/img`

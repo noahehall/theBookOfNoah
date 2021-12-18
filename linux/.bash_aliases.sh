@@ -161,12 +161,15 @@ alias vbstart='VBoxManage startvm'
 
 # vagrant, overriding vg i'll never use it
 alias vgt='vagrant'
-alias vgtboxes='vagrant box list'
 alias vgtdestroy='vagrant destroy' # delete everything, but keep vagrantfile
+alias vgtlistboxes='vagrant box list'
+alias vgtlistsnapshots='vagrant snapshot list'
 alias vgtprovision='vagrant provision'
 alias vgtrestart='vagrant reload'
 alias vgtrunning='vagrant status'
 alias vgtrunningall='vagrant global-status'
 alias vgtssh='vagrant ssh'
 alias vgtstart='vagrant up'
+alias vgtstartandprovision='vagrant up --provision'
+alias vgtstartdontprovision='vagrant up --no-provision'
 alias vgtstop='vagrant halt'
