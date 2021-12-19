@@ -19,6 +19,10 @@
 - [vscode tips and tricks](https://code.visualstudio.com/docs/getstarted/tips-and-tricks)
 - [optimize vs code and choosing extensions](https://www.freecodecamp.org/news/optimize-vscode-performance-best-extensions/)
 
+- keymap
+  - `ctrl ,` open fkn settings.json
+  - `ctrl backtick` open terminal
+
 ```jsonc
 //default settings
 {

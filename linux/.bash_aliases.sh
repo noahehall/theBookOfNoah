@@ -13,7 +13,11 @@ alias echopath='echo $PATH | tr -s ":" "\n"'
 alias lessbashrc='less ~/.bashrc'
 alias nanobashrc='nano ~/.bashrc'
 alias sourcebashrc='source ~/.bashrc'
+alias catbashrc='cat ~/.bashrc'
 alias treedir='tree --dirsfirst --charset=ascii'
+alias tree1='tree -L 1'
+alias tree2='tree -L 2'
+alias tree3='tree -L 3'
 alias cdmedia="cd /media/$(whoami)/"
 
 # grep ---------------------------------
@@ -81,12 +85,14 @@ alias dockerinspect="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPA
 
 # node ---------------------------------
 alias npmglobals='npm list -g --depth=0'
-alias nvminstalled='nvm ls'
-alias nvmlatest='nvm ls-remote | grep -i latest'
-alias nvmlatestinstall='nvm install node --reinstall-packages-from=node'
-alias nvmlatestnpm='nvm install-latest-npm'
+alias nvmaliasnode='nvm alias default node'
 alias nvmdefualtsystem='nvm alias default system'
+alias nvminstalled='nvm ls'
+alias nvmlatestinstall='nvm install node --reinstall-packages-from=default --latest-npm'
+alias nvmlatestlts='nvm ls-remote | grep -i latest'
+alias nvmlatestnpm='nvm install-latest-npm'
 alias nvmstop='nvm deactivate' # only for current shell
+
 
 # terraform ----------------------------
 alias tfplan='terraform plan -out tfplan'
@@ -177,3 +183,23 @@ alias vgtstart='vagrant up'
 alias vgtstartandprovision='vagrant up --provision'
 alias vgtstartdontprovision='vagrant up --no-provision'
 alias vgtstop='vagrant halt'
+
+# nim
+alias cnim='choosenim'
+alias cnimlist='choosenim show'
+alias nimbuild='nimble build' # same as nimprodbuild
+alias nimdebugrun='nim c -r'
+alias nimdevbuild='nim c --verbosity:2'
+alias nimdevrun='nim c -r --verbosity:0'
+alias nimi='nimble install'
+alias niminit='nimble init'
+alias nimlist='nimble list'
+alias nimlistinstalled='nimble list --installed'
+alias nimprodbuild='nim -d:release c --verbosity:2'
+alias nimprodrun='nim -d:release c -r --verbosity:0'
+alias nimrefresh='nimble refresh'
+
+# gpg|ssh keys -------------------------
+# @see https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key
+alias gpglistkeys='gpg --list-keys'
+alias gpglistkeyslong='gpg --list-keys --keyid-format=long'
