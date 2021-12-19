@@ -1,6 +1,7 @@
 # web security
 
-- PAGE 17, the DOM
+- reading: done
+- copying: 17, the DOM
 
 - todo
   - move the security related stuff in the old azz webtech file into this file
