@@ -485,6 +485,10 @@
   - etc
 
 - exposure
+  - relying on the default browser upload functionality/client side validation of file contents
+    - browsers dont run (if) any checks on the file contents
+    - attackers can go around client side validation checks by posting directly to the backend endpoints
+  - webservers that treat uploaded files like large blobs of binary data,
 
 - fallout
 
