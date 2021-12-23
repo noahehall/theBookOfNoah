@@ -1,7 +1,7 @@
 # web security
 
 - reading: done
-- copying: PAGE 59, remote code execution
+- copying: PAGE 60, file upload vulnerabilities > anatomy of a file upload attack
 
 ## links
 
@@ -67,6 +67,8 @@
 - serialization: the process of converting an in-memory data structure into a stream of binary data
   - usually for the purpose of passing the data structure across a network
   - deserialization: the reserve process that occurs at the other end, when the binary data is converted back into a data structure
+
+- web shell: page 60
 
 #### internet protocol suite
 
