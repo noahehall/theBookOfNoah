@@ -4,7 +4,7 @@ modeling languages and their syntax
 
 - heavy focus on UML
 
-- bookmark: component diagram
+- bookmark: composite structure diagram
 
 ## links
 
@@ -131,6 +131,7 @@ modeling languages and their syntax
 - ownership: a solid line with circle containing a plus sign
   - the circle is attached to the classifer that owns the other end
 - nodes: shown as cubes
+- decision: a big diamond, with each vertice being a decision flow
 
 ### structure diagrams
 
@@ -274,9 +275,25 @@ modeling languages and their syntax
   - relationships amongs other instances at a specific point in time
     - same notation as class diagrams, but again, focused specifically at that point in time
 
+#### composite structure diagrams
+
+- model the internal structure of a classifier
+
 ### behavior diagrams
 
 - ideally where you will identify & scope the methods of your system
+
+#### interaction overview diagrams
+
+- model an overview of control flow
+- specialized mix of activity and interaction (sequence/communication) diagrams
+
+- key elements
+  - frame: rectangles with a header (and name) in the top left
+    - the header represents some action
+  - node
+    - interaction: the actual sequence/communication diagram is displayed
+    - interaction use: the sequence/communaction is not depicted, only the name of the behavior is given
 
 #### use case diagrams
 
