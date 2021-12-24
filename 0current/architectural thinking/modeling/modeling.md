@@ -318,7 +318,36 @@ modeling languages and their syntax
   - behavioral state diagrams: model event-driven behavior of an object, used more than protocol state diagrams
 
 - key elements (research the rest)
-  - states
+  - state: represents a single state of an entity
+    - indicated by rounded cornered rectangle
+      - name of the object/instance above the box
+      - state name as title within the box
+      - internal behaviors & transitions in the main box body: 2 different formats
+        - someAttribute [boolean condition] / affectOnStateOrActivity
+          - nextAction / affectOnStateOrActivity
+        - someAttribute conditionOrTrigger / affectOnStateOrActivity
+          - nextAction / affectOnStateOrActivity
+    - simple state: lowest level
+
+    - composite/super state: contains multiple internal (usually simple) states
+      - to model hierarchy of states by nesting states within a higher abstraction state
+      - e.g. a moving playing state, which contains playing, paused and finished nested states
+
+    - submachine state: an entity modeled within a state diagram of a larger system
+      - e.g. modeling a movie theater, in which the state of a movie player was being modeled, then the movie player would be a submachine
+    - pseudo states: apply to all three simple, composite/super, and submachine states
+      - dont really represent a state, but just a path to a state
+      - indicated by a green/red circle, with the line going into an actual state
+
   - transitions
-  - regions
-  - vertices
+    - to model an entity moving/transition from one state to another
+    - indicated by an arrow from source state to target
+      - label: trigger [guard]/ activity
+        - triggers are events that occur outside the entity, but cause a sideffect to the state
+        - guard: is the boolean condition that must occur before the activity can take place
+        - activity: the activity that takes place when the transition happens
+
+  - vertices: nodes that are the source/target of transitions
+
+  - regions: fragments of state diagrams that run concurrently, i.e. modeling parallel processes within states
+    - indicated by fragments within a composite state
