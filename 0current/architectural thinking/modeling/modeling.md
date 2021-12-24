@@ -2,8 +2,6 @@
 
 modeling languages and their syntax
 
-- heavy focus on UML
-
 - bookmark: composite structure diagram
 
 ## links
@@ -277,7 +275,17 @@ modeling languages and their syntax
 
 #### composite structure diagrams
 
-- model the internal structure of a classifier
+- model the internal structural elements of a system, e.g. class, component, object
+- to depict how different elements come together to create a unified thing when the systme is running
+
+- key elements
+  - classifier: the entity whose internal structure is being modeled
+  - parts: internel elements of the entity
+    - composition elements: since there could be more than one of each, add a number in the top right
+    - aggregation elements: todo
+  - ports: external connection points on which you attach interfaces
+  - interfaces
+  - connectors: communication links among various parts of the system
 
 ### behavior diagrams
 
