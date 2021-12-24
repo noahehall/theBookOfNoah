@@ -121,7 +121,7 @@ modeling languages and their syntax
 
 #### class diagram
 
-- model the type of objects & relationships among them
+- model the type of objects & relationships among them over time
 - the most granular level of diagram showing a static view of a system
 - most used by developers when designing a system
 
@@ -175,6 +175,19 @@ modeling languages and their syntax
 
 - aka instance diagrams
 - depicts snapshots of instances of objects in a system at a point in time
+  - i.e. to visual the state of a system at a specific point in time
+  - as opposed to modeling classes, interfaces, etc, you are modeling specific manifestations of these objects
+- only represent the structural aspect of instances
+  - thus you shouldnt list any methods when detailing the slots/attributes
+
+- key elements
+  - objects
+    - indicated by name:parentClassOrWhatever with an underline
+  - slots/attributes + values
+    - only list the slots + values of those attributes that are important at that point in time
+    - ^ no need to relist everything from the class diagram
+  - relationships amongs other instances at a specific point in time
+    - same notation as class diagrams, but again, focused specifically at that point in time
 
 ### behavior diagrams
 
