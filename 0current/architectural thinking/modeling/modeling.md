@@ -3,9 +3,11 @@
 modeling languages and their syntax
 
 - heavy focus on UML
-- however im not a big fan of OOP, so even the UML is system-level focused
+- however im not a big fan of OOP, so
+  - the UML is system-level focused
+  - im more interested in component-based development (CBD)
 
-- bookmark: object diagram
+- bookmark: component diagram
 
 ## links
 
@@ -118,6 +120,8 @@ modeling languages and their syntax
   - `<< rest api >>`
 
 ### structure diagrams
+
+#### component diagrams
 
 #### class diagram
 
@@ -350,4 +354,7 @@ modeling languages and their syntax
   - vertices: nodes that are the source/target of transitions
 
   - regions: fragments of state diagrams that run concurrently, i.e. modeling parallel processes within states
-    - indicated by fragments within a composite state
+    - indicated by fragments within a composite state to model two/more things happening at the same time
+    - e.g. when a movie player is in the isBeingUsed composite state
+      - fragment 1: movieIsPlaying state (actually playing the movie)
+      - fragment 2: movieTimer state (showing progress of move)
