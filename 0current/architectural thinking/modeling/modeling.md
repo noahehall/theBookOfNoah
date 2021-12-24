@@ -305,3 +305,20 @@ modeling languages and their syntax
 - the sequence of messages are indicated by labeling each msg with a number, (1, 2, 3, etc)
   - requests indicated by a solid line arrow
   - responses indicated by a dashed line arrow
+
+#### state machine diagrams
+
+- aka state transition diagrams, state chart diagrams
+
+- models different states of an entity within a system
+  - details how specific entities transition from one state to the next
+
+- types: both use basically the same key elements & concepts
+  - protocol state diagrams: model interaction sequences, big emphasis on the sequence of the state transitions
+  - behavioral state diagrams: model event-driven behavior of an object, used more than protocol state diagrams
+
+- key elements (research the rest)
+  - states
+  - transitions
+  - regions
+  - vertices
