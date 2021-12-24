@@ -3,9 +3,6 @@
 modeling languages and their syntax
 
 - heavy focus on UML
-- however im not a big fan of OOP, so
-  - the UML is system-level focused
-  - im more interested in component-based development (CBD)
 
 - bookmark: component diagram
 
@@ -116,16 +113,49 @@ modeling languages and their syntax
 
 - TODO: need to exact all notations and list them here
 
-- depending they all represent the same idea, but depending on the context (i.e. diagram) the specifics could change
+- at a high level each represent the same idea across diagrams
+  - but depending on the context (i.e. diagram) the specifics could change
 
 - `rectangle` nonhuman thing
 - `<< stereotype >>` stereotyping common things, e.g. a database, used as a title/label for a component
   - `<< nosql DB >>`
   - `<< rest api >>`
+  - `<< merge >>` dependency relationship in which the target package gets combined into the source
+  - `<< dependency >>`
+  - `<< import >>`
+  - `<< reallyAnyDescriptor >>`
 - lollipop: a dashed/solid line with a circle at one end and a filled squeare at the other
-- socket: just a reversed lollipop
+  - socket: just a reversed lollipop
+- ownership: a solid line with circle containing a plus sign
+  - the circle is attached to the classifer that owns the other end
 
 ### structure diagrams
+
+#### package diagrams
+
+- model the structure and organization of a large system
+- useful when there are hundreds of interfaces/classes/etc
+  - grouping related things
+  - create hierarchies between things
+  - show relationships across groups & hierarchies
+- helps to abstract out details of lower level things, and focus on the big picture of the system being modeled
+
+- key elements
+  - packages: namespaces for elements of a system
+    - helps group related classifiers in a hierarchy
+    - child packages can have the same name as other packages as long as there in a different parent package
+      - i.e. packages are identified by their fully qualified name which includes all ancestor packages
+      - e.g. me.toilet.flush, is different than you.toilet.flush,
+        - even tho they could both depend on the same flush behavior
+  - relationships: dependencies between packages
+    - merge: contents of target package are combined into th source
+      - similar to generalization but without having the relationships
+        - closer to a conceptual than actual generalization relationship
+        - e.g. a triangle & a 3d triangle are similar, but not the same thing as a 3d triangle has more features
+        - but still a shapes package could combine with a 3dshapes package to provide both, with there being any relationship/dependency
+      - helps to avoid cyclical merges
+
+    - import: to model other forms of depdnencies, e.g. generalization and associations among elements across packages
 
 #### component diagrams
 
@@ -143,7 +173,10 @@ modeling languages and their syntax
     - required: interfaces that must be implmeneted by others to use the component
       - indicated by a socket (just a reversed lollipop)
 
-  - Relationship: dependnecies between components, and between components & interfaces
+  - Relationship: dependencies between components, or between components & interfaces
+    - between components, or between components & interfaces are generally the same thing
+    - ^ because all interfaces are implemented components
+      - so a diagram with nothing but interfaces, can be interpreted by the eventual components that implement them
 
 #### class diagram
 
