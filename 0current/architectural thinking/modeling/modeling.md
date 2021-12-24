@@ -115,6 +115,8 @@ modeling languages and their syntax
 
 - at a high level each represent the same idea across diagrams
   - but depending on the context (i.e. diagram) the specifics could change
+  - get creative: diagrams are like visual language, the communiation of ideas
+    - so fk how other people talk, ensure your diagrams are easy to understand vs letting other people define how you describe your reality
 
 - `rectangle` nonhuman thing
 - `<< stereotype >>` stereotyping common things, e.g. a database, used as a title/label for a component
@@ -128,8 +130,32 @@ modeling languages and their syntax
   - socket: just a reversed lollipop
 - ownership: a solid line with circle containing a plus sign
   - the circle is attached to the classifer that owns the other end
+- nodes: shown as cubes
 
 ### structure diagrams
+
+#### deployment diagrams
+
+- model the executation architecture of a system
+- a high level view of how the software system will be actualized in terms of
+  - devices
+  - networks
+  - operating systems
+  - databases
+  - runtime environment
+  - etc
+
+- used by architects & deployment teams to model the runtime architecture of a system
+  - captures where each system (hardware & software) component will be located within the stack/topology of environment
+
+- key elements
+  - nodes: represent a deployment target that can host some software
+    - typically a hardware device/execution/runtime environment
+  - artifacts: what gets deployed onto a node
+    - typically executables/assets/etc
+  - relationships: exist between nodes & artifacts
+    - communication paths: bidirectional paths: two nodes talk to each other
+    - dependencies: between nodes & artifacts, or artifacts themselves
 
 #### package diagrams
 
