@@ -4,6 +4,7 @@
 
 ## quickies
 
+- [component-based software engineer / development](https://en.wikipedia.org/wiki/Component-based_software_engineering)
 - [fault tolerance](https://en.wikipedia.org/wiki/Fault_tolerance)
 - [high availability](https://en.wikipedia.org/wiki/High_availability)
 - [101 guide to creating user flow diagrams](https://creately.com/blog/diagrams/user-flow-diagram/)
