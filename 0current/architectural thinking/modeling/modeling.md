@@ -112,16 +112,38 @@ modeling languages and their syntax
       - timing
       - interaction overview
 
-### common notations
+### notations
+
+- TODO: need to exact all notations and list them here
+
+- depending they all represent the same idea, but depending on the context (i.e. diagram) the specifics could change
 
 - `rectangle` nonhuman thing
 - `<< stereotype >>` stereotyping common things, e.g. a database, used as a title/label for a component
   - `<< nosql DB >>`
   - `<< rest api >>`
+- lollipop: a dashed/solid line with a circle at one end and a filled squeare at the other
+- socket: just a reversed lollipop
 
 ### structure diagrams
 
 #### component diagrams
+
+- model systems in terms of autonomouse reusable units that are rewired togethered to form a system
+- based on CBD
+
+- key elements
+  - Component: self contained unit with a stable interface that can be replaced at design/runtime by a component that offers equivalent functionality
+    - i.e. plug n play software units
+    - components implement interfaces
+
+  - Interface: defines a components behavior/role they play
+    - provided: interfaces implemented by the component
+      - indicated by a lollipop
+    - required: interfaces that must be implmeneted by others to use the component
+      - indicated by a socket (just a reversed lollipop)
+
+  - Relationship: dependnecies between components, and between components & interfaces
 
 #### class diagram
 
