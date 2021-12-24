@@ -295,6 +295,7 @@ modeling languages and their syntax
 
 - model an overview of control flow
 - specialized mix of activity and interaction (sequence/communication) diagrams
+  - some of the actions in the activity expose their internal interactions to entities which accomplish those interactions
 
 - key elements
   - frame: rectangles with a header (and name) in the top left
@@ -464,3 +465,16 @@ modeling languages and their syntax
     - e.g. when a movie player is in the isBeingUsed composite state
       - fragment 1: movieIsPlaying state (actually playing the movie)
       - fragment 2: movieTimer state (showing progress of move)
+
+#### timing diagrams
+
+- originated in electronic engineering
+  - skipped
+
+- timing diagrams and state diagrams
+  - timing diagrams
+    - show changes along the flow of time
+    - often model multiple objects
+  - state diagrams
+    - show changes based on triggers received from other objects in or outside the system.
+    - model a single object
