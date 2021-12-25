@@ -22,6 +22,8 @@
   - wmap
   - nmap
   - [sans institut opensource](https://www.sans.org/cloud-security/tools/)
+  - [center for internet security](https://www.cisecurity.org/)
+    - TODO: review their prehardened OS images
 
 ## basics
 
@@ -36,6 +38,8 @@
 - defense in depth: secure your application with redundancies
   - consider and enforce security at every level of the stack
   - enabling failures at one level to be mitigated by other strategies
+  - always good to dos no matter what
+    - remove uneeded software from your server
 
 - principle of least privilege: demands that every process and appliation run only with the permissions it needs to perform its permitted functions
   - so if an attacker compromises component A, they shouldnt be able to compromise component B
@@ -498,8 +502,18 @@
       - ^ php files are typically treated as executables by OS, which is key to making this attack work
 
 - fallout
+  - giving attackers a backdoor for executing arbitrary code on your webserver
+  - the attacker would have the same access to your OS as they would with a command injection attack
 
 - mitigation
+  - principle of defense in depth
+  - ensure any uploaded files cant be executed as code
+    - files should be treated as inert rather than as executable objects
+    - separating uploaded files into a partiular directory/partition (so they arent intermingled with code/executables)
+  - hardening your servers so that only the minimally require dsoftware is installed
+  - rename files as you upload them so you dont write files with darious file extensions to disk
+  - analyze uploaded files and reject any that appear to be corrupt or malicious
+  - use a CDN/cloud-based storage to offload this responsibility
 
 ### cross-site scripting
 
