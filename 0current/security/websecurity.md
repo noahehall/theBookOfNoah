@@ -1,7 +1,7 @@
 # web security
 
 - reading: done
-- copying: PAGE 60, file upload vulnerabilities > anatomy of a file upload attack
+- copying: PAGE 65, cross-site scripting attacks
 
 ## links
 
@@ -520,6 +520,7 @@
 
 ### cross-site scripting attacks
 
+- page 65
 - malicious code is injected into webpages
 
 - exposure
