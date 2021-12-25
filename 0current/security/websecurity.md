@@ -29,11 +29,16 @@
 
 ### best practices
 
+- these are part of ever mitigation strategy
+
 - test code in a dedicated and isolated test environment that resembles prod as close as possible
 - have reliable, reproducible, and revertible release processes.
 - after each release, execute penetration testing to identify vulnerabilities before their exploited
 - logging, monitoring & error reporting in your runtime environment
 - stay ahead of security advisories for any third-party code
+- dont rely on any type of header validation
+- dont use microsoft windows servers (haha IMO!)
+  - or just dont use microsoft windows!
 
 - defense in depth: secure your application with redundancies
   - consider and enforce security at every level of the stack
@@ -41,7 +46,7 @@
   - always good to dos no matter what
     - remove uneeded software from your server
 
-- principle of least privilege: demands that every process and appliation run only with the permissions it needs to perform its permitted functions
+- principle of least privilege: demands that every process and appliation run only with the permissions it needs to perform their assigned tasks
   - so if an attacker compromises component A, they shouldnt be able to compromise component B
   - uses different roles for admin, dev, and runtime usecases, even at the service level
     - e.g roles for an SQL database
@@ -405,14 +410,14 @@
 
 ### injection attacks
 
-- basics
-  - when the attacker injects external cpde into an application in an effort to take control of the application or read sensitive data
-  - server-side code has no reliable way of telling whether a crit or a browser generated an http request
-    - waste of time checking the `User-Agent` header
+- when the attacker injects external cpde into an application in an effort to take control of the application or read sensitive data
+- server-side code has no reliable way of telling whether a crit or a browser generated an http request
+  - waste of time checking the `User-Agent` header
 
 #### SQL Injection attacks
 
 - target websites that use an underlying SQL database whereby the aplication constructs data queries in an insecure fashion
+  - i.e. code that doesnt security construct SQL strings when communication with a SQL database
 - allowing an HTTP request to pass data into sql queries that cause the db driver to perform arbitrary actions
 - i.e. use control characters that have special meaning in SQL statements to jump out of context and change the whole semantics of the SQL statement
 
@@ -460,7 +465,6 @@
 
 - mitigation
   - properly escpaing inputs from HTTP requests, especially sensitive control chars like `&`
-  - principle of least privilege
 
 #### Remote Code Execution Attacks
 
@@ -506,7 +510,6 @@
   - the attacker would have the same access to your OS as they would with a command injection attack
 
 - mitigation
-  - principle of defense in depth
   - ensure any uploaded files cant be executed as code
     - files should be treated as inert rather than as executable objects
     - separating uploaded files into a partiular directory/partition (so they arent intermingled with code/executables)
