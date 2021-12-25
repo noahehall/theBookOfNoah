@@ -88,6 +88,8 @@
     - sudo apt install vlc-plugin-access-extra libbluray-bdj libdvdcss2 vlc-plugin-svg vlc-plugin-video-output
   - [brightness controller](https://techstoriesindia.blogspot.com/2020/05/reduce-external-monitor-brightness-ubuntu-linux.html)
   - chromium: sudo apt install chromium-browser
+  - simplescreenrecorder
+  - gimp
 
 - virtualization
   - [compose](https://docs.docker.com/compose/install/)
@@ -99,6 +101,7 @@
   - [vagrant](https://www.vagrantup.com/)
   - [virtualbox](https://www.virtualbox.org/manual/ch02.html)
     - make sure to get the guest additions iso
+  - [gnome-boxes](https://wiki.gnome.org/Apps/Boxes)
 
 - [gnome extensions](https://extensions.gnome.org/)
   - dont use this if using regolith
