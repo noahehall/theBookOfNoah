@@ -494,6 +494,8 @@
   - webservers that treat uploaded files like large blobs of binary data
   - not ensurig file contents meets file type
     - e.g. letting a user upload image.php as an image, when the file contents is clearly a web shell
+      - now they can request their image from your server, `site.com/image.php?cmd=cat+/etc/passwd` and your server will execute image.php if it has a php runtime installed
+      - ^ php files are typically treated as executables by OS, which is key to making this attack work
 
 - fallout
 
