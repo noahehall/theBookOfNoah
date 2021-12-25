@@ -1,0 +1,76 @@
+
+# ASSESSMENT TEST (answers on xliii)
+
+- an availability zone is the lalrgest geographic area within the aws environment
+- which of these is not av alid regionn within AWS
+- with of the below optionos best describes what a cloudwatch alarm is
+- which of these in not a component of cloudwatch events
+- what is the term used to describe a container that is used to collect related metrics in cloudwatch
+- which of these is not ab enefit provided by aws organiztions
+- what is the best description of an organiztionn in relation to aws and aws organizations
+- in IAM, you group user accounts into a group. what do you group your aws accounts into in aws organizations
+- which aws service provides configuration management for systems in aws and systems on-premises
+- rules in aws config are used to tel aws config what to do if a configuration is not correct
+- how manhy custom rules can you create in a single aws account for aws config
+- what does a trail do in aws cloudtrail
+- you want to ensure that new regions w9ll automatically have AWS cloudtrail enabled for them, and that you are monitoring both managent and data events. what is the best way to accomplish this?
+- which permissions do you need to give your users or admins to work wiht AWS cloudtrail
+- the default settings in amazon RDS are cost efficient
+- you need to ensure that your database can survive the failure of an availability zone: whata is the best solution for this requirement?
+- multi-az is for disaster recovery, and read replicas are for performance
+- when do healath checks occur on the instances in an auto scaling group
+- which of tghese is something that would not be included in a launch configuration
+- vpc peering uses transitive trusts
+- where must a bastio host be located
+- in order for aws systems mangaer to minotor, install software and configure systems: pick one
+- which of these are not a valid document type in aws systems manager
+- which storage products are classified as object storage
+- what is the largest size permitted for an object in s3
+- which region does s3.amazonaws.com belong to
+- which of these prodcts is a block storage solution
+- when you terminate an ec2 instane: how do you e nsure that the root volume is not deleted
+- of the different types of EBS volumes: which offers the highest number of IOPS
+- which of these is not an aaccessibilty type of AMI
+- instance backed amis are a great solutiono for when moy need to e nsure data will persist after an instance has been terminated
+- which type of policy is recommnded by aws in most cases whe  setting permissions within iam
+- to create an access key which will allow a user to securely connect within the aws cli and aws api: what command would you use wtihin aws cli
+- which product can you se to monitor for the invocation of aws lambda functions
+- which of these is not a valid alarm state for amazon cloudwatch
+- if you havae missing datpaoints in amazon cloudwatch, and you want to ensure that amazon cloudwatch does not consider the datapoints that were not captured, which setting should you choose
+- wh8ich of the follwing are assessments available in aws inspector
+- which of tehse is not a type of activity that amazon guardduty montors for
+- what is the largest and most basic component in aws networking
+- which of these is valid CIDR  notation for an ipv4 vpc in AWS
+- which of these is valid CIDR notation for an iPv6 vpc in aws
+- which networking port does DNS use for queries
+- which DNS record type is used to resolve ip addresses to hostnames
+- which type of record is used to route traffic to aws resources such as s3 buckets
+- which languages are used in cloudformation templates
+- which component is the only required componen t in a cloudformation template
+- which  builtin-in function is required if you wa t to pass user data into a cloudformation template
+- which of these is not one of the three architectural models used with elastic beanstalk
+- what is the name of the zip file that contains all of the configuration files and scripts you need to build a platform in elastic beanstalk
+- the platform definition file is named packer.yaml
+
+# INTRO TO SYS OPS ON AWS test
+
+    - you are tasked with managing multipe aws accounts for  large organization. what aws service provies bulk account management and consolidated billing
+    - which aws service should you use to monitor applications and they interact with your apis
+    - you are a new hier at a company with several cloud applications. they currently have no monitoring in place for their applications. what is the first service youd look into adding to their cloud setup
+    - which of the following aws facilities allows an applications resources to grow and shrink with demand
+    - which of the following aws facilities are part of a scalable cluster of ec2 instances
+    - which of the following are aws storage services
+    - what aws service provides users, groups, roles and policies
+    - which of the following statements are true
+    - who is responsible for the security of regions and availability zones
+    - which of the following is the basic networking component of AWS that contins subnets and instances
+    - you are tasked with creating auniform set of deployment scripts. what aws facility would you use to standardize your application deployment and provisioning
+    - which of the following is not an aws support plan
+    - what aws component acts as an analog to firewalls in on premise applications
+    - what tool would you use to manage and interact with your aws resources fr a terminal or command prompt
+    - you are tasked with creating a network environment for ac ompany that is moving their web application into aws. which of the following aws services are most important to creating this environment
+    - you are tasked with preparing a report oon the advantages of aws as compared to on premise systems. as part of the report you need to explain the responsiveness of aws in dealing with services in the event of an otuage. what would you need to consult to provide statistics and response times
+    - you are tasked wiht preparing a report ono the advantages of aws as compared to on premises systems. as part of the report you need toe xplain which parts of the current architecture will no longer be the responsibility of your company to maintain. what would you need to consult to provide statistics adn response times
+    - which of the following represents a separate geographic region in which aws services run
+    - how many available zones does each aws region have
+    - which of the following acts as a virtual datacenter within aws
