@@ -518,7 +518,7 @@
   - analyze uploaded files and reject any that appear to be corrupt or malicious
   - use a CDN/cloud-based storage to offload this responsibility
 
-### cross-site scripting
+### cross-site scripting attacks
 
 - malicious code is injected into webpages
 
@@ -528,6 +528,30 @@
 - fallout
   - read credit card details/credentials
   - add script tags that inject even more malicious code
+
+#### stored cross-site scripting attacks
+
+- exposure
+
+- fallout
+
+- mitigation
+
+#### reflected cross-site scripting attacks
+
+- exposure
+
+- fallout
+
+- mitigation
+
+#### DOM-based cross-site scripting attacks
+
+- exposure
+
+- fallout
+
+- mitigation
 
 ### cross-site request forgery
 
