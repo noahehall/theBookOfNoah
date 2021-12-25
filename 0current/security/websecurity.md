@@ -69,7 +69,7 @@
   - usually for the purpose of passing the data structure across a network
   - deserialization: the reserve process that occurs at the other end, when the binary data is converted back into a data structure
 
-- web shell: page 60
+- web shell: an executable script that will take ana rgument fomr an HTTP reques,t execute on te command line and output the result
 
 #### internet protocol suite
 
@@ -491,7 +491,9 @@
   - relying on the default browser upload functionality/client side validation of file contents
     - browsers dont run (if) any checks on the file contents
     - attackers can go around client side validation checks by posting directly to the backend endpoints
-  - webservers that treat uploaded files like large blobs of binary data,
+  - webservers that treat uploaded files like large blobs of binary data
+  - not ensurig file contents meets file type
+    - e.g. letting a user upload image.php as an image, when the file contents is clearly a web shell
 
 - fallout
 

@@ -26,20 +26,22 @@
 ```jsonc
 //default settings
 {
+{
   // often need to edit
   // enable when in typescript project
   "typescript.validate.enable": false,
   "javascript.validate.enable": false,
 
   // enable when in flow project
+  // https://github.com/flowtype/flow-for-vscode
   "flow.useNPMPPackedFlow": true,
-  "flow.pathToFlow": "${flowconfigDir}/node_modules/.bin/flow",
-  "flow.useBundledFlow": true,
-  "flow.showUncovered": true,
   "flow.coverageSeverity": "info",
-  "flow.stopFlowOnExit": true,
-  "flow.useCodeSnippetOnFunctionSuggest": true,
+  "flow.pathToFlow": "${workspaceFolder}/node_modules/.bin/flow",
   "flow.runOnEdit": true,
+  "flow.showUncovered": true,
+  "flow.stopFlowOnExit": true,
+  "flow.useBundledFlow": false,
+  "flow.useCodeSnippetOnFunctionSuggest": true,
 
   // relativeliy stable
   "editor.acceptSuggestionOnEnter": "smart",
@@ -111,6 +113,9 @@
   "terminal.integrated.sendKeybindingsToShell": true,
   "terminal.explorerKind": "external",
 
+
+
+  "hediet.vscode-drawio.local-storage": "some key i dont want ot share with you",
   "redhat.telemetry.enabled": false,
   "sync.gist": "71451b778136a553e785868c37c7e9a0",
   "sync.autoUpload": true,
