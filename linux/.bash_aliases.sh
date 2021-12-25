@@ -121,6 +121,8 @@ alias gitpf='git push --force'
 alias gitpl='git pull'
 alias gitplf='git pull --force'
 alias gits='git status -sb'
+alias gitrmcache='git rm --cached -r .'
+
 ## extended
 alias gitcontributors='git log --format="%ae" | sort -u'
 alias gitconfig='git config --list'

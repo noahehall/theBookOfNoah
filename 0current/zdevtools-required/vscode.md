@@ -26,6 +26,22 @@
 ```jsonc
 //default settings
 {
+  // often need to edit
+  // enable when in typescript project
+  "typescript.validate.enable": false,
+  "javascript.validate.enable": false,
+
+  // enable when in flow project
+  "flow.useNPMPPackedFlow": true,
+  "flow.pathToFlow": "${flowconfigDir}/node_modules/.bin/flow",
+  "flow.useBundledFlow": true,
+  "flow.showUncovered": true,
+  "flow.coverageSeverity": "info",
+  "flow.stopFlowOnExit": true,
+  "flow.useCodeSnippetOnFunctionSuggest": true,
+  "flow.runOnEdit": true,
+
+  // relativeliy stable
   "editor.acceptSuggestionOnEnter": "smart",
   "editor.autoIndent": "advanced",
   "editor.cursorBlinking": "phase",
@@ -48,8 +64,21 @@
     "source.fixAll": true
   },
 
-  "eslint.alwaysShowStatus": true,
+  "terminal.integrated.tabs.location": "left",
+  "workbench.experimental.sidePanel.enabled": true,
+  "terminal.integrated.enableFileLinks": true,
+  "terminal.integrated.copyOnSelection": true,
 
+  "eslint.alwaysShowStatus": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "yaml",
+    "yml"
+  ],
   "explorer.sortOrder": "default",
 
   "files.autosave": false,
@@ -57,7 +86,7 @@
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "files.associations": {
-    ".json": "json",
+    ".json": "jsonc",
     ".jsonc": "jsonc",
   },
 
@@ -82,53 +111,17 @@
   "terminal.integrated.sendKeybindingsToShell": true,
   "terminal.explorerKind": "external",
 
-
-
-  "hediet.vscode-drawio.local-storage": "eyIuZHJhd2lvLWNvbmZpZyI6IntcImxhbmd1YWdlXCI6XCJcIixcImN1c3RvbUZvbnRzXCI6W10sXCJsaWJyYXJpZXNcIjpcImdlbmVyYWxcIixcImN1c3RvbUxpYnJhcmllc1wiOltcIkwuc2NyYXRjaHBhZFwiXSxcInBsdWdpbnNcIjpbXSxcInJlY2VudENvbG9yc1wiOltdLFwiZm9ybWF0V2lkdGhcIjpcIjI0MFwiLFwiY3JlYXRlVGFyZ2V0XCI6ZmFsc2UsXCJwYWdlRm9ybWF0XCI6e1wieFwiOjAsXCJ5XCI6MCxcIndpZHRoXCI6ODUwLFwiaGVpZ2h0XCI6MTEwMH0sXCJzZWFyY2hcIjp0cnVlLFwic2hvd1N0YXJ0U2NyZWVuXCI6dHJ1ZSxcImdyaWRDb2xvclwiOlwiI2QwZDBkMFwiLFwiZGFya0dyaWRDb2xvclwiOlwiIzZlNmU2ZVwiLFwiYXV0b3NhdmVcIjp0cnVlLFwicmVzaXplSW1hZ2VzXCI6bnVsbCxcIm9wZW5Db3VudGVyXCI6MCxcInZlcnNpb25cIjoxOCxcInVuaXRcIjoxLFwiaXNSdWxlck9uXCI6ZmFsc2UsXCJ1aVwiOlwiXCJ9In0=",
   "redhat.telemetry.enabled": false,
-
-  "sync.autoDownload": true,
+  "sync.gist": "71451b778136a553e785868c37c7e9a0",
   "sync.autoUpload": true,
-  "sync.forceDownload": true,
-  "sync.gist": "33f60c724f51bde9afa2c2a9e540d094",
-  "window.title": "${dirty} ${activeEditorMedium}",
-  "window.zoomLevel": 1,
-
-  // to be categorized
-  "breadcrumbs.enabled": true,
-  "css.lint.important": "warning",
-  "scss.lint.important": "warning",
-  "debug.toolBarLocation": "docked",
-  "html.format.enable": true,
-  "html.format.endWithNewline": false,
-  "htmlhint.enable": true,
-  "javascript.format.enable": true,
-  "javascript.format.insertSpaceAfterConstructor": true,
-  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
-  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
-  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
-  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "markdown.preview.scrollEditorWithPreview": true,
-  "markdown.preview.scrollPreviewWithEditor": true,
-
-
-  // language customizations
-  "[markdown]": {},
-  "[css]": {},
-  "[dockerfile]": {},
-  "[html]": {},
-  "[javascript]": {},
-  "[javascriptreact]": {},
-  "[json]": {},
-  "[scss]": {},
-  "[sql]": {},
-  "[typescript]": {},
-  "[typescriptreact]": {},
-  "[xml]": {},
-  "[yaml]": {},
-  "[yaml-frontmatter]": {}
-
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": false,
+    "plaintext": false,
+    "markdown": false
+  },
+  "editor.formatOnType": true,
+  "window.zoomLevel": 1
 }
+
 ```

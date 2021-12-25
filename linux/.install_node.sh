@@ -47,7 +47,8 @@ sudo ln -ns $NODE_BIN/* /usr/local/bin
 # install pnpm & yarn & npm via corepack
 sudo corepack enable # requires sudo for /usr/local/bin
 corepack prepare --activate --all
-corepack prepare pnpm@6.24.2 --activate # i use pnpm for everything
+# corepack prepare pnpm@6.24.2 --activate # doesnt work
+sudo pnpm add -g pnpm # upgrade to latest; pnpm rox
 
 # install nvm
 touch ~/.bashrc
