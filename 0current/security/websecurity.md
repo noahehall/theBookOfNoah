@@ -571,16 +571,18 @@
 
 - malicious code is injected into webpages while the user is on the site
 
-- exposure
-  - dfa
-
 - fallout
   - read credit card details/credentials
   - add script tags that inject even more malicious code
+  - hijack a users session (if htey can read HTTP session)
 
 #### stored cross-site scripting attacks
 
 - exposure
+  - any page content rendering javascript stored in a database;
+    - the js is stored in the db, but rendered in the browser
+    - e.g. via user comments / SQL injections
+  - not escaping injected scripts when rendering HTML
 
 - fallout
 
