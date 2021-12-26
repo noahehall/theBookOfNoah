@@ -581,12 +581,19 @@
 - exposure
   - any page content rendering javascript stored in a database;
     - the js is stored in the db, but rendered in the browser
-    - e.g. via user comments / SQL injections
+    - e.g. via any end-user controlled content / SQL injections
   - not escaping injected scripts when rendering HTML
 
 - fallout
+  - see above
 
 - mitigation
+  - escaping HTML control characters e.g. `" & ' < >`tags with their entity coding
+    - this includes when inserting raw HTML to bypass templating languages, e.g. react
+
+  - implement a content security policy via HTTP response headers
+    - specify limitations of javascript execution
+    - ^ especially inline script tags (i.e. via `<script>`)
 
 #### reflected cross-site scripting attacks
 
