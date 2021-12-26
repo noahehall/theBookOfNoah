@@ -1,7 +1,7 @@
 # web security
 
 - reading: done
-- copying: PAGE 65, cross-site scripting attacks
+- copying: PAGE 75 cross-site request forgery
 
 ## links
 
@@ -90,6 +90,10 @@
   - path: /poop
   - query string: ?then=wippe
   - fragment: #then-flush
+    - used for
+      - intra-page navigation, i.e. linking dirctly to h-tags
+      - record & reload state: i.e. keeping state across browser refreshes
+        - e.g. in infinite-scroll, you can store the current position in the URI fragment and load & then scroll to the thing
 
 #### internet protocol suite
 
@@ -622,14 +626,19 @@
 - smuggling malicious code into webpages via the URI fragment (thing after the # in urls)
 
 - exposure
-  -
+  - rendering content URI fragment content in pages
 
 - fallout
+  - see above
 
 - mitigation
+  - securing server side code **Cant** mitagate this attack, as its largely based on the URI fragment (browsers strip the URI fragment from requests)
+    - thus it cant be detected in server logs
+  - client-side code needs to manage the parsing & escaping of URI fragments if fragment content is used in rendering
 
 ### cross-site request forgery
 
+- page 75
 - exposure
 
   - using GET requests for anything other than retrieving resources
