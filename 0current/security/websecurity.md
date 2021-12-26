@@ -569,11 +569,10 @@
 
 ### cross-site scripting attacks
 
-- malicious code is injected into webpages
+- malicious code is injected into webpages while the user is on the site
 
 - exposure
-
-  - ...
+  - dfa
 
 - fallout
   - read credit card details/credentials
