@@ -84,6 +84,13 @@
 
 - web shell: an executable script that will take ana rgument fomr an HTTP reques,t execute on te command line and output the result
 
+- URI: uniform resource identifier
+  - protocol: http://
+  - domain: google.com
+  - path: /poop
+  - query string: ?then=wippe
+  - fragment: #then-flush
+
 #### internet protocol suite
 
 - internet protocol suite: dictates how computers exchange data over the web
@@ -606,10 +613,16 @@
   - see above
 
 - mitigation
+  - i.e. everything you would do for stored cross-site scripting attacks
+  - escape dynamic content from HTTP requests
+  - ^ especially search pages, error pages, anything page that renders part of the query string in the browser
 
 #### DOM-based cross-site scripting attacks
 
+- smuggling malicious code into webpages via the URI fragment (thing after the # in urls)
+
 - exposure
+  -
 
 - fallout
 
