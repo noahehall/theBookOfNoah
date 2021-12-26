@@ -38,9 +38,11 @@
 - stay ahead of security advisories for any third-party code
 - dont rely on any type of header validation
 - dont use microsoft windows servers (haha IMO!)
+
   - or just dont use microsoft windows!
 
 - defense in depth: secure your application with redundancies
+
   - consider and enforce security at every level of the stack
   - enabling failures at one level to be mitigated by other strategies
   - always good to dos no matter what
@@ -69,12 +71,14 @@
 - ICANN: internet corporation for assigned names and numbers
   - alotts blocks of IP addresses to regional authorities
 - regional authorities
+
   - grant blocks of addresses to internet service prviders and hosting companies within their region
   - when you connect to the net, your ISP assigned an IP to your computer
     - however the IP is rotated periodically
   - similary: companies that host content are assigned an IP for each server they connect to the network
 
 - serialization: the process of converting an in-memory data structure into a stream of binary data
+
   - usually for the purpose of passing the data structure across a network
   - deserialization: the reserve process that occurs at the other end, when the binary data is converted back into a data structure
 
@@ -83,6 +87,7 @@
 #### internet protocol suite
 
 - internet protocol suite: dictates how computers exchange data over the web
+
   - there are over 20 protocols collectively under this umbrella
 
 - internet protocol layers
@@ -122,6 +127,7 @@
 ##### Transport Layer Protocols
 
 - TCP: transmission control protocol
+
   - enables two computers to reliably exchange data over the internet
   - created in response to ARPANET (predecessor to the internet)
   - the first msg sent (was on ARPANET) was a LOGIN command destined for a remote computer at stanford university, but crashed after the first two letters (reason for TCP)
@@ -143,9 +149,11 @@
 ##### Application Layer Protocols
 
 - TLS: transport layer security
+
   - arguable what fkn layer this is actually in
   - method of encryption that provides both privacy and data integry
   - ensures that
+
     - privacy: packets intercepted by a third party can be decrypted without the appropriate encryption keys
     - data integrity: any attempt to tamper with the packets will be detectable
 
@@ -160,9 +168,11 @@
 - XMPP: extensible messaging and presence protocol
   - instant messaging
 - FTP: file transfer protocol
+
   - downloading files from servers
 
 - HTTP: hypertext transfer protocol
+
   - transport webpages and their resources to user agents like web browsers
 
   - workflow: general
@@ -172,10 +182,12 @@
     - the majority of web exploits use http in some fashion
 
 - DNS: domain name system
+
   - a global directory that translated IP addrs to unique human readable domains e.g. nirv.ai
   - domain registrars: private organizations that register domains before they can be used in DNS
 
   - workflow
+
     - when a browser encounters a domain for the first time
       - check the local domain name server (typically hosted by an ISP) to get the associated IP (and various other data) and cache the result
 
@@ -191,7 +203,9 @@
 ## http focus
 
 - http requests
+
   - method: akak verb; the action that the user agent wants the server to perform
+
     - GET: fetch
     - POST: create/update
     - PUT: update/upload
@@ -209,8 +223,10 @@
   - Body: optional component contains any extra data that needs to be sent to the server
 
 - HTTP responses
+
   - protocol:
   - code: 3 digit status code
+
     - 2xx: understood, accepted, and responded to
     - 3xx: redirect
     - 4xx: client error; user agent genreated an invalid request
@@ -218,12 +234,14 @@
 
   - msg: status msg
   - headers: instruct the user agent how to treat the content
+
     - content-type
     - cache-control
 
   - body: if a resource was requested
 
 - stateful connections:
+
   - when a client and server perform a handhsake and continue to send packets back n fourth until one of the communicate parties decides to terminate
 
 - encryption:
@@ -235,12 +253,14 @@
 - application server: computer program (e.g. node) that hosts application code, and responds to HTTP requests from web servers
 
 - CDN: content delivery network
+
   - will store duplicated copies of static resources in data centers around the world
   - enables prouction of responsive websites without a massive server expenditure
   - security issues:
     - allows a third party to serve content under your security certicate
 
 - CMS: content management systems
+
   - provide authoring tools requiring little/no technial knowedlge to wriet content
   - cms plugins provide additional tooling, e.g. anlytics
   - security issues
@@ -248,10 +268,12 @@
     - but also makes them a high profile target for hackers, e.g. wordpress is always getting fkn hacked
 
 - http session: the entire conversation (stateless/stateful) between a specific user agent & server
+
   - server could send a set-cookie header in the initial HTTP response containing data that identifies the user agent
     - the user agent will store & send back the same cookie on each subsequent response
 
 - resources
+
   - static: an object thats returned unaltered in HTTP responses
   - dynamic: an object thats executed/interpreted based on data in HTTP requests and computed before returned in HTTP responses
     - often the code loads data from a databae in order to populate the http response
@@ -259,8 +281,10 @@
       - the dynamic interpoation of content can e vulnerable to attack
 
 - databases
+
   - database technology predates the web, since the 1960s
   - SQL databases
+
     - are relational, storing data in one/more tables that related to each other in formally prescribed ways
     - DDL: data definition language
       - any statement using CREATE, DROP or MODIFY to create, drop and modify table structures
@@ -282,6 +306,7 @@
 ### user agents
 
 - web browsers
+
   - javascript engine
   - rendering pipeline
   - connect with operating system to resolve and cache DNS addresses
@@ -289,6 +314,7 @@
   - encode requests in HTTPS
   - store and transmit cookies according to the web servers instructions
   - browser security model
+
     - dictates
       - js code must be executed within a sandbox,
         - disabling the following actions
@@ -305,12 +331,14 @@
           - write new & navigate between entries in the browser history
           - ask for users location
           - ask permission to send desktop notifications
-    - rendering pipeline: software component within a web browser responsible for transforming  HTML into its visual representation
+    - rendering pipeline: software component within a web browser responsible for transforming HTML into its visual representation
 
       - parse the HTML
+
         - tokenize
 
       - generate the DOM
+
         - an in-memory data structure that represents the browsers understanding of how the page is structured,
           - a series of nested elements called DOM nodes, each roughly equivalent to an HTML tag
         - parse the HTML into a DOM
@@ -320,12 +348,14 @@
             - ensure the `defer` attribute is added so the script tag doesnt execute until the rendering pipeline is completed
 
       - generate the CSSOM
+
         - styling rules applied to each DOM element
           - which correspond to onscreen elemnts
           - how to paint each element relative to eachother
           - what styling to apply to each
 
       - DRAW/PAINT
+
         - draws the webpage on screen
 
       - EXECUTE JS
@@ -336,16 +366,20 @@
 ## People & their prcoesses
 
 - programmers: need to roll out changes in an orderly and discplined fashion
+
   - however, its common for security vulnerabilities and bugs to creep i over time because of shortcuts taken in the face of deadlines
   - most security vulnerabilites are introduced not through a lack of develpment knowedlge, but because of a lack of attention to detail
 
 - SDLC: software development life cycle
+
   - the process a devleopment team follows when designing new software & software features, writing code, testing it and pushing out changes
   - phase 1: design and analysis
+
     - analye the features you need to add and design their implementation
     - identifying the requirements the code is trying to address
 
   - phase 2: writing code
+
     - source control is the number one tool all dev teams need to use
       - four eyes principle: requires two people to see every code change before a release
       - distrubted source control
@@ -353,6 +387,7 @@
       - centralized source control
 
   - phase 3: pre-release testing
+
     - release code only after youve tested it throroughly to catch any potential bugs an densure that it works correctly
     - unit tests: should be simple and non brittle
     - CI: continuous integration
@@ -365,6 +400,7 @@
         - must be 100% segegrated and isolated from production env vars and workflows
 
   - phase 4: release
+
     - taking code from source control, deploying it to its final destination, and making it accessible to end users
     - reliable release process: means that you can guarantee what code, deps, rsources and configuration files get deployed during the release
       - release scripts typically use checksums (fingerprints) that ensure that the files copied onto the server are identical to those held in source control
@@ -372,12 +408,13 @@
     - revertible release process: allows you to roll back/undo releases
 
   - phase 5: post-rlease testing & observation
+
     - smoke testing: ensure the release process correctly deployed the latest version, and the way the code executs in prod matches expectations
     - penetration testing: tests for security vulnerabilities by externally probing a website
       - useful in both pre-rlease and post-rleases testing
       - utilize automated testing tools that probe for common security vulnerabilities
     - observability: ensuring your environment is observable at compile and runtime
-      - helps spot unusual and potentially malicious  behavior and diagnose issues as they occur
+      - helps spot unusual and potentially malicious behavior and diagnose issues as they occur
       - logging: having code write to a log file as the software performs actions
         - every http request with a timestamp, URL and the http response code
         - any signficant actions performed by user,
@@ -422,6 +459,7 @@
 - i.e. use control characters that have special meaning in SQL statements to jump out of context and change the whole semantics of the SQL statement
 
 - exposure
+
   - any SQL statement that permits SQL control characters in variables used as parameters in db queries
     - `'` single quote closes the statement
     - `--` comment causes db driver to ignore any subsequent text
@@ -437,12 +475,15 @@
     - `email already exists`
 
 - fallout
+
   - generally a crafty person can run arbitrary queries against your db
   - bypass authentication; read, donwload and delet data at will
   - inject malicious JS (especially if you use db data in HTML templates)
 
 - mitigation
+
   - parameterized statments & bind parameters: placeholder characters that the db driver will safely replace
+
     - bind parameters will automatically prefix control characters with escape characters that causes the db driver to treat the control characters as INPUT to the SQL statement, rather than PART of the sql statement
 
   - use an ORM: object-relational mapping
@@ -455,12 +496,14 @@
 - attackers exploit an application that makes insecure command line calls to the underlying operating system
 
 - exposure
+
   - if command line calls are executed with external input that hasnt been sanitized
   - http requests to the server that interact with the OS
     - `GET/poop.com?expectedThing=expectedValue%3Becho%20%22gothacked%22`
     - `server.getExpectedThing(queryString) -> doThisCli && echo "got hacked`
 
 - fallout
+
   - attakers execute arbitrary OS commands and seize contorl of your runtime
 
 - mitigation
@@ -470,15 +513,18 @@
 
 - attackers inject malicious code to be executed in the language of the application itself (e.g. a web servers native language)
 - when an application has a vulnerability that permits external parties to execute internal runtime commands as if they were coming from within the application itself
+
   - exploit scripts incorporate malicious code in the body of an HTTP request, encoded in a such a way that the server will read and execute the code when the request is handled
 
 - exposure
+
   - not staying up to date on appliation (especially web server) dependencies
     - e.g. using an old version of express/nodejs
   - using executing code during deserialization of http requests bodies & headers
   - invalid web server configuration
 
 - fallout
+
   - trick your application (e.g. web server) into executing arbitrary code by injecting malicioius code directly into your applications's runtime process
 
 - mitigation
@@ -489,6 +535,7 @@
 #### File Upload Exploits
 
 - vulnerabilities in file upload fns, e.g.
+
   - letting users add images to their profile/posts
   - adding attachments to messages
   - submitting paperwork
@@ -496,6 +543,7 @@
   - etc
 
 - exposure
+
   - relying on the default browser upload functionality/client side validation of file contents
     - browsers dont run (if) any checks on the file contents
     - attackers can go around client side validation checks by posting directly to the backend endpoints
@@ -506,6 +554,7 @@
       - ^ php files are typically treated as executables by OS, which is key to making this attack work
 
 - fallout
+
   - giving attackers a backdoor for executing arbitrary code on your webserver
   - the attacker would have the same access to your OS as they would with a command injection attack
 
@@ -520,10 +569,10 @@
 
 ### cross-site scripting attacks
 
-- page 65
 - malicious code is injected into webpages
 
 - exposure
+
   - ...
 
 - fallout
@@ -557,6 +606,7 @@
 ### cross-site request forgery
 
 - exposure
+
   - using GET requests for anything other than retrieving resources
 
 - fallout
@@ -565,6 +615,7 @@
 ### session hijacking
 
 - exposure
+
   - ...
 
 - fallout
@@ -573,6 +624,7 @@
 ### XML attacks
 
 - exposure
+
   - ...
 
 - fallout
@@ -581,6 +633,7 @@
 ### denial-of-service attacks
 
 - exposure
+
   - ...
 
 - fallout
@@ -591,6 +644,7 @@
 - a local DNS cache is deliberately corrupted
 
 - exposure
+
   - ...
 
 - fallout
