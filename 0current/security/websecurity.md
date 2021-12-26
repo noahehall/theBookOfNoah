@@ -597,9 +597,13 @@
 
 #### reflected cross-site scripting attacks
 
+- an attacker sends the malicious code in the HTML request, and the server reflects it back in the HTTP response & the browser renders it on the page
+
 - exposure
+  - rendering content from HTTP requests in the DOM without scaping it (this includes queryString params)
 
 - fallout
+  - see above
 
 - mitigation
 
