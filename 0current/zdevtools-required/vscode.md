@@ -20,12 +20,13 @@
 - [optimize vs code and choosing extensions](https://www.freecodecamp.org/news/optimize-vscode-performance-best-extensions/)
 
 - keymap
-  - `ctrl ,` open fkn settings.json
-  - `ctrl backtick` open terminal
+  - `ctrl ,` open settings.json
+  - `ctrl b` toggle explorer
+  - `ctrl shift e` open workspace explorer
+  - `ctrl backtick` toggle terminal
 
 ```jsonc
 //default settings
-{
 {
   // often need to edit
   // enable when in typescript project
@@ -89,10 +90,10 @@
   "files.trimTrailingWhitespace": true,
   "files.associations": {
     ".json": "jsonc",
-    ".jsonc": "jsonc",
+    ".jsonc": "jsonc"
   },
 
-  "workbench.editor.closeEmptyGroups":true,
+  "workbench.editor.closeEmptyGroups": true,
   "workbench.editor.enablePreview": true,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.showTabs": true,
@@ -102,18 +103,16 @@
   "workbench.settings.editor": "json",
   "workbench.sideBar.location": "right",
 
-  "outline.icons":true,
-  "outline.problems.enabled":true,
-  "outline.problems.badges":true,
-  "outline.problems.colors":true,
+  "outline.icons": true,
+  "outline.problems.enabled": true,
+  "outline.problems.badges": true,
+  "outline.problems.colors": true,
 
   "terminal.integrated.allowChords": false,
   "terminal.integrated.defaultProfile.linux": "bash",
   "terminal.integrated.fontsize": 18,
   "terminal.integrated.sendKeybindingsToShell": true,
   "terminal.explorerKind": "external",
-
-
 
   "hediet.vscode-drawio.local-storage": "some key i dont want ot share with you",
   "redhat.telemetry.enabled": false,
@@ -128,5 +127,4 @@
   "editor.formatOnType": true,
   "window.zoomLevel": 1
 }
-
 ```

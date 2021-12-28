@@ -1,6 +1,6 @@
 <https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-incident-response.html>
-  top of page, then just keep fkn clicking next at the bottom
-  ^ this shit iz massive
+top of page, then just keep fkn clicking next at the bottom
+^ this shit iz massive
 
 # TLDR
 
@@ -15,6 +15,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx
   - [access (i.e. permissions) analyzer for s3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-analyzer.html)
   - [analytics and inisghts to optmize storage usage](https://docs.aws.amazon.com/AmazonS3/latest/userguide/analytics-insights.html)
 - tuts
+
   - [managing storage lifecycle](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html)
   - [making requests](https://docs.aws.amazon.com/AmazonS3/latest/userguide/MakingRequests.html)
   - [s3 getting started](https://docs.aws.amazon.com/AmazonS3/latest/userguide/GetStartedWithS3.html)
@@ -43,10 +44,12 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx
   - [set the versioning state of an existing bucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketVersioning.html)
 
 - s3 glacier
+
   - [s3 glacier developer guide](https://docs.aws.amazon.com/amazonglacier/latest/dev/introduction.html)
   - [restore an object in glacier back into s3](https://docs.aws.amazon.com/AmazonS3/latest/API/API_RestoreObject.html)
 
 - s3 storage lens
+
   - [using service-linked roles](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-service-linked-roles.html)
 
 - reference
@@ -91,11 +94,13 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx
 ### costs
 
 - you are not charged for
+
   - creating buckets
   - using Access Analyzer for s3
     - you need to create an account-level analyzer in IAM Access Analyzer on a per-region bases
 
 - you are charged for
+
   - objects in buckets
   - more info: go to the s3 pricing (see link above)
     - ensure you tab through each cost type
@@ -126,6 +131,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx
 ## s3 model & workflow architecture
 
 - bucket & object: flat hierarchy
+
   - bucket names must be globally unique across ALL AWS Accounts
   - hierarchy
     - buckets half a flat structure
@@ -137,6 +143,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx
 
 - ARN: can be found in the bucket policy/CORS configuration permissions pages
 - important policy permission actions
+
   - any `Deny` statement always supersedes any `Allow` permission
   - `s3:CreateBucket`
   - `s3:DeleteObject`
@@ -154,6 +161,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx
     - `s3:PutLifecycleConfiguration`
 
 - buckets: container of objects and other subresources
+
   - lifecycle: stores lifecycle configuration information
   - website: stores website configuration information if configured for website hosting
   - versioning: stores versioning configuration
@@ -163,11 +171,13 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx
   - logging: amazon can save bucket access logs (if requested)
 
 - objects: files stored in buckets
+
   - acl: list of access permissions on the object
   - restore: supports temporarily restoring an archived object
     - an object in s3 glacier storage class is an archived object
 
 - understanding bucket & object ownership
+
   - the aws account used to create buckets & update objects
   - the IAM user/role credentials, the AWS account the user/role belongs to
   - if granted, then cross-account permissions to another AWS account (or users in that account) to upload objects, then the uploading account has all permissions except:
@@ -196,6 +206,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx
 ### CRUD
 
 - prereqs
+
   - create & sign in as an IAM user (not the root account)
 
 - CREATING
@@ -231,6 +242,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx
 ### controll access
 
 - TLDR
+
   - permission delegation
     - if an AWS account owns a resource
       - can grant those permissions to another AWS account

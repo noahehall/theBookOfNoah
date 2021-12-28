@@ -408,7 +408,7 @@ modeling languages and their syntax
       - alt: (alternatives) if statements with an else/if
       - loops: a block of msgs that continue as long as the condition is true
 
-##### communiation diagrams
+##### communication diagrams
 
 - similar to sequence diagrams, but without lifelines
 - the focus on links & communiation between objects
