@@ -12,6 +12,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
 - analytics: turning data into insights
 - diagnostics: process of figuring out whats going wrong
 - observability: properties of a system that can be monitored and provided as data for analytics
+
   - a measure of how well internal states of a system can be inferred from knowledge of its external outputs
 
 - protocols
@@ -51,6 +52,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
 ## cloudtrail
 
 - cloudtrail vs cloudwatch logs
+
   - cloudtrail
     - captures events from all services
     - requires no configuration to view events
@@ -69,6 +71,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
   - to what resources
   - when the action occured
 - use cases
+
   - track changes on resources
   - perform security analysis
   - identify unusual activity
@@ -103,12 +106,14 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
 ## cloudwatch
 
 - cloudwatch vs aws health
+
   - cloudwatch
     - monitor at the resource level
   - aws health
     - monitor at the service level
 
 - use cases
+
   - monitor applications
   - optimize utilization
   - respond to changes
@@ -122,6 +127,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
     - billing
 
 - basics
+
   - monitor resources and applications
   - enables you to view data from all AWS services in a single console
   - data from different services are organized into namespaces
@@ -134,6 +140,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
     - use a cloudwatch agent to get system & application level data
 
 - cloudwatch alarms: notifications when critical metrics breach predefined thresholds
+
   - post to sns topics
   - trigger lambda fns
   - supports automated elasticity
@@ -141,11 +148,13 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
     - have to enable it in IAM
 
 - cloudwatch events: precursor to Amazon EventBridge
+
   - continuously monitor events patterns
   - trigger remediation actions via lambda fns
   - @see event bridge section
 
 - cloudwatch logs: collect & store logs from aws resources, applications & services in near realtime
+
   - centralize logs in one place
   - search, sort, filter & query for patterns
   - group by specific fields
@@ -166,9 +175,11 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
     - can be used in cloudwatch alarms
 
 - namespace: isolated container for metrics
+
   - naming convention: AWS/Service, e.g. AWS/EC2
 
 - metrics: variables used to monitor a service
+
   - are per region
   - cannot be deleted; but are auto-deleted after 15 months of no data
   - must be associated with a timestamp `YYY-MM-DDTHH:MM:SSZ`
@@ -177,12 +188,14 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
     - high: one-secon granularity
 
 - data points: metric values
+
   - cpu utilization of ec2
   - read/write of ebs volumes
   - size of s3 buckets
   - etc
 
 - log insights
+
   - search and analyze data interactively
   - automatically generates fields form logsand provides ability to query those fields
     - any field prefixed with `@` is auto generated
@@ -210,6 +223,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
       - @etc
 
 - cloudwatch agents
+
   - collect metrics from ec2 instances & on-premsise servers
   - stored in `CWAgent` namespace
   - you have to install the agent on your servers manually
@@ -224,6 +238,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
 ### cloudwatch considerations
 
 - alarms
+
   - type: billing, insufficient data, ok, etc
   - metric name
   - statistic
@@ -233,7 +248,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
       - static
       - anomaly detection
     - threshold type
-      - >|>=|<=|<
+      - > |>=|<=|<
       - value
     - datapoints to alarm: i.e. how many times to the condition must be true before the alarm executes
   - actions
@@ -248,6 +263,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
     - systems management action
 
 - metric filters
+
   - query fields & values
   - metric name
   - namespace (group of metrics)
@@ -255,6 +271,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
   - dimension name & value
 
 - cloudwatch agent
+
   - operating system
   - iam role
   - metrics to capture

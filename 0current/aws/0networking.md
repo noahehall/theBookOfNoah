@@ -165,10 +165,10 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 
 - NAT gateway: enable resources in a private subnet to initiate & connect to the public internet
 
+  - network address translation
   - requires an EIP
     - useful for providing a consistent resource for apps & end users
     - if an ec2/etc fails, you can reassign the IP
-  - network address translation
   - has to be contained in a public subnet
   - map multiple private hosts to a single internet routable IP address
   - nat instance
@@ -433,11 +433,14 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - manage the domain in route53
 
 - health checks
+
   - failover
     - active
     - passive
   - 3 types
+
     - endpoint health check: domain name/ip address
+
       - based on http with/out string matching/tcp
       - responses
         - tcp: must be received in 10 seconds
@@ -449,10 +452,13 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
       - failure rates
         - user defined based on regions
         - valid: if > 18% agents evaluate as healthy
+
     - calculated health check: monitors other health checks
+
       - a parent health check monitors up to 255 child health checks
       - configurable logic as to what constitutes as a lack of health
         - e.g. an API thats dependent on another external API, you want BOTH apis to be successful
+
     - cloudwatch alarm: useful when failing over to another resource based on an preconfigured alarm
       - what are the conditions for triggering an unhealthy check?
         - is cloudwatch okay === rute53 health check is okay

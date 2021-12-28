@@ -9,6 +9,7 @@ dynamodb, rds, aurora (proprietary mysql), elasticache, keyspaces, neptune
 - [aws simple monthly calculator](http://calculator.s3.amazonaws.com/index.html)
 
 - ref
+
   - [db instance classes](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html)
   - [aws-cli for rds](https://docs.aws.amazon.com/cli/latest/reference/rds/index.html)
   - [db instance billing](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/User_DBInstanceBilling.html)
@@ -16,6 +17,7 @@ dynamodb, rds, aurora (proprietary mysql), elasticache, keyspaces, neptune
   - [supported postgres versions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts.General.DBVersions)
 
 - tuts
+
   - [running dbs on AWS](http://aws.amazon.com/running_databases/)
   - [rds & vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.html)
   - [security on rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html)
@@ -55,15 +57,18 @@ Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, s
 
 - az: availablity zone; distinct data center in a specific region; reach region has at least two AZs
 - RDS: web service to setup, operate and scale a relational database in the AWS cloud
+
   - managed db service: responsibile for most managmeent tasks
 
   - limitations
+
     - up to 40 postgresql db instances
     - storage limits (see storage link)
     - max connections: rds requires 3 connections for system maintenance
       - if you set a value for user connections, always `add 3` to account for rds system management connections
 
   - use cases
+
     - cost-efficient, resizable capacity for industry standard relation db
     - manages common admin tasks
       - backups: automatic (have to turn on) or manual; can be used to restore a db
@@ -87,14 +92,17 @@ Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, s
   - access via same tools & apps you would normally
   - create/modify db instances using the cli, rds api, console
 - db engines: the specific database product software that runs on the db instance
+
   - mysql, mariadb, postgresql, oracle, microsfot sql server
 
 - db instance class: determines the ocmputation and memory capacity of a db instance oferring different compute, memory and torage capabilities
 - NTP: network time protocol is used to sync time on db instances
+
   - you also use this ubuntu to sync time (e.g. when fkn slack fks up the time you run this)
   - security group: controls access to the db instance by permitting access to IP ranges/ec2 instances you specify
 
 - database preview environment: try out new postrel versions & extensions before they are fully supported by creating a db instance in the database preview environment
+
   - endpoint for api/cli: `rds-preview.us-east-2.amazonaws.com`
 
 - modules: i.e. postgres extensions
@@ -120,7 +128,7 @@ Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, s
           - requires an internet gateway attached to the vpc
           - support DNS resolution, DNS hostnames
             - go to the vpc console > select vpc > actoins > drop through each one
-      - specify a DB subnet group  that defines which subnets in that VPC can be used by the DB instance
+      - specify a DB subnet group that defines which subnets in that VPC can be used by the DB instance
 - high availability
   - failover support in production & testing runbooks: a Multi-AZ deployment creates a primary & secondary (standby) db instance in another az for failover support
 - iam policies: ensure you have account policies that grant the permissions needed to perform RDS operations
@@ -212,7 +220,7 @@ Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, s
   - application types
     - HIPAA-compliance apps to store healthcare related information
     - protected health information (PHI) under a completed business associate agreement (BAA) wth AWS
-    - federal risk & authorization  management program (FedRAMP) security requirements
+    - federal risk & authorization management program (FedRAMP) security requirements
 
 ##### postgres upgrading major/minor versions
 
@@ -254,10 +262,12 @@ Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, s
 ##### connecting to db instance
 
 - notes
+
   - rds doesnt permit host access to the DB instance (e.g. via telnet / ssh)
   - restricts access to certain system procedures & tables that requir advanced privileges
 
   - database authentication schemes
+
     - password: i.e. database paswords
     - password + IAM database authentication: auth using db password + user creds through AWS IAM users and roles
     - password + kerberos auth: choose a directory in which you want to allow authorized users to authenticate with this DB instance using kerberos authentication
@@ -271,6 +281,7 @@ Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, s
     - general purpose SSD (gp2)
     - provisioned IPS SSD (io1)
     -
+
 - connect via pgadmin
 - connect via psql
 
@@ -284,10 +295,6 @@ Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, s
     aws rds describe-db-engine-versions --default-only --engine postgres
 
 ```
-
-## aurora
-
-- proprietary mysql
 
 ## dynamodb
 

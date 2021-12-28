@@ -59,6 +59,7 @@
     - phone numbers
     - email addrs
 - topics: logical access point & communication channel
+
   - publishers: create topics/get push permissions
 
 - service quotas
