@@ -470,6 +470,27 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
         - if cloudwatch alarm === route53 is bad
         - if cloudwatch is insufficient === you can configure if the route53 health check is good/bad
 
+- active routing options: traffic management policies
+
+  - ensure health checks are setup and route53 will auto failover in case of outage
+  - ensure autoscaling is configured for the resources to handle the increase load in the event of failover
+
+  - weighted round-robin
+
+    - route traffic to VPCs in different regions based on weights assigned to record sets
+    - e.g. route 3:1 us-east:us-west === 3/4 -> useast, 1/4 -> uswest
+
+  - latency based
+    - route traffic to VPCs in different regions when response times are dynamic but load times are critical
+    - each DNS query will take the originating IP into account, and compare the geo of the IP to the known latency of the regions of each VPC and route to the optimal resources
+
+- geolocation based
+  - route traffic based on correlating IP address to physical locations
+  - e.g. to comply with EUGDP (data protections) or china, you have to route users in those geos to resources in those regions
+    - this time, be sure failover occurs to regions in those geos, else you could be on your way to a big FINE buddy
+  - you have to configure a default resource record set
+    - otherwise AWS will return a no response in the event it cant map an IP to a physical location in a region
+
 ### route 53 considerations
 
 - health checks
