@@ -434,9 +434,11 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 
 - health checks
 
-  - failover
+  - failover: when a health check determines a failed resource, you can failover & activate an alternative set of DNS records to route traffic to backup resources
+
     - active
     - passive
+
   - 3 types
 
     - endpoint health check: domain name/ip address
@@ -446,7 +448,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
         - tcp: must be received in 10 seconds
         - http/s: must be received in 6 seconds
           - 4s allocated for establishing a connection
-          - 2s for receiving a valid status code (2|3xx)
+          - 2s for receiving a valid status code (2|3)xx
           - string matching: contained within the first 5120 bytes
             - optional
       - failure rates
