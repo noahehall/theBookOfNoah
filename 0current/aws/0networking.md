@@ -434,6 +434,9 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 
 - health checks
 
+  - latency graph: useful for domains with a global audience
+  - invert health check status: useful for a canary page that only appears when an error has manifested
+
   - failover: when a health check determines a failed resource, you can failover & activate an alternative set of DNS records to route traffic to backup resources
 
     - active

@@ -1,7 +1,8 @@
-
 # TLDR
 
-cli, regions, azs, service quotas
+- cli, regions, azs, service quotas, etc
+
+- broad strategies & architectures that encompass multiple AWS resources
 
 ## todo
 
@@ -25,6 +26,7 @@ things that generally apply to all services
 - [enabling access anlyzer](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html#access-analyzer-enabling)
   - [access analyzer APIs](https://docs.aws.amazon.com/access-analyzer/latest/APIReference/Welcome.html)
 - tools
+
   - [get your public IP](https://checkip.amazonaws.com/)
 
 - cli
@@ -67,6 +69,7 @@ things that generally apply to all services
 - CORS: JSON configuration defines a way for servers from domain X to interact with resources on domain Y
 
 - ARN: amazon resource name: identifier for a specific resource
+
   - can use wildcards as part of the resource ARN
     - `*` represents any combination of zero/more characers
     - `?` represents any single character
@@ -92,12 +95,13 @@ things that generally apply to all services
   - to ensure tags are shown in dashboard columns, they must be case-sensitive
     - i.e. `Name` [dashboard] !== `name` [tag]
 - encryption
-- user policies:  use IAM to manage access to resources on AWS,
+- user policies: use IAM to manage access to resources on AWS,
   - i.e. create IAM users, groups and roles and attach access policies to them to grant access to resources
     - everyone is denied by default
   - cannot grant anonymous permissions to users, as you have to attach policies to a specific user/group/etc
 - resource policies: JSON object defining basic access permissions
-- ACL: access control list:  ACLs predates resource-based policies and IAM
+- ACL: access control list: ACLs predates resource-based policies and IAM
+
   - list of grants identifying grantee and permission granted
 
 - resource: an entity tha tyou can work with (e.g. an s3 bucket, or an s3 bucket object)
@@ -120,7 +124,7 @@ things that generally apply to all services
       - anyone accessing via cloudfront URL `{"CanonicalUser":"Amazon S3 Canonical User ID assigned to origin access identity"}`
     - Action: array of actions related to the affect,
       - e.g. array of specific actions `["s3:GetObject", "s3:PutObject"]`
-      - e.g. all actions on the `"*"
+      - e.g. all actions on the `"\*"
       - for each resource type, amazon supports a set of operations;
       - each action is a keyword that maps directly to an aws service operation
     - Resource: array of ARNs to apply the statement to
@@ -136,12 +140,17 @@ things that generally apply to all services
 ## key goal & design concepts
 
 - high availablity
-  - route 53 dns config
+
+  - route 53 dns config & routing options
   - regional load balancing across AZs
   - elastic IP swapping across AZs in the event of failure
   - Autoscaling with appropriate triggers
-  - snapshots
   - AMIs
+  - ebs snapshots
+  - db level architecture
+  - caching
+  - s3
+  - cloudfront
 
 - fault tolerance
   - appropriate storage & backup (s3, ebs elastic block storage)
