@@ -187,7 +187,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx
 
 - understanding ownerhsip and request authentication
   - all requests are either authenticated or unauthenticated
-    - authenticated: include a signature value that authentiates the request sender
+    - authenticated: include a signature value that authenticates the request sender
     - unauthenticated: all other requests, and are always made by the `anonymouse user`
       - permitted when a bucket has:
         - public bucket policy
@@ -239,7 +239,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx
   - deleting a bucket
     - cannot be undone
 
-### controll access
+### control access
 
 - TLDR
 

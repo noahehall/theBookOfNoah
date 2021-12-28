@@ -22,6 +22,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 ### best practices / gotchas
 
 - always
+
   - never use any of the default resources (vpc, subnets, security groups, etc)
     - except the default `dhcp options set`
       - this is the aws dns config
@@ -48,6 +49,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 #### gotchas
 
 - troubleshooting connectivity
+
   - connecting to AWS resources
     - anything in your local environment?
       - firewalls, network settings, etc
@@ -88,6 +90,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
       - do this by adding linking security groups, each attached to the resources you want to connect, add an inbound rule to the one receiving the connection, permitting the security group sending the connection
     - or you can connect them (e.g. via PrivateLink) using the internal AWS network
 - vpc peering
+
   - The IP space cannot overlap.
   - after creating the VPC peer in one VPC, you have to accept the request in the other
   - basic workflow: Configure VPC peering and the appropriate security group/NACL/route table settings.
@@ -108,7 +111,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
     - by default
       - all outbound is permitted
       - and all inbound is blocked
-  - only suppors allow rules (i.e. you block traffic)
+  - only suppors allow rules (i.e. all traffic blocked by default)
   - are stateful
     - if you send a request from an instance, the response is allowed to flow in regardless of rules
       - so make sure you dont connect to vulnerable hosts
@@ -132,12 +135,14 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 ## vpc
 
 - vpc: isolated network within your aws account in a specific region
+
   - as big as a /16 and as small as a /28
     - the vpc cidr/block is called the `super net`, as it contains all IPs for all subnets, and thus all resources
-    - ^ e.g *the 10.0 super net*, or the *198.0 super net*
-      - ^ as *192.0.1* would be a specific subnet, and *192.0.1.0* would be a specific host
+    - ^ e.g _the 10.0 super net_, or the _198.0 super net_
+      - ^ as _192.0.1_ would be a specific subnet, and _192.0.1.0_ would be a specific host
 
 - subnets: a range (subset) of ips within a vpc
+
   - the larger the cidr, the smaller the number of ips
   - can contain public/private resources
     - private: for private resources
@@ -146,17 +151,20 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
       - should point to the internet gateway
 
 - route tables: specify how vpc traffic flows in/out of subnets
+
   - controls subnet routing directs traffic between subnets
     - e.g. specify how a resource in a private subnet can connect to something in a public subnet
   - default route table: can be modified but not deleted
 
 - internet gateway: allows resources within a VPC access to the public internet
+
   - redundancy built in
   - highly available (i.e. you only need 1 per vpc)
   - configure subnet route tables to use the internet gateway
   - provides NAT for instances with a public IP
 
 - NAT gateway: enable resources in a private subnet to initiate & connect to the public internet
+
   - requires an EIP
     - useful for providing a consistent resource for apps & end users
     - if an ec2/etc fails, you can reassign the IP
@@ -184,6 +192,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 - egress-only internet gateway: allows VPC ipv6 outbound (but denies inbound)
 
 - VPC endpoints: enable resources within a VPC to privately access other AWS services without traversing the public internet
+
   - PrivateLink: uses the internal aws network instead of the public internet
     - per hourly charges
     - per GB charges
@@ -206,6 +215,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 - virtual private gateway: enable external resources to connect privately to resources within a vpc
 
 - transit gateway: simplify network management across multiple VPCs &/ on premise data centers
+
   - Transit Gateway connects on-premises resources to VPCs using a centralized hub. VPC Peering connects VPCs with each other, DirectConnect provides dedicated bandwidth, and a site-to-site VPN is a software approach for securing traffic.
   - use cases
     - centralizes & simplifies regional network management for a given region in single hub
@@ -223,32 +233,38 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
       - only use for complex setups
 
 - customer gateway: CG: on premise; physical networking appliance, to which all aws bound network traffic is anchored
+
   - you buy it from like cisco
   - it creates the IPsec tunnel
 
 - virtual private gateway: VPG: the virtual counterpart to a customer gateway; resides in aws; the anchor point for all customer gateway network traffic
 
 - site-to-site vpn: enables machines in a local data center (e.g. within a customer gateway) to connect to aws resources (e.g. via a virtual private gateway)
+
   - network traffic flows securely over a vpn tunnel
 
 - IPsec tunnel: internet protocol security vpn tunnel
+
   - needs an anchor configured on both sides to work
     - within aws: use a VPG and attach it to resources within AWS
     - on premise: use a CG:
     - the traffice is routed over the public internet
 
 - direct connect: alternative to the IPsec tunnel architecture
+
   - purchased from AWS
   - dedicated network connection to AWS
   - establishes a physical link from the router you own, and an AWS direct connect router
     - the traffic is routed over AWS network (not the public)
 
 - vpc peering: connect privately between AWS VPCs (within same/diff accounts/organizations)
+
   - doesnt need a gateway/vpn connection
   - makes use of internal AWS routing infrastructure
   - connections can span regions, accounts, organizations
 
 - DHCP option set: dynamic host configuration protocol
+
   - pass config info to hosts on a TCP/IP network
     - e.g. domain name, domain name server, etc
   - e.g. specify your own DNS servers
@@ -269,6 +285,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 ### default VPC
 
 - components
+
   - vpc cidr block: `172.31.0.0/16` 65k ips
     - for all default vpcs in all regions
   - creates a subnet in each availability zone in its each region
@@ -292,6 +309,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 ### vpc considerations
 
 - vpc
+
   - ipv4 cidr block
   - ipv6 cidr block
   - tenancy
@@ -301,9 +319,11 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - private dns (route 53)
 
 - internet gateway
+
   - vpc
 
 - vpc endpoints
+
   - type
   - aws service
   - vpc
@@ -317,6 +337,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - target (resource e.g. internet gateway id)
 - network acl (pronounced NACL)
 - subnets
+
   - public
     - internet gateway
     - route table
@@ -345,9 +366,11 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 - name address resolution: nirv.ai > 123.123.123.123
 
 - DNS failover: can detect website outage and redirect requests to a different IP
+
   - sends people to regionA, when it detects traffic failure, it can reroute to regionB
 
 - global traffic management: create traffic policies that optimize network flow
+
   - weighted round robin: i.e send 60% of traffic to regionA, and 40% to regionB
   - latency-base routing: each DNS query will take the originating IP into account, compare the latency to available regions, and direct traffic to the one with the lowest latency
   - geolocation (geo dns) routing: route traffic to regions based on the originating IP
@@ -355,6 +378,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
     - e.g. make application inaccessible from a specific country.
 
 - private DNS for a VPC: dns level routing
+
   - domains can have public, and multiple private hosted zones
     - public: for public internet traffic
     - private: for internal AWS traffic
@@ -362,7 +386,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
       - a single domain routing requests to multiple VPCs/different resources in the same VPC
       - `enableDnsHostnames` and `enableDnsSupport` must be true in the VPC config
   - use cases
-    - setting up prod, dev, staging at the *same* domain
+    - setting up prod, dev, staging at the _same_ domain
     - let you test new application version without affecting production
   - steps
     - create a private hosted zone that points to a VPC
@@ -372,9 +396,11 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - zone apex: a root domain (e.g. www.mycompany.com)
 - s3 as the zone apex
 - ELB as the zone apex
+
   - route53 will handle the health checks for each instance behind the ELB
 
 - hosted zones: all the domains you managed with route 53
+
   - SOA: start of authority
   - NS: name records
   - record sets: where should the domain be routed? for what type of request?
@@ -395,6 +421,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
     - NS: name server
 
 - Alias resource record set: aws specific extension to DNS
+
   - alias cant point to any of the following (quick create record > a record > alias radio button)
     - s3 bucket thats configured to host a static website
     - elastic load balancer: e.g. when you have multiple ec2 instances behind the elb
@@ -472,6 +499,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 - delivered logs to s3/kinesis data stream
 
 - reporting
+
   - cache statistics
     - select your cdn
     - good reports
@@ -545,6 +573,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 ## global accelerator
 
 - use cases
+
   - for national/global infrastructure
   - isolate your infrastructure from general internet traffic patterns
   - routes network traffic using AWS global network
@@ -558,6 +587,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
       - per region?
 
 - global accelerator vs cloudfront
+
   - both
     - use the AWS global network to facilitate speed
   - accelerator

@@ -3,7 +3,7 @@
 security groups, key pairs, IAM, STS, Access Analyzer, certifact manager
 
 <https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html>
-  authorization
+authorization
 
 todo: should be in order
 
@@ -55,18 +55,20 @@ todo: should be in order
 ## keypairs
 
 - public key cryptography: asymmetric cryptography
-  - the key used to encrypt the data, cannot be used to decrypt (thats why you need two)
-- public key: used to encrypt data
-  - is also stored on instances (e.g. ec2)
-- private key: used to decrypt data
-  - required to access instances (e.g. ec2)
-  - are regional:
+  - public key
+    - the key used to encrypt the data, cannot be used to decrypt (thats why you need two)
+    - is also stored on instances (e.g. ec2)
+  - private key:
+    - used to decrypt data
+    - required to access instances (e.g. ec2)
+    - are regional:
 
 ## IAM
 
 - IAM: Identity and access management
+
   - webservice for controlling access to AWS resources
-  - authnetication: who can sign in
+  - authentication: who can sign in
   - authorization: who can do what (permissions)
 
 - free to use
@@ -74,9 +76,11 @@ todo: should be in order
   - STS
   - Access Analyzer
 - costs
+
   - cloudtrail (i think)
 
 - use cases
+
   - shared access to your AWS account
     - grant other people permission to administer/use resources in AWS without sharing your password/access key
   - granular permissions
@@ -90,9 +94,10 @@ todo: should be in order
   - eventually consistent: achieves high availability by replicating data across multiple servers within amazons datacenters
 
 - key components
+
   - IAM provides the infrastructure necessary to control authentication and authorization
   - resources: user, group, role, policy and identity provider objects that are stored in IAM
-  - identities: resource objects used to identity and group
+  - identities: resource objects used for users, groups and roles
     - you attach policies to IAM identities (users, groups roles)
   - entities: resource objects that AWS uses for authentication (users and roles)
   - principals: person/application that uses the AWS root user, IAM user, or IAM role to sign in and make requests to AWS (federated users and assumed roles)
