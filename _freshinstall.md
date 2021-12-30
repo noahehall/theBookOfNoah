@@ -65,6 +65,7 @@
 
 - base apps
 
+  - [jq: use apt](https://stedolan.github.io/jq/)
   - [postman](https://www.postman.com/downloads/)
   - [obs studio](https://obsproject.com/wiki/install-instructions#ubuntumint-installation)
   - sudo apt install preload

@@ -29,7 +29,7 @@ alias apti='grep " install " /var/log/apt/history.log'
 alias installed='(dpkgi;apti) | less'
 alias whatsmyip="hostname -I | cut -d' ' -f1"
 alias whatsmyipexternal='curl -s http://ipecho.net/plain'
-
+alias untar='tar -xvf'
 
 # random
 alias xargall='xargs -p -t -n 1'
