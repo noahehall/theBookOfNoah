@@ -38,7 +38,7 @@
 
 - Oauth extensions: optional services, contracts & tech that enable oauth2 use cases; there are too many to list
 
-### oauth extensions
+#### oauth extensions
 
 - json web token: aka jwt/jot; RFC7519; easy way to encode & share json data
 
@@ -76,4 +76,33 @@
 
 - OpenID Connect: OIDC; special use case of auth design specifically for SSO and sharing profile information
 
+  - provides a rigid structure to the oauth2 framework
+  - ^ structured JWTs and specific extensions
+
   - provides structure to a user profile and selective share elements within the profile
+
+## Oauth 2.0
+
+- key elements
+  - access & refresh tokens
+  - authorization & token endpoints
+  - grant types (there are more)
+    - authorization code
+    - implicit
+    - resource owner passwords
+    - client credentials
+
+## OpenID Connect
+
+- the most widely used oauth2.0 extension (many folks will think its distinct from oauth2)
+- primary use case are SSO & profile sharing
+- simplifies creation of user accounts (if you trust the issuer of the ID token)
+
+- key elements
+  - +oauth2.0 key elements
+  - ID tokens: must be a JWT with properties & naming convetions
+    - is usually the user profile info
+  - userinfo endpoints: for retrieving user info, generally contains the same info in the ID token
+  - grant types (subset of oauth2)
+    - authorization code
+    - implicit
