@@ -11,6 +11,10 @@
 
 ## Basics
 
+- when you sign into a hotel (auth server)
+  - you give the front desk your ID & credit card (authentication)
+  - they give you a roomkey, that enables access to dope azz top floor suite, the jacuzi, weight room, and free breakfast and massages (authorization)
+
 ### terms
 
 - authentication: aka authN; who are you?
@@ -26,19 +30,21 @@
 
 - Oauth extensions: there are just too many to list
 
-  - JWT: json web token
-  - token revocation
-  - token introspection
-  - dynamic client registration
-  - authorization server metadata discovery
-
 - OpenID Connect: OIDC; special use case of auth design specifically for SSO and sharing profile information
 
   - provides structure to a user profile and selective share elements within the profile
 
-- key tools
-  - Oauth2
-  - OIDC
-  - Postman & Postman Interceptor
-  - Token INtrospection tool
-  - OAuth Server
+### oauth extensions
+
+- there are too many to list, here are some easy ones
+
+- json web token: aka jwt/jot; easy way to encode & share json data
+
+  - its encoded, NOT encrypted; so never use unencrypted sensitive data inside a jwt (or just use JWE)
+
+- JSON Web Encryption: JWE; an encrypted JWT token
+
+- token revocation
+- token introspection
+- dynamic client registration
+- authorization server metadata discovery
