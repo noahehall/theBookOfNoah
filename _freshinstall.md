@@ -20,6 +20,7 @@
 ### ubuntu:dev
 
 - do first
+
   - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
   - [switch to regolith & restart](https://regolith-linux.org/docs/getting-started/)
     - `sudo apt search ^i3xrocks`
@@ -30,6 +31,7 @@
         - ^ switch to theme
 
 - essential
+
   - [mozilla vpn](https://support.mozilla.org/en-US/kb/how-install-mozilla-vpn-linux-computer)
   - resolvconf
   - terminator
@@ -62,6 +64,8 @@
     - [read this first](https://miloserdov.org/?p=5493)
 
 - base apps
+
+  - [postman](https://www.postman.com/downloads/)
   - [obs studio](https://obsproject.com/wiki/install-instructions#ubuntumint-installation)
   - sudo apt install preload
   - speedtest-cli
@@ -92,6 +96,7 @@
   - gimp
 
 - virtualization
+
   - [compose](https://docs.docker.com/compose/install/)
   - [dive](https://github.com/wagoodman/dive)
   - [ctop](https://github.com/bcicen/ctop)
@@ -104,6 +109,7 @@
   - [gnome-boxes](https://wiki.gnome.org/Apps/Boxes)
 
 - [gnome extensions](https://extensions.gnome.org/)
+
   - dont use this if using regolith
   - maybe not since we are now using regloith
   - extensions are by computer, not per login so you have to reinstall
@@ -139,29 +145,29 @@
 
 ### remote server setup
 
-  1. setup non root user with sudo priv
-  2. configure ssh key-based authentication
-  3. disable password authentication and enable ufw with ssh enabled
-  4. setup firewall (usually ufw) to block everything except 80, 443, and 22 initially and define your default policies
+1. setup non root user with sudo priv
+2. configure ssh key-based authentication
+3. disable password authentication and enable ufw with ssh enabled
+4. setup firewall (usually ufw) to block everything except 80, 443, and 22 initially and define your default policies
 
 ## old notes
 
 sudo apt install conky-all
-    cp /etc/conky/conky.conf ~/.conkrc
-    [check this](https://linuxconfig.org/ubuntu-20-04-system-monitoring-with-conky-widgets)
+cp /etc/conky/conky.conf ~/.conkrc
+[check this](https://linuxconfig.org/ubuntu-20-04-system-monitoring-with-conky-widgets)
 
 [graphics driver](https://linuxconfig.org/ubuntu-20-04-tricks-and-things-you-might-not-know#h6-internet)
 
 list all services
-    $ systemctl list-units --all --type=service --no-pager
+$ systemctl list-units --all --type=service --no-pager
 list all systemd unit files
-    systemctl list-unit files --no-pager
+systemctl list-unit files --no-pager
 get services in specific status
-    $ systemctl list-units --all --type=service --no-pager | grep running|dead
+$ systemctl list-units --all --type=service --no-pager | grep running|dead
 get enabled/disabled systemd service unit states
-    $ systemctl list-unit-files | grep enabled|disabled
+$ systemctl list-unit-files | grep enabled|disabled
 set service status
-    systemctl start|stop|enable|disable servicename
+systemctl start|stop|enable|disable servicename
 
 - [tor](https://2019.www.torproject.org/docs/debian.html.en)
 - [multi audio sources](https://linuxconfig.org/how-to-enable-multiple-simultaneous-audio-outputs-on-pulseaudio-in-linux)
