@@ -103,6 +103,8 @@
 
 ### endpoints
 
+- authorize & token are the only endpoints defined in the spec, all other endpoints come through an extension
+
 - POST/authorize: confirm a users identity: gets the authorization grant & user consent
 
   - used for ANY user facing grant types (e.g. auth code/implicit)
