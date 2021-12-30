@@ -11,8 +11,11 @@
 
 - RFCs
   - [jwt RFC 7519](https://datatracker.ietf.org/doc/html/rfc7519)
-  - [token revocation rfc 7009](https://datatracker.ietf.org/doc/html/rfc7009)
+  - [token revocation 7009](https://datatracker.ietf.org/doc/html/rfc7009)
   - [token introspection 7662](https://datatracker.ietf.org/doc/html/rfc7662)
+  - [dynamic client registration protocol 7591](https://datatracker.ietf.org/doc/html/rfc7591)
+  - [dynamic client registration management protocol 7592](https://datatracker.ietf.org/doc/html/rfc7592)
+  - [authorization server metadata](https://datatracker.ietf.org/doc/html/rfc8414)
 
 ## Basics
 
@@ -49,12 +52,27 @@
 
 - JSON Web Encryption: JWE; an encrypted JWT token
 
-- token revocation: cancels a token via API; in practice this is a required extension
+- token revocation: cancels a token via API
+
+  - in practice this is a required extension
 
 - token introspection: examines an (opaque) token to describe its contents & determine if its still valid
 
-- dynamic client registration
-- authorization server metadata discovery
+  - mandatory if using token revocation (which you should)
+  - client apps can query the auth server to determine if a token is still valid
+
+- dynamic client registration: defines a consistent API for creating OAuth clients
+
+  - enables systems to register themselves with the auth server for requesting tokens
+  - useful in self-service API dev portals; where developers register their app clients for requesting tokens for their app users
+
+- dynamic client management: edit & manage clients that have registered to an auth server
+
+- authorization server metadata discovery: like an OPTIONS request; query the auth server for its oauth discovery doc
+
+  - auth server capabilities
+  - auth server endpoints
+  - ^ enables you to configure your auth client on the fly
 
 - OpenID Connect: OIDC; special use case of auth design specifically for SSO and sharing profile information
 
