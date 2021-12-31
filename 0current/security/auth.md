@@ -2,10 +2,15 @@
 
 - everywhere you see `oauth` im referring to `oauth 2.0`
 
+- when you sign into a hotel (auth server)
+  - you give the front desk your ID & credit card (authentication)
+  - they give you a roomkey (access token), that enables (authorization) access (scopes) to dope azz top floor suite, the jacuzi, weight room, and free breakfast and massages (resources)
+  - when you later come back with your roomkey, they again ask you for your ID (establish trust) to confirm you should still be permitted (validation)
+
 ## links
 
 - [postman](https://www.postman.com/)
-- [json web token](https://jwt.io/)
+- [json web token: JWT](https://jwt.io/)
 - [google auth playground](https://developers.google.com/oauthplayground)
 - [oauths auth playground](https://www.oauth.com/playground)
 - [openid OIDC playground](https://openidconnect.net/)
@@ -26,10 +31,6 @@
   - [combinations & permutations](https://www.mathplanet.com/education/pre-algebra/probability-and-statistic/combinations-and-permutations)
 
 ## Basics
-
-- when you sign into a hotel (auth server)
-  - you give the front desk your ID & credit card (authentication)
-  - they give you a roomkey (access token), that enables (authorization) access (scopes) to dope azz top floor suite, the jacuzi, weight room, and free breakfast and massages (resources)
 
 ### best practices/gotchas
 
@@ -171,6 +172,26 @@
   - email
   - phone
   - address
+
+### oauth tokens
+
+- access token: string representing an authorization issued to a client
+
+  - i.e. a specific set of scopes & durations of access, granted by the resource owner, and enforced by the resource server & authorization server
+
+- refresh token: string representing the authorization granted to the client by the resource owner
+
+  - i.e. an identifer used to retrieve the authorization (access token)
+
+- the entire point of grant types revovle around requesting & receiving tokens in different context & environments
+
+- types of tokens
+
+  - opaque: unique obsfucated string that acts as a database key; cant be decoded, extracted or decrypted (unless your the auth server that created it)
+
+  - JWT: (pronounced JOT) plain text authorization & profile data
+    - validation: is how you establish trust
+      - should always be validated with the auth server before using it (in case its been stolen)
 
 ### grant types
 
