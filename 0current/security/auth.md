@@ -30,14 +30,16 @@
 
   - [combinations & permutations](https://www.mathplanet.com/education/pre-algebra/probability-and-statistic/combinations-and-permutations)
 
-## Basics
-
 ### best practices/gotchas
+
+- validation: ID and access tokens should always be validated with the auth server before using it (in case its been stolen)
 
 - scope naming conventions
   - be consistent
   - if using url-style, the real benefit is havint the ORIGIN resolve (e.g. to a metadata doc) so that your API becomes self documenting
   - never use `admin` as scope, is too broad & vague
+
+## Basics
 
 ### terms
 
@@ -190,8 +192,16 @@
   - opaque: unique obsfucated string that acts as a database key; cant be decoded, extracted or decrypted (unless your the auth server that created it)
 
   - JWT: (pronounced JOT) plain text authorization & profile data
-    - validation: is how you establish trust
-      - should always be validated with the auth server before using it (in case its been stolen)
+
+- validation: is how you establish trust; always validate the access & ID token
+  - retrieve your sigingKeys: the keys doc represent the public key that the token was signed with
+  - split the access token on each period
+    - `[header.payload.signature] = accessToken.split('.')`
+    - get all the claims: `{ typ, alg, kid } = decodeBase64(header)`
+      - kid: key id,
+        `canITrustAccessToken = sign(kid[signingKeys], payload, alg) === accessToken`
+      - alg: algorithm
+      - typ: ...
 
 ### grant types
 
