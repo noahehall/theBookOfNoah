@@ -1,5 +1,7 @@
 # OAUTH 2.0 & OpenID Connect
 
+- everywhere you see `oauth` im referring to `oauth 2.0`
+
 ## links
 
 - [postman](https://www.postman.com/)
@@ -29,6 +31,13 @@
   - you give the front desk your ID & credit card (authentication)
   - they give you a roomkey (access token), that enables (authorization) access (scopes) to dope azz top floor suite, the jacuzi, weight room, and free breakfast and massages (resources)
 
+### best practices/gotchas
+
+- scope naming conventions
+  - be consistent
+  - if using url-style, the real benefit is havint the ORIGIN resolve (e.g. to a metadata doc) so that your API becomes self documenting
+  - never use `admin` as scope, is too broad & vague
+
 ### terms
 
 - combination: [1, 2, 3] = [3, 2, 1]
@@ -45,8 +54,6 @@
 - grant types: workflows for retrieving access tokens
 
 - Oauth extensions: optional services, contracts & tech that enable oauth2 use cases; there are too many to list
-
-#### oauth extensions
 
 - json web token: aka jwt/jot; RFC7519; easy way to encode & share json data
 
@@ -89,7 +96,7 @@
 
   - provides structure to a user profile and selective share elements within the profile
 
-## Oauth 2.0
+## Oauth
 
 - delegated authorization framework
 
@@ -132,7 +139,7 @@
 - /userinfo: publishes user profile data
   - openid connect
 
-### oauth 2.0 scopes
+### oauth scopes
 
 - combination of case-sensitive space delimited combination of strings defined by the auth server
 - ^ each string adds an additional access range to the requested scope
@@ -159,8 +166,6 @@
 
 #### extension scopes
 
-- ## arbitrary
-
 - openid (must be part of the set)
   - profile
   - email
@@ -174,8 +179,9 @@
 - authorization code with PKCE: for mobile apps/SPAs
 - client credentials: service accounts/microservices where there isnt a user involved
 - resource owner password: for legacy apps
+- device
 
-### oauth2 extensions
+### oauth extensions
 
 #### OpenID Connect
 
