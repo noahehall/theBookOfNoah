@@ -118,7 +118,8 @@
 
 #### extension endpoints
 
-- these are expected names, but can be named anything you want so check the auth server that implements the extension
+- these are expected names as defined in the extensions,
+- ^ but an oauth provider can name them anything, so verify the implementation details with the metadata doc
 
 - /introspect: analyze & decode a token
 - /revoke: invalid an access/refresh token
