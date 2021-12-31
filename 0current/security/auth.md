@@ -10,6 +10,7 @@
 - [free developer account, oauth as a service](https://developer.okta.com)
 
 - RFCs
+
   - [oauth 2.0 6749](https://datatracker.ietf.org/doc/html/rfc6749)
   - [jwt 7519](https://datatracker.ietf.org/doc/html/rfc7519)
   - [token revocation 7009](https://datatracker.ietf.org/doc/html/rfc7009)
@@ -18,6 +19,10 @@
   - [dynamic client registration management protocol 7592](https://datatracker.ietf.org/doc/html/rfc7592)
   - [authorization server metadata](https://datatracker.ietf.org/doc/html/rfc8414)
 
+- other
+
+  - [combinations & permutations](https://www.mathplanet.com/education/pre-algebra/probability-and-statistic/combinations-and-permutations)
+
 ## Basics
 
 - when you sign into a hotel (auth server)
@@ -25,6 +30,9 @@
   - they give you a roomkey (access token), that enables (authorization) access (scopes) to dope azz top floor suite, the jacuzi, weight room, and free breakfast and massages (resources)
 
 ### terms
+
+- combination: [1, 2, 3] = [3, 2, 1]
+- permutation: [1, 2, 3] != [3, 2, 1]
 
 - authentication: aka authN; who are you?
 - authorization: aka authZ: what can you do?
@@ -123,6 +131,31 @@
 - /revoke: invalid an access/refresh token
 - /userinfo: publishes user profile data
   - openid connect
+
+### oauth 2.0 scopes
+
+- combination of case-sensitive space delimited combination of strings defined by the auth server
+- ^ each string adds an additional access range to the requested scope
+- open to the auth server to implement, however, a good pattern is to deploy a naming convention (github failed us)
+
+- types of naming conventions
+  - simple strings: read|write|delete|admin_read|etc
+  - java-style namespace structure: expressive, granular, predictable, but can get incredibly long as your auth requirements get more complex
+    - com.app.resource
+    - com.app.resource.read
+    - com.app.resource.attribute.read
+    - com.app.resource.subresource.read
+    - etc
+
+#### extension scopes
+
+- ## arbitrary
+
+- openid (must be part of the set)
+  - profile
+  - email
+  - phone
+  - address
 
 ### grant types
 
