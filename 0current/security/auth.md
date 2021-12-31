@@ -139,12 +139,22 @@
 - open to the auth server to implement, however, a good pattern is to deploy a naming convention (github failed us)
 
 - types of naming conventions
-  - simple strings: read|write|delete|admin_read|etc
+
+  - simple strings: read|write|delete|admin_read|etc (e.g. github)
+
   - java-style namespace structure: expressive, granular, predictable, but can get incredibly long as your auth requirements get more complex
+
     - com.app.resource
     - com.app.resource.read
     - com.app.resource.attribute.read
     - com.app.resource.subresource.read
+    - etc
+
+  - url style: expressive, granular, predictable, the API becomes self documenting if the ORIGIN resolves to a metadata doc (e.g. google)
+
+    - <https://api.company.com/resource>
+    - ORIGIN/resource.read
+    - ORIGIN/resource.subresource.write
     - etc
 
 #### extension scopes
