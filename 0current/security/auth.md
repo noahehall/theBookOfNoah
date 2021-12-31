@@ -103,16 +103,27 @@
 
 ### endpoints
 
+#### oauth 2 spec endpoints
+
 - authorize & token are the only endpoints defined in the spec, all other endpoints come through an extension
 
-- POST/authorize: confirm a users identity: gets the authorization grant & user consent
+- POST/authorize: interact witte user to confirm their identity: gets the authorization grant & user consent
 
   - used for ANY user facing grant types (e.g. auth code/implicit)
   - never fkn GET (even tho thats whats in the spec)
   - servers tend to log all get requests
 
-- POST/token: retrieve an access token
+- POST/token: retrieve tokens
   - used when a user is confirmed/there isnt a user at all (e.g. client credential/password grants)
+
+#### extension endpoints
+
+- these are expected names, but can be named anything you want so check the auth server that implements the extension
+
+- /introspect: analyze & decode a token
+- /revoke: invalid an access/refresh token
+- /userinfo: publishes user profile data
+  - openid connect
 
 ## OpenID Connect
 
