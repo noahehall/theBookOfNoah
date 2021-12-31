@@ -93,14 +93,6 @@
   - authorization & token endpoints
   - grant types
 
-### grant types
-
-- authorization code: for backend apps
-- implicit: deprecated; for mobile apps/SPAs
-- authorization code with PKCE: for mobile apps/SPAs
-- client credentials: service accounts/microservices where there isnt a user involved
-- resource owner password: for legacy apps
-
 ### endpoints
 
 #### oauth 2 spec endpoints
@@ -121,12 +113,28 @@
 - these are expected names as defined in the extensions,
 - ^ but an oauth provider can name them anything, so verify the implementation details with the metadata doc
 
+- /.well-known/oauth-authorization-server: get the metadata/discovery doc
+
+  - lists all the URL patterns for all endpoints
+  - this is where you confirm the naming conventions of extension endpoints
+  - all auth servers are required to provide this endpoint
+
 - /introspect: analyze & decode a token
 - /revoke: invalid an access/refresh token
 - /userinfo: publishes user profile data
   - openid connect
 
-## OpenID Connect
+### grant types
+
+- authorization code: for backend apps
+- implicit: deprecated; for mobile apps/SPAs
+- authorization code with PKCE: for mobile apps/SPAs
+- client credentials: service accounts/microservices where there isnt a user involved
+- resource owner password: for legacy apps
+
+### oauth2 extensions
+
+#### OpenID Connect
 
 - the most widely used oauth2.0 extension (many folks will think its distinct from oauth2)
 - a structured pattern on top of auth2.0
