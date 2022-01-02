@@ -62,6 +62,7 @@
 
 ### terminology
 
+- cookie: small pieces of text passed back n forth between clients & servers in HTTP headers
 - exploit: a piece of code that illustrates how to take advantage of a secuirty flaw
 - 0 day: type of exploit that has be publicized for less than a day/not publicized at all
 - white hat: discovery security holes and will advise owners of the exploits before making them public
@@ -657,11 +658,14 @@
 ### cross-site request forgery: CSRF
 
 - CSRF: pronounced sea-surf; an attacker tricks a user into clicking a maliscious link that triggers a request to your application
+- predominatly used with GET requests, but any HTTP method can be exploited
+- anti-CSRF cookie: randomized string token that the web server writes out to a named cookie parameter
 
 - exposure
 
   - using GET requests with side effects; if it the GET doesnt anything accept READ, your vulnerable
   - GET requests are the only HTTP method that contain the entirety of the requests contents in the url
+  - not using anti-csrf cookies for HTTP methods that modify resource state
 
 - fallout
 
@@ -671,6 +675,7 @@
 
   - ensure GET requests dont have side effects (affect any resource state)
   - utilize more appropriate HTTP methods following REST
+  - always set an anti-csrf cookie in the response to ANY request to your server, e.g. `Set-Cookie: _xsrf=12345` and never modify any resource state unless that cookie is present on subsequent requests in the HTTP header
 
 ### session hijacking
 
