@@ -229,6 +229,7 @@
 
   - service acocunts: as you need a user to authenticate
   - any environment where you cant store secrets (your application needs an ID and PW with the auth server)
+    - even if you compile & obsfucate your source code, if your dumb azz stores your secrets in source code, youve already failed
 
 - key elements
 
