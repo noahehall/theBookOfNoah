@@ -63,11 +63,11 @@
 - authorization: aka authZ: what can you do?
 - client: the thing being authenticated
 - resources: the things being protected
-- authorization server: the service that evaluates authorization policies and determines which resources a client can utilize
+- authorization server: i.e. identity provider; the service that evaluates authorization policies and determines which resources a client can utilize on behalf of a user
 - scope: permission a client can request & are granted/denied
 - access token: a set of granted scopes for a specific period of time
 - refresh token: is given back to the auth server in exchange for a new access token (granted/denied)
-- grant types: workflows for retrieving access tokens
+- grant types: workflows for retrieving tokens
 - Oauth extensions: optional services, contracts & tech that enable oauth2 use cases; there are too many to lis
 - json web token: aka jwt/jot; RFC7519; easy way to encode & share json data
   - its encoded, NOT encrypted; so never use unencrypted sensitive data inside a jwt (or just use JWE/opaque token)
@@ -181,7 +181,7 @@
 
   - JWE: encrypted JWT;
 
-- validation: is how you establish trust; always validate the access & ID token
+- validation: is how you establish trust; always decode the token, grab the header, recreate the signature and compare it against the token
 
   - retrieve the keys document: i.e. your sigingKeys; represent the public key that the token was signed with
     - GET/authserver/someendpoint
@@ -211,12 +211,22 @@
 
 ### grant types
 
-- authorization code: for backend apps
 - implicit: deprecated; for mobile apps/SPAs
 - authorization code with PKCE: for mobile apps/SPAs
 - client credentials: service accounts/microservices where there isnt a user involved
 - resource owner password: for legacy apps
 - device
+
+#### authorization code
+
+- generally implemented by BFFs; is the most secure by default
+- often used by fullstack apps that request specific scopes to a users identity
+- flow
+  - client navigates to a front and request a login
+  - the BFF sends you to an auth server (identity provider) and client authenticates and grants authorization the BFF requests
+  - the BFF receives an auth code, client id, and client secret from the auth server
+  - the BFF uses the 3 elements to thit the authserver/token endpoint to get an access & refresh token
+  - the BFF informs the client that the user has authorized the full stack app
 
 ### extensions
 
