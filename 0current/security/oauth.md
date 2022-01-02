@@ -304,6 +304,9 @@
 - originally designed from SPAs/Mobile apps
 - technically not deprecated, but PKCE is now the preferred grant type flow
 
+- flow
+  - TODO
+
 ### extensions
 
 - may repeat stuff in other sections, but relisting here when I need to focus on a specific extension
