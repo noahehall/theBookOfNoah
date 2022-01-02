@@ -34,10 +34,11 @@
 
 ### best practices/gotchas
 
-- implimentation:
+- implementation:
 
   - playaround with the oauth playground to test many of the major grant type (flows)
   - you can test each flow entirely with postman
+  - make sure you choose the most secure grant type thats available for your application environment
 
 - validation: ID and access tokens should always be validated with the auth server **and** by the client before using it (in case its been stolen/expired)
 
@@ -272,7 +273,7 @@
 
 #### PKCE: proof key for code exchange
 
-- aka auth code with PKCE
+- aka auth code with PKCE, preffered over implicit flow
 - behaves like auth code flow, but doesnt use a client secret
 
 - use cases
@@ -297,6 +298,11 @@
   - client posts a request to authserver/token endpoint with the auth code & and the code verifier
   - the auth server hashes & encodes the code verifier and compares with the previously sent code challenge
   - if the auth servers stored code challenge === hashed & encoded code verifier, the auth server responds with the token
+
+#### Implicit
+
+- originally designed from SPAs/Mobile apps
+- technically not deprecated, but PKCE is now the preferred grant type flow
 
 ### extensions
 
