@@ -4,8 +4,8 @@
 
 - when you sign into a hotel (auth server)
   - you give the front desk your ID & credit card (authentication)
-  - they give you a roomkey (access token), that enables (authorization) access (scopes) to dope azz top floor suite, the jacuzi, weight room, and free breakfast and massages (resources)
-  - when you later come back with your roomkey, they again ask you for your ID (establish trust) to confirm you should still be permitted (validation)
+  - they give you a roomkey (access token), that enables (authorization) access (scopes) to (resources) a dope azz top floor suite, the jacuzi, weight room, and free breakfast and massages
+  - when you later come back with your roomkey, they again ask you for your ID (establish trust) to confirm you should still (expiration) be permitted (validation)
 
 ## links
 
@@ -37,6 +37,11 @@
   - you cant have a partially validated token
     - check the token: decode the token, grab the header, and resign the payload, it should match the original token
     - check the token payload: decode the payload, check the cid, aud, exp and iss, they should all be what you expect
+
+- security
+
+  - if someone gets your access token, they can assume your identity until the token expires
+  - if someone gets your refresh token, they can retrieve a new accesstoken forever (unless it gets revoked)
 
 - scope naming conventions
   - be consistent
@@ -94,8 +99,6 @@
 
 ### endpoints
 
-#### oauth 2 spec endpoints
-
 - authorize & token are the only endpoints defined in the spec, all other endpoints come through an extension
 
 - POST/authorize: interact witte user to confirm their identity: gets the authorization grant & user consent
@@ -107,7 +110,9 @@
 - POST/token: retrieve tokens
   - used when a user is confirmed/there isnt a user at all (e.g. client credential/password grants)
 
-#### extension endpoints
+#### endpoints: extensions
+
+- catch all, since many extensions reuse the same endpoints
 
 - these are expected names as defined in the extensions,
 - ^ but an oauth provider can name them anything, so verify the implementation details with the metadata doc
@@ -150,13 +155,16 @@
 
 ### tokens
 
+- access and refresh tokens form the foundation of oauth;
 - access token: string representing an authorization issued to a client
 
   - i.e. a specific set of scopes & durations of access, granted by the resource owner, and enforced by the resource server & authorization server
 
 - refresh token: string representing the authorization granted to the client by the resource owner
 
-  - i.e. an identifer used to retrieve the authorization (access token)
+  - are opaque so only useful via the authservers/token endpoint
+  - ^ the auth server will validate the refreshToken and issue a new access token
+  - ^ can be revoked by hitting the authservers/revocation endpoint
 
 - the entire point of grant types revolve around requesting & receiving tokens in different context & environments
 
@@ -207,6 +215,9 @@
 
 ### extensions
 
+- may repeat stuff in other sections, but relisting here when I need to focus on a specific extension
+- each extension adds additional features to base oauth framework
+
 #### OpenID Connect
 
 - the most widely used oauth2.0 extension (many folks will think its distinct from oauth2)
@@ -216,18 +227,22 @@
   - simplifies creation of user accounts (if you trust the issuer of the ID token)
   - e.g. signing into linkedin learning with your linkedin account
 
-- key elements
+##### openID connect: key elements
 
-  - +oauth2.0 key elements
-  - ID tokens: must be a JWT with properties & naming convetions
-    - is usually the user profile info
-  - userinfo endpoints: for retrieving user info, generally contains the same info in the ID token
-  - grant types
-    - authorization code
-    - implicit
+- tokens
 
-- scopes
-  - profile
-  - email
-  - phone
-  - address
+  - ID tokens: should contain profile info
+    - must be a JWT
+    - is highly structured with strict properties & naming conventions in the claims in the token payload
+
+- userinfo endpoints: for retrieving user info, generally contains the same info in the ID token
+- grant types
+
+  - authorization code
+  - implicit
+
+- scopes: what type of info is your service authorized to access?
+  - profile: generally used for creating a user account in your service (doesnt contain email)
+  - email: the users email, and if its been verified
+  - address: usually shipping address
+  - phone: usually a cell number, and if its been verified
