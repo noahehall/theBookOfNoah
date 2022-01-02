@@ -34,6 +34,10 @@
 
 - validation: ID and access tokens should always be validated with the auth server before using it (in case its been stolen)
 
+  - you cant have a partially validated token
+    - check the token: decode the token, grab the header, and resign the payload, it should match the original token
+    - check the token payload: decode the payload, check the cid, aud, exp and iss, they should all be what you expect
+
 - scope naming conventions
   - be consistent
   - if using url-style, the real benefit is havint the ORIGIN resolve (e.g. to a metadata doc) so that your API becomes self documenting
@@ -45,7 +49,6 @@
 
 - combination: [1, 2, 3] = [3, 2, 1]
 - permutation: [1, 2, 3] != [3, 2, 1]
-
 - authentication: aka authN; who are you?
 - authorization: aka authZ: what can you do?
 - client: the thing being authenticated
@@ -55,48 +58,26 @@
 - access token: a set of granted scopes for a specific period of time
 - refresh token: is given back to the auth server in exchange for a new access token (granted/denied)
 - grant types: workflows for retrieving access tokens
-
-- Oauth extensions: optional services, contracts & tech that enable oauth2 use cases; there are too many to list
-
+- Oauth extensions: optional services, contracts & tech that enable oauth2 use cases; there are too many to lis
 - json web token: aka jwt/jot; RFC7519; easy way to encode & share json data
-
   - its encoded, NOT encrypted; so never use unencrypted sensitive data inside a jwt (or just use JWE/opaque token)
-  - common fields
-    - iss: issuer; auth server
-    - iat: issued at; timestamp
-    - sub: subject; client
-    - aud: audience; the service that the token was created for
-    - exp: expiration; max time the token is valid for
-
 - JSON Web Encryption: JWE; an encrypted JWT token
-
 - token revocation: cancels a token via API
-
   - in practice this is a required extension
-
 - token introspection: examines an (opaque) token to describe its contents & determine if its still valid
-
   - mandatory if using token revocation (which you should)
   - client apps can query the auth server to determine if a token is still valid
-
 - dynamic client registration: defines a consistent API for creating OAuth clients
-
   - enables systems to register themselves with the auth server for requesting tokens
   - useful in self-service API dev portals; where developers register their app clients for requesting tokens for their app users
-
 - dynamic client management: edit & manage clients that have registered to an auth server
-
 - authorization server metadata discovery: like an OPTIONS request; query the auth server for its oauth discovery doc
-
   - auth server capabilities
   - auth server endpoints
   - ^ enables you to configure your auth client on the fly
-
 - OpenID Connect: OIDC; special use case of auth design specifically for SSO and sharing profile information
-
   - provides a rigid structure to the oauth2 framework
   - ^ structured JWTs and specific extensions
-
   - provides structure to a user profile and selective share elements within the profile
 
 ## Oauth
@@ -185,15 +166,35 @@
 
   - JWT: (pronounced JOT) plain text authorization & profile data
 
+  - JWE: encrypted JWT;
+
 - validation: is how you establish trust; always validate the access & ID token
-  - retrieve your sigingKeys: the keys doc represent the public key that the token was signed with
+
+  - retrieve the keys document: i.e. your sigingKeys; represent the public key that the token was signed with
+    - GET/authserver/someendpoint
   - split the access token on each period
+
     - `[header.payload.signature] = accessToken.split('.')`
     - get all the claims: `{ typ, alg, kid } = decodeBase64(header)`
-      - kid: key id,
-        `canITrustAccessToken = sign(kid[signingKeys], payload, alg) === accessToken`
+
+      - kid: key id
+        - `signature = sign(signingKeys[kid], payload, alg)`
+        - `canTrustToken = signature === accessToken`
       - alg: algorithm
       - typ: ...
+
+    - decode the payload to view the token claims
+      - `tokenPayload = decodeBase64(payload)`
+      - aud: audience; the service the token is suppose to be used by, e.g. `imusing.oauthformyusers.com`
+      - cid: client id; the id of the service that originally requested the token
+      - exp: expiration; a future timestamp that represents when the token is invalid
+      - iat: issued at; timestamp
+      - iss: issuer; auth server that created the token, e.g. `https://poop.com/oauth2/234324/234324`
+      - jti:
+      - scp:
+      - sub: subject; client
+      - uid:
+      - ver:
 
 ### grant types
 
