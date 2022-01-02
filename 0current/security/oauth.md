@@ -14,6 +14,7 @@
 - [google auth playground](https://developers.google.com/oauthplayground)
 - [oauths auth playground](https://www.oauth.com/playground)
 - [openid OIDC playground](https://openidconnect.net/)
+- [openid appauth libraries](https://appauth.io/)
 - [free developer account, oauth as a service](https://developer.okta.com)
 
 - RFCs
@@ -258,6 +259,7 @@
 
 #### PKCE: proof key for code exchange
 
+- aka auth code with PKCE
 - behaves like auth code flow, but doesnt use a client secret
 
 - use cases
@@ -266,7 +268,16 @@
 
 - key elements
 
+  - code verifier: a random URL-safe >= 43 characters stored on the local system
+  - code challenge: base 64 encoded SHA-256 hash of the code verifier
+
 - flow
+  - client generates a code verifier & code challenge
+  - client sends the code challenge with an authorization request to an auth server
+  - auth server responds with an authorization code if the user successfully authenticates
+  - client sends a request to authserver/token endpoint with the auth code & and the code verifier
+  - the auth server hashes encodes the code verifier and compares with the previously sent code challenge
+  - if the stored code challenge === hashed & encoded code verifier, the auth server responds with the token
 
 ### extensions
 
