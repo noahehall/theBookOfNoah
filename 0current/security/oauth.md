@@ -219,14 +219,39 @@
 
 #### authorization code
 
-- generally implemented by BFFs; is the most secure by default
-- often used by fullstack apps that request specific scopes to a users identity
+- requires a fullstack app; is the most secure by default as everything is kept in the BFF
+
+- use cases
+
+  - often used with SSO to request specific scopes to a users identity
+
+- not useful for
+
+  - service acocunts: as you need a user to authenticate
+  - any environment where you cant store secrets (your application needs an ID and PW with the auth server)
+
+- key elements
+
+  - auth code: token the BFF receives after a user authenticates with an auth server; enables the BFF to retrieve an access & refresh token for this specific user
+  - access token: token for a specific user
+  - refresh token: refresh token for a specific user
+  - client secret: your apps PW you create with an auth server
+  - client id: your apps ID you create with an auth server
+
 - flow
-  - client navigates to a front and request a login
-  - the BFF sends you to an auth server (identity provider) and client authenticates and grants authorization the BFF requests
-  - the BFF receives an auth code, client id, and client secret from the auth server
-  - the BFF uses the 3 elements to thit the authserver/token endpoint to get an access & refresh token
+
+  - your user needs to authenticate with an auth server to prove their identity
+  - on some screen in your app, they click `sign in with GOOGLE`
+  - the BFF redirects the auser to an auth server (identity provider, e.g. google) and the user authenticates and grants authorization for your application to access their identity
+  - the BFF receives an auth code from the auth server
+  - the BFF uses its client ID & secret + the auth code to thit the authserver/token endpoint to get an access & refresh token for this specific user
   - the BFF informs the client that the user has authorized the full stack app
+
+- benefits
+
+  - only the one-time use authorization code is exposed
+  - the application never sees the users credentials
+  - the client nor the user never see the access or refresh token (its kept in the BFF)
 
 ### extensions
 
