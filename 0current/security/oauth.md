@@ -25,6 +25,7 @@
   - [dynamic client registration protocol 7591](https://datatracker.ietf.org/doc/html/rfc7591)
   - [dynamic client registration management protocol 7592](https://datatracker.ietf.org/doc/html/rfc7592)
   - [authorization server metadata](https://datatracker.ietf.org/doc/html/rfc8414)
+  - [PKCE: proof key for code exchange 7636](https://datatracker.ietf.org/doc/html/rfc7636)
 
 - other
 
@@ -211,6 +212,7 @@
 
 ### grant types
 
+- i.e. flows
 - implicit: deprecated; for mobile apps/SPAs
 - authorization code with PKCE: for mobile apps/SPAs
 - client credentials: service accounts/microservices where there isnt a user involved
@@ -253,6 +255,18 @@
   - only the one-time use authorization code is exposed
   - the application never sees the users credentials
   - the client nor the user never see the access or refresh token (its kept in the BFF)
+
+#### PKCE: proof key for code exchange
+
+- behaves like auth code flow, but doesnt use a client secret
+
+- use cases
+
+  - SPA/Mobile apps/any environment where you cant (or shouldnt) store secrets
+
+- key elements
+
+- flow
 
 ### extensions
 
