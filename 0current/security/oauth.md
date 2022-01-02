@@ -34,6 +34,11 @@
 
 ### best practices/gotchas
 
+- implimentation:
+
+  - playaround with the oauth playground to test many of the major grant type (flows)
+  - you can test each flow entirely with postman
+
 - validation: ID and access tokens should always be validated with the auth server before using it (in case its been stolen)
 
   - you cant have a partially validated token
@@ -57,13 +62,14 @@
 
 ## Basics
 
-### terms
+### terminlogy
 
 - combination: [1, 2, 3] = [3, 2, 1]
 - permutation: [1, 2, 3] != [3, 2, 1]
 - authentication: aka authN; who are you?
 - authorization: aka authZ: what can you do?
 - client: the thing being authenticated
+- public client: any client that cant/shouldnt store secrets
 - resources: the things being protected
 - authorization server: i.e. identity provider; the service that evaluates authorization policies and determines which resources a client can utilize on behalf of a user
 - scope: permission a client can request & are granted/denied
@@ -244,6 +250,7 @@
 
 - flow
 
+  - your application registers as a client with the auth server and creates a client Id and client secret (i.e. username and pw)
   - your user needs to authenticate with an auth server to prove their identity
   - on some screen in your app, they click `sign in with GOOGLE`
   - the BFF redirects the auser to an auth server (identity provider, e.g. google) and the user authenticates and grants authorization for your application to access their identity
@@ -254,8 +261,10 @@
 - benefits
 
   - only the one-time use authorization code is exposed
-  - the application never sees the users credentials
+  - the third party application (the one requesitng the info on the user) never sees the users credentials
   - the client nor the user never see the access or refresh token (its kept in the BFF)
+
+- scopes: can be anything, but generally auth servers permit you to use openid connect with this flow
 
 #### PKCE: proof key for code exchange
 
@@ -265,11 +274,17 @@
 - use cases
 
   - SPA/Mobile apps/any environment where you cant (or shouldnt) store secrets
+  - replacing the implicit flow because implicit flow is less secure
+
+- limitations
+
+  - you cant get a refresh token (thats why auth code is preferred if you can store secrets)
 
 - key elements
 
   - code verifier: a random URL-safe >= 43 characters stored on the local system
   - code challenge: base 64 encoded SHA-256 hash of the code verifier
+  - ^ wiht the code verifier & challenge, your application is effectively authenticating itself
 
 - flow
   - client generates a code verifier & code challenge
@@ -294,22 +309,22 @@
   - simplifies creation of user accounts (if you trust the issuer of the ID token)
   - e.g. signing into linkedin learning with your linkedin account
 
-##### openID connect: key elements
+- key elements
 
-- tokens
+  - tokens
 
-  - ID tokens: should contain profile info
-    - must be a JWT
-    - is highly structured with strict properties & naming conventions in the claims in the token payload
+    - ID tokens: should contain profile info
+      - must be a JWT
+      - is highly structured with strict properties & naming conventions in the claims in the token payload
 
-- userinfo endpoints: for retrieving user info, generally contains the same info in the ID token
-- grant types
+  - userinfo endpoints: for retrieving user info, generally contains the same info in the ID token
+  - grant types
 
-  - authorization code
-  - implicit
+    - authorization code
+    - implicit
 
-- scopes: what type of info is your service authorized to access?
-  - profile: generally used for creating a user account in your service (doesnt contain email)
-  - email: the users email, and if its been verified
-  - address: usually shipping address
-  - phone: usually a cell number, and if its been verified
+  - scopes: what type of info is your service authorized to access?
+    - profile: generally used for creating a user account in your service (doesnt contain email)
+    - email: the users email, and if its been verified
+    - address: usually shipping address
+    - phone: usually a cell number, and if its been verified
