@@ -68,8 +68,18 @@
 - black hat: hoard exploits to maximize the time windows during which they can use vulnerabilities
 - dark web: websites available oly via special network nodes that anonymize incoming IP address
 - worm: a recursive exploit that tricks other computers into recursively tricking other computers to execute some code
+
+- REST: representational state transfer; design philosophy for mapping website operatins to the appropriate HTTP method according to their intention
+
+  - GET: read
+  - POST: create
+  - PUT: update
+  - DELETE: delete
+
 - ICANN: internet corporation for assigned names and numbers
+
   - alotts blocks of IP addresses to regional authorities
+
 - regional authorities
 
   - grant blocks of addresses to internet service prviders and hosting companies within their region
@@ -644,9 +654,9 @@
     - thus it cant be detected in server logs
   - client-side code needs to manage the parsing & escaping of URI fragments if fragment content is used in rendering
 
-### cross-site request forgery
+### cross-site request forgery: CSRF
 
-- ## CSRF: pronounced sea-surf; an attacker tricks a user into clicking a maliscious link that triggers a request to your application
+- CSRF: pronounced sea-surf; an attacker tricks a user into clicking a maliscious link that triggers a request to your application
 
 - exposure
 
@@ -654,7 +664,13 @@
   - GET requests are the only HTTP method that contain the entirety of the requests contents in the url
 
 - fallout
+
   - ...
+
+- mitigation
+
+  - ensure GET requests dont have side effects (affect any resource state)
+  - utilize more appropriate HTTP methods following REST
 
 ### session hijacking
 
