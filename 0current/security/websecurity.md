@@ -1,7 +1,7 @@
 # web security
 
 - reading: done
-- copying: PAGE 75 cross-site request forgery
+- copying: PAGE 81 compromising authentication
 
 ## links
 
@@ -686,9 +686,17 @@
   - always include anti-csrf cookies in HTTP requests originating from client-side javascript
     - you query the anti-csrf token from the html page and pass it back to the server with the request
   - always specify `SameSite` attribute when setting any cookies
+    - e.g. `Set-Cookie: _xsrf=1234; SameSite=strict|Lax;`
+    - ^ strict: for inbound links will force a user to relogin if using HTTP sessions (as the session cookie will be stripped)
+    - ^ lax: doesnt force relogin if using HTTP sessions
     - when a browser generates a request to your site, by default it will attach the last known cookies that the site set regardless of hte source
     - i.e. a request from attacker site A to your site B will use the last known cookies that were attachd to site B, even the request originated from attacker site A
     - ^ if you specific the `SameSite` attribute, the cookies will only be attached if the request originates from your site B
+  - force users to reauthenticate for sensitive actions
+
+### compromising authentication
+
+- page 81
 
 ### session hijacking
 
