@@ -206,14 +206,15 @@
 
     - decode the payload to view the token claims
       - `tokenPayload = decodeBase64(payload)`
+      - acp: the scopes related to this specific token
       - aud: audience; the service the token is suppose to be used by, e.g. `imusing.oauthformyusers.com`
       - cid: client id; the id of the service that originally requested the token
-      - exp: expiration; a future timestamp that represents when the token is invalid
+      - exp: expiration; a future timestamp afterwhich the token should be considered invalid
       - iat: issued at; timestamp
       - iss: issuer; auth server that created the token, e.g. `https://poop.com/oauth2/234324/234324`
       - jti:
       - scp:
-      - sub: subject; client
+      - sub: subject; the user/client this token describes
       - uid:
       - ver:
 
@@ -316,6 +317,7 @@
     - ID tokens: should contain profile info
       - must be a JWT
       - is highly structured with strict properties & naming conventions in the claims in the token payload
+      - genereally contains the same info as an access token, but includes more information
 
   - userinfo endpoints: for retrieving user info, generally contains the same info in the ID token
   - grant types
@@ -328,3 +330,4 @@
     - email: the users email, and if its been verified
     - address: usually shipping address
     - phone: usually a cell number, and if its been verified
+    - offline_access: request the auth server to include a refresh token in its response
