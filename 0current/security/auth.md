@@ -142,7 +142,7 @@
 - /userinfo: publishes user profile data
   - openid connect
 
-### oauth scopes
+### scopes
 
 - combination of case-sensitive space delimited combination of strings defined by the auth server
 - ^ each string adds an additional access range to the requested scope
@@ -167,15 +167,7 @@
     - ORIGIN/resource.subresource.write
     - etc
 
-#### extension scopes
-
-- openid (must be part of the set)
-  - profile
-  - email
-  - phone
-  - address
-
-### oauth tokens
+### tokens
 
 - access token: string representing an authorization issued to a client
 
@@ -212,7 +204,7 @@
 - resource owner password: for legacy apps
 - device
 
-### oauth extensions
+### extensions
 
 #### OpenID Connect
 
@@ -224,6 +216,7 @@
   - e.g. signing into linkedin learning with your linkedin account
 
 - key elements
+
   - +oauth2.0 key elements
   - ID tokens: must be a JWT with properties & naming convetions
     - is usually the user profile info
@@ -231,3 +224,9 @@
   - grant types
     - authorization code
     - implicit
+
+- scopes
+  - profile
+  - email
+  - phone
+  - address
