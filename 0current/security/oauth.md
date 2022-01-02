@@ -39,7 +39,7 @@
   - playaround with the oauth playground to test many of the major grant type (flows)
   - you can test each flow entirely with postman
 
-- validation: ID and access tokens should always be validated with the auth server before using it (in case its been stolen)
+- validation: ID and access tokens should always be validated with the auth server **and** by the client before using it (in case its been stolen/expired)
 
   - you cant have a partially validated token
     - check the token: decode the token, grab the header, and resign the payload, it should match the original token
@@ -54,6 +54,9 @@
   - if someone gets your refresh token, they can retrieve a new accesstoken forever (unless it gets revoked)
   - protect every token you ever use, treat encrypted tokens like they are unencrypted, defense in depth!
   - always revoke refresh tokens, ALWAYYYYYYS
+  - always use SSL/TLS to protect your tokens in transit
+  - protect the auth code at all cost (for authorization code/PKCE flows)
+  - protect your redirect URIs: this is where the auth server responds with tokens after a user authenticates, you should only accept requests from origins (i.e auth servers) you trust, and you should whitelist the redirct_uris within the auth server so they only redirect users to the URLs you set
 
 - scope naming conventions
   - be consistent
@@ -229,7 +232,7 @@
 
 #### authorization code
 
-- requires a fullstack app; is the most secure by default as everything is kept in the BFF
+- requires a fullstack app; is the most secure by default as everything all tokens are kept in the BFF and the user/client never see it
 
 - use cases
 
@@ -284,16 +287,16 @@
 - key elements
 
   - code verifier: a random URL-safe >= 43 characters stored on the local system
-  - code challenge: base 64 encoded SHA-256 hash of the code verifier
+  - code challenge: base 64 encoded SHA-256 hash `bae64url(sha256(code_verifier))` of the code verifier
   - ^ wiht the code verifier & challenge, your application is effectively authenticating itself
 
 - flow
   - client generates a code verifier & code challenge
   - client sends the code challenge with an authorization request to an auth server
-  - auth server responds with an authorization code if the user successfully authenticates
-  - client sends a request to authserver/token endpoint with the auth code & and the code verifier
-  - the auth server hashes encodes the code verifier and compares with the previously sent code challenge
-  - if the stored code challenge === hashed & encoded code verifier, the auth server responds with the token
+  - auth server responds with a onetime authorization code (usually expires within 60 seconds) if the user successfully authenticates
+  - client posts a request to authserver/token endpoint with the auth code & and the code verifier
+  - the auth server hashes & encodes the code verifier and compares with the previously sent code challenge
+  - if the auth servers stored code challenge === hashed & encoded code verifier, the auth server responds with the token
 
 ### extensions
 
