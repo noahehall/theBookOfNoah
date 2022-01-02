@@ -669,7 +669,9 @@
 
 - fallout
 
-  - ...
+  - tricking your webserver into thinking a request was made by a USER coming from your frontend, but really its coming from their frontend
+  - your webserver will then fetch sensitive info/modify resource (e.g. db) state and send the info back to the attacker
+  - anything you permit users to do on your site, will be done from the attackers site
 
 - mitigation
 
@@ -680,8 +682,13 @@
     - the browser will send the required cookie **only** the page is loaded from the same domain
     - your webserver should confirm that the token in the html page and the token in the return cookie header match
     - the browser security model will return cookies according to the `same-origin policy` so the cookie can have only been set by your web server
+    - without the `SameSite` attribute, attackers can inspect & steal your anti-csrf token and use it
   - always include anti-csrf cookies in HTTP requests originating from client-side javascript
     - you query the anti-csrf token from the html page and pass it back to the server with the request
+  - always specify `SameSite` attribute when setting any cookies
+    - when a browser generates a request to your site, by default it will attach the last known cookies that the site set regardless of hte source
+    - i.e. a request from attacker site A to your site B will use the last known cookies that were attachd to site B, even the request originated from attacker site A
+    - ^ if you specific the `SameSite` attribute, the cookies will only be attached if the request originates from your site B
 
 ### session hijacking
 
