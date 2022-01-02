@@ -40,8 +40,13 @@
 
 - security
 
+  - always think about the scopes your tokens permit to set a reasonable expiration timestamp
+    - read only to public/sensitive info?
+    - +write to public/sensitive info?
   - if someone gets your access token, they can assume your identity until the token expires
   - if someone gets your refresh token, they can retrieve a new accesstoken forever (unless it gets revoked)
+  - protect every token you ever use, treat encrypted tokens like they are unencrypted, defense in depth!
+  - always revoke refresh tokens, ALWAYYYYYYS
 
 - scope naming conventions
   - be consistent
@@ -221,8 +226,9 @@
 #### OpenID Connect
 
 - the most widely used oauth2.0 extension (many folks will think its distinct from oauth2)
-- a structured pattern on top of auth2.0
-- primary use case are SSO & profile sharing
+- a structured pattern on top of auth2.0, its the `sign in with` flow you see everywhere
+- primary use case are SSO, profile sharing & creation, authentication
+- you must trust the auth server that issues the ID token
 
   - simplifies creation of user accounts (if you trust the issuer of the ID token)
   - e.g. signing into linkedin learning with your linkedin account
