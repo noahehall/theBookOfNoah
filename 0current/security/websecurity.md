@@ -67,7 +67,7 @@
 - white hat: discovery security holes and will advise owners of the exploits before making them public
 - black hat: hoard exploits to maximize the time windows during which they can use vulnerabilities
 - dark web: websites available oly via special network nodes that anonymize incoming IP address
-
+- worm: a recursive exploit that tricks other computers into recursively tricking other computers to execute some code
 - ICANN: internet corporation for assigned names and numbers
   - alotts blocks of IP addresses to regional authorities
 - regional authorities
@@ -590,16 +590,20 @@
 #### stored cross-site scripting attacks
 
 - exposure
+
   - any page content rendering javascript stored in a database;
     - the js is stored in the db, but rendered in the browser
     - e.g. via any end-user controlled content / SQL injections
   - not escaping injected scripts when rendering HTML
 
 - fallout
+
   - see above
 
 - mitigation
+
   - escaping HTML control characters e.g. `" & ' < >`tags with their entity coding
+
     - this includes when inserting raw HTML to bypass templating languages, e.g. react
 
   - implement a content security policy via HTTP response headers
@@ -611,9 +615,11 @@
 - an attacker sends the malicious code in the HTML request, and the server reflects it back in the HTTP response & the browser renders it on the page
 
 - exposure
+
   - rendering content from HTTP requests in the DOM without scaping it (this includes queryString params)
 
 - fallout
+
   - see above
 
 - mitigation
@@ -626,9 +632,11 @@
 - smuggling malicious code into webpages via the URI fragment (thing after the # in urls)
 
 - exposure
+
   - rendering content URI fragment content in pages
 
 - fallout
+
   - see above
 
 - mitigation
@@ -638,10 +646,12 @@
 
 ### cross-site request forgery
 
-- page 75
+- ## CSRF: pronounced sea-surf; an attacker tricks a user into clicking a maliscious link that triggers a request to your application
+
 - exposure
 
-  - using GET requests for anything other than retrieving resources
+  - using GET requests with side effects; if it the GET doesnt anything accept READ, your vulnerable
+  - GET requests are the only HTTP method that contain the entirety of the requests contents in the url
 
 - fallout
   - ...
