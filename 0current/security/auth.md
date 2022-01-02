@@ -177,7 +177,7 @@
 
   - i.e. an identifer used to retrieve the authorization (access token)
 
-- the entire point of grant types revovle around requesting & receiving tokens in different context & environments
+- the entire point of grant types revolve around requesting & receiving tokens in different context & environments
 
 - types of tokens
 

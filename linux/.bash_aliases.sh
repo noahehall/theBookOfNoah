@@ -120,8 +120,10 @@ alias gitp='git push'
 alias gitpf='git push --force'
 alias gitpl='git pull'
 alias gitplf='git pull --force'
-alias gits='git status -sb'
+alias gitprune=' git fetch --prune'
+alias gitprunecheck='git prune --dry-run --verbose'
 alias gitrmcache='git rm --cached -r .'
+alias gits='git status -sb'
 
 ## extended
 alias gitcontributors='git log --format="%ae" | sort -u'
@@ -135,7 +137,7 @@ alias gitloglast='git log -1 HEAD --stat'
 alias gitstash='git stash -u'
 alias gitstashlist='git stash list'
 alias gitstashpop='git stash pop'
-alias gitprune='git fetch --prune'
+alias gitprune='git fetch --prune && git prune'
 alias gitamend='git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend'
 
 # apt ----------------------------------
