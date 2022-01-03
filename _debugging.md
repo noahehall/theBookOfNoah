@@ -5,9 +5,11 @@ easy to forget things
 ## linux
 
 - [increasing file descriptors]<https://docs.oracle.com/cd/E19476-01/821-0505/file-descriptor-requirements.html>
+
   - `$ ulimit -aH` see humand readabile limits
 
 - users, groups, and permissions
+
   - `exec su -l $USER` reload session, e.g. to reload group assignments
   - x: execute 1
   - w: write 2
@@ -27,6 +29,7 @@ easy to forget things
       - x = can access the directory (i.e., cd to the directory)
 
 - system info (just use neofetch, but these are useful for scripting)
+
   - `lsb_release -a` all info
   - `lsb_release -cs` e.g impish
   - `dpkg-architecture -q DEB_BUILD_ARCH` e.g. amd64, but can be used to query anything
@@ -36,22 +39,26 @@ easy to forget things
   - `lshw -short` list hardware
 
 - files & disk
+
   - `find ~/all/files/in/dir -type f -size +100k`
   - `tar -czvf as_this_file.tar.gz from_this_file`
   - `tar xvzf unzip_this_file.tar.gz -C to/this/dir`
 
 - [disable webcam](https://askubuntu.com/questions/166809/how-can-i-disable-my-webcam)
+
   1. find the cam from the list of devices `lsusb -t`
   2. get some tape from one of your kitchen drawers
   3. and use the tape to cover the device you found in step 1
 
 - repos/packages
+
   - `sudo add-apt-repository -r ppa:remove/this/ppa`
   - `sudo add-apt-repository ppa:add/this/ppa`
   - `sudo dpkg -i installme.deb`
   - `whereis somecmd` binary, source & man pages for a cmd
 
 - networking
+
   - `hostname -I` your ip
   - `ifconfig | grep inet` all your ips
   - [whats on 80](https://www.tecmint.com/find-out-which-process-listening-on-a-particular-port/)
@@ -70,6 +77,7 @@ easy to forget things
       - for embedded devices
 
 - ssh
+
   - `eval \`ssh-agent -s\`` start the ssh agent
   - `ssh-add` add identities in `~/.ssh` can also append a specific private key
   - `ssh-add -l` list identities
@@ -77,10 +85,12 @@ easy to forget things
   - `id_rsa` === your private key
 
 - terminal
+
   - `ctrl shift t` new tab
   - `tree --dirsfirst --charset=ascii SOME_DIR` show tree of dir
 
 - settings
+
   - `sudo update-alternatives --config` [choose the default cmd](https://linuxhint.com/update_alternatives_ubuntu/)
     - set the default for common cmds
       - x-terminal-emulator
@@ -94,16 +104,18 @@ easy to forget things
           - repeat this for each cmd you want to use
 
 - aws
+
   - `export AWS_DEFAULT_PROFILE=poop`
   - `aws configure list` safely list current aws config
   - `aws configure get aws_access_key_id` show the world your access key
 
 - [docker networking](https://www.tutorialworks.com/container-networking/)
+
   - docker network ls
   - docker inspect network some_network
 
 - eslint
-  - /*eslint-disable*/
+  - /_eslint-disable_/
   - // eslint-disable-next-line
   - // eslint-disable-line
 
@@ -116,3 +128,9 @@ sudo rm -rf /usr/src/rtl8814au-5.8.5.1/
 sudo rm -rf /usr/src/8814au-5.8.5.1/
 
 [sync computer & network time](https://www.howtogeek.com/tips/how-to-sync-your-linux-server-time-with-network-time-servers-ntp/)
+
+# curl
+
+[use the --data-urlencode option](https://stackoverflow.com/questions/296536/how-to-urlencode-data-for-curl-command)
+
+- inspect the response via jq `curl really-long-curl-options | jq .`
