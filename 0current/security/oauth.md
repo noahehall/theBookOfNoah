@@ -63,6 +63,9 @@
     - whitelist the redirct_uris within the auth server so they only redirect users to the URLs you set (i.e. dont use an auth server that allows arbitrary redirect URIs)
     - dont use query params/fragments when accepting tokens from auth servers
     - use an auth server that supports CORS, and have them return the token via form post
+  - never use resource owner password grant type: its the only flow that requires a user to give up their credentials
+    - just never use it, you dont want to be involved in the fallout
+    - once a third party has your user creds, no mititation steps fkn matter
 
 - scope naming conventions
   - be consistent
