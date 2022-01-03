@@ -28,6 +28,7 @@
   - [dynamic client registration management protocol 7592](https://datatracker.ietf.org/doc/html/rfc7592)
   - [authorization server metadata](https://datatracker.ietf.org/doc/html/rfc8414)
   - [PKCE: proof key for code exchange 7636](https://datatracker.ietf.org/doc/html/rfc7636)
+  - [device authorization grant RFC 8628](https://datatracker.ietf.org/doc/html/rfc8628)
 
 - other
 
@@ -66,6 +67,7 @@
   - never use resource owner password grant type: its the only flow that requires a user to give up their credentials
     - just never use it, you dont want to be involved in the fallout
     - once a third party has your user creds, no mititation steps fkn matter
+  - log & track oauth requests (but not anything sensitive) so you can spot malicious behavior
 
 - scope naming conventions
   - be consistent
@@ -363,18 +365,45 @@
   - useful for backend services & microservices: you can manage access to protected resources in your microservice architecture via an authserver
   - enables backend systems to speak oauth, enabling them to participate in more use cases and reducing the tech burden on developers (as the oauth logic can be reused across service components)
   - enables credential rotation, scopes & better tooling across you tech stack
+  - there is no user, and no public requests (everything is backend) so this should be the goto for microservices
 
 - key elements
 
   - client id: of the microservice
   - client secret: of the microservice
+  - grant_type: client_credentials
 
 - flow
 
   - a service sends its id & secret to an auth server and receives an access token
   - the service then sends that access token to other other services with protected resources
 
-#### resource owner password flow
+#### device grant type
+
+- for internet connected devices without a browser/UI: e.g. smart appliances, game consoles, kiosks, and some IoT devices
+
+- limitations
+
+  - the device must meet 4 reqiuements as specified by the oauth RFC
+    - the device is already connected to the internet
+    - the device can make https requests
+    - the device can communiate a URI to the end user (e.g. showing a QR code)
+    - the user has to have another device (e.g. mobile phone) to visit the URI
+
+- use cases
+
+  - any environment without a browser/UI that can meet the 4 reqs specified in the abovel limitation
+
+- key elements
+
+- flow
+  - a user needs to authenticate through some device (i.e. machine)
+  - the device sends its own ID to an auth server and it responds with a device code, end user code, and a verification URI (e.g. QR code)
+  - the user visits the URI via some other mechanism (e.g. scan the QR code on their phone) and authenticates & authorizes the device
+  - the auth server will POST (or unfortunately a URL fragment/query param) to the initiating device with an access token
+    - or even worse the device will have to poll the auth server to determine if the user successfully authenticated
+
+#### resource owner password
 
 - the application receives the users identity provider credentials and logs in to the auth server on their behalf
 
@@ -401,18 +430,6 @@
   - user navigates to a screen in your app thats a protected resource and clicks `login to see this shiznit`
   - user is presented with a login form to enter their identity provider (e.g. google name & pw) credentials
   - the application submits the users credentials to the identity provider and gets an access token if successful
-
-#### grant type BLAH
-
-- about this grant type
-
-- limitations
-
-- use cases
-
-- key elements
-
-- flow
 
 ### extensions
 
