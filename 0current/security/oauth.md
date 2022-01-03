@@ -54,11 +54,14 @@
   - always think about the scopes your tokens permit to set a reasonable expiration timestamp
     - read only to public/sensitive info?
     - +write to public/sensitive info?
-  - if someone gets your access token, they can assume your identity until the token expires
-  - if someone gets your refresh token, they can retrieve a new accesstoken forever (unless it gets revoked)
-  - protect every token you ever use, treat encrypted tokens like they are unencrypted, defense in depth!
-  - always revoke refresh tokens, ALWAYYYYYYS
   - always use SSL/TLS (inbound & outbound should require https) to protect your tokens in transit
+  - protect every token you ever use, treat encrypted tokens like they are unencrypted, defense in depth!
+    - thus any API with a protected resource that uses tokens should validate the token before granting access to the protected resource
+    - if someone gets your access token, they can assume your identity until the token expires
+    - if someone gets your refresh token, they can retrieve a new accesstoken forever (unless it gets revoked)
+    - validate locally (explained elseware)
+    - validate remotely with the auth server via the introspection endpoint (has the token been revoked?)
+  - always revoke refresh tokens, ALWAYYYYYYS
   - protect the auth code at all cost (for authorization code/PKCE flows)
   - protect your redirect URIs: this is where the auth server responds with tokens after a user authenticates
     - only accept requests from origins (i.e auth servers) you trust
@@ -78,6 +81,13 @@
   - never use `admin` as scope, is too broad & vague
 
 ## Basics
+
+### key elements in all flows
+
+- a client/user: this could be just an application, or a user + client, depending on the flow
+- authorization server: this is the identity provider, the user/client has previously created an identity with this application, and it shares the user/client info with third party applications
+- resource/api: this is the protected resource in the third party, in which the third party requires a user/client to authenticate with the auth server before they can access it
+- api gateway:
 
 ### terminlogy
 
