@@ -230,7 +230,13 @@
 
 ### grant types
 
-- i.e. flows: all require you to register your application with an auth server as the first step
+- i.e. flows: all flows require you to:
+
+  - register your application with an auth server as the first step: usually receiving a client ID, secret, etc to identify your application
+  - specify the grant type
+  - specify the scopes your application is requesting
+  - have a redirect URI
+
 - implicit: deprecated; for mobile apps/SPAs
 - authorization code with PKCE: for mobile apps/SPAs
 - client credentials: service accounts/microservices where there isnt a user involved
@@ -335,7 +341,47 @@
 
 - flow
   - a user on your frontend clicks `login with` and authenticates & authorizes your app with the auth server
-  - the users client (e.g. browser) redirects back to your application with an access token
+  - the users client (e.g. browser) redirects back to your application with an access token in the URL fragment/query param
+
+#### resource owner password flow
+
+- the application receives the users identity provider credentials and logs in to the auth server on their behalf
+
+- limitations
+
+  - 99% of the time its not the best option: the user is required to an application their auth server credentials!
+  - imagine having to give a third party application your bank login details, WTF
+  - doesnt support refresh tokens
+  - there is nothing any can do to prevent the third party application developers from missusing elon musks bank account credentials!
+  - everything an attacker needs to impersonate the application & the user is in the request the application makes to the auth server
+
+- use cases
+
+  - its practical for legacy applications that only accept user name & password,
+  - i.e. you have to get the users credentials in order to authenticate with the auth server
+
+- key elements
+
+  - grant_type should always be `password`
+  - users name
+  - users pw
+
+- flow
+  - user navigates to a screen in your app thats a protected resource and clicks `login to see this shiznit`
+  - user is presented with a login form to enter their identity provider (e.g. google name & pw) credentials
+  - the application submits the users credentials to the identity provider and gets an access token if successful
+
+#### grant type BLAH
+
+- about this grant type
+
+- limitations
+
+- use cases
+
+- key elements
+
+- flow
 
 ### extensions
 
