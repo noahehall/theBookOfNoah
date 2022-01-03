@@ -349,13 +349,20 @@
 #### client credential
 
 - doesnt involve a user
-- a service authenticates itself with an auth server
+- a service authenticates itself with an auth server and gets an API key
+- anywhere that you think of implementing API keys its almost certainly better to use client credential flow
+- the easiest to implement as it doesnt require a user interface (there isnt a user involved)
 
 - limitations
+
+  - only for services without users, which is perfect
+  - cant be used anywhere you cant store secrets
 
 - use cases
 
   - useful for backend services & microservices: you can manage access to protected resources in your microservice architecture via an authserver
+  - enables backend systems to speak oauth, enabling them to participate in more use cases and reducing the tech burden on developers (as the oauth logic can be reused across service components)
+  - enables credential rotation, scopes & better tooling across you tech stack
 
 - key elements
 
