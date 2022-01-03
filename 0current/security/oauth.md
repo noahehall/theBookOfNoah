@@ -224,7 +224,7 @@
 
 ### grant types
 
-- i.e. flows
+- i.e. flows: all require you to register your application with an auth server as the first step
 - implicit: deprecated; for mobile apps/SPAs
 - authorization code with PKCE: for mobile apps/SPAs
 - client credentials: service accounts/microservices where there isnt a user involved
@@ -304,8 +304,28 @@
 - originally designed from SPAs/Mobile apps
 - technically not deprecated, but PKCE is now the preferred grant type flow
 
+- limitations
+
+  - the access token is exposed to the end-user (is passed back in the URL) & therefore at risk of theft
+  - doesnt support refresh tokens (it would be at risk too)
+
+- use cases
+
+  - if you have a BFF that uses auth code/similar behind the scenes, the implicit flow can just interface with the backend for SSO
+  - quick n dirty SSO with an identity provider (auth server) you trust, e.g. Google, Facebook, Github, Linkedin
+
+- key elements
+
+  - 0 trust: the user doesnt trust your app, and you dont trust the user (they have access to your source code) but you both trust the identity provider (the auth server)
+    - your application never sees the users credentials
+    - your application uses the underyling cookie/session storage so SSO work as expected
+      - i.e. if the user is already logged in with the auth server, then they dont have to login again, they skip straight to authorizing your application
+  - cookie/session storage: if the user is already authenticated with the identity provider, they skip straight to authorizing the scopes your application requests
+  - url fragment/query: identity provider adds the access token to the URL when it redirects the user back to your application
+
 - flow
-  - TODO
+  - a user on your frontend clicks `login with` and authenticates & authorizes your app with the auth server
+  - the users client (e.g. browser) redirects back to your application with an access token
 
 ### extensions
 
