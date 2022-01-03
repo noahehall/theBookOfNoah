@@ -346,6 +346,27 @@
   - a user on your frontend clicks `login with` and authenticates & authorizes your app with the auth server
   - the users client (e.g. browser) redirects back to your application with an access token in the URL fragment/query param
 
+#### client credential
+
+- doesnt involve a user
+- a service authenticates itself with an auth server
+
+- limitations
+
+- use cases
+
+  - useful for backend services & microservices: you can manage access to protected resources in your microservice architecture via an authserver
+
+- key elements
+
+  - client id: of the microservice
+  - client secret: of the microservice
+
+- flow
+
+  - a service sends its id & secret to an auth server and receives an access token
+  - the service then sends that access token to other other services with protected resources
+
 #### resource owner password flow
 
 - the application receives the users identity provider credentials and logs in to the auth server on their behalf
