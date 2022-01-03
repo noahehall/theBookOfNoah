@@ -47,6 +47,7 @@
   - you cant have a partially validated token
     - check the token: decode the token, grab the header, and resign the payload, it should match the original token
     - check the token payload: decode the payload, check the cid, aud, exp and iss, they should all be what you expect
+  - if using oauth across multiple components (e.g. in a microservice architecture) its useful to have a distinct validation service that other services can use to validate their tokens
 
 - security
 
@@ -57,7 +58,7 @@
   - if someone gets your refresh token, they can retrieve a new accesstoken forever (unless it gets revoked)
   - protect every token you ever use, treat encrypted tokens like they are unencrypted, defense in depth!
   - always revoke refresh tokens, ALWAYYYYYYS
-  - always use SSL/TLS to protect your tokens in transit
+  - always use SSL/TLS (inbound & outbound should require https) to protect your tokens in transit
   - protect the auth code at all cost (for authorization code/PKCE flows)
   - protect your redirect URIs: this is where the auth server responds with tokens after a user authenticates
     - only accept requests from origins (i.e auth servers) you trust
@@ -68,6 +69,8 @@
     - just never use it, you dont want to be involved in the fallout
     - once a third party has your user creds, no mititation steps fkn matter
   - log & track oauth requests (but not anything sensitive) so you can spot malicious behavior
+  - always implement rate limiting for oauth requests to mitigate brute force attacks
+  - always use the best grant type, with the least amount of trust involved
 
 - scope naming conventions
   - be consistent
@@ -400,6 +403,7 @@
   - device code: represents that device at that moment in time (a subsequent user initiating the flow will cause the device to receive a different device code)
   - user code: identifies the current user initiating the request via the device, each user gets a different user code
   - verification uri: the URI the device needs to present to the user, which they navigate to from another device (e.g. their mobile phone)
+  - validation service: you need to setup a validation service (e.g. api gateway, etc) that the device can use to validate tokens
 
 - flow
   - a user needs to authenticate through some device (i.e. machine)
