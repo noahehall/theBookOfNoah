@@ -85,10 +85,14 @@
 
 ### key elements in all flows
 
-- a client/user: this could be just an application, or a user + client, depending on the flow
+- a client app/user: this could be just an application, or a user + browser, depending on the flow
+- client application: registers with the auth server as a service that needs access to the user data the auth server has
+  - specifies the scopes required
+  - responsible for validating & securing tokens it receives on behalf of users
+  - responsibile for choosing the right grant type to not put users at risk
 - authorization server: this is the identity provider, the user/client has previously created an identity with this application, and it shares the user/client info with third party applications
 - resource/api: this is the protected resource in the third party, in which the third party requires a user/client to authenticate with the auth server before they can access it
-- api gateway: not required but should always be used
+- api gateway: not required but should always be used infront of other APIs with protected services
   - enables rate limiting, token validation, logging, and better management & observability of oauth requests throughout your tech stack
 
 ### terminlogy
