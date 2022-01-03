@@ -12,6 +12,7 @@
 - [postman](https://www.postman.com/)
 - [json web token: JWT](https://jwt.io/)
 - [google auth playground](https://developers.google.com/oauthplayground)
+- [google cooud platform dashboard](https://console.cloud.google.com/apis/dashboard)
 - [oauths auth playground](https://www.oauth.com/playground)
 - [openid OIDC playground](https://openidconnect.net/)
 - [openid appauth libraries](https://appauth.io/)
@@ -57,7 +58,11 @@
   - always revoke refresh tokens, ALWAYYYYYYS
   - always use SSL/TLS to protect your tokens in transit
   - protect the auth code at all cost (for authorization code/PKCE flows)
-  - protect your redirect URIs: this is where the auth server responds with tokens after a user authenticates, you should only accept requests from origins (i.e auth servers) you trust, and you should whitelist the redirct_uris within the auth server so they only redirect users to the URLs you set
+  - protect your redirect URIs: this is where the auth server responds with tokens after a user authenticates
+    - only accept requests from origins (i.e auth servers) you trust
+    - whitelist the redirct_uris within the auth server so they only redirect users to the URLs you set (i.e. dont use an auth server that allows arbitrary redirect URIs)
+    - dont use query params/fragments when accepting tokens from auth servers
+    - use an auth server that supports CORS, and have them return the token via form post
 
 - scope naming conventions
   - be consistent
@@ -215,6 +220,7 @@
       - cid: client id; the id of the service that originally requested the token
       - exp: expiration; a future timestamp afterwhich the token should be considered invalid
       - iat: issued at; timestamp
+      - idpId: the identity provider, e.g. google
       - iss: issuer; auth server that created the token, e.g. `https://poop.com/oauth2/234324/234324`
       - jti:
       - scp:
@@ -308,11 +314,15 @@
 
   - the access token is exposed to the end-user (is passed back in the URL) & therefore at risk of theft
   - doesnt support refresh tokens (it would be at risk too)
+  - its not impossible to secure, just relatively more difficult to secure than authcode + PKCE
+    - generally uses URL fragments/query params to pass the access token back
 
 - use cases
 
   - if you have a BFF that uses auth code/similar behind the scenes, the implicit flow can just interface with the backend for SSO
   - quick n dirty SSO with an identity provider (auth server) you trust, e.g. Google, Facebook, Github, Linkedin
+  - if the auth provider doesnt support PKCE
+  - if you have a supporting BFF, you can impliment SSO with a popup on the client, and accept the accesstoken via a POST from the auth server to your backend
 
 - key elements
 
