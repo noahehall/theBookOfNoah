@@ -20,15 +20,17 @@
 
 - RFCs
 
-  - [oauth 2.0 6749](https://datatracker.ietf.org/doc/html/rfc6749)
-  - [jwt 7519](https://datatracker.ietf.org/doc/html/rfc7519)
-  - [token revocation 7009](https://datatracker.ietf.org/doc/html/rfc7009)
-  - [token introspection 7662](https://datatracker.ietf.org/doc/html/rfc7662)
-  - [dynamic client registration protocol 7591](https://datatracker.ietf.org/doc/html/rfc7591)
-  - [dynamic client registration management protocol 7592](https://datatracker.ietf.org/doc/html/rfc7592)
-  - [authorization server metadata](https://datatracker.ietf.org/doc/html/rfc8414)
-  - [PKCE: proof key for code exchange 7636](https://datatracker.ietf.org/doc/html/rfc7636)
+  - [oauth 2.0 rfc 6749](https://datatracker.ietf.org/doc/html/rfc6749)
+  - [jwt rfc 7519: all tokens should adhere to this spec](https://datatracker.ietf.org/doc/html/rfc7519)
+  - [token revocation rfc 7009](https://datatracker.ietf.org/doc/html/rfc7009)
+  - [token introspection rfc 7662](https://datatracker.ietf.org/doc/html/rfc7662)
+  - [dynamic client registration protocol rfc 7591](https://datatracker.ietf.org/doc/html/rfc7591)
+  - [dynamic client registration management protocol rfc 7592](https://datatracker.ietf.org/doc/html/rfc7592)
+  - [authorization server metadata rfc 8414](https://datatracker.ietf.org/doc/html/rfc8414)
+  - [PKCE: proof key for code exchange rfc 7636](https://datatracker.ietf.org/doc/html/rfc7636)
   - [device authorization grant RFC 8628](https://datatracker.ietf.org/doc/html/rfc8628)
+  - [bearer tokens in HTTP Authorizatio header rfc 6750](https://datatracker.ietf.org/doc/html/rfc6750)
+  - [JWE json web encryption RFC 7516](https://datatracker.ietf.org/doc/html/rfc7516)
 
 - other
 
@@ -62,6 +64,7 @@
     - validate locally (explained elseware)
     - validate remotely with the auth server via the introspection endpoint (has the token been revoked?)
     - ensure the scopes associated with the token match the authorization requested
+    - use JWE, and move on with your life
   - always revoke refresh tokens, ALWAYYYYYYS
   - protect the auth code at all cost (for authorization code/PKCE flows)
   - protect your redirect URIs: this is where the auth server responds with tokens after a user authenticates
@@ -90,6 +93,8 @@
   - specifies the scopes required
   - responsible for validating & securing tokens it receives on behalf of users
   - responsibile for choosing the right grant type to not put users at risk
+  - client side apps: never use a grant type that requires you to store secrets
+  - back end apps: use a grant type that requires secrets but make sure you store it securely
 - authorization server: this is the identity provider, the user/client has previously created an identity with this application, and it shares the user/client info with third party applications
 - resource/api: this is the protected resource in the third party, in which the third party requires a user/client to authenticate with the auth server before they can access it
 - api gateway: not required but should always be used infront of other APIs with protected services
@@ -459,7 +464,23 @@
 ### extensions
 
 - may repeat stuff in other sections, but relisting here when I need to focus on a specific extension
-- each extension adds additional features to base oauth framework
+- each extension adds additional features to the base oauth framework
+- there are oauth extensions that are specific for each environment and industry
+
+- key extensions
+
+  - oauth 2.0 rfc 6749: the base framework in which all extensions sit on top of
+  - jwt rfc 7519: defines json web tokens
+  - PKCE rfc 7636: should always be used in environments where you cant store secrets (SPA/mobile apps) and enables those apps to use the authorization code flow
+  - device authorization grant RFC 8628: for use in IoT devices that lack a browser or only have console prompts
+  - bearer tokens rfc 6750: always send tokens via HTTP Authorization header and never via url fragments/query strings
+  - JWE rfc 7516: always encrypt JWTs since oauth is all about passing around user data, and to one extent or another, should always be considered sensitive
+  - token introspection rfc 7662: remote validation & decoding of tokens
+  - token revocation rfc 7009: always invalidate tokens when your app no longer needs it
+  - support dev experience onboarding to oauth 2.0:
+    - dynamic client registration rfc 7591: create client applications
+    - dynamic client registration management rfc 7592: manage those client applications with consistent & predictable APIs
+  - auth server metadata doc rfc 8414: the auth server should always communicate what capabilities (extensions) it supports and the various endpoints available
 
 #### OpenID Connect
 
