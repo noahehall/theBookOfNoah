@@ -18,6 +18,14 @@
 - [openid appauth libraries](https://appauth.io/)
 - [free developer account, oauth as a service](https://developer.okta.com)
 
+- todo
+
+  - [oath 2.0 simplified: read this first when implementing & researching](https://www.oauth.com/)
+    - its an online version of the book by Aaron Parecki
+  - [oath 2.0 server map: figure out what you should implement](https://www.oauth.com/oauth2-servers/map-oauth-2-0-specs/)
+  - [smart on FHIR extensions for healthcare](https://techno-soft.com/smart-on-fhir-single-sign-on-and-oauth2.html/)
+  - [open banking](https://www.reuters.com/business/finance/what-is-open-banking-2021-07-09/)
+
 - RFCs
 
   - [oauth 2.0 rfc 6749](https://datatracker.ietf.org/doc/html/rfc6749)
@@ -481,6 +489,10 @@
     - dynamic client registration rfc 7591: create client applications
     - dynamic client registration management rfc 7592: manage those client applications with consistent & predictable APIs
   - auth server metadata doc rfc 8414: the auth server should always communicate what capabilities (extensions) it supports and the various endpoints available
+  - SMART on FHIR: designed specifically to integrate with electronic health records/patient portals in healthcare
+    - enables a receptionist in some health care settings to see what tests(etc) youve taken, but not the test results
+  - HRT: health relationship trust: to share even more specific data
+  - open banking: the process of banks & other traditional financial institutions giving customers & third parties easy digital access to users financial data
 
 #### OpenID Connect
 
