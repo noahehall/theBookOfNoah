@@ -396,6 +396,11 @@
 
 - key elements
 
+  - client id identifying the device
+  - device code: represents that device at that moment in time (a subsequent user initiating the flow will cause the device to receive a different device code)
+  - user code: identifies the current user initiating the request via the device, each user gets a different user code
+  - verification uri: the URI the device needs to present to the user, which they navigate to from another device (e.g. their mobile phone)
+
 - flow
   - a user needs to authenticate through some device (i.e. machine)
   - the device sends its own ID to an auth server and it responds with a device code, end user code, and a verification URI (e.g. QR code)
