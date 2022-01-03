@@ -61,6 +61,7 @@
     - if someone gets your refresh token, they can retrieve a new accesstoken forever (unless it gets revoked)
     - validate locally (explained elseware)
     - validate remotely with the auth server via the introspection endpoint (has the token been revoked?)
+    - ensure the scopes associated with the token match the authorization requested
   - always revoke refresh tokens, ALWAYYYYYYS
   - protect the auth code at all cost (for authorization code/PKCE flows)
   - protect your redirect URIs: this is where the auth server responds with tokens after a user authenticates
@@ -87,7 +88,8 @@
 - a client/user: this could be just an application, or a user + client, depending on the flow
 - authorization server: this is the identity provider, the user/client has previously created an identity with this application, and it shares the user/client info with third party applications
 - resource/api: this is the protected resource in the third party, in which the third party requires a user/client to authenticate with the auth server before they can access it
-- api gateway:
+- api gateway: not required but should always be used
+  - enables rate limiting, token validation, logging, and better management & observability of oauth requests throughout your tech stack
 
 ### terminlogy
 
