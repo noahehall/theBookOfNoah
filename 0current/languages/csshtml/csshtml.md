@@ -225,18 +225,13 @@ validation
   - margin: around element, expands space element consumes
   - border: between padding & margin, expands space consumes
 
-  - top:
-  - right:
-  - bottom:
-  - left:
+  - top/block-start:
+  - right/inline-end:
+  - bottom/block-end:
+  - left/inline-start:
 
   - logical properties: enable the developer to logically apply box model properties to all languages, regardless of the direction in which the text flows
-    - inline-size
-    - block-size
-    - border-block-start
-    - border-inline-start
-    - blah-block-end
-    - blah-binline-end
+    - can be appended to any box model property (see top,right,bottom,left above)
     - without logical properites
       - left-to-right languages work as expected
       - right-to-left languages cause the 2 of 4 offsets to reverse horizontally
@@ -275,7 +270,7 @@ validation
   - all positioned elements accept
     - the zindex to control the zed dimension
     - top,left,right,bottom offsets
-- relative: element stays in the normal flow
+- relative: element stays in the normal flow but can be offset without affecting surrounding elements
   - great for creating an ancestor for children elements
 - absolute: removes element from the normal flow
   - is relative to the closest positioned ancestor/body
