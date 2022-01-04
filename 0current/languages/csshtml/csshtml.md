@@ -1,4 +1,4 @@
-# CSS
+# CSS + HTML
 
 - not everything is captured, dont depend on this file as a full reference
   - e.g. some tricks arent listed based on my opinions
@@ -103,18 +103,18 @@
 - doctype: always include for things to work right
 - ht
 
-    ```html
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="utf-8">
-        <title>My test page</title>
-      </head>
-      <body>
-        <img src="images/firefox-icon.png" alt="My test image">
-      </body>
-    </html>
-    ```
+  ```html
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <title>My test page</title>
+    </head>
+    <body>
+      <img src="images/firefox-icon.png" alt="My test image" />
+    </body>
+  </html>
+  ```
 
 ### forms
 
@@ -130,7 +130,7 @@
     - dont break the back button
     - provide visual calendars when selecting dates
     - use datalist to provide suggestions 'for' form inputs
-        .users are not restricted to the suggestions provided
+      .users are not restricted to the suggestions provided
     - use labels on form inputs, and make them visible
     - use placheolders to provide guidance
     - use established names 'for' elements and include the autocomplete attribute
@@ -193,10 +193,12 @@ validation
 
 ## CSS layouts
 
-- organized the content first in a well structured layout  in the normal flow
+- organized the content first in a well structured layout in the normal flow
+
   - before applying any CSS
 
 - normal flow
+
   - default display and lyaout of elements when no CSS has been applied
   - elements displayed in HTML order
   - normal flow element types
@@ -209,15 +211,41 @@ validation
       - take width of content
   - stacking order: as defined in HTML, all elements in the same zindex (0)
 
-- the box model: 5 properties that define how an element takes up space, i.e the total area of an element
-  - width
-  - height
+- the box model: 5 properties that define how an element takes up space, i.e the total area of an element, plus 4 positioning offsets that are language dependent
+
+  - left-to-right languages work as expected
+  - right-to-left languages cause the 2 of 4 offsets to reverse horizontally
+  - top-to-bottom languages cause the 2 of 4 offsets to reverse vertically
+
+  - width/inline-size: should be thought of as the length of the line axis (language dependent)
+
+    - i.e. the inline dimension: the line that the text flows along
+
+  - height/block-size: should be though tof as the length of the perpendicular to line axis (language dependent)
+
+    - i.e. the block dimension: i.e. perpendicular to the inline dimension
+
   - padding: within element, expands element itself
   - margin: around element, expands space element consumes
   - border: between padding & margin, expands space consumes
 
+  - top:
+  - right:
+  - bottom:
+  - left:
+
+  - additional logical properties:
+    - inline-size
+    - block-size
+    - border-block-start
+    - border-inline-start
+    - blah-block-end
+    - blah-binline-end
+
 - box-sizing property: sets the algorithm for how the box model determines the total area an element consumes
+
   - gotchas
+
     - computedSize = width + height
     - margin still adds additional space to the area the element consumes
 
@@ -257,6 +285,7 @@ validation
 ### flexbox & Grid
 
 - useful terms
+
   - grid: pattern used by designers to align design elements for consistent flow & symmetrical layouts
     - equal width rows & columns are added as guides
       - generually using 12 columns, as its divisible by 2,3,4,6 for targeting general devices & creating consistent designs
@@ -284,12 +313,14 @@ validation
 #### flexbox
 
 - 1-dimensional alignment of content, ordering items, and implementing flexible sizing
+
   - the ability to make the flex items flexible, altering their width/height to fill the availble space in the main dimension
   - while it dictates behavior on a single axis
     - items can wrap to create additional groupings
     - flex containers can be nested to create additional dimensions
 
 - flex-direction: determines which dimension is the main & cross axis
+
   - but also depends on the writing order of the document
   - column: consider height & ignore width
   - row: consider width & ignore height
@@ -312,6 +343,7 @@ validation
   - column-reverse: flips start & end on both dimensions
 
 - flex-wrap: is per group on main axis
+
   - i.e. if you set to wrap,
     - and 2 groups are created are created on the main axis (because there wasnt enough space on first group)
       - flex-items in the second group will have there own computed values
@@ -327,10 +359,12 @@ validation
 - designed for two dimensional layouts at hte same time
 
 - grid lines: based on language direction (i.e. left -> right & top -> bottom)
+
   - divide the grid into cols & rows
   - top left is 1,1 for eng,
 
 - grid-template-row|column
+
   - defines the CSS grid
   - grid items will equal exactly 1 col & 1 row by default
 
