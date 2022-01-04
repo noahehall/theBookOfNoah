@@ -96,7 +96,7 @@
 
 ### key elements in all flows
 
-- a client app/user: this could be just an application, or a user + browser, depending on the flow
+- a client app/user: this could be just an application, or a user (principal) + browser, depending on the flow
 - client application: registers with the auth server as a service that needs access to the user data the auth server has
   - specifies the scopes required
   - responsible for validating & securing tokens it receives on behalf of users

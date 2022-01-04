@@ -265,18 +265,24 @@ validation
 
 ### positioning
 
-- by default all elements start with their position set to static: i.e. determined by the normal flow of HTML source
 - arrange elements relative to their current position, containing element, or the browser viewport
   - all positioned elements accept
     - the zindex to control the zed dimension
     - top,left,right,bottom offsets
+- static, sticky, & relative all leave the surrounding content unchanged
+- absolute & fixed affect the surrounding content (because the element is taken out of the normal flow)
+
+- static: by default all elements start with their position set to static: i.e. determined by the normal flow of HTML source
 - relative: element stays in the normal flow but can be offset without affecting surrounding elements
   - great for creating an ancestor for children elements
+- sticky: make an element stick relative to its containing block & viewport
+  - element renders as relative positioned,
+  - until its containing block (usually immediate parent) hits the specified threshold/offset, then its renders as fixed to the viewport
+  - until it the sticky element meets the opposite end of its containing block, then it goes back to relative and scrolls with the viewport
 - absolute: removes element from the normal flow
   - is relative to the closest positioned ancestor/body
   - other elements take up the space the absolutely positioned element previously consumed
 - fixed: keeps an element on screen, regardless of scroll position
-- sticky: element renders as relative positioned, until its offset has been met, then its renders as fixed
 
 ### flexbox & Grid
 
