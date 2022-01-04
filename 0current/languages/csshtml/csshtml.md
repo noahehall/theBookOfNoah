@@ -211,11 +211,7 @@ validation
       - take width of content
   - stacking order: as defined in HTML, all elements in the same zindex (0)
 
-- the box model: 5 properties that define how an element takes up space, i.e the total area of an element, plus 4 positioning offsets that are language dependent
-
-  - left-to-right languages work as expected
-  - right-to-left languages cause the 2 of 4 offsets to reverse horizontally
-  - top-to-bottom languages cause the 2 of 4 offsets to reverse vertically
+- box model: 5 properties that define how an element takes up space, i.e the total area of an element, plus 4 positioning offsets that are language dependent
 
   - width/inline-size: should be thought of as the length of the line axis (language dependent)
 
@@ -234,13 +230,17 @@ validation
   - bottom:
   - left:
 
-  - additional logical properties:
+  - logical properties: enable the developer to logically apply box model properties to all languages, regardless of the direction in which the text flows
     - inline-size
     - block-size
     - border-block-start
     - border-inline-start
     - blah-block-end
     - blah-binline-end
+    - without logical properites
+      - left-to-right languages work as expected
+      - right-to-left languages cause the 2 of 4 offsets to reverse horizontally
+      - top-to-bottom languages cause the 2 of 4 offsets to reverse vertically
 
 - box-sizing property: sets the algorithm for how the box model determines the total area an element consumes
 
@@ -270,6 +270,7 @@ validation
 
 ### positioning
 
+- by default all elements start with their position set to static: i.e. determined by the normal flow of HTML source
 - arrange elements relative to their current position, containing element, or the browser viewport
   - all positioned elements accept
     - the zindex to control the zed dimension
