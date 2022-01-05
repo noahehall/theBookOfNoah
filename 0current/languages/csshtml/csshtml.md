@@ -44,6 +44,7 @@
 - [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
 - [object fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)
 - [picture element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
+- [nth of type](https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-of-type)
 
 - fonts
 
@@ -644,20 +645,43 @@ p,
 .class,
 #someID {
 }
+
 /* state selectors */
 li:active,
 :checked,
 :enabled,
 :hover {
 }
+
 /* input selectors */
 input:required,
 :focus
-/* pseudo selectors */
+
+/* pseudo classes */
 li:first-child,
-:last-child {
-}
-li:last-child {
+:last-child,
+:only-child,
+:first-of-type,
+:last-of-type,
+:only-of-type,
+/*
+  special nth* classes
+  can use odd|even keywords as well
+  can use An+B function notation === (A * n) + B
+  A: the element index(1-based) to start counting from
+    ^ all elements before this are not passed to the fn,
+  n: is the index of each element passed to the function
+  B: is the step
+  ^ 1 > first element
+  ^ 2n > every even (second) element
+  ^ 2n+1 > every odd element
+  ^ 3n > ever third element
+
+*/
+:nth-child(1),
+:nth-last-child(2),
+:nth-of-type(3),
+:nth-last-of-type(4) {
 }
 
 /* attribute selectors */
