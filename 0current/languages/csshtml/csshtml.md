@@ -48,6 +48,8 @@
 - [native container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries)
 - [specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity)
 - [speciFISHity](https://specifishity.com/)
+- [fun with viewport units](https://css-tricks.com/fun-viewport-units/)
+- [new viewport units](https://www.w3.org/TR/css-values-4/#viewport-relative-lengths)
 
 - fonts
 
@@ -559,8 +561,8 @@
   - ch The advance measure (width) of the glyph "0" of the elements font.
   - rem Font size of the root element.
   - lh Line height of the element.
-  - vw 1% of the viewports width.
-  - vh 1% of the viewports height.
+  - vw 1% of the viewports width. (be careful with scrollbars!)
+  - vh 1% of the viewports height. (be careful with scrollbars!)
   - vmin 1% of the viewports smaller dimension.
   - vmax 1% of the viewports larger dimension.
 
@@ -632,11 +634,12 @@
 :root {
   --big-poppa: poop;
   /* style all font sizes based on this var */
-  /* targets the fontsize set on the html element (usualy 16px) */
+  /* clamps the fontsize set on the html element (usualy 16px) */
+  /* but prefers 2% of the viewport width */
   /* generally use rem > em to base everything relative to html fontsize */
   /* ^ because nesting elements cause weird cascading issues with em */
   /* clamp( minSize, preferredSize, maxSize) */
-  basefontsize: clamp(0.5rem, 1rem, 3rem);
+  basefontsize: clamp(0.5rem, 2vw, 3rem);
 }
 
 /*
@@ -941,17 +944,24 @@ background-size: contain|no-repeat|cover|%|% %;
     - e.g. col-1 === 1/12 width, col-4 === 4/12 width, col8 === 8/12 width, etc
 
 - Versus rap battle
+
   - both
+
     - can use any css length unit, e.g. %, vh, px, rem, etc
       - but both works best with `fr`
       - ^ fractional unit: you dont specify the `fr` in flex, but you do in grid
         - 1 === distribute evently
         - 2 = give this one 2/totalColsOrRows etc
+
   - GRID:
+
+    - layout in layout: the specified layout truly controls the layout, child element content are forced to fit within the specifications
     - 2 dimensions at the same time
     - additional groups of items have the same dimensions as previous group by defualt
     - declare dimensions for grid-items in the parent, via a single property
+
   - FLEXBOX
+    - content out layout: the child elements content truly controls the layout of the box model
     - 1 dimension
     - additional groups of items (when wrapping) have their own dimensions
     - declare dimensions for flex-items on the flex item, via multiple properties
