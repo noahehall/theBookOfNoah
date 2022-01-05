@@ -141,6 +141,7 @@ things that generally apply to all services
 
 - high availablity
 
+  - The term "number of nines" stems from the decrease of downtime per year as the number and costs increase. high availability = more 9s
   - route 53 dns config & routing options
   - regional load balancing across AZs
   - elastic IP swapping across AZs in the event of failure

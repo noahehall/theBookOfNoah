@@ -16,6 +16,7 @@
 - compute service to run code without managing servers
 - use cases
   - target of an event bridge rule
+  - cloud watch alarm automation, especially in high availability & failover contexts where you need to spin up new resources and reassign EIPs
 
 ### lambda considerations
 
@@ -46,6 +47,8 @@
 - push based messaging system
 - manages the delivery & sending of msgs to subscribin endpoints & clients
   - app to app|person
+- use cases:
+  - super useful in cloudwatch alarms, that send msgs to SNS topics which subsequently trigger lambda functions for automating responses (e.g. reosurce failure) to system events
 - clients
   - publishers: send async msgs to a topic
     - cloudwatch alarms

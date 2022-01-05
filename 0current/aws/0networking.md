@@ -23,6 +23,9 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 
 - always
 
+  - use immutable infrastructure
+    - never patch/update resources, always create new, and force your architecture & dev cycle to support this
+    - put an EIP infront of production services to enable blue/green deployments
   - never use any of the default resources (vpc, subnets, security groups, etc)
     - except the default `dhcp options set`
       - this is the aws dns config
@@ -40,7 +43,6 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 - sometimes
 
   - enable ssh & ICMP from anywhere while debugging
-  - put an EIP infront of services to enable blue/green deployments and immutable infrastructure
   - for absolute speed & security, stay off the public internet
 
 - never
@@ -375,6 +377,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 ## route 53
 
 - dns & traffic flow management
+- can be configured to dynamically reroute traffic to overcome component failure across regions
 - name address resolution: nirv.ai > 123.123.123.123
 
 - DNS failover: can detect website outage and redirect requests to a different IP
@@ -384,6 +387,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 - global traffic management: create traffic policies that optimize network flow
 
   - weighted round robin: i.e send 60% of traffic to regionA, and 40% to regionB
+    - This option allows administrators to specify where the majority of traffic goes, so they can have more or less weight for each system.
   - latency-base routing: each DNS query will take the originating IP into account, compare the latency to available regions, and direct traffic to the one with the lowest latency
   - geolocation (geo dns) routing: route traffic to regions based on the originating IP
     - you have to configure a `default record resource set`
@@ -445,6 +449,8 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - manage the domain in route53
 
 - health checks
+
+  - endpoints, calculated health checks, and CloudWatch alarms can be produced using the Route 53 domain management health checks.
 
   - latency graph: useful for domains with a global audience
   - invert health check status: useful for a canary page that only appears when an error has manifested
@@ -511,16 +517,31 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - active (route requests here)
   - backup (route requests here if active dns records have bad health checks)
 
-## elastic ip
+## elastic ip: EIP
 
-- free if used with a running instance
-  - you just pay for the instance
-- static IP that can be associated with an ec2 instance
-- can move eip from one ec2 to another
-  - software defined networking (SDN) at its finest
-- can be moved across VPCs
-  - helpful for blue/green deployments
+- static, public IP for use within an AWS Account
 - cannot be moved across regions
+- use cases
+
+  - critical for high availability
+  - use in concert with cloudwatch alarms, SNS (notifications), and lambda (logic) to automate responses to system events and orchestrate event driven failover
+
+- ec2
+
+  - can move eip from one ec2 to another
+    - software defined networking (SDN) at its finest
+    - the ec2 has to be in a subnet which is publiclly accessible
+  - free if used with a running instance
+    - you just pay for the instance
+
+- vpc
+
+  - can be moved across VPCs
+    - helpful for blue/green deployments
+
+- nat gateway
+
+  - enable private resources to access public internet
 
 ## cloud front
 

@@ -27,8 +27,10 @@
 ## ec2
 
 - instance connect: connect to an instance from the browser
+- Auto scaling is a great way to have the E2C services change when needed.
 
 - use cases
+
   - secure; resizable compute capacity in the cloud
   - virtual machines you run in the cloud
   - configure cpu, memory, storage & networking capabilities
@@ -54,6 +56,7 @@
 ### ec2 considerations
 
 - ec2
+
   - ami
   - type: e.g. micro/nano
   - number of instances
