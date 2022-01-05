@@ -1025,7 +1025,15 @@ background-size: contain|no-repeat|cover|%|% %;
   - grid items will equal exactly 1 col & 1 row by default
 
 - grid-row|column
+
   - defines how specific items span rows & columns
+
+- grid-auto-flow: how grid items are placed in the grid items
+  - row: rows are filled first (e.g. left to right)
+  - column: columns are filled first (e.g. top to bottom)
+  - row|column dense: fill any gaps for grid items that are manually positioned
+    - you generally always want to specify dense
+    - unless the order of the grid items matter (as empty spaces are backfilled)
 
 ### multi-column
 
