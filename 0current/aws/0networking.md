@@ -38,9 +38,11 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
     - you can permit TCP outbound traffic on ports `32768-61000` to catch all linux ephemeral ports
 
 - sometimes
+
   - enable ssh & ICMP from anywhere while debugging
   - put an EIP infront of services to enable blue/green deployments and immutable infrastructure
   - for absolute speed & security, stay off the public internet
+
 - never
   - delete the default VPC
     - renders some services unusable
@@ -57,13 +59,13 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
       - you need a bastion host/private tunnel into the private subnet
     - must be in a public subnet?
       - does the resouce have a public IP?
-        - remember, the internal IP is only for internal AWS
+        - remember, the internal IP is only for internal AWS resources
       - what type of Public IP? e.g. is it an EIP?
     - what are the security group settings?
       - they have to allow the protocol & port your using
       - also confirm theres an outbound rule thats appropriate
     - what are the NACLs?
-      - the nacle has to explicitly allow (both in and out) your protocol and port
+      - the nacl has to explicitly allow (both in and out) your protocol and port
     - what are the route tables?
       - there needs to be a route whose destination is the public internet & target is an internet gateway
     - load balancer health checks?
@@ -72,23 +74,31 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
     - cloudwatch logs (for load balancers)
 
 - securing traffic
+
   - public internet > internet gateway > VPC > NACL > subnet > route table > security group > some resource
+
 - network traffic
+
   - in a public/private subnet?
   - how are subnet routetables configured?
   - how are network ACLs configured?
   - how are the security group configured?
+
 - subbnets
+
   - aws reserves the first 3 ips in every subnet for internal routing purposes
   - subnets not explicitly associated with a route table, end up in the VPCs main route table
   - you cannot alter the default route table that allows traffic on the same subnet
     - so any resource to resource connectivity problems must be at the security group level
+
 - security groups
+
   - are region specific
   - treats internal AWS resources as external resources if the traffic flows on the public internet
     - thus you need to specifically allow other AWS resources (even in the same VPC) access via the security groups
-      - do this by adding linking security groups, each attached to the resources you want to connect, add an inbound rule to the one receiving the connection, permitting the security group sending the connection
+      - do this by adding/linking security groups, each attached to the resources you want to connect, add an inbound rule to the one receiving the connection, permitting the security group sending the connection
     - or you can connect them (e.g. via PrivateLink) using the internal AWS network
+
 - vpc peering
 
   - The IP space cannot overlap.
@@ -147,12 +157,14 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - can contain public/private resources
     - private: for private resources
       - should point to the NAT GATEWAY in the public subnet
+      - this translates a resources private IP to a public one
     - public: for public resources
       - should point to the internet gateway
+      - this enables inbound/outbound traffic on the public net
 
 - route tables: specify how vpc traffic flows in/out of subnets
 
-  - controls subnet routing directs traffic between subnets
+  - controls subnet routing & directs traffic between subnets
     - e.g. specify how a resource in a private subnet can connect to something in a public subnet
   - default route table: can be modified but not deleted
 
@@ -168,7 +180,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - network address translation
   - requires an EIP
     - useful for providing a consistent resource for apps & end users
-    - if an ec2/etc fails, you can reassign the IP
+    - if an ec2/etc fails, you can reassign the IP to another
   - has to be contained in a public subnet
   - map multiple private hosts to a single internet routable IP address
   - nat instance
@@ -212,8 +224,6 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
     - gateway
       - serve as a target for a route in a route table for traffic destined for the service
 
-- virtual private gateway: enable external resources to connect privately to resources within a vpc
-
 - transit gateway: simplify network management across multiple VPCs &/ on premise data centers
 
   - Transit Gateway connects on-premises resources to VPCs using a centralized hub. VPC Peering connects VPCs with each other, DirectConnect provides dedicated bandwidth, and a site-to-site VPN is a software approach for securing traffic.
@@ -237,7 +247,9 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - you buy it from like cisco
   - it creates the IPsec tunnel
 
-- virtual private gateway: VPG: the virtual counterpart to a customer gateway; resides in aws; the anchor point for all customer gateway network traffic
+- virtual private gateway: VPG; enable external resources to connect privately to resources within a vpc
+
+  - the virtual counterpart to a customer gateway; resides in aws; the anchor point for all customer gateway network traffic
 
 - site-to-site vpn: enables machines in a local data center (e.g. within a customer gateway) to connect to aws resources (e.g. via a virtual private gateway)
 
