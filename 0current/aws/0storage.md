@@ -4,7 +4,7 @@ top of page, then just keep fkn clicking next at the bottom
 
 # TLDR
 
-s3, ebs elastic block storage, efs elastic file system, amazon FSx
+s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 
 ## links
 
@@ -300,6 +300,19 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx
     - many to one
     - volume & instance must be in the same AZ
   - can persist beyond the life of the ec2
+
+### EBS snapshots
+
+- fundamental component & basic building block of high availability solutions
+- is a file which contains a copy of all data stored on a disk image (e.g. a copy of an EBS attached to an ec2)
+  - are incrementally copied, so the initial snapshot will take a long time, but subsequent snapshots are faster
+- are stored in s3
+
+- cost ~ .05/gig/month
+
+- use cases
+  - configuring a default ec2 (e.g. softare/OS hardening) then take a snapshot of the volume for reuse
+  - create an AMI from a snapshot, the AMI can then be used like a base box
 
 ### ebs considerations
 

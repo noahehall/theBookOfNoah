@@ -1,5 +1,7 @@
 # TLDR
 
+- ec2, AMI (amazon machine images)
+
 ## links
 
 - ec2
@@ -24,6 +26,21 @@
   - AMIs are region specific
     - so an AMI ID for us-east-1 (nyc) wont work in us-west-2 (oregon)
 
+# amazon machine images
+
+- templates from which EC2 instances can be launched
+
+- user data: field to pass a shell script/file that executes on first boot of an EC2
+
+  - anything you can script can be accomplished on startup
+  - ^ e.g. software patches, download latest software, etc
+  - data scripts run as the root user on linux and only execute on the initial boot
+
+- use cases
+
+  - critical for high availability
+  - can pass parameters/instructions (e.g. shell script) to the AMI on launch using the user data field (e.g. to specify the versions of arbitrary software thats installed when booting a new EC2 from an AMI)
+
 ## ec2
 
 - instance connect: connect to an instance from the browser
@@ -42,6 +59,7 @@
 - public DNS: the external DNS hostname e.g. `ec2-000-000-00-00.REGION_NAME.compute.amazonaws.com
 - ipv6: the ipv6 address of the instance
 - username: used to connect to the instance (e.g. via ssh client)
+
   - use the user name of your user account
   - the default user name for the AMI used to launc your instance
     - amazon AMI : ec2-user
@@ -52,6 +70,9 @@
     - ubuntu: ubuntu
     - oracle: ec2-user
     - bitname: bitname
+
+- root device: contains all the data for the server, if its an EBS volume, an EBS snapshot will be a copy of this device
+- block device:
 
 ### ec2 considerations
 
