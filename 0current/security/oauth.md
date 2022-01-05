@@ -189,7 +189,7 @@
 
 ### scopes
 
-- combination of case-sensitive space delimited combination of strings defined by the auth server
+- combination of case-sensitive space delimited strings defined by the auth server
 - ^ each string adds an additional access range to the requested scope
 - open to the auth server to implement, however, a good pattern is to deploy a naming convention (github failed us)
 
@@ -282,7 +282,7 @@
 
 #### authorization code
 
-- requires a fullstack app; is the most secure by default as everything all tokens are kept in the BFF and the user/client never see it
+- requires a fullstack app; is the most secure by default as everything (i.e. all tokens) are kept in the BFF and the user/client never see it
 
 - use cases
 
@@ -316,7 +316,7 @@
 
   - only the one-time use authorization code is exposed
   - the third party application (the one requesitng the info on the user) never sees the users credentials
-  - the client nor the user never see the access or refresh token (its kept in the BFF)
+  - neither the client nor the user ever see the access or refresh token (its kept in the BFF)
 
 - scopes: can be anything, but generally auth servers permit you to use openid connect with this flow
 
@@ -338,7 +338,7 @@
 
   - code verifier: a random URL-safe >= 43 characters stored on the local system
   - code challenge: base 64 encoded SHA-256 hash `bae64url(sha256(code_verifier))` of the code verifier
-  - ^ wiht the code verifier & challenge, your application is effectively authenticating itself
+  - ^ with the code verifier & challenge, your application is effectively authenticating itself
 
 - flow
   - client generates a code verifier & code challenge

@@ -206,7 +206,7 @@ validation
       - full width of containing element
       - height of content
       - separated by margin
-        - margin collapsing: when two elements margins take up the same space
+        - margin collapsing: when two element's margins occupy the same space; the Math.max(marginX,marginY,etc) === total margin used between elements
     - inline elements:
       - take width of content
   - stacking order: as defined in HTML, all elements in the same zindex (0)

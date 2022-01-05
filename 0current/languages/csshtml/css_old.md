@@ -1,5 +1,9 @@
 # tools, examples, shit like that
 
+- todo: move into the new csshtml.md
+
+## links
+
 - misc
   - [online image editor](https://doka.photo/)
 - color shit
@@ -94,7 +98,7 @@
 
 - CSS Preprocessor: scripting language that extends CSS and then compiltes it into regular CSS
 
-- -
+  - -
 
 # TLDR; best practices, tips and tricks
 
@@ -787,12 +791,16 @@ background-size: contain|no-repeat|cover|%|% %|# #|etc .;
   - all directly children are automatically grid-items
   - specifies default dimensions for rows and columns
 - grid children
+
   - child placement
+
     - default flow (implicit placement)
       - arrange children by row
       - each item will be placed into each cell of row 1
     - explicit placement
+
       - using `grid-template-rows`
+
       -
 
 ```css
@@ -1101,9 +1109,3 @@ background-size: contain|no-repeat|cover|%|% %|# #|etc .;
   }
 }
 ```
-
-# POSITIONING
-
-# SASS
-
-# JSS
