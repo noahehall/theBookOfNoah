@@ -45,6 +45,9 @@
 - [object fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)
 - [picture element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
 - [nth of type](https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-of-type)
+- [native container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries)
+- [specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity)
+- [speciFISHity](https://specifishity.com/)
 
 - fonts
 
@@ -582,6 +585,18 @@
 
 ### selectors
 
+- specificity: in increasing order
+
+  - Type selectors (e.g., h1) and pseudo-elements (e.g., ::before).
+  - Class selectors (e.g., .example), attributes selectors (e.g., [type="radio"]) and pseudo-classes (e.g., :hover).
+  - ID selectors (e.g., #example).
+  - Universal selector (\*), combinators (+, >, ~, ' ', ||) and negation pseudo-class (:not()) have no effect on specificity. (The selectors declared inside :not() do, however.)
+  - !important
+    - Always look for a way to use specificity before even considering !important
+    - Only use !important on page-specific CSS that overrides foreign CSS (from - - external libraries, like Bootstrap or normalize.css).
+    - Never use !important when you're writing a plugin/mashup.
+    - Never use !important on site-wide CSS.
+
 - universel selector: selects all elements
 - simple: element type, class, id
 - attirbute: attribute & attribute values; values are case sensitive unless `i` i specified
@@ -597,7 +612,8 @@
 
 - at-rules: used to convey metadata & conditional information e.g. `@IDENTIFIER (RULE);`
 
-  - media query: consits of a media type and zero/more expressions that check for the conditions of particular m edia features
+  - media query: control the layout of an element based on viewport dimensions/features
+    - consits of a media type and zero/more expressions that check for the conditions of particular media features
   - page: modify margins, orphans, widows, and page breaks when printing a document
   - font-face: specify a custom font loaded from a remote/server or user's computer
     - most browsers only download `@font-face` fonts if the font-family is actually used in a CSS declaration
@@ -605,12 +621,22 @@
     - use `local()` to specify the name of a locally-installed front, useful for offline styling
   - keyframes: controls the intermediate steps ina CSS animation sequence by defining styles for keyframes/waypoints along the animation sequence
 
+- container queries: control the layout of an element based on its parent element
+  - create style rules that respond to the size of a container
+  - not ready for production; but there are JS solutions on github
+
 ```css
 /*
   pseudo element for defining custom properties for the html document
   */
 :root {
   --big-poppa: poop;
+  /* style all font sizes based on this var */
+  /* targets the fontsize set on the html element (usualy 16px) */
+  /* generally use rem > em to base everything relative to html fontsize */
+  /* ^ because nesting elements cause weird cascading issues with em */
+  /* clamp( minSize, preferredSize, maxSize) */
+  basefontsize: clamp(0.5rem, 1rem, 3rem);
 }
 
 /*
@@ -665,7 +691,7 @@ li:first-child,
 :last-of-type,
 :only-of-type,
 /*
-  special nth* classes
+  special nth* pseudo classes
   can use odd|even keywords as well
   can use An+B function notation === (A * n) + B
   A: the element index(1-based) to start counting from
@@ -676,12 +702,22 @@ li:first-child,
   ^ 2n > every even (second) element
   ^ 2n+1 > every odd element
   ^ 3n > ever third element
-
 */
 :nth-child(1),
 :nth-last-child(2),
 :nth-of-type(3),
 :nth-last-of-type(4) {
+}
+
+/**
+  is/where pseudo classes
+  :is works as a class selector (higher specificity)
+  :where has 0 specificity, so acts more like a fallback
+  target subgset of elements with the same base class
+*/
+.cta :is(li, p, button) {
+}
+.cta :where (li, p, button) {
 }
 
 /* attribute selectors */
