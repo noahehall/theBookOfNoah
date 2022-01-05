@@ -605,68 +605,88 @@
   - keyframes: controls the intermediate steps ina CSS animation sequence by defining styles for keyframes/waypoints along the animation sequence
 
 ```css
+/*
+  pseudo element for defining custom properties for the html document
+  */
 :root {
-}
-p {
-}
-p.class {
-}
-p#id {
+  --big-poppa: poop;
 }
 
-li:active {
+/*
+  use a custom property as a variable
+  if the property doesnt have a value, use the fallback value
+  if no fallback value is provided, whatever value the parent element has will be used
+*/
+.someSelector {
+  background-color: var(--big-poppa, "fallback value");
 }
-checkbox:checked {
+
+/*
+  you can get/set the actual value from javascript
+  const val = element.style.getPropertyValue("--my-var");
+  const val = getComputedStyle(element).getPropertyValue("--my-var");
+  element.style.setProperty("--my-var", jsVar + 4);
+  */
+
+/*
+  the box-model fix
+  ensures elements retain height & width
+  even when border/padding is applied
+  */
+html {
+  box-sizing: border-box
+
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
 }
-li:first-child {
+p,
+.class,
+#someID {
+}
+/* state selectors */
+li:active,
+:checked,
+:enabled,
+:hover {
+}
+/* input selectors */
+input:required,
+:focus
+/* pseudo selectors */
+li:first-child,
+:last-child {
 }
 li:last-child {
 }
-button:enabled {
-}
-a:hover {
-}
-input:focus {
-}
-input:required {
-}
 
-[attribute-exists] {
-}
-[attribute-with="value"] {
-}
-[attribute-with-case-insensitive="value" i] {
-}
-[attribute-contains-enum~="value"] {
-}
-[attribute-contains*="value"] {
-}
-[attribute-exactly-or-starts-with|="value"] {
-}
-[attribute-starts-with^="value"] {
-}
-[attribute-with="value"] {
-}
+/* attribute selectors */
+[attribute-exists],
+[attribute-with="value"],
+[attribute-with-case-insensitive="value" i],
+[attribute-contains-enum~="value"],
+[attribute-contains*="value"],
+[attribute-exactly-or-starts-with|="value"],
+[attribute-starts-with^="value"],
+[attribute-with="value"],
 [attribute-ends-with$="value"] {
 }
 
+/** pseudo elements */
 /* All elements with an attribute "href" with values
    starting with "http" will have an arrow added after their
    content (to indicate they are external links) */
 [href^="http"]::after {
   content: "⤴";
 }
-::before {
-}
-::first-letter {
-}
-::first-line {
-}
-::selection {
-}
+::before,
+::first-letter,
+::first-line,
+::selection,
 ::backdrop {
 }
 
+/** font specific */
 @charset 'UTF-8';
 @import "custom.css";
 @import "noahedwardhall.com/styles/poop.css";
@@ -682,6 +702,7 @@ input:required {
     url(/fonts/OpenSans-Regular-webfont.woff2) format("woff2"), url("/fonts/OpenSans-Regular-webfont.woff")
       format("woff");
 }
+/** media rules */
 @page {
 }
 
@@ -736,20 +757,21 @@ input:required {
   }
 }
 
+/* media */
 /*
-    sets how the content of replaced elements (e.g. img, or video) should be resized to fit its container
-    */
+  sets how the content of replaced elements (e.g. img, or video) should be resized to fit its container
+  */
 object-fit: fill|contain|civer|none|scale-down;
 
 /*
-    specifies the alignment of the replace elements contents within th elements box
-    areas of the box which arent covered reveal the elements background
-  object-position: % %|top right|center bottom|etc etc;
-    */
+  specifies the alignment of the replace elements contents within th elements box
+  areas of the box which arent covered reveal the elements background
+  */
+object-position: % %|top right|center bottom|etc etc;
 
 /*
-    set the size of the elements backgroudn image
-    */
+  set the size of the elements backgroudn image
+  */
 background-size: contain|no-repeat|cover|%|% %;
 ```
 
@@ -942,46 +964,7 @@ background-size: contain|no-repeat|cover|%|% %;
 ### examples
 
 ```css
-/*
-    pseudo element for defining custom properties for the html document
-    */
-  :root {
-    --big-poppa: poop;
-  }
 
-
-  /*
-    use a custom property as a variable
-    if the property doesnt have a value, use the fallback value
-    if no fallback value is provided, whatever value the parent element has will be used
-    */
-  .someSelector {
-    background-color: var(--big-poppa, 'fallback value')
-  }
-
-  /*
-    you can get/set the actual value from javascript
-    const val = element.style.getPropertyValue("--my-var");
-    const val = getComputedStyle(element).getPropertyValue("--my-var");
-    element.style.setProperty("--my-var", jsVar + 4);
-
-    */
-
-  /* box model
-    ----------------------------------------------------------------------------
-    */
-  /*
-    the box-model fix
-    ensures elements retain height & width
-    even when border/padding is applied
-    */
-  html {
-    box-sizing: border-box
-
-    *, *:before, *:after {
-      box-sizing: inherit
-    }
-  }
 
   /*
     floats
