@@ -4,7 +4,11 @@
   - e.g. some tricks arent listed based on my opinions
   - check MDN, then w3.org as your use case becomes more complex
 - mainly for keeping me up to date whenever I return to a predominately frontend role
+
   - where expert level css knowledge is required to remain efficient
+
+- note about anything design related: im not a designer, not interested in being a designer, but all frontend devs needs to have some basic knowledge in case we need to push back against something crazy that doesnt make sense
+  - designers are special people, like a good painter/basketball player, your born with a 6th sense,
 
 ## links
 
@@ -14,8 +18,43 @@
 - [checking browser support](https://caniuse.com/)
 - [facebook open graph protocol](http://ogp.me/)
 - [webaim: all about accessibility](https://webaim.org/)
+- [css layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout)
+- [gotchas for grid](https://css-tricks.com/things-ive-learned-css-grid-layout/)
+- [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
+- [css units](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units)
+- [multi column layouts via fragmentation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Columns)
+- [filter](https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
+- [bunch of filter functions](https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function)
+- [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
+- [calc](https://developer.mozilla.org/en-US/docs/Web/CSS/calc)
+- [repeat](https://developer.mozilla.org/en-US/docs/Web/CSS/repeat)
+- [dynamic css grid](https://oky.dk/blog/1kb-grid)
+- [key frames reference](https://developer.mozilla.org/en-US/docs/Web/API/CSSKeyframesRule)
+- [keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes)
+- [media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)
+- [using media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)
+- [animation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations)
+- [at-rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)
+- [import](https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
+- [css variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables)
+- [centering things](https://css-tricks.com/centering-css-complete-guide/)
+- [css reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
+- [color converter](https://serennu.com/colour/hsltorgb.php)
+- [css validator by w3c](http://jigsaw.w3.org/css-validator/#validate_by_input)
+- [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+- [object fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)
+- [picture element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
+
+- fonts
+
+  - [great font-face explanation](https://hacks.mozilla.org/2009/06/beautiful-fonts-with-font-face/)
+  - [font-face](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face)
+  - [font-face generator](https://everythingfonts.com/font-face)
+  - [web font generator](https://www.fontsquirrel.com/tools/webfont-generator)
+  - [cool fonts for download](https://coolfont.org/)
 
 - html
+
   - [html entity reference](https://html.spec.whatwg.org/multipage/indices.html)
   - [html reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference)
   - [xml/html character entity reference](https://en.m.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references)
@@ -30,8 +69,103 @@
   - [link type reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types)
   - [content categories](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories)
 
+- misc
+
+  - [online image editor](https://doka.photo/)
+
+- color stuff
+
+  - [color wheel](https://commons.wikimedia.org/wiki/File:RGB_color_wheel_24.svg)
+  - [premade color palletes](https://colorhunt.co/)
+  - [color pallete generator](https://coolors.co/)
+  - [another color generator but my favorite thus far](http://paletton.com/)
+  - [adobes colro wheel dope too](https://color.adobe.com/create)
+  - [free color schemes](https://www.canva.com/templates/)
+  - [100 color schemes](https://www.canva.com/learn/100-color-combinations/)
+
+- template stuff
+
+  - [jack other peopels design shits](https://dribbble.com/)
+  - [style tyles](http://styletil.es/)
+  - [izmir hover effects](https://ciar4n.com/izmir/)
+  - [jack webflow design templates](https://webflow.com/templates?utm_source=dashboard)
+  - [webflow animation builder](https://webflow.com/interactions-animations?utm_medium=inline-ad&utm_source=ix2)
+  - [codepen](https://codepen.io/)
+  - [codemyui](https://codemyui.com/)
+  - [whole lotta shit here](https://freebiesbug.com/)
+
+- stock photos
+
+  - [free illustrations of people and objects](https://fresh-folk.com/)
+  - [unspalsh](https://unsplash.com/)
+  - [high res photos](https://gratisography.com/)
+  - [picography](https://picography.co/)
+  - [whole lotta images](https://pixabay.com/)
+  - [cooler pics](https://kaboompics.com/)
+  - [fave brand thus far](https://jaymantri.com/)
+  - [food pictures](https://www.foodiesfeed.com/)
+  - [free images](https://littlevisuals.co/)
+  - [high res](https://www.lifeofpix.com/)
+  - [has an admin picked photo section](https://skitterphoto.com/)
+  - [basic stock shit](https://stocksnap.io/)
+
+- cool fonts
+
+  - [recursive](https://www.recursive.design/)
+  - [bridamount](https://www.1001fonts.com/bridamount-font.html)
+  - [grifter](https://hansonmethod.com/grifter)
+
+- design
+
+  - [dont hate w3schools](https://www.w3schools.com/html/html_responsive.asp)
+  - [csstricks design principles](https://css-tricks.com/design-principles-for-developers-processes-and-css-tips-for-better-web-design/)
+  - [guide to creating innovative web layouts](https://www.htmlgoodies.com/beyond/css/css-guide-to-creating-innovative-web-layouts.html)
+  - [blend modes](https://developer.mozilla.org/en-US/docs/Web/CSS/Compositing_and_Blending)
+  - [css features](https://www.htmlgoodies.com/beyond/css/7-amazing-new-css-techniques-for-2019.html)
+  - [webflow layout design trends](https://webflow.com/blog/layout-design)
+  - [typography for developers](https://css-tricks.com/typography-for-developers/)
+  - [choosing a color palette](https://www.invisionapp.com/inside-design/quick-guide-color-palette/)
+  - [100 color combinations and how to use them](https://www.canva.com/learn/100-color-combinations/)
+
 ## basics
 
+### best practices / gotchas
+
+- putting inline elements on different lines in source code creates a space between them
+
+  - set fontsize 0 to the containing element
+
+- always validate your CSS, e.g. with <http://jigsaw.w3.org/css-validator/#validate_by_input>
+- always size things from the inside out
+- use `background-clip` to adjust how background-color|image fill its element
+- set the opacity of selected elements and their children via `opacity`
+- `@import` statements must precede all other types of rules except charset and cannot be ussed inside conditional group at-rule
+  - in general, review the `import` link above as there are many gotchas
+- review `@font-face` syntax before using them, too many gotchas
+- set the page font size on the body element, and size everything relative to that via rem, or is em?
+- always declar a `:root {}` selector set your variables, 9 times out of 8 you should be using variables mutherfucker
+- GRID vs FLEXBOX vs WTF
+  - ROW | COLUMN - flexbox
+  - ROW & COLUMN - grid
+  - CONTENT-OUT (content forces layout) - flexbox
+    - e.g. when placing items evenly in a container, let the size of the content decide how much individual space each item takes
+      - you can still use grid, but then the grid items will change the entire track
+  - LAYOUT-IN (layout forces content) - grid
+    - e.g. when placing items evenly in a container, you let the available space of the layout determine how the items are placed
+  - BOX ALIGNMENT - flexbox
+    - aligning items within a box,
+- use the picture element to offer alternative versions of an image for different displays/devices
+  - combine with at-rules
+- the `content:` rule is powerful, use it whenver you need to insert dynamic content via css and not js
+  - is generally used with
+    - selector::before|after to target the anchor element for the content to be inserted
+    - attr(data-prop) to retrieve the value of the HTML DATA property and insert it as content
+- think creatively when using `calc` and custom properties
+  - e.g. read [this link](https://oky.dk/blog/1kb-grid)
+
+### terms
+
+- CSS Preprocessor: scripting language that extends CSS and then compiltes it into regular CSS
 - w3 explanation of colors & status codes
   - shouldnt use
     - FPWD: first public working draft
@@ -45,10 +179,217 @@
   - theres a better version out
     - SPSD: superseded recommendation:
 
-## best practices / gotchas
+## design
 
-- putting inline elements on different lines in source code creates a space between them
-  - set fontsize 0 to the containing element
+### designing a website
+
+- from webflow
+  - goal identification
+    - purpose of the site
+    - primary purpose to inform ? sell ? etcs
+    - who is the site for
+    - what do they expect to find/do
+    - competitors and their sites
+    - tools: audience personas, creative brief, competitor anlaysis, brand attributes
+  - scope definition
+    - what web pages and features the site requires to fullfil the goal
+    - timeline
+    - tools: gantt charts, design contract
+  - sitemap and wireframe creation
+    - how the content and features in the scope will interrelate and their hierarchy/relationship
+    - wireframe:
+    - tools: webflow, all the other shit costs, fuck them
+  - content creation
+    - creating content for individual pages
+    - tools:
+      - content creation: google docs, dropbox paper, quip, gather content,
+      - seo: google keyword planner, google trends, screaming frogs seo spider
+  - visual elements
+    - developing the visual brand
+    - tools
+      - style tyles, moodboards, element collages
+      -
+  - testing
+    - fuck your tests bitch
+
+### picking a color pallete
+
+- some guys process (Css tricks)
+  - determine the mood of your site to guide the development of a color pallete
+  - find your main color
+  - add 2/3 supporting colors
+    - add additional supporting colors as needed
+    - changing the tint (mixing with white) and shade (mixing with black)
+- some other guy
+  - start with greyscale
+    - ensures a focus on useability and clear navigation rather than assigning colors to elements
+    - focus on
+      - layout out elements
+      - optimiznig white space
+      - creating a hierarchy of type and elements
+  - develop a 60-30-10 % rule
+    - comes from interior design when assigning colors to things
+      - a color pallete should have no momre than 5 colors cuz some muthafucka from invionapp wrote a blog post
+    - 60% to your dominant hue
+    - 30% to secondary color
+    - 10% for accent color
+  - the best color combinations come from nature
+    - because they will always look natural
+    - e.g. sunrise, sunsets, beach scenes, etc
+
+### type
+
+- set font-size to vw (viewport width) so it scales with the viewport
+- use repetitive styles across similar elements
+- use hierarchy wisely
+  - the distinction between differnet fonts, colors, size, capitalization etc
+- choosing a font
+  - a balance between readbility and IMPACT
+    - the length of text can help decide between the two
+- set the line-height larger than the font size to reduce cramping
+  - dont set a unit to your line-height value, as a unitless line-height is proportional to its font-size!
+
+### layout
+
+- layout movement:
+  - how the content flows and your eyes move through the flow of the page
+  - direct a users eye in order to tell a sotry, CTAs, or encourage scrolling/navigation
+- layout proximity:
+  - establishes relationships between objects
+  - use repetition (Based on fontsize) to establish a spacing-schema
+    - 0.25rem, .5rem, 1rem, 2rem, 4rem
+
+### color
+
+- conveys personality and calls attention
+- gives pages life and emotion
+- saturation (color intensity)
+  - the strength/weakness of a color
+- brightness|value (how close to white or black)
+  - darker moods = darker colors
+- hue (color, like blue or red)
+  - the hue of a color is what gives it meaning
+  - most people associate hues with ideas (see link)
+- chroma (how pure a color is)
+  - lack of whitie, black or gray added to it
+- tone
+  - creaated by adding gray toa pure hue
+- shade
+  - created by adding black to a pure hue
+- tint
+  - created by adding white to a hue
+- types of color palettes (theres many more)
+  - monochromatic
+    - different shades and depths of aa single hue
+    - i.e. there there all the same color
+    - can be very boring
+  - analogous
+    - a main color and the colors from either side of it on the color wheel
+    - do a great job of
+      - expressing consistency and uniformity within design
+      - limiting any distraction away from the content
+    - isnt a large differentiation in hue
+    - contrast is struck primarily through the variations in color shade
+  - complementary
+    - i.e. opposite colors from the color wheel
+      - red and green
+        blue and orange
+    - great for
+      - communicating a sense of balance
+    - add tints & shades to expand the color pallete
+      - helps to avoid the glaring contrasts (causes eyestrain) when two opposing colors are placed next to each other
+  - triadic
+    - three colors from equidistant points ont he color whweel
+      - e.g. red, yellow and blue
+    - creates a diverse color pallete
+    - requires a lot of planning and experimentation
+- color meanings
+  - red
+    - energy, power, passion
+  - orange
+    - join, enthusiasm, creativity
+  - yellow
+    - happiness, intellect, energy
+  - green
+    - ambition, growth, freshness, safety
+  - blue
+    - tranquility, confidence, intelligence
+  - purple
+    - luxury, ambition, creativity
+  - black
+    - power, elegance, mystery
+  - white
+    - cleanliness, purity, perfection
+- ensure your theres enough contrast between foreground and background colors
+  - the difference in saturation, brightness and hue
+  - important for accessibility for those with low vision/color blindness
+
+### design toolbelt
+
+#### CSS features
+
+- blend modes
+  - how content (e.g. images) blends with the background and foreground
+  - background-blend-mode
+    - setting the Container Background-Blend-Mode: Darken on background-image and background-color to get a colorizing effect. You can also create an overlay with pseudo-elements (i.e. :before and :after) on the image wrapper to get the same effect.
+  - mix-blend mode
+    - blend in the contents of the element with the contents of its direct parent background. One use of this mode is overlapped lettering instead of adjusting the opacity, which often results in loss of color vividness
+- masking
+  - tell the browser which elements to show/hide via Raster elements, CSS gradients and SVG elements are three ways masking can be done
+- clipping
+  - the shape's boundary and defining areas of the image that shall be visible
+- text container shapes
+  - how text flows around its container, e.g. on the outside circle
+    - shape-outside
+    - shape-inside
+      - both use shapes circle(), polygon(), inset() or ellipse().
+- transform and skew
+  - use to adjust perspective
+- animations
+- initial letter
+  - selects the first letter of an element and specifies the number of lines it occupies (above or below the initial line)
+- variable fonts
+  - set of features defined in the OpenType specification
+  - enables font files to contain multiple variations of a font in a single file
+    - you can then pick which variation via CSS and use variables to adjust them
+    - ital: italic
+    - wght: the fonts weight
+    - wdth: the fonts width
+    - opsz: adjust the optical size of the font
+    - slnt - the slant of the font
+- logical properties and values
+  - css module for managing appearance of elements through logical directions and dimension mappings
+    - logical properties describe the direction which they flow
+      - block
+        - the order in which blocks are displayed on the page
+      - inline
+        - the direction which a text line is written
+        - e.g english is left to right, top to bottom
+- scroll snapping
+  - determines the rigidity with which attachment poitns are applied to the scroll container
+  - i.e. locks the viewport to certain elemnets/locations after the user has finsihed scrolling
+    - e.g. for image galleries or full-height|width content
+- flexbox, grid, and subgrid
+- media queries
+  - especially the new level 4
+
+#### effects, trends, etc
+
+- parallax effect
+  - layering graphics, images and text while tying their moving to scroll position at differnet speeds
+  - use cases
+    - make soething more dynamic and itneresting
+- overlapping elements
+  - e.g. solid colors, behind an imge, behind text, each artistically visible and possibly animated at different speeds/scroll positions
+- breakup content with offset headers, subheaders and columns
+  - instead of rigid symmetry, offset shit
+- horizontal cards
+  - great for smaller screens where scroll is done vertically
+- split screens
+  - great for large screens
+  - break up big blocks of content, where each sdie of the screen is dedicated to differnet parts of the same content, e.g header + image vs paragraph text
+- using the foreground and background axis artistically
+- use cards/sliders instead of scrolling content
 
 ## html
 
@@ -141,32 +482,32 @@
     - show validation errors in real time
 
 ```js
-labels
+// labels
   label.for='someInputId'
   input.id='someInputId'
 
-inputs
+// inputs
   input.placeholder='show this text when no user input exists'
   input.type='datetime-local' //calendar
 
   input.autocomplete='email'
 
-autofocus: only one element can have it, boolean
+// autofocus: only one element can have it, boolean
   input.autofocus='true'
 
-validation
-  required: if exists, this input needs a value
+// validation
+  // required: if exists, this input needs a value
     input.required
 
-  custom validation: <https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity>
+  // custom validation: <https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/setCustomValidity>
     input.value='blah'
     submit.onclick=()=>{
       if input.value !== 'bloop'
       input.setCustomValidity = 'Input value should be bloop'
     }
-  constraint validation:
-    <https://html.spec.whatwg.org/#constraint-validation-api>
-    <https://www.html5rocks.com/en/tutorials/forms/constraintvalidation/>
+  // constraint validation:
+    // <https://html.spec.whatwg.org/#constraint-validation-api>
+    // <https://www.html5rocks.com/en/tutorials/forms/constraintvalidation/>
     the algorithm utilizes new HTML5 attributes min, max, step, pattern, and required as well as existing attributes maxlength and type.
 
     //has error
@@ -191,7 +532,228 @@ validation
     if (formElement.checkValidity())
 ```
 
-## CSS layouts
+## CSS
+
+### units
+
+- numbers e.g. `20`
+- percentage e.g. `20%`
+- absolute units
+
+  - cm Centimeters 1cm = 96px/2.54
+  - mm Millimeters 1mm = 1/10th of 1cm
+  - Q Quarter-millimeters 1Q = 1/40th of 1cm
+  - in Inches 1in = 2.54cm = 96px
+  - pc Picas 1pc = 1/16th of 1in
+  - pt Points 1pt = 1/72th of 1in
+  - px Pixels 1px = 1/96th of 1in
+
+- relative units
+
+  - em Font size of the parent element.
+  - ex x-height of the elements font.
+  - ch The advance measure (width) of the glyph "0" of the elements font.
+  - rem Font size of the root element.
+  - lh Line height of the element.
+  - vw 1% of the viewports width.
+  - vh 1% of the viewports height.
+  - vmin 1% of the viewports smaller dimension.
+  - vmax 1% of the viewports larger dimension.
+
+- colors
+
+  - keywords e.g. red
+  - hexadecimal e.g. #ff0000
+    - allows us to specify any of the 256 available values for each (16 x 16 = 256.)
+  - rgb e.g. rgb(0,0,255)
+    - three parameters that represent the red, green and blue channel values of the colors between 0 and 255
+  - hsl e.g. hsl(0,100%,50%)
+    - accepts hue, saturation, and lightness values, which are used to distinguish between the 16.7 million colors
+    - hue: the base shade of the color. This takes a value between 0 and 360, presenting the angles round a color wheel.
+    - saturation: how saturated is the color: This takes a value from 0-100%, where 0 is no color (it will appear as a shade of grey), and 100% is full color saturation
+    - how light or bright is the color: This takes a value from 0-100%, where 0 is no light (it will appear completely black) and 100% is full light (it will appear completely white)
+  - rgba & hsla
+    - allow you to set an additional `transparency` dimension
+      - `rgba(255,0,0,0.5);`
+      - `hsla(240,100%,50%,0.5);`
+
+- functions e.g. background images / graduates
+
+### selectors
+
+- universel selector: selects all elements
+- simple: element type, class, id
+- attirbute: attribute & attribute values; values are case sensitive unless `i` i specified
+- pseudo-classes: based on element state, append keyword to selector
+- pseudo-elements: parts of content in a certain position in relation to an element, e.g. first word of a paragraph or some generated content
+- combinators: ways of combining two/more selectors for a more precise selection
+  - `a,b`: matching a or b
+  - `a b`: b is descendant of a
+  - `a > b`: b is direct child of a
+  - `a + b`: b is direct sibling of a
+  - `a ~ b`: b is one of a's siblings
+- multiple selectors: applying the same rule to multiple selectors that are separated by commas
+
+- at-rules: used to convey metadata & conditional information e.g. `@IDENTIFIER (RULE);`
+
+  - media query: consits of a media type and zero/more expressions that check for the conditions of particular m edia features
+  - page: modify margins, orphans, widows, and page breaks when printing a document
+  - font-face: specify a custom font loaded from a remote/server or user's computer
+    - most browsers only download `@font-face` fonts if the font-family is actually used in a CSS declaration
+      - so list as many as needed, but be careful how many you actually use
+    - use `local()` to specify the name of a locally-installed front, useful for offline styling
+  - keyframes: controls the intermediate steps ina CSS animation sequence by defining styles for keyframes/waypoints along the animation sequence
+
+```css
+:root {
+}
+p {
+}
+p.class {
+}
+p#id {
+}
+
+li:active {
+}
+checkbox:checked {
+}
+li:first-child {
+}
+li:last-child {
+}
+button:enabled {
+}
+a:hover {
+}
+input:focus {
+}
+input:required {
+}
+
+[attribute-exists] {
+}
+[attribute-with="value"] {
+}
+[attribute-with-case-insensitive="value" i] {
+}
+[attribute-contains-enum~="value"] {
+}
+[attribute-contains*="value"] {
+}
+[attribute-exactly-or-starts-with|="value"] {
+}
+[attribute-starts-with^="value"] {
+}
+[attribute-with="value"] {
+}
+[attribute-ends-with$="value"] {
+}
+
+/* All elements with an attribute "href" with values
+   starting with "http" will have an arrow added after their
+   content (to indicate they are external links) */
+[href^="http"]::after {
+  content: "⤴";
+}
+::before {
+}
+::first-letter {
+}
+::first-line {
+}
+::selection {
+}
+::backdrop {
+}
+
+@charset 'UTF-8';
+@import "custom.css";
+@import "noahedwardhall.com/styles/poop.css";
+
+@font-face {
+  font-display: auto;
+  font-style: oblique 30deg 50deg;
+  font-variation-settings: normal;
+  font-weight: bold;
+  font-family: "Open Sans";
+  src: local("Helvetica Neue Bold"),
+    url(https://somewebsite.com/path/to/font.woff),
+    url(/fonts/OpenSans-Regular-webfont.woff2) format("woff2"), url("/fonts/OpenSans-Regular-webfont.woff")
+      format("woff");
+}
+@page {
+}
+
+@supports (display: flex) {
+  @media screen and (min-width: 900px) {
+    article {
+      display: flex;
+    }
+  }
+}
+
+@media (min-width: 801px) {
+  body {
+    margin: 0 auto;
+    width: 800px;
+  }
+}
+
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+    width: 300%;
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+
+@media (400px <= width <= 700px) {
+  body {
+    line-height: 1.4;
+  }
+}
+
+@keyframes identifier {
+  0% {
+    top: 0;
+    left: 0;
+  }
+  30% {
+    top: 50px;
+  }
+  68%,
+  72% {
+    left: 50px;
+  }
+  100% {
+    top: 100px;
+    left: 100%;
+  }
+}
+
+/*
+    sets how the content of replaced elements (e.g. img, or video) should be resized to fit its container
+    */
+object-fit: fill|contain|civer|none|scale-down;
+
+/*
+    specifies the alignment of the replace elements contents within th elements box
+    areas of the box which arent covered reveal the elements background
+  object-position: % %|top right|center bottom|etc etc;
+    */
+
+/*
+    set the size of the elements backgroudn image
+    */
+background-size: contain|no-repeat|cover|%|% %;
+```
+
+### layouts
 
 - organized the content first in a well structured layout in the normal flow
 
@@ -255,7 +817,7 @@ validation
   - flex
   - grid
 
-### floats
+#### floats
 
 - floated elements are removed from normal flow
 - any element following a floated element will fill the space around it
@@ -263,7 +825,7 @@ validation
 - parent elements will only recognize the height of non floated elements
   - thats why you have to clear a float, so that the height of the floated element is respected by the parent
 
-### positioning
+#### positioning
 
 - arrange elements relative to their current position, containing element, or the browser viewport
   - all positioned elements accept
@@ -284,7 +846,7 @@ validation
   - other elements take up the space the absolutely positioned element previously consumed
 - fixed: keeps an element on screen, regardless of scroll position
 
-### flexbox & Grid
+#### flexbox & Grid
 
 - useful terms
 
@@ -312,7 +874,7 @@ validation
     - additional groups of items (when wrapping) have their own dimensions
     - declare dimensions for flex-items on the flex item, via multiple properties
 
-#### flexbox
+##### flexbox
 
 - 1-dimensional alignment of content, ordering items, and implementing flexible sizing
 
@@ -356,7 +918,7 @@ validation
   - 1 -> first item on main exis, incremented as expected
   - -1 -> before 0, etc
 
-#### grid
+##### grid
 
 - designed for two dimensional layouts at hte same time
 
@@ -375,9 +937,35 @@ validation
 
 ### multi-column
 
-## examples
+- todo
+
+### examples
 
 ```css
+/*
+    pseudo element for defining custom properties for the html document
+    */
+  :root {
+    --big-poppa: poop;
+  }
+
+
+  /*
+    use a custom property as a variable
+    if the property doesnt have a value, use the fallback value
+    if no fallback value is provided, whatever value the parent element has will be used
+    */
+  .someSelector {
+    background-color: var(--big-poppa, 'fallback value')
+  }
+
+  /*
+    you can get/set the actual value from javascript
+    const val = element.style.getPropertyValue("--my-var");
+    const val = getComputedStyle(element).getPropertyValue("--my-var");
+    element.style.setProperty("--my-var", jsVar + 4);
+
+    */
 
   /* box model
     ----------------------------------------------------------------------------
@@ -512,6 +1100,14 @@ validation
       grid-row-end: 4; /* end at 4, but dont take up 4 */
       grid-row: 2 / 4: /* shorthand^: take up 2 rows */
     }
+  }
+
+  /*
+    example html <p data-foo="hello">world</p>
+    renders <>hello world</>
+    */
+  [data-foo]::before {
+    content: attr(data-foo) " ";
   }
 
 ```
