@@ -4,8 +4,8 @@
 
 - when you sign into a hotel (auth server)
   - you give the front desk your ID & credit card (authentication)
-  - they give you a roomkey (access token), that enables (authorization) access (scopes) to (resources) a dope azz top floor suite, the jacuzi, weight room, and free breakfast and massages
-  - when you later come back with your roomkey, they again ask you for your ID (establish trust) to confirm you should still (expiration) be permitted (validation)
+  - they give you a roomkey (access token), that enables (authorization) access (scopes) to a dope azz top floor suite, the jacuzi, weight room, and free breakfast and massages (resources)
+  - when you later come back with your roomkey (token), they again ask you for your ID (establish trust) to confirm you should still (expiration) be permitted (validation)
 
 ## links
 
