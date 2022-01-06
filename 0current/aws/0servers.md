@@ -26,7 +26,7 @@
   - AMIs are region specific
     - so an AMI ID for us-east-1 (nyc) wont work in us-west-2 (oregon)
 
-# amazon machine images
+## amazon machine images
 
 - templates from which EC2 instances can be launched
 

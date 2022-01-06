@@ -1093,6 +1093,7 @@ background-size: contain|no-repeat|cover|%|% %;
   .parent {
     display: flex; /* width of parent i.e. block */
     display: inline-flex; /* width of flex-items i.e. inline */
+    gap: rowGap columnGap; /* see grid */
 
     flex-direction: row|column;
     flex-wrap: nowrap; /* force items to stay on main axis & resize */
