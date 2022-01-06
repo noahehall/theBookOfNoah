@@ -32,6 +32,12 @@
 
 - user data: field to pass a shell script/file that executes on first boot of an EC2
 
+  - remember, this adds to the time it takes for the ec2 to launch and be ready for use!
+  - so how important is the initial boot time?
+
+    - long lived instances may not be as critical (e.g. a db instance)
+    - but short lived instances (e.g. servers in an autoscale config) need fast boot times
+
   - anything you can script can be accomplished on startup
   - ^ e.g. software patches, download latest software, etc
   - data scripts run as the root user on linux and only execute on the initial boot
@@ -41,6 +47,15 @@
 
   - critical for high availability
   - can pass parameters/instructions (e.g. shell script) to the AMI on launch using the user data field (e.g. to specify the versions of arbitrary software thats installed when booting a new EC2 from an AMI)
+
+- considerations
+  - what type of AMI? minimal? public? privately bought AMI?
+  - whats going to be part of the base AMI used across your stack?
+  - how frequently are you going to update the base AMI?
+  - what mechanism are you going to use to update the base AMI?
+  - how are you going to manage use rdata?
+  - are you going to incorporate ansible? chef? system manager? puppet? opswork? etc
+  - what are the incplications of onboat and on reboot scripts?
 
 ## ec2
 
