@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# some fns are friviousl
+# e.g. why create a timecmd fn?
+# because its easy to forget these cmds exist
+# or how to use it
+
 # random stuff -----------------------------------------------------------------
 
 # refresh shell
