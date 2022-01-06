@@ -157,3 +157,19 @@ awslinkinternetgateway() {
     # aws ec2 attach-internet-gateway --internet-gateway-id $1 --vpc-id $2 --profile $3
     echo 'not setup'
 }
+
+# todo: i need to setup named params before using any of this
+awsruninstances() {
+    # $1 ami-id
+    # $2 count of instances
+    # $3 instance type
+    # $4 key pair name
+    # $5 subnet id
+    # $6 security group ids
+    # $7 user data cmds to run on boot
+    # $8 profile to use
+    # $9 tag key
+    # $10 tag value
+    # aws ec2 run-instances --image-id $1 --count $2 --instance-type $3 --key-name $4 --subnet-id $5 --security-group-ids $6 --user-data $7 --tag-specifications --profile $8 "ResourceType=instance,Tags=[{Key=$9,Value=$10}]"
+    echo 'not setup'
+}
