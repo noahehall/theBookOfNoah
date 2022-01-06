@@ -26,7 +26,7 @@
   - AMIs are region specific
     - so an AMI ID for us-east-1 (nyc) wont work in us-west-2 (oregon)
 
-## amazon machine images
+## AMI amazon machine images
 
 - templates from which EC2 instances can be launched
 
@@ -35,6 +35,7 @@
   - anything you can script can be accomplished on startup
   - ^ e.g. software patches, download latest software, etc
   - data scripts run as the root user on linux and only execute on the initial boot
+    - are critical for AMIs, as they always contain obsolete software you'll want to update before launching ec2s
 
 - use cases
 

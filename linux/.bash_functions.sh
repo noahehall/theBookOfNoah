@@ -33,9 +33,14 @@ function sourceifexists() {
 
 # completation aware g<alias bash aliases for each git alias
 # https://gist.github.com/mwhite/6887990
+# TODO: doesnt work like expected
 function_exists() {
      declare -f -F "$1" > /dev/null
      return $?
+}
+
+timecmd() {
+    time "$@"
 }
 
 # networking -------------------------------------------------------------------
@@ -133,7 +138,7 @@ awscreateinternetgateway() {
 }
 
 awscreatetags() {
-    # $1 reource ids
+    # $1 resource ids
     # $2 tagKey e.g. Name
     # $3 tagValue e.g. poop-dev
     # $4 profile
@@ -161,15 +166,15 @@ awslinkinternetgateway() {
 # todo: i need to setup named params before using any of this
 awsruninstances() {
     # $1 ami-id
-    # $2 count of instances
-    # $3 instance type
-    # $4 key pair name
+    # $2 count of instances e.g. 1
+    # $3 instance type e.g. t2.micro
+    # $4 key pair name (rememer scoped to region)
     # $5 subnet id
     # $6 security group ids
-    # $7 user data cmds to run on boot
+    # $7 user data, e.g. file://somefile.sh (ensure you use -y in the script)
     # $8 profile to use
-    # $9 tag key
-    # $10 tag value
+    # $9 tag key e.g. Name
+    # $10 tag value e.g. poop-dev
     # aws ec2 run-instances --image-id $1 --count $2 --instance-type $3 --key-name $4 --subnet-id $5 --security-group-ids $6 --user-data $7 --tag-specifications --profile $8 "ResourceType=instance,Tags=[{Key=$9,Value=$10}]"
     echo 'not setup'
 }
