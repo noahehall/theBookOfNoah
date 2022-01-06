@@ -1,6 +1,6 @@
 # TLDR
 
-vpc, gateways, route tables, subnets, load balancers, cloudfront, global accelerator, security groups, network acls, route53, elastic ip,
+vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront, global accelerator, security groups, network acls, route53, elastic ip,
 
 ## links
 
@@ -107,7 +107,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - after creating the VPC peer in one VPC, you have to accept the request in the other
   - basic workflow: Configure VPC peering and the appropriate security group/NACL/route table settings.
 
-- [route 53, s3, and cloudfront](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/RoutingToS3Bucket.html)
+- [route53, s3, and cloudfront](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/RoutingToS3Bucket.html)
   - s3 buckets must be configured correctly
   - sometimes you need a CDN in front of the s3 bucket(s) and point route53 to it
 - [route53 & cdns](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-to-cloudfront-distribution.html)
@@ -330,7 +330,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - vpc peering
     - subnet
       - route table
-  - private dns (route 53)
+  - private dns (route53)
 
 - internet gateway
 
@@ -374,7 +374,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
     - routes dynamically propagated to route tables
     - ^ but vpcs require static routes with transit gateways
 
-## route 53
+## route53
 
 - dns & traffic flow management
 - can be configured to dynamically reroute traffic to overcome component failure across regions
@@ -415,7 +415,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 
   - route53 will handle the health checks for each instance behind the ELB
 
-- hosted zones: all the domains you managed with route 53
+- hosted zones: all the domains you managed with route53
 
   - SOA: start of authority
   - NS: name records
@@ -450,7 +450,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
 
 - health checks
 
-  - endpoints, calculated health checks, and CloudWatch alarms can be produced using the Route 53 domain management health checks.
+  - endpoints, calculated health checks, and CloudWatch alarms can be produced using the route53 domain management health checks.
 
   - latency graph: useful for domains with a global audience
   - invert health check status: useful for a canary page that only appears when an error has manifested
@@ -509,7 +509,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - you have to configure a default resource record set
     - otherwise AWS will return a no response in the event it cant map an IP to a physical location in a region
 
-### route 53 considerations
+### route53 considerations
 
 - health checks
   - sns: create alarms by posting to an sns topic
@@ -517,7 +517,7 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
   - active (route requests here)
   - backup (route requests here if active dns records have bad health checks)
 
-## elastic ip: EIP
+## EIP elastic IP
 
 - static, public IP for use within an AWS Account
 - cannot be moved across regions
@@ -738,3 +738,34 @@ vpc, gateways, route tables, subnets, load balancers, cloudfront, global acceler
     - rate limit
     - burst limit
 - Route53 health checks
+
+## load balancing
+
+- load balancer: highly available component (you only need 1)
+- mechanism for optimally routing requests to resources through a single service
+- resources could be other servers that provide responses, or additional load balancers (e.g. specific to a set of resources)
+
+- key elements
+
+  - always add a route53 health check to your load balancer
+  - external ELB for internet facing resources
+  - internal ELB for private resources
+
+- use cases
+  - critical for high availability, fault tolerance, redundancy, etc
+  - offload many uses cases at the ELB
+    - SSL/TLS termination
+    - certificate management (renewal & deployment)
+    - oauth/IAM/firewal related things
+    - resource health checks
+    - session management via ELB generated cookies (critical for routing requests to the same backend resource that initiallly responded)
+    - logging
+    - etc
+
+### ALB application load balancer
+
+- operates at [network layer 7](https://avinetworks.com/glossary/layer-7/)
+
+### ELB elastic load balancer (classic load balancer)
+
+### NLB network load balancer
