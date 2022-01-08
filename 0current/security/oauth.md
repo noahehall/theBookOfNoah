@@ -55,7 +55,7 @@
 - validation: ID and access tokens should always be validated with the auth server **and** by the client before using it (in case its been stolen/expired)
 
   - you cant have a partially validated token
-    - check the token: decode the token, grab the header, and resign the payload, it should match the original token
+    - check the token: grab the public key, decode the token, grab the header, and resign the payload, it should match the original token
     - check the token payload: decode the payload, check the cid, aud, exp and iss, they should all be what you expect
   - if using oauth across multiple components (e.g. in a microservice architecture) its useful to have a distinct validation service that other services can use to validate their tokens
 
@@ -89,7 +89,7 @@
 
 - scope naming conventions
   - be consistent
-  - if using url-style, the real benefit is havint the ORIGIN resolve (e.g. to a metadata doc) so that your API becomes self documenting
+  - if using url-style, the real benefit is having the ORIGIN resolve (e.g. to a metadata doc) so that your API becomes self documenting
   - never use `admin` as scope, is too broad & vague
 
 ## Basics

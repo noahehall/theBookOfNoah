@@ -766,6 +766,18 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
 - operates at [network layer 7](https://avinetworks.com/glossary/layer-7/)
 
-### ELB elastic load balancer (classic load balancer)
+- use cases
+  - HTTP/2 SUPPORT: allows multiple requests to be sent on a single connection
+    - thus you can create health checks on per-port-basis
+  - content-based routing: support multiple services behind a single load balancer
+    - target group: a group of ec2 instances categorized by host, path, http header, http method, query param, source IP cidr
+  - webscokets support: real time 2 way messaging over a long running tcp connection
+  - container support: containers running directly on ec2 or the ec2-container service, can e fronted by an ALB
+  - lambda support: specify lambda fns as ALB targets
+  - connection draining: based on a configurable timeout, enables an EC2 scheduled for removal to complete any inflight requests without receiving any new ones from the ALB
 
 ### NLB network load balancer
+
+- operates at [network (tcp/udp) layer 4](https://www.a10networks.com/glossary/what-is-layer-4-of-the-osi-model/)
+
+### ELB elastic load balancer (classic load balancer)
