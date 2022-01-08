@@ -780,4 +780,17 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
 - operates at [network (tcp/udp) layer 4](https://www.a10networks.com/glossary/what-is-layer-4-of-the-osi-model/)
 
-### ELB elastic load balancer (classic load balancer)
+- use cases
+  - connection based routing: tcp/udp/tls; highly scalable vs ALB as the network layer does less work
+  - static/elastic IP address: by default the NLB provides a static IP per AZ
+  - PrivateLink support: for onprem infrastructre with privatelink into AWS; use an NLB to balance TCP/TLS traffic
+  - websockets support: same as ALB
+
+### CLB Classic Load Balancer (original ELB)
+
+- the olest load balancing solution
+
+- use cases
+  - support layer 4 and layer 7 but with fewer features than using ALB/NLB directly
+  - useful for existing customers who already have ELB implemented
+  
