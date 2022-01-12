@@ -1,7 +1,7 @@
 # web security
 
 - reading: done
-- copying: PAGE 81 compromising authentication
+- copying: PAGE 83 brute force attacks
 
 ## links
 
@@ -62,6 +62,7 @@
 
 ### terminology
 
+- hash: the output of a one-way encryption algorithm that makes it easy to generate a unique fingerprint for a set of input data (really difficult to take the output and revert it to the input data)
 - cookie: small pieces of text passed back n forth between clients & servers in HTTP headers
 - exploit: a piece of code that illustrates how to take advantage of a secuirty flaw
 - 0 day: type of exploit that has be publicized for less than a day/not publicized at all
@@ -205,8 +206,13 @@
     - the majority of web exploits use http in some fashion
 
   - authentication: the process of identifyng users when they return to your application
-    - to present an authentication challenge, a web server returns a 01 status code in the HTTP respone and adds a `WWW-Authneticate` header describing the preferred authenticatio method
-    - the user agent (e.g. a browser) requests a username & password from the user
+    - http native authentication is rarely used: to present an authentication challenge, a web server returns a 01 status code in the HTTP respone and adds a `WWW-Authneticate` header describing the preferred authentication method
+      - basic authentication scheme:
+        - the user agent (e.g. a browser) requests a username & password from the user
+        - the browser concatenates the username + password separeted by a colon, e.g. `myname:mypw`
+        - uses the base64 algorithm to encode this strng and sends it back to te server in the `Authorization` header of the http request
+      - Digest authenetication scheme:
+        - requires the browser to generate a hash consisting of the username, password, and URL
 
 - DNS: domain name system
 
@@ -701,7 +707,13 @@
 
 ### compromising authentication
 
-- page 81
+- exposure
+
+  - brute force attacks
+  - page 83
+
+- falout
+  - hijack accounts to sprea clibait/commit financial fraud
 
 ### session hijacking
 
@@ -710,7 +722,6 @@
   - ...
 
 - fallout
-  - hijack accounts to sprea clibait/commit financial fraud
 
 ### XML attacks
 
