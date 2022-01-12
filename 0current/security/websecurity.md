@@ -198,10 +198,15 @@
   - transport webpages and their resources to user agents like web browsers
 
   - workflow: general
+
     - user agents generate requests for specific resources
     - web servers expecting those requests, return responses containing either the requested resource, or an error code
     - both requests & responses are plain text msgs, but can be delivered as compressed &/ encrypted
     - the majority of web exploits use http in some fashion
+
+  - authentication: the process of identifyng users when they return to your application
+    - to present an authentication challenge, a web server returns a 01 status code in the HTTP respone and adds a `WWW-Authneticate` header describing the preferred authenticatio method
+    - the user agent (e.g. a browser) requests a username & password from the user
 
 - DNS: domain name system
 
@@ -705,7 +710,7 @@
   - ...
 
 - fallout
-  - ...
+  - hijack accounts to sprea clibait/commit financial fraud
 
 ### XML attacks
 

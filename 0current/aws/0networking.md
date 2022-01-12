@@ -789,8 +789,8 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 ### CLB Classic Load Balancer (original ELB)
 
 - the olest load balancing solution
+- use an ALB/NLB for new applications
 
 - use cases
   - support layer 4 and layer 7 but with fewer features than using ALB/NLB directly
   - useful for existing customers who already have ELB implemented
-  
