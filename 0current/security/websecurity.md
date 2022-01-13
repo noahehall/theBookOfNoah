@@ -1,7 +1,7 @@
 # web security
 
 - reading: done
-- copying: PAGE 97 cookie theft
+- copying: PAGE 104 access control
 
 ## links
 
@@ -430,7 +430,8 @@
 
 - authentication: correctly identifying a user when they return to th site
 - authorization: deciding which actions a user should and shouldnt be able to perform after they've identified themselves
-- permission checking: evaluating authorization at the point in time when a user attmpts to perform an action
+- permission checking: evaluating authorization at the point in time when a user attmpts to perform an action 917
+- page 104
 
 ## People & their prcoesses
 
