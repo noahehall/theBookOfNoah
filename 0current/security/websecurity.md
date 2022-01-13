@@ -1,7 +1,7 @@
 # web security
 
 - reading: done
-- copying: PAGE 93 session hijacking
+- copying: PAGE 97 cookie theft
 
 ## links
 
@@ -62,6 +62,7 @@
 
 ### terminology
 
+- digital signature: acts as a unique fingerprint for some input data; that can be easily recalculated as long as they have the signing key originally used to generate the signature
 - hash: the output of a one-way encryption algorithm that makes it easy to generate a unique fingerprint for a set of input data (really difficult to take the output and revert it to the input data)
   - should be quick to calculate (but not too quick)
   - bcrypt: allows you to add extra iterations to the hashing function to make it strong and more time-consuming
@@ -414,10 +415,14 @@
   - can be transmittd via URL, http header, body of requests
   - but best practice is to send as a session cookie via the `Set-Cookie` header of the http response
     - the browser will natively send this cookie & value back on subsequent requests automatically to the server that set it
-    - this also requires that backend servers have access to other servers session information (e.g. in a load balanced architecture)
 
 - server side sessions: the web server keeps the session state in locally/remotely (e.g. in file/cache/db/etc), and both the server & user agent pass the session ID back n forth
-  - the server stores & retrieves other session state data via the session ID
+
+  - the server stores & retrieves other session state data in a remote/local DB/cache/file of some sort
+  - scalability issues: requires that backend servers have access to other servers session information (e.g. in a load balanced architecture)
+
+- client side sessions: web servers send the serializes entire session state (and not just the session ID) in the cookie, this alleviates the need to share session state amongst BFF servers
+  - security issues: attackers can manipulate/forge the data stored in the cookie and your BFFs will be none the wiser
 
 ## People & their prcoesses
 
@@ -797,16 +802,48 @@
 
 - when an attacker steals a current & valid session, enabling them real-time access while the session is in progress
 
+- cookie theft: staling the value of a cookie header from an authenticated users
+
+  - cross-site scripting: injecting malicious JS onto a page while the user interacts with it
+
+    - the attacker will harvest cookies as they appear in the web servers log file, then reuse them in a script/new browser session to perform action sunder the hacked users session
+
+  - man in the middle attack: sniffing network traffic in order to intercept HTTP headers
+
+    - the attacker finds a way to sit between the rowser & webserver and read network traffic as it passes back n forth
+
+  - cross-site request forgery: triggering unintended HTTP requests to a site when they've already authenticated
+    - attackers trick your users into clicking a link to your site; if they already have a session open with your server, the browser will resend the cookie along with the http request triggered from the attackers site but your server will be none the wiser
+
+- session fixation: attackers creates & appends a predetermined session ID to a request to your server from an external site, triggering your server to force the user to authenticate
+
+  - after the user authenticates, your server will reuse the session ID (which was created by the attacker)
+  - this `fixed` session ID can then be used elseware by the attacker since the user authenticated the fixed session id
+
 - exposure
 
-  - ...
+  - passing session IDs in the URL
+  - logging session IDs
+  - inscure cookies
+  - allowing cookies to be sent with inbound requests to your server from external sites
 
 - fallout
 
   - if an attacker can access/forge session information, they can access any user account on your site
 
 - mitigation
-  - ...
+
+  - encrypt the serialized client side session cookie before sending it via the `Set-Cookie` header and decrypt it on each subsequent request
+  - digitally sign sessin cookies before they are sent; then you an easily detect if the cookie has been modified on subsequent requests
+
+    - signing cookies rather than encrypting them allows an attacker to read th session data in a browser debugger
+
+  - secure your cookies when setting them in the servers HTTP response by appending three keywords:
+    - HttpOnly: ensure cookies are inaccessible to jS code
+    - Secure: never send the uncrypted cookies with unencrypted HTTP traffic; requires you to add https
+    - SameSite: only send cookies with requests triggered from the same site
+      - SameSite=Strict: strip all cookies from all requests triggered from external sites to your server; disable social media sharing tho (use LAX instead)
+      - SameSite=Lax: only allow sending cookies with inbound GET requests from external sites
 
 ### XML attacks
 
