@@ -1,7 +1,7 @@
 # web security
 
 - reading: done
-- copying: PAGE 83 brute force attacks
+- copying: PAGE 93 session hijacking
 
 ## links
 
@@ -740,6 +740,7 @@
       - timing attacks can be used to numerate users by measuring HTTP response times
         - hashing a pw is time consuming, so even on incorrect username, you should always hash the pw so users can different the time between a bad PW and a bad USERNAME
       - PW reset screens shouldnt indicate if a username/email doesnt exist, but instead say 'if it exists, weve sent an email'
+    - implement CAPTCHA: asks web users to perform various image recognition tasks that are trivial for humans but tricky for computers
 
   - require multifactor authentication: require returning users to identify with a t least two of the following three categories
 
@@ -755,7 +756,9 @@
   - secure your own authentication system: useful if a subset of your users dont use social media/oauth providers
 
     - requiring usernames, email addresses, or both; but using email addresses for display names is a bad practice as it invites harassment
+
     - validating email addresses:
+
       - ensure every users email address corresponds to a working email account
       - ensure emails contain only valid characters
       - DNS must contain an MX (mail exchange) record for the email address domain (e.g. gmail.com),
@@ -763,6 +766,7 @@
       - always send an email verificaiton link when a user signs up
         - include a validation token that links back to a record in your DB, that you can reference when a user clicks the email in their inbox
       - banning disposable email accounts: there are blacklists you can d/l from the net
+
     - securing password resets: only send pw resets to email addresses youve previously validated; and the they should be shortlived (e.g. expires in 60 seconds)
 
     - requiring complex passwords: include numbers, symbols, and mix-case letters with a minimum length
@@ -778,6 +782,7 @@
 
 ### session hijacking
 
+- page 93
 - exposure
 
   - ...
