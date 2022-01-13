@@ -101,7 +101,7 @@
   - usually for the purpose of passing the data structure across a network
   - deserialization: the reserve process that occurs at the other end, when the binary data is converted back into a data structure
 
-- web shell: an executable script that will take ana rgument fomr an HTTP reques,t execute on te command line and output the result
+- web shell: an executable script that will takse elements from an HTTP request & execute as a command line script and retun the result
 
 - URI: uniform resource identifier
 
@@ -412,6 +412,8 @@
 
 - session ID: typically a large, randomly generated number: the minimal information the browser needs to transmit with each subsequen tHTTP request so the server can continue the HTTP conversation from the previous request
 
+  - remember, these are generally just random integers
+
   - can be transmittd via URL, http header, body of requests
   - but best practice is to send as a session cookie via the `Set-Cookie` header of the http response
     - the browser will natively send this cookie & value back on subsequent requests automatically to the server that set it
@@ -423,6 +425,12 @@
 
 - client side sessions: web servers send the serializes entire session state (and not just the session ID) in the cookie, this alleviates the need to share session state amongst BFF servers
   - security issues: attackers can manipulate/forge the data stored in the cookie and your BFFs will be none the wiser
+
+### access control
+
+- authentication: correctly identifying a user when they return to th site
+- authorization: deciding which actions a user should and shouldnt be able to perform after they've identified themselves
+- permission checking: evaluating authorization at the point in time when a user attmpts to perform an action
 
 ## People & their prcoesses
 
@@ -796,8 +804,6 @@
       - hashing passwords: cryptographic hash algorithm before being stored in the DB
         - converts the raw tring of input into a bitstring of fixed length that maes it computationally unfeasible to revers the process
 
-    -
-
 ### session hijacking
 
 - when an attacker steals a current & valid session, enabling them real-time access while the session is in progress
@@ -819,6 +825,7 @@
 
   - after the user authenticates, your server will reuse the session ID (which was created by the attacker)
   - this `fixed` session ID can then be used elseware by the attacker since the user authenticated the fixed session id
+  - basically the victim authenticates the fake session ID, now the attacker can use it to perform actions under their account
 
 - exposure
 
@@ -826,6 +833,8 @@
   - logging session IDs
   - inscure cookies
   - allowing cookies to be sent with inbound requests to your server from external sites
+  - servers that support URL rewriting to append session IDs to urls are subject to session fixation
+  - servers with weak session IDs are subject to brute force attacks where attackers guess the session ID numbers
 
 - fallout
 
@@ -844,6 +853,23 @@
     - SameSite: only send cookies with requests triggered from the same site
       - SameSite=Strict: strip all cookies from all requests triggered from external sites to your server; disable social media sharing tho (use LAX instead)
       - SameSite=Lax: only allow sending cookies with inbound GET requests from external sites
+
+### Permissions
+
+#### privilege escalation
+
+- a malicious user usurps the permissions of another user
+- vertical escalation: an attacker gets access to an account wiht a broader permissions than their own
+- horizontal escalation: an attacker accesses anothr account with similar privileges as their own
+
+- expsore
+
+  - if an attacker can deploy a web shell on your server and escalate to root privilege
+
+- fallout
+
+- mitigation
+  - securely implement access controls for all sensitive resources
 
 ### XML attacks
 
