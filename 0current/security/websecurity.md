@@ -63,6 +63,12 @@
 ### terminology
 
 - hash: the output of a one-way encryption algorithm that makes it easy to generate a unique fingerprint for a set of input data (really difficult to take the output and revert it to the input data)
+  - should be quick to calculate (but not too quick)
+  - bcrypt: allows you to add extra iterations to the hashing function to make it strong and more time-consuming
+- salting hashes: i.e. adding an element of randomness to the hashing algorithm so the input data doesnt solely determine the output hash
+  - protects you against rainbow tables
+- rainbow tables: commonly usd passwords that have been put through a known hashing algorithm
+  - matching hashes against precalculated values yield a very good return for an attacker
 - cookie: small pieces of text passed back n forth between clients & servers in HTTP headers
 - exploit: a piece of code that illustrates how to take advantage of a secuirty flaw
 - 0 day: type of exploit that has be publicized for less than a day/not publicized at all
@@ -722,7 +728,8 @@
   - use third-party authnetication from a trusted service, e.g. Facebook/Google login
   - integrate with SSO e.g. Okta, OneLogin, Centrify which centralizes authentication across enterprise systems so employees can log in seamlessly to third-party applications using their business email
 
-  - secure your own authnetication system: useful if a subset of your users dont use social media/oauth providers
+  - secure your own authentication system: useful if a subset of your users dont use social media/oauth providers
+
     - requiring usernames, email addresses, or both; but using email addresses for display names is a bad practice as it invites harassment
     - validating email addresses:
       - ensure every users email address corresponds to a working email account
@@ -731,6 +738,19 @@
         - you should be able to query for the MX record in your BFF
       - always send an email verificaiton link when a user signs up
         - include a validation token that links back to a record in your DB, that you can reference when a user clicks the email in their inbox
+      - banning disposable email accounts: there are blacklists you can d/l from the net
+    - securing password resets: only send pw resets to email addresses youve previously validated; and the they should be shortlived (e.g. expires in 60 seconds)
+
+    - requiring complex passwords: include numbers, symbols, and mix-case letters with a minimum length
+
+      - studies have shown password length is more important than anything else
+
+    - securely storing passwords: i.e. never plain text db records
+
+      - hashing passwords: cryptographic hash algorithm before being stored in the DB
+        - converts the raw tring of input into a bitstring of fixed length that maes it computationally unfeasible to revers the process
+
+    -
 
 ### session hijacking
 
