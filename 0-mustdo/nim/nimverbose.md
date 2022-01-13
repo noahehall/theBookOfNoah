@@ -1,7 +1,7 @@
 # NIM
 
 - reading: complete
-- copying: 0
+- copying: page 5: how does nim compile source code
 
 ## links
 
@@ -14,7 +14,18 @@
 
 ### what is NIM?
 
-- general purpose programming languages designed to be efficient, expressive and elegant (in that order)
+- general purpose compiled programming languages designed to be efficient, expressive and elegant (in that order)
+- created by `Andreas Rumpf` in 2005
+
+- compilation workflow
+
+  - translate source code into C code
+  - TODO (fully documented later in the book)
+
+- use cases
+  - systems programming: operating systems, compilers, dvice drivers, and embedde system software can be written (when compiling to C)
+  - IoT devices: physical devices with embedded electronics
+  - page 5
 
 ### terminology
 
