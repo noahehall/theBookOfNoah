@@ -206,13 +206,15 @@
     - the majority of web exploits use http in some fashion
 
   - authentication: the process of identifyng users when they return to your application
-    - http native authentication is rarely used: to present an authentication challenge, a web server returns a 01 status code in the HTTP respone and adds a `WWW-Authneticate` header describing the preferred authentication method
+    - http native authentication is rarely used since you cant customize the login form presented by the browser
+      - to present an authentication challenge, a web server returns a 01 status code in the HTTP respone and adds a `WWW-Authneticate` header describing the preferred authentication method
       - basic authentication scheme:
         - the user agent (e.g. a browser) requests a username & password from the user
         - the browser concatenates the username + password separeted by a colon, e.g. `myname:mypw`
         - uses the base64 algorithm to encode this strng and sends it back to te server in the `Authorization` header of the http request
       - Digest authenetication scheme:
         - requires the browser to generate a hash consisting of the username, password, and URL
+    - non-native authentication: generally presented through a custo HTML form, whose action is to POST to some bff
 
 - DNS: domain name system
 
@@ -707,13 +709,16 @@
 
 ### compromising authentication
 
+- brute force attacks: rapidly guesing credentials through automated scripts that depend on commonly used phrases
+
 - exposure
 
-  - brute force attacks
-  - page 83
-
 - falout
+
   - hijack accounts to sprea clibait/commit financial fraud
+
+- mitigation
+  - use third-party authnetication from a trusted service, e.g. Facebook/Google login
 
 ### session hijacking
 
