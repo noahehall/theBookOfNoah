@@ -715,18 +715,42 @@
 
 ### compromising authentication
 
-- brute force attacks: rapidly guesing credentials through automated scripts that depend on commonly used phrases
+#### brute force attacks
+
+- rapidly guesing credentials through automated scripts that depend on commonly used phrases
+- enumerating a list of usernames to see which exist in an application
+- timing attacks to different good/bad username vs password
 
 - exposure
 
+  - having insecure user authentication: login, logout, and reset all need to be secure
+
 - falout
 
-  - hijack accounts to sprea clibait/commit financial fraud
+  - attackers have access to & can hijack your user accounts and personal (e.g. financial) data
 
 - mitigation
 
   - use third-party authnetication from a trusted service, e.g. Facebook/Google login
   - integrate with SSO e.g. Okta, OneLogin, Centrify which centralizes authentication across enterprise systems so employees can log in seamlessly to third-party applications using their business email
+
+  - prevent user enumeration: ensure attackers cant test each username from a list to see whether it exists on your site
+
+    - ensure invalid logins dont leak whether the username/password was incorrect
+      - timing attacks can be used to numerate users by measuring HTTP response times
+        - hashing a pw is time consuming, so even on incorrect username, you should always hash the pw so users can different the time between a bad PW and a bad USERNAME
+      - PW reset screens shouldnt indicate if a username/email doesnt exist, but instead say 'if it exists, weve sent an email'
+
+  - require multifactor authentication: require returning users to identify with a t least two of the following three categories
+
+    - something they know: e.g. password
+    - something they have: e.g. mobile device
+    - something they are: i.e. biometrics (e.g. fingerprint)
+
+  - implementing & securing the logout function: is super important for your users on shared devices
+
+    - clear the sessio cookie in the browser
+    - invalidate the session identifer if stored on the server side
 
   - secure your own authentication system: useful if a subset of your users dont use social media/oauth providers
 
