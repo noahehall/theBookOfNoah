@@ -103,6 +103,7 @@
 - web shell: an executable script that will take ana rgument fomr an HTTP reques,t execute on te command line and output the result
 
 - URI: uniform resource identifier
+
   - protocol: http://
   - domain: google.com
   - path: /poop
@@ -404,6 +405,20 @@
         - the browser will load & execute any JS it comes across as it constructs the DOM
         - and the JS can dynamically make changes to the DOM and styling rules, either before the page is rendered or in response to user actions
 
+### sessions
+
+- session: HTTP conversation in which the browser sends a series of HTTP requests corresponding to a specific uer, and the web server recognizes them as corresponding to the same user; the initial request is usually tagged with an ID, and that ID is sent back in the response
+
+- session ID: typically a large, randomly generated number: the minimal information the browser needs to transmit with each subsequen tHTTP request so the server can continue the HTTP conversation from the previous request
+
+  - can be transmittd via URL, http header, body of requests
+  - but best practice is to send as a session cookie via the `Set-Cookie` header of the http response
+    - the browser will natively send this cookie & value back on subsequent requests automatically to the server that set it
+    - this also requires that backend servers have access to other servers session information (e.g. in a load balanced architecture)
+
+- server side sessions: the web server keeps the session state in locally/remotely (e.g. in file/cache/db/etc), and both the server & user agent pass the session ID back n forth
+  - the server stores & retrieves other session state data via the session ID
+
 ## People & their prcoesses
 
 - programmers: need to roll out changes in an orderly and discplined fashion
@@ -473,10 +488,8 @@
 - need to flush out
   - TRACE requests
     - can allow javascript injected into a page to access cookies that have been deliberately made inaccessible to javascript
-  - session cookies
-    - enables an attacker to impersonate a user agent to a web server
-  - man in the middle attacks
-    - plain text msgs an be read by anyone intercepting the data packets
+  - session cookies: enables an attacker to impersonate a user agent to a web server
+  - man in the middle attacks: plain text msgs an be read by anyone intercepting the data packets
   - comprimising authentication
   - permissions
   - information leaks
@@ -782,12 +795,18 @@
 
 ### session hijacking
 
-- page 93
+- when an attacker steals a current & valid session, enabling them real-time access while the session is in progress
+
 - exposure
 
   - ...
 
 - fallout
+
+  - if an attacker can access/forge session information, they can access any user account on your site
+
+- mitigation
+  - ...
 
 ### XML attacks
 
