@@ -718,7 +718,19 @@
   - hijack accounts to sprea clibait/commit financial fraud
 
 - mitigation
+
   - use third-party authnetication from a trusted service, e.g. Facebook/Google login
+  - integrate with SSO e.g. Okta, OneLogin, Centrify which centralizes authentication across enterprise systems so employees can log in seamlessly to third-party applications using their business email
+
+  - secure your own authnetication system: useful if a subset of your users dont use social media/oauth providers
+    - requiring usernames, email addresses, or both; but using email addresses for display names is a bad practice as it invites harassment
+    - validating email addresses:
+      - ensure every users email address corresponds to a working email account
+      - ensure emails contain only valid characters
+      - DNS must contain an MX (mail exchange) record for the email address domain (e.g. gmail.com),
+        - you should be able to query for the MX record in your BFF
+      - always send an email verificaiton link when a user signs up
+        - include a validation token that links back to a record in your DB, that you can reference when a user clicks the email in their inbox
 
 ### session hijacking
 
