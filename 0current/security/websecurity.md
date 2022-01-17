@@ -906,11 +906,17 @@
 
 - exposure
 
-  - if any of yoru website URLs contain paramters describing paths to files
+  - if any of your website URLs contain paramters describing paths to files
+  - if server side code permits an attacker to pass and evaluate relative filepaths in place of filenames
 
 - fallout
 
+  - attakers can probe your filesystem for interesting files
+  - break access control and download any file on your system
+
 - mitigation
+  - use a secure web server that provides a secure method for resolving static URLs to filesystem resources (e.g. images, css, files, etc)
+  - use a hosting service: instead of serving files from disk, host them via a third party and disable all filesystem access
 
 ### XML attacks
 
