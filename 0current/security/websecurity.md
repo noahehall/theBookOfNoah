@@ -430,8 +430,23 @@
 
 - authentication: correctly identifying a user when they return to th site
 - authorization: deciding which actions a user should and shouldnt be able to perform after they've identified themselves
-- permission checking: evaluating authorization at the point in time when a user attmpts to perform an action 917
-- page 104
+- permission checking: evaluating authorization at the point in time when a user attmpts to perform an action
+
+- a good access control strategy consists of three stages
+  - designing an authorization model
+    - acess control lists: create a list of permissions that are
+      - gates to each object in your system
+      - assigned to users
+      - e.g. the linux filesystem is the canonical example: each user is granted read,write or execute permissions on each file and directory
+    - white/blacklists: users that can vs cant access each object in your system
+      - e.g. spam filters: you white/black list specific email accounts
+    - role based access control:
+      - grants roles to users or adds users to groups that grant specific roles
+      - policies in the system define how each role can interact with seicfic subjects
+      - subjects are the resources in your system
+      - e.g. AWS IAM and Microsoft Active Dirctory are the canonical RBAC implementation
+  - implementing access control
+  - testing the access control
 
 ## People & their prcoesses
 
