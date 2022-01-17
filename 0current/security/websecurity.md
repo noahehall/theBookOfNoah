@@ -62,6 +62,8 @@
 
 ### terminology
 
+- security through obscurity: relying on an attacker being unable to guess something; i.e. relying on an attackers ignorance/obscurity of the system
+- embargo resources: enable access to snesitive rsources only at a certain point in time, e.g. financial reports are often embargoed
 - digital signature: acts as a unique fingerprint for some input data; that can be easily recalculated as long as they have the signing key originally used to generate the signature
 - hash: the output of a one-way encryption algorithm that makes it easy to generate a unique fingerprint for a set of input data (really difficult to take the output and revert it to the input data)
   - should be quick to calculate (but not too quick)
@@ -896,6 +898,19 @@
 
 - mitigation
   - securely implement access controls for all sensitive resources
+
+#### directory traversal
+
+- an attacker manipulates the URL parameters in order to access sensitive files that you nver intnded to be accessible
+- usually involve replacing a URL parameter with a relative file path, e.g. `../../` to climb out of the hosting directory
+
+- exposure
+
+  - if any of yoru website URLs contain paramters describing paths to files
+
+- fallout
+
+- mitigation
 
 ### XML attacks
 
