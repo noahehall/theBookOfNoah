@@ -445,8 +445,18 @@
       - policies in the system define how each role can interact with seicfic subjects
       - subjects are the resources in your system
       - e.g. AWS IAM and Microsoft Active Dirctory are the canonical RBAC implementation
+    - ownership based access control:
+      - each user has full control over their resources & granting access to other users in the system
+      - e.g. social media platforms
   - implementing access control
+    - centralize whatever authorization model youve chosen
+    - dont rely on anything in the HTTP request besides the session cookie (an attacker can meddle with everything else)
+    - audit trails: log files or database entries that are recorded whenever a user performs an action
+      - especially important for resources that arent designed to be discoverable
+      - i.e. audit everything whether or not there are inbound links to the resources
   - testing the access control
+    - test authorization via properly vettd identity data in your system
+    - unit tests should make assertions about who can and CANT access every resource type in your system
 
 ## People & their prcoesses
 
