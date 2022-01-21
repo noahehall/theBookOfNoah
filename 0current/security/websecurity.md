@@ -1,7 +1,7 @@
 # web security
 
 - reading: done
-- copying: PAGE 104 access control
+- copying: PAGE 114 clean URLs
 
 ## links
 
@@ -451,9 +451,11 @@
     - audit trails: log files or database entries that are recorded whenever a user performs an action
       - especially important for resources that arent designed to be discoverable
       - i.e. audit everything whether or not there are inbound links to the resources
+      - useful for troubleshooting and forensic analysis
   - testing the access control
-    - test authorization via properly vettd identity data in your system
+    - test authorization via properly vetted identity data in your system
     - unit tests should make assertions about who can and CANT access every resource type in your system
+    - penetration testing: probin for missing/errneous access control rules that can be abused
 
 ## People & their prcoesses
 
@@ -897,17 +899,18 @@
 
 #### directory traversal
 
-- an attacker manipulates the URL parameters in order to access sensitive files that you nver intnded to be accessible
+- an attacker manipulates URL parameters in order to access sensitive files that you never intended to be accessible
 - usually involve replacing a URL parameter with a relative file path, e.g. `../../` to climb out of the hosting directory
 
 - exposure
 
   - if any of your website URLs contain paramters describing paths to files
   - if server side code permits an attacker to pass and evaluate relative filepaths in place of filenames
+  - using opaque IDs in url parameters, e.g. `poop.com/item?id=1234`, a user can just increment/test with random strings
 
 - fallout
 
-  - attakers can probe your filesystem for interesting files
+  - attackers can probe your filesystem for interesting files
   - break access control and download any file on your system
 
 - mitigation
@@ -932,6 +935,7 @@
 
 - mitigation
   - disable telltale server headers: some
+  - page 114 clean urls
 
 ### XML attacks
 
