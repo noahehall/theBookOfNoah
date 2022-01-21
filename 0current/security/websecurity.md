@@ -934,8 +934,13 @@
   - attackers can exploit the zero day vulnerabilities if they know your using vulnerable software
 
 - mitigation
-  - disable telltale server headers: some
-  - page 114 clean urls
+  - disable any server headers that reveal the technology, language or version of your web/application server
+  - always use clean urls: remove any file suffixes e.g. php, asp or jsp
+  - use generic cookie params: e.g. never use something like a JESSIONID common in java web servers
+  - use generic clientside error reporting: e.g. never print stack traces/routing/database information in an HTML error page
+  - minify javascript files: remove extranous characters (e.g. whitespace) and replace appropriate code statements with shorter, semantically identical ones
+  - obvfuscate javascript files: replace method & function names with short meaningless tokens
+  - sanitize client-side files via code reviews and static analysis tools that search for comments and sensitive data
 
 ### XML attacks
 
