@@ -364,9 +364,9 @@
           - access the operating systems network layer
           - call operating system functions
         - enabling the following actions
-          - read & manipulate the DOM of hte current page
+          - read & manipulate the DOM of the current page
           - listen & respond to user actions via event listeners
-          - http http calls on behalf ot he user
+          - make http calls on behalf of the user
           - open new webpages/refresh the URL of the current page ONLY in response to user actions
           - write new & navigate between entries in the browser history
           - ask for users location
@@ -405,7 +405,7 @@
 
 ### sessions
 
-- session: HTTP conversation in which the browser sends a series of HTTP requests corresponding to a specific uer, and the web server recognizes them as corresponding to the same user; the initial request is usually tagged with an ID, and that ID is sent back in the response
+- session: HTTP conversation in which the browser sends a series of HTTP requests corresponding to a specific user, and the web server recognizes them as corresponding to the same user; the initial request is usually tagged with an ID, and that ID is sent back in the response
 
 - session ID: typically a large, randomly generated number: the minimal information the browser needs to transmit with each subsequen tHTTP request so the server can continue the HTTP conversation from the previous request
 
@@ -459,15 +459,16 @@
 
 - programmers: need to roll out changes in an orderly and discplined fashion
 
-  - however, its common for security vulnerabilities and bugs to creep i over time because of shortcuts taken in the face of deadlines
+  - however, its common for security vulnerabilities and bugs to creep in over time because of shortcuts taken in the face of deadlines
   - most security vulnerabilites are introduced not through a lack of develpment knowedlge, but because of a lack of attention to detail
 
 - SDLC: software development life cycle
 
   - the process a devleopment team follows when designing new software & software features, writing code, testing it and pushing out changes
+
   - phase 1: design and analysis
 
-    - analye the features you need to add and design their implementation
+    - analyze the features you need to add and design their implementation
     - identifying the requirements the code is trying to address
 
   - phase 2: writing code
