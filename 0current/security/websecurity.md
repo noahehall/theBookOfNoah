@@ -45,8 +45,7 @@
 
   - consider and enforce security at every level of the stack
   - enabling failures at one level to be mitigated by other strategies
-  - always good to dos no matter what
-    - remove uneeded software from your server
+  - remove uneeded software from your server
 
 - principle of least privilege: demands that every process and appliation run only with the permissions it needs to perform their assigned tasks
   - so if an attacker compromises component A, they shouldnt be able to compromise component B
@@ -63,13 +62,14 @@
 ### terminology
 
 - security through obscurity: relying on an attacker being unable to guess something; i.e. relying on an attackers ignorance/obscurity of the system
-- embargo resources: enable access to snesitive rsources only at a certain point in time, e.g. financial reports are often embargoed
+- embargo resources: enable access to sensitive rsources only at a certain point in time, e.g. financial reports are often embargoed
 - digital signature: acts as a unique fingerprint for some input data; that can be easily recalculated as long as they have the signing key originally used to generate the signature
 - hash: the output of a one-way encryption algorithm that makes it easy to generate a unique fingerprint for a set of input data (really difficult to take the output and revert it to the input data)
   - should be quick to calculate (but not too quick)
   - bcrypt: allows you to add extra iterations to the hashing function to make it strong and more time-consuming
 - salting hashes: i.e. adding an element of randomness to the hashing algorithm so the input data doesnt solely determine the output hash
   - protects you against rainbow tables
+  - you need to store the salt value securely, and reuse it when validating hashes
 - rainbow tables: commonly usd passwords that have been put through a known hashing algorithm
   - matching hashes against precalculated values yield a very good return for an attacker
 - cookie: small pieces of text passed back n forth between clients & servers in HTTP headers
@@ -77,15 +77,10 @@
 - 0 day: type of exploit that has be publicized for less than a day/not publicized at all
 - white hat: discovery security holes and will advise owners of the exploits before making them public
 - black hat: hoard exploits to maximize the time windows during which they can use vulnerabilities
-- dark web: websites available oly via special network nodes that anonymize incoming IP address
+- dark web: websites available only via special network nodes that anonymize incoming IP address
 - worm: a recursive exploit that tricks other computers into recursively tricking other computers to execute some code
 
 - REST: representational state transfer; design philosophy for mapping website operatins to the appropriate HTTP method according to their intention
-
-  - GET: read
-  - POST: create
-  - PUT: update
-  - DELETE: delete
 
 - ICANN: internet corporation for assigned names and numbers
 
@@ -103,14 +98,14 @@
   - usually for the purpose of passing the data structure across a network
   - deserialization: the reserve process that occurs at the other end, when the binary data is converted back into a data structure
 
-- web shell: an executable script that will takse elements from an HTTP request & execute as a command line script and retun the result
+- web shell: an executable script that will take elements from an HTTP request & execute them as a command line script and retun the result
 
 - URI: uniform resource identifier
 
   - protocol: http://
   - domain: google.com
   - path: /poop
-  - query string: ?then=wippe
+  - query string: ?then=wipe
   - fragment: #then-flush
     - used for
       - intra-page navigation, i.e. linking dirctly to h-tags
@@ -175,7 +170,7 @@
         - possibly at an adjusted speed based on the speed of consumption by receiver
     - this send & receipt workflow guarantees msg delivery
 
-- UDP: User Dataram Protocol
+- UDP: User Datagram Protocol
   - newer than TCP
   - commonly used with video/situations where dropped data packets are expected/msg guarantee isnt required, but the data packets can be streamed at a constant rate
 
@@ -187,7 +182,7 @@
   - method of encryption that provides both privacy and data integry
   - ensures that
 
-    - privacy: packets intercepted by a third party can be decrypted without the appropriate encryption keys
+    - privacy: packets intercepted by a third party cant be decrypted without the appropriate encryption keys
     - data integrity: any attempt to tamper with the packets will be detectable
 
   - workflow
@@ -217,7 +212,7 @@
 
   - authentication: the process of identifyng users when they return to your application
     - http native authentication is rarely used since you cant customize the login form presented by the browser
-      - to present an authentication challenge, a web server returns a 01 status code in the HTTP respone and adds a `WWW-Authneticate` header describing the preferred authentication method
+      - to present an authentication challenge, a web server returns a 401 status code in the HTTP respone and adds a `WWW-Authneticate` header describing the preferred authentication method
       - basic authentication scheme:
         - the user agent (e.g. a browser) requests a username & password from the user
         - the browser concatenates the username + password separeted by a colon, e.g. `myname:mypw`
@@ -241,7 +236,7 @@
       - i.e. DNS caching
     - CNAME: canonical name records
       - i.e. aliases for domain names
-      - enable multiple domain names to point ot the same IP address
+      - enable multiple domain names to point to the same IP address
     - MX: mail exchange records
       - help route email
 
@@ -249,7 +244,7 @@
 
 - http requests
 
-  - method: akak verb; the action that the user agent wants the server to perform
+  - method: aka verb; the action that the user agent wants the server to perform
 
     - GET: fetch
     - POST: create/update
@@ -263,7 +258,7 @@
 
   - URL: universal resource locator: describes the resource being manipulated/fetched
 
-  - Headers: metadata; e.g. type of content the user agent is epcting/whether it accepts compressed responses
+  - Headers: metadata; e.g. type of content the user agent is expecting/whether it accepts compressed responses
 
   - Body: optional component contains any extra data that needs to be sent to the server
 
@@ -274,7 +269,7 @@
 
     - 2xx: understood, accepted, and responded to
     - 3xx: redirect
-    - 4xx: client error; user agent genreated an invalid request
+    - 4xx: client error; user agent generated an invalid request
     - 5xx: server error; request was valid, but the server was unable to fullfil the request
 
   - msg: status msg
@@ -295,7 +290,7 @@
 ### servers
 
 - web servers: computer program (e.g. HAproxy) that validates & routes HTTP requests to application servers
-- application server: computer program (e.g. node) that hosts application code, and responds to HTTP requests from web servers
+- application server: computer program (e.g. nodejs) that hosts application code, and responds to HTTP requests from web servers
 
 - CDN: content delivery network
 
@@ -321,9 +316,9 @@
 
   - static: an object thats returned unaltered in HTTP responses
   - dynamic: an object thats executed/interpreted based on data in HTTP requests and computed before returned in HTTP responses
-    - often the code loads data from a databae in order to populate the http response
+    - often the code loads data from a database in order to populate the http response
     - security issues
-      - the dynamic interpoation of content can e vulnerable to attack
+      - the dynamic interpolation of content can be vulnerable to attack
 
 - databases
 
@@ -341,12 +336,12 @@
     - often schemaless, allowing you to add fields to new records with having to upgarde any data structures
   - distrubed caches
     - in-memory databases, that load data from disk and stores it in cache
-    - caching refers to the process of storing a copy of data kept elseware in an easily retrievable form to speed up retrieval of that data
+    - caching refers to the process of storing a copy of data in an easily retrievable form to speed up responding to requests for that data
 
 - URL resolution
   - enable any URL to be mapped to a particular static resource
   - by unlinking the URL from a filepath, you have more freedom in organizing your code
-    - e.g. having each user have a different profile image on disk, using the same URL path /user/profile/image
+    - e.g. having each user have a different profile image on disk, but using the same URL path /user/profile/image
 
 ### user agents
 
@@ -363,8 +358,8 @@
     - dictates
       - js code must be executed within a sandbox,
         - disabling the following actions
-          - start new processes/access exisitng process
-          - read arbitrary chunks of system memmory
+          - start new processes/access existing process
+          - read arbitrary chunks of system memory
           - access the local disk
           - access the operating systems network layer
           - call operating system functions
