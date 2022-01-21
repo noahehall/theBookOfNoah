@@ -1,7 +1,7 @@
 # web security
 
 - reading: done
-- copying: PAGE 114 clean URLs
+- copying: PAGE 116 clean URLs
 
 ## links
 
@@ -169,6 +169,8 @@
         - possibly along a different network path
         - possibly at an adjusted speed based on the speed of consumption by receiver
     - this send & receipt workflow guarantees msg delivery
+    - TCP doesnt dictate how the data being sent is meant to be interpreted, that occurs at a higher level protocol (e.g. HTTP)
+      - unencrypted TCP data are vulnerable to man in the middle attacks, see TLS for more info
 
 - UDP: User Datagram Protocol
   - newer than TCP
@@ -178,8 +180,8 @@
 
 - TLS: transport layer security
 
-  - arguable what fkn layer this is actually in
-  - method of encryption that provides both privacy and data integry
+  - arguable what fkn layer this is actually in (some say its not the application layer)
+  - method of encryption that provides both privacy and data integrity
   - ensures that
 
     - privacy: packets intercepted by a third party cant be decrypted without the appropriate encryption keys
@@ -188,7 +190,7 @@
   - workflow
     - HTTP conversations using TLS are called HTTP secure
     - HTTPS requires the client & server to perform a TLS handshake
-    - both parties agree on an encyption method (cypher) and exchange encryption keys
+      - both parties agree on an encyption method (cypher) and exchange encryption keys
     - any subsequent data packets (request & responses) will be opaque to outsiders
 
 - SMTP: simple mail transport protocol
@@ -284,8 +286,40 @@
 
   - when a client and server perform a handhsake and continue to send packets back n fourth until one of the communicate parties decides to terminate
 
-- encryption:
-  - method of desguising the contents of messages from prying eyes by encoding them during transmission
+### encryption
+
+- method of desguising the contents of messages from prying eyes by encoding them during transmission
+- HTTPS: hypertext transfer protocol secure: the most widely used form encryption on the web
+  - obtain a certificate from a ceriticate authority and install it on your server
+- cryptography: the study of methods of encrypting and decrypting data
+- encryption algorithm: takes input data and scrambles it by using an encryption key
+
+  - symmetric encryption: uses the same key to encrypt and decrypt data
+
+    - usually operate as block ciphers: break the input data into fixed-size blocks that can be individually encrypted
+    - ^ if the last block of input data is undersized, it will be padded to fill out the block size
+    - since there is only one key for both encrypting & decrypting the key must be shared before secure communication can occur
+    - use cases
+      - suitable for processing streams of data, e.g. TCP data packets
+      - suitable for speed
+
+  - asymmetric encryption: aka public-key cryptography; uses distinct keys for encryption & decryption
+
+    - developed in response to symmetric algorithms, since they're vulnerable to key theft
+    - encryption key: aka public key; available to the public and enables any user agent to send encrypted messages to any server containing the decryption key
+    - decryption key: aka private key;
+
+  - hash functions: encryption algorithms whose output cannot be decrypted
+
+    - hash value: the output of the hash function; is always a fixed size regardless of the size ofth einput data
+    - use cases
+      - data integrity: since you cant decrypt the data, it servers as a fingerprint of the input data and enables you to determine if two separate inputs are the same without storing the raw values, by recalculating the hash value and comparing the results
+      - storing passwords in a db, you store the hash value, and validate against the the stored hash everytime a user reauthenticates
+
+  - message authentication codes: MAC;
+
+- encryption key: a secret used to scramble data
+- decryption key: the corresponding key required to unscrable data
 
 ### servers
 
