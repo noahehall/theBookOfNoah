@@ -916,7 +916,26 @@
 
 - mitigation
   - use a secure web server that provides a secure method for resolving static URLs to filesystem resources (e.g. images, css, files, etc)
-  - use a hosting service: instead of serving files from disk, host them via a third party and disable all filesystem access
+  - use a hosting service: instead of serving files from disk, host them via a third party (e.g. CDN, CMS, cloud storage, etc) and disable all filesystem access
+  - use indirect file references: assign each file an opaque ID that corresponds to a filepath, and have all URLs reference each file by ID
+  - sanitize file references: ban any file reference that includes path separator characters, and check for characters that are encoded
+
+### information leaks
+
+#### zero day vulnerabilities
+
+- security flaws that have been made public for less than 24 hours
+
+- exposure
+
+  - web servers that leak information about the type of software stack being used
+
+- fallout
+
+  - attackers can exploit the zero day vulnerabilities if they know your using vulnerable software
+
+- mitigation
+  - disable telltale server headers: some
 
 ### XML attacks
 
