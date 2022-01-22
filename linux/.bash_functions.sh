@@ -49,16 +49,6 @@ cmdtime() {
 }
 
 # networking -------------------------------------------------------------------
-responsetime() {
-    if [[ $# -eq 1 ]]; then
-        while true; do
-            time curl "$1"
-            sleep 1
-        done
-    else
-        echo "\$1 === url"
-    fi
-}
 responseheaders() {
     if [[ $# -eq 1 ]]; then
         curl -I "$1"
@@ -67,6 +57,24 @@ responseheaders() {
     fi
 }
 
+responsetime() {
+    if [[ $# -eq 1 ]]; then
+        cmdtime responseheaders "$1"
+    else
+        echo "\$1 === url"
+    fi
+}
+
+responseDoS() {
+    if [[ $# -eq 1 ]]; then
+        while true; do
+            responsetime "$1"
+            sleep 0.1
+        done
+    else
+        echo "\$1 === url"
+    fi
+}
 
 waitforserviceonport () {
     if test $# -eq 2; then
