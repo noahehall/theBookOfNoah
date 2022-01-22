@@ -6,6 +6,11 @@ cloudformation, config, systems manager, autoscaling
 
 - a deep understanding of your application is the only way to create effective autoscaling configurations & policies
 - think deeply about your demand profile when setting up autoscaling policies
+- always simulate your autoscaling policy configuration via the web console > scaling policy > actions dropdown > execute
+
+### gotchas
+
+- remember cloud watch alarm metrics are aggregated across the entire autoscaling group, and not for just a specific instances breaching a threshold
 
 ## autoscaling (ec2 dashboard)
 
@@ -44,24 +49,24 @@ cloudformation, config, systems manager, autoscaling
   - cloudwatch: collect group metrics to track changes to the autoscaling group over time
   - sns topics: add notifications when scaling events occur
 
-- scaling polices: define which events trigger scaling actions; a tool to dynamically control the number of running instances in an autoscaling group
+- scaling polices: define which [cloud watch alarm] events trigger scaling actions; a tool to dynamically control the number of running instances in an autoscaling group
 
   - autoscaling group > automatic scaling tab
   - scale out: increase capacity
   - scale in: decrease capacity
   - can integrate with cloudwatch: e.g. trigger a scaling event in response to a cloudwatch alarm when average CPU utilization increases 80% for 5 consecutive minutes
   - can be schedule driven: e.g. between 9-5 have 3 instances, but only 1 during other hours
-  - types
-    - target tracking policy: automatically changes the # of running instances based on some metric
+  - policy types
+    - target tracking scaling: automatically changes the # of running instances based on some metric
       - e.g. target value of 60% CPU utilization: this policy will ensure that the aggregate of all instance CPU utilization is close to 60%
       - considerations that impact success & cost of target tracking
       - length of time for new instances to start & enter the group
       - frequency of change in demand that can cause rapid changes in scaling in/out
       - cost of unpredicted swings in demand, causing rapid scaling out, and slower scaling in
-    - step scaling policy: greater control over scale in/out events in response to cloud watch alarms; both % based scaling and evaluations during cooldown periods
+    - step scaling: greater control over scale in/out events in response to cloud watch alarms; % based scaling that also evaluates during cooldown periods (unlike simple scaling)
       - e.g. target value of 60%, if it goes up by 10%, add 1 additional instance, if its passed by 30%, add 3 instances
       - allows for fine-grained scale adjustments
-    - simple scaling policy: not revaluated during cooldown periods; if you experience a huge and sudden change in demand, you may not scale out appropriately
+    - simple scaling: not revaluated during cooldown periods; if you experience a huge and sudden change in demand, you may not scale out appropriately
     - Simple Queue Service
 
 - considerations
