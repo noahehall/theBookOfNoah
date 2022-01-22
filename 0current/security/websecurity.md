@@ -194,13 +194,30 @@
       - both parties agree on an encyption method (cipher) and exchange encryption keys
     - any subsequent data packets (request & responses) will be opaque to outsiders
 
-  - TLS Handshake: consists of symmetric AND assymetric encryption, and Message Authentication Codes for fingerprinting
+  - TLS Handshake: consists of assymetric and symmetric encryption, and Message Authentication Codes for fingerprinting (see cipher suites)
+
     - selection of the cipher used for encryption & decrypting all data packets
-      - user agents will inform servers what cipher suites they support, and the server will select the best option
-      - the initial phase is to use assymetric encryption to encrypt block cipher key before passing it to the recipient
+
+      - user agents will inform servers which cipher suites it supports
+      - and the server replies with the best cipher suite that it also supports, the servers digital certificate and the encryption (public) key
+      - the user agent verifies the authenticity of the certificate with the issueing certificate authority
+      - the user agent generates a session key, encrypts it with the servers public key using the key-exchange algorithm from the chosen cipher suite and sends it to the server
+        - the session key (another large random integer) is used to encrypt all subsequent TLS conversation (data packets) with the block cipher from the cipher suite chosen by the server
+      - now data packets can be sent over TLS
+      - additional info
+        - the initial phase is to use assymetric encryption to encrypt the block cipher key before passing it to the recipient
         - this is to prevent theft of the single key used to encrypt & decrypt symmetrically encrypted data
-      - block ciphers: most data packets will be symmetrically encrypted for efficiency, the recipient should already have the encryption & decryption key from the first phase of the handshake
-    - the block ciphers are also tagged with a MAC; so both parties can detect if ANY packets have been tampered with (data integrity)
+        - block ciphers: most data packets will be symmetrically encrypted for efficiency, the recipient should already have the encryption & decryption key from the first phase of the handshake
+        - the block ciphers are also tagged with a MAC; so both parties can detect if ANY packets have been tampered with (data integrity)
+
+  - cipher suites: each suite is a set of 3 algorithms used to secure communication; always use the latest TLS cipher suite
+    - key-exchange algorithm: the first algorithm; assymetric; used by communicating computers to exchange secret keys
+    - symmetric block cipher: the second algorithm; used for encrypting the content of TCP packets
+    - MAC algorithm: for authenticating the encrypting messages havent been tampered with
+    - e.g. TLS 1.3 offers numerous cipher suites, one of them being ECDHE-ECDSA-AES128-GCM-SHA256
+      - ECDHE-RSA: the key exchange algorithm
+      - AES-128-GCM: the block cipher
+      - SHA-256: the message authentication algorithm
 
 - SMTP: simple mail transport protocol
   - for sending emails
