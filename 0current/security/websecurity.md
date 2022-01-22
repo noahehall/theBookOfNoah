@@ -188,10 +188,19 @@
     - data integrity: any attempt to tamper with the packets will be detectable
 
   - workflow
+
     - HTTP conversations using TLS are called HTTP secure
     - HTTPS requires the client & server to perform a TLS handshake
-      - both parties agree on an encyption method (cypher) and exchange encryption keys
+      - both parties agree on an encyption method (cipher) and exchange encryption keys
     - any subsequent data packets (request & responses) will be opaque to outsiders
+
+  - TLS Handshake: consists of symmetric AND assymetric encryption, and Message Authentication Codes for fingerprinting
+    - selection of the cipher used for encryption & decrypting all data packets
+      - user agents will inform servers what cipher suites they support, and the server will select the best option
+      - the initial phase is to use assymetric encryption to encrypt block cipher key before passing it to the recipient
+        - this is to prevent theft of the single key used to encrypt & decrypt symmetrically encrypted data
+      - block ciphers: most data packets will be symmetrically encrypted for efficiency, the recipient should already have the encryption & decryption key from the first phase of the handshake
+    - the block ciphers are also tagged with a MAC; so both parties can detect if ANY packets have been tampered with (data integrity)
 
 - SMTP: simple mail transport protocol
   - for sending emails
@@ -292,6 +301,8 @@
 - HTTPS: hypertext transfer protocol secure: the most widely used form encryption on the web
   - obtain a certificate from a ceriticate authority and install it on your server
 - cryptography: the study of methods of encrypting and decrypting data
+- encryption key: a secret used to scramble data
+- decryption key: the corresponding key required to unscramble data
 - encryption algorithm: takes input data and scrambles it by using an encryption key
 
   - symmetric encryption: uses the same key to encrypt and decrypt data
@@ -316,10 +327,14 @@
       - data integrity: since you cant decrypt the data, it servers as a fingerprint of the input data and enables you to determine if two separate inputs are the same without storing the raw values, by recalculating the hash value and comparing the results
       - storing passwords in a db, you store the hash value, and validate against the the stored hash everytime a user reauthenticates
 
-  - message authentication codes: MAC;
-
-- encryption key: a secret used to scramble data
-- decryption key: the corresponding key required to unscrable data
+  - message authentication codes: MAC; map input data of an arbitrary length to a fixed-sized output same as hash functions
+    - messaging authentication code: the output of the MAC function
+    - requires a secret key to compute unlike hash functions; thus only the parties with the secret key can generate/check the validity of messaging authentication codes
+    - both parties exchange the secret key (which should also be encrypted) as part of a TLS handshake
+    - the sender will then generate a MAC for each data packet being sent, and send both the packet & the MAC to the receiver
+    - the receiver (which also has the secret key) will then recalculate the MAC using the data packet as input, and if both MACs match the receiver can be sure the data packet hasnt been tampered with
+    - use cases
+      - ensure that the data packets transmitted cannot be forged or tampered with
 
 ### servers
 
