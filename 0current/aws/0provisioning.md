@@ -7,7 +7,7 @@ cloudformation, config, systems manager, autoscaling
 - core concept in high availability
 - scale out/in (up/down) elastic capacity in response to changes in demand for compute resources
 
-- launch configuration: similar considerations as starting an EC2
+- launch configuration: similar considerations as starting an EC2; you should use launch templates instead to get the latest features
 
   - AMI template
   - EC2 instance type (e.g. a spot instance)
@@ -28,9 +28,11 @@ cloudformation, config, systems manager, autoscaling
   - VPC
   - subnets
 
-- scaling polices
+- scaling polices: define triggering actions
   - scale out: increase capacity
   - scale in: decrease capacity
+  - can integrate with cloudwatch: e.g. trigger a scaling event in response to a cloudwatch alarm when average CPU utilization increases 80% for 5 consecutive minutes
+  - can be schedule driven: e.g. between 9-5 have 3 instances, but only 1 during other hours
 
 ## cloudformation
 
