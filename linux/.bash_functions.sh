@@ -44,7 +44,7 @@ function_exists() {
      return $?
 }
 
-timecmd() {
+cmdtime() {
     time "$@"
 }
 
