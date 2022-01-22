@@ -24,8 +24,8 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - always
 
   - use immutable infrastructure
-    - never patch/update resources, always create new, and force your architecture & dev cycle to support this
-    - put an EIP infront of production services to enable blue/green deployments
+    - never patch/update resources, always create new, and force your architecture & dev cycle to support the dynamic destroying and creation of resources via service discovery
+    - put an EIP infront of production services to enable blue/green deployments & failover strategies
   - never use any of the default resources (vpc, subnets, security groups, etc)
     - except the default `dhcp options set`
       - this is the aws dns config
@@ -42,7 +42,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
 - sometimes
 
-  - enable ssh & ICMP from anywhere while debugging
+  - enable ssh & ICMP (ping) from anywhere while debugging
   - for absolute speed & security, stay off the public internet
 
 - never
@@ -55,21 +55,16 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - troubleshooting connectivity
 
   - connecting to AWS resources
-    - anything in your local environment?
-      - firewalls, network settings, etc
-    - private subnet?
-      - you need a bastion host/private tunnel into the private subnet
-    - must be in a public subnet?
-      - does the resouce have a public IP?
-        - remember, the internal IP is only for internal AWS resources
+    - anything in your local environment? e.g. firewalls, network settings, etc
+    - aws resource in a private subnet? you need a bastion host/private tunnel into the private subnet
+    - aws resource in a public subnet?
+      - does the resouce have a public IP? remember, the internal IP is only for internal AWS resources
       - what type of Public IP? e.g. is it an EIP?
     - what are the security group settings?
       - they have to allow the protocol & port your using
       - also confirm theres an outbound rule thats appropriate
-    - what are the NACLs?
-      - the nacl has to explicitly allow (both in and out) your protocol and port
-    - what are the route tables?
-      - there needs to be a route whose destination is the public internet & target is an internet gateway
+    - what are the NACLs? the nacl has to explicitly allow (both in and out) the protocol and port your using
+    - what are the route tables? there needs to be a route whose destination is the public internet & target is an internet gateway
     - load balancer health checks?
   - useful tools
     - vpc flow logs
@@ -86,9 +81,9 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - how are network ACLs configured?
   - how are the security group configured?
 
-- subbnets
+- subnets
 
-  - aws reserves the first 3 ips in every subnet for internal routing purposes
+  - aws reserves the first 3 ips in every subnet is for internal routing purposes
   - subnets not explicitly associated with a route table, end up in the VPCs main route table
   - you cannot alter the default route table that allows traffic on the same subnet
     - so any resource to resource connectivity problems must be at the security group level
@@ -150,19 +145,17 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
   - as big as a /16 and as small as a /28
     - the vpc cidr/block is called the `super net`, as it contains all IPs for all subnets, and thus all resources
-    - ^ e.g _the 10.0 super net_, or the _198.0 super net_
-      - ^ as _192.0.1_ would be a specific subnet, and _192.0.1.0_ would be a specific host
+    - ^ e.g the `10.0` super net, or the `198.0` super net
+    - ^ `192.0.1` would be a specific subnet, and `192.0.1.0` would be a specific host
 
-- subnets: a range (subset) of ips within a vpc
+- subnet: a range (subset) of ips within a vpc
 
-  - the larger the cidr, the smaller the number of ips
+  - the larger the /cidr, the smaller the number of ips just like a fraction
   - can contain public/private resources
     - private: for private resources
-      - should point to the NAT GATEWAY in the public subnet
-      - this translates a resources private IP to a public one
+      - should point to the NAT GATEWAY in the public subnet for translating a resources private IP into a public one
     - public: for public resources
-      - should point to the internet gateway
-      - this enables inbound/outbound traffic on the public net
+      - should point to the internet gateway to enable inbound/outbound traffic on the public net
 
 - route tables: specify how vpc traffic flows in/out of subnets
 
@@ -177,15 +170,16 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - configure subnet route tables to use the internet gateway
   - provides NAT for instances with a public IP
 
-- NAT gateway: enable resources in a private subnet to initiate & connect to the public internet
+- NAT gateway: network address translation; enable resources in a private subnet to initiate & connect to the public internet
 
-  - network address translation
   - requires an EIP
     - useful for providing a consistent resource for apps & end users
-    - if an ec2/etc fails, you can reassign the IP to another
+    - if an ec2/resource fails, you can reassign the IP to another resource
   - has to be contained in a public subnet
   - map multiple private hosts to a single internet routable IP address
+
   - nat instance
+
     - you create an ec2 within a public subnet,
     - have to manage the server yourself: updates, patches, security, etc
     - more operational responsbility & flexibility
@@ -193,6 +187,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
       - able to specify a private IP
       - supports port forwarding
       - acts as a bastion host
+
   - nat gateway (the managed service)
     - you dont have to do anything
     - use cases
@@ -208,20 +203,24 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - VPC endpoints: enable resources within a VPC to privately access other AWS services without traversing the public internet
 
   - PrivateLink: uses the internal aws network instead of the public internet
+
     - per hourly charges
     - per GB charges
+
   - use cases
+
     - private access: if one vpc service needs to talk to another service, just use privatelink
     - simplifies network configuration (dont need an internet gateway)
     - improved secuirty posture (less configuration, no public internet)
+
   - types
     - interface:
-      - powered by AWS PriateLink
+      - powered by AWS PrivateLink
       - use an elastic interface (ENI) as an entry point for traffice destined to the service
       - typically accessed using public/private dns name associated with the service
     - gateway load balancer
-      - powered by AWS PriateLink
-      - use an elastic interface (ENI) as an entry point for traffice destined to the service
+      - powered by AWS PrivateLink
+      - use an elastic interface (ENI) as an entry point for traffic destined to the service
       - serve as a target for a route in a route table for traffic destined for the service
     - gateway
       - serve as a target for a route in a route table for traffic destined for the service
@@ -286,11 +285,11 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
 - network ACL: access control lists (pronounced NACL) (are real firewalls unlike security groups)
   - are specific to a single VPC
-  - have 1:M relationship with subnets, 1 nacle: many subnets
+  - have 1:M relationship with subnets, 1 nacl has many subnets
   - are stateless: rules to allow network traffic must be explicitly configured
     - have allow & deny traffic rules (unlike security groups which only allow)
     - have an implicit deny
-      - so for each inbound allow, you may have to create an outbound allow as well (and vice versa)
+      - so for each inbound allow, you have to create an outbound allow as well (and vice versa)
   - rules are processed in numerical order
     - the first successful rule stops the processing chain
   - default NACL created with a new vpc
@@ -398,12 +397,12 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - domains can have public, and multiple private hosted zones
     - public: for public internet traffic
     - private: for internal AWS traffic
-      - e.g. if you want an alternative version of a site for IPs originating from a VPC
+      - e.g. if you want an alternative version of a site for IPs originating from a particular VPC
       - a single domain routing requests to multiple VPCs/different resources in the same VPC
       - `enableDnsHostnames` and `enableDnsSupport` must be true in the VPC config
   - use cases
-    - setting up prod, dev, staging at the _same_ domain
-    - let you test new application version without affecting production
+    - setting up prod, dev, staging at the same domain
+    - let you test new application versions without affecting production
   - steps
     - create a private hosted zone that points to a VPC
     - create a simple A record pointing to a **private** IP address within the VPC
@@ -425,7 +424,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
       - associate it with an ec2 instance
       - update the A record(s) to point to this new EIP
       - wait for DNS to propagate
-    - CNAME: canonical name
+    - CNAME: canonical name, an alternative name for a domain name, e.g. poop.domain flush.domain
     - MX: mail exchange
     - AAAA: ipv6 address
     - TXT: text
