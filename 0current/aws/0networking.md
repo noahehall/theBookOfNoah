@@ -39,6 +39,11 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
     - NACLs are the only way to set deny rules, and take precedence over security groups
     - ^ especiialy deny inbound traffic to databases & internal apps
     - you can permit TCP outbound traffic on ports `32768-61000` to catch all linux ephemeral ports
+  - for high availability
+    - create subnets in different availability zones
+    - each subnet containing duplicate resources (e.g. a node application)
+    - create a target group pointing to each resource
+    - point a load balancer at the target group
 
 - sometimes
 
@@ -738,7 +743,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
     - burst limit
 - Route53 health checks
 
-## load balancing
+## load balancing (ec2 dashboard)
 
 - load balancer: highly available component (you only need 1)
 - mechanism for optimally routing requests to resources through a single service
@@ -768,10 +773,9 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - use cases
   - HTTP/2 SUPPORT: allows multiple requests to be sent on a single connection
     - thus you can create health checks on per-port-basis
-  - content-based routing: support multiple services behind a single load balancer
-    - target group: a group of ec2 instances categorized by host, path, http header, http method, query param, source IP cidr
+  - content-based routing: support multiple services behind a single load balancer via ec2 target groups
   - webscokets support: real time 2 way messaging over a long running tcp connection
-  - container support: containers running directly on ec2 or the ec2-container service, can e fronted by an ALB
+  - container support: containers running directly on ec2 or the ec2-container service, can be fronted by an ALB
   - lambda support: specify lambda fns as ALB targets
   - connection draining: based on a configurable timeout, enables an EC2 scheduled for removal to complete any inflight requests without receiving any new ones from the ALB
 
@@ -780,16 +784,23 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - operates at [network (tcp/udp) layer 4](https://www.a10networks.com/glossary/what-is-layer-4-of-the-osi-model/)
 
 - use cases
+  - highly scalable relative to ALB as NLB does less work
   - connection based routing: tcp/udp/tls; highly scalable vs ALB as the network layer does less work
+    - you create a target group (ec2 dashboard), then add resources to it, then associate the ALB to point to the target group, and when people hit the ALB, it routes to the resources based on some setting
   - static/elastic IP address: by default the NLB provides a static IP per AZ
-  - PrivateLink support: for onprem infrastructre with privatelink into AWS; use an NLB to balance TCP/TLS traffic
+  - PrivateLink support: for onprem infrastructer with privatelink into AWS; use an NLB to balance TCP/TLS traffic
   - websockets support: same as ALB
 
 ### CLB Classic Load Balancer (original ELB)
 
-- the olest load balancing solution
+- the oldest load balancing solution
 - use an ALB/NLB for new applications
 
 - use cases
   - support layer 4 and layer 7 but with fewer features than using ALB/NLB directly
   - useful for existing customers who already have ELB implemented
+
+### target groups (ec2 dashboard)
+
+- route to a group of ec2 instances/IP/lambda fns based on host, path, http header, http method, query param, source IP cidr
+- perform health checks on the targets

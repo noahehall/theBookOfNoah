@@ -49,7 +49,7 @@ timecmd() {
 }
 
 # networking -------------------------------------------------------------------
-timeresponse() {
+responsetime() {
     if [[ $# -eq 1 ]]; then
         while true; do
             time curl "$1"
@@ -59,6 +59,14 @@ timeresponse() {
         echo "\$1 === url"
     fi
 }
+responseheaders() {
+    if [[ $# -eq 1 ]]; then
+        curl -I "$1"
+    else
+        echo "\$1 === url"
+    fi
+}
+
 
 waitforserviceonport () {
     if test $# -eq 2; then
