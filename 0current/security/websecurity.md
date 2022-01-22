@@ -203,14 +203,15 @@
       - the user agent verifies the authenticity of the certificate with the issueing certificate authority
       - the user agent generates a session key, encrypts it with the servers public key using the key-exchange algorithm from the chosen cipher suite and sends it to the server
         - the session key (another large random integer) is used to encrypt all subsequent TLS conversation (data packets) with the block cipher from the cipher suite chosen by the server
-      - now data packets can be sent over TLS
+      - now data packets can finally be sent over TLS efficiently using the symmetric block cipher
       - additional info
         - the initial phase is to use assymetric encryption to encrypt the block cipher key before passing it to the recipient
         - this is to prevent theft of the single key used to encrypt & decrypt symmetrically encrypted data
         - block ciphers: most data packets will be symmetrically encrypted for efficiency, the recipient should already have the encryption & decryption key from the first phase of the handshake
-        - the block ciphers are also tagged with a MAC; so both parties can detect if ANY packets have been tampered with (data integrity)
+        - the block ciphers are also tagged with a MAC; so both parties can authenticate messages & detect if ANY packets have been tampered with (data integrity)
 
   - cipher suites: each suite is a set of 3 algorithms used to secure communication; always use the latest TLS cipher suite
+
     - key-exchange algorithm: the first algorithm; assymetric; used by communicating computers to exchange secret keys
     - symmetric block cipher: the second algorithm; used for encrypting the content of TCP packets
     - MAC algorithm: for authenticating the encrypting messages havent been tampered with
@@ -218,6 +219,10 @@
       - ECDHE-RSA: the key exchange algorithm
       - AES-128-GCM: the block cipher
       - SHA-256: the message authentication algorithm
+
+  - digital certificates: aka public-key certificate; an electronic document issued by third-party certificate authorities to prove which internet domain owns which public encryption key
+    - that way user agents can confirm the server (some IP) they are communicating with is valid for this domain (e.g. google.com) and this certificate
+    - that way an attacker cant impersonate a domain or a certifcate the UA checks with the certificate authority in the initial phases of the TLS handshake
 
 - SMTP: simple mail transport protocol
   - for sending emails
@@ -1036,3 +1041,11 @@
 
 - fallout
   - data is routed to a server controlled by an attacker
+
+#### spoofing attacks
+
+- direct internet traffic away from a legitimate server to an IP address controlled by an attacker
+- an attacker that can spoof a domain name, can issue their own encryption key and user agents will be fooled into communicating with the attackers server
+
+- mitigation
+  - user agents need to always check with a third-party certificate authority to validate the servers certificate with the info on file
