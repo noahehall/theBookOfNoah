@@ -2,6 +2,10 @@
 
 cloudformation, config, systems manager, autoscaling
 
+## best practices
+
+- a deep understanding of your application is the only way to create effective autoscaling configurations & policies
+
 ## autoscaling
 
 - core concept in high availability
@@ -29,10 +33,19 @@ cloudformation, config, systems manager, autoscaling
   - subnets
 
 - scaling polices: define triggering actions
+
   - scale out: increase capacity
   - scale in: decrease capacity
   - can integrate with cloudwatch: e.g. trigger a scaling event in response to a cloudwatch alarm when average CPU utilization increases 80% for 5 consecutive minutes
   - can be schedule driven: e.g. between 9-5 have 3 instances, but only 1 during other hours
+
+- considerations
+  - how many subnets & AZs are you using? different AZs have distinct number of subnets
+  - scaling policies: should increment servers evenly across AZs and subnets, it will automatically distribute servers to each subnet in each AZ
+  - getting the initial, and desired number of instances takes good understanding of your resource load
+  - boot time: if you have dramatic & unpredictable shift in demand, ensure your AMIs have quick boot times
+  - good understanding of your application performance is necessary to create appropriate cloudwatch alarms that trigger scaling actions
+  - spot instances are critical for cost optimization
 
 ## cloudformation
 
