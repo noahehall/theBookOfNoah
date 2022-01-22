@@ -1,6 +1,36 @@
 # TLDR
 
-cloudformation, config, systems manager
+cloudformation, config, systems manager, autoscaling
+
+## autoscaling
+
+- core concept in high availability
+- scale out/in (up/down) elastic capacity in response to changes in demand for compute resources
+
+- launch configuration: similar considerations as starting an EC2
+
+  - AMI template
+  - EC2 instance type (e.g. a spot instance)
+  - user data scripts: actions to perform on boot
+  - security group(s) to attach
+
+- launch templates: modern way to specify EC2 instances for an auto scale group; same considerations as setting up a launch configuration
+
+  - recommended over launch configurations
+  - the difference being you can have multiple version of a launch template, but only one version of a launch configuration
+  - e.g. one that starts small instances, and another that starts large instances
+
+- auto scaling group: ASG: the details about where EC2 instances get launched
+
+  - the ASG itself should be placed behind a load balancer
+  - launch configuration/template
+  - number of initial instances
+  - VPC
+  - subnets
+
+- scaling polices
+  - scale out: increase capacity
+  - scale in: decrease capacity
 
 ## cloudformation
 
@@ -18,8 +48,9 @@ cloudformation, config, systems manager
 ## config
 
 - A summarized view of AWS and non-AWS resources and the compliance status of the rules and the resources in each AWS Region.
-- managed service  providing an inventory of AWS resources, config history, and change notifcations to
+- managed service providing an inventory of AWS resources, config history, and change notifcations to
 - use cases
+
   - enable security & governance
   - discover existing aws resources
   - CRUD notifications
@@ -42,6 +73,7 @@ cloudformation, config, systems manager
 - config recorder: stores configuration of supported resources as configuration items
   - you must create & start the recorder
 - config rules: the desired config settings for AWS resources
+
   - if a resource violates a rule, aws config flags the resource and the rule as noncompliant
   - rule evaluations occur when:
     - a configuration change occurs
@@ -89,9 +121,11 @@ cloudformation, config, systems manager
 ## systems manager
 
 - view operatoinal data from multiple services & automate operation tasks
+
   - formerly known as Simple Systems Manager
 
 - use cases
+
   - centrally define the configuration options & policies for managed instances
   - identify resources that are out of compliance and take corrective action
   - automate variety of maintence tasks (e.g. ec2 patching)
@@ -100,9 +134,11 @@ cloudformation, config, systems manager
   - automatically collect inventory information about amazon EC2 and on-premise managed instances
 
 - systems manager agent: required to be installed on ec2 instances, on-premise servers, or avirtual machine
+
   - some AMIs have the agent preinstalled
 
 - management types
+
   - operations managemnet
   - application management
   - change management
@@ -110,6 +146,7 @@ cloudformation, config, systems manager
   - shared resources
 
 - fleet manager: all nodes that include the Systems manager agent
+
   - click into an instance
     - view file system, performance counters, users and gorups
     - can even log into the instance from the web console (click actions button)
@@ -119,16 +156,20 @@ cloudformation, config, systems manager
 - patch manager: auto patch instances
 
 - run command: run a command on an instance via the web console
+
   - pick one from the list of command documents
 
 - hybrid activations: for installing the systems manager agent in on-premise servers
+
   - you only need to do this once for each account
   - make sure you have keep the activation code & ID as you only can view it once while creating it
 
 - documents: create your own runbook document
+
   - in JSON/yaml format
 
 - distributor: enable you to install software on your managed instances
+
   - software provided by aws
   - software you provide
     - create a package and upload it

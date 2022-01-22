@@ -145,7 +145,7 @@ things that generally apply to all services
   - route 53 dns config & routing options
   - regional load balancing across AZs
   - elastic IP swapping across AZs in the event of failure
-  - Autoscaling with appropriate triggers
+  - Autoscaling with appropriate triggers (see provisioning file)
   - AMIs
   - ebs snapshots
   - db level architecture
