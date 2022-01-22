@@ -1,7 +1,7 @@
 # web security
 
 - reading: done
-- copying: PAGE 116 clean URLs
+- copying: PAGE 123 obtaining a digital certificate
 
 ## links
 
@@ -221,8 +221,10 @@
       - SHA-256: the message authentication algorithm
 
   - digital certificates: aka public-key certificate; an electronic document issued by third-party certificate authorities to prove which internet domain owns which public encryption key
+    - contains: server domain name, the issueing certificate authority, an encryption public key
     - that way user agents can confirm the server (some IP) they are communicating with is valid for this domain (e.g. google.com) and this certificate
     - that way an attacker cant impersonate a domain or a certifcate the UA checks with the certificate authority in the initial phases of the TLS handshake
+    - PAGE 123
 
 - SMTP: simple mail transport protocol
   - for sending emails
@@ -1048,4 +1050,4 @@
 - an attacker that can spoof a domain name, can issue their own encryption key and user agents will be fooled into communicating with the attackers server
 
 - mitigation
-  - user agents need to always check with a third-party certificate authority to validate the servers certificate with the info on file
+  - user agents need to always check with a third-party certificate authority that they trust to validate the servers certificate with the info on file
