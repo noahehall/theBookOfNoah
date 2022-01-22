@@ -5,11 +5,14 @@ cloudformation, config, systems manager, autoscaling
 ## best practices
 
 - a deep understanding of your application is the only way to create effective autoscaling configurations & policies
+- think deeply about your demand profile when setting up autoscaling policies
 
 ## autoscaling (ec2 dashboard)
 
 - core concept in high availability
 - scale out/in (up/down) elastic capacity in response to changes in demand for compute resources
+- even without scaling, can ensure failed instances are replaced (e.g. in the event of a failed health check)
+- cooldown period: a protect time in which a scaling event is occuring so that a threshold being crossed doesnt trigger a scaling action
 
 - launch configuration: similar considerations as starting an EC2; you should use launch templates instead to get the latest/advanced features and better workflow/wizard
 
@@ -31,7 +34,7 @@ cloudformation, config, systems manager, autoscaling
   - the ASG itself should be placed behind a load balancer
   - launch configuration/template
   - number of initial, desired, and maximum instances to have running
-    - desired: # you want running
+    - desired: # you want running, scaling will ensure this is the normal running capacity bar any changes in demand
     - minimum: duh
     - maximum: duh: but think about it, you dont want to set it too high because a DOS attack can trigger unbelievable costs
   - VPC
@@ -41,12 +44,25 @@ cloudformation, config, systems manager, autoscaling
   - cloudwatch: collect group metrics to track changes to the autoscaling group over time
   - sns topics: add notifications when scaling events occur
 
-- scaling polices: define triggering actions
+- scaling polices: define which events trigger scaling actions; a tool to dynamically control the number of running instances in an autoscaling group
 
+  - autoscaling group > automatic scaling tab
   - scale out: increase capacity
   - scale in: decrease capacity
   - can integrate with cloudwatch: e.g. trigger a scaling event in response to a cloudwatch alarm when average CPU utilization increases 80% for 5 consecutive minutes
   - can be schedule driven: e.g. between 9-5 have 3 instances, but only 1 during other hours
+  - types
+    - target tracking policy: automatically changes the # of running instances based on some metric
+      - e.g. target value of 60% CPU utilization: this policy will ensure that the aggregate of all instance CPU utilization is close to 60%
+      - considerations that impact success & cost of target tracking
+      - length of time for new instances to start & enter the group
+      - frequency of change in demand that can cause rapid changes in scaling in/out
+      - cost of unpredicted swings in demand, causing rapid scaling out, and slower scaling in
+    - step scaling policy: greater control over scale in/out events in response to cloud watch alarms; both % based scaling and evaluations during cooldown periods
+      - e.g. target value of 60%, if it goes up by 10%, add 1 additional instance, if its passed by 30%, add 3 instances
+      - allows for fine-grained scale adjustments
+    - simple scaling policy: not revaluated during cooldown periods; if you experience a huge and sudden change in demand, you may not scale out appropriately
+    - Simple Queue Service
 
 - considerations
   - how many subnets & AZs are you using? different AZs have distinct number of subnets

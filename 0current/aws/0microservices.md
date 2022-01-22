@@ -1,6 +1,6 @@
 # TLDR
 
-- lambda, fargate, SQS, SNS
+- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS
 
 ## basics
 
