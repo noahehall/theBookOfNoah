@@ -6,12 +6,12 @@ cloudformation, config, systems manager, autoscaling
 
 - a deep understanding of your application is the only way to create effective autoscaling configurations & policies
 
-## autoscaling
+## autoscaling (ec2 dashboard)
 
 - core concept in high availability
 - scale out/in (up/down) elastic capacity in response to changes in demand for compute resources
 
-- launch configuration: similar considerations as starting an EC2; you should use launch templates instead to get the latest features
+- launch configuration: similar considerations as starting an EC2; you should use launch templates instead to get the latest/advanced features and better workflow/wizard
 
   - AMI template
   - EC2 instance type (e.g. a spot instance)
@@ -21,16 +21,25 @@ cloudformation, config, systems manager, autoscaling
 - launch templates: modern way to specify EC2 instances for an auto scale group; same considerations as setting up a launch configuration
 
   - recommended over launch configurations
-  - the difference being you can have multiple version of a launch template, but only one version of a launch configuration
-  - e.g. one that starts small instances, and another that starts large instances
+  - main difference being you can
+    - have multiple version of a launch template, but only one version of a launch configuration; a dedefault one that starts small instances, and another that starts large instances
+    - better workflow/wizard
+    - more advanced features and configuration options
 
-- auto scaling group: ASG: the details about where EC2 instances get launched
+- auto scaling group: ASG: uses the launch template (i.e. ec2 template) for creating ec2 instances across subnets & AZs in a VPCs
 
   - the ASG itself should be placed behind a load balancer
   - launch configuration/template
-  - number of initial instances
+  - number of initial, desired, and maximum instances to have running
+    - desired: # you want running
+    - minimum: duh
+    - maximum: duh: but think about it, you dont want to set it too high because a DOS attack can trigger unbelievable costs
   - VPC
   - subnets
+  - load balancing
+  - health checks: how long to wait before checking if newly launched instances are healthy
+  - cloudwatch: collect group metrics to track changes to the autoscaling group over time
+  - sns topics: add notifications when scaling events occur
 
 - scaling polices: define triggering actions
 
