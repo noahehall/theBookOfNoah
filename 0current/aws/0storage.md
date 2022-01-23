@@ -76,6 +76,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 
 - ALWAYS
   - use an IAM user to make authenticated requests (i.e. never the root user)
+  - understand your availability requires in the design phase
 - SOMETIMES
   - prevent objects from being modified by the `anonymouse user`
     - do not implement bucket policiess that allow anonymouse public writes to buckets
@@ -89,8 +90,12 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 - bucket: a container for objects
 - object: a file + metadata; the bucket must already be created
 
-## S3
+## S3 - Simple Storage Service
 
+- group objects (i.e. files max size 5TB) storage in buckets
+- designed for durability
+- all buckets share the same namespace across ALL of aws customers (think salesforce)
+- is universably referencable (and web accessible) across all other AWS resources, regions, etc
 - use cases
 
   - static website hosting
@@ -98,6 +103,21 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
   - application hosting: dpeloy, install and manage web applications
   - media hosting: video, photo, music uploads/downloads
   - software delivery: host apps for download
+
+- storage types
+
+  - standard: various degrees of regular access durability (99.99%); highest storage cost, but lowest interaction cost
+  - standard infrequent access: not access regularly (99.9%); half the cost for storage, but double interaction cost relative to standard, useful for backups
+  - one zone infrequent access: lowest availability offerring (99.5%); objects exist within a single availability zone; lowest storage cost, but double interaction cost; great for non-master data
+  - intelligent tiering: 99.9% availability; high storage cost; but after 30 days of no access data is moved to the infrequent access tier which lowers the storage cost, and an additional cost for moving between infrequent & standard
+    - great for shifting access patterns, you dont have to manage the lifecycle
+  - glacier: for archival data 99.99% durability; low storage cost but highest interaction cost + 90 day minimum charge
+  - glacier deep archive: same durability but 1/4 cost of glacier but 180-day minimum chart, with the highest interaction cost
+
+- S3 CRR: Cross-Region replication: replicate objects in one region in another region
+
+  - requires you to enable versioning in the source bucket
+  - deleting objects in the source bucket will remove them from the target bucket
 
 - costs
 
@@ -285,6 +305,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 
 ## ebs
 
+- when you need to store data on a server
 - elastic block storage
   - block level storage volumes directly attached to an ec2 instance
     - its like adding an extra harddrive to your laptop
