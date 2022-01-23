@@ -7,6 +7,10 @@
 ### best practices / gotchas
 
 - always
+  - DNS (route 53) level routing to resources behind a load balancer is critical for microservices
+  - for compute resources: there should be an additional load balancer associated with an autoscaling group for high availability and automatic registration in health checks for scale/in events
+  - increase the segmentation of business logic via distinct resources that handle specific aspects of your business
+    - i.e. dont have one monolithic code base, but use a service oriented architecture where each service can scale out & in and adopt an event driven model
 - sometimes
   - push an event from SNS into an SQS queue
 
