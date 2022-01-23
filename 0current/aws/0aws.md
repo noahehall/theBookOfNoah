@@ -148,7 +148,13 @@ things that generally apply to all services
   - Autoscaling with appropriate triggers (see provisioning file)
   - AMIs
   - ebs snapshots
-  - db level architecture: specifially NoSQL dbs are easier to architect for high availability relative to relational dbs
+  - db level architecture:
+    - NoSQL dbs are easier to architect (especially dynamodb) for high availability relative to relational dbs
+    - relational dbs require much higher level expertise to improve availability (unless your using RDS + multi-availability option on launch)
+      - primary DB server on ec2 + standby in different AZ
+      - replicas on different EC2s in different regions, VPCs, availabilty zones, and subnets
+        - note the greater the distance from the primary DB, the longer it takes for data to be reflected
+      - operational details: OS management, db management, data protection schemes, primary DB failure scenarios, etc etc etc
   - caching
   - s3
   - cloudfront

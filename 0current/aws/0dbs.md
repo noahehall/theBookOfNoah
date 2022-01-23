@@ -299,6 +299,8 @@ Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, s
 ## dynamodb
 
 - fully managed highly available & fault tolerant (infrastructure failure) nosql db
+  - the ease in which you get high availability & fault tolerance cannot be beat
+  - however you are fkn stuck on AWS
 - DynamoDB Local is available as a download (requires JRE), as an Apache Maven dependency, or as a Docker image.
 - designed for a single AWS region
 - data is automatically replicated across three independent locations
