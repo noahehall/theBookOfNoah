@@ -40,6 +40,10 @@ dynamodb, rds, aurora (proprietary mysql), elasticache, keyspaces, neptune
 
 ## best practices
 
+- storage types
+  - provisioned IOPS: when you have high throughput needs
+  - general purpose: for everything else
+
 ### gotchas
 
 - managed DB services
@@ -47,45 +51,49 @@ dynamodb, rds, aurora (proprietary mysql), elasticache, keyspaces, neptune
   - restricted user privileges
   - inability to micropatch (you have to wait for AWS)
 
+## terms
+
+- database resiliency: Resiliency is the ability of resource to recover quickly and continue operating even when there has been an failure/disruption; users of a resilient system never know that a disruption has even occurred.
+
 ## aurora
 
-Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, starting at <$1/day. Aurora supports up to 64TB of auto-scaling storage capacity, 6-way replication across three availability zones, and 15 low-latency read replicas
+- Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, starting at <$1/day.
+- designed for high availability & scalability
+  - supports up to 64TB of auto-scaling storage capacity, 6-way replication across three availability zones, and 15 low-latency read replicas
 
 ## rds
 
-### basics
-
 - az: availablity zone; distinct data center in a specific region; reach region has at least two AZs
 - RDS: web service to setup, operate and scale a relational database in the AWS cloud
+- managed db service: responsibile for most managmeent tasks
 
-  - managed db service: responsibile for most managmeent tasks
+- limitations
 
-  - limitations
+  - up to 40 postgresql db instances
+  - storage limits (see storage link)
+  - max connections: rds requires 3 connections for system maintenance
+    - if you set a value for user connections, always `add 3` to account for rds system management connections
 
-    - up to 40 postgresql db instances
-    - storage limits (see storage link)
-    - max connections: rds requires 3 connections for system maintenance
-      - if you set a value for user connections, always `add 3` to account for rds system management connections
+- use cases
 
-  - use cases
+  - cost-efficient, resizable capacity for industry standard relation db
+  - manages common admin tasks
+    - backups: automatic (have to turn on) or manual; can be used to restore a db
+    - software patching
+    - automatic failure detection
+    - recovery
+    - high availability with a primary instance and a sync seocndary instance: failover to secondary when problems occur
+    - scalability: use read replicas to increase read scaling
+    - security: via IAM (create users access) and provision behind a VPC
+  - use commoon db products: mysql, mariadb, postgres, oracle & microsoft sql server
 
-    - cost-efficient, resizable capacity for industry standard relation db
-    - manages common admin tasks
-      - backups: automatic (have to turn on) or manual; can be used to restore a db
-      - software patching
-      - automatic failure detection
-      - recovery
-      - high availability with a primary instance and a sync seocndary instance: failover to secondary when problems occur
-      - scalability: use read replicas to increase read scaling
-      - security: via IAM (create users access) and provision behind a VPC
-    - use commoon db products: mysql, mariadb, postgres, oracle & microsoft sql server
+- recommended version: postgres 13.4
 
-  - recommended version: postgres 13.4
-    - [all extensions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts.General.FeatureSupport.Extensions.13x)
-      - [spi model](https://www.postgresql.org/docs/13/contrib-spi.html)
-      - [pgrouting](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_Partitions.html)
-      - [pglogical](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_Partitions.html)
-      - [postgis](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.PostGIS.html#CHAP_PostgreSQL.Extensions.PostGIS)
+  - [all extensions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts.General.FeatureSupport.Extensions.13x)
+    - [spi model](https://www.postgresql.org/docs/13/contrib-spi.html)
+    - [pgrouting](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_Partitions.html)
+    - [pglogical](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_Partitions.html)
+    - [postgis](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.PostGIS.html#CHAP_PostgreSQL.Extensions.PostGIS)
 
 - db instance: isolated DB enviornment in AWS cloud; the basic building block of rds
   - contain one/more user-created dbs
@@ -115,10 +123,18 @@ Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, s
   - only support asyncrhonous replication
   - can be promoted to standalone independent instances
     - to implement sharding to address scalability
-  - add the multi-availability option for automatic replication to another AZ
-    - cross region replication can be enabled but it costs more
+  - add the multi-availability zone option for automatic replication to another AZ
+    - you need to create a subnet group
 
 ### worfklows
+
+#### multi-availibity zone RDS
+
+- create a VPC
+- create a db subnet group for the database in each AZ you want to have a DB instance in
+  - you generally want your DBs in private subnets, so only internal resources can access them
+- create a primary RDS instance in one of your previously created subnets
+- then setup read replica instances in the other subnets
 
 #### determining db instance requirements
 
