@@ -1,6 +1,6 @@
 # TLDR
 
-dynamodb, rds, aurora (proprietary mysql), elasticache, keyspaces, neptune
+dynamodb, rds, aurora (mysql/postgres), elasticache, keyspaces, neptune (graph db)
 
 ## links
 
@@ -43,6 +43,7 @@ dynamodb, rds, aurora (proprietary mysql), elasticache, keyspaces, neptune
 - storage types
   - provisioned IOPS: when you have high throughput needs
   - general purpose: for everything else
+  - storage autoscaling: offload management of increasing db storage capcity to AWS (enable this and move on with your life) but be aware of costs
 
 ### gotchas
 
@@ -123,12 +124,12 @@ dynamodb, rds, aurora (proprietary mysql), elasticache, keyspaces, neptune
   - only support asyncrhonous replication
   - can be promoted to standalone independent instances
     - to implement sharding to address scalability
-  - add the multi-availability zone option for automatic replication to another AZ
+  - add the multi-AZ zone option for automatic replication to another AZ
     - you need to create a subnet group
 
 ### worfklows
 
-#### multi-availibity zone RDS
+#### multi-AZ deployment RDS
 
 - create a VPC
 - create a db subnet group for the database in each AZ you want to have a DB instance in
