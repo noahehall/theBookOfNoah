@@ -383,10 +383,13 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db)
     - this improves write performance as you can distribute writes to multiple shards
     - each shard stores data independently
     - you generally want at least one (and preferrable 2) read replica per shard to guard against failure
+- rebalancing (scaling in/out shards) can take hours depending on instance size, EBS speed, and transaction volume
 
 ## keyspaces
 
-- i.e. cassandra
+- managed compatable apache cassandra nosql database designed to be highly available with no single point of failure
+- tables are encrypted by default and spread out 3 times across AZs
+- has a 99.99 avaialbility SLA in each region (less than an hour of downtime per year)
 
 ## neptune
 

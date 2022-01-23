@@ -1,7 +1,3 @@
-<https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-incident-response.html>
-top of page, then just keep fkn clicking next at the bottom
-^ this shit iz massive
-
 # TLDR
 
 s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
@@ -76,47 +72,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
       - [configuring cors](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html)
       - [troubleshooting](https://docs.aws.amazon.com/AmazonS3/latest/userguide/cors-troubleshooting.html)
 
-## basics
-
-### terminology
-
-- bucket: a container for objects
-- object: a file + metadata; the bucket must already be created
-
-### use cases
-
-- static website hosting
-- backup and storage: manage costs, meet regulatory requirements, reduce latency and save multiple distinct copies of data for compliance requirements
-- application hosting: dpeloy, install and manage web applications
-- media hosting: video, photo, music uploads/downloads
-- software delivery: host apps for download
-
-### costs
-
-- you are not charged for
-
-  - creating buckets
-  - using Access Analyzer for s3
-    - you need to create an account-level analyzer in IAM Access Analyzer on a per-region bases
-
-- you are charged for
-
-  - objects in buckets
-  - more info: go to the s3 pricing (see link above)
-    - ensure you tab through each cost type
-      - storage
-      - requests & data retrievals
-      - data transfer
-      - management & analytics
-      - replication
-      - s3 object lambda
-
-- storage classes
-  - s3 (simple storage): regular storage for frequent read/writes
-  - s3 glacier: durable low-cost storage for infrequenlty used data
-    - includes data archiving & backup
-
-### best practices
+## best practices
 
 - ALWAYS
   - use an IAM user to make authenticated requests (i.e. never the root user)
@@ -125,10 +81,47 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
     - do not implement bucket policiess that allow anonymouse public writes to buckets
     - do not use ACLs that allow `anonymouse user` write access
     - i.e. use the `S3 Block Public Access`
-- NEVER
-  - TBD
 
-## s3 model & workflow architecture
+## basics
+
+### terminology
+
+- bucket: a container for objects
+- object: a file + metadata; the bucket must already be created
+
+## S3
+
+- use cases
+
+  - static website hosting
+  - backup and storage: manage costs, meet regulatory requirements, reduce latency and save multiple distinct copies of data for compliance requirements
+  - application hosting: dpeloy, install and manage web applications
+  - media hosting: video, photo, music uploads/downloads
+  - software delivery: host apps for download
+
+- costs
+
+  - you are not charged for
+    - creating buckets
+    - using Access Analyzer for s3
+      - you need to create an account-level analyzer in IAM Access Analyzer on a per-region bases
+  - you are charged for
+    - objects in buckets
+    - more info: go to the s3 pricing (see link above)
+      - ensure you tab through each cost type
+        - storage
+        - requests & data retrievals
+        - data transfer
+        - management & analytics
+        - replication
+        - s3 object lambda
+
+- storage classes
+  - s3 (simple storage): regular storage for frequent read/writes
+  - s3 glacier: durable low-cost storage for infrequenlty used data
+    - includes data archiving & backup
+
+### s3 model & workflow architecture
 
 - bucket & object: flat hierarchy
 
