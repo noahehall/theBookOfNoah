@@ -1,6 +1,6 @@
 # TLDR
 
-dynamodb, rds, aurora (mysql/postgres), elasticache, keyspaces, neptune (graph db)
+dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db)
 
 ## links
 
@@ -59,6 +59,10 @@ dynamodb, rds, aurora (mysql/postgres), elasticache, keyspaces, neptune (graph d
   - dont give you access to all features for every database engine
   - restricted user privileges
   - inability to micropatch (you have to wait for AWS)
+
+### troubleshooting
+
+- if app perf is slow, check the status of DB/cache clusters to see if you need to add additional nodes/read-replicas
 
 ## terms
 
@@ -340,10 +344,45 @@ dynamodb, rds, aurora (mysql/postgres), elasticache, keyspaces, neptune (graph d
 ## elasticache
 
 - for in memory data, supports both redis & memcache
+- both
+  - completely managed
+  - neither service uses the latest version of either engine
+- distinction
+  - memcache
+    - only auto scales vertically (increase instance size), you have to manually scale in/out the # of nodes in a cluster
+    - read only cache
+  - redis
+    - scales auto scales both vertically & horizontally
+    - cache is read & write
+    - fault tolerance is more complex; ensure you select append only file (AOF) for data durability
+    - use replication groups to protect against cluster failure
+      - consists of a primary read/write cluster + 5 read only replicas that are updated asynchronously
+      - however there is no manual cluster promotion (AWS manages this by creating a new one in the existing AZ)
+
+### memcache
+
 - fully managed multi-AZ protocol compliant adaption of memcache by AWS but not the most current version of memcache
 - can modify number of running nodes via api call/web console (up to 100)
-- you have to create a cache subnet group (similar workflow to an RDS subnet group)
-  - generally you want atleast 2 nodes per AZ
+- mult node memcache cluster
+  - you have to create a cache subnet group (similar workflow to an RDS subnet group)
+    - generally you want atleast 2 nodes per subnet in a private cache subnet group in each AZ
+    - by defualt, the # of nodes you select in the config screen will be distributed across the subnets in your selected cache subnet group
+
+### redis
+
+- multi AZ capability
+  - create cache subnet group in multiple AZs
+  - one contains the primary read/write instance
+  - other contains the read replicas
+  - global datastore enables cross-region read replicas
+  - on primary node failure: the read replica with the least amount of replication lag is chosen and promoted to primary read/write
+    - internal to elasticache, no change is required
+    - but since your application is required to access the read/write via endpoint, you have to update your code to point to the new read/write
+    - if you dont setup any read replicas, on failure, you lose everything!
+  - cluster mode: the data is distributed across nodes in shards (up to 90) to help guard against any single node being overwhelmed
+    - this improves write performance as you can distribute writes to multiple shards
+    - each shard stores data independently
+    - you generally want at least one (and preferrable 2) read replica per shard to guard against failure
 
 ## keyspaces
 
