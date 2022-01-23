@@ -702,6 +702,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
 ## api gateway
 
+- The AWS API Gateway is used as a single point of access to services.
 - homogenous access to resource endpoints
 - facilitates management of API performance
 - route arbitrary (http/https/websocket) inbound requests to arbitrary aws services

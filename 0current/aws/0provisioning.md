@@ -7,8 +7,10 @@ cloudformation, config, systems manager, autoscaling
 - a deep understanding of your application is the only way to create effective autoscaling configurations & policies
 - think deeply about your demand profile when setting up autoscaling policies
 - always simulate your autoscaling policy configuration via the web console > scaling policy > actions dropdown > execute
-- combine load balancing and auto scaling to deliver highly available services
-  - that way instances are registered and automatically placed behind the load balancer and added to health checks automatically
+- autoscaling
+  - combine load balancing and auto scaling to deliver highly available services
+    - that way instances are registered and automatically placed behind the load balancer and added to health checks automatically
+  - Simulate a failover by terminating an instance and verifying the other instances have handled the additional processes.
 
 ### gotchas
 
@@ -80,7 +82,7 @@ cloudformation, config, systems manager, autoscaling
     - step scaling: greater control over scale in/out events in response to cloud watch alarms; % based scaling that also evaluates during cooldown periods (unlike simple scaling)
       - e.g. target value of 60%, if it goes up by 10%, add 1 additional instance, if its passed by 30%, add 3 instances
       - allows for fine-grained scale adjustments
-    - simple scaling: not revaluated during cooldown periods; if you experience a huge and sudden change in demand, you may not scale out appropriately
+    - simple scaling: not re-evaluated during cooldown periods; if you experience a huge and sudden change in demand, you may not scale out appropriately
     - Simple Queue Service
 
 - considerations

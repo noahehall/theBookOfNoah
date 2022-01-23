@@ -298,7 +298,21 @@ Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, s
 
 ## dynamodb
 
-- nosql db
+- fully managed highly available & fault tolerant (infrastructure failure) nosql db
+- DynamoDB Local is available as a download (requires JRE), as an Apache Maven dependency, or as a Docker image.
+- designed for a single AWS region
+- data is automatically replicated across three independent locations
+- dynamodb streams: replicate a dynamodb table to separate region(s)
+- global table: automatically replicate a table across multiple aws regions automatically
+  - the tables are multi-master, i.e. that can be written to/from any region
+  - to convert a regional table to a global table, streams must be enabled & write capacity must be configured as paper-request/auto-scaled (preferred)
+- elastic storage: AWS has no limit on the amount of data you can store (up to billions of documents in a single table)
+- elastic throughput: can adjust the throughput via an API call to match demand patterns
+
+- considerations
+  - table name
+  - primary key- sort keys
+  - global table: create a regular table > globl tables tab > add a global table region(s) to replicate the table across regions
 
 ## elasticache
 

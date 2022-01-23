@@ -148,7 +148,7 @@ things that generally apply to all services
   - Autoscaling with appropriate triggers (see provisioning file)
   - AMIs
   - ebs snapshots
-  - db level architecture
+  - db level architecture: specifially NoSQL dbs are easier to architect for high availability relative to relational dbs
   - caching
   - s3
   - cloudfront
