@@ -7,6 +7,8 @@ cloudformation, config, systems manager, autoscaling
 - a deep understanding of your application is the only way to create effective autoscaling configurations & policies
 - think deeply about your demand profile when setting up autoscaling policies
 - always simulate your autoscaling policy configuration via the web console > scaling policy > actions dropdown > execute
+- combine load balancing and auto scaling to deliver highly available services
+  - that way instances are registered and automatically placed behind the load balancer and added to health checks automatically
 
 ### gotchas
 
@@ -36,7 +38,7 @@ cloudformation, config, systems manager, autoscaling
 
 - auto scaling group: ASG: uses the launch template (i.e. ec2 template) for creating ec2 instances across subnets & AZs in a VPCs
 
-  - the ASG itself should be placed behind a load balancer
+  - target groups: a group of ec2 resources
   - launch configuration/template
   - number of initial, desired, and maximum instances to have running
     - desired: # you want running, scaling will ensure this is the normal running capacity bar any changes in demand
@@ -44,12 +46,24 @@ cloudformation, config, systems manager, autoscaling
     - maximum: duh: but think about it, you dont want to set it too high because a DOS attack can trigger unbelievable costs
   - VPC
   - subnets
-  - load balancing
+  - load balancing: will monitor load balancer utilization and scale in/out ec2 resources
+
+    - you need to have previously created an application or classic load balancer
+    - for an existing/new auto scaling group click edit and go to the load balancing section
+    - gotchas:
+      - the '`choose a target group for your load balancer`' option is for application load balancers
+      - the '`choose a load balancer`' option is for classic load balancers
+    - create a new target group for a CLB/ALB that targets the instances managed by the auto scaling group
+    - then go to an existing load balancer and click edit rules on the listeners tab
+    - you want to insert a new rule (or modify an existing one) that matches those instances (e.g. path based rule) then sticky (i.e always) forwards to the target group you created in the previous step
+    - now your load balancer forwards to the target group that contains the ec2 instances
+    - you should return to the auto scaling group, and ensure `ELB` health checks is selected under the health checks section in addition to the EC2 health checks
+
   - health checks: how long to wait before checking if newly launched instances are healthy
   - cloudwatch: collect group metrics to track changes to the autoscaling group over time
   - sns topics: add notifications when scaling events occur
 
-- scaling polices: define which [cloud watch alarm] events trigger scaling actions; a tool to dynamically control the number of running instances in an autoscaling group
+- scaling polices: define which [cloud watch alarm] metric event thresholds trigger scaling actions; a tool to dynamically control the number of running instances in an autoscaling group
 
   - autoscaling group > automatic scaling tab
   - scale out: increase capacity

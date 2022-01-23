@@ -778,6 +778,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - container support: containers running directly on ec2 or the ec2-container service, can be fronted by an ALB
   - lambda support: specify lambda fns as ALB targets
   - connection draining: based on a configurable timeout, enables an EC2 scheduled for removal to complete any inflight requests without receiving any new ones from the ALB
+  - fronting an autoscaling group (see provisioning file)
 
 ### NLB network load balancer
 
