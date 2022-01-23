@@ -38,20 +38,20 @@ dynamodb, rds, aurora (proprietary mysql), elasticache, keyspaces, neptune
 
   -
 
+## best practices
+
+### gotchas
+
+- managed DB services
+  - dont give you access to all features for every database engine
+  - restricted user privileges
+  - inability to micropatch (you have to wait for AWS)
+
 ## aurora
 
 Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, starting at <$1/day. Aurora supports up to 64TB of auto-scaling storage capacity, 6-way replication across three availability zones, and 15 low-latency read replicas
 
 ## rds
-
-- todo
-  - ondemand db instances <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_OnDemandDBInstances.html>
-  - db instance billing <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/User_DBInstanceBilling.html>
-  - reserved db instances <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithReservedDBInstances.html>
-  - multi-az <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html>
-  - regions, avialability, local zones <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html>
-  - db instance storage <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html>
-  - db instance classes <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html>
 
 ### basics
 
@@ -106,7 +106,17 @@ Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, s
   - endpoint for api/cli: `rds-preview.us-east-2.amazonaws.com`
 
 - modules: i.e. postgres extensions
+
   - see modules available for your current version after logging into psql `SHOW rds.extensions;`
+
+- read-replica considerations
+  - support read-only SQL queries
+  - requires automatic backups
+  - only support asyncrhonous replication
+  - can be promoted to standalone independent instances
+    - to implement sharding to address scalability
+  - add the multi-availability option for automatic replication to another AZ
+    - cross region replication can be enabled but it costs more
 
 ### worfklows
 

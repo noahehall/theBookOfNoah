@@ -3,13 +3,12 @@
 - cli, regions, azs, service quotas, etc
 
 - broad strategies & architectures that encompass multiple AWS resources
+- things that generally apply to all services
 
 ## todo
 
 - <https://aws.amazon.com/tools/>
 - supported compliance standards: <http://aws.amazon.com/compliance/>
-
-things that generally apply to all services
 
 - lot of things about IAM in here, move it into the 0security file
 
@@ -51,15 +50,16 @@ things that generally apply to all services
       - [manage private keys (pem)](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-keypairs.html)
       - [import an existing key pair into aws](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-key-pair.html#examples)
 
-## basics
-
 ### best practices/gotchas
 
 - gotchas
+  - using any AWS managed service makes you operationally dependent on AWS
   - not all services are available in all regions
   - not all services cost the same in all regions
 - picking a region
   - service availability, pricing, latency, compliance (law), SLAs
+
+## basics
 
 ### terminology
 
@@ -151,7 +151,7 @@ things that generally apply to all services
   - db level architecture:
     - NoSQL dbs are easier to architect (especially dynamodb) for high availability relative to relational dbs
     - relational dbs require much higher level expertise to improve availability (unless your using RDS + multi-availability option on launch)
-      - primary DB server on ec2 + standby in different AZ
+      - primary DB server on ec2 + standby in different AZ + automatic failover on failure (use DNS name instead of IP)
       - replicas on different EC2s in different regions, VPCs, availabilty zones, and subnets
         - note the greater the distance from the primary DB, the longer it takes for data to be reflected
       - operational details: OS management, db management, data protection schemes, primary DB failure scenarios, etc etc etc
