@@ -150,7 +150,7 @@
   - ebs snapshots
   - db level architecture:
     - NoSQL dbs are easier to architect (especially dynamodb) for high availability relative to relational dbs
-    - relational dbs require much higher level expertise to improve availability (unless your using RDS + multi-availability option on launch)
+    - relational dbs require much higher level expertise to improve availability (unless your using RDS + multi-AZ option)
       - primary DB server on ec2 + standby in different AZ + automatic failover on failure (use DNS name instead of IP)
       - replicas on different EC2s in different regions, VPCs, availabilty zones, and subnets
         - note the greater the distance from the primary DB, the longer it takes for data to be reflected

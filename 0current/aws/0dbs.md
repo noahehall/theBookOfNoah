@@ -44,6 +44,14 @@ dynamodb, rds, aurora (mysql/postgres), elasticache, keyspaces, neptune (graph d
   - provisioned IOPS: when you have high throughput needs
   - general purpose: for everything else
   - storage autoscaling: offload management of increasing db storage capcity to AWS (enable this and move on with your life) but be aware of costs
+- simulating DB failure
+  - login to the DB and get the host via SQL e.g. `select host_name`
+  - go to the RDS/etc config page and reboot instance (ensure with failover is checked)
+  - click the log & events tab and check that failover occured
+  - log back into the DB and retrieve the hostname, it should be different
+- all applications should have DB reconnect logic to manage the scenarios of dbs being replaced and connections being lossed
+- managed multi-AZ doubles the cost for each additional instance,
+- a single db subnet group can be shared across db services (e.g. aurora, neptune, rds, etc)
 
 ### gotchas
 
@@ -119,6 +127,7 @@ dynamodb, rds, aurora (mysql/postgres), elasticache, keyspaces, neptune (graph d
   - see modules available for your current version after logging into psql `SHOW rds.extensions;`
 
 - read-replica considerations
+
   - support read-only SQL queries
   - requires automatic backups
   - only support asyncrhonous replication
@@ -127,61 +136,61 @@ dynamodb, rds, aurora (mysql/postgres), elasticache, keyspaces, neptune (graph d
   - add the multi-AZ zone option for automatic replication to another AZ
     - you need to create a subnet group
 
-### worfklows
+- multi-AZ deployment RDS
 
-#### multi-AZ deployment RDS
+  - create a VPC
+  - create a db subnet group for the database in each AZ you want to have a DB instance in
+    - you generally want your DBs in private subnets, so only internal resources can access them
+  - create a primary RDS instance in one of your previously created subnets
+  - you can either:
+    - add the multi-AZ at the time of creation
+    - come back later an modify it (theres a perf impact and could take the db offline while in process)
 
-- create a VPC
-- create a db subnet group for the database in each AZ you want to have a DB instance in
-  - you generally want your DBs in private subnets, so only internal resources can access them
-- create a primary RDS instance in one of your previously created subnets
-- then setup read replica instances in the other subnets
+- determining db instance requirements
 
-#### determining db instance requirements
+  - resource reqs:
+    - memory?
+    - cpu?
+  - VPC, subnet and security group:
+    - security group rules: based on type of VPC and region
+      - default VPC: automatically configured to support db instances
+        - create a VPC security group that authorizes connection fro the application/service to RDS db instance
+        - specify the default DB subnet group
+      - user defined VPC: must be created before you setup the DB instance
+        - create a VPC security group that authorizes connections from the app/service to RDS db instance
+        - configure the VPC to host DB instances
+          - atleast 2 subnets each in distinct availablity zones
+          - if db instance is publicly accessible,
+            - requires an internet gateway attached to the vpc
+            - support DNS resolution, DNS hostnames
+              - go to the vpc console > select vpc > actoins > drop through each one
+        - specify a DB subnet group that defines which subnets in that VPC can be used by the DB instance
+  - high availability
+    - failover support in production & testing runbooks: a Multi-AZ deployment creates a primary & secondary (standby) db instance in another az for failover support
+  - iam policies: ensure you have account policies that grant the permissions needed to perform RDS operations
+  - open ports: ensure the TCP/IP port your db uses is accessible through your companies firewall policies
+  - AWS region: ensure your DB is provisioned in the region closes to your sers
+  - DB disk subsystem: determine the type of storag eyou need
+    - magnetic (standard): i.e. disk-based; most cost-effect; ideal for applications with light/burst I/O reqs
+    - general purpose (SSD): i.e. gp2; faster access than disk-based
+    - provisioned IOPS (PIOPS): the fastest; ideal for I/O-intensive workloads requireing storage performance and consistency in random I/O throughput
 
-- resource reqs:
-  - memory?
-  - cpu?
-- VPC, subnet and security group:
-  - security group rules: based on type of VPC and region
-    - default VPC: automatically configured to support db instances
-      - create a VPC security group that authorizes connection fro the application/service to RDS db instance
-      - specify the default DB subnet group
-    - user defined VPC: must be created before you setup the DB instance
-      - create a VPC security group that authorizes connections from the app/service to RDS db instance
-      - configure the VPC to host DB instances
-        - atleast 2 subnets each in distinct availablity zones
-        - if db instance is publicly accessible,
-          - requires an internet gateway attached to the vpc
-          - support DNS resolution, DNS hostnames
-            - go to the vpc console > select vpc > actoins > drop through each one
-      - specify a DB subnet group that defines which subnets in that VPC can be used by the DB instance
-- high availability
-  - failover support in production & testing runbooks: a Multi-AZ deployment creates a primary & secondary (standby) db instance in another az for failover support
-- iam policies: ensure you have account policies that grant the permissions needed to perform RDS operations
-- open ports: ensure the TCP/IP port your db uses is accessible through your companies firewall policies
-- AWS region: ensure your DB is provisioned in the region closes to your sers
-- DB disk subsystem: determine the type of storag eyou need
-  - magnetic (standard): i.e. disk-based; most cost-effect; ideal for applications with light/burst I/O reqs
-  - general purpose (SSD): i.e. gp2; faster access than disk-based
-  - provisioned IOPS (PIOPS): the fastest; ideal for I/O-intensive workloads requireing storage performance and consistency in random I/O throughput
+- create a VPC security group to provide access to your db instance
 
-#### create a VPC security group to provide access to your db instance
-
-- if youre not using the default VPC, do the following to create a security group for a user-defined VPC
-  - go the VPC console > security groups > create
-  - give a name, description
-  - select the VPC you want to creat eyour DB instance in
-  - setup rules
-    - inbound (repeat if you need multiple access rules, e.g. for different users/applications)
-      - type: custom TCP
-      - port range: value for your db instance
-      - source: security groupname/ID address range (CIDR value) from where you access the db istance
-        - ip address: permits ccess to the db instance from the IP address detected in your browser
-    - outbound: default all outbound connections permitted
-      - generally you should limit outbound to the set of APIs you'll be providing data too
-- if your using the default VPC, a default subnet group spanning all VPCs subnets is created for you
-  - you can select the default VPC to use
+  - if youre not using the default VPC, do the following to create a security group for a user-defined VPC
+    - go the VPC console > security groups > create
+    - give a name, description
+    - select the VPC you want to creat eyour DB instance in
+    - setup rules
+      - inbound (repeat if you need multiple access rules, e.g. for different users/applications)
+        - type: custom TCP
+        - port range: value for your db instance
+        - source: security groupname/ID address range (CIDR value) from where you access the db istance
+          - ip address: permits ccess to the db instance from the IP address detected in your browser
+      - outbound: default all outbound connections permitted
+        - generally you should limit outbound to the set of APIs you'll be providing data too
+  - if your using the default VPC, a default subnet group spanning all VPCs subnets is created for you
+    - you can select the default VPC to use
 
 ```sh
   # example from defualt vpc + subnets
@@ -227,13 +236,9 @@ dynamodb, rds, aurora (mysql/postgres), elasticache, keyspaces, neptune (graph d
     # then you can create an ec2 server to connect to your db instance
     # ^ make sure the ec2 instance has the correct security group you created earlier (the public one)
 
-
-
-
-
 ```
 
-#### postgres on RDS
+### postgres on RDS
 
 - managed service running specific version of postgresql
 - use cases
@@ -249,7 +254,7 @@ dynamodb, rds, aurora (mysql/postgres), elasticache, keyspaces, neptune (graph d
     - protected health information (PHI) under a completed business associate agreement (BAA) wth AWS
     - federal risk & authorization management program (FedRAMP) security requirements
 
-##### postgres upgrading major/minor versions
+#### postgres upgrading major/minor versions
 
 - types of upgrades
   - operating system upgrades: the underlying opreating system of the DB instance for secuirty fixes/OS changes
@@ -286,7 +291,7 @@ dynamodb, rds, aurora (mysql/postgres), elasticache, keyspaces, neptune (graph d
 
 ```
 
-##### connecting to db instance
+#### connecting to db instance
 
 - notes
 
@@ -312,17 +317,6 @@ dynamodb, rds, aurora (mysql/postgres), elasticache, keyspaces, neptune (graph d
 - connect via pgadmin
 - connect via psql
 
-### quickies
-
-```sh
-  # always set the default profile
-    export AWS_DEFAULT_PROFILE=someprofile
-
-  # see supported postgres versions
-    aws rds describe-db-engine-versions --default-only --engine postgres
-
-```
-
 ## dynamodb
 
 - fully managed highly available & fault tolerant (infrastructure failure) nosql db
@@ -346,6 +340,10 @@ dynamodb, rds, aurora (mysql/postgres), elasticache, keyspaces, neptune (graph d
 ## elasticache
 
 - for in memory data, supports both redis & memcache
+- fully managed multi-AZ protocol compliant adaption of memcache by AWS but not the most current version of memcache
+- can modify number of running nodes via api call/web console (up to 100)
+- you have to create a cache subnet group (similar workflow to an RDS subnet group)
+  - generally you want atleast 2 nodes per AZ
 
 ## keyspaces
 
@@ -353,4 +351,9 @@ dynamodb, rds, aurora (mysql/postgres), elasticache, keyspaces, neptune (graph d
 
 ## neptune
 
-- a graph database
+- a fully managed high-available graph database
+- vertically scalable: can adjust the instance size of a running instance
+- redundant database volumes: each db volume replicated multiple times across 3 availability zones
+- supports up to 15 async read replicas; any replica can be promoted to primary in event of failure with automatic DNS name pointing to the new primary during failover
+- does not offer cross-region replicas
+- after creation of a neptune cluster, you can add a new read replica via the actions dropdown
