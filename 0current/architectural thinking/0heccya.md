@@ -463,13 +463,6 @@ various components exist when designing a system, understanding the specific com
   - continue to think through this distinction
   - i've yet to see it put in terms this way
 
-### CTA: Call To Action: Context, Technical Context, Asides
-
-- capturing user requirements and acceptance criteria in normal language
-  - Context: biz context, put on your CEO & forward-facing CTO hat
-  - technical context: put on your inward-facing CTO & engineer hat
-  - Asides: supplementary information
-
 ### types of patterns
 
 - distributed: components can be fully decoupled with heavy reliance on the communication channel
