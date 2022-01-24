@@ -5,6 +5,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 ## links
 
 - [host a static website in under 20 minutes](https://www.youtube.com/watch?v=5qS3DzSn5Z4)
+- [RPO vs RTO strategies](https://www.druva.com/glossary/what-is-a-recovery-point-objective-definition-and-related-faqs/)
 - s3 tools
   - [storage inventory](https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-inventory.html)
   - [s3 node sdk](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/getting-started-nodejs.html)
@@ -79,6 +80,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
   - understand your availability requires in the design phase
   - to minimize data stored on a server always attach an EBS volume to it
     - an EBS volumes survive ec2 instance failure and can be reattched to a new instance
+    - however youre still vulnerable to an EBS/AZ failure (use recurring EBS snapshots to mitigate)
 - SOMETIMES
   - prevent objects from being modified by the `anonymouse user`
     - do not implement bucket policiess that allow anonymouse public writes to buckets
@@ -91,6 +93,8 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 
 - bucket: a container for objects
 - object: a file + metadata; the bucket must already be created
+- recovery time objective: RTO; the amount of real time a business has to restore its processes at an acceptable service level after a disaster to avoid intolerable consequences associated with the disruption
+- recovery point objective: RPO; the maximum amount of data – as measured by time – that can be lost after a recovery from a disaster, failure, or comparable event before data loss will exceed what is acceptable to an organization. An RPOs determines the maximum age of the data or files in backup storage needed to be able to meet the objective specified by the RPO
 
 ## S3 - Simple Storage Service
 
@@ -308,11 +312,11 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 ## ebs elastic block storage
 
 - when you need to store data on a server; an EBS can be attached (i.e. mounted) to any ec2 instance; i.e. like hard drive
-- raw unformated storage volumes (i.e. no file system, but you can add one)
+- can only be used in a single AZ; but you can create a snapshot and use it to populate another EBS in any region/account
+- raw unformated storage volumes (i.e. no file system, but you can add one) of a specific size (EFS is elastic)
 - can persist beyond the life of the ec2
   99.999% availability
 - ec2:ebs is a many:1 relationship
-- EBS can only be used in a single AZ; but you can create a snapshot and use it to populate another EBS in any region/account
 - snapshots are stored in s3
 - both EBS volumes and any corrosponding snapshots can be encrypted
   - if the volume is encrypted, the snapshots will be encrypted, and any subsequent EBS volumes created from the snapshot
@@ -342,8 +346,23 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 
 ## efs elastic file system
 
-- networked file system for linux machines
-- enables thousands of EC2 instances can concurrently accesss the same file system
+- fully managed networked attached file storage service that spreads the physical storage across multiple AZs in a specific region (unlike EBS which is only accessible from a single AZ)
+- enables thousands of EC2 instances to concurrently accesss the same file system from multiple AZs in the same region
+  - you create a mountpoint in each AZ
+  - each mountpoint is highly available, with a static IP and DNS name
+  - if a mount target fails, you'll have to instantiate new EC2 instances in an AZ with a healthy mount point
+    - you only need 1 mount point per AZ regardles of the amount of subnets within the AZ
+- uses the FNS protocol (suitable for linux machines)
+- only pay for the data you're actively consuming (just like S3)
+- volume size is elastic, unlike EBS where you have to specify how much disk space you need
+- useful for parallel apps that all need high throughput to the same files
+- has centralized security via EFS access points for both groups and users
+- lifecycle management similar to S3
+
+- considerations
+  - VPC
+  - which priv/pub subnets in which AZs to create mountpoints in
+  - security groups: you need to attach the mountpoint security group to each instance that is authorized to access the underlying network storage
 
 ## amazon FSx
 
