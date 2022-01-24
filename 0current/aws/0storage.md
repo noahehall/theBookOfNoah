@@ -303,17 +303,17 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
   - AWS IAM: provide access to specific users in your account
   - bucket policies
 
-## ebs
+## ebs elastic block storage
 
-- when you need to store data on a server
-- elastic block storage
-  - block level storage volumes directly attached to an ec2 instance
-    - its like adding an extra harddrive to your laptop
-  - raw unformated storage volumes (i.e. no file system)
-  - ec2 can have multiple volumes, but only one volume can be attached to one instance
-    - many to one
-    - volume & instance must be in the same AZ
-  - can persist beyond the life of the ec2
+- when you need to store data on a server; an EBS can be attached (i.e. mounted) to any ec2 instance; i.e. like hard drive
+- raw unformated storage volumes (i.e. no file system, but you can add one)
+- can persist beyond the life of the ec2
+  99.999% availability
+- ec2:ebs is a many:1 relationship
+- EBS can only be used in a single AZ; but you can create a snapshot and use it to populate another EBS in any region/account
+- snapshots are stored in s3
+- both EBS volumes and any corrosponding snapshots can be encrypted
+  - if the volume is encrypted, the snapshots will be encrypted, and any subsequent EBS volumes created from the snapshot
 
 ### EBS snapshots
 
