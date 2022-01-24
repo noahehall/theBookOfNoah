@@ -77,6 +77,8 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 - ALWAYS
   - use an IAM user to make authenticated requests (i.e. never the root user)
   - understand your availability requires in the design phase
+  - to minimize data stored on a server always attach an EBS volume to it
+    - an EBS volumes survive ec2 instance failure and can be reattched to a new instance
 - SOMETIMES
   - prevent objects from being modified by the `anonymouse user`
     - do not implement bucket policiess that allow anonymouse public writes to buckets
