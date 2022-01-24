@@ -1,6 +1,6 @@
 # TLDR
 
-s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
+s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot, Data Lifecycle Manager, AWS Backup,
 
 ## links
 
@@ -95,6 +95,27 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 - object: a file + metadata; the bucket must already be created
 - recovery time objective: RTO; the amount of real time a business has to restore its processes at an acceptable service level after a disaster to avoid intolerable consequences associated with the disruption
 - recovery point objective: RPO; the maximum amount of data – as measured by time – that can be lost after a recovery from a disaster, failure, or comparable event before data loss will exceed what is acceptable to an organization. An RPOs determines the maximum age of the data or files in backup storage needed to be able to meet the objective specified by the RPO
+
+## Snapshots
+
+- a full copy of all data for initial and the changed blocks (unless you change the encryption key) for subsequent snaps of its target
+- a snapshot target can be:
+  - an attached/boot volume (the full size of the drive, not just the data)
+  - the state of a DB instance
+    - for DBs natively installed on EC2
+      - you also have to consider how the DB interacts with the underlying operating system
+      - thus its like better to export the DB data via db specific methods
+    - for managed DBs (e.g. rds)
+      - for single-AZ instances the db will be unusuable because the db data has to be static while the snaphot is occuring
+        - for multi-az configs the snapshots are taken from the standby instances so you dont have to worry about it
+      - df
+  - etc
+- reside in the same region of the resource being copied, but can be replicated to a different region once completed
+- can be automated via cloudwatch events & lambda code
+
+## Data Lifecycle manager
+
+- daf
 
 ## S3 - Simple Storage Service
 
@@ -359,13 +380,36 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 - has centralized security via EFS access points for both groups and users
 - lifecycle management similar to S3
 
+- mounting an EFS to an EC2
+
+  - ensure youve assigned the default EFS security group to the EC2 instance
+  - ssh into the instance and install the EFS mount helper
+
 - considerations
   - VPC
   - which priv/pub subnets in which AZs to create mountpoints in
   - security groups: you need to attach the mountpoint security group to each instance that is authorized to access the underlying network storage
+  - life cycle policy: definitely need for cost optimizations
+  - throughput mode: bursting (vs provisioned) is only necessary for consistent high throughput requirements
+  - performance mode: max I/O (vs general purpose) is only necessary if support hundreds/thousands of concurrent ec2 instances
+  - encryption at rest
+  - file system policy: determines client access, click 'set policy' to see the actual policy on the JSON tab
+    - you can also see the role (ecs full access) applied to the EC2 instance via the ec2 dashboard instance screen
+  - access points: set standard linux permissions for (sub) directories in the file system for applications that need access the disk; e.g. the user (e.g. whatever user is setup on your AMI) & group ids, the directory path (e.g. /mnt/shared_storaged), and the owner (e.g. whatever user is setup on your AMI) & permissions (e.g. 755) of files within the dir
+    - you can then apply the file system policy to access points within the disk
 
-## amazon FSx
+## FSx
 
-- networked file system for windows machines/high performance workloads with using the luster filer system
-
--
+- fully managed networked file system
+  - use with Lustre: a distirbuted parallel file system
+    - scratch storage:
+      - no data replication
+      - potential data loss
+      - ood for transient data
+    - persistent storage
+      - good for master data
+      - automated file server replacement
+      - good for master data
+- burstable + dedicated throughput for intense I/O needs
+- available for windows and Lustre (linux)
+- backups are stored in s3
