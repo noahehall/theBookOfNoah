@@ -74,6 +74,13 @@
   - system specs should be reviewed, built and tests
   - create systems from specifications and manage them programatically
 
-### practices
+### practices: components of devops
+
+- incident command systems: identify, surface, share, control and correct failures and other misgivings
+- developers on call: creators should primarily be the support team for their creations; enables a fast feedback loop
+- pulic status pages: increases customer satisfaction & trust during service outage
+- blameless postmortems: there is generally never a single root cause; nor is human error an appropriate reason for a failure (the buck stops with the CEO)
+- embedded teams: reduces conflict of interest when responsibles are internal to the team managing the full breadth of a services lifecycle, thus SERVICE X team should include dev, qa, product, ops, etc; a team should never have to make a request to another team
+-
 
 ### tools
