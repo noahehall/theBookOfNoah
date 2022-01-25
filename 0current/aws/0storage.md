@@ -1,6 +1,6 @@
 # TLDR
 
-s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot, Data Lifecycle Manager, AWS Backup,
+s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot, Data Life cycle Manager, AWS Backup,
 
 ## links
 
@@ -113,9 +113,41 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 - reside in the same region of the resource being copied, but can be replicated to a different region once completed
 - can be automated via cloudwatch events & lambda code
 
-## Data Lifecycle manager
+## DLM Data Life cycle manager (ec2 dashboard > lifecycle manager)
 
-- daf
+- automate AMI and EBS snapshot management at 0 cost (but you pay for the underlying storage of snapshots)
+- snapshots created via DLM will be listed in ec2 > snapshots
+- you can see which policy created which snapshots via the snapshots tab in the left side bar > open a policy > schedules tab > show snapshots
+  - this is an easy way to delete snapshots when you delete the policy
+  - ^ deleting a policy does not delete the snapshots automatically
+- use cases
+
+  - configure policies that take snapshots on a rolling basis (e.g. every hour) to multiple regions and auto delete after some time
+    - each subsequent snapshot only contains the chained blocks since the last snapshot (as with all snapshots)
+  - automate EBS volume (whether boot/attached) protection policy
+  - automate EBS-backed AMI protection policy, e.g. for use with launch templates 4 ec2 instances, and AMIs that enable AMI launch configurations
+  - automate cross-account data protection
+
+- considerations
+  - you want to tag resources that should be backed up, e.g. key=DLM,value=TRUE
+  - resource type: volume only or instance + volume
+  - target with these tags: how you link a DLM policy to specific resources
+  - IAM role: the default should be good enough
+  - policy schedule: uses cron (ouch, need to find those notes or just google cron syntax), also configure show many snapshots are retained and the interval in which they're created
+  - copy tags: this is how you identify which snapshots are from which resource, by copying the source tags to the snapshot
+
+## AWS Backup
+
+- 0 cost (except the storage fees & cross-region transfer) managed backup capabilities across many AWS resources (DLM only supports EBS/AMIs)
+- components
+  - backup vault: logical storage of backups in any region
+  - recovery point: the state of a given resource at a given point in time, i.e. restore the resource at this timestamp
+  - backup plan: the backup policy
+- use cases
+  - supports multiple services: aurora, dynamodb, ebs, ec2, efs, fsx, rds, storage gateway (i.e. on premise data)
+  - backups can be sent to a different AWS account to improve security
+- consideations:
+  - same as DLM, you add tags to resource, create policies that create backups from tagged resources, and set lifecycle policy for creation, & deletion
 
 ## S3 - Simple Storage Service
 
