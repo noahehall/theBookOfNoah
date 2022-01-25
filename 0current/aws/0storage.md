@@ -146,8 +146,12 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 - use cases
   - supports multiple services: aurora, dynamodb, ebs, ec2, efs, fsx, rds, storage gateway (i.e. on premise data)
   - backups can be sent to a different AWS account to improve security
-- consideations:
+- considerations:
   - same as DLM, you add tags to resource, create policies that create backups from tagged resources, and set lifecycle policy for creation, & deletion
+  - you can edit an existing policy, and click `add copy` > `copy to another account's vault` > enter the ARN from the other accounts back up vault
+  - click `protected resources` tab to see which resources are sources for your backups
+    - ec2 backups include instance type, vpc, subnet, security group, iam role, etc
+  - the jobs tab lists current restore operations in progress
 
 ## S3 - Simple Storage Service
 
