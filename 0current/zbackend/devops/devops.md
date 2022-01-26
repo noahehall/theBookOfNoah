@@ -31,11 +31,14 @@
 - CAMS: culture, automation, measurement, sharing; mutually reinforcing values; the WHY behind everything devops
 - culture: who people are, communicate, socialize, and work; people, process, tools, in that order
   - the wall of confusion: how teams can often have opposing objectives and success criteria at the expense of others
-  - developers: key metric is throughput of code
-  - sysadmins/operations: key metric is reliability (new code is the most harmful to their objectives)
-  - infosec: key metric is vulnerabilities (new code & lax systems (admins) are harmful to their objectives)
-  - network admins
-  - db admins
+    - teams with opposing goals
+      - developers: key metric is throughput of code, new functionality, and moving fast
+      - infrastructure teams: generally at odds with developers
+        - sysadmins/operations: key metric is reliability, stability, controlling change
+        - infosec: key metric is vulnerabilities (new code & lax systems (admins) are harmful to their objectives)
+        - network admins
+        - db admins
+    - the wall of confusion stems from process & team alignment; e.g. what should take 1 hr, could take 1 week if there are unnecessary checks & balances, or misalignment between team objectives & goals
 - automation: automated management & control systems and applications
 - measurement: exposing the right metrics and analyzing them continuously; stay engaged, focused and in pursuit of goals and objectives
   - mean time to recovery
@@ -92,8 +95,12 @@
 
 - incident command systems: identify, surface, share, control and correct failures and other misgivings
 - developers on call: creators should primarily be the support team for their creations; enables a fast feedback loop
-- pulic status pages: increases customer satisfaction & trust during service outage
-- blameless postmortems: there is generally never a single root cause; nor is human error an appropriate reason for a failure (the buck stops with the CEO)
+- pulic status pages: increases customer satisfaction & trust during service outage; heavy focus on communication so consumers understand whats going on
+- blameless postmortems: there is generally never a single root cause; nor is human error an appropriate reason for a failure (the buck stops with the CEO); heavy focus on communication so no one feels blamed
+  - a meeting to identify, analyse, and strategize
+  - should occur within 48 hours after failures have been identified; find what went wrong fast, and communicate it
+  - the people involved with the issue should be part of the meeting, but should NOT run it
+  - create a timeline of events that attributed to the issue; everything should be in UTC time so that system events & human events can be plotted sequentially
 - embedded teams: reduces conflict of interest when responsibles are internal to the team managing the full breadth of a services lifecycle, thus SERVICE X team should include dev, qa, product, ops, etc; a team should never have to make a request to another team
 - the cloud: enables an API driven way to create and control infrastructure
 - andon cords: halt/upgrade/rollback deployments as soon as bugs/issues are found
