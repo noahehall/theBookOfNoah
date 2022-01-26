@@ -81,6 +81,15 @@
 - pulic status pages: increases customer satisfaction & trust during service outage
 - blameless postmortems: there is generally never a single root cause; nor is human error an appropriate reason for a failure (the buck stops with the CEO)
 - embedded teams: reduces conflict of interest when responsibles are internal to the team managing the full breadth of a services lifecycle, thus SERVICE X team should include dev, qa, product, ops, etc; a team should never have to make a request to another team
--
+- the cloud: enables an API driven way to create and control infrastructure
+- andon cords: halt/upgrade/rollback deployments as soon as bugs/issues are found
+- dependency injection: inversion of control; loosely coupled dependencies that are passed into the application at runtime; supports IaC and immutable infrastructure; similar objectives to Service Discovery from a devops perspective
+- service discovery: add some notes about this here
+- blue/green deployments: after testing the release in a staging environment; deploy to an alternate production environment with a % of your userbase hitting it, once confirmed, you can blue/green prevProd/newProd to greater % of users; definitely need a load balancer for this with a % based route strategy
+- chaos monkey: system (on a whole) is less dependent on high availability and more on reliability; even in the face of unreliable components
+
+  - a service that depends on a chain of components, each being 99% uptime, will only have 95% uptime (99*99*99*99*99===95%)
+
+  -
 
 ### tools
