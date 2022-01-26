@@ -1,6 +1,12 @@
-# basics
+# devops
 
-## terms
+## links
+
+- [devops maturity model](https://romesh-mccullough.github.io/devops-maturity-model/)
+
+## basics
+
+### terms
 
 - devops: developer operations; the entire serice lifecycle, from design > dev > production support
 
@@ -31,6 +37,9 @@
   - push notifications from your systems & process automation cycles into your chat client
 
 - shadow IT: teams deliberately bypassing processes & formalities just to get shit done
+- conways law: melvin conway: organizations which design systems, are constrained to produce designs which are copies fo the communicatoin structures of these organizations
+  - i.e. systems align themselves to communication boundaries; sales systems, ops systems, dev systems, biz systems, etc.
+- process boundaries: ...
 
 ## five levels of devops
 
@@ -122,8 +131,9 @@
     - remediations/corrections/preventions/detections for/of future occurences
 - embedded teams: reduces conflict of interest when responsibles are internal to the team managing the full breadth of a services lifecycle, thus SERVICE X team should include dev, qa, product, ops, etc; a team should never have to make a request to another team
   - independent, cross-functionality teams is the only way to have an effective & efficient devops practice
+    - all about education, understanding and encouragement to be successful
   - devs have to take responsibility for the code they produce
-  - QA/operations need to create & manage self-service portals that enable devs to perform ops, and be there to support them and be subject matter experts
+  - QA/operations need to create & manage self-service portals that enable devs to perform ops, and be there to support/guide them and be subject matter experts instead of doing work for other people
 - the cloud: enables an API driven way to create and control infrastructure
 - andon cords: halt/upgrade/rollback deployments as soon as bugs/issues are found
 - dependency injection: inversion of control; loosely coupled dependencies that are passed into the application at runtime; supports IaC and immutable infrastructure; similar objectives to Service Discovery from a devops perspective
