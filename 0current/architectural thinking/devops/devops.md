@@ -19,7 +19,22 @@
 
 - development teams: build stuff
 - operations teams: ensure stability
+
 - kaizen: japenese; continuous improvement
+
+  - good processes bring good results
+  - go see for yourself (gemba): go to the actual place where value is created or incidents occur; never depend on reports, etc, but go see for yourself; go to the code, go inside the application, go view the config files, go talk to the people, etc
+  - speak wiht data and manage by facts
+  - take action to contain and correct root causes
+  - work as a team
+  - kaizen is everybody's business
+  - general process: plan > do > check > act > [repeat]
+
+- the five whys: it generally takes 5 whys to find a root cause: why did X happen, because of Y, why did Y happen, because of Z, ... etc 5 times
+  - focus on the undelrying causes, not symptoms
+  - dont accept answers like `not enough time`; we all work under constraints, so try to understand why there wasnt enough time
+  - track the forks in the five whys: e.g. Y happened because of X & Z
+  - dont accept human error as a root cause: as this always points to a process failure/lack of a process with sufficient safe guards
 - feedback loop: any process that recursively uses its own outcome as input when deciding what to do next (subsequent outcomes)
 
   - work > commit > build > test > release > support
@@ -40,6 +55,8 @@
 - conways law: melvin conway: organizations which design systems, are constrained to produce designs which are copies fo the communicatoin structures of these organizations
   - i.e. systems align themselves to communication boundaries; sales systems, ops systems, dev systems, biz systems, etc.
 - process boundaries: ...
+  - Minimum Viable Process: a manager should dictate the outer bounds of processes, and let independent teams adapt to the current env as they evolve
+    - more processes is usually never the solution, as it often leads to greater bottlenecks
 
 ## five levels of devops
 
