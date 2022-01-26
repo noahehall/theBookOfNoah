@@ -4,6 +4,8 @@
 
 - devops: developer operations; the entire serice lifecycle, from design > dev > production support
 
+  - a partnership of all the team members involved in software development and operations.
+  - The main reason to deploy DevOps in the cloud is to allow infrastructures to be controlled by APIs.
   - the term devops was popularized by Patric Debois
   - developers, QA, sys/network/db admins
   - supporting the entire ecosystem of design, development, and production use cases
@@ -13,8 +15,14 @@
 - operations teams: ensure stability
 - kaizen: japenese; continuous improvement
 - feedback loop: any process that recursively uses its own outcome as input when deciding what to do next (subsequent outcomes)
+
   - work > commit > build > test > release > support
   - effective feedback is what drives any control designed to improve a system
+
+- logistics tail: the idea that everything has an ongoing cost, e.g. each tool in your toolchain requires
+  - continued learning
+  - patches & upgrades
+  - etc
 
 ## five levels of devops
 
@@ -22,6 +30,12 @@
 
 - CAMS: culture, automation, measurement, sharing; mutually reinforcing values; the WHY behind everything devops
 - culture: who people are, communicate, socialize, and work; people, process, tools, in that order
+  - the wall of confusion: how teams can often have opposing objectives and success criteria at the expense of others
+  - developers: key metric is throughput of code
+  - sysadmins/operations: key metric is reliability (new code is the most harmful to their objectives)
+  - infosec: key metric is vulnerabilities (new code & lax systems (admins) are harmful to their objectives)
+  - network admins
+  - db admins
 - automation: automated management & control systems and applications
 - measurement: exposing the right metrics and analyzing them continuously; stay engaged, focused and in pursuit of goals and objectives
   - mean time to recovery
@@ -48,7 +62,7 @@
 
 ### methods: devops playbooks
 
-- people > process > tools
+- people over processes over tools
 
   - people: whose responsible?
   - process: what do they need to do, and how do they need to do it
@@ -86,6 +100,7 @@
 - dependency injection: inversion of control; loosely coupled dependencies that are passed into the application at runtime; supports IaC and immutable infrastructure; similar objectives to Service Discovery from a devops perspective
 - service discovery: add some notes about this here
 - blue/green deployments: after testing the release in a staging environment; deploy to an alternate production environment with a % of your userbase hitting it, once confirmed, you can blue/green prevProd/newProd to greater % of users; definitely need a load balancer for this with a % based route strategy
+  - Blue green development requires two identical production environments, where one is online and the other is offline/not accessible to external users
 - chaos monkey: system (on a whole) is less dependent on high availability and more on reliability; even in the face of unreliable components
 
   - a service that depends on a chain of components, each being 99% uptime, will only have 95% uptime (99*99*99*99*99===95%)
@@ -93,3 +108,21 @@
   -
 
 ### tools
+
+- devops toolchain: never focus on a single tool, but the ecosystem/series of tools that can be composed into a toolchain and holistically support different aspects of devops practices
+  - a tool is only useful to the degree that it supports your entire system
+- characteristics of good tools
+  - plays well with others tools in the toolchain
+  - programmable: should be automation driven
+  - verifiable: observability is key; what does it say its do/doing? how can you programmatically prove whats it doing/did?
+  - well behaved: highly tested, opensource/from a trusted provider
+- configuration management tools: supports automation of systems and components
+- df
+
+## pillars of devops
+
+### infrastructure automation
+
+### continuous delivery (& integration)
+
+### reliability engineering
