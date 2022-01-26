@@ -20,9 +20,14 @@
   - effective feedback is what drives any control designed to improve a system
 
 - logistics tail: the idea that everything has an ongoing cost, e.g. each tool in your toolchain requires
+
   - continued learning
   - patches & upgrades
   - etc
+
+- chat-ops: using your chat client (e.g. slack) as part of your operational system
+  - but it must be fkn automated, dont be ADOBE!
+  - push notifications from your systems & process automation cycles into your chat client
 
 ## five levels of devops
 
@@ -96,12 +101,24 @@
 - incident command systems: identify, surface, share, control and correct failures and other misgivings
 - developers on call: creators should primarily be the support team for their creations; enables a fast feedback loop
 - pulic status pages: increases customer satisfaction & trust during service outage; heavy focus on communication so consumers understand whats going on
+  - transparent uptime: communicate with consumers as much as possible during an outage
+    - admit failure: everyone knows everything fails all of the time
+    - sound like a human: dont sound corporaty when shit is fucked up; talk real to your real customers
+    - have a communication channel thats consistently updated & customers know about it
+    - be authentic; especially in the heat of the moment
 - blameless postmortems: there is generally never a single root cause; nor is human error an appropriate reason for a failure (the buck stops with the CEO); heavy focus on communication so no one feels blamed
-  - a meeting to identify, analyse, and strategize
+  - a meeting to identify, analyse, and strategize: its not about assigning blame, its about ensuring whatever happened doesnt happen again
   - should occur within 48 hours after failures have been identified; find what went wrong fast, and communicate it
   - the people involved with the issue should be part of the meeting, but should NOT run it
-  - create a timeline of events that attributed to the issue; everything should be in UTC time so that system events & human events can be plotted sequentially
+  - artifacts
+    - create a timeline of events that attributed to the issue; everything should be in UTC time so that system events & human events can be plotted sequentially
+    - description of the incident
+    - description(s) of the root cause (could be multiple ideas about what caused it)
+    - how the incident was/will be resolved/stabilized
+    - how customers were affected
+    - remediations/corrections/preventions/detections for/of future occurences
 - embedded teams: reduces conflict of interest when responsibles are internal to the team managing the full breadth of a services lifecycle, thus SERVICE X team should include dev, qa, product, ops, etc; a team should never have to make a request to another team
+  - independent, cross-functionality teams is the only way to have an effective & efficient devops practice
 - the cloud: enables an API driven way to create and control infrastructure
 - andon cords: halt/upgrade/rollback deployments as soon as bugs/issues are found
 - dependency injection: inversion of control; loosely coupled dependencies that are passed into the application at runtime; supports IaC and immutable infrastructure; similar objectives to Service Discovery from a devops perspective
