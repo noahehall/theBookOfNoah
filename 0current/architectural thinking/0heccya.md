@@ -58,7 +58,9 @@ probably should be in the arhcitectural thinking doc tho
 
 ### terminology
 
-- UAT: user acceptance testing
+- UAT: user acceptance testing; i.e. staging env; enable users to give the dev team valuable feedback
+- QA: quality assurance; enable the QA team to test before resources move up the chain to prod
+- LT: load testing; env to simulate high resource/service throughput to test performance resiliancy
 - VCS: version control system, e.g. git
 - CAB: change advisory board
 - GDPR:
@@ -90,13 +92,13 @@ probably should be in the arhcitectural thinking doc tho
   - architecture:
     - how components work together in a workload
     - how components communicate and interact is often the focus of architectur diagrams
-    - key arcihtecture decision records
+    - key architecture decision records
     - milestones: key changes in your architecture as it evolves throughout the product lifecycle
       - should be documented via Architectural Decision Records (ADR)
       - trade offs: between the 5 pillars based on your business content
         - e.g. optimize to reduce cost at the expense of reliability in development environments
-        - e.g. optimize realibility with increased costs for production
-        - but: security ad operational excellence should never be traded-off against the other pillars
+        - e.g. optimize reliability with increased costs for production
+        - security and operational excellence should never be traded-off against the other pillars
 
 - product lifecycle:
 
@@ -107,8 +109,8 @@ probably should be in the arhcitectural thinking doc tho
   - production:
   - repeat
 
-- self serve infrastructure: instead a of a global operations team managing the entire infrastructure, each specific team are responsibile for their devstack via tools provided by the central operations team
-- software defined netowrking: SDN: provides more control to operators & developers and allows netowrking to better support the applications urnnin on top
+- self serve infrastructure: instead a of a global operations team managing the entire infrastructure, each specific team are responsibile for their devstack via tools provided by the central operations team; key to devops
+- software defined netowrking: SDN: provides more control to operators & developers and allows netowrking to better support the applications running on top
 
   - most have a control layer and infrastructure layer
 
@@ -149,6 +151,13 @@ probably should be in the arhcitectural thinking doc tho
 
 ##### aws well architected framework: 5 pillars
 
+- 3m
+  - nodejs
+  - security
+  - identity access management
+  - aws fargate
+  - okta
+
 - operational excellence in the cloud:
 
   - goals
@@ -160,7 +169,7 @@ probably should be in the arhcitectural thinking doc tho
   - design principles
 
     - perform operations as code: apply the same engineering discipline that you use for application code to your infrastructure code
-      - implement operation proceders as code and automate their execution by trigger them in response to events
+      - implement operation procedures as code and automate there execution by trigger them in response to events
       - limit human error and enable consistent responses to events
     - make frequent, small reversible changes: design workloads to allow components to be updated regularly
     - refine operation procedures frequently: always look for opportunities to improve your operation procedures
@@ -210,13 +219,12 @@ you cant talk about system design without talking about the people involved
   - networking architect
   - security architect
   - technical architect (infrastructure focused)
-  - solutions architect (software focused)
-    - architect solutions across a wide variety of business verticals and use cases
+  - solutions architect (software focused) across a wide variety of business verticals and use cases
   - principal engineers: review architecture designs and provide guidance on best practices
 
 - application, resource and workspace owners:
 
-  - responsibile for owning & managing each _thing_, e.g. the health/status, change lifecycle through dev, UAT, staging and production
+  - responsibile for owning & managing each resource, e.g. the health/status, change lifecycle through dev, UAT, staging and production
   - main approver of changes to production within their domain
 
 - contributor: submits changes to resources/applications/domains/etc by making updates to the underlying code/infrastructure
