@@ -48,6 +48,10 @@
 
 ### terms
 
+- cascading failure pattern: where a failure at one integration point, cascades to cause failures/disruptions throughtout the application stack in a layered architecture
+- circuit breaker pattern: a service that watches for failures through a systems boundaries, and reroutes requests upon detection
+- design: theory & thoughtful planning
+
 - devops: developer operations; the entire serice lifecycle, from design > dev > production support
 
   - a partnership of all the team members involved in software development and operations.
@@ -377,5 +381,9 @@
 #### design for operation, and operate for design
 
 - design for operation: structure systems to be maximally reliable and maintainable
-
+  - all systems fail: high availability is a losing game; what will you do when it fails?
+    - you should understand the behavior of every resource/service in a system, and understand the effect when it fails
+  - application performance management: APM; distributed lightweight profiling across a systems to gather metrics & identify bottlenecks
+    - distributed systems are more vulnerable to bottlenecks than outright application failure
 - operate for design: push production insights and feedback directly into the design & development workflows
+  - observability: monitoring, metrics & loggin
