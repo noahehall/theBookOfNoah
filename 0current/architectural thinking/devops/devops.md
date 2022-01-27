@@ -23,8 +23,20 @@
   - less reliance on configuration management, since its baked into the container
   - however CM is still critical for the datalayer
 - stay away from kitchen sinks, use plug-n-play tools instead, focus on tools that do one thing well, vs try to do everything poorly
-
--
+- continuous integration
+  - the coffee test: all builds should be less than 5 minutes
+  - commit small bits
+  - never leave the build broken: a broken build should stop all work across all teams
+  - use a trunk-based git model: no long running branches
+    - branch based: has long running branches, e.g. a dev vs master branch
+  - never allow flaky tests: fkn fix or fkn remove
+  - every build outputs a status, a log and an artifact for deployment
+- continous delivery
+  - only build artifacts once
+  - artifacts should be immutable
+  - deployment should go to a copy of production
+  - stop deploys if a previous step fails
+  - deployments should be idempotent
 
 ### gotchas
 
@@ -305,10 +317,22 @@
 #### continuous integration
 
 - automatically building and unit tesitng the entire service on every commit
+- keeping software in a workin state all of the time
+- workflow:
+  - code commit
+  - build
+  - unit tests
+  - other validation
+  - packaging
+  - outputs an immutable artifact, build status and log
 
-### continuous delivery
+#### continuous delivery & deployment
 
 - deploying the output of CI to an environment, and performing automating integration & acceptance testing
 - continuous deployment: continuous delivery specific to the production environment
+  - artifacts shouldnt be rebuilt for production, instead the same artifact should be usuable in all environments
+    - the CI pipeline only has write access to the artifact repository
+    - the CD pipeline only has read access to artifacts
+  - each artifact should have a checksum, to guarantee data integrity
 
 ### reliability engineering
