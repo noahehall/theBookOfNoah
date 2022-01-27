@@ -386,4 +386,45 @@
   - application performance management: APM; distributed lightweight profiling across a systems to gather metrics & identify bottlenecks
     - distributed systems are more vulnerable to bottlenecks than outright application failure
 - operate for design: push production insights and feedback directly into the design & development workflows
-  - observability: monitoring, metrics & loggin
+
+  - increase the feedback loop from operations into design & development
+  - observability: monitoring, metrics & logging
+
+    - process
+      - instrument your resources
+      - measure the metrics of your services over time
+      - analyze & learn from your system
+      - repeat
+    - key areas
+      - service performance & uptime: synthetic checks at the highest level/abstraction of the system; answers the question, is the system working holistically?
+      - software component metrics: ports & processes located on the host; answers the question, is this resource working?
+      - system metrics: time series metrics analyzing cpu, memory, etc; answers the question, is this resource functioning normally?
+      - application metrics: telemetry emitted from the application itself during runtime; answers the quesiton, how is the application performing, responding to the environment, and interacting with users/other services
+      - performance metrics: all other areas include performance metrics, but you should also specifically focus on it
+        - RUM: real user monitoring; captures performance from the end-users perspective
+        - APM: application performance management; instrumentation at the code level to monitor function performance
+      - security monitoring:
+        - key areas
+          - system security: TLS/SSL; open ports, configuration issues
+          - application security: intrusion detection
+          - custom application events: password resets, invalid logins, new account creation
+          - anomalies: too many 401s, access attempts from weird IP segments
+      - logging:
+        - centralized logging: send all logs (especially in a distributed system) to a repository
+          - dont collect log data you dont plan to use
+          - keep logs for as long as they're useful
+          - only alert on what you must respond to
+          - clearly define log levels: infos, warnings, errors
+            - if an error doesnt require an action, it isnt an error, its a warn
+            - there should never be a standard error
+        - 5 Ws
+          - what happened?
+          - when did it happen?
+          - where did it happen?
+          - who was involved
+          - where did that entity come from?
+
+  - how complex systems fail
+    - change introduces new forms of failure
+    - systems contain changing mixtures of failures latent within them
+    - all systems are always running in degraded mode
