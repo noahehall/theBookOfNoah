@@ -3,6 +3,7 @@
 ## links
 
 - [devops maturity model](https://romesh-mccullough.github.io/devops-maturity-model/)
+- [devops infrastructures wiki & checklist](http://infrastructures.org/)
 
 ## basics
 
@@ -55,8 +56,19 @@
 - conways law: melvin conway: organizations which design systems, are constrained to produce designs which are copies fo the communicatoin structures of these organizations
   - i.e. systems align themselves to communication boundaries; sales systems, ops systems, dev systems, biz systems, etc.
 - process boundaries: ...
+
   - Minimum Viable Process: a manager should dictate the outer bounds of processes, and let independent teams adapt to the current env as they evolve
     - more processes is usually never the solution, as it often leads to greater bottlenecks
+
+- ITSM: IT Service Management: service delivery is important to the overall process of software development
+
+- ITIL: information technology infrastructure library; the first ITSM framework
+  - a process model based view of controlling and managing services; suitable more for a watefall dev cycle
+  - phases
+    - service strategy
+    - service design
+    - service transition
+    - service operation
 
 ## five levels of devops
 
@@ -180,7 +192,14 @@
   - verifiable: observability is key; what does it say its do/doing? how can you programmatically prove whats it doing/did?
   - well behaved: highly tested, opensource/from a trusted provider
 - configuration management tools: supports automation of systems and components
-- df
+
+- big list
+  - cfengine
+  - puppet
+  - chef
+  - ansible
+  - saltstack
+  - capistrano
 
 ## pillars of devops
 
@@ -214,6 +233,40 @@
   - where waste resides in the process
 
 ### infrastructure automation
+
+- infrastructure as code: completely programmatic approach to infrastructure
+
+  - treat systems like code
+  - keep everything in source control
+  - write unit & integration tests
+  - deploy on changes
+  - get input from the environment and make decisions at runtime based on state
+
+- define your infrastructure via code, any UI is your enemy
+
+  - confidence that your dev, stage, prod, etc envs are all the same, as they are all built from the same template
+
+- cattle, not pets: dont treat your infrastructure as pets, treat it as cattle
+
+  - pets are something you handle manually
+  - cattle is something you herd and process enmasse
+
+- provisioning: making a resource ready for operation, including hardware, OS, system services and network connectivity
+
+- deployment: automatically deploying and upgrading resources
+
+  - canary (staged) deployment: upgrade a subset of resources (the canary), and if it works, you upgrade the rest
+  - blue/green deployment: duplicate the entire system, test, then swap
+  - cluster immune system deployment:
+  - immutable deployment: never upgrade software in product at all, but you replace it (my preference)
+
+- orchestration: performing coordinated operations across multiple resources
+
+- configuration management: management of change control for system configuration after initial provisoin; maintaining and upgrading resources and dependencies
+  - imperative/procedural configurations: command necessary to produce a desired state are defined and executed
+  - declarative/functional configurations: desired states are defined, and the service magically configures the system to match that state
+  - idempotent configurations: the ability to reppeatedly execute configurations, achieve the same state
+  - self-service configurations: ability for an end usre t oinitiate a process without having to go through other people
 
 ### continuous delivery (& integration)
 
