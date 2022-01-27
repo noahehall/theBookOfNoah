@@ -366,10 +366,13 @@
 
 - the ability of a resource/service to function under state conditions for a specified period of time
 - key practices
+
   - extend delivery to production
   - extend operations feedback to development
   - embed project development knowledge into operations
   - embed operations knowledge into development
+
+- site reliability engineering: product teams support their own services; until it becomes critical enough for oversight; supports a health feedback loop from ops to design
 
 #### design for operation, and operate for design
 
