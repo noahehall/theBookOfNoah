@@ -4,29 +4,55 @@
 
 - need to list by type
 
-- cfengine
-- puppet
-- chef
 - ansible
-- saltstack
-- capistrano
-- zookeeper
-- k8s
-- ubuntu juju: models infrastructure & services together
-  - this is HECCYA being realized
-- packer
-- kitchenCI
-- etcd
-- zookeeper
-- consul
-- docker
-- mesos
-- habitat (by chef)
 - apache bench
-- jmeter
-- mitten
+- appdynamics
 - artifactory
-- nexus
-- docker hub
-- rundeck
+- capistrano
+- cfengine
+- chef
+- consul
+- datadog
 - deployinator
+- docker
+- docker hub
+- elasticsearch
+- etcd
+- flapjack
+- grafana
+- graphite
+- habitat (by chef)
+- icinga
+- influxdb
+- jmeter
+- k8s
+- kibana
+- kitchenCI
+- librato
+- logstash
+- mesos
+- mitten
+- nagios
+- netuitive
+- new relic
+- nexus
+- opentsdb
+- packer
+- pagerduty
+- pingdom
+- prometheus
+- puppet
+- rerun (bash framework)
+- rundeck
+- ruxit
+- saltstack
+- sensu
+- splunk
+- statsd
+- statuspage.io
+- sumologic
+- sysdig
+- ubuntu juju: models infrastructure & services together
+- victorops
+- zookeeper
+- zookeeper
