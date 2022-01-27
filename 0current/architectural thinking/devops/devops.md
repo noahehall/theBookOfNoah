@@ -62,7 +62,9 @@
 
 ### values
 
-- CAMS: culture, automation, measurement, sharing; mutually reinforcing values; the WHY behind everything devops
+#### cams
+
+- culture, automation, measurement, sharing; mutually reinforcing values; the WHY behind everything devops
 - culture: who people are, communicate, socialize, and work; people, process, tools, in that order
   - the wall of confusion: how teams can often have opposing objectives and success criteria at the expense of others
     - teams with opposing goals
@@ -82,9 +84,14 @@
   - employee satisfaction
 - sharing: openness and transparency; the feedback loop that helps continuously improve
 
+#### CALMS
+
+- culture, automation, lean, measurement, sharing
+
 ### principles
 
 - the three ways
+
   - systems thinking: focus on the overall outcome of the entire pipeline of the value chain
     - useful perspective when tracking and pursuing outcomes
     - dont overoptimize a component at the expense of the overall system & objectives; unless your optimizing your security posture
@@ -176,6 +183,35 @@
 - df
 
 ## pillars of devops
+
+- agile infrastructure: the history of devops is rooted in agile, so having a firm grasp of agile principles is core for devops teams
+
+  - extends the agile manifesto to include operations teams (its pure dev focused) and infrastructure (doesnt include anything to do with building & maintaining the underlying infrastructure)
+
+- lean software development: a systematic process for eliminating waste
+
+  - eliminate waste
+    - muda: work that absorbs resources, but adds no value
+    - muri: unreasonable work imposed on workers & machines
+    - mura: work coming in unevenly instead of a constant/regular flow
+    - forms of waste: partially done work, extra features, relearning, handoffs, delays, task switching, defects
+  - amplify learning
+  - decide as late as possible
+  - decide as fast as possible
+  - empower the team
+  - build integrity
+
+- lean startup: the build, measure learn loop; get the product as fast as you can to consumers, and iterate from there
+
+  - build: the minimum viable product
+  - measure: the outcome and internal metrics
+  - learn: about your problem and your solution
+  - repeat: go deep where its needed
+
+- value stream mapping: analyze the entire pathway (concept to cash, idea to realization) of value creation to understand
+  - what value is added where
+  - how long it takes to add value at each step
+  - where waste resides in the process
 
 ### infrastructure automation
 
