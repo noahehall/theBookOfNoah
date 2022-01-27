@@ -253,6 +253,8 @@
 
 - provisioning: making a resource ready for operation, including hardware, OS, system services and network connectivity
 
+  - model driven automation: a declarative model of resources are used to realize resources, e.g. via terraform/aws cloudformation
+
 - deployment: automatically deploying and upgrading resources
 
   - canary (staged) deployment: upgrade a subset of resources (the canary), and if it works, you upgrade the rest
@@ -263,10 +265,15 @@
 - orchestration: performing coordinated operations across multiple resources
 
 - configuration management: management of change control for system configuration after initial provisoin; maintaining and upgrading resources and dependencies
+
   - imperative/procedural configurations: command necessary to produce a desired state are defined and executed
   - declarative/functional configurations: desired states are defined, and the service magically configures the system to match that state
   - idempotent configurations: the ability to reppeatedly execute configurations, achieve the same state
   - self-service configurations: ability for an end usre t oinitiate a process without having to go through other people
+
+- immutable infrastructure (systems), immutable delivery (apps)
+  - container based architecture: resources are packaged in a container with just enough OS config & dependencies and deployed to barebones physical infrastructure
+    - less reliance on configuration, and instead baking the configuration into the image, and deploying the image instead
 
 ### continuous delivery (& integration)
 
