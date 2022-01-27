@@ -12,9 +12,10 @@
 - actualize high performance workflows
   - reduction in time to market is key
   - deployment frequency goes up
-  - mean time to recover (MTTR) is increased
+  - mean time to recover (MTTR) is increased: how quickly a service can recover form a disruption
     - in a failure state, come up with a mitigation action and treat it as any other change in your workflow, build, test, deploy
     - overlay incident timestmaps on deploy timestamps, to help narrow down which commit caused the error (requires continuous integration & delivery)
+  - Mean Time between failures (MTBF) the average time between service disruptions
   - quality increases exponentionally relative to bugs
   - change failure rate goes down
   - limits work in progress
@@ -364,4 +365,14 @@
 ### reliability engineering
 
 - the ability of a resource/service to function under state conditions for a specified period of time
--
+- key practices
+  - extend delivery to production
+  - extend operations feedback to development
+  - embed project development knowledge into operations
+  - embed operations knowledge into development
+
+#### design for operation, and operate for design
+
+- design for operation: structure systems to be maximally reliable and maintainable
+
+- operate for design: push production insights and feedback directly into the design & development workflows
