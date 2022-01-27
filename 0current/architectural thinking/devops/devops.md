@@ -5,6 +5,29 @@
 - [devops maturity model](https://romesh-mccullough.github.io/devops-maturity-model/)
 - [devops infrastructures wiki & checklist](http://infrastructures.org/)
 
+## best practices
+
+- actualize high intelligence teams
+  - with high intelligence teams: its easier to transition to more complex models, tools, systems & architectures
+- actualize high performance workflows
+  - reduction in time to market is key
+  - deployment frequency goes up
+  - mean time to recover (MTTR) is increased
+    - in a failure state, come up with a mitigation action and treat it as any other change in your workflow, build, test, deploy
+    - overlay incident timestmaps on deploy timestamps, to help narrow down which commit caused the error (requires continuous integration & delivery)
+  - quality increases exponentionally relative to bugs
+  - change failure rate goes down
+  - limits work in progress
+  - shortens lead times for changes: i.e. the number of tasks in flight at once; the software equivalent of work in progress
+- immutable infrastructure is the next phase of devops
+  - less reliance on configuration management, since its baked into the container
+  - however CM is still critical for the datalayer
+- stay away from kitchen sinks, use plug-n-play tools instead, focus on tools that do one thing well, vs try to do everything poorly
+
+-
+
+### gotchas
+
 ## basics
 
 ### terms
@@ -63,12 +86,15 @@
 - ITSM: IT Service Management: service delivery is important to the overall process of software development
 
 - ITIL: information technology infrastructure library; the first ITSM framework
+
   - a process model based view of controlling and managing services; suitable more for a watefall dev cycle
   - phases
     - service strategy
     - service design
     - service transition
     - service operation
+
+- data warehouse: inventory of all IT assets, and the relationships between them
 
 ## five levels of devops
 
@@ -192,14 +218,7 @@
   - verifiable: observability is key; what does it say its do/doing? how can you programmatically prove whats it doing/did?
   - well behaved: highly tested, opensource/from a trusted provider
 - configuration management tools: supports automation of systems and components
-
-- big list
-  - cfengine
-  - puppet
-  - chef
-  - ansible
-  - saltstack
-  - capistrano
+- service discovery: enable realtime system orchestration
 
 ## pillars of devops
 
@@ -274,7 +293,22 @@
 - immutable infrastructure (systems), immutable delivery (apps)
   - container based architecture: resources are packaged in a container with just enough OS config & dependencies and deployed to barebones physical infrastructure
     - less reliance on configuration, and instead baking the configuration into the image, and deploying the image instead
+    - the container should be the artifact your build and deploy: the OS + config + app all backed in;
+      - there shouldnt be a need to change its state via configuration management, once its deployed its immutable
+      - when its time for upgrade, you redeploy the artifact
 
-### continuous delivery (& integration)
+### ci/cd
+
+- resources get automatically get built, unit tests are run, and deployed to the environment on each code commit
+  - resources are always in a working state
+
+#### continuous integration
+
+- automatically building and unit tesitng the entire service on every commit
+
+### continuous delivery
+
+- deploying the output of CI to an environment, and performing automating integration & acceptance testing
+- continuous deployment: continuous delivery specific to the production environment
 
 ### reliability engineering
