@@ -460,8 +460,12 @@ various components exist when designing a system, understanding the specific com
   - I would say the business & product context: the environment for a product like AWS is far different than the environment for a product like facebook
     - each provides a different product, each business has different requirements, and each should model the components it provides and requires in relation to that context
 - TODO....
+
   - continue to think through this distinction
   - i've yet to see it put in terms this way
+
+- tests are first class citizens
+- from hardware to user: if it doesnt work locally, dont use it
 
 ### types of patterns
 

@@ -32,11 +32,14 @@
   - never allow flaky tests: fkn fix or fkn remove
   - every build outputs a status, a log and an artifact for deployment
 - continous delivery
+
   - only build artifacts once
   - artifacts should be immutable
   - deployment should go to a copy of production
   - stop deploys if a previous step fails
   - deployments should be idempotent
+
+- testing: criticall for the CI/CD pipeline
 
 ### gotchas
 
@@ -107,6 +110,8 @@
     - service operation
 
 - data warehouse: inventory of all IT assets, and the relationships between them
+- cycle: the full commit pipeline, from commit to deploy
+- cycle time: the time it takes for a change to be committed to be deployed
 
 ## five levels of devops
 
@@ -313,6 +318,27 @@
 
 - resources get automatically get built, unit tests are run, and deployed to the environment on each code commit
   - resources are always in a working state
+- key areas
+  - version control
+  - CI system
+  - build
+  - test
+  - artifact repository
+  - deployment
+
+#### testing
+
+- nothing matters without tests & good code hygine: all of the best practices relative to particular environment and test type
+
+- unit tests: the most specific type of test, relative to each line of code
+- integration testing: holistic tests across service & resource boundaries
+- core test methdologies
+  - tdd: test driven development; not a fan, fk your opinion
+  - bdd: behavior driven development: base tests on natural language descriptions that model business functionality
+  - ATDD: acceptance test driven development: define scenarios from end users perspective where use cases are the basis of automated testing
+- infrastructure testing: starting up a new env specifically to test configuration management, system design, and system efficacy
+- performance testing: load, stress, soak and spike tests
+- security testing
 
 #### continuous integration
 
@@ -336,3 +362,6 @@
   - each artifact should have a checksum, to guarantee data integrity
 
 ### reliability engineering
+
+- the ability of a resource/service to function under state conditions for a specified period of time
+-
