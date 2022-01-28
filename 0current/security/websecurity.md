@@ -227,7 +227,10 @@
     - contains: server domain name, the issueing certificate authority, an encryption public key
     - that way user agents can confirm the server (some IP) they are communicating with is valid for this domain (e.g. google.com) and this certificate
     - that way an attacker cant impersonate a domain or a certifcate the UA checks with the certificate authority in the initial phases of the TLS handshake
-    - PAGE 123
+    - general process: is all about having the certificate authority verify ownership of a particular domain, and then giving you a certificate you can share in responses to requests to your domain
+      - generate a key pair: digital file ocntaining randomly generated public adn private encryption keys
+      - use the key pair to generate a Certificate Signing Request (CSR) that contains the pulic key and domain your requesting the certificate for
+      - upload the CSR to the certificate authority, and the cert authority will then require you to validate ownership by making some DNS change with values they specify
 
 - SMTP: simple mail transport protocol
   - for sending emails
