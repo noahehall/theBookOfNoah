@@ -6,7 +6,7 @@
 ## links
 
 - envs
-  - [kali linux](https://www.kali.org/)
+  - [kali linux](https://www.kapageli.org/)
   - [caine](https://www.caine-live.net/)
   - [blackbox](https://www.backbox.org/)
   - [parrot](https://www.parrotsec.org/)
@@ -24,6 +24,8 @@
   - [sans institut opensource](https://www.sans.org/cloud-security/tools/)
   - [center for internet security](https://www.cisecurity.org/)
     - TODO: review their prehardened OS images
+- stuff
+  - [checksums](https://en.wikipedia.org/wiki/Checksum)
 
 ## basics
 
@@ -61,6 +63,7 @@
 
 ### terminology
 
+- checksum: a small-sized block of data derived from another block of digital data for the purpose of detecting errors that may have been introduced during its transmission or storage. By themselves, checksums are often used to verify data integrity but are not relied upon to verify data authenticity.
 - security through obscurity: relying on an attacker being unable to guess something; i.e. relying on an attackers ignorance/obscurity of the system
 - embargo resources: enable access to sensitive rsources only at a certain point in time, e.g. financial reports are often embargoed
 - digital signature: acts as a unique fingerprint for some input data; that can be easily recalculated as long as they have the signing key originally used to generate the signature
@@ -180,7 +183,7 @@
 
 - TLS: transport layer security
 
-  - arguable what fkn layer this is actually in (some say its not the application layer)
+  - arguable what fkn layer this is actually in (some say its not the application layer, but a lower layer)
   - method of encryption that provides both privacy and data integrity
   - ensures that
 
