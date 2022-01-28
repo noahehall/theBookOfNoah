@@ -248,6 +248,10 @@
       - upload the CSR to the certificate authority, and the cert authority will then require you to validate ownership by making some DNS change with values they specify
       - once ownership is proven: you will be given to a digital cert for use on your domain server along with the key pair previously created
 
+  - HTTP Strict Transport Security: HSTS; policy that ensures sensitive data (e.g. cookies) will not be sent during any initial connection over HTTP, and must wait for the TLS handshake to be completed
+    - when a user agent visits a site it has seen previously, it will automatically send back any cookies the website prviously supplied in the Cookie header
+    - if the initial connection was insecure, then the cookies will be sent back insecurely, even if subseqent requests were handled over HTTPS
+
 - SMTP: simple mail transport protocol
   - for sending emails
 - XMPP: extensible messaging and presence protocol
@@ -387,6 +391,7 @@
 - web servers: computer program (e.g. HAproxy) that validates & routes HTTP requests for dynamic content to application servers, responds directly with static content, and performs low-level TCP functions like HTTPS termination
   - all HTTP traffic should be rerouted to HTTPS
   - web server handling HTTPS should terminate (strip, decrypt) the request before proxying the request to application servers
+  - application servers should not be reachable by the public
   - the application server will fullfil the request, and reply to the web server with the content, and the web server will forward the content back to the user agent that made the request
 - application server: computer program (e.g. nodejs) that hosts application code, and responds to HTTP requests from web servers, generally handles all requests for dynamic http content
 
@@ -941,6 +946,7 @@
   - man in the middle attack: sniffing network traffic in order to intercept HTTP headers
 
     - the attacker finds a way to sit between the rowser & webserver and read network traffic as it passes back n forth
+    - e.g. any unencrypted HTTP requests are prime targets
 
   - cross-site request forgery: triggering unintended HTTP requests to a site when they've already authenticated
     - attackers trick your users into clicking a link to your site; if they already have a session open with your server, the browser will resend the cookie along with the http request triggered from the attackers site but your server will be none the wiser
