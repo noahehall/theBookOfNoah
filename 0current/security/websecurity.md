@@ -1,7 +1,8 @@
 # web security
 
 - reading: done
-- copying: PAGE 123 obtaining a digital certificate
+- copying: PAGE 131 third-party code
+  - need to create a new section for this
 
 ## links
 
@@ -63,6 +64,8 @@
 
 ### terminology
 
+- attack vectors: the methods that adversaries use to breach or infiltrate your network
+- attack surface: the sum of the different points (for "attack vectors")
 - checksum: a small-sized block of data derived from another block of digital data for the purpose of detecting errors that may have been introduced during its transmission or storage. By themselves, checksums are often used to verify data integrity but are not relied upon to verify data authenticity.
 - security through obscurity: relying on an attacker being unable to guess something; i.e. relying on an attackers ignorance/obscurity of the system
 - embargo resources: enable access to sensitive rsources only at a certain point in time, e.g. financial reports are often embargoed
@@ -631,7 +634,6 @@
   - TRACE requests
     - can allow javascript injected into a page to access cookies that have been deliberately made inaccessible to javascript
   - session cookies: enables an attacker to impersonate a user agent to a web server
-  - man in the middle attacks: plain text msgs an be read by anyone intercepting the data packets
   - comprimising authentication
   - permissions
   - information leaks
@@ -946,7 +948,11 @@
   - man in the middle attack: sniffing network traffic in order to intercept HTTP headers
 
     - the attacker finds a way to sit between the rowser & webserver and read network traffic as it passes back n forth
-    - e.g. any unencrypted HTTP requests are prime targets
+      - any unencrypted HTTP requests are prime targets
+      - wireless routers: contain a barebones installation of some linux distro thats never updated with security patches; route traffic to a local ISP
+      - wi-fi hotspots: attackers setup their own wifi hotspots (often with a similar name as a real hotspot) and routes requests to a real ISP to provide internet connections
+
+  - downgrade attacks: interfering wiht the initial TLS handshake so that user agents opted to use weaker encryption/no encryption at all
 
   - cross-site request forgery: triggering unintended HTTP requests to a site when they've already authenticated
     - attackers trick your users into clicking a link to your site; if they already have a session open with your server, the browser will resend the cookie along with the http request triggered from the attackers site but your server will be none the wiser
