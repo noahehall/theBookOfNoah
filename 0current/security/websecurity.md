@@ -224,17 +224,24 @@
       - SHA-256: the message authentication algorithm
 
   - digital certificates: aka public-key certificate; an electronic document issued by third-party certificate authorities to prove which internet domain owns which public encryption key
+
     - contains: server domain name, the issueing certificate authority, an encryption public key
     - that way user agents can confirm the server (some IP) they are communicating with is valid for this domain (e.g. google.com) and this certificate
     - that way an attacker cant impersonate a domain or a certifcate the UA checks with the certificate authority in the initial phases of the TLS handshake
+    - self signed certificates: digital certs not issued by a certificate authority; useful for internal domains and development environments
+
     - Certificate Signing Request: CSR; contain info about the applicant & domain that is all useful in verifying authenticity; often created with openssl on the cli
+
       - domain name: distinguished name (DN) or the fully qualified domain name (FWDN)
       - organizations legal name
       - physical location
+
     - domain verification: process by which a ceritficate authority verifies that someone applying for a certificate for an internet domain does indeed have control of that domain
+
       - domain verification is what protects against DNS spoofing attacks; an attacker cnanot apply for a cerificate unless they also have DNS access rights to that domain
       - Extended validation (EV) certificates: require the certificate authority to collect and verify information about hte legal entity applying for a certificate; popular with large organizations because the name of the org is often displayed alongside the padlock in the browser url
       - certificates have a finite lifespan (years/months) and can be voluntarily revoked by the owner
+
     - general process: is all about having the certificate authority verify ownership of a particular domain, and then giving you a certificate you canbe used to decrypt traffic sent to thta domain,
       - generate a key pair: digital file ocntaining randomly generated public adn private encryption keys
       - use the key pair to generate a Certificate Signing Request (CSR) that contains the pulic key and domain your requesting the certificate for
@@ -377,8 +384,11 @@
 
 ### servers
 
-- web servers: computer program (e.g. HAproxy) that validates & routes HTTP requests to application servers
-- application server: computer program (e.g. nodejs) that hosts application code, and responds to HTTP requests from web servers
+- web servers: computer program (e.g. HAproxy) that validates & routes HTTP requests for dynamic content to application servers, responds directly with static content, and performs low-level TCP functions like HTTPS termination
+  - all HTTP traffic should be rerouted to HTTPS
+  - web server handling HTTPS should terminate (strip, decrypt) the request before proxying the request to application servers
+  - the application server will fullfil the request, and reply to the web server with the content, and the web server will forward the content back to the user agent that made the request
+- application server: computer program (e.g. nodejs) that hosts application code, and responds to HTTP requests from web servers, generally handles all requests for dynamic http content
 
 - CDN: content delivery network
 
