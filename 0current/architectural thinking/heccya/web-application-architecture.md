@@ -1,8 +1,12 @@
+# todo
+
+move into 0heccya
+
 # links
 
 - [stackify on web app arch](https://stackify.com/web-application-architecture/)
   - wack as fuuuu
-- [microsoft on service oriented architecture](https://docs.microsoft.com/en-us/previous-versions/aa480021(v=msdn.10))
+- [microsoft on service oriented architecture](<https://docs.microsoft.com/en-us/previous-versions/aa480021(v=msdn.10)>)
 - [fundamentals of web application architecture](https://www.peerbits.com/blog/web-application-architecture.html)
 
 # web application architecture
@@ -21,6 +25,7 @@
   - microservices
   - serverless architectures
 - concerns
+
   - user requirements
     - usability
   - developer requirements
@@ -28,10 +33,12 @@
     - scalability
     - development speed
   - software product owner requirements
+
     - hardware
     - maintenance
     - network infrastructure
     - security
+
   -
 
 ## components
@@ -40,7 +47,9 @@
 
 - desirable poroperty of a system which indicates its ability to handle growing amounts of work in a graceful manner, or to be enlarged as demands increase
 - 7 stages
-   1. simple architecture
+
+  1. simple architecture
+
   - firewall and load balancer
   - pair of web servers
   - database server
@@ -48,8 +57,10 @@
   - use cases
     - low complexity, quick development and lots of features fast
     - no redundancy, low operational cost great for startups
-   2. grow bigger
-   1. add redundant firewalls, load balancers
+
+  2. grow bigger
+  1. add redundant firewalls, load balancers
+
   - more web servers for performance
   - add database redundancy
 
@@ -89,12 +100,13 @@
         - page per second
     - response times
       - the times required for an application to respond to a users actions at such a load
-  - computational resources  used by the application for the load,
+  - computational resources used by the application for the load,
     - indicates whether there is adequate capacity to support the load
     - possible locations of performance bottlenecks
     - establishes an empirical performance basline for the application
       - the baseline can be used to detect changes in performance
 - conceptual framework
+
   - end user experience
     - measuring the transit of traffic from user request to data and back is part of capturing the end user experience
       - real time application monitoring
@@ -111,8 +123,10 @@
     - generally targeted at middleware focusing on web, application and messaging servers
     - provides a real-time view of stacks, tying them back to user defined business transactions
   - analytics/reporting
+
     - a common set of metrics to collect and report on for each application
     - standardize common views on how to present the application performance data
+
     -
 
 ### UI/UX
@@ -125,6 +139,7 @@
   - the interface rendition of a web app functionality which the user interacts with
   - i.e. the content delivered to the client
 - server
+
   - application server
     - business logic
     - multi-layer applications
@@ -138,14 +153,17 @@
       - logical layering
         - common technique for impr
   - database server
+
     - provides and stores data
     - supports business logic
+
     -
+
   -
 
 # architecture types
 
-## N-layer  architectures
+## N-layer architectures
 
 - user interface
 - business logic
@@ -198,8 +216,9 @@
     - implementation application core services
     - infrastructure specific services
 - principles
+
   - independent of frameworks
-    - the architecture does not depend  on frameworks, but instead treats frameworks as tools
+    - the architecture does not depend on frameworks, but instead treats frameworks as tools
   - independent of UI
     - the UI can change easily without changing the rest of the system
   - independent of database
@@ -208,8 +227,10 @@
   - independent of any external agency
     - business rules dont know anything aoubt the outside world
   - the dependency rule
+
     - source code dependencies can only point inwards
     - nothing in an inner circle can know anything about something in an outer circle
+
     -
 
 ## serverless
@@ -239,11 +260,14 @@
   - deployment
 - responsible for responding to requests made by clients
 - components
+
   - physical capacity
+
     - computinng power
     - storage
     - memory
     - performance
+
     -
 
 ## service oriented
@@ -276,6 +300,7 @@
 - integrates distributed, separetly-maintained and deployed software components
 - the policies, practices, and frameworks that enable application functionality to be provided and consumed as sets of services published at a granularity relevant to the service consumer
 - components
+
   - application frontend
   - services
     - contract
@@ -311,10 +336,13 @@
     - adaptability
     - managability
 - perspectives
+
   - application architecture
+
     - the business facing solution which consumes services from one/more providers and integrates them into the business processes
 
   - service architecture
+
     - provides a bridge between the implementations and the consuming applications
     - creates a logical view of sets of services which are available for use
     - invoked by a common interface and management architecture
@@ -345,6 +373,7 @@
   - component architecture
     - describes the various environments supporting the implemented applicatioons, the business objects and their implementations
   -
+
 - use cases
   - synchronization between the business and IT implementation perspective
     - convergence of business and IT processes
@@ -372,6 +401,7 @@
 - service interface
   - defines how the service can be interacted with
 - principles
+
   - service boundaries are explicit
   - services are autonomous
   - services share schema and contract, but NEVER class
@@ -381,6 +411,7 @@
   - focused on their application architecture, services used
     - doesnt care about the component architecture
 - providers
+
   - focused on the component architecture, service architecture
     - doesnt care about the consumers application architecture
 
@@ -427,9 +458,11 @@
 - practice
 - frameworks
 - virtual platform
+
   - development platform
     - guidance on the development and implementation of applications to ensure that the published services conform to the same set of structural principles that are relevant to the management and consumer view of the services
   - implementation platform
+
     - best implementation architecture is a component-based architecture
 
   - platform components
@@ -483,18 +516,23 @@
 -
 - provide a one-to-one mappinng beteween business entities and component implementations
 - busijness objects
+
   - objects that abstract business entities in an object oriented program
   - encapsulates all the data and behavior (logic and rules)
   - e.g.
+
     - sales orders
     - employees
+
     -
 
 ## high availabillity application architecture
 
 - a process followed when implementing a new appliation into an existing business-wide computer system/ERP while minimizing downtime
 - high availability
+
   - ensures a certain degree of operational continuity
+
   -
 
 ## application service archtecture
@@ -534,9 +572,11 @@
 - an approach to developing software for complex needs by deeply connecting the implementation to an evolving model of the core business concepts
 - provides a structure of practices and terminology for making design decisions that focus and accelerate software projects dealing with complicated patterns
 - principles
+
   - place the projects primary focus on the core domain and domain logic
   - base complex designs on a model
   - initiate a creative collaboration between technical and domain experts to iteratively cut ever closer to the conceptual heart of the problem
+
   -
 
 # patterns

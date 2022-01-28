@@ -281,7 +281,7 @@
 
 - _useEffect_
 
-  - for dat afetching, subscriptions, changing dom elements, i.e any side asynchronous side effect
+  - for data fetching, subscriptions, changing dom elements, i.e any side asynchronous side effect
   - runs on every render soo make sure to:
     - add used vars in the dependency array
     - use an if condition before invoking side effect logic
@@ -309,7 +309,7 @@
 
   - for global state thats accessible to any child component
   - forcibly rerenders all child components on update
-  - can be at multiple levelsand the frist context.provider can intercept & handle it
+  - can be at multiple levels and the first context.provider can intercept & handle it
     - think of the normal event bubbling logic
 
 - _useReducer_
@@ -331,7 +331,7 @@
 
 - _useMemo_
 
-  - returns a memoized vlaue when its dependencies change
+  - returns a memoized value when its dependencies change
   - runs during rendering
     - so **NO** side effects
   -
