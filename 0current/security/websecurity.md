@@ -1052,6 +1052,8 @@
   - obvfuscate javascript files: replace method & function names with short meaningless tokens
   - sanitize client-side files via code reviews and static analysis tools that search for comments and sensitive data
 
+#### third-party code
+
 ### XML attacks
 
 - exposure
