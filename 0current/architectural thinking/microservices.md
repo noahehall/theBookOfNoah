@@ -107,13 +107,14 @@
 
 ### integration patterns
 
-- solve orchestration & ingress needs across a systme as a whole
+- solve orchestration & ingress needs across a system as a whole
 
 #### api gateway pattern
 
 - pattern for external clients communicating with your system
 - clients shouldnt be able to call any/all service, but instead call a single gateway which acts as a reverse proxy to all of the services you provide
-- the gateway provides a buffer/facade/proxy to the services behind its fence
+- the gateway provides aggregation/buffer/facade/proxy/decoration/oauth/etc to the services behind its fence, and is responsible for mutating, limiting and proxying requests
+- keep business logic out of the gateway, while it can be done, there are more appropriate patterns (see process aggregator) that should be responsible
 
 #### process aggregator pattern
 
