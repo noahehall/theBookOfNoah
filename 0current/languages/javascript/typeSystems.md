@@ -2,46 +2,7 @@
 
 - typescript & flow docs
 
-## typescript
-
-```js
-https://www.carlrippon.com/react-children-with-typescript/
-
-https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components
-const fncomponent = (): JSX.Element => <div>yolo worl</div>
-someFn(myRating as unknown as number)
-const someObj: any { things: 'hello'} as OtherThing
-export const SOME_OBJ: { poop: string } = { poop: 'value' };
-
-import React, { FC, ReactElement } from 'react';
-
-export interface PropDef {
-  readonly poop: string;
-}
-export const someFnComponent: FC<PropDef> = ({
-  prop1,
-  prop2,
-}): ReactElement => {}
-// ^ or one that doesnt accept props
-// SomeComponent: FC<Record<string, never>> = (): ReactElement
-
-export const fetchSomething (): Promise<PropDef> {
-  return ...
-}
-const arrayOfObjects: PropDef[] = [propDef1, propDefX...s]
-SomeEl = ({ }: propDef): JSX.Element
-Promise<{ [x: string]: string }>
-```
-
-## flow
-
-bookmark: <https://flow.org/en/docs/types/utilities/#toc-readonly>
-start at the example
-
-reference1: <https://github.com/facebook/react/blob/main/packages/shared/ReactTypes.js>
-reference2: <https://flow.org/en/docs/react/types/>
-
-### links
+## links
 
 - other
 
@@ -49,6 +10,12 @@ reference2: <https://flow.org/en/docs/react/types/>
   - [meaning of set difference](https://mathworld.wolfram.com/SetDifference.html)
   - [complement set, identical to set difference](https://mathworld.wolfram.com/ComplementSet.html)
 
+- react
+  - [react type reference](https://flow.org/en/docs/react/types/)
+  - [react types source code](https://github.com/facebook/react/blob/main/packages/shared/ReactTypes.js)
+- typescript
+  - [react children with typescript](https://www.carlrippon.com/react-children-with-typescript/)
+  - [fn components with typescript](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components/)
 - flow
   - [remove typescript via babel](https://babeljs.io/docs/en/babel-preset-typescript)
   - [eslint-plugin-fb-flow](https://www.npmjs.com/package/eslint-plugin-fb-flow)
@@ -74,6 +41,114 @@ reference2: <https://flow.org/en/docs/react/types/>
   - [typeof types](https://flow.org/en/docs/types/typeof/)
   - [managing flow & typescript in vscode](https://stackoverflow.com/questions/48859169/js-types-can-only-be-used-in-a-ts-file-visual-studio-code-using-ts-check)
 
+## react quickies
+
+```js
+
+  const fncomponent = (): JSX.Element => <div>yolo worl</div>
+  someFn(myRating as unknown as number)
+  const someObj: any { things: 'hello'} as OtherThing
+  export const SOME_OBJ: { poop: string } = { poop: 'value' };
+
+  import React, { FC, ReactElement } from 'react';
+
+  export interface PropDef {
+    readonly poop: string;
+  }
+  export const someFnComponent: FC<PropDef> = ({
+    prop1,
+    prop2,
+  }): ReactElement => {}
+  // ^ or one that doesnt accept props
+  // SomeComponent: FC<Record<string, never>> = (): ReactElement
+
+  export const fetchSomething (): Promise<PropDef> {
+    return ...
+  }
+  const arrayOfObjects: PropDef[] = [propDef1, propDefX...s]
+  SomeEl = ({ }: propDef): JSX.Element
+  Promise<{ [x: string]: string }>
+
+
+  // React type reference
+  // this is how facebook does it, follow their lead or create your own framework
+  // and namespaces should no longer hinder treeshaking
+    import * as React from 'react';
+
+  // any node that can be rendered in a react application
+  // use this and move on with your life
+  React.Node
+    // i.e.
+      type Node = React.ChildrenArray<void | null | boolean | string | number | React.Element<any>;
+    // class component
+      class MyComponent extends React.Component<{}> {
+        render(): React.Node { /*render here */}
+      }
+    // fn component
+      function MyComponent(props: {}): React.Node { /* some code... */}
+
+  // the type of jsx element
+  // e.g. returned from React.createElement()
+  React.Element
+    const element: React.Element<'div'> = <div />;
+
+
+  //can be a single/nested array to any level
+  React.ChildrenArray<T>
+    const children: React.ChildrenArray<number> = 42;
+    const children: React.ChildrenArray<number> = [[1, 2], 3, [4, 5]];
+    const array: Array<number> = React.Children.toArray(children); // flatten the array
+
+  // need a better example
+  // this is the ost abstract representation of a react component
+  // useful for HOCs and library definitions
+  React.AbstractComponent<Config, Instance>
+
+
+  // alwys use for  class/fns that receive/return react components
+  // doesnt include strings, @see React.ElementType
+  React.ComponentType<Props>
+    const StyledAnchor: React.ComponentType<any> = styled(Clickable)`css declarations`
+    // i.e.
+    type ComponentType<Props> =
+      | React.StatelessFunctionalComponent<Props>
+      | Class<React.Component<Props, any>>;
+
+  // same as React.ComponentType but includes renderable strings
+  React.ElementType
+    // i.e.
+    type ElementType = | string | React.ComponentType<any>;
+
+  // the most general type of all react elmenets
+  // similar to `mixed` for all values
+  React.MixedElement
+    const element: React.MixedElement = <div />;
+    // i.e.
+      React.Element<React.ElementType>
+
+  // type of a react stateless fn component
+  React.StatelessFunctionalComponent<Props>
+    // i.e.
+      type StatelessFunctionalComponent<Props> = (props: Props) => React.Node;
+
+  // key props
+  React.Key
+    type Key = string | number;
+
+  // type of ref prop on rect elments, i.e. string/fn
+  React.Ref<typeof Component>
+    // i.e.
+    type Ref<C> =
+      | string
+      | (instance: React.ElementRef<C> | null) => mixed;
+
+  React.ElementProps<typeof Component>
+  React.ElementConfig<typeof Component>
+  React.ElementRef<typeof Component>
+  React.Config<Props, DefaultProps>
+
+```
+
 ### best practices
 
 - always
@@ -98,7 +173,7 @@ reference2: <https://flow.org/en/docs/react/types/>
 
   - you want to define your type separately from the object your annotating
 
-    - as a `type` alias for exporting, e.g. in tests
+    - as a `type` alias for exporting
     - as an `opaque` for internal use
 
   - to document external data
@@ -172,7 +247,7 @@ reference2: <https://flow.org/en/docs/react/types/>
   - works: classes (used as a type), type aliases, interfaces
   - errors: functions, function types
 
-### terms
+## terms
 
 - refinement: the ability for a static type checker to be able to tell the type of variable a mixed/any/etc type is. usually occurs within an if/case statement before use of the variable
 - invariant: a type that is less specific than another type
@@ -206,165 +281,12 @@ reference2: <https://flow.org/en/docs/react/types/>
   - fns of type overLoadFn are `overloaded`
 - thunks: fns in the form of `() => A`
 
-### flow usage
+## commonalities
 
-- `// @flow` typecheck this file
-- `// @noflow` do not typecheck this file
-- ignore the next line strategies
-  - `// FlowFixMe` for type errors yo uintend to fix later
-  - `// $FlowIssue` for type errors you think are flows fault
-  - `// @FlowExpetedError` when you expect a type error
-  - `// @FlowIgnore` when you want to ignore your code
-  - `// $ExpectError` when you expect a type error, but not sure if it will be thrown or not
-
-### flow config
-
-- [include]
-  - a path per line, accepts `*` and `**` globs
-  - including a parent directory includes all child descendant directories
-- [ignore]
-  - a path per line, accepts OCaml regular expressoins
-  - match against absolute paths so start each path with `.*`
-    - <PROJECT_ROOT> === the project root, use in `ignore` section and dont use `.*`
-  - processed after & override anything in `[include]` section
-  - any file ignored must be `import|require`ed using `flow-typed`
-    - instead add these to files to `untyped|declarations` section
-- [untyped]
-  - a path per line
-  - matched against absolute paths so start each with `.*`
-  - files to not typecheck, but still make requireable and importable
-  - throw away types and treat modules as `any`
-  -
-- [libs]
-  - a path per line
-  - each pointing to type definitions
-- [lints]
-  - TODO: see linting link
-- [options]
-  - 1 option per line
-  - omitted options use their default values
-- [version]
-  - specify support flow version
-- [declarations]
-  - path per line
-  - use type information from thirdparty libraries without typing checking their contents
-  - does not typecheck files
-  - uses the signatures of all function, classes, etc. when checking other code
-
-### examples
-
-#### quickies
+### types
 
 ```js
-const ComponentProps = {
-  children: ElementReact$,
-};
 
-// exporting behaves as expected
-export opaque type NumberAlias = number;
-export type OtherType = string;
-export opaque type ID: string = string; // subtyping constraint
-// you need to import both keyword `type` and the specific type( i.g. numberalias) ?
-import type { NumberAlias, OtherType } from "./exports";
-```
-
-#### errors and react types
-
-```js
-  // handling errors
-    // $FlowFixMe
-    // $FlowIssue[incompatible-type]
-    /* $FlowIgnore[prop-missing] some other text here */
-    /* $FlowFixMe[incompatible-cast] this
-        is a multi-line
-        comment */
-    { /* $FlowIssue this is how you suppress errors inside JSX */ }
-    someCode('with errors, all previous lines apply only to this line')
-
-  // React type reference
-  // this is how facebook does it, follow their lead or create your own framework
-  // and namespaces should no longer hinder treeshaking
-    import * as React from 'react';
-
-  // any node that can be rnedered in a react application
-  // use this and move on with your life
-  React.Node
-    // i.e.
-      type Node = React.ChildrenArray<void | null | boolean | string | number | React.Element<any>;
-    // class component
-      class MyComponent extends React.Component<{}> {
-        render(): React.Node { /*render here */}
-      }
-    // fn component
-      function MyComponent(props: {}): React.Node { /* some code... */}
-
-  // the type of jsx element
-  // e.g. returned from React.createElement()
-  React.Element
-    const element: React.Element<'div'> = <div />;
-
-
-  //can be a single/nested array to any level
-  React.ChildrenArray<T>
-    const children: React.ChildrenArray<number> = 42;
-    const children: React.ChildrenArray<number> = [[1, 2], 3, [4, 5]];
-    const array: Array<number> = React.Children.toArray(children); // flatten the array
-
-  // need a better example
-  // this is the ost abstract representation of a react component
-  // useful for HOCs and library definitions
-  React.AbstractComponent<Config, Instance>
-
-
-  // alwys use for  class/fns that receive/return react components
-  // doesnt include strings, @see React.ElementType
-  React.ComponentType<Props>
-    const StyledAnchor: React.ComponentType<any> = styled(Clickable)`css declarations`
-    // i.e.
-    type ComponentType<Props> =
-      | React.StatelessFunctionalComponent<Props>
-      | Class<React.Component<Props, any>>;
-
-  // same as React.ComponentType but includes renderable strings
-  React.ElementType
-    // i.e.
-    type ElementType = | string | React.ComponentType<any>;
-
-  // the most general type of all react elmenets
-  // similar to `mixed` for all values
-  React.MixedElement
-    const element: React.MixedElement = <div />;
-    // i.e.
-      React.Element<React.ElementType>
-
-  // type of a react stateless fn component
-  React.StatelessFunctionalComponent<Props>
-    // i.e.
-      type StatelessFunctionalComponent<Props> = (props: Props) => React.Node;
-
-  // key props
-  React.Key
-    type Key = string | number;
-
-  // type of ref prop on rect elments, i.e. string/fn
-  React.Ref<typeof Component>
-    // i.e.
-    type Ref<C> =
-      | string
-      | (instance: React.ElementRef<C> | null) => mixed;
-
-  React.ElementProps<typeof Component>
-  React.ElementConfig<typeof Component>
-  React.ElementRef<typeof Component>
-  React.Config<Props, DefaultProps>
-
-
-
-```
-
-#### basic JS types
-
-```js
   // modifiers
     // append to propName function params and object members
     // prepend ? to type to make it optional (type|void)
@@ -466,7 +388,71 @@ import type { NumberAlias, OtherType } from "./exports";
     type b: string
     type c: a | b;
     type d: a & b
+```
 
+## typescript
+
+## flow
+
+### flow usage
+
+- `// @flow` typecheck this file
+- `// @noflow` do not typecheck this file
+- ignore the next line strategies
+  - `// FlowFixMe` for type errors yo uintend to fix later
+  - `// $FlowIssue` for type errors you think are flows fault
+  - `// @FlowExpetedError` when you expect a type error
+  - `// @FlowIgnore` when you want to ignore your code
+  - `// $ExpectError` when you expect a type error, but not sure if it will be thrown or not
+
+### flow config
+
+- [include]
+  - a path per line, accepts `*` and `**` globs
+  - including a parent directory includes all child descendant directories
+- [ignore]
+  - a path per line, accepts OCaml regular expressoins
+  - match against absolute paths so start each path with `.*`
+    - <PROJECT_ROOT> === the project root, use in `ignore` section and dont use `.*`
+  - processed after & override anything in `[include]` section
+  - any file ignored must be `import|require`ed using `flow-typed`
+    - instead add these to files to `untyped|declarations` section
+- [untyped]
+  - a path per line
+  - matched against absolute paths so start each with `.*`
+  - files to not typecheck, but still make requireable and importable
+  - throw away types and treat modules as `any`
+  -
+- [libs]
+  - a path per line
+  - each pointing to type definitions
+- [lints]
+  - TODO: see linting link
+- [options]
+  - 1 option per line
+  - omitted options use their default values
+- [version]
+  - specify support flow version
+- [declarations]
+  - path per line
+  - use type information from thirdparty libraries without typing checking their contents
+  - does not typecheck files
+  - uses the signatures of all function, classes, etc. when checking other code
+
+### errors and react types
+
+```js
+// handling errors
+// $FlowFixMe
+// $FlowIssue[incompatible-type]
+/* $FlowIgnore[prop-missing] some other text here */
+/* $FlowFixMe[incompatible-cast] this
+        is a multi-line
+        comment */
+{
+  /* $FlowIssue this is how you suppress errors inside JSX */
+}
+someCode("with errors, all previous lines apply only to this line");
 ```
 
 #### function typing
@@ -521,18 +507,12 @@ import type { NumberAlias, OtherType } from "./exports";
       return !!a && !!b;
     }
 
-
-
 ```
 
 #### class typig & interface typing
 
 ```js
 // Class
-  // this inside the class doesnt require type annotation
-  // ^ but if a type is provided, it must be one of:
-  // ^^ super type of the class
-  // ^^ class type (for static methods)
   class MyClass {
     method(this: interface{ x: string}) void {} // errors since x is not defined in the class
     prop: number;
