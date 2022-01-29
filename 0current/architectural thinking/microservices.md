@@ -39,22 +39,36 @@
 
 - break a component into logical steps, convert each step into a service that can be reused and scaled
 
-- domain-based microservices: functional pipelines in a system; create services that fulfill the needs of a particular domain
+#### domain-based decomposition
 
-  - business domain
-  - data domain
-  - product domain
-  - inventory domain
-  - etc etc, really scoped to a particular application/biz/tech context
+- functional pipelines in a system; create services that fulfill the needs of a particular domain
 
-- business process-based microservices: breakdown complex business processes into discrete services that fulfil a role in the overall business process
+- based on domain-driven design patterns
 
-- atomic transaction based microservices: you build your decomposition model around the atomic transaction itself
-  - when eventual consistency isnt an acceptable model, e.g. within fintech
+- business domain
+- data domain
+- product domain
+- inventory domain
+- etc etc, really scoped to a particular application/biz/tech context
+
+#### business process based decompositoin
+
+- breakdown complex business processes into discrete services that fulfil a role in the overall business process
+
+#### atomic transaction based decomposition
+
+- you build your decomposition model around the atomic transaction itself
+- when eventual consistency isnt an acceptable model, e.g. within fintech
 
 #### strangler pattern
 
+- migrate from a monolithic system into a microservices architecture
+- the most common pattern
+
 #### sidecar pattern
+
+- promote separation of concerns
+- offload services (e.g. operational/security functions) into distinct components that can be deployed alongside dependent services
 
 ### integration patterns
 
