@@ -93,6 +93,15 @@ waitforserviceonport () {
     fi
 }
 
+# security -----------------------------
+makechecksum() {
+    if [[ $# -eq 1 ]]; then
+        md5sum "$1"
+    else
+        echo "\$1 === filename"
+    fi
+}
+
 # aws --------------------------------------------------------------------------
 
 # @see https://github.com/donnemartin/saws
