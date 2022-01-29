@@ -67,6 +67,8 @@
 - attack vectors: the methods that adversaries use to breach or infiltrate your network
 - attack surface: the sum of the different points (for "attack vectors")
 - checksum: a small-sized block of data derived from another block of digital data for the purpose of detecting errors that may have been introduced during its transmission or storage. By themselves, checksums are often used to verify data integrity but are not relied upon to verify data authenticity.
+  - digital fingerprints that are calculated when a resource is created, and can be reused to recalculate checksum upon donwload to ensure the uploaded version matches the downloaded version
+- subresource integrity checks: checksums for the browser
 - security through obscurity: relying on an attacker being unable to guess something; i.e. relying on an attackers ignorance/obscurity of the system
 - embargo resources: enable access to sensitive rsources only at a certain point in time, e.g. financial reports are often embargoed
 - digital signature: acts as a unique fingerprint for some input data; that can be easily recalculated as long as they have the signing key originally used to generate the signature
@@ -1065,9 +1067,10 @@
 - fallout
 
 - mitigation
-  - know precisely what dependencies you're consuming, and always specify specific version numbers (instead of ranges)
+  - know precisely what dependencies (app & OS level) you're consuming, and which deps they are consuming (etc) and always specify specific version numbers (instead of ranges)
   - ability to quickly update/replace dependencies
   - staying alert of security issues
+  - check the integrity of all third party code, e.g. via checksums,
 
 ### XML attacks
 
