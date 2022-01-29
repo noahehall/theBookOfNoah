@@ -1,5 +1,9 @@
 # microservices
 
+## links
+
+- [acid transactions](https://databricks.com/glossary/acid-transactions)
+
 ## basics
 
 ### terms
@@ -61,16 +65,24 @@
 
 ##### business process based decompositoin
 
-- breakdown complex business processes into discrete services that fulfil a role in the overall business process
+- breakdown complex business processes into discrete services each fulfilling a specific role in the overall system
 - higher level of service for reusing business logic across other microservices
 - enables you to encapsulate related domains, that depend on similary business processes
 - business processes should never have direct access to datasources, but instead are given the data they need to operate on
   - this is hard boundary between data domains & business domains
+- identify each process you want to expose
+- identify the data domain each process requires as input
+- define the APIs for each business process
+  - business processes always change, and sometimes frequently, so encapsulate the actual business process logic into its own module that can be iterated on separately from the service contract & interface
 
 #### atomic transaction based decomposition
 
-- you build your decomposition model around the atomic transaction itself
-- when eventual consistency isnt an acceptable model, e.g. within fintech
+- you build your decomposition model around the atomic transaction at the data domain level
+- when eventual consistency isnt an acceptable model, e.g. within fintech when you need to guarantee ACID transactions across domains
+  - atomicity: each statement (CRUD) in a transaction is treated as a single unit; either the entire statement is executed, or none of it is executed
+  - consistency: transactions only make changes to tables in predefined, predictable ways
+  - isolation: ensures concurrent tansactions dont interfere/effect with one another
+  - durability: changes to the data made by successfully executed transaction will be saved, even in the vent of system failure
 
 #### strangler pattern
 
