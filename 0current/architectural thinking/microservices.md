@@ -26,5 +26,17 @@
   - operational (devops) components: log & metric aggregators, deployment services, etc
   - diagnostic components: enable you to connect to the runtime env of a microservice and inspect, analyze, diagnose, troubleshoot & improve performance
 
-- cloud native:
-- microser
+- architectural style: way of designing processes & building systems to facilitate an end goal, e.g cloud native is an architectural style
+- cloud native: designed to facilitate operating in the cloud
+
+  - externalizing configuration
+  - focusing on portable (global) and scalability (in & out)
+  - making your apps start fast, and handle shutdowns gracefully
+
+- microservices: scoped units of services, that work in unison to achieve a goal
+
+  - breaking endpoints into distinct units of work that can be scaled independently
+  - focus on data, business and function domains, analyze call patterns and dependency graphs, and determine boundaries between services that need to be scaled independently
+
+- dependency graph:
+- call patterns
