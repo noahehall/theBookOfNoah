@@ -78,25 +78,42 @@
 #### atomic transaction based decomposition
 
 - you build your decomposition model around the atomic transaction at the data domain level
+  - these are synchronous blocking calls, be sure this is what you need and understand the performance implications on the system as a whole (this could become a bottleneck)
+- domains requiring atomic transactions should be in a single shared database in order to build the atomic service
 - when eventual consistency isnt an acceptable model, e.g. within fintech when you need to guarantee ACID transactions across domains
   - atomicity: each statement (CRUD) in a transaction is treated as a single unit; either the entire statement is executed, or none of it is executed
   - consistency: transactions only make changes to tables in predefined, predictable ways
   - isolation: ensures concurrent tansactions dont interfere/effect with one another
   - durability: changes to the data made by successfully executed transaction will be saved, even in the vent of system failure
+- provide failure domains & rollbacks; blocking API calls until the previous API call is complete, synchronous APIs work best/asyncrhonous with a guarantee callback mechanism
+  - always have clearly defined transactions, especially the conditions which cause commits to be rolledback
+- dont depend on distributed transactions, the complexity is far greater than just using a synchronous API
 
 #### strangler pattern
 
 - migrate from a monolithic system into a microservices architecture
-- the most common pattern
+- carving/sharding functionality out of a monolith and into a micrservice endpoint
+- the most common pattern for moving from monolith to microservice
+- start with the monolith, and encapsulate/strangle each dependency, migrating each one-by-one to a microservice endpoint, then deprecate & remove the dependency from the monolith once the microservice is fully implemented
+- top down approach: start at the API/service level, and work down to the data domain
+- bottom up approach: start the at data domain, and move up to the API/service level
 
 #### sidecar pattern
 
-- promote separation of concerns
-- offload services (e.g. operational/security functions) into distinct components that can be deployed alongside dependent services
+- promote separation of concerns; all about removing repetitive code from multiple microservices into a single embedded that can be utilized by each
+- offload services (e.g. operational/security functions) into distinct components that can be deployed alongside dependent services as runtime dependencies
+- e.g. monitoring, logging, & security etc all lend themselves to this pattern, and can either be deployed as an embedded module (e.g. logging) or as a distinct microservice itself (e.g. oauth)
+- this pattern shouldnt create more microservices, but instead create child processes to existing microservices
 
 ### integration patterns
 
-#### gateway pattern
+- solve orchestration & ingress needs across a systme as a whole
+
+#### api gateway pattern
+
+- pattern for external clients communicating with your system
+- clients shouldnt be able to call any/all service, but instead call a single gateway which acts as a reverse proxy to all of the services you provide
+- the gateway provides a buffer/facade/proxy to the services behind its fence
 
 #### process aggregator pattern
 
