@@ -38,15 +38,21 @@
 ### decomposition patterns
 
 - break a component into logical steps, convert each step into a service that can be reused and scaled
+- core goal is to make services smaller, thereby more scalable as demand fluxuates across service boundaries
 
-#### domain-based decomposition
+#### domain based decomposition
 
 - functional pipelines in a system; create services that fulfill the needs of a particular domain
+- largely based on domain-driven design patterns, as that methodology lends itself to decomposing services by domains
+- usually the lowest level of decomposition
 
-- based on domain-driven design patterns
+- data domain: services driven by the data itself and focus on serving data thats used by the system, as well as data specific logic
+
+  - start with the data model (from the perspective of the outside world), how its needed and how its consumed, what are the actions (not in terms of CRUD/REST, just plainspeak) that need to be performed on the model
+  - scope the service contract, dont worry about implementation details just yet
+  - the underlying data schema is not important; focus instead on data access patterns
 
 - business domain
-- data domain
 - product domain
 - inventory domain
 - etc etc, really scoped to a particular application/biz/tech context
