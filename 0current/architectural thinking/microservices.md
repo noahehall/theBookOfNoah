@@ -44,22 +44,28 @@
 
 - functional pipelines in a system; create services that fulfill the needs of a particular domain
 - largely based on domain-driven design patterns, as that methodology lends itself to decomposing services by domains
-- usually the lowest level of decomposition
 
-- data domain: services driven by the data itself and focus on serving data thats used by the system, as well as data specific logic
-
-  - start with the data model (from the perspective of the outside world), how its needed and how its consumed, what are the actions (not in terms of CRUD/REST, just plainspeak) that need to be performed on the model
-  - scope the service contract, dont worry about implementation details just yet
-  - the underlying data schema is not important; focus instead on data access patterns
-
-- business domain
 - product domain
 - inventory domain
 - etc etc, really scoped to a particular application/biz/tech context
 
-#### business process based decompositoin
+##### data domain
+
+- services driven by the data itself and focus on serving data thats used by the system, as well as data specific logic
+
+- usually the lowest level of decomposition
+  - start with the data model (from the perspective of the outside world), how its needed and how its consumed, what are the actions (not in terms of CRUD/REST, just plainspeak) that need to be performed on the model
+  - scope the service contract, dont worry about implementation details just yet
+  - define your service boundary and build APIs around your actions
+  - define a schema that supports the model (but doesnt have to match 1:1 to the model) and implement your datastore (db)
+
+##### business process based decompositoin
 
 - breakdown complex business processes into discrete services that fulfil a role in the overall business process
+- higher level of service for reusing business logic across other microservices
+- enables you to encapsulate related domains, that depend on similary business processes
+- business processes should never have direct access to datasources, but instead are given the data they need to operate on
+  - this is hard boundary between data domains & business domains
 
 #### atomic transaction based decomposition
 
