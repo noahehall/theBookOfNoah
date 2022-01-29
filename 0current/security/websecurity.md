@@ -6,6 +6,9 @@
 
 ## links
 
+- blogs
+  - [krebs on security](https://krebsonsecurity.com/)
+  - [schneier on security](https://www.schneier.com/)
 - envs
   - [kali linux](https://www.kapageli.org/)
   - [caine](https://www.caine-live.net/)
@@ -1070,7 +1073,12 @@
   - know precisely what dependencies (app & OS level) you're consuming, and which deps they are consuming (etc) and always specify specific version numbers (instead of ranges)
   - ability to quickly update/replace dependencies
   - staying alert of security issues
-  - check the integrity of all third party code, e.g. via checksums,
+  - check the integrity of all third party code, e.g. via checksums & subresource integrity checks
+  - ability to deploy changes quickly via an orderly & automated release process
+  - ability to deploy patches to dependencies without upgrading source code
+  - utilize software tools to scan dependencies for vulnerabilities, e.g. npm audit, OWASP dependency-check, github source code scans
+  - ensure no dependencies run with default configuration/login credentials/etc, e.g. db name & password, server file location e.g. /etc/certs
+  - disable open directory listings: so if hackers penetrate your system, they are unable to search ofr sensitive files and encryption keys
 
 ### XML attacks
 
