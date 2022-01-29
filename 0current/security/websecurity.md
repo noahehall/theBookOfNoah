@@ -1079,6 +1079,8 @@
   - utilize software tools to scan dependencies for vulnerabilities, e.g. npm audit, OWASP dependency-check, github source code scans
   - ensure no dependencies run with default configuration/login credentials/etc, e.g. db name & password, server file location e.g. /etc/certs
   - disable open directory listings: so if hackers penetrate your system, they are unable to search ofr sensitive files and encryption keys
+  - keep private shiz external from souce code: db credentials, api keys, private encryption keys, certs, etc
+  - encryption at rest: shiz stored on the server should be encrypted
 
 ### XML attacks
 
