@@ -995,10 +995,10 @@
 #### privilege escalation
 
 - a malicious user usurps the permissions of another user
-- vertical escalation: an attacker gets access to an account wiht a broader permissions than their own
-- horizontal escalation: an attacker accesses anothr account with similar privileges as their own
+- vertical escalation: an attacker gets access to an account with a broader permissions than their own
+- horizontal escalation: an attacker accesses another account with similar privileges as their own
 
-- expsore
+- exposure
 
   - if an attacker can deploy a web shell on your server and escalate to root privilege
 
@@ -1046,13 +1046,28 @@
 - mitigation
   - disable any server headers that reveal the technology, language or version of your web/application server
   - always use clean urls: remove any file suffixes e.g. php, asp or jsp
-  - use generic cookie params: e.g. never use something like a JESSIONID common in java web servers
+  - use generic cookie params: e.g. never use something like a JESSIONID common in java web servers (or just dont use fkn java)
   - use generic clientside error reporting: e.g. never print stack traces/routing/database information in an HTML error page
   - minify javascript files: remove extranous characters (e.g. whitespace) and replace appropriate code statements with shorter, semantically identical ones
-  - obvfuscate javascript files: replace method & function names with short meaningless tokens
+  - obfuscate javascript files: replace method & function names with short meaningless tokens
   - sanitize client-side files via code reviews and static analysis tools that search for comments and sensitive data
 
 #### third-party code
+
+- most of the code in software is written by others
+- ^ thus its far easier for an attacker to scan for insecure sites than to target a particular site
+
+- exposure
+
+  - malvertising: deploying malware through ad networks
+  - insecure dependencies: all third-party code, and all third-party liraries are liable to have securty issues
+
+- fallout
+
+- mitigation
+  - know precisely what dependencies you're consuming, and always specify specific version numbers (instead of ranges)
+  - ability to quickly update/replace dependencies
+  - staying alert of security issues
 
 ### XML attacks
 
