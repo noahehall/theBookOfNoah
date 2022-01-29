@@ -14,21 +14,6 @@
   - focusing on portable (global) and scalability (in & out)
   - making your apps start fast, and handle shutdowns gracefully
 
-- microservices: scoped units of services, that work in unison but scale independently to achieve a goal
-
-  - breaking endpoints into distinct units of work that can be scaled independently
-  - focus on data, business and function domains, analyze call patterns and dependency graphs, and determine boundaries between services that need to be scaled independently
-
-- domain-based microservices: functional pipelines in a system; domain-driven design
-
-  - business domain
-  - data domain
-  - product domain
-  - inventory domain
-  - etc etc, really scoped to a particular application/biz/tech context
-
-- business process-based microservices: ...
-
 - service types:
 
   - data service: connects to a data source within a system
@@ -45,9 +30,27 @@
 
 ## patterns
 
+- microservices: scoped units of services, that work in unison but scale independently to achieve a goal
+
+  - breaking endpoints into distinct units of work that can be scaled independently
+  - focus on data, business and function domains, analyze call patterns and dependency graphs, and determine boundaries between services that need to be scaled independently
+
 ### decomposition patterns
 
 - break a component into logical steps, convert each step into a service that can be reused and scaled
+
+- domain-based microservices: functional pipelines in a system; create services that fulfill the needs of a particular domain
+
+  - business domain
+  - data domain
+  - product domain
+  - inventory domain
+  - etc etc, really scoped to a particular application/biz/tech context
+
+- business process-based microservices: breakdown complex business processes into discrete services that fulfil a role in the overall business process
+
+- atomic transaction based microservices: you build your decomposition model around the atomic transaction itself
+  - when eventual consistency isnt an acceptable model, e.g. within fintech
 
 #### strangler pattern
 
