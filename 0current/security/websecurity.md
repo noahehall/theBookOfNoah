@@ -67,6 +67,7 @@
 
 ### terminology
 
+- webhook: when a service provider needs to make calls to your server, e.g. to send notifications; a reverse API on your website that the service provider will send HTTP requests when an event happens
 - attack vectors: the methods that adversaries use to breach or infiltrate your network
 - attack surface: the sum of the different points (for "attack vectors")
 - checksum: a small-sized block of data derived from another block of digital data for the purpose of detecting errors that may have been introduced during its transmission or storage. By themselves, checksums are often used to verify data integrity but are not relied upon to verify data authenticity.
@@ -647,6 +648,9 @@
   - unwitting accessories
   - the process of resolving a URL to a file can introduce vulnerabilities
     - ensure you have access control rules defined on the web server
+  - replay attacks: an attacker resends an HTTP request in an attempt to repeat an action, e.g. duplicate a payment
+  - subdomain takeovers: attackers scan the internet for DNS entries describing subdomains that point to the IP addresses for uninitialized/deactivated services
+    - then they swuat on one of hte listed IP addresses, enabling them to create links to their malicious content by using the domain of the victim
 
 ### injection attacks
 
@@ -1066,6 +1070,7 @@
 
   - malvertising: deploying malware through ad networks
   - insecure dependencies: all third-party code, and all third-party liraries are liable to have securty issues
+  - trusting anything from third party code, to services, to content
 
 - fallout
 
@@ -1081,6 +1086,10 @@
   - disable open directory listings: so if hackers penetrate your system, they are unable to search ofr sensitive files and encryption keys
   - keep private shiz external from souce code: db credentials, api keys, private encryption keys, certs, etc
   - encryption at rest: shiz stored on the server should be encrypted
+  - harden test envs: test envs often repliate prod envs; if attackers gain access to test envs they can learn valuable infomraiton about prod envs
+  - never shae/reuse keys/creds across envs
+  - secure administrative frontends: e.g. db login screens
+  - treat third party services (e.g. facebook login) as you would third-party code; they are all vulnerable and high-target attack surfaces
 
 ### XML attacks
 
