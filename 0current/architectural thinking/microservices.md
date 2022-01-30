@@ -212,7 +212,7 @@
 - the source logs need to have a clearly defined model and structure and be consistent across the entire system for effective aggregation and holistic analysis
 - in distributed systems, its often usefult to link the logs across systems
 - processing logs via aggregation requires each source log to have a consistent taxonomy, similar keys & formats
-- log aggregation: each service generally right their own logs thats output for observability,
+- log aggregation: each service generally right their own logs thats output for observability, but all logs should end up in a single stream of data
   - aggregation involves retrieving the logged output, parsed, labeled/tagged, and stored in a time-ordered fashion
   - the faster you can aggregate logs, the faster you can diagnose & trouble shoot issues
   - correlation of logs via tracing identifiers requires uniform design across the entire system
