@@ -175,7 +175,8 @@
 - the most complex pattern of all the data patterns
 - but if implemented correctly, provides the most benefits
 - data access patterns diverge from traditional CRUD, into multi-model bounded contexts
-  -
+  - multi-interface operations, write verus read
+    - query interfaces my aggregate and transform the schema to represent the model for specific use cases
 
 #### asynchronous eventing
 
