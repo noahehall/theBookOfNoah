@@ -7,6 +7,8 @@
 
 ## basics
 
+- abstraction for the sake of abstraction increase complexity & cost for no value
+
 ### terms
 
 - architectural style: way of designing processes & building systems to facilitate an end goal, e.g cloud native is an architectural style
@@ -121,6 +123,8 @@
 - adhere to strict api version control and ensure all changes are passive (non-aggressive)
 - implement clients (service wrappers) as distinct modules for service behind the gateway
 
+#### edge pattern
+
 #### process aggregator pattern
 
 - aggregate multiple business processes into a distinct flow to solve specific goals
@@ -131,11 +135,10 @@
   - this is the main usecase, else you might as well use an aggrigator at the api-gateway level
   - however, this can cause long blocking calls if too many business processes are aggregated
 - determine the business processes
-- determine the processing rules
+- determine the processing rules (should be encapsulated and an interface presented instead of hardcoding the logic directly in the service)
 - design a consolidated model (for the composite payload) based on how the processing rules modify the responses
-- design an API for the actions on that model
-
-#### edge pattern
+- design an API for the actions on that model (using either REST/Actions pattern)
+- wire the service and implement the internal processing
 
 ### data pattern
 
