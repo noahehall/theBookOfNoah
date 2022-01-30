@@ -152,6 +152,13 @@
 
 #### single service database
 
+- the most common pattern for all data domain based services
+- single service, single database
+  - perfect when the scalability demands between the db and service are related (usually proportional)
+  - as the demand for the service increases, thus the demands on the db, and you can allocate resources effectively by monitoring both
+  - thus, each data domain should have its own dedicated datastore in this pattern
+  - can potentially isolate the data per region, for a more sophisticated architecture
+
 #### shared service database
 
 #### command query responsbility segregation
