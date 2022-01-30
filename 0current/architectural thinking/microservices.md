@@ -164,7 +164,8 @@
 - all data domains exist within a single database
   - still you should break the data domains into schemas/keystores/etc to keep them somewhat distinct at the data level
   - definitely you should still treat the data distinctly at the application code level
-  - each user/service that consumes each distinct data domain should also have distinct credentials for each, even tho they are really accessing the same data store
+  - each user/service that consumes each distinct data domain should also have distinct credentials for accessing those services & data domains, even tho they are really accessing the same data store
+    - ensure you have proper segmentation at the data & service level
     - this enables you to move to a single service database in the future with the least amount of friction
 - you see this more in enterprises where there are contractual obligations/not enough resources to fully move to a true microservice architecture
 - data distribution should be handled by the database, and not by code
@@ -172,20 +173,53 @@
 
 #### command query responsbility segregation (CQRS)
 
-- the most complex pattern of all the data patterns, but if implemented correctly, provides the most benefits for the use cases where its appropriate
+- the most complex pattern of all the data patterns
+  - if implemented correctly, provides the most benefits for the use cases where its appropriate
+    - task based UI operations: complex write queries commit tasks, and complex read queries to support the system state at a given point in time
+    - eventually consistency is a must, as usually there are multiple and disparate data domains to be written to and read from
+    - event driven models work well, as you can react from triggers & events
+    - you must spend significant time in the design phase
+  - else is a nightmare to maintain
 - data access patterns diverge from traditional CRUD, into multi-model patterns within specific bounded contexts or data domain
   - multi-interface operations, write verus read
     - query interfaces may transform & aggregate the actual data schema to represent the access pattern being modeled
     - write interfaces may inject behavior and other characteristics based on a specific use case being modeled
   - whenever CRUD becomes a bottleneck in complex write & read scenarios
 
-#### asynchronous eventing
+#### asynchronous messaging/eventing pattern
+
+- whenever you have long running transactions/complex workflows and a single blocking API call becomes unfeasable
+- some problems/processes cannot be achieved in real time
+- service API to trigger event, and events cacade asynchronously
+- events can trigger from posting to a messaging queue
+- super powerful in distributed systems
 
 ### operational patterns
 
+- how you run run systems, vs how you build it
+- helps you answer:
+  - what is happening?
+  - when is it happening?
+  - where it is happening?
+  - why is it happening?
+  - who is involved?
+
 #### log aggregation patterns
 
+- provide detail behavior of the runtime characteristics of the system
+- the source logs need to have a clearly defined model and structure and be consistent across the entire system for effective aggregation and holistic analysis
+- in distributed systems, its often usefult to link the logs across systems
+- processing logs via aggregation requires each source log to have a consistent taxonomy, similar keys & formats
+- log aggregation: each service generally right their own logs thats output for observability,
+  - aggregation involves retrieving the logged output, parsed, labeled/tagged, and stored in a time-ordered fashion
+  - the faster you can aggregate logs, the faster you can diagnose & trouble shoot issues
+  - correlation of logs via tracing identifiers requires uniform design across the entire system
+    - enables you to recreate call stacks from errant processes
+- log indexing: enbales rapid searching, is almost required in high-value production systems
+
 #### metrics aggregation patterns
+
+-
 
 #### tracing patterns
 
