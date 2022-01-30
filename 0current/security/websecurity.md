@@ -1,8 +1,8 @@
 # web security
 
 - reading: done
-- copying: PAGE 131 third-party code
-  - need to create a new section for this
+- copying: PAGE 152 dont be an accessory
+  - categorized as unwitting accomplice
 
 ## links
 
@@ -1103,12 +1103,15 @@
 
 ### XML attacks
 
-- exposure
+- just dont fkn use XML, its not 1990
+- attack vectors
+  - xml bombs
+  - xml external entity attacks
+  - xml parsers
 
-  - ...
+### unwitting accomplice
 
-- fallout
-  - ...
+- page 152
 
 ### denial-of-service attacks
 
