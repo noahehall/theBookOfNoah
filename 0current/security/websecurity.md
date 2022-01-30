@@ -1071,6 +1071,7 @@
   - malvertising: deploying malware through ad networks
   - insecure dependencies: all third-party code, and all third-party liraries are liable to have securty issues
   - trusting anything from third party code, to services, to content
+  - imported third-party code, e.g. GTM/support bots, can read anything in the DOM, including sensitive data the user types in; can be subvertised by the third party or attackers that have infiltered the third party
 
 - fallout
 
@@ -1090,6 +1091,7 @@
   - never shae/reuse keys/creds across envs
   - secure administrative frontends: e.g. db login screens
   - treat third party services (e.g. facebook login) as you would third-party code; they are all vulnerable and high-target attack surfaces
+  - use web components to wrap client-side thirdparty codes, as it provides more granular permissions for code and page elements relative to the existing browser security sandbox model
 
 ### XML attacks
 
