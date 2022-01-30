@@ -161,7 +161,21 @@
 
 #### shared service database
 
-#### command query responsbility segregation
+- all data domains exist within a single database
+  - still you should break the data domains into schemas/keystores/etc to keep them somewhat distinct at the data level
+  - definitely you should still treat the data distinctly at the application code level
+  - each user/service that consumes each distinct data domain should also have distinct credentials for each, even tho they are really accessing the same data store
+    - this enables you to move to a single service database in the future with the least amount of friction
+- you see this more in enterprises where there are contractual obligations/not enough resources to fully move to a true microservice architecture
+- data distribution should be handled by the database, and not by code
+  - else synchronization/replication issues will eventually develop if application code is responsible for pushing data across regions/datacenters
+
+#### command query responsbility segregation (CQRS)
+
+- the most complex pattern of all the data patterns
+- but if implemented correctly, provides the most benefits
+- data access patterns diverge from traditional CRUD, into multi-model bounded contexts
+  -
 
 #### asynchronous eventing
 
