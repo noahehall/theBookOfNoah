@@ -172,11 +172,12 @@
 
 #### command query responsbility segregation (CQRS)
 
-- the most complex pattern of all the data patterns
-- but if implemented correctly, provides the most benefits
-- data access patterns diverge from traditional CRUD, into multi-model bounded contexts
+- the most complex pattern of all the data patterns, but if implemented correctly, provides the most benefits for the use cases where its appropriate
+- data access patterns diverge from traditional CRUD, into multi-model patterns within specific bounded contexts or data domain
   - multi-interface operations, write verus read
-    - query interfaces my aggregate and transform the schema to represent the model for specific use cases
+    - query interfaces may transform & aggregate the actual data schema to represent the access pattern being modeled
+    - write interfaces may inject behavior and other characteristics based on a specific use case being modeled
+  - whenever CRUD becomes a bottleneck in complex write & read scenarios
 
 #### asynchronous eventing
 
