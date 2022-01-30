@@ -117,6 +117,8 @@
 #### api gateway pattern
 
 - pattern for external clients communicating with your system
+  - if distinct clients have diverging demands/special business logic, use the edge pattern instead
+  - works best when all fronted services have similar demand profiles
 - clients shouldnt be able to call any/all service, but instead call a single gateway which acts as a reverse proxy to all of the services you provide
 - the gateway provides aggregation/buffer/facade/proxy/decoration/oauth/etc to the services behind its fence, and is responsible for mutating, limiting and proxying requests
 - keep business logic out of the gateway, while it can be done, there are more appropriate patterns (see process aggregator) that should be responsible
@@ -124,6 +126,12 @@
 - implement clients (service wrappers) as distinct modules for service behind the gateway
 
 #### edge pattern
+
+- client specific API gateways for optimizing cost by creating distinct ingress APIs for clients with distinct business logic & demand profiles
+- provides aggregation, consolidation, composition and complexity isolation away from the main API gateway used by the other clients
+- directly addresses specific client scaling needs, e.g. if your customer is microsoft/apple, you likely want an edge service scoped to their needs
+- identify the client, their needs & constraints, build contracts, interfaces and models
+- generally recommended over pure api gateways, unless the cost of the additional hardware/service is too much
 
 #### process aggregator pattern
 
