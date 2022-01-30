@@ -3,6 +3,7 @@
 ## links
 
 - [acid transactions](https://databricks.com/glossary/acid-transactions)
+- [the action pattern](https://ponyfoo.com/articles/action-pattern-clean-obvious-testable-code)
 
 ## basics
 
@@ -31,6 +32,8 @@
   - ancillary services: message queues, cache services, oauth, etc; some are first class, others arent
   - operational (devops) components: log & metric aggregators, deployment services, etc
   - diagnostic components: enable you to connect to the runtime env of a microservice and inspect, analyze, diagnose, troubleshoot & improve performance
+
+- business process: logic that consumes one/more data domains to solve an issue
 
 ## patterns
 
@@ -115,8 +118,22 @@
 - clients shouldnt be able to call any/all service, but instead call a single gateway which acts as a reverse proxy to all of the services you provide
 - the gateway provides aggregation/buffer/facade/proxy/decoration/oauth/etc to the services behind its fence, and is responsible for mutating, limiting and proxying requests
 - keep business logic out of the gateway, while it can be done, there are more appropriate patterns (see process aggregator) that should be responsible
+- adhere to strict api version control and ensure all changes are passive (non-aggressive)
+- implement clients (service wrappers) as distinct modules for service behind the gateway
 
 #### process aggregator pattern
+
+- aggregate multiple business processes into a distinct flow to solve specific goals
+  - usually the processes are dependent, and must be executed consecutively (and not in parallel) and can cause choke points as wait times increase
+- whenever you have several business processes that must be called together and have a composite payload (multiple data domains)
+- the aggregator interface should provide clients with a single API that subsequently calls each downstream process, assembles the responses from each, and returns a composite payload
+- the aggregator is responsible for processing the responses and returning a unified response payload
+  - this is the main usecase, else you might as well use an aggrigator at the api-gateway level
+  - however, this can cause long blocking calls if too many business processes are aggregated
+- determine the business processes
+- determine the processing rules
+- design a consolidated model (for the composite payload) based on how the processing rules modify the responses
+- design an API for the actions on that model
 
 #### edge pattern
 
