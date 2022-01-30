@@ -67,6 +67,10 @@
 
 ### terminology
 
+- safeframe: allows ad network publishers to specify that ads must be run in an iframe, and offers an API that allows the advertiser to overcome some of the native limitations of frames
+- exploit kits: determine whether a particular user angent/operating system is vulnerable beore delivering the actual malicious code (the payload)
+  - payload: include scripts that may redirect/lock the browser, viruses, ransomware delivered via vulnerabilities in plugins, or javascript that mines cryptocurrency, etc
+    - generally hosted at dynamically generated URLs and avoid automated scans by triggering only sporadically
 - webhook: when a service provider needs to make calls to your server, e.g. to send notifications; a reverse API on your website that the service provider will send HTTP requests when an event happens
 - attack vectors: the methods that adversaries use to breach or infiltrate your network
 - attack surface: the sum of the different points (for "attack vectors")
@@ -1076,6 +1080,7 @@
 - fallout
 
 - mitigation
+
   - know precisely what dependencies (app & OS level) you're consuming, and which deps they are consuming (etc) and always specify specific version numbers (instead of ranges)
   - ability to quickly update/replace dependencies
   - staying alert of security issues
@@ -1092,6 +1097,9 @@
   - secure administrative frontends: e.g. db login screens
   - treat third party services (e.g. facebook login) as you would third-party code; they are all vulnerable and high-target attack surfaces
   - use web components to wrap client-side thirdparty codes, as it provides more granular permissions for code and page elements relative to the existing browser security sandbox model
+  - host third-party code in a iframe, since code in an iframe cannot access the DOM of the containing page
+
+  -
 
 ### XML attacks
 
