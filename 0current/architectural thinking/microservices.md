@@ -235,8 +235,22 @@
 - the more call stacks span processes and networks, code traces are less valuable
 - you need to implement a higher level trace ID that can be delivered across processes & services
 - enables you to recreate the call stack by injecting a trace ID into every call
-  - the trace ID should be injected at the edge, and span all the way down into the data layer, perhaps even stored in the database itself
+  - the trace ID should be injected at the edge/entry point to your system, and span all the way down into the data layer, perhaps even stored in the database itself
+  - every log message should embed the trace Id through structured logging with common taxonomy
+- always use an open-standards approach (usually specify the trace ID in the request header)
 
 #### external configuration
 
+- critical when resources and services are moved across systems
+- its main benefits is operational: when you need to reconfigure resources & services, its great to have a single place to manage the runtime environment of microservices
+- use tooling that makes external configuration & environment variables easy to find and manipulate
+- use consistent naming conventions across services and their configurations
+- ensure secrets are kept separate from configurations
+- configurations are generally injected into the service, or retrieved as part of the service startup routine
+- services should prioritized externalized values over embedded (default) values
+
 #### service discovery
+
+- mechanism for provider services to be found by consuming services in a dynamic runtime where service identifiers/locations/etc can and do change in response to system activity
+- a central location should should exist that can be queried to find what services exist to acocmplish each task in the system,
+  - as services boot, they should advertise themselves to this datastore, describing their location and what services they offer
