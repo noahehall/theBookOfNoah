@@ -1,5 +1,7 @@
 # microservices
 
+- microservice patterns from the edge to the datastore
+
 ## links
 
 - [acid transactions](https://databricks.com/glossary/acid-transactions)
@@ -219,9 +221,21 @@
 
 #### metrics aggregation patterns
 
--
+- understand whats going on at a system level
+- ensure the taxonomy is structured across all system components
+- dashboard design is critical: both system and user events should be injected into dashboards
+  - high-level dashboards: useful for spotting trends across the system as a whole
+  - detailed dashboards: useful for drilling down into specific system components to further investigatation
+    - especially if you can embed links to the log aggregation system
+    - trace alarms on dashboards are useful, that way oncall devs can see why they are being paged visually without having to run queries to figure out where issues are occuring
+- ensure you have runbooks for all alarms
 
 #### tracing patterns
+
+- the more call stacks span processes and networks, code traces are less valuable
+- you need to implement a higher level trace ID that can be delivered across processes & services
+- enables you to recreate the call stack by injecting a trace ID into every call
+  - the trace ID should be injected at the edge, and span all the way down into the data layer, perhaps even stored in the database itself
 
 #### external configuration
 
