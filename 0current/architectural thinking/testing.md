@@ -50,17 +50,20 @@
 
 - unit tests: Unit Tests are functions and classes designed to prove the code performs within a set of guidelines
 - integration tests: tests to check the correct functioning of a system that rely on external dependencies
+  - discern defects in the interfaces and in the interactions between itnegrated components/systems
   - collect modules together and test them as a subsystem in order to verify that they collaborate as intended to achieve some larger piece of behaviour.
-- e2e test: aka UI Tests: the task of performing tests on the user interface; in the same way a user would
+- e2e test: the task of performing tests from the end users perspective; in the same way a user would
+  - ui tests: testing an applications UI interface through automated tools
+  - acceptance tests: ensures the requirements of a specification/contract/etc are met; only place manual QA tests still win over automation
+  - regression tests: testing to validate new features havent broken exiting features; performed at all levels of tests (unit, integration, e2e (most reliable))
 - security testing: performed to look for flaws in code and runtime to prevent compromises and leaking of data in production
-  - e.g. via findbugs, fortify, or gauntlt
-- acceptance tests: automated version of a user performing some task in your application. are the highest level. validation of how application works from user point of view.
+  - static security tests: look for known patterns/libraries with vulnerabilities via static analysis tools
+  - dynamic security tests: test actual attack payloads, but requires the system to be running
 - blackbox tests: focses on the object state
 - domain tests: testing business logic
 - functional tests: multiple unit tests working together in order to test a specific functionality
 - monitoring tests: testing continuously at regular intervals
 - performance testing: e.g. soak tests, spike tests, step tests,
-- regression tests: testing old functionality, to ensure new changes are not breaking existing functionality
 - smoke test: testing the environment
 - white box tests: focuses on the objects behavior
 - regression tests: testing old functionality, to ensure new changes are not breaking existing functionality
@@ -70,15 +73,8 @@
 - component tests: limits the scope of the exercised software to a portion of the system under test, manipulating the system through internal code interfaces and using test doubles to isolate the code under test from other components
   - By instantiating the full microservice in-memory using in-memory test doubles and datastores it is possible to write component tests that do not touch the network whatsoever.
 - functional tests: tests of a specific function within your application, requiring some type of user input, and returning some type of results.
-  - Typical tests can be for login, registration to the site, user account operations, account settings changes, complex data retrieval operations, among others. Function tests typically mirror the user-scenarios used to specify the features and design or your application.
-- acceptance tests:
 
-  - an acceptance test is an automated version of a user performing some task in your application.
-  - Acceptance tests are the tests of highest level. Generally this kind of tests give us knowledge about how application works from user point of view.
-  - ensures that the acceptance criteria 'for' a story are met
-  - domains: functionality, capacity, usability, security, modifiability, availability
-  - after incorrect fill of the login form,
-  - where user will be redirected after correct fill the login form.
+  - Typical tests can be for login, registration to the site, user account operations, account settings changes, complex data retrieval operations, among others. Function tests typically mirror the user-scenarios used to specify the features and design or your application.
 
 - end to end tests: verifies that a system meets external requirements and achieves its goals, testing the entire system, from end to end, irrespective of the component architecture in use.
   - the system is treated as a black box and the tests exercise as much of the fully deployed system as possible, manipulating it through public interfaces such as GUIs and service APIs.
