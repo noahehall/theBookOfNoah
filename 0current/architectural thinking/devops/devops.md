@@ -32,14 +32,17 @@
     - branch based: has long running branches, e.g. a dev vs master branch
   - never allow flaky tests: fkn fix or fkn remove
   - every build outputs a status, a log and an artifact for deployment
+- continuous integration
+  - always start wiht a clean env; each build should start with a clean state
+  - keep builds fast
+  - never commit new code to broken builds, leave the bulid broken, or remove tests that fail without first troubleshooting
+  - use notifications to monitor build progress: code commit, build start, build stage, build complete, deploy, etc
 - continous delivery
-
   - only build artifacts once
   - artifacts should be immutable
   - deployment should go to a copy of production
   - stop deploys if a previous step fails
   - deployments should be idempotent
-
 - testing: criticall for the CI/CD pipeline
 - feature flags: enables committing of unfinished code, a/b testing, etc
   - branch by abstraction: use feature flags in the code to control cutting over to new areas of code
