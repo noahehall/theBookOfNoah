@@ -365,6 +365,8 @@
   - artifact repo: amazon s3, artifactory, nexus, docker registries,
     - think through the packaging formats to accept and how you will manage (retire) dependencies
   - deployment server: responsible for watching the artifact repo, and deploying new packages to environments
+    - deployments should always self validate their state, e.g. via smoke tests
+    - deploy the same artifact, the same way, to the same (functionally similar) environment
     - deployments to production should only come from the artifact repository, and the CI system should be the only thing capable of writing to the artifactory repository
     - deployment tools: first deploy to a test/ci/qa/etc environment to run tests, then deploy to prod
     - ci environment: responsible for running integratoin & e2e tests

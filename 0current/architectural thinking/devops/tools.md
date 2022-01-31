@@ -1,59 +1,5 @@
 # devops tools
 
-## poop
-
-- need to list by type
-
-- ansible
-- apache bench
-- appdynamics
-- artifactory
-- capistrano
-- cfengine
-- chef
-- consul
-- datadog
-- deployinator
-- docker
-- docker hub
-- elasticsearch
-- etcd
-- flapjack
-- grafana
-- graphite
-- habitat (by chef)
-- icinga
-- influxdb
-- jmeter
-- k8s
-- kibana
-- kitchenCI
-- librato
-- logstash
-- mesos
-- mitten
-- nagios
-- netuitive
-- new relic
-- opentsdb
-- packer
-- pagerduty
-- pingdom
-- prometheus
-- puppet
-- rerun (bash framework)
-- rundeck
-- ruxit
-- saltstack
-- sensu
-- splunk
-- statsd
-- statuspage.io
-- sumologic
-- sysdig
-- ubuntu juju: models infrastructure & services together
-- victorops
-- zookeeper
 - CI systems
   - jenkins: most common CI system
   - cirleCI
@@ -64,3 +10,57 @@
   - apache archiva
   - docker registry
   - terraform registry
+- deployment tools
+
+  - capistrano (stay way from this, exposing your source control to prod is an anti pattern)
+  - chef/puppet: depends on you packaging your artifacts as OS packages
+  - rundeck
+  - ansible
+
+- need to list by (primary) type
+  - apache bench
+  - appdynamics
+  - artifactory
+  - capistrano
+  - cfengine
+  - consul
+  - datadog
+  - deployinator
+  - docker
+  - docker hub
+  - elasticsearch
+  - etcd
+  - flapjack
+  - grafana
+  - graphite
+  - habitat (by chef)
+  - icinga
+  - influxdb
+  - jmeter
+  - k8s
+  - kibana
+  - kitchenCI
+  - librato
+  - logstash
+  - mesos
+  - mitten
+  - nagios
+  - netuitive
+  - new relic
+  - opentsdb
+  - packer
+  - pagerduty
+  - pingdom
+  - prometheus
+  - rerun (bash framework)
+  - ruxit
+  - saltstack
+  - sensu
+  - splunk
+  - statsd
+  - statuspage.io
+  - sumologic
+  - sysdig
+  - ubuntu juju: models infrastructure & services together
+  - victorops
+  - zookeeper
