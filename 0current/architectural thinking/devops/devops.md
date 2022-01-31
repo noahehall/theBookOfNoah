@@ -324,12 +324,28 @@
 - resources get automatically get built, unit tests are run, and deployed to the environment on each code commit
   - resources are always in a working state
 - key areas
+
   - version control
   - CI system
   - build
   - test
   - artifact repository
   - deployment
+
+- empowering teams: the CI/CD pipeline should be a self-service & transparent system
+  - changes team dynamics and collaboration to ensure high fidelity is maintained
+- reduced cycle times: the duration from code commit to release to production
+- better security: the ability to continuously integrate patches and software updates reduces the amount of time needed to mitigate
+- more time to be productive: the more you deliver, the more you can see your changes, the more you want to deliver, the more you're movitivated to deliver
+
+- build pipeline: sequence of operations and tools that peform them, between source code and the deployed system
+
+  - how you compose your build pipeline and the flow between the its elements, is more critical than which exact tool you use
+  - version control: e.g. github
+  - build system: watches the repository for changes and triggers builds, e.g jenkins, bamboo, teamcity, travisCI, circleci
+    - build code, run unit tests, provide feedback and visibility into the build process
+  - build tools: compilation & orchestration tools, e.g. docker, make, bash, etc
+    - enables devs to build on the dev machine, as well as in the build env, keeping as much as the build logic stored in version control and out of build UIs (fk UIs)
 
 #### testing
 
@@ -347,7 +363,8 @@
 
 #### continuous integration
 
-- automatically building and unit tesitng the entire service on every commit
+- automatically building and unit tesitng an entire service on every commit
+  - but it should also extend to the dev env, so devs arent needless waisting resources by committing unbuildable code
 - keeping software in a workin state all of the time
 - workflow:
   - code commit
@@ -360,6 +377,7 @@
 #### continuous delivery & deployment
 
 - deploying the output of CI to an environment, and performing automating integration & acceptance testing
+  - all envs should be as close to production as possible
 - continuous deployment: continuous delivery specific to the production environment
   - artifacts shouldnt be rebuilt for production, instead the same artifact should be usuable in all environments
     - the CI pipeline only has write access to the artifact repository
