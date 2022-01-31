@@ -1,5 +1,7 @@
 # testing
 
+- read this file with a healthy amount of skepticism, unsure how early in my career this shiz was created
+
 ## links
 
 - [testing react components](https://medium.freecodecamp.com/the-right-way-to-test-react-components-548a4736ab22)
@@ -13,14 +15,23 @@
 
 ### terms
 
-- dummy objects: objects that the System Under Test (SUT) depends on, but are never actually used.
-  - any object that is required to run/test some behavior, but is not actually used (e.g. a required parameter) and must resemble a real object
-- test stubs: an object to control the indirect input of the tested code. setting up state
-  - Test stubs are functions (spies) with pre-programmed behavior. They support the full test spy API in addition to methods which can be used to alter the stub’s behavior.
-  - Control a method’s behavior from a test to force the code down a specific path. Examples include forcing a method to throw an error in order to test error handling.
-  - When you want to prevent a specific method from being called directly (possibly because it triggers undesired behavior, such as a XMLHttpRequest or similar).
-- test spies: a function that records arguments, return value, the value of this and exception thrown (if any) 'for' all its calls
-
+- shift left: the idea of moving testing as early as possible in the dev process, idealy to the dev environment; i.e. every kind of test in your system should be runnable in development
+- cycle time: how long it takes between ticket assignment to ticket delivery (actually deployed to prod)
+- velocity: value delivered per unit time
+- customer satisfaction: how well ap roduct/service met the customers needs
+  - NPS scores
+  - bug reports
+- lead time: the time from ticket creation until ticket delivery (actually deployed to prod)
+- System Under Test: aka SUT; the application and system you're testing, as well as the environment the tests are running in
+- test fixtures: set of objects used to run a test in a well-known environment
+  - mocking: code designed to stand in for other pieces of code that contains external dependencies to enable unit tests; umbrella term for stubs, dummy objects, spies, etc
+  - dummy objects: objects that the System Under Test (SUT) depends on, but are never actually used.
+    - any object that is required to run/test some behavior, but is not actually used (e.g. a required parameter) and must resemble a real object
+  - test stubs: an object to control the indirect input of the tested code. setting up state
+    - Test stubs are functions (spies) with pre-programmed behavior. They support the full test spy API in addition to methods which can be used to alter the stub’s behavior.
+    - Control a method’s behavior from a test to force the code down a specific path. Examples include forcing a method to throw an error in order to test error handling.
+    - When you want to prevent a specific method from being called directly (possibly because it triggers undesired behavior, such as a XMLHttpRequest or similar).
+  - test spies: a function that records arguments, return value, the value of this and exception thrown (if any) 'for' all its calls
 - Specifications: what the program is suppose to do
 - component specfifications: communicate the visual design
 - executable specifications (test component specifications)
@@ -28,64 +39,53 @@
 
 ### Methodologies
 
-- TDD: test driven development
-  - tests are written before code is developed
+- TDD: test driven development; tests are written before code is developed
+  - write a failing test first, then writing code to cause the test to pass
 - BDD: behavior driven development:
   - implementing an application by describing its behavior from the perspective of its stakeholders in the form of 'it... should...'
   - describes a cycle of interactions with well-defined inputs, resulting in the delivery of working, tested software
+- ATDD: acceptance test-driven development; the practice of defining testable behavior before development to establish what is to be delivered
 
 ## type of tests
 
-- functional tests: multiple unit tests working together in order to test a specific functionality
+- unit tests: Unit Tests are functions and classes designed to prove the code performs within a set of guidelines
+- integration tests: tests to check the correct functioning of a system that rely on external dependencies
+  - collect modules together and test them as a subsystem in order to verify that they collaborate as intended to achieve some larger piece of behaviour.
+- e2e test: aka UI Tests: the task of performing tests on the user interface; in the same way a user would
+- security testing: performed to look for flaws in code and runtime to prevent compromises and leaking of data in production
+  - e.g. via findbugs, fortify, or gauntlt
 - acceptance tests: automated version of a user performing some task in your application. are the highest level. validation of how application works from user point of view.
-- integration tests: tests to check the correct functioning of our system. These tests require an integration environment, instead of using double test as they do the unit tests, and take longer to execute.
-- domain tests: testing business logic
-- UI Tests: the task of performing tests on the user interface
 - blackbox tests: focses on the object state
-- white box tests: focuses on the objects behavior
-- smoke test: testing the environment
+- domain tests: testing business logic
+- functional tests: multiple unit tests working together in order to test a specific functionality
 - monitoring tests: testing continuously at regular intervals
+- performance testing: e.g. soak tests, spike tests, step tests,
 - regression tests: testing old functionality, to ensure new changes are not breaking existing functionality
+- smoke test: testing the environment
+- white box tests: focuses on the objects behavior
+- regression tests: testing old functionality, to ensure new changes are not breaking existing functionality
+  - performed at build time on a single unit of code/artifact without use of external deps/deployment
+- contract test: a test at the boundary of an external service verifying that it meets the contract expected by a consuming service
+  - Whenever some consumer couples to the interface of a component to make use of its behaviour, a contract is formed between them. This contract consists of expectations of input and output data structures, side effects and performance and concurrency characteristics.
+- component tests: limits the scope of the exercised software to a portion of the system under test, manipulating the system through internal code interfaces and using test doubles to isolate the code under test from other components
+  - By instantiating the full microservice in-memory using in-memory test doubles and datastores it is possible to write component tests that do not touch the network whatsoever.
+- functional tests: tests of a specific function within your application, requiring some type of user input, and returning some type of results.
+  - Typical tests can be for login, registration to the site, user account operations, account settings changes, complex data retrieval operations, among others. Function tests typically mirror the user-scenarios used to specify the features and design or your application.
+- acceptance tests:
 
-- Technology Facing: written and maintained by developers
-  - unit tests: Unit Tests are functions and classes designed to prove the code performs within a set of guidelines
-    - performed at build time on a single unit of code/artifact without use of external deps/deployment
-  - integration tests: collect modules together and test them as a subsystem in order to verify that they collaborate as intended to achieve some larger piece of behaviour.
-    - When writing automated tests of the modules which interact with external components, the goal is to verify that the module can communicate sufficiently rather than to acceptance test the external component.
-    - tests of this type should aim to cover basic success and error paths through the integration module.
-  - contract test: a test at the boundary of an external service verifying that it meets the contract expected by a consuming service
-    - Whenever some consumer couples to the interface of a component to make use of its behaviour, a contract is formed between them. This contract consists of expectations of input and output data structures, side effects and performance and concurrency characteristics.
-  - component tests: limits the scope of the exercised software to a portion of the system under test, manipulating the system through internal code interfaces and using test doubles to isolate the code under test from other components
-    - By instantiating the full microservice in-memory using in-memory test doubles and datastores it is possible to write component tests that do not touch the network whatsoever.
-  - System/deployment tests:
-  - functional tests: tests of a specific function within your application, requiring some type of user input, and returning some type of results.
-    - Typical tests can be for login, registration to the site, user account operations, account settings changes, complex data retrieval operations, among others. Function tests typically mirror the user-scenarios used to specify the features and design or your application.
-  - content test, is a simple test for the existence of a static, non-changing, UI element. e.g. image, title, etc.
-- Testing Links: clicking a link and verifying the expected page
-- Business Facing
-  - functional tests: multiple unit tests working together in order to test a specific functionality
-  - acceptance tests:
-    - an acceptance test is an automated version of a user performing some task in your application.
-    - Acceptance tests are the tests of highest level. Generally this kind of tests give us knowledge about how application works from user point of view.
-    - ensures that the acceptance criteria 'for' a story are met
-    - domains: functionality, capacity, usability, security, modifiability, availability
-    - after incorrect fill of the login form,
-    - where user will be redirected after correct fill the login form.
-  - end to end tests: verifies that a system meets external requirements and achieves its goals, testing the entire system, from end to end, irrespective of the component architecture in use.
-    - the system is treated as a black box and the tests exercise as much of the fully deployed system as possible, manipulating it through public interfaces such as GUIs and service APIs.
-    - Write as few end-to-end tests as possible
-    - Focus on personas and user journeys
-    - Rely on infrastructure-as-code for repeatability
-    - Make tests data-independent
-- Manual tests:
-- domain tests: testing business logic
-- UI Tests: the task of performing tests on the user 'interface'
-- blackbox tests: focses on the object state
-- white box tests: focuses on the objects behavior
-- mocking: allows you test behavior
-- smoke test: testing the environment
-- monitoring tests: testing continuously at regular intervals
-- regression tests: testing old functionality, to ensure new changes are not breaking existing functionality
+  - an acceptance test is an automated version of a user performing some task in your application.
+  - Acceptance tests are the tests of highest level. Generally this kind of tests give us knowledge about how application works from user point of view.
+  - ensures that the acceptance criteria 'for' a story are met
+  - domains: functionality, capacity, usability, security, modifiability, availability
+  - after incorrect fill of the login form,
+  - where user will be redirected after correct fill the login form.
+
+- end to end tests: verifies that a system meets external requirements and achieves its goals, testing the entire system, from end to end, irrespective of the component architecture in use.
+  - the system is treated as a black box and the tests exercise as much of the fully deployed system as possible, manipulating it through public interfaces such as GUIs and service APIs.
+  - Write as few end-to-end tests as possible
+  - Focus on personas and user journeys
+  - Rely on infrastructure-as-code for repeatability
+  - Make tests data-independent
 
 ### [page objects](https://www.thoughtworks.com/insights/blog/using-page-objects-overcome-protractors-shortcomings)
 
