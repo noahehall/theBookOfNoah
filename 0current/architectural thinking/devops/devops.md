@@ -57,6 +57,7 @@
 
 ### terms
 
+- composability: services tend to rely on multiple components, packaging components into artifacts enables dependency management at component level
 - cascading failure pattern: where a failure at one integration point, cascades to cause failures/disruptions throughtout the application stack in a layered architecture
 - circuit breaker pattern: a service that watches for failures through a systems boundaries, and reroutes requests upon detection
 - design: theory & thoughtful planning
@@ -354,12 +355,17 @@
   - version control: e.g. github
   - build system: watches the repository for changes and triggers builds, e.g jenkins, bamboo, teamcity, travisCI, circleci
     - build code, run unit tests, provide feedback and visibility into the build process
+      - always test in the mode the application runs in (i.e. production mode and never dev mode)
     - build tools: compilation & orchestration tools, e.g. docker, make, bash, etc
       - enables devs to build on the dev machine, as well as in the build env, keeping as much as the build logic stored in version control and out of build UIs (fk UIs)
     - unit & integration tests are critical to be run within the build system
   - artifacts: output of the build system; packages that can be stored, retrieved, and deployed
+    - supports reliability, composability, security and sharability
+    - ensures what you've tested is exactly whats going to production
   - artifact repo: amazon s3, artifactory, nexus, docker registries,
+    - think through the packaging formats to accept and how you will manage (retire) dependencies
   - deployment server: responsible for watching the artifact repo, and deploying new packages to environments
+    - deployments to production should only come from the artifact repository, and the CI system should be the only thing capable of writing to the artifactory repository
     - deployment tools: first deploy to a test/ci/qa/etc environment to run tests, then deploy to prod
     - ci environment: responsible for running integratoin & e2e tests
       - integration & e2e tests are critical to be run within the test env (e.g. QA/staging)

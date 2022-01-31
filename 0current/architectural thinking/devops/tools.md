@@ -35,7 +35,6 @@
 - nagios
 - netuitive
 - new relic
-- nexus
 - opentsdb
 - packer
 - pagerduty
@@ -59,3 +58,9 @@
   - jenkins: most common CI system
   - cirleCI
   - TravisCI
+- artifact repositories
+  - nexus
+  - jfrog
+  - apache archiva
+  - docker registry
+  - terraform registry
