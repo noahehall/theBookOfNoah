@@ -350,8 +350,9 @@
   - artifacts: output of the build system; packages that can be stored, retrieved, and deployed
   - artifact repo: amazon s3, artifactory, nexus, docker registries,
   - deployment server: responsible for watching the artifact repo, and deploying new packages to environments
-    - deployment tools: first deploy to a test environment to run tests, then deploy to prod
-    - integration & e2e tests are critical to be run within the test env (e.g. QA/staging)
+    - deployment tools: first deploy to a test/ci/qa/etc environment to run tests, then deploy to prod
+    - ci environment: responsible for running integratoin & e2e tests
+      - integration & e2e tests are critical to be run within the test env (e.g. QA/staging)
 
 #### testing
 
