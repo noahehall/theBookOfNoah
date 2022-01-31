@@ -55,4 +55,4 @@
 - ubuntu juju: models infrastructure & services together
 - victorops
 - zookeeper
-- zookeeper
+- jenkins

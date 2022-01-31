@@ -41,6 +41,12 @@
   - deployments should be idempotent
 
 - testing: criticall for the CI/CD pipeline
+- feature flags: enables committing of unfinished code, a/b testing, etc
+  - branch by abstraction: use feature flags in the code to control cutting over to new areas of code
+- choosing your git branching strategy wisely: if your PR lasts for days/weeks, get off that fkn team
+  - high performance teams integrate often
+  - the mechanism to handle PRs should be small and easy to understand
+- commit hooks are useful: ticket numbers in commit messages, linting, unit tests, etc
 
 ### gotchas
 
@@ -341,6 +347,7 @@
 - build pipeline: sequence of operations and tools that peform them, between source code and the deployed system
 
   - how you compose your build pipeline and the flow between the its elements, is more critical than which exact tool you use
+  - each stage (below) is a feedback loop, that lets you incrementally improve each change before continuing to the next phase
   - version control: e.g. github
   - build system: watches the repository for changes and triggers builds, e.g jenkins, bamboo, teamcity, travisCI, circleci
     - build code, run unit tests, provide feedback and visibility into the build process
@@ -353,6 +360,8 @@
     - deployment tools: first deploy to a test/ci/qa/etc environment to run tests, then deploy to prod
     - ci environment: responsible for running integratoin & e2e tests
       - integration & e2e tests are critical to be run within the test env (e.g. QA/staging)
+    - prod env: the same artifacts that passed testing should be deployed to prod
+  - other tools: test coverage, linters, performance testing, etc
 
 #### testing
 

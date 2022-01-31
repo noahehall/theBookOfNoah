@@ -1,4 +1,5 @@
 <https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History>
+<https://medium.com/@patrickporto/4-branching-workflows-for-git-30d0aaee7bf>
 
 # TLDR
 
@@ -7,6 +8,7 @@ long list of git
 ## LINKS
 
 - refrence
+
   - [environment vars](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables)
   - [git flight rules](https://github.com/k88hudson/git-flight-rules/blob/master/README.md)
   - [git town cli plugin](https://www.git-town.com/)
@@ -21,6 +23,7 @@ long list of git
   - [first time setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)
 
 - copypasta
+
   - [gitignore files](https://github.com/github/gitignore)
   - [rebasing](https://stackoverflow.com/questions/41464752/git-rebase-interactive-the-last-n-commits)
   - [deleting branches](https://www.freecodecamp.org/news/how-to-delete-a-git-branch-both-locally-and-remotely/)
@@ -208,8 +211,8 @@ long list of git
 - anything under this line i wouldnt trust
 
 sparse clone an existing repo from git to local
-    git clone --filter=blob:none --no-checkout git/url/to/clone
-        setup empty dir to later sparse checkout only certain dirs
+git clone --filter=blob:none --no-checkout git/url/to/clone
+setup empty dir to later sparse checkout only certain dirs
 
     git sparse-checkout init --cone
         cd into the ABOVE dir to init it
@@ -217,15 +220,15 @@ sparse clone an existing repo from git to local
     git sparse-checkout set paths/to/download
 
 check paths included in sparse-checkout
-    git sparse-checkout list
+git sparse-checkout list
 
 only checkout files in root dir
-    $ git clone --filter=blob:none --sparse <https://github.com/derrickstolee/sparse-checkout-example>
+$ git clone --filter=blob:none --sparse <https://github.com/derrickstolee/sparse-checkout-example>
 
 force checking out paths ignoring sparse checkout
 e.g. to force checking out a path not matching sparse settings
-    git checkout --ignore-skip-worktree-bits -- PATHS
+git checkout --ignore-skip-worktree-bits -- PATHS
 
 <https://stackoverflow.com/questions/6127328/how-can-i-delete-all-git-branches-which-have-been-merged>
-    git branch --merged | egrep -v "(^\*|dev)" | xargs git branch -d
-    git remote prune origin
+git branch --merged | egrep -v "(^\*|dev)" | xargs git branch -d
+git remote prune origin
