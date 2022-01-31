@@ -344,8 +344,14 @@
   - version control: e.g. github
   - build system: watches the repository for changes and triggers builds, e.g jenkins, bamboo, teamcity, travisCI, circleci
     - build code, run unit tests, provide feedback and visibility into the build process
-  - build tools: compilation & orchestration tools, e.g. docker, make, bash, etc
-    - enables devs to build on the dev machine, as well as in the build env, keeping as much as the build logic stored in version control and out of build UIs (fk UIs)
+    - build tools: compilation & orchestration tools, e.g. docker, make, bash, etc
+      - enables devs to build on the dev machine, as well as in the build env, keeping as much as the build logic stored in version control and out of build UIs (fk UIs)
+    - unit & integration tests are critical to be run within the build system
+  - artifacts: output of the build system; packages that can be stored, retrieved, and deployed
+  - artifact repo: amazon s3, artifactory, nexus, docker registries,
+  - deployment server: responsible for watching the artifact repo, and deploying new packages to environments
+    - deployment tools: first deploy to a test environment to run tests, then deploy to prod
+    - integration & e2e tests are critical to be run within the test env (e.g. QA/staging)
 
 #### testing
 
