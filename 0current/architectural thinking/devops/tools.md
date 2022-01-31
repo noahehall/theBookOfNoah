@@ -55,4 +55,7 @@
 - ubuntu juju: models infrastructure & services together
 - victorops
 - zookeeper
-- jenkins
+- CI systems
+  - jenkins: most common CI system
+  - cirleCI
+  - TravisCI

@@ -329,7 +329,7 @@
 
 - resources get automatically get built, unit tests are run, and deployed to the environment on each code commit
   - resources are always in a working state
-- key areas
+- key areas (see pipeline below)
 
   - version control
   - CI system
