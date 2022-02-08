@@ -31,10 +31,13 @@ alias whatsmyip="hostname -I | cut -d' ' -f1"
 alias whatsmyipexternal='curl -s http://ipecho.net/plain'
 alias untar='tar -xvf'
 
+# networking
+alias getwifi='sudo iwlist wlp3s0 scan | grep ESSID'
+alias whatsonport='sudo netstat -tulpn' # | grep 8080
+
 # random
 alias xargall='xargs -p -t -n 1'
 alias copyssh='pbcopy < ~/.ssh/id_rsa.pub'
-alias getwifi='sudo iwlist wlp3s0 scan | grep ESSID'
 alias listallsystemusers='cut -d: -f1 /etc/passwd'
 alias myubunturelease='lsb_release -cs'
 alias npmglobals='npm list -g --depth=0'

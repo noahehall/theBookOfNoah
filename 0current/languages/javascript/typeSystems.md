@@ -23,7 +23,6 @@
   - [library definitions](https://flow.org/en/docs/libdefs/)
   - [linting](https://flow.org/en/docs/linting/)
   - [types-first](https://flow.org/en/docs/lang/types-first/)
-  - [react types](https://flow.org/en/docs/react/types/)
   - [how to type styled components](https://medium.com/maxime-heckel/https-medium-com-maximeheckel-how-to-efficiently-type-your-styled-components-with-flow-f43930a0dd2b)
   - [HOC](https://flow.org/en/docs/react/hoc/#toc-supporting-defaultprops-with-react-elementconfig)
   - [context](https://flow.org/en/docs/react/context/)
@@ -152,8 +151,6 @@
 ### best practices
 
 - always
-
-  - fk mutations, use a immutable helper library
   - when using an object as a map, always use flows `indexer property`
     - it allows reads and writes using any key that matches the indexer key type
   - reusability
@@ -161,18 +158,14 @@
       - this should also alieviate some of the extra work around defining your type definitions
       - always include a default when parameteriing your generics
   - intersection types
-
     - use them when a fn can return different types based on input (see examples)
-
   - immutability
     - when you need to use a read-only version of an object|array, cast it via `$ReadOnly|$ReadOnlyArray` utility
       - allows you to define a mutable + immutable object|array type without having to re-define and annotate each key twice
     - use `$NonMaybeType<T>` to convert `null|undefined` types to exact types
 
 - generally
-
   - you want to define your type separately from the object your annotating
-
     - as a `type` alias for exporting
     - as an `opaque` for internal use
 
@@ -180,14 +173,11 @@
 
     - use super type for ALL of the params they contain
     - use opaque type subclass for the values you use
-      - I hate not knowing both sets of values, ignorance is not bliss
     - get the union of all the types out of the object via `externalTypes = ExternalTypes[$Keys<ExternalTypes>]`;
-    - use flows inferred type of the value to create a type, e.g. `type thisType: typeof externalData = 56` // if externalData is inferred to be a number
+    - use flows inferred type of the value to create a type, e.g. `type thisType: typeof externalData = 56` // externalData is inferred to be a number
     - type cast difficult values to any, then to the desired type
       - this is an escape hatch, but sometimes you need to be free!
-
   - when you think you want a Class type, you likely want an Interface + implements
-
     - more benefits... cheap negatives
       - slightly extra work so the cost increases, but still worth it
     - interfaces allow to set readOnly (covariant) props
@@ -288,41 +278,34 @@
 ```js
 
   // modifiers
-    // append to propName function params and object members
-    // prepend ? to type to make it optional (type|void)
-      // i.e. maybe types
-      // ?number === number|undefined
-      // { propertyName?: string } == {poop: undefined} but not { poop:null}
-    // prepend ! to type to make it not nullable (type|void)
+    // append propName! === not nullable
+    // append propName? === undefined but not null
+    // prepend ?someType === type | undefined | null
 
   // list of types
     // number
     // string
     // boolean
+    // symbol
     // null for null
     // void for undefined
-    // Array<subtype> subtype[] e.g. string[]
-    // symbol for Symbol
-    // mixed for anything (but must be refined...see elseware for clarity)
-    // { propName: type }
-    // { propName?: type }
-    // { propName!: type }
-
-  // union types: as one/more from a set of types
-    const x: number | string = 'hello';
-    const literalType: 'sucess' | 'warnning' | 'success';
+    // Array<string> | string[]
+    // symbol
+    // mixed (must be refined)
+    // any (no type checking)
+    // literals e.g. const poop: 'this'|'that';
+    // unions e.g. const poop: string | number;
+    // type combinations
+        type a: number;
+        type b: string
+        type c: a | b;
+        type d: a & b
 
   // variables and types
-    const a: number = 42;
-    const b: string = 'hello';
-    const c: boolean = true;
-    const e: number | undefined = 10;
-    const f: Array<number> = [1, 2, 3];
     const g: mixed = z; // you must refine this type via typeof or some other checker before usig
     const h: any = 1; // op out of all type checking,  refrain from this as best you can
       // ^ very careful when using this with an object, as all of obj props will now be any (leak!)
       // ^ guard against this by declaring the obj.prop values to a type for assignment
-    const d: ?number = null; // ? == maybe type, can be the declared|null|undefined
 
 
   // refining types
@@ -383,16 +366,82 @@
       }
     }
 
-  // type combinations
-    type a: number;
-    type b: string
-    type c: a | b;
-    type d: a & b
+
 ```
 
 ## typescript
 
+```js
+
+ poop as OtheRtype;
+```
+
 ## flow
+
+```js
+  // go here first: https://flow.org/en/docs/react/types/
+  // then go here: https://emotion.sh/docs/typescript
+
+  // you dont need to annotate the return of render|stateless function
+  // the default: () => React$Element<React$Node>
+  // notice the syntax, you can use this anywhere
+  // for passing props
+  // const poop = styled.div<PropDef>`your css props`
+  // Using a css block
+  // const Image0 = styled.div<ImageProps>`
+  //   width: ${props => props.width};
+  //   background: url(${props => props.src}) center center;
+  //   background-size: contain;
+  // `
+  // const Image0 = styled('div')<ImageProps>`
+  //   width: ${props => props.width};
+  //   background: url(${props => props.src}) center center;
+  //   background-size: contain;
+  // `
+
+  // // Or with object styles
+  // const Image1 = styled('div')<ImageProps>(
+  //   {
+  //     backgroundSize: 'contain'
+  //   },
+  //   props => ({
+  //     width: props.width,
+  //     background: `url(${props.src}) center center`
+  //   })
+
+  // or with components
+  //   const Component: FC<ComponentProps> = ({ label, className }) => (
+  //   <div className={className}>{label}</div>
+  // )
+
+  // const StyledComponent0 = styled(Component)`
+  //   color: ${props => (props.label === 'Important' ? 'red' : 'green')};
+  // `
+
+  // const StyledComponent1 = styled(Component)({
+  //   color: 'red'
+  // })
+  // @flow
+  import typeof myNumber from './exports';
+  import type Poop { OtherPoop }
+  (value: CastType) // in typescript use as
+
+  // $FlowFixMe[incompatible-return]
+  blah: wrongtype
+
+  [].filter(Boolean) > [].filter(x => x)
+
+  // ensure to overload the typedefs
+  // so the errors are better
+  // never do: x: string | number | null
+  // ^ the above is okay for simple arguments
+  // ^ but never for complex arguments
+  type Fn =
+    & ((x: "string") => string)
+    & ((x: "number") => number)
+    & ((x: string) => null);
+
+```
 
 ### flow usage
 
@@ -443,16 +492,16 @@
 
 ```js
 // handling errors
+// @see https://flow.org/en/docs/errors/
 // $FlowFixMe
 // $FlowIssue[incompatible-type]
 /* $FlowIgnore[prop-missing] some other text here */
 /* $FlowFixMe[incompatible-cast] this
         is a multi-line
         comment */
-{
+
   /* $FlowIssue this is how you suppress errors inside JSX */
-}
-someCode("with errors, all previous lines apply only to this line");
+  someCode("with errors, all previous lines apply only to this line");
 ```
 
 #### function typing

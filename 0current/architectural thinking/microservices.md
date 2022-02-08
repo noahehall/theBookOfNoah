@@ -49,7 +49,7 @@
 ### decomposition patterns
 
 - break a component into logical steps, convert each step into a service that can be reused and scaled
-- core goal is to make services smaller, thereby more scalable as demand fluxuates across service boundaries
+- core goal is to make services smaller, thereby more scalable as demand fluxtuates across service boundaries
 
 #### domain based decomposition
 
@@ -70,11 +70,11 @@
   - define your service boundary and build APIs around your actions
   - define a schema that supports the model (but doesnt have to match 1:1 to the model) and implement your datastore (db)
 
-##### business process based decompositoin
+##### business process based decomposition
 
 - breakdown complex business processes into discrete services each fulfilling a specific role in the overall system
 - higher level of service for reusing business logic across other microservices
-- enables you to encapsulate related domains, that depend on similary business processes
+- enables you to encapsulate related domains, that depend on similar business processes
 - business processes should never have direct access to datasources, but instead are given the data they need to operate on
   - this is hard boundary between data domains & business domains
 - identify each process you want to expose

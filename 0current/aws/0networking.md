@@ -34,10 +34,10 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - review the dashboards:
     - vpc: provides a holistic view of all VPC components in all regions
       - can also drill down to a specific region
-    - ec2: the deashboard also provides a hostlic view
+    - ec2: the deashboard also provides a holistic view
   - setup new Network ACL on your VPCs to deny traffic on ports your not using, from IPs your not expecting
     - NACLs are the only way to set deny rules, and take precedence over security groups
-    - ^ especiialy deny inbound traffic to databases & internal apps
+    - ^ important for denying inbound traffic to databases & internal apps
     - you can permit TCP outbound traffic on ports `32768-61000` to catch all linux ephemeral ports
   - for high availability
     - create subnets in different availability zones
