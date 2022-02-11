@@ -44,6 +44,7 @@
 
 ```js
 
+
   const fncomponent = (): JSX.Element => <div>yolo worl</div>
   someFn(myRating as unknown as number)
   const someObj: any { things: 'hello'} as OtherThing
@@ -184,26 +185,16 @@
       - helps with immutability! #easyWin
     - interfaces allow you to set writeOnly (contravariant) props
       - helps with loosening types, e.g. during chaos engineering/monkey testing/api development! #easyWin
-
   - you want to use generics
-
     - refrain from using the `_` operator (to let flow infer the types)
       - it works as if you explicitly set the type
       - but its slower, and we like fast, #rickyBobby
-
   - dont refine your generics
     - instead add a type to them for clarity and specificity
       - ide follow this for all first-party code
       - This way you can keep the behavior of generics while only allowing certain types to be used.
     - if you instead choose type refinements, why bother with generics?
       - type refinements may still be useful for third-party code
-
-- sometimes
-
-  - may be appropriate, but not generally
-
-- never
-  - use anonymouse interfaces - just dont or die and go to hell where they code java with JSP
 
 #### gotchas
 
@@ -382,6 +373,7 @@
   // go here first: https://flow.org/en/docs/react/types/
   // then go here: https://emotion.sh/docs/typescript
 
+  import Foo, { type Func } from 'my-module';
   // you dont need to annotate the return of render|stateless function
   // the default: () => React$Element<React$Node>
   // notice the syntax, you can use this anywhere

@@ -282,7 +282,7 @@
 - _useEffect_
 
   - for data fetching, subscriptions, changing dom elements, i.e any side asynchronous side effect
-  - runs on every render soo make sure to:
+  - runs on every render so make sure to:
     - add used vars in the dependency array
     - use an if condition before invoking side effect logic
     - always return a function to handle cleanup when the component unmounts
