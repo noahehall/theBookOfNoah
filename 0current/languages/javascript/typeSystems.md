@@ -374,6 +374,8 @@
   // then go here: https://emotion.sh/docs/typescript
 
   import Foo, { type Func } from 'my-module';
+  const inexactObject = {};
+  return (Object.freeze({...inexactObject}): castToExactType)
   // you dont need to annotate the return of render|stateless function
   // the default: () => React$Element<React$Node>
   // notice the syntax, you can use this anywhere
