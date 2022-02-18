@@ -521,9 +521,6 @@ various components exist when designing a system, understanding the specific com
 
 ### component architecture
 
-- command query responsibility segregation (CQRS)
-- command queyr responsibility segregation and event sourcing combined
-
 #### monolith
 
 - all services in a system are within a single compile, yield and runtime environment
@@ -555,8 +552,10 @@ various components exist when designing a system, understanding the specific com
 
 ##### microkernel / plugin
 
-- core logic that can be extended via plugins (sidecars), and defines the interface of each sidecar
+- core logic that can be extended via plugins (sidecars), and defines the interface of each plugin
 - each plugin/sidecar then implements the contract
+
+
 
 ##### MVP model view presenter
 

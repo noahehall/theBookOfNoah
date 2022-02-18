@@ -25,3 +25,15 @@
   - GraphQL
 
 - asynchronous messaging design pattern
+
+## event sourcing
+
+- storing events instead of state, enabling you to rehydrate/replay timelines
+
+## command query responsibility segregation (CQRS)
+
+- specific to data problems
+- a distinct service for reading from data sources
+- a distinct service for writing to data sources
+
+## command query responsibility segregation and event sourcing combined
