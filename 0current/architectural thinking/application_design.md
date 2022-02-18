@@ -17,4 +17,4 @@
 - chain of responsibility pattern
 - aggregator pattern
 
-
+- domain driven design

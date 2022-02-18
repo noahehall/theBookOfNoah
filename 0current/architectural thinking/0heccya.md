@@ -12,6 +12,8 @@
 - I personally think through the distinction of environment (infrastructure) and component (application) design/architecture patterns
 
   - environment: the context of an application or service
+    - hardware
+    - compile & runtime variables
   - component: the application or service
 
 - I also feel the extraction of the communication layer decision from the environment and component pattern selection is a useful 3rd dimension to think through separatly, however, not in isolation

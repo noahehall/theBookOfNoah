@@ -519,28 +519,20 @@ various components exist when designing a system, understanding the specific com
 
 ### environment architecture
 
-- todo
-
 ### component architecture
 
 - command query responsibility segregation (CQRS)
 - command queyr responsibility segregation and event sourcing combined
 
-#### Gateway [api]
-
-#### Branch
-
 #### monolith
 
 - all services in a system are within a single compile, yield and runtime environment
-
-#### serverless
 
 #### N-tier/layered
 
 - substacks services based on the flow of data, each stack/tier/layer exists at a different level of abstraction and is responsibile for a specific
 
-  - tier: represents a unit of submodules that produces a cohesive set of services,
+  - tier: abstracts services by what they are, instead of what they do, so still some duplication exists over service-oriented architectures
     - the bottom tier(s) generally closer to the data and provides services to the tier above it
     - increase the number of tiers depending on the complexity of the model & types of requests & optmizations required
   - data flows down from the requester until it reaches a lower tier that can respond to the request
@@ -640,7 +632,20 @@ various components exist when designing a system, understanding the specific com
     - responders can be promoted to controller, but technical deficits exist in the time it takes to transition
 - examples:
 
-#### microservices
+#### service oriented
+
+- beyond tiers, which group by fn (what it is), this groups services by activity (what it does)
+- heavily dependent on interface design & contracts and communication architecture patterns
+
+- enterprise service bus: the controller responsible for orchestrating communication between services
+
+##### Gateway
+
+- e.g. an API gateway
+
+##### microservices
+
+- the exterme in service oriented architectures, with the removal of the enterprise service bus
 
 - involves creating multiple applications (i.e. micro services) that work interdependently
 
@@ -658,12 +663,13 @@ various components exist when designing a system, understanding the specific com
 - disadvantages:
 - examples
 
-#### event-driven
+##### serverless
 
 ### communication architecture
 
 - remote access protocols (e.g. REST, SOAP, or GraphQL)
 
+  - these should actually be in application design patterns doc
   - REST
   - SOAP
   - GraphQL
