@@ -37,3 +37,5 @@
 - a distinct service for writing to data sources
 
 ## command query responsibility segregation and event sourcing combined
+
+- super useful for operational & yielding problems

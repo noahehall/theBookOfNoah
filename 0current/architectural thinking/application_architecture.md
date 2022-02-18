@@ -1,4 +1,34 @@
-<https://www.youtube.com/watch?app=desktop&v=kNv2PlqmsAc>
+<!-- vscode-markdown-toc -->
+
+- 1. [links](#links)
+- 2. [basics](#basics)
+  - 2.1. [terminology](#terminology)
+  - 2.2. [architectural thinking](#architecturalthinking)
+    - 2.2.1. [key goals](#keygoals)
+    - 2.2.2. [key people & roles](#keypeopleroles)
+    - 2.2.3. [key questions](#keyquestions)
+    - 2.2.4. [key principals and best practices](#keyprincipalsandbestpractices)
+  - 2.3. [system design artifacts and actions](#systemdesignartifactsandactions)
+  - 2.4. [system breakdown](#systembreakdown)
+    - 2.4.1. [components](#components)
+- 3. [application architecture patterns](#applicationarchitecturepatterns)
+  - 3.1. [hardware architecture](#hardwarearchitecture)
+  - 3.2. [environment architecture](#environmentarchitecture)
+  - 3.3. [component architecture](#componentarchitecture)
+    - 3.3.1. [monolith](#monolith)
+    - 3.3.2. [N-tier](#N-tier)
+    - 3.3.3. [service oriented](#serviceoriented)
+    - 3.3.4. [decentralized](#decentralized)
+  - 3.4. [communication architecture](#communicationarchitecture)
+  - 3.5. [Yielding Architecture](#YieldingArchitecture)
+  - 3.6. [Architecture (the A in HECCYA)](#ArchitecturetheAinHECCYA)
+
+<!-- vscode-markdown-toc-config
+	numbering=true
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc --><https://www.youtube.com/watch?app=desktop&v=kNv2PlqmsAc>
+
 grab all her references
 probably should be in the arhcitectural thinking doc tho
 
@@ -6,7 +36,7 @@ probably should be in the arhcitectural thinking doc tho
 
 - find where the old version of this file exists and copy everything here
 
-## links
+## 1. <a name='links'></a>links
 
 - [haproy layer 4 & 7 proxy mode](https://www.haproxy.com/blog/layer-4-and-layer-7-proxy-mode/)
 - [terraform docs](https://www.terraform.io/docs/cloud/guides/recommended-practices/part2.html)
@@ -45,9 +75,9 @@ probably should be in the arhcitectural thinking doc tho
     - [architecture labs](https://www.wellarchitectedlabs.com/?ref=wellarchitected-wp)
       - code repository of code and documentation to get hands-on experience implementing best practices
 
-## basics
+## 2. <a name='basics'></a>basics
 
-### terminology
+### 2.1. <a name='terminology'></a>terminology
 
 - software pattern: a solution to a common problem, defining the components and interactions between them
 
@@ -111,9 +141,9 @@ probably should be in the arhcitectural thinking doc tho
   - flat topology
   - tree hierarchy
 
-### architectural thinking
+### 2.2. <a name='architecturalthinking'></a>architectural thinking
 
-#### key goals
+#### 2.2.1. <a name='keygoals'></a>key goals
 
 - redundancy
 - fault tolerance: the degree to which a system operates in the presense of failing components
@@ -187,7 +217,7 @@ probably should be in the arhcitectural thinking doc tho
 - cost optimization
   - run systems to deliver business value at the lowest price point
 
-#### key people & roles
+#### 2.2.2. <a name='keypeopleroles'></a>key people & roles
 
 you cant talk about system design without talking about the people involved
 
@@ -217,7 +247,7 @@ you cant talk about system design without talking about the people involved
   - usually dont have authority to make changes to production, but can to dev, UAT and staging
   - can edit a subset of global application variables and/or apply personal variables to non-production environments for testing
 
-#### key questions
+#### 2.2.3. <a name='keyquestions'></a>key questions
 
 before you can design a system, you need to understand the business requirements, existing infrastructure, and capabilities of the IT determine to manage and iterate
 
@@ -346,7 +376,7 @@ before you can design a system, you need to understand the business requirements
     - immdiately, writing a hot-fix in the infrastructure as code
       - the most secure option and should occur before employee leaves the building
 
-#### key principals and best practices
+#### 2.2.4. <a name='keyprincipalsandbestpractices'></a>key principals and best practices
 
 - general design principles (cloud perspective)
   - technically understand capacity needs: never accept idle resources/performance implications of limited capacity
@@ -363,7 +393,7 @@ before you can design a system, you need to understand the business requirements
   - learn from all operational failures: drive improvement through lessons learned from all operational events and failures
     - share what is learned across temas and through the entire organization
 
-### system design artifacts and actions
+### 2.3. <a name='systemdesignartifactsandactions'></a>system design artifacts and actions
 
 - game days: simulation events to reularly review and validate that all procedures are effect and that teams are familiar with them
 
@@ -374,9 +404,9 @@ before you can design a system, you need to understand the business requirements
   - test your failure scenarios and validate your understanding of their impact
   - test your response procedures to ensure they are effective and that teams are familiar with their execution
 
-### system breakdown
+### 2.4. <a name='systembreakdown'></a>system breakdown
 
-#### components
+#### 2.4.1. <a name='components'></a>components
 
 various components exist when designing a system, understanding the specific components in isolation and planning how they should holistically work together to meet business requirements is the main goal of system design
 
@@ -426,9 +456,11 @@ various components exist when designing a system, understanding the specific com
 - access control
 - DNS
 
-## application architecture patterns
+## 3. <a name='applicationarchitecturepatterns'></a>application architecture patterns
 
 - not trying to go in depth on all of them, just the ones i prefer/expect to use
+
+  - some architecture patterns can be used as application design patterns and vice versa
 
 - generalizes the environment of an applicaiton, and other applications, services and the users that exist within the environment, independent on how the applications and services themselves are designed
 
@@ -508,7 +540,7 @@ various components exist when designing a system, understanding the specific com
   - everything from the cable type, radio frequency link (e.g. 802.11 wireless) the layout of pins, voltages, etc
   - e.g. you operate at Layer 1 when you check that cables are firmly connected and the power plug hasnt been pulled out the modem
 
-### hardware architecture
+### 3.1. <a name='hardwarearchitecture'></a>hardware architecture
 
 - focusing on where and how of hardware, including virtualization
 
@@ -517,15 +549,15 @@ various components exist when designing a system, understanding the specific com
 - multi-cloud
 - hybrid-cloud
 
-### environment architecture
+### 3.2. <a name='environmentarchitecture'></a>environment architecture
 
-### component architecture
+### 3.3. <a name='componentarchitecture'></a>component architecture
 
-#### monolith
+#### 3.3.1. <a name='monolith'></a>monolith
 
 - all services in a system are within a single compile, yield and runtime environment
 
-#### N-tier
+#### 3.3.2. <a name='N-tier'></a>N-tier
 
 - substacks services based on the flow of data, each stack/tier/layer exists at a different level of abstraction and is responsibile for a specific
 
@@ -554,12 +586,6 @@ various components exist when designing a system, understanding the specific com
 
 - core logic that can be extended via plugins (sidecars), and defines the interface of each plugin
 - each plugin/sidecar then implements the contract
-
-
-
-##### MVP model view presenter
-
-##### MVVM: model view view model
 
 ##### model-view-controller
 
@@ -590,6 +616,10 @@ various components exist when designing a system, understanding the specific com
 - advantages:
 - disadvantages:
 - examples:
+
+###### MVP model view presenter
+
+###### MVVM: model view view model
 
 ##### client-server
 
@@ -633,7 +663,7 @@ various components exist when designing a system, understanding the specific com
     - responders can be promoted to controller, but technical deficits exist in the time it takes to transition
 - examples:
 
-#### service oriented
+#### 3.3.3. <a name='serviceoriented'></a>service oriented
 
 - beyond tiers, which group by fn (what it is), this groups services by activity (what it does)
 - heavily dependent on interface design & contracts and communication architecture patterns
@@ -673,7 +703,7 @@ various components exist when designing a system, understanding the specific com
 
 - function as a service: simple utilities callable over a network
 
-#### decentralized
+#### 3.3.4. <a name='decentralized'></a>decentralized
 
 - blockchain....
 
@@ -689,15 +719,15 @@ various components exist when designing a system, understanding the specific com
 - disadvantages:
 - examples:
 
-### communication architecture
+### 3.4. <a name='communicationarchitecture'></a>communication architecture
 
 - todo: i just havent focused on the networking layer enough
 
-### Yielding Architecture
+### 3.5. <a name='YieldingArchitecture'></a>Yielding Architecture
 
 - todo: see the other provisioning docs for specific patterns
 
-### Architecture (the A in HECCYA)
+### 3.6. <a name='ArchitecturetheAinHECCYA'></a>Architecture (the A in HECCYA)
 
 - the degree to which an application is split across the other (HECCY) domains
 
