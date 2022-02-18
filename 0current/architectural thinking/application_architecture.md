@@ -532,24 +532,31 @@ various components exist when designing a system, understanding the specific com
 
 #### monolith
 
+- all services in a system are within a single compile, yield and runtime environment
+
 #### serverless
 
-#### multi-tier/layered
+#### N-tier/layered
 
-- substacks services based on the flow of data, each stack/tier/layer exists at a different level of abstraction
+- substacks services based on the flow of data, each stack/tier/layer exists at a different level of abstraction and is responsibile for a specific
+
   - tier: represents a unit of submodules that produces a cohesive set of services,
     - the bottom tier(s) generally closer to the data and provides services to the tier above it
     - increase the number of tiers depending on the complexity of the model & types of requests & optmizations required
   - data flows down from the requester until it reaches a lower tier that can respond to the request
   - a common theme being the hierarchical and layered flow of data, generally unidirectional but in some patterns biderirectional (e.g. server sent events)
-- N-Tier
-  - 2-tier:
-    - examples
-      - pool of web servers with a dtabase tier
-  - 3-tier
-  - etc
+  - each tier can have its own HECCYA description
 
-#### model-view-controller
+- common to think of N-Tier architectures thorugh
+  - presentation: UI and pure UI logic; usually the presentation of the business logic solution to external users
+  - business: the logic of the problem domain, what does the application do?
+  - data: database related stuff
+
+##### MVP model view presenter
+
+##### MVVM: model view view model
+
+##### model-view-controller
 
 - extends the multi-tier pattern: divides an application into 3 tiers
 
@@ -579,7 +586,7 @@ various components exist when designing a system, understanding the specific com
 - disadvantages:
 - examples:
 
-#### client-server
+##### client-server
 
 - extends the multi-tier pattern: two main components taking roles of service requester (client) and service provider (server)
 
@@ -598,7 +605,7 @@ various components exist when designing a system, understanding the specific com
 - examples:
   - the internet operates on a client-server pattern
 
-#### Peer-to-Peer
+##### Peer-to-Peer
 
 - extends the the client-server architecture, utilizing a decenralized system in which peers communicate with each other directly
   - abstraction X...
@@ -610,7 +617,7 @@ various components exist when designing a system, understanding the specific com
 - disadvantages:
 - examples:
 
-#### Controller-Responder (master-slave|primary-replica)
+##### Controller-Responder (master-slave|primary-replica)
 
 - extends the multi-tier pattern consisting of two components the controller and responser(s)
 
@@ -633,8 +640,6 @@ various components exist when designing a system, understanding the specific com
     - responders can be promoted to controller, but technical deficits exist in the time it takes to transition
 - examples:
 
--
-
 #### microservices
 
 - involves creating multiple applications (i.e. micro services) that work interdependently
@@ -655,14 +660,22 @@ various components exist when designing a system, understanding the specific com
 
 #### event-driven
 
-#### space/cloud-based
-
 ### communication architecture
 
 - remote access protocols (e.g. REST, SOAP, or GraphQL)
+
   - REST
   - SOAP
   - GraphQL
+
 - asynchronous messaging design pattern
 
 ### Yielding Architecture
+
+### Architecture (the A in HECCYA)
+
+- the degree to which an application is split across the other (HECCY) domains
+
+  - gives an idea of the sophistication of the software and the amount of domain knowledge required to implement it
+
+  - perhaps theres a better way to describe this, but the concept taken from [algebra](https://www.mathsisfun.com/algebra/degree-expression.html)
