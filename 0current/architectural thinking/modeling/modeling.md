@@ -16,14 +16,18 @@ modeling languages and their syntax
 ### terminology
 
 - model: partial abstract representation of a real-world system
+
   - analyze, communiate, test and document your understanding of a system
 
 - types
+
   - computational: computer simulations representing time-varying behavior of a system
+
     - weather forecasting models: simulating future weather patterns
     - car racing games: simulating real world cars
 
   - analytical: mathematical models of relationships among variables in a system
+
     - banking formulas: how much interest you pay if you take loan X for Y years
 
   - nonanalytical/descriptive: describe components and their relationships in a system
@@ -37,9 +41,11 @@ modeling languages and their syntax
 #### nonanalytical descriptive models
 
 - application models: describe the application that works on data
+
   - UML: focus on modeling the logic and structure of software applications and the software application data
 
   - SysML: system modeling language
+
     - like UML, but more general purpose and focused on systems engineering
 
   - BPMN: business process model & notation
@@ -55,11 +61,13 @@ modeling languages and their syntax
 ## best practices / gotchas
 
 - always
+
   - start rough and refine it as needed
     - iterate through models to ensure your understanding of the system reflects the complexity of the system
     - focus on what you are modeling, and not the model itself
 
 - sometimes
+
   - model selectively: dont draw all the models to develop a system
     - its just a means to an end, so do enough to successfuly analyze, document, and test
   - model collaboratively: use models to think, share, learn and understand together with your team
@@ -72,6 +80,7 @@ modeling languages and their syntax
 - based on standards controlled by Object Management Group (OMG)
 
 - use case specification: detailed explanation that lists each specific use case and scenarios in which that use case exists
+
   - identify all nouns: these will be the classifiers (i.e. objects) in your class diagrams
     - becareful, because some nouns can actually be attributes, and not first-class citizens
   - identify all attributes: these are the features (i.e. attributes) of classifiers in your class diagrams
@@ -86,10 +95,13 @@ modeling languages and their syntax
   - sequence diagrams rely heavily on the nouns and verbs
 
 - diagram types
+
   - you generally want to iterate between structural & behavior diagrams
+
     - the modeling activities in each informs the other
 
-  - structure: represents staic view of the system and its components
+  - structure: represents static view of the system and its components
+
     - class: static view of all classes created to build the system
     - component
     - object
@@ -112,6 +124,7 @@ modeling languages and their syntax
 - TODO: need to exact all notations and list them here
 
 - at a high level each represent the same idea across diagrams
+
   - but depending on the context (i.e. diagram) the specifics could change
   - get creative: diagrams are like visual language, the communiation of ideas
     - so fk how other people talk, ensure your diagrams are easy to understand vs letting other people define how you describe your reality
@@ -137,6 +150,7 @@ modeling languages and their syntax
 
 - model the executation architecture of a system
 - a high level view of how the software system will be actualized in terms of
+
   - devices
   - networks
   - operating systems
@@ -145,6 +159,7 @@ modeling languages and their syntax
   - etc
 
 - used by architects & deployment teams to model the runtime architecture of a system
+
   - captures where each system (hardware & software) component will be located within the stack/topology of environment
 
 - key elements
@@ -166,6 +181,7 @@ modeling languages and their syntax
 - helps to abstract out details of lower level things, and focus on the big picture of the system being modeled
 
 - key elements
+
   - packages: namespaces for elements of a system
     - helps group related classifiers in a hierarchy
     - child packages can have the same name as other packages as long as there in a different parent package
@@ -173,7 +189,9 @@ modeling languages and their syntax
       - e.g. me.toilet.flush, is different than you.toilet.flush,
         - even tho they could both depend on the same flush behavior
   - relationships: dependencies between packages
+
     - merge: contents of target package are combined into th source
+
       - similar to generalization but without having the relationships
         - closer to a conceptual than actual generalization relationship
         - e.g. a triangle & a 3d triangle are similar, but not the same thing as a 3d triangle has more features
@@ -188,11 +206,14 @@ modeling languages and their syntax
 - based on CBD
 
 - key elements
+
   - Component: self contained unit with a stable interface that can be replaced at design/runtime by a component that offers equivalent functionality
+
     - i.e. plug n play software units
     - components implement interfaces
 
   - Interface: defines a components behavior/role they play
+
     - provided: interfaces implemented by the component
       - indicated by a lollipop
     - required: interfaces that must be implmeneted by others to use the component
@@ -210,7 +231,9 @@ modeling languages and their syntax
 - most used by developers when designing a system
 
 - key elements
+
   - classifiers: the types of entities in the system
+
     - Classifiers other than a regular class are often the result of applying design patterns, and hence surface mostly during design time.
     - i.e. supertypes/metaclass of your system entities
     - types: active/concrate/generic/association classes, enumeration, interfaces
@@ -219,10 +242,13 @@ modeling languages and their syntax
         - helps decouple two mutually interdependent classes by creating a third class that contains their dependencies
 
   - features: structural & behavior characteristics of classifiers
+
     - i.e. the properties & methods
 
   - relationships: how classifiers are related to each other, e.g. dependency, inheritance, or implementations
+
     - associations:
+
       - i.e. one class is contained in another
       - association links: when one class (source) uses an instance of another class (target)
         - indicated by a line with a diamond, the diamond is next to the source
@@ -236,6 +262,7 @@ modeling languages and their syntax
           - the diamon is filled in
 
     - generalizations:
+
       - inheritance (e.g. child extends parent) relationship between two classifiers
       - indicated by a line with an unfilled arrow at the parent class
 
@@ -262,6 +289,7 @@ modeling languages and their syntax
   - i.e. to visual the state of a system at a specific point in time
   - as opposed to modeling classes, interfaces, etc, you are modeling specific manifestations of these objects
 - only represent the structural aspect of instances
+
   - thus you shouldnt list any methods when detailing the slots/attributes
 
 - key elements
@@ -295,6 +323,7 @@ modeling languages and their syntax
 
 - model an overview of control flow
 - specialized mix of activity and interaction (sequence/communication) diagrams
+
   - some of the actions in the activity expose their internal interactions to entities which accomplish those interactions
 
 - key elements
@@ -308,11 +337,13 @@ modeling languages and their syntax
 
 - precursor to use case specifications
 - use cases are supposed to offer value, so not every workflow is a usecase, some are just prerequisites to use cases
+
   - e.g. Login functionality, whats its value? its really a burden/cost for some other use case
   - use cases fit this threshold: `users come to the system to do X and receive Y`
     - they never come to your system to ONLY login, they come to do something else, and logging in is a prereq to do that other thing
 
 - goals
+
   - captures high-level functionality of a system using notations for
   - developed by biz analysts to depict the summary of all use cases in a system
   - link to detailed specification docs
@@ -384,6 +415,7 @@ modeling languages and their syntax
 - most common interaction diagram
 - capture the sequence of interactions/behavior, among two/more entities within a scenario
 - to understand the behavior you need to implement in code
+
   - this details the runtime behavior of objects in specific scenarios
   - thus requiring use case specifications
 
@@ -422,14 +454,18 @@ modeling languages and their syntax
 - aka state transition diagrams, state chart diagrams
 
 - models different states of an entity within a system
+
   - details how specific entities transition from one state to the next
 
 - types: both use basically the same key elements & concepts
+
   - protocol state diagrams: model interaction sequences, big emphasis on the sequence of the state transitions
   - behavioral state diagrams: model event-driven behavior of an object, used more than protocol state diagrams
 
 - key elements (research the rest)
+
   - state: represents a single state of an entity
+
     - indicated by rounded cornered rectangle
       - name of the object/instance above the box
       - state name as title within the box
@@ -441,6 +477,7 @@ modeling languages and their syntax
     - simple state: lowest level
 
     - composite/super state: contains multiple internal (usually simple) states
+
       - to model hierarchy of states by nesting states within a higher abstraction state
       - e.g. a moving playing state, which contains playing, paused and finished nested states
 
@@ -451,6 +488,7 @@ modeling languages and their syntax
       - indicated by a green/red circle, with the line going into an actual state
 
   - transitions
+
     - to model an entity moving/transition from one state to another
     - indicated by an arrow from source state to target
       - label: trigger [guard]/ activity
@@ -469,6 +507,7 @@ modeling languages and their syntax
 #### timing diagrams
 
 - originated in electronic engineering
+
   - skipped
 
 - timing diagrams and state diagrams

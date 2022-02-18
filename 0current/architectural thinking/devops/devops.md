@@ -12,7 +12,7 @@
 - actualize high performance workflows
   - reduction in time to market is key
   - deployment frequency goes up
-  - mean time to recover (MTTR) is increased: how quickly a service can recover form a disruption
+  - mean time to recover (MTTR) is increased: how quickly a service can recover from a disruption
     - in a failure state, come up with a mitigation action and treat it as any other change in your workflow, build, test, deploy
     - overlay incident timestmaps on deploy timestamps, to help narrow down which commit caused the error (requires continuous integration & delivery)
   - Mean Time between failures (MTBF) the average time between service disruptions
@@ -21,7 +21,7 @@
   - limits work in progress
   - shortens lead times for changes: i.e. the number of tasks in flight at once; the software equivalent of work in progress
 - immutable infrastructure is the next phase of devops
-  - less reliance on configuration management, since its baked into the container
+  - less reliance on configuration management (CM), since its baked into the container
   - however CM is still critical for the datalayer
 - stay away from kitchen sinks, use plug-n-play tools instead, focus on tools that do one thing well, vs try to do everything poorly
 - continuous integration
@@ -59,10 +59,10 @@
 
 - composability: services tend to rely on multiple components, packaging components into artifacts enables dependency management at component level
 - cascading failure pattern: where a failure at one integration point, cascades to cause failures/disruptions throughtout the application stack in a layered architecture
-- circuit breaker pattern: a service that watches for failures through a systems boundaries, and reroutes requests upon detection
+- circuit breaker pattern: a service that watches for failures through systems boundaries, and reroutes requests upon detection
 - design: theory & thoughtful planning
 
-- devops: developer operations; the entire serice lifecycle, from design > dev > production support
+- devops: developer operations; the entire service lifecycle, from design > dev > production support
 
   - a partnership of all the team members involved in software development and operations.
   - The main reason to deploy DevOps in the cloud is to allow infrastructures to be controlled by APIs.
@@ -78,14 +78,14 @@
 
   - good processes bring good results
   - go see for yourself (gemba): go to the actual place where value is created or incidents occur; never depend on reports, etc, but go see for yourself; go to the code, go inside the application, go view the config files, go talk to the people, etc
-  - speak wiht data and manage by facts
+  - speak with data and manage by facts
   - take action to contain and correct root causes
   - work as a team
   - kaizen is everybody's business
   - general process: plan > do > check > act > [repeat]
 
 - the five whys: it generally takes 5 whys to find a root cause: why did X happen, because of Y, why did Y happen, because of Z, ... etc 5 times
-  - focus on the undelrying causes, not symptoms
+  - focus on the underlying causes, not symptoms
   - dont accept answers like `not enough time`; we all work under constraints, so try to understand why there wasnt enough time
   - track the forks in the five whys: e.g. Y happened because of X & Z
   - dont accept human error as a root cause: as this always points to a process failure/lack of a process with sufficient safe guards
@@ -106,7 +106,7 @@
   - push notifications from your systems & process automation cycles into your chat client
 
 - shadow IT: teams deliberately bypassing processes & formalities just to get shit done
-- conways law: melvin conway: organizations which design systems, are constrained to produce designs which are copies fo the communicatoin structures of these organizations
+- conways law: melvin conway: organizations which design systems, are constrained to produce designs which are copies of the communication structures of these organizations
   - i.e. systems align themselves to communication boundaries; sales systems, ops systems, dev systems, biz systems, etc.
 - process boundaries: ...
 
@@ -125,6 +125,7 @@
     - service operation
 
 - data warehouse: inventory of all IT assets, and the relationships between them
+- data lake: a centralized repository that allows you to store all your structured and unstructured data at any scale; a system or repository of data stored in its natural/raw format, usually object blobs or files
 - cycle: the full commit pipeline, from commit to deploy
 - cycle time: the time it takes for a change to be committed to be deployed
 
