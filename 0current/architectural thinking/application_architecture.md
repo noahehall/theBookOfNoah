@@ -587,21 +587,21 @@ various components exist when designing a system, understanding the specific com
 - core logic that can be extended via plugins (sidecars), and defines the interface of each plugin
 - each plugin/sidecar then implements the contract
 
-##### model-view-controller
+##### MVC
 
 - extends the multi-tier pattern: divides an application into 3 tiers
 
-  - model: contains application data and core functionality
+  - model: manages application data and data related functionality
 
     - the central component of the pattern
-    - the dynamic dat structure of hte software application
+    - the dynamic data structure of the software application
     - controls the data and logic of the applications
 
   - view: displays application data and interacts with the user
 
     - accesses the data in the model and presents it to the user
 
-  - controller: understands the data and how the data can be manipulated
+  - controller: manages the interaction between the model & view layers
 
     - handles input from the use rand mediates between the model and view
     - listens to external inputs from the view/user and creates appropriate outputs
@@ -619,7 +619,23 @@ various components exist when designing a system, understanding the specific com
 
 ###### MVP model view presenter
 
+- evolution of MVC
+- model: see MVC
+- view: see MVC
+- presenter: 2 types
+  - passive view: all UI logic is in the presenter layer
+    - presenter responsible for dynamically creating a static view of the current state of the model
+    - and the view is responsible for rendering the static content given to it by the presenter
+  - supervising controller: rendering logic is in within the UI, but data transformation logic is within the presenter
+
 ###### MVVM: model view view model
+
+- i want a note here: describing how much I dislike this pattern, and two way databinding in general
+
+- model: business logic & data
+- view model: interacts with the model
+- view: interacts with the view model
+  - two-way databinding between the view data, and the model data
 
 ##### client-server
 
