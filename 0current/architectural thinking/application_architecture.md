@@ -528,7 +528,7 @@ various components exist when designing a system, understanding the specific com
 
 - all services in a system are within a single compile, yield and runtime environment
 
-#### N-tier/layered
+#### N-tier
 
 - substacks services based on the flow of data, each stack/tier/layer exists at a different level of abstraction and is responsibile for a specific
 
@@ -539,10 +539,24 @@ various components exist when designing a system, understanding the specific com
   - a common theme being the hierarchical and layered flow of data, generally unidirectional but in some patterns biderirectional (e.g. server sent events)
   - each tier can have its own HECCYA description
 
-- common to think of N-Tier architectures thorugh
+- common to think of N-Tier architectures through
   - presentation: UI and pure UI logic; usually the presentation of the business logic solution to external users
   - business: the logic of the problem domain, what does the application do?
   - data: database related stuff
+
+##### layered
+
+- type of n-tier in which communication between tiers are forced to flow in a single direction, from top to bottom
+  - presentation: UI
+  - application: abstracts away implemnetation details to interact wiht the business layer
+  - business: business logic
+  - persistence: abstracts away the implementation details to interact with the database
+  - data: database
+
+##### microkernel / plugin
+
+- core logic that can be extended via plugins (sidecars), and defines the interface of each sidecar
+- each plugin/sidecar then implements the contract
 
 ##### MVP model view presenter
 
@@ -597,18 +611,6 @@ various components exist when designing a system, understanding the specific com
 - examples:
   - the internet operates on a client-server pattern
 
-##### Peer-to-Peer
-
-- extends the the client-server architecture, utilizing a decenralized system in which peers communicate with each other directly
-  - abstraction X...
-  - communication:
-    - clients can connect to each other for services and connect to the server generally to retrieve the list of available clients
-- key concepts:
-  - clients are `peers` and share work + responsibilities
-- advantages:
-- disadvantages:
-- examples:
-
 ##### Controller-Responder (master-slave|primary-replica)
 
 - extends the multi-tier pattern consisting of two components the controller and responser(s)
@@ -645,7 +647,7 @@ various components exist when designing a system, understanding the specific com
 
 ##### microservices
 
-- the exterme in service oriented architectures, with the removal of the enterprise service bus
+- the extreme in service oriented architectures, with the removal of the enterprise service bus
 
 - involves creating multiple applications (i.e. micro services) that work interdependently
 
@@ -665,11 +667,36 @@ various components exist when designing a system, understanding the specific com
 
 ##### serverless
 
+- not as extreme (implementation wise) as microservices
+- currently restricted by the available cloud technology for advanced use-cases
+
+- backend as a service: abstracts security (e.g. authnz), operational (e.g. logging), and database (e.g. RDS) implementation details away for the core application
+
+- function as a service: simple utilities callable over a network
+
+#### decentralized
+
+- blockchain....
+
+##### Peer-to-Peer
+
+- extends the the client-server architecture, utilizing a decenralized system in which peers communicate with each other directly
+  - abstraction X...
+  - communication:
+    - clients can connect to each other for services and connect to the server generally to retrieve the list of available clients
+- key concepts:
+  - clients are `peers` and share work + responsibilities
+- advantages:
+- disadvantages:
+- examples:
+
 ### communication architecture
 
 - todo: i just havent focused on the networking layer enough
 
 ### Yielding Architecture
+
+- todo: see the other provisioning docs for specific patterns
 
 ### Architecture (the A in HECCYA)
 
