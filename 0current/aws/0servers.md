@@ -59,6 +59,8 @@
 
 ## ec2
 
+- servers in the cloud
+
 - instance connect: connect to an instance from the browser
 - Auto scaling is a great way to have the E2C services change when needed.
 

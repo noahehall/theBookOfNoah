@@ -547,7 +547,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
   - enable private resources to access public internet
 
-## cloud front
+## cloudfront
 
 - content delivery network
   - caches resources in AWS global edge network
@@ -559,7 +559,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - edge computing: customize how an application behaves based on location
     - also requires lambda
   - deep integration with other AWS services
-  - data from other aws services (e.g. s3 webhosting) into cloud front is at no cost
+  - data from other aws services (e.g. s3 webhosting) into cloudfront is at no cost
 - origin server: where cloudfront copies source resources (e.g. s3/ec2)
   - but can be external to AWS (but it costs more)
 - origin group: a primary + secondary origin servers

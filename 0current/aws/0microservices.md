@@ -1,6 +1,6 @@
 # TLDR
 
-- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS
+- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS, cloudwatch, Amazon Connect (dunno wherelse to put this), Amazon Kinesis, EKS
 
 ## basics
 
@@ -89,3 +89,32 @@
 - delivery retry policy: retry failed deliveries for http/s
 - delivery status logging: only for specific protols (lambda, sqs, etc)
 - IAM roles
+
+## Connect
+
+- salesforce knockoff + voip
+
+## Kinesis
+
+- manage data in realtime
+
+## SageMaker
+
+- ML in the cloud
+
+## Lightsale
+
+- heroku knockoff
+
+## cloudwatch
+
+- check the old docs for this
+- monitoring & observability, operational problems
+
+## eks
+
+- elastic kubernetes service
+
+## ECS
+
+- amazon container service

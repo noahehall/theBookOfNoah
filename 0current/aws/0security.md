@@ -1,6 +1,6 @@
 # TLDR
 
-security groups, key pairs, IAM, STS, Access Analyzer, certifact manager
+security groups, key pairs, IAM, STS, Access Analyzer, certifact manager, cognito
 
 <https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html>
 authorization
@@ -130,3 +130,7 @@ todo: should be in order
 ## STS
 
 - STS: Security Token Service
+
+## cognito
+
+- authnz
