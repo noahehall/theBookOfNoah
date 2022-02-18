@@ -721,7 +721,7 @@ various components exist when designing a system, understanding the specific com
 
 ### 3.4. <a name='communicationarchitecture'></a>communication architecture
 
-- todo: i just havent focused on the networking layer enough
+- todo: most of this is within aws/networking docs
 
 ### 3.5. <a name='YieldingArchitecture'></a>Yielding Architecture
 
