@@ -667,14 +667,7 @@ various components exist when designing a system, understanding the specific com
 
 ### communication architecture
 
-- remote access protocols (e.g. REST, SOAP, or GraphQL)
-
-  - these should actually be in application design patterns doc
-  - REST
-  - SOAP
-  - GraphQL
-
-- asynchronous messaging design pattern
+- todo: i just havent focused on the networking layer enough
 
 ### Yielding Architecture
 

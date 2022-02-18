@@ -18,3 +18,10 @@
 - aggregator pattern
 
 - domain driven design
+- remote access protocols (e.g. REST, SOAP, or GraphQL)
+
+  - REST
+  - SOAP
+  - GraphQL
+
+- asynchronous messaging design pattern
