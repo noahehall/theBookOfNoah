@@ -2,8 +2,8 @@
 
 - **H**ardware (cloud/metal)
 - **E**nvironment (...)
-- **C**omponent (application)
-- **C**ommunication (messaging)
+- **C**omponent (services)
+- **C**ommunication (networking)
 - **Y**ielding (provisioning)
 - **A**rchitecture (...)
 
