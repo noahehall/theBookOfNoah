@@ -4,7 +4,7 @@
 - hopefully this will be my last bash cheatsheet and I can simplify `
 
 - reading 70
-- copying 8
+- copying page 17 redirection
 
 ## links
 
@@ -258,3 +258,5 @@
   cmd1 || cmd2 # OR short circuit; execute cmd1, if failure, execute cmd2
   !cmd # NOT; execute cmd, flip the exit status of cmd
 ```
+
+### page 17 redirection
