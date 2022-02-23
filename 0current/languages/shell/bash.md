@@ -16,7 +16,7 @@
 
 - bourne shell
   - original bourne shell was 1979 via the V7 Unix
-  - found in `/bin/sh` (but I think somewhere this is no longer shell, but some other version on new systems)
+  - found in `/bin/sh` (but I think somewhere this is no longer sh, but some other version on new systems)
 - POSIX standard: defines the `standard shell` language & behavior based on the System V Bourne SHell
 - Bash: by the Free Software Foundation; clone of the Bourne Shell written from scrach
 
@@ -76,6 +76,16 @@
 
 ## concepts
 
+- how bash reads scripts
+  - one line at a time
+  - parses each line completely before executing any of the cmds on that line
+    - you cannot define an alias ad use it on the same line
+    - cmds that affect script parsing should be placed before the lines they affect
+- how bash reads functions
+  - functions are parsed all at once
+    - options enabled in one function are thus enabled in all functions
+    - thus dont enable/disable options within functions, but at the very top of scripts
+
 ### arguments
 
 - bash arguments are assigned to positional params $1, $2, etc
@@ -98,24 +108,46 @@
 
 ### filename metacharacters
 
-- - any string of zero/more chars
-- ? singel char
-- [abc...] one of the enclosed characters
-- [a-z...] range of characters
-- [!abc...] any char not within brackets
-- ~ home dir of cur user
-- ~username home dir of username
-- ~+ $PWD
-- ~- $OLDPWD
+- `*` any string of zero/more chars
+- `?` singel char
+- `[abc...]` one of the enclosed characters
+- `[a-z...]` range of characters
+- `[!abc...]` any char not within brackets
+- `~` home dir of cur user
+- `~username` home dir of username
+- `~+` $PWD
+- `~-` $OLDPWD
 - requires `extglob` to be enabled
-  - ?(pattern) match zero/one
-  - \*(pattern) match zero/more
-  - +(pattern) match one/more
-  - @(pattern) exactly one
-  - !(pattern) anything except pattern
+  - `?(pattern)` match zero/one
+  - `*(pattern)` match zero/more
+  - `+(pattern)` match one/more
+  - `@(pattern)` exactly one
+  - `!(pattern)` anything except pattern
 - requires `globstar`
-  - \*\* match all files & zero/more sudirs
-  - \*\*/ only match dirs & subdirs
+  - `**` match all files & zero/more sudirs
+  - `**/` only match dirs & subdirs
+- character classes `[[:poop:]]`
+  - alnum: alpha numeric
+  - alpha: alphabetic
+  - ascii: ASCII (not posix)
+  - blank: space/tab
+  - cntrl: control characters
+  - digit: decimals
+  - graph nonspace characters
+  - lower: lowercase chars
+  - print: printable chars
+  - punct: punctuation
+  - space: whitespace
+  - upper: uppercase
+  - word: not posix,
+  - xdigit: hexadecimal digits
+
+### brace expansion
+
+- pre{X, Y[, Z...]}post === preXpost, preYpost, etx
+- pre{start..end[..incr]}post
+  - start & end signify ranges, e.g. 1..10, a..z
+  - incr is an integer, determining how to increment (e.g. by 1 defualt, 2 etc)
 
 ## control flow
 
@@ -152,7 +184,13 @@
     -v, --verbose # print lines as the shell reads them
     +O SOME_OPT # disable some_option
   # options to enable/disable via -O/O+
-    extglob # extended filename globbing, see filename metacharacters
+    extglob # extended shell patterns, see filename metacharacters
     globstar # see ** in filename metacharacters
 
+```
+
+### bash scripts
+
+```bash
+  shopt -s extglob # enable extended shell patterns
 ```
