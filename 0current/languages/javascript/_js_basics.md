@@ -7,6 +7,9 @@
 - [prototypical inheritance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 - [arithmetic operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Arithmetic_Operators#Exponentiation)
 - [javascript versions](https://www.w3schools.com/Js/js_versions.asp)
+- [tc39 process](https://tc39.es/process-document/)
+- [ecmascript spec](https://tc39.es/ecma262/)
+- [current proposals - all stages](https://github.com/tc39/proposals)
 
 ## terms
 
@@ -20,6 +23,14 @@
   - es6: 2015
   - es7: 2016
     - etc
+
+- process
+
+  - stage 0: anything goes
+  - stage 1: tc39 expects to devote time to examine the problem space, solutions & cross-cutting concerns
+  - stage 2: tc39 expects the feature to be developed and eventually included in the standard
+  - stage 3: tc39 expects the solution is complete, but needs feedback from the field
+  - stage 4: feature will be included in the next ecmascript version
 
 - prototype: each object has an internal link to another object, its prototype, that provides additional behavior and properties
 - prototype chain: the sequence of linked objects from one object's prototype to another, all the way up until you reach the Null object (which does not have a prototype)
