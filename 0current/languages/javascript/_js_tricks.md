@@ -27,3 +27,32 @@
 ```js
   Object.is(value1, value2):
 ```
+
+- prototypes, dizzam remember these?
+- If you want to inherit from a regular object, you can instead use Object.setPrototypeOf():
+
+```js
+var Animal = {
+  speak() {
+    console.log(this.name + " makes a noise.");
+  },
+};
+
+class Dog {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+Object.setPrototypeOf(Dog.prototype, Animal); // If you do not do this you will get a TypeError when you invoke speak
+
+var d = new Dog("Mitzie");
+d.speak(); // Mitzie makes a noise.
+```
+
+- random array stuff
+
+```js
+Array.from(document.querySelectorAll("*")); // Returns a real Array
+Array.of(1, 2, 3); // Similar to new Array(...), but without special one-arg behavior
+```

@@ -1,63 +1,69 @@
 # control statements
 
-#### control
+## links
 
-- try catch
+- [for in](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in)
+- [for of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of)
 
-  ```
-  try {
-   /*code*/
-  } catch (err){
-   /*
-    err.message == message of error
-   */
-  }finally {
-   /*do this regardless of what happens*/
-  }
-  ```
+## try catch
 
-- if statements
+```
+try {
+ /*code*/
+} catch (err){
+ /*
+  err.message == message of error
+ */
+}finally {
+ /*do this regardless of what happens*/
+}
+```
 
-  ```
-  if (condition1) {
-      block of code to be executed if condition1 is true
-  } else if (condition2) {
-      block of code to be executed if the condition1 is false and condition2 is true
-  } else {
-      block of code to be executed if the condition1 is false and condition2 is false
-  }
-  ```
+## if statements
 
-- switch statements
+```
+if (condition1) {
+    block of code to be executed if condition1 is true
+} else if (condition2) {
+    block of code to be executed if the condition1 is false and condition2 is true
+} else {
+    block of code to be executed if the condition1 is false and condition2 is false
+}
+```
 
-  ```
-  switch(expression) {
-      case n:
-          code block
-          break;
-      case n:
-          code block
-          break;
-      default:
-          default code block
-  }
-  ```
+## switch statements
 
-#### loops
+```
+switch(expression) {
+    case n:
+        code block
+        break;
+    case n:
+        code block
+        break;
+    default:
+        default code block
+}
+```
+
+## loops
 
 - The break statement breaks the loop and continues executing the code after the loop (if any):
 
 - The continue statement breaks one iteration (in the loop), if a specified condition occurs, and continues with the next iteration in the loop.
-- for
 
-  ```
-  var fruits = ["Banana", "Orange", "Apple", "Mango"];
-  for (index = 0; index < fruits.length; index++) {
-      text += fruits[index];
-  }
-  ```
+### for
 
-- for in
+```
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+for (index = 0; index < fruits.length; index++) {
+    text += fruits[index];
+}
+```
+
+### for in
+
+- The for...in statement iterates over the enumerable properties of an object, in original insertion order. For each distinct property, statements can be executed.
 
   ```
   var person = {fname:"John", lname:"Doe", age:25};
@@ -68,64 +74,31 @@
   }
   ```
 
-- while
+### for..of: basic iterable loop
 
-  ```
-  index =100
-  while (index--) {
-   //index in here will start at 99, since you used index-- as the condition
-      code block to be executed
+- The for...of syntax is specific to collections, rather than all objects. It will iterate in this manner over the elements of any collection that has a [Symbol.iterator] property.
+
+```s
+  for (const/let variable of iterable) {
+    statement
   }
-  ```
+```
 
-- do while
+### while
 
-  ```
-  do {
-      code block to be executed
-  }
-  while (condition);
-  ```
+```
+index =100
+while (index--) {
+ //index in here will start at 99, since you used index-- as the condition
+    code block to be executed
+}
+```
 
-## loops
+### do while
 
-- for..of: basic iterable loop
-
-  ```s
-    for (const/let variable of iterable) {
-      statement
-    }
-  ```
-
-- arr.entries(): returns a new Array Iterator object that contains the key/value pairs for each index in the array.
-
-  ```s
-  var a = ['a', 'b', 'c'];
-  var iterator = a.entries();
-
-  // with for..of loop
-    for (let e of iterator) {
-      console.log(e);
-    }
-  // manually
-    console.log(iterator.next().value); // [0, 'a']
-    console.log(iterator.next().value); // [1, 'b']
-    console.log(iterator.next().value); // [2, 'c']
-  ```
-
-- arr.keys(): returns a new Array Iterator that contains the keys for each index in the array.
-
-  ```s
-    var arr = ['a', 'b', 'c'];
-    var iterator = arr.keys();
-
-    console.log(iterator.next()); // { value: 0, done: false }
-    console.log(iterator.next()); // { value: 1, done: false }
-    console.log(iterator.next()); // { value: 2, done: false }
-    console.log(iterator.next()); // { value: undefined, done: true }
-
-    var sparseKeys = Object.keys(arr);
-    var denseKeys = [...arr.keys()];
-    console.log(sparseKeys); // ['0', '2']
-    console.log(denseKeys);  // [0, 1, 2]
-  ```
+```
+do {
+    code block to be executed
+}
+while (condition);
+```
