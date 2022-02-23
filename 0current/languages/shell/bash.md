@@ -1,7 +1,7 @@
 # bash scripting
 
 - most of this should have come straight from the bash pocket ref (bash v4.4)
-- hopefully this will be my last bash cheatsheet
+- hopefully this will be my last bash cheatsheet and I can simplify `
 
 - reading 70
 - copying 8
@@ -73,18 +73,7 @@
 - $? exit status of the previous executed cmd
 - $PWD
 - $OLDPWD
-
-## concepts
-
-- how bash reads scripts
-  - one line at a time
-  - parses each line completely before executing any of the cmds on that line
-    - you cannot define an alias ad use it on the same line
-    - cmds that affect script parsing should be placed before the lines they affect
-- how bash reads functions
-  - functions are parsed all at once
-    - options enabled in one function are thus enabled in all functions
-    - thus dont enable/disable options within functions, but at the very top of scripts
+- $PS0-4 prompt strings
 
 ### arguments
 
@@ -149,6 +138,38 @@
   - start & end signify ranges, e.g. 1..10, a..z
   - incr is an integer, determining how to increment (e.g. by 1 defualt, 2 etc)
 
+### escape sequences
+
+- occur in 4 contexts
+  - the $'...' quoted string
+  - arguments to echo -e and printf %b
+  - format strings for printf
+  - value of PS0-4 prompt strings
+
+```bash
+  # i skipped a bunch, swing back through later
+  \b # backspace
+  \c # supress the terminating new line, do not print any following chars
+  \f # formfeed
+  \n # newline
+  \r # carriage return
+  \t # tab
+
+
+```
+
+## concepts
+
+- how bash reads scripts
+  - one line at a time
+  - parses each line completely before executing any of the cmds on that line
+    - you cannot define an alias ad use it on the same line
+    - cmds that affect script parsing should be placed before the lines they affect
+- how bash reads functions
+  - functions are parsed all at once
+    - options enabled in one function are thus enabled in all functions
+    - thus dont enable/disable options within functions, but at the very top of scripts
+
 ## control flow
 
 ### if
@@ -157,7 +178,7 @@
 
 ### until
 
-## todos
+## todos: i want to capture these but categorize them later
 
 ### invoking bash
 
