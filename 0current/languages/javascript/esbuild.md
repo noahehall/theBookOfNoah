@@ -10,6 +10,8 @@
   - file: the defualt; i.e. files on the file syste
   - virtual moduels: e.g. a module provided via stdin, or a via an esbuild plugin
 - filters: every callback provides a filter, so esbuild knows which module is associated with which plugin
+  - all filters use Go's regex: look-ahead|behind|backreferences are not supported
+  - ^ i.e. basic js regular expressions should work
 - caching: esbuild is super fast, you want to cache your plugin results from previous builds so as not to slowdown esbuild
 
 ```js
