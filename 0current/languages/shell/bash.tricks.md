@@ -7,6 +7,16 @@
 ```bash
   ls {ch, app}? # ch1, ch2, appX, appY etc, because of the ? char
   mv info{,.old} # mv info info.old,
-  
+
+```
+
+## cmd execution
+
+```bash
+  (date; who; pwd) > logfile # everything in logfile
+  egrep '(yes|no)' `cat listoffiles.txt` # search listoffiles.txt
+  # ^ $(cat listoffiles.txt) for POSIX
+  # ^ $(< listoffiles.txt) faster, but definitely not POSIX
+
 
 ```

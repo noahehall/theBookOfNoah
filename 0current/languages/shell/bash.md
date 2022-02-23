@@ -242,3 +242,19 @@
   echo $'single quote with \t escape sequences'
 
 ```
+
+### cmd execution
+
+```bash
+  cmd & # execute cmd in the backgroun
+  cmd1; cmd2 # cmd sequence, execute multiple cmds sequetially on the same line
+  {cmd1; cmd2} # cmd group; in the current shell
+  (cmd1; cmd2) # cmd group: in a subshell
+  cmd1 | cmd2 # output of cmd1 as input to cmd2
+  cmd1 `cmd2` # cmd substitution; cmd2 output as args to cmd1
+  cmd1 $(cmd2) # cmd substution (POSIX)
+  cmd $((expression)) # POSIX shell arithmetic substitution; expr output as args to cmd1
+  cmd1 && cmd2 # AND short circuit; execut cmd1, if success, execute cmd2
+  cmd1 || cmd2 # OR short circuit; execute cmd1, if failure, execute cmd2
+  !cmd # NOT; execute cmd, flip the exit status of cmd
+```
