@@ -60,10 +60,41 @@
 - ENV
 - GLOBIGNORE
 - SHELLOPTS
+- $? exit status of the previous executed cmd
+
+## concepts
+
+### arguments
+
+- bash arguments are assigned to positional params $1, $2, etc
+- if the first arg is a script
+  - cmds are read from the script
+  - the scrpit doesnt need to be executable, but must be readable
+  - the script path is assigned to $0
+
+### exit status
+
+- when a cmd exits, it provides a numerical exit status between 0-255
+  - external cmds (e.g. `ls`) provides the value to the operating system
+  - internal cmds (e.g. `cd`) provides this value directly to the shell
+- cmd exit values (by convention)
+  - 0: the only one that === true/success
+  - 2: usage errors
+  - 126: cmd was found but not executable
+  - 127: cmd not found
+  - 128 + N: cmd died due to receiving signal number N
+
+## control flow
+
+### if
+
+### while
+
+### until
 
 ## todos
 
-```sh
+```bash
   bash [options] [arguments]
   # options
     -c str # read cmds from string
@@ -85,5 +116,5 @@
     --version # print version
     --help # print help
     -, -- # end option processing
-``
+
 ```
