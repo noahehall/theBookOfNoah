@@ -155,8 +155,26 @@
   \r # carriage return
   \t # tab
 
-
 ```
+
+### special characters
+
+- cmd execution
+  - `;` cmd separator
+  - `&` bg execution
+  - `()` cmd grouping
+  - `\`` tilda is for cmd substitution
+- `|` pipe
+- `< > &` redirection symbols
+- `* ? [ ] ~ + - @ !` filename metacharacters
+- `" ' \` used in quoting other chars
+- `$` variable/cmd/arithmetic substitution
+- `#` single line comment
+- `"` literal quoting + special chars
+  - `$ \`` still maintain their special meaning
+- `'` literal quoting no special chars
+- `$"..."` just like " but locale translation is performed
+- `$'...'` similar to ' but the qouted text is processed for escape sequences
 
 ## concepts
 
@@ -214,4 +232,13 @@
 
 ```bash
   shopt -s extglob # enable extended shell patterns
+```
+
+### bash quotes
+
+```bash
+  echo "a string plus cmd output `ls`"
+  echo "the value of \$x is $x"
+  echo $'single quote with \t escape sequences'
+
 ```
