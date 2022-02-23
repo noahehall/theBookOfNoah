@@ -3,6 +3,9 @@
 - most of this should have come straight from the bash pocket ref (bash v4.4)
 - hopefully this will be my last bash cheatsheet
 
+- reading 70
+- copying 8
+
 ## links
 
 - likely should check out the scripting.md file for links
@@ -33,8 +36,13 @@
   - arithmetic for loop
 
 - shell types
-  - login shell: reads `/etc/profile` and `~/.profile`
-  - regular shells: read $ENV
+  - login shell:
+    - whenever the `-l` option is set
+    - reads `/etc/profile`
+    - reads the first found: `~/.bash_profile > ~/.bash_login > ~/.profile`
+  - nonlogin shells:
+    - if invoked as `sh` or with `--posix` reads $ENV
+    - else reads `~/.bashrc`
   - interactive shell:
     - uses the prompt for input
     - reads `~/.bashrc`
@@ -46,8 +54,10 @@
 
 ### files and directories
 
-- `/bin/sh`: usually a link to bash
-- `/etc/profile`:
+- `/bin/sh` usually a link to bash
+- `/etc/passwd` the user database (except on networked systems)
+- `/etc/profile`
+- `~/.bash_logout` read when an interactive shell exits, or `exit` builtin cmd (non-interactive shells)
 - `~/.bash_profile`
 - `~/.bashrc`
 - `~/.profile`
@@ -61,6 +71,8 @@
 - GLOBIGNORE
 - SHELLOPTS
 - $? exit status of the previous executed cmd
+- $PWD
+- $OLDPWD
 
 ## concepts
 
@@ -84,6 +96,27 @@
   - 127: cmd not found
   - 128 + N: cmd died due to receiving signal number N
 
+### filename metacharacters
+
+- - any string of zero/more chars
+- ? singel char
+- [abc...] one of the enclosed characters
+- [a-z...] range of characters
+- [!abc...] any char not within brackets
+- ~ home dir of cur user
+- ~username home dir of username
+- ~+ $PWD
+- ~- $OLDPWD
+- requires `extglob` to be enabled
+  - ?(pattern) match zero/one
+  - \*(pattern) match zero/more
+  - +(pattern) match one/more
+  - @(pattern) exactly one
+  - !(pattern) anything except pattern
+- requires `globstar`
+  - \*\* match all files & zero/more sudirs
+  - \*\*/ only match dirs & subdirs
+
 ## control flow
 
 ### if
@@ -94,27 +127,32 @@
 
 ## todos
 
+### invoking bash
+
 ```bash
   bash [options] [arguments]
   # options
-    -c str # read cmds from string
-    -D, --dump-strings # print all $".." strings in the program
-    -i # create an interactive shell
-    -l, --login # behave as a login shell
-    -O SOME_OPT # enable some_option
-    +O SOME_OPT # disable some_option
-    -p #start as a privileged user
-    -r, --restricted # create a restricted shell
-    -s, read cmds from stdin, builtin cmd output > descriptor 1, all other > descriptor 2
-    -v, --verbose # print lines as the shell reads them
     --debugger # read the debugger profile if its available at startup, turn on extdebug option to shopt
-    -init-file FILE, --rcfile FILE # use FILE instead of ~/.bashrc for interactive shells
+    --help # print help
     --noediting # do not use readline library for input
     --noprofile # do not read any startup rc files or /etc/profile
     --norc # do not read ~/.bashrc (e.g. when invoked as sh)
     --posix # turn on POSIX mode
     --version # print version
-    --help # print help
     -, -- # end option processing
+    -c str # read cmds from string
+    -D, --dump-strings # print all $".." strings in the program
+    -i # create an interactive shell
+    -init-file FILE, --rcfile FILE # use FILE instead of ~/.bashrc for interactive shells
+    -l, --login # behave as a login shell
+    -O SOME_OPT # enable some_option
+    -p #start as a privileged user
+    -r, --restricted # create a restricted shell
+    -s, read cmds from stdin, builtin cmd output > descriptor 1, all other > descriptor 2
+    -v, --verbose # print lines as the shell reads them
+    +O SOME_OPT # disable some_option
+  # options to enable/disable via -O/O+
+    extglob # extended filename globbing, see filename metacharacters
+    globstar # see ** in filename metacharacters
 
 ```
