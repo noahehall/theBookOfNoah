@@ -18,5 +18,14 @@
   # ^ $(cat listoffiles.txt) for POSIX
   # ^ $(< listoffiles.txt) faster, but definitely not POSIX
 
+```
 
+## redirections
+
+```bash
+  echo "send this to stderr, eg. to add a comment" 1>&2
+
+  # find files you can access, send to accessiblefiles list
+  # for files you cant access, send to innacessbilefileslist
+  find / -print > accessiblefileslist 2> inaccessiblefileslist
 ```

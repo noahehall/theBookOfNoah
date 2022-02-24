@@ -70,7 +70,12 @@
 ### files and directories
 
 - `/bin/sh` usually a link to bash
-- `/dev/fd`
+- `/dev/fd/n` a duplicate of file descriptor n
+- `/dev/stderr` duplicate of file descriptor 2
+- `/dev/stdin` duplicate of file descriptor 0
+- `/dev/stdout` duplicate of file descriptor 1
+- `/dev/tcp/host/port` bash opens tcp connection to host (hostname/ip address) on port, and uses the file descriptor in redirections
+- `/dev/udp/host/port` same as the tcp counterpart, but for udp
 - `/etc/passwd` the user database (except on networked systems)
 - `/etc/profile`
 - `~/.bash_logout` read when an interactive shell exits, or `exit` builtin cmd (non-interactive shells)
@@ -214,6 +219,11 @@
   - 0 stdin, keyboard
   - 1 stdout, screen
   - 2 stdout, screen
+  - in redirections, you can use {poop} instead of a number
+    - bash auto picks a number greater than 9 for the file descriptor
+    - bash assigns the picked number to variable $poop,
+    - you can use $poop anywhere in the script, e.g. with exec
+    - you have manually close the file descriptor saved in $poop
 - /dev/null is a useful place to send stderr
 
 ```bash
