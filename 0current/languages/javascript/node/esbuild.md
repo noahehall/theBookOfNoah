@@ -1,5 +1,20 @@
 # ESBUILD
 
+```js
+todo: put this somewhere
+// easy to forget stuff
+// bundling: takes an input file, inlines all statically imported deps (that arent externalized) and outputs a single file
+// ^ asynchronous imports need to be marked as external, and made available in the runtime environment
+// concateting: passing multiple input files will create multiple bundles
+// external
+// ^ require for the iife and cjs formats, import for the esm format
+// ^ can use * as wildcard path to mark entire filepaths as external
+// ^^ both before & after path resolution,
+// ^^ import path in sourcecode, e.g. @foo/bar/* or /somedir/*
+// ^^ absolute filepath of the resolved file, e.g. ./node_modules/*
+
+```
+
 ## plugins
 
 - super rudimentary notes to get through my esbuild popcopy plugin

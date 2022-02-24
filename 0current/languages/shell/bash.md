@@ -3,7 +3,7 @@
 - most of this should have come straight from the bash pocket ref (bash v4.4)
 - hopefully this will be my last bash cheatsheet and I can simplify `
 
-- reading 70
+- reading 74
 - copying page 17 redirection
 
 ## links
