@@ -4,11 +4,14 @@
 - hopefully this will be my last bash cheatsheet and I can simplify `
 
 - reading 74
-- copying page 17 redirection
+- copying page 19 redirection with file descriptors
 
 ## links
 
 - likely should check out the scripting.md file for links
+
+- [heredoc](https://linuxize.com/post/bash-heredoc/)
+- [herestring](https://bash.cyberciti.biz/guide/Here_strings)
 
 ## basics
 
@@ -176,6 +179,50 @@
 - `$"..."` just like " but locale translation is performed
 - `$'...'` similar to ' but the qouted text is processed for escape sequences
 
+### cmd execution
+
+```bash
+  cmd & # execute cmd in the backgroun
+  cmd1; cmd2 # cmd sequence, execute multiple cmds sequetially on the same line
+  {cmd1; cmd2} # cmd group; in the current shell
+  (cmd1; cmd2) # cmd group: in a subshell
+  cmd1 | cmd2 # output of cmd1 as input to cmd2
+  cmd1 `cmd2` # cmd substitution; cmd2 output as args to cmd1
+  cmd1 $(cmd2) # cmd substution (POSIX)
+  cmd $((expression)) # POSIX shell arithmetic substitution; expr output as args to cmd1
+  cmd1 && cmd2 # AND short circuit; execut cmd1, if success, execute cmd2
+  cmd1 || cmd2 # OR short circuit; execute cmd1, if failure, execute cmd2
+  !cmd # NOT; execute cmd, flip the exit status of cmd
+```
+
+### redirection
+
+- file descriptors: can be reasigned, but defaults are
+  - 0 stdin, keyboard
+  - 1 stdout, screen
+  - 2 stdout, screen
+
+```bash
+  # simple redirection
+  cmd > file # create/overwright file
+  cmd >> file # create/append to file
+  cmd < file # file contents (read only) is input to cmd
+  cmd <> file # file content (read+write) is input to cmd
+  cmd >| file # create/overwight file, ignoring noclobber option
+  cmd <<< "this is a here string, check the nixCraft link"
+  cmd <<- poop
+    # pass multiple lines of input, the cmd is actually optional
+    # if poop is unquoted, this block of text will undergo variable, cmd & arithmetic substitution
+    # the - ignores all leading tabs, which is what you want for formatting this block
+    # no whitespace can exist before the ending poop
+    # poop can also be a variable
+    # check the linuxize links for more juiciness
+poop
+
+  # redirection using file descriptors
+  # page 19
+```
+
 ## concepts
 
 - how bash reads scripts
@@ -197,6 +244,8 @@
 ### until
 
 ## todos: i want to capture these but categorize them later
+
+- likely these should be a separate file, as all of these sections are really fkn super long
 
 ### invoking bash
 
@@ -225,6 +274,7 @@
   # options to enable/disable via -O/O+
     extglob # extended shell patterns, see filename metacharacters
     globstar # see ** in filename metacharacters
+    noclobber
 
 ```
 
@@ -242,21 +292,3 @@
   echo $'single quote with \t escape sequences'
 
 ```
-
-### cmd execution
-
-```bash
-  cmd & # execute cmd in the backgroun
-  cmd1; cmd2 # cmd sequence, execute multiple cmds sequetially on the same line
-  {cmd1; cmd2} # cmd group; in the current shell
-  (cmd1; cmd2) # cmd group: in a subshell
-  cmd1 | cmd2 # output of cmd1 as input to cmd2
-  cmd1 `cmd2` # cmd substitution; cmd2 output as args to cmd1
-  cmd1 $(cmd2) # cmd substution (POSIX)
-  cmd $((expression)) # POSIX shell arithmetic substitution; expr output as args to cmd1
-  cmd1 && cmd2 # AND short circuit; execut cmd1, if success, execute cmd2
-  cmd1 || cmd2 # OR short circuit; execute cmd1, if failure, execute cmd2
-  !cmd # NOT; execute cmd, flip the exit status of cmd
-```
-
-### page 17 redirection
