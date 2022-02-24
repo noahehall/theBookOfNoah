@@ -201,8 +201,10 @@
   - 0 stdin, keyboard
   - 1 stdout, screen
   - 2 stdout, screen
+- /dev/null is a useful place to send stderr
 
 ```bash
+  # no spacing is allowed between file descriptors and a redirectin symbol
   # simple redirection
   cmd > file # create/overwright file
   cmd >> file # create/append to file
@@ -232,7 +234,17 @@ poop
 
   # multiple redirection
   cmd 2> file # stderr to file
-  
+  cmd > file 2>&1 # stdout and stderr to file
+  cmd >& file # stdout and stderr to file
+  cmd &> file # stdout and stderr to file (preferred)
+  cmd &>> file # append stdout & stderr to file
+  cmd > fileA 2> fileB # stdout to fileA, stderr to fileB
+
+  # using tee to duplicate output
+  cmd | tee files # send output to stdout and files
+  cmd 2>&1 | tee files # pipe stdout and stderr of cmd to tee and to files
+  cmd |& tee files # pipe stdout and stderr of cmd to tee and to files
+
 ```
 
 ## concepts
