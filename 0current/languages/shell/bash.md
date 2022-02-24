@@ -3,7 +3,7 @@
 - most of this should have come straight from the bash pocket ref (bash v4.4)
 - hopefully this will be my last bash cheatsheet and I can simplify `
 
-- reading 74
+- reading 96
 - copying page 19 redirection with file descriptors
 
 ## links
