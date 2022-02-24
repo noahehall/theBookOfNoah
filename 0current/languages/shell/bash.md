@@ -55,9 +55,22 @@
     - do not import functions from the environment
     - ignore values in BASHOPTS, CDPATH, GLOBIGNORE, and SHELLOPTS
 
+### concepts
+
+- how bash reads scripts
+  - one line at a time
+  - parses each line completely before executing any of the cmds on that line
+    - you cannot define an alias ad use it on the same line
+    - cmds that affect script parsing should be placed before the lines they affect
+- how bash reads functions
+  - functions are parsed all at once
+    - options enabled in one function are thus enabled in all functions
+    - thus dont enable/disable options within functions, but at the very top of scripts
+
 ### files and directories
 
 - `/bin/sh` usually a link to bash
+- `/dev/fd`
 - `/etc/passwd` the user database (except on networked systems)
 - `/etc/profile`
 - `~/.bash_logout` read when an interactive shell exits, or `exit` builtin cmd (non-interactive shells)
@@ -65,7 +78,7 @@
 - `~/.bashrc`
 - `~/.profile`
 
-### env vars
+### env vars (move to separate file when focusing on these)
 
 - BASH_ENV
 - BASHOPTS
@@ -247,17 +260,25 @@ poop
 
 ```
 
-## concepts
+### process substitution
 
-- how bash reads scripts
-  - one line at a time
-  - parses each line completely before executing any of the cmds on that line
-    - you cannot define an alias ad use it on the same line
-    - cmds that affect script parsing should be placed before the lines they affect
-- how bash reads functions
-  - functions are parsed all at once
-    - options enabled in one function are thus enabled in all functions
-    - thus dont enable/disable options within functions, but at the very top of scripts
+- a way to create non-linear pipelines
+- not available in POSIX, systems that dont support named pipes (FIFOS), systems that dont support accessing open files via filenames in `/dev/fd`
+
+```bash
+  # in all cases
+  # run cmd with its input connected to a named pipe/open file in /dev/fd
+  # place the file's name in the argument list of cmd
+
+  # cmd can read the file to see the output of command
+  # i.e. cmd should periodically check the file, to see the output of command
+  cmd <(command)
+
+  # output written by cmd to the file is input to command
+  # i.e. output from cmd to file, is input to command
+  cmd >(command)
+
+```
 
 ## control flow
 
