@@ -219,8 +219,20 @@
     # check the linuxize links for more juiciness
 poop
 
-  # redirection using file descriptors
-  # page 19
+  # single redirection using file descriptors
+  cmd >&n # send output to n
+  cmd m>&n # send output AND m to n
+  cmd >&- # close standard output
+  cmd >&n- # move n to standard output by duplicating it, then closing the original
+
+  cmd <&n # cmd input from n
+  cmd m<&n # cmd input from n, and any input from m also comes from n
+  cmd <&- # close standard input
+  cmd <&n- # move n to standard input by duplicating it, and closing the original
+
+  # multiple redirection
+  cmd 2> file # stderr to file
+  
 ```
 
 ## concepts
