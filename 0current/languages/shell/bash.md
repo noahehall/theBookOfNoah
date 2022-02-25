@@ -4,7 +4,7 @@
 - hopefully this will be my last bash cheatsheet and I can simplify `
 
 - reading 96
-- copying page 24 function traps
+- copying top of page 30, variable substition
 
 ## links
 
@@ -332,6 +332,8 @@ poop
     noclobber
     functrace, -T
     errtrace, -E
+    -u # throws err in non interactive shells trying to use an unset var
+    nocasematch # todo
 
 ```
 
@@ -344,22 +346,85 @@ poop
   - all variables are considered strings, unless prefixed with `declare -i`
     - thats why you dont need quotes
 - variable substitution
+  - when using `:` the var must be nonull as well as set
+  - obeys the shell nocasematch option
+  - single quoted text needs your attention
+    - todo
+  -
 - indirect varialbes (namerefs)
 - builtins
 - arrays
 - prompt strings
 
 ```bash
+# using the value of a variable
+# $poop and ${poop} are the same thing
+# however the {} are required if the variable name has text immediately to the right
+# ^ $poopsam wouldnt work, but ${poop}sam does
+# ^ sam$poop works, no need for braces
 # all vars are considered strings
+poop= # poop is null
 poop=flush
 # unless using declare, then bash interprets it as an expression
-declare -i int; int=5+3; echo int # 8
+declare -i int; int=5+3; echo $int # 8
+int+=8; echo $int # 16
+
 # multiple var assignment
 firstname=noah lastname=hall
 # appending to a var
 name=noah
 name+=" hall"; echo $name # noah hall
 
+# arrays
+pets=(lion panther)
+echo ${pets[*]} # lion panther
+# can append to arrays
+pets+=(tiger jaguar); echo ${pets[*]}; # lion panther tiger jaguar
+
+# var substitution: used when retrieving the value from a variable
+# var must be nonnull AND set if using the `:` in the substitution
+# the `:` is optional
+
+# default values
+${poop} # poop or nothing
+${poop:-valueIfNotSet} # but doesnt change the value of $poop
+${poop:=valueIfNotSet} # but WILL change the value of $poop
+${poop:?valueIfNotSet} # interactive shells: print err msg to stderr; else print value and exit
+${poop:+valueIfSet} # uses value if var is not set, otherwise use nothing
+
+# extracing values
+${poop#pattern} # remove the shortest matching text starting from the left
+${poop##pattern} # remove longest matching text starting from the left
+${poop%pattern} # remove shortest matching text starting from the right
+${poop%%pattern} # remove longest matching text starting from the right
+${poop:1} # return all text starting at index 1 (0 based)
+${poop:1:2} # return the second and third characters
+${poop/pattern/replace} # replace the first match with replace
+${poop/deletethis} # delete the first match
+
+# modifying case
+${poop^pattern} # convert the first letter of matching text to uppercase
+${poop^^pattern} # convert all matching text to uppercase
+${poop,pattern} # convert the first letter of matching text to lowercase
+${poop,,pattern} # convert all matching text to lowercase
+
+# page 29, bash pocket ref, dont understand what these do
+${var@a}
+${var@A}
+${var@E}
+${var@P}
+${var@Q}
+
+# length of value
+${#poop} # the length of poop
+${#*} # number of positional parameters
+${#@} # number of positional parameters
+
+# introspection
+${!poop*} # print all vars whose name starts with poop
+${!poop@} # same as above
+
+# top of page 30
 ```
 
 ## functions
