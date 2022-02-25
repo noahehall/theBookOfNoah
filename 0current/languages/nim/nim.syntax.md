@@ -86,7 +86,7 @@ proc someName(varName: varType): returnType =
 
 ## control flow
 
-### if / when
+### if / when / case
 
 ```python
 if 42 > 0:

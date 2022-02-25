@@ -14,6 +14,8 @@
 - [GCC c compiler](https://gcc.gnu.org/)
 - [Clang C compiler](http://clang.org/)
 - [nimble, the nim package manager](https://github.com/nim-lang/nimble)
+- [offensive nim](https://s3cur3th1ssh1t.github.io/Playing-with-OffensiveNim/)
+- [nimtutorial](https://nim-lang.org/docs/tut1.html)
 
 ## basics
 
