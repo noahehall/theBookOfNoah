@@ -61,11 +61,40 @@ var poop = "flush" # var creates mutable variables
 - builtin
 
 ```python
-  int # integer
+  int # signed integers, 32bit/64bit depending on system
+    let
+      a = 100
+      b: int8 = 100
+      c = 100'i8
+
+  int8,16,32,64 # 8 = +-127, 16 = +-~32k, 32 = +-~2.1billion
+  uint # positive integers, 32/64 bit depending on system,
+    let
+      b: uint8 = 100
+      c = 100'u8
+  uint8,16,32,64 # 8 = 0 -> 2550, 16 = ~65k, 32 = ~4billion
   float # decimals
+    let
+      a = 100.0
+      b = 100.0'f32
+  float32,64
   string # must be enclosed in double quotes
+    let poop = "flush"
   bool # true | false
+    let t = true
   char # single ASCII characters, enclosed in single quotes
+    let
+      a = 'a'
+      b = '\109'
+      c = '\x79'
+  # escape sequences with chars, but you might aswell use a string
+    let
+      carriageReturn = '\r'
+      lineFeed = '\l'
+      tab = '\t'
+      backslash = '\\'
+      singleQuote = '\''
+      doubleQuote = '\"'
 
 ```
 
