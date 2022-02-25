@@ -2,8 +2,7 @@
 
 - fkn need to finish this thing
 - reading done
-- copying. 22
-  - i went a little bit of ahead of 22 to copy some additional syntax, but still need to restart at 22 to get the discussion
+- copying. 35 returning values from procedures
 
 ## links
 
@@ -17,6 +16,7 @@
 - [offensive nim](https://s3cur3th1ssh1t.github.io/Playing-with-OffensiveNim/)
 - [nim tutorial](https://nim-lang.org/docs/tut1.html)
 - [nim manual](https://nim-lang.org/docs/manual.html)
+- [nim style guide](https://status-im.github.io/nim-style-guide/)
 
 ## basics
 

@@ -14,8 +14,8 @@
 
 ## conventions
 
-- builtin types are lowercase
-- user-defined types are SentenceCase
+- builtin types & variables are lowercase
+- user-defined types are PascalCase
 
 ## compilation flags
 
@@ -24,7 +24,7 @@
 
 ```
 
-## other stuff
+## other stuff, keywords e.g.
 
 ```python
 # comments
@@ -40,6 +40,7 @@ echo("only after: ",
   "punctuation")
 
 nil.nil # special value that signifies the lack of a value for any reference type
+discard someProc() # discard the return value of someProc
 ```
 
 ## operators
@@ -61,6 +62,9 @@ let poop = "hello" # runtime immutable, value must be known at runtime
 var poop = "flush" # runtime mutable
 const poop = "flush" # compile time immutable, value must be computable at compile, most effiecient
 let `let` = "stropping"; echo(`let`) # stropping enables keywords as identifiers
+
+# concatenation
+echo "hello " & poop
 
 ```
 
@@ -109,6 +113,7 @@ let `let` = "stropping"; echo(`let`) # stropping enables keywords as identifiers
       singleQuote = '\''
       doubleQuote = '\"'
 
+  void
 ```
 
 - user defined
@@ -132,12 +137,23 @@ instance.someFn()
 
 ## procedures
 
-```python
-proc someName(varName: varType): returnType =
-  # procedure body
+- procs with return values, the return value must be used OR discard
+  - if the last expression has a non void value, that value is implicitly returned
+    - no need to return it, nor is it idiomatic nim
+- procs without return values return void (adding void keyword is optional)
+- proces cant be used before their definition without a forward declaration
+  - forward declaration: the function signature without a body
+- procs without parameters can omit the paranthesis in the difinition
 
-# showNumber(3.14)
-# showNumber(42)
+```python
+proc someName(paramNam: paramType): returnType =
+  # procedure body
+echo someName("poop")
+discard someName("oop")
+
+proc someName = # returns void, and doesnt accept params
+  # procedure body
+proc someName = echo "defined on one line"
 ```
 
 ## control flow
