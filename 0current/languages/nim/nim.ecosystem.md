@@ -2,6 +2,10 @@
 
 - extended information about third-party nim stuff
 
+## nimble
+
+- [github](https://github.com/nim-lang/nimble)
+
 ## c2nim
 
 - [github](https://github.com/nim-lang/c2nim)

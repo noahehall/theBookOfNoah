@@ -2,7 +2,7 @@
 
 - fkn need to finish this thing
 - reading done
-- copying. starting all over
+- copying. 22
 
 ## links
 
@@ -12,6 +12,7 @@
 - [C++ and iOS, windows and android development](https://devblogs.microsoft.com/cppblog/android-and-ios-development-with-c-in-visual-studio/)
 - [GCC c compiler](https://gcc.gnu.org/)
 - [Clang C compiler](http://clang.org/)
+- [nimble, the nim package manager](https://github.com/nim-lang/nimble)
 
 ## basics
 
