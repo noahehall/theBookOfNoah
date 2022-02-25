@@ -32,6 +32,8 @@
   - proecure; context of precedural programming
   - function: used in functional programming
   - subroutine: used with saltine crackers
+- Unofirm Function Call Syntax: UFCS: allows you to create new procedures on existing objects externally, and allows procedure calls to be chained
+- functional programming: avoids the changing of state and the use of mutable data, preferring the use of first-class functions, anonymous functions, and closures
 
 ### nim and nims history
 

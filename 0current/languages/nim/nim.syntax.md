@@ -1,6 +1,6 @@
-# nim syntax
+# nim
 
-- to keep this and the `nim.md` from being too long
+- pure syntax related notes, see examples doc for real world examples
 
 ## conventions
 
@@ -35,9 +35,16 @@
 ```python
 
 type
-  Dog = object
-    age: int
-let dog = Dog(age: 3)
+  SomeType = object
+    propName: type
+
+# procedures arent directly associated with the dog type
+# instead the self parameter defines the type it is associated with
+proc someFn(self: SomeType):
+  echo("Woof!")
+
+let instance = SomeType(propName: someValue)
+instance.someFn()
 
 ```
 
