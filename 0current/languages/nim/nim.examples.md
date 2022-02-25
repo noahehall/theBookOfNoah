@@ -29,4 +29,12 @@ list.map(
 import strutils
 for name in list:
   echo((name.split[0], namessplit[1]))
+
+# strings
+import strutils # provides unindent procedure
+let multiline = """ this
+  keeps whitespace
+  and indententation
+"""
+echo multiline.unindent # removes all indentetion
 ```

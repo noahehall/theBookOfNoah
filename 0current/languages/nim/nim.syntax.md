@@ -10,6 +10,7 @@
 - you can only split a statement after a punctuation symbol, and the next line must be indented
 - every identifier must be associated with a type, and types are checked at compile time
   - some types can be automatically inferred, e.g. primtives assigned a value when defined
+- the type of a variable cant change
 
 ## conventions
 
@@ -37,6 +38,8 @@ when false:
 # splitting statements
 echo("only after: ",
   "punctuation")
+
+nil.nil # special value that signifies the lack of a value for any reference type
 ```
 
 ## operators
@@ -50,9 +53,10 @@ echo("only after: ",
 ## variables
 
 ```python
-
-let poop = "hello" # let creates immutable variables
-var poop = "flush" # var creates mutable variables
+# keyword name: type = value
+let poop = "hello" # runtime immutable var, value must be known at runtime
+var poop = "flush" # runtime mutable var
+const poop = "flush" # compile time immutable var, value must be computable at compile time
 
 ```
 
@@ -79,7 +83,12 @@ var poop = "flush" # var creates mutable variables
       b = 100.0'f32
   float32,64
   string # must be enclosed in double quotes
-    let poop = "flush"
+    let
+      poop = "flush"
+      flush = r"raw string, no escape sequences required"
+      multiline = """can be split on multiple lines, no escape sequences required"""
+
+
   bool # true | false
     let t = true
   char # single ASCII characters, enclosed in single quotes
