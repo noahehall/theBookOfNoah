@@ -4,7 +4,7 @@
 - hopefully this will be my last bash cheatsheet and I can simplify `
 
 - reading 96
-- copying page 19 redirection with file descriptors
+- copying page 24 function traps
 
 ## links
 
@@ -270,6 +270,15 @@ poop
 
 ```
 
+### quotes in bash
+
+```bash
+  echo "a string plus cmd output `ls`"
+  echo "the value of \$x is $x"
+  echo $'single quote with \t escape sequences'
+
+```
+
 ### process substitution
 
 - a way to create non-linear pipelines
@@ -288,6 +297,32 @@ poop
   # i.e. output from cmd to file, is input to command
   cmd >(command)
 
+```
+
+## functions
+
+- faster than and preferred over aliases
+- funtion arguments are received as positional params identical to shell scripts
+- redirections in the function definition are evaluated when the fn is invoked
+- functions whose name dont include = or / can be exported with `export -f`
+- function traps
+  - page 24
+
+```bash
+  # POSIX format
+  fn_name () {
+    # some code
+    # $0 = script name
+    # $1 = fn arg 1, etc...
+    exit 1 # will exit the entire script with status 1, not just the fn
+    return 0 # will return exit status 0 to the caller
+  } # redirections here
+
+  # BASH format
+  # () after fn_name are optional
+  function fn_name {
+    # same as posix
+  } # redirections here
 ```
 
 ## control flow
@@ -337,13 +372,4 @@ poop
 
 ```bash
   shopt -s extglob # enable extended shell patterns
-```
-
-### bash quotes
-
-```bash
-  echo "a string plus cmd output `ls`"
-  echo "the value of \$x is $x"
-  echo $'single quote with \t escape sequences'
-
 ```
