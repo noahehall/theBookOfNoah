@@ -3,6 +3,9 @@
 - fkn need to finish this thing
 - reading done
 - copying. 35 returning values from procedures
+  - also this: https://github.com/nim-lang/Nim/wiki/Nim-for-TypeScript-Programmers#this
+    - ^ likely want to dive through the wiki first the swing back to the book
+    - ^ the book is just hella old
 
 ## links
 
@@ -17,6 +20,7 @@
 - [nim tutorial](https://nim-lang.org/docs/tut1.html)
 - [nim manual](https://nim-lang.org/docs/manual.html)
 - [nim style guide](https://status-im.github.io/nim-style-guide/)
+- [nim for typescript programmers tutorial](https://github.com/nim-lang/Nim/wiki/Nim-for-TypeScript-Programmers)
 
 ## basics
 

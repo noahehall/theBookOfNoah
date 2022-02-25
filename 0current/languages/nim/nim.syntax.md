@@ -154,6 +154,9 @@ discard someName("oop")
 proc someName = # returns void, and doesnt accept params
   # procedure body
 proc someName = echo "defined on one line"
+
+# anonymous proc: doesnt have a name and surrounded by paranthesis
+var someName = ( proc (params): returnType = "poop")
 ```
 
 ## control flow
@@ -164,6 +167,8 @@ proc someName = echo "defined on one line"
 # runtime check
 if 42 > 0:
   echo "true"
+# ternary i just an if..else inline
+if conditional: "true" else: false
 
 # compile time check
 when true:
