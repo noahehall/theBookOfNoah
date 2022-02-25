@@ -3,6 +3,7 @@
 - fkn need to finish this thing
 - reading done
 - copying. 22
+  - i went a little bit of ahead of 22 to copy some additional syntax, but still need to restart at 22 to get the discussion
 
 ## links
 
@@ -35,6 +36,7 @@
   - subroutine: used with saltine crackers
 - Unofirm Function Call Syntax: UFCS: allows you to create new procedures on existing objects externally, and allows procedure calls to be chained
 - functional programming: avoids the changing of state and the use of mutable data, preferring the use of first-class functions, anonymous functions, and closures
+- foreign function interface: FFI: allows you to use libraries written in other programming languages
 
 ### nim and nims history
 

@@ -13,10 +13,23 @@
 
 ```
 
+## other stuff
+
+```python
+
+# single line comment
+#[ multline comment
+]#
+
+when false:
+  echo("this code is commented out")
+```
+
 ## operators
 
 ```python
-  | # or
+  | # or, e.g. a | b
+  $ # converts its input to a string, e.g. $someVar
 
 ```
 
@@ -24,7 +37,8 @@
 
 ```python
 
-let poop = "hello"
+let poop = "hello" # let creates immutable variables
+var poop = "flush" # var creates mutable variables
 
 ```
 
@@ -35,6 +49,9 @@ let poop = "hello"
 ```python
   int # integer
   float # decimals
+  string # must be enclosed in double quotes
+  bool # true | false
+  char # single ASCII characters, enclosed in single quotes
 
 ```
 
@@ -57,17 +74,27 @@ instance.someFn()
 (one, two)
 ```
 
-## functions
+## procedures
 
 ```python
-proc showNumber(num: int | float) =
-  echo(num)
+proc someName(varName: varType): returnType =
+  # procedure body
 
 # showNumber(3.14)
 # showNumber(42)
 ```
 
 ## control flow
+
+### if / when
+
+```python
+if 42 > 0:
+  echo "true"
+
+when true:
+  echo("this is a compile time if statement")
+```
 
 ### loops
 
