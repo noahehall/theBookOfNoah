@@ -4,7 +4,12 @@
 - hopefully this will be my last bash cheatsheet and I can simplify `
 
 - reading 96
-- copying top of page 30, variable substition
+- page 44, arrays
+- TODO
+  - starting at page 34 pocke tref(selectively picked ones i liked), theres too fkn many
+  - starting at page 38, other shell vars
+  - skipped the entire section on escape sequences
+  - namerefs page 31
 
 ## links
 
@@ -158,7 +163,6 @@
   - value of PS0-4 prompt strings
 
 ```bash
-  # i skipped a bunch, swing back through later
   \b # backspace
   \c # supress the terminating new line, do not print any following chars
   \f # formfeed
@@ -431,7 +435,8 @@ ${#@} # number of positional parameters
 ${!poop*} # print all vars whose name starts with poop
 ${!poop@} # same as above
 
-# top of page 30
+# page 44 arrays
+
 ```
 
 ## functions
@@ -483,7 +488,6 @@ ${!poop@} # same as above
 
 ```bash
 # namerefs in for loops
-# ^ skipped: page 31
 ```
 
 ## todos: i want to capture these but categorize them later
@@ -491,8 +495,6 @@ ${!poop@} # same as above
 - likely these should be a separate file, as all of these sections are really fkn super long
 
 ### builtin shell variables
-
-- i started skipping at page 34 pocke tref(selectively picked ones i liked), theres too fkn many
 
 ```bash
 # always available
