@@ -6,6 +6,13 @@
 
 - primitive types & variables start with lowercase, constructor types start with Uppercase
 
+## compilation flags
+
+```python
+  --gc:GC_NAME # chose the type of garbage collector to use
+
+```
+
 ## operators
 
 ```python
