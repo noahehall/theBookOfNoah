@@ -510,15 +510,40 @@ $*, $@ # all args
 # automatically set based on context
 $_ # pathname of script/cmd being executed, or the last arg of the, or MAIL file
 $BASH # full path of this instance of Bash
-$BASHOPTS # colon-sep list of enabled shell opts
+$BASHOPTS # colon-sep list of enabled shell opts, for shopt -s ?
+$SHELLOPTS # colon-sep list of enabled shell opts, for set -o ?
 $BASHPID # proccess ID of current bash process, could be != to $$
 $BASH_ALIASES # associate array var of all aliases, doesnt work like `alias` on my machine
 $BASH_ARGC # array, args to a fn/dot-script invocation, only avail in extended debug mode
 $BASH_COMMAND # the cmd currently executing/about to execute, or the cmd that caused a TRAP
 $BASH_SUBSHELL # the 0-index of the current subshell, 0=parent, 1= subshel 1, etc
 $BASH_VERSION # the full bash version as a string, e.g. 5.1.8(1)-release
+$EUID # effective UID of the current user
+$UID # numerica real UID of the current user
+$GROUPS # array of group IDs of the current user
+$HISTCMD # history number of the current cmd
+$HOSTNAME # name of the current host, e.g. spaceship
+$HOSTTYPE # host description, e.g. x86_64
+$LINENO # current line number within the script/fn
+$MACHTYPE # host description, e.g. x86_64-pc-linux-gnu
+$OLDPWD # previous working dir set by cd, or inherited from the env
+$OPTARG # value of arg to last option processed by getopts
+$OPTIND # numerical index of $OPTARG
+$OSTYPE # string describes the host, e.g. linux-gnu
+$PIPESTATUS # array of exit statuses of cmds in previous fg pipeline
+$PPID # process number of this shells parent
+$PWD # current working dir set by cd
+$RANDOM # random inteer
+SHLVL # incrememted by one ever time a new bash starts up
 
-# todo
+# not automatically set, but influence bash behavior
+# set in your rc file, POOP=FLUSH
+
+
+# todo: eventually i will need these
+#FUNCNAME
+# BASH_SOURCE
+# COPROC
 # - BASH_ENV
 # - CDPATH
 # - ENV
