@@ -15,7 +15,8 @@
 - [Clang C compiler](http://clang.org/)
 - [nimble, the nim package manager](https://github.com/nim-lang/nimble)
 - [offensive nim](https://s3cur3th1ssh1t.github.io/Playing-with-OffensiveNim/)
-- [nimtutorial](https://nim-lang.org/docs/tut1.html)
+- [nim tutorial](https://nim-lang.org/docs/tut1.html)
+- [nim manual](https://nim-lang.org/docs/manual.html)
 
 ## basics
 
@@ -38,7 +39,8 @@
   - subroutine: used with saltine crackers
 - Unofirm Function Call Syntax: UFCS: allows you to create new procedures on existing objects externally, and allows procedure calls to be chained
 - functional programming: avoids the changing of state and the use of mutable data, preferring the use of first-class functions, anonymous functions, and closures
-- foreign function interface: FFI: allows you to use libraries written in other programming languages
+- foreign function interface: FFI: allows you to use libraries written in other programming languages, nim includes native C,C++ automatically
+- stropping: enable the use of nim keywords in identifiers
 
 ### nim and nims history
 

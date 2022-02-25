@@ -2,9 +2,19 @@
 
 - pure syntax related notes, see examples doc for real world examples
 
+## rules
+
+- indentation must be 2 space chars
+- generally `:` ends keyword statement, e.g. an `if` statement
+- optionally `;` ends a statement, required if putting 2 statements on the same line
+- you can only split a statement after a punctuation symbol, and the next line must be indented
+- every identifier must be associated with a type, and types are checked at compile time
+  - some types can be automatically inferred, e.g. primtives assigned a value when defined
+
 ## conventions
 
-- primitive types & variables start with lowercase, constructor types start with Uppercase
+- builtin types are lowercase
+- user-defined types are SentenceCase
 
 ## compilation flags
 
@@ -16,13 +26,17 @@
 ## other stuff
 
 ```python
-
+# comments
 # single line comment
 #[ multline comment
 ]#
-
+# comment out code
 when false:
   echo("this code is commented out")
+
+# splitting statements
+echo("only after: ",
+  "punctuation")
 ```
 
 ## operators
@@ -44,7 +58,7 @@ var poop = "flush" # var creates mutable variables
 
 ## types
 
-- primitives
+- builtin
 
 ```python
   int # integer
@@ -55,7 +69,7 @@ var poop = "flush" # var creates mutable variables
 
 ```
 
-- complex
+- user defined
 
 ```python
 # create a type, associate a procedure, and instantiate an instance
@@ -89,9 +103,11 @@ proc someName(varName: varType): returnType =
 ### if / when / case
 
 ```python
+# runtime check
 if 42 > 0:
   echo "true"
 
+# compile time check
 when true:
   echo("this is a compile time if statement")
 ```
@@ -115,3 +131,4 @@ for thing in list:
   - ->
 - strutils: string utilities
   - split
+- system: builtin types, auto included in your source code
