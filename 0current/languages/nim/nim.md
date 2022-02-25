@@ -27,14 +27,21 @@
 - programming language implementation: every language has an implementation in the form of an application, which either interprets source code or compiles the source code to an executable
   - interpreter: e.g. like javascript
   - compiler: e.g. like nim
+- methods === precedures === functions === subroutines
+  - method: conext of OOP
+  - proecure; context of precedural programming
+  - function: used in functional programming
+  - subroutine: used with saltine crackers
 
 ### nim and nims history
 
 - developed by Andreas Rumpf in 2005
-- general purpose statically typed compiled programming language designed to be efficient > expressive > elegant
+- general purpose statically typed compiled precedural multi-paradigm programming language designed to be efficient > expressive > elegant
 
   - efficient: just as fast as C, 13 times faster than python
-  - does have type inference
+  - expressive
+  - elegant: as beautiful as python
+  - multi-paradigm: doesnt focus on OOP, but has varying support for OOP, functional, declarative, concurrent, and other programming styles
 
 - shares many of pythons traits
 
@@ -56,8 +63,15 @@
   - I/O intensive applications: e.g. reading files/sending data over a network
   - CLI applications: nim apps are compiled to a single binary and dont require any runtime dependencies
   - full stack applications: nim compiles to JS
+  - a complete C replacement
+    - nim is as performant as C
+    - more reliable than C
+    - has an improved type system
+    - supports generics
+    - advanced metaprogramming
 
 - core features
+
   - metaprogramming: read, generate, analyze and transform source (see elseware in this doc)
   - style-insensitive variable, function and types `poOpFluSh, poop_flush and poopFlush` all point to the same thing
     - nim only considers the case of the FIRST character, so `poop` and `Poop` DO point to different things
@@ -77,6 +91,19 @@
       - prevents variables containing unexpected & corrupt data
   - generics programming: allows for code reuse without sacrificing type safety, e.g. fn overloading
 
+- differences with:
+  - java
+    - java has the JVM, to enable its JAR executable to be run everywhere, however the end-user needs to have the JVM installed
+    - nim supports cross-compilation, where you can create executables for each CPU architecture and OS, and the enduser doesnt need to download an additoinal runtime dependency
+  - python/javascript/ruby/etc
+    - requires a a VM/interpreter of some sort,
+  - C/go/rust/etc
+    - doesnt do cross compilation?
+
+### procedural traits
+
+- procedures are standalone entities that operate on data structures
+
 ### compilation process
 
 - send the nim code to the nim compiler
@@ -90,6 +117,7 @@
   - javascript: my bread n butter
 - the executable file contains instructions that indicate the specific tasks the computer should perform
   - the executable is specific to the CPU architecture and OS it was compiled on
+  - cross-compilation: it is possible to instruct nim to a compile to a different OS and architecture
 
 ### garbage collection
 

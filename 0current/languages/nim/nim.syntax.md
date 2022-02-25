@@ -50,3 +50,13 @@ proc showNumber(num: int | float) =
 # showNumber(3.14)
 # showNumber(42)
 ```
+
+## control flow
+
+### loops
+
+```python
+for i in 0 .. <10:
+  echo(i)
+
+```
