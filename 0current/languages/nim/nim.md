@@ -8,6 +8,8 @@
 
 - [changes since nimlang book (2017)](https://deepakg.github.io/nim/2019/09/28/nim-in-action-errata.html)
 - [nimlang on github](https://github.com/nim-lang/)
+- [objective C and iOS](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
+- [C++ and iOS, windows and android development](https://devblogs.microsoft.com/cppblog/android-and-ios-development-with-c-in-visual-studio/)
 
 ## basics
 
@@ -76,9 +78,9 @@
 - send the C code into a C compiler
 - then can compile to a supported backend language
   - C:
-  - C++
-  - Objective C: e.g. for use with iOS
-  - javascript
+  - C++: native windows/android/iOS applications
+  - Objective C: native iOS applications
+  - javascript: my bread n butter
 
 ### garbage collection
 
