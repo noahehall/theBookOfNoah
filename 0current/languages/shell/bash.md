@@ -12,6 +12,9 @@
 
 - [heredoc](https://linuxize.com/post/bash-heredoc/)
 - [herestring](https://bash.cyberciti.biz/guide/Here_strings)
+- [advanced bash-scripting guide](https://tldp.org/LDP/abs/html/index.html)
+- [all bash versions](https://ftp.gnu.org/gnu/bash/)
+- [bash homepage](https://www.gnu.org/software/bash/)
 
 ## basics
 
@@ -489,7 +492,7 @@ ${!poop@} # same as above
 
 ### builtin shell variables
 
-- i started skipping at page 34, theres too fkn many
+- i started skipping at page 34 pocke tref(selectively picked ones i liked), theres too fkn many
 
 ```bash
 # always available
@@ -514,6 +517,7 @@ $BASH_ARGC # array, args to a fn/dot-script invocation, only avail in extended d
 $BASH_COMMAND # the cmd currently executing/about to execute, or the cmd that caused a TRAP
 $BASH_SUBSHELL # the 0-index of the current subshell, 0=parent, 1= subshel 1, etc
 $BASH_VERSION # the full bash version as a string, e.g. 5.1.8(1)-release
+
 # todo
 # - BASH_ENV
 # - CDPATH

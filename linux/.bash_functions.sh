@@ -26,9 +26,15 @@ function getpath() {
         # with filename
         echo "${THISDIR}/$1"
     fi
-
 }
 
+function checkpkgupgrade () {
+    if [[ $# -eq 1 ]]; then
+        apt-cache policy "$1"
+    else
+        echo "\$1 === some_pkg_name"
+    fi
+}
 function sourceifexists() {
     if [[ $# -eq 1 && -f "$1" ]]; then
         . "$1"
