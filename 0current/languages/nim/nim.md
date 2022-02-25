@@ -10,6 +10,8 @@
 - [nimlang on github](https://github.com/nim-lang/)
 - [objective C and iOS](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
 - [C++ and iOS, windows and android development](https://devblogs.microsoft.com/cppblog/android-and-ios-development-with-c-in-visual-studio/)
+- [GCC c compiler](https://gcc.gnu.org/)
+- [Clang C compiler](http://clang.org/)
 
 ## basics
 
@@ -22,6 +24,9 @@
 - type inference: the ability for a compiler to infer the type of a variable
 - dynamic type checking
   - runtime type information: enables dynamic dispatch of functions
+- programming language implementation: every language has an implementation in the form of an application, which either interprets source code or compiles the source code to an executable
+  - interpreter: e.g. like javascript
+  - compiler: e.g. like nim
 
 ### nim and nims history
 
@@ -74,13 +79,17 @@
 
 ### compilation process
 
-- translate nim code into C
+- send the nim code to the nim compiler
+- the nim compiler compiles the nim code into C
+  - has a hard dependency on a C compiler, e.g. GCC or Clang
 - send the C code into a C compiler
-- then can compile to a supported backend language
+- the C compiler compiles the C code into an executable in the chosen backend
   - C:
   - C++: native windows/android/iOS applications
   - Objective C: native iOS applications
   - javascript: my bread n butter
+- the executable file contains instructions that indicate the specific tasks the computer should perform
+  - the executable is specific to the CPU architecture and OS it was compiled on
 
 ### garbage collection
 
