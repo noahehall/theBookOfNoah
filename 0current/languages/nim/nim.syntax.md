@@ -54,9 +54,13 @@ nil.nil # special value that signifies the lack of a value for any reference typ
 
 ```python
 # keyword name: type = value
-let poop = "hello" # runtime immutable var, value must be known at runtime
-var poop = "flush" # runtime mutable var
-const poop = "flush" # compile time immutable var, value must be computable at compile time
+# cant start with a number/contain two consecutive _
+# case insensitive EXCEPT the first letter
+# style insensitive, pOoP, poop, and p_o_o_p all point to the same thing
+let poop = "hello" # runtime immutable, value must be known at runtime
+var poop = "flush" # runtime mutable
+const poop = "flush" # compile time immutable, value must be computable at compile, most effiecient
+let `let` = "stropping"; echo(`let`) # stropping enables keywords as identifiers
 
 ```
 
