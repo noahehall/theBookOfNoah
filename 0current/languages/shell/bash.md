@@ -351,7 +351,8 @@ poop
   - single quoted text needs your attention
     - todo
   -
-- indirect varialbes (namerefs)
+- indirect variables (namerefs)
+  - variables whose value is a name for another variable
 - builtins
 - arrays
 - prompt strings
@@ -363,11 +364,20 @@ poop
 # ^ $poopsam wouldnt work, but ${poop}sam does
 # ^ sam$poop works, no need for braces
 # all vars are considered strings
-poop= # poop is null
+poop= # poop is set, but null
 poop=flush
 # unless using declare, then bash interprets it as an expression
 declare -i int; int=5+3; echo $int # 8
 int+=8; echo $int # 16
+
+# nameref: an indirect reference
+poop=flush
+declare -n toilet=poop
+echo $toilet # return flush
+echo ${!toilet} # returns poop, not poops value
+unset -n toilet # delete doilet
+confusing=poop
+echo ${!confusing} # returns flush, poop
 
 # multiple var assignment
 firstname=noah lastname=hall
@@ -382,11 +392,11 @@ echo ${pets[*]} # lion panther
 pets+=(tiger jaguar); echo ${pets[*]}; # lion panther tiger jaguar
 
 # var substitution: used when retrieving the value from a variable
-# var must be nonnull AND set if using the `:` in the substitution
-# the `:` is optional
+# : === will use default if var  === !null || !set
+# else default is used if var !set
 
-# default values
 ${poop} # poop or nothing
+${doesntExist="always use this"}
 ${poop:-valueIfNotSet} # but doesnt change the value of $poop
 ${poop:=valueIfNotSet} # but WILL change the value of $poop
 ${poop:?valueIfNotSet} # interactive shells: print err msg to stderr; else print value and exit
@@ -399,9 +409,12 @@ ${poop%pattern} # remove shortest matching text starting from the right
 ${poop%%pattern} # remove longest matching text starting from the right
 ${poop:1} # return all text starting at index 1 (0 based)
 ${poop:1:2} # return the second and third characters
-${poop/pattern/replace} # replace the first match with replace
+${poop/pattern/replace} # replace the first match
 ${poop/deletethis} # delete the first match
-
+${poop//pattern/replace} # replace all matches
+${poop/#pattern/replace} # replace if pattern is found at start of value
+${poop/%pattern/replace} # replace if pattern is found at the end of value
+${!poop} # indirect reference; use value of poop as name of var, then use the value of that var
 # modifying case
 ${poop^pattern} # convert the first letter of matching text to uppercase
 ${poop^^pattern} # convert all matching text to uppercase
