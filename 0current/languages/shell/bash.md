@@ -83,19 +83,6 @@
 - `~/.bashrc`
 - `~/.profile`
 
-### env vars (move to separate file when focusing on these)
-
-- BASH_ENV
-- BASHOPTS
-- CDPATH
-- ENV
-- GLOBIGNORE
-- SHELLOPTS
-- $? exit status of the previous executed cmd
-- $PWD
-- $OLDPWD
-- $PS0-4 prompt strings
-
 ### arguments
 
 - bash arguments are assigned to positional params $1, $2, etc
@@ -321,14 +308,18 @@ poop
     -r, --restricted # create a restricted shell
     -s, read cmds from stdin, builtin cmd output > descriptor 1, all other > descriptor 2
     -v, --verbose # print lines as the shell reads them
+
   # enable/disabling options
     -o SOME_OPT # enable some_option
     +o SOME_OPT # disable some_option
     set -o SOME_OPT
     set -T # -T === set -o functrace
-  # options to enable/disable via -O/O+
+    shopt -s SOME_OPT # enable extended shell patterns
+
+  # options to enable/disable
     extglob # extended shell patterns, see filename metacharacters
     globstar # see ** in filename metacharacters
+    extdebug # extended debug mode
     noclobber
     functrace, -T
     errtrace, -E
@@ -485,12 +476,51 @@ ${!poop@} # same as above
 
 ### until
 
+### for
+
+```bash
+# namerefs in for loops
+# ^ skipped: page 31
+```
+
 ## todos: i want to capture these but categorize them later
 
 - likely these should be a separate file, as all of these sections are really fkn super long
 
-### bash scripts
+### builtin shell variables
+
+- i started skipping at page 34, theres too fkn many
 
 ```bash
-  shopt -s extglob # enable extended shell patterns
+# always available
+$# # number of commandline-arguments
+$- # options currently in effect
+$? # exit value of last executed cmd, save to another var if needed
+$$ # process number of shell
+$! # process number of last bg cmd, fkn always save this
+$0 # first word; the cmd name, or full pathname if cmd found via PATH search
+$n # positional parameters, e.g. $1, use ${n} to get params > 9
+$*, $@ # all args
+"$*" # "all args as one string"
+"#@" # "all" "args" "as" "sep" "strings"
+
+# automatically set based on context
+$_ # pathname of script/cmd being executed, or the last arg of the, or MAIL file
+$BASH # full path of this instance of Bash
+$BASHOPTS # colon-sep list of enabled shell opts
+$BASHPID # proccess ID of current bash process, could be != to $$
+$BASH_ALIASES # associate array var of all aliases, doesnt work like `alias` on my machine
+$BASH_ARGC # array, args to a fn/dot-script invocation, only avail in extended debug mode
+$BASH_COMMAND # the cmd currently executing/about to execute, or the cmd that caused a TRAP
+$BASH_SUBSHELL # the 0-index of the current subshell, 0=parent, 1= subshel 1, etc
+$BASH_VERSION # the full bash version as a string, e.g. 5.1.8(1)-release
+# todo
+# - BASH_ENV
+# - CDPATH
+# - ENV
+# - GLOBIGNORE
+# - SHELLOPTS
+# - $PWD
+# - $OLDPWD
+# - $PS0-4 prompt strings
 ```
