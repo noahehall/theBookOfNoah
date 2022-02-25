@@ -299,14 +299,88 @@ poop
 
 ```
 
+### invoking bash / toggling options
+
+```bash
+  bash [options] [arguments]
+  # options
+    --debugger # read the debugger profile if its available at startup, turn on extdebug option to shopt
+    --help # print help
+    --noediting # do not use readline library for input
+    --noprofile # do not read any startup rc files or /etc/profile
+    --norc # do not read ~/.bashrc (e.g. when invoked as sh)
+    --posix # turn on POSIX mode
+    --version # print version
+    -, -- # end option processing
+    -c str # read cmds from string
+    -D, --dump-strings # print all $".." strings in the program
+    -i # create an interactive shell
+    -init-file FILE, --rcfile FILE # use FILE instead of ~/.bashrc for interactive shells
+    -l, --login # behave as a login shell
+    -p #start as a privileged user
+    -r, --restricted # create a restricted shell
+    -s, read cmds from stdin, builtin cmd output > descriptor 1, all other > descriptor 2
+    -v, --verbose # print lines as the shell reads them
+  # enable/disabling options
+    -o SOME_OPT # enable some_option
+    +o SOME_OPT # disable some_option
+    set -o SOME_OPT
+    set -T # -T === set -o functrace
+  # options to enable/disable via -O/O+
+    extglob # extended shell patterns, see filename metacharacters
+    globstar # see ** in filename metacharacters
+    noclobber
+    functrace, -T
+    errtrace, -E
+
+```
+
+## variables
+
+- variable assignment
+  - names can contain letters, digits, underscores; upper & lower case letters are distinct, and cannot start with a digit
+  - no space between variable name and the value
+  - multiple assignments by separating each with a space
+  - all variables are considered strings, unless prefixed with `declare -i`
+    - thats why you dont need quotes
+- variable substitution
+- indirect varialbes (namerefs)
+- builtins
+- arrays
+- prompt strings
+
+```bash
+# all vars are considered strings
+poop=flush
+# unless using declare, then bash interprets it as an expression
+declare -i int; int=5+3; echo int # 8
+# multiple var assignment
+firstname=noah lastname=hall
+# appending to a var
+name=noah
+name+=" hall"; echo $name # noah hall
+
+```
+
 ## functions
 
 - faster than and preferred over aliases
 - funtion arguments are received as positional params identical to shell scripts
 - redirections in the function definition are evaluated when the fn is invoked
-- functions whose name dont include = or / can be exported with `export -f`
+- function names
+  - names that dont include = or / can be exported with `export -f`
+  - dont have to be valid shell identifers (unless in POSIX MODE)
+    - neither do variable names
+  -
 - function traps
-  - page 24
+  - signal-based traps: shared with the parent unless the function redefines the trap
+  - DEBUG trap: shared if function tracing is enabled; else a DEBUG trap created bya f unction remains in place when the function returns
+  - ERR trap: sharedif error tracing is enabled
+  - EXIT trap: shared until the function redefines the trap
+  - RETURN trap: shared if function racing is enabled
+- function variables
+  - local variables are defined with `local`
+    - are dynamically scoped: local variables are visible to the function and other functions that it calls
 
 ```bash
   # POSIX format
@@ -336,37 +410,6 @@ poop
 ## todos: i want to capture these but categorize them later
 
 - likely these should be a separate file, as all of these sections are really fkn super long
-
-### invoking bash
-
-```bash
-  bash [options] [arguments]
-  # options
-    --debugger # read the debugger profile if its available at startup, turn on extdebug option to shopt
-    --help # print help
-    --noediting # do not use readline library for input
-    --noprofile # do not read any startup rc files or /etc/profile
-    --norc # do not read ~/.bashrc (e.g. when invoked as sh)
-    --posix # turn on POSIX mode
-    --version # print version
-    -, -- # end option processing
-    -c str # read cmds from string
-    -D, --dump-strings # print all $".." strings in the program
-    -i # create an interactive shell
-    -init-file FILE, --rcfile FILE # use FILE instead of ~/.bashrc for interactive shells
-    -l, --login # behave as a login shell
-    -O SOME_OPT # enable some_option
-    -p #start as a privileged user
-    -r, --restricted # create a restricted shell
-    -s, read cmds from stdin, builtin cmd output > descriptor 1, all other > descriptor 2
-    -v, --verbose # print lines as the shell reads them
-    +O SOME_OPT # disable some_option
-  # options to enable/disable via -O/O+
-    extglob # extended shell patterns, see filename metacharacters
-    globstar # see ** in filename metacharacters
-    noclobber
-
-```
 
 ### bash scripts
 
