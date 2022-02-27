@@ -73,6 +73,7 @@ echo "hello " & poop
 - builtin
 
 ```python
+  auto # used as procedure return types, for type inference
   int # signed integers, 32bit/64bit depending on system
     let
       a = 100
@@ -137,26 +138,54 @@ instance.someFn()
 
 ## procedures
 
-- procs with return values, the return value must be used OR discard
+- procs with return values, the return value must be used OR discarded
+  - the defualt return value is binary zero (just like a variables default value)
   - if the last expression has a non void value, that value is implicitly returned
-    - no need to return it, nor is it idiomatic nim
-- procs without return values return void (adding void keyword is optional)
-- proces cant be used before their definition without a forward declaration
+    - no need to use return keyword, nor is it idiomatic nim
+  - every proc with a return value has an implicit `result` variable declared within its body
+    - is mutable, and of the same type as the procedures returnType
+      - its idiomatic nim to mutate the `result` var when needed
+- procs without return values return void (adding void returnType is optional)
+- procs cant be used before their definition without a forward declaration
   - forward declaration: the function signature without a body
 - procs without parameters can omit the paranthesis in the difinition
 
 ```python
-proc someName(paramNam: paramType): returnType =
+proc someName(paramNam: paramType, p2 = "with a default value"): returnType =
   # procedure body
-echo someName("poop")
-discard someName("oop")
+  # default values dont need a type, its inferred
+proc someName(p1, p2, p3: int): int =
+  # you only need to specify the type on the last
+  # if they are all the same
 
 proc someName = # returns void, and doesnt accept params
-  # procedure body
-proc someName = echo "defined on one line"
+proc someName: void = echo "defined on one line"
+proc someName: auto = "return type is inferred"
 
 # anonymous proc: doesnt have a name and surrounded by paranthesis
 var someName = ( proc (params): returnType = "poop")
+
+# calling & discarding
+echo someName("poop")
+discard someName("oop")
+
+# returning values from procs
+proc implicit: string =
+  "i will be returned"
+proc discarded: string =
+  discard "i will not be returned"
+proc explicit: string =
+  return "I will be returned"
+proc resultVar: string =
+  result = "I will be returned"
+proc resultVar2: string =
+  result = ""
+  result.add("I will be ")
+  result.add("returned")
+proc resultVar3: string =
+  result = "I am the result"
+  "I will cause an error"
+
 ```
 
 ## control flow

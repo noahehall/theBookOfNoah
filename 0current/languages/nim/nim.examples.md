@@ -37,4 +37,9 @@ let multiline = """ this
   and indententation
 """
 echo multiline.unindent # removes all indentetion
+
+
+# using assert to test your code
+assert someProc() == 'returns this value"
+assert discarded() == nil
 ```
