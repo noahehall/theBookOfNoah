@@ -6,7 +6,7 @@
 - reading 96
 - page 44, arrays
 - TODO
-  - starting at page 34 pocke tref(selectively picked ones i liked), theres too fkn many
+  - starting at page 34 pocket ref(selectively picked ones i liked), theres too fkn many
   - starting at page 38, other shell vars
   - skipped the entire section on escape sequences
   - namerefs page 31
@@ -20,6 +20,7 @@
 - [advanced bash-scripting guide](https://tldp.org/LDP/abs/html/index.html)
 - [all bash versions](https://ftp.gnu.org/gnu/bash/)
 - [bash homepage](https://www.gnu.org/software/bash/)
+- [what is a login shell](https://linuxhandbook.com/login-shell/)
 
 ## basics
 
@@ -48,13 +49,16 @@
 
 - shell types
   - login shell:
-    - whenever the `-l` option is set
+    - types
+      - generally whenever you enter creds to access a system, the first shell thats started
+      - in etc/passwd, user:stuff:stuff:stuff:stuff/bin/bash <-- login shell
+      - whenever the `-l` option is set
     - reads `/etc/profile`
     - reads the first found: `~/.bash_profile > ~/.bash_login > ~/.profile`
-  - nonlogin shells:
+  - nonlogin shells: dont require creds, e.g. system accounts
     - if invoked as `sh` or with `--posix` reads $ENV
     - else reads `~/.bashrc`
-  - interactive shell:
+  - interactive shell: generally reads & writes to a users terminal
     - uses the prompt for input
     - reads `~/.bashrc`
   - restricted shell:
