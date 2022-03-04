@@ -35,12 +35,17 @@
 
 #### serverless components (on aws)
 
-- compute: business logic without the server; code runs on demand and is trigger by events/periodically; generally lambda / farget (for containers)
+- compute: business logic without the server; code runs on demand and is trigger by events/periodically;
+  - lambda is the primary compute option, but is limited by execution time, ram, and triggering events/messaging support
+  - farget is the fallback option, whenever limitations of lambda is unnacceptable
 - storage: always S3, but choosing the appropriate S3 storage class is critical
+  - keeping the raw data around is crucial for replaying events
+  - data partitioning is key, think hard about the bucket name when saving objects to s3 as they naming scheme you chose determines the paritioning of your data
+    - generally you always want logic/naming/structure/year/month/day/minute/etc
 - data stores: relational, key-value, in-memory, document, graph, time series, ledger (blockchain)
 - API proxies: api gateway
 - application integration and orchestration
-  - SQS: for polling based messaging
+  - SQS: for polling based messaging & FIFO queues
   - SNS: for pub-sub based messaging
   - Step Functions: for coordination among lambda based services by defining state machine styled functions. i.e. workflow automation
 - analytics: kinesis for streaming data
@@ -48,7 +53,7 @@
 
 #### serverless considerations
 
-- lambda fn vs Fargate
+- lambda fn (serverless) vs Fargate (containers)
 
   - lambda is best when logic needs to be run in response to an event, or periodically and can the processing can be complete in ~15 minutes
   - fargate is basest when compute time exceeds 15 minutes of execution time, or memory exceeds 3gb
@@ -58,14 +63,20 @@
   - first decide the type of data storage you need
   - then when multiple options exists for the db type, determine the use cases, limits, efficiencies, and costs associated with each
 
-## lamda
+## lambda
 
 - basically on-demand compute, almost anything you would need an EC2 instance for, you can implement as an AWS Lambda fn
 - event drivent, stateless (serverless) business logic
 - compute service to run code without managing servers
 - use cases
+
   - target of an event bridge rule
   - cloud watch alarm automation, especially in high availability & failover contexts where you need to spin up new resources and reassign EIPs
+
+- limits
+  - 15 min max execution time
+  - 3k mb max ram
+  - types of event/messages that can trigger lambda execution
 
 ### lambda considerations
 
@@ -84,12 +95,17 @@
 
 ## fargate
 
-- fully managed infrastructure for container based applications
+- fully managed infrastructure for serverless container based applications
+- preferred over lambda for complex/long running business logic, e.g. listening to FIFO queues for messages
 
 ## SQS simple queue service
 
 - a polling based queueing service
 - fully managed queuing service; both generanl queues and FIFO queues to pass info between services
+  - FIFO queues
+    - are important when you need to process events in order, and not in parallel
+    - message groups all different channels in the same FIFO queue, to add a level of parallelism to the queue based on message type
+    - FIFO queues cannot be triggered from a lambda fn
 - core for decoupling of services
 
 ## SNS simple notification service
