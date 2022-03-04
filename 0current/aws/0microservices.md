@@ -71,10 +71,13 @@
   - first decide the type of data storage you need
   - then when multiple options exists for the db type, determine the use cases, limits, efficiencies, and costs associated with each
 
-- SQS vs SNS
+- SQS vs SNS vs Kinesis
   - use SQS when delivery guarantees are required, but only a single consumer can handle a single message, if the consumer fails, the message goes back into the queue
   - use SNS when delivery guarnatees arent required, or when multiple consumers need to act on a single message
     - you need to architect for failure, as once the message is taken from the topic, its up to the consumer to succeed, on failure the data is lost
+  - use kinesis when delivery guarantees are required, ordering is guanrateed, AND Multiple consumers for each message
+    - like SQS, has message delivery gurantees
+    - like SNS, multiple consumers for each message
 
 ## lambda
 
@@ -202,3 +205,6 @@
 - manage streaming data in realtime
 - ingest real-time data such as video, audio, application logs, website clickstreams, and IoT telemetry data for machine learning, analytics, and other applications.
 - process and analyze data as it arrives and respond instantly instead of having to wait until all your data is collected before the processing can begin.
+- use cases
+  - can have multiple shards within a stream, and consumers can be assigned to specific shards
+  - full replay is possible by resetting a stream to a point in time
