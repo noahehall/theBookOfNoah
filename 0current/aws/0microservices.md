@@ -5,11 +5,6 @@
 
 ## basics
 
-- serverless: fully managed approached to execute business logic in the cloud; storage, compute, and networking without provisioning/managing servers/dbs
-  - reduces operational complexity: processes and tasks that require operational skills no longer required; e.g. provisioning, backups, version management, patching, deploying, etc
-  - reduces cost
-  - standardize common tasks: e.g. security, error handling, logging
-
 ### best practices / gotchas
 
 - always
@@ -20,6 +15,28 @@
   - SQS, SNS, and lambda are critical for event driven architectures
 - sometimes
   - push an event from SNS into an SQS queue
+
+### serverless
+
+- fully managed approached to execute business logic in the cloud; storage, compute, and networking without provisioning/managing servers/dbs
+- reduces operational complexity: processes and tasks that require operational skills no longer required; e.g. provisioning, backups, version management, patching, deploying, etc
+- reduces cost
+- standardize common tasks: e.g. security, error handling, logging
+- serverless components (on aws)
+  - compute
+  - storage: always S3, but choosing the appropriate S3 storage class is critical
+  - data stores
+    - RDS: relational data storage
+    - key-value
+    - in-memory
+    - document
+    - graph
+    - time series
+    - ledger
+  - API proxies
+  - application integration and orchestration
+  - analytics
+  - developer tools
 
 ## lamda
 

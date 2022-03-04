@@ -1,12 +1,16 @@
 # TLDR
 
-dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db)
+dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (data swarehouse), documentdb, timestream, qldb
 
 ## links
 
 - [user guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
 - [database preview environment](https://us-east-2.console.aws.amazon.com/rds-preview/home?region=us-east-2#)
 - [aws simple monthly calculator](http://calculator.s3.amazonaws.com/index.html)
+- [amazon aurora serverless](https://aws.amazon.com/rds/aurora/serverless/)
+- [amazon redshift](https://aws.amazon.com/redshift/)
+- [amazon documentdb](https://aws.amazon.com/documentdb/)
+- [amazon timestream](https://aws.amazon.com/timestream/)
 
 - ref
 
@@ -67,17 +71,20 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db)
 ## terms
 
 - database resiliency: Resiliency is the ability of resource to recover quickly and continue operating even when there has been an failure/disruption; users of a resilient system never know that a disruption has even occurred.
+- az: availablity zone; distinct data center in a specific region; reach region has at least two AZs
 
 ## aurora
 
-- Amazon Aurora is a MySQL- and PostgreSQL-compatible enterprise-class database, starting at <$1/day.
+- Amazon Aurora is a MySQL and PostgreSQL compatible enterprise-class database, starting at <$1/day.
 - designed for high availability & scalability
   - supports up to 64TB of auto-scaling storage capacity, 6-way replication across three availability zones, and 15 low-latency read replicas
+- automatically scalable and distributed by default
+- Amazon Aurora Serverless: a fully ondemand version
 
 ## rds
 
-- az: availablity zone; distinct data center in a specific region; reach region has at least two AZs
 - RDS: web service to setup, operate and scale a relational database in the AWS cloud
+  - mysql, postgresql, mariadb, oracle, sql server
 - managed db service: responsibile for most managmeent tasks
 
 - limitations
@@ -323,7 +330,7 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db)
 
 ## dynamodb
 
-- fully managed highly available & fault tolerant (infrastructure failure) nosql db
+- fully managed highly available & fault tolerant (infrastructure failure) nosql (key-value) db
   - the ease in which you get high availability & fault tolerance cannot be beat
   - however you are fkn stuck on AWS
 - DynamoDB Local is available as a download (requires JRE), as an Apache Maven dependency, or as a Docker image.
@@ -394,8 +401,30 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db)
 ## neptune
 
 - a fully managed high-available graph database
+  - property graphs using Gremlin
+  - knowledge graphs using RDF and SPAWRQL
 - vertically scalable: can adjust the instance size of a running instance
 - redundant database volumes: each db volume replicated multiple times across 3 availability zones
 - supports up to 15 async read replicas; any replica can be promoted to primary in event of failure with automatic DNS name pointing to the new primary during failover
 - does not offer cross-region replicas
 - after creation of a neptune cluster, you can add a new read replica via the actions dropdown
+
+## redshift
+
+- fully serverless data warehouse solution
+
+## documentdb
+
+- i.e. managed mongodb
+- compatible with mongodb at the API level
+
+## timestream
+
+- time series database
+- ideal for IoT and telemtry
+- can handle trillions of events per day
+
+## QLDB
+
+- quantum ledger DB
+- immutable and verifiable transaction log without the need to manage a blockchain network
