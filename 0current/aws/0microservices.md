@@ -15,7 +15,13 @@
     - i.e. dont have one monolithic code base, but use a service oriented architecture where each service can scale out & in and adopt an event driven model utilizing an API gateway that routes requests to each service
   - SQS, SNS, and lambda are critical for event driven architectures
 - sometimes
+
   - push an event from SNS into an SQS queue
+
+- lambda fn vs Fargate
+  - lambda is best when logic needs to be run in response to an event, or periodically and can the processing can be complete in ~15 minutes
+  - fargate is basest when compute time exceeds 15 minutes of execution time, or memory exceeds 3gb
+    - i.e. use fargate whenever you exceed lambda limits
 
 ### serverless
 
@@ -32,8 +38,8 @@
     - SQS: for polling based messaging
     - SNS: for pub-sub based messaging
     - Step Functions: for coordination among lambda based services by defining state machine styled functions. i.e. workflow automation
-  - analytics
-  - developer tools
+  - analytics: kinesis for streaming data
+  - developer tools; IDEs, CI, deployment tools, SDKs, and monitoring & logging tools
 
 ## lamda
 
