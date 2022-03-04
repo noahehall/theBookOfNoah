@@ -4,6 +4,10 @@
 
 - lumping serverless into this file
 
+## links
+
+- [kinesis](https://aws.amazon.com/kinesis/)
+
 ## basics
 
 ### terms
@@ -33,20 +37,23 @@
 - reduces cost
 - standardize common tasks: e.g. security, error handling, logging
 
-#### serverless components (on aws)
+#### serverless components
 
 - compute: business logic without the server; code runs on demand and is trigger by events/periodically;
   - lambda is the primary compute option, but is limited by execution time, ram, and triggering events/messaging support
+    - be sure to set a reasonable lambda concurrency limit, e.g. when the lambda is hitting a DB, you dont want 100000 lambdas hitting a DB which would explode your managed DB costs
   - farget is the fallback option, whenever limitations of lambda is unnacceptable
 - storage: always S3, but choosing the appropriate S3 storage class is critical
-  - keeping the raw data around is crucial for replaying events
+  - keeping the raw data (as close to origin as possible) around is crucial for replaying events
+    - for complex/costly data transforms, save the intermediate steps as well
   - data partitioning is key, think hard about the bucket name when saving objects to s3 as they naming scheme you chose determines the paritioning of your data
     - generally you always want logic/naming/structure/year/month/day/minute/etc
 - data stores: relational, key-value, in-memory, document, graph, time series, ledger (blockchain)
-- API proxies: api gateway
+- API proxies: api gateways
 - application integration and orchestration
-  - SQS: for polling based messaging & FIFO queues
+  - SQS: for polling & FIFO queues
   - SNS: for pub-sub based messaging
+  - Kinesis: for ingesting and responding to streaming data
   - Step Functions: for coordination among lambda based services by defining state machine styled functions. i.e. workflow automation
 - analytics: kinesis for streaming data
 - developer tools; IDEs, CI, deployment tools, SDKs, and monitoring & logging tools
@@ -60,8 +67,14 @@
     - i.e. use fargate whenever you exceed lambda limits
 
 - database options
+
   - first decide the type of data storage you need
   - then when multiple options exists for the db type, determine the use cases, limits, efficiencies, and costs associated with each
+
+- SQS vs SNS
+  - use SQS when delivery guarantees are required, but only a single consumer can handle a single message, if the consumer fails, the message goes back into the queue
+  - use SNS when delivery guarnatees arent required, or when multiple consumers need to act on a single message
+    - you need to architect for failure, as once the message is taken from the topic, its up to the consumer to succeed, on failure the data is lost
 
 ## lambda
 
@@ -107,11 +120,14 @@
     - message groups all different channels in the same FIFO queue, to add a level of parallelism to the queue based on message type
     - FIFO queues cannot be triggered from a lambda fn
 - core for decoupling of services
+- use cases
+  - multiple consumers can listen to a single queue, but each message can only have a single consumer
+    - use an SNS topic if multiple consumers need to handle a single message
+  - FIFO queues: guarantee delivery of messages within defined message groups
 
 ## SNS simple notification service
 
-- a pub-sub based service
-- push based messaging system
+- a pub-sub based messaging service
 - manages the delivery & sending of msgs to subscribin endpoints & clients
   - app to app|person
 - use cases:
@@ -180,3 +196,9 @@
 ## Step Functions
 
 - workflow automation, e.g. state machines & orchestration between lambda fns
+
+## Kinesis
+
+- manage streaming data in realtime
+- ingest real-time data such as video, audio, application logs, website clickstreams, and IoT telemetry data for machine learning, analytics, and other applications.
+- process and analyze data as it arrives and respond instantly instead of having to wait until all your data is collected before the processing can begin.

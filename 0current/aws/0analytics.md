@@ -1,11 +1,11 @@
 # TLDR
 
-cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log insights, log groups, kinesis
+cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log insights, log groups
 
 ## links
 
 - [all billing reports](https://console.aws.amazon.com/cost-management/home?#/reports/overview)
-- [kinesis](https://aws.amazon.com/kinesis/)
+
 
 ## basics
 
@@ -353,6 +353,4 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
       - e.g. service issues
   - target: e.g. lambda fn, sns topic, sqs queue
 
-## Kinesis
 
-- manage streaming data in realtime

@@ -40,6 +40,7 @@
 - business process: logic that consumes one/more data domains to solve an issue
 
 - data pipeline: aggregating data from multiple sources in distinct formats, transforming each to match a single interface, and then storing the transformed data into a single graph/db
+
   - scheduler: manages retrieval from multiple data sources at different rates, and sending each into the matching data collector
   - data collectors: services geared toward retrieving data from a single data source, serializing and storing the raw data (e.g. in s3)
   - data convertors: convert raw serialized data into a common serialization format, with a defined interface and storing the new formatted data (e.g. back into s3)
@@ -52,10 +53,24 @@
   - breaking endpoints into distinct units of work that can be scaled independently
   - focus on data, business and function domains, analyze call patterns and dependency graphs, and determine boundaries between services that need to be scaled independently
 
+### messaging patterns
+
+- Queues
+- Messages
+- Streams
+
 ### decomposition patterns
 
 - break a component into logical steps, convert each step into a service that can be reused and scaled
 - core goal is to make services smaller, thereby more scalable as demand fluxtuates across service boundaries
+
+#### decoupling patterns
+
+- decoupled services: the degree of decoupling has significant implicatins on archtecture, performance and scalability
+
+- direct service calls: either sync/async
+- producer/consumer: a single producer orchastrates the invocation of multiple consumers, and handles the responses
+- pipeline architectures: a form of producer/consumer, however the producer doesnt expect a response from the consumer, but passes accepts input from the previous stage, does its thing, and passes its output as input to the next stage
 
 #### domain based decomposition
 
