@@ -49,7 +49,8 @@
   - data partitioning is key, think hard about the bucket name when saving objects to s3 as they naming scheme you chose determines the paritioning of your data
     - generally you always want logic/naming/structure/year/month/day/minute/etc
 - data stores: relational, key-value, in-memory, document, graph, time series, ledger (blockchain)
-- API proxies: api gateways
+- API proxies: whenever a microservice needs to be called (instead of triggered) an api gateway is required
+  - lambda fns integrate seamlessly with amazon API gateway
 - application integration and orchestration
   - SQS: for polling & FIFO queues
   - SNS: for pub-sub based messaging
@@ -108,6 +109,14 @@
     - select a predefined role that provides permissions necessary for the fns business logic
 - memory (e.g. 256mb)
 - timeout (e.g. 10seconds)
+- triggering configuration
+  - sqs queue
+  - sns topic
+  - etc
+
+### lambda considerations
+
+- can be triggered from a FIFO queue messages
 
 ## fargate
 
@@ -124,13 +133,27 @@
     - FIFO queues cannot be triggered from a lambda fn
 - core for decoupling of services
 - use cases
-  - multiple consumers can listen to a single queue, but each message can only have a single consumer
+  - multiple consumers can listen to a single queue, BUT each message can only have a single consumer
     - use an SNS topic if multiple consumers need to handle a single message
+  -
   - FIFO queues: guarantee delivery of messages within defined message groups
+
+### SQS considerations
+
+- default visibility timeout
+- message rentention period: how long an unprocessed message will remain in the queue
+- maximum message size
+- delivery delay
+- receive message wait time
+- dead letter queue settings: capture messages that fallout due to errors & expiring message retention
+  - redrive policy
+  - maximum receives
+- server side encryption settings
 
 ## SNS simple notification service
 
 - a pub-sub based messaging service
+  - use whenever there are multiple consumers for a single message
 - manages the delivery & sending of msgs to subscribin endpoints & clients
   - app to app|person
 - use cases:
