@@ -6,6 +6,14 @@
 
 ## basics
 
+### terms
+
+- application architecture spectrum
+  - monolithic: single codebase, where changes to any component requires rebuilding and deploying the entire stack
+  - SOA, Service Oriented Architecture: distributed application components that communicate via messaging middleware; services are not (but can be) single purpose
+  - Microservices: SOA to the next level, each component should be single purpose, and communication is done via REST, events, or messaging
+  - Serverless Microservices: microservices deployed in a cloud environment using serverless technologies for compute; communication is the same as regular microservice architecture
+
 ### best practices / gotchas
 
 - always
@@ -18,28 +26,37 @@
 
   - push an event from SNS into an SQS queue
 
-- lambda fn vs Fargate
-  - lambda is best when logic needs to be run in response to an event, or periodically and can the processing can be complete in ~15 minutes
-  - fargate is basest when compute time exceeds 15 minutes of execution time, or memory exceeds 3gb
-    - i.e. use fargate whenever you exceed lambda limits
-
 ### serverless
 
 - fully managed approached to execute business logic in the cloud; storage, compute, and networking without provisioning/managing servers/dbs
 - reduces operational complexity: processes and tasks that require operational skills no longer required; e.g. provisioning, backups, version management, patching, deploying, etc
 - reduces cost
 - standardize common tasks: e.g. security, error handling, logging
-- serverless components (on aws)
-  - compute: business logic without the server; code runs on demand and is trigger by events/periodically; generally lambda / farget (for containers)
-  - storage: always S3, but choosing the appropriate S3 storage class is critical
-  - data stores: relational, key-value, in-memory, document, graph, time series, ledger (blockchain)
-  - API proxies: api gateway
-  - application integration and orchestration
-    - SQS: for polling based messaging
-    - SNS: for pub-sub based messaging
-    - Step Functions: for coordination among lambda based services by defining state machine styled functions. i.e. workflow automation
-  - analytics: kinesis for streaming data
-  - developer tools; IDEs, CI, deployment tools, SDKs, and monitoring & logging tools
+
+#### serverless components (on aws)
+
+- compute: business logic without the server; code runs on demand and is trigger by events/periodically; generally lambda / farget (for containers)
+- storage: always S3, but choosing the appropriate S3 storage class is critical
+- data stores: relational, key-value, in-memory, document, graph, time series, ledger (blockchain)
+- API proxies: api gateway
+- application integration and orchestration
+  - SQS: for polling based messaging
+  - SNS: for pub-sub based messaging
+  - Step Functions: for coordination among lambda based services by defining state machine styled functions. i.e. workflow automation
+- analytics: kinesis for streaming data
+- developer tools; IDEs, CI, deployment tools, SDKs, and monitoring & logging tools
+
+#### serverless considerations
+
+- lambda fn vs Fargate
+
+  - lambda is best when logic needs to be run in response to an event, or periodically and can the processing can be complete in ~15 minutes
+  - fargate is basest when compute time exceeds 15 minutes of execution time, or memory exceeds 3gb
+    - i.e. use fargate whenever you exceed lambda limits
+
+- database options
+  - first decide the type of data storage you need
+  - then when multiple options exists for the db type, determine the use cases, limits, efficiencies, and costs associated with each
 
 ## lamda
 
