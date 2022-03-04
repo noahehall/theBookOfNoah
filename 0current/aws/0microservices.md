@@ -1,6 +1,7 @@
 # TLDR
 
-- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS, cloudwatch, Amazon Connect (dunno wherelse to put this), Amazon Kinesis, EKS
+- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS, cloudwatch, Amazon Connect, EKS, Step Functions
+
 - lumping serverless into this file
 
 ## basics
@@ -23,25 +24,20 @@
 - reduces cost
 - standardize common tasks: e.g. security, error handling, logging
 - serverless components (on aws)
-  - compute
+  - compute: business logic without the server; code runs on demand and is trigger by events/periodically; generally lambda / farget (for containers)
   - storage: always S3, but choosing the appropriate S3 storage class is critical
-  - data stores
-    - RDS: relational data storage
-    - key-value
-    - in-memory
-    - document
-    - graph
-    - time series
-    - ledger
-  - API proxies
+  - data stores: relational, key-value, in-memory, document, graph, time series, ledger (blockchain)
+  - API proxies: api gateway
   - application integration and orchestration
+    - SQS: for polling based messaging
+    - SNS: for pub-sub based messaging
+    - Step Functions: for coordination among lambda based services by defining state machine styled functions. i.e. workflow automation
   - analytics
   - developer tools
 
 ## lamda
 
 - basically on-demand compute, almost anything you would need an EC2 instance for, you can implement as an AWS Lambda fn
-
 - event drivent, stateless (serverless) business logic
 - compute service to run code without managing servers
 - use cases
@@ -65,15 +61,17 @@
 
 ## fargate
 
-- to manage container infrastructure
+- fully managed infrastructure for container based applications
 
 ## SQS simple queue service
 
 - a polling based queueing service
-  - i.e. rabbitMQ
+- fully managed queuing service; both generanl queues and FIFO queues to pass info between services
+- core for decoupling of services
 
 ## SNS simple notification service
 
+- a pub-sub based service
 - push based messaging system
 - manages the delivery & sending of msgs to subscribin endpoints & clients
   - app to app|person
@@ -119,10 +117,6 @@
 
 - salesforce knockoff + voip
 
-## Kinesis
-
-- manage data in realtime
-
 ## SageMaker
 
 - ML in the cloud
@@ -143,3 +137,7 @@
 ## ECS
 
 - amazon container service
+
+## Step Functions
+
+- workflow automation, e.g. state machines & orchestration between lambda fns
