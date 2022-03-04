@@ -39,6 +39,12 @@
 
 - business process: logic that consumes one/more data domains to solve an issue
 
+- data pipeline: aggregating data from multiple sources in distinct formats, transforming each to match a single interface, and then storing the transformed data into a single graph/db
+  - scheduler: manages retrieval from multiple data sources at different rates, and sending each into the matching data collector
+  - data collectors: services geared toward retrieving data from a single data source, serializing and storing the raw data (e.g. in s3)
+  - data convertors: convert raw serialized data into a common serialization format, with a defined interface and storing the new formatted data (e.g. back into s3)
+  - data processors: take the converted data, and process it for storing into the final db (e.g. a knowledge graph)
+
 ## patterns
 
 - microservices: scoped units of services, that work in unison but scale independently to achieve a goal

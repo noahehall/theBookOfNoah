@@ -664,7 +664,7 @@ various components exist when designing a system, understanding the specific com
 ##### microservices
 
 - the extreme in service oriented architectures, with the removal of the enterprise service bus
-- each service should be single purpose, stateless and scalable
+- each service should be single purpose, stateless, independenty scalable and composable
 
 - involves creating multiple applications (i.e. micro services) that work interdependently
 
@@ -676,6 +676,9 @@ various components exist when designing a system, understanding the specific com
 - key concepts
 
   - separate CI/CD of each service: creates a streamlined delivery pipeline that increases scalability
+  - callable via APIs/Events
+    - apis: asyncrhonous/synchronous and typically over HTTP
+    - events: always asynchronous: useful to think of events as messages
 
 - advantages:
 - disadvantages:
