@@ -5,6 +5,11 @@
 
 ## basics
 
+- serverless: fully managed approached to execute business logic in the cloud; storage, compute, and networking without provisioning/managing servers/dbs
+  - reduces operational complexity: processes and tasks that require operational skills no longer required; e.g. provisioning, backups, version management, patching, deploying, etc
+  - reduces cost
+  - standardize common tasks: e.g. security, error handling, logging
+
 ### best practices / gotchas
 
 - always
@@ -17,6 +22,8 @@
   - push an event from SNS into an SQS queue
 
 ## lamda
+
+- basically on-demand compute, almost anything you would need an EC2 instance for, you can implement as an AWS Lambda fn
 
 - event drivent, stateless (serverless) business logic
 - compute service to run code without managing servers
