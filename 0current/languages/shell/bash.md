@@ -48,7 +48,7 @@
   - arithmetic for loop
 
 - shell types
-  - login shell:
+  - login shell: i.e an authenticated shell
     - types
       - generally whenever you enter creds to access a system, the first shell thats started
       - in etc/passwd, user:stuff:stuff:stuff:stuff/bin/bash <-- login shell
@@ -77,7 +77,7 @@
 - how bash reads functions
   - functions are parsed all at once
     - options enabled in one function are thus enabled in all functions
-    - thus dont enable/disable options within functions, but at the very top of scripts
+    - thus you generally shouldnt enable/disable options within functions, but at the very top of scripts
 
 ### files and directories
 
@@ -100,7 +100,7 @@
 - bash arguments are assigned to positional params $1, $2, etc
 - if the first arg is a script
   - cmds are read from the script
-  - the scrpit doesnt need to be executable, but must be readable
+  - the script doesnt need to be executable, but must be readable
   - the script path is assigned to $0
 
 ### exit status
@@ -118,7 +118,7 @@
 ### filename metacharacters
 
 - `*` any string of zero/more chars
-- `?` singel char
+- `?` single char
 - `[abc...]` one of the enclosed characters
 - `[a-z...]` range of characters
 - `[!abc...]` any char not within brackets
@@ -198,7 +198,7 @@
 ### cmd execution
 
 ```bash
-  cmd & # execute cmd in the backgroun
+  cmd & # execute cmd in the background
   cmd1; cmd2 # cmd sequence, execute multiple cmds sequetially on the same line
   {cmd1; cmd2} # cmd group; in the current shell
   (cmd1; cmd2) # cmd group: in a subshell
@@ -213,7 +213,7 @@
 
 ### redirection
 
-- file descriptors: can be reasigned, but defaults are
+- file descriptors: a number that uniquely identifies an open file, a data resource, and how it may be accessed
   - 0 stdin, keyboard
   - 1 stdout, screen
   - 2 stdout, screen
@@ -243,8 +243,8 @@
 poop
 
   # single redirection using file descriptors
-  cmd >&n # send output to n
-  cmd m>&n # send output AND m to n
+  cmd >&n # cmd output to n
+  cmd m>&n # cmd output AND m to n
   cmd >&- # close standard output
   cmd >&n- # move n to standard output by duplicating it, then closing the original
 

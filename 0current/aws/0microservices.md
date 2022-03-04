@@ -1,6 +1,7 @@
 # TLDR
 
 - lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS, cloudwatch, Amazon Connect (dunno wherelse to put this), Amazon Kinesis, EKS
+- lumping serverless into this file
 
 ## basics
 
