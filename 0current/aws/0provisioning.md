@@ -1,6 +1,6 @@
 # TLDR
 
-cloudformation, config, systems manager, autoscaling
+cloudformation, config, systems manager, autoscaling, codecommit, codepipeline
 
 ## best practices
 
@@ -259,3 +259,11 @@ cloudformation, config, systems manager, autoscaling
   - region
   - all/specific instances
   - resource group/manually select
+
+# codecommit
+
+- secure, highly scalable, managed source control service that hosts private Git repositories
+
+# Codepipeline
+
+- fully managed continuous delivery service that helps you automate your release pipelines for fast and reliable application and infrastructure updates. CodePipeline automates the build, test, and deploy phases of your release process every time there is a code change, based on the release model you define.

@@ -19,7 +19,7 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
   - [db instance billing](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/User_DBInstanceBilling.html)
   - [rds billing](https://aws.amazon.com/rds/pricing)
   - [supported postgres versions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts.General.DBVersions)
-
+  - [dynamodb local docker setup](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html#docker)
 - tuts
 
   - [running dbs on AWS](http://aws.amazon.com/running_databases/)

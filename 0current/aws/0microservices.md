@@ -111,6 +111,10 @@
   - 15 min max execution time
   - 3k mb max ram
   - types of event/messages that can trigger lambda execution
+  - each lambda fn must be fronted by an API Gateway
+
+- test events: create events that invoke the lambda fn, sending in JSON to the lambda fn handler
+  - first you create the event, then you click test again
 
 ### lambda considerations
 
@@ -130,10 +134,6 @@
   - sqs queue
   - sns topic
   - etc
-
-### lambda considerations
-
-- can be triggered from a FIFO queue messages
 
 ## SQS simple queue service
 

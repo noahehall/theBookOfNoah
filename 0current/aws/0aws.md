@@ -14,6 +14,7 @@
 
 ## links
 
+- [sam cli](https://github.com/aws/aws-sam-cli)
 - [all cli cmds](https://docs.aws.amazon.com/cli/latest/reference/)
 - [aws docs index](https://docs.aws.amazon.com/index.html)
   - also probably the best overview of all services
@@ -203,7 +204,9 @@
   - create cloud watch alarms for certain quotas
 - can have a max of 9 cards on the dashboard for important services
 
-## cli
+## clis
+
+### aws cli
 
 ```sh
   # configure help
@@ -232,7 +235,7 @@
       dfadfa # use that to get a list of servicenames
 ```
 
-### S3
+#### S3
 
 - [docs home](https://docs.aws.amazon.com/s3/?id=docs_gateway)
 
@@ -260,7 +263,7 @@
 
 ```
 
-### ec2
+#### ec2
 
 ```sh
   # create a key pair
@@ -283,3 +286,7 @@
     aws ec2 get-console-output --instance-id EC2_INSTANCE_ID --output text
 
 ```
+
+### sam cli
+
+- AWS Serverless Application Model (SAM) CLI is an open-source CLI tool that helps you develop serverless applications containing Lambda functions, Step Functions, API Gateway, EventBridge, SQS, SNS and more. Some of the features it provides are:

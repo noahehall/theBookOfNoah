@@ -703,13 +703,14 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 ## api gateway
 
 - The AWS API Gateway is used as a single point of access to services.
-- homogenous access to resource endpoints
-- facilitates management of API performance
-- route arbitrary (http/https/websocket) inbound requests to arbitrary aws services
-- front serverless (lambda) rest APIs behind an api gateway
-- front EBS behind an api gateway
-- api version management (via stages)
-- caching
+  - homogenous access to resource endpoints
+  - facilitates management of API performance
+  - route arbitrary (http/https/websocket) inbound requests to arbitrary aws services
+  - front serverless (lambda) rest APIs behind an api gateway
+  - front EBS behind an api gateway
+  - api version management (via stages)
+  - caching
+  - fault tolerant component to accomodate thousands of concurrent requests
 - costs
   - super cheap inbound ($5/millions of requests)
   - pricier for outbound (per gb)
@@ -717,19 +718,33 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - rate limits
   - access controls
   - authorization via api keys
-- fault tolerant component to accomodate thousands of concurrent requests
-- htttp
+- http
   - query string params
   - request headers
   - json
   - xml
   - etc
 - api keys
+  - todo
+- deploy: every change to API gateway requires the gateway to be redeployed
+- resources: an API endpoint that routes to some aws resource. the resources become the API contract for end users
+  - after creating a resource, you can add any HTTP method to it
+    - the method can be associated with lambda fn, http, mock, aws service, vpc link
+- deploy: after deploying, you will receive the endpoint to invoke
+  - Missing Authentication Token error: basically means your hitting the wrong endpoint, or using the wrong METHOD
 
 ### api gateway considerations
 
-- api type (http/s/websocket)
-- region
+- api type
+  - http api
+  - rest api
+  - private rest api
+  - web socket
+- import: use openapi swagger doc
+- endpoint type
+  - regional
+  - edge optimized: for caching & cloudfront
+  - private
 - configure api gateway endpoint & resource
 - stages (e.g. dev, staging, prod) become part of the api endpoint
   - auto deploy
