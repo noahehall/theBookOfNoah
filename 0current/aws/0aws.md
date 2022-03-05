@@ -204,7 +204,9 @@
   - create cloud watch alarms for certain quotas
 - can have a max of 9 cards on the dashboard for important services
 
-## clis
+## CLIs
+
+- there are many, lets install them all
 
 ### aws cli
 

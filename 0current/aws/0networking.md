@@ -734,9 +734,6 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - Missing Authentication Token error: basically means your hitting the wrong endpoint, or using the wrong METHOD
 - lambda proxy integration: tells api gateway not to mangle the request details, but to pass the details on to the lambda function (very useful for POST method)
   - it will be available in `event.body`
-- runtime: the runtime env of the lambda fn, e.g. the nodejs runtime gives you access to all the nodejs builtin modules to import at the top of your lambda fn
-- CORS issues:
-  - make sure you add the `Access-Control-Allow-Origin` header in the response JSON you return from your lambda fn
 
 ### api gateway considerations
 

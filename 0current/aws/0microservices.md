@@ -117,6 +117,31 @@
 
 - test events: create events that invoke the lambda fn, sending in JSON to the lambda fn handler
   - first you create the event, then you click test again
+- runtime: the runtime env of the lambda fn, e.g. the nodejs runtime gives you access to all the nodejs builtin modules to import at the top of your lambda fn
+  - you can also `const aws = require('aws-sdk')` to interact with other aws services from within the lambda fn
+- CORS issues:
+  - make sure you add the `Access-Control-Allow-Origin` header in the response JSON you return from your lambda fn
+
+```javascript
+const AWS = require("aws-sdk");
+const querystring = require("querystring");
+
+// async lambda
+exports.handler = async (event) => {
+  // TODO implement
+  const response = {
+    statusCode: 200,
+    body: JSON.stringify("Hello from Lamxxxvvvxxvbda!"),
+  };
+  return response;
+};
+
+exports.handler = function (event, context, callback) {
+  // same as async, but use error first callback
+
+  callback(null, response);
+};
+```
 
 ### lambda considerations
 
