@@ -12,10 +12,11 @@
 - [official docker image library](https://github.com/docker-library/official-images)
 - [best practices](https://github.com/docker/docker.github.io/blob/master/develop/develop-images/dockerfile_best-practices.md)
 - [tini: init for containers](https://github.com/krallin/tini)
-- [buildx:  Docker CLI plugin for extended build capabilities with BuildKit](https://github.com/docker/buildx#documentation)
+- [buildx: Docker CLI plugin for extended build capabilities with BuildKit](https://github.com/docker/buildx#documentation)
 - [buildx + buildkit tut](https://medium.com/titansoft-engineering/docker-build-cache-sharing-on-multi-hosts-with-buildkit-and-buildx-eb8f7005918e)
 - [docker file validator](https://github.com/docker-library/dockerfile-validator)
 - [docker file linter](https://github.com/hadolint/hadolint)
+
   - [online version](https://hadolint.github.io/hadolint/)
 
 - [alpine pkg management](https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management)
@@ -25,6 +26,7 @@
 ### general
 
 - lifecycle statuses (as reported by docker ps)
+
   - running
     - docker run
     - docker start
@@ -74,7 +76,8 @@
 
 ## general cmds for dockerfile, docker-compose, etc
 
-- $variable_name | ${variable_name} | ${variable:-default_value} | ${variable:+if_set_use_this_else_''}
+- $variable*name | ${variable_name} | ${variable:-default_value} | ${variable:+if_set_use_this_else*''}
+
   - ADD
   - COPY
   - ENV
@@ -323,25 +326,30 @@
     - ENV, ADD, COPY, WORKDIR, VOLUME, EXPOSE, USER
     - use `docker inspect...` on the resulting image to verify vars are set correctly
 - files
+
   - .dockerignore
 
-  +
+  *
 
-# docker-compose
+# docker compose
 
 - options specified in the dockerfile are respected by default
+
   - you dont need to specify them again in the compose file
   - CMD, EXPOSE, VOLUME, ENV
   - YAML boolean values must be enclosed in quotes
+
     - true, false, yes, no, on off
 
   - some keys accept lists or mappings
+
     - lists
       - `- key=value`
     - mapping
       - `key: value`
 
   - service definition
+
     - i.e. docker container create
     - if build + image are specified
       - value of image becomes image name
@@ -444,15 +452,13 @@
 # docker config create
 ```
 
-# volumes
+# docker volume CMD
 
-- command cmds
-  - docker volume ...
-    - create
-    - inspect
-    - ls
-    - prune
-    - rm
+- `create` create a volume
+- `inspect` display d5tailed information volume(s)
+- `ls` list volumes
+- `prune` remove unused local volumes
+- `rm` remove volume(s)
 
 ```sh
     # create a data container using an existing volume based on busybox

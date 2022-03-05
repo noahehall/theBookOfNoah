@@ -876,7 +876,7 @@
   - content addressable image identifer
   - any image that includes th digest component returned from `docker pull`
 
-### UFS
+#### UFS
 
 - union file system
 - the UFS mount point provides the containers file system
@@ -901,7 +901,7 @@
   - determins the relationship between layers and how layers relate to images, repositories and tags
   -
 
-### layers
+#### layers
 
 - collections of changes made to a docker image, and the metadata describing those changes
 - layers maintain parent/child relationships
@@ -929,7 +929,7 @@
       - makes it possible to share access to images instead of creating independent copies for every container
       -
 
-## containers
+### containers
 
 - uses existing container engines (installed in linux) to provide consistent containers built according to best practices
   - any software run with docker is run inside a container
@@ -955,7 +955,7 @@
   - attempt for some predetermined time to restart when a failure is detected
   - always restart the container regardless of the condition
 
-## volumes
+### volumes
 
 - a host/containers directory tree is created by a set of mount points that describe how to piece together one/more file systems
 - volume
@@ -978,7 +978,7 @@
       - thus you are free to iterate (recreate) services without losing data
       -
 
-### volume types
+#### volume types
 
 - for virtualbox (docker machine / boot2docker) users
 
@@ -1008,7 +1008,7 @@
       - thus no way to share/delete a managed volume manually
     - can only be identified by the containers that use them
 
-### volume patterns
+#### volume patterns
 
 - volume container
 
@@ -1038,7 +1038,7 @@
     - an image that contains nodejs and by default executes a cmd that runs /app/app.js
     - you can override /app/app.js at container creation time to do something else
 
-### volume sharing
+#### volume sharing
 
 - host-dependent sharing
   - when two/more containers all have a bind mount volume for a single known location on the host file system
@@ -1053,97 +1053,7 @@
       - you cannot change the permissions of the data in the new container
     -
 
-### docker volume
-
-- `create`
-  - create a volume
-- `inspect`
-  - display d5tailed information volume(s)
-- `ls`
-  - list volumes
-- `prune`
-  - remove unused local volumes
-- `rm`
-  - remove volume(s)
-
-```sh
-  # create then remove volume 'myvol'
-  docker volume create myvol
-  docker volume rm myvol
-
-  # create a data container using an existing volume based on busybox
-  docker create -v SOMEVOL:/place/here/in/container ---name CONT_NAME busybox
-
-  # copy files from host into data container
-  docker cp /some/file CONT_NAME:/place/here
-
-  # use data container in some other continer
-  docker run...
-    --volumes-from DATA_CONT_NAME
-
-  # remove al dangling volumes
-  docker volume rm $(docker volume ls -f dangling=true -q)
-
-  # test file permissions in volume
-  # create root-owned file on host
-  # try to read file as nobody (unsuccessful)
-  # try to read file as container root
-  echo 'poop' > garbage
-  chmod 600 garbage
-  sudo chown root:root garbage
-  docker run --rm -v "$(pwd)"/garbage:/test/garbage
-    -u root busybox
-
-
-  # create a volume container
-  # uses a docker managed volume
-  docker run...
-    --name poop
-    --volume /some/dir
-
-  # inherit a volume from another container
-  docker run...
-    --volumes-from poop
-
-  # bind mount a read+write volume in a container
-  docker run...
-    -v ~/absolute/host/location:/absolute/container/location
-
-  # bind mount a read only volume
-  docker  run...
-    -v ~/blah:/blah:ro
-
-  # retrieve all volumes associated with the container
-  docker inspect CONTAINER_NAME|ID | grep volume
-
-  # remove all associated volumes when removing the container
-    docker rm -vf CONTAINER_NAME/UID
-
-
-  # copy image config into container
-  # i.e. data packed volume
-  docker run...
-    -v /config
-    SOME_IMAGE /bin/sh -c 'cp /image/content /config'
-
-  # provide additional tools to a running application
-  # via the polymorphic container pattern
-  docker run --name tools... # create a data packed container
-  docker run --name app...
-    volumes-from tools... # copy over data from tools
-  docker exec app /tools/dir/new/program # inject new app
-
-  # backup a volumes data to the host
-  mkdir ~/backup
-  docker run --rm --volumes-from VOLNAME -v ~/backup:/backup ubuntu bash -c “cd /PATH/in/VOLNAME && tar cvf /backup/VOLNAME_BACKUP.tar .”
-
-  # restore /backup/SOMEFILE.tar on host to new volume
-  docker volume create VOLNAME
-  docker run --rm -v VOLNAME:/recover -v ~/backup:/backup ubuntu bash -c “cd /recover && tar xvf /backup/SOMEFILE.tar”
-
-```
-
-## networking
+### networking
 
 - communicating between processes that may/not share the same local resources
 - protocol
@@ -1178,7 +1088,7 @@
     - defined as part of the Transmission Control Protocol (TCP)
   -
 
-### docker networking
+#### docker networking
 
 - docker creates a bridge network to connect all of the running containers to the host computers network
 - single-host virtual networks
@@ -1203,7 +1113,7 @@
 - multi-host virtual networks
   - provide an overlay where any container on a participating host can have its on routable IP address from any other container in the network
 
-### docker container networking archetypes
+#### docker container networking archetypes
 
 - define how a container interacts with other local containers and the hosts network
 - each archetype provides a different level of isolation\]]
@@ -1273,7 +1183,7 @@
   - define the address and subnet of the bridgeddefine the range of ip addresses that can be assigned to containers
   - define the maximum transmission unit (MTU)
 
-### local service discovery
+#### local service discovery
 
 - alternatives
   - use a local dns server and a registration hook/agent when each container starts
@@ -1287,95 +1197,7 @@
   - if inter-container communication (ICC) has been disabled,
     - docker will add specific firewall rules to allow communication between linked containers
 
-```sh
-  # list all interfaces
-    docker run --rm...
-      ip addr
-
-  # create a closed container
-  docker run...
-    --net none
-
-  # create a bridged container
-  docker run...
-    --net bridge # can be ommitted, its the default
-
-  # provide a hostname to a container
-  # and then lookup its ip address
-  docker run...
-    --hostname poop
-    alpine nslookup poop
-
-  # set custom dns servers
-  docker run...
-    --dns 8.8.8.8 # googles dns server
-
-  # set default dns-search
-  # automatically appends poop.com to hostnames
-  # without a top-level domain
-  # e.g. timeto -> timeto.poop.com
-  docker run...
-    --dns-search poop.com
-
-  # update the containers host file
-  # add a map from poop to some IP addr
-  # you now access it via http://poop/
-  docker run...
-    --add-host poop:127.0.0.2
-
-  # bind container port to dynamic host port
-  # on all host interfaces
-  docker run...
-    -p 1234
-
-  # bind specific container (4321) and host (1234) port
-  # on all host interfaces
-  docker run...
-    -p 1234:4321
-
-  # bind specific container (4321) port to specific
-  # host interface on a dynamic port
-  docker run...
-    -p 123.123.123.123:4321
-
-  # bind specific container (4321) port to specific
-  # host interface on specific port (1234)
-  docker run...
-    -p 123.123.123.123:1234:4321
-
-  # share a containers network interface with another
-  docker run --name owner...
-    --net none... # closed container
-  docker run...
-    --net container:owner # joined container
-
-  # create an open container
-  docker run...
-    --net host
-
-  # create a user defined network
-  # allows inter-container communication
-  # but does note expose containers to the outside world
-  docker network create SOME_NAME
-  # connect a running container to SOME_NAME
-  docker network connect SOME_NAME SOME_CONTAINER
-  # run a container and connect it to the network
-  docker run...
-    --network SOME_NAME
-
-  # link containers via the oldschool method
-  # you must EXPOSE the ports in the dockerifle, or via with capital -P flag
-  # will output `ready for connections` in the `docker logs`
-  # when it is ready to be linked
-  docker run...
-    --name CONT_1
-  # link this container to CONT_1
-  # you can optionally rename the linked container
-  docker run...
-    --link CONT_1:name_inside_container
-```
-
-## resources
+### resources
 
 - containers provide isolated process context, not 100% system virtualization
 - Container isolation
@@ -1421,11 +1243,12 @@
       - any processes running as that user inherits those permissions
         - thus, if one of those processes are bugged, the entire system is bugged
     - root user use cases
+
       - for buiding images
       - at runtime when there are no other options
         - running system admin software that requires priviledged access
 
-    .- chroot()
+    - chroot()
 
   - controls the location of the file system root
   - used to make the root of the image file system the root in the containers context
@@ -1433,7 +1256,7 @@
   - cgroups
     - resource protection
 
-### resource allowances
+#### resource allowances
 
 - memory limits
   - lack of memory for a process results in failure
@@ -1453,7 +1276,7 @@
       - try to limit context switching for critical process
       - i.e. limit distinct critical processes from executinng on the same CPU setbr
 
-### OS feature access & capabilities
+#### OS feature access & capabilities
 
 - docker can adjust the feature (i.e. capabilities) authorization of processes within containers
   - whenever a presource - override resource limits
@@ -1594,7 +1417,7 @@
     --lxc-config="lxc.cgroup.cpuset.cpus=0,1"...
 ```
 
-## dockerfile
+### dockerfile
 
 - a file that contains instructions for building an image
 - instructions are followed by the docker image builder from top to bottom
@@ -1721,20 +1544,7 @@
 - `.dockerignore`
   - file that informs the docker builder which files in the context directory to NOT copy into the build image
 
-```sh
-  FROM debian:wheezy
-  # FROM debian@sha256:1234 # use the digest returned from docker pull
-  MAINTAINER noah hall "poop@your.toilet"
-  RUN ...
-  ENV THIS="/that" \
-    VERSION="400 degrees"
-  LABEL base.name="lilwayne" \
-    base.version="${VERSION}"
-
-
-```
-
-## docker-compose
+### docker compose
 
 - tool for defining, launching and managing services via yaml files
 - service
@@ -1756,7 +1566,7 @@
   - docker-compose stop|kill someservice
   - docker-compose rm -fv someservice
 
-### docker-compose file structure
+#### docker compose file structure
 
 - options specified in the dockerfile are respected by default
   - you dont need to specify them again in the compose file
@@ -1787,166 +1597,19 @@
 - volume definition
   - i.e. docker volume create
 
-```sh
-  # quickies
-  docker-compose up
-
-  # example definitions
-  version: '3.8'
-  services:
-    SERVICE_NAME:
-      # skipped cuz f windows
-      credential_spec
-
-      # useful but skipped
-      cap_add:
-        - something
-      cap_drop:
-        - something
-      cgroup_parent: something
-
-      # u cannot scale a service beyond 1 container
-      # if supplying a static container name
-      container_name: poop
-
-
-      # impacts compose up and stop
-      # waits for the container to be started
-      # not for the service to be ready
-      depends_on:
-        - servicenameX
-        - servicenameX
-      # grant access to pre-existing configs
-      # mounted at /configname in container
-      configs:
-        - config1
-        - configX
-      # or long syntax
-      configs:
-        - source: configname
-          target: /mount/path/configname
-          uid: 'owner'
-          gid: 'group'
-          mode: 0444 # default
-      # override the default cmd
-      command: any linux cmd here
-      command: ['or', 'as', 'a', 'list']
-
-      image: NAME:TAG
-      # string/object, but not both
-      build: ./dir/with/dockerfile
-      build:
-        # path/url
-        # path - containing dockerfile
-        # url - git repository
-        context: ./build/context
-        # if specified, context required
-        dockerfile: /path/some.dockerfile
-        # accessible only during build process
-        # must exist in dockerfile
-        args:
-          - ARGX=VALX
-          - ARGY #take val from env
-
-        # list of images the engine uses
-        # for cache resolution
-        cache_from:
-          - alpine:latest
-          - corp/web:123.4
-
-        # metadata for the resulting image
-        # best practice use reverse-DNS notation
-        labels:
-          - "com.SERVICENAME.LABELX=VALUE"
-          - "com.SERVICENAME.LABEL=VALUE"
-
-        # label this build stage
-        # used for multi-stage builds
-        target: prod
-
-
-
-        # skipped
-        SHM_SIZE: '2gb'
-        # end build
-
-# TODO
-# docker config create
-```
-
-### docker-compose scale
+#### docker compose scale
 
 - set the number of containers to run for a service
 - services will bind to the hosts ephemeral port 0
   - this allows the OS to bind to a random (in a predefined range) available port
 
-### docker-compose up
+#### docker compose up
 
 - build, (re)creates, starts, and attaches to containers for a service
 - options
   - detach, no-color, quiet-pull, no-deps, force-recreate, always-recreate-deps, no-recreate, no-build, no-start, build, abort-on-container-exit, timeout, renew-anon-volumes, remove-orphans, exit-code-from, scale
 
-```sh
-  # start services in detached mode
-  docker-compose up -d
-```
-
-## integrations
-
-### reverse proxy
-
-- flow
-  - clients make requests
-  - proxy intercepts requests
-  - proxy routes to correct service
-
-### TLS
-
-- transport layer security
-- provides endpoint identifications, message integrity and message privacy
-- implemented at a layer below http and is what provides the S in https
-
-  - uses port 443 instead of 80
-  - requires a signed certificate and private key files
-  - the host name of the server and the proxy configuration must match the one use dto create the certificate
-    - if using a reverse proxy for TLs termination
-
--
-
-```sh
-  # create a certifcate for TLS on localhost
-  # generates a 4096-bit RSA key pair
-  # priv key file and cert output to current dir
-  docker run --rm \
-    -e COMMON_NAME=localhost \
-    -e KEY_NAME=localhost \
-    -v "$(pwd)":/certs centurylink/openssl
-```
-
-### SSH tunnels
-
-- secure shell
-  - a protocol for tunneling network track
-  - uses similar security techniques as TLS but lacks the third-party trust mechanism that makes TLS scale to large numbers of users
-- use cases
-  - a cheaper and arguably less complex way to secure your registry network traffic is to enable connections only through SSH
-  - centralized registry for small teams
-- gotchas
-
-  - requires a user account management and authentication system in place, e.g. pub/priv keys
-  - does scale well
-
-- process
-  - install an ssh server (openssh) on the same machine as the registry
-  - map the registry only to the loop back interface (localhost) on the machine
-    - this restricts inbound registry traffic to what comes through the SSH server
-  - when clients want to cnnect theyll create an ssh tunnel
-    - binds a local TCP port and forwards traffic to it over an SSH connection between the clients computer and the remote SSH server out to some destination host and port
-      - i.e. clients create a tunnel that allows them to treat your registry as if it were running locally
-      -
-    -
-
-# dockerd
+### dockerd
 
 - controls the docker daemon without going through the docker client
 
@@ -1957,7 +1620,7 @@
 
 ```
 
-# debugging
+### debugging
 
 - should be a catchall for debugging docker/dockerd
 
@@ -1982,34 +1645,6 @@
   cd Docker-Terminal
   python2 -m SimpleHttpServer 8000
 
-
-```
-
-# examples
-
-## microservices
-
-- essentially using one service per containner
-  - easier separation of concerns through the sinsgle responsibilty principle
-  - easier to put a single container throught he software development lifecycle
-    - development, test, production
-  - more agile deliveries
-  - more scalable software
-  -
-
-```sh
-
-
-```
-
-## docker help
-
-- display information about the basic syntax for using the docker cmdline program as well as a complete list of cmds for your version of the program
-
-```sh
-  docker help
-  docker help cp
-  docker help run | grep OPTION
 
 ```
 
