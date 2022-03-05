@@ -731,8 +731,10 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - api type (http/s/websocket)
 - region
 - configure api gateway endpoint & resource
-- stages (e.g. dev, staging, prod)
+- stages (e.g. dev, staging, prod) become part of the api endpoint
   - auto deploy
+  - very useful in point a specific api gateway stage to a lambda alias
+    - you should define stage variables that match your lambda aliases, and use those stage variables as suffixes to your lambda calls
 - logging
   - access logging
   - cloudwatch log group

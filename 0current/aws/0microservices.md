@@ -1,6 +1,6 @@
 # TLDR
 
-- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS, cloudwatch, Amazon Connect, EKS, Step Functions
+- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS, cloudwatch, EKS, Step Functions, SES
 
 - lumping serverless into this file
 
@@ -26,9 +26,21 @@
   - increase the segmentation of business logic via distinct resources that handle specific aspects of your business
     - i.e. dont have one monolithic code base, but use a service oriented architecture where each service can scale out & in and adopt an event driven model utilizing an API gateway that routes requests to each service
   - SQS, SNS, and lambda are critical for event driven architectures
+  - assign aliases to lambda fns, e.g. dev, prod, and QA
+    - and set the lambda trigger on the ALIAS, and not the version
+    - when you have fully tested a new version, you can point the alias prod to that new vesion
 - sometimes
 
   - push an event from SNS into an SQS queue
+
+#### gotchas
+
+- lambdas
+  - deploying a new version of a lambda fn, immediately replaces the existing version
+    - there are no rollbacks, however you should always utilize versioning & aliases
+  - lambda outside a VPC have internet access
+    - lambda inside a VPC may not have internet access
+      - if they do, there must be a NAT gateway setup
 
 ### serverless
 
@@ -36,6 +48,7 @@
 - reduces operational complexity: processes and tasks that require operational skills no longer required; e.g. provisioning, backups, version management, patching, deploying, etc
 - reduces cost
 - standardize common tasks: e.g. security, error handling, logging
+- saving objects to s3 (e.g. json objects) is a good way to trigger lambda events to kick start an event driven data pipeline
 
 #### serverless components
 
@@ -75,24 +88,26 @@
   - then when multiple options exists for the db type, determine the use cases, limits, efficiencies, and costs associated with each
 
 - SQS vs SNS vs Kinesis
-  - use SQS when delivery guarantees are required, but only a single consumer can handle a single message, if the consumer fails, the message goes back into the queue
+  - use SQS when delivery guarantees are required, but only a single consumer should handle each message, if the consumer fails, the message goes back into the queue
   - use SNS when delivery guarnatees arent required, or when multiple consumers need to act on a single message
     - you need to architect for failure, as once the message is taken from the topic, its up to the consumer to succeed, on failure the data is lost
-  - use kinesis when delivery guarantees are required, ordering is guanrateed, AND Multiple consumers for each message
+  - use kinesis when delivery guarantees are required, ordering is important, AND Multiple consumers need to be updated on each message
     - like SQS, has message delivery gurantees
     - like SNS, multiple consumers for each message
 
 ## lambda
 
-- basically on-demand compute, almost anything you would need an EC2 instance for, you can implement as an AWS Lambda fn
+- the most basic on-demand compute, almost anything you would need an EC2 instance for, you can implement as an AWS Lambda fn
 - event drivent, stateless (serverless) business logic
 - compute service to run code without managing servers
 - use cases
 
   - target of an event bridge rule
   - cloud watch alarm automation, especially in high availability & failover contexts where you need to spin up new resources and reassign EIPs
+  - s3 putObject can trigger an instance of a lambda fn to run, e.g. in response to new data being saved to s3
 
 - limits
+
   - 15 min max execution time
   - 3k mb max ram
   - types of event/messages that can trigger lambda execution
@@ -119,11 +134,6 @@
 ### lambda considerations
 
 - can be triggered from a FIFO queue messages
-
-## fargate
-
-- fully managed infrastructure for serverless container based applications
-- preferred over lambda for complex/long running business logic, e.g. listening to FIFO queues for messages
 
 ## SQS simple queue service
 
@@ -196,17 +206,18 @@
 - delivery status logging: only for specific protols (lambda, sqs, etc)
 - IAM roles
 
-## Connect
+## Kinesis
 
-- salesforce knockoff + voip
+- manage streaming data in realtime
+- ingest real-time data such as video, audio, application logs, website clickstreams, and IoT telemetry data for machine learning, analytics, and other applications.
+- process and analyze data as it arrives and respond instantly instead of having to wait until all your data is collected before the processing can begin.
+- use cases
+  - can have multiple shards within a stream, and consumers can be assigned to specific shards
+  - full replay is possible by resetting a stream to a point in time
 
 ## SageMaker
 
 - ML in the cloud
-
-## Lightsale
-
-- heroku knockoff
 
 ## cloudwatch
 
@@ -221,15 +232,16 @@
 
 - amazon container service
 
+## fargate
+
+- fully managed infrastructure for serverless container based applications
+- preferred over lambda for complex/long running business logic, e.g. listening to FIFO queues for messages
+
 ## Step Functions
 
 - workflow automation, e.g. state machines & orchestration between lambda fns
+- the return values of a lambda fn can drive a state transition in the step function state machine
 
-## Kinesis
+## SES
 
-- manage streaming data in realtime
-- ingest real-time data such as video, audio, application logs, website clickstreams, and IoT telemetry data for machine learning, analytics, and other applications.
-- process and analyze data as it arrives and respond instantly instead of having to wait until all your data is collected before the processing can begin.
-- use cases
-  - can have multiple shards within a stream, and consumers can be assigned to specific shards
-  - full replay is possible by resetting a stream to a point in time
+- simple email service

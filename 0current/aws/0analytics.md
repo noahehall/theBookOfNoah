@@ -1,11 +1,11 @@
 # TLDR
 
-cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log insights, log groups
+cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log insights, log groups, xray
 
 ## links
 
 - [all billing reports](https://console.aws.amazon.com/cost-management/home?#/reports/overview)
-
+- [aws xray](https://aws.amazon.com/xray/)
 
 ## basics
 
@@ -353,4 +353,7 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
       - e.g. service issues
   - target: e.g. lambda fn, sns topic, sqs queue
 
+# xray
 
+- Analyze and debug production, distributed applications
+- service that collects data about requests that your application serves, and provides tools that you can use to view, filter, and gain insights into that data to identify issues and opportunities for optimization.

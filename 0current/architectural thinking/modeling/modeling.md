@@ -10,6 +10,7 @@ modeling languages and their syntax
 - [plantuml](https://plantuml.com/starting)
 - [nomnoml](https://nomnoml.com/)
 - [use drawio and move on with your life](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio)
+- [block diagram](https://en.wikipedia.org/wiki/Block_diagram)
 
 ## basics
 
@@ -108,6 +109,7 @@ modeling languages and their syntax
     - composite structure
     - package
     - deployment
+    - block
 
   - behavior: dynamic view of the system and its components, over time
     - use case
@@ -121,7 +123,7 @@ modeling languages and their syntax
 
 ### notations
 
-- TODO: need to exact all notations and list them here
+- TODO: need to extract all notations and list them here
 
 - at a high level each represent the same idea across diagrams
 
@@ -145,6 +147,11 @@ modeling languages and their syntax
 - decision: a big diamond, with each vertice being a decision flow
 
 ### structure diagrams
+
+#### block diagrams
+
+- see wikipedia link
+- A block diagram is a diagram of a system in which the principal parts or functions are represented by blocks connected by lines that show the relationships of the blocks
 
 #### deployment diagrams
 
