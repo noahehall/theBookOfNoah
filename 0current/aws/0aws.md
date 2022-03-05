@@ -16,6 +16,7 @@
 
 - [sam cli](https://github.com/aws/aws-sam-cli)
 - [all cli cmds](https://docs.aws.amazon.com/cli/latest/reference/)
+- [aws ci install & update directions](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 - [aws docs index](https://docs.aws.amazon.com/index.html)
   - also probably the best overview of all services
 - [AWS glossary](https://docs.aws.amazon.com/general/latest/gr/glos-chap.html)
@@ -207,25 +208,33 @@
 ## CLIs
 
 - there are many, lets install them all
+- generally all require you to download a zip file, and run the install script
 
 ### aws cli
 
+- files
+  - default config & credentials
+  - ~/.aws/config: setup the default output and region per profile
+  - ~/.aws/credentials: setup access key ID and secret for each profile
+
 ```sh
   # configure help
-    aws configure
+    aws configure # set your creds one by one
       list # see current profile
       list-profiles # see available profiles
       get KEY # get the current value of the current profiles config, (anything from list)
   # global options
     --profile SOMENAME # configure/use creds + config of a profile, specify this LAST
-      # so you dont have to use the --profile on each cmd
-      export AWS_DEFAULT_PROFILE=AccountAadmin
+
+    # so you dont have to use the --profile on each cmd
+    export AWS_DEFAULT_PROFILE=AccountAadmin
+
+    # to override the selected profile, e.g. in a script
+    export AWS_ACCESS_KEY_ID=poop
+    export AWS_SECRET_ACCESS_KEY=poop
+    export AWS_DEFAULT_REGION=us-poop-1
 
     --region us-east-1 # specify the region
-
-  # admin
-  aws configure # specify key id, secret, region, and output format
-    list-profiles
 
   # basics
 
