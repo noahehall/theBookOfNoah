@@ -51,11 +51,13 @@
 - data stores: relational, key-value, in-memory, document, graph, time series, ledger (blockchain)
 - API proxies: whenever a microservice needs to be called (instead of triggered) an api gateway is required
   - lambda fns integrate seamlessly with amazon API gateway
+  - a frontend app (stored & served from s3) can call an api gateway endpoint, which in turn calls a lambda fn, and returns the response to the frontend
 - application integration and orchestration
   - SQS: for polling & FIFO queues
   - SNS: for pub-sub based messaging
   - Kinesis: for ingesting and responding to streaming data
   - Step Functions: for coordination among lambda based services by defining state machine styled functions. i.e. workflow automation
+    - you generally dont want to call one lambda from another, instead use step functions to implement a workflow
 - analytics: kinesis for streaming data
 - developer tools; IDEs, CI, deployment tools, SDKs, and monitoring & logging tools
 

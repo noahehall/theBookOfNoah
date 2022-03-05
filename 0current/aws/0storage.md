@@ -161,6 +161,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 - is universably referencable (and web accessible) across all other AWS resources, regions, etc
 - use cases
 
+  - for hardcore MVPs, you can serialize data to JSON and save as an object in s3, as lowclass cache solution (way cheaper than amazon elasticache)
   - supporting serverless architectures
   - static website hosting
   - backup and storage: manage costs, meet regulatory requirements, reduce latency and save multiple distinct copies of data for compliance requirements
