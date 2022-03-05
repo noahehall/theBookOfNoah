@@ -105,6 +105,8 @@
   - target of an event bridge rule
   - cloud watch alarm automation, especially in high availability & failover contexts where you need to spin up new resources and reassign EIPs
   - s3 putObject can trigger an instance of a lambda fn to run, e.g. in response to new data being saved to s3
+  - integration with SES: you have to create a service role for Lambda that enables it to use SES, the policy is `AmazonSESFullAccess`
+    - ensure to also add the cloudwatch policy, `AWSLambdaBasicExecuteRole`
 
 - limits
 
