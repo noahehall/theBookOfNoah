@@ -1,6 +1,7 @@
 # docker
 
 - my (2022) docker cheatsheet
+- TODO: finish copying stuff from the old docker cheatsheet
 
 ## links
 
@@ -11,6 +12,8 @@
 - [compose in prod](https://docs.docker.com/compose/production/)
 - [buildx github](https://github.com/docker/buildx)
 - [docker buildkit backend](https://docs.docker.com/engine/reference/builder/#buildkit)
+- [docker buildx](https://docs.docker.com/buildx/working-with-buildx/)
+- [docker scan](https://docs.docker.com/engine/scan/)
 - [docker build](https://docs.docker.com/engine/reference/commandline/build/)
 - on the web
   - [uid & gid in docker containers](https://medium.com/@mccode/understanding-how-uid-and-gid-work-in-docker-containers-c37a01d01cf)
@@ -438,18 +441,18 @@
 
 ```sh
 
+  # -t host.com/repository/name:tag
+
   # install the built image to name:tag
   # uses the dockerfile in the current dir, sets context to current dir
       docker build -t NAME:TAG .
 
   # use the current directory as the build context and read a Dockerfile from stdin.
-  curl example.com/remote/Dockerfile | docker build -f - .
+      curl example.com/remote/Dockerfile | docker build -f - .
 
+  # build an image with a docker file in a specific dir
+      docker build -t name:tag -f /path/to/dockerfile
 
-
-  -f /path/to/dockerfile
-  # or just -t NAME:TAG
-  -t host.com/username/repository:tag
 
 
   # suppress output and print image ID on success
@@ -481,10 +484,8 @@
   --iidfile
 
 
-  # squash an images layers into a single layer
-  # use multi-stage builds instead
+  # squash an images layers into a single layer, useful for building prod images
   --squash
-
 
 ```
 
