@@ -1,8 +1,9 @@
-# skipped
+# docker reference
 
-# books
+- super long docker notes
 
 - docker in action
+
   - jeff nickoloff
   - skipped
     - custom registries
@@ -20,7 +21,7 @@
   - aidan hobsan sayers
   -
 
-# links
+## links
 
 - [docker registry docs](https://docs.docker.com/registry/)
 - [docker registry specs](https://docs.docker.com/registry/spec/)
@@ -28,22 +29,18 @@
 - [credential helper for docker login](https://docs.docker.com/engine/reference/commandline/login/#credentials-store)
 - [unix permissions calculator](http://permissions-calculator.org/)
 - [docker machine drivers](https://docs.docker.com/machine/drivers/)
-
-## MUST DO
-
 - [docker-compose ref](https://docs.docker.com/compose/compose-file/)
 - [docker-compose file version ref](https://docs.docker.com/compose/compose-file/compose-versioning/)
 - [dockerfile ref](https://docs.docker.com/engine/reference/builder/)
 - [docker object labels](https://docs.docker.com/config/labels-custom-metadata/)
 - [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/)
 - [linux capabilities](https://linux-audit.com/linux-capabilities-101/)
-  - see `man 7 capabilities`
 - [docker configs](https://docs.docker.com/engine/swarm/configs/)
 - [controlling service dependencies](https://docs.docker.com/compose/startup-order/)
 - [docker swarm](https://docs.docker.com/engine/swarm/)
 - [docker machien overview](https://docs.docker.com/machine/overview/)
 
-# background
+## basics
 
 - about
   - build, ship a d run any app anywhere in any location that has docker
@@ -51,14 +48,16 @@
   - works with the OS to package, ship and run software
   - a tool for efficiently installing, removing, upgrading, distributing, trusting and managing software
 - use cases
+
   - high level
-    - replacing virtual machines
+
+    - replacing virtual machines (lol !)
     - prototyping software
     - packabinb software
     - enabling a microservices architecture
     - modeling networks
     - enabling full stackprdouctivity when offline
-    - reducing  debuging overhead
+    - reducing debuging overhead
     - documenting software dependen cies and touchpoints
     - enabling continuous delivery
 
@@ -99,9 +98,11 @@
       - the scope of any security threat associated with running a particular application is limited to the scope of the application itself
 
 - limitations
+
   - containers wont help much with the security of programs that have to run with full access to the machine
 
 - Analogies
+
   - think of docker as a physical shipping container system
     - a box where you store and run an applkication and all of its dependencies
     - just as cranes, trucks, trains, etc work with shipping contaiiners
@@ -111,7 +112,7 @@
 - docker engine and docker compose simplify the lives of developers and opreations personnel by abstracting the host from the contained environment
 - docker machine and docker swarm help system admins and infrastructure engineers extend those abstactions to clutered environments
 
-# terminology
+### terminology
 
 - jail
   - describes a modified runtime environment for a program that prevents that program from accessing protected services
@@ -124,10 +125,8 @@
     - provide virtual hardware on which an operating system and other programs can be installed
 - linux namespaces
   - help manage containers at runtime
-  - wtf else?
 - cgroup
   - help manage containers at runtime
-  - wtf else?
 - user space
   - memory alotted to run user software, e.g. cmdline programs and GUI things
 - abstraction
@@ -138,7 +137,7 @@
   - a program thats used to launch and maintain the state of other programs
   - on a linux system, PID #1 is the init process
 - agent
-  - a container specifically for providing limited  interactive access to other containers
+  - a container specifically for providing limited interactive access to other containers
 - polymorphic tool
   - a tool you can interact with in a consistent way bu tmay have several implementations that do different things
 - CIDR
@@ -161,11 +160,11 @@
   - reliable autonomic distributed objet store
   - ceph is the software that you would use to build your own Azure storage or AWs s3-like distributed blob storage service
 - daemon
-  - a process that runs int he background r ather tha  under the direct control fo the user
+  - a process that runs int he background r ather tha under the direct control fo the user
 - server
   - a process that takes requests from a client and performs the actions required to fulfill the requests
 
-# best practices
+### best practices
 
 - use content-addressable images to ensure no untusted artifacts are deployed to containers
   - i.e. `image: name@sha256poop`
@@ -178,6 +177,7 @@
 - disable debugging endpoints in prod
 
 - harden your images
+
   - the process of shaping it in a way that will reduce the attack surface inside any docker containers based on it
   - minimize software contained in the image
   - enforce that images are based on a specific image
@@ -186,6 +186,7 @@
   - eliminate root user escalation
 
 - inject a configuration file in the image
+
   - consumers can override the file
     - modify the included file directly
     - a bind-mount volume to override the file with a new one namespaces
@@ -207,7 +208,8 @@
     -
 
 - remember the diff between entrypoint and cmd
-  - entryoint is the program that will be executed when the container starts
+
+  - entryoint is the script that will be executed when the container starts
     - use this for all sorts of things
     - e.g. validation
   - cmds
@@ -219,13 +221,14 @@
       - more flexible
 
 - dockerfiles
+
   - delay any RUN instructions that change file ownership until after all COPY/ADD cmds have been completed
   - use COPY over ADD
   - create the user and group as soon as possible
   - set the default user and group as late as possible
-  - use the ENTRYPOINT for startup scripts if software requires
+  - use the ENTRYPOINT for startup scripts if software requires it
     - startup assitance
-    - superision
+    - supervision
     - monitoring
     - coordination with other in-container processes
     - validation
@@ -238,6 +241,7 @@
       - current user
 
 - use base images to create common layers
+
   - do not set the default user in the base otherwise all implementations will not be able to update the image
   - however you should always create the user:group as soon as possible (just dont change to it)
 
@@ -246,6 +250,7 @@
 - always use a credential helper with docker login
 
 - use debian, busyboxy, alpine or scratch for base images
+
   - scratch
     - starting from an empty image
     - have no dependencies
@@ -257,12 +262,14 @@
     - seems to be the fav
 
 - dont run docker as the root user on your system
+
   - eliminate this by
     - creating a `docker` group
     - setting that group as the owner of the docker socket
     - adding your user to that group
 
 - all known container breakout tactics rely on having sytem admin privileges inside the container
+
   - eliminate this by either
     - set the USER instruction to a user and group with limited priveleges
     - change the user in the init script
@@ -272,10 +279,12 @@
     -
 
 - be sure to rotate/truncate container logs
+
   - the logs for a container will remain and grow as long as the container exists
   - log-term persistence i a problem for long-lived processes
 
 - utlizing the PID namespaces that are automatically created for each container is a critical feature of Docker
+
   - without the PID namespace containers would share PIDs and lack isolation
   - thus DO NOT share the host PID namespace unless you know wtf your doing
   - when sharing PID namespaces
@@ -288,6 +297,7 @@
       - a second program installed modified an env var that another program uses
 
 - build environment-agnostic systems
+
   - minimize specializations of the computing environment
     - global-scoped dependencies, e.g. known host file system locations
     - hard-coded deployment architectures, e.g. env checks in code/configuration
@@ -302,7 +312,8 @@
     - docker volumes
 
 - build durable containers
-  - use init processes, startup scripts and container restart policies and  to build durable & reliable containers
+
+  - use init processes, startup scripts and container restart policies and to build durable & reliable containers
   - automatically restart processes when they exit/fail
     - use exponential backoff
   - keep containers running with supervisor & startup processes
@@ -326,46 +337,51 @@
     -
 
 - use proper versioning for all image
-    -  all images should be tagged
+
+  - all images should be tagged
   - stray away from reliying on `:latest` at all costs
   - define and tag versions at a level where users can depend on consistent contracts
-  - i.e. the smallest uinit of the versioning system captures the smallest unit of contract iteration
-          -  thus whenever a change impacts the contract, create a new version!
+  - i.e. the smallest uinit of the versioning system captures the smallest unit of contract iteration - thus whenever a change impacts the contract, create a new version!
   - the `:latest` tag should refer to the latest stable version, not the latest available version
   - in situations where software dependencies change, or software needs to be distribute don top of multiple bases, those deps should be included in the tagging scheme
 
-    -  the goal of an effective versioning scheme is to communicate clearly and provide adoption flexibility
-      -  identify contracts
+    - the goal of an effective versioning scheme is to communicate clearly and provide adoption flexibility
+    - identify contracts
 
 - use images with publicly available dockerfiles
-    -  they are more trustworthy as you can inspect how they are built
+
+  - they are more trustworthy as you can inspect how they are built
 
 - use volumes for persistent data and support tools
-    -  sinc any container can connect to an
+
+  - sinc any container can connect to an
 
 - always use the strongest possible container network archetype
-    -  always harden the default bridge network if using it connect containers to the outside
-    -  generally every container involved in the network stack should be assigned a hostname
+
+  - always harden the default bridge network if using it connect containers to the outside
+  - generally every container involved in the network stack should be assigned a hostname
   - this permits you to decouple the container from its IP address and reroute messages without hardcoded IP addresses
   - internally
   - when programs running inside a container need to lookup their own ip address
   - when programs running inside a container must self-identify
 
-    -  use custom DNS servers (e.g. 8.8.8.8)
-      -  to provide consistency
-      -  working on a laptop and often move between internet service providers
-      -  your applications are slow to start and you need to handle IP address changes on service discovery
+    - use custom DNS servers (e.g. 8.8.8.8)
+    - to provide consistency
+    - working on a laptop and often move between internet service providers
+    - your applications are slow to start and you need to handle IP address changes on service discovery
     - configure the docker daemon to disallow network connections between containers (icc=false)
       - this is the best practice in multi-tenant environments
       - it minimizes the points (i.e. attack surface) where an attacker might compromise other containers
       - you can explicitly permitted inter-container communication by link containers that require it
 
 - set reasonable resource allowances for physical system resources like memory and CPU time
-    -  creates a strong isolated context for individual containers
-    -  dont share host memory (i.e. IPC host) unless you need to comunicate with a process that must run ont he host
+
+  - creates a strong isolated context for individual containers
+  - dont share host memory (i.e. IPC host) unless you need to comunicate with a process that must run ont he host
   - instead share container memory specifically (i.e. IPC somecontainer)
 
 - users
+
   - never use the root user inside the container, or a process that inherits the permissions of the root user
     - disable the root account or atleast set a passwd
   - be careful about which users can control the docker daemon
@@ -379,43 +395,48 @@
     - these files are generally only needed during image build
 
 - volumes
+
   - dont mount files/dirs in containers that arent required
 
-- start with the most isolated container  you can build and justify reasons for weakneing those restrictions
+- start with the most isolated container you can build and justify reasons for weakneing those restrictions
+
   - make sure every application is running as a user with limited permissions
   - limit the system capabilities of the browser
-  - set limits on how much  of the CPU and memory the application can use
+  - set limits on how much of the CPU and memory the application can use
   - specifically whitelist devices each program can access
-  - use capabilities to tune program access to  high level system services
+  - use capabilities to tune program access to high level system services
     - e.g. cron, syslogd, dbus, ssh, docker
   - dont run low level system services in containers
     - things like devices/network stack, firewall, file-system management, device management, network managent
     - they most always require priv access
     - generally are core host concerns
   - exceptions
+
     - short running configuration containers
+
       - in an env where all deployments happen with docker images and containers
       - you can create a single privileged container to make changes to high/low level system services
       - but make sure you restrict access to this container
 
-          ```sh
-            # find all files with SUID set
-            # use +2000 for SGID
-            docker run...
-              find / -perm 6000 -type -f
+        ```sh
+          # find all files with SUID set
+          # use +2000 for SGID
+          docker run...
+            find / -perm 6000 -type -f
 
-            # unset SUID and SGID for all appropriate files
-            RUN for i in \
-              $(find / -type -f\( -perm +6000 -o -perm +2000\)); \
-              do chmod ug-s $1; done
+          # unset SUID and SGID for all appropriate files
+          RUN for i in \
+            $(find / -type -f\( -perm +6000 -o -perm +2000\)); \
+            do chmod ug-s $1; done
 
-          ```
+        ```
 
-# architecture
+### architecture
 
 - docker is a commandline program, a background daemon, and a set of remote services that take a logistical approach to solving common software problems
   - installing, running, publishing and removing software
 - stack
+
   - without docker
     - user space
       - cmd line, software, etc
@@ -443,7 +464,7 @@
 - Virtualization vs Containerization
   - VM is a virtual machine
     - installed on top of the host OS, and runs a guest operating machine
-    - emulates a computer, usually to run an operating system  and applications
+    - emulates a computer, usually to run an operating system and applications
     - local VM
       - disk image livs on and VM execution happens on your computer
     - remote VM
@@ -458,9 +479,9 @@
       - netowork ports
       -
 
-## registries, indexes, repositories
+#### registries, indexes, repositories
 
-### repositories
+##### repositories
 
 - a named bucket of images
   - i.e. location/name pairs that point to set of specific layer Ids
@@ -478,7 +499,7 @@
   -
 -
 
-### registries and indexes
+##### registries and indexes
 
 - a set of infrastructure components that simplify distributing docker images
 - indexes
@@ -493,16 +514,18 @@
   - can be requested from any docker daemon that has access to the registry
   -
 
-#### customizing registries
+##### customizing registries
 
 - the docker daemon wont connect to a registry without TLs unless that registry is running on localhost
 - use cases
+
   - software that integrates with a docker registry may require a local instance to develop against
   - dev team might devploy their own central registry to share their work and streamline integrations
   - a company running one/more centralized registries that are backed by durable artifact storage
     - to control external image deps
     - managing deployment artifacts
   - distribution project
+
     - official image by docker for creating registries
     - production modifications
       - secrets management
@@ -515,6 +538,7 @@
       - debug endpoints
       - reliable storage
     - available storage backends
+
       - filesystem
       - azure
       - s3
@@ -537,6 +561,7 @@
         - skip the provided authentication mechanisms and implement your own at the reverse proxy layer (see example)
 
 - personal registries
+
   - architecture
     - layer 1
       - local docker client
@@ -546,6 +571,7 @@
     - dev/test purposes
 
 - centralized
+
   - requires TLS for any registry not running on localhost
   - layer 1
     - docker clients
@@ -561,10 +587,12 @@
         - man-in-the-middle attacks
 
 - centralized durable
+
   - centralized
   - but replace the local hd with a remote blob storage
 
 - fast and scalable
+
   - layer 1
     - docker clients
   - layer 2
@@ -591,8 +619,7 @@
     - middleware-enhanced remote blob storage
 - registry API
   - the VV2 registry API is restful
-  -
-            -
+  -          -
 
 ```sh
   # start a local registry
@@ -603,28 +630,34 @@
 
 ```
 
-### public and private software distribution
+##### public and private software distribution
 
 - hosted registries
   - offer both public and private repositories with automated build tools
 - private registry
+
   - enables you to hide and customize your image distribution infrastructure
 
-- distribution methods  (easiest -> most flexible)
+- distribution methods (easiest -> most flexible)
+
   - hosted registry with public repos
+
     - e.g. docker hub, quay.io
 
   - hosted registry with private repos
+
     - e.g. docker hub, quay.io, tutum.co, gcr.io
     - tools for working with private repos are identical to those for working with public repos
       - except for docker pull/run to install an image requires authentication
 
   - private registries
+
     - utlizes local registry software
       - e.g. local priate network, orporate network, private cloud infrastructure
     - users can interact with a private registry the same as a public registry
     - the most flexible distribution method that involves docker registries
     - use cases
+
       - hard requirement on availability, longevity or secrecy
       - regional image caches
       - team-specific image distribution for locality/visbility
@@ -658,6 +691,7 @@
           - configuration for a redis cache
 
   - custom image distribution infrastructure
+
     - when you work with images as files, you use docker only to manage local images and create files
     - process
       - build a docker file to local iamge cache
@@ -749,20 +783,21 @@
 
 ```
 
-## docker cmd line
+## docker ref
 
-- search the docker hub index and display results
-- issue cmds to the docker daemon
+- docker cmd line
 
-## docker daemon
+  - search the docker hub index and display results
+  - issue cmds to the docker daemon
 
-- should always be running
-- route cmds to containers
-- interfaces with each container space
-- is the parent process to all containers
-  - controls access to docker on your machine
-  - manages the state of containers and images
-  - brokers interactions with the outside world
+- docker daemon
+  - should always be running
+  - route cmds to containers
+  - interfaces with each container space
+  - is the parent process to all containers
+    - controls access to docker on your machine
+    - manages the state of containers and images
+    - brokers interactions with the outside world
 
 ```sh
   # generally all changes requires restarting the docker
@@ -807,11 +842,10 @@
   docker -H tcp://HOST_IP:2375 SOME_CMD
 ```
 
-## images
+### images
 
 - a collection of filesystem layers and some metadata
   - used to created docker containers
-  -
 - a file for starting containers
   - a bundled snapshot of all the files that should be available to programs running inside a container
   - stacks of layers constructed by traversing the layer dependency graph from some starting layer
@@ -823,6 +857,7 @@
     - etc
   - each time an image is changed it receives a new UID
 - things to know about every image
+
   - the base image and its installed software/deps
   - the entrypoint and default cmd
   - the configuration file (if any)
@@ -922,7 +957,7 @@
 
 ## volumes
 
-- a host/containers directory tree is created by a set of mount points that describe how to piece together one/more file  systems
+- a host/containers directory tree is created by a set of mount points that describe how to piece together one/more file systems
 - volume
   - mount point on the containers directory tree where a portion of the host directory tree has been mounted
   - useful for working with persistent/shared data
@@ -946,9 +981,11 @@
 ### volume types
 
 - for virtualbox (docker machine / boot2docker) users
+
   - the host path specified in each value is relative to their virtual machine root file system and not the root of their host
 
 - bind mount volumes
+
   - use any user-specified directory/file on the host operating system
     - i.e. specify the location on the host where data is persisteed
   - use cases
@@ -974,6 +1011,7 @@
 ### volume patterns
 
 - volume container
+
   - creating a container with an attached volume, stopping the container, then source that containers volume when creating other containers
     - when creating the container, you can issue a simple echo command to run it and exit immediately
   - a volume container doesnt need to be running because stopped containers maintain their volume references
@@ -986,6 +1024,7 @@
       - so when containers source from the volume container, they have some indication where the volume will be mounted
 
 - data packed volume containers
+
   - using images to distribute static resources like configuration/code for use in containers created with other images
   - i.e. specify the volume in the Dockerfile, and copy static content into the volume at container creation time
 
@@ -1005,7 +1044,7 @@
   - when two/more containers all have a bind mount volume for a single known location on the host file system
 - generalized sharing via `volumes-from`
   - copy the volumes from one/more containers to a new container
-  - it will copy direct and transitive  (children) volumes into the new container
+  - it will copy direct and transitive (children) volumes into the new container
   - `volumes-from` can be set multiple times to source multiple containers
   - issues
     - copied volumes always have th same mount point
@@ -1170,6 +1209,7 @@
 - each archetype provides a different level of isolation\]]
 
 - closed containers
+
   - doesnt allow any network traffic
     - i.e. is not connected to the docker bridge (docker0) interface
     - container process can connect to/wait for (internal) connections on the loopback interface
@@ -1184,6 +1224,7 @@
   -
 
 - bridged containers
+
   - the most customizable and should be hardened as a best practice
   - connected to docker0
   - arent accessible from the host network by default
@@ -1196,6 +1237,7 @@
     -
 
 - joined containers
+
   - containers that share a common network stack
     - i.e. theres no isolation between between them
     - in the default network stack, all containers share the same virtual interface
@@ -1337,7 +1379,9 @@
 
 - containers provide isolated process context, not 100% system virtualization
 - Container isolation
+
   - PID namespace
+
     - the set of possible numbers that identify each process
     - process identifiers
     - process capabilities
@@ -1346,21 +1390,26 @@
     -
 
   - UTS namespace
+
     - host and domain name
 
   - MNT namespace
+
     - file system access and structure
     - the linux kernel provides a namespace for the MNT system
     - when docker creates a container
       - the new container will have its own MNT namespace and a new mount point will be created for the container to the image
 
   - IPC namespace
+
     - process communication over shared memory
 
   - NET namespace
+
     - network access and structure
 
   - USR namespace
+
     - user names and identifiers
     - allows users in one namespace to be mapped to users in another
       - operates like the PID namespace
@@ -1377,6 +1426,7 @@
         - running system admin software that requires priviledged access
 
     .- chroot()
+
   - controls the location of the file system root
   - used to make the root of the image file system the root in the containers context
 
@@ -1450,12 +1500,14 @@
     - replaces the standard discreetionary access control
       - i.e. file owners define access rules
 - AppArmor
+
   - frequently preferred oer SELinux
     - works with file paths instead of labels
     - has a training mode to passively build provles based on obsered application behavior
     - easier to adopt and maintain for NOOOBS LIKE YUUU
 
 - SELinux
+
   - a labeling system
   - context
     - a set of labels
@@ -1463,7 +1515,7 @@
       - every file and system object
       - every user and process
   - at runtime whe n a process attempts to interact with a file or system resource
-    - the sets of labels are evaluated against a  set of allowed rules
+    - the sets of labels are evaluated against a set of allowed rules
     - the result of that evaluation determines whnether the interactioin is allowed or blocked
 
 - LXC (linux containers)
@@ -1471,7 +1523,7 @@
   - a tool that actually works with linux to create namespaces and all the components that go into building a container
     - replaced by libcontainer (current runtime provider for docker)
   - docker was originally built to use LXC
-  - is more mature  that libcontainer and provides many additioonal features
+  - is more mature that libcontainer and provides many additioonal features
     - however you LOSE PORTABILITY!
       - phuck your portability
   - LXC configuration
@@ -1549,24 +1601,31 @@
 - uses extensive caching to aid rapid development and iteration
 
 - keys
+
   - can use var substitution
+
     - ENV, ADD, COPY, WORKDIR, VOLUME, EXPOSE, USER
     - use `docker inspect...` on the resulting image to verify vars are set correctly
 
   - basic instructions
+
     - FROM image:tag
+
       - i.e. sets the layer stack to start from a specific image
       - must be the first line in the dockerfile
       -
 
     - MAINTAINER "super@dope.com"
+
       - maintainer name and email for the image
       - helps people know whom to contact if theres a problem with the image
 
     - RUN any linux cmd
+
       - scoped to the distro youre using
 
     - ONBUILD
+
       - used to inject downstream build-time behavior
       - defines instructions to execute if the resulting image is used as a base image for naother build
         - the instructions are recorded in the resulting images metadata under `ContainerConfig.OnBuild`
@@ -1574,12 +1633,13 @@
         - e.g. to compile a program thats provided by a downstream layer
       - the upstream dockerfile will execute the ONBUILD instruction before running any other instructions
       - examples
-        - registry.hub.docker.com/_/python/
+        - registry.hub.docker.com/\_/python/
           - /golang/
           - /node/
       -
 
     - ENTRYPOINT
+
       - sets the executable to be run at container init
       - shell form
         - a shell cmd with whitespace-delimited arguments
@@ -1592,31 +1652,38 @@
         - a string array where the first value is the cmd to eecute and the remaining values are arguments
 
     - `# this is a comment`
+
       - use comments liberally
 
     - ENV
+
       - set env vars for the resulting image and other dockerfile instructions
       - use ENV vars to also set dynamic values for later use by LABEL instructions
         - the value of the vars will be avaiable to processes running inside a container as well as recorded to the appropriate label
 
     - LABEL
+
       - define key=value pairs that are recordded as additional metadata fo ran image//container
       - use ENV vars
 
     - WORKDIR
+
       - set the default working directory
       - if the dir does not exist it will be created
 
     - EXPOSE
+
       - creates a layer that opens a specific port
       - the container will listen on all exposed ports
 
     - USER
+
       - sets the user and group for all further build steps and containers created from the image
       - while the user and group should be created as early as possible
         - this instruction should be used as LATE as possible
 
     - CMD
+
       - represents the default argument list for the entrypoint exec form
 
     - ARGS
@@ -1630,13 +1697,16 @@
         - available after FROM
 
   - file system instructions
+
     - COPY
+
       - copy files from current context into the build container
       - any files copied will be copied with the file ownership set to root
         - the default regardless of how the default user is set before the copy instruction
         - de
 
     - ADD
+
       - differs from COPY in two ways
         - fetch remote sources if a URL is specified
         - extract files of any source determined to be an archive file (tar, gzip, etc)
@@ -1677,6 +1747,7 @@
   - manage the build phase for environments that use data-packed volume containers to inject environment configuration
 - compose cmds should be executed in the directory the compose.yml file is located
 - build context
+
   - directory sent to the docker daemon
   - all files not ignored in `.dockerignore` are available
 
@@ -1691,15 +1762,18 @@
   - you dont need to specify them again in the compose file
   - CMD, EXPOSE, VOLUME, ENV
 - YAML boolean values must be enclosed in quotes
+
   - true, false, yes, no, on off
 
 - some keys accept lists or mappings
+
   - lists
     - `- key=value`
   - mapping
     - `key: value`
 
 - service definition
+
   - i.e. docker container create
   - if build + image are specified
     - value of image becomes image name
@@ -1831,6 +1905,7 @@
 - transport layer security
 - provides endpoint identifications, message integrity and message privacy
 - implemented at a layer below http and is what provides the S in https
+
   - uses port 443 instead of 80
   - requires a signed certificate and private key files
   - the host name of the server and the proxy configuration must match the one use dto create the certificate
@@ -1857,6 +1932,7 @@
   - a cheaper and arguably less complex way to secure your registry network traffic is to enable connections only through SSH
   - centralized registry for small teams
 - gotchas
+
   - requires a user account management and authentication system in place, e.g. pub/priv keys
   - does scale well
 
@@ -1976,9 +2052,11 @@
   - return the container UID
     - its common to persist the UID to a variable for use with other cmds
 - docker run creates a NEW CONTAINER each time
+
   - use docker start to run an existing container
 
 - options
+
   - -i and -t are used together for running interactive programs like a shell in an interactive container
 
   - `-d | --detached`
@@ -1989,6 +2067,7 @@
   - `-i | --interactive`
     - keep STDIN open even if not attached
   - `-t | --tty`
+
     - allocate a pseudo-tty (i.e. virtual terminal)
 
   - `--pid`
@@ -2001,16 +2080,18 @@
     - set env variables
     - overrides variables set in the image
   - `--restart=POLICY`
-    - restart policy to appply whena  container exists
+    - restart policy to appply whena container exists
     - policies
       - `no` dont restart when the container exits
       - `always` always restart when the container exits
       - `unless-stopped` always restart, but remember explicitly stopping
       - `on-failure[:max-retry]` restart only on failure
   - `--rm`
+
     - automatically remove containers when they are stopped
 
   - resource limits/authorization
+
     - `--ipc`
       - IPC mode to use
       - share memory between processes on a single host but different containers
@@ -2036,6 +2117,7 @@
     - `--memory-swappiness`
       - tune container memory swappiness (0...100)
     - `--cpuset-mems`
+
       - MEMs in which to allow execution
       - 0...3, (range) 0,1 (specific)
 
@@ -2052,6 +2134,7 @@
     - `--cpus`
       - number of CPUs
     - `--cpuset-cpus`
+
       - CPUs in which to allow esecution
       - 0...3 (range), 0,1 (specific)
 
@@ -2074,28 +2157,34 @@
       - limit write (io per sec) rate to a device
 
   - networking
+
     - `-h | --hostname`
+
       - set the containers hostname
 
     - `--dns`
+
       - set custom DNS servers
       - must be an IP address
       - can also be set when you startup the docker daemon that runs in the background providing it all containers by default
 
     - `--dns-search`
+
       - set custom DNS
       - specify a dns search documentationlike a defrault host name suffic
       - any hostnamaes that do not have a top-level domain (e.g. .com) will be searched for with the specified suffix appended
       - use cases
         - shortcut names for internal corporate networks
           - e.g. <http://wiki/> -> <http://wiki.google.com/>
-        - setting up dev/test env  hostnames that auto resolve without builcing env-aware software
+        - setting up dev/test env hostnames that auto resolve without builcing env-aware software
         - can be set with setting up the docker daemon to provide defaults for every container created
 
     - `--dns-option`
+
       - set DNS options
 
     - `--add-host`
+
       - override the DNS system (i.e. update /etc/hosts)
       - add a custom host-to-ip mapping (host:ip)
       - use cases
@@ -2112,7 +2201,8 @@
       - publish all exposed ports to random host ports if no host port is specified
       - note the capital P
     - `--expose`
-      - expose  port/range of ports
+
+      - expose port/range of ports
       - binds exposed ports to ephemeral (i.e. dynamic) ports on the host
       - images maintain a lkiikst of ports that are exposed for simiplicity and as a hint to users where contained services are listening
 
@@ -2130,15 +2220,16 @@
       -
       - environment modifications when links are created
         - injects env variables prepended with the alias name
-        - <ALIAS>_PORT_<PORT_#>_<TCP|UDP>_PORT=<PORT_#>
+        - <ALIAS>_PORT_<PORT*#>*<TCP|UDP>_PORT=<PORT_#>
           - contains the port number
-        - <ALIAS>_PORT_<PORT_#>_<TCP|UDP>ADDR=<IP>
+        - <ALIAS>_PORT_<PORT*#>*<TCP|UDP>ADDR=<IP>
           - contains the ip address of the container
-        - <ALIAS>_PORT_<PORT_#>_<TCP|UDP>_PROTO=<PROTO>
+        - <ALIAS>_PORT_<PORT*#>*<TCP|UDP>\_PROTO=<PROTO>
           - contains the protocol, either TCP/UDP
-        - <ALIAS>_PORT_<PORT_#>_<TCP|UDP>=<URI>
+        - <ALIAS>_PORT_<PORT*#>*<TCP|UDP>=<URI>
           - contains the full url, e.g. tcp://172.17.0.23/3333
-        - <ALIAS>_NAME=/<container_name>/<alias_name>
+        - <ALIAS>\_NAME=/<container_name>/<alias_name>
+
   - security
     - `--privileged`
       - give extended privileges to this container
@@ -2159,7 +2250,7 @@
         - specified as high-low pairs, or a single low level
       - label:disable
         - disable SELinux label confinement for a container
-        -label:apparmor:<PROFILE>
+          -label:apparmor:<PROFILE>
           apply an AppArmor profile on the container
 
 ```sh
@@ -2453,6 +2544,7 @@
 - `--security-opt`
   - security options
 - `--target`
+
   - set the target build stage to build
   - `-t`
     - tag the image
@@ -2478,10 +2570,10 @@
   - docker commands / by hand
     - fire up a container with docker run and input the commands to create yoru image on the command line
     - create an image with docker commit
-    - fire if your  doingn proofs of concepts to see whether your isntallation process works
+    - fire if your doingn proofs of concepts to see whether your isntallation process works
       - should keep notes to define the steps for creating your image via a more sopphisticated method
   - dockerfile
-    - build from a  known base image and specify the build with a limited set of simple commands
+    - build from a known base image and specify the build with a limited set of simple commands
   - dockerfile and configuration management (CM) tool
     - same as dockerfile, but you hand over control of the build to a more sophisticated CM tool
     - useful when a dockerifle isnt enough for complex build steps
@@ -2576,9 +2668,9 @@
   - using the machine as the unit of deployment
     - i.e. each new piece of software gets its own fleet of machines that can be scaled on demand
   - scheduling distributed machines
-      1. efficiency of resource usage
-      2. the performance characteristis of each machines hardware
-      3. network locality
+    1. efficiency of resource usage
+    2. the performance characteristis of each machines hardware
+    3. network locality
     - scheduling
       - selecting a machine based on the above 3 factors
   - registration
@@ -2589,16 +2681,19 @@
 ### docker swarm architecture
 
 - cluster discovery subsystem
+
   - the heartbeat with
     - resource useage statistics
     - the local container list
 
 - docker host/machine
+
   - can be a manager, workeer, or peform both roles
 
 - swarm cluster is made up of two types of machines
 
   - swarm managers
+
     - multiple docker hosts which run in swarm mode and act as managers
       - manage membership and delegation
     - periodically pull lists of
@@ -2705,7 +2800,7 @@
 
 ## docker-machine active
 
-```sh
+````sh
   # print the active machine
   docker-machine active
 ``
@@ -2730,7 +2825,7 @@
 ```sh
   # get the ip of host1
   docker-machine ip host1
-```
+````
 
 ## docker-machine upgrade
 
