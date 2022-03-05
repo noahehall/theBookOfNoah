@@ -1,6 +1,24 @@
 # docker
 
-- my docker cheatsheet
+- my (2022) docker cheatsheet
+
+## links
+
+- [docker docs](https://docs.docker.com/)
+- [docker ref](https://docs.docker.com/reference/)
+- [docker guides: overview](https://docs.docker.com/get-started/overview/)
+- [docker dev best practices](https://docs.docker.com/develop/dev-best-practices/)
+- [compose in prod](https://docs.docker.com/compose/production/)
+- [buildx github](https://github.com/docker/buildx)
+- [docker buildkit backend](https://docs.docker.com/engine/reference/builder/#buildkit)
+
+- on the web
+  - [uid & gid in docker containers](https://medium.com/@mccode/understanding-how-uid-and-gid-work-in-docker-containers-c37a01d01cf)
+  - [vagrant vs docker](https://www.ctl.io/developers/blog/post/docker-vs-vagrant)
+  - [k8s vs docker swarm](https://thenewstack.io/kubernetes-vs-docker-swarm-whats-the-difference/)
+  - [hella dockerfile examples](https://github.com/jessfraz/dockerfiles)
+  - [pretty good docker cheetsheet](https://github.com/wsargent/docker-cheat-sheet)
+  - [docker + buildkit](https://devopsspiral.com/articles/containers/modernize-image-builds/)
 
 ## basics
 
@@ -41,16 +59,4 @@
     docker ps -l # show the last created container
     CID=$(docker ps -l -q) # save the UID of the last created container
 
-    # aggregated stream of all services
-    docker compose ps
-
-
-    # naming images
-        # IMAGE_NAME format: <host><username>/<repo-name>[:<tag>]
-        # during build
-            docker build -t IMAGE_NAME
-        # re-tagging an existing local image
-            docker tag PREV_IMG_NAME NEW_IMG_NAME
-        # commit current state of a container
-            docker commit CNTER_NAME NEW_IMAGE_NAME
 ```
