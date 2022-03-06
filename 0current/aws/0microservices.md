@@ -312,9 +312,11 @@ exports.handler = function (event, context, callback) {
       "Parameters": {
         "FunctionName": "arn:aws:lambda:poop:poop:function:someLambdaFn:$SOME_VERSION" // should be able to use an alias, like $dev or $prod if youve created those stages
         "Payload": {
-          "Input.$": "$"
+          "Input.$": "$" // $ === the event.input passed to the lambda
         }
       },
+      "ResultPath": "$.someVarName", // save the received input value back into $ under someVarName
+        "OutputPath": "$" // output this lambdas input as input to the next state
       "End": true, // this state ends the state machine
     },
     // example choice state
