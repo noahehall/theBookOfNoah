@@ -305,7 +305,7 @@ exports.handler = function (event, context, callback) {
   - wait: wait for a certain duration/specific time
   - map: processing a set of steps in an input array
 - state errors: cause state machines to fail
-  - States.ALL: catchall reference
+  - States.ALL: catchall reference to error thrown that isnt caught by something more specific
   - States.Runtime: corrupt input/output, blank json document, etc; is not retriable
   - States.Timeout: a task exceeds an execution threshold
   - States.TaskFailed: specific task states
@@ -325,6 +325,26 @@ exports.handler = function (event, context, callback) {
     "someKey": {
       "type": "Task", // see state types above
       "Resource": "arn::aws::states:::lambda:invoke",
+      "TimeoutSeconds": 10, // max execution time for this state
+      "Retry": [ // retry logic
+        {
+          "ErrorEquals": ["States.Timeout"], // any list of err names
+          "IntervalSeconds": 3, // wait this many secs between retries
+          "MaxAttempts": 2, // dont try too many times
+          "BackoffRate": 1.5 // in addition to intervalSeconds
+        },
+      ],
+      "Catch": [ // catch logic  if retries fails
+        {
+          "ErrorEquals": ["some.node.error.dunno"],
+          "ResultPath": "$.errorInfo", // place stacktrace in this var
+          "Next": "RecoveryState", // transition here
+        },
+        {
+          "ErrorEquals": ["States.ALL"], // all other errors
+          "Next": "ifErrorThenExitPoop" // stop processing this state
+        }
+      ],
       "Parameters": {
         "FunctionName": "arn:aws:lambda:poop:poop:function:someLambdaFn:$SOME_VERSION", // should be able to use an alias, like $dev or $prod if youve created those stages
         "Payload": {
@@ -357,6 +377,11 @@ exports.handler = function (event, context, callback) {
         "someVarName": "use this value", // assign someVarName the value useThisValue
       },
       "ResultPath": "$.Payload.body.someVarName" // downstream states can access it here
+    },
+    // example pass state, e.g. transition here from a catch definition
+    "ifErrorThenExitPoop": {
+      "Type": "Pass",
+      "End": true
     }
   }
 }
