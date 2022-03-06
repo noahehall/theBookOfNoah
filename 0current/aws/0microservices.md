@@ -7,6 +7,7 @@
 ## links
 
 - [kinesis](https://aws.amazon.com/kinesis/)
+- [amazon states language](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html)
 
 ## basics
 
@@ -268,11 +269,32 @@ exports.handler = function (event, context, callback) {
 
 - workflow automation, e.g. state machines & orchestration between lambda fns
 - the return values of a lambda fn can drive a state transition in the step function state machine
-
-- state machine: defines the workflow
-- definition: different ways to define the workflow
-  - amazon states language: json schema defining states, actions, and transitions
-    - there are various `generate code snippets
+- features
+  - sync/async exeuction
+  - retry logic
+  - error handling
+  - i/o parameter management
+  - timeout control
+- use cases
+  - create workflows between lambda fns, using the output from one as input to another
+  - simplify lambda fn dependency logic, especially where you end up creating a lambda fn to manage the dependency graph between a series of lambdas
+- state machine: a workflow, defining a series of steps/states, their input, and the workflow/relationships between them
+  - definition: a json object defining the state machine
+- amazon states language: json schema defining states, actions, and transitions
+  - there are various `generate code snippets`
+- state types
+  - tasks: execute tasks/actions, e.g. invoke lambda fns or API Actions (http calls)
+  - choice: add branching logic for transitioning between steps; supports several conditions
+  - stop:
+    - succeed: state machine is completed
+    - fail:
+    - fail with cause and error: specify retry logic
+  - pass: performs no action, but takes an input and passes it to an output
+    - useful for prototyping/troublingshooting, as you can inject values into the input that gets passed to the next state
+  - parallel: execut multiple tasks at once; if any of the branches fail, the entire state fails
+    - each branch has a copy of the input
+  - wait: wait for a certain duration/specific time
+  - map: processing a set of steps in an input array
 
 ```json
 {
@@ -283,7 +305,6 @@ exports.handler = function (event, context, callback) {
       // state definition
     }
   }
-
 }
 ```
 
