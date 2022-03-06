@@ -121,6 +121,9 @@ awsliststatemachines() {
 awsrunstatemachine() {
     # todo
     aws stepfunctions start-execution help
+    # args:
+    # --state-machine-arn some_arn_from_aws
+    # --input file://some_file_path.json
 }
 # @see https://github.com/donnemartin/saws
 
