@@ -14,6 +14,8 @@
 
 ## links
 
+- [aws developer tools](https://aws.amazon.com/products/developer-tools/)
+- [aws toolkit for vscode](https://aws.amazon.com/visualstudiocode/)
 - [sam cli](https://github.com/aws/aws-sam-cli)
 - [all cli cmds](https://docs.aws.amazon.com/cli/latest/reference/)
 - [aws ci install & update directions](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
@@ -301,3 +303,12 @@
 ### sam cli
 
 - AWS Serverless Application Model (SAM) CLI is an open-source CLI tool that helps you develop serverless applications containing Lambda functions, Step Functions, API Gateway, EventBridge, SQS, SNS and more. Some of the features it provides are:
+
+- docker is preqreq for testing applications locally and building deployment packages using the `--use-container` option
+  - the sam cli uses the `DOCKER_HOST` env var to communcate with the docker daeon
+
+```sh
+
+sam --version
+
+```

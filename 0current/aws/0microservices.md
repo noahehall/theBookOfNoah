@@ -269,6 +269,24 @@ exports.handler = function (event, context, callback) {
 - workflow automation, e.g. state machines & orchestration between lambda fns
 - the return values of a lambda fn can drive a state transition in the step function state machine
 
+- state machine: defines the workflow
+- definition: different ways to define the workflow
+  - amazon states language: json schema defining states, actions, and transitions
+    - there are various `generate code snippets
+
+```json
+{
+  "comment": "describe the state machine"
+  "StartAt": "someKeyFromStates",
+  "States": {
+    "someKey": {
+      // state definition
+    }
+  }
+
+}
+```
+
 ## SES
 
 - simple email service
