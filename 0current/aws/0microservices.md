@@ -283,7 +283,7 @@ exports.handler = function (event, context, callback) {
   - create workflows between lambda fns, using the output from one as input to another
   - simplify lambda fn dependency logic, especially where you end up creating a lambda fn to manage the dependency graph between a series of lambdas
 - amazon states language: json schema defining states, actions, and transitions
-  - there are various `generate code snippets`
+  - there are various `generate code snippets` that you can select & copy/pasta into your stateMachine.stats member
 - state machine: a workflow, defining a series of steps/states, their input, and the workflow/relationships between them
   - definition: a json object defining the state machine
   - state types
@@ -305,16 +305,40 @@ exports.handler = function (event, context, callback) {
   "comment": "describe the state machine"
   "StartAt": "someKeyFromStates",
   "States": { // each defines a specific state
+    // example task state
     "someKey": {
       "type": "Task", // see state types above
       "Resource": "arn::aws::states:::lambda:invoke",
       "Parameters": {
-        "FunctionName": "arn:aws:lambda:poop:poop:function:someLambdaFn:$VERSION"
+        "FunctionName": "arn:aws:lambda:poop:poop:function:someLambdaFn:$SOME_VERSION" // should be able to use an alias, like $dev or $prod if youve created those stages
         "Payload": {
           "Input.$": "$"
         }
       },
       "End": true, // this state ends the state machine
+    },
+    // example choice state
+    "someOtherKey": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.Payload.body.someKey", // value from some previous lambda fn
+          "SomeCondition": "equals this value",
+          "Next": "someUberKey" // transition to this state on truthy
+        }
+      ],
+      "Default": "Default value for choice"
+    },
+    // example pass state
+    // in this example, the SomeOtherKey choices state, if truthy, will transition to this pass state
+    // this pass state will inject a variable with a predefined value
+    // that is accessible to downstream states
+    "someUberKey": {
+      "Type": "Pass",
+      "Result": {
+        "someVarName": "use this value", // assign someVarName the value useThisValue
+      },
+      "ResultPath": "$.Payload.body.someVarName" // downstream states can access it here
     }
   }
 }
