@@ -117,6 +117,11 @@ awslists3() {
 awsliststatemachines() {
     aws stepfunctions list-state-machines
 }
+
+awsrunstatemachine() {
+    # todo
+    aws stepfunctions start-execution help
+}
 # @see https://github.com/donnemartin/saws
 
 awsprofileset() {
