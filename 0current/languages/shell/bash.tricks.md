@@ -28,4 +28,12 @@
   # find files you can access, send to accessiblefiles list
   # for files you cant access, send to innacessbilefileslist
   find / -print > accessiblefileslist 2> inaccessiblefileslist
+
+  # create a multiline file with some poopy text
+  myhost=`hostname`
+  cat > /some/file/to/save/this/shiz.txt <<-EOF
+  save this text
+  into shiz.txt
+  my host is $myhost
+EOF
 ```
