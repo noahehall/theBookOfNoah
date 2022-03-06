@@ -284,21 +284,37 @@ exports.handler = function (event, context, callback) {
   - simplify lambda fn dependency logic, especially where you end up creating a lambda fn to manage the dependency graph between a series of lambdas
 - amazon states language: json schema defining states, actions, and transitions
   - there are various `generate code snippets` that you can select & copy/pasta into your stateMachine.stats member
-- state machine: a workflow, defining a series of steps/states, their input, and the workflow/relationships between them
-  - definition: a json object defining the state machine
-  - state types
-    - tasks: execute tasks/actions, e.g. invoke lambda fns or API Actions (http calls)
-    - choice: add branching logic for transitioning between steps; supports several conditions
-    - stop:
-      - succeed: state machine is completed
-      - fail:
-      - fail with cause and error: specify retry logic
-    - pass: performs no action, but takes an input and passes it to an output
-      - useful for prototyping/troublingshooting, as you can inject values into the input that gets passed to the next state
-    - parallel: execut multiple tasks at once; if any of the branches fail, the entire state fails
-      - each branch has a copy of the input
-    - wait: wait for a certain duration/specific time
-    - map: processing a set of steps in an input array
+
+### state machine:
+
+- a workflow, defining a series of steps/states, their input, and the workflow/relationships between them
+  - you generally want a single start, and a single end point in the workflow
+- definition: a json object defining the state machine
+  - everything in step functions are Case SeNsSiTiVe
+- state types
+  - tasks: execute tasks/actions, e.g. invoke lambda fns or API Actions (http calls)
+  - choice: add branching logic for transitioning between steps; supports several conditions
+  - stop:
+    - succeed: state machine is completed
+    - fail:
+    - fail with cause and error: specify retry logic
+  - pass: performs no action, but takes an input and passes it to an output
+    - useful for prototyping/troublingshooting, as you can inject values into the input that gets passed to the next state
+  - parallel: execut multiple tasks at once; if any of the branches fail, the entire state fails
+    - each branch has a copy of the input
+  - wait: wait for a certain duration/specific time
+  - map: processing a set of steps in an input array
+- state errors: cause state machines to fail
+  - States.ALL: catchall reference
+  - States.Runtime: corrupt input/output, blank json document, etc; is not retriable
+  - States.Timeout: a task exceeds an execution threshold
+  - States.TaskFailed: specific task states
+  - States.Permissions: incorrect IAM Role, e.g. you didnt add a lambda permission to invoke a lambda fn from a step function
+- lambda specific errors
+  - Lambda.Unknown: e.g. out of memory condition
+  - Lambda.Exception
+  - Lambda.ServiceException
+  - Lambda.ErrorName: general format of all lambda errors
 
 ```json
 {
@@ -310,14 +326,14 @@ exports.handler = function (event, context, callback) {
       "type": "Task", // see state types above
       "Resource": "arn::aws::states:::lambda:invoke",
       "Parameters": {
-        "FunctionName": "arn:aws:lambda:poop:poop:function:someLambdaFn:$SOME_VERSION" // should be able to use an alias, like $dev or $prod if youve created those stages
+        "FunctionName": "arn:aws:lambda:poop:poop:function:someLambdaFn:$SOME_VERSION", // should be able to use an alias, like $dev or $prod if youve created those stages
         "Payload": {
           "Input.$": "$" // $ === the event.input passed to the lambda
         }
       },
       "ResultPath": "$.someVarName", // save the received input value back into $ under someVarName
-        "OutputPath": "$" // output this lambdas input as input to the next state
-      "End": true, // this state ends the state machine
+        "OutputPath": "$", // output this lambdas input as input to the next state
+      "End": true, // this is the state in the step function state machine
     },
     // example choice state
     "someOtherKey": {
