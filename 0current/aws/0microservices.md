@@ -315,6 +315,17 @@ exports.handler = function (event, context, callback) {
   - Lambda.Exception
   - Lambda.ServiceException
   - Lambda.ErrorName: general format of all lambda errors
+- executing state machines
+  - via web console
+  - via AWS cli/aws SAM cli
+  - via (e.g. node) aws sdk
+  - via api gateway endpoint
+  - one statemachine task can execute another state machine (a nested execution)
+  - cloudwatch event trigger
+  - lambda fn that uses the aws sdk
+- logging
+  - add the cloudwatchlogs permissions to whatever role you're using
+  - enable logging and there will be a cloudwatch log group that contains the state machien step function in its entirety in each log event, with additional metadata
 
 ```json
 {
@@ -379,6 +390,7 @@ exports.handler = function (event, context, callback) {
       "ResultPath": "$.Payload.body.someVarName" // downstream states can access it here
     },
     // example pass state, e.g. transition here from a catch definition
+    // could be enhanced, e.g. to send an email via SES
     "ifErrorThenExitPoop": {
       "Type": "Pass",
       "End": true

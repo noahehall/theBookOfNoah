@@ -110,6 +110,13 @@ makechecksum() {
 
 # aws --------------------------------------------------------------------------
 
+awslists3() {
+    aws s3 ls
+}
+
+awsliststatemachines() {
+    aws stepfunctions list-state-machines
+}
 # @see https://github.com/donnemartin/saws
 
 awsprofileset() {
