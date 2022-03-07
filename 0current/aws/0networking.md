@@ -17,7 +17,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
 ## basics
 
-- bastion host: a server that provides access to a private network from an external network (e.g. the internet)
+- bastion host: a server that provides access to a private network from an external network
 
 ### best practices / gotchas
 
@@ -34,7 +34,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - review the dashboards:
     - vpc: provides a holistic view of all VPC components in all regions
       - can also drill down to a specific region
-    - ec2: the deashboard also provides a holistic view
+    - ec2: the dashboard also provides a holistic view
   - setup new Network ACL on your VPCs to deny traffic on ports your not using, from IPs your not expecting
     - NACLs are the only way to set deny rules, and take precedence over security groups
     - ^ important for denying inbound traffic to databases & internal apps
@@ -88,7 +88,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
 - subnets
 
-  - aws reserves the first 3 ips in every subnet is for internal routing purposes
+  - aws reserves the first 3 ips in every subnet for internal routing purposes
   - subnets not explicitly associated with a route table, end up in the VPCs main route table
   - you cannot alter the default route table that allows traffic on the same subnet
     - so any resource to resource connectivity problems must be at the security group level
@@ -119,11 +119,8 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - tool to control inbound & outbound network traffic to resources in AWS
 - work at the component level: only apply to the specific resources they are assigned to (e.g. a specific ec2 instance)
 - like a virtual firewall for various resources to control inbound/outbound traffic
-  - have separate inbound & outbound rules
-    - by default
-      - all outbound is permitted
-      - and all inbound is blocked
-  - only suppors allow rules (i.e. all traffic blocked by default)
+  - by default all inbound traffic is blocked & outbound traffic permitted
+  - you have to specifically add allow rules for inbound traffic
   - are stateful
     - if you send a request from an instance, the response is allowed to flow in regardless of rules
       - so make sure you dont connect to vulnerable hosts
@@ -175,7 +172,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - configure subnet route tables to use the internet gateway
   - provides NAT for instances with a public IP
 
-- NAT gateway: network address translation; enable resources in a private subnet to initiate & connect to the public internet
+- NAT gateway (managed): network address translation; enable resources in a private subnet to initiate & connect to the public internet
 
   - requires an EIP
     - useful for providing a consistent resource for apps & end users
@@ -183,7 +180,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - has to be contained in a public subnet
   - map multiple private hosts to a single internet routable IP address
 
-  - nat instance
+  - nat instance (unmanaged)
 
     - you create an ec2 within a public subnet,
     - have to manage the server yourself: updates, patches, security, etc

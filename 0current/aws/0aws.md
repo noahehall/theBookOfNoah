@@ -97,7 +97,7 @@
 
 - tags
   - to ensure tags are shown in dashboard columns, they must be case-sensitive
-    - i.e. `Name` [dashboard] !== `name` [tag]
+    - i.e. `Name` !== `name`
 - encryption
 - user policies: use IAM to manage access to resources on AWS,
   - i.e. create IAM users, groups and roles and attach access policies to them to grant access to resources
@@ -108,7 +108,7 @@
 
   - list of grants identifying grantee and permission granted
 
-- resource: an entity tha tyou can work with (e.g. an s3 bucket, or an s3 bucket object)
+- resource: an entity that you can work with (e.g. an s3 bucket, or an s3 bucket object)
 - resource > subresource: child of a reosurce
 - resource owner: by default its the AWS account that creates the resource, but can be changed via resource/user based policies (e.g. to be the IAM user and not hte account owner)
 
@@ -181,7 +181,7 @@
   - represented by `name-name-number`
 - availability zone: a distinct data center (or set of data centers) in a region
   - distinct location within a region thats insulated from failures in other availability zones
-  - each AZ within are connected through low-latency links
+  - each AZ within a region are connected through low-latency links
   - represented by a `letter`
 - edge locations
   - independent of region & azs
