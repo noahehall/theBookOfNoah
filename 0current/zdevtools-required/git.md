@@ -7,11 +7,12 @@ long list of git
 
 ## LINKS
 
-- github actions
+- github actions/workflows
 
   - [github actions docs](https://docs.github.com/en/actions)
   - [github runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners)
   - [github example node ci build test](https://github.com/actions/starter-workflows/blob/main/ci/node.js.yml)
+  - [events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows)
 
 - refrence
 
@@ -247,28 +248,21 @@ git remote prune origin
   - stored in `.github/workflows/someworkflow.yml`
 - events:
 
-  - e.g. a push, checkout, etc
+  - e.g. a push, pull_request,
   - a webhook, e.g. branch creation/deletion, issues opened/resolved,
   - a schedule, similar to cron format
 
 - workflow & action attributes
   - name: identifies the workflow, if not supplied then github will use the name of the file
   - on: the github event that triggers the workflow
-  - jobs: a workflow can have multiple jobs, each containing a series of steps to be executed
-  - runs-on: the VM (runner) to use
-  - steps: list of actions/cmds, has access to the file system, each step runs in its own process
-    - uses: identifies a (i.e. docker image) that will run the action
-      - the docker images can be located the same repo, another public repo, or a container registry like docker hub
-    - run: runs a cmd in the VMs shell environment
-    - name: optional identifer for the step
-
-```yml
-name: ci
-on: [push]
-jobs:
-  test:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-      -
-```
+  - jobs: a workflow can have multiple jobs, each containing a series of steps to be executed, by default they run in parallel
+    - runs-on: the VM (runner) to use
+    - steps: one/more tasks within a job, has access to the file system, each step runs in its own process
+      - name: optional identifer for the step that follows
+      - uses: identifies the path to an action/docker image to be executed in the VM
+        - more versatile than a run statement as you can specify a series of things in an action file
+        - can be located the same repo, another public repo, or a container registry like docker hub
+          - public repo: owner/repo@ref,
+          - same repo: ./.github/actions/somepath
+          - docker image registry: docker://hello-world:latest
+      - run: runs a cmd in the VMs shell environment
