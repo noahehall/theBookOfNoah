@@ -9,6 +9,7 @@
 - [kinesis](https://aws.amazon.com/kinesis/)
 - [amazon states language](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html)
 - [amazon ecr public gallery](https://gallery.ecr.aws/)
+- [container definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definitions%3Ficmpid=docs_ecs_hp-task-definition)
 
 ## basics
 
@@ -393,13 +394,26 @@ exports.handler = function (event, context, callback) {
 ## ECS
 
 - amazon container service
+- cluster: regional grouping of one or more container instances on which you can run task requests; tasks are deployed to clusters
+  - template types
+    - networking only: use fargate with windows/linux based images
+    - ec2 linux + networking: ec2 instead of fargate
+    - ec2 windows + networking: ec2 instead of fargate
+- task definitions: provides details and resource requirements for a container that is passed to the Docker daemon. A task definition may contain one or more container definitions.
+
+- cloudwatch container insights: CloudWatch automatically collects metrics for many resources, such as CPU, memory, disk, and network.Container Insights also provides diagnostic information, such as container restart failures, that you use to isolate issues andresolve them quickly. You can also set CloudWatch alarms on metrics that Container Insights collects.
 
 ## fargate
 
 - fully managed infrastructure for serverless container based applications
-- preferred over lambda for complex/long running business logic, e.g. listening to FIFO queues for messages
+- use cases
+  - preferred over lambda for complex/long running business logic, e.g. listening to FIFO queues for messages
+- costs
+  - by container running cpu/memory and time
 
 ## ECR
 
 - elastic container registry
 - docker registry on aws
+- create registry from the web console then click `view push cmds`
+  - you generally need to do this once, so that you can connect to the registry and push your images

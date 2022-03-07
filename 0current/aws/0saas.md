@@ -2,7 +2,7 @@
 
 - various SaaS offerrings by aws, no matter their particular domain
 
-- cloud 9, connect, lightsale
+- cloud 9, connect, lightsale, codecommit
 
 ## links
 
@@ -11,6 +11,7 @@
 ## cloud 9
 
 - IDE in a web browser,
+- useful for working on lambdas
 
 ## Connect
 
@@ -19,3 +20,7 @@
 ## Lightsale
 
 - heroku knockoff
+
+## codecommit
+
+- git on aws
