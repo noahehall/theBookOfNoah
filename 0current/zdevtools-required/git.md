@@ -7,6 +7,12 @@ long list of git
 
 ## LINKS
 
+- github actions
+
+  - [github actions docs](https://docs.github.com/en/actions)
+  - [github runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners)
+  - [github example node ci build test](https://github.com/actions/starter-workflows/blob/main/ci/node.js.yml)
+
 - refrence
 
   - [environment vars](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables)
@@ -235,4 +241,34 @@ git branch --merged | egrep -v "(^\*|dev)" | xargs git branch -d
 git remote prune origin
 ```
 
-## github workflows
+## github actions & workflows
+
+- workflows: define the event that triggers actions, and which actions to run for each event
+  - stored in `.github/workflows/someworkflow.yml`
+- events:
+
+  - e.g. a push, checkout, etc
+  - a webhook, e.g. branch creation/deletion, issues opened/resolved,
+  - a schedule, similar to cron format
+
+- workflow & action attributes
+  - name: identifies the workflow, if not supplied then github will use the name of the file
+  - on: the github event that triggers the workflow
+  - jobs: a workflow can have multiple jobs, each containing a series of steps to be executed
+  - runs-on: the VM (runner) to use
+  - steps: list of actions/cmds, has access to the file system, each step runs in its own process
+    - uses: identifies a (i.e. docker image) that will run the action
+      - the docker images can be located the same repo, another public repo, or a container registry like docker hub
+    - run: runs a cmd in the VMs shell environment
+    - name: optional identifer for the step
+
+```yml
+name: ci
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+      -
+```
