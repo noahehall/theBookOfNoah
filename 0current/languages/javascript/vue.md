@@ -16,6 +16,13 @@
 
 ### data binding
 
+- templates: uses `{{ someDataKey }}`
+- v-text directive: `<div v-text="someDataKey" />`
+  - escapes html
+  - has a jq like syntax, e.g. `someDataKey[0].poop`
+- v-html directive: see v-text
+  - doesnt escape html
+
 ## quickies
 
 - cli
@@ -30,12 +37,14 @@
 ```js
 <html>
   <div id="someid">{{ someAppName }}</div>
+  <div v-text="otherThing" />
 </html>;
 
 const SomeApp = {
   data() {
     return {
       someAppName: "my app name",
+      otherThing: "im some other thing",
     };
   },
 };
