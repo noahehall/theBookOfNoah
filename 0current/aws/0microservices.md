@@ -1,6 +1,6 @@
 # TLDR
 
-- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS, cloudwatch, EKS, Step Functions, SES
+- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS, cloudwatch, EKS, Step Functions, SES, ECR
 
 - lumping serverless into this file
 
@@ -8,6 +8,7 @@
 
 - [kinesis](https://aws.amazon.com/kinesis/)
 - [amazon states language](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html)
+- [amazon ecr public gallery](https://gallery.ecr.aws/)
 
 ## basics
 
@@ -165,108 +166,6 @@ exports.handler = function (event, context, callback) {
   - sns topic
   - etc
 
-## SQS simple queue service
-
-- a polling based queueing service
-- fully managed queuing service; both generanl queues and FIFO queues to pass info between services
-  - FIFO queues
-    - are important when you need to process events in order, and not in parallel
-    - message groups all different channels in the same FIFO queue, to add a level of parallelism to the queue based on message type
-    - FIFO queues cannot be triggered from a lambda fn
-- core for decoupling of services
-- use cases
-  - multiple consumers can listen to a single queue, BUT each message can only have a single consumer
-    - use an SNS topic if multiple consumers need to handle a single message
-  -
-  - FIFO queues: guarantee delivery of messages within defined message groups
-
-### SQS considerations
-
-- default visibility timeout
-- message rentention period: how long an unprocessed message will remain in the queue
-- maximum message size
-- delivery delay
-- receive message wait time
-- dead letter queue settings: capture messages that fallout due to errors & expiring message retention
-  - redrive policy
-  - maximum receives
-- server side encryption settings
-
-## SNS simple notification service
-
-- a pub-sub based messaging service
-  - use whenever there are multiple consumers for a single message
-- manages the delivery & sending of msgs to subscribin endpoints & clients
-  - app to app|person
-- use cases:
-  - super useful in cloudwatch alarms, that send msgs to SNS topics which subsequently trigger lambda functions for automating responses (e.g. reosurce failure) to system events
-- clients
-  - publishers: send async msgs to a topic
-    - cloudwatch alarms
-  - subscribers: pull msgs from a topic
-    - lambda
-    - sqs queues
-    - http/s endpoints
-    - event fork pipelines
-    - kinesis data firehose delivery streams
-    - mobile apps
-    - phone numbers
-    - email addrs
-- topics: logical access point & communication channel
-
-  - publishers: create topics/get push permissions
-
-- service quotas
-  - quotas: resources, actions and items have defined limits
-    - breaching a limit will always increase costs or cause components to fail
-  - monitor and manage quotas for any AWS service
-
-### sns considerations
-
-- type
-  - standard: when msg order & duplication isnt important
-  - FIFO: msg order & duplication is important (must use SQS)
-- access policy: who can publish & subscribe
-  - topic owner
-  - everyone
-  - specific AWS accounts
-  - requests from specific endpoints
-- encryption: server side encryption
-- delivery retry policy: retry failed deliveries for http/s
-- delivery status logging: only for specific protols (lambda, sqs, etc)
-- IAM roles
-
-## Kinesis
-
-- manage streaming data in realtime
-- ingest real-time data such as video, audio, application logs, website clickstreams, and IoT telemetry data for machine learning, analytics, and other applications.
-- process and analyze data as it arrives and respond instantly instead of having to wait until all your data is collected before the processing can begin.
-- use cases
-  - can have multiple shards within a stream, and consumers can be assigned to specific shards
-  - full replay is possible by resetting a stream to a point in time
-
-## SageMaker
-
-- ML in the cloud
-
-## cloudwatch
-
-- check the old docs for this
-- monitoring & observability, operational problems
-
-## eks
-
-- elastic kubernetes service
-
-## ECS
-
-- amazon container service
-
-## fargate
-
-- fully managed infrastructure for serverless container based applications
-- preferred over lambda for complex/long running business logic, e.g. listening to FIFO queues for messages
-
 ## Step Functions
 
 - workflow automation, e.g. state machines & orchestration between lambda fns
@@ -402,3 +301,105 @@ exports.handler = function (event, context, callback) {
 ## SES
 
 - simple email service
+
+## SQS simple queue service
+
+- a polling based queueing service
+- fully managed queuing service; both generanl queues and FIFO queues to pass info between services
+  - FIFO queues
+    - are important when you need to process events in order, and not in parallel
+    - message groups all different channels in the same FIFO queue, to add a level of parallelism to the queue based on message type
+    - FIFO queues cannot be triggered from a lambda fn
+- core for decoupling of services
+- use cases
+  - multiple consumers can listen to a single queue, BUT each message can only have a single consumer
+    - use an SNS topic if multiple consumers need to handle a single message
+  -
+  - FIFO queues: guarantee delivery of messages within defined message groups
+
+### SQS considerations
+
+- default visibility timeout
+- message rentention period: how long an unprocessed message will remain in the queue
+- maximum message size
+- delivery delay
+- receive message wait time
+- dead letter queue settings: capture messages that fallout due to errors & expiring message retention
+  - redrive policy
+  - maximum receives
+- server side encryption settings
+
+## SNS simple notification service
+
+- a pub-sub based messaging service
+  - use whenever there are multiple consumers for a single message
+- manages the delivery & sending of msgs to subscribin endpoints & clients
+  - app to app|person
+- use cases:
+  - super useful in cloudwatch alarms, that send msgs to SNS topics which subsequently trigger lambda functions for automating responses (e.g. reosurce failure) to system events
+- clients
+  - publishers: send async msgs to a topic
+    - cloudwatch alarms
+  - subscribers: pull msgs from a topic
+    - lambda
+    - sqs queues
+    - http/s endpoints
+    - event fork pipelines
+    - kinesis data firehose delivery streams
+    - mobile apps
+    - phone numbers
+    - email addrs
+- topics: logical access point & communication channel
+
+  - publishers: create topics/get push permissions
+
+- service quotas
+  - quotas: resources, actions and items have defined limits
+    - breaching a limit will always increase costs or cause components to fail
+  - monitor and manage quotas for any AWS service
+
+### sns considerations
+
+- type
+  - standard: when msg order & duplication isnt important
+  - FIFO: msg order & duplication is important (must use SQS)
+- access policy: who can publish & subscribe
+  - topic owner
+  - everyone
+  - specific AWS accounts
+  - requests from specific endpoints
+- encryption: server side encryption
+- delivery retry policy: retry failed deliveries for http/s
+- delivery status logging: only for specific protols (lambda, sqs, etc)
+- IAM roles
+
+## Kinesis
+
+- manage streaming data in realtime
+- ingest real-time data such as video, audio, application logs, website clickstreams, and IoT telemetry data for machine learning, analytics, and other applications.
+- process and analyze data as it arrives and respond instantly instead of having to wait until all your data is collected before the processing can begin.
+- use cases
+  - can have multiple shards within a stream, and consumers can be assigned to specific shards
+  - full replay is possible by resetting a stream to a point in time
+
+## SageMaker
+
+- ML in the cloud
+
+## EKS
+
+- elastic kubernetes service
+
+## ECS
+
+- amazon container service
+
+## fargate
+
+- fully managed infrastructure for serverless container based applications
+- preferred over lambda for complex/long running business logic, e.g. listening to FIFO queues for messages
+
+## ECR
+
+- elastic container registry
+- docker registry on aws

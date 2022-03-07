@@ -210,6 +210,7 @@ long list of git
 - categorize all below
 - anything under this line i wouldnt trust
 
+```sh
 sparse clone an existing repo from git to local
 git clone --filter=blob:none --no-checkout git/url/to/clone
 setup empty dir to later sparse checkout only certain dirs
@@ -232,3 +233,6 @@ git checkout --ignore-skip-worktree-bits -- PATHS
 <https://stackoverflow.com/questions/6127328/how-can-i-delete-all-git-branches-which-have-been-merged>
 git branch --merged | egrep -v "(^\*|dev)" | xargs git branch -d
 git remote prune origin
+```
+
+## github workflows

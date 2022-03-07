@@ -84,6 +84,7 @@
   docker ps -l # show the last created container
   CID=$(docker ps -l -q) # save the UID of the last created container
 
+  docker run --rm --name containername -p 8080:80 -d runthisimage:version
 ```
 
 ## dockerfile
