@@ -10,6 +10,7 @@
 - [vite](https://vitejs.dev/)
 - [vue cli](https://cli.vuejs.org/)
 - [vue component life cycle](https://vuejs.org/guide/essentials/lifecycle.html)
+- [vue router](https://router.vuejs.org/)
 
 ## terms
 
@@ -19,6 +20,7 @@
 - is progressive: progressively add more features
 - is declarative: blah blah
 - is composable: bah blah
+- uses a virtual dom
 
 ### technical
 
@@ -60,6 +62,21 @@
 
 - todo
 - how vue instances are created, mounted, updated and destroyed
+
+- created: this is where you want to init ajax calls
+
+#### essential components
+
+##### vue router
+
+- todo
+- single page apps with client side routing
+
+##### vuex
+
+- todo
+- state management and sharing data between components
+- uses the flux pattern (similar to react)
 
 ### data binding
 
