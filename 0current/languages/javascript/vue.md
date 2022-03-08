@@ -36,6 +36,10 @@
 #### component options object
 
 - generally accepts the same keys as appData,
+  - child components do not have access to parent component properties/methods
+  - ^ you have to pass the data down from parent to child
+    - you can reference passed props in the childs appData via the property name, e.g. to assign a passed prop to a data property in a child
+  - ^ child components cant mutate properties owned by parent components
 - but can also use a `template` property if its not mounted on a specific dom element
   - `template: `<div>any html and vue directives</div>`
   - you generally dont want to use the `template` property, but instead use a buildtool to compile the template automatically
@@ -43,6 +47,7 @@
 ### data binding
 
 - almost any html attribute has a `:someAttribute` syntax for binding to an appDataProperty, see `v-bind`
+  - without the leading `:` the attribute becomes a static property, instead of dynamically binding to appData
 
 #### form controls
 
@@ -101,6 +106,14 @@
   - @click.self: invoke handler only if the event.target === this.el/this.el.children
   - @click.once: invoke handler once at most
 
+#### custom events
+
+- $emit: some arbitrary event, e.g `@click="$emit(\'poopEvent\')"`
+  - useful when needing to trigger events in parent component from a child component
+  - you $emit in templates, and then you can use the parents methods/properties in the HTML
+  - you have to escape the eventName
+  - you still
+
 ### control flow
 
 - v-if,else-if, and else will not render their elements in the DOM if condition is false
@@ -149,6 +162,7 @@
     <input v-model="options" type="checkbox" name="poop1" />
     <input v-model="options" type="checkbox" name="poop2" />
   </form>
+  <lower-cased-snake :someprop="someAppDataProp" staticprop="string value" @poopEvent="parentMethod" />
 </body>
 </html>;
 
@@ -178,4 +192,15 @@ const SomeApp = {
 // app is available in the devtools
 // its data is available on the app object
 const app = Vue.createApp(someApp).mount("#someid");
+app.component('lower-cased-snake', {
+  template: `<div @poopEvent="parentProp = !parentProp">any html + vue directives</div>`
+  name: 'LowerCasedSnake',
+  props: ['someprop', 'thisonetwo'],
+  data() {
+    return {
+      myProp: someprop, // sync child prop to parent prop
+    }
+  }
+});
+
 ```
