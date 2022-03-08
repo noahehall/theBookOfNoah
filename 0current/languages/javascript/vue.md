@@ -34,6 +34,10 @@
 - ^ and registered as `someApp.component('lower-cased-snake', someOptionObj );`
 - you can use regular `<slot></slot>` web components as placeholders in templates
   - then you can pass in the real components via the html
+  - use the `<template v-slot:slotname></template>` to replace specific slots
+  - use the `<template v-slot:default></template>` to target the default slot (the one without a name)
+  - you can enable slots to access props via `<template v-slot:slotname="props"></template>`
+    - now the slot can access the appData via `props.someDataProperty`
 
 #### component options object
 
@@ -170,6 +174,7 @@
     @poopEvent="parentMethod"
   >
     <any><valid>vue or html</valid></any>
+    <template v-slot:otherslot>poop</template>
   </lower-cased-snake>
 </body>
 </html>;
@@ -201,7 +206,7 @@ const SomeApp = {
 // its data is available on the app object
 const app = Vue.createApp(someApp).mount("#someid");
 app.component('lower-cased-snake', {
-  template: `<div @click="$emit(\'poopEvent\')"><slot>default html</slot></div>`
+  template: `<div @click="$emit(\'poopEvent\')"><slot>default html</slot> <slot name="otherslot" /></div>`
   name: 'LowerCasedSnake',
   props: ['someprop', 'thisonetwo'],
   data() {
