@@ -28,7 +28,21 @@
 
 ## concepts
 
+### components
+
+- generally custom components are `<lower-cased-snake></lower-cased-snake>`
+- ^ and registered as `someApp.component('lower-cased-snake', someOptionObj );`
+
+#### component options object
+
+- generally accepts the same keys as appData,
+- but can also use a `template` property if its not mounted on a specific dom element
+  - `template: `<div>any html and vue directives</div>`
+  - you generally dont want to use the `template` property, but instead use a buildtool to compile the template automatically
+
 ### data binding
+
+- almost any html attribute has a `:someAttribute` syntax for binding to an appDataProperty, see `v-bind`
 
 #### form controls
 
