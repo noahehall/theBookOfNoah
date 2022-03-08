@@ -32,6 +32,8 @@
 
 - generally custom components are `<lower-cased-snake></lower-cased-snake>`
 - ^ and registered as `someApp.component('lower-cased-snake', someOptionObj );`
+- you can use regular `<slot></slot>` web components as placeholders in templates
+  - then you can pass in the real components via the html
 
 #### component options object
 
@@ -162,7 +164,13 @@
     <input v-model="options" type="checkbox" name="poop1" />
     <input v-model="options" type="checkbox" name="poop2" />
   </form>
-  <lower-cased-snake :someprop="someAppDataProp" staticprop="string value" @poopEvent="parentMethod" />
+  <lower-cased-snake
+    :someprop="someAppDataProp"
+    staticprop="string value"
+    @poopEvent="parentMethod"
+  >
+    <any><valid>vue or html</valid></any>
+  </lower-cased-snake>
 </body>
 </html>;
 
@@ -193,7 +201,7 @@ const SomeApp = {
 // its data is available on the app object
 const app = Vue.createApp(someApp).mount("#someid");
 app.component('lower-cased-snake', {
-  template: `<div @poopEvent="parentProp = !parentProp">any html + vue directives</div>`
+  template: `<div @click="$emit(\'poopEvent\')"><slot>default html</slot></div>`
   name: 'LowerCasedSnake',
   props: ['someprop', 'thisonetwo'],
   data() {
