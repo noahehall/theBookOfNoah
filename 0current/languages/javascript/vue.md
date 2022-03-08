@@ -56,6 +56,8 @@
   - can also use `{'font-size'}` if you dont want to use camelCase
   - can also set it to `:style="someDataProp"` and set someDataProp to an object with camelCase keys
   - can also set it to an array `:style="[styleObj1, styleObj2]`
+- :class: bind classnames to boolean conditions in a appData
+  - e.g. `:class="{someClassName: !!someDataProp}" class="normal static classes`
 
 #### two-way binding
 
