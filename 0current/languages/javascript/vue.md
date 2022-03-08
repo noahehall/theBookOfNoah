@@ -7,6 +7,8 @@
 
 - [quickstart build tools](https://vuejs.org/guide/quick-start.html#without-build-tools)
 - [firefox vue devtools extension](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
+- [vite](https://vitejs.dev/)
+- [vue cli](https://cli.vuejs.org/)
 
 ## terms
 
@@ -157,11 +159,12 @@
 - vue quickies
 
 ```js
-<html>
-<style>
+
+<style scoped>
   [v-cloak] { display: none; }
 </style>
-<body>
+
+<template>
   <div id="someid">{{ someAppName }}</div>
   <div v-text="otherThing" />
   <div v-cloak v-text="somePoop" />
@@ -178,8 +181,10 @@
     <any><valid>vue or html</valid></any>
     <template v-slot:otherslot>poop</template>
   </lower-cased-snake>
-</body>
-</html>;
+</template>
+
+<script>
+import SomeSingleFileComponent from './SomeSingleFileComponent'
 
 const SomeApp = {
   data() {
@@ -190,6 +195,12 @@ const SomeApp = {
       someUrl: "github.com",
       options: []
     };
+  },
+  // alternative to the global registration app.component(componentName, optionsObj);
+  // you generally want to use this mechanism so that they are locally registered
+  // ^ as child components to this component
+  components: {
+    someSingleFileComponent
   },
   // cached
   computed: {
@@ -204,6 +215,7 @@ const SomeApp = {
     }
   }
 };
+
 // app is available in the devtools
 // its data is available on the app object
 const app = Vue.createApp(someApp).mount("#someid");
@@ -215,17 +227,22 @@ app.component('lower-cased-snake', {
     return {
       myProp: someprop, // sync child prop to parent prop
     }
+  },
+  components: {
+    myChildComponent
   }
 });
+</script>
+
 
 // some other file, e.g. MyComponent.vue
-
+// requires a buildtool, like vue-cli, webpack, or vite
 <template>
-  default the template
+  <h1>{{ poop }}</h1>
 </template>
 
 <script>
-module.exports = sameInterfaceAsAppData
+export default sameInterfaceAsAppData
 </script>
 
 // css declarations for this SFC
