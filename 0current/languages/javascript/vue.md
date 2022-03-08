@@ -94,8 +94,13 @@
   - `v-show="!someDataProp"`
 
 - v-cloak: attribute that can be assigned to an element and used in css declarations for hiding elements that arent ready to be displayed
+
   - e.g. dont set el.visible === true until its binded data properties are ready, e.g. waiting for an promise to fullfil
   - i.e. until vue has completed compiling
+
+- v-for: for loop, useful iterating over some dataPropArray
+  - e.g. `<div v-for="poop in dataPoopArray">render me and my children</div>`
+  - ^ `poop` can be used anywhere in the DOM el tree
 
 ## quickies
 
