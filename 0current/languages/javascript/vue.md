@@ -9,6 +9,7 @@
 - [firefox vue devtools extension](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
 - [vite](https://vitejs.dev/)
 - [vue cli](https://cli.vuejs.org/)
+- [vue component life cycle](https://vuejs.org/guide/essentials/lifecycle.html)
 
 ## terms
 
@@ -33,6 +34,7 @@
 ### components
 
 - generally custom components are `<lower-cased-snake></lower-cased-snake>`
+  - unless specified as an SFC, then you can use `<CamelCase />`
 - ^ and registered as `someApp.component('lower-cased-snake', someOptionObj );`
 - you can use regular `<slot></slot>` web components as placeholders in templates
   - then you can pass in the real components via the html
@@ -53,6 +55,11 @@
 - but can also use a `template` property if its not mounted on a specific dom element
   - `template: `<div>any html and vue directives</div>`
   - you generally dont want to use the `template` property, but instead use a buildtool to compile the template automatically
+
+#### component lifecycle
+
+- todo
+- how vue instances are created, mounted, updated and destroyed
 
 ### data binding
 
@@ -181,6 +188,7 @@
     <any><valid>vue or html</valid></any>
     <template v-slot:otherslot>poop</template>
   </lower-cased-snake>
+  <SomeSingleFileComponent />
 </template>
 
 <script>
