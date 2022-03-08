@@ -51,6 +51,11 @@
   - parses html in string context
 - v-bind:someAttribute: binds some data key to an html elements attribute
   - shorthand is `:someAttribute`
+- :style: bind the inline style attribute to you some appDataProperty, propably want to use `:class` instead
+  - e.g. `<div :style="{fontSize: someDataProp + 'px'}">`
+  - can also use `{'font-size'}` if you dont want to use camelCase
+  - can also set it to `:style="someDataProp"` and set someDataProp to an object with camelCase keys
+  - can also set it to an array `:style="[styleObj1, styleObj2]`
 
 #### two-way binding
 
@@ -70,6 +75,7 @@
 
   - shorthand `@eventName="runThisMethod"`
   - ^ no `()` needed if not passing arguments
+  - list of events, click, keydown.someKey,
 
 - v-on modifiers: add magic fns to event handlers
   - all accept the shorthands, e.g. `@click.prevent="someMethodProp"`
@@ -99,8 +105,8 @@
   - i.e. until vue has completed compiling
 
 - v-for: for loop, useful iterating over some dataPropArray
-  - e.g. `<div v-for="poop in dataPoopArray">render me and my children</div>`
-  - ^ `poop` can be used anywhere in the DOM el tree
+  - e.g. `<div v-for="(poop, thizIndex) in dataPoopArray">render me and my children</div>`
+  - ^ `poop` and `thizIndex` can be used anywhere in the DOM el tree
 
 ## quickies
 
