@@ -38,6 +38,8 @@
   - use the `<template v-slot:default></template>` to target the default slot (the one without a name)
   - you can enable slots to access props via `<template v-slot:slotname="props"></template>`
     - now the slot can access the appData via `props.someDataProperty`
+- single file components: SFC
+  - any file with a `.vue` extension
 
 #### component options object
 
@@ -216,4 +218,17 @@ app.component('lower-cased-snake', {
   }
 });
 
+// some other file, e.g. MyComponent.vue
+
+<template>
+  default the template
+</template>
+
+<script>
+module.exports = sameInterfaceAsAppData
+</script>
+
+// css declarations for this SFC
+<style scoped>
+</style>
 ```
