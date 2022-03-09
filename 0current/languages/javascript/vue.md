@@ -10,7 +10,7 @@
 - [vite](https://vitejs.dev/)
 - [vue cli](https://cli.vuejs.org/)
 - [vue component life cycle](https://vuejs.org/guide/essentials/lifecycle.html)
-- [vue router](https://router.vuejs.org/)
+- [vue router](https://router.vuejs.org/guide/)
 
 ## terms
 
@@ -170,6 +170,26 @@
 - v-for: for loop, useful iterating over some dataPropArray
   - e.g. `<div v-for="(poop, thizIndex) in dataPoopArray">render me and my children</div>`
   - ^ `poop` and `thizIndex` can be used anywhere in the DOM el tree
+
+### routing
+
+- the standard router provided by vue
+- architecture
+  - define components
+  - someRouteObj that maps paths to components
+  - instantiate a vueRouterInstance passing in history and someRoutesObj
+  - instantiate vueApp then app.use(vueRouterInstance)
+    - provides access to
+      - `this.$router` history methods n things, the same as importing the vueRouterInstance
+      - `$this.route` obj with route.params|query|hash|etc
+        - route params are dynamic vars in `/:url/:paths`
+  - mount the app
+
+#### router components
+
+- router-link: renders anchor tags
+  - hijacks history in some form for SPA experience
+- router-view: specifies the slot to inject components that matches the current url
 
 ## quickies
 
