@@ -12,6 +12,7 @@
 - [SSR & single-spa](https://single-spa.js.org/docs/ssr-overview/)
 - [singleSpa api](https://single-spa.js.org/docs/api/)
 - [single spa ecosystem](https://single-spa.js.org/docs/ecosystem/)
+- [singlespa vue](https://single-spa.js.org/docs/ecosystem-vue/)
 
 ## basics
 
@@ -24,12 +25,18 @@
   - shared dependencies
     - sharing a module in the browser via import maps, which are declared in the root config
     - only required if any applications expect shared dependencies, e.g. react
-- applications: an SPA that can be registered with and rendered by single-spa
-  - name
-  - fn that loads teh applications code
-  - fn that determines when the application is active/inactive
-  - requirements
-    - must know how to bootstrap, mount and unmount itself from the DOM
+- Microfrontend types
+  - applications: an SPA that can be registered with and rendered by single-spa
+    - name
+    - fn that loads teh applications code
+    - fn that determines when the application is active/inactive
+    - requirements
+      - must know how to bootstrap, mount and unmount itself from the DOM
+    - has routing, declarative API, renders a UI, single-spa managed lifecycles
+  - parcel: render components without controlling routes, e.g. when loading multiple frameworks
+    - only needed with multiple frameworks, has no routes, imperative API, renders UI, custom managed lifecycles
+  - utility: export shared js logic/service without rendering components
+    - has no routes, exports a public interface, may/not render a UI, no direct single-spa lifecycles,
 - layout engine: provides a routing API that cotrols top level routes, applications and dom elements
   - should be installed as a prod dep into the root config
   - in the client
