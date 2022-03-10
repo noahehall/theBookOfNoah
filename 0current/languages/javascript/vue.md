@@ -22,6 +22,7 @@
 - is declarative: blah blah
 - is composable: bah blah
 - uses a virtual dom
+- heavy use of web components and html template tag
 
 ### technical
 
@@ -31,6 +32,8 @@
 
 - community frounds on imperative code embedded within the html
   - prefers keeping expressions in the app.methods/app.computed
+- use the html template tag everywhere, e.g. in `v-` directives, so you dont add unnecessary `div` container tags
+  - except with `v-show`
 
 ## concepts
 
@@ -157,17 +160,18 @@
 
 ### control flow
 
-- v-if,else-if, and else will not render their elements in the DOM if condition is false
-
-  - use v-show instead to hide the element, instead of totally removing it
+- v-if,else-if, and v-else will not render their elements in the DOM if condition is false
+  - totally remoes the element from the DOM
+  - compiled before `v-for` so it doesnt have access to `v-for` defined on the same html element
+    - instead you have to embed the `v-if` inside the `v-for` on a child element
   - v-if: e.g. `v-if="!someDataProp" v-text="someOtherDataProp"`
     - is connected to the previous `v-if` in the DOM
       - v-else-if: same syntax as `v-if`
       - v-else: e.g `v-else v-html="someDataProp"`
-
 - v-show: more appropriate for elements that should always exist in the DOM, but their visibilty toggled based on some condition
 
   - `v-show="!someDataProp"`
+  - doesnt support template tags
 
 - v-cloak: attribute that can be assigned to an element and used in css declarations for hiding elements that arent ready to be displayed
 
@@ -177,6 +181,14 @@
 - v-for: for loop, useful iterating over some dataPropArray
   - e.g. `<div v-for="(poop, thizIndex) in dataPoopArray">render me and my children</div>`
   - ^ `poop` and `thizIndex` can be used anywhere in the DOM el tree
+  - ^ you should also specify `<... :key="poop.someID">` so vue can track which item is being modified
+    - depends on having an ID in your poopArray
+  - can also use `blah of dataPoopArray` instead of `in`
+  - can also be used with objects, e.g. `(poop, poopKey, poopIndex) of poopObject`
+    - order of loop isnt consistent, same as looping through an obj in jss
+  - v-for api
+    - mutation methods: push, pop, shift, unshift, splice, sort, reverse
+    - replacement methods: filter, concat, slice
 
 ### routing
 
@@ -248,14 +260,14 @@ const SomeApp = {
       options: []
     };
   },
-  // alternative to the global registration app.component(componentName, optionsObj);
-  // you generally want to use this mechanism so that they are locally registered
-  // ^ as child components to this component
   components: {
+      // components are alternative to the global registration app.component(componentName, optionsObj);
+      // you generally want to use this mechanism so that they are locally registered
+      // ^ as child components to this component
     someSingleFileComponent
   },
-  // cached
   computed: {
+    // computed caches its values, and only recomputes if dependencies change
     somePoop() {
       return this.someOtherThing.trim()
     }
@@ -289,6 +301,7 @@ app.component('lower-cased-snake', {
 
 // some other file, e.g. MyComponent.vue
 // requires a buildtool, like vue-cli, webpack, or vite
+// template isnt rendered, only the templates content (the h1)
 <template>
   <h1>{{ poop }}</h1>
 </template>
