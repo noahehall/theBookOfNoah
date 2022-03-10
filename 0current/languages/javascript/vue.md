@@ -11,6 +11,7 @@
 - [vue cli](https://cli.vuejs.org/)
 - [vue component life cycle](https://vuejs.org/guide/essentials/lifecycle.html)
 - [vue router](https://router.vuejs.org/guide/)
+- [extending vue-router router-link](https://vueschool.io/lessons/extending-router-link-for-external-urls)
 
 ## terms
 
@@ -32,6 +33,12 @@
   - prefers keeping expressions in the app.methods/app.computed
 
 ## concepts
+
+### Vue APIs
+
+- global API: what you use when vue is added to the page via a script tag
+  - `Vue.someApi` within a script tag, `Vue` is expected to be on the windows object, e.g. `Vue.createApp`
+- application API: when you use vue via a build tool
 
 ### components
 
@@ -80,8 +87,8 @@
 
 ### data binding
 
-- almost any html attribute has a `:someAttribute` syntax for binding to an appDataProperty, see `v-bind`
-  - without the leading `:` the attribute becomes a static property, instead of dynamically binding to appData
+- directives: bind html attributes to vueApp.data
+  - start with `v-directiveName`
 
 #### form controls
 
@@ -96,11 +103,11 @@
     - the benefit over computed vs method data props is for simple expressions,
       - you dont need to invoke the computed prop in the mustache template
       - computed properties are cached
-- v-text directive: `<div v-text="someDataKey" />`
+- v-text: `<div v-text="someDataKey" />`
   - escapes html
   - has a jq like syntax, e.g. `someDataKey[0].poop`
   - supports any expression, e.g. `someDataKey ? '' : someOtherKey.poop.flush`
-- v-html directive: see v-text
+- v-html: see v-text
   - parses html in string context
 - v-bind:someAttribute: binds some data key to an html elements attribute
   - shorthand is `:someAttribute`
