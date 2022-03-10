@@ -1,11 +1,43 @@
 # application design patterns
 
+## basics
+
 - specific to the internals of a single application, restricted by the application architecture
 
   - the structural composition of the software program
   - the interactions between software elements
   - during the process of writing software code, edevelopers encounter similar problems multiple times within a roject/compony
     - design patterns give engineers a reusable way to solve recurring problems
+
+- bad design:
+
+  - rigid: hard to change, e.g. due to dependency changes
+  - fragile: easy to break, e.g. when making a change bugs cascade
+  - immobile: difficult to reuse
+
+- OOP concepts not always relevant to good design principles
+
+  - enheritance: reuse features & behaviors
+  - encapsulation: hide & protect data
+  - polymorphism: code that works by behavior, and works with types/subtypes with a similar interface
+  - abstraction: hide implementation details, and depend instead on declarative interfaces
+
+- design principles: sets of practices that form the basis of design patterns
+
+  - favor composition over inheritance: dont overuse inheritance, composition should also be used to extend behavior
+  - encapsulate what varies: anything expected to change often should be encapsulated behind some sort of interface
+  - program to interfaces: keep designs high level and declarative
+  - loose coupling between objects that interact
+  - SOLID: by Martin Robert Martin
+    - S: single responsibility
+    - O: classes should be open for extension, but closed for modification
+    - L: Liskov substitution: subtypes should be substitutable for their base types
+    - I: interface segregation: interfaces should be small and cohesive
+    - D: dependency inversion: high level modules should not depend on low level modules; both should depend on abstractions
+
+- design patterns: specific strategies for resolving common architecture problems
+
+## patterns
 
 - builder
 - factory: abstracts implementation details of instantiating entities
