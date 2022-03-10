@@ -10,6 +10,7 @@
 - [amazon states language](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html)
 - [amazon ecr public gallery](https://gallery.ecr.aws/)
 - [container definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definitions%3Ficmpid=docs_ecs_hp-task-definition)
+- [aws serverless compute](https://aws.amazon.com/serverless/)
 
 ## basics
 
@@ -103,8 +104,16 @@
 - the most basic on-demand compute, almost anything you would need an EC2 instance for, you can implement as an AWS Lambda fn
 - event drivent, stateless (serverless) business logic
 - compute service to run code without managing servers
+- costs
+  - number of requests
+  - duration of each request
+  - amount of memory lamba needs
 - use cases
 
+  - execute data processing tasks
+  - handling web requests
+  - in response to changing code commits, changes to infrastructure
+  - run code on a schedule, similar to cron tasks
   - target of an event bridge rule
   - cloud watch alarm automation, especially in high availability & failover contexts where you need to spin up new resources and reassign EIPs
   - s3 putObject can trigger an instance of a lambda fn to run, e.g. in response to new data being saved to s3
@@ -113,6 +122,9 @@
   - can be used as a step function state machine task
     - inputs from state machines will be in `event.input.poop`
 
+- perhaps shouldnt be used
+  - extreme real-time responses
+  - complex compute: with high memory/long run times
 - limits
 
   - 15 min max execution time
@@ -120,6 +132,27 @@
   - types of event/messages that can trigger lambda execution
   - each lambda fn must be fronted by an API Gateway
 
+- general process
+
+  - upload code to lambda
+    - a handler fn, either `async (event) =>` or `fn(event, context, callback) {}`
+    - event: the data sent during invocation, interface changes depending on which resource triggered the fn
+    - context: methods available to interact with runtime information
+    - callack: think this is when fn syntax is async
+  - setup triggers from other aws resources, http endpoints, etc
+    - request to api gateway
+    - modifications to aws resources
+      - dynamoddb table
+      - s3 putObject, etc
+      - sqs queue messages
+      - sns topics
+  - aws runs the code in response to triggers
+
+- lamda designer: in the web console, after you click on a lamba fn name
+  - see the different layers
+  - add/remove triggers for a specific lambda fn
+  - see the resources the lambda fn has permissions for
+- layers: manage fn dependnecies/add additional functioality
 - test events: create events that invoke the lambda fn, sending in JSON to the lambda fn handler
   - first you create the event, then you click test again
 - runtime: the runtime env of the lambda fn, e.g. the nodejs runtime gives you access to all the nodejs builtin modules to import at the top of your lambda fn

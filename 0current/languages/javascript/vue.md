@@ -93,19 +93,21 @@
 - directives: bind html attributes to vueApp.data
   - start with `v-directiveName`
 
-#### form controls
+#### watchers
 
-- useful for checkboxes in which the input.checked should be truthy if a dataProperty is set to a specific string, e.g. on|off
-  - true-value: e.g. `true-value="on"`
-  - false-value: e.g. `false-value="off"`
+- generic way of tracking changes
+- you `watch: { existingAppDataProp(curValue) { doThisStuffWhenItChanges }}
 
 #### one-way binding
 
 - templates: uses `{{ someDataKey }}`
-  - computed properties: keeps the mustache `{{}}` expressionless by moving the code into the appData.computed member
-    - the benefit over computed vs method data props is for simple expressions,
-      - you dont need to invoke the computed prop in the mustache template
-      - computed properties are cached
+  - dont work as html attribute values or textara content
+- computed properties: calculations are only recomputed on changes to appData
+  - keeps the mustache `{{}}` expressionless by moving the code into the appData.computed member
+  - the benefit over computed vs method data props is for simple expressions,
+    - you dont need to invoke the computed prop in the mustache template
+    - computed properties are cached
+  - support getters & setters, e.g. `{ computed: { myPoop: { get(), set() }}`
 - v-text: `<div v-text="someDataKey" />`
   - escapes html
   - has a jq like syntax, e.g. `someDataKey[0].poop`
@@ -124,7 +126,16 @@
 
 #### two-way binding
 
-- v-model: pushes user updates to data properties (e.g. in an input field) back into the app data property
+- useful for checkboxes/radio/select buttons in which the input.checked should be truthy if a dataProperty is set to a specific string, e.g. on|off
+
+  - will set the the v-model var in appDAta
+    - true-value: e.g. `true-value="on"`
+    - false-value: e.g. `false-value="off"`
+    - `value="poop"` will set the v-model var to `poop` if checked
+
+- v-model: update appData based on user input, and update rendered values on changes to appData
+  - supports input, textarea, and select elements
+  - emits value, input, checked and change events
   - on form controls its automatically connected to the input.value
   - can be set to dataPropertyArray, in which form elements will be kept insync per their position in the DOM
     - useful for checkboxes, in which all input.checked will be included in the dataProp[]
@@ -260,6 +271,12 @@ const SomeApp = {
       options: []
     };
   },
+  watch: {
+    otherThing(curValue) {
+      // if statement checking current value
+      // called whenever data.otherThing changes
+    }
+  }
   components: {
       // components are alternative to the global registration app.component(componentName, optionsObj);
       // you generally want to use this mechanism so that they are locally registered

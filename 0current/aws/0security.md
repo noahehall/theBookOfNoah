@@ -1,6 +1,6 @@
 # TLDR
 
-security groups, key pairs, IAM, STS, Access Analyzer, certifact manager, cognito
+security groups, key pairs, IAM, STS, Access Analyzer, certifact manager, cognito, IAM
 
 <https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html>
 authorization
@@ -65,22 +65,23 @@ todo: should be in order
 
 ## IAM
 
-- IAM: Identity and access management
-
+- Identity Access Management
   - webservice for controlling access to AWS resources
   - authentication: who can sign in
   - authorization: who can do what (permissions)
-
+- IAM Users
+  - groups: categorize groups of users
+  - policies: array of permissions for groups/users,
+    - effect: allow/deny
+    - action: array of resource methods in the form `resourceName:ActionName`
+    - resource: the aws resource, in the form `arn:aws:resource:poop:poop:poop
 - free to use
   - IAM
   - STS
   - Access Analyzer
 - costs
-
   - cloudtrail (i think)
-
 - use cases
-
   - shared access to your AWS account
     - grant other people permission to administer/use resources in AWS without sharing your password/access key
   - granular permissions
@@ -92,7 +93,6 @@ todo: should be in order
   - PCI DSS copmliance: processing, storage and transmission of credit card data by a merchant/service provider
     - validated as being compliant with Payment Card Industry (PCI) data securty standard (DSS)
   - eventually consistent: achieves high availability by replicating data across multiple servers within amazons datacenters
-
 - key components
 
   - IAM provides the infrastructure necessary to control authentication and authorization
