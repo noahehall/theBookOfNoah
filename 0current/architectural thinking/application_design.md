@@ -25,7 +25,11 @@
 - design principles: sets of practices that form the basis of design patterns
 
   - favor composition over inheritance: dont overuse inheritance, composition should also be used to extend behavior
+    - identify application components that vary, and separate them from what stays the same
+    - HAS-A (a dog has an owner) is better than IS-A (a dog is a animal)
   - encapsulate what varies: anything expected to change often should be encapsulated behind some sort of interface
+    - its all about letting one part of a system vary independently of others, e.g. moving the brancing logic into a separate module that exports an interface
+    - all patterns implement this principle in some form or another
   - program to interfaces: keep designs high level and declarative
   - loose coupling between objects that interact
   - SOLID: by Martin Robert Martin
@@ -39,17 +43,24 @@
 
 ## patterns
 
+- adapter
+- aggregator
 - builder
+- chain of responsibility
+- decorator
+- domain driven development
+- facade
 - factory: abstracts implementation details of instantiating entities
+  - simple factory: encapsulating a complex if statement/similar into a separate module
+- interface oriented design
+- observer
 - repository: abstract implementation details on how to retrieve data; logic for retrieving, validating and translating responses from a data service
 - singleton
+- strategy
 - tryparse: pattern for trying some logic and returning the response, but on error returning the given substitute instead of throwing the exception
-- interface oriented design
-- domain driven development
-- chain of responsibility pattern
-- aggregator pattern
 
-- domain driven design
+### API Patterns
+
 - remote access protocols (e.g. REST, SOAP, or GraphQL)
 
   - REST
