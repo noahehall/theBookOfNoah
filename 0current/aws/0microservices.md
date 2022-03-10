@@ -77,6 +77,16 @@
     - you generally dont want to call one lambda from another, instead use step functions to implement a workflow
 - analytics: kinesis for streaming data
 - developer tools; IDEs, CI, deployment tools, SDKs, and monitoring & logging tools
+  - especially
+    - the AWS SAM cli: modifying functions, apis and databases common to serverless resources
+      - the sam yml file gets transformed into cloudformation templates
+      - ^ contains a single deployment configuration for your serverless app
+      - local development, testing & debugging
+      - creating resources on aws from the cli
+      - retrieve lambda fn logs
+      - deploy apps to aws
+    - cloud9
+    - codebuild
 
 #### serverless considerations
 
@@ -153,7 +163,9 @@
     - poll/stream:
       - sqs: poll
       - kinesis: stream
-  - cloudwatch monitoring for runtime observability; its on the monitoring tab
+  - cloudwatch monitoring for runtime observability;
+    - summary on the monitoring tab, loggroups on in cloudwatch console
+      - super important (as with all cloudwatch & resources) to finetime resource settings and cost optimization
     - invocations: total fn invocations
     - duration: min, max & average execution time
     - error count & success rate
