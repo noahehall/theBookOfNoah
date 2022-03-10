@@ -140,13 +140,23 @@
     - context: methods available to interact with runtime information
     - callack: think this is when fn syntax is async
   - setup triggers from other aws resources, http endpoints, etc
-    - request to api gateway
+    - api gateway: api endpoint receives a request
     - modifications to aws resources
-      - dynamoddb table
-      - s3 putObject, etc
-      - sqs queue messages
+      - dynamoddb: stream events
+      - s3: CRUD events
+      - sqs: queue events
+      - kinesis: stream events
       - sns topics
-  - aws runs the code in response to triggers
+  - aws runs the code in response to triggers, 3 types of execution models
+    - synchronous: a blocking requests, e.g. api gateway invoking lambda, has to wait for lambda to finish executing
+    - asynchronous: asynchronous requests, e.g. s3 event trigger lambda, s3 doesnt wait for lambda
+    - poll/stream:
+      - sqs: poll
+      - kinesis: stream
+  - cloudwatch monitoring for runtime observability; its on the monitoring tab
+    - invocations: total fn invocations
+    - duration: min, max & average execution time
+    - error count & success rate
 
 - lamda designer: in the web console, after you click on a lamba fn name
   - see the different layers
