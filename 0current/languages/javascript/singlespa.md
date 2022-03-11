@@ -1,5 +1,8 @@
 # single-spa
 
+- bookmark ???
+  - dunno: but start here https://single-spa.js.org/docs/layout-overview
+
 ## links
 
 - [overview](https://single-spa.js.org/docs/getting-started-overview)
