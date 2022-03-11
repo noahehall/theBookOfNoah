@@ -22,6 +22,7 @@
 ### architecture
 
 - single-spa root config: renders the HTML page and the JS that registers applications; its only purpose is to startup the single-spa applications
+  - its really just the orchestrator for all the different micro MFE
   - root html shared by all single-spa applications
   - js that invokes `singleSpa.registerApplication()`
     - so it knows how and when to initiate, load, mount, and unmount each application
@@ -29,6 +30,7 @@
     - sharing a module in the browser via import maps, which are declared in the root config
     - only required if any applications expect shared dependencies, e.g. react
 - Microfrontend types
+  - each application needs to be wrapped in a singleSpaPOOP, which returns bootstrap, mount and unmount lifecycle methods that the singlespa root config needs to be able to access
   - applications: an SPA that can be registered with and rendered by single-spa
     - name
     - fn that loads teh applications code
