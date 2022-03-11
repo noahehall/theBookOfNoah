@@ -50,8 +50,16 @@
   - L: Liskov substitution: subtypes should be substitutable for their base types
     - i.e. subtypes should adhere to the interfaces of their base types
     - i.e. subtypes behave like their base types
-  - I: interface segregation: interfaces should be small and cohesive
+  - I: interface segregation: interfaces should be small and cohesive, and shouldnt include methods they dont use
+    - polluted interface: continuing to add new functionality to an interface as it evolves
+      - causes unwanted dependencies between consumers of the the interfaces
+    - cohesion: how related a class/interfaces methods are to themselves
+      - if all consumers of a class/interface use the class/interface the same way, it generally means there is high cohesion
+      - else you should subtype the class/interface into additional subtypes, that only implements the behavior with high cohesion
   - D: dependency inversion: high level modules should not depend on low level modules; both should depend on abstractions
+    - instead of coupling high level component -> low level component
+    - ^ you should instead program to an interface, and have both the high and low components depend on the same interface abstraction
+    - ^ the abstraction should not depend on details (implementation), but the implementation (low level component) should depend on the interface
 
 - design by contract: specify preconditions, postconditions & invariants; treat inputs and outputs the same way across implementations
 
