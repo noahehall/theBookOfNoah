@@ -11,6 +11,7 @@
 - [amazon ecr public gallery](https://gallery.ecr.aws/)
 - [container definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definitions%3Ficmpid=docs_ecs_hp-task-definition)
 - [aws serverless compute](https://aws.amazon.com/serverless/)
+- [coldstarts in aws lambda](https://mikhail.io/serverless/coldstarts/aws/)
 
 ## basics
 
