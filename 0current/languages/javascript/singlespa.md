@@ -30,8 +30,8 @@
     - sharing a module in the browser via import maps, which are declared in the root config
     - only required if any applications expect shared dependencies, e.g. react
 - Microfrontend types
-  - each application needs to be wrapped in a singleSpaPOOP, which returns bootstrap, mount and unmount lifecycle methods that the singlespa root config needs to be able to access
-  - applications: an SPA that can be registered with and rendered by single-spa
+  - each application needs to be wrapped in a singleSpa, which returns bootstrap, mount and unmount lifecycle methods that the singlespa root config needs to be able to access
+  - applications: an SPA that can be registered with and rendered by single-spa; render components for a set of specific routes.
     - name
     - fn that loads teh applications code
     - fn that determines when the application is active/inactive
@@ -42,7 +42,7 @@
     - only needed with multiple frameworks, has no routes, imperative API, renders UI, custom managed lifecycles
   - utility: export shared js logic/service without rendering components
     - has no routes, exports a public interface, may/not render a UI, no direct single-spa lifecycles,
-- layout engine: provides a routing API that cotrols top level routes, applications and dom elements
+- layout engine: provides a routing API that controls top level routes, applications and dom elements
   - should be installed as a prod dep into the root config
   - in the client
     - Generate single-spa registration config from an HTML Element and/or JSON object.
@@ -50,3 +50,18 @@
   - on the server
     - Construct a server layout object from an HTML template.
     - Send an HTML document (HTTP response headers and body) to the browser, based on the server layout object and current route.
+
+## configuring single-spa
+
+- [single spa api docs](https://single-spa.js.org/docs/api/)
+
+- root html: shared by all single-spa applications
+- imports JS file that calls `singleSpa.registerApplication()
+
+### events
+
+- [event docs](https://single-spa.js.org/docs/api/#events)
+
+## layout engine
+
+- [docs](https://single-spa.js.org/docs/layout-overview/)
