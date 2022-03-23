@@ -7,13 +7,7 @@ long list of git
 
 ## LINKS
 
-- github actions/workflows
-
-  - [github actions docs](https://docs.github.com/en/actions)
-  - [github runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners)
-  - [github example node ci build test](https://github.com/actions/starter-workflows/blob/main/ci/node.js.yml)
-  - [events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows)
-
+- github actions/workflows: see actions section below
 - refrence
 
   - [environment vars](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables)
@@ -244,6 +238,9 @@ git remote prune origin
 
 ## github actions
 
+- continue: https://docs.github.com/en/actions/using-workflows/advanced-workflow-features
+  - creating dependent jobs
+
 ### links
 
 - [learn github actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
@@ -258,6 +255,9 @@ git remote prune origin
 - [finding and customizing github actions](https://docs.github.com/en/actions/learn-github-actions/finding-and-customizing-actions)
 - [keeping actions up to date with dependabot](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot)
 - [essential github action features](https://docs.github.com/en/actions/learn-github-actions/essential-features-of-github-actions)
+- [using env vars](https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables)
+- [perissting data using workflow artifacts](https://docs.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts)
+- [creating and storing enrypted secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)
 
 ### terms
 
@@ -273,16 +273,31 @@ git remote prune origin
 - event: a specific activity that triggers a workflow run
 - runner: a server that runs your workflows
   - each runner can run a single job at a time
+- artifacts: files generated in a uses/run cmd that can be shared across jobs in the same workflow
+  - all run/ses have write access to that workflows artifacts
+- secrets: stored in Github as secrets, then referrenced in your ci yml file
 
 ### actions in depth
 
 - see finding and customizing actions link
-- continue: https://docs.github.com/en/actions/learn-github-actions/essential-features-of-github-actions
 
 - action sources
   - in your repo
   - in any public repo
   - a published docker container image on docker hub (w00p w00p)
+
+### environment vars
+
+- by defualt, env vars are scoped to the run/uses block that define them
+-
+
+### artifacts
+
+- enable you to share generated files with other jobs in the same workflow
+
+### secrets
+
+- see yml below
 
 ```yml
 name: some-workflow-name
@@ -295,5 +310,21 @@ jobs:
       - uses: actions/setup-node@v2 # dont use this, we use vagrant
         with:
           node-version: "14"
+      - name: some-file
+        uses actions/upload-artiact@v3
+        path: wherever/poop.log
+      - uses: actions/download-artifact # download na artifact form a separate worflow
+        with:
+          name: some-file
       - run: npm install -g bats # a cmd, either this or uses (for an action)
+        env:
+          POOP: flush
+          FLUSH: poop
+      - run: "./.github/scripts/poop.sh" # prefer this, so we can reuse them
+        shell: bash
+      - name: retrieve a secret
+        env:
+          super_secret: ${{ secrets.SUPERSECRET }}
+        run: | # inline, multiline script
+          normalbashfn "$super_secret"
 ```
