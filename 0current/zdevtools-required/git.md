@@ -242,27 +242,19 @@ git branch --merged | egrep -v "(^\*|dev)" | xargs git branch -d
 git remote prune origin
 ```
 
-## github actions & workflows
+## github actions
 
-- workflows: define the event that triggers actions, and which actions to run for each event
-  - stored in `.github/workflows/someworkflow.yml`
-- events:
+### links
 
-  - e.g. a push, pull_request,
-  - a webhook, e.g. branch creation/deletion, issues opened/resolved,
-  - a schedule, similar to cron format
+- [learn github actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
+- [reusing workflows](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows)
+- [using workflows](https://docs.github.com/en/actions/using-workflows)
+- [events that trigger workflows](https://docs.github.com/en/actions/reference/events-that-trigger-workflows)
 
-- workflow & action attributes
-  - name: identifies the workflow, if not supplied then github will use the name of the file
-  - on: the github event that triggers the workflow
-  - jobs: a workflow can have multiple jobs, each containing a series of steps to be executed, by default they run in parallel
-    - runs-on: the VM (runner) to use
-    - steps: one/more tasks within a job, has access to the file system, each step runs in its own process
-      - name: optional identifer for the step that follows
-      - uses: identifies the path to an action/docker image to be executed in the VM
-        - more versatile than a run statement as you can specify a series of things in an action file
-        - can be located the same repo, another public repo, or a container registry like docker hub
-          - public repo: owner/repo@ref,
-          - same repo: ./.github/actions/somepath
-          - docker image registry: docker://hello-world:latest
-      - run: runs a cmd in the VMs shell environment
+### terms
+
+- workflow: triggered in response to an event; a configurable automated process that wil lrun one/more jobs
+- jobs: one/more tasks that make up a workflow; each run inside a VM/container, executed sequentially/parallel
+- steps: scripts/actions that make up a job
+- action: reusable script to help simplify workflows
+- event: a specific activity that triggers a workflow run
