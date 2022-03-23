@@ -250,11 +250,50 @@ git remote prune origin
 - [reusing workflows](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows)
 - [using workflows](https://docs.github.com/en/actions/using-workflows)
 - [events that trigger workflows](https://docs.github.com/en/actions/reference/events-that-trigger-workflows)
+- [using jobs](https://docs.github.com/en/actions/using-jobs)
+- [creating actions](https://docs.github.com/en/actions/creating-actions)
+- [hosting your own runners](https://docs.github.com/en/actions/hosting-your-own-runners)
+- [github actions syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
+- [metadata for custom githu actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions)
+- [finding and customizing github actions](https://docs.github.com/en/actions/learn-github-actions/finding-and-customizing-actions)
+- [keeping actions up to date with dependabot](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot)
+- [essential github action features](https://docs.github.com/en/actions/learn-github-actions/essential-features-of-github-actions)
 
 ### terms
 
 - workflow: triggered in response to an event; a configurable automated process that wil lrun one/more jobs
-- jobs: one/more tasks that make up a workflow; each run inside a VM/container, executed sequentially/parallel
+- jobs: one/more tasks that make up a workflow; each run inside a runner (a VM/container), executed sequentially/parallel
+  - a job will execute all its steps on a single runner
+  - by defualt jobs are isolated, but you can force dependencies, e.g. to share a build job with a deploy job
 - steps: scripts/actions that make up a job
+  - executed in the order they appear
+  - are dependent on eachother
+  - share the VM (and the data)
 - action: reusable script to help simplify workflows
 - event: a specific activity that triggers a workflow run
+- runner: a server that runs your workflows
+  - each runner can run a single job at a time
+
+### actions in depth
+
+- see finding and customizing actions link
+- continue: https://docs.github.com/en/actions/learn-github-actions/essential-features-of-github-actions
+
+- action sources
+  - in your repo
+  - in any public repo
+  - a published docker container image on docker hub (w00p w00p)
+
+```yml
+name: some-workflow-name
+on: [list, of, event, triggers]
+jobs:
+  some-job:
+    runs-on: macos-10.15 # has vagrant, which we use to pick our ubuntu version
+    steps:
+      - uses: actions/checkout@v2 # always use this to checkout the repos code
+      - uses: actions/setup-node@v2 # dont use this, we use vagrant
+        with:
+          node-version: "14"
+      - run: npm install -g bats # a cmd, either this or uses (for an action)
+```
