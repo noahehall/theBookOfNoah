@@ -65,3 +65,54 @@
 ## layout engine
 
 - [docs](https://single-spa.js.org/docs/layout-overview/)
+
+## extra notes
+
+- what is it?
+  - frameowrk for bringing together multiple microfrontends into a single frontend application
+  - controls the mounting & unmounting of microfrontends
+  - i.e. a toplevel router for
+- benefits
+  - multiple frameowrks on the same page
+  - deploy mfes independently
+  - lazy load code for improved intial load time
+- components
+  - route config: the root application in single spa
+    - contains the root HTML file that is shared by all MFEs
+    - contains the javascript file that registers applications and runs start to mount applications
+      - apps must have a name
+      - a fn to load the app code
+      - a fn that determines when the application is active
+  - applications:
+    - chunk of U rendered for a set of routes
+    - each is an entirely separate spa in and of itself
+  - parcel: framework agnostic component, a chunk of functionality ment to be mounted manually by an application
+    - best for sharing UI between frameworks
+  - utility: shared common js logic, no rendering
+- architectural approaches
+  - monorepo
+  - npm modules
+  - module loading: enables separate cod repos, independenct CI builds, and separate deployments
+- buildtime vs inbrowser modules
+  - ## buildtime: your transpiler will compile away the import
+  - inbrowser modules: import is retained and the dep is resolved in the browser
+    - in your webpack config, all externals are in browser modules
+- import maps: specify a URL for an inbrowser module
+  - defined in script element in your html file
+  - each app can be independently deveoped and deployed
+  - common libraries are easily managed and preloaded
+  - lazy loading is easy
+  - share common code
+  - recommended to have the import map hosted externally, and each team should update it
+- systemjs
+  - enable you to setup import maps for your inbowser modules
+
+```js
+
+{
+  imports: {
+    // can have scoping per URL
+    "react": "some url"
+  }
+}
+```

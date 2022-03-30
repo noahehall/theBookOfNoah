@@ -238,8 +238,11 @@ git remote prune origin
 
 ## github actions
 
-- continue: https://docs.github.com/en/actions/using-workflows/advanced-workflow-features
-  - creating dependent jobs
+- continue:
+  - https://docs.github.com/en/actions/using-workflows/advanced-workflow-features
+    - using a build matrix
+  - https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
+    - https://github.com/actions/cache
 
 ### links
 
@@ -258,6 +261,13 @@ git remote prune origin
 - [using env vars](https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables)
 - [perissting data using workflow artifacts](https://docs.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts)
 - [creating and storing enrypted secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)
+- [using jobs in a workflow](https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow)
+- [caching deps to speed up workflows](https://docs.github.com/en/actions/guides/caching-dependencies-to-speed-up-workflows)
+- [using a build matrix](https://docs.github.com/en/actions/using-jobs/using-a-build-matrix-for-your-jobs)
+- [using dbs and service containers](https://docs.github.com/en/actions/configuring-and-managing-workflows/using-databases-and-service-containers)
+- [labels with self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/using-labels-with-self-hosted-runners)
+- [github hosted runners & hardware resources](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners)
+- [all github hosted runners](https://github.com/actions/virtual-environments)
 
 ### terms
 
@@ -277,7 +287,7 @@ git remote prune origin
   - all run/ses have write access to that workflows artifacts
 - secrets: stored in Github as secrets, then referrenced in your ci yml file
 
-### actions in depth
+### actions
 
 - see finding and customizing actions link
 
@@ -285,6 +295,11 @@ git remote prune origin
   - in your repo
   - in any public repo
   - a published docker container image on docker hub (w00p w00p)
+
+### jobs
+
+- use `needs` to create a dependency between jobs, dependent jobs run sequentially
+  - all dependent jobs are skipped if the `needs` job(s) fails
 
 ### environment vars
 
@@ -299,12 +314,43 @@ git remote prune origin
 
 - see yml below
 
+### caches
+
+- once the cache is created, it is available to all workflows in the same repository
+- dont store any sensitive info in te cache of public repos
+  - especially cmdline programs like `docker login` which store creds in a config file
+  - anyone with read access can create a pull request and access the contents of the cache
+    - even with forks by making a pull request to the base branch
+- cache vs artifacts
+  - cache: reuse files that dont change often between jobs
+  - artifacts: save files produced bya job to view after a workflow has ended
+- access caches
+  - a workflow can access and restore a cache:
+    - in the current branch
+    - the base branch (including base branches of forked repos)
+    - the default branch
+  - cache isolation exists between different branches
+    - a cache created for branch POOP with the base develop
+    - ^ is not accessible in branch FLUSH with the base develop
+- caching logic
+  - [must read the cache actions docs](https://github.com/actions/cache)
+
+### very long example
+
 ```yml
 name: some-workflow-name
 on: [list, of, event, triggers]
 jobs:
   some-job:
-    runs-on: macos-10.15 # has vagrant, which we use to pick our ubuntu version
+    # @see dbs and service containers
+    # container: node:10.18-jessie
+    # services:
+      # postgres:
+        # image: postgres
+    runs-on: macos-10.15 # has vagrant, everything we do is within vagrant
+    # strategy: @see using a build matrix
+    #   matrix:
+    #   node: [6, 8 ,10]
     steps:
       - uses: actions/checkout@v2 # always use this to checkout the repos code
       - uses: actions/setup-node@v2 # dont use this, we use vagrant
