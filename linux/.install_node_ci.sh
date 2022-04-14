@@ -2,7 +2,7 @@
 
 DISTRO='linux-x64'
 NODE_DIR='/opt/nodejs'
-NODE_VERSION='v17.6.0'
+NODE_VERSION='v17.9.0'
 NODE_DIST="node-${NODE_VERSION}"
 
 sudo rm -rf "$NODE_DIR"
