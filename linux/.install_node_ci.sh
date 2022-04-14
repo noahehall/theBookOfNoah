@@ -33,5 +33,5 @@ sudo ln -ns $NODE_BIN/* /usr/local/bin
 
 # install pnpm & yarn & npm via corepack
 sudo corepack enable # requires sudo for /usr/local/bin
-corepack prepare --activate --all
-sudo pnpm add -g pnpm # upgrade to latest; pnpm rox
+corepack prepare pnpm@6.32.7 --activate
+# sudo pnpm add -g pnpm # upgrade to latest; pnpm rox
