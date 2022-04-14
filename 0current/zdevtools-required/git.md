@@ -39,7 +39,7 @@ long list of git
 - git: i'm always talking about git-scm.com
 - three states of git
   - working directory: uncommited changes
-    - single checkout of one version of the project; pulled out of the compressed database (the .git directory) and place on disk fo ryou to use/modify
+    - single checkout of one version of the project; pulled out of the compressed database (the .git directory) and place on disk for you to use/modify
   - staging area: changes you've commited
     - stores information about what will go into your next commit (the index)
   - .git directory: changes pushed to github
@@ -51,7 +51,7 @@ long list of git
 - high level
   - snapshots, not differences: other git systems (e.g. subversion) store data as a set of diffs, git stores data as snapshots
   - nearly every operation is local: many other git systems require network connecion, however git almost doesnt
-    - since you have the entire histoyr of the project on your local disk, most operations seem instantaneous
+    - since you have the entire history of the project on your local disk, most operations seem instantaneous
   - integrity: everything in git is checksummed before it is stored; and then only referred to by that checksum
     - i.e. its impossible to change the contents of a file/directory without git knowing about it
 
@@ -277,14 +277,14 @@ git remote prune origin
   - by defualt jobs are isolated, but you can force dependencies, e.g. to share a build job with a deploy job
 - steps: scripts/actions that make up a job
   - executed in the order they appear
-  - are dependent on eachother
+  - are dependent on each other
   - share the VM (and the data)
 - action: reusable script to help simplify workflows
 - event: a specific activity that triggers a workflow run
 - runner: a server that runs your workflows
   - each runner can run a single job at a time
 - artifacts: files generated in a uses/run cmd that can be shared across jobs in the same workflow
-  - all run/ses have write access to that workflows artifacts
+  - all run/uses cmds have write access to that workflows artifacts
 - secrets: stored in Github as secrets, then referrenced in your ci yml file
 
 ### actions
@@ -304,7 +304,6 @@ git remote prune origin
 ### environment vars
 
 - by defualt, env vars are scoped to the run/uses block that define them
--
 
 ### artifacts
 

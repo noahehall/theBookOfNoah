@@ -1,7 +1,7 @@
 # bash scripting
 
 - most of this should have come straight from the bash pocket ref (bash v4.4)
-- hopefully this will be my last bash cheatsheet and I can simplify `
+- hopefully this will be my last bash cheatsheet
 
 - reading 96
 - page 44, arrays
@@ -182,7 +182,7 @@
   - `;` cmd separator
   - `&` bg execution
   - `()` cmd grouping
-  - `\`` tilda is for cmd substitution
+  - "`" tilda is for cmd substitution
 - `|` pipe
 - `< > &` redirection symbols
 - `* ? [ ] ~ + - @ !` filename metacharacters
