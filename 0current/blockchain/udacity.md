@@ -6,11 +6,13 @@
 ## links
 
 - [solidity: ethereum programming language](https://soliditylang.org/)
+- [how to timestamp a digital document, the first block idea](https://www.anf.es/pdf/Haber_Stornetta.pdf)
+- [bitcoin: peer to peer electornic cash system](https://bitcoin.org/bitcoin.pdf)
 
 ## terminology
 
 - blockchain: a shared db that contains a list of transactions
-  - started as an idea by Satoshi Nakamoto back in 2009
+  - started as an idea by Satoshi Nakamoto back in 2009 to solve problems with financial transactions
   - bitcoin is the first blockchain, but now there are many more
 - transactions: a record of information, e.g. who sent it, received, etc
   - are sent to other users and grouped with other transactions into a block
@@ -21,6 +23,11 @@
 - blockchain data is
   - held, shared and verified by all users on the block
   - anonymous and cryptographically secure
+- trusted 3rd party: entity that facilitates interactions between 2 parties
+  - establish security to secure, store/record and make transactions
+- ledger: list of transaction records, e.g. who sent, received, etc; removes the double spending problem
+  - is shared on the blockchain, everyone has access to it
+- double spending problem: when someone spends the same money more than once
 
 ## blockchain framework
 
@@ -34,3 +41,9 @@
   - hashing
   - block
   - blockchain
+
+## bitcoin
+
+- the first, but now one of many blockchains
+- a type of digital currency that utilizes the blockchain to facilitate financial transactions
+- uses blocks to group and validate transactions
