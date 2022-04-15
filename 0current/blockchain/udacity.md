@@ -37,6 +37,15 @@
   - is shared on the blockchain, everyone has access to it
 - double spending problem: when someone spends the same money more than once
 
+## blockchains
+
+### bitcoin
+
+- the first, but now one of many blockchains
+- a type of digital currency that utilizes the blockchain to facilitate financial transactions
+- uses blocks to group and validate transactions
+- uses sha256 to create a unique hash value for each block on the blockchain
+
 ## blockchain framework
 
 - overview of blockchain components
@@ -56,14 +65,7 @@
 - data > hash fn (e.g. sha56) > hash value
 - sha256: outputs a 256 bit number
 
-## bitcoin
-
-- the first, but now one of many blockchains
-- a type of digital currency that utilizes the blockchain to facilitate financial transactions
-- uses blocks to group and validate transactions
-- uses sha256 to create a unique hash value for each block on the blockchain
-
-## blocks
+### blocks
 
 - the building blocks of the blockchain
 - a container that hold a list of transactions to be added to the blockchain
@@ -84,3 +86,13 @@
 - block size: the amount of space a block has to hold information (e.g. 1mb)
   - is decided by the developer
   - determines how long it takes to create a block, and how many blocks will be on the chain. is the same for every block on the chain, and can only be changed via an update
+- block number: identifies the position of this block within the blockchain, i.e. the block # 1 is the first block
+  - genesis block: the block with number 1
+
+### blockchain
+
+- a shared digital ledger that contains the entire histoyr of transactions made on the network
+  - i.e. the transaction history of the network
+- a connection of linked blocks joined together by hash values; hash values + blocks are the core components
+  - if the hash value of a block is changed, the hash for the next block is also changed, and next block, etc.
+- all information is immutable
