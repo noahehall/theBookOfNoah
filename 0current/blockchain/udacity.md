@@ -1,5 +1,8 @@
 # udacity's blockchain developer nanodegree
 
+- skipped
+  - udacity online workspace; rather use my local machine
+
 ## links
 
 - [solidity: ethereum programming language](https://soliditylang.org/)
@@ -18,3 +21,16 @@
 - blockchain data is
   - held, shared and verified by all users on the block
   - anonymous and cryptographically secure
+
+## blockchain framework
+
+- overview of blockchain components
+  - transaction
+  - wallet
+  - signature
+  - mempool
+  - network
+  - consensus
+  - hashing
+  - block
+  - blockchain
