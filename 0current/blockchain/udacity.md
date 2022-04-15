@@ -1,13 +1,18 @@
 # udacity's blockchain developer nanodegree
 
 - skipped
+
   - udacity online workspace; rather use my local machine
 
 ## links
 
 - [solidity: ethereum programming language](https://soliditylang.org/)
 - [how to timestamp a digital document, the first block idea](https://www.anf.es/pdf/Haber_Stornetta.pdf)
-- [bitcoin: peer to peer electornic cash system](https://bitcoin.org/bitcoin.pdf)
+- todos
+  - [bitcoin: peer to peer electornic cash system](https://bitcoin.org/bitcoin.pdf)
+  - [anders bitcoin hashing](https://anders.com/blockchain/hash.html)
+  - [bitcoin hash wiki](https://en.bitcoin.it/wiki/Hash)
+  - [cryptographic hash function](https://en.wikipedia.org/wiki/Cryptographic_hash_function)
 
 ## terminology
 
@@ -42,8 +47,15 @@
   - block
   - blockchain
 
+### hash
+
+- a digital fingerprint for information
+- data > hash fn (e.g. sha56) > hash value
+- sha256: outputs a 256 bit number
+
 ## bitcoin
 
 - the first, but now one of many blockchains
 - a type of digital currency that utilizes the blockchain to facilitate financial transactions
 - uses blocks to group and validate transactions
+- uses sha256 to create a unique hash value for each block on the blockchain
