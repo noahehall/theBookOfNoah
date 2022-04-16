@@ -42,12 +42,12 @@
 #### Mainnet
 
 - prod: primary network where live transactions take place
-- +peers, +value, ~200gb, full block difficulty, 10 min block creation, pub-key prefix = 1
+- peers: entire network, +value, ~200gb, full block difficulty, 10 min block creation, pub-key prefix = 1
 
 #### Testnet
 
 - test: alternative bitcoin blockchain that provides a test env for applications
-- has peers (i.e. network), no value, ~14gb, pub key prefix = m or n, half block diffulty of mainnet
+- peers: testers, no value, ~14gb, pub key prefix = m or n, half block diffulty of mainnet; coins have no value and periodically get reset and redistributed
 
 #### Regnet
 
