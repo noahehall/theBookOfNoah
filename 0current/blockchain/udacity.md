@@ -30,6 +30,7 @@
   - [proof of activity](https://www.coinbureau.com/blockchain/proof-of-activity-explained-hybrid-consensus-algorithm/)
   - [proof of burn](https://99bitcoins.com/what-is-proof-of-burn/)
   - [neo blockchain](https://neo.org/)
+  - [multicoin capital](https://multicoin.capital/)
 
 ## terminology
 
@@ -252,3 +253,11 @@
 #### proof of burn
 
 - todo
+
+### transactions
+
+- identity: when you move crypto from one address to another, you need to provide a digital signature proving that you control/own that address, i.e. your signing a transaction that shows you control the address from which the crypto is moving from
+  - its like your SS number, bank account, drivers license, etc.
+- private key: a secret number that allows you to spend bitcoin from your wallet; everytime you interact with the blockchain, you have to sign that transaction with your private key
+- public key: a shareable key that cannot be used to spend crypto
+- wallet address: a unique identifer for a wallet
