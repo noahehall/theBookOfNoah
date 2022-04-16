@@ -135,6 +135,20 @@
   - everytime a sender puts out a transaction into the mempool, they add a transaction fee, a tip for the miner to validate the transaction
   - miners can look through all possible transactions and will pick the one with the higest fee, (thats how they get paid)
 
-### consensus
+### consensus (idea and algorithms)
 
-- drives all the decisions made to establish and grow the blockchain
+- drives all the decisions made to establish and grow the blockchain; its how the blockchain makes decisions; and how blocks join the blockchain
+- is an idea, thats implemented via different algorithms
+  - a voting process for the network, that makes decisions about information on the blockchain, e.g. which transactions are most trustworthy
+- byzantine generals' problem: an analogy for a distributed network and reaching consensus amongst nodes
+  - 9 generals encircling an army, need to make a decision about how best to attack, or retreat, and all nine must agree to do the same thing, else they will lose
+  - of the 9 generals, there could be some who are traitors (theres always traitors in the mix)
+  - the generals are physically separated, and must send their votes via messengers, which could be attacked along the way, lose the msg, or change the msg
+
+#### proof of work algorithm
+
+- a way to achieve consensus without a centralized authority
+
+#### proof of stake algorithm
+
+#### DBFT algorithm
