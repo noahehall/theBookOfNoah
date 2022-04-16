@@ -31,6 +31,7 @@
   - [proof of burn](https://99bitcoins.com/what-is-proof-of-burn/)
   - [neo blockchain](https://neo.org/)
   - [multicoin capital](https://multicoin.capital/)
+  - [electrum](https://electrum.org/#home)
 
 ## terminology
 
@@ -254,26 +255,73 @@
 
 - establishes your identity on the blockchain
   - when you move crypto from one address to another, you need to provide a digital signature proving that you control/own that address, i.e. your signing a transaction that shows you control the address from which the crypto is moving from
-- private key, public key, wallet address
-  - private > public > wallet
-  - private key: a randomly generated secret that allows you to send crypto from your wallet; everytime you interact with the blockchain, you have to sign that transaction with your private key
-  - public key: a shareable key that cannot be used to spend crypto; but used to receive crypto; created from the private key via some one-way elliptic curge digital signature algo (ECDSA see security docs for indepth);
-  - wallet address: a unique identifer made from the public key for a wallet that can be shared with anyone
+
+#### keys
+
+- private > public > wallet
+
+##### private keys
+
+- private key: a cryptographically secure randomly generated number that allows you to send crypto from your wallet; everytime you interact with the blockchain, you have to sign that transaction with your private key
+  - can be any number from 1 to 2^256
+- formats:
+  - hexadecimal: 256 bits === 32 bytes
+  - wallet import format (WIF): make it easier to make different copies for different use cases
+    - WIF (Base58Check):
+    - WIF-Compressed (Base58Check added suffix 0x01 before encoding)
+- generating
+  - find a secure source of entropy to make it random/unpredictable
+
+##### public key
+
+- public key: a shareable key that cannot be used to spend crypto; but used to receive crypto; created from the private key via some one-way elliptic curge digital signature algo (ECDSA see security docs for indepth);
+
+##### wallet address
+
+- wallet address: a unique identifer made from the public key for a wallet that can be shared with anyone
 
 #### non deterministic wallet
 
-- random wallets where private keys are generated from random numbers
+- random wallets where private keys are generated from random private keys as seeds (instead of easy to remember words)
 
-#### sequential deterministic wallet
+  - random number > priv key > pub key > wallet addrss
+  - nothing can be traced back to the random number
+
+- best practices
+  - generate a new wallet address for each transaction, so no one can trck links between addresses
+  - make sure to backup the wallet, so you dont lose the generated priv key
+- use cases
+  - backend services
+
+#### deterministic wallets
+
+- all priv, publick and wallet addresses can be traced back to the original seeds, theres a purpose behind each
+
+##### sequential deterministic wallet
 
 - derived sequentially from a single seed and can be traced back to that seed
+  - a random number is used to generate a seed (e.g. 12 words)
+  - the seed is put through an algo to create a private master key
+  - the private master key goes through an algo, to create a new private key, and so on
+  - the seed can be used to regenerate everything as well as export/import to migrate the wallet to diferent impelmentations, thus only a single backup is necessary
+- first introduced in electrum
 
-#### hierarchical deterministic (HD) wallet
+##### hierarchical deterministic (HD) wallet
 
+- borne from the bitcoin improvement proposal 32 (BIP32)
+  - BIPs are used to improve the bitcoin proposal
 - an advanced type of deterministic wallet that contains keys derived in a tree structure
   - a seed creates a master key
   - that master key can create child private/public keys, chlid keys can create grandchild private/public keys, and so on
 - seed words: list of words that store all te information needed to recover a wallet
+- use cases
+  - businesses that want to separate out different departmental spending
+    - since all the keys still tie back to the initial master key, you can still assert authority over all public/private ancestor keys
+  - assigning keys to application users that need to be paid
+  - creating keys for different types of transactions
+  - trustless servers: a webserver can create ancestor public keys for various tasks, and never share the private key
+- best practices
+  - the master key must be secured, as everything falls apart if its leaks
 
 ### hashing
 
