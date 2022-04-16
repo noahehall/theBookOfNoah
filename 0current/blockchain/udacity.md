@@ -9,7 +9,7 @@
 - [solidity: ethereum programming language](https://soliditylang.org/)
 - [how to timestamp a digital document, the first block idea](https://www.anf.es/pdf/Haber_Stornetta.pdf)
 - todos
-  - [bitcoin: peer to peer electornic cash system](https://bitcoin.org/bitcoin.pdf)
+  - [bitcoin: peer to peer electornic cash system and PoW](https://bitcoin.org/bitcoin.pdf)
   - [anders bitcoin hashing](https://anders.com/blockchain/hash.html)
     - link no longer works
   - [anders blockchain block](https://anders.com/blockchain/block)
@@ -145,7 +145,7 @@
   - of the 9 generals, there could be some who are traitors (theres always traitors in the mix)
   - the generals are physically separated, and must send their votes via messengers, which could be attacked along the way, lose the msg, or change the msg
 
-#### proof of work algorithm
+#### proof of work algorithm (PoW)
 
 - a way to achieve consensus without a centralized authority, original proposed by bitcoin (see the paper link)
 - whoever puts in the most work to contribute to the system is the most trustworthy
@@ -157,7 +157,23 @@
     - miners are in a race with eachother to solve the next problem, in order to be the one that puts the next block on the blockchain
     - in return for their time and resources they are paid transaction fees (by the users) and in bitcoin (by the network)
       - the bitcoin are created specifically for miners, and is the only way new coins are added to the network
+- the proof of work requires a certain type of hash value, that starts with a certain amount of zeros (this is the block difficulty)
+  - you get the zeros by having the correct Nonce + block data
+  - since the block data (the transactions) arent changing, the only option is to change the Nonce
+  - guessing the Nonce is time consuming, and the more leading zeros required in the final hash value, the longer the guessing game takes
+  - bitcoin adjusts the block difficulty (amount of zeros required) to ensure a new block is created every 10 minutes
+    - 10 minutes was arbitrarily decided by the bitcoin developers, as a balance between network security and efficiency of creating new blocks
+      - too fast: hackers can attempt to change the data
+      - too slow: network cant keep up with the amount of transactions happening and the mempool will be overloaded
+- issues
+  - extremely high energy consumption: the compute power to calculate the correct Nonce is super high
+    - mining rigs/farms are setup that consume a lot of energy
+  - monopoly of miners leads to concern for centralization
+    - those who have the resources to access more equipment have an unfair advantage
+    - they have more say in which blocks are considered valid
 
-#### proof of stake algorithm
+#### proof of stake algorithm (PoS)
+
+- ....
 
 #### DBFT algorithm
