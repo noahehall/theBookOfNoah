@@ -52,8 +52,8 @@
   - transaction
   - wallet
   - signature
-  - mempool
-  - network
+  - mempool (memory pool)
+  - network (distributed P2P network)
   - consensus
   - hashing
   - block
@@ -88,11 +88,26 @@
   - determines how long it takes to create a block, and how many blocks will be on the chain. is the same for every block on the chain, and can only be changed via an update
 - block number: identifies the position of this block within the blockchain, i.e. the block # 1 is the first block
   - genesis block: the block with number 1
+- blocks hash value: it includes this blocks data + the hash value of the previous block, creating a chain of blocks (blockchain)
 
 ### blockchain
 
 - a shared digital ledger that contains the entire histoyr of transactions made on the network
   - i.e. the transaction history of the network
 - a connection of linked blocks joined together by hash values; hash values + blocks are the core components
-  - if the hash value of a block is changed, the hash for the next block is also changed, and next block, etc.
+  - if the hash value of a block is changed, the hash for the next block is also changed, and next block, etc. and all those blocks become invalid
 - all information is immutable
+
+### network (distributed p2p network)
+
+- the network enables the blockchain to bypass the need for trusted 3rd parties
+- peer to peer: a network of computers that allows information to be shared directly across users (nodes) without the need for a central authority to hold that information
+  - enables open communication
+- network types
+  - centralized network: information is held by a single network owner, and all nodes must connect to it to get information
+  - decentralized: information is duplicated and held in multiple locations, and nodes can connect to any of the networks to get information
+  - distributed network: a network that duplicates information to each user in the network
+    - enables information to be owned by users
+    - its a decentralized network pushed to the limits
+
+### mempool (memory pool)
