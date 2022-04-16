@@ -147,7 +147,16 @@
 
 #### proof of work algorithm
 
-- a way to achieve consensus without a centralized authority
+- a way to achieve consensus without a centralized authority, original proposed by bitcoin (see the paper link)
+- whoever puts in the most work to contribute to the system is the most trustworthy
+  - a system where information can be costly to produce (the work required to generate a blocks hash value), but easy to verify
+  - each node is involved in solving a problem to prove theyve done the required work
+  - solving the problem (takes a long time) is indicator/signal that the node can be trusted
+    - the problem is finding the Nonce for the next block
+  - the nodes that solve the problem are known as miners
+    - miners are in a race with eachother to solve the next problem, in order to be the one that puts the next block on the blockchain
+    - in return for their time and resources they are paid transaction fees (by the users) and in bitcoin (by the network)
+      - the bitcoin are created specifically for miners, and is the only way new coins are added to the network
 
 #### proof of stake algorithm
 
