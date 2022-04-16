@@ -2,6 +2,12 @@
 
 - most comes from udacity's blockchain nanodegree program
 
+## links
+
+- todo
+  - [testnet](https://en.bitcoinwiki.org/wiki/Testnet)
+  - [example applications](https://developer.bitcoin.org/examples/)
+
 ## terms
 
 - bitcion:
@@ -35,15 +41,15 @@
 
 #### Mainnet
 
-- primary network where live transactions take place
-- +peers +value
+- prod: primary network where live transactions take place
+- +peers, +value, ~200gb, full block difficulty, 10 min block creation, pub-key prefix = 1
 
 #### Testnet
 
-- alternative bitcoin blockchain that provides a test env for applications
-- has peers, no value
+- test: alternative bitcoin blockchain that provides a test env for applications
+- has peers (i.e. network), no value, ~14gb, pub key prefix = m or n, half block diffulty of mainnet
 
 #### Regnet
 
-- alternative test network for testing bitcion applications
-- no peers, no value
+- regression: alternative test network for testing bitcion applications
+- no peers (no network), no value
