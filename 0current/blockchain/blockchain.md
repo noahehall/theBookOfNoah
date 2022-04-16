@@ -1,4 +1,6 @@
-# udacity's blockchain developer nanodegree
+# blockchain
+
+- most comes from udacity's blockchain developer nanodegree
 
 - skipped
   - udacity online workspace; rather use my local machine
