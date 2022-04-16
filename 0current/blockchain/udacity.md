@@ -16,6 +16,10 @@
     - no longer works
   - [bitcoin hash wiki](https://en.bitcoin.it/wiki/Hash)
   - [cryptographic hash function](https://en.wikipedia.org/wiki/Cryptographic_hash_function)
+  - [blockchain.com](https://www.blockchain.com/about/index.html)
+  - [blockchain.com unconfirmed transactions](https://www.blockchain.com/btc/unconfirmed-transactions)
+  - [blockchain.com charts](https://www.blockchain.com/charts)
+  - [bitcoin visuals](https://bitcoinvisuals.com/stats)
 
 ## terminology
 
@@ -36,6 +40,7 @@
 - ledger: list of transaction records, e.g. who sent, received, etc; removes the double spending problem
   - is shared on the blockchain, everyone has access to it
 - double spending problem: when someone spends the same money more than once
+- wallet address: like an email address
 
 ## blockchains
 
@@ -111,3 +116,25 @@
     - its a decentralized network pushed to the limits
 
 ### mempool (memory pool)
+
+- the waiting place (backlog) for unconfirmed transactions to be verified before they are added to the blockchain
+  - the purpose is to provide transaction security
+    - transactions must be included in a block, and the block confirmed six times before being added to the blockchain
+      - 6 confirmations means 5 additional blocks have been added to that blockchain, then the entire 6 blocks get added to the overall blockchain
+      - its considered irrevocable after 6 confirmations, because it will take an considerable amount of CPU resources to revalidate 6 entire blocks
+  - transactions sit in RAM (memory) of all the nodes on the bitcoin network
+  - six/more confirmations is sufficient proof for a transaction to leave the mempool and be included in a block on the blockchain
+  - before a transaction can be considered complete, it must be verified by specialized nodes on the network called miners (at least 6 confirmations)
+- miners: help ensure consensus on the blockchain by verifieing transactions in the mempool
+- valid reasons for a transaction to leave the mempool (eviction does not imply a transaction is canceled)
+  - the transaction expired by timeout (default 14 days after entering)
+  - transaction was at the bottom (when sorted by fee per size), the mempool reached its size limit, and a new higher-fee transaction was accepted, evicting the transaction at the bottom
+  - the transaction was included in a block (i.e. it shouldnt be in the mempool if it already added to the blockchain)
+  - the transaction/one of its unconfirmed ancestors conflicts with a transaction that was already included in a block
+- fees: confirming bitcoin transactions requires a lot of computational memory,
+  - everytime a sender puts out a transaction into the mempool, they add a transaction fee, a tip for the miner to validate the transaction
+  - miners can look through all possible transactions and will pick the one with the higest fee, (thats how they get paid)
+
+### consensus
+
+- drives all the decisions made to establish and grow the blockchain
