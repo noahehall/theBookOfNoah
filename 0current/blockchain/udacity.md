@@ -27,7 +27,6 @@
 
 ## terminology
 
-- forks: TODO
 - blockchain: a shared ledger (db) that records a list of transactions that happen within the network
   - started as an idea by Satoshi Nakamoto back in 2009 to solve problems with financial transactions
   - bitcoin is the first blockchain, but now there are many more
@@ -196,6 +195,8 @@
     - the greater the % of total coins a validator owns, the higher the chance of them being picked of validating the next block
     - if a validators block is added to the blockchain, they are added coin proportional to the amount of their stake
   - there are no miners in PoS that mine coins, because all the coins already exist
+- forks: TODO
+  - basically when there are multiple proposed blocks and that split a chain, need to research this some more
 - issues
   - nothing at stake problem: if a validator bets on multiple blocks, so they always win.
     - slasher solution: validators are penalized if they simutaneously create blocks on multiple chains
@@ -204,3 +205,13 @@
 #### DBFT algorithm
 
 - delegated Byzantine fault tolerance
+- said to be much faster that PoW because there are no complicated cryptographic puzzles to solve
+- assignes roles to nodes to help coordinate consensus
+- does not have miners, but instead consensus nodes and regular nodes
+  - regular nodes: just normal users
+  - consensus nodes: have the power to verify each block written to the blockchain; act as representatives for other nodes in the network
+    - keep track of proposed blocks that could be added to the blockchain
+    - when its time to add a block to the blockchain, a random consensus node is selected,
+      - NEO blockchain: labels the selected consensus node SPEAKER, and the others delegates
+        - the speaker creates a new block and proposes it to the delegates
+        - 2/3rds of delegates must approve the block, else a new randomly selected consensus node becomes speaker and the process repeates
