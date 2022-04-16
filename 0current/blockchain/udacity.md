@@ -24,6 +24,12 @@
   - [dash](https://www.dash.org/)
   - [lisk](https://lisk.io/)
   - [ethereum PoS FAQs](https://github.com/ethereum/wiki/wiki/Proof-of-Stake-FAQs)
+  - [wikipedia proof of stake: block selection methods](https://en.wikipedia.org/wiki/Proof-of-stake)
+  - [alternative proof of stake methods](https://dailyfintech.com/2016/01/20/why-proof-of-stake-matters-for-blockchain/#content-wrapper)
+  - [DBFT: neos consensus protocol](https://steemit.com/neo/@basiccrypto/neo-s-consensus-protocol-how-delegated-byzantine-fault-tolerance-works)
+  - [proof of activity](https://www.coinbureau.com/blockchain/proof-of-activity-explained-hybrid-consensus-algorithm/)
+  - [proof of burn](https://99bitcoins.com/what-is-proof-of-burn/)
+  - [neo blockchain](https://neo.org/)
 
 ## terminology
 
@@ -149,8 +155,10 @@
   - of the 9 generals, there could be some who are traitors (theres always traitors in the mix)
   - the generals are physically separated, and must send their votes via messengers, which could be attacked along the way, lose the msg, or change the msg
 
-#### proof of work algorithm (PoW)
+#### proof of work (PoW)
 
+- summary: miner nodes solve a math puzzle that requires a lot of computation power. whichever miner is able to solve the puzzle the fastest is able to add a block of transactions to the blockchain
+  - in return, they are paid the transaction fees from all the transactions included in the block, as well as paid by the netowrk with bitcions that were newly created upon the mining of the block
 - bitcoin uses PoW
 - a way to achieve consensus without a centralized authority, original proposed by bitcoin (see the paper link)
 - whoever puts in the most work to contribute to the system is the most trustworthy
@@ -179,14 +187,18 @@
 
 #### proof of stake algorithm (PoS)
 
-- ethereum uses PoS (but use to be on PoW)
-- DASH: pioneer of PoS: built from the core bitcoin platform with added features for privacy and Tx speed
-  - PrivateSend: todo
-  - InstantSend: todo
-- LISK: focused on creating decentralize Apps; uses delegated PoS
-  - dapps are built with javascript
-  - delegated PoS: only the top 101 delegates are able to have stakes in the network
-    - delegates are voted on in a rolling basis by the community; 1 Lisk === 1 vote
+- summary: there are no miners, instead validators (stakeholders) determine which block makes it onto the chain
+  - in order to validate transactions and create blocks, they must put up their own coins as stake, like placing a bet
+  - if they validate a fraudulent transaction, they lose their stake as well as their rights to participate as a validator in the future
+- who uses it
+  - ethereum uses PoS (but use to be on PoW)
+  - DASH: pioneer of PoS: built from the core bitcoin platform with added features for privacy and Tx speed
+    - PrivateSend: todo
+    - InstantSend: todo
+  - LISK: focused on creating decentralize Apps; uses delegated PoS
+    - dapps are built with javascript
+    - delegated PoS: only the top 101 delegates are able to have stakes in the network
+      - delegates are voted on in a rolling basis by the community; 1 Lisk === 1 vote
 - focuses on giving votes to members, depending on how much stake they have in the success of the chain; more stake === more votes
 - validators: aka stakeholders: determine which blocks make it onto the blockchain
   - validators put up their own coins as stake, as if they were placing a bet
@@ -202,8 +214,14 @@
     - slasher solution: validators are penalized if they simutaneously create blocks on multiple chains
     - other solution: validators on penalized for creating blocks on the wrong chain; forcing them to be selective about which blockchain to put their stake on
 
+#### delegated proof of stake
+
+- todo
+
 #### DBFT algorithm
 
+- summary: ordinary nodes in the system vote on representative delegate nodes; the delegate nodes decide which blocks should be added to the blockchain
+  - when its time to add a block, a randomly selected delegate is selected as speaker, proposes the block of transactions to add, and atleast 66% of the other delegates must approve, the process repeates if less than 66% (2/3rds) fail to approve the proposed block
 - neo uses DBFT
 - delegated Byzantine fault tolerance
 - said to be much faster that PoW because there are no complicated cryptographic puzzles to solve
@@ -223,14 +241,14 @@
   - bad delegates: users may not know which other nodes are good, and be unable to cast meaningful votes
     - solution: some platforms release data about the honesty and functioning of each delegate for voters to review
 
-#### delegated proof of stake
-
-- todo
-
 #### Proof of Activity
 
 - todo
 
 #### proof of elapsed time
+
+- todo
+
+#### proof of burn
 
 - todo
