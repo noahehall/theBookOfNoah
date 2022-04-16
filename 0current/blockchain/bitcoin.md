@@ -7,6 +7,8 @@
 - todo
   - [testnet](https://en.bitcoinwiki.org/wiki/Testnet)
   - [example applications](https://developer.bitcoin.org/examples/)
+  - [dev setup requirements](https://bitcoin.org/en/bitcoin-core/features/requirements)
+  - [reduce storage](https://bitcoin.org/en/full-node#reduce-storage)
 
 ## terms
 
@@ -47,9 +49,11 @@
 #### Testnet
 
 - test: alternative bitcoin blockchain that provides a test env for applications
-- peers: testers, no value, ~14gb, pub key prefix = m or n, half block diffulty of mainnet; coins have no value and periodically get reset and redistributed
+- peers: testers, no value, ~14gb, pub key prefix = m or n, half block diffulty of mainnet; coins have no value and periodically get reset and redistributed,
+- you have to sync to the network and download the blocks
 
 #### Regnet
 
 - regression: alternative test network for testing bitcion applications
-- no peers (no network), no value
+- no peers (local to your computer), coins have no value, can instantaneously create blocks (no block difficulty), transactions dont go through validation,
+- can only download the core components necessary to run the application
