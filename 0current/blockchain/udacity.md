@@ -20,9 +20,14 @@
   - [blockchain.com unconfirmed transactions](https://www.blockchain.com/btc/unconfirmed-transactions)
   - [blockchain.com charts](https://www.blockchain.com/charts)
   - [bitcoin visuals](https://bitcoinvisuals.com/stats)
+  - [ethereum](https://ethereum.org/)
+  - [dash](https://www.dash.org/)
+  - [lisk](https://lisk.io/)
+  - [ethereum PoS FAQs](https://github.com/ethereum/wiki/wiki/Proof-of-Stake-FAQs)
 
 ## terminology
 
+- forks: TODO
 - blockchain: a shared ledger (db) that records a list of transactions that happen within the network
   - started as an idea by Satoshi Nakamoto back in 2009 to solve problems with financial transactions
   - bitcoin is the first blockchain, but now there are many more
@@ -147,6 +152,7 @@
 
 #### proof of work algorithm (PoW)
 
+- bitcoin uses PoW
 - a way to achieve consensus without a centralized authority, original proposed by bitcoin (see the paper link)
 - whoever puts in the most work to contribute to the system is the most trustworthy
   - a system where information can be costly to produce (the work required to generate a blocks hash value), but easy to verify
@@ -174,6 +180,27 @@
 
 #### proof of stake algorithm (PoS)
 
-- ....
+- ethereum uses PoS (but use to be on PoW)
+- DASH: pioneer of PoS: built from the core bitcoin platform with added features for privacy and Tx speed
+  - PrivateSend: todo
+  - InstantSend: todo
+- LISK: focused on creating decentralize Apps; uses delegated PoS
+  - dapps are built with javascript
+  - delegated PoS: only the top 101 delegates are able to have stakes in the network
+    - delegates are voted on in a rolling basis by the community; 1 Lisk === 1 vote
+- focuses on giving votes to members, depending on how much stake they have in the success of the chain; more stake === more votes
+- validators: aka stakeholders: determine which blocks make it onto the blockchain
+  - validators put up their own coins as stake, as if they were placing a bet
+  - if a validator puts an invalid transaction into a block on the blockchain, they lose their holds and their right to participate as a validator in the future
+    - this incentives validators to validate only truthy transactions
+    - the greater the % of total coins a validator owns, the higher the chance of them being picked of validating the next block
+    - if a validators block is added to the blockchain, they are added coin proportional to the amount of their stake
+  - there are no miners in PoS that mine coins, because all the coins already exist
+- issues
+  - nothing at stake problem: if a validator bets on multiple blocks, so they always win.
+    - slasher solution: validators are penalized if they simutaneously create blocks on multiple chains
+    - other solution: validators on penalized for creating blocks on the wrong chain; forcing them to be selective about which blockchain to put their stake on
 
 #### DBFT algorithm
+
+- delegated Byzantine fault tolerance
