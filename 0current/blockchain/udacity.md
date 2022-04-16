@@ -32,6 +32,8 @@
   - [multicoin capital](https://multicoin.capital/)
   - [electrum](https://electrum.org/#home)
   - [getting started with electrum](https://www.youtube.com/watch?v=WdVlH9N2oKU)
+  - [importing priv keys in electrum](https://bitcoinelectrum.com/importing-your-private-keys-into-electrum/)
+  - [sweep a private key in electrum](https://bitcoinelectrum.com/sweeping-your-private-keys-into-electrum/)
   - [bitcoin wallet generator](https://www.bitaddress.org/bitaddress.org)
   - [generate a private key by flipping a coin](https://bitcointalk.org/index.php?topic=297077.msg3197393#msg3197393)
   - [generate a private key offline](https://github.com/bigmob/cryptosteel-tutorial/wiki/How-to-generate-private-key-offline-with-Bitaddress)
@@ -259,6 +261,14 @@
 
 - establishes your identity on the blockchain
   - when you move crypto from one address to another, you need to provide a digital signature proving that you control/own that address, i.e. your signing a transaction that shows you control the address from which the crypto is moving from
+- restoring a wallet
+  - use a seed: the 12 words used to initially create the wallet
+  - import a private key: you take the private key of a source wallet and import it into a destination wallet
+    - enables you to access the key via the source/destination wallet(s)
+      - be careful, as now the source wallet has been shared, it increases the likelihood of being compromised
+  - sweep a private key: move the private key of a source wallet into a destination wallet
+    - the source wallet is now empty, and the destination becomes the new source
+    -
 
 #### keys
 
