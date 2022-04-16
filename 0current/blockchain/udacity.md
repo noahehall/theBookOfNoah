@@ -271,6 +271,15 @@
     - e.g. you gennerally need to have more than you are sending, to cover the miner fees, any change left over will be converted to a new transaction output, so that they can be returned to you
 - algebra
   - (sum of inputs) - (sum outputs - changeBack) = transaction fee
+- lifecycle
+  - get the receivers wallet address
+  - create a transaction: amount to send + transaction fee
+  - verify & sign the transaction via senders wallet, using the wallets private key
+  - broadcast the transaction to the mempool
+  - miners eventually accept the transaction, group it into a block, find the proof of work, and assign the block a hash value
+  - the block is eventually placed onto the blockchain
+  - as the block gains confirmations, its eventually accepted as a valid transaction
+  - the receiver finally receives their funds
 
 ### wallet
 
