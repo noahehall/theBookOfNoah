@@ -72,15 +72,15 @@
 ## blockchain framework
 
 - overview of blockchain components
-  - transaction
-  - wallet
-  - signature
-  - mempool (memory pool)
-  - network (distributed P2P network)
-  - consensus
-  - hashing
   - block
   - blockchain
+  - consensus
+  - digital signature
+  - hashing
+  - mempool (memory pool)
+  - network (distributed P2P network)
+  - transaction
+  - wallet
 
 ### blocks
 
@@ -257,6 +257,21 @@
 
 ### transactions
 
+- transactions start broadcasting to the network when a wallet first signs a transaction
+  - a signature is required before a transaction is submitted to the network
+  - you sign the transaction via the private key linked to your wallet address
+  - the signed transaction goes from the sender to the receiver as a transaction message
+  - are made up of multiple transaction inputs and outputs
+- UTXO: unspent transaction output; the initial broadcast of a transaction to the network; only UTXO messages can be used as inputs to an accepted transaction
+  - contains conditions (proofs): proof of ownership to transact with those funds (derived from the wallet addresses private key)
+- transaction inputs: inbound payments that contribute to funding a wallet
+  - conditions: transaction inputs need to be converted to an output, which contains the condition to prove ownership using a private key
+- transaction output: the wallet needs to have enough funds, the sum of the input transactions + fees
+  - multiple transaction outputs can be included in an transaction inputs,
+    - e.g. you gennerally need to have more than you are sending, to cover the miner fees, any change left over will be converted to a new transaction output, so that they can be returned to you
+- algebra
+  - (sum of inputs) - (sum outputs - changeBack) = transaction fee
+
 ### wallet
 
 - establishes your identity on the blockchain
@@ -344,3 +359,8 @@
   - hash private key with ECDSA to create public key
   - hash public key with SHA256 (256 bits), then with primitive to digest (RIPEMD-160, 160 bits) to create a public key hash
   - make the wallet address via Base58Check
+
+### digital signatures
+
+- establishes a proof of ownership for each transaction on the blockchain
+- created via the wallet address
