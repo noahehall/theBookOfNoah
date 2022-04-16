@@ -204,8 +204,10 @@
 
 #### DBFT algorithm
 
+- neo uses DBFT
 - delegated Byzantine fault tolerance
 - said to be much faster that PoW because there are no complicated cryptographic puzzles to solve
+- there are no forks: because there is always only one versin of truth (due to the consensus nodes + voting process)
 - assignes roles to nodes to help coordinate consensus
 - does not have miners, but instead consensus nodes and regular nodes
   - regular nodes: just normal users
@@ -215,3 +217,20 @@
       - NEO blockchain: labels the selected consensus node SPEAKER, and the others delegates
         - the speaker creates a new block and proposes it to the delegates
         - 2/3rds of delegates must approve the block, else a new randomly selected consensus node becomes speaker and the process repeates
+- issues
+  - bad speaker: since speakers are chosen randomly, the selected speaker could be dishonest/malfunction
+    - solution: since users vote on delegates, and delegates are randomly selected to become speaker, its up to the users to ensure only honest nodes become delegates
+  - bad delegates: users may not know which other nodes are good, and be unable to cast meaningful votes
+    - solution: some platforms release data about the honesty and functioning of each delegate for voters to review
+
+#### delegated proof of stake
+
+- todo
+
+#### Proof of Activity
+
+- todo
+
+#### proof of elapsed time
+
+- todo
