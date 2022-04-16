@@ -75,12 +75,6 @@
   - block
   - blockchain
 
-### hash
-
-- a digital fingerprint for information
-- data > hash fn (e.g. sha56) > hash value
-- sha256: outputs a 256 bit number
-
 ### blocks
 
 - the building blocks of the blockchain
@@ -263,17 +257,28 @@
 - private key, public key, wallet address
   - private > public > wallet
   - private key: a randomly generated secret that allows you to send crypto from your wallet; everytime you interact with the blockchain, you have to sign that transaction with your private key
-    - cannot be traced
   - public key: a shareable key that cannot be used to spend crypto; but used to receive crypto; created from the private key via some one-way elliptic curge digital signature algo (ECDSA see security docs for indepth);
-    - can be traced
   - wallet address: a unique identifer made from the public key for a wallet that can be shared with anyone
+
+#### non deterministic wallet
+
+- random wallets where private keys are generated from random numbers
+
+#### sequential deterministic wallet
+
+- derived sequentially from a single seed and can be traced back to that seed
+
+#### hierarchical deterministic (HD) wallet
+
+- an advanced type of deterministic wallet that contains keys derived in a tree structure
+  - a seed creates a master key
+  - that master key can create child private/public keys, chlid keys can create grandchild private/public keys, and so on
+- seed words: list of words that store all te information needed to recover a wallet
 
 ### hashing
 
 - blockchain hashing logic
   - generate private key
   - hash private key with ECDSA to create public key
-  - hash public key with SHA256 (256 bits)
-  - hash that output with primitive to digest (RIPEMD-160, 160 bits) to create wallet address
-  - make the wallet address readable via Base58Check
-    - this is your shareable wallet address
+  - hash public key with SHA256 (256 bits), then with primitive to digest (RIPEMD-160, 160 bits) to create a public key hash
+  - make the wallet address via Base58Check
