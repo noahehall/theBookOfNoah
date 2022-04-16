@@ -1,7 +1,6 @@
 # udacity's blockchain developer nanodegree
 
 - skipped
-
   - udacity online workspace; rather use my local machine
 
 ## links
@@ -32,6 +31,11 @@
   - [neo blockchain](https://neo.org/)
   - [multicoin capital](https://multicoin.capital/)
   - [electrum](https://electrum.org/#home)
+  - [getting started with electrum](https://www.youtube.com/watch?v=WdVlH9N2oKU)
+  - [bitcoin wallet generator](https://www.bitaddress.org/bitaddress.org)
+  - [generate a private key by flipping a coin](https://bitcointalk.org/index.php?topic=297077.msg3197393#msg3197393)
+  - [generate a private key offline](https://github.com/bigmob/cryptosteel-tutorial/wiki/How-to-generate-private-key-offline-with-Bitaddress)
+  - [full list of wallets](https://bitcoin.org/en/choose-your-wallet)
 
 ## terminology
 
