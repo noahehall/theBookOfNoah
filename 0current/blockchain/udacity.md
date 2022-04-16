@@ -260,6 +260,20 @@
 
 - establishes your identity on the blockchain
   - when you move crypto from one address to another, you need to provide a digital signature proving that you control/own that address, i.e. your signing a transaction that shows you control the address from which the crypto is moving from
-- private key: a randomly generated secret that allows you to send crypto from your wallet; everytime you interact with the blockchain, you have to sign that transaction with your private key
-- public key: a shareable key that cannot be used to spend crypto; but used to receive crypto; created from the private key via some algo (see security docs for indepth)
-- wallet address: a unique identifer for a wallet that can be shared with anyone
+- private key, public key, wallet address
+  - private > public > wallet
+  - private key: a randomly generated secret that allows you to send crypto from your wallet; everytime you interact with the blockchain, you have to sign that transaction with your private key
+    - cannot be traced
+  - public key: a shareable key that cannot be used to spend crypto; but used to receive crypto; created from the private key via some one-way elliptic curge digital signature algo (ECDSA see security docs for indepth);
+    - can be traced
+  - wallet address: a unique identifer made from the public key for a wallet that can be shared with anyone
+
+### hashing
+
+- blockchain hashing logic
+  - generate private key
+  - hash private key with ECDSA to create public key
+  - hash public key with SHA256 (256 bits)
+  - hash that output with primitive to digest (RIPEMD-160, 160 bits) to create wallet address
+  - make the wallet address readable via Base58Check
+    - this is your shareable wallet address
