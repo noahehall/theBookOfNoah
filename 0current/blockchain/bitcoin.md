@@ -47,7 +47,15 @@
 
 #### blockcypher block explorer
 
-- todo
+- in the searchbar at top, you can enter a wallet address, transaction id, etc
+  - using the transaction ID returns a bunch of stuff, espcially important is the details section & total confirmations
+- recent blocks: the latest blocks to make it on the chain
+  - height: always increases by one
+  - age: the order each block was created
+  - transations: total transactions in the block
+  - size: dependent on the total transactions
+- current fee estimates: approximate cost of making transactions on the network
+- latest transactions:
 
 ### full-node wallet
 
@@ -113,3 +121,13 @@
 
 
 ```
+
+### data and the data model
+
+- opcodes:
+  - can be used to embed data in blocks on the blockchain
+    - this usecase is controversial:
+      - supporters: a way to expand bitcoin to support nonfinancial use cases
+      - retractors: bitcoin was only meant for financial purposes, and places a load (increased size, cost, maintenance etc) on users who to keep it that way
+  - op-return: todo
+-
