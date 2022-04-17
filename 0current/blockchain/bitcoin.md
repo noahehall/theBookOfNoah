@@ -14,6 +14,8 @@
   - [bitcoin core wiki docs](https://en.bitcoin.it/wiki/Running_Bitcoin#Linux_Quickstart)
   - [bitcoin.conf generator](https://jlopp.github.io/bitcoin-core-config-generator/)
   - [linux setup instructions: use this](https://bitcoin.org/en/full-node#linux-instructions)
+  - [choose a bitcoin wallet](https://bitcoin.org/en/choose-your-wallet)
+  - [bitcoin data dir](https://en.bitcoin.it/wiki/Data_directory)
 
 ## terms
 
@@ -40,9 +42,11 @@
 
 - fully accepts and validates transactions and blocks from the bitcoin blockchain
   - enables you to continuously download and validate the blockchain using your local computer
+  - you dont participate in mining
 
 ### debug console
 
+- in the help menu
 - CLI enabling you to intereact with data on the bitcoin blockchain
 
 ### environments
