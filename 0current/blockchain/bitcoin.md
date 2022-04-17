@@ -9,11 +9,16 @@
   - [example applications](https://developer.bitcoin.org/examples/)
   - [dev setup requirements](https://bitcoin.org/en/bitcoin-core/features/requirements)
   - [reduce storage](https://bitcoin.org/en/full-node#reduce-storage)
+  - [download latest version](https://bitcoin.org/en/download)
+  - [bitcoin core docs](https://bitcoin.org/en/bitcoin-core/help#documentation)
+  - [bitcoin core wiki docs](https://en.bitcoin.it/wiki/Running_Bitcoin#Linux_Quickstart)
+  - [bitcoin.conf generator](https://jlopp.github.io/bitcoin-core-config-generator/)
+  - [linux setup instructions: use this](https://bitcoin.org/en/full-node#linux-instructions)
 
 ## terms
 
-- bitcion:
-  - specifically a network of bitcion users creating & validating transactions
+- bitcoin:
+  - specifically a network of bitcoin users creating & validating transactions
   - generally known as a cryptocurrency
 - bitcoin core: implementation of bitcoin that encompasses all of the software behind bitcoin that allows the network to function
   - aka Bitcoin-QT, or the Satoshi Client
@@ -31,9 +36,10 @@
 
 - explore & verify the entire bitcoin blockahin, the history of all transactions
 
-### wallet
+### full-node wallet
 
-- allows you to transfer bitcions
+- fully accepts and validates transactions and blocks from the bitcoin blockchain
+  - enables you to continuously download and validate the blockchain using your local computer
 
 ### debug console
 
@@ -54,6 +60,20 @@
 
 #### Regnet
 
-- regression: alternative test network for testing bitcion applications
+- regression: alternative test network for testing bitcoin applications
 - no peers (local to your computer), coins have no value, can instantaneously create blocks (no block difficulty), transactions dont go through validation,
 - can only download the core components necessary to run the application
+
+## bitcoin core development
+
+- ~/.bitcoin/bitcoin.conf: all cli options excent for `-conf` can be specified in this file
+
+- you can run the cli or the GUI, but not both at the same time
+
+### bitcoind
+
+- the cli: can be run without arguments
+
+### bitcoin-qt
+
+- the gui
