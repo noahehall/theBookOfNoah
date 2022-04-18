@@ -21,6 +21,7 @@
   - [some random testnet faucet](https://testnet.help/en/btcfaucet/testnet#log)
   - [another random testnet faucet](https://bitcoinfaucet.uo1.net)
   - [blockcypher testnet explorer](https://live.blockcypher.com/btc-testnet/)
+  - [bitcoin Script language](https://kingslanduniversity.com/bitcoin-script-101/)
 
 ## terms
 
@@ -124,28 +125,30 @@
 
 ### data and the data model
 
-- opcodes:
-  - can be used to embed data in blocks on the blockchain
-    - this usecase is controversial:
-      - supporters: a way to expand bitcoin to support nonfinancial use cases
-      - retractors: bitcoin was only meant for financial purposes, and places a load (increased size, cost, maintenance etc) on users who to keep it that way
-  - op-return: todo
 - smart contracts: a series of conditions that must be met for an action to occur, and the parameters that meet those conditions
-- scripts: fine tune how transactions are executed and added to the blockchain
-
-#### blockchain
-
+- scripts: list of instructions recorded in each transaction that when executed, determines if the transaction is valid and if the bitcoins can be spent
+  - unlocking script: if the transaction is valid, this will contain the the requires that unlock the conditions of the locking script
+  - locking script:
+- Bitcoin Script: a stack based language
+  - stores numbers (data constants)
+  - executes from left to right
+  - opcodes: used to interact with data in the Bitcoin Script Stack
+    - used to push/pop data onto and interact with data in the stack
+    - can be used to embed data in blocks on the blockchain
+      - this usecase is controversial:
+        - supporters: a way to expand bitcoin to support nonfinancial use cases
+        - retractors: bitcoin was only meant for financial purposes, and places a load (increased size, cost, maintenance etc) on users who to keep it that way
 - transactions:
   - double hashed using SHA256 before being stored on the blockchain
     - sha256(sha256(0100...))
-    - 0100000001f3f6a909f8521adb57d898d2985834e632374e770fd9e2b98656f1bf1fdfd427010000006b48304502203a776322ebf8eb8b58cc6ced4f2574f4c73aa664edce0b0022690f2f6f47c521022100b82353305988cb0ebd443089a173ceec93fe4dbfe98d74419ecc84a6a698e31d012103c5c1bc61f60ce3d6223a63cedbece03b12ef9f0068f2f3c4a7e7f06c523c3664ffffffff0260e31600000000001976a914977ae6e32349b99b72196cb62b5ef37329ed81b488ac063d1000000000001976a914f76bc4190f3d8e2315e5c11c59cfc8be9df747e388ac00000000
+    - e.g. this is a raw transaction (not double hashed): 0100000001f3f6a909f8521adb57d898d2985834e632374e770fd9e2b98656f1bf1fdfd427010000006b48304502203a776322ebf8eb8b58cc6ced4f2574f4c73aa664edce0b0022690f2f6f47c521022100b82353305988cb0ebd443089a173ceec93fe4dbfe98d74419ecc84a6a698e31d012103c5c1bc61f60ce3d6223a63cedbece03b12ef9f0068f2f3c4a7e7f06c523c3664ffffffff0260e31600000000001976a914977ae6e32349b99b72196cb62b5ef37329ed81b488ac063d1000000000001976a914f76bc4190f3d8e2315e5c11c59cfc8be9df747e388ac00000000
       - 010000: the bitcoin version number; indicates which bitcoin protocol this transaction adheres to
       - 01: input count; how many inputs were used for this transaction
       - f3...fff: input info; where the input is coming from, and the conditions
-        - unlocking script: if the transaction is valid, this will contain the the requires that unlock the conditions of the locking script
+        - unlocking script: (see elseware in this doc)
       - 02: output count; how many outputs were produced from this transaction
       - 60e...88ac: output info; how much bitcoin outputed from the transaction, and conditions for spending in future transactions
-        - locking script: TODO
+        - locking script: (see elseware in this doc)
       - 00...: locktime; the earliest time (or block) that a transaction can be added onto the blockchain
         - if non-zero && < 500million: its interpreted as the block height, and miners have to wait until the ilicit block height is reached before attempting to add it to the block chain
         - if > 500million: its interpreted as a unix timestamp,
