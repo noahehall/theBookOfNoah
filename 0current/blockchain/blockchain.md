@@ -274,11 +274,13 @@
 - transaction output: aka UTXO
   - UTXO: unspent transaction output; the initial broadcast of a transaction to the network; only UTXO messages can be used as inputs to an accepted transaction
     - contains conditions (proofs): proof of ownership to transact with those funds (derived from the wallet addresses private key)
+    - is indivisible, like a coin, cant be cut in half,
+      - if the value of a UTXO is larger than the desired value of a transaction, it must still be consumed in its entired, and an additional output must be created to give change back to the owner
   - when a user receives bitcoin, that amount is recorded on the blockchain as unspent outputs (UTXO);
   - all of a wallets UTXO is scattered throughought the blockchain
   - when its time for them to spend that bitcoin, the wallet scans the blockchain and aggregates all the UTXO belonging to that user, and calculates the balance
     - i.e. theres no such thing as a stored balance for an account/bitcoin address; theres just a bunch of UTXO scattered on the blockchain, all linking back to a specific wallet address
-- lifecycle
+- lifecycle 1
   - get the receivers wallet address
   - create a transaction: amount to send + transaction fee
   - verify & sign the transaction via senders wallet, using the wallets private key
@@ -287,6 +289,10 @@
   - the block is eventually placed onto the blockchain
   - as the block gains confirmations, its eventually accepted as a valid transaction
   - the receiver finally receives their funds
+- lifecycle 2
+  - i want to send 2 bitcoin
+  - wallet scans the blockchain and retrieves two UTXO belonging to my address that can be summed to cover the costs
+  - these two UTXO becomes input to a new transaction, and the change is converted to an output (another UTXO) and linked back to my wallet address
 
 ### wallet
 
