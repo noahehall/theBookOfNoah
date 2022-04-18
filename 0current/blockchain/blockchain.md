@@ -64,7 +64,19 @@
 
 ## blockchains
 
-### bitcoin
+- public blockchain:
+  - permission: open and permissionless design that allows anyone to participate
+  - scalability: more difficult
+  - vulnerability: less vulnerable
+  - compliance: more difficult
+- private blockchain:
+  - permission: required, and are typically under centralized control
+- cross-chain functionality: connecting data across blockchains
+  - allows a series of protocols that work in harmony to delivery decentralized applications
+  - e.g. a private blockchain can store public blockchain data, like to log bitcoin transactions via their transaction id hash
+  - e.g. a public blockchain can store private blockchain by embedding data, e.g. bitcoin core OP_RETURN can store up to 40bytes
+
+### bitcoin core
 
 - the first, but now one of many blockchains
 - a type of digital currency that utilizes the blockchain to facilitate financial transactions

@@ -255,7 +255,7 @@
   OP_CHECKSIG # checks the signature for the top two stack items
   OP_RETURN <data> # allows embedding up to 40 bytes of data
     # does not bloat UTXO memory pool
-    # data should be sha256 hashed
+    # to store a sha256 hash, you need to encode the data to binary with 8 bits per byte
 
   # opcode examples:
   # ^ remember they execute from left to right
