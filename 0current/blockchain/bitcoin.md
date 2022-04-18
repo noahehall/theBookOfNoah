@@ -22,6 +22,7 @@
   - [another random testnet faucet](https://bitcoinfaucet.uo1.net)
   - [blockcypher testnet explorer](https://live.blockcypher.com/btc-testnet/)
   - [bitcoin Script language](https://kingslanduniversity.com/bitcoin-script-101/)
+  - [bitcoin script + list of opcodes](https://en.bitcoin.it/wiki/Script)
 
 ## terms
 
@@ -141,7 +142,7 @@
 - Bitcoin Script: a stack based language
   - stores numbers (data constants)
   - executes from left to right
-  - opcodes: used to interact with data in the Bitcoin Script Stack
+  - opcodes: i.e. operation codes; used to interact with data in the Bitcoin Script Stack
     - used to push/pop data onto and interact with data in the stack
     - can be used to embed data in blocks on the blockchain
       - this usecase is controversial:
@@ -179,6 +180,16 @@
   # ^ the rest is the locking script
   <sig> <pubKey> OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
 
+  # common opcodes
+  OP_ADD # pop two items from the top of the stack, add them, them push the sum back to the stack
+  OP_EQUAL # checks if the top two stack items are equal to each other
+
+  # opcode examples:
+  # ^ remember they execute from left to right
+  # ^ constant values are pushed to the top of the stack
+  2 6 OP_ADD 8 OP_EQUAL # 2 + 6 === 8
+    # ^ 2 could be an unlocking script, and the remainder could be a locking script
+    # ^ together they return true
 ```
 
 #### block data model
