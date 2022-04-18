@@ -42,6 +42,9 @@
 ### transaction verification engine
 
 - connects to the bitcoin network as a full node allowing you to verify transactions occuring within the network
+- grabs the unlocking script contained in the input of a transaction, and checks if it solves the requirements of the UTXO (output) of the linked transaction
+  - i.e. the unlocking script of an input in a transaction unlocks the output of a locking script in a PREVIOUS transaction
+  - i.e. the locking script of a transaction, interacts with the unlocking script of an input to a FUTURE transaction
 
 ### block explorer
 
@@ -162,6 +165,14 @@
         - if non-zero && < 500million: its interpreted as the block height, and miners have to wait until the ilicit block height is reached before attempting to add it to the block chain
         - if > 500million: its interpreted as a unix timestamp,
         - if 0: this block can be confirmed as soon as possible
+
+```sh
+  # example bitcoin script
+  # ^ sig + pubKey === unlocking script
+  # ^ the rest is the locking script
+  <sig> <pubKey> OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
+
+```
 
 #### block data model
 
