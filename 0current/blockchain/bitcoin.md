@@ -94,7 +94,15 @@
     # solvable: true if the wallet knows how to spend this output
     # safe: true if ? TODO
   gettxout <txid> <vout> # view details about a specific UTXO
-    # todo
+    # bestblock: hash of the block header that includes this transaction
+    # confirmations: total
+    # value: amount of bitcoin sent to this output
+    # scriptPubKey: the locking script
+    # ^ hex: encoded as hex
+    # ^ reqSig: the number of required signatures
+    # ^ type: type of script, pubkey, multisig, scripthash, etc
+    # ^ addresses: the addresses used in this transaction
+    # ^ coinbase: true if it belongs to coinbase transaction
 ```
 
 ### environments
