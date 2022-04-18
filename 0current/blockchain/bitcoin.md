@@ -131,23 +131,6 @@
 ### data and the data model
 
 - smart contracts: a series of conditions that must be met for an action to occur, and the parameters that meet those conditions
-- scripts: list of instructions recorded in each transaction that when executed, determines if the transaction is valid and if the bitcoins can be spent
-  - the locking and unlocking script are like a problem and a solution to determine if a transaction is valid, the locking script sets the conditions required for the funds to be spent, and the unlocking script sets the parameters that should satisfied the conditions in the locking script
-    - i.e. the locking script should return true when provided with the unlocking script
-  - unlocking script: if the transaction is valid, this will contain the the requires that unlock the conditions of the locking script
-    - generally contains a digital signature producers by the users wallet from their private key that will unlock the locking script
-  - locking script:
-    - places a lock on an UTXO (output) of a transaction by specifying the conditions that must be met in order to spend the outputs in the future
-      - e.g. the condition may be: anyone with the key (signature) corrosponding to some public address associated with some wallet
-- Bitcoin Script: a stack based language
-  - stores numbers (data constants)
-  - executes from left to right
-  - opcodes: i.e. operation codes; used to interact with data in the Bitcoin Script Stack
-    - used to push/pop data onto and interact with data in the stack
-    - can be used to embed data in blocks on the blockchain
-      - this usecase is controversial:
-        - supporters: a way to expand bitcoin to support nonfinancial use cases
-        - retractors: bitcoin was only meant for financial purposes, and places a load (increased size, cost, maintenance etc) on users who to keep it that way
 - transactions:
   - double hashed using SHA256 before being stored on the blockchain
     - sha256(sha256(0100...))
@@ -173,6 +156,26 @@
         - if non-zero && < 500million: its interpreted as the block height, and miners have to wait until the ilicit block height is reached before attempting to add it to the block chain
         - if > 500million: its interpreted as a unix timestamp,
         - if 0: this block can be confirmed as soon as possible
+
+#### bitcoin script
+
+- scripts: list of instructions recorded in each transaction that when executed, determines if the transaction is valid and if the bitcoins can be spent
+  - the locking and unlocking script are like a problem and a solution to determine if a transaction is valid, the locking script sets the conditions required for the funds to be spent, and the unlocking script sets the parameters that should satisfied the conditions in the locking script
+    - i.e. the locking script should return true when provided with the unlocking script
+  - unlocking script: if the transaction is valid, this will contain the the requires that unlock the conditions of the locking script
+    - generally contains a digital signature producers by the users wallet from their private key that will unlock the locking script
+  - locking script:
+    - places a lock on an UTXO (output) of a transaction by specifying the conditions that must be met in order to spend the outputs in the future
+      - e.g. the condition may be: anyone with the key (signature) corrosponding to some public address associated with some wallet
+- Bitcoin Script: a stack based language
+  - stores numbers (data constants)
+  - executes from left to right
+  - opcodes: i.e. operation codes; used to interact with data in the Bitcoin Script Stack
+    - used to push/pop data onto and interact with data in the stack
+    - can be used to embed data in blocks on the blockchain
+      - this usecase is controversial:
+        - supporters: a way to expand bitcoin to support nonfinancial use cases
+        - retractors: bitcoin was only meant for financial purposes, and places a load (increased size, cost, maintenance etc) on users who to keep it that way
 
 ```sh
   # example bitcoin script
