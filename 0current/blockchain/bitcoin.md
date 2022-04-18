@@ -134,7 +134,10 @@
   - the locking and unlocking script are like a problem and a solution to determine if a transaction is valid, the locking script sets the conditions required for the funds to be spent, and the unlocking script sets the parameters that should satisfied the conditions in the locking script
     - i.e. the locking script should return true when provided with the unlocking script
   - unlocking script: if the transaction is valid, this will contain the the requires that unlock the conditions of the locking script
+    - generally contains a digital signature producers by the users wallet from their private key that will unlock the locking script
   - locking script:
+    - places a lock on an UTXO (output) of a transaction by specifying the conditions that must be met in order to spend the outputs in the future
+      - e.g. the condition may be: anyone with the key (signature) corrosponding to some public address associated with some wallet
 - Bitcoin Script: a stack based language
   - stores numbers (data constants)
   - executes from left to right
@@ -155,12 +158,16 @@
         - previous output index; may have more than one UTXO which are referenced by their index number
         - script size (in bytes)
         - scriptsig (the unlocking script) that fullfil ths conditions of the UTXO lockin script
+          - historically called scriptsig, because it usually contains a digital signature
+          - however, unlocking script is preferred (not all locking scripts are required to contain a signature)
         - sequence: deprecatated feature of bitcoin
       - 02: output count; how many outputs were produced from this transaction
       - 60e...88ac: output info; how much bitcoin outputed from the transaction, and conditions for spending in future transactions (can be further broken down)
         - value: the amount of bitcion outputted in Satoshis
         - script size (in bytes)
         - scriptpubkey (the locking script); the hash of the locking script that specifies the conditions that must be met to spend this output
+          - historically called scriptpubkey, becomes they contain a public key/bitcoin address
+          - however the phrase lockingScript is generally preferred
       - 00...: locktime; the earliest time (or block) that a transaction can be added onto the blockchain
         - if non-zero && < 500million: its interpreted as the block height, and miners have to wait until the ilicit block height is reached before attempting to add it to the block chain
         - if > 500million: its interpreted as a unix timestamp,
