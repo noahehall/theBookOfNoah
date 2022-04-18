@@ -128,6 +128,8 @@
 
 - smart contracts: a series of conditions that must be met for an action to occur, and the parameters that meet those conditions
 - scripts: list of instructions recorded in each transaction that when executed, determines if the transaction is valid and if the bitcoins can be spent
+  - the locking and unlocking script are like a problem and a solution to determine if a transaction is valid, the locking script sets the conditions required for the funds to be spent, and the unlocking script sets the parameters that should satisfied the conditions in the locking script
+    - i.e. the locking script should return true when provided with the unlocking script
   - unlocking script: if the transaction is valid, this will contain the the requires that unlock the conditions of the locking script
   - locking script:
 - Bitcoin Script: a stack based language
