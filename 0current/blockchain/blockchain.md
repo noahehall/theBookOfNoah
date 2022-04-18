@@ -261,20 +261,23 @@
 
 - the fundamental building blocks of any blockchain
 - a data structure that encodes a transfer of value from a source of funds (input) to a destination of funds (output)
+  - the wallet needs to have enough funds, the sum of the input transactions + fees
 - transactions start broadcasting to the network when a wallet first signs a transaction
   - a signature is required before a transaction is submitted to the network
   - you sign the transaction via the private key linked to your wallet address
   - the signed transaction goes from the sender to the receiver as a transaction message
   - can be made up of multiple transaction inputs and outputs
     - e.g. a single input will generally require two outputs, input to cover the value being transferred + miner fees, 1 output to the receiver, 1 output as change back to the sender
-- UTXO: unspent transaction output; the initial broadcast of a transaction to the network; only UTXO messages can be used as inputs to an accepted transaction
-  - contains conditions (proofs): proof of ownership to transact with those funds (derived from the wallet addresses private key)
 - transaction inputs: value from a source of funds becomes input to the transaction
+  - all inputs are unspent outputs from another transaction, i.e. all inputs reference back to an output, e.g. the initial funding of a wallet (like a linked list)
   - conditions: transaction inputs need to be converted to an output, which contains the condition to prove ownership using a private key
-- transaction output:
-  - the wallet needs to have enough funds, the sum of the input transactions + fees
-- algebra
-  - (sum of inputs) - (sum outputs - changeBack) = transaction fee
+- transaction output: aka UTXO
+  - UTXO: unspent transaction output; the initial broadcast of a transaction to the network; only UTXO messages can be used as inputs to an accepted transaction
+    - contains conditions (proofs): proof of ownership to transact with those funds (derived from the wallet addresses private key)
+  - when a user receives bitcoin, that amount is recorded on the blockchain as unspent outputs (UTXO);
+  - all of a wallets UTXO is scattered throughought the blockchain
+  - when its time for them to spend that bitcoin, the wallet scans the blockchain and aggregates all the UTXO belonging to that user, and calculates the balance
+    - i.e. theres no such thing as a stored balance for an account/bitcoin address; theres just a bunch of UTXO scattered on the blockchain, all linking back to a specific wallet address
 - lifecycle
   - get the receivers wallet address
   - create a transaction: amount to send + transaction fee
