@@ -268,10 +268,10 @@
   - the signed transaction goes from the sender to the receiver as a transaction message
   - can be made up of multiple transaction inputs and outputs
     - e.g. a single input will generally require two outputs, input to cover the value being transferred + miner fees, 1 output to the receiver, 1 output as change back to the sender
-- transaction inputs: value from a source of funds becomes input to the transaction
+- transaction inputs:
   - all inputs are unspent outputs from another transaction, i.e. all inputs reference back to an output, e.g. the initial funding of a wallet (like a linked list)
   - conditions: transaction inputs need to be converted to an output, which contains the condition to prove ownership using a private key
-- transaction output: aka UTXO
+- transaction output: aka UTXO; the amount received by a wallet in a transaction
   - UTXO: unspent transaction output; the initial broadcast of a transaction to the network; only UTXO messages can be used as inputs to an accepted transaction
     - contains conditions (proofs): proof of ownership to transact with those funds (derived from the wallet addresses private key)
     - is indivisible, like a coin, cant be cut in half,
