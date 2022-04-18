@@ -115,8 +115,17 @@
   signrawtransactionwithwallet <hexstring>
     # returns a new hex string
   sendrawtransaction <hexstring>
-    # returns a transaction id (hashed, hexstring)
-    # run it through gettxout to decocde it
+    # returns a transaction hash (transaction id hexstring)
+    # run it through gettxout/gettransaction to view details
+  gettransaction <txid> # view details about a transaction
+    # amount: how much the wallet received/sent depending if the wallet sent/received
+    # fee: fee amount
+    # confirmations: amount of confirmations
+    # txid: the txid
+    # details array
+  getrawtransaction <txid>
+
+
 ```
 
 ### environments
@@ -149,6 +158,11 @@
 - ~/.bitcoin: the data default directory
   - /testnet3: for the testnet
     - /wallets: contains all your wallets, they end in `.dat`
+
+### blockchain
+
+- designed for transactional data, but can also be used to embed any kind of data as the blockchain expands beyond finance
+  - see OP_RETURN elseware
 
 ### bitcoind
 
@@ -239,12 +253,17 @@
   OP_DUPE # duplicate the top stack item
   OP_EQUALVERIFY
   OP_CHECKSIG # checks the signature for the top two stack items
+  OP_RETURN <data> # allows embedding up to 40 bytes of data
+    # does not bloat UTXO memory pool
+    # data should be sha256 hashed
+
   # opcode examples:
   # ^ remember they execute from left to right
   # ^ constant values are pushed to the top of the stack
   2 6 OP_ADD 8 OP_EQUAL # 2 + 6 === 8
     # ^ 2 could be an unlocking script, and the remainder could be a locking script
     # ^ together they return true
+
 ```
 
 #### block data model
