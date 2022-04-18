@@ -100,9 +100,23 @@
     # scriptPubKey: the locking script
     # ^ hex: encoded as hex
     # ^ reqSig: the number of required signatures
-    # ^ type: type of script, pubkey, multisig, scripthash, etc
+    # ^ type: type of script, pubkey, multisig, scripthash, witness_v0_keyhash, etc
     # ^ addresses: the addresses used in this transaction
     # ^ coinbase: true if it belongs to coinbase transaction
+  createrawtransaction <inputArray> <outputObject># create a transaction (doesnt send it)
+    # createrawtransaction '[{"txid":"TXID","vout": VOUT}]' '{"to_address":amount1, "from_address":amount2}'
+    # ^ there are generally two outputs in the outputObject
+    # ^ to account for change back
+    # returns a hex string
+  decoderawtransaction <rawtransactionhexstring> # decodes a raw transactions hex string into a human readable object
+    # vin: an array of inputs
+    # ^the scriptSig will be empty if the raw transaction hasnt been signed by the sending address
+    # vout: an array of the outputs
+  signrawtransactionwithwallet <hexstring>
+    # returns a new hex string
+  sendrawtransaction <hexstring>
+    # returns a transaction id (hashed, hexstring)
+    # run it through gettxout to decocde it
 ```
 
 ### environments
