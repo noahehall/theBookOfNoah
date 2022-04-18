@@ -93,6 +93,8 @@
     # spendable: true if the private key(s) needed to spend this output are part of the wallet
     # solvable: true if the wallet knows how to spend this output
     # safe: true if ? TODO
+  gettxout <txid> <vout> # view details about a specific UTXO
+    # todo
 ```
 
 ### environments
