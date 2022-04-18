@@ -32,6 +32,7 @@
   - aka Bitcoin-QT, or the Satoshi Client
 - faucet: a website that gives rewards in the form of bitcoin; e.g. how you can get testnet coins
   - google `bitcoin testnet public faucet`
+- satoshis: the smallest bitcion unit: 10^8 satoshis = 1 bitcoin
 
 ## bitcoin core
 
@@ -144,11 +145,17 @@
     - e.g. this is a raw transaction (not double hashed): 0100000001f3f6a909f8521adb57d898d2985834e632374e770fd9e2b98656f1bf1fdfd427010000006b48304502203a776322ebf8eb8b58cc6ced4f2574f4c73aa664edce0b0022690f2f6f47c521022100b82353305988cb0ebd443089a173ceec93fe4dbfe98d74419ecc84a6a698e31d012103c5c1bc61f60ce3d6223a63cedbece03b12ef9f0068f2f3c4a7e7f06c523c3664ffffffff0260e31600000000001976a914977ae6e32349b99b72196cb62b5ef37329ed81b488ac063d1000000000001976a914f76bc4190f3d8e2315e5c11c59cfc8be9df747e388ac00000000
       - 010000: the bitcoin version number; indicates which bitcoin protocol this transaction adheres to
       - 01: input count; how many inputs were used for this transaction
-      - f3...fff: input info; where the input is coming from, and the conditions
-        - unlocking script: (see elseware in this doc)
+      - f3...fff: input info; where the input is coming from, and the conditions (can be further broken down below)
+        - previous output hash (reversed); links back to an output (UTXO), i.e. points back to the transaction containing the UTXO that will be spnt in this input
+        - previous output index; may have more than one UTXO which are referenced by their index number
+        - script size (in bytes)
+        - scriptsig (the unlocking script) that fullfil ths conditions of the UTXO lockin script
+        - sequence: deprecatated feature of bitcoin
       - 02: output count; how many outputs were produced from this transaction
-      - 60e...88ac: output info; how much bitcoin outputed from the transaction, and conditions for spending in future transactions
-        - locking script: (see elseware in this doc)
+      - 60e...88ac: output info; how much bitcoin outputed from the transaction, and conditions for spending in future transactions (can be further broken down)
+        - value: the amount of bitcion outputted in Satoshis
+        - script size (in bytes)
+        - scriptpubkey (the locking script); the hash of the locking script that specifies the conditions that must be met to spend this output
       - 00...: locktime; the earliest time (or block) that a transaction can be added onto the blockchain
         - if non-zero && < 500million: its interpreted as the block height, and miners have to wait until the ilicit block height is reached before attempting to add it to the block chain
         - if > 500million: its interpreted as a unix timestamp,
