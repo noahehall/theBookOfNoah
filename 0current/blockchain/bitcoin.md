@@ -168,6 +168,16 @@
     - places a lock on an UTXO (output) of a transaction by specifying the conditions that must be met in order to spend the outputs in the future
       - e.g. the condition may be: anyone with the key (signature) corrosponding to some public address associated with some wallet
 - Bitcoin Script: a stack based language
+  - high level
+    - not turing complete: no loops/complex flow control
+      - no infinite loops
+      - prevents the validation mechanism from being targeted and attacked as a vulnerability
+      - simplifies and secures the system
+      - completely deterministic
+    - stateless verification
+      - no state saved prior to/after the script executes
+      - self-contained
+      - provides predictability no matter where script is executed
   - stores numbers (data constants)
   - executes from left to right
   - opcodes: i.e. operation codes; used to interact with data in the Bitcoin Script Stack
