@@ -259,18 +259,20 @@
 
 ### transactions
 
+- the fundamental building blocks of any blockchain
+- a data structure that encodes a transfer of value from a source of funds (input) to a destination of funds (output)
 - transactions start broadcasting to the network when a wallet first signs a transaction
   - a signature is required before a transaction is submitted to the network
   - you sign the transaction via the private key linked to your wallet address
   - the signed transaction goes from the sender to the receiver as a transaction message
-  - are made up of multiple transaction inputs and outputs
+  - can be made up of multiple transaction inputs and outputs
+    - e.g. a single input will generally require two outputs, input to cover the value being transferred + miner fees, 1 output to the receiver, 1 output as change back to the sender
 - UTXO: unspent transaction output; the initial broadcast of a transaction to the network; only UTXO messages can be used as inputs to an accepted transaction
   - contains conditions (proofs): proof of ownership to transact with those funds (derived from the wallet addresses private key)
-- transaction inputs: inbound payments that contribute to funding a wallet
+- transaction inputs: value from a source of funds becomes input to the transaction
   - conditions: transaction inputs need to be converted to an output, which contains the condition to prove ownership using a private key
-- transaction output: the wallet needs to have enough funds, the sum of the input transactions + fees
-  - multiple transaction outputs can be included in an transaction inputs,
-    - e.g. you gennerally need to have more than you are sending, to cover the miner fees, any change left over will be converted to a new transaction output, so that they can be returned to you
+- transaction output:
+  - the wallet needs to have enough funds, the sum of the input transactions + fees
 - algebra
   - (sum of inputs) - (sum outputs - changeBack) = transaction fee
 - lifecycle

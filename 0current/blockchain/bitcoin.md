@@ -130,4 +130,14 @@
       - supporters: a way to expand bitcoin to support nonfinancial use cases
       - retractors: bitcoin was only meant for financial purposes, and places a load (increased size, cost, maintenance etc) on users who to keep it that way
   - op-return: todo
--
+
+#### block data model
+
+- block header
+  - previous blocks hash: for the block that comes directly before a given block in a the chain; this is how blocks are linked together in the blockchain
+  - time: timestamp of creation
+  - merkle root: hash representing every transaction included in a given block;
+    - pairs of transactions are repeatedly hashed together, recursively until a single hash is left
+    - can be used to search the original transactions, e.g. to find the original transactions that made up the block
+  - nonce: i.e. number only use once; used in bitcoin mining; miners are solving for a nonce, that when added to a hashed block, and those two values are rehashed, will solve the mining puzzle
+- body: contains transactions
