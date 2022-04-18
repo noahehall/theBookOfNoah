@@ -23,6 +23,8 @@
   - [blockcypher testnet explorer](https://live.blockcypher.com/btc-testnet/)
   - [bitcoin Script language](https://kingslanduniversity.com/bitcoin-script-101/)
   - [bitcoin script + list of opcodes](https://en.bitcoin.it/wiki/Script)
+  - [all bitcoin & lightning network APIs](https://chainquery.com/)
+    - [bitcoin listunspent cmd](https://chainquery.com/bitcoin-cli/listunspent)
 
 ## terms
 
@@ -79,6 +81,18 @@
   getwalletinfo
   createWallet somename
   loadWalet
+  listunspent # show all the unspect confirmed transaction outputs in a wallet, can be used as inputs in another transaction;
+    # txid: the transaction id
+    # vout: output index of this output within this transaction
+    # address: the address to which this output is paid
+    # label: if a label was assigned to the transaction
+    # redeemScript: one copy is hashed to create the scriptPubKey, the other copy is for the signature
+    # scriptPubKey: the hash of the locking script
+    # amount: the amount of bitcoin that is paid to the address
+    # confirmation: total confirmations
+    # spendable: true if the private key(s) needed to spend this output are part of the wallet
+    # solvable: true if the wallet knows how to spend this output
+    # safe: true if ? TODO
 ```
 
 ### environments
