@@ -180,10 +180,14 @@
   # ^ the rest is the locking script
   <sig> <pubKey> OP_DUP OP_HASH160 <pubKeyHash> OP_EQUALVERIFY OP_CHECKSIG
 
-  # common opcodes
+  # common opcodes, the OP_ prefix can be omitted in scripts
+  # ^ generally all push their result to the top of the stack
   OP_ADD # pop two items from the top of the stack, add them, them push the sum back to the stack
+  OP_MUL # multipies top two items
   OP_EQUAL # checks if the top two stack items are equal to each other
-
+  OP_DUPE # duplicate the top stack item
+  OP_EQUALVERIFY
+  OP_CHECKSIG # checks the signature for the top two stack items
   # opcode examples:
   # ^ remember they execute from left to right
   # ^ constant values are pushed to the top of the stack
