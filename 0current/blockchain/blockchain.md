@@ -78,12 +78,38 @@
   - e.g. a private blockchain can store public blockchain data, like to log bitcoin transactions via their transaction id hash
   - e.g. a public blockchain can store private blockchain by embedding data, e.g. bitcoin core OP_RETURN can store up to 40bytes
 
-### bitcoin core
+### version 1 / generation 1 blockchains
+
+- focused on moving value, maintaining a ledger, and creating ideal payment systems
+
+#### bitcoin core
 
 - the first, but now one of many blockchains
+  - generally considered blockchain version 1 (first generation)
 - a type of digital currency that utilizes the blockchain to facilitate financial transactions
 - uses blocks to group and validate transactions
 - uses sha256 to create a unique hash value for each block on the blockchain
+
+#### litecoin
+
+- todo
+
+#### monero
+
+- todo
+
+### version 2 / generation 2
+
+- takes many of the lessons learned from first generation blockchains
+- focused on recording transactions on the blockchain, adding in programming & logic for associated data via smart contracts
+
+#### ethereum
+
+- generally considered blockchain version 2 (2nd generation), and first introduced the smart contract
+
+#### neo
+
+- todo
 
 ## blockchain framework
 
