@@ -35,14 +35,15 @@
   - [electrum](https://electrum.org/#home)
   - [getting started with electrum](https://www.youtube.com/watch?v=WdVlH9N2oKU)
   - [importing priv keys in electrum](https://bitcoinelectrum.com/importing-your-private-keys-into-electrum/)
-  - [sweep a private key in electrum](https://bitcoinelectrum.com/sweeping-your-private-keys-into-electrum/)
-  - [bitcoin wallet generator](https://www.bitaddress.org/bitaddress.org)
+  - [sweep a private key in electrum](https://bitcoinelectrum.com/sweepi- privatetaddress.org)
   - [generate a private key by flipping a coin](https://bitcointalk.org/index.php?topic=297077.msg3197393#msg3197393)
   - [generate a private key offline](https://github.com/bigmob/cryptosteel-tutorial/wiki/How-to-generate-private-key-offline-with-Bitaddress)
   - [full list of wallets](https://bitcoin.org/en/choose-your-wallet)
+  - [proof of existence service](https://poex.io/)
 
 ## terminology
 
+- encryption: make a non-reversable secret (laymens), vs encoding (which is reformating)
 - blockchain: a shared ledger (db) that records a list of transactions that happen within the network
   - started as an idea by Satoshi Nakamoto back in 2009 to solve problems with financial transactions
   - bitcoin is the first blockchain, but now there are many more
@@ -204,7 +205,8 @@
 #### proof of stake algorithm (PoS)
 
 - summary: there are no miners, instead validators (stakeholders) determine which block makes it onto the chain
-  - in order to validate transactions and create blocks, they must put up their own coins as stake, like placing a bet
+  - bad delegates: users may not know which other nodes are good, and be unable to cast meaningful votes
+    - solution: some platforms release data about the honesty and functiir own coins as stake, like placing a bet
   - if they validate a fraudulent transaction, they lose their stake as well as their rights to participate as a validator in the future
 - who uses it
   - ethereum uses PoS (but use to be on PoW)
@@ -402,11 +404,36 @@
 ### digital assets and blockchain
 
 - digitally stored content/online account owned by an individual
-  - blockchains help with ownership of digital assets, but not storage
+
+  - blockchains help with ownership of digital assets, but not storage,
+    - see proof of existence elseware
     - instead of who owns this transaction, the blockchain answers who owns this asset
-- compression algorithms:
+
+- compression algorithms: goal is to make something smaller
 - encoding: process of putting a sequence of chars into a specialized (raw) format for efficient transmission between computers or storage
-  - ASCII
-  - Base64
-  - Hexadecimal
+  - ASCII: (pronounced asky) american standard code for information interchange; based on the idea that you can represent text as numbers
+  - Base64: more concise and human redable representation of binary;
+  - Hexadecimal: encoding scheme meant to represent data as numbers in a string format; 0-9 and a-f; use xxd on the cmd line
 - decoding: takes encoded, raw, unreadable files and converts them back into human readable format
+  - uses the same encoding schemes
+
+#### Proof Of Existence (POE)
+
+- a concept & service that publicly proves and authenticates any digital asset on the blockchain by verifying its hash, e.g. via SHA256/MD5
+- its like a notary service
+- verification: check the integrity of the digital asset to confirm that it contains the correct sequence of byts and has not been wrongfully accessed/altered
+  - doesnt refer to the trustworthiness of the source file, only that it hasnt been tampered with
+  - only the hash of the digital asset is stored on the blockchain, but not the asset itself
+  - the hash is linked to the time the document was submitted, so even the time of ownership can be proven
+    - this way even ownership of private assets can be proved
+- example steps
+  - digital asset is hashed via sha256
+  - the hash is appended to an identifier
+  - the hash + idnetifier is put into a generated transaction
+  - the transaction is marked with OP_RETURN so its unspendable
+- use cases:
+  - data ownership: e.g. copyrights, patents
+  - integrity checks: validate an asset hasnt changed
+  - time stamping: prove some asset/info existed at a certain time
+  - certifies the existence of an asset without the need for a central authority
+-
