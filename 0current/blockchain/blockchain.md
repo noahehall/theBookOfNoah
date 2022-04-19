@@ -398,3 +398,15 @@
 
 - establishes a proof of ownership for each transaction on the blockchain
 - created via the wallet address
+
+### digital assets and blockchain
+
+- digitally stored content/online account owned by an individual
+  - blockchains help with ownership of digital assets, but not storage
+    - instead of who owns this transaction, the blockchain answers who owns this asset
+- compression algorithms:
+- encoding: process of putting a sequence of chars into a specialized (raw) format for efficient transmission between computers or storage
+  - ASCII
+  - Base64
+  - Hexadecimal
+- decoding: takes encoded, raw, unreadable files and converts them back into human readable format
