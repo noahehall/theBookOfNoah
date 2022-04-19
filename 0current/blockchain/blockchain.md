@@ -65,6 +65,7 @@
 
 ## blockchains
 
+- can be thought of as a type of decentralized database
 - public blockchain:
   - permission: open and permissionless design that allows anyone to participate
   - scalability: more difficult
@@ -432,8 +433,8 @@
   - the hash + idnetifier is put into a generated transaction
   - the transaction is marked with OP_RETURN so its unspendable
 - use cases:
-  - data ownership: e.g. copyrights, patents
+  - data ownership: e.g. copyrights, patents, etc, when encoding the tx on the blockchain, you can include the owners identity
   - integrity checks: validate an asset hasnt changed
   - time stamping: prove some asset/info existed at a certain time
   - certifies the existence of an asset without the need for a central authority
--
+  - secure an asset: protect an asset from wrongful access/alteration
