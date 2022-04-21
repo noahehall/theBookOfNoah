@@ -25,7 +25,7 @@
   - [ethereum yellowpaper](https://github.com/ethereum/yellowpaper)
   - [EVM](https://ethdocs.org/en/latest/introduction/what-is-ethereum.html?highlight=EVM#ethereum-virtual-machine)
   - [remix](https://remix.ethereum.org/#optimize=true&version=soljson-v0.4.24+commit.e67f0147.js)
-  
+
 ## terms
 
 - turing complete: can execute code
@@ -59,11 +59,12 @@
   - an object on the ethereum blockchain that contains code to be executed by the EVM
   - can store data, execute logic, interact with other smart contracts, and send ether
 - high level
-  - compiled into two views
+  - compiled into two views then deployed to the ethereum blockchain
     - assembly view: human readable
     - bytecode view: machine readable
   - executed on the EVM
 - test network: for testing smart contracts via the EVM
+- gotchas: once your smart contracts are deployed to the blockchain it cannot be changed!
 
 ## blockchain framework
 
@@ -78,3 +79,10 @@
   - code hash
   - account storage
   - ethereum virtual code
+
+## dapps on ethereum
+
+- general architecture
+  - frontend: normal stuff
+  - smart contract: the logic/intereactions/transactions/etc users of your app can execute
+  - ethereum blockchain: stores the state of transactions made by users of your application
