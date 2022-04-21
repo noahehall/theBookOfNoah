@@ -124,6 +124,7 @@
 #### ethereum
 
 - generally considered blockchain version 2 (2nd generation), and first introduced the smart contract
+  - see ethereum doc
 
 #### neo
 
@@ -141,6 +142,12 @@
   - block: groups transactions and created a single hash for the set
   - blockchain: groups of blocks linked via their hashes, contains the entire history of transactions
   - hashing: process of generating a digital fingerprint
+
+### state
+
+- how a blockchain manages information within its data storage layer
+  - bitcoin state: UTXOs represent the state of the blockchain,
+  - ethereum world state: contains bunches of stuff, see docs
 
 ### blocks
 

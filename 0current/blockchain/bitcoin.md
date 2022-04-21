@@ -46,6 +46,7 @@
 
 - connects to the bitcoin network as a full node allowing you to verify transactions occuring within the network
 - grabs the unlocking script contained in the input of a transaction, and checks if it solves the requirements of the UTXO (output) of the linked transaction
+  - the sum of a wallets UTXO (unspent bitcoin) is its account balance
   - i.e. the unlocking script of an input in a transaction unlocks the output of a locking script in a PREVIOUS transaction
   - i.e. the locking script of a transaction, interacts with the unlocking script of an input to a FUTURE transaction
 
