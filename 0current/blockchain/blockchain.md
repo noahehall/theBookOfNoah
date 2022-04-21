@@ -78,13 +78,15 @@
   - allows a series of protocols that work in harmony to delivery decentralized applications
   - e.g. a private blockchain can store public blockchain data, like to log bitcoin transactions via their transaction id hash
   - e.g. a public blockchain can store private blockchain by embedding data, e.g. bitcoin core OP_RETURN can store up to 40bytes
-In the Blockchain class we are going to implement the method: validateChain()
+    In the Blockchain class we are going to implement the method: validateChain()
 
-    This method will return a Promise that will resolve with the list of errors when validating the chain.
-    Steps to validate:
-        You should validate each block using validate() method from each of the blocks in the chain.
-        Each Block should check the with the previousBlockHash to make sure the chain isn't broken.
-vs 2
+        This method will return a Promise that will resolve with the list of errors when validating the chain.
+        Steps to validate:
+            You should validate each block using validate() method from each of the blocks in the chain.
+            Each Block should check the with the previousBlockHash to make sure the chain isn't broken.
+
+    vs 2
+
   - both
     - depend on a wallet address for identity for transactions and services
     - both keep a public record of transactions that have taken place
@@ -130,15 +132,15 @@ vs 2
 ## blockchain framework
 
 - overview of blockchain components
-  - block
-  - blockchain
-  - consensus
-  - digital signature
-  - hashing
-  - mempool (memory pool)
-  - network (distributed P2P network)
-  - transaction
-  - wallet
+  - transaction: basic atomic units of work, submitted by users to a node to be included in the next block
+  - wallet: contains priv, public keys and address: the addresses are used to send/receive transactions
+  - digital signature: transactions must be signed by the wallet keys before being sent to the mempool to be included in a block on the blockchain
+  - mempool (memory pool): where all unconfirmed transactions are placed until mining nodes validate the transaction
+  - network (distributed P2P network): everyone is able to download a copy of the network data, and work together to achieve consensus to determine which transactions (in the mempool) are valid and should be included in the network ledger
+  - consensus: a group of algorithms used to create a voting mechanism/process, e.g. PoF, PoS, DBFT
+  - block: groups transactions and created a single hash for the set
+  - blockchain: groups of blocks linked via their hashes, contains the entire history of transactions
+  - hashing: process of generating a digital fingerprint
 
 ### blocks
 
@@ -443,6 +445,7 @@ vs 2
 
 - establishes a proof of ownership for each transaction on the blockchain
 - created via the wallet address
+- before the blockchain accepts a transaction, it must be signed
 
 ### digital assets and blockchain
 
