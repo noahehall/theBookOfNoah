@@ -74,9 +74,21 @@
 - private blockchain:
   - permission: required, and are typically under centralized control
 - cross-chain functionality: connecting data across blockchains
+
   - allows a series of protocols that work in harmony to delivery decentralized applications
   - e.g. a private blockchain can store public blockchain data, like to log bitcoin transactions via their transaction id hash
   - e.g. a public blockchain can store private blockchain by embedding data, e.g. bitcoin core OP_RETURN can store up to 40bytes
+In the Blockchain class we are going to implement the method: validateChain()
+
+    This method will return a Promise that will resolve with the list of errors when validating the chain.
+    Steps to validate:
+        You should validate each block using validate() method from each of the blocks in the chain.
+        Each Block should check the with the previousBlockHash to make sure the chain isn't broken.
+vs 2
+  - both
+    - depend on a wallet address for identity for transactions and services
+    - both keep a public record of transactions that have taken place
+    - users can interact with autonomously on the blockchain, and ohters an verify their data
 
 ### version 1 / generation 1 blockchains
 
@@ -102,6 +114,10 @@
 
 - takes many of the lessons learned from first generation blockchains
 - focused on recording transactions on the blockchain, adding in programming & logic for associated data via smart contracts
+- smart contracts: a legal contract via code
+  - an event, triggers the contract to execute whatever code is held within the contract
+  - enabled developers to create projects ontop of the blockchain and organize decentralized governance
+- dApps: decentralized apps
 
 #### ethereum
 
