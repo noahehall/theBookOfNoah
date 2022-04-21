@@ -18,10 +18,14 @@
 ## links
 
 - [ethereum](https://ethereum.org/)
+- [ethereum stackexchange](https://ethereum.stackexchange.com)
+- [ethereum youtube](https://www.youtube.com/user/ethereumproject)
+
 - todo
   - [ethereum yellowpaper](https://github.com/ethereum/yellowpaper)
   - [EVM](https://ethdocs.org/en/latest/introduction/what-is-ethereum.html?highlight=EVM#ethereum-virtual-machine)
-
+  - [remix](https://remix.ethereum.org/#optimize=true&version=soljson-v0.4.24+commit.e67f0147.js)
+  
 ## terms
 
 - turing complete: can execute code

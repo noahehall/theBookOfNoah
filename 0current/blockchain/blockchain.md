@@ -40,6 +40,9 @@
   - [generate a private key offline](https://github.com/bigmob/cryptosteel-tutorial/wiki/How-to-generate-private-key-offline-with-Bitaddress)
   - [full list of wallets](https://bitcoin.org/en/choose-your-wallet)
   - [proof of existence service](https://poex.io/)
+  - [dappradar](https://dappradar.com/)
+  - [state of the dapp](https://www.stateofthedapps.com/)
+  - [trust dapp browser](https://trustwallet.com/dapp)
 
 ## terminology
 
@@ -119,7 +122,7 @@
 - smart contracts: a legal contract via code
   - an event, triggers the contract to execute whatever code is held within the contract
   - enabled developers to create projects ontop of the blockchain and organize decentralized governance
-- dApps: decentralized apps
+- dApps: application whose backend runs on a decentralized network
 
 #### ethereum
 
