@@ -6,3 +6,5 @@
 ## links
 
 - [website](https://metamask.io/)
+- [public faucet](https://faucet.metamask.io/)
+- [rinkeby facuet](https://faucet.rinkeby.io/)

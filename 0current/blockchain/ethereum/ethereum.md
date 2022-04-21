@@ -20,7 +20,8 @@
 - [ethereum](https://ethereum.org/)
 - [ethereum stackexchange](https://ethereum.stackexchange.com)
 - [ethereum youtube](https://www.youtube.com/user/ethereumproject)
-
+- [networks & public faucets](https://ethereum.org/en/developers/docs/networks/)
+  - [this one works](https://fauceth.komputing.org)
 - todo
   - [ethereum yellowpaper](https://github.com/ethereum/yellowpaper)
   - [EVM](https://ethdocs.org/en/latest/introduction/what-is-ethereum.html?highlight=EVM#ethereum-virtual-machine)
@@ -84,6 +85,13 @@
 - account types
   - regular: can make transactions
   - contract: for smart contracts deployed on the blockchain
+
+### network
+
+- mainnet: prod; proof of work
+- ropsten: proof of work
+- kovan: proof of authority
+- rinkeby: proof of authority;
 
 ## dapps on ethereum
 
