@@ -25,6 +25,7 @@
   - [ethereum yellowpaper](https://github.com/ethereum/yellowpaper)
   - [EVM](https://ethdocs.org/en/latest/introduction/what-is-ethereum.html?highlight=EVM#ethereum-virtual-machine)
   - [remix](https://remix.ethereum.org/#optimize=true&version=soljson-v0.4.24+commit.e67f0147.js)
+  - [search the ethereum blockchain](https://etherscan.io/)
 
 ## terms
 
@@ -32,6 +33,7 @@
 - ether: the cryptocurrency of ethereum
 - kill switch: self destructs a smart contract
 - patricia tree: data structure; Practical Algorithm to Retrieve Information Code in Alphanumeric
+- gas: the cost of executing transactions on the EVM.
 
 ## solidity
 
@@ -79,6 +81,9 @@
   - code hash
   - account storage
   - ethereum virtual code
+- account types
+  - regular: can make transactions
+  - contract: for smart contracts deployed on the blockchain
 
 ## dapps on ethereum
 
@@ -86,3 +91,6 @@
   - frontend: normal stuff
   - smart contract: the logic/intereactions/transactions/etc users of your app can execute
   - ethereum blockchain: stores the state of transactions made by users of your application
+  - web3js: js ethereum api; enables you to read and write data to the blockchain
+  - infura:
+  - metamask: interact with dapps; web3 provider
