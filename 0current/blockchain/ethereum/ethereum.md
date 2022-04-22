@@ -28,6 +28,7 @@
   - [remix](https://remix.ethereum.org/#optimize=true&version=soljson-v0.4.24+commit.e67f0147.js)
   - [search the ethereum blockchain](https://etherscan.io/)
   - [ethereumjs/tx package](https://github.com/ethereumjs/ethereumjs-monorepo/tree/master/packages/tx)
+  - [ethereum metrics](https://ethstats.net/)
 
 ## terms
 
@@ -37,6 +38,7 @@
 - patricia tree: data structure; Practical Algorithm to Retrieve Information Code in Alphanumeric
 - gas: the cost of executing transactions on the EVM.
 - Wei: smaller denomination of Ether, 1 ether === 10^18 Wei
+- Gwei: gigga wei, 6 billion wei
 
 ## solidity
 
@@ -109,20 +111,40 @@
 - ropsten: proof of work
 - kovan: proof of authority
 - rinkeby: proof of authority;
-
+- ethereum network performance metrics (check ethstats link)
+  - best block: the highest block number of the longest valid chain
+  - uncles: orphaned blocks; in Ethereum they are included and rewarded. 
+  - last block: the last mined block in seconds
+  - avarge block time: the avergae time between two blocks excluding uncles
+  - avg network hashrate: # of hashes spent by miners to find a new block, typically shown in terra hashes
+  - difficulty: mining difficulty to find the new block
+  - active nodes: # of nodes connected
+  - gas price: price the miners the currently accepting, default is 20
+  - gas limit: gas limit for the block, default is 4 million
+    - miners can include transactions until the block is full/gas limit has been met
+    - similar to bitcon block size limit
+  - block time: the time between blocks
+  - difficulty: of prevoius blocks
+  - block propagation: how fast blocks are shared between nodes
+  - last blocks miners: private key of miners who found the last blocks
+  - uncle count: number of uncles per block
+  - transactions: number of transactins in the last included block
+  -
 ### transactions
 
 - transactions result in a change to the world state
   - all transactions need to be signed before sending it to the network
 - externally owned account transaction types
-
   - message calls: recipient can be another EOA or a CA
   - contract creation: recipient is a CA
-
+- gas: the total cost of executing operations on the contract; the cost is converted to ether and sent to the node that executed the transaction
 - transaction fields (different between transaction types)
   - nonce: number of transactions in the senders account, incremented by 1, 0-index
   - gas price: price per unit of gas the sender is willing to pay for executing the code in the smart contract; i.e. same as the miner fee in bitcoin
-  - gas limit: the max number of computation steps the transaction is allowed to spend
+  - gas limit: the maximum amount of gas a sender is will to pay for a given transaction; i.e. the budget
+    - the max number of computation steps the transaction is allowed to spend
+    - if there isnt enough gas (i.e. exceeds the gas limit) the contract will error, and you'll lose any gas spent before the error is thrown
+    - any unused gas will be returned to the sender
   - to: recipient address
   - value: Amount of either in wei
   - optional fields: used to record the creation & execution of smart contracts
