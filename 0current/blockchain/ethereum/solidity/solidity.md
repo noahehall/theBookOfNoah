@@ -3,8 +3,7 @@
 - strongly typed language used to develop smart contracts in the Ethereum platform
 - there is some overlap with the ethereum.md file, rely on this one more (as it comes straight from solidity docs vs udacity)
 - fkn udacity solidity course sucks, just read the docs vs their old azz videos
-  - bookmark:
-    - The contract will work as follows:
+  - bookmark: https://docs.soliditylang.org/en/latest/solidity-by-example.html#what-is-a-payment-channel
 
 ## links
 
@@ -130,6 +129,8 @@ sudo apt-get install solc
 
 - ECDSA signatures consit of two params, r and s
   - signatures in ehtereum include a third param called v: used to verify which accounts priate keys was used to sign a message, and the transactions sneder
+  - signatures produced by web3.js are the concatenation of r, s and v
+  -
 
 ### transactions
 
@@ -261,6 +262,7 @@ sudo apt-get install solc
   - else you have to use convert an address via `payable(someAddr)` to use the `.send()` fn
 - returns (dataType varName)
 - ecrecover: fn that accepts a msg along with the r, s and v params (ECDSA) and returns the address that was used to sign the msg
+- pure: todo
 
 ### global vars n fns
 
@@ -313,6 +315,16 @@ contract DataLocation {
     uint times;
     bool flushed;
   }
+
+  // splits a signature (sig) using inline assembly
+  assembly {
+    // first 32 bytes, after the length prefix.
+    r := mload(add(sig, 32))
+    // second 32 bytes.
+    s := mload(add(sig, 64))
+    // final byte (first byte of the next 32 bytes).
+    v := byte(0, mload(add(sig, 96)))
+}
 
   // maps addresses to names
   mapping(address => name) public names;
@@ -553,7 +565,8 @@ contract SomeContract {
   - then the receiver receives 150% back (they put up 2x + the 50% from the buyer)
   - this incentives both parties to resolve the situation or oyherwise their money is locked forever
 - [micropayment channel](https://docs.soliditylang.org/en/latest/solidity-by-example.html#micropayment-channel)
-- uses cryptographic signatures to make repeated transfers of ether between the same parties secure, instantaneous and without transaction fees
+  - [the implemented contract, must read](https://docs.soliditylang.org/en/latest/solidity-by-example.html#computing-the-message-)
+- payments channel: use cryptographic signatures to make repeated transfers of ether securely, instantaneously and without transaction fees
   - the signature acts like a bank check
 - use signatures to authorise transactions via a smart contract
 - sender:
