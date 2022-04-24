@@ -572,7 +572,7 @@ contract SomeContract {
 - sender:
   - creates and deploys a contract, that contains
     - enough ether to cover expected payments
-    - a fn a sender can call with the senders signature (see below)
+    - a fn a recipient can call with the senders signature (see below)
     - the fn will take ether from the senders account and transmit it to the caller
   - sends a cryptographically signed message off-chain (e.g. via email) to the recipient which must include
     - the recipients address
