@@ -1,6 +1,7 @@
 # solidity
 
 - strongly typed language used to develop smart contracts in the Ethereum platform
+- there is some overlap with the ethereum.md file, rely on this one more (as it comes straight from solidity docs vs udacity)
 - fkn udacity solidity course sucks, just read the docs vs their old azz videos
   - bookmark: https://docs.soliditylang.org/en/latest/introduction-to-smart-contracts.html#blockchain-basics
 
@@ -28,6 +29,18 @@
 - smart contracts: code that lives on the blockchain, the core of ethereum
   - automatically executes when conditions are met
   - what differentiates ethereum from bitcoin Script
+- blockchain: globally shared, transactional database
+  - anyone can read entries in the blockchain by participating in the network
+- transaction: changes something in the blockchain
+  - i.e. a db transaction, where everything is rolledback when anything fails
+  - while a transaction is being applied, no other transaction can alter the blockchain
+  - is always cryptographically signed by the sender (creator)
+    - e.g. ensures that only the person holding th keys to the account can transfer money from it
+    - must be included in a block to be added to the blockchain
+- block: a bunlde of transactions; executed and distributed among all participating nodes
+  - if two transactions in a block contradict each other, the one that comes first will succeed and the conflicting transctions discarded
+  - blocks are added in ethereum every 17 seconds
+- mining: the block selection algorithm
 
 ## basics
 
@@ -37,6 +50,13 @@
 - events: events and logs emitted by the contract; dApps can listen for and react to these events
 - functions:
 - All identifiers (contract names, function names and variable names) are restricted to the ASCII character set. It is possible to store UTF-8 encoded data in string variables.
+
+### evm
+
+- ethereum virtual machine: runtime environment for smart contracts
+- sandboxed and completely isolated: has no access to network, filesystem or other processes
+
+### accounts
 
 ### memory management
 
