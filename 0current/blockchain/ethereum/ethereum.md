@@ -72,16 +72,29 @@
   - can store data, execute logic, interact with other smart contracts, and send ether
   - can hold ether just like a wallet, and have an address just like a wallet
 - use cases
+
   - when buying something from a seller, you send the money to the smart contract
     - the smart contract will hold the ether until you receive the stuff
     - once the stuff is received, you update the smart contract and it will send the ether to the seller
-- high level
-  - compiled into two views then deployed to the ethereum blockchain
-    - assembly view: human readable
-    - bytecode view: machine readable
-  - executed on the EVM
+
 - test network: for testing smart contracts via the EVM
 - gotchas: once your smart contracts are deployed to the blockchain it cannot be changed!
+
+### lifecycle (high level)
+
+- develop & compile
+  - write the code (e.g. in solidity)
+  - compiled into two views then deployed to the ethereum blockchain
+  - assembly view: human readable
+  - bytecode view: machine readable
+- deploy
+  - once deployed the ocntract is un-editable
+  - retrieve the deployed contract's address for you to use
+- invoke & execute on the EVM
+  - you invoke the contract to call the contracts functions
+- destroy
+  - important to self-destruct the contract so no one can call functions on it anymore
+  - contrats also tend to have ether in it, so keeping a contract around (instead of self destructing) puts those funds at risk
 
 ## blockchain framework
 
