@@ -24,7 +24,7 @@
   - [this one works](https://fauceth.komputing.org)
 - todo
   - [ethereum yellowpaper](https://github.com/ethereum/yellowpaper)
-  - [EVM](https://ethdocs.org/en/latest/introduction/what-is-ethereum.html?highlight=EVM#ethereum-virtual-machine)
+  - [ethereum docs](https://ethdocs.org/en/latest/introduction/what-is-ethereum.html?highlight=EVM#ethereum-virtual-machine)
   - [remix](https://remix.ethereum.org/#optimize=true&version=soljson-v0.4.24+commit.e67f0147.js)
   - [search the ethereum blockchain](https://etherscan.io/)
   - [ethereumjs/tx package](https://github.com/ethereumjs/ethereumjs-monorepo/tree/master/packages/tx)

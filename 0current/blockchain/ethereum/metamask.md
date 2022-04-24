@@ -2,6 +2,8 @@
 
 - (a browser) wallet & tool for interacting with dapps
   - works as an injected web3 provider
+    - it injects web3 into the browser so dApps can use it,
+    - also makes a node available
   - users need to have metamask installed in their browser to for your dapp to work
 - To build and interact with decentralized applications; Metamask provides the connection between DApps and the Ethereum blockchain.
 
