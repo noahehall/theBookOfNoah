@@ -3,8 +3,7 @@
 - strongly typed language used to develop smart contracts in the Ethereum platform
 - there is some overlap with the ethereum.md file, rely on this one more (as it comes straight from solidity docs vs udacity)
 - fkn udacity solidity course sucks, just read the docs vs their old azz videos
-  - bookmark: https://docs.soliditylang.org/en/latest/solidity-by-example.html#id2
-    - at the line explaining modifiers
+  - bookmark: start from the blind auction link at the bottom of this doc
 
 ## links
 
@@ -49,6 +48,7 @@
 - mining: the block selection algorithm
 - wei: 10\*\*18 ether
 - ether: ethereums currency
+- natspec: triple-slash comments `/// like this` that will be shown when the user is asked to confirm a transaction or when an error is displayed
 
 ## basics
 
@@ -58,6 +58,14 @@
 - events: events and logs emitted by the contract; dApps can listen for and react to these events
 - functions:
 - All identifiers (contract names, function names and variable names) are restricted to the ASCII character set. It is possible to store UTF-8 encoded data in string variables.
+
+### best practices
+
+- sending back (refunding) ether vai someAddr.send(soevalue) is a security risk
+  - the fn containing this logic could be executed by an untrusted contract
+  - instead just keep the refund amount in a variable, and require the recipient to within their money themselves
+- in contracts, always zero out any variables holding money after delivery
+  - because the recipient could call the fn multiple times
 
 ### installation
 
@@ -232,7 +240,8 @@ sudo apt-get install solc
 - revert: unconditionally aborts and reverts all changes; allows you to provide the name of an Error and additional data to be returned to the caller
 - external: fn is callable from other contracts?
 - internal: fn is only callable from the contract itself/derived contracts
-- payable
+- payable: enables the fn to able to receive ether
+  - else you have to use convert an address via `payable(someAddr)` to use the `.send()` fn
 - returns (dataType varName)
 
 ### global vars n fns
@@ -268,6 +277,9 @@ payable(msg.sender).transfer(refund)
   struct Poop: container of other data types
     poop = Poop({ key: value, ...})
 
+  enum Blah { Flush, Poop, Toilet }
+  Blah public blah; create an instance of Blah enum,
+    ^ has a default value of Blah.flush
  */
 contract DataLocation {
   // elementary data types
@@ -284,15 +296,27 @@ contract DataLocation {
     bool flushed;
   }
 
-  event IPooped(address sender, uint times);
-  error NoToilerPaper();
-  error NoWatterInTank(uint secondsToWait)
   // maps addresses to names
   mapping(address => name) public names;
 
   // dynamically sized array of Poop structs
   Poop[] public poops;
 
+  // Errors that describe failures.
+
+  // The triple-slash comments are so-called natspec
+  // comments. They will be shown when the user
+  // is asked to confirm a transaction or
+  // when an error is displayed.
+
+  /// The auction has already ended.
+  error AuctionAlreadyEnded();
+  /// There is already a higher or equal bid.
+  error BidNotHighEnough(uint highestBid);
+  /// The auction has not ended yet.
+  error AuctionNotYetEnded();
+  /// The function auctionEnd has already been called.
+  error AuctionEndAlreadyCalled();
   constructor(bytes32[] listOfStrings) {
     // msg is a global var
     sender = msg.sender;
@@ -431,6 +455,12 @@ contract SomeContract {
   function setName(string _name) public {
     name = _name;
   }
+
+  // Set to true at the end, disallows any change.
+  // By default initialized to `false`.
+  bool ended;
+
+
 }
 
 ```
@@ -441,8 +471,19 @@ contract SomeContract {
 
 - [voting example](https://docs.soliditylang.org/en/latest/solidity-by-example.html#voting)
 - [open auction](https://docs.soliditylang.org/en/latest/solidity-by-example.html#blind-auction)
+  - everyone can see the bids that are made
+  - everyone can send their bids during a bidding period
+  - the bids include Ether to bind bidders to their bid
+  - if the current highest bid is exceeded, the previous highest bidder gets their money back
 - [blind auction](https://docs.soliditylang.org/en/latest/solidity-by-example.html#id2)
 
 ### purchases
 
+- simplifest form is a single buyer and single seller that must send an item to the buyer and receive funds in return
+
 - [safe remote purchases](https://docs.soliditylang.org/en/latest/solidity-by-example.html#id2)
+  - both parties put twice the value of the item into the contract as escrow
+  - the money is locked until the seller ships the item and the buyer confirms receipt by calling a fn on the contract
+  - then the buyer receives 50% back (they put up 2x)
+  - then the receiver receives 150% back (they put up 2x + the 50% from the buyer)
+  - this incentives both parties to resolve the situation or oyherwise their money is locked forever
