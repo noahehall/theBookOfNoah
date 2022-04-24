@@ -1,6 +1,7 @@
 # solidity
 
 - strongly typed language used to develop smart contracts in the Ethereum platform
+- fkn udacity solidity course sucks, just read the docs vs their old azz videos
 
 ## links
 
@@ -10,6 +11,7 @@
 - [old azz udacity example code](https://github.com/udacity/nd1309-work-code/tree/master/Course_Identity_And_Smart_Contracts/solidity)
 - ref
   - [reference types data location](https://docs.soliditylang.org/en/latest/types.html#reference-types)
+  - [data types](https://docs.soliditylang.org/en/latest/types.html)
 
 ## terms
 
@@ -66,8 +68,10 @@
 ```js
 contract DataLocation {
   // elementary data types
-  uint count;
-
+  uint count; // initialized to 0
+  int amount; // initialized to 0
+  bool iKnowWhatImDoing; // initialized to false
+  address owner; // initialized to 0x0
   // complex data types
   uint[] points;
 
@@ -79,6 +83,17 @@ contract DataLocation {
     uint[] pointer = points;
   }
 }
+
+```
+
+### operators
+
+```js
+ !
+ &&
+ ||
+ ==
+ !=
 
 ```
 
