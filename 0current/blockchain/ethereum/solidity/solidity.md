@@ -502,6 +502,28 @@ function signPayment(recipient, amount, nonce, contractAddress, callback) {
 
     web3.eth.personal.sign(hash, web3.eth.defaultAccount, callback);
 }
+
+// sign a message via javascript and supported libraries
+function constructPaymentMessage(contractAddress, amount) {
+    return abi.soliditySHA3(
+        ["address", "uint256"],
+        [contractAddress, amount]
+    );
+}
+function signMessage(message, callback) {
+    web3.eth.personal.sign(
+        "0x" + message.toString("hex"),
+        web3.eth.defaultAccount,
+        callback
+    );
+}
+// contractAddress is used to prevent cross-contract replay attacks.
+// amount, in wei, specifies how much Ether should be sent.
+function signPayment(contractAddress, amount, callback) {
+    var message = constructPaymentMessage(contractAddress, amount);
+    signMessage(message, callback);
+}
+
 ```
 
 ### example contracts
@@ -571,6 +593,10 @@ contract SomeContract {
   - the only fees occured are when:
     the sender deploys the created contract to the block hain
     - the receiver executes the contract on the blockchain
+    - once the receiver is finished using the payment channel, they call a close method
+      - the close mehtod is responsible for actually transfering the funds
+      - thus if multiple payments exist, there are accumulative (you receive the last one which contains all the others)
+      - the sender is not permitted to call the close fn (as they could use it to cheat the recipient)
 - use signatures to authorise transactions via a smart contract
 - sender:
   - creates and deploys a contract, that contains
