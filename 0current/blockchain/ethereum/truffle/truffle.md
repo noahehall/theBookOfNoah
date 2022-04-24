@@ -6,3 +6,8 @@
 ## links
 
 - [truffle website](https://trufflesuite.com/)
+
+## todo
+
+- had some issues installing with pnpm, i think it has to do with `_install.node` whatever script in the linux dir
+  - works with npm tho
