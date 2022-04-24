@@ -3,7 +3,8 @@
 - strongly typed language used to develop smart contracts in the Ethereum platform
 - there is some overlap with the ethereum.md file, rely on this one more (as it comes straight from solidity docs vs udacity)
 - fkn udacity solidity course sucks, just read the docs vs their old azz videos
-  - bookmark: start from the blind auction link at the bottom of this doc
+  - bookmark:
+    - The contract will work as follows:
 
 ## links
 
@@ -49,6 +50,15 @@
 - wei: 10\*\*18 ether
 - ether: ethereums currency
 - natspec: triple-slash comments `/// like this` that will be shown when the user is asked to confirm a transaction or when an error is displayed
+- replay attacks: when a signed message is reused to clai authorization for a second action
+  - prevent these by signing the msg with a nonce (number of transactions sent by the account)
+  - ^ the smart contract will check if a nonce is used multiple times
+  - ReceiverPays smart contract: vulnerable to these type of attacks
+    - can occur when the owner deploys the contract, makes some payments, and then destroys the contract
+    - later the owner redeploys the smart contract again, but the new instance doesnt know nonces used in the previous deployment, so the attacker can use the old messages wiht hte new contract instance
+    - protect against these by
+      - including the contract address in the signed message provided to the buyer
+      - and ensure a condition exists within the contract that only messages containing the correct address will be accepted
 
 ## basics
 
@@ -385,6 +395,7 @@ contract DataLocation {
 
 for (uint i = 0; i < somePoop.length; i++) {
   // do this stuff
+  // continue; immediately start next loop
 }
 
 while (someVar != someOtherVar) {
@@ -433,6 +444,31 @@ function auctionEnd() external {
   // 3. Interaction
   beneficiary.transfer(highestBid);
 }
+
+// Ensure that `msg.value` is an even number.
+// Division will s
+function isEven() {
+  value = msg.value / 2;
+  if ((2 * value) != msg.value)
+      revert ValueNotEven();
+}
+
+/// Abort the purchase and reclaim the ether.
+/// Can only be called by the seller before
+/// the contract is locked.
+function abort()
+    external
+    onlySeller
+    inState(State.Created)
+{
+    emit Aborted();
+    state = State.Inactive;
+    // We use transfer here directly. It is
+    // reentrancy-safe, because it is the
+    // last call in this function and we
+    // already changed the state.
+    seller.transfer(address(this).balance);
+}
 ```
 
 ### example contracts
@@ -467,23 +503,47 @@ contract SomeContract {
 
 ## algorithms & strategies
 
+- come from `solidity by example`
+- but the idea is important: try to find and document other blockchain strategies
+
 ### auctions & voting
 
 - [voting example](https://docs.soliditylang.org/en/latest/solidity-by-example.html#voting)
 - [open auction](https://docs.soliditylang.org/en/latest/solidity-by-example.html#blind-auction)
   - everyone can see the bids that are made
-  - everyone can send their bids during a bidding period
+  - everyone can send their bids during a bidding period (at a certain time the auction ends)
   - the bids include Ether to bind bidders to their bid
   - if the current highest bid is exceeded, the previous highest bidder gets their money back
 - [blind auction](https://docs.soliditylang.org/en/latest/solidity-by-example.html#id2)
+- blind strategy:
+  - during the bidding period a bidder doesnt actually send their bid, but only hashed version of it (so its blind)
+  - after the bidding period the bidders have to reveal their bids by sending their values unencrypted and the contract checks that the hash value is the same as the one provided during the bidding period
+- binding strategy:
+  - the only way to prevent the bidder from NOT sending the bid value after the auction ends is to make them send it together with the bid
+  - since value transfers cannot be blinded in theithereum, anyone can see the value
 
 ### purchases
 
 - simplifest form is a single buyer and single seller that must send an item to the buyer and receive funds in return
-
 - [safe remote purchases](https://docs.soliditylang.org/en/latest/solidity-by-example.html#id2)
   - both parties put twice the value of the item into the contract as escrow
   - the money is locked until the seller ships the item and the buyer confirms receipt by calling a fn on the contract
   - then the buyer receives 50% back (they put up 2x)
   - then the receiver receives 150% back (they put up 2x + the 50% from the buyer)
   - this incentives both parties to resolve the situation or oyherwise their money is locked forever
+- [micropayment channel](https://docs.soliditylang.org/en/latest/solidity-by-example.html#micropayment-channel)
+- uses cryptographic signatures to make repeated transfers of ether between the same parties secure, instantaneous and without transaction fees
+  - the signature acts like a bank check
+- use signatures to authorise transactions via a smart contract
+- sender:
+  - creates and deploys a contract, that contains
+    - enough ether to cover expected payments
+    - a fn a sender can call with the senders signature (see below)
+    - the fn will take ether from the senders account and transmit it to the caller
+  - sends a cryptographically signed message off-chain (e.g. via email) to the recipient which must include
+    - the recipients address
+    - the amount to be transferred
+    - protection against replace attaacks
+- recipient (see web3 docs)
+  - is responsible for calling the smart contract fn created by the sender, providing the senders signature
+  - since the recipient is calling the fn, they are responsible for paying the transaction fees

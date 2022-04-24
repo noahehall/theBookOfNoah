@@ -14,8 +14,20 @@
 
 ```js
 import web3 from "web3"; // main class
-const { utils } = web3; // utility functions for Ethereum dapps and other web3.js packages.
-const { eth } = web3; // interact with a blockchain & smart contracts
-const { accounts } = eth; // fns to generate eth accounts & sign transactions & data
-const { personal } = eth; //nteract with the Ethereum node’s accounts.
+
+// util: functions for Ethereum dapps and other web3.js packages.
+const { utils } = web3; // utility
+const hash = utils.sha3("some msg");
+
+// eth: interact with a blockchain & smart contracts
+const { eth } = web3;
+
+// eth.account: to generate eth accounts & sign transactions & data
+const { accounts } = eth;
+
+// eth.personal: interact with the Ethereum node’s accounts.
+const { personal } = eth;
+// prepends the length of the msg to the signed data
+// be sure you create the hash first, this way the msg will always be exactly 32 bytes long
+personal.sign(someHash, eth.defaultAccount).then(console.log);
 ```
