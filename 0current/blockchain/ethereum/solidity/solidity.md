@@ -14,6 +14,9 @@
 - [solidity by example](https://docs.soliditylang.org/en/latest/solidity-by-example.html)
 - [ethereum developer resources](https://ethereum.org/en/developers/)
 - [remix download files for offline use](https://github.com/ethereum/remix-live/tree/gh-pages)
+- [openzepplin ECDSA fns for signatures](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/cryptography/ECDSA.sol)
+- [openzepplin stuff](https://github.com/OpenZeppelin/openzeppelin-contracts)
+- [openzepplin wizard](https://wizard.openzeppelin.com/)
 - ref
   - [installation types & steps](https://docs.soliditylang.org/en/latest/installing-solidity.html)
   - [reference types data location](https://docs.soliditylang.org/en/latest/types.html#reference-types)
@@ -524,6 +527,16 @@ function signPayment(contractAddress, amount, callback) {
     signMessage(message, callback);
 }
 
+/// the recipient can close the channel at any time by presenting a
+/// signed amount from the sender. the recipient will be sent that amount,
+/// and the remainder will go back to the sender
+function close(uint256 amount, bytes memory signature) external {
+    require(msg.sender == recipient);
+    require(isValidSignature(amount, signature));
+
+    recipient.transfer(amount);
+    selfdestruct(sender);
+}
 ```
 
 ### example contracts
@@ -594,7 +607,7 @@ contract SomeContract {
     the sender deploys the created contract to the block hain
     - the receiver executes the contract on the blockchain
     - once the receiver is finished using the payment channel, they call a close method
-      - the close mehtod is responsible for actually transfering the funds
+      - the close method is responsible for actually transfering the funds (via selfdestruct)
       - thus if multiple payments exist, there are accumulative (you receive the last one which contains all the others)
       - the sender is not permitted to call the close fn (as they could use it to cheat the recipient)
 - use signatures to authorise transactions via a smart contract
