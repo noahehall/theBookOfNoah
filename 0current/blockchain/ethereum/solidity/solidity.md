@@ -3,7 +3,7 @@
 - strongly typed language used to develop smart contracts in the Ethereum platform
 - there is some overlap with the ethereum.md file, rely on this one more (as it comes straight from solidity docs vs udacity)
 - fkn udacity solidity course sucks, just read the docs vs their old azz videos
-  - bookmark: https://docs.soliditylang.org/en/latest/introduction-to-smart-contracts.html#message-calls
+  - bookmark: https://docs.soliditylang.org/en/latest/solidity-by-example.html
 
 ## links
 
@@ -13,7 +13,9 @@
 - [old azz udacity example code](https://github.com/udacity/nd1309-work-code/tree/master/Course_Identity_And_Smart_Contracts/solidity)
 - [solidity by example](https://docs.soliditylang.org/en/latest/solidity-by-example.html)
 - [ethereum developer resources](https://ethereum.org/en/developers/)
+- [remix download files for offline use](https://github.com/ethereum/remix-live/tree/gh-pages)
 - ref
+  - [installation types & steps](https://docs.soliditylang.org/en/latest/installing-solidity.html)
   - [reference types data location](https://docs.soliditylang.org/en/latest/types.html#reference-types)
   - [data types](https://docs.soliditylang.org/en/latest/types.html)
   - [mapping data type](https://docs.soliditylang.org/en/latest/types.html#mapping-types)
@@ -55,6 +57,34 @@
 - events: events and logs emitted by the contract; dApps can listen for and react to these events
 - functions:
 - All identifiers (contract names, function names and variable names) are restricted to the ASCII character set. It is possible to store UTF-8 encoded data in string variables.
+
+### installation
+
+#### remix
+
+- remix: recommended for small contract & quickly learning solidity as you dont need to install anything
+- can be downloaded for use without an internet connection
+- see the remix.md file
+
+#### solc-js
+
+- node module
+- has fewer features that solc
+- tools expecting `solc` likely arent compatible with `solcjs`
+
+#### solc
+
+- the cmdline compiler
+- deriv
+
+```sh
+docker run ethereum/solc:stable --help
+
+# install via pkg manager
+sudo add-apt-repository ppa:ethereum/ethereum
+sudo apt-get update
+sudo apt-get install solc
+```
 
 ### evm
 
@@ -125,6 +155,62 @@
 - best practices
   - derived calculations, caching, and aggregates should be stored outside of the contract
 
+#### logs
+
+- special indexed data structure that maps all the way up to the block level
+- used to implement events
+- contracts cannot access log data after it has been created
+- log data can be efficiently accessed from outside the blockchain
+
+### message calls
+
+- similar to transactions, in that they have
+  - source, target, data payload, ether, gas and return data
+- every transaction consists of a top-level msg call which in urn create message calls
+- limitations
+  - limited to a depth of 1024
+    - for complex operations, loops should be preferred over recursive calls
+  - only 63/64th of the gas can be forwarded in a message call
+
+#### delegatecall / callcode and libraries
+
+- delegatecall: special variant of a msg call
+  - identical to a msg call apart from that fact that
+    - the code at the target address is executed in the context (i.e at the address) of the calling contract
+    - msg.sender & msg.value do not change their values
+- libraries: implemented via delegate calls
+  - contract can dynamically load code froma different address at runtime
+  - storage, current address & balance still refer to the calling contract
+    - only the code is taken from the called addres
+
+#### create
+
+- contracts create other creates via this opcode
+- different from normal msg calls in that
+  - the payload data is executed
+  - the result of the execution is stored as code
+  - the caller/creator receives the address of the new contract on the stack
+
+### contracts
+
+#### self-destruct
+
+- the only ay to remove code from the blockchain is when a contract performs the `selfdestruct` operations
+- the remaining ether is sent to a designated target and then the storage & code is removed from state
+  - if someone sends ether to a removed contract the enter is lost forever
+  - some nodes will still contain the contract in history, so self destructing is not hte same as deleting data from a hard disk
+- to deactivate a contract you should disable it instead
+  - e.g. by changing some internal state which causes all fns to revert
+  - this makes it impossible to use the contract, as it returns ether immediately
+
+#### precompiled contracts
+
+- special contracts whose addresses range between 1 & including 8
+- can be called as any other contract but
+  - their behavior & gas consumption is not defined by EVM code
+  - instead is implemented in the EVM execution environment itself
+- different EVM compatible chains may use a different set of precompiled contracts
+
 ### keywords
 
 - pragram: states which version of solidity to use
@@ -149,6 +235,7 @@
 ```js
 msg;
   .sender // always the address where the current (external) fn call came from
+  .value // todo
 tx;
   .origin // the sender/creator of this transaction
 block;
