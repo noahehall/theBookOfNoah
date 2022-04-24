@@ -29,6 +29,8 @@
   - [errors and revert](https://docs.soliditylang.org/en/latest/contracts.html#errors)
   - [revert statement](https://docs.soliditylang.org/en/latest/control-structures.html#revert-statement)
   - [opcodes](https://docs.soliditylang.org/en/latest/yul.html#opcodes)
+  - [math & cryptographic fns](https://docs.soliditylang.org/en/latest/units-and-global-variables.html#mathematical-and-cryptographic-functions)
+  - [inline assembly](https://docs.soliditylang.org/en/latest/assembly.html)
 
 ## terms
 
@@ -123,6 +125,11 @@ sudo apt-get install solc
   - address: determined from the public key
 - contract accounts: controlled by the code stored together with the account
   - address: determined at the time the contract is created (derived from the creator address & the number of transactions sent form that address (i.e. the nonce))
+
+### signatures
+
+- ECDSA signatures consit of two params, r and s
+  - signatures in ehtereum include a third param called v: used to verify which accounts priate keys was used to sign a message, and the transactions sneder
 
 ### transactions
 
@@ -230,7 +237,7 @@ sudo apt-get install solc
   - instead is implemented in the EVM execution environment itself
 - different EVM compatible chains may use a different set of precompiled contracts
 
-### keywords
+### keywords, globals, etc
 
 - pragram: states which version of solidity to use
 - contract: collection of code (functions) and data (state) that resides at a specific address on the chain
@@ -253,6 +260,7 @@ sudo apt-get install solc
 - payable: enables the fn to able to receive ether
   - else you have to use convert an address via `payable(someAddr)` to use the `.send()` fn
 - returns (dataType varName)
+- ecrecover: fn that accepts a msg along with the r, s and v params (ECDSA) and returns the address that was used to sign the msg
 
 ### global vars n fns
 
@@ -468,6 +476,19 @@ function abort()
     // last call in this function and we
     // already changed the state.
     seller.transfer(address(this).balance);
+}
+
+// recipient is the address that should be paid.
+// amount, in wei, specifies how much ether should be sent.
+// nonce can be any unique number to prevent replay attacks
+// contractAddress is used to prevent cross-contract replay attacks
+function signPayment(recipient, amount, nonce, contractAddress, callback) {
+    var hash = "0x" + abi.soliditySHA3(
+        ["address", "uint256", "uint256", "address"],
+        [recipient, amount, nonce, contractAddress]
+    ).toString("hex");
+
+    web3.eth.personal.sign(hash, web3.eth.defaultAccount, callback);
 }
 ```
 
