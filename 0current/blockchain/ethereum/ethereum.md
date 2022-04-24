@@ -39,6 +39,10 @@
 - gas: the cost of executing transactions on the EVM.
 - Wei: smaller denomination of Ether, 1 ether === 10^18 Wei
 - Gwei: gigga wei, 6 billion wei
+- clients: different ways to interact with the ethereum blockchain
+  - geth: go ethereum
+  - ethereumjs: javascript client
+  - bunch of others as well
 
 ## solidity
 
@@ -66,6 +70,11 @@
   - a contract written in code; to programmatically enforce rules setup in a negotiation between two parties
   - an object on the ethereum blockchain that contains code to be executed by the EVM
   - can store data, execute logic, interact with other smart contracts, and send ether
+  - can hold ether just like a wallet, and have an address just like a wallet
+- use cases
+  - when buying something from a seller, you send the money to the smart contract
+    - the smart contract will hold the ether until you receive the stuff
+    - once the stuff is received, you update the smart contract and it will send the ether to the seller
 - high level
   - compiled into two views then deployed to the ethereum blockchain
     - assembly view: human readable
@@ -113,7 +122,7 @@
 - rinkeby: proof of authority;
 - ethereum network performance metrics (check ethstats link)
   - best block: the highest block number of the longest valid chain
-  - uncles: orphaned blocks; in Ethereum they are included and rewarded. 
+  - uncles: orphaned blocks; in Ethereum they are included and rewarded.
   - last block: the last mined block in seconds
   - avarge block time: the avergae time between two blocks excluding uncles
   - avg network hashrate: # of hashes spent by miners to find a new block, typically shown in terra hashes
@@ -130,6 +139,7 @@
   - uncle count: number of uncles per block
   - transactions: number of transactins in the last included block
   -
+
 ### transactions
 
 - transactions result in a change to the world state
