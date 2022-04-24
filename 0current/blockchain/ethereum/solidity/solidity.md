@@ -568,6 +568,9 @@ contract SomeContract {
   - [the implemented contract, must read](https://docs.soliditylang.org/en/latest/solidity-by-example.html#computing-the-message-)
 - payments channel: use cryptographic signatures to make repeated transfers of ether securely, instantaneously and without transaction fees
   - the signature acts like a bank check
+  - the only fees occured are when:
+    the sender deploys the created contract to the block hain
+    - the receiver executes the contract on the blockchain
 - use signatures to authorise transactions via a smart contract
 - sender:
   - creates and deploys a contract, that contains
@@ -581,3 +584,7 @@ contract SomeContract {
 - recipient (see web3 docs)
   - is responsible for calling the smart contract fn created by the sender, providing the senders signature
   - since the recipient is calling the fn, they are responsible for paying the transaction fees
+- considerations:
+  - time to keep the payment channel live
+    - for shortlived transactions, e.g. paying for something each minute, it may be shorter
+    - for longer term payment channels, e.g. paying an employee, the channel may be kept open for years or months
