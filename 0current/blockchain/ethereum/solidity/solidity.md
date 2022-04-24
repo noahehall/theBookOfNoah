@@ -23,6 +23,23 @@
 - events: events and logs emitted by the contract; dApps can listen for and react to these events
 - functions:
 
+### memory management
+
+- divided into 3 broad categories: memory, storage and callData
+- memory: used for fn code execution
+  - temporary: data is lost after fn execution
+  - arrays & structs
+  - addressable at byte level
+- storage: for state & local contract-level data, its the contracts db
+  - persistant: think of it as a db
+  - key-value store (256-bit key & value)
+  - read/write costly
+  - cntract can manage its own data
+- callData: like a stack, used for EVM call execution
+  - EVM code execution
+  - immutable
+  - max size 1024, word 256 bit
+
 ### keywords
 
 - pragram: states which version of solidity to use
