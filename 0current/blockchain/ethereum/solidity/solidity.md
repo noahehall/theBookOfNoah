@@ -230,8 +230,10 @@ sudo apt-get install solc
 - require: defines conditions that reverts all changes if not met
 - error: allow you to provide info about why an operation failed; errors are returned to the caller of the fn
 - revert: unconditionally aborts and reverts all changes; allows you to provide the name of an Error and additional data to be returned to the caller
-- external: todo
+- external: fn is callable from other contracts?
+- internal: fn is only callable from the contract itself/derived contracts
 - payable
+- returns (dataType varName)
 
 ### global vars n fns
 
@@ -246,16 +248,26 @@ block;
 assert;
 require;
 revert;
-
+payable(msg.sender).transfer(refund)
 ```
 
 ### data types
 
 ```js
 /**
- * uint: unsigned 256 bit integer
- * address: 160-bit value; no arithmetic operations are allowed; used to store contract address, or a hash of hte public half of a keypair belonging to external accounts
- * mapping (from => to): maps a from key to a value; cannot retrieve a list of all the keys of a mapping, nor a list of all values; or whats been added, or be used within a context there its not needed
+  uint: unsigned 256 bit integer
+
+  address: 160-bit value; no arithmetic operations are allowed; used to store contract address, or a hash of hte public half of a keypair belonging to external accounts
+
+  mapping (from => to): maps a from key to a value; cannot retrieve a list of all the keys of a mapping, nor a list of all values; or whats been added, or be used within a context there its not needed
+
+  dataType[]: dynmically sized arrays
+    .push(...)
+    .length
+
+  struct Poop: container of other data types
+    poop = Poop({ key: value, ...})
+
  */
 contract DataLocation {
   // elementary data types
@@ -287,6 +299,19 @@ contract DataLocation {
     // do stuff
   }
 
+  // good way to validate inputs to fns
+  modifier addThisCodeToFn(uint whatev) {
+    if (block.timestamp >= time) revert TooLate(time);
+    _; // original fn code inserted here
+  }
+
+  function someFn(uint someInt)
+    external
+    payable
+    addThiscodetoFn(blindedBid)
+  {
+    // fn body
+  }
   function localVars() {
     require(
       msg.sender == someAddr,
@@ -326,7 +351,8 @@ contract DataLocation {
  ||
  ==
  !=
-
+ -=
+ +=
 ```
 
 ### control
@@ -408,3 +434,15 @@ contract SomeContract {
 }
 
 ```
+
+## algorithms & strategies
+
+### auctions & voting
+
+- [voting example](https://docs.soliditylang.org/en/latest/solidity-by-example.html#voting)
+- [open auction](https://docs.soliditylang.org/en/latest/solidity-by-example.html#blind-auction)
+- [blind auction](https://docs.soliditylang.org/en/latest/solidity-by-example.html#id2)
+
+### purchases
+
+- [safe remote purchases](https://docs.soliditylang.org/en/latest/solidity-by-example.html#id2)
