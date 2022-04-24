@@ -85,12 +85,13 @@
 - develop & compile
   - write the code (e.g. in solidity)
   - compiled into two views then deployed to the ethereum blockchain
-  - assembly view: human readable
-  - bytecode view: machine readable
+  - assembly view: human readable json ABI (application binary interface)
+  - bytecode view: bytecode machine readable
 - deploy
-  - once deployed the ocntract is un-editable
-  - retrieve the deployed contract's address for you to use
+  - each deployment creates a new instance of the contract; and you receive an address that points to that instance
+  - once deployed the contract is un-editable
 - invoke & execute on the EVM
+  - via any wallet, whether online, desktop, hardware (ledger, trezor), ordApp
   - you invoke the contract to call the contracts functions
 - destroy
   - important to self-destruct the contract so no one can call functions on it anymore

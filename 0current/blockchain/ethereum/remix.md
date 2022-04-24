@@ -1,8 +1,18 @@
 # remix ethereum online ide
 
+- online IDE for writing, compiling, deploying and invoking smart contracts
+- test contracts in a simulator
+- deploy contracts to main/test networks
+- connect to a node running locally
+- connect to various environments
+  - javascript VM
+  - injected web3 (e.g. metamask)
+  - web3 providers running locally on your box
+
 ## links
 
 - [remix website](https://remix.ethereum.org)
+- [docs](https://remix-ide.readthedocs.io/en/latest/)
 
 ## basics
 

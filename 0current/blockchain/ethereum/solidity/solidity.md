@@ -1,6 +1,6 @@
 # solidity
 
-- language used to develop smart contracts in the Ethereum platform
+- strongly typed language used to develop smart contracts in the Ethereum platform
 
 ## links
 
@@ -19,18 +19,40 @@
 
 - strongly typed language
 - source code files end with `.sol`
+- state/storage vars: exist for the life of the contract, and started in the blockchain as part of the contract
+- events: events and logs emitted by the contract; dApps can listen for and react to these events
+- functions:
 
 ### keywords
 
 - pragram: states which version of solidity to use
+- contract: similar to class keyword in js
+- constructor:
 
 ### types
 
-- public:
+- public: visibility
 - view: only meant to view information
 - returns (type): type of object returned by a fn
 
-```sh
+```js
+// sample contract
+contract SomeContract {
+  string public someStateVar;
 
+  constructor (string _name) public {
+    name = _name;
+  }
+
+  // not required for public vars
+  // its getters are automatically created
+  function getName() public view returns (string _name) {
+    return name;
+  }
+
+  function setName(string _name) public {
+    name = _name;
+  }
+}
 
 ```
