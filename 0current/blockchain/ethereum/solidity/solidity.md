@@ -3,7 +3,8 @@
 - strongly typed language used to develop smart contracts in the Ethereum platform
 - there is some overlap with the ethereum.md file, rely on this one more (as it comes straight from solidity docs vs udacity)
 - fkn udacity solidity course sucks, just read the docs vs their old azz videos
-  - bookmark: https://docs.soliditylang.org/en/latest/solidity-by-example.html
+  - bookmark: https://docs.soliditylang.org/en/latest/solidity-by-example.html#id2
+    - at the line explaining modifiers
 
 ## links
 
@@ -135,7 +136,7 @@ sudo apt-get install solc
   - reads are limited to a width o 256 bits
   - writes can be either 8 or 256 bits wide
   - at the time of expansion, the cost in gas must be paid
-    - memory is more costly the larger it grows
+    - is more costly the larger it grows
     - ^ scales quadratically
 - storage: for state & local contract-level data, persistent between fn calls and transactions
   - key-value store that maps 256-niy words to 256-bit words
@@ -229,6 +230,8 @@ sudo apt-get install solc
 - require: defines conditions that reverts all changes if not met
 - error: allow you to provide info about why an operation failed; errors are returned to the caller of the fn
 - revert: unconditionally aborts and reverts all changes; allows you to provide the name of an Error and additional data to be returned to the caller
+- external: todo
+- payable
 
 ### global vars n fns
 
@@ -239,6 +242,7 @@ msg;
 tx;
   .origin // the sender/creator of this transaction
 block;
+  .timestamp
 assert;
 require;
 revert;
@@ -255,19 +259,60 @@ revert;
  */
 contract DataLocation {
   // elementary data types
-  uint count; // initialized to 0
+  uint public count; // initialized to 0
   int amount; // initialized to 0
   bool iKnowWhatImDoing; // initialized to false
-  address owner; // initialized to 0x0
-  // complex data types
+  address payable owner; // initialized to 0x0
+  byte32 name;
   uint[] points;
 
+  // complex data types
+  struct Poop {
+    uint times;
+    bool flushed;
+  }
+
+  event IPooped(address sender, uint times);
+  error NoToilerPaper();
+  error NoWatterInTank(uint secondsToWait)
+  // maps addresses to names
+  mapping(address => name) public names;
+
+  // dynamically sized array of Poop structs
+  Poop[] public poops;
+
+  constructor(bytes32[] listOfStrings) {
+    // msg is a global var
+    sender = msg.sender;
+    // do stuff
+  }
+
   function localVars() {
+    require(
+      msg.sender == someAddr,
+      "return this string if false"
+    );
+
+    // doesnt return a msg, but still exits & reverts if false
+    require(
+      msg.sender != someAddr
+    )
     uint[] storage localArray;
     uint[] memory memoryArray;
 
     // creates a ref to a storage array
+    // reference vars change the reference
     uint[] pointer = points;
+  }
+
+  function flush() {
+    if (block.timestamp > whatever) {
+      revert NoToilerPaper();
+    }
+
+    emit IPooped(msg.sender, msg.value);
+
+    return true;
   }
 }
 
@@ -282,6 +327,62 @@ contract DataLocation {
  ==
  !=
 
+```
+
+### control
+
+```js
+
+for (uint i = 0; i < somePoop.length; i++) {
+  // do this stuff
+}
+
+while (someVar != someOtherVar) {
+  // do this stuff
+
+  // always include a require check
+  // else you could burn all your gas
+  require(thisThing == thatThing)
+}
+
+if (someThingEvaluatesToBool) {
+  // do this stuff
+} else {
+  // do this other stuff
+}
+
+```
+
+### functions
+
+```js
+function auctionEnd() external {
+  // It is a good guideline to structure functions that interact
+  // with other contracts (i.e. they call functions or send Ether)
+  // into three phases:
+  // 1. checking conditions
+  // 2. performing actions (potentially changing conditions)
+  // 3. interacting with other contracts
+  // If these phases are mixed up, the other contract could call
+  // back into the current contract and modify the state or cause
+  // effects (ether payout) to be performed multiple times.
+  // If functions called internally include interaction with external
+  // contracts, they also have to be considered interaction with
+  // external contracts.
+
+  // 1. Conditions
+  if (block.timestamp < auctionEndTime)
+      revert AuctionNotYetEnded();
+  if (ended)
+      revert AuctionEndAlreadyCalled();
+
+  // 2. Effects
+  ended = true;
+  emit AuctionEnded(highestBidder, highestBid);
+
+  // 3. Interaction
+  beneficiary.transfer(highestBid);
+}
 ```
 
 ### example contracts
