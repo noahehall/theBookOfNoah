@@ -33,6 +33,7 @@
   - [opcodes](https://docs.soliditylang.org/en/latest/yul.html#opcodes)
   - [math & cryptographic fns](https://docs.soliditylang.org/en/latest/units-and-global-variables.html#mathematical-and-cryptographic-functions)
   - [inline assembly](https://docs.soliditylang.org/en/latest/assembly.html)
+  - [libraries & contracts](https://docs.soliditylang.org/en/latest/contracts.html#libraries)
 
 ## terms
 
@@ -222,6 +223,11 @@ sudo apt-get install solc
   - the caller/creator receives the address of the new contract on the stack
 
 ### contracts
+
+#### structure
+
+- specify and control the behavior of contracts by breaking them into modules for isolation
+- ## libraries: todo (see link)
 
 #### self-destruct
 
@@ -569,6 +575,21 @@ contract SomeContract {
 
 ```
 
+### example libraries
+
+```js
+
+library Balances {
+  function move(mapping(address => uint256) storage balances, address from, address to, uint amount) internal {
+      require(balances[from] >= amount);
+      require(balances[to] + amount >= balances[to]);
+      balances[from] -= amount;
+      balances[to] += amount;
+  }
+}
+
+```
+
 ## algorithms & strategies
 
 - come from `solidity by example`
@@ -604,12 +625,12 @@ contract SomeContract {
 - payments channel: use cryptographic signatures to make repeated transfers of ether securely, instantaneously and without transaction fees
   - the signature acts like a bank check
   - the only fees occured are when:
-    the sender deploys the created contract to the block hain
+    - the sender deploys the created contract to the block hain
     - the receiver executes the contract on the blockchain
-    - once the receiver is finished using the payment channel, they call a close method
-      - the close method is responsible for actually transfering the funds (via selfdestruct)
-      - thus if multiple payments exist, there are accumulative (you receive the last one which contains all the others)
-      - the sender is not permitted to call the close fn (as they could use it to cheat the recipient)
+  - once the receiver is ready to collect their payment, they call a close method
+    - the close method is responsible for actually transfering the funds (via selfdestruct)
+    - thus if multiple payments exist, there are accumulative (you receive the last one which contains all the others)
+    - the sender is not permitted to call the close fn (as they could use it to cheat the recipient)
 - use signatures to authorise transactions via a smart contract
 - sender:
   - creates and deploys a contract, that contains
@@ -623,6 +644,11 @@ contract SomeContract {
 - recipient (see web3 docs)
   - is responsible for calling the smart contract fn created by the sender, providing the senders signature
   - since the recipient is calling the fn, they are responsible for paying the transaction fees
+  - the recipient needs to:
+    - verify the contract address in the message matches the payment channel
+    - verify the total on each new payment is the expected amount
+    - verify the new accumulative total doesnt exceed the amount of ether escrowed
+    - verify the signature is valid and comes from the payment channel sender
 - considerations:
   - time to keep the payment channel live
     - for shortlived transactions, e.g. paying for something each minute, it may be shorter
