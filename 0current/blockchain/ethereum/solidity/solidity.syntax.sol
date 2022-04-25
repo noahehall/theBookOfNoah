@@ -32,6 +32,14 @@ contract GlobalVars {
     block.number; // (uint): current block number
     block.timestamp; // (uint): current block timestamp as seconds since unix epoch
   }
+
+  // this contracts abi
+  function thisAbi() public {
+    abi.encode(args); // (bytes): ABI-encodes the given arguments
+    abi.encodePacked(arg); // (bytes): Performes packed encoding
+    abi.encodeWithSelector(selector, args); // (bytes) ABI-encodes the given arguments with the given selector
+    abi.encodeWithSignature(signatureString, arg); // (bytes): Equivalent to abi.encodeWithSelector(bytes4(keccak256(signature), ...)`
+  }
 }
 
 contract GlobalFns {
@@ -77,6 +85,10 @@ contract Operators {
 
 /// examples of all datatypes
 contract DataTypes {
+  /* generalizations */
+  // you can use any type as a fn to convert another type to it
+  // ^ e.g. address(uint160(bytes20(b))) or address(uint160(uint256(b)))
+
   /* variable modifiers ****************/
   // public: can be called by other contracts, e.g. uint public amount
 
@@ -101,15 +113,36 @@ contract DataTypes {
   // operators: ! && || == !=
   bool iKnowWhatImDoing;
 
+  // addresses
   // initialized to 0x0
-  // 160-bit value
-  // no arithmetic operations are allowed
+  // operators: comparison
   // used to store contract address
-  // ^ or a hash of hte public half of a keypair belonging to external accounts
+  // ^ or a hash of the public half of a keypair belonging to external accounts
+  // holds a 20 byte value (size of an ethereum address)
+  // can be converted to a
+  // ^payable address via payable(address)
+  // ^to/from uint160, integer literals, bytes20, and contract types
+  // properties:
+  // ^ balance,
+  // ^ code === bytes memory ,
+  // ^ codehash === keccak-256 hash as bytes32, cheaper than using keccak256(addr.code)
+  // methods: call(), delegatecall(), staticcall()
+  // ^ you are handing over control to the contract at that address with these methods
+  // ^ they can change your state vars, be careful!
   address owner;
-  // same as address, but now has additional properties
+  // is an address you can send ether to
+  // can be converted to a regular address
+  // properties: balance, send(), transfer()
   address payable recipient;
+  // fails if the contract is not large enough/rejected by recipient
+  recipient.transfer(20);
+  // low-level counterpart of transfer
+  // on failure the contract will not stop with an exception
+  // ^but the send() fn will return false, so always check the return value
+  // ^ generally use .transfer() instead, or even better force the recipient to withdraw the money
+  // address(this).send(20);
 
+  // bytes
   // 32 byte string
   bytes32 name;
 
@@ -217,8 +250,15 @@ contract Contracts {
     _; // original fn code inserted here
   }
   // use the modifier fn above to augment this fn
-  function someFn () public addThisCodeToFn {
-    // do stuff
+  function getContractBalance () public addThisCodeToFn {
+    // converts this contract to an address to get the current balance
+    uint currentBalance = address(this).balance;
+
+    return currentBalance;
+  }
+
+  function convertToPayableContract() {
+    address payable canReceivePayaments = payable(address(this));
   }
 }
 

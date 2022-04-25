@@ -3,7 +3,7 @@
 - strongly typed language used to develop smart contracts in the Ethereum platform
 - there is some overlap with the ethereum.md file, rely on this one more (as it comes straight from solidity docs vs udacity)
 - fkn udacity solidity course sucks, just read the docs vs their old azz videos
-  - bookmark: https://docs.soliditylang.org/en/latest/layout-of-source-files.html#pragmas
+  - bookmark: https://docs.soliditylang.org/en/latest/types.html#fixed-size-byte-arrays
 
 ## links
 
@@ -59,6 +59,9 @@
   - addition subtraction and multiplication
   - gas cost tests (figure this out)
   - optimizer (figure this out)
+  - members of addresses (just re-read that entire fkn section)
+    - review the call, delegatecall, staticcall and the warning about using them
+    - review how you can modify the supplied gas and ether
 
 ## terms
 
@@ -251,6 +254,11 @@ sudo apt-get install solc
 ### interfaces: todo
 
 ### contracts
+
+- if you declara a local variable of contract type (e.g. `ContractName poop`) you can call fns on that contract
+- can be instantiated via new
+- the data representation of a contract is identical to that of address type, and is also used in the ABI
+- the members of contract types are the external fns of the contract, including state variables marked as public
 
 #### structure
 
