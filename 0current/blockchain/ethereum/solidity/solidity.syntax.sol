@@ -81,7 +81,7 @@ contract DataTypes {
   // payable: address can receive ether, e.g. address payable poopAddr
   // external:
 
-  /* elementary data types ****************/
+  /* elementary (value) data types ****************/
   // unsigned 256 bit integer
   // initialized to 0
   uint count;
@@ -164,36 +164,53 @@ contract Visibility {
     return name;
   }
 }
-// todo: need to add function keywords
-// ^ e.g. public, external, payable, constant, private, internal,
-contract Functions {
+
+// define descript names and data for failures
+// can be used in revert statements
+// MUCH cheaper than strings and allow for more complex data
+// always use with a natspec
+/// Not enough funds for transfer. Requested `requested`,
+/// but only `available` available.
+error NotEnoughFunds(uint requested, uint available);
+
+function Functions() {
   // function auctionEnd() external {
-//   // It is a good guideline to structure functions that interact
-//   // with other contracts (i.e. they call functions or send Ether)
-//   // into three phases:
-//   // 1. checking conditions
-//   // 2. performing actions (potentially changing conditions)
-//   // 3. interacting with other contracts
-//   // If these phases are mixed up, the other contract could call
-//   // back into the current contract and modify the state or cause
-//   // effects (ether payout) to be performed multiple times.
-//   // If functions called internally include interaction with external
-//   // contracts, they also have to be considered interaction with
-//   // external contracts.
+  //   // It is a good guideline to structure functions that interact
+  //   // with other contracts (i.e. they call functions or send Ether)
+  //   // into three phases:
+  //   // 1. checking conditions
+  //   // 2. performing actions (potentially changing conditions)
+  //   // 3. interacting with other contracts
+  //   // If these phases are mixed up, the other contract could call
+  //   // back into the current contract and modify the state or cause
+  //   // effects (ether payout) to be performed multiple times.
+  //   // If functions called internally include interaction with external
+  //   // contracts, they also have to be considered interaction with
+  //   // external contracts.
 
-//   // 1. Conditions
-//   if (block.timestamp < auctionEndTime)
-//       revert AuctionNotYetEnded();
-//   if (ended)
-//       revert AuctionEndAlreadyCalled();
+  //   // 1. Conditions
+  //   if (block.timestamp < auctionEndTime)
+  //       revert AuctionNotYetEnded();
+  //   if (ended)
+  //       revert AuctionEndAlreadyCalled();
 
-//   // 2. Effects
-//   ended = true;
-//   emit AuctionEnded(highestBidder, highestBid);
+  //   // 2. Effects
+  //   ended = true;
+  //   emit AuctionEnded(highestBidder, highestBid);
 
-//   // 3. Interaction
-//   beneficiary.transfer(highestBid);
-// }
+  //   // 3. Interaction
+  //   beneficiary.transfer(highestBid);
+  // }
+
+}
+
+// @see https://docs.soliditylang.org/en/latest/contracts.html#contracts
+contract Contracts {
+  uint someNumber; // state var: stored in contract storage
+  // constructor is only called when contract is created
+  constructor() {
+    // do this stuff
+  }
 
   // good way to validate inputs to fns
   // this can be added to any fn
@@ -203,21 +220,18 @@ contract Functions {
     _; // original fn code inserted here
   }
   // use the modifier fn above to augment this fn
-  function someFn () public addThisCodeToFn() {
+  function someFn () public addThisCodeToFn {
     // do stuff
   }
 }
 
-contract Contracts {
-  // constructor is only called when contract is created
-  constructor() {
-    // do this stuff
-  }
-}
-
+// interfaces with the EVM logging mechanism
 contract Events {
-  // events/logs todo
-  // emit IPooped(msg.sender, msg.value);
+  event myEvent();
+
+  function someFn() {
+    emit myEvent();
+  }
 }
 
 contract ControlFlow {
