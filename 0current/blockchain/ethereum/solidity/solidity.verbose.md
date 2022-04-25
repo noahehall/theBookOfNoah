@@ -3,7 +3,7 @@
 - strongly typed language used to develop smart contracts in the Ethereum platform
 - there is some overlap with the ethereum.md file, rely on this one more (as it comes straight from solidity docs vs udacity)
 - fkn udacity solidity course sucks, just read the docs vs their old azz videos
-  - bookmark: https://docs.soliditylang.org/en/latest/types.html#function-types
+  - bookmark: https://docs.soliditylang.org/en/latest/types.html#reference-types
 
 ## links
 
@@ -64,7 +64,9 @@
     - review how you can modify the supplied gas and ether
   - fixed-sizd byte arrays
   - dynamically-sized byte array
-  - user defined types
+  - user defined value types
+  - function types
+    - specifically the examples
 
 ## terms
 

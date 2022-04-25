@@ -219,6 +219,23 @@ contract Visibility {
 /// but only `available` available.
 error NotEnoughFunds(uint requested, uint available);
 
+
+// internal fns: can only be called inside the current contract (default fn type)
+// ^ i.e. current code unit: includes internal libraries & inherited fns
+// external fns: consist of an address & a fn signature
+// i.e. ContractName.fn (or this.f if within the contract);
+// ^ can be passed via and return from external fn calls
+// function (<parameter types>) {internal|external} [pure|view|payable] [returns (<return types>)]
+// if a fn returns something you HAVE to specify the type
+// fn conversion
+// pure: can be converted to view & non-payable fns
+// view: can be converted to non-payable fns
+// payable: can be converted to non-payable fns
+// properties
+// .address: the address of hte contract of the fn
+// .selector: returns the ABI fn selector
+// gas & wei
+// send gas to a fn via someFn{gas: <amount>, value: <amount>}(args)
 function Functions() {
   // function auctionEnd() external {
   //   // It is a good guideline to structure functions that interact
