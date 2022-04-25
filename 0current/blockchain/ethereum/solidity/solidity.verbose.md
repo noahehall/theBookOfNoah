@@ -35,6 +35,14 @@
   - [inline assembly](https://docs.soliditylang.org/en/latest/assembly.html)
   - [libraries & contracts](https://docs.soliditylang.org/en/latest/contracts.html#libraries)
   - [source files](https://docs.soliditylang.org/en/latest/layout-of-source-files.html)
+  - [structure of a contract](https://docs.soliditylang.org/en/latest/structure-of-a-contract.html#contract-structure)
+  - [layout](https://docs.soliditylang.org/en/latest/layout-of-source-files.html)
+  - [pragmas](https://docs.soliditylang.org/en/latest/layout-of-source-files.html#pragma)
+  - [using for directive](https://docs.soliditylang.org/en/latest/contracts.html#using-for)
+  - [structs](https://docs.soliditylang.org/en/latest/types.html#structs)
+  - [enums](https://docs.soliditylang.org/en/latest/types.html#enums)
+  - [functions](https://docs.soliditylang.org/en/latest/contracts.html#functions)
+  - [constant and immutable state vars](https://docs.soliditylang.org/en/latest/contracts.html#constants)
 
 ## terms
 
