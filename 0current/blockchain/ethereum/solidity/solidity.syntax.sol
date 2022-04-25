@@ -1,15 +1,33 @@
 // TODO: stuff is here extracted from solidity.verbose
 // ^ to keep this better structured
+// ^ all of this should be valid solidity
+// either comes from solidity docs or vscode sol plugin
 
 /// global vars and functions
 contract GlobalVars {
-  // msg;
-  //   .sender // always the address where the current (external) fn call came from
-  //   .value // todo
-  // tx;
-  //   .origin // the sender/creator of this transaction
-  // block;
-  //   .timestamp
+  // msg == current msg
+  function thisMsg() {
+    msg.data; // complete calldata
+    msg.sender; // address: sender of the msg
+    msg.sig; // bytes4: first 4 bytes of the calldata
+    msg.value; // uint: in wei
+  }
+
+  // tx == current transaction
+  function thisTx() {
+    tx.gas; // (uint): gas price of the transaction
+    tx.origin; // (address): sender of the transaction (full call chain)
+  }
+
+  // block == current block
+  function thisBlock() {
+    block.difficulty; // (uint): current block difficulty
+    block.gaslimit; // (uint): current block gaslimit
+    block.number; // (uint): current block number
+    block.timestamp // (uint): current block timestamp as seconds since unix epoch
+
+  }
+
   // assert;
   // require;
   // revert;

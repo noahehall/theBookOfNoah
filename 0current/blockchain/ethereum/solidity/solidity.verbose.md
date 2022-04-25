@@ -232,10 +232,10 @@ sudo apt-get install solc
 
 - the only way to remove code from the blockchain is when a contract performs the `selfdestruct` operations
 - the remaining ether is sent to a designated target and then the storage & code is removed from state
-  - if someone sends ether to a removed contract the enter is lost forever
-  - some nodes will still contain the contract in history, so self destructing is not hte same as deleting data from a hard disk
+  - if someone sends ether to a removed contract the either is lost forever
+  - some nodes will still contain the contract in history, so self destructing is not the same as deleting data from a hard disk
 - to deactivate a contract you should disable it instead
-  - e.g. by changing some internal state which causes all fns to revert
+  - e.g. by changing some internal state which causes all fns to revert when someone attempts to execute them
   - this makes it impossible to use the contract, as it returns ether immediately
 
 #### precompiled contracts
