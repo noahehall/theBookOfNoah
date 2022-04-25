@@ -1,6 +1,6 @@
 // TODO: stuff is here extracted from solidity.verbose
 // ^ to keep this better structured
-// ^ all of this should be valid solidity
+// ^ all of this should be valid solidity, but I still need to verify with solidity docs
 // either comes from solidity docs or vscode sol plugin
 
 /// global vars and functions
@@ -26,14 +26,34 @@ contract GlobalVars {
     block.number; // (uint): current block number
     block.timestamp; // (uint): current block timestamp as seconds since unix epoch
   }
-
-  // assert;
-  // require;
-  // revert;
-  // payable(msg.sender).transfer(refund)
-
 }
 
+contract GlobalFns {
+  function requireCondition() {
+    // can specify multiple conditions
+    require(
+      msg.sender == someAddr,
+      "return this string if false"
+    );
+
+    // doesnt return a msg, but still exits & reverts if false
+    require(msg.sender != someAddr);
+  }
+
+  function assertCondition () {
+
+  }
+
+  error NoToilertPaper();
+  function revertWithArray() {
+    if (block.timestamp > whatever) {
+      revert NoToilerPaper();
+    }
+  }
+
+  // assert;
+  // payable(msg.sender).transfer(refund)
+}
 
 /// examples of all datatypes
 contract DataTypes {
@@ -97,13 +117,24 @@ contract DataTypes {
   }
 }
 
-contract ContractDeepDive {
+contract MemoryManagement {
   // all vars outside a fn are state vars
   // all state vars are stored in contract storage
-  // constructor is only called when contract is created
-  constructor() {
-    // do this stuff
+
+  // specifically assigned to storage
+  uint[] storage stateArray;
+
+  function localVars() {
+    // creates a ref to a storage array
+    // reference vars change the reference
+    uint[] localArray = stateArray;
+
+    // specifically assigned to memory
+    uint[] memory memoryArray;
   }
+}
+
+contract Functions {
 
   // good way to validate inputs to fns
   // this can be added to any fn
@@ -112,9 +143,16 @@ contract ContractDeepDive {
 
     _; // original fn code inserted here
   }
-
+  // use the modifier fn above to augment this fn
   function someFn () public addThisCodeToFn() {
     // do stuff
+  }
+}
+
+contract Contracts {
+  // constructor is only called when contract is created
+  constructor() {
+    // do this stuff
   }
 }
 
@@ -135,75 +173,41 @@ contract ContractDeepDive {
 //   error AuctionEndAlreadyCalled();
 
 
-//   function localVars() {
-//     require(
-//       msg.sender == someAddr,
-//       "return this string if false"
-//     );
-
-//     // doesnt return a msg, but still exits & reverts if false
-//     require(
-//       msg.sender != someAddr
-//     )
-//     uint[] storage localArray;
-//     uint[] memory memoryArray;
-
-//     // creates a ref to a storage array
-//     // reference vars change the reference
-//     uint[] pointer = points;
-//   }
-
-//   function flush() {
-//     if (block.timestamp > whatever) {
-//       revert NoToilerPaper();
-//     }
-
+// events/logs todo
 //     emit IPooped(msg.sender, msg.value);
 
-//     return true;
-//   }
-// }
+contract Operators {
+  // TODO: different datatypes use different operators
+  //  !
+  //  &&
+  //  ||
+  //  ==
+  //  !=
+  //  -=
+  //  +=
+}
 
-// ```
+contract ControlFlow {
+  // for (uint i = 0; i < somePoop.length; i++) {
+  //   // do this stuff
+  //   // continue; immediately start next loop
+  // }
 
-// ### operators
+  // while (someVar != someOtherVar) {
+  //   // do this stuff
 
-// ```js
-//  !
-//  &&
-//  ||
-//  ==
-//  !=
-//  -=
-//  +=
-// ```
+  //   // always include a require check
+  //   // else you could burn all your gas
+  //   require(thisThing == thatThing)
+  // }
 
-// ### control
+  // if (someThingEvaluatesToBool) {
+  //   // do this stuff
+  // } else {
+  //   // do this other stuff
+  // }
+}
 
-// ```js
-
-// for (uint i = 0; i < somePoop.length; i++) {
-//   // do this stuff
-//   // continue; immediately start next loop
-// }
-
-// while (someVar != someOtherVar) {
-//   // do this stuff
-
-//   // always include a require check
-//   // else you could burn all your gas
-//   require(thisThing == thatThing)
-// }
-
-// if (someThingEvaluatesToBool) {
-//   // do this stuff
-// } else {
-//   // do this other stuff
-// }
-
-// ```
-
-// ### functions
 
 // ```js
 // function auctionEnd() external {
@@ -330,15 +334,6 @@ contract ContractDeepDive {
 //   // By default initialized to `false`.
 //   bool ended;
 
-
-// }
-
-// ```
-
-// ### example libraries
-
-// ```js
-
 // library Balances {
 //   function move(mapping(address => uint256) storage balances, address from, address to, uint amount) internal {
 //       require(balances[from] >= amount);
@@ -347,5 +342,3 @@ contract ContractDeepDive {
 //       balances[to] += amount;
 //   }
 // }
-
-// ```
