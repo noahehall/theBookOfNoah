@@ -34,11 +34,11 @@
   - [math & cryptographic fns](https://docs.soliditylang.org/en/latest/units-and-global-variables.html#mathematical-and-cryptographic-functions)
   - [inline assembly](https://docs.soliditylang.org/en/latest/assembly.html)
   - [libraries & contracts](https://docs.soliditylang.org/en/latest/contracts.html#libraries)
+  - [source files](https://docs.soliditylang.org/en/latest/layout-of-source-files.html)
 
 ## terms
 
 - smart contracts: code that lives on the blockchain, the core of ethereum
-  - automatically executes when conditions are met
   - what differentiates ethereum from bitcoin Script
 - blockchain: globally shared, transactional database
   - anyone can read entries in the blockchain by participating in the network
@@ -46,33 +46,27 @@
   - i.e. a db transaction, where everything is rolledback when anything fails
   - while a transaction is being applied, no other transaction can alter the blockchain
   - is always cryptographically signed by the sender (creator)
-    - e.g. ensures that only the person holding th keys to the account can transfer money from it
-    - must be included in a block to be added to the blockchain
-- block: a bunlde of transactions; executed and distributed among all participating nodes
+    - ensures that only the person holding the keys to the account can transfer money from it
+    - must be included in a block being being added to the blockchain
+- block: a bundle of transactions; validated by miners and distributed among all participating nodes
   - if two transactions in a block contradict each other, the one that comes first will succeed and the conflicting transctions discarded
-  - blocks are added in ethereum every 17 seconds
+  - blocks are added in ethereum ~17 seconds
 - mining: the block selection algorithm
 - wei: 10\*\*18 ether
 - ether: ethereums currency
 - natspec: triple-slash comments `/// like this` that will be shown when the user is asked to confirm a transaction or when an error is displayed
-- replay attacks: when a signed message is reused to clai authorization for a second action
+  - should come directly before all fns, state vars, etc
+- replay attacks: when a signed message is reused to claim authorization for a second action
   - prevent these by signing the msg with a nonce (number of transactions sent by the account)
   - ^ the smart contract will check if a nonce is used multiple times
   - ReceiverPays smart contract: vulnerable to these type of attacks
     - can occur when the owner deploys the contract, makes some payments, and then destroys the contract
-    - later the owner redeploys the smart contract again, but the new instance doesnt know nonces used in the previous deployment, so the attacker can use the old messages wiht hte new contract instance
+    - later the owner redeploys the smart contract again, but the new instance doesnt know nonces used in the previous deployment, so the attacker can use the old messages with the new contract instance
     - protect against these by
       - including the contract address in the signed message provided to the buyer
       - and ensure a condition exists within the contract that only messages containing the correct address will be accepted
 
 ## basics
-
-- strongly typed language
-- source code files end with `.sol`
-- state/storage vars: exist for the life of the contract, and started in the blockchain as part of the contract
-- events: events and logs emitted by the contract; dApps can listen for and react to these events
-- functions:
-- All identifiers (contract names, function names and variable names) are restricted to the ASCII character set. It is possible to store UTF-8 encoded data in string variables.
 
 ### best practices
 
@@ -169,7 +163,8 @@ sudo apt-get install solc
     - is more costly the larger it grows
     - ^ scales quadratically
 - storage: for state & local contract-level data, persistent between fn calls and transactions
-  - key-value store that maps 256-niy words to 256-bit words
+  - exist for the life of the contract, and stored in the blockchain as part of the contract
+  - key-value store that maps 256-bit words to 256-bit words
     - costly to read and write: minimize what you store in only what the contract needs to run
     - contracts can only read & write to its own storage
   - state vs local
@@ -222,12 +217,15 @@ sudo apt-get install solc
   - the result of the execution is stored as code
   - the caller/creator receives the address of the new contract on the stack
 
+### libraries: todo (see link)
+
+### interfaces: todo
+
 ### contracts
 
 #### structure
 
 - specify and control the behavior of contracts by breaking them into modules for isolation
-- ## libraries: todo (see link)
 
 #### self-destruct
 
@@ -247,8 +245,14 @@ sudo apt-get install solc
   - instead is implemented in the EVM execution environment itself
 - different EVM compatible chains may use a different set of precompiled contracts
 
+### source files
+
+- source code files end with `.sol`
+- can contain an arbitrary number of contract definitions, import, pragma, and `using for` directives and struct, enum, function, error and constant ariable definitions
+
 ### keywords, globals, etc
 
+- All identifiers (contract names, function names and variable names) are restricted to the ASCII character set. It is possible to store UTF-8 encoded data in string variables.
 - pragram: states which version of solidity to use
 - contract: collection of code (functions) and data (state) that resides at a specific address on the chain
   - similar to a class in JS
@@ -261,6 +265,7 @@ sudo apt-get install solc
 - view: only meant to view information
 - returns (type): type of object returned by a fn
 - event: allows clients to react so specific contract changes
+  - events and logs emitted by the contract; dApps can listen for and react to these events
   - you can create a blockchain explorer that tracks transactions & balances
 - require: defines conditions that reverts all changes if not met
 - error: allow you to provide info about why an operation failed; errors are returned to the caller of the fn
