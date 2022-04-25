@@ -72,22 +72,25 @@ contract Operators {
   //  !=
   //  -=
   //  +=
+  // %
 }
 
 /// examples of all datatypes
 contract DataTypes {
   /* variable modifiers ****************/
   // public: can be called by other contracts, e.g. uint public amount
-  // payable: address can receive ether, e.g. address payable poopAddr
-  // external:
 
   /* elementary (value) data types ****************/
-  // unsigned 256 bit integer
+  // integers: accepts steps 8 increments, from 8 to 256
+  // without step defualts to 256
   // initialized to 0
-  uint count;
+  // can use type(datatype).min|.max e.g. type(uint).min
 
-  // integer
-  // initialized to 0
+  // unsigned
+  // operators: comparison, arithmetic, bitwise
+  uint count;
+  // signed
+  // operators: can also use the unary - operator
   int amount;
 
   // strings
@@ -95,6 +98,7 @@ contract DataTypes {
 
   // boolean
   // initialized to false
+  // operators: ! && || == !=
   bool iKnowWhatImDoing;
 
   // initialized to 0x0
@@ -103,18 +107,19 @@ contract DataTypes {
   // used to store contract address
   // ^ or a hash of hte public half of a keypair belonging to external accounts
   address owner;
+  // same as address, but now has additional properties
+  address payable recipient;
 
   // 32 byte string
   bytes32 name;
 
-  /* complex data types ****************/
+  /* complex (reference) data types ****************/
   // dynmically sized arrays in the form dataType[]
   // methods: push(),
   // props: length,
   uint[] numbers;
 
-  // container of other data types
-  // create an instance, e.g. poop = Poop({ key: value, ...})
+  // custom defined types
   struct Poop {
     uint times;
     bool flushed;
@@ -125,18 +130,10 @@ contract DataTypes {
   // or use within a context where the mapping isnt needed
   mapping(address => name) public names;
 
-  // constants, the initialized to the first value
-  enum Blah { Flush, Poop, Toilet };
+  // custom types with a finite set of constant values
+  // initialized to the first value
+  enum Blah { Flush, Poop, Toilet }
 
-    // splits a signature (sig) using inline assembly
-  assembly {
-    // first 32 bytes, after the length prefix.
-    r := mload(add(sig, 32))
-    // second 32 bytes.
-    s := mload(add(sig, 64))
-    // final byte (first byte of the next 32 bytes).
-    v := byte(0, mload(add(sig, 96)))
-  }
 }
 
 contract MemoryManagement {
@@ -255,6 +252,15 @@ contract ControlFlow {
   }
 }
 
+// splits a signature (sig) using inline assembly
+// assembly {
+//   // first 32 bytes, after the length prefix.
+//   r := mload(add(sig, 32))
+//   // second 32 bytes.
+//   s := mload(add(sig, 64))
+//   // final byte (first byte of the next 32 bytes).
+//   v := byte(0, mload(add(sig, 96)))
+// }
 // TODO: need to make these reusable
 // ^ by specifying the params
 // reusable fns are defined outside of contracts

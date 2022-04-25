@@ -49,6 +49,16 @@
   - [constant and immutable state vars](https://docs.soliditylang.org/en/latest/contracts.html#constants)
   - [contract metadata](https://docs.soliditylang.org/en/latest/metadata.html#metadata)
   - [styleguide](https://docs.soliditylang.org/en/latest/style-guide.html#)
+  - [operator precedence](https://docs.soliditylang.org/en/latest/cheatsheet.html#order)
+
+## todos
+
+- [data types](https://docs.soliditylang.org/en/latest/types.html)
+  - bit operations
+  - shifts
+  - addition subtraction and multiplication
+  - gas cost tests (figure this out)
+  - optimizer (figure this out)
 
 ## terms
 
@@ -191,6 +201,10 @@ sudo apt-get install solc
   - ^ has to be paid up front to the EVM executor
   - ^ already used up gas is not refunded on error
 
+#### gas cost tests
+
+- todo
+
 ### memory management
 
 - divided into 3 broad categories: memory, storage and callData
@@ -303,6 +317,10 @@ sudo apt-get install solc
     - requires an SMT solver to be installed locally
   - `pragma experimental SMTChecker;`
 
+#### optimizer
+
+- todo
+
 #### source files
 
 - source code files end with `.sol`
@@ -313,6 +331,10 @@ sudo apt-get install solc
 - imports: the solidity compiler extracts away filesystem details to support reproducible builds on all platforms (think windows vs linux paths)
   - VFS: virutal filesystem: mapps import paths to import symbols
     - you can modify the import symbols and paths via the JSON api, e.g. to modify which symbols map to which (and where) import paths
+
+### data types
+
+- division on integers always results in an integer (solidity rounds down)
 
 ## algorithms & strategies
 
