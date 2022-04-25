@@ -6,7 +6,7 @@
 /// global vars and functions
 contract GlobalVars {
   // msg == current msg
-  function thisMsg() {
+  function thisMsg() public {
     msg.data; // complete calldata
     msg.sender; // address: sender of the msg
     msg.sig; // bytes4: first 4 bytes of the calldata
@@ -14,18 +14,17 @@ contract GlobalVars {
   }
 
   // tx == current transaction
-  function thisTx() {
+  function thisTx() public {
     tx.gas; // (uint): gas price of the transaction
     tx.origin; // (address): sender of the transaction (full call chain)
   }
 
   // block == current block
-  function thisBlock() {
+  function thisBlock() public {
     block.difficulty; // (uint): current block difficulty
     block.gaslimit; // (uint): current block gaslimit
     block.number; // (uint): current block number
-    block.timestamp // (uint): current block timestamp as seconds since unix epoch
-
+    block.timestamp; // (uint): current block timestamp as seconds since unix epoch
   }
 
   // assert;
@@ -38,8 +37,10 @@ contract GlobalVars {
 
 /// examples of all datatypes
 contract DataTypes {
-  // all vars outside a fn are state vars
-  // all state vars are stored in contract storage
+  /* variable modifiers ****************/
+  // public: can be called by other contracts, e.g. uint public amount
+  // payable: address can receive ether, e.g. address payable poopAddr
+  // external:
 
   /* elementary data types ****************/
   // unsigned 256 bit integer
@@ -62,11 +63,10 @@ contract DataTypes {
   address owner;
 
   // 32 byte string
-  byte32 name;
+  bytes32 name;
 
   /* complex data types ****************/
-  // dynmically sized arrays
-  // ^ takes the form dataType[]
+  // dynmically sized arrays in the form dataType[]
   // methods: push(),
   // props: length,
   uint[] numbers;
@@ -78,44 +78,45 @@ contract DataTypes {
     bool flushed;
   }
 
+  // maps fromThis => ToThis
+  // cannot  retrieve a list of all the keys nor added values,
+  // or use within a context where the mapping isnt needed
+  mapping(address => name) public names;
 
-  // variable modifiers
-  // public: can be called by other contracts, e.g. uint public amount
-  // payable: address can receive ether, e.g. address payable poopAddr
+  // constants, the initialized to the first value
+  enum Blah { Flush, Poop, Toilet };
 
+    // splits a signature (sig) using inline assembly
+  assembly {
+    // first 32 bytes, after the length prefix.
+    r := mload(add(sig, 32))
+    // second 32 bytes.
+    s := mload(add(sig, 64))
+    // final byte (first byte of the next 32 bytes).
+    v := byte(0, mload(add(sig, 96)))
+  }
 }
 
-//   mapping (from => to): maps a from key to a value; cannot retrieve a list of all the keys of a mapping, nor a list of all values; or whats been added, or be used within a context there its not needed
+contract ContractDeepDive {
+  // all vars outside a fn are state vars
+  // all state vars are stored in contract storage
+  // constructor is only called when contract is created
+  constructor() {
+    // do this stuff
+  }
 
-//   dataType[]:
-//
+  // good way to validate inputs to fns
+  // this can be added to any fn
+  modifier addThisCodeToFn() {
+    // do stuff
 
-//   struct Poop:
-//
+    _; // original fn code inserted here
+  }
 
-//   enum Blah { Flush, Poop, Toilet }
-//   Blah public blah; create an instance of Blah enum,
-//     ^ has a default value of Blah.flush
-//  */
-// contract DataLocation {
-//   // elementary data types
-
-
-//   // splits a signature (sig) using inline assembly
-//   assembly {
-//     // first 32 bytes, after the length prefix.
-//     r := mload(add(sig, 32))
-//     // second 32 bytes.
-//     s := mload(add(sig, 64))
-//     // final byte (first byte of the next 32 bytes).
-//     v := byte(0, mload(add(sig, 96)))
-// }
-
-//   // maps addresses to names
-//   mapping(address => name) public names;
-
-//   // dynamically sized array of Poop structs
-//   Poop[] public poops;
+  function someFn () public addThisCodeToFn() {
+    // do stuff
+  }
+}
 
 //   // Errors that describe failures.
 
@@ -132,25 +133,8 @@ contract DataTypes {
 //   error AuctionNotYetEnded();
 //   /// The function auctionEnd has already been called.
 //   error AuctionEndAlreadyCalled();
-//   constructor(bytes32[] listOfStrings) {
-//     // msg is a global var
-//     sender = msg.sender;
-//     // do stuff
-//   }
 
-//   // good way to validate inputs to fns
-//   modifier addThisCodeToFn(uint whatev) {
-//     if (block.timestamp >= time) revert TooLate(time);
-//     _; // original fn code inserted here
-//   }
 
-//   function someFn(uint someInt)
-//     external
-//     payable
-//     addThiscodetoFn(blindedBid)
-//   {
-//     // fn body
-//   }
 //   function localVars() {
 //     require(
 //       msg.sender == someAddr,
