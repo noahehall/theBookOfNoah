@@ -3,7 +3,7 @@
 - strongly typed language used to develop smart contracts in the Ethereum platform
 - there is some overlap with the ethereum.md file, rely on this one more (as it comes straight from solidity docs vs udacity)
 - fkn udacity solidity course sucks, just read the docs vs their old azz videos
-  - bookmark: https://docs.soliditylang.org/en/latest/types.html#fixed-size-byte-arrays
+  - bookmark: https://docs.soliditylang.org/en/latest/types.html#function-types
 
 ## links
 
