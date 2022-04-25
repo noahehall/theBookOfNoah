@@ -1,4 +1,5 @@
-// TODO: add spdx license identifer
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.8 <0.9.0;
 // TODO: stuff is here extracted from solidity.verbose
 // ^ to keep this better structured
 // ^ all of this should be valid solidity, but I still need to verify with solidity docs

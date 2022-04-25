@@ -36,6 +36,7 @@
   - [math & cryptographic fns](https://docs.soliditylang.org/en/latest/units-and-global-variables.html#mathematical-and-cryptographic-functions)
   - [inline assembly](https://docs.soliditylang.org/en/latest/assembly.html)
   - [libraries & contracts](https://docs.soliditylang.org/en/latest/contracts.html#libraries)
+  - [interfaces](https://docs.soliditylang.org/en/latest/contracts.html#interfaces)
   - [source files](https://docs.soliditylang.org/en/latest/layout-of-source-files.html)
   - [structure of a contract](https://docs.soliditylang.org/en/latest/structure-of-a-contract.html#contract-structure)
   - [layout](https://docs.soliditylang.org/en/latest/layout-of-source-files.html)
