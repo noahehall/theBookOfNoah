@@ -64,7 +64,7 @@
     - review how you can modify the supplied gas and ether
   - fixed-sizd byte arrays
   - dynamically-sized byte array
-  - hexadecimal literals
+  - user defined types
 
 ## terms
 

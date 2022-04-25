@@ -93,6 +93,7 @@ contract DataTypes {
   // public: can be called by other contracts, e.g. uint public amount
   // memory: save in memory
   // storage: save in storage
+  // constant
 
   /* elementary (value) data types ****************/
   // integers: accepts steps 8 increments, from 8 to 256
@@ -150,10 +151,11 @@ contract DataTypes {
   // ^but the send() fn will return false, so always check the return value
   // ^ generally use .transfer() instead, or even better force the recipient to withdraw the money
   // address(this).send(20);
-  address literalAddr = 0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF;
+  address literalAddr = hex"0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF";
 
   // bytes
-  // 32 byte string
+  // ^ go from 1 to 32
+  // ^ e.g. 32 byte string
   bytes32 name;
 
   /* complex (reference) data types ****************/
@@ -174,7 +176,11 @@ contract DataTypes {
   mapping(address => name) public names;
 
   // custom types with a finite set of constant values
+  // explicitly convertible to/from all integer types
+  // limited to 256 members
   // initialized to the first value
+  // indexes starts at 0 and increments by 1 like in C
+  // can be declared outside a contract
   enum Blah { Flush, Poop, Toilet }
 
 }
