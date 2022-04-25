@@ -62,6 +62,9 @@
   - members of addresses (just re-read that entire fkn section)
     - review the call, delegatecall, staticcall and the warning about using them
     - review how you can modify the supplied gas and ether
+  - fixed-sizd byte arrays
+  - dynamically-sized byte array
+  - hexadecimal literals
 
 ## terms
 

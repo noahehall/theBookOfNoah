@@ -91,6 +91,8 @@ contract DataTypes {
 
   /* variable modifiers ****************/
   // public: can be called by other contracts, e.g. uint public amount
+  // memory: save in memory
+  // storage: save in storage
 
   /* elementary (value) data types ****************/
   // integers: accepts steps 8 increments, from 8 to 256
@@ -104,9 +106,16 @@ contract DataTypes {
   // signed
   // operators: can also use the unary - operator
   int amount;
+  // litereals
+  uint a = 1;
+  uint b = 1.5; // rational
+  unit c = 2e10; // 2 * 10**10
 
   // strings
   string name;
+  string poop = "flush" // or 'flush'
+  string memory a = unicode"Hello 😃"; // prefixed with unicode
+  string flush = "poop" "flush"; // compiles to "poopflush"
 
   // boolean
   // initialized to false
@@ -141,6 +150,7 @@ contract DataTypes {
   // ^but the send() fn will return false, so always check the return value
   // ^ generally use .transfer() instead, or even better force the recipient to withdraw the money
   // address(this).send(20);
+  address literalAddr = 0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF;
 
   // bytes
   // 32 byte string
