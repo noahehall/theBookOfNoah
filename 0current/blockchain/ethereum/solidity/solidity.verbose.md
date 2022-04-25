@@ -3,7 +3,7 @@
 - strongly typed language used to develop smart contracts in the Ethereum platform
 - there is some overlap with the ethereum.md file, rely on this one more (as it comes straight from solidity docs vs udacity)
 - fkn udacity solidity course sucks, just read the docs vs their old azz videos
-  - bookmark: https://docs.soliditylang.org/en/latest/solidity-by-example.html#what-is-a-payment-channel
+  - bookmark: https://docs.soliditylang.org/en/latest/layout-of-source-files.html#pragmas
 
 ## links
 
@@ -17,6 +17,8 @@
 - [openzepplin ECDSA fns for signatures](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/cryptography/ECDSA.sol)
 - [openzepplin stuff](https://github.com/OpenZeppelin/openzeppelin-contracts)
 - [openzepplin wizard](https://wizard.openzeppelin.com/)
+- [spdx license list](https://spdx.org/licenses/)
+- [npm spdx](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#license)
 - ref
   - [installation types & steps](https://docs.soliditylang.org/en/latest/installing-solidity.html)
   - [reference types data location](https://docs.soliditylang.org/en/latest/types.html#reference-types)
@@ -43,6 +45,7 @@
   - [enums](https://docs.soliditylang.org/en/latest/types.html#enums)
   - [functions](https://docs.soliditylang.org/en/latest/contracts.html#functions)
   - [constant and immutable state vars](https://docs.soliditylang.org/en/latest/contracts.html#constants)
+  - [contract metadata](https://docs.soliditylang.org/en/latest/metadata.html#metadata)
 
 ## terms
 
@@ -257,6 +260,9 @@ sudo apt-get install solc
 ### source files
 
 - source code files end with `.sol`
+- the file should always start with an SPDX license identifier
+  - the compiler doesnt validate the license is part of the SPDX list, but it does include the supplied stringin the bytecode metadata
+  - solidity follows the npm recommendation (see link)
 - can contain an arbitrary number of contract definitions, import, pragma, and `using for` directives and struct, enum, function, error and constant ariable definitions
 
 ### keywords, globals, etc

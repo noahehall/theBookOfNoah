@@ -1,3 +1,4 @@
+// TODO: add spdx license identifer
 // TODO: stuff is here extracted from solidity.verbose
 // ^ to keep this better structured
 // ^ all of this should be valid solidity, but I still need to verify with solidity docs
