@@ -36,22 +36,62 @@ contract GlobalVars {
 }
 
 
-// ### data types
+/// examples of all datatypes
+contract DataTypes {
+  // all vars outside a fn are state vars
+  // all state vars are stored in contract storage
 
-// ```js
-// /**
-//   uint: unsigned 256 bit integer
+  /* elementary data types ****************/
+  // unsigned 256 bit integer
+  // initialized to 0
+  uint count;
 
-//   address: 160-bit value; no arithmetic operations are allowed; used to store contract address, or a hash of hte public half of a keypair belonging to external accounts
+  // integer
+  // initialized to 0
+  int amount;
+
+  // boolean
+  // initialized to false
+  bool iKnowWhatImDoing;
+
+  // initialized to 0x0
+  // 160-bit value
+  // no arithmetic operations are allowed
+  // used to store contract address
+  // ^ or a hash of hte public half of a keypair belonging to external accounts
+  address owner;
+
+  // 32 byte string
+  byte32 name;
+
+  /* complex data types ****************/
+  // dynmically sized arrays
+  // ^ takes the form dataType[]
+  // methods: push(),
+  // props: length,
+  uint[] numbers;
+
+  // container of other data types
+  // create an instance, e.g. poop = Poop({ key: value, ...})
+  struct Poop {
+    uint times;
+    bool flushed;
+  }
+
+
+  // variable modifiers
+  // public: can be called by other contracts, e.g. uint public amount
+  // payable: address can receive ether, e.g. address payable poopAddr
+
+}
 
 //   mapping (from => to): maps a from key to a value; cannot retrieve a list of all the keys of a mapping, nor a list of all values; or whats been added, or be used within a context there its not needed
 
-//   dataType[]: dynmically sized arrays
-//     .push(...)
-//     .length
+//   dataType[]:
+//
 
-//   struct Poop: container of other data types
-//     poop = Poop({ key: value, ...})
+//   struct Poop:
+//
 
 //   enum Blah { Flush, Poop, Toilet }
 //   Blah public blah; create an instance of Blah enum,
@@ -59,18 +99,7 @@ contract GlobalVars {
 //  */
 // contract DataLocation {
 //   // elementary data types
-//   uint public count; // initialized to 0
-//   int amount; // initialized to 0
-//   bool iKnowWhatImDoing; // initialized to false
-//   address payable owner; // initialized to 0x0
-//   byte32 name;
-//   uint[] points;
 
-//   // complex data types
-//   struct Poop {
-//     uint times;
-//     bool flushed;
-//   }
 
 //   // splits a signature (sig) using inline assembly
 //   assembly {
