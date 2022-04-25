@@ -44,6 +44,8 @@ contract GlobalFns {
 
   }
 
+  // TODO: need more error examples
+  // ^ they can accept data
   error NoToilertPaper();
   function revertWithArray() {
     if (block.timestamp > whatever) {
@@ -53,6 +55,17 @@ contract GlobalFns {
 
   // assert;
   // payable(msg.sender).transfer(refund)
+}
+
+contract Operators {
+  // TODO: different datatypes use different operators
+  //  !
+  //  &&
+  //  ||
+  //  ==
+  //  !=
+  //  -=
+  //  +=
 }
 
 /// examples of all datatypes
@@ -70,6 +83,9 @@ contract DataTypes {
   // integer
   // initialized to 0
   int amount;
+
+  // strings
+  string name;
 
   // boolean
   // initialized to false
@@ -134,83 +150,18 @@ contract MemoryManagement {
   }
 }
 
+contract Visibility {
+  string public name;
+  // not required for public vars (above name is public)
+  // its getters are automatically created
+  function getName() public view returns (string _name) {
+    return name;
+  }
+}
+// todo: need to add function keywords
+// ^ e.g. public, external, payable, constant, private, internal,
 contract Functions {
-
-  // good way to validate inputs to fns
-  // this can be added to any fn
-  modifier addThisCodeToFn() {
-    // do stuff
-
-    _; // original fn code inserted here
-  }
-  // use the modifier fn above to augment this fn
-  function someFn () public addThisCodeToFn() {
-    // do stuff
-  }
-}
-
-contract Contracts {
-  // constructor is only called when contract is created
-  constructor() {
-    // do this stuff
-  }
-}
-
-//   // Errors that describe failures.
-
-//   // The triple-slash comments are so-called natspec
-//   // comments. They will be shown when the user
-//   // is asked to confirm a transaction or
-//   // when an error is displayed.
-
-//   /// The auction has already ended.
-//   error AuctionAlreadyEnded();
-//   /// There is already a higher or equal bid.
-//   error BidNotHighEnough(uint highestBid);
-//   /// The auction has not ended yet.
-//   error AuctionNotYetEnded();
-//   /// The function auctionEnd has already been called.
-//   error AuctionEndAlreadyCalled();
-
-
-// events/logs todo
-//     emit IPooped(msg.sender, msg.value);
-
-contract Operators {
-  // TODO: different datatypes use different operators
-  //  !
-  //  &&
-  //  ||
-  //  ==
-  //  !=
-  //  -=
-  //  +=
-}
-
-contract ControlFlow {
-  // for (uint i = 0; i < somePoop.length; i++) {
-  //   // do this stuff
-  //   // continue; immediately start next loop
-  // }
-
-  // while (someVar != someOtherVar) {
-  //   // do this stuff
-
-  //   // always include a require check
-  //   // else you could burn all your gas
-  //   require(thisThing == thatThing)
-  // }
-
-  // if (someThingEvaluatesToBool) {
-  //   // do this stuff
-  // } else {
-  //   // do this other stuff
-  // }
-}
-
-
-// ```js
-// function auctionEnd() external {
+  // function auctionEnd() external {
 //   // It is a good guideline to structure functions that interact
 //   // with other contracts (i.e. they call functions or send Ether)
 //   // into three phases:
@@ -238,6 +189,55 @@ contract ControlFlow {
 //   beneficiary.transfer(highestBid);
 // }
 
+  // good way to validate inputs to fns
+  // this can be added to any fn
+  modifier addThisCodeToFn() {
+    // do stuff
+
+    _; // original fn code inserted here
+  }
+  // use the modifier fn above to augment this fn
+  function someFn () public addThisCodeToFn() {
+    // do stuff
+  }
+}
+
+contract Contracts {
+  // constructor is only called when contract is created
+  constructor() {
+    // do this stuff
+  }
+}
+
+contract Events {
+  // events/logs todo
+  // emit IPooped(msg.sender, msg.value);
+}
+
+contract ControlFlow {
+  for (uint i = 0; i < somePoop.length; i++) {
+    // do this stuff
+    // continue; immediately start next loop
+  }
+
+  while (someVar != someOtherVar) {
+    // do this stuff
+
+    // always include a require check
+    // else you could burn all your gas
+    require(thisThing == thatThing)
+  }
+
+  if (varEvalutesToBool) {
+    // do this stuff
+  } else {
+    // do this other stuff
+  }
+}
+
+// TODO: need to make these reusable
+// ^ by specifying the params
+// reusable fns are defined outside of contracts
 // // Ensure that `msg.value` is an even number.
 // // Division will s
 // function isEven() {
@@ -309,26 +309,6 @@ contract ControlFlow {
 // }
 // ```
 
-// ### example contracts
-
-// ```js
-// // sample contract
-// contract SomeContract {
-//   string public someStateVar;
-
-//   constructor (string _name) public {
-//     name = _name;
-//   }
-
-//   // not required for public vars
-//   // its getters are automatically created
-//   function getName() public view returns (string _name) {
-//     return name;
-//   }
-
-//   function setName(string _name) public {
-//     name = _name;
-//   }
 
 //   // Set to true at the end, disallows any change.
 //   // By default initialized to `false`.
