@@ -191,6 +191,25 @@
 
 ### digital assets
 
+#### NFTs
+
+- a token
+  - ER-721:
+    - ERC-20 tokens, in that each individual NFT token is completely unique and not divisible
+- ownership
+  - managed throught the uniqueID and metadata that no other token can replicate
+- high level creation (minting) process
+  - create a new block
+  - validate info
+  - record info on the blockchain
+- high level NFT properties
+  - unique identifier that is directly linked to one ethereum address
+  - not directly interchangeable with other tokens 1:1, e.g. 1ETH is always === 1 ETH, whereas 1 NFT is never === another NFT
+
+##### POAP: proof of attendance protocol
+
+- collectibles that prove you participated in an event
+
 ## dapps on ethereum
 
 - general architecture

@@ -499,9 +499,12 @@
 
 - non-fungible tokens
   - non fungible: an economic term you could use to describe things like furniture, a song file, etc; things that arent exchangable for other items because they have unique properties
-- can only have one official owner at a time
+- can only have one official owner (based on their private key) at a time
+  - similar to how you sign messages with a private key to prove you created the msg,
+- the creators public key serves as a certificate of authenticity for that digital Artifact
+  - i.e. its a permanent part of the tokens history, and proves the NFT was created by the creator and not a counterfeit
 - use cases
-  - a way to represent anything unique as blockchain-based asset, e.g. a deed for an item in the digital or physical realm
+  - a way to represent anything unique (and original) as a blockchain-based asset, e.g. a deed for an item in the digital or physical realm
     - tokenise things like art, collectives, real estate, etc.
   - digital reprelicate properties of physical items like scarcity, uniqueness and proof of ownership
   - commerce: creators can sell, and when items resell can claim resell royalties directly

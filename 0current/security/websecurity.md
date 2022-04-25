@@ -62,13 +62,13 @@
       - dev: admin in development
   - limiting the directories a process can read/write from/to
     - e.g. via a `chroot` jail
-  - limiting network access between & too applicatins and processes
+  - limiting network access between & too applications and processes
     - via firewalls and access control lists on the network
 
 ### terminology
 
 - safeframe: allows ad network publishers to specify that ads must be run in an iframe, and offers an API that allows the advertiser to overcome some of the native limitations of frames
-- exploit kits: determine whether a particular user angent/operating system is vulnerable beore delivering the actual malicious code (the payload)
+- exploit kits: determine whether a particular user agent/operating system is vulnerable before delivering the actual malicious code (the payload)
   - payload: include scripts that may redirect/lock the browser, viruses, ransomware delivered via vulnerabilities in plugins, or javascript that mines cryptocurrency, etc
     - generally hosted at dynamically generated URLs and avoid automated scans by triggering only sporadically
 - webhook: when a service provider needs to make calls to your server, e.g. to send notifications; a reverse API on your website that the service provider will send HTTP requests when an event happens
@@ -78,7 +78,7 @@
   - digital fingerprints that are calculated when a resource is created, and can be reused to recalculate checksum upon donwload to ensure the uploaded version matches the downloaded version
 - subresource integrity checks: checksums for the browser
 - security through obscurity: relying on an attacker being unable to guess something; i.e. relying on an attackers ignorance/obscurity of the system
-- embargo resources: enable access to sensitive rsources only at a certain point in time, e.g. financial reports are often embargoed
+- embargo resources: enable access to sensitive resources only at a certain point in time, e.g. financial reports are often embargoed
 - digital signature: acts as a unique fingerprint for some input data; that can be easily recalculated as long as they have the signing key originally used to generate the signature
 - hash: the output of a one-way encryption algorithm that makes it easy to generate a unique fingerprint for a set of input data (really difficult to take the output and revert it to the input data)
   - should be quick to calculate (but not too quick)
@@ -86,7 +86,7 @@
 - salting hashes: i.e. adding an element of randomness to the hashing algorithm so the input data doesnt solely determine the output hash
   - protects you against rainbow tables
   - you need to store the salt value securely, and reuse it when validating hashes
-- rainbow tables: commonly usd passwords that have been put through a known hashing algorithm
+- rainbow tables: commonly used passwords that have been put through a known hashing algorithm
   - matching hashes against precalculated values yield a very good return for an attacker
 - cookie: small pieces of text passed back n forth between clients & servers in HTTP headers
 - exploit: a piece of code that illustrates how to take advantage of a secuirty flaw
@@ -199,21 +199,15 @@
   - arguable what fkn layer this is actually in (some say its not the application layer, but a lower layer)
   - method of encryption that provides both privacy and data integrity
   - ensures that
-
     - privacy: packets intercepted by a third party cant be decrypted without the appropriate encryption keys
     - data integrity: any attempt to tamper with the packets will be detectable
-
   - workflow
-
     - HTTP conversations using TLS are called HTTP secure
     - HTTPS requires the client & server to perform a TLS handshake
       - both parties agree on an encyption method (cipher) and exchange encryption keys
     - any subsequent data packets (request & responses) will be opaque to outsiders
-
   - TLS Handshake: consists of assymetric and symmetric encryption, and Message Authentication Codes for fingerprinting (see cipher suites)
-
     - selection of the cipher used for encryption & decrypting all data packets
-
       - user agents will inform servers which cipher suites it supports
       - and the server replies with the best cipher suite that it also supports, the servers digital certificate and the encryption (public) key
       - the user agent verifies the authenticity of the certificate with the issueing certificate authority
@@ -225,9 +219,7 @@
         - this is to prevent theft of the single key used to encrypt & decrypt symmetrically encrypted data
         - block ciphers: most data packets will be symmetrically encrypted for efficiency, the recipient should already have the encryption & decryption key from the first phase of the handshake
         - the block ciphers are also tagged with a MAC; so both parties can authenticate messages & detect if ANY packets have been tampered with (data integrity)
-
   - cipher suites: each suite is a set of 3 algorithms used to secure communication; always use the latest TLS cipher suite
-
     - key-exchange algorithm: the first algorithm; assymetric; used by communicating computers to exchange secret keys
     - symmetric block cipher: the second algorithm; used for encrypting the content of TCP packets
     - MAC algorithm: for authenticating the encrypting messages havent been tampered with
@@ -235,31 +227,25 @@
       - ECDHE-RSA: the key exchange algorithm
       - AES-128-GCM: the block cipher
       - SHA-256: the message authentication algorithm
-
   - digital certificates: aka public-key certificate; an electronic document issued by third-party certificate authorities to prove which internet domain owns which public encryption key
 
     - contains: server domain name, the issueing certificate authority, an encryption public key
     - that way user agents can confirm the server (some IP) they are communicating with is valid for this domain (e.g. google.com) and this certificate
     - that way an attacker cant impersonate a domain or a certifcate the UA checks with the certificate authority in the initial phases of the TLS handshake
     - self signed certificates: digital certs not issued by a certificate authority; useful for internal domains and development environments
-
     - Certificate Signing Request: CSR; contain info about the applicant & domain that is all useful in verifying authenticity; often created with openssl on the cli
-
       - domain name: distinguished name (DN) or the fully qualified domain name (FWDN)
       - organizations legal name
       - physical location
-
     - domain verification: process by which a ceritficate authority verifies that someone applying for a certificate for an internet domain does indeed have control of that domain
-
       - domain verification is what protects against DNS spoofing attacks; an attacker cnanot apply for a cerificate unless they also have DNS access rights to that domain
       - Extended validation (EV) certificates: require the certificate authority to collect and verify information about hte legal entity applying for a certificate; popular with large organizations because the name of the org is often displayed alongside the padlock in the browser url
       - certificates have a finite lifespan (years/months) and can be voluntarily revoked by the owner
-
     - general process: is all about having the certificate authority verify ownership of a particular domain, and then giving you a certificate you canbe used to decrypt traffic sent to thta domain,
-      - generate a key pair: digital file ocntaining randomly generated public adn private encryption keys
+      - generate a key pair: digital file containing randomly generated public and private encryption keys
       - use the key pair to generate a Certificate Signing Request (CSR) that contains the pulic key and domain your requesting the certificate for
       - upload the CSR to the certificate authority, and the cert authority will then require you to validate ownership by making some DNS change with values they specify
-      - once ownership is proven: you will be given to a digital cert for use on your domain server along with the key pair previously created
+      - once ownership is proven: you will be given a digital cert for use on your domain server along with the key pair previously created
 
   - HTTP Strict Transport Security: HSTS; policy that ensures sensitive data (e.g. cookies) will not be sent during any initial connection over HTTP, and must wait for the TLS handshake to be completed
     - when a user agent visits a site it has seen previously, it will automatically send back any cookies the website prviously supplied in the Cookie header
@@ -270,20 +256,14 @@
 - XMPP: extensible messaging and presence protocol
   - instant messaging
 - FTP: file transfer protocol
-
   - downloading files from servers
-
 - HTTP: hypertext transfer protocol
-
   - transport webpages and their resources to user agents like web browsers
-
   - workflow: general
-
     - user agents generate requests for specific resources
     - web servers expecting those requests, return responses containing either the requested resource, or an error code
     - both requests & responses are plain text msgs, but can be delivered as compressed &/ encrypted
     - the majority of web exploits use http in some fashion
-
   - authentication: the process of identifyng users when they return to your application
     - http native authentication is rarely used since you cant customize the login form presented by the browser
       - to present an authentication challenge, a web server returns a 401 status code in the HTTP respone and adds a `WWW-Authneticate` header describing the preferred authentication method
@@ -291,20 +271,15 @@
         - the user agent (e.g. a browser) requests a username & password from the user
         - the browser concatenates the username + password separeted by a colon, e.g. `myname:mypw`
         - uses the base64 algorithm to encode this strng and sends it back to te server in the `Authorization` header of the http request
-      - Digest authenetication scheme:
+      - Digest authentication scheme:
         - requires the browser to generate a hash consisting of the username, password, and URL
     - non-native authentication: generally presented through a custo HTML form, whose action is to POST to some bff
-
 - DNS: domain name system
-
   - a global directory that translated IP addrs to unique human readable domains e.g. nirv.ai
   - domain registrars: private organizations that register domains before they can be used in DNS
-
   - workflow
-
     - when a browser encounters a domain for the first time
       - check the local domain name server (typically hosted by an ISP) to get the associated IP (and various other data) and cache the result
-
   - terms
     - TTL: time to live: how long a domain name server will cache the IP addr associated with a domain
       - i.e. DNS caching
@@ -317,9 +292,7 @@
 ## http focus
 
 - http requests
-
   - method: aka verb; the action that the user agent wants the server to perform
-
     - GET: fetch
     - POST: create/update
     - PUT: update/upload
@@ -329,33 +302,22 @@
     - CONNECT: initiates two-way comms; e.g. connecting through a proxy
     - OPTIONS: lets a user agent ask what other methods are supported by a resource
     - TRACE: will contain an exact copy of the original HTTP request, for the user agent to see what (if any) alterations were made by intermediate servers
-
   - URL: universal resource locator: describes the resource being manipulated/fetched
-
   - Headers: metadata; e.g. type of content the user agent is expecting/whether it accepts compressed responses
-
   - Body: optional component contains any extra data that needs to be sent to the server
-
 - HTTP responses
-
   - protocol:
   - code: 3 digit status code
-
     - 2xx: understood, accepted, and responded to
     - 3xx: redirect
     - 4xx: client error; user agent generated an invalid request
     - 5xx: server error; request was valid, but the server was unable to fullfil the request
-
   - msg: status msg
   - headers: instruct the user agent how to treat the content
-
     - content-type
     - cache-control
-
   - body: if a resource was requested
-
 - stateful connections:
-
   - when a client and server perform a handhsake and continue to send packets back n fourth until one of the communicate parties decides to terminate
 
 ### encryption
