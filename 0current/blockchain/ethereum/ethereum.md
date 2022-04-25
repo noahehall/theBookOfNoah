@@ -99,34 +99,14 @@
 
 ## blockchain framework
 
-### accounts
-
-- account state: accounts, addresses, balances, including:
-  - Nonce: number of transactions on the senders account
-    - EOAs: total transactions that user made
-    - CAs: number of times it has deployed/created other smart contracts
-  - balance: value of ether available on the account in wei
-  - storage hash: root node of the patricia tree
-  - code hash: hash of the code within the smart contract; executes everytime a call is made to the contract; cannot change after its deployed
-  - account storage
-  - ethereum virtual code
-- account types
-  - EOAs: externally owned accounts;
-    - tied to a private key
-    - doesnt hold code
-    - maintains ether balance
-    - can send transactions/transfer between wallets
-    - initiate smart contracts
-  - CAs: contract accounts;
-    - has code thats triggered by transactions/messages
-    - controlled by the code contained within smart contracts
-    - transfer value, initiate another smart contract, and execute associated smart contracts, manipulate storage
-    - abi: application binary interface: javascript representation of the contract
-
 ### state
 
 - separates blockchain state from account states and creates a mapping between them
 - blockchain: contains the history of transactions, and links to accounts
+
+### blocks
+
+### blockchain
 
 ### network
 
@@ -154,6 +134,10 @@
   - transactions: number of transactins in the last included block
   -
 
+### mempool
+
+### consensus
+
 ### transactions
 
 - transactions result in a change to the world state
@@ -174,6 +158,38 @@
   - optional fields: used to record the creation & execution of smart contracts
     - data: todo
     - init: todo
+
+### wallet
+
+#### accounts
+
+- account state: accounts, addresses, balances, including:
+  - Nonce: number of transactions on the senders account
+    - EOAs: total transactions that user made
+    - CAs: number of times it has deployed/created other smart contracts
+  - balance: value of ether available on the account in wei
+  - storage hash: root node of the patricia tree
+  - code hash: hash of the code within the smart contract; executes everytime a call is made to the contract; cannot change after its deployed
+  - account storage
+  - ethereum virtual code
+- account types
+  - EOAs: externally owned accounts;
+    - tied to a private key
+    - doesnt hold code
+    - maintains ether balance
+    - can send transactions/transfer between wallets
+    - initiate smart contracts
+  - CAs: contract accounts;
+    - has code thats triggered by transactions/messages
+    - controlled by the code contained within smart contracts
+    - transfer value, initiate another smart contract, and execute associated smart contracts, manipulate storage
+    - abi: application binary interface: javascript representation of the contract
+
+### hashing
+
+### digital signatures
+
+### digital assets
 
 ## dapps on ethereum
 

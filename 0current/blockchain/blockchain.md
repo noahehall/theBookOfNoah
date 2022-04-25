@@ -9,6 +9,7 @@
 
 - [solidity: ethereum programming language](https://soliditylang.org/)
 - [how to timestamp a digital document, the first block idea](https://www.anf.es/pdf/Haber_Stornetta.pdf)
+- [ethereum NFT docs](https://ethereum.org/en/nft/)
 - todos
   - [bitcoin: peer to peer electornic cash system and PoW](https://bitcoin.org/bitcoin.pdf)
   - [anders bitcoin hashing](https://anders.com/blockchain/hash.html)
@@ -457,7 +458,7 @@
 - created via the wallet address
 - before the blockchain accepts a transaction, it must be signed
 
-### digital assets and blockchain
+### digital assets
 
 - digitally stored content/online account owned by an individual
 
@@ -493,3 +494,15 @@
   - time stamping: prove some asset/info existed at a certain time
   - certifies the existence of an asset without the need for a central authority
   - secure an asset: protect an asset from wrongful access/alteration
+
+#### NFTs
+
+- non-fungible tokens
+  - non fungible: an economic term you could use to describe things like furniture, a song file, etc; things that arent exchangable for other items because they have unique properties
+- can only have one official owner at a time
+- use cases
+  - a way to represent anything unique as blockchain-based asset, e.g. a deed for an item in the digital or physical realm
+    - tokenise things like art, collectives, real estate, etc.
+  - digital reprelicate properties of physical items like scarcity, uniqueness and proof of ownership
+  - commerce: creators can sell, and when items resell can claim resell royalties directly
+  - debt: use items as collateral in a decentralised loan
