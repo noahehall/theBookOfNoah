@@ -87,6 +87,8 @@ contract Operators {
 contract DataTypes {
   /* generalizations */
   // you can use any type as a fn to convert another type to it
+  // ^ has to be a logical conversion (e.g. int8 cannot hold int256) without any loss of data
+  // ^ else compiler will throw error
   // ^ e.g. address(uint160(bytes20(b))) or address(uint160(uint256(b)))
 
   /* variable modifiers ****************/
@@ -95,9 +97,13 @@ contract DataTypes {
   // storage: save in storage
   // constant
 
-  /* elementary (value) data types ****************/
+  /* value data types ****************/
   // integers: accepts steps 8 increments, from 8 to 256
   // without step defualts to 256
+  // int8 = 1 byte = 0-255.
+  // int16 = 2 bytes = -32,768 to 32,767
+  // int32 = 4 bytes = -2,147,483,648 to 2,147,483,647
+  // etc
   // initialized to 0
   // can use type(datatype).min|.max e.g. type(uint).min
 
@@ -158,7 +164,7 @@ contract DataTypes {
   // ^ e.g. 32 byte string
   bytes32 name;
 
-  /* complex (reference) data types ****************/
+  /* rerference data types ****************/
   // dynmically sized arrays in the form dataType[]
   // methods: push(),
   // props: length,
