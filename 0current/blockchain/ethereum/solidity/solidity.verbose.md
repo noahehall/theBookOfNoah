@@ -19,6 +19,7 @@
 - [openzepplin wizard](https://wizard.openzeppelin.com/)
 - [spdx license list](https://spdx.org/licenses/)
 - [npm spdx](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#license)
+- [npm semvar](https://docs.npmjs.com/cli/v6/using-npm/semver)
 - ref
   - [installation types & steps](https://docs.soliditylang.org/en/latest/installing-solidity.html)
   - [reference types data location](https://docs.soliditylang.org/en/latest/types.html#reference-types)
@@ -47,6 +48,7 @@
   - [functions](https://docs.soliditylang.org/en/latest/contracts.html#functions)
   - [constant and immutable state vars](https://docs.soliditylang.org/en/latest/contracts.html#constants)
   - [contract metadata](https://docs.soliditylang.org/en/latest/metadata.html#metadata)
+  - [styleguide](https://docs.soliditylang.org/en/latest/style-guide.html#)
 
 ## terms
 
@@ -258,18 +260,15 @@ sudo apt-get install solc
   - instead is implemented in the EVM execution environment itself
 - different EVM compatible chains may use a different set of precompiled contracts
 
-### source files
-
-- source code files end with `.sol`
-- the file should always start with an SPDX license identifier
-  - the compiler doesnt validate the license is part of the SPDX list, but it does include the supplied stringin the bytecode metadata
-  - solidity follows the npm recommendation (see link)
-- can contain an arbitrary number of contract definitions, import, pragma, and `using for` directives and struct, enum, function, error and constant ariable definitions
-
 ### keywords, globals, etc
 
 - All identifiers (contract names, function names and variable names) are restricted to the ASCII character set. It is possible to store UTF-8 encoded data in string variables.
-- pragram: states which version of solidity to use
+- pragma: states which version of solidity to use
+  - enables compiler features/checks
+  - always local to a source file, so its needed in each file
+  - version: should always specify a minimum and a maximum, follows npm semantic versioning
+  - ABI coder pragma: select either v1 or v2
+    - => 0.8 v2 is auto selected
 - contract: collection of code (functions) and data (state) that resides at a specific address on the chain
   - similar to a class in JS
 - constructor: only run when the contract is created and will never be called afterwards
@@ -293,6 +292,27 @@ sudo apt-get install solc
 - returns (dataType varName)
 - ecrecover: fn that accepts a msg along with the r, s and v params (ECDSA) and returns the address that was used to sign the msg
 - pure: todo
+
+### compiler
+
+- SMTChecker: provides additional safety warnings by querying an SMT solver
+  - has to be enabled when the solidity compiler is built
+  - it is activated for the Ubuntu PPA (most versions)
+  - not for docker images, wndows binaries, or statically-built linux binaries
+  - activated for solc-js via smtCallback (only via node, not the browser)
+    - requires an SMT solver to be installed locally
+  - `pragma experimental SMTChecker;`
+
+#### source files
+
+- source code files end with `.sol`
+- the file should always start with an SPDX license identifier
+  - the compiler doesnt validate the license is part of the SPDX list, but it does include the supplied stringin the bytecode metadata
+  - solidity follows the npm recommendation (see link)
+- can contain an arbitrary number of contract definitions, import, pragma, and `using for` directives and struct, enum, function, error and constant ariable definitions
+- imports: the solidity compiler extracts away filesystem details to support reproducible builds on all platforms (think windows vs linux paths)
+  - VFS: virutal filesystem: mapps import paths to import symbols
+    - you can modify the import symbols and paths via the JSON api, e.g. to modify which symbols map to which (and where) import paths
 
 ## algorithms & strategies
 

@@ -16,6 +16,7 @@
 - [remix website](https://remix.ethereum.org)
 - [docs](https://remix-ide.readthedocs.io/en/latest/)
 - [remixd: enable access to local filesystem](https://remix-ide.readthedocs.io/en/latest/remixd.html)
+- [importing files](https://remix-ide.readthedocs.io/en/latest/import.html)
 
 ## basics
 
