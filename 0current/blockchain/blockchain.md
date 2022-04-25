@@ -47,6 +47,8 @@
 
 ## terminology
 
+- defi: decentralized finance
+- dao: decentralized autonomous organization
 - encryption: make a non-reversable secret (laymens), vs encoding (which is reformating)
 - blockchain: a shared ledger (db) that records a list of transactions that happen within the network
   - started as an idea by Satoshi Nakamoto back in 2009 to solve problems with financial transactions
@@ -454,6 +456,12 @@
 
 ### digital signatures
 
+- check websecurity.md#encryption
+  - all blockchains use
+    - assymetric (public-key) encryption for wallets
+      - public key: encrypt data
+      - private key: decrypt data
+    - hash fns for data integrity
 - establishes a proof of ownership for each transaction on the blockchain
 - created via the wallet address
 - before the blockchain accepts a transaction, it must be signed
@@ -501,6 +509,8 @@
   - non fungible: an economic term you could use to describe things like furniture, a song file, etc; things that arent exchangable for other items because they have unique properties
 - can only have one official owner (based on their private key) at a time
   - similar to how you sign messages with a private key to prove you created the msg,
+  - however there is a way to create fractional/shared ownership
+    - e.g to give others oportunities to own a part of an NFT without having to buy the whole thing
 - the creators public key serves as a certificate of authenticity for that digital Artifact
   - i.e. its a permanent part of the tokens history, and proves the NFT was created by the creator and not a counterfeit
 - use cases
@@ -509,3 +519,6 @@
   - digital reprelicate properties of physical items like scarcity, uniqueness and proof of ownership
   - commerce: creators can sell, and when items resell can claim resell royalties directly
   - debt: use items as collateral in a decentralised loan
+- scarcity: creator decides how many NFT (i.e. tokens) exist
+  - e.g. 500 tickets to a concert, 1 art piece
+- royalties: some NFTs automatically pay out royalties to their creators (e.g. foundation.app, zora.co)
