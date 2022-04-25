@@ -94,6 +94,9 @@ contract DataTypes {
   /* variable modifiers ****************/
   // public: can be called by other contracts, e.g. uint public amount
   // memory: save in memory
+  // ^ cannot push on memory arrays (needs confirmation)
+  // ^ Assignment of dynamic memory arrays is NOT allowed (needs confirmation)
+  // ^ memory arrays cant be initialized (e.g. int8[] memory x = [1,2,3], you have to make it storage)
   // storage: save in storage
   // constant
 
@@ -117,12 +120,6 @@ contract DataTypes {
   uint a = 1;
   uint b = 1.5; // rational
   unit c = 2e10; // 2 * 10**10
-
-  // strings
-  string name;
-  string poop = "flush" // or 'flush'
-  string memory a = unicode"Hello 😃"; // prefixed with unicode
-  string flush = "poop" "flush"; // compiles to "poopflush"
 
   // boolean
   // initialized to false
@@ -159,14 +156,23 @@ contract DataTypes {
   // address(this).send(20);
   address literalAddr = hex"0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF";
 
+  /* rerference data types ****************/
+
+  // strings
+  string name;
+  string poop = "flush" // or 'flush'
+  string memory a = unicode"Hello 😃"; // prefixed with unicode
+  string flush = "poop" "flush"; // compiles to "poopflush"
+
   // bytes
   // ^ go from 1 to 32
   // ^ e.g. 32 byte string
   bytes32 name;
 
-  /* rerference data types ****************/
   // dynmically sized arrays in the form dataType[]
-  // methods: push(),
+  // statically sized arrays in the form dataType[size]
+  // methods: push(), pop()
+  // ^ push not permitted on memory arrays
   // props: length,
   uint[] numbers;
 
