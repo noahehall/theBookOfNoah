@@ -358,6 +358,7 @@ sudo apt-get install solc
 
 - division on integers always results in an integer (solidity rounds down)
 - Fallback functions provide a safeguard. They are automatically triggered if the function signature does not match any of the function signatures in the smart contract. A contract can have exactly one fallback function. These fallback functions are unnamed.
+- "Modifiers can be used to easily change the behavior of functions. For example, they can automatically check a condition prior to executing the function. Modifiers are inheritable properties of contracts and may be overridden by derived contracts.
 
 ## algorithms & strategies
 

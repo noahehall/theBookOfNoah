@@ -424,20 +424,27 @@ function Functions() {
 // @see https://docs.soliditylang.org/en/latest/contracts.html#contracts
 contract Contracts {
   uint someNumber; // state var: stored in contract storage
-  // constructor is only called when contract is created
-  constructor() {
-    // do this stuff
+  // constructor is only called when contract is instantiated
+  // not required
+  constructor() public {
+    // initialize stuff here
   }
 
-  // good way to validate inputs to fns
+  // good way to validate inputs, set controls (e.g. which specific addr can invoke)
   // this can be added to any fn
   modifier addThisCodeToFn() {
     // do stuff
 
     _; // original fn code inserted here
   }
+
+  modifier mustBeOwner() {
+    require(msg.sender == owner);
+    _; // original fn code inserted here
+  }
+
   // use the modifier fn above to augment this fn
-  function getContractBalance () public addThisCodeToFn {
+  function getContractBalance () public addThisCodeToFn mustBeOwner {
     // converts this contract to an address to get the current balance
     uint currentBalance = address(this).balance;
 
@@ -450,6 +457,14 @@ contract Contracts {
 
   function returnsTuple () returns (int, int) {
     return (1, 2);
+  }
+
+  function () {
+    // i am a fallback fn (there can only be one)
+    // invoked when a call to a fn doesnt match
+    // any of the other fns
+    // cannot return anything, accept arguments, implement loops
+    // maximum gas spend is 2300
   }
 }
 
