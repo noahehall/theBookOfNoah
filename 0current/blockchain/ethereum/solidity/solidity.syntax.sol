@@ -169,18 +169,35 @@ contract DataTypes {
   // address(this).send(20);
   address literalAddr = hex"0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF";
 
+  // enums
   // custom types with a finite set of constant values
   // explicitly convertible to/from all integer types
   // limited to 256 members
   // initialized to the first value
   // indexes starts at 0 and increments by 1 like in C
   // can be declared outside a contract
+  // not part of the ABI definition
+  // ^ i.e. a caller of the contract cant determine enums via the ABI
+  // ^ the caller will need to send a uint8 integer to a fn that provides access to the enum
   enum Blah { Flush, Poop, Toilet }
 
 
   /* reference data types ****************/
   // comprise structs, arrays and mappings
 
+  // struct: for user defined types
+  // cannot have members of its own type (you cant poop inside a Poop)
+  // not part of the ABI (callers dont have direct access)
+  // ^ instead you can provide a fn that returns a struct
+  // cannot be passed as an argument to a fn
+  // ^ you have to pass the individual struct members
+  struct Poop {
+    uint times;
+    bool flushed;
+  }
+  Poop me;
+  me.times = 1200;
+  uint timesIPoopEachDAy = me.times;
 
   // arrays:
   // properties
@@ -209,11 +226,6 @@ contract DataTypes {
   // ^ always a statically-sized memory array whose length == number of expressions
   // ^ first expression determines the type of all subsequent expressions
   [1, a, f(3)] // unit8[3] memory
-  // custom defined types
-  struct Poop {
-    uint times;
-    bool flushed;
-  }
 
   // special arrays: bytes & strings
   // bytes: for arbitrary-length raw byte data
@@ -241,11 +253,21 @@ contract DataTypes {
   string flush = "poop" "flush"; // compiles to "poopflush"
 
 
-
-  // maps fromThis => ToThis
-  // cannot  retrieve a list of all the keys nor added values,
-  // or use within a context where the mapping isnt needed
-  mapping(address => name) public names;
+  // mappings
+  // maps keyType => valueType
+  // ^ key
+  // ^^ cant be a mapping type
+  // ^^ is initialized to all possible values keyType
+  // ^ value
+  // ^^ can be a mapping type
+  // must be storage/state var
+  // ^ i.e. cant be a local variable inside a fn
+  // must use delete to remove a value for a key
+  // cannot
+  // ^ retrieve a list of all the keys nor added values,
+  // ^ use within a context where the mapping isnt needed
+  mapping(string => string) public names;
+  names["poop"] = "then wipe";
 
 
 }
@@ -368,6 +390,10 @@ contract Contracts {
 
   function convertToPayableContract() {
     address payable canReceivePayaments = payable(address(this));
+  }
+
+  function returnsTuple () returns (int, int) {
+    return (1, 2);
   }
 }
 
