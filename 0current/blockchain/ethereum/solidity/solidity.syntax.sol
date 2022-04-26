@@ -99,8 +99,8 @@ contract DataTypes {
   // you have to explicity provide the data area
   // memory: lifetime === lifetime of external fn call
   // ^ cannot push on memory arrays
-  // ^ Assignment of dynamic memory arrays is NOT allowed (needs confirmation)
-  // ^ memory arrays cant be initialized (e.g. int8[] memory x = [1,2,3], you have to make it storage)
+  // ^ memory arrays cant be resized (theres no push) you have to make it a storage
+  // ^ memory arrays must be created with new, e.g. uint[] memory myArray = new uint[](10) // size of 10
   // storage: lifetime === lifetime of contract
   // ^ calldata: special data location that contains the fn arguments
   // ^^ behaves like memory, prefer this when appropriate
@@ -205,8 +205,20 @@ contract DataTypes {
 
 
   // arrays:
+  // properties
+  // ^ length
+  // methods
+  // ^ push() // only storage arrays & bytes
+  // ^^ has constant gas cost
+  // ^ pop() // only storage arrays & bytes
+  // ^^ has gas cost proportional to the array length
   // compile-time fixed/dynamic size
+  // ^ cannot be converted between each other
   // dynmically sized arrays in the form dataType[]
+  // ^ cant be initialized on creation
+  // ^^ you have to assign each individual element
+  // ^^ e.g. uint[] memory x = new uint[](3);
+  // ^^ x[0] = 1; x[1] = 2; x[2] = 3;
   // statically sized arrays in the form dataType[size]
   // methods:
   // ^ push()
@@ -215,6 +227,10 @@ contract DataTypes {
   uint[] numbers;
   uint[][3] numbers; // an array of 3 dynamic uint arrays
 
+  // array literals
+  // ^ always a statically-sized memory array whose length == number of expressions
+  // ^ first expression determines the type of all subsequent expressions
+  [1, a, f(3)] // unit8[3] memory
   // custom defined types
   struct Poop {
     uint times;

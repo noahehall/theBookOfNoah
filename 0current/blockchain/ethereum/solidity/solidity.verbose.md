@@ -3,7 +3,7 @@
 - strongly typed language used to develop smart contracts in the Ethereum platform
 - there is some overlap with the ethereum.md file, rely on this one more (as it comes straight from solidity docs vs udacity)
 - fkn udacity solidity course sucks, just read the docs vs their old azz videos
-  - bookmark: https://docs.soliditylang.org/en/latest/types.html#allocating-memory-arrays
+  - bookmark: https://docs.soliditylang.org/en/latest/types.html#ternary-operator
 
 ## links
 
@@ -51,7 +51,7 @@
   - [styleguide](https://docs.soliditylang.org/en/latest/style-guide.html#)
   - [operator precedence](https://docs.soliditylang.org/en/latest/cheatsheet.html#order)
 
-## todos
+## todos (skipped)
 
 - [data types](https://docs.soliditylang.org/en/latest/types.html)
   - bit operations
@@ -67,6 +67,13 @@
   - user defined value types
   - function types
     - specifically the examples
+  - Array Members
+    - the contract ArrayContract example
+  - array slices
+  - structs
+  - mapping types
+  - iterable mappings
+  - operators (section right after iterable mappings)
 
 ## terms
 
@@ -296,6 +303,7 @@ sudo apt-get install solc
   - version: should always specify a minimum and a maximum, follows npm semantic versioning
   - ABI coder pragma: select either v1 or v2
     - => 0.8 v2 is auto selected
+    - required To use arrays of arrays in external (instead of public) functions, you need to activate ABI coder v2.
 - contract: collection of code (functions) and data (state) that resides at a specific address on the chain
   - similar to a class in JS
 - constructor: only run when the contract is created and will never be called afterwards
