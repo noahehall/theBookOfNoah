@@ -98,7 +98,7 @@ contract DataTypes {
 
   // you have to explicity provide the data area
   // memory: lifetime === lifetime of external fn call
-  // ^ cannot push on memory arrays (needs confirmation)
+  // ^ cannot push on memory arrays
   // ^ Assignment of dynamic memory arrays is NOT allowed (needs confirmation)
   // ^ memory arrays cant be initialized (e.g. int8[] memory x = [1,2,3], you have to make it storage)
   // storage: lifetime === lifetime of contract
@@ -177,6 +177,29 @@ contract DataTypes {
   // can be declared outside a contract
   enum Blah { Flush, Poop, Toilet }
 
+  // special arrays: bytes & strings (but still value types)
+  // bytes: for arbitrary-length raw byte data
+  // ^ similary to bytes1[]
+  // ^^ but is packed tightly in calldata & memory
+  // ^^ prefer bytes > bytes1[] because its cheaper
+  // ^ go from 1 to 32
+  // ^ e.g. 32 byte string
+  // methods
+  // ^ bytes.concat(b1, b2); (returns bytes memory)
+  bytes32 name;
+
+  // strings: for arbitrary-length UTF-8 data
+  // ^ unless the string fits in bytes1 through 32
+  // ^ equal to bytes
+  // ^^ but does not have allow length/index access
+  // methods
+  // ^ string.concat(s1, s2); (returns string memory)
+  string name;
+  string poop = "flush" // or 'flush'
+  string memory a = unicode"Hello 😃"; // prefixed with unicode
+  string flush = "poop" "flush"; // compiles to "poopflush"
+
+
   /* reference data types ****************/
   // comprise structs, arrays and mappings
 
@@ -191,18 +214,6 @@ contract DataTypes {
   // props: length,
   uint[] numbers;
   uint[][3] numbers; // an array of 3 dynamic uint arrays
-
-  // special arrays: bytes & strings
-  // strings
-  string name;
-  string poop = "flush" // or 'flush'
-  string memory a = unicode"Hello 😃"; // prefixed with unicode
-  string flush = "poop" "flush"; // compiles to "poopflush"
-
-  // bytes
-  // ^ go from 1 to 32
-  // ^ e.g. 32 byte string
-  bytes32 name;
 
   // custom defined types
   struct Poop {
