@@ -87,18 +87,31 @@ contract Operators {
 contract DataTypes {
   /* generalizations */
   // you can use any type as a fn to convert another type to it
-  // ^ has to be a logical conversion (e.g. int8 cannot hold int256) without any loss of data
+  // ^ has to be a logical conversion (e.g. int8 cannot hold int256)
   // ^ else compiler will throw error
   // ^ e.g. address(uint160(bytes20(b))) or address(uint160(uint256(b)))
 
   /* variable modifiers ****************/
   // public: can be called by other contracts, e.g. uint public amount
-  // memory: save in memory
+  // ^ public state arrays will automatically have a getter with index required
+  // constant
+
+  // you have to explicity provide the data area
+  // memory: lifetime === lifetime of external fn call
   // ^ cannot push on memory arrays (needs confirmation)
   // ^ Assignment of dynamic memory arrays is NOT allowed (needs confirmation)
   // ^ memory arrays cant be initialized (e.g. int8[] memory x = [1,2,3], you have to make it storage)
-  // storage: save in storage
-  // constant
+  // storage: lifetime === lifetime of contract
+  // ^ calldata: special data location that contains the fn arguments
+  // ^^ behaves like memory, prefer this when appropriate
+  // ^^ immutable, non-persistent
+  // calldata: save in same space fns parameters are kept
+  // assignment/type conversion that changes the data location
+  // ^ always create an independent copy (no reference)
+  // assignments inside the same data location
+  // ^ memory to memeory: reference
+  // ^ storage to local storage: reference
+  // ^^ all other ssignments to storage: copy
 
   /* value data types ****************/
   // integers: accepts steps 8 increments, from 8 to 256
@@ -156,18 +169,6 @@ contract DataTypes {
   // address(this).send(20);
   address literalAddr = hex"0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF";
 
-
-  // strings
-  string name;
-  string poop = "flush" // or 'flush'
-  string memory a = unicode"Hello 😃"; // prefixed with unicode
-  string flush = "poop" "flush"; // compiles to "poopflush"
-
-  // bytes
-  // ^ go from 1 to 32
-  // ^ e.g. 32 byte string
-  bytes32 name;
-
   // custom types with a finite set of constant values
   // explicitly convertible to/from all integer types
   // limited to 256 members
@@ -178,25 +179,30 @@ contract DataTypes {
 
   /* reference data types ****************/
   // comprise structs, arrays and mappings
-  // you have to explicity provide the data area
-  // ^ memory: lifetime === lifetime of external fn call
-  // ^ storage: lifetime === lifetime of contract
-  // ^ calldata: special data location that contains the fn arguments
-  // ^^ behaves like memory, prefer this when appropriate
-  // ^^ immutable, non-persistent
-  // assignment/type conversion that changes the data location
-  // ^ always create an independent copy (no reference)
-  // assignments inside the same data location
-  // ^ memory to memeory: reference
-  // ^ storage to local storage: reference
-  // ^^ all other ssignments to storage: copy
 
+
+  // arrays:
+  // compile-time fixed/dynamic size
   // dynmically sized arrays in the form dataType[]
   // statically sized arrays in the form dataType[size]
-  // methods: push(), pop()
-  // ^ push not permitted on memory arrays
+  // methods:
+  // ^ push()
+  // ^ pop()
   // props: length,
   uint[] numbers;
+  uint[][3] numbers; // an array of 3 dynamic uint arrays
+
+  // special arrays: bytes & strings
+  // strings
+  string name;
+  string poop = "flush" // or 'flush'
+  string memory a = unicode"Hello 😃"; // prefixed with unicode
+  string flush = "poop" "flush"; // compiles to "poopflush"
+
+  // bytes
+  // ^ go from 1 to 32
+  // ^ e.g. 32 byte string
+  bytes32 name;
 
   // custom defined types
   struct Poop {
