@@ -84,8 +84,16 @@ contract GlobalFns {
     // solidity will automatically return it
     hash = blockhash(block.number -1);
   }
+
+  // error handling
+  // can specify multiple conditions within a body of a fn
+  // when any of the conditions expressions evaluate to false
+  // ^ the condition will fail
+  function revertCondition() {
+
+  }
+
   function requireCondition() {
-    // can specify multiple conditions
     require(
       msg.sender == someAddr,
       "return this string if false"
@@ -424,9 +432,10 @@ function Functions() {
 // @see https://docs.soliditylang.org/en/latest/contracts.html#contracts
 contract Contracts {
   uint someNumber; // state var: stored in contract storage
-  // constructor is only called when contract is instantiated
+  // constructor is only called when contract is created
   // not required
-  constructor() public {
+  // any params must be supplied when the contract is deployed
+  constructor(paramList) public {
     // initialize stuff here
   }
 
@@ -444,10 +453,13 @@ contract Contracts {
   }
 
   // use the modifier fn above to augment this fn
-  function getContractBalance () public addThisCodeToFn mustBeOwner {
+  function getContractBalance () public addThisCodeToFn mustBeOwner returns (uint) {
     // converts this contract to an address to get the current balance
     uint currentBalance = address(this).balance;
 
+    // required because the returns doesnt specify a name
+    // else you could do someVarName = currentBalance;
+    // ^ and EVM will automatically return it
     return currentBalance;
   }
 

@@ -320,6 +320,19 @@ sudo apt-get install solc
   - you can create a blockchain explorer that tracks transactions & balances
 - require: defines conditions that reverts all changes if not met
 - error: allow you to provide info about why an operation failed; errors are returned to the caller of the fn
+  - runtime error: due to EVM/operatoins
+  - application errors: due to some condition in the contract code/wrong data
+    - usese assert, require, and revert global fns
+  - error handling: how to handle and communicate errors to the caller of the contract
+    - return a value to the communicate the error
+    - emit events
+    - throw an exception (preferred)
+      - control is passed back to the caller
+      - all changes to the contract are rolled back (but no gas refunds)
+      - no ether is ent from a fn call
+      - all sent ether are returned to the caller
+      - gas used is not refunded
+      - transaction still gets recorded on the blockchain
 - revert: unconditionally aborts and reverts all changes; allows you to provide the name of an Error and additional data to be returned to the caller
 - external: fn is callable from other contracts?
 - internal: fn is only callable from the contract itself/derived contracts
