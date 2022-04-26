@@ -133,10 +133,8 @@ contract DataTypes {
   // ^ e.g. address(uint160(bytes20(b))) or address(uint160(uint256(b)))
 
   /* variable modifiers ****************/
-  // public: can be called by other contracts, e.g. uint public amount
-  // ^ public state arrays will automatically have a getter with index required
-  // constant
-
+  // public, private, internal, external
+  // ^ see function Functions
   // you have to explicity provide the data area
   // memory: lifetime === lifetime of external fn call
   // ^ cannot push on memory arrays
@@ -360,28 +358,38 @@ error NotEnoughFunds(uint requested, uint available);
 
 // todo: need to clean this up
 // function (<parameter types>) internal|external <functionType> returns (<return types>) { /* body */ }
-// internal fns: can only be called inside the current contract (default fn type)
+// fn overloading: can have multiple fns with the same name as long as the params are distinct
+// internal/external are only appropriate for public fns
+// ^ because private fns/vars are only visibile within the current contract
+// internal: can only be called inside the current contract (default fn type)
 // ^ i.e. current code unit: includes internal libraries & inherited fns
-// external fns: consist of an address & a fn signature
-// i.e. ContractName.fn (or this.f if within the contract);
+// ^ also applies to variables
+// external fns: are part of the contracts interface;
+// ^ i.e. ContractName.fn (or this.fn if within the contract);
+// ^ also applies to vars (except storage vars)
 // ^ can be passed via and return from external fn calls
-// if a fn returns something you HAVE to specify the type
+// return types
+// ^ multiple return values are returned as an array
+// ^ if a fn returns something you HAVE to specify the type
+// ^ else dont speciy returns
 // fn types: can specify multiple
-// ^ public: anyone can call
-// ^ private: only this contract can call
-// ^ pure: doenst modify (or read!!!) the contracts data
-// ^ view: returns data and DOES NOT modify contract data
+// ^ public: anyone with an ethereum account can invoke this fn/var
+// ^^ public storage arrays will automatically have a getter with index required
+// ^^ all other public types get be retrieved via varName()
+// ^ private: only this contract (not derived contracts) can invoke,
+// ^ pure:  no access to contract data
+// ^ view: read only access to contract data
 // ^ constant: same as view
 // ^ payable: caller can send ether via this fn
-// fn conversion
-// pure: can be converted to view & non-payable fns
-// view: can be converted to non-payable fns
-// payable: can be converted to non-payable fns
+// fn type conversion
+// ^ pure: can be converted to view & non-payable fns
+// ^ view: can be converted to non-payable fns
+// ^ payable: can be converted to non-payable fns
 // properties
-// .address: the address of hte contract of the fn
-// .selector: returns the ABI fn selector
+// ^ .address: the address of hte contract of the fn
+// ^ .selector: returns the ABI fn selector
 // gas & wei
-// send gas to a fn via someFn{gas: <amount>, value: <amount>}(args)
+// ^ send gas to a fn via someFn{gas: <amount>, value: <amount>}(args)
 function Functions() {
   // function auctionEnd() external {
   //   // It is a good guideline to structure functions that interact

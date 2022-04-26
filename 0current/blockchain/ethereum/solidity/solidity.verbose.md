@@ -357,6 +357,7 @@ sudo apt-get install solc
 ### data types
 
 - division on integers always results in an integer (solidity rounds down)
+- Fallback functions provide a safeguard. They are automatically triggered if the function signature does not match any of the function signatures in the smart contract. A contract can have exactly one fallback function. These fallback functions are unnamed.
 
 ## algorithms & strategies
 
