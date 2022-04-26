@@ -7,16 +7,18 @@ pragma solidity >=0.8 <0.9.0;
 // import { flush, toilet as tl } from "./poop";
 
 /*
-  * This is a comment
+  * This is a mltiline comment
   */
-/// global vars and functions
+
+/// this is a natspec comment
+/// multipline lines displayed to user
 contract GlobalVars {
-  // msg == current msg
+  // msg == info about the current tx being executed
   function thisMsg() public {
-    msg.data; // complete calldata
-    msg.sender; // address: sender of the msg
-    msg.sig; // bytes4: first 4 bytes of the calldata
-    msg.value; // uint: in wei
+    msg.data; // (bytes) the calldata
+    msg.sender; // (address) sender of this tx
+    msg.sig; // (bytes4): fn identifier; i.e. first 4 bytes of the calldata
+    msg.value; // (uint): in wei; only available in payable fns
   }
 
   // tx == current transaction
@@ -25,12 +27,13 @@ contract GlobalVars {
     tx.origin; // (address): sender of the transaction (full call chain)
   }
 
-  // block == current block
+  /// block == current block
   function thisBlock() public {
-    block.difficulty; // (uint): current block difficulty
-    block.gaslimit; // (uint): current block gaslimit
+    block.coinbase; // (address): coinbase of the block's miner
+    block.difficulty; // (uint):
+    block.gaslimit; // (uint):
     block.number; // (uint): current block number
-    block.timestamp; // (uint): current block timestamp as seconds since unix epoch
+    block.timestamp; // (uint): seconds since unix epoch
   }
 
   // this contracts abi
