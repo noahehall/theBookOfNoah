@@ -85,14 +85,22 @@ contract GlobalFns {
     hash = blockhash(block.number -1);
   }
 
-  // error handling
-  // can specify multiple conditions within a body of a fn
-  // when any of the conditions expressions evaluate to false
-  // ^ the condition will fail
+  // error handling: revert, require, assert
+  // unconditionally aborts and reverts all changes; allows you to provide the name of an Error and additional data to be returned to the caller
+  // control is passed back to the caller
+  // all changes to the contract are rolled back (but no gas refunds)
+  // no ether is ent from a fn call
+  // all sent ether are returned to the caller
+  // gas used is not refunded, but unused gas is refunded
+  // transaction still gets recorded on the blockchain
   function revertCondition() {
 
   }
 
+  // can specify multiple conditions within a body of a fn
+  // if condition evaluates false an exception is thrown
+  // all used gas is refunded ?
+  // returns an error msg to the caller
   function requireCondition() {
     require(
       msg.sender == someAddr,
@@ -103,6 +111,10 @@ contract GlobalFns {
     require(msg.sender != someAddr);
   }
 
+  // can specify multiple conditions
+  // if condition evaluates false an exception is thrown
+  // no gas is refunded
+  // used mostly for internal testing
   function assertCondition () {
 
   }

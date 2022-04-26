@@ -327,20 +327,9 @@ sudo apt-get install solc
     - return a value to the communicate the error
     - emit events
     - throw an exception (preferred)
-      - control is passed back to the caller
-      - all changes to the contract are rolled back (but no gas refunds)
-      - no ether is ent from a fn call
-      - all sent ether are returned to the caller
-      - gas used is not refunded
-      - transaction still gets recorded on the blockchain
-- revert: unconditionally aborts and reverts all changes; allows you to provide the name of an Error and additional data to be returned to the caller
-- external: fn is callable from other contracts?
-- internal: fn is only callable from the contract itself/derived contracts
 - payable: enables the fn to able to receive ether
   - else you have to use convert an address via `payable(someAddr)` to use the `.send()` fn
-- returns (dataType varName)
 - ecrecover: fn that accepts a msg along with the r, s and v params (ECDSA) and returns the address that was used to sign the msg
-- pure: todo
 
 ### compiler
 
