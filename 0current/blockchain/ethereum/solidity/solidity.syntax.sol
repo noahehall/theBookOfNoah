@@ -156,7 +156,6 @@ contract DataTypes {
   // address(this).send(20);
   address literalAddr = hex"0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF";
 
-  /* rerference data types ****************/
 
   // strings
   string name;
@@ -168,6 +167,29 @@ contract DataTypes {
   // ^ go from 1 to 32
   // ^ e.g. 32 byte string
   bytes32 name;
+
+  // custom types with a finite set of constant values
+  // explicitly convertible to/from all integer types
+  // limited to 256 members
+  // initialized to the first value
+  // indexes starts at 0 and increments by 1 like in C
+  // can be declared outside a contract
+  enum Blah { Flush, Poop, Toilet }
+
+  /* reference data types ****************/
+  // comprise structs, arrays and mappings
+  // you have to explicity provide the data area
+  // ^ memory: lifetime === lifetime of external fn call
+  // ^ storage: lifetime === lifetime of contract
+  // ^ calldata: special data location that contains the fn arguments
+  // ^^ behaves like memory, prefer this when appropriate
+  // ^^ immutable, non-persistent
+  // assignment/type conversion that changes the data location
+  // ^ always create an independent copy (no reference)
+  // assignments inside the same data location
+  // ^ memory to memeory: reference
+  // ^ storage to local storage: reference
+  // ^^ all other ssignments to storage: copy
 
   // dynmically sized arrays in the form dataType[]
   // statically sized arrays in the form dataType[size]
@@ -187,31 +209,35 @@ contract DataTypes {
   // or use within a context where the mapping isnt needed
   mapping(address => name) public names;
 
-  // custom types with a finite set of constant values
-  // explicitly convertible to/from all integer types
-  // limited to 256 members
-  // initialized to the first value
-  // indexes starts at 0 and increments by 1 like in C
-  // can be declared outside a contract
-  enum Blah { Flush, Poop, Toilet }
 
 }
 
-contract MemoryManagement {
-  // all vars outside a fn are state vars
-  // all state vars are stored in contract storage
+// @see https://docs.soliditylang.org/en/latest/types.html#data-location-and-assignment-behaviour
+contract DataLocation {
+    // The data location of x is storage.
+    // This is the only place where the
+    // data location can be omitted.
+    uint[] x;
 
-  // specifically assigned to storage
-  uint[] storage stateArray;
+    // The data location of memoryArray is memory.
+    function f(uint[] memory memoryArray) public {
+        x = memoryArray; // works, copies the whole array to storage
+        uint[] storage y = x; // works, assigns a pointer, data location of y is storage
+        y[7]; // fine, returns the 8th element
+        y.pop(); // fine, modifies x through y
+        delete x; // fine, clears the array, also modifies y
+        // The following does not work; it would need to create a new temporary /
+        // unnamed array in storage, but storage is "statically" allocated:
+        // y = memoryArray;
+        // This does not work either, since it would "reset" the pointer, but there
+        // is no sensible location it could point to.
+        // delete y;
+        g(x); // calls g, handing over a reference to x
+        h(x); // calls h and creates an independent, temporary copy in memory
+    }
 
-  function localVars() {
-    // creates a ref to a storage array
-    // reference vars change the reference
-    uint[] localArray = stateArray;
-
-    // specifically assigned to memory
-    uint[] memory memoryArray;
-  }
+    function g(uint[] storage) internal pure {}
+    function h(uint[] memory) public pure {}
 }
 
 contract Visibility {
