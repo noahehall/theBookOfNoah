@@ -177,28 +177,6 @@ contract DataTypes {
   // can be declared outside a contract
   enum Blah { Flush, Poop, Toilet }
 
-  // special arrays: bytes & strings (but still value types)
-  // bytes: for arbitrary-length raw byte data
-  // ^ similary to bytes1[]
-  // ^^ but is packed tightly in calldata & memory
-  // ^^ prefer bytes > bytes1[] because its cheaper
-  // ^ go from 1 to 32
-  // ^ e.g. 32 byte string
-  // methods
-  // ^ bytes.concat(b1, b2); (returns bytes memory)
-  bytes32 name;
-
-  // strings: for arbitrary-length UTF-8 data
-  // ^ unless the string fits in bytes1 through 32
-  // ^ equal to bytes
-  // ^^ but does not have allow length/index access
-  // methods
-  // ^ string.concat(s1, s2); (returns string memory)
-  string name;
-  string poop = "flush" // or 'flush'
-  string memory a = unicode"Hello 😃"; // prefixed with unicode
-  string flush = "poop" "flush"; // compiles to "poopflush"
-
 
   /* reference data types ****************/
   // comprise structs, arrays and mappings
@@ -236,6 +214,33 @@ contract DataTypes {
     uint times;
     bool flushed;
   }
+
+  // special arrays: bytes & strings
+  // bytes: for arbitrary-length raw byte data
+
+  // ^ similary to bytes1[]
+  // ^^ but is packed tightly in calldata & memory
+  // ^^ prefer bytes > bytes1[] because its cheaper
+  // ^ go from 1 to 32
+  // ^ e.g. 32 byte string
+  // methods
+  // ^ bytes.concat(b1, b2); (returns bytes memory)
+  bytes32 name;
+
+  // strings: for arbitrary-length UTF-8 data
+  // ^ unless the string fits in bytes1 through 32
+  // ^ equal to bytes
+  // ^^ but does not have allow length/index access
+  // ^^ convert the string to bytes for length/index access
+  // ^ complex string operations are costly (gas) and should be avoid
+  // methods
+  // ^ string.concat(s1, s2); (returns string memory)
+  string name;
+  string poop = "flush" // or 'flush'
+  string memory a = unicode"Hello 😃"; // prefixed with unicode
+  string flush = "poop" "flush"; // compiles to "poopflush"
+
+
 
   // maps fromThis => ToThis
   // cannot  retrieve a list of all the keys nor added values,
