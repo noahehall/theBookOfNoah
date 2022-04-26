@@ -68,9 +68,10 @@ contract GlobalVars {
     // tether: add 000 to previous
   }
 
-  // block time in seconds since epoch 1970
+  // theres a bunch of different units
+  // ^ check docs
   function timeUnits() public {
-    uint nowInSeconds = now;
+    uint nowInSeconds = now; // seconds since unix epoch
     uint oneWeek = 7 days;
   }
 }
@@ -121,7 +122,7 @@ contract Operators {
   //  -=
   //  +=
   // %
-}
+}/
 
 /// examples of all datatypes
 contract DataTypes {
@@ -357,14 +358,21 @@ contract Visibility {
 /// but only `available` available.
 error NotEnoughFunds(uint requested, uint available);
 
-
+// todo: need to clean this up
+// function (<parameter types>) internal|external <functionType> returns (<return types>) { /* body */ }
 // internal fns: can only be called inside the current contract (default fn type)
 // ^ i.e. current code unit: includes internal libraries & inherited fns
 // external fns: consist of an address & a fn signature
 // i.e. ContractName.fn (or this.f if within the contract);
 // ^ can be passed via and return from external fn calls
-// function (<parameter types>) {internal|external} [pure|view|payable] [returns (<return types>)]
 // if a fn returns something you HAVE to specify the type
+// fn types: can specify multiple
+// ^ public: anyone can call
+// ^ private: only this contract can call
+// ^ pure: doenst modify (or read!!!) the contracts data
+// ^ view: returns data and DOES NOT modify contract data
+// ^ constant: same as view
+// ^ payable: caller can send ether via this fn
 // fn conversion
 // pure: can be converted to view & non-payable fns
 // view: can be converted to non-payable fns
