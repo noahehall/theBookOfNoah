@@ -179,6 +179,7 @@ sudo apt-get install solc
     - the output data of this execution is permenantly stored as the code of the contract
       - while a contract is being created, its code is still empty
       - ^ do not call back into the contract until its constructor fn has finished exeucting
+- ether: the currency of ethereum, can be specified in various denominations (see solidity.syntax)
 
 ### message calls
 

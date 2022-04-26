@@ -9,22 +9,29 @@ pragma solidity >=0.8 <0.9.0;
 /*
   * This is a mltiline comment
   */
-
 /// this is a natspec comment
 /// multipline lines displayed to user
+/// should be placed directly before all vars, fns, contracts, etc
+
+// EOA > contract A > contract B
+// ^ within contract A:
+// ^^ msg.sender && tx.origin == EOA address
+// ^ within contract B:
+// ^^ msg.sender == address of Contract A
+// ^^ tx.origin = EOA address
 contract GlobalVars {
   // msg == info about the current tx being executed
   function thisMsg() public {
     msg.data; // (bytes) the calldata
     msg.sender; // (address) sender of this tx
     msg.sig; // (bytes4): fn identifier; i.e. first 4 bytes of the calldata
-    msg.value; // (uint): in wei; only available in payable fns
+    msg.value; // (uint): ether in wei sent with this tx; only available in payable fns
   }
 
   // tx == current transaction
   function thisTx() public {
     tx.gas; // (uint): gas price of the transaction
-    tx.origin; // (address): sender of the transaction (full call chain)
+    tx.origin; // (address): address that originated the transaction
   }
 
   /// block == current block
@@ -43,9 +50,39 @@ contract GlobalVars {
     abi.encodeWithSelector(selector, args); // (bytes) ABI-encodes the given arguments with the given selector
     abi.encodeWithSignature(signatureString, arg); // (bytes): Equivalent to abi.encodeWithSelector(bytes4(keccak256(signature), ...)`
   }
+
+
+  // needs confirmation with solidity docs
+  function etherUnits() public {
+    int amount = 1 ether;
+    // shows err maybe needs to be within a fn?
+    bool asFinney = (1 ether == 1000 finney);
+    // szabo: add 000 to previous
+    // gwei (shannon): add 000 to previous
+    // mwei: add 000 to previous
+    // kwei: add 000 to previous
+    // wei: the defualt denomination; add 000 to previous, smallest denomination of ether
+    // kether: .001
+    // mether: add 000 to previous
+    // gether: add 000 to previous
+    // tether: add 000 to previous
+  }
+
+  // block time in seconds since epoch 1970
+  function timeUnits() public {
+    uint nowInSeconds = now;
+    uint oneWeek = 7 days;
+  }
 }
 
+
 contract GlobalFns {
+  function getPrevBlockHash() public returns (bytes32 hash) {
+    // return previous blocks hash via blockhash fn
+    // notice we mutate the var hash declared in returns directive above
+    // solidity will automatically return it
+    hash = blockhash(block.number -1);
+  }
   function requireCondition() {
     // can specify multiple conditions
     require(
