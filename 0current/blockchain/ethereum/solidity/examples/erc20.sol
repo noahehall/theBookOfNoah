@@ -1,6 +1,7 @@
 pragma solidity >=0.4.24;
 
 // copypasta from udacity
+// doesnt include error handling
 contract myToken {
 
     string public constant name = "Udacity Token";
