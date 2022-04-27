@@ -2,6 +2,7 @@ pragma solidity >=0.4.24;
 
 // copypasta from udacity
 // doesnt include error handling
+// fuller example: https://github.com/udacity/nd1309-work-code/tree/master/Course_Identity_And_Smart_Contracts/SampleToken
 contract myToken {
 
     string public constant name = "Udacity Token";
