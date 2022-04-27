@@ -23,6 +23,8 @@
 - [networks & public faucets](https://ethereum.org/en/developers/docs/networks/)
   - [this one works](https://fauceth.komputing.org)
 - [ethereum courses on block geeks](https://courses.blockgeeks.com/course/bg101-ethereum-course-101/)
+- [all ERC-20 ethereum tokens](https://etherscan.io/tokens)
+- [all ERC-721 (nft) tokens](https://etherscan.io/tokens-nft)
 - todo
   - [ethereum yellowpaper](https://github.com/ethereum/yellowpaper)
   - [ethereum docs](https://ethdocs.org/en/latest/introduction/what-is-ethereum.html?highlight=EVM#ethereum-virtual-machine)
@@ -219,9 +221,9 @@
 
 - Ethereum Improvement Proposals
 - describe standards for the Ethereum platform, including core protocol specifications, client APIs, and contract standards
-  - e.g. ERCs below
+  - ERCs are a subset of EIPs
 
-##### ERC
+#### ERC
 
 - Ethereum Request for Comments
   - similar to BIPs: Bitcion Improvement Proposals
@@ -229,20 +231,34 @@
   - e.g some define a set of rules to implement tokens on the Ethereum blockchain
 - ethereum token standards: contracts which can be inherited from
 
-#### NFTs
+#### fungible tokens
 
-- a token
-  - ER-721:
-    - ERC-20 tokens, in that each individual NFT token is completely unique and not divisible
+- when all tokens are exactly the same and have the same value
+- can be exchanged for eachother, e.g. 1 dollar bill always ==== another dollar bill
+
+###### ERC-20
+
+- most popular fungible token standard
+- standarization: wallets can show varius token balances and provide an easy transfer of tokens between addresses
+  - any application that understands ERC-20, can interact with ERC-20 tokens
+  - all they need is the contract address that implements the token
+
+#### non fungible tokens
+
+- special type of cryptographic token which represent something unique
+  - are not interchangable because they all have a different value, e.g. 1 Poop !== 1 Urine, because they
+- high level NFT properties
+  - unique identifier that is directly linked to one ethereum address
+  - not directly interchangeable with other tokens 1:1, e.g. 1ETH is always === 1 ETH, whereas 1 NFT is never === another NFT
+
+###### ERC-721
+
 - ownership
   - managed throught the uniqueID and metadata that no other token can replicate
 - high level creation (minting) process
   - create a new block
   - validate info
   - record info on the blockchain
-- high level NFT properties
-  - unique identifier that is directly linked to one ethereum address
-  - not directly interchangeable with other tokens 1:1, e.g. 1ETH is always === 1 ETH, whereas 1 NFT is never === another NFT
 
 ##### POAP: proof of attendance protocol
 
