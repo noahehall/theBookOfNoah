@@ -208,6 +208,7 @@
 - built on the ethereum platform
 - used for exchanging value between different parties based on rules specified in that tokens smart contract
 - represent any fungible (replaceable) tradable good such as coins, loyalty points, gold certificates, IOUs or non fungible goods (unique collectibles) e.g. in-game itmes, etc
+- different exchanges may not support all tokens, based on the requirements of the ERC standard the token implemnets (see elseware in this doc)
 
 #### token contracts
 
@@ -236,12 +237,33 @@
 - when all tokens are exactly the same and have the same value
 - can be exchanged for eachother, e.g. 1 dollar bill always ==== another dollar bill
 
-###### ERC-20
+##### ERC-20
 
 - most popular fungible token standard
 - standarization: wallets can show varius token balances and provide an easy transfer of tokens between addresses
   - any application that understands ERC-20, can interact with ERC-20 tokens
   - all they need is the contract address that implements the token
+  - only allows transfer of token value (but not the token data?)
+- only allows a single token issuance event (thus totalSupply cant be changed)
+
+##### ERC-621
+
+- extension of ERC-20
+- adds 2 additional fns to increase/decrease the totalSupply of tokens in circulation
+  - increaseSupply
+    decreaseSupply
+
+##### ERC-827
+
+- latest (prolly not) improvement to ERC-20
+- enables transfer of and approval of tokens to e spent by another on-chain 3rd party
+  - so you can transfer token value & token data
+  - other applications (e.g. wallets, decentralized exchanges) can reuse tokens
+
+##### ERC-223
+
+- provides the possibility to avoid losing tokens when sent ot a ocntract that cannot deal with sent tokens
+- uses less gas than ERC-20 transfer
 
 #### non fungible tokens
 
@@ -250,15 +272,17 @@
 - high level NFT properties
   - unique identifier that is directly linked to one ethereum address
   - not directly interchangeable with other tokens 1:1, e.g. 1ETH is always === 1 ETH, whereas 1 NFT is never === another NFT
-
-###### ERC-721
-
 - ownership
   - managed throught the uniqueID and metadata that no other token can replicate
 - high level creation (minting) process
   - create a new block
   - validate info
   - record info on the blockchain
+
+##### ERC-721
+
+- every token can have a distinct value
+- e.g. to create marketplaces, where goods are represented as distinct tokens with different values
 
 ##### POAP: proof of attendance protocol
 
