@@ -36,6 +36,7 @@
 - faucet: a website that gives rewards in the form of bitcoin; e.g. how you can get testnet coins
   - google `bitcoin testnet public faucet`
 - satoshis: the smallest bitcion unit: 10^8 satoshis = 1 bitcoin
+- BIPs: Bitcoin Improvement Proposals; similar to ethereum EIPs
 
 ## bitcoin core
 
