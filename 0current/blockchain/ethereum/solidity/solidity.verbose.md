@@ -281,7 +281,7 @@ sudo apt-get install solc
     - when a contract inherits from other contracts, only a single contract is created on the blockchain
     - and the code from all the base contracts are copied into the created contract
   - two mechanisms
-    - interface contracts
+    - interface (abstract) contracts
       - this is how token standards are implemented: if any contract wants to adopt a token, needs to provide the fns defined in the token interface
     - derived contracts
       - last contract in file gets deployed

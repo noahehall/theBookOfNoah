@@ -296,8 +296,7 @@ contract DataTypes {
   // ^ bytes.concat(b1, b2); (returns bytes memory)
   bytes32 name;
 
-  // strings: for arbitrary-length UTF-8 data
-  // ^ unless the string fits in bytes1 through 32
+  // strings: for arbitrary-length UTF-8 data-20
   // ^ equal to bytes
   // ^^ but does not have allow length/index access
   // ^^ convert the string to bytes for length/index access
@@ -504,7 +503,10 @@ contract DerivedContract is Contracts, Interfaces, SomeOtherContract(100) {
 }
 
 
-// interfaces with the EVM logging mechanism
+// utilises EVM logging mechanism
+// any service (e.g. dapp, website, etc) connected to the Ethereum JSON-RPC API can listen for and react to events
+// events are stored in all ethereum nodes
+// are declared within a contract and become part of the contract's ABI definition
 contract Events {
   event myEvent();
 
