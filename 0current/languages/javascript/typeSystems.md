@@ -152,6 +152,7 @@
 ### best practices
 
 - always
+
   - when using an object as a map, always use flows `indexer property`
     - it allows reads and writes using any key that matches the indexer key type
   - reusability
@@ -166,7 +167,9 @@
     - use `$NonMaybeType<T>` to convert `null|undefined` types to exact types
 
 - generally
+
   - you want to define your type separately from the object your annotating
+
     - as a `type` alias for exporting
     - as an `opaque` for internal use
 
@@ -178,6 +181,7 @@
     - use flows inferred type of the value to create a type, e.g. `type thisType: typeof externalData = 56` // externalData is inferred to be a number
     - type cast difficult values to any, then to the desired type
       - this is an escape hatch, but sometimes you need to be free!
+
   - when you think you want a Class type, you likely want an Interface + implements
     - more benefits... cheap negatives
       - slightly extra work so the cost increases, but still worth it
@@ -362,9 +366,41 @@
 
 ## typescript
 
-```js
+- todos
+  - [types vs interfaces](https://www.typescriptlang.org/play?e=83#example/types-vs-interfaces)
 
- poop as OtheRtype;
+```js
+/**
+ * type examples
+ * native types
+ * boolean, bigint, null, number, string, symbol, and undefined
+ * typescript extensions
+ * any, unkown, never, void
+ */
+  let poop: string = 'flush';
+
+  // for objects, classes, fns
+  interface BigPoops {
+    when: string;
+    flush: boolean;
+  }
+  // as object
+  const iTake: BigPoops = {
+    when: 'mornings',
+    flush: true
+  }
+  // as class: i know hella duplication
+  class BigPooper {
+    when: string;
+    flush: boolean;
+
+    constructor (when: string, flush: boolean) {
+      this.when = when;
+      this.flush = flush;
+    }
+  }
+  const poop: BigPoops = new BigPooper('mornings', true);
+  poop as OtheRtype;
 ```
 
 ## flow
@@ -494,8 +530,8 @@
         is a multi-line
         comment */
 
-  /* $FlowIssue this is how you suppress errors inside JSX */
-  someCode("with errors, all previous lines apply only to this line");
+/* $FlowIssue this is how you suppress errors inside JSX */
+someCode("with errors, all previous lines apply only to this line");
 ```
 
 #### function typing
