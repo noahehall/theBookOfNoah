@@ -439,6 +439,12 @@ function Functions() {
 
 }
 
+// cannot include var definitions
+// all functions must be external, without a fn body
+interface Interfaces {
+  function someFn () external returns (bool);
+}
+
 // @see https://docs.soliditylang.org/en/latest/contracts.html#contracts
 contract Contracts {
   uint someNumber; // state var: stored in contract storage
@@ -489,6 +495,14 @@ contract Contracts {
     // maximum gas spend is 2300
   }
 }
+
+// derived contract
+// bases contract can be in the same file, imported, or retrieved via HTTP (e.g. github)
+// you can specify 1/more contracts after the is keyword, and send in any params for their constructor fn
+contract DerivedContract is Contracts, Interfaces, SomeOtherContract(100) {
+  // contract body
+}
+
 
 // interfaces with the EVM logging mechanism
 contract Events {

@@ -168,6 +168,12 @@ sudo apt-get install solc
   - signatures in ehtereum include a third param called v: used to verify which accounts priate keys was used to sign a message, and the transactions sneder
   - signatures produced by web3.js are the concatenation of r, s and v
 
+### tokens
+
+- ERC-20
+- ERC-721
+- there are others
+
 ### transactions
 
 - a msg sent from one account to another (or to the same account)
@@ -264,8 +270,6 @@ sudo apt-get install solc
 
 ### libraries: todo (see link)
 
-### interfaces: todo
-
 ### contracts
 
 - if you declara a local variable of contract type (e.g. `ContractName poop`) you can call fns on that contract
@@ -273,12 +277,14 @@ sudo apt-get install solc
 - the data representation of a contract is identical to that of address type, and is also used in the ABI
 - the members of contract types are the external fns of the contract, including state variables marked as public
 - inheritance
-  - when a contract inherits from other contracts, only a single contract is created on the blockchain
-  - and the code from all the base contracts are copied into the created contract
-  - import inheritance
-    - todo
-  - interface contracts
-    - todo
+  - supports multiple inheritance by copying code
+    - when a contract inherits from other contracts, only a single contract is created on the blockchain
+    - and the code from all the base contracts are copied into the created contract
+  - two mechanisms
+    - interface contracts
+      - this is how token standards are implemented: if any contract wants to adopt a token, needs to provide the fns defined in the token interface
+    - derived contracts
+      - last contract in file gets deployed
 
 #### structure
 
