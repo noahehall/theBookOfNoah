@@ -272,6 +272,13 @@ sudo apt-get install solc
 - can be instantiated via new
 - the data representation of a contract is identical to that of address type, and is also used in the ABI
 - the members of contract types are the external fns of the contract, including state variables marked as public
+- inheritance
+  - when a contract inherits from other contracts, only a single contract is created on the blockchain
+  - and the code from all the base contracts are copied into the created contract
+  - import inheritance
+    - todo
+  - interface contracts
+    - todo
 
 #### structure
 
@@ -320,7 +327,7 @@ sudo apt-get install solc
   - you can create a blockchain explorer that tracks transactions & balances
 - require: defines conditions that reverts all changes if not met
 - error: allow you to provide info about why an operation failed; errors are returned to the caller of the fn
-  - runtime error: due to EVM/operatoins
+  - runtime error: due to EVM/operations
   - application errors: due to some condition in the contract code/wrong data
     - usese assert, require, and revert global fns
   - error handling: how to handle and communicate errors to the caller of the contract

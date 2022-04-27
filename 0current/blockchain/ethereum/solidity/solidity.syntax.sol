@@ -97,9 +97,8 @@ contract GlobalFns {
 
   }
 
-  // can specify multiple conditions within a body of a fn
   // if condition evaluates false an exception is thrown
-  // all used gas is refunded ?
+  // exactly like the revert call, but allows you to return data to the caller
   // returns an error msg to the caller
   function requireCondition() {
     require(
@@ -111,9 +110,8 @@ contract GlobalFns {
     require(msg.sender != someAddr);
   }
 
-  // can specify multiple conditions
   // if condition evaluates false an exception is thrown
-  // no gas is refunded
+  // uses up all the gas (spent & unspent) and none is refunded
   // used mostly for internal testing
   function assertCondition () {
 
@@ -123,7 +121,7 @@ contract GlobalFns {
   // ^ they can accept data
   error NoToilertPaper();
   function revertWithArray() {
-    if (block.timestamp > whatever) {
+    if (thisEvalutesToFalse) {
       revert NoToilerPaper();
     }
   }
