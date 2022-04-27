@@ -371,8 +371,12 @@
 ## typescript
 
 - todos
+
   - [types vs interfaces](https://www.typescriptlang.org/play?e=83#example/types-vs-interfaces)
   - [handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
+
+- use cases
+  - transpilation: down-level the output js to a specific JS release via the `target` option
 
 ### gotchas
 
@@ -515,6 +519,15 @@ declare const backpack: Backpack<string>;
 // intersections
 type Combined = { a: number } & { b: string }; // combined == { a: number, b: string }
 type Conflicting = { a: number } & { a: string }; // error
+```
+
+### tsc: typescript compiler
+
+```js
+pnpm add typescript // install tsc to node_modules
+pnpm tsc somefile.ts // typecheck a specific file and output a .js file with the types removed
+  --noEmitOnError // dont output files if errors exist
+  --target es2015 // set which version of JS to downlevel to
 ```
 
 ## flow
