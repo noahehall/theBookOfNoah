@@ -8,6 +8,8 @@ https://docs.openzeppelin.com/
 
 ### example process
 
+- [implemented here](https://github.com/udacity/nd1309-work-code/tree/master/Course_Identity_And_Smart_Contracts/SampleToken)
+
 - Create an ERC-20 token using OpenZeppelin
 - Use Truffle to compile and deploy the token contract to a locally running ethereum network
 - Use Infura and Truffle to deploy the token contract to the Rinkeby Public Test Network

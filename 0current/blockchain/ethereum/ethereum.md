@@ -261,7 +261,9 @@ contract ERC20Interface {
   string public constant symbol = 'POOP';
   // important as ethereum cant deal with decimals, only integers
   // but via this property you can imitate it
-  uint8 public constant decimals = 18; // how divisible a token can be, 18 is common
+  // how divisible a token can be, 18 is common
+  // the derived contract would set totalSupply = someAmount * (10 * decimals) in the constructor when creating the token
+  uint8 public constant decimals = 18;
 
   /** required events */
   // emitted when a contract transfers a token
