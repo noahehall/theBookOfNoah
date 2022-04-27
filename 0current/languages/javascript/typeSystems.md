@@ -265,6 +265,10 @@
 - overload: a function with the same name, but different types of parameters
   - fns of type overLoadFn are `overloaded`
 - thunks: fns in the form of `() => A`
+- structural typing: aka duck typing: focuses on the shape of an object; if it looks like a duck, treat it like a duck
+  - if two objects have the same shape, they are considered to be of the same type
+  - The shape-matching only requires a subset of the object’s fields to match.
+  - no distinction between objects and classes
 
 ## commonalities
 
@@ -368,39 +372,149 @@
 
 - todos
   - [types vs interfaces](https://www.typescriptlang.org/play?e=83#example/types-vs-interfaces)
+  - [handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
+
+### gotchas
 
 ```js
+// calling a method on a numeric literal requires it to be in parentheses to aid the parser.
+(1).toExponential();
+
+// types vs interfaces
+// ^ Type aliases behave differently from interfaces with respect to recursive definitions and type parameters
+
+// If some variant is not covered, the return type of a fn will be poop | undefined
+type SomeType = "this" | "that" | "thisIsntCheckedWithinFn";
+const someFn = (arg: SomeType) => {
+  if (arg === "this") return "this";
+  return arg;
+};
+// since we didnt cover all the cases, the return type will be string | undefined
+const poop = someFn();
+
+// const vs readonly
+// const only declares the reference to be immutable
+// notice below the referent is can still be mutated
+const a = [1, 2, 3];
+a.push(102);
+a[0] = 101;
+// const assertions (via as keyword) works for arrays and object literals
+let a = [1, 2, 3] as const;
+a.push(102); // error
+a[0] = 101; // error
+// readonly stops all mutation
+interface Rx { readonly x: number;}
+let rx: Rx = { x: 1 };
+rx.x = 12; // error
+let rx: Readonly<X> = { x: 1 }; // you can even make all properties read only
+rx.x = 12; // error
+// stop all mutations on arrays
+let a: ReadonlyArray<number> = [1, 2, 3];
+let b: readonly number[] = [1, 2, 3];
+a.push(102); // error
+b[0] = 101; // error
+```
+
+### basics
+
+```js
+/** imports */
+import { value, Type } from "npm-package";
+import { other, Types } from "./local-package";
+import * as prefix from "../lib/third-package";
+import f = require("single-function-package"); // how to import commonjs
+
+/** exports */
+// you can use export lists & direct exports in the same file
+export { f }; // an export list
+function f() { return g(); }
+function g() {} // g is not exported
+export function a { return g() } // a direct export
+
 /**
  * type examples
  * native types
- * boolean, bigint, null, number, string, symbol, and undefined
+ * number, string, bigint, boolean, symbol, null, undefined, object
  * typescript extensions
- * any, unkown, never, void
+ * any: turns off the typechecker
+ * unknown: the top type from which all inherit
+ * object literal: e.g. { property: Type}
+ * void: subtype of undefined, intended for use as a return type
+ * T[]: mutable arrays, shortcut for Array<T>
+ * [T, T]: fixed-length mutable tuple, a subtype of T[]
+ * (arg: T) => U: functions
  */
-  let poop: string = 'flush';
 
-  // for objects, classes, fns
-  interface BigPoops {
-    when: string;
-    flush: boolean;
-  }
-  // as object
-  const iTake: BigPoops = {
-    when: 'mornings',
-    flush: true
-  }
-  // as class: i know hella duplication
-  class BigPooper {
-    when: string;
-    flush: boolean;
+// basic types
+let poop: string = "flush";
+const direction: 'left' | 'right' = 'left'; // subtype  of primitives
 
-    constructor (when: string, flush: boolean) {
-      this.when = when;
-      this.flush = flush;
-    }
+// for objects, classes, fns
+// preferred over types unless you need specific type features
+interface BigPoops {
+  when: string;
+  flush: boolean;
+}
+// as object
+const iTake: BigPoops = {
+  when: "mornings",
+  flush: true,
+};
+// as class: i know hella duplication
+class BigPooper {
+  when: string;
+  flush: boolean;
+
+  constructor(when: string, flush: boolean) {
+    this.when = when;
+    this.flush = flush;
   }
-  const poop: BigPoops = new BigPooper('mornings', true);
-  poop as OtheRtype;
+}
+const poop: BigPoops = new BigPooper("mornings", true);
+
+// fns
+// shortcut syntax
+let fnSyntax1: (a: any, b: any) => any = (a, b) => a;
+// samething but more verbose
+// Type parameters should only be used to propagate type information, such as constraining parameters to be the same type:
+let fnSyntax2: <T, U>(a: T, b: U) => T = (a, b) => a;
+/**
+ * composing types
+ */
+
+// determining the type of a var
+// string 	typeof s === "string"
+// number 	typeof n === "number"
+// bigint 	typeof m === "bigint"
+// boolean 	typeof b === "boolean"
+// symbol 	typeof g === "symbol"
+// undefined 	typeof undefined === "undefined"
+// function 	typeof f === "function"
+// array 	Array.isArray(a)
+// object 	typeof o === "object"
+
+// unions
+// when a type can be any of the given types
+type MyBool = true | false;
+type someOpts = string | string[];
+
+// generics
+// provide variables to types, e.g. specifying the type of elements within an array
+type StringArray = Array>string>;
+type ObjectWithNameArray = Array<{name: string}>
+
+// interface generic
+interface Backpack<Type> {
+  add: (obj: Type) => void;
+  get: () => Type;
+}
+// This line is a shortcut to tell TypeScript there is a
+// constant called `backpack`, and to not worry about where it came from.
+declare const backpack: Backpack<string>;
+
+// intersections
+type Combined = { a: number } & { b: string }; // combined == { a: number, b: string }
+type Conflicting = { a: number } & { a: string }; // error
 ```
 
 ## flow
