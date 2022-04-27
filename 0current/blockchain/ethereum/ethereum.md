@@ -64,22 +64,6 @@
   - pyethereum
   - ethereumJ (java)
 
-## smart contract
-
-- applications that run exactly as programmed without any possibilty of downtime, censorship, fraud or third-party interference
-  - a contract written in code; to programmatically enforce rules setup in a negotiation between two parties
-  - an object on the ethereum blockchain that contains code to be executed by the EVM
-  - can store data, execute logic, interact with other smart contracts, and send ether
-  - can hold ether just like a wallet, and have an address just like a wallet
-- use cases
-
-  - when buying something from a seller, you send the money to the smart contract
-    - the smart contract will hold the ether until you receive the stuff
-    - once the stuff is received, you update the smart contract and it will send the ether to the seller
-
-- test network: for testing smart contracts via the EVM
-- gotchas: once your smart contracts are deployed to the blockchain it cannot be changed!
-
 ### lifecycle (high level)
 
 - develop & compile
@@ -158,6 +142,32 @@
   - optional fields: used to record the creation & execution of smart contracts
     - data: todo
     - init: todo
+
+#### smart contract
+
+- applications that run exactly as programmed without any possibilty of downtime, censorship, fraud or third-party interference
+  - a contract written in code; to programmatically enforce rules setup in a negotiation between two parties
+  - an object on the ethereum blockchain that contains code to be executed by the EVM
+  - can store data, execute logic, interact with other smart contracts, and send ether
+  - can hold ether just like a wallet, and have an address just like a wallet
+- use cases
+
+  - when buying something from a seller, you send the money to the smart contract
+    - the smart contract will hold the ether until you receive the stuff
+    - once the stuff is received, you update the smart contract and it will send the ether to the seller
+
+- test network: for testing smart contracts via the EVM
+- gotchas: once your smart contracts are deployed to the blockchain it cannot be changed!
+
+#### ether
+
+- the native ucrrency of ethereum used to power smart contracts
+
+#### tokens
+
+- built on the ethereum platform
+- used for exchanging value between different parties based on rules specified in that tokens smart contract
+- represent any fungible (replaceable) tradable good such as coins, loyalty points, gold certificates, IOUs or non fungible goods (unique collectibles) e.g. in-game itmes, etc
 
 ### wallet
 

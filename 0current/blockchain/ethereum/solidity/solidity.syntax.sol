@@ -398,6 +398,7 @@ error NotEnoughFunds(uint requested, uint available);
 // ^ view: read only access to contract data
 // ^ constant: same as view
 // ^ payable: caller can send ether via this fn
+// ^^ if no ether is sent when fn is invoked an exception is thrown
 // fn type conversion
 // ^ pure: can be converted to view & non-payable fns
 // ^ view: can be converted to non-payable fns
@@ -504,7 +505,8 @@ contract DerivedContract is Contracts, Interfaces, SomeOtherContract(100) {
 
 
 // utilises EVM logging mechanism
-// any service (e.g. dapp, website, etc) connected to the Ethereum JSON-RPC API can listen for and react to events
+// any service (e.g. dapp, website, etc) connected to the Ethereum JSON-RPC API can listen for and react to events,
+// ^ should emit events whenever you need to notifiy these services, e.g. before reverts
 // events are stored in all ethereum nodes
 // are declared within a contract and become part of the contract's ABI definition
 contract Events {

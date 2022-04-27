@@ -285,6 +285,8 @@ sudo apt-get install solc
       - this is how token standards are implemented: if any contract wants to adopt a token, needs to provide the fns defined in the token interface
     - derived contracts
       - last contract in file gets deployed
+- ABI: application binary interface
+  - dApps use this JSON file as the contracts interface
 
 #### structure
 
