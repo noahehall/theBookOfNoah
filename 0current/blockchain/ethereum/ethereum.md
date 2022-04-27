@@ -22,6 +22,7 @@
 - [ethereum youtube](https://www.youtube.com/user/ethereumproject)
 - [networks & public faucets](https://ethereum.org/en/developers/docs/networks/)
   - [this one works](https://fauceth.komputing.org)
+- [ethereum courses on block geeks](https://courses.blockgeeks.com/course/bg101-ethereum-course-101/)
 - todo
   - [ethereum yellowpaper](https://github.com/ethereum/yellowpaper)
   - [ethereum docs](https://ethdocs.org/en/latest/introduction/what-is-ethereum.html?highlight=EVM#ethereum-virtual-machine)
@@ -29,6 +30,7 @@
   - [search the ethereum blockchain](https://etherscan.io/)
   - [ethereumjs/tx package](https://github.com/ethereumjs/ethereumjs-monorepo/tree/master/packages/tx)
   - [ethereum metrics](https://ethstats.net/)
+  - [what is an ethereum token](https://blockgeeks.com/guides/ethereum-token/)
 
 ## terms
 
@@ -46,6 +48,7 @@
 
 ## solidity
 
+- check the solidity.verbose & solidity.syntax files
 - modeled after cpp, python and javascript, submitted to EVM for execution
 - statically typed, supporting inheritance and libraries
 - high level language for coding and deploying smart contracts
@@ -143,6 +146,10 @@
     - data: todo
     - init: todo
 
+#### ether
+
+- the native ucrrency of ethereum used to power smart contracts
+
 #### smart contract
 
 - applications that run exactly as programmed without any possibilty of downtime, censorship, fraud or third-party interference
@@ -151,23 +158,32 @@
   - can store data, execute logic, interact with other smart contracts, and send ether
   - can hold ether just like a wallet, and have an address just like a wallet
 - use cases
-
+  - create tokens and facilitate transactions of tokens and record alances of tokens in an account
   - when buying something from a seller, you send the money to the smart contract
     - the smart contract will hold the ether until you receive the stuff
     - once the stuff is received, you update the smart contract and it will send the ether to the seller
-
 - test network: for testing smart contracts via the EVM
 - gotchas: once your smart contracts are deployed to the blockchain it cannot be changed!
 
-#### ether
-
-- the native ucrrency of ethereum used to power smart contracts
-
-#### tokens
+##### tokens
 
 - built on the ethereum platform
 - used for exchanging value between different parties based on rules specified in that tokens smart contract
 - represent any fungible (replaceable) tradable good such as coins, loyalty points, gold certificates, IOUs or non fungible goods (unique collectibles) e.g. in-game itmes, etc
+
+##### token contracts
+
+- smart contracts that contain a `mapping(address => balance)` and deployed on the ethereum network
+  - i.e. maps account addresses to their balances
+  - balances can represent anything, a monetary value, license, physical object, etc, determined by the contract creator
+  - the unit of this balance is called a token
+- token contracts need to follow the ethereum token standard (protocol)
+
+##### ERC
+
+- Ethereum Request for Comments
+- technical documents used by smart contract developers
+- define a set of rules to implement tokens on the Ethereum blockchain
 
 ### wallet
 

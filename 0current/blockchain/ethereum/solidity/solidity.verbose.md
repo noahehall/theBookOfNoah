@@ -53,6 +53,8 @@
 
 ## todos (skipped)
 
+- this file
+  - theres stuff in here that should be in ethereum.md or in the solidity.syntax file
 - [data types](https://docs.soliditylang.org/en/latest/types.html)
   - bit operations
   - shifts
@@ -67,8 +69,7 @@
   - user defined value types
   - function types
     - specifically the examples
-  - Array Members
-    - the contract ArrayContract example
+  - Array Members# e
   - array slices
   - structs
   - mapping types
