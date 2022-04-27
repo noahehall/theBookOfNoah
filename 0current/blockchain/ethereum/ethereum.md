@@ -245,25 +245,50 @@
   - all they need is the contract address that implements the token
   - only allows transfer of token value (but not the token data?)
 - only allows a single token issuance event (thus totalSupply cant be changed)
+- mint: creating new tokens to increase the totalSupply
+- burn: decrease the totalSupply
+  - e.g. by sending them to address 0x0
+    - doesnt decrease the totalSupply perse, but it makes the transfered tokens unaivable (because 0x0 owns them)
 
 ```js
 
-interface ERC20BASE {
-  // optional fields
-  // cant be defined in an interface, but derived contracts should implement them
-  strig public constant name = 'Example ERC-20 Token';
-  string public constant symbol = 'POOP';
-  uint8 public constant decimals = 18; // most common # of decimal places
+contract ERC20Interface {
+  /** optional fields */
 
-  // required events
+  // keep it short and sweet
+  strig public constant name = 'Example ERC-20 Token';
+  // similar to a stock symbol
+  string public constant symbol = 'POOP';
+  // important as ethereum cant deal with decimals, only integers
+  // but via this property you can imitate it
+  uint8 public constant decimals = 18; // how divisible a token can be, 18 is common
+
+  /** required events */
+  // emitted when a contract transfers a token
   event Transfer(address indexed from, address indexed to, uint tokens);
+  // emitted when one address approves another address for spending a specific amount of tokens
   event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
 
+  /** required fns */
+
+  // maximum supply of tokens that can circulate between addresses
   function totalSupply() public ocnstant returns (uint);
+  // # of tokens held by a given address, is viewable by anyone
+  // the derived contract uses this to implement the mapping fn
   function balanceOf(address tokenOwner) public constant returns (uint balance);
+  // the owner manually transfers
+  // owner can transfer tokens to another address
+  // no checks are made to determine if the recipient is valid (its up to the owner)
+  // ^ possible to send to a wrong person, or to an invalid address
   function transfer(address to, uint tokens) public returns (bool success);
+  // enables the smart contract to automate the transfer of tokens on behalf of the owner
+  // ^ i.e. the owner approves the contract to send on their behalf
   function transferFrom(address from, address to, uint tokens) public returns (bool success);
+  // token owner gives approval to another address (e.g. a smart contract) to spend their tokens, up to a certain allowance
+  // the other address uses the transferFrom fn
   function approve(address spender, uint tokens) public returns (bool success);
+  // amount of tokens (remaining) allowed to be transfered from an owner by another address
+  // generally implemented by a mapping inside a mapping
   function allowance(address tokenOwner, address spender) public constant returns (uint remaining);
 }
 
