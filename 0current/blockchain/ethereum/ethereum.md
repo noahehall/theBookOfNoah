@@ -246,6 +246,29 @@
   - only allows transfer of token value (but not the token data?)
 - only allows a single token issuance event (thus totalSupply cant be changed)
 
+```js
+
+interface ERC20BASE {
+  // optional fields
+  // cant be defined in an interface, but derived contracts should implement them
+  strig public constant name = 'Example ERC-20 Token';
+  string public constant symbol = 'POOP';
+  uint8 public constant decimals = 18; // most common # of decimal places
+
+  // required events
+  event Transfer(address indexed from, address indexed to, uint tokens);
+  event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
+
+  function totalSupply() public ocnstant returns (uint);
+  function balanceOf(address tokenOwner) public constant returns (uint balance);
+  function transfer(address to, uint tokens) public returns (bool success);
+  function transferFrom(address from, address to, uint tokens) public returns (bool success);
+  function approve(address spender, uint tokens) public returns (bool success);
+  function allowance(address tokenOwner, address spender) public constant returns (uint remaining);
+}
+
+```
+
 ##### ERC-621
 
 - extension of ERC-20
