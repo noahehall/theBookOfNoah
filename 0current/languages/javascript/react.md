@@ -127,68 +127,48 @@
 ## lifecycle methods (in order)
 
 - mounting: component instance is being created and inserted into the DOM
-
   - _constructor_
-
     - when being created & before mounting
     - usescases: initialize state, bind instance methods for event handlers
-
   - _static getDerivedStateFromError_
-
     - invoked after an error is thrown in achild component
     - no side effects allowed (e.g. fetches)
     - for updating state
-
   - _static getDerivedStateFromProps_
-
     - right before the render method on initial and subsequent updates
       - fired on every render! use with caution
     - return an object to update state or null
     - doesnt have access to the component instance
       - move shared logic outside the class definition
     - usecases: when state depends on changes in props over time (e.g. deciding if a component should be animated in and out)
-    -
-
   - _render_
     - only required method
     - return null to render nothing
   - _componentDidMount_
     - after component is rendered to the DOM
     - usecases: timers, async shit, interactionn with the browser
-
 - updating: when a component instance is being rerendered; caused by a change to state/props/forceUpdate
-
   - _render_: see mounting section
   - _static getDerivedStateFromProps_: see mounting section
-  -
-
   - _getSnapshotBeforeUpdate_
     - invoked before component updates are flushed to the dom
     - sends captured values to _componentDidUpdate_ as third param
       - return null if nothing has changed
     - usecases: capture dom info (e.g. scroll position)
-    -
   - _shouldComponentUpdate_
-
     - performance enhancement
     - receives cur + new props to be compared
     - not called for initial render OR after _forceUpdate_
     - does NOT prevent child components from rendering when THEIR props/state changes
-    -
-
   - _componentDidUpdate_
     - immediately after update occurs
     - not called for the initial render
     - usecases: operate on the DOM, network requests AFTER comparing current & next props requires a new fetch
     - receives a third prop if _getSnapshotBeforeUpdate_ is used
-
 - unmounting: when a component is being removed from the DOM and destroyed
-
   - _componentWillUnmount_
-
     - before being destroyed
     - usescases: remove timers, canceling shit (e.g. fetches/subscriptions)
-
   - _componentDidCatch_
     - after an error has been thrown by a child component
     - called during commit phase & allows side effects
@@ -201,13 +181,11 @@
 ## instance props & methods
 
 - _setState_
-
   - informs react state has changed & to asynchronously flush these changes to the DOM
   - queues a rerender for the calling component & its descendants
   - update the UI in response to events
   - react batches updates for performance; this is a **REQUSTE**
   - call setState **ONLY** when it differes from the previous state
-
 - _forceUpdate_
 
   - use when the render method depends on data external to props/state
@@ -224,9 +202,7 @@
 ## React; top-level api
 
 - _React.Component_: have state and life cycle methods (PureComponent doesnt)
-
 - _React.PureComponent_: no state/life cycle methods but shallow compares new & old props automatically (i.e. implement shouldComponentUpdate)
-
 - _React.children_
 - _cloneElement_
 - _isValidElement_
@@ -236,8 +212,6 @@
 - _React.lazy_
 - _React.Suspense_
 
--
-
 ## hooks
 
 - let you into react life cycle features from a functional component
@@ -245,9 +219,7 @@
 - only at the top level of functional components
 - dont call inside loops, conditions or nested functions
 - react tracks hooks via the order they are invoked
-
 - _useState_
-
   - add local state to functional copmonents
   - doesnt shallow merge old & new state like setstate
     - it _REPLACES_ the entire state!
@@ -255,9 +227,7 @@
   - pass a fn to setState fn if
     - _new_ state depends on the _prev_ state
     - initial state is the result of an expensive computation
-
 - _useEffect_
-
   - for data fetching, subscriptions, changing dom elements, i.e any side asynchronous side effect
   - runs on every render so make sure to:
     - add used vars in the dependency array
@@ -269,10 +239,7 @@
     - _componentDidMount_
     - _componentDidUpdate_
     - _componentWillUpdate_
-  -
-
 - _useLayoutEffect_
-
   - synchronous version of _useEffect_ that fires synchronously after all DOM mutations but before the browser has a chance to paint
     - in comparison to _useEffect_ that fires asynchronously
   - allows you to memoize effects but requires all dependent variables used inside the effect hook to be listed as a dep
@@ -281,56 +248,40 @@
     - see _useEffect_
     - _componentDidMount_, _componentDidUpdate_
     - read layout information from the DOM and synchronously re-render (e.g. updating scroll position)
-
 - _useContext_
-
   - for global state thats accessible to any child component
   - forcibly rerenders all child components on update
   - can be at multiple levels and the first context.provider can intercept & handle it
     - think of the normal event bubbling logic
-
 - _useReducer_
-
   - alternative to _useState_ for:
     - complex objects
     - lazy initialization of state
     - advanced initialization of state
     - when next state depends on prev state
     - optimizing performance for components that trigger deep updates by passing a _dispatch_ function instead of callbacks
-
 - _useCallback_
-
   - returns a memoized callback to calculate a new value when its dependencies change
   - alternative to _useMemo_ which provide the memoized value instead
   - usecases:
     - a child component needs the dispatch because it controls the dependency values
-    -
-
 - _useMemo_
-
   - returns a memoized value when its dependencies change
   - runs during rendering
     - so **NO** side effects
-  -
-
 - _useRef_
-
   - returns a mutable ref object that exist sfor the lifetime of the component
   - gives you the _SAME_ ref via _Object.is_ logic
   - usecases:
     - needing to access a child imperetively; e.g. a dom node to set focus
     - keeping any mutable value around across renders
       - as it doesnt trigger a rerender when its value is mutated
-  -
-
 - _useImperativeHandle_
-
   - customizes the instance value expsosed to parent components when using _ref_
   - should be used with _forwardRef_ when exporting _ANY_ component that implements this hook
     - permits any consuming component to call `poop.current\* to get a handle to the ref created in the component definition
   - react generally recommends staying away from this hook
   - usescases: whenever you need to write imperative code related to a _ref_ object, e.g. a handle on a input dom element to handle focus
-
 - _useDebugValue_
 
 ## ReactDOM: top level api
@@ -340,12 +291,8 @@
 - _unmountComponentAtNode_
 - _findDOMNode_
 - _createPortal_
-
 - _ReactDOM.createPortal_: render children into a dom node that exist outside the hierarchy of the parent component
-
   - event bubbling still occurs in the parent components hierarchy regardless of where the child element exists in the brownser DOM hierarchy
-
-  -
 
 ## ReactDOMServer: top level api
 
@@ -353,8 +300,6 @@
 - _renderToStaticMarkup_
 - _renderToNodeStream_
 - _renderToSTaticNodeStream_
-
--
 
 ## react examples
 
