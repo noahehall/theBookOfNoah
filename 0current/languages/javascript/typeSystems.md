@@ -495,6 +495,17 @@ class BigPooper {
 const poop: BigPoops = new BigPooper("mornings", true);
 
 // fns
+// type alias
+type SomeFn = (a: any) => void;
+// type alias with call signature (e.g for Date)
+interface CallOrConstruct {
+  new (s: string): Date; // new Date('today')
+  (n?: number): number; // when invoking as fn Date(123456)
+}
+// construct signatures
+type SomeConstructor {
+  new (s: string): SomeObject; // new Poop('flush')
+}
 // inline
 function poop(a: any): any { /* body */}
 // shortcut syntax
