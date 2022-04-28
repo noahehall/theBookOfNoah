@@ -16,7 +16,7 @@
     - but definitely need to get through it
   - [creating types from types](https://www.typescriptlang.org/docs/handbook/2/types-from-types.html)
     - skipped entire screen
-  -
+  - [type-only field declarations](https://www.typescriptlang.org/docs/handbook/2/classes.html#type-only-field-declarations)
 
 ## links
 
@@ -338,9 +338,8 @@ class BigPooper {
 const poop: BigPoops = new BigPooper("mornings", true);
 
 // interfaces can be extended
-interface A extends B, C, D {
-  /*annotations*/
-}
+interface A extends B, C, D {}
+
 // type alias can can combine interfaces (similar affect as extend)
 // i.e. an intersection type
 type CombinedInterfaces = SomeInter & OtherInter;
@@ -500,6 +499,15 @@ class Example {
 
 // inheritance
 interface Poop() {}
-// type-check ocnfirm boop correctly implements poop
-class Boop implements Poop {}
+
+// implements:  check that the class can be treated as the interface type
+// ^ i.e. has the same props & method signatures
+// ^ It doesn’t change the type of the class or its methods at all
+// ^ optional interface properties arent created on the class
+class Boop implements Poop, Shoop, Doop {}
+
+// extends: derived class has all the props & methods of base classes
+// ^ even optional props, unlike interface implementations
+class A extends B,C,D {}
+
 ```
