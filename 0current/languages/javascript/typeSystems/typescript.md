@@ -81,6 +81,8 @@ const poop = someFn();
 
 - todos
   - [start here](https://react-typescript-cheatsheet.netlify.app/docs/basic/setup)
+  - [quick setup overview](https://reactjs.org/docs/static-type-checking.html#typescript)
+  - [ts, react & webpack](https://webpack.js.org/guides/typescript/)
   - [and here](https://www.typescriptlang.org/docs/handbook/react.html)
 
 ```js
@@ -213,6 +215,9 @@ pnpm add typescript // install tsc to node_modules
 pnpm tsc somefile.ts // typecheck a specific file and output a .js file with the types removed
   --noEmitOnError // dont output files if errors exist
   --target es2015 // set which version of JS to downlevel to
+  -- init // create a new tsconfig.json
+
+// tsconfig.json
 // common compiler options
 {
   compilerOptions: {
