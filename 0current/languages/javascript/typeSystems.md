@@ -384,8 +384,10 @@
 // calling a method on a numeric literal requires it to be in parentheses to aid the parser.
 (1).toExponential();
 
-// types vs interfaces
+// type aliases vs interfaces
 // ^ Type aliases behave differently from interfaces with respect to recursive definitions and type parameters
+// ^ interfaces can be extended via: interface Poop extends Flush
+// ^ alias can be extended via intersection: type Poop = Flush & { ... }
 
 // If some variant is not covered, the return type of a fn will be poop | undefined
 type SomeType = "this" | "that" | "thisIsntCheckedWithinFn";
@@ -419,7 +421,7 @@ a.push(102); // error
 b[0] = 101; // error
 ```
 
-### basics
+### cheatsheet
 
 ```js
 /** imports */
@@ -440,7 +442,7 @@ export function a { return g() } // a direct export
  * native types
  * number, string, bigint, boolean, symbol, null, undefined, object
  * typescript extensions
- * any: turns off the typechecker
+ * any: turns off the typechecker (wont produce errors)
  * unknown: the top type from which all inherit
  * object literal: e.g. { property: Type}
  * void: subtype of undefined, intended for use as a return type
@@ -448,6 +450,17 @@ export function a { return g() } // a direct export
  * [T, T]: fixed-length mutable tuple, a subtype of T[]
  * (arg: T) => U: functions
  */
+
+// type assertions
+// the as TYPE must be more specific than the inferred type
+const poop = {} as object;
+// to coerce to any type, you need double assertions
+const poop = ({} as any) as object;
+
+// modifiers
+type Modifiers {
+  optional?: any, // requires checking if undefined before use
+}
 
 // basic types
 let poop: string = "flush";
@@ -477,6 +490,8 @@ class BigPooper {
 const poop: BigPoops = new BigPooper("mornings", true);
 
 // fns
+// inline
+function poop(a: any): any { /* body */}
 // shortcut syntax
 let fnSyntax1: (a: any, b: any) => any = (a, b) => a;
 // samething but more verbose
@@ -521,6 +536,12 @@ type Combined = { a: number } & { b: string }; // combined == { a: number, b: st
 type Conflicting = { a: number } & { a: string }; // error
 ```
 
+### typescript + react
+
+- todos
+  - [start here](https://react-typescript-cheatsheet.netlify.app/docs/basic/setup)
+  - [and here](https://www.typescriptlang.org/docs/handbook/react.html)
+
 ### tsc: typescript compiler
 
 ```js
@@ -528,6 +549,12 @@ pnpm add typescript // install tsc to node_modules
 pnpm tsc somefile.ts // typecheck a specific file and output a .js file with the types removed
   --noEmitOnError // dont output files if errors exist
   --target es2015 // set which version of JS to downlevel to
+// common compiler options
+{
+  compilerOptions: {
+    "strict": true, // turn on all strict settings, can individually turn them off
+  }
+}
 ```
 
 ## flow
