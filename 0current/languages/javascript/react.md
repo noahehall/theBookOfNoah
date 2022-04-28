@@ -1,4 +1,8 @@
-# links
+# react
+
+- a complete react18 cheatsheet
+
+## links
 
 - react
   - [react docs](https://reactjs.org/docs/getting-started.html)
@@ -9,16 +13,6 @@
   - [why not to use event delegation in react < 17](https://github.com/facebook/react/issues/13635)
   - [should i use event delegation in react](https://dev.to/thawsitt/should-i-use-event-delegation-in-react-nl0)
   - [discussion about event delegation github issue](https://github.com/reactjs/reactjs.org/issues/3543)
-
-# TLDR
-
-- a complete react17 study guide
-- pairs well with
-  - frontendtech accessibility reference
-  - web technologies directory
-  - javascript reference
-
-# react
 
 ## best practices
 
@@ -54,25 +48,16 @@
   - You don’t need to annotate the return type of either your render() method or a stateless functional component
 
   - add a _useDebugValue_ inside custom hook definitions to support dev experience but _ALWAYS_ add a second formatting parm to defer expensive operations unless the hook is inspected
-
     - react doesnt recommend it for _EVERY_ custom hook, but when did we ever follow directions?
-
   - use the setState + updator syntax if next props & state relies on prev props & state
-
     - or use a reducer for complex/advanced situations
-
   - when performing side effects (e.g. fetching, animation, etc)
-
     - after a component has been updated
       - _componentDidUpdate_ > _static getDerivedStateFromProps_
     - before a copmonent has been updated
       - useEffect|useLayoutEffect
-    -
-
   - recompute data when props change
-
     - any of the memoization options > controlled/uncontrolled with a key > _static getDerivedStateFromProps_
-
   - catching errors for logging
     - _componentDidCatch_ > _static getDerivedStateFromEror_
 
@@ -83,25 +68,17 @@
 - **NEVER**
 
   - dont use `create-react-class` as it autobinds methods which has a performance hit
-
     - instead use
       - `class properties` which will do the autobinding when built
       - bind methods in the constructor (u lazy bum)
       - use are functions for event handlers
         - and this is the only reason you need autobinding anyway
-
   - use mixins: react-team doesnt recommend it
-
   - copy props into state
-
   - use deep equality checks/JSON.stringify for comparisons
-
     - use _immutability-helper_ instead
-
   - use _constructor_ if when not binding instance methods (for event handlers) or initializing state
-
   - use the callback in _setState_; move that logic to _componentDidUpdate_ as react recommends
-
   - use error boundaries for control flow
     - only for recovery
 
