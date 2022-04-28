@@ -64,11 +64,6 @@
 // calling a method on a numeric literal requires it to be in parentheses to aid the parser.
 (1).toExponential();
 
-// type aliases vs interfaces
-// ^ Type aliases behave differently from interfaces with respect to recursive definitions and type parameters
-// ^ interfaces can be extended via: interface Poop extends Flush
-// ^ alias can be extended via intersection: type Poop = Flush & { ... }
-
 // If some variant is not covered, the return type of a fn will be poop | undefined
 type SomeType = "this" | "that" | "thisIsntCheckedWithinFn";
 const someFn = (arg: SomeType) => {
@@ -77,28 +72,6 @@ const someFn = (arg: SomeType) => {
 };
 // since we didnt cover all the cases, the return type will be string | undefined
 const poop = someFn();
-
-// const vs readonly
-// const only declares the reference to be immutable
-// notice below the referent is can still be mutated
-const a = [1, 2, 3];
-a.push(102);
-a[0] = 101;
-// const assertions (via as keyword) works for arrays and object literals
-let a = [1, 2, 3] as const;
-a.push(102); // error
-a[0] = 101; // error
-// readonly stops all mutation
-interface Rx { readonly x: number;}
-let rx: Rx = { x: 1 };
-rx.x = 12; // error
-let rx: Readonly<X> = { x: 1 }; // you can even make all properties read only
-rx.x = 12; // error
-// stop all mutations on arrays
-let a: ReadonlyArray<number> = [1, 2, 3];
-let b: readonly number[] = [1, 2, 3];
-a.push(102); // error
-b[0] = 101; // error
 ```
 
 ## react quickies
@@ -108,8 +81,6 @@ b[0] = 101; // error
   - [and here](https://www.typescriptlang.org/docs/handbook/react.html)
 
 ```js
-
-
   const fncomponent = (): JSX.Element => <div>yolo worl</div>
   someFn(myRating as unknown as number)
   const someObj: any { things: 'hello'} as OtherThing
@@ -279,13 +250,38 @@ pnpm tsc somefile.ts // typecheck a specific file and output a .js file with the
 // type assertions
 // the as TYPE must be more specific than the inferred type
 const poop = {} as object;
+const otherPoop = {} as const; // makes it totally immutable
 // to coerce to any type, you need double assertions
 const poop = ({} as any) as object;
 
 // modifiers
 type Modifiers {
-  optional?: any, // requires checking if undefined before use
+  optional?: any; // requires checking if undefined before use
+  readonly noReAssignment: string; // can be reassigned,
+  [index: number]: string; // when you dont know the names, but you know the shape
 }
+
+// const vs readonly
+// const only declares the reference to be immutable
+// notice below the referent is can still be mutated
+const a = [1, 2, 3];
+a.push(102);
+a[0] = 101;
+// const assertions (via as keyword) works for arrays and object literals
+let a = [1, 2, 3] as const;
+a.push(102); // error
+a[0] = 101; // error
+// readonly stops all mutation
+interface Rx { readonly x: number;}
+let rx: Rx = { x: 1 };
+rx.x = 12; // error
+let rx: Readonly<X> = { x: 1 }; // you can even make all properties read only
+rx.x = 12; // error
+// stop all mutations on arrays
+let a: ReadonlyArray<number> = [1, 2, 3];
+let b: readonly number[] = [1, 2, 3];
+a.push(102); // error
+b[0] = 101; // error
 ```
 
 ### simple types
@@ -305,10 +301,10 @@ type Combined = { a: number } & { b: string }; // combined == { a: number, b: st
 type Conflicting = { a: number } & { a: string }; // error
 ```
 
-### interfaces
+### interfaces & type aliases
 
 ```js
-// preferred over types unless you need specific type features
+// preferred over type aliases
 interface BigPoops {
   when: string;
   flush: boolean;
@@ -329,6 +325,26 @@ class BigPooper {
   }
 }
 const poop: BigPoops = new BigPooper("mornings", true);
+
+// interfaces can be extended
+interface A extends B, C, D {
+  /*annotations*/
+}
+// also combined (same as affect as extend)
+type CombinedInterfaces = SomeInter & OtherInter;
+
+// type aliases vs interfaces
+// ^ Type aliases behave differently from interfaces with respect to recursive definitions and type parameters
+// ^ interfaces can be extended via: interface Poop extends Flush
+// ^ type aliases can be combined: type Poop = Flush & { ... }
+// ^ the distinction is how conflicts are resolved
+
+// interface templates
+interface Box<T> {
+  contents: T;
+}
+const poop: Box<string> = "works";
+const poop: Box<number> = 1;
 ```
 
 ### functions
