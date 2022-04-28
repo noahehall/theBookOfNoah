@@ -375,6 +375,10 @@
   - [types vs interfaces](https://www.typescriptlang.org/play?e=83#example/types-vs-interfaces)
   - [handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
 
+- skipped
+
+  - [type predicates](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
+
 - use cases
   - transpilation: down-level the output js to a specific JS release via the `target` option
 
@@ -446,6 +450,7 @@ export function a { return g() } // a direct export
  * unknown: the top type from which all inherit
  * object literal: e.g. { property: Type}
  * void: subtype of undefined, intended for use as a return type
+ * never: when a union is reduced to no valid type, i.e. a state that shouldnt exist in your code
  * T[]: mutable arrays, shortcut for Array<T>
  * [T, T]: fixed-length mutable tuple, a subtype of T[]
  * (arg: T) => U: functions
