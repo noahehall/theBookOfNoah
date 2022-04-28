@@ -2,6 +2,12 @@
 
 ## links
 
+- other
+
+  - [flowcheatsheet](https://devhints.io/flow)
+  - [meaning of set difference](https://mathworld.wolfram.com/SetDifference.html)
+  - [complement set, identical to set difference](https://mathworld.wolfram.com/ComplementSet.html)
+
 - flow
   - [remove typescript via babel](https://babeljs.io/docs/en/babel-preset-typescript)
   - [eslint-plugin-fb-flow](https://www.npmjs.com/package/eslint-plugin-fb-flow)

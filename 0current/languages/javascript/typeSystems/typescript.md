@@ -1,14 +1,9 @@
 # typescript
 
 - typescript
+- bookmark: https://www.typescriptlang.org/docs/handbook/2/objects.html#readonly-properties
 
 ## links
-
-- other
-
-  - [flowcheatsheet](https://devhints.io/flow)
-  - [meaning of set difference](https://mathworld.wolfram.com/SetDifference.html)
-  - [complement set, identical to set difference](https://mathworld.wolfram.com/ComplementSet.html)
 
 - react
   - [react type reference](https://flow.org/en/docs/react/types/)
@@ -255,6 +250,7 @@
     - constraints
     - specifying type arguments
     - guidelines for writing good generic functions
+  - [mapping modifiers](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html#mapping-modifiers)
 
 - skipped
 
@@ -325,13 +321,13 @@ export function a { return g() } // a direct export
 /**
  * type examples
  * native types
- * number, string, bigint, boolean, symbol, null, undefined, object
+ * number, string, bigint, boolean, symbol, null, undefined, object (any non primitive), Function
  * typescript extensions
  * any: turns off the typechecker (wont produce errors)
- * unknown: the top type from which all inherit
+ * unknown: the top type from which all inherit, safer than using any
  * object literal: e.g. { property: Type}
  * void: subtype of undefined, intended for use as a return type
- * never: when a union is reduced to no valid type, i.e. a state that shouldnt exist in your code
+ * never: when a union is reduced to no valid type, or a fn that ends the program/throws exception
  * T[]: mutable arrays, shortcut for Array<T>
  * [T, T]: fixed-length mutable tuple, a subtype of T[]
  * (arg: T) => U: functions
@@ -394,6 +390,39 @@ let fnSyntax1: (a: any, b: any) => any = (a, b) => a;
 // samething but more verbose
 // Type parameters should only be used to propagate type information, such as constraining parameters to be the same type:
 let fnSyntax2: <T, U>(a: T, b: U) => T = (a, b) => a;
+// overloads: require 2 more overload signatures
+// ^ specify some signatures without the body (overload signatures)
+// ^ and another specifying the body (implementation signature) that should handle ALL CASES
+function makeDate(timestamp: number): Date;
+function makeDate(m: number, d: number, y: number): Date;
+function makeDate(mOrTimestamp: number, d?: number, y?: number): Date {
+  if (d !== undefined && y !== undefined) {
+    return new Date(y, mOrTimestamp, d);
+  } else {
+    return new Date(mOrTimestamp);
+  }
+}
+const d1 = makeDate(12345678);
+const d2 = makeDate(5, 5, 5);
+const d3 = makeDate(1, 3);
+// annotating this within function functions
+interface DB {
+  filterUsers(filter: (this: User) => boolean): User[];
+}
+const db = getDB();
+const admins = db.filterUsers(function (this: User) {
+  return this.admin;
+});
+// object destructuring
+type ABC = { a: number; b: number; c: number };
+function sum({ a, b, c }: ABC) {
+  console.log(a + b + c);
+}
+// rest params
+function multiply(n: number, ...m: number[]) {
+  return m.map((x) => n * x);
+}
+
 /**
  * composing types
  */
