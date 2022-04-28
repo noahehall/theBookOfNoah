@@ -10,6 +10,9 @@
   - [mapping modifiers](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html#mapping-modifiers)
 - skipped
   - [type predicates](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
+  - [the array type](https://www.typescriptlang.org/docs/handbook/2/objects.html#the-array-type)
+    - skipped everything start with and after this
+    - but definitely need to get through it
 
 ## links
 
@@ -304,7 +307,7 @@ type Conflicting = { a: number } & { a: string }; // error
 ### interfaces & type aliases
 
 ```js
-// preferred over type aliases
+// preferred over type aliases for describing object types
 interface BigPoops {
   when: string;
   flush: boolean;
@@ -343,8 +346,16 @@ type CombinedInterfaces = SomeInter & OtherInter;
 interface Box<T> {
   contents: T;
 }
-const poop: Box<string> = "works";
-const poop: Box<number> = 1;
+const poop: Box<string> = { contents: "works" };
+const poop: Box<number> = { contents: 1 };
+
+// generic type alias
+type Box<Type> = {
+  contents: Type,
+};
+type OrNull<Type> = Type | null;
+type OneOrMany<Type> = Type | Type[];
+type OneOrManyOrNull<Type> = OrNull<OneOrMany<Type>>;
 ```
 
 ### functions
@@ -412,6 +423,7 @@ function multiply(n: number, ...m: number[]) {
 // a fn where te type of the input relate to the type of the output
 // ^ or where the types of two inputs relate in some way
 // T === placeholder, for whatever type the caller sends
+// enables you to avoid overloads entirely
 function firstElement<T>(arr: T[]): T | undefined {
   return arr[0];
 }
