@@ -32,6 +32,89 @@
   - [typeof types](https://flow.org/en/docs/types/typeof/)
   - [managing flow & typescript in vscode](https://stackoverflow.com/questions/48859169/js-types-can-only-be-used-in-a-ts-file-visual-studio-code-using-ts-check)
 
+## best practices
+
+- always
+
+  - when using an object as a map, always use flows `indexer property`
+    - it allows reads and writes using any key that matches the indexer key type
+  - reusability
+    - class types, type aliases, and interfaces should be defined as parameterized generics if reusability is intended
+      - this should also alieviate some of the extra work around defining your type definitions
+      - always include a default when parameteriing your generics
+  - intersection types
+    - use them when a fn can return different types based on input (see examples)
+  - immutability
+    - when you need to use a read-only version of an object|array, cast it via `$ReadOnly|$ReadOnlyArray` utility
+      - allows you to define a mutable + immutable object|array type without having to re-define and annotate each key twice
+    - use `$NonMaybeType<T>` to convert `null|undefined` types to exact types
+
+- generally
+
+  - you want to define your type separately from the object your annotating
+
+    - as a `type` alias for exporting
+    - as an `opaque` for internal use
+
+  - to document external data
+
+    - use super type for ALL of the params they contain
+    - use opaque type subclass for the values you use
+    - get the union of all the types out of the object via `externalTypes = ExternalTypes[$Keys<ExternalTypes>]`;
+    - use flows inferred type of the value to create a type, e.g. `type thisType: typeof externalData = 56` // externalData is inferred to be a number
+    - type cast difficult values to any, then to the desired type
+      - this is an escape hatch, but sometimes you need to be free!
+
+  - when you think you want a Class type, you likely want an Interface + implements
+    - more benefits... cheap negatives
+      - slightly extra work so the cost increases, but still worth it
+    - interfaces allow to set readOnly (covariant) props
+      - helps with immutability! #easyWin
+    - interfaces allow you to set writeOnly (contravariant) props
+      - helps with loosening types, e.g. during chaos engineering/monkey testing/api development! #easyWin
+  - you want to use generics
+    - refrain from using the `_` operator (to let flow infer the types)
+      - it works as if you explicitly set the type
+      - but its slower, and we like fast, #rickyBobby
+  - dont refine your generics
+    - instead add a type to them for clarity and specificity
+      - ide follow this for all first-party code
+      - This way you can keep the behavior of generics while only allowing certain types to be used.
+    - if you instead choose type refinements, why bother with generics?
+      - type refinements may still be useful for third-party code
+
+### gotchas
+
+- the `?` before the type marks the type as maybe, i.e. null|undefined|type
+- the `?` before the `:` in an object prop definition marks the prop as optional, i.e. can be missing from the object
+  - `someObj = { optionalProp?: ?number}`
+    - the prop is optional and can be missing
+    - the value can be null|undefined|numbercovarian
+- when you assign a type to a mutable variable (i.e. let|var)
+  - you can only mutate the value to a compatible type
+- when you dont assign a type to a mutable variable (i.e. let|var)
+  - flow tracks all previously assigned types to its type
+    - `let foo = 42, foo = 'hello;`
+    - `let isOneOf: number | string = foo` <-- is true because of the previous assignments
+- arrow functions may not have a this parameter annotation, as these functions bind their this parameter at the definition site, rather than the call site.
+- Classes operate as values & types
+  - i.e. you can use a class name wherever you would a type definition
+- flow accepts
+  - contravariant inputs: less specific types passed in
+  - covariant outputs: more specific types returned
+- interfaces properties can be
+  - invariant: read + write
+  - covariant: read-only
+  - contravariant: write-only
+- flow doe snot infer generic types, you must annotate it as generic
+  - flow may infer a type that is less polymorphic than you expect
+- when you pass one type into another you lose the original type
+  - e.g. passing a less specific type, where a more specific type was expected
+    - flow forgets about the more specific type, and uses the less specific one
+- Parameterized generics
+  - works: classes (used as a type), type aliases, interfaces
+  - errors: functions, function types
+
 ## cheatsheet
 
 ```js

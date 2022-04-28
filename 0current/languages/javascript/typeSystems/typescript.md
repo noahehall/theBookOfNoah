@@ -2,6 +2,14 @@
 
 - typescript
 - bookmark: https://www.typescriptlang.org/docs/handbook/2/objects.html#readonly-properties
+- todos
+  - [constraints](https://www.typescriptlang.org/docs/handbook/2/functions.html)
+    - constraints
+    - specifying type arguments
+    - guidelines for writing good generic functions
+  - [mapping modifiers](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html#mapping-modifiers)
+- skipped
+  - [type predicates](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
 
 ## links
 
@@ -12,7 +20,92 @@
   - [react children with typescript](https://www.carlrippon.com/react-children-with-typescript/)
   - [fn components with typescript](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components/)
 
+## terms
+
+- refinement: the ability for a static type checker to be able to tell the type of variable a mixed/any/etc type is. usually occurs within an if/case statement before use of the variable
+- invariant: a type that is less specific than another type
+  - does not accept `supertypes` or `subtypes`
+- covariance: a type that is more specific that another type
+  - does not accept `supertypes`
+  - accepts `subtypes`
+- contravariance
+  - accepts `supertypes`
+  - does not accept `subtypes`
+- bivariance
+  - accepts `supertypes` and `subtypes`
+- tuple: a list with a limited set of items
+  - tuples always have a fixed length based on its length when instantiated
+  - are not a subtype of arrays, thus cant be used where one is expected & vice versa
+  - only posses immutable array methods
+- nominal types: hides the implementation details of a type, and only exposes the public interface
+- identity function: returns whatever value was passed
+- generic type: i.e. polymorphic type
+  - identity function that returns the same type its passed
+- parametric polymorphism: i.e. parameterized generics; allow you to pass types in like arguments to a function
+- union types
+  - a value can be one of a set of types
+  - disjoint unions
+    - any number of object types which are each tagged by a single property with an `EXACT` value
+      - i.e. `success[true|false]`
+    - i.e they all share atleast ONE property, e.g. a `success` property in a response that could either be `true` or `false`
+- width subtyping
+  - permits you to pass a object with more properties that the type expects
+- overload: a function with the same name, but different types of parameters
+  - fns of type overLoadFn are `overloaded`
+- thunks: fns in the form of `() => A`
+- structural typing: aka duck typing: focuses on the shape of an object; if it looks like a duck, treat it like a duck
+  - if two objects have the same shape, they are considered to be of the same type
+  - The shape-matching only requires a subset of the object’s fields to match.
+  - no distinction between objects and classes
+
+## gotchas
+
+```js
+// calling a method on a numeric literal requires it to be in parentheses to aid the parser.
+(1).toExponential();
+
+// type aliases vs interfaces
+// ^ Type aliases behave differently from interfaces with respect to recursive definitions and type parameters
+// ^ interfaces can be extended via: interface Poop extends Flush
+// ^ alias can be extended via intersection: type Poop = Flush & { ... }
+
+// If some variant is not covered, the return type of a fn will be poop | undefined
+type SomeType = "this" | "that" | "thisIsntCheckedWithinFn";
+const someFn = (arg: SomeType) => {
+  if (arg === "this") return "this";
+  return arg;
+};
+// since we didnt cover all the cases, the return type will be string | undefined
+const poop = someFn();
+
+// const vs readonly
+// const only declares the reference to be immutable
+// notice below the referent is can still be mutated
+const a = [1, 2, 3];
+a.push(102);
+a[0] = 101;
+// const assertions (via as keyword) works for arrays and object literals
+let a = [1, 2, 3] as const;
+a.push(102); // error
+a[0] = 101; // error
+// readonly stops all mutation
+interface Rx { readonly x: number;}
+let rx: Rx = { x: 1 };
+rx.x = 12; // error
+let rx: Readonly<X> = { x: 1 }; // you can even make all properties read only
+rx.x = 12; // error
+// stop all mutations on arrays
+let a: ReadonlyArray<number> = [1, 2, 3];
+let b: readonly number[] = [1, 2, 3];
+a.push(102); // error
+b[0] = 101; // error
+```
+
 ## react quickies
+
+- todos
+  - [start here](https://react-typescript-cheatsheet.netlify.app/docs/basic/setup)
+  - [and here](https://www.typescriptlang.org/docs/handbook/react.html)
 
 ```js
 
@@ -121,188 +214,7 @@
 
 ```
 
-### best practices
-
-- always
-
-  - when using an object as a map, always use flows `indexer property`
-    - it allows reads and writes using any key that matches the indexer key type
-  - reusability
-    - class types, type aliases, and interfaces should be defined as parameterized generics if reusability is intended
-      - this should also alieviate some of the extra work around defining your type definitions
-      - always include a default when parameteriing your generics
-  - intersection types
-    - use them when a fn can return different types based on input (see examples)
-  - immutability
-    - when you need to use a read-only version of an object|array, cast it via `$ReadOnly|$ReadOnlyArray` utility
-      - allows you to define a mutable + immutable object|array type without having to re-define and annotate each key twice
-    - use `$NonMaybeType<T>` to convert `null|undefined` types to exact types
-
-- generally
-
-  - you want to define your type separately from the object your annotating
-
-    - as a `type` alias for exporting
-    - as an `opaque` for internal use
-
-  - to document external data
-
-    - use super type for ALL of the params they contain
-    - use opaque type subclass for the values you use
-    - get the union of all the types out of the object via `externalTypes = ExternalTypes[$Keys<ExternalTypes>]`;
-    - use flows inferred type of the value to create a type, e.g. `type thisType: typeof externalData = 56` // externalData is inferred to be a number
-    - type cast difficult values to any, then to the desired type
-      - this is an escape hatch, but sometimes you need to be free!
-
-  - when you think you want a Class type, you likely want an Interface + implements
-    - more benefits... cheap negatives
-      - slightly extra work so the cost increases, but still worth it
-    - interfaces allow to set readOnly (covariant) props
-      - helps with immutability! #easyWin
-    - interfaces allow you to set writeOnly (contravariant) props
-      - helps with loosening types, e.g. during chaos engineering/monkey testing/api development! #easyWin
-  - you want to use generics
-    - refrain from using the `_` operator (to let flow infer the types)
-      - it works as if you explicitly set the type
-      - but its slower, and we like fast, #rickyBobby
-  - dont refine your generics
-    - instead add a type to them for clarity and specificity
-      - ide follow this for all first-party code
-      - This way you can keep the behavior of generics while only allowing certain types to be used.
-    - if you instead choose type refinements, why bother with generics?
-      - type refinements may still be useful for third-party code
-
-#### gotchas
-
-- the `?` before the type marks the type as maybe, i.e. null|undefined|type
-- the `?` before the `:` in an object prop definition marks the prop as optional, i.e. can be missing from the object
-  - `someObj = { optionalProp?: ?number}`
-    - the prop is optional and can be missing
-    - the value can be null|undefined|numbercovarian
-- when you assign a type to a mutable variable (i.e. let|var)
-  - you can only mutate the value to a compatible type
-- when you dont assign a type to a mutable variable (i.e. let|var)
-  - flow tracks all previously assigned types to its type
-    - `let foo = 42, foo = 'hello;`
-    - `let isOneOf: number | string = foo` <-- is true because of the previous assignments
-- arrow functions may not have a this parameter annotation, as these functions bind their this parameter at the definition site, rather than the call site.
-- Classes operate as values & types
-  - i.e. you can use a class name wherever you would a type definition
-- flow accepts
-  - contravariant inputs: less specific types passed in
-  - covariant outputs: more specific types returned
-- interfaces properties can be
-  - invariant: read + write
-  - covariant: read-only
-  - contravariant: write-only
-- flow doe snot infer generic types, you must annotate it as generic
-  - flow may infer a type that is less polymorphic than you expect
-- when you pass one type into another you lose the original type
-  - e.g. passing a less specific type, where a more specific type was expected
-    - flow forgets about the more specific type, and uses the less specific one
-- Parameterized generics
-  - works: classes (used as a type), type aliases, interfaces
-  - errors: functions, function types
-
-## terms
-
-- refinement: the ability for a static type checker to be able to tell the type of variable a mixed/any/etc type is. usually occurs within an if/case statement before use of the variable
-- invariant: a type that is less specific than another type
-  - does not accept `supertypes` or `subtypes`
-- covariance: a type that is more specific that another type
-  - does not accept `supertypes`
-  - accepts `subtypes`
-- contravariance
-  - accepts `supertypes`
-  - does not accept `subtypes`
-- bivariance
-  - accepts `supertypes` and `subtypes`
-- tuple: a list with a limited set of items
-  - tuples always have a fixed length based on its length when instantiated
-  - are not a subtype of arrays, thus cant be used where one is expected & vice versa
-  - only posses immutable array methods
-- nominal types: hides the implementation details of a type, and only exposes the public interface
-- identity function: returns whatever value was passed
-- generic type: i.e. polymorphic type
-  - identity function that returns the same type its passed
-- parametric polymorphism: i.e. parameterized generics; allow you to pass types in like arguments to a function
-- union types
-  - a value can be one of a set of types
-  - disjoint unions
-    - any number of object types which are each tagged by a single property with an `EXACT` value
-      - i.e. `success[true|false]`
-    - i.e they all share atleast ONE property, e.g. a `success` property in a response that could either be `true` or `false`
-- width subtyping
-  - permits you to pass a object with more properties that the type expects
-- overload: a function with the same name, but different types of parameters
-  - fns of type overLoadFn are `overloaded`
-- thunks: fns in the form of `() => A`
-- structural typing: aka duck typing: focuses on the shape of an object; if it looks like a duck, treat it like a duck
-  - if two objects have the same shape, they are considered to be of the same type
-  - The shape-matching only requires a subset of the object’s fields to match.
-  - no distinction between objects and classes
-
-## basics
-
-- todos
-
-  - [constraints](https://www.typescriptlang.org/docs/handbook/2/functions.html)
-    - constraints
-    - specifying type arguments
-    - guidelines for writing good generic functions
-  - [mapping modifiers](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html#mapping-modifiers)
-
-- skipped
-
-  - [type predicates](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
-
-- use cases
-  - transpilation: down-level the output js to a specific JS release via the `target` option
-
-### gotchas
-
-```js
-// calling a method on a numeric literal requires it to be in parentheses to aid the parser.
-(1).toExponential();
-
-// type aliases vs interfaces
-// ^ Type aliases behave differently from interfaces with respect to recursive definitions and type parameters
-// ^ interfaces can be extended via: interface Poop extends Flush
-// ^ alias can be extended via intersection: type Poop = Flush & { ... }
-
-// If some variant is not covered, the return type of a fn will be poop | undefined
-type SomeType = "this" | "that" | "thisIsntCheckedWithinFn";
-const someFn = (arg: SomeType) => {
-  if (arg === "this") return "this";
-  return arg;
-};
-// since we didnt cover all the cases, the return type will be string | undefined
-const poop = someFn();
-
-// const vs readonly
-// const only declares the reference to be immutable
-// notice below the referent is can still be mutated
-const a = [1, 2, 3];
-a.push(102);
-a[0] = 101;
-// const assertions (via as keyword) works for arrays and object literals
-let a = [1, 2, 3] as const;
-a.push(102); // error
-a[0] = 101; // error
-// readonly stops all mutation
-interface Rx { readonly x: number;}
-let rx: Rx = { x: 1 };
-rx.x = 12; // error
-let rx: Readonly<X> = { x: 1 }; // you can even make all properties read only
-rx.x = 12; // error
-// stop all mutations on arrays
-let a: ReadonlyArray<number> = [1, 2, 3];
-let b: readonly number[] = [1, 2, 3];
-a.push(102); // error
-b[0] = 101; // error
-```
-
-### cheatsheet
+## import/export
 
 ```js
 /** imports */
@@ -318,6 +230,26 @@ function f() { return g(); }
 function g() {} // g is not exported
 export function a { return g() } // a direct export
 
+```
+
+## tsc: typescript compiler
+
+```js
+pnpm add typescript // install tsc to node_modules
+pnpm tsc somefile.ts // typecheck a specific file and output a .js file with the types removed
+  --noEmitOnError // dont output files if errors exist
+  --target es2015 // set which version of JS to downlevel to
+// common compiler options
+{
+  compilerOptions: {
+    "strict": true, // turn on all strict settings, can individually turn them off
+  }
+}
+```
+
+## data types
+
+```js
 /**
  * type examples
  * native types
@@ -333,6 +265,17 @@ export function a { return g() } // a direct export
  * (arg: T) => U: functions
  */
 
+// determining the type of a var
+// string 	typeof s === "string"
+// number 	typeof n === "number"
+// bigint 	typeof m === "bigint"
+// boolean 	typeof b === "boolean"
+// symbol 	typeof g === "symbol"
+// undefined 	typeof undefined === "undefined"
+// function 	typeof f === "function"
+// array 	Array.isArray(a)
+// object 	typeof o === "object"
+
 // type assertions
 // the as TYPE must be more specific than the inferred type
 const poop = {} as object;
@@ -343,12 +286,28 @@ const poop = ({} as any) as object;
 type Modifiers {
   optional?: any, // requires checking if undefined before use
 }
+```
 
+### simple types
+
+```js
 // basic types
 let poop: string = "flush";
-const direction: 'left' | 'right' = 'left'; // subtype  of primitives
+const direction: "left" | "right" = "left"; // subtype  of primitives
 
-// for objects, classes, fns
+// unions
+// when a type can be any of the given types
+type MyBool = true | false;
+type someOpts = string | string[];
+
+// intersections
+type Combined = { a: number } & { b: string }; // combined == { a: number, b: string }
+type Conflicting = { a: number } & { a: string }; // error
+```
+
+### interfaces
+
+```js
 // preferred over types unless you need specific type features
 interface BigPoops {
   when: string;
@@ -370,6 +329,11 @@ class BigPooper {
   }
 }
 const poop: BigPoops = new BigPooper("mornings", true);
+```
+
+### functions
+
+```js
 
 // fns
 // type alias
@@ -422,26 +386,11 @@ function sum({ a, b, c }: ABC) {
 function multiply(n: number, ...m: number[]) {
   return m.map((x) => n * x);
 }
+```
 
-/**
- * composing types
- */
+### generics
 
-// determining the type of a var
-// string 	typeof s === "string"
-// number 	typeof n === "number"
-// bigint 	typeof m === "bigint"
-// boolean 	typeof b === "boolean"
-// symbol 	typeof g === "symbol"
-// undefined 	typeof undefined === "undefined"
-// function 	typeof f === "function"
-// array 	Array.isArray(a)
-// object 	typeof o === "object"
-
-// unions
-// when a type can be any of the given types
-type MyBool = true | false;
-type someOpts = string | string[];
+```js
 
 // generics
 // a fn where te type of the input relate to the type of the output
@@ -470,29 +419,4 @@ interface Backpack<Type> {
 // This line is a shortcut to tell TypeScript there is a
 // constant called `backpack`, and to not worry about where it came from.
 declare const backpack: Backpack<string>;
-
-// intersections
-type Combined = { a: number } & { b: string }; // combined == { a: number, b: string }
-type Conflicting = { a: number } & { a: string }; // error
-```
-
-### typescript + react
-
-- todos
-  - [start here](https://react-typescript-cheatsheet.netlify.app/docs/basic/setup)
-  - [and here](https://www.typescriptlang.org/docs/handbook/react.html)
-
-### tsc: typescript compiler
-
-```js
-pnpm add typescript // install tsc to node_modules
-pnpm tsc somefile.ts // typecheck a specific file and output a .js file with the types removed
-  --noEmitOnError // dont output files if errors exist
-  --target es2015 // set which version of JS to downlevel to
-// common compiler options
-{
-  compilerOptions: {
-    "strict": true, // turn on all strict settings, can individually turn them off
-  }
-}
 ```
