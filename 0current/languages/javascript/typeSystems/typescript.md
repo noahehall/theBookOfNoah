@@ -8,6 +8,7 @@
     - specifying type arguments
     - guidelines for writing good generic functions
   - [mapping modifiers](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html#mapping-modifiers)
+  - [check the examples in typescript playground](https://www.typescriptlang.org/play)
 - skipped
   - [type predicates](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
   - [the array type](https://www.typescriptlang.org/docs/handbook/2/objects.html#the-array-type)

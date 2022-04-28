@@ -2,6 +2,9 @@
 
 - a complete react18 cheatsheet
 
+- todos
+  - [react & webcomponents](https://reactjs.org/docs/web-components.html)
+
 ## links
 
 - react
@@ -109,7 +112,7 @@
   - any component can be an error boundary by defining either _static getDerivedStateFromError_ or _componentDidCatch_
 - error handling: exceptions thrown during rendering, life cycle methhods, or constructor call
 
-## general
+## basics
 
 - class components: have state and life cycle methods
 
@@ -122,9 +125,7 @@
 
 ### Concurrent Mode
 
-### Testing
-
-## lifecycle methods (in order)
+### lifecycle methods (in order)
 
 - mounting: component instance is being created and inserted into the DOM
   - _constructor_
@@ -178,7 +179,7 @@
     - in prod
       - errors **DO NOT** bubble and you must catch them for logging
 
-## instance props & methods
+### instance props & methods
 
 - _setState_
   - informs react state has changed & to asynchronously flush these changes to the DOM
@@ -187,11 +188,9 @@
   - react batches updates for performance; this is a **REQUSTE**
   - call setState **ONLY** when it differes from the previous state
 - _forceUpdate_
-
   - use when the render method depends on data external to props/state
   - skips any checks in _shouldComponentUpdate_ in the component and the components descendants
     - forces the entire component hierarchy to rerender
-
 - _defaultProps_
 - _displayName_
 - _props_
@@ -303,10 +302,16 @@
 
 ## react examples
 
+### ReactDOM
+
 ```js
-  /**
-  * React
-  */
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<h1>Hello, world!</h1>);
+```
+
+### events
+
+```js
 
   // synthetic events
     // contract
@@ -425,6 +430,47 @@
           }
         }}
 
+```
+
+### class component
+
+```js
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {date: new Date()};
+    // only required for event handlers
+    // so you can refrain from <button onClick={e => this.handler(e)}>
+    // and jsut do onClick={this.handler}
+    this.eventHandler = this.eventHandler.bind(this);
+  }
+
+  componentDidMount() {
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  eventHandler = () => 'class fields syntax'
+
+  unboundHandler () {
+    // can bind in event handler
+  }
+  tick() { this.setState({date: new Date()    });  }
+  render() {
+    return (
+      <div>
+        <h1>Hello, world!</h1>
+        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+      </div>
+    );
+  }
+}
 
   // instance methods
     // shallow merge a single prop into state
@@ -446,15 +492,7 @@
 
           this.state = {}
 
-          // only required for event handlers
-          // so you can refrain from <button onClick={e => this.handler(e)}>
-          // and jsut do onClick={this.handler}
-          this.eventHandler = this.eventHandler.bind(this);
-          eventHandler = () => 'class fields syntax'
 
-          unboundHandler () {
-            // can bind in event handler
-          }
 
           poop = 'flush'
           render () {
@@ -464,14 +502,15 @@
           }
         }
       }
+```
 
+### functional components
+
+```js
     React.PureComponent
     React.memo
 
-  // Transforming components
-    React.cloneElement
-    React.isValidElement
-    React.children
+
 
   // rendering
     React.Fragment
@@ -481,9 +520,6 @@
     React.createRef
     React.forwardRef
 
-  // lazyLoading
-    React.lazy
-    React.Suspense
 
   // Hooks - common
     React.useState
@@ -499,4 +535,17 @@
     React.useLayoutEffect
     React.useDebugValue
 
+```
+
+### top level API
+
+```js
+// Transforming components
+React.cloneElement;
+React.isValidElement;
+React.children;
+
+// lazyLoading
+React.lazy;
+React.Suspense;
 ```
