@@ -12,8 +12,11 @@
 - skipped
   - [type predicates](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)
   - [the array type](https://www.typescriptlang.org/docs/handbook/2/objects.html#the-array-type)
-    - skipped everything start with and after this
+    - skipped everything starting with and after this
     - but definitely need to get through it
+  - [creating types from types](https://www.typescriptlang.org/docs/handbook/2/types-from-types.html)
+    - skipped entire screen
+  -
 
 ## links
 
@@ -266,8 +269,7 @@ const poop = ({} as any) as object;
 // modifiers
 type Modifiers {
   optional?: any; // requires checking if undefined before use
-  readonly noReAssignment: string; // can be reassigned,
-  [index: number]: string; // when you dont know the names, but you know the shape
+  readonly noReAssignment: string; // cant be reassigned, but if object, child props can be
 }
 
 // const vs readonly
@@ -339,7 +341,8 @@ const poop: BigPoops = new BigPooper("mornings", true);
 interface A extends B, C, D {
   /*annotations*/
 }
-// also combined (same as affect as extend)
+// type alias can can combine interfaces (similar affect as extend)
+// i.e. an intersection type
 type CombinedInterfaces = SomeInter & OtherInter;
 
 // type aliases vs interfaces
@@ -362,6 +365,12 @@ type Box<Type> = {
 type OrNull<Type> = Type | null;
 type OneOrMany<Type> = Type | Type[];
 type OneOrManyOrNull<Type> = OrNull<OneOrMany<Type>>;
+
+// index signatures
+// when you dont know the key names, but you know the shape
+interface StringArray {
+  [index: number]: string;
+}
 ```
 
 ### functions
@@ -453,4 +462,44 @@ interface Backpack<Type> {
 // This line is a shortcut to tell TypeScript there is a
 // constant called `backpack`, and to not worry about where it came from.
 declare const backpack: Backpack<string>;
+```
+
+### classes
+
+```js
+class Example {
+  // public writable fields
+  poop: string; // must be intiialized in constructor
+  dontThrowError!: string; // ! dont throw error if not initialized
+  withDefault: string = "intialized when created";
+  readonly flush: boolean; // prevents mutation outside of the constructor
+
+  // single constructor
+  constructor() {
+    super(); // required if this a is a derived class
+    this.poop = "mornings";
+  }
+
+  // constructors can be overloaded
+  // Overloads
+  constructor(x: number, y: string);
+  constructor(s: string);
+  constructor(xs: any, y?: any) {
+    // TBD
+  }
+
+  // getter
+  get poop(): number {
+    return this._size;
+  }
+  // setter
+  set poop() {
+    // return type is inferred from the getter
+  }
+}
+
+// inheritance
+interface Poop() {}
+// type-check ocnfirm boop correctly implements poop
+class Boop implements Poop {}
 ```
