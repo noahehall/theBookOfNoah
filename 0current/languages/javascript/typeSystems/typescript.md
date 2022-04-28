@@ -1,6 +1,6 @@
-# TLDR
+# typescript
 
-- typescript & flow docs
+- typescript
 
 ## links
 
@@ -247,110 +247,14 @@
   - The shape-matching only requires a subset of the object’s fields to match.
   - no distinction between objects and classes
 
-## commonalities
-
-### types
-
-```js
-
-  // modifiers
-    // append propName! === not nullable
-    // append propName? === undefined but not null
-    // prepend ?someType === type | undefined | null
-
-  // list of types
-    // number
-    // string
-    // boolean
-    // symbol
-    // null for null
-    // void for undefined
-    // Array<string> | string[]
-    // symbol
-    // mixed (must be refined)
-    // any (no type checking)
-    // literals e.g. const poop: 'this'|'that';
-    // unions e.g. const poop: string | number;
-    // type combinations
-        type a: number;
-        type b: string
-        type c: a | b;
-        type d: a & b
-
-  // variables and types
-    const g: mixed = z; // you must refine this type via typeof or some other checker before usig
-    const h: any = 1; // op out of all type checking,  refrain from this as best you can
-      // ^ very careful when using this with an object, as all of obj props will now be any (leak!)
-      // ^ guard against this by declaring the obj.prop values to a type for assignment
-
-
-  // refining types
-    const x: symbol | number = Symbol();
-    if (typeof x === 'symbol')
-      const y: symbol = x;
-    else
-      const y: number = x;
-
-  // basic function
-    function method(str: string, bool?: boolean, ...nums: Array<number>): void {}
-    let method = (str: string, bool?: boolean, ...nums: Array<number>): void => {}
-    function add(a: number, b: number): number {}
-    // optional params can their set type, void, but NOT null
-    function add(a?: number, b?: number): number | void {}
-    // with default values, can be their set type, void, but NOT null
-    function add(a: number = 2) {}
-    // the return type is the same as whatever is passed into the function
-    function identity<T> (value: T): T {}
-    // required obj.value but but the value maybe null|undefined but must be declared
-    // i.e. you have to pass the obj with value.type === numer|null|undefined
-    function({ value }: { value: ?number })
-    // to get around the issue, make the object.value optional, as well its type being the 'maybe'
-    // lol dont let this catch u up bro!
-    function({ value }: { value?: ?number })
-    // the mixed type, use sparingly as it accepts anything!
-    // you must 'refine' the type before returning a value else it throws
-    function whatever(value: mixed) {
-      switch (typeof value) {
-        case 'string':
-        // ...etc
-      }
-
-      // or like this
-      if (Array.isArray(value))
-      else if (value instanceof Event))
-      // ...etc
-
-      // or refine objects
-      type A = { type: 'A' }
-      type B = { type: 'B' }
-      function blah(value: A | B ) {
-        if (value.type === 'A')
-        else // must be B
-        // be careful when passing a refined type to another function
-        // without types
-        // it will invalidate the refinement ai the other function doesnt verify type
-        // instead store the value before passing to silence flow errs if they occur
-      }
-
-      // save prop after refinement else flow throws err
-      function method(value: { prop?: string }) {
-        if (value.prop) {
-          var prop = value.prop; // without this
-          otherMethod(); // because of this
-          prop.charAt(0); // <-- throws err here
-        }
-      }
-    }
-
-
-```
-
-## typescript
+## basics
 
 - todos
 
-  - [types vs interfaces](https://www.typescriptlang.org/play?e=83#example/types-vs-interfaces)
-  - [handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
+  - [constraints](https://www.typescriptlang.org/docs/handbook/2/functions.html)
+    - constraints
+    - specifying type arguments
+    - guidelines for writing good generic functions
 
 - skipped
 
@@ -511,6 +415,20 @@ type MyBool = true | false;
 type someOpts = string | string[];
 
 // generics
+// a fn where te type of the input relate to the type of the output
+// ^ or where the types of two inputs relate in some way
+// T === placeholder, for whatever type the caller sends
+function firstElement<T>(arr: T[]): T | undefined {
+  return arr[0];
+}
+// s is of type 'string'
+const s = firstElement(["a", "b", "c"]);
+// n is of type 'number'
+const n = firstElement([1, 2, 3]);
+// u is of type undefined
+const u = firstElement([]);
+// example specifying multiple T
+fn poop<A, B>(a: A, b: B): B { /*body*/}
 // provide variables to types, e.g. specifying the type of elements within an array
 type StringArray = Array>string>;
 type ObjectWithNameArray = Array<{name: string}>
