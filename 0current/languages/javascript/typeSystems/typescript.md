@@ -67,6 +67,9 @@
 
 ## gotchas
 
+- remember: typescript is compile time type-checking
+  - so all of this goodiness is removed when shipped to prod
+
 ```js
 // calling a method on a numeric literal requires it to be in parentheses to aid the parser.
 (1).toExponential();
@@ -475,7 +478,18 @@ class Example {
   declare soemProp: Poop; // declare only enforces type-check, doesnt emit any runtime js code
   public normalProp: string; // visible outside the class, the default
   protected onlyViaDerivedClasses: string; // visile within the class, derived classes must also specify if overloading it
-
+  private softPrivate: bool; // visible to the class that defines it, or publicy if accessed via instance['privateThing']
+  private #hardPrivate: bool; // using JS native private fields makes this a truly private field
+  // ^ using mechanisms that offer hard runtime privacy, such as closures, WeakMaps, or private fields could affet performance
+  static classProp: bool; // accessible via Class.classProp
+  // ^ can also have any of the other visiblity modfiiers, e.g. priate static poop: bool;
+  // ^ static properties cant be use any names from the Funtion prototype, e.g. name, length, call as static prop names are invalid
+  static {
+    // static blocks hav etheir own scope, with full access to the class; good place for writing static initialization code
+    try {
+      // some code
+    } catch {}
+  }
 
   // single constructor
   constructor() {
@@ -502,6 +516,15 @@ class Example {
     // return type is inferred from the getter
   }
 }
+
+// generic classes
+class Box<Type> {
+  contents: Type;
+  constructor(value: Type) {
+    this.contents = value;
+  }
+}
+const b = new Box("hello!");
 
 // inheritance
 interface Poop() {}
