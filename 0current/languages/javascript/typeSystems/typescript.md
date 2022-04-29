@@ -472,10 +472,15 @@ class Example {
   dontThrowError!: string; // ! dont throw error if not initialized
   withDefault: string = "intialized when created";
   readonly flush: boolean; // prevents mutation outside of the constructor
+  declare soemProp: Poop; // declare only enforces type-check, doesnt emit any runtime js code
+  public normalProp: string; // visible outside the class, the default
+  protected onlyViaDerivedClasses: string; // visile within the class, derived classes must also specify if overloading it
+
 
   // single constructor
   constructor() {
     super(); // required if this a is a derived class
+    // super.property|method(); invoke base class
     this.poop = "mornings";
   }
 
@@ -488,6 +493,7 @@ class Example {
   }
 
   // getter
+  // if no corrosponding settter exists, this will be readonly
   get poop(): number {
     return this._size;
   }
