@@ -17,6 +17,8 @@
   - [creating types from types](https://www.typescriptlang.org/docs/handbook/2/types-from-types.html)
     - skipped entire screen
   - [type-only field declarations](https://www.typescriptlang.org/docs/handbook/2/classes.html#type-only-field-declarations)
+  - [this at runtime in classes](https://www.typescriptlang.org/docs/handbook/2/classes.html#this-at-runtime-in-classes)
+    - likely the best explanation of `this` ive seen
 
 ## links
 
@@ -515,9 +517,24 @@ class Example {
   set poop() {
     // return type is inferred from the getter
   }
+
+  instanceFn () {
+    // this will always point to the current object reference
+    // ^ e.g. if  objRef = myClassInstace;
+    // ^ poop will refer to objRef and not myClassInstance
+    return this.poop;
+  }
+
+  instanceFnArray = () => {
+    // will always point to the current class instance
+    // ^ e.g. if objRef = myClassInstance
+    // ^ poop will refer to myClassInstance
+    return this.poop;
+  }
 }
 
 // generic classes
+// same features as generic interfaces
 class Box<Type> {
   contents: Type;
   constructor(value: Type) {
