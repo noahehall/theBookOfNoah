@@ -518,15 +518,17 @@ class Example {
     // return type is inferred from the getter
   }
 
+  // every instance of the class references a single fn in memory
+  // thus, will always point to the current object reference
   instanceFn () {
-    // this will always point to the current object reference
     // ^ e.g. if  objRef = myClassInstace;
     // ^ poop will refer to objRef and not myClassInstance
     return this.poop;
   }
 
+  // every instance of the class gets a new fn allocationed (more memory)
+  // thus: will always point to the current class instance
   instanceFnArray = () => {
-    // will always point to the current class instance
     // ^ e.g. if objRef = myClassInstance
     // ^ poop will refer to myClassInstance
     return this.poop;
