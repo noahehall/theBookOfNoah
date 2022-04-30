@@ -72,13 +72,108 @@
   - instead use
     - `class properties` which will do the autobinding when built
     - bind methods in the constructor (u lazy bum)
-    - use are functions for event handlers
+    - use functions for event handlers
       - and this is the only reason you need autobinding anyway
 - use mixins: react-team doesnt recommend it
 - copy props into state
 - use deep equality checks/JSON.stringify for comparisons
-  - use _immutability-helper_ instead
-- use _constructor_ if when not binding instance methods (for event handlers) or initializing state
-- use the callback in _setState_; move that logic to _componentDidUpdate_ as react recommends
+  - use _immutability-helper_ pkg instead
+- use _constructor_ when not binding instance methods (for event handlers) or initializing state
 - use error boundaries for control flow
   - only for recovery
+
+## gotchas
+
+- defaultProps only used for undefined props; e.g. null props will still be null (and wont use the value assigned in defaultprops)
+- react events are camelCase and not lowercase
+  - e.g. `onclick` === `onClick`
+  - cannot return false to prevent default behavior
+    - must call `preventDefault` explicitly
+- by default all event handlers are trigged in the `bubbling` phase
+  - to register event handlers for the capture phase, append `Capture`
+    - e.g. `onClick` === `onClickCapture`
+- pointer events are
+  - not cross-browser compatible (like a normal SyntheticEvent)
+  - not polyfilled
+  - recommended to only be used via a third party pointer event polyfill
+
+## events
+
+- evenhandlers receive instances of `SyntheticEvnet`
+- cross-browser wrapper around the UA native event
+
+## component types
+
+### class components
+
+- have state and life cycle methods
+
+#### lifecycle methods (in order)
+
+- mounting: component instance is being created and inserted into the DOM
+  - _constructor_
+    - when being created & before mounting
+    - usescases: initialize state, bind instance methods for event handlers
+  - _static getDerivedStateFromError_
+    - invoked after an error is thrown in achild component
+    - no side effects allowed (e.g. fetches)
+    - for updating state
+  - _static getDerivedStateFromProps_
+    - right before the render method on initial and subsequent updates
+      - fired on every render! use with caution
+    - return an object to update state or null
+    - doesnt have access to the component instance
+      - move shared logic outside the class definition
+    - usecases: when state depends on changes in props over time (e.g. deciding if a component should be animated in and out)
+  - _render_
+    - only required method
+    - return null to render nothing
+  - _componentDidMount_
+    - after component is rendered to the DOM
+    - usecases: timers, async shit, interactionn with the browser
+- updating: when a component instance is being rerendered; caused by a change to state/props/forceUpdate
+  - _render_: see mounting section
+  - _static getDerivedStateFromProps_: see mounting section
+  - _getSnapshotBeforeUpdate_
+    - invoked before component updates are flushed to the dom
+    - sends captured values to _componentDidUpdate_ as third param
+      - return null if nothing has changed
+    - usecases: capture dom info (e.g. scroll position)
+  - _shouldComponentUpdate_
+    - performance enhancement
+    - receives cur + new props to be compared
+    - not called for initial render OR after _forceUpdate_
+    - does NOT prevent child components from rendering when THEIR props/state changes
+  - _componentDidUpdate_
+    - immediately after update occurs
+    - not called for the initial render
+    - usecases: operate on the DOM, network requests AFTER comparing current & next props requires a new fetch
+    - receives a third prop if _getSnapshotBeforeUpdate_ is used
+- unmounting: when a component is being removed from the DOM and destroyed
+  - _componentWillUnmount_
+    - before being destroyed
+    - usescases: remove timers, canceling shit (e.g. fetches/subscriptions)
+  - _componentDidCatch_
+    - after an error has been thrown by a child component
+    - called during commit phase & allows side effects
+      - for logging errors (e.g. console|another system)
+    - in dev
+      - errors bubble up to window and can be handled by window.onerror/addeventListener
+    - in prod
+      - errors **DO NOT** bubble and you must catch them for logging
+
+### pure components
+
+- never alter their inputs & are idempotent
+
+### functional components
+
+### portals
+
+- use portals when rendering a child even when the parent has overflow hidden/z-index
+  - e.g. dialogs, tooltips, modals, etc
+
+### error boundaries
+
+- for catching errors in their children and displaying recovery (fallback) content
+  - any component can be an error boundary by defining either _static getDerivedStateFromError_ or _componentDidCatch_
