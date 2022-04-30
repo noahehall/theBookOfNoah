@@ -1,9 +1,17 @@
 # react
 
 - a complete react 18 cheetsheat
+- you should review EACH ACCESSIBILITY link in the links section in the link section below
 
-- todos
+- bookmark: https://reactjs.org/docs/code-splitting.html
+
+- todos/skipped
   - [react & webcomponents](https://reactjs.org/docs/web-components.html)
+  - [programmatically managing focus](https://reactjs.org/docs/accessibility.html#programmatically-managing-focus)
+  - [mouse and pointer events](https://reactjs.org/docs/accessibility.html#mouse-and-pointer-events)
+    - i skipped this and everything after it
+    - but i did grab all the links (see below) to wai-aria & wcag etc
+      - up until the color contrast section
 
 ## links
 
@@ -18,14 +26,48 @@
   - [discussion about event delegation github issue](https://github.com/reactjs/reactjs.org/issues/3543)
   - [reconnciliation](https://reactjs.org/docs/reconciliation.html)
   - [uncontrolled components](https://reactjs.org/docs/uncontrolled-components.html)
+  - [thinking in react](https://reactjs.org/docs/thinking-in-react.html)
+  - [accessibility](https://reactjs.org/docs/accessibility.html)
+- ecosystem
+  - [formik: easy form components](https://formik.org/docs/overview)
 - other stuff
   - [w3c ui events](https://www.w3.org/TR/uievents/)
   - [javascript tc39 finished proposals by release](https://github.com/tc39/proposals/blob/main/finished-proposals.md)
+  - [a11y](https://en.wikipedia.org/wiki/Accessibility)
+- accessibility (a11y)
+  - [wcag2](https://www.w3.org/WAI/standards-guidelines/wcag/)
+  - [wcag checklist](https://www.wuhcag.com/wcag-checklist/)
+  - [webaims wcag 2 checklist](https://webaim.org/standards/wcag/checklist)
+  - [a11y project](https://www.a11yproject.com/checklist/)
+  - [wai-aria overview](https://www.w3.org/WAI/standards-guidelines/aria/)
+  - [semantic html: mdn element list](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
+  - [w3 how to label controls](https://www.w3.org/WAI/tutorials/forms/labels/)
+  - [webaim how to label controls](https://webaim.org/techniques/forms/controls)
+  - [explanation of labeling & accessible names](https://www.tpgi.com/what-is-an-accessible-name/)
+  - [user notificaitons](https://www.w3.org/WAI/tutorials/forms/notifications/)
+  - [form validatoin & error recovery](https://webaim.org/techniques/formvalidation/)
+  - [keyboard navigation](https://webaim.org/techniques/keyboard/)
+  - [skip navigation](https://webaim.org/techniques/skipnav/)
+  - [landmarks](https://www.scottohara.me/blog/2018/03/03/landmarks.html)
+  - [keyboard navigable javascript widgets](https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets)
+  - [aria roles](https://www.w3.org/TR/wai-aria/#roles)
+  - [aria states and props](https://www.w3.org/TR/wai-aria/#states_and_properties)
+  - [aria design patterns and widgets](https://www.w3.org/TR/wai-aria-practices/#aria_ex)
+  - [practical aria examples](https://heydonworks.com/article/practical-aria-examples/)
+  - [inclusive component design](https://inclusive-components.design/)
+  - [screen reader language selection (e.g. english vs spanish)](https://webaim.org/techniques/screenreader/#language)
+  - [react document title component (stale but good example)](https://github.com/gaearon/react-document-title)
+  - [understanding document title](https://www.w3.org/TR/UNDERSTANDING-WCAG20/navigation-mechanisms-title.html)
 
 ## best practices
 
 ### always
 
+- if something can be derived from either props or state, it probably shouldn’t be in the state.
+- There should be a single “source of truth” for any data that changes in a React application.
+  - Usually, the state is first added to the component that needs it for rendering.
+  - if other components also need it, you can lift it up to their closest common ancestor.
+  - you should rely on the top-down data flow instead of syncing state between props
 - use curly braces when embedding user input into JSX
   - the {someVar} is fully escaped to prevent injection attacks
 - decompose components for reusability
@@ -75,6 +117,8 @@
 
 ### never
 
+- At Facebook, we use React in thousands of components, and we haven’t found any use cases where we would recommend creating component inheritance hierarchies.
+  - i.e. always use Props and composition to customize a component’s look and behavior in an explicit and safe way
 - dont use `create-react-class` as it autobinds methods which has a performance hit
   - instead use
     - `class properties` which will do the autobinding when built
@@ -91,6 +135,8 @@
 
 ## gotchas
 
+- sharing state is accomplished by moving it up to the closest common ancestor of the components that need it.
+  - This is called “lifting state up”
 - Returning null from a component’s render method does not affect the firing of the component’s lifecycle methods
 - array elements and keys
   - keys are not needed if each item is a component
@@ -107,6 +153,10 @@
   - not cross-browser compatible (like a normal SyntheticEvent)
   - not polyfilled
   - recommended to only be used via a third party pointer event polyfill
+
+## terms
+
+- a11y: i.e. accessibility; Numeronym presenting accessibility as "a" followed by 11 more letters, followed by "y".
 
 ## events
 
@@ -269,6 +319,10 @@ class Clock extends React.Component {
     // and jsut do onClick={this.handler}
     // ^ can also use class fields syntax with arrow fn
     this.eventHandler = this.eventHandler.bind(this);
+
+    // Create a ref to store the textInput DOM element
+    // can be passed to child elements as props
+    this.textInput = React.createRef();
   }
 
   // setup your side effects
@@ -306,6 +360,12 @@ class Clock extends React.Component {
       counter: prevState.poop + curProps.increment
     }));
   }
+
+  focus() {
+    // Explicitly focus the text input using the raw DOM API
+    // Note: we're accessing "current" to get the DOM node
+    this.textInput.current.focus();
+  }
   render() {
     return (
       <div>
@@ -330,6 +390,11 @@ class Clock extends React.Component {
         // ^ else it negatively impacts perf and causes issues with comp state
         <ul>{arrayOfLiElements}</ul>
 
+        // Use the `ref` callback to store a reference to the text input DOM  // element in an instance field (for example, this.textInput).
+        <input
+          type="text"
+          ref={this.textInput}
+          />
       </div>
     );
   }
@@ -461,6 +526,16 @@ function Greeting(props) {
   }
   return <GuestGreeting />;
 }
+
+// the ref comes from the parent
+// enables the parent to manage the associate DOM element created by this component
+function CustomTextInput(props) {
+  return (
+    <div>
+      <input ref={props.inputRef} />{" "}
+    </div>
+  );
+}
 ```
 
 #### hooks
@@ -536,6 +611,7 @@ function Greeting(props) {
 
 ##### useRef
 
+- Refs provide a way to access DOM nodes or React elements created in the render method.
 - returns a mutable ref object that exist sfor the lifetime of the component
   - gives you the _SAME_ ref via _Object.is_ logic
   - usecases:
@@ -557,10 +633,25 @@ function Greeting(props) {
 
 ### fragments
 
-- reduces the need to create a container when rendering child elements
+- reduces the need to create a container when rendering multiple sibling elements
 
 ```js
-// can also use <React.Fragment></React.Fragment>
+// only benefit of React.Fragment is to add keys= to the children
+function Glossary(props) {
+  return (
+    <dl>
+      {props.items.map(item => (
+        // Without the `key`, React will fire a key warning
+        <React.Fragment key={item.id}>
+          <dt>{item.term}</dt>
+          <dd>{item.description}</dd>
+        </React.Fragment>
+      ))}
+    </dl>
+  );
+}
+
+// same as above but <> doesnt accept keys/props
 render() {
   return (
     <>
@@ -569,11 +660,36 @@ render() {
   )
 }
 
-const SomeComp = () => (
-  <>
-    /* html elements */
-  </>
-);
+```
+
+### children
+
+- generic/reusable components like Sidebars / Headers / Heros should render props.children
+  - this lets other components pass arbigrary children to
+
+```js
+// using children
+function FancyBorder(props) {
+  return (
+    <div className={"FancyBorder FancyBorder-" + props.color}>
+      {props.children}{" "}
+    </div>
+  );
+}
+
+// using props to render multiple slots
+function SplitPane(props) {
+  return (
+    <div className="SplitPane">
+      <div className="SplitPane-left">{props.left} </div>
+      <div className="SplitPane-right">{props.right} </div>
+    </div>
+  );
+}
+
+function App() {
+  return <SplitPane left={<Contacts />} right={<Chat />} />;
+}
 ```
 
 ### controlled components
@@ -644,6 +760,36 @@ class NameForm extends React.Component {
 
 - for catching errors in their children and displaying recovery (fallback) content
   - any component can be an error boundary by defining either _static getDerivedStateFromError_ or _componentDidCatch_
+
+### accessible components
+
+- you should review EACH ACCESSIBILITY link in the links section at the top of this doc
+- all `aria-POOP` attributes should never be camelcased
+- Semantic HTML is the foundation of accessibility in a web application.
+- Every HTML form control, such as <input> and <textarea>, needs to be labeled accessibly.
+  - We need to provide descriptive labels that are also exposed to screen readers.
+- the current element should always have an outline
+  - use `outline: 0` to remove the default but remember to provide your own
+- use refs to set focus to an element
+  - set initial focus on the cancel button (preventing the keyboard user from accidentally activating the success action)
+  - trap keyboard focus inside the modal
+  - resets focus back to the element that initially triggered the modal.
+
+```js
+// using aria-* attributes
+<input
+  type="text"
+  aria-label={labelText}
+  aria-required="true"
+  onChange={onchangeHandler}
+  value={inputValue}
+  name="name"
+/>
+
+// for= attribute is htmlFor in react
+<label htmlFor="namedInput">Name:</label>
+<input id="namedInput" type="text" name="name"/>
+```
 
 ## React top level api
 
