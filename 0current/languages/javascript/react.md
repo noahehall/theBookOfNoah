@@ -21,6 +21,8 @@
 
 ### always
 
+- use curly braces when embedding user input into JSX
+  - the {someVar} is fully escaped to prevent injection attacks
 - decompose components for reusability
 - _displayName_ is only useful in _dev_ for debugging, as they should be obsfucated in prod
 - only use state for data that changes over time that impact rendering/data flow
@@ -223,15 +225,6 @@
 
 ## component types
 
-### root component
-
-- creates a react root: a dom hierarchy managed by react
-
-```js
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<h1>Hello, world!</h1>);
-```
-
 ### fragments
 
 - reduces the need to create a container when rendering child elements
@@ -241,16 +234,25 @@ root.render(<h1>Hello, world!</h1>);
 render() {
   return (
     <>
-      /* component list*/
+      /* html elements*/
     </>
   )
 }
 
 const SomeComp = () => (
   <>
-    /* component list*/
+    /* html elements */
   </>
 );
+```
+
+### root component
+
+- a dom hierarchy managed by react
+
+```js
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<h1>Hello, world!</h1>);
 ```
 
 ### class components
