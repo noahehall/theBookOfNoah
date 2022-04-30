@@ -1,7 +1,9 @@
 # typescript
 
-- bookmark: https://www.typescriptlang.org/docs/handbook/2/modules.html#es-module-syntax
-  - [declarations](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html)
+- bookmark: https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html
+  - [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+    - this is the beginning of the reference
+    - eventually you want to get through this shiz
 - todos
   - [constraints](https://www.typescriptlang.org/docs/handbook/2/functions.html)
     - constraints
@@ -21,9 +23,6 @@
   - [relationships between classes](https://www.typescriptlang.org/docs/handbook/2/classes.html#relationships-between-classes)
     - classes are duckedtype like all other objects
     - ^ so Person === Human if they have the same signature
-  - [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
-    - this is the beginning of the reference
-    - eventually you want to get through this shiz
 
 ## links
 
@@ -33,6 +32,9 @@
 - typescript
   - [react children with typescript](https://www.carlrippon.com/react-children-with-typescript/)
   - [fn components with typescript](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components/)
+  - [tsconfig module options](https://www.typescriptlang.org/tsconfig#module)
+  - [module resolution](https://www.typescriptlang.org/docs/handbook/module-resolution.html)
+  - [latest features added in typescript 4.5](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5-beta/)
 
 ## terms
 
@@ -208,6 +210,10 @@ const poop = someFn();
 ```
 
 ## import/export
+
+- module resolution: process of taking a string from import/require statement and mapping it to a file on disk
+  - classic: the default when the compiler option is not `commonjs`; dont use it
+  - node: replicates ow node.js works in commonjs mode, with additional checks for .ts and .d.ts
 
 ```js
 /** imports */
