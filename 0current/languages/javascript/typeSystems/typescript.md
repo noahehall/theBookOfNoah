@@ -2,6 +2,7 @@
 
 - typescript
 - bookmark: https://www.typescriptlang.org/docs/handbook/2/modules.html#es-module-syntax
+  - [declarations](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html)
 - todos
   - [constraints](https://www.typescriptlang.org/docs/handbook/2/functions.html)
     - constraints
