@@ -18,6 +18,9 @@
     - skipped entire screen
   - [type-only field declarations](https://www.typescriptlang.org/docs/handbook/2/classes.html#type-only-field-declarations)
   - [this types](https://www.typescriptlang.org/docs/handbook/2/classes.html#this-types)
+  - [relationships between classes](https://www.typescriptlang.org/docs/handbook/2/classes.html#relationships-between-classes)
+    - classes are duckedtype like all other objects
+    - ^ so Person === Human if they have the same signature
 
 ## links
 
@@ -470,6 +473,7 @@ declare const backpack: Backpack<string>;
 ### classes
 
 ```js
+// any class not prefixed with abstract is a concrete class
 class Example {
   // public writable fields
   poop: string; // must be intiialized in constructor
@@ -541,6 +545,22 @@ class ParamProps {
   constructor(
     public poop: boolean; // will be availale on the class as if it was a class property
   )
+}
+
+// class expressions:
+// ^ dont need a name, but will be typed as the same name as the are assigned to
+const IsAClass = class<T> {
+  constructor(public yup: T)
+}
+const instance = new IsAClass('hello') // typeof instance ==== 'instance<String>
+// abstract classes: like interfaces, but for classes
+// ^ can only contain property & method signatures, but no implemnetation
+// ^ can not be instantiated, and must be derived from
+astract class Poop {
+  abstract iPoop(): string;
+}
+class WhoPoops extends Poop {
+  iPoop() { return 'yes' }
 }
 
 // generic classes
