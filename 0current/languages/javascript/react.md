@@ -291,6 +291,9 @@
 - All React components must act like pure functions with respect to their props.
 - ^ i.e. props are readonly
 - state & props flows down to child components; This is commonly called a “top-down” or “unidirectional” data flow.
+- not all of the below sections are technically different react components
+  - however the use case and context of each section make them conceptually distinct component types
+    - IMO of course
 
 ### root component
 
@@ -822,6 +825,10 @@ class NameForm extends React.Component {
 - todo
 
 ### Profiler components
+
+- todo
+
+### strict mode components
 
 - todo
 
