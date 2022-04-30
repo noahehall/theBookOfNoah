@@ -249,6 +249,7 @@ const SomeComp = () => (
 ### root component
 
 - a dom hierarchy managed by react
+- you may have as many isolated root DOM nodes as you like
 
 ```js
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -534,35 +535,17 @@ class Clock extends React.Component {
 // React.forwardRef
 ```
 
-## ReactDOM top level api
+## ReactDOM
 
-- todo: intermix this with the other sections
-- and indicate when one comes from React pkg vs ReactDOM pkg
-  - rarely will you use one without the other
-  - and having them together makes sense from a consumers perspective
+- [docs](https://reactjs.org/docs/react-dom.html)
+- The react-dom package provides DOM-specific methods that can be used at the top level of your app and as an escape hatch to get outside the React model if you need to.
 
-```js
-// todo
-// - _render_
-// - _hydrate_
-// - _unmountComponentAtNode_
-// - _findDOMNode_
-// - _createPortal_
-// - _ReactDOM.createPortal_: render children into a dom node that exist outside the hierarchy of the parent component
-//   - event bubbling still occurs in the parent components hierarchy regardless of where the child element exists in the brownser DOM hierarchy
-```
+## ReactDOMClient
 
-## ReactDOMServer top level api
+- [docs](https://reactjs.org/docs/react-dom-client.html)
+- The react-dom/client package provides client-specific methods used for initializing an app on the client. Most of your components should not need to use this module.
 
-- todo: intermix this with the other sections
-- and indicate when one comes from React pkg vs ReactDOMServer pkg
-  - rarely will you use one without the other
-  - and having them together makes sense from a consumers perspective
+## ReactDOMServer
 
-```js
-// todo
-// - _renderToString_
-// - _renderToStaticMarkup_
-// - _renderToNodeStream_
-// - _renderToSTaticNodeStream_
-```
+- [docs](https://reactjs.org/docs/react-dom-server.html)
+- The ReactDOMServer object enables you to render components to static markup. Typically, it’s used on a Node server:
