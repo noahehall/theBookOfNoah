@@ -17,6 +17,7 @@
   - [should i use event delegation in react](https://dev.to/thawsitt/should-i-use-event-delegation-in-react-nl0)
   - [discussion about event delegation github issue](https://github.com/reactjs/reactjs.org/issues/3543)
   - [reconnciliation](https://reactjs.org/docs/reconciliation.html)
+  - [uncontrolled components](https://reactjs.org/docs/uncontrolled-components.html)
 - other stuff
   - [w3c ui events](https://www.w3.org/TR/uievents/)
   - [javascript tc39 finished proposals by release](https://github.com/tc39/proposals/blob/main/finished-proposals.md)
@@ -239,27 +240,6 @@
 - All React components must act like pure functions with respect to their props.
 - ^ i.e. props are readonly
 - state & props flows down to child components; This is commonly called a “top-down” or “unidirectional” data flow.
-
-### fragments
-
-- reduces the need to create a container when rendering child elements
-
-```js
-// can also use <React.Fragment></React.Fragment>
-render() {
-  return (
-    <>
-      /* html elements*/
-    </>
-  )
-}
-
-const SomeComp = () => (
-  <>
-    /* html elements */
-  </>
-);
-```
 
 ### root component
 
@@ -574,6 +554,86 @@ function Greeting(props) {
 ##### useDebugValue
 
 - todo
+
+### fragments
+
+- reduces the need to create a container when rendering child elements
+
+```js
+// can also use <React.Fragment></React.Fragment>
+render() {
+  return (
+    <>
+      /* html elements*/
+    </>
+  )
+}
+
+const SomeComp = () => (
+  <>
+    /* html elements */
+  </>
+);
+```
+
+### controlled components
+
+- generally used with form elements that accept user input
+- these elements should receive their values via component state
+- the submit button should not submit the form, instead use form.onSubmit handler
+
+```js
+class NameForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: "" };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  // works for input, select, and textarea
+  // make sure to set a name= attribute on each
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    // set value to undefined or null to make it an uncontrolled component
+    // ^ the user will be able to edit it directly as a normal html component
+    // ^ i.e. never set a controlled components value= to undefined/null
+    this.setState({[name]: value });
+  }
+
+  handleSubmit(event) {
+    alert("A name was submitted: " + this.state.value);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input
+          type="text"
+          value={this.state.value}
+          onChange={this.handleChange}
+        />
+        // textarea use value attribute in react
+        <textarea value={this.state.value} onChange={this.handleChange} />
+        // the select.value is used instead of option.selected in react
+        <select value={this.state.value} onChange={this.handleChange}>
+          <option value="grapefruit">Grapefruit</option>
+          <option value="lime">Lime</option>
+          <option value="coconut">Coconut</option>
+          <option value="mango">Mango</option>
+        </select>
+        // can also used ina multi-select select
+        <select multiple={true} value={['B', 'C']}>
+        // clicking submit triggers form.onSubmit
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+```
 
 ### portals
 
