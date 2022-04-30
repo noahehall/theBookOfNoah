@@ -16,6 +16,10 @@
   - [why not to use event delegation in react < 17](https://github.com/facebook/react/issues/13635)
   - [should i use event delegation in react](https://dev.to/thawsitt/should-i-use-event-delegation-in-react-nl0)
   - [discussion about event delegation github issue](https://github.com/reactjs/reactjs.org/issues/3543)
+  - [reconnciliation](https://reactjs.org/docs/reconciliation.html)
+- other stuff
+  - [w3c ui events](https://www.w3.org/TR/uievents/)
+  - [javascript tc39 finished proposals by release](https://github.com/tc39/proposals/blob/main/finished-proposals.md)
 
 ## best practices
 
@@ -86,6 +90,10 @@
 
 ## gotchas
 
+- Returning null from a component’s render method does not affect the firing of the component’s lifecycle methods
+- array elements and keys
+  - keys are not needed if each item is a component
+  - keys are needed if created the item in an array (e.g. via a [].map)
 - defaultProps only used for undefined props; e.g. null props will still be null (and wont use the value assigned in defaultprops)
 - react events are camelCase and not lowercase
   - e.g. `onclick` === `onClick`
@@ -101,7 +109,10 @@
 
 ## events
 
-- evenhandlers receive instances of `SyntheticEvnet`
+- evenhandlers receive instances of `SyntheticEvent`
+  - React events are named using camelCase, rather than lowercase.
+  - you pass a function as the event handler, rather than a string.
+  - cannot return false to prevent default behavior (must call preventDefault)
 - cross-browser wrapper around the UA native event
 
 ```js
@@ -227,6 +238,7 @@
 
 - All React components must act like pure functions with respect to their props.
 - ^ i.e. props are readonly
+- state & props flows down to child components; This is commonly called a “top-down” or “unidirectional” data flow.
 
 ### fragments
 
@@ -272,12 +284,15 @@ class Clock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {date: new Date()};
-    // only required for event handlers
+    // only required for event handlers to make `this` work in the callback
     // so you can refrain from <button onClick={e => this.handler(e)}>
     // and jsut do onClick={this.handler}
+    // ^ can also use class fields syntax with arrow fn
     this.eventHandler = this.eventHandler.bind(this);
   }
 
+  // setup your side effects
+  // runs after the component output has been rendered to the DOM
   componentDidMount() {
     this.timerID = setInterval(
       () => this.tick(),
@@ -285,21 +300,56 @@ class Clock extends React.Component {
     );
   }
 
+  // remove your side effects to free up resources
   componentWillUnmount() {
     clearInterval(this.timerID);
   }
 
+  // @see https://babeljs.io/docs/en/babel-plugin-proposal-class-properties
+  // is included in @babel/preset-env in ES2022
   eventHandler = () => 'class fields syntax'
 
   unboundHandler () {
-    // can bind in event handler
+    // can bind in event handler (but never do it)
+    // prefer to bind in the constructor
   }
-  tick() { this.setState({date: new Date()    });  }
+
+  // state updates are shallow merged (not replaced)
+  // thus you can update the state properties independently
+  updateState() {
+    // async state update, best performance
+    this.setState({ first: 1 }) // doesnt change this.state.second
+
+    // only way to reliably sync state with props
+    // curProps: props at the time the update is applied
+    this.setState((prevState, curProps) => ({
+      counter: prevState.poop + curProps.increment
+    }));
+  }
   render() {
     return (
       <div>
-        <h1>Hello, world!</h1>
+        // both event handlers do the same thing
+        // this.deleteRow will receive (id, e) in both instances
+        <button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
+        // e is automatically forwarded to deleteRow after id (see above comment)
+        <button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
         <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+        // be careful: falsy expressions render 0
+        { ifThisIsTrueRenderElseDont && (
+          <SomeComponent />
+        )}
+        // returning null is likely what you want, it renders nothing
+        { ifThisIsTrueRenderElseDont
+            ? <SomeComponent />
+            : null
+        }
+        // works but dont do it, move the arrayOfLiElements into a component
+        // always assign key={someID} to each el
+        // only use {index.toString()} as keys if the order of els in the arr dont change
+        // ^ else it negatively impacts perf and causes issues with comp state
+        <ul>{arrayOfLiElements}</ul>
+
       </div>
     );
   }
@@ -424,11 +474,13 @@ class Clock extends React.Component {
 - must accept a single object (props) and return a react element
 
 ```js
-function Welcome(props) {
-  return <h1>Hello, {props.name}</h1>;
+function Greeting(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <UserGreeting />;
+  }
+  return <GuestGreeting />;
 }
-
-const GoodBye = (props) => <div></div>;
 ```
 
 #### hooks
