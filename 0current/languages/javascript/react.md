@@ -225,6 +225,9 @@
 
 ## component types
 
+- All React components must act like pure functions with respect to their props.
+- ^ i.e. props are readonly
+
 ### fragments
 
 - reduces the need to create a container when rendering child elements
@@ -253,7 +256,11 @@ const SomeComp = () => (
 
 ```js
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<h1>Hello, world!</h1>);
+// are immutable, cant be changed after creation
+// in order to rerender this element, you have to create a new instance
+const element = <h1>Hello, world!</h1>;
+
+root.render(element);
 ```
 
 ### class components
@@ -413,6 +420,16 @@ class Clock extends React.Component {
 ```
 
 ### functional components
+
+- must accept a single object (props) and return a react element
+
+```js
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+const GoodBye = (props) => <div></div>;
+```
 
 #### hooks
 
