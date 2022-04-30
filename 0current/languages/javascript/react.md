@@ -2,7 +2,7 @@
 
 - a complete react 18 cheetsheat
 - you should review EACH ACCESSIBILITY link in the links section in the link section below
-
+- on new releases always review the changelog (see link)
 - bookmark: https://reactjs.org/docs/code-splitting.html
 
 - todos/skipped
@@ -16,6 +16,7 @@
 ## links
 
 - react
+  - [version changelog](https://reactjs.org/versions)
   - [react docs](https://reactjs.org/docs/getting-started.html)
   - [react top level api ref](https://reactjs.org/docs/react-api.html)
   - [handling events](https://reactjs.org/docs/handling-events.html)
@@ -628,6 +629,26 @@ function CustomTextInput(props) {
 - usescases: whenever you need to write imperative code related to a _ref_ object, e.g. a handle on a input dom element to handle focus
 
 ##### useDebugValue
+
+- todo
+
+##### useDeferredValue
+
+- todo
+
+##### useTranssition
+
+- todo
+
+##### useId
+
+- todo
+
+##### useSyncExternalStore
+
+- todo
+
+##### useInsertionEffect
 
 - todo
 
