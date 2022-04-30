@@ -751,6 +751,10 @@ class NameForm extends React.Component {
 }
 ```
 
+### uncontrolled components
+
+- todo
+
 ### portals
 
 - use portals when rendering a child even when the parent has overflow hidden/z-index
@@ -790,6 +794,18 @@ class NameForm extends React.Component {
 <label htmlFor="namedInput">Name:</label>
 <input id="namedInput" type="text" name="name"/>
 ```
+
+### HoC: Higher-Order components
+
+- todo
+
+### Profiler components
+
+- todo
+
+### web components & react
+
+- todo
 
 ## React top level api
 
