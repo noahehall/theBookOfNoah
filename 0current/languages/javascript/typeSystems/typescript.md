@@ -1,7 +1,7 @@
 # typescript
 
 - typescript
-- bookmark: https://www.typescriptlang.org/docs/handbook/2/objects.html#readonly-properties
+- bookmark: https://www.typescriptlang.org/docs/handbook/2/classes.html#this-types
 - todos
   - [constraints](https://www.typescriptlang.org/docs/handbook/2/functions.html)
     - constraints
@@ -17,8 +17,7 @@
   - [creating types from types](https://www.typescriptlang.org/docs/handbook/2/types-from-types.html)
     - skipped entire screen
   - [type-only field declarations](https://www.typescriptlang.org/docs/handbook/2/classes.html#type-only-field-declarations)
-  - [this at runtime in classes](https://www.typescriptlang.org/docs/handbook/2/classes.html#this-at-runtime-in-classes)
-    - likely the best explanation of `this` ive seen
+  - [this types](https://www.typescriptlang.org/docs/handbook/2/classes.html#this-types)
 
 ## links
 
@@ -533,6 +532,15 @@ class Example {
     // ^ poop will refer to myClassInstance
     return this.poop;
   }
+}
+
+// parameter properties: reduces boilerplate of assigning properties to classes via the constructor
+// ^ constructur param must be one of public, private, protected, readonly
+class ParamProps {
+  // public poop: boolean; <--- no longer needed as its in the constructor
+  constructor(
+    public poop: boolean; // will be availale on the class as if it was a class property
+  )
 }
 
 // generic classes
