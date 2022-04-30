@@ -435,14 +435,23 @@ class Clock extends React.Component {
 
 #### lifecycle methods (in order)
 
-- mounting: component instance is being created and inserted into the DOM
-  - _constructor_
-    - when being created & before mounting
-    - usescases: initialize state, bind instance methods for event handlers
+- error handling occurs: during rendering, within a lifecycle method, or in the constructor of any child component
   - _static getDerivedStateFromError_
     - invoked after an error is thrown in a child component
     - no side effects allowed (e.g. fetches)
     - for updating state
+  - _componentDidCatch_
+    - after an error has been thrown by a child component
+    - called during commit phase & allows side effects
+      - for logging errors (e.g. console|another system)
+    - in dev
+      - errors bubble up to window and can be handled by window.onerror/addeventListener
+    - in prod
+      - errors **DO NOT** bubble and you must catch them for logging
+- mounting: component instance is being created and inserted into the DOM
+  - _constructor_
+    - when being created & before mounting
+    - usescases: initialize state, bind instance methods for event handlers
   - _static getDerivedStateFromProps_
     - right before the render method on initial and subsequent updates
       - fired on every render! use with caution
@@ -457,18 +466,18 @@ class Clock extends React.Component {
     - after component is rendered to the DOM
     - usecases: timers, async shit, interactionn with the browser
 - updating: when a component instance is being rerendered; caused by a change to state/props/forceUpdate
-  - _render_: see mounting section
   - _static getDerivedStateFromProps_: see mounting section
-  - _getSnapshotBeforeUpdate_
-    - invoked before component updates are flushed to the dom
-    - sends captured values to _componentDidUpdate_ as third param
-      - return null if nothing has changed
-    - usecases: capture dom info (e.g. scroll position)
   - _shouldComponentUpdate_
     - performance enhancement
     - receives cur + new props to be compared
     - not called for initial render OR after _forceUpdate_
     - does NOT prevent child components from rendering when THEIR props/state changes
+  - _render_: see mounting section
+  - _getSnapshotBeforeUpdate_
+    - invoked before component updates are flushed to the dom
+    - sends captured values to _componentDidUpdate_ as third param
+      - return null if nothing has changed
+    - usecases: capture dom info (e.g. scroll position)
   - _componentDidUpdate_
     - immediately after update occurs
     - not called for the initial render
@@ -478,14 +487,6 @@ class Clock extends React.Component {
   - _componentWillUnmount_
     - before being destroyed
     - usescases: remove timers, canceling shit (e.g. fetches/subscriptions)
-  - _componentDidCatch_
-    - after an error has been thrown by a child component
-    - called during commit phase & allows side effects
-      - for logging errors (e.g. console|another system)
-    - in dev
-      - errors bubble up to window and can be handled by window.onerror/addeventListener
-    - in prod
-      - errors **DO NOT** bubble and you must catch them for logging
 
 #### instance props & methods
 
