@@ -1,7 +1,7 @@
 # typescript
 
 - typescript
-- bookmark: https://www.typescriptlang.org/docs/handbook/2/classes.html#this-types
+- bookmark: https://www.typescriptlang.org/docs/handbook/2/modules.html#es-module-syntax
 - todos
   - [constraints](https://www.typescriptlang.org/docs/handbook/2/functions.html)
     - constraints
@@ -21,6 +21,9 @@
   - [relationships between classes](https://www.typescriptlang.org/docs/handbook/2/classes.html#relationships-between-classes)
     - classes are duckedtype like all other objects
     - ^ so Person === Human if they have the same signature
+  - [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+    - this is the beginning of the reference
+    - eventually you want to get through this shiz
 
 ## links
 
@@ -586,4 +589,30 @@ class Boop implements Poop, Shoop, Doop {}
 // ^ even optional props, unlike interface implementations
 class A extends B,C,D {}
 
+```
+
+### modules
+
+- ES Modules: aka ES6 Modules; the default module implementation, i.e. import/export
+  - a file containing import, export, or top level await is an ES6 module
+    - receive their own private scope
+  - all other files are scripts
+- commonjs: oldschool module implemnetation, i.e. module.exports
+- scripts: contents are available in the global scope (omg remember this!) and do not receive their own (closure) scope
+  - typescript scripts: assumed you'll either use
+    - the `outFile` compiler option to join multiple input scripts into a single output file
+    - use multiple script tags to load script files (in the correct order!)
+- scope: visibility of declarations (e.g. vars) and who can access them and how
+  - modules: only exported declarations are accessible outside the module
+  - scripts: all declarations are accessible (unless concealed by some other mechanism)
+- typescript module considerations
+  - syntax: what syntax do i want ot use to import/export things?
+  - module resolution: what is the relationship between module names/paths and files on disk?
+  - module output target: what should my emitted javascript module look like?
+
+```js
+// modules
+
+// turns a file without import statements into a module
+export {};
 ```
