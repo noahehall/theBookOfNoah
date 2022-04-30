@@ -1,6 +1,5 @@
 # typescript
 
-- typescript
 - bookmark: https://www.typescriptlang.org/docs/handbook/2/modules.html#es-module-syntax
   - [declarations](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html)
 - todos
@@ -79,6 +78,9 @@
   - so all of this goodiness is removed when shipped to prod
 
 ```js
+// @ts-ignore
+// will ignore this line
+
 // calling a method on a numeric literal requires it to be in parentheses to aid the parser.
 (1).toExponential();
 
@@ -209,18 +211,32 @@ const poop = someFn();
 
 ```js
 /** imports */
-import { value, Type } from "npm-package";
-import { other, Types } from "./local-package";
+import { a,b,c } from "./local-package";
 import * as prefix from "../lib/third-package";
-import f = require("single-function-package"); // how to import commonjs
+import theDefault from './poop';
+import './someFileWithSideEffects'; // doesnt include any vars, but does run fns
 
 /** exports */
 // you can use export lists & direct exports in the same file
-export { f }; // an export list
+export { a, b, c }; // an export list
 function f() { return g(); }
 function g() {} // g is not exported
 export function a { return g() } // a direct export
 
+/* typescript specific import/exports */
+export type A = { Poop: number };
+export interface Flush { Yes: boolean };
+// will import the matching type/vars, i dont like this syntax
+import { Poop, Flush } from './wherever';
+// import type: can only import types, this is WAY better
+import type { Poop, Flush } './wherver';
+import { someFn, type Poop, type Flush } // this is WAY better
+import f = require("single-function-package"); // how to import commonjs
+
+/* commonjs */
+module.exports = {a, b, c};
+const theWholeThing = require('./poop');
+const { a as justA } = require('./poop');
 ```
 
 ## tsc: typescript compiler

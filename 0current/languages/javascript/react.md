@@ -12,6 +12,10 @@
     - i skipped this and everything after it
     - but i did grab all the links (see below) to wai-aria & wcag etc
       - up until the color contrast section
+  - [packages used by create-react-app](https://github.com/facebook/create-react-app/tree/main/packages)
+    - may be useful to install some of the packages they use
+    - ^ e.g. react-cripts, react-dev-utils, cra-template-typescript are pretty good to install as devDeps
+    - ^ or just review how facebook team does it
 
 ## links
 
