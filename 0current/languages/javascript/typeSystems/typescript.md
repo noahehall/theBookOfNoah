@@ -35,6 +35,9 @@
   - [tsconfig module options](https://www.typescriptlang.org/tsconfig#module)
   - [module resolution](https://www.typescriptlang.org/docs/handbook/module-resolution.html)
   - [latest features added in typescript 4.5](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5-beta/)
+  - [declarations by example reference](https://www.typescriptlang.org/docs/handbook/declaration-files/by-example.html)
+  - [library structure reference](https://www.typescriptlang.org/docs/handbook/declaration-files/library-structures.html)
+  - [installating delcaration files](https://www.typescriptlang.org/docs/handbook/declaration-files/consumption.html)
 
 ## terms
 
@@ -262,6 +265,10 @@ pnpm tsc somefile.ts // typecheck a specific file and output a .js file with the
   }
 }
 ```
+
+## declaration files
+
+-
 
 ## data types
 
