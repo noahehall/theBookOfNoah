@@ -871,9 +871,19 @@ class NameForm extends React.Component {
 
 - see code-splitting section
 - lets you render a dynamic import as a regular component
+  - the imported component MUST BE a default export
 - ensure your bundler is setup for code-splitting
 
 ```js
+/* intermediate module that reexports a named export */
+// ensures tree shaking keeps working
+// SomeComponent.js: import this to get the regular component
+export const MyComponent = /* ... */;
+export const MyUnusedComponent = /* ... */;
+// SomeComponentLazy.js: import this to get the lazy version
+export { MyComponent as default } from "./ManyComponents.js";
+
+
 /** example lazy loading components */
 import React, { Suspense, lazy } from "react";
 
