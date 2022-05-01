@@ -39,6 +39,7 @@
   - [w3c ui events](https://www.w3.org/TR/uievents/)
   - [javascript tc39 finished proposals by release](https://github.com/tc39/proposals/blob/main/finished-proposals.md)
   - [a11y](https://en.wikipedia.org/wiki/Accessibility)
+  - [cool react examples](https://github.com/mrdulin/react-examples)
 - accessibility (a11y)
   - [wcag2](https://www.w3.org/WAI/standards-guidelines/wcag/)
   - [wcag checklist](https://www.wuhcag.com/wcag-checklist/)
@@ -99,7 +100,6 @@
 ### generally
 
 - prefer _PureComponent_ over _shouldComponentUpdate_ for auto shallow comparisons
-- import namespaces, [who the fk knows if it hinders/helps treeshaking?](https://github.com/airbnb/javascript/issues/1487)
 - add a _useDebugValue_ inside custom hook definitions to support dev experience but _ALWAYS_ add a second formatting param to defer expensive operations unless the hook is inspected
   - react doesnt recommend it for _EVERY_ custom hook, but when did we ever follow directions?
 - use the setState + updator syntax if next props & state relies on prev props & state
@@ -288,6 +288,16 @@
           }
         }}
 
+```
+
+## code splitting
+
+- bundling: creating a single file out of a hierarchy of files related through import statements
+- code splitting: creates multiple bundles that can be dynamically loaded at runtime
+
+```js
+// webpack will automatically code-split dynamically imported modules
+const Something = await imporT("./poop");
 ```
 
 ## component types
@@ -835,6 +845,62 @@ class NameForm extends React.Component {
 ### strict mode components
 
 - todo
+
+### lazy components
+
+- lets you render a dynamic import as a regular component
+- ensure your bundler is setup for code-splitting
+
+```js
+import React, { Suspense } from "react";
+import Tabs from "./Tabs";
+import Glimmer from "./Glimmer";
+import MyErrorBoundary from "./MyErrorBoundary";
+
+// will load the bundle containing this component when its first rendered
+// OtherComponent must resolve to a default exporting containing a React component
+const Comments = React.lazy(() => import("./Comments"));
+const Photos = React.lazy(() => import("./Photos"));
+
+function MyComponent() {
+  const [tab, setTab] = React.useState("photos");
+
+  // will show the glimmer component when a user switches tabs
+  // i.e. will immediately switch to glimmer, then to the newly seleted tab
+  // i.e. no transition
+  function handleTabSelect(tab) {
+    setTab(tab);
+  }
+
+  // will show the existing UI until the new one is ready
+  // i.e. will transition to the new UI, and not show the fallback component
+  // i.e. this isnt an urgen update
+  function handleTabSelect(tab) {
+    startTransition(() => {
+      setTab(tab);
+    });
+  }
+
+  // all lazy components must be rendered via Suspense HoC
+  // can place the Suspense component anywhere above the lazy component
+  // can wrap multiple lazy components with a single Suspense component.
+  // an ErrorBoundary should be used in case the lazy component fails
+  const RenderableComponent = (
+    <MyErrorBoundary>
+      <Suspense fallback={<Glimmer />}>
+        {tab === "photos" ? <Photos /> : <Comments />}
+      </Suspense>
+    </MyErrorBoundary>
+  );
+
+  return (
+    <div>
+      <Tabs onTabSelect={handleTabSelect} />
+      <RenderableComponent />
+    </div>
+  );
+}
+```
 
 ### web components & react
 
