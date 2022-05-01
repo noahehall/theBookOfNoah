@@ -292,12 +292,33 @@
 
 ## code splitting
 
+- see lazy components section
 - bundling: creating a single file out of a hierarchy of files related through import statements
 - code splitting: creates multiple bundles that can be dynamically loaded at runtime
+- use cases
+  - route based code splitting: users expect page transitions taking some amount of time to load
 
 ```js
 // webpack will automatically code-split dynamically imported modules
 const Something = await imporT("./poop");
+
+/** example route based code splitting */
+import React, { Suspense, lazy } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+const Home = lazy(() => import("./routes/Home"));
+const About = lazy(() => import("./routes/About"));
+
+const App = () => (
+  <Router>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </Suspense>
+  </Router>
+);
 ```
 
 ## component types
@@ -848,19 +869,18 @@ class NameForm extends React.Component {
 
 ### lazy components
 
+- see code-splitting section
 - lets you render a dynamic import as a regular component
 - ensure your bundler is setup for code-splitting
 
 ```js
-import React, { Suspense } from "react";
-import Tabs from "./Tabs";
-import Glimmer from "./Glimmer";
-import MyErrorBoundary from "./MyErrorBoundary";
+/** example lazy loading components */
+import React, { Suspense, lazy } from "react";
 
 // will load the bundle containing this component when its first rendered
 // OtherComponent must resolve to a default exporting containing a React component
-const Comments = React.lazy(() => import("./Comments"));
-const Photos = React.lazy(() => import("./Photos"));
+const Comments = lazy(() => import("./Comments"));
+const Photos = lazy(() => import("./Photos"));
 
 function MyComponent() {
   const [tab, setTab] = React.useState("photos");
