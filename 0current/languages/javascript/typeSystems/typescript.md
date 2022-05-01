@@ -1,6 +1,6 @@
 # typescript
 
-- bookmark: https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html
+- bookmark: https://www.typescriptlang.org/docs/handbook/declaration-files/library-structures.html
   - [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
     - this is the beginning of the reference
     - eventually you want to get through this shiz
@@ -268,7 +268,44 @@ pnpm tsc somefile.ts // typecheck a specific file and output a .js file with the
 
 ## declaration files
 
--
+- for annotating packages with no types, e.g. the poop package may have a poop.d.ts
+
+```js
+
+// describe types or values access by dot notation
+// e.g. myLib.makeGreeting()
+declare namespace myLib {
+  function makeGreeting(s: string): string;
+  let numberOfGreetings: number;
+}
+
+// overloading fns
+// getWidget(1) | getWidget('1');
+declare function getWidget(n: number): Widget;
+declare function getWidget(s: string): Widget[];
+
+// reusable interfaces
+interface GreetingSettings {
+  greeting: string;
+  duration?: number; //optional
+  color?: string; //optional
+}
+declare function greet(setting: GreetingSettings): void;
+
+// class and class like objects
+// have properties, methods and constructors
+declare class Greeter {
+  constructor(greeting: string);
+  greeting: string;
+  showGreeting(): void;
+}
+
+// variables
+declare var foo: number; // global
+declare const boo: number; // constant
+declare let zoo: number; // block scoped
+declare function greet(greeting: string): void;
+```
 
 ## data types
 
