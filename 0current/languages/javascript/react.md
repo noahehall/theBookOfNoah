@@ -3,7 +3,7 @@
 - a complete react 18 cheetsheat
 - you should review EACH ACCESSIBILITY link in the links section in the link section below
 - on new releases always review the changelog (see link)
-- bookmark: https://reactjs.org/docs/code-splitting.html
+- bookmark: https://reactjs.org/docs/error-boundaries.html
 
 - todos/skipped
   - [react & webcomponents](https://reactjs.org/docs/web-components.html)
@@ -839,6 +839,10 @@ class NameForm extends React.Component {
 // create a container with the default data
 // the default is only used when a consumer can find a matching provider
 // ^ it will then use the default of the closest ancestor
+// never do this
+// always create the default value in the parents state
+// so that consumers dont rerender each time the provider rerenders
+// ^ but only when the providers context changes
 ThemeContext = React.createContext({
   theme: themes.dark,
   // must match the actual fn
