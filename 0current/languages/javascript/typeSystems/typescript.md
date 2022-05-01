@@ -268,7 +268,13 @@ pnpm tsc somefile.ts // typecheck a specific file and output a .js file with the
 
 ## declaration files
 
-- for annotating packages with no types, e.g. the poop package may have a poop.d.ts
+- for annotating packages/libraries with no types, e.g. the poop package may have a poop.d.ts
+  - the idea being if you have access to the code, you should write the annotations with the code
+  - ^ and not in a declaration file
+- kinds of libraries: determines the structure of a declaration file
+  - modular libraries:
+    - only work in a JS environment wiht a module loader (commonJS, ESM, RequieJS, etc)
+    -
 
 ```js
 
