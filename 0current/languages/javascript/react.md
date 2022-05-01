@@ -815,6 +815,46 @@ class NameForm extends React.Component {
 
 - todo
 
+### context components (pub-sub data flow)
+
+- state: for unidirectional data flow; top-down through component hierarchy
+- context: pub-sub data flow for centralized data
+  - pass data directly to consumers without anywhere in the component hierarchy
+  - when some data needs to be accessible by many components at different nesting levels.
+- uses cases:
+  - theming
+  - authNZ
+  - locale
+  - etc
+
+```js
+// create a container with the default data
+ThemeContext = React.createContext("light");
+
+class App extends React.Component {
+  render() {
+    return (
+      // the Provider component needs to be at a higher level that consumer components
+      // publish the current value via the containers Proider component
+      // ^ generall you manage this via state and pass that to consumers as well for updating
+      <ThemeContext.Provider value="dark">
+        <Toolbar />
+      </ThemeContext.Provider>
+    );
+  }
+}
+
+class ThemedButton extends React.Component {
+  // subscribe to context a context provider
+  static contextType = ThemeContext;
+  render() {
+    // React will find the closest theme Provider above and use its value.
+    // In this example, the current theme is "dark". (see above)
+    return <Button theme={this.context} />;
+  }
+}
+```
+
 ### portals
 
 - use portals when rendering a child even when the parent has overflow hidden/z-index
