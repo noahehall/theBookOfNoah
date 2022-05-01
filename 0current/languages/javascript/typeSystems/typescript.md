@@ -1,6 +1,6 @@
 # typescript
 
-- bookmark: https://www.typescriptlang.org/docs/handbook/declaration-files/library-structures.html
+- bookmark: https://www.typescriptlang.org/docs/handbook/declaration-files/library-structures.html#global-libraries
   - [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
     - this is the beginning of the reference
     - eventually you want to get through this shiz
@@ -273,8 +273,13 @@ pnpm tsc somefile.ts // typecheck a specific file and output a .js file with the
   - ^ and not in a declaration file
 - kinds of libraries: determines the structure of a declaration file
   - modular libraries:
-    - only work in a JS environment wiht a module loader (commonJS, ESM, RequieJS, etc)
-    -
+    - only work in a JS environment with a module loader (commonJS, ESM, RequieJS, UMD, SystemJS, etc)
+    - generally never assign properties to window/global
+    - templates
+      - [general modules](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html)
+      - [class modules](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-class-d-ts.html)
+      - [function modules](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-function-d-ts.html)
+      - [plugin modules](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-plugin-d-ts.html)
 
 ```js
 
@@ -311,6 +316,7 @@ declare var foo: number; // global
 declare const boo: number; // constant
 declare let zoo: number; // block scoped
 declare function greet(greeting: string): void;
+
 ```
 
 ## data types
