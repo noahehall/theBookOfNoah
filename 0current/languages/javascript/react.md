@@ -554,7 +554,7 @@ class Clock extends React.Component {
 // React.PureComponent
 ```
 
-### functional components
+### function components
 
 - must accept a single object (props) and return a react element
 
@@ -821,37 +821,116 @@ class NameForm extends React.Component {
 - context: pub-sub data flow for centralized data
   - pass data directly to consumers without anywhere in the component hierarchy
   - when some data needs to be accessible by many components at different nesting levels.
+  - lets you “broadcast” such data, and changes to it, to all components below
 - uses cases:
   - theming
   - authNZ
   - locale
-  - etc
+  - cache
+- alternatives
+  - instead of using context to pass data to components
+    - pass renderable components down as props
+    - intermediate components just pass on props not menth for them
+    - decouples a child from their immediate parents
+  - render props
+    - enables a child to communicate with its parent before rendering
 
 ```js
 // create a container with the default data
-ThemeContext = React.createContext("light");
-
+// the default is only used when a consumer can find a matching provider
+// ^ it will then use the default of the closest ancestor
+ThemeContext = React.createContext({
+  theme: themes.dark,
+  // must match the actual fn
+  // e.g. this matches a setState fn
+  toggleTheme: () => {},
+});
+// the name of this component in react dev tools
+ThemeContext.displayName = "ThemeProviderComponent";
 class App extends React.Component {
+  constructor() {
+    super(props);
+    this.toggleTheme = () => {
+      this.setState((state) => ({
+        theme: state.theme === themes.dark ? themes.light : themes.dark,
+      }));
+    };
+  }
   render() {
     return (
       // the Provider component needs to be at a higher level that consumer components
-      // publish the current value via the containers Proider component
-      // ^ generall you manage this via state and pass that to consumers as well for updating
-      <ThemeContext.Provider value="dark">
-        <Toolbar />
-      </ThemeContext.Provider>
+      // publishes the current value via to consumers that are descendants
+      // all descendant consumers rerender whenever the value changes
+      // ^ consumers are updated even when an ancestor component skips updating via shouldComponentUpdate
+      <Page>
+        // uses the theme from app.state
+        <ThemeContext.Provider value={this.state.theme}>
+          // all consumers are updated when this is called // even if they
+          initially start with a different value
+          <Toolbar changeTheme={this.toggleTheme} />
+        </ThemeContext.Provider>
+        // uses the default theme // i.e. via another ThemeContext provider
+        <Section>
+          <ThemedButton />
+        </Section>
+      </Page>
     );
   }
 }
 
+// subscribe to a context in a class component
 class ThemedButton extends React.Component {
-  // subscribe to context a context provider
+  // initialize this.context via a class property
   static contextType = ThemeContext;
   render() {
     // React will find the closest theme Provider above and use its value.
     // In this example, the current theme is "dark". (see above)
     return <Button theme={this.context} />;
   }
+}
+
+// subscribe to a context in a function component
+function SomeComponent() {
+  // value is the current value, or the default value of some proider
+  const renderBasedOnContext = (value) => {
+    return value ? <TrueComp /> : <FalseComp />;
+  };
+  return <MyContext.Consumer>{renderBasedOnContext}</MyContext.Consumer>;
+}
+
+// consuming multiple contexts
+const ThemeContext = React.createContext("light");
+const UserContext = React.createContext({
+  name: "Guest",
+});
+
+class App extends React.Component {
+  render() {
+    const { signedInUser, theme } = this.props;
+
+    // App component that provides initial context values
+    return (
+      <ThemeContext.Provider value={theme}>
+        <UserContext.Provider value={signedInUser}>
+          <Layout />
+        </UserContext.Provider>
+      </ThemeContext.Provider>
+    );
+  }
+}
+
+// A component may consume multiple contexts
+// e.g. this is rendered by Layout above
+function Content() {
+  return (
+    <ThemeContext.Consumer>
+      {(theme) => (
+        <UserContext.Consumer>
+          {(user) => <ProfilePage user={user} theme={theme} />}
+        </UserContext.Consumer>
+      )}
+    </ThemeContext.Consumer>
+  );
 }
 ```
 
