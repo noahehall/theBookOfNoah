@@ -838,6 +838,94 @@ object-position: % %|top right|center bottom|etc etc;
 background-size: contain|no-repeat|cover|%|% %;
 ```
 
+#### media queries
+
+- media types: screen, print, speech, all
+  - all other values have been deprecated (check w3c)
+  - the focus now is on capabilities and functionality
+
+```css
+@media print {
+  .someclass {
+    width: 100%;
+  }
+}
+
+/* landscape vs portrait
+ * landscape: browser window is wider than it is tall
+ * portrait: the opposite
+ */
+@media (orientation: portrait) {
+}
+
+/** general width base queries */
+@media all and (min-width: 480px) {
+  /* use min-width for  mobile first designs */
+}
+
+@media all and (max-width: 700px) {
+  /* use max width for dekstop first designs */
+}
+
+@media all and (min-width: 700px) and (max-width: 2000px) {
+  /* can be combined */
+}
+
+/** black n white */
+@media (monochrome) {
+  /* black n white  or grayscale */
+}
+
+@media (monochrome: 0) {
+  /* i.e. not monochrome */
+}
+
+/* screen resolution
+ * good for swapping out background images
+*/
+@media (resolution: 240dpi) {
+}
+@media (min-resolution: 190dpi) {
+}
+@media (max-resolution: 300dpi) {
+}
+
+/**
+ * hover vs pointer:
+ * hover: hovering over something
+ * ^ hover: i.e. the primary device is hover capable
+ * ^ none: no hovering capability
+ * ^ any-hover: any type of connecte device is a hovering capable device
+ * pointer: how finely a pointing device indicates a target
+ * ^ coarse: e.g. a finger
+ * ^ fine: mouse
+ * ^ any-pointer: any kind of pointing device
+ */
+
+@media (hover: hover) {
+  /* likely there is a mouse/trackpad */
+  button:hover {
+    /* make sure to only target :hover */
+  }
+}
+
+@media (any-hover: hover) {
+  /* likely there is a stylus or something */
+}
+
+@media (pointer: fine) {
+  /* likely a mouse */
+  button:hover {
+  }
+}
+
+@media (pointer: coarse) {
+  button: hover {
+
+  }
+}
+```
+
 ### layouts
 
 - organized the content first in a well structured layout in the normal flow
@@ -968,6 +1056,8 @@ background-size: contain|no-repeat|cover|%|% %;
 
 ##### flexbox
 
+- gotchas
+  - dont use the width property on flex items, use flex-basis (or just flex)
 - 1-dimensional alignment of content, ordering items, and implementing flexible sizing
 
   - the ability to make the flex items flexible, altering their width/height to fill the availble space in the main dimension
