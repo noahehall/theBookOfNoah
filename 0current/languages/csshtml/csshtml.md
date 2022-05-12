@@ -845,10 +845,24 @@ background-size: contain|no-repeat|cover|%|% %;
   - the focus now is on capabilities and functionality
 
 ```css
+/* media TYPE and (condition) and (condition) */
+/* and: must all be true */
+/* not: only applies to what follows next, must include a media TYPE */
+/* or: indicated by comma separated values */
+@media not print {
+}
+/* not only applies to print, not the min width */
+@media not print and (min-width: 800in) {
+}
 @media print {
   .someclass {
     width: 100%;
   }
+}
+
+/* only is only useful when supporting older browsers
+* to stop them from applying styles */
+@media only screen {
 }
 
 /* landscape vs portrait
@@ -895,11 +909,11 @@ background-size: contain|no-repeat|cover|%|% %;
  * hover: hovering over something
  * ^ hover: i.e. the primary device is hover capable
  * ^ none: no hovering capability
- * ^ any-hover: any type of connecte device is a hovering capable device
+ * ^ any-hover: hover|none any type of connecte device is a hovering capable device
  * pointer: how finely a pointing device indicates a target
  * ^ coarse: e.g. a finger
  * ^ fine: mouse
- * ^ any-pointer: any kind of pointing device
+ * ^ any-pointer: fine|coarse any kind of pointing device
  */
 
 @media (hover: hover) {
@@ -923,6 +937,25 @@ background-size: contain|no-repeat|cover|%|% %;
   button: hover {
 
   }
+}
+
+/* if screen and (portrait OR any-pointer is fine) */
+@media screen and (orientiation: portrait), (any-pointer: fine) {
+}
+/* targetig specific devices*/
+@media (hover: none) and (pointer: coarse) {
+  /* smartphones, touchscreens */
+}
+
+@media (hover: none) and (pointer: fine) {
+  /* stylus-based screens */
+}
+
+@media (hover: hover) and (pointer: coarse) {
+  /* wii controller, microsoft kinect */
+}
+@media (hover: hover) and (pointer: fine) {
+  /*mouse, touchpad */
 }
 ```
 
