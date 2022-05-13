@@ -523,7 +523,7 @@ function multiply(n: number, ...m: number[]) {
 ```js
 
 // generics
-// a fn where te type of the input relate to the type of the output
+// a fn where the type of the input relate to the type of the output
 // ^ or where the types of two inputs relate in some way
 // T === placeholder, for whatever type the caller sends
 // enables you to avoid overloads entirely
@@ -539,7 +539,7 @@ const u = firstElement([]);
 // example specifying multiple T
 fn poop<A, B>(a: A, b: B): B { /*body*/}
 // provide variables to types, e.g. specifying the type of elements within an array
-type StringArray = Array>string>;
+type StringArray = Array<string>;
 type ObjectWithNameArray = Array<{name: string}>
 
 // interface generic

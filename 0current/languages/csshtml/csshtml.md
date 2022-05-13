@@ -12,6 +12,7 @@
 
 ## links
 
+- [cool font scales + explanations](https://type-scale.com/)
 - [w3 css validator](https://jigsaw.w3.org/css-validator/)
 - [w3 css](https://www.w3.org/Style/CSS/Overview.en.html)
 - [w3 css release phases](https://www.w3.org/Style/CSS/current-work)
@@ -556,10 +557,10 @@
 
 - relative units
 
-  - em Font size of the parent element.
+  - em Font size of the nearest parent element with a font-size explicitly set
   - ex x-height of the elements font.
   - ch The advance measure (width) of the glyph "0" of the elements font.
-  - rem Font size of the root element.
+  - rem Font size of the root element. (html)
   - lh Line height of the element.
   - vw 1% of the viewports width. (be careful with scrollbars!)
   - vh 1% of the viewports height. (be careful with scrollbars!)
@@ -584,6 +585,42 @@
       - `hsla(240,100%,50%,0.5);`
 
 - functions e.g. background images / graduates
+
+### calc
+
+- math in css
+- supported anywhere (i think) a unit value can be used
+  - length: width/height
+  - animations/transitions: frequency, angle, time
+  - numbers/integers: font sizes, padding, etc
+  - operators: + - \* / (please excuse my dear ant sally)
+- use cases
+  - manipulating numbers with differnet units (px vs rem, etc)
+  - documenting logic right in the CSS (i.e. read the fkn code duuuude)
+
+```css
+.poop {
+  font-size: calc(1rem + 2px);
+}
+```
+
+### custom properties (css variables)
+
+- can have their values changed in media queries (dizzope)
+- can be overridden via the usuall css cascade
+- values cna be accessed & manipulated via js
+- no major hit to performance
+- root selector: makes the everything within root is scoped globally to the entire dom
+
+```css
+:root {
+  --poop: brown;
+}
+
+.turd {
+  color: var(--poop);
+}
+```
 
 ### selectors
 
@@ -1063,6 +1100,9 @@ background-size: contain|no-repeat|cover|%|% %;
     - design elements are then placed on the grid
   - CSS grid systems: predefined style rules are tried to grid/column-specific class names
     - e.g. col-1 === 1/12 width, col-4 === 4/12 width, col8 === 8/12 width, etc
+  - justify-content
+    - space-around: place half of hte vaiable psace on each side of the box
+      - e.g. 4 boxes with flexbasis @ 24%, that means a 0.5% is placed on each side of each box
 
 - Versus rap battle
 
