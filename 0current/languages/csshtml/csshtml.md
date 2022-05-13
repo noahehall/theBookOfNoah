@@ -1,5 +1,6 @@
 # CSS + HTML
 
+- always start with high quality markup, you need text, copy and structure before you can style anything
 - not everything is captured, dont depend on this file as a full reference
   - e.g. some tricks arent listed based on my opinions
   - check MDN, then w3.org as your use case becomes more complex
