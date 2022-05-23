@@ -254,6 +254,11 @@
 
 ### typography
 
+- todo
+
+  - [css COLR pallete for multi colored fonts](https://css-tricks.com/colrv1-and-css-font-palette-web-typography/)
+  - [better logic for fluid scaling type and spacing](https://css-tricks.com/consistent-fluidly-scaling-type-and-spacing/)
+
 - typeface: (general) the design of a collection of glyphs (letters numbers symbols)
   - have to be considered within the context their used (heading, paragraph, cta, logo, etc)
   - using different typefaces (vs different fonts of a typeface) takes some care, like choosing colors in palette
@@ -278,8 +283,13 @@
   - variable fonts: use numbers instead of words, e.g. 600 would be a good bold (imo)
 - font-size: creates hierarchy, guides the user through the page
   - you want to set a base font in px, then all used font sizes in em/rem
-- light-height: how tall a line of text is, affects readability
+- light-height: vertical spacing; how tall a line of text is, affects readability
   - always express as a unitless number representing a multiple of the defined font size
+- letter-spacing: horizontal spacing; between glyphs and overall width of content
+  - generally only need to modify for fonts that are squished, unique/stylish, super big, or super small
+    - big: reduce space
+- font-kerning: custom spacing between specific elements, e.g. AV
+  - not all fonts have this capability
 
 #### generalities
 
