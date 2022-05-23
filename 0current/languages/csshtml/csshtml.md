@@ -1130,21 +1130,20 @@ background-size: contain|no-repeat|cover|%|% %;
 
 ##### flexbox
 
+- always think about parents and children, flex containers and flex items
+  - parent determines how flow of the children
 - gotchas
   - dont use the width property on flex items, use flex-basis (or just flex)
 - 1-dimensional alignment of content, ordering items, and implementing flexible sizing
-
   - the ability to make the flex items flexible, altering their width/height to fill the availble space in the main dimension
   - while it dictates behavior on a single axis
     - items can wrap to create additional groupings
     - flex containers can be nested to create additional dimensions
-
 - flex-direction: determines which dimension is the main & cross axis
 
   - but also depends on the writing order of the document
   - column: consider height & ignore width
   - row: consider width & ignore height
-
   - row: the parent is a row, children render left to right, additional rows created when wrapping
     - width is an input var to the flex algorithm
     - main axis: horizontal

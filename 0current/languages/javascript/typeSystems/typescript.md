@@ -108,6 +108,10 @@ const poop = someFn();
   - [and here](https://www.typescriptlang.org/docs/handbook/react.html)
 
 ```js
+  // JSX element type 'Component' does not have any construct or call signatures.
+  // ^ use { type ElementType } from 'react';
+  // ^ CompToRender = props.someComp as ElementType
+
   const fncomponent = (): JSX.Element => <div>yolo worl</div>
   someFn(myRating as unknown as number)
   const someObj: any { things: 'hello'} as OtherThing
