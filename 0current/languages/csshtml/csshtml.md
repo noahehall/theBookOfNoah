@@ -60,6 +60,7 @@
   - [font-face generator](https://everythingfonts.com/font-face)
   - [web font generator](https://www.fontsquirrel.com/tools/webfont-generator)
   - [cool fonts for download](https://coolfont.org/)
+  - [30 fonts for headings](https://www.elegantthemes.com/blog/resources/30-sans-serif-fonts-perfect-for-website-headings)
 
 - html
 
@@ -245,7 +246,7 @@
     - because they will always look natural
     - e.g. sunrise, sunsets, beach scenes, etc
 
-### type
+### typography
 
 - set font-size to vw (viewport width) so it scales with the viewport
 - use repetitive styles across similar elements
@@ -256,6 +257,9 @@
     - the length of text can help decide between the two
 - set the line-height larger than the font size to reduce cramping
   - dont set a unit to your line-height value, as a unitless line-height is proportional to its font-size!
+- main theme
+  - typography is about usability first
+  - ^ then about emotion second
 
 ### layout
 
@@ -1198,7 +1202,7 @@ background-size: contain|no-repeat|cover|%|% %;
     - you generally always want to specify dense
     - unless the order of the grid items matter (as empty spaces are backfilled)
 
-### multi-column
+#### multi-column
 
 - todo
 
