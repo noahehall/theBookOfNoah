@@ -109,6 +109,9 @@ const poop = someFn();
 
 ```js
   // JSX element type 'Component' does not have any construct or call signatures.
+  // ^ means the component has already been rendered, and you are trying to render it again
+  // ^ easy fix by doing {Component} instead of <Component />
+  // ^ or see below
   // ^ use { type ElementType } from 'react';
   // ^ CompToRender = props.someComp as ElementType
 

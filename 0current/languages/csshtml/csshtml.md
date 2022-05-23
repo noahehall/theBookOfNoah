@@ -53,15 +53,6 @@
 - [fun with viewport units](https://css-tricks.com/fun-viewport-units/)
 - [new viewport units](https://www.w3.org/TR/css-values-4/#viewport-relative-lengths)
 
-- fonts
-
-  - [great font-face explanation](https://hacks.mozilla.org/2009/06/beautiful-fonts-with-font-face/)
-  - [font-face](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face)
-  - [font-face generator](https://everythingfonts.com/font-face)
-  - [web font generator](https://www.fontsquirrel.com/tools/webfont-generator)
-  - [cool fonts for download](https://coolfont.org/)
-  - [30 fonts for headings](https://www.elegantthemes.com/blog/resources/30-sans-serif-fonts-perfect-for-website-headings)
-
 - html
 
   - [html entity reference](https://html.spec.whatwg.org/multipage/indices.html)
@@ -124,6 +115,20 @@
   - [bridamount](https://www.1001fonts.com/bridamount-font.html)
   - [grifter](https://hansonmethod.com/grifter)
 
+- fonts
+
+  - [great font-face explanation](https://hacks.mozilla.org/2009/06/beautiful-fonts-with-font-face/)
+  - [font-face](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face)
+  - [font-face generator](https://everythingfonts.com/font-face)
+  - [web font generator](https://www.fontsquirrel.com/tools/webfont-generator)
+  - [cool fonts for download](https://coolfont.org/)
+  - [30 fonts for headings](https://www.elegantthemes.com/blog/resources/30-sans-serif-fonts-perfect-for-website-headings)
+  - [find pairs of font that go together](https://www.fontpair.co/)
+  - [overlay fonts on top of eachother to see the diff](http://www.typeconnection.com/step4/ec.php)
+  - [jack other peoples font schemes](https://www.typewolf.com/)
+  - [best way to setup the @import rule via this tool for fonts](https://transfonter.org/)
+  - [build a modular scale for a font sizing scheme](https://www.modularscale.com/)
+
 - design
 
   - [dont hate w3schools](https://www.w3schools.com/html/html_responsive.asp)
@@ -135,6 +140,7 @@
   - [typography for developers](https://css-tricks.com/typography-for-developers/)
   - [choosing a color palette](https://www.invisionapp.com/inside-design/quick-guide-color-palette/)
   - [100 color combinations and how to use them](https://www.canva.com/learn/100-color-combinations/)
+  - [typography golden ration](https://digitaldeepak.com/golden-ratio-typography/)
 
 ## basics
 
@@ -248,6 +254,35 @@
 
 ### typography
 
+- typeface: (general) the design of a collection of glyphs (letters numbers symbols)
+  - have to be considered within the context their used (heading, paragraph, cta, logo, etc)
+  - using different typefaces (vs different fonts of a typeface) takes some care, like choosing colors in palette
+- font: (specific) a specific size, weight, or style of a typeface (regular, bold italic)
+- main theme
+  - typography is about usability first
+  - ^ then about emotion second
+- font types
+  - monospace: each glyph has the same width; useful for designing visual structures
+  - serif: aids reability by adding accents to ends of some glyphs
+    - didone
+    - slab
+    - old style
+  - sans-serif: doesnt have accents
+    - humanist
+    - geometric
+    - grotesk
+
+#### font attributes
+
+- font-weight: thin, extra light, regular, medium, semi bold, bold, extra bold, black
+  - variable fonts: use numbers instead of words, e.g. 600 would be a good bold (imo)
+- font-size: creates hierarchy, guides the user through the page
+  - you want to set a base font in px, then all used font sizes in em/rem
+- light-height: how tall a line of text is, affects readability
+  - always express as a unitless number representing a multiple of the defined font size
+
+#### generalities
+
 - set font-size to vw (viewport width) so it scales with the viewport
 - use repetitive styles across similar elements
 - use hierarchy wisely
@@ -255,11 +290,10 @@
 - choosing a font
   - a balance between readbility and IMPACT
     - the length of text can help decide between the two
-- set the line-height larger than the font size to reduce cramping
-  - dont set a unit to your line-height value, as a unitless line-height is proportional to its font-size!
-- main theme
-  - typography is about usability first
-  - ^ then about emotion second
+- rhythm: describes how text flows vertically on a page
+  - use the base line height as a baseline unit from which all spacing is derived
+  - ^ any margin, padding, etc. should be baed on line-height
+  - ^ em/rem play an important role here
 
 ### layout
 
