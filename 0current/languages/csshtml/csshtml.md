@@ -128,6 +128,7 @@
   - [jack other peoples font schemes](https://www.typewolf.com/)
   - [best way to setup the @import rule via this tool for fonts](https://transfonter.org/)
   - [build a modular scale for a font sizing scheme](https://www.modularscale.com/)
+  - [crazy genius fluid type calculator without media quries](https://utopia.fyi/type/calculator/)
 
 - design
 
@@ -290,6 +291,8 @@
     - big: reduce space
 - font-kerning: custom spacing between specific elements, e.g. AV
   - not all fonts have this capability
+- line length
+  - set the parent element (span, button, p, etc) to something like 50ch (for about ~50 chars wide based on the fonts number 0)
 
 #### generalities
 
@@ -304,6 +307,8 @@
   - use the base line height as a baseline unit from which all spacing is derived
   - ^ any margin, padding, etc. should be baed on line-height
   - ^ em/rem play an important role here
+- use a scale/ratio to a uniform progression of font sizes
+  - e.g. scale = 1.6, each time you go up, current size _ 1.6, each time you go down, current size _ 1.6
 
 ### layout
 
@@ -472,6 +477,13 @@
 - block text
   - p
   - h#
+    - there should only be 1 H1 per page, even tho the HTML spec allows H1 per section element, the HTML outline has never been implemented
+    - ^ thus support your screenreaders (and those users) who use H1 to know what the page is about, not a fkn section
+    - Header tags should be visually rendered in order (h1, h2, etc), again this goes to support screen readers (and those users) who use it to navigate hte page in order, and read out a page outline from the screen readers
+      - used by user agents to construct a table of contents for a document automatically
+      - thus all H2 should semantically represent the same `aria-level` of a pages outline
+      - ^ thus this semantically limits you to 1 page category, and 5 subcategories per page
+        - an H2 is a subcategory of an H1, and an H3 to H2, etc
 - lists
   - ol / ul
   - dl + dt + dd

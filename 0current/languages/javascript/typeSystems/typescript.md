@@ -472,6 +472,24 @@ interface StringArray {
 
 ```js
 
+// quickies
+
+// as interface
+interface PastaItemInterface {
+  (El: FC<any>, about: string): {
+    PastaEl: ReactElement;
+    children: ReactElement;
+  };
+}
+// as type
+type PastaItemType = (
+  El: FC<any>,
+  about: string
+) => {
+  PastaEl: ReactElement;
+  children: ReactElement;
+};
+
 // fns
 // type alias
 type SomeFn = (a: any) => void;
