@@ -539,16 +539,41 @@
   - best to use width descriptors, as accounting for display density X flexible width images will have you creating 1000x fkn srcsets and 1000 fkn versions of a fkn image
 - inline responsive images: using a single image, in combination with css and javascript to resize the
   - the issue is that the browser downloads the image before javascript, so you still waste bandwidth
-    - the only thing the browser knows after display density is the client viewport
-    - ^ hence img srcset + picture element is the best approach, then add responsive css/js for optimization/UX
+    - ^ the only thing the browser knows after display density is the client viewport when it requests the image
+      - ^ hence img img.srcset + img.sizes + picture element is the best approach, then add responsive css/js for optimization/UX
+    - ^ img.sizes enables the browser to request an appropriate img.size based on the known viewport width before the request
 
 ```html
+<!-- RESOLUTION SWITCHING solutions: display density and width descriptors -->
+<!-- this is a suggestion to the user-agent, which is responsible for choosing the appropriate img -->
 <!-- display density: use poop on 1x display desnity, poop2x.jpg on 2x display density -->
-<img srrc="poop.jpg" srcset="poop.jpg 1x, poop-2x.jpg 2x" />
+<img src="poop.jpg" srcset="poop.jpg 1x, poop-2x.jpg 2x" />
 
-<!-- width descriptors: display the best image based on the resolution width of the source image-->
+<!-- width descriptors: display the best image based on the resolution width of the source image -->
 <!-- ^ fk display density and apple -->
-<img srrc="poop.jpg" srcset="poop160.jpg 160w, poop320.jpg 320w, etc" />
+<!-- sizes attr is required for width descriptors -->
+<!-- tells the browser the rendered display size of the image based on the width of hte viewport -->
+<!-- i.e., if the max-width of hte viewport is X, the image will display at size Y -->
+<!-- the last value should be a defualt if none of the `media-conditions` matches -->
+<img
+  src="poop.jpg"
+  srcset="poop160.jpg 160w, poop320.jpg 320w, etc"
+  sizes="
+    (max-width:480px) 100vw,
+    (max-width: 900px) 33vw,
+    100px
+  "
+/>
+
+<!-- RESOLUTION SWITCHING solutions: use the picture element -->
+<!-- this is a directive to the user agent, that must obey media query -->
+<!-- uses media conditions (and not media conditions) to switch out the image -->
+<!-- the source.media query that matches, that image will be used, else the img el is used -->
+<picture>
+  <source media="(min-width: 900px)" srcset="cat-vertical.jpg" />
+  <source media="(min-width: 750px)" srcset="cat-horizontal.jpg" />
+  <img src="cat.jpg" alt="cat" />
+</picture>
 ```
 
 ### anatomy of an HTML document
