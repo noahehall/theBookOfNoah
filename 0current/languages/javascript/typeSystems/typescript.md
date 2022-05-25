@@ -5,6 +5,9 @@
     - this is the beginning of the reference
     - eventually you want to get through this shiz
 - todos
+  - [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+  - [typecript cheatsheet extended utility types](https://github.com/typescript-cheatsheets/utilities)
+  - [typescript advanced utility types](https://react-typescript-cheatsheet.netlify.app/docs/advanced/utility_types/)
   - [constraints](https://www.typescriptlang.org/docs/handbook/2/functions.html)
     - constraints
     - specifying type arguments
@@ -110,6 +113,8 @@ const poop = someFn();
 ```js
   // JSX element type 'Component' does not have any construct or call signatures.
   // ^ means the component has already been rendered, and you are trying to render it again
+  // ^ or it means youave specified an object type annotation instead of a fn type annotation
+  // ^ or it means your fn has someFn(SomeComp) instead of someFn({ SomeComp })
   // ^ easy fix by doing {Component} instead of <Component />
   // ^ or see below
   // ^ use { type ElementType } from 'react';

@@ -13,45 +13,43 @@
 
 ## links
 
-- [cool font scales + explanations](https://type-scale.com/)
-- [w3 css validator](https://jigsaw.w3.org/css-validator/)
-- [w3 css](https://www.w3.org/Style/CSS/Overview.en.html)
-- [w3 css release phases](https://www.w3.org/Style/CSS/current-work)
-- [checking browser support](https://caniuse.com/)
-- [facebook open graph protocol](http://ogp.me/)
-- [webaim: all about accessibility](https://webaim.org/)
-- [css layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout)
-- [gotchas for grid](https://css-tricks.com/things-ive-learned-css-grid-layout/)
-- [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
-- [css units](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units)
-- [multi column layouts via fragmentation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Columns)
-- [filter](https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
-- [bunch of filter functions](https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function)
-- [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
-- [calc](https://developer.mozilla.org/en-US/docs/Web/CSS/calc)
-- [repeat](https://developer.mozilla.org/en-US/docs/Web/CSS/repeat)
-- [dynamic css grid](https://oky.dk/blog/1kb-grid)
-- [key frames reference](https://developer.mozilla.org/en-US/docs/Web/API/CSSKeyframesRule)
-- [keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes)
-- [media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)
-- [using media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)
-- [animation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations)
-- [at-rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)
-- [import](https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
-- [css variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables)
-- [centering things](https://css-tricks.com/centering-css-complete-guide/)
-- [css reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
-- [color converter](https://serennu.com/colour/hsltorgb.php)
-- [css validator by w3c](http://jigsaw.w3.org/css-validator/#validate_by_input)
-- [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
-- [object fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)
-- [picture element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
-- [nth of type](https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-of-type)
-- [native container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries)
-- [specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity)
-- [speciFISHity](https://specifishity.com/)
-- [fun with viewport units](https://css-tricks.com/fun-viewport-units/)
-- [new viewport units](https://www.w3.org/TR/css-values-4/#viewport-relative-lengths)
+- css
+
+  - [w3 css validator](https://jigsaw.w3.org/css-validator/)
+  - [w3 css](https://www.w3.org/Style/CSS/Overview.en.html)
+  - [w3 css release phases](https://www.w3.org/Style/CSS/current-work)
+  - [checking browser support](https://caniuse.com/)
+  - [css units](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units)
+  - [filter](https://developer.mozilla.org/en-US/docs/Web/CSS/filter)
+  - [bunch of filter functions](https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function)
+  - [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
+  - [calc](https://developer.mozilla.org/en-US/docs/Web/CSS/calc)
+  - [repeat](https://developer.mozilla.org/en-US/docs/Web/CSS/repeat)
+  - [media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)
+  - [using media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)
+  - [at-rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)
+  - [import](https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
+  - [css variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables)
+  - [object fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)
+  - [picture element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
+  - [css reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
+  - [css validator by w3c](http://jigsaw.w3.org/css-validator/#validate_by_input)
+  - [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+  - [nth of type](https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-of-type)
+  - [native container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries)
+  - [specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity)
+  - [speciFISHity](https://specifishity.com/)
+  - [fun with viewport units](https://css-tricks.com/fun-viewport-units/)
+  - [new viewport units](https://www.w3.org/TR/css-values-4/#viewport-relative-lengths)
+
+- animation
+
+  - [key frames reference](https://developer.mozilla.org/en-US/docs/Web/API/CSSKeyframesRule)
+  - [keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes)
+  - [animation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations)
+
+  - [centering things](https://css-tricks.com/centering-css-complete-guide/)
+  - [color converter](https://serennu.com/colour/hsltorgb.php)
 
 - html
 
@@ -68,6 +66,14 @@
   - [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link)
   - [link type reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types)
   - [content categories](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories)
+
+- layout
+
+  - [css layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout)
+  - [gotchas for grid](https://css-tricks.com/things-ive-learned-css-grid-layout/)
+  - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
+  - [multi column layouts via fragmentation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Columns)
+  - [dynamic css grid](https://oky.dk/blog/1kb-grid)
 
 - misc
 
@@ -96,7 +102,7 @@
 
 - stock photos
 
-  - [free illustrations of people and objects](https://fresh-folk.com/)
+  - [free images](https://littlevisuals.co/)
   - [unspalsh](https://unsplash.com/)
   - [high res photos](https://gratisography.com/)
   - [picography](https://picography.co/)
@@ -104,7 +110,6 @@
   - [cooler pics](https://kaboompics.com/)
   - [fave brand thus far](https://jaymantri.com/)
   - [food pictures](https://www.foodiesfeed.com/)
-  - [free images](https://littlevisuals.co/)
   - [high res](https://www.lifeofpix.com/)
   - [has an admin picked photo section](https://skitterphoto.com/)
   - [basic stock shit](https://stocksnap.io/)
@@ -117,6 +122,7 @@
 
 - fonts
 
+  - [cool font scales + explanations](https://type-scale.com/)
   - [great font-face explanation](https://hacks.mozilla.org/2009/06/beautiful-fonts-with-font-face/)
   - [font-face](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face)
   - [font-face generator](https://everythingfonts.com/font-face)
@@ -142,6 +148,9 @@
   - [choosing a color palette](https://www.invisionapp.com/inside-design/quick-guide-color-palette/)
   - [100 color combinations and how to use them](https://www.canva.com/learn/100-color-combinations/)
   - [typography golden ration](https://digitaldeepak.com/golden-ratio-typography/)
+
+- accessibility
+  - [webaim: all about accessibility](https://webaim.org/)
 
 ## basics
 
@@ -506,6 +515,10 @@
   - samp
 - q
 - a
+
+#### img
+
+- [image file type and format guide](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
 
 ### anatomy of an HTML document
 
