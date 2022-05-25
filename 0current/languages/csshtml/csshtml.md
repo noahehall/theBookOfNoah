@@ -537,8 +537,9 @@
 - responsive images: A method for providing the browser with multiple image sources depending on display density, size of the image element in the page, or any number of other factors.
 - display density: by default its assumed to be 1x, but could be 2x, 3x etc
   - best to use width descriptors, as accounting for display density X flexible width images will have you creating 1000x fkn srcsets and 1000 fkn versions of a fkn image
-- inline responsive images: using a single image, in combination with css and javascript to resize the
-  - the issue is that the browser downloads the image before javascript, so you still waste bandwidth
+- inline responsive images: using HTML attributes to solve the resolution switching and art direction problem
+- ^ relative to using just css for flex width images or JS to modify the html attributes
+  - the issue is that the browser downloads the image before javascript/css is downloaded and parsed, so you still waste bandwidth
     - ^ the only thing the browser knows after display density is the client viewport when it requests the image
       - ^ hence img img.srcset + img.sizes + picture element is the best approach, then add responsive css/js for optimization/UX
     - ^ img.sizes enables the browser to request an appropriate img.size based on the known viewport width before the request
@@ -547,9 +548,11 @@
 <!-- RESOLUTION SWITCHING solutions: display density and width descriptors -->
 <!-- this is a suggestion to the user-agent, which is responsible for choosing the appropriate img -->
 <!-- display density: use poop on 1x display desnity, poop2x.jpg on 2x display density -->
+<!-- only appropriate for FIXED WIDTH images, that dont flex on browser resizes -->
 <img src="poop.jpg" srcset="poop.jpg 1x, poop-2x.jpg 2x" />
 
 <!-- width descriptors: display the best image based on the resolution width of the source image -->
+<!-- appropriate for FLEX WIDTH images -->
 <!-- ^ fk display density and apple -->
 <!-- sizes attr is required for width descriptors -->
 <!-- tells the browser the rendered display size of the image based on the width of hte viewport -->
@@ -570,9 +573,16 @@
 <!-- uses media conditions (and not media conditions) to switch out the image -->
 <!-- the source.media query that matches, that image will be used, else the img el is used -->
 <picture>
-  <source media="(min-width: 900px)" srcset="cat-vertical.jpg" />
-  <source media="(min-width: 750px)" srcset="cat-horizontal.jpg" />
+  <source media="(min-width: 900px)" srcset="see prev examples" />
+  <source media="(min-width: 750px)" srcset="see prev examples" />
   <img src="cat.jpg" alt="cat" />
+</picture>
+
+<!-- rendering different image types -->
+<picture>
+  <source type="image/svg+xml" srcset="see prev examples" />
+  <source type="image/webp" srcset="see prev examples" />
+  <img src="logo.png" />
 </picture>
 ```
 
