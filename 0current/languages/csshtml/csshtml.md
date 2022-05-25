@@ -30,8 +30,6 @@
   - [at-rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)
   - [import](https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
   - [css variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables)
-  - [object fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)
-  - [picture element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
   - [css reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
   - [css validator by w3c](http://jigsaw.w3.org/css-validator/#validate_by_input)
   - [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
@@ -41,6 +39,13 @@
   - [speciFISHity](https://specifishity.com/)
   - [fun with viewport units](https://css-tricks.com/fun-viewport-units/)
   - [new viewport units](https://www.w3.org/TR/css-values-4/#viewport-relative-lengths)
+
+- images
+
+  - [image file type and format guide](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
+  - [object fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)
+  - [picture element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
+  - [respnsive image series](https://cloudfour.com/thinks/responsive-images-101-definitions/)
 
 - animation
 
@@ -518,7 +523,12 @@
 
 #### img
 
-- [image file type and format guide](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
+- raster images: normal images like jpg
+- vector images: useful for simple graphics/logos etc
+- art direction problem: issue ofserving different cropped images based on the available screen real estate
+  - e.g. large show all, medium crop by X, etc
+- resolution switching problem: issue embedding large images on small screens, and small images scaled up on larger screens
+  - multiple resolutions need to be made available for the client to choose the appropriate img
 
 ### anatomy of an HTML document
 
