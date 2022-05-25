@@ -525,10 +525,31 @@
 
 - raster images: normal images like jpg
 - vector images: useful for simple graphics/logos etc
-- art direction problem: issue ofserving different cropped images based on the available screen real estate
-  - e.g. large show all, medium crop by X, etc
+- art direction problem: issue of serving different cropped images based on the available screen real estate
+  - Whenever you need to make changes to content or aspect ratio of an image based on the size of the image in the page
+    - e.g. on a large screen show the full image, with all the details in the background including the subject of the image
+      - however on small screens, crop the image to only show the subject and not the background
+      - or instead of cropping, perhaps switch out the image to a different image thats portrait (instead of landscape)
 - resolution switching problem: issue embedding large images on small screens, and small images scaled up on larger screens
-  - multiple resolutions need to be made available for the client to choose the appropriate img
+  - provide different sizes of an image and you’re not making any modifications to the content or aspect ratio of the image
+  - encompasses flexible images that change based on the size of the viewport, but also scenarios where you want to provide different image sources based on the display density (a.k.a., retina images).
+  - i.e. multiple resolutions need to be made available for the client to choose the appropriate img
+- responsive images: A method for providing the browser with multiple image sources depending on display density, size of the image element in the page, or any number of other factors.
+- display density: by default its assumed to be 1x, but could be 2x, 3x etc
+  - best to use width descriptors, as accounting for display density X flexible width images will have you creating 1000x fkn srcsets and 1000 fkn versions of a fkn image
+- inline responsive images: using a single image, in combination with css and javascript to resize the
+  - the issue is that the browser downloads the image before javascript, so you still waste bandwidth
+    - the only thing the browser knows after display density is the client viewport
+    - ^ hence img srcset + picture element is the best approach, then add responsive css/js for optimization/UX
+
+```html
+<!-- display density: use poop on 1x display desnity, poop2x.jpg on 2x display density -->
+<img srrc="poop.jpg" srcset="poop.jpg 1x, poop-2x.jpg 2x" />
+
+<!-- width descriptors: display the best image based on the resolution width of the source image-->
+<!-- ^ fk display density and apple -->
+<img srrc="poop.jpg" srcset="poop160.jpg 160w, poop320.jpg 320w, etc" />
+```
 
 ### anatomy of an HTML document
 
