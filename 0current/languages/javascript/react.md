@@ -33,6 +33,7 @@
   - [uncontrolled components](https://reactjs.org/docs/uncontrolled-components.html)
   - [thinking in react](https://reactjs.org/docs/thinking-in-react.html)
   - [accessibility](https://reactjs.org/docs/accessibility.html)
+  - [lazy & suspense guide](https://medium.com/hackernoon/lazy-loading-and-preloading-components-in-react-16-6-804de091c82d)
 - ecosystem
   - [formik: easy form components](https://formik.org/docs/overview)
 - other stuff
@@ -638,16 +639,27 @@ function CustomTextInput(props) {
 
 ##### useCallback
 
-- returns a memoized callback to calculate a new value when its dependencies change
-  - alternative to _useMemo_ which provide the memoized value instead
+- returns a memoized fn to calculate a new value when its dependencies change
+  - alternative to _useMemo_ which returns a value, this returns a fn
   - usecases:
     - a child component needs the dispatch because it controls the dependency values
+    - You’re passing the function to another component that is also memoized (useMemo)
+    - Your function has an internal state it needs to remember
+    - Your function is a dependency of another hook, like useEffect for example
+    - memoizing any fn involved in the rendering pipelie/data fetching
+    - if the function is computationally complex, a dependency of another hook or a prop passed to a memoized component
 
 ##### useMemo
 
 - returns a memoized value when its dependencies change
   - runs during rendering
     - so **NO** side effects
+
+##### createRef
+
+- [create vs useRef](https://stackoverflow.com/questions/54620698/whats-the-difference-between-useref-and-createref)
+  - createRef will always create a new ref: e.g. in a React.Component you would assign it to a instance prop
+  - useRef will always return the same ref: e.g. in a FC Component, to always get the same ref back
 
 ##### useRef
 

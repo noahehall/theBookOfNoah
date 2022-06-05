@@ -112,7 +112,8 @@ const poop = someFn();
 
 ```js
   // JSX element type 'Component' does not have any construct or call signatures.
-  // ^ means the component has already been rendered, and you are trying to render it again
+  // ^ means you need to set the annotation to FC<whatever>
+  // ^ or it means the component has already been rendered, and you are trying to render it again
   // ^ or it means youave specified an object type annotation instead of a fn type annotation
   // ^ or it means your fn has someFn(SomeComp) instead of someFn({ SomeComp })
   // ^ easy fix by doing {Component} instead of <Component />

@@ -25,8 +25,7 @@
   - [custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
   - [calc](https://developer.mozilla.org/en-US/docs/Web/CSS/calc)
   - [repeat](https://developer.mozilla.org/en-US/docs/Web/CSS/repeat)
-  - [media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)
-  - [using media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)
+
   - [at-rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule)
   - [import](https://developer.mozilla.org/en-US/docs/Web/CSS/@import)
   - [css variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables)
@@ -40,12 +39,21 @@
   - [fun with viewport units](https://css-tricks.com/fun-viewport-units/)
   - [new viewport units](https://www.w3.org/TR/css-values-4/#viewport-relative-lengths)
 
+- media queries
+  - [complete media queries guide](https://css-tricks.com/a-complete-guide-to-css-media-queries/)
+  - [media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)
+  - [using media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)
 - images
 
   - [image file type and format guide](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types)
   - [object fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)
   - [picture element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
   - [respnsive image series](https://cloudfour.com/thinks/responsive-images-101-definitions/)
+  - [various image resizing services](https://docs.google.com/spreadsheets/d/1e4qdGEoq7tqDCnY7iSSnl3OFoWkzhRfVAly-73A3uCc/edit#gid=0)
+  - [basic fluid images](https://css-tricks.com/barebones-css-for-fluid-images/)
+  - [background images](https://css-tricks.com/almanac/properties/b/background-image/)
+  - [multiple bg image css animations](https://davidwalsh.name/multiple-background-css-animations)
+  - [resource loading with fetchpriority](https://www.smashingmagazine.com/2022/04/boost-resource-loading-new-priority-hint-fetchpriority/)
 
 - animation
 
@@ -79,6 +87,7 @@
   - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
   - [multi column layouts via fragmentation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Columns)
   - [dynamic css grid](https://oky.dk/blog/1kb-grid)
+  - [complete guide to grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
 
 - misc
 
@@ -584,6 +593,24 @@
   <source type="image/webp" srcset="see prev examples" />
   <img src="logo.png" />
 </picture>
+```
+
+- css images
+
+```css
+/* image-set === srcset === for resolution switching */
+background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
+
+/* art direction problem */
+/*
+    dpi — dots per inch
+    dpcm — dots per centimeter
+    dppx — dots per px unit (use this and move on with your life)
+*/
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+/* High density stuff here */
+￼￼￼￼￼￼}
+
 ```
 
 ### anatomy of an HTML document
