@@ -20,6 +20,7 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
   - [rds billing](https://aws.amazon.com/rds/pricing)
   - [supported postgres versions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts.General.DBVersions)
   - [dynamodb local docker setup](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html#docker)
+
 - tuts
 
   - [running dbs on AWS](http://aws.amazon.com/running_databases/)
@@ -39,8 +40,6 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
   - [scenarios for accessing a DB instance in a vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.Scenarios.html)
   - [create an ec2 instance to connect to a db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateWebServer.html)
   - [local pgadmin connect to rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToPostgreSQLInstance.html)
-
-  -
 
 ## best practices
 
@@ -71,7 +70,6 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
 ## terms
 
 - database resiliency: Resiliency is the ability of resource to recover quickly and continue operating even when there has been an failure/disruption; users of a resilient system never know that a disruption has even occurred.
-- az: availablity zone; distinct data center in a specific region; reach region has at least two AZs
 
 ## aurora
 
@@ -86,16 +84,12 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
 - RDS: web service to setup, operate and scale a relational database in the AWS cloud
   - mysql, postgresql, mariadb, oracle, sql server
 - managed db service: responsibile for most managmeent tasks
-
 - limitations
-
   - up to 40 postgresql db instances
   - storage limits (see storage link)
   - max connections: rds requires 3 connections for system maintenance
     - if you set a value for user connections, always `add 3` to account for rds system management connections
-
 - use cases
-
   - cost-efficient, resizable capacity for industry standard relation db
   - manages common admin tasks
     - backups: automatic (have to turn on) or manual; can be used to restore a db
@@ -106,39 +100,27 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
     - scalability: use read replicas to increase read scaling
     - security: via IAM (create users access) and provision behind a VPC
   - use commoon db products: mysql, mariadb, postgres, oracle & microsoft sql server
-
 - recommended version: postgres 13.4
-
   - [all extensions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts.General.FeatureSupport.Extensions.13x)
     - [spi model](https://www.postgresql.org/docs/13/contrib-spi.html)
     - [pgrouting](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_Partitions.html)
     - [pglogical](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_Partitions.html)
     - [postgis](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.PostGIS.html#CHAP_PostgreSQL.Extensions.PostGIS)
-
 - db instance: isolated DB enviornment in AWS cloud; the basic building block of rds
   - contain one/more user-created dbs
   - access via same tools & apps you would normally
   - create/modify db instances using the cli, rds api, console
 - db engines: the specific database product software that runs on the db instance
-
   - mysql, mariadb, postgresql, oracle, microsfot sql server
-
 - db instance class: determines the ocmputation and memory capacity of a db instance oferring different compute, memory and torage capabilities
 - NTP: network time protocol is used to sync time on db instances
-
   - you also use this ubuntu to sync time (e.g. when fkn slack fks up the time you run this)
   - security group: controls access to the db instance by permitting access to IP ranges/ec2 instances you specify
-
 - database preview environment: try out new postrel versions & extensions before they are fully supported by creating a db instance in the database preview environment
-
   - endpoint for api/cli: `rds-preview.us-east-2.amazonaws.com`
-
 - modules: i.e. postgres extensions
-
   - see modules available for your current version after logging into psql `SHOW rds.extensions;`
-
 - read-replica considerations
-
   - support read-only SQL queries
   - requires automatic backups
   - only support asyncrhonous replication
@@ -146,9 +128,7 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
     - to implement sharding to address scalability
   - add the multi-AZ zone option for automatic replication to another AZ
     - you need to create a subnet group
-
 - multi-AZ deployment RDS
-
   - create a VPC
   - create a db subnet group for the database in each AZ you want to have a DB instance in
     - you generally want your DBs in private subnets, so only internal resources can access them
@@ -156,9 +136,7 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
   - you can either:
     - add the multi-AZ at the time of creation
     - come back later an modify it (theres a perf impact and could take the db offline while in process)
-
 - determining db instance requirements
-
   - resource reqs:
     - memory?
     - cpu?
@@ -185,9 +163,7 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
     - magnetic (standard): i.e. disk-based; most cost-effect; ideal for applications with light/burst I/O reqs
     - general purpose (SSD): i.e. gp2; faster access than disk-based
     - provisioned IOPS (PIOPS): the fastest; ideal for I/O-intensive workloads requireing storage performance and consistency in random I/O throughput
-
 - create a VPC security group to provide access to your db instance
-
   - if youre not using the default VPC, do the following to create a security group for a user-defined VPC
     - go the VPC console > security groups > create
     - give a name, description
@@ -305,16 +281,12 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
 #### connecting to db instance
 
 - notes
-
   - rds doesnt permit host access to the DB instance (e.g. via telnet / ssh)
   - restricts access to certain system procedures & tables that requir advanced privileges
-
   - database authentication schemes
-
     - password: i.e. database paswords
     - password + IAM database authentication: auth using db password + user creds through AWS IAM users and roles
     - password + kerberos auth: choose a directory in which you want to allow authorized users to authenticate with this DB instance using kerberos authentication
-
   - instance types
     - standard: m classes; e.g. `db.m6g.large`
     - memory optimized: r & x classes; e.g. `db.r6g.large`
@@ -323,8 +295,6 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
     - megnetic
     - general purpose SSD (gp2)
     - provisioned IPS SSD (io1)
-    -
-
 - connect via pgadmin
 - connect via psql
 
@@ -342,7 +312,6 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
   - to convert a regional table to a global table, streams must be enabled & write capacity must be configured as paper-request/auto-scaled (preferred)
 - elastic storage: AWS has no limit on the amount of data you can store (up to billions of documents in a single table)
 - elastic throughput: can adjust the throughput via an API call to match demand patterns
-
 - considerations
   - table name
   - primary key- sort keys

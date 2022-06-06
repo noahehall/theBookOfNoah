@@ -36,7 +36,6 @@
 ### best practices
 
 - these are part of ever mitigation strategy
-
 - test code in a dedicated and isolated test environment that resembles prod as close as possible
 - have reliable, reproducible, and revertible release processes.
 - after each release, execute penetration testing to identify vulnerabilities before their exploited
@@ -44,15 +43,11 @@
 - stay ahead of security advisories for any third-party code
 - dont rely on any type of header validation
 - dont use microsoft windows servers (haha IMO!)
-
   - or just dont use microsoft windows!
-
 - defense in depth: secure your application with redundancies
-
   - consider and enforce security at every level of the stack
   - enabling failures at one level to be mitigated by other strategies
   - remove uneeded software from your server
-
 - principle of least privilege: demands that every process and appliation run only with the permissions it needs to perform their assigned tasks
   - so if an attacker compromises component A, they shouldnt be able to compromise component B
   - uses different roles for admin, dev, and runtime usecases, even at the service level
@@ -75,7 +70,7 @@
 - attack vectors: the methods that adversaries use to breach or infiltrate your network
 - attack surface: the sum of the different points (for "attack vectors")
 - checksum: a small-sized block of data derived from another block of digital data for the purpose of detecting errors that may have been introduced during its transmission or storage. By themselves, checksums are often used to verify data integrity but are not relied upon to verify data authenticity.
-  - digital fingerprints that are calculated when a resource is created, and can be reused to recalculate checksum upon donwload to ensure the uploaded version matches the downloaded version
+  - digital fingerprints that are calculated when a resource is created, and can be reused to recalculate checksum upon download to ensure the uploaded version matches the downloaded version
 - subresource integrity checks: checksums for the browser
 - security through obscurity: relying on an attacker being unable to guess something; i.e. relying on an attackers ignorance/obscurity of the system
 - embargo resources: enable access to sensitive resources only at a certain point in time, e.g. financial reports are often embargoed
@@ -95,45 +90,33 @@
 - black hat: hoard exploits to maximize the time windows during which they can use vulnerabilities
 - dark web: websites available only via special network nodes that anonymize incoming IP address
 - worm: a recursive exploit that tricks other computers into recursively tricking other computers to execute some code
-
 - REST: representational state transfer; design philosophy for mapping website operatins to the appropriate HTTP method according to their intention
-
 - ICANN: internet corporation for assigned names and numbers
-
   - alotts blocks of IP addresses to regional authorities
-
 - regional authorities
-
   - grant blocks of addresses to internet service prviders and hosting companies within their region
   - when you connect to the net, your ISP assigned an IP to your computer
     - however the IP is rotated periodically
   - similary: companies that host content are assigned an IP for each server they connect to the network
-
 - serialization: the process of converting an in-memory data structure into a stream of binary data
-
   - usually for the purpose of passing the data structure across a network
-  - deserialization: the reserve process that occurs at the other end, when the binary data is converted back into a data structure
-
+  - deserialization: the reverse process that occurs at the other end, when the binary data is converted back into a data structure
 - web shell: an executable script that will take elements from an HTTP request & execute them as a command line script and retun the result
-
 - URI: uniform resource identifier
-
   - protocol: http://
   - domain: google.com
   - path: /poop
   - query string: ?then=wipe
   - fragment: #then-flush
     - used for
-      - intra-page navigation, i.e. linking dirctly to h-tags
+      - intra-page navigation, i.e. linking directly to h-tags
       - record & reload state: i.e. keeping state across browser refreshes
         - e.g. in infinite-scroll, you can store the current position in the URI fragment and load & then scroll to the thing
 
 #### internet protocol suite
 
 - internet protocol suite: dictates how computers exchange data over the web
-
   - there are over 20 protocols collectively under this umbrella
-
 - internet protocol layers
   - network layer
     - ARP
@@ -171,11 +154,9 @@
 ##### Transport Layer Protocols
 
 - TCP: transmission control protocol
-
   - enables two computers to reliably exchange data over the internet
   - created in response to ARPANET (predecessor to the internet)
   - the first msg sent (was on ARPANET) was a LOGIN command destined for a remote computer at stanford university, but crashed after the first two letters (reason for TCP)
-
   - high level workflow
     - messages sent via TCP are split into data packets
     - the servers that make up the internet push these packets from sender to receiver without having to read the entire msg
@@ -187,7 +168,6 @@
     - this send & receipt workflow guarantees msg delivery
     - TCP doesnt dictate how the data being sent is meant to be interpreted, that occurs at a higher level protocol (e.g. HTTP)
       - unencrypted TCP data are vulnerable to man in the middle attacks, see TLS for more info
-
 - UDP: User Datagram Protocol
   - newer than TCP
   - commonly used with video/situations where dropped data packets are expected/msg guarantee isnt required, but the data packets can be streamed at a constant rate
@@ -197,6 +177,7 @@
 - TLS: transport layer security
 
   - arguable what fkn layer this is actually in (some say its not the application layer, but a lower layer)
+    - makes sense it would be in the transport layer, (because of the name)
   - method of encryption that provides both privacy and data integrity
   - ensures that
     - privacy: packets intercepted by a third party cant be decrypted without the appropriate encryption keys
@@ -228,7 +209,6 @@
       - AES-128-GCM: the block cipher
       - SHA-256: the message authentication algorithm
   - digital certificates: aka public-key certificate; an electronic document issued by third-party certificate authorities to prove which internet domain owns which public encryption key
-
     - contains: server domain name, the issueing certificate authority, an encryption public key
     - that way user agents can confirm the server (some IP) they are communicating with is valid for this domain (e.g. google.com) and this certificate
     - that way an attacker cant impersonate a domain or a certifcate the UA checks with the certificate authority in the initial phases of the TLS handshake
@@ -246,9 +226,8 @@
       - use the key pair to generate a Certificate Signing Request (CSR) that contains the pulic key and domain your requesting the certificate for
       - upload the CSR to the certificate authority, and the cert authority will then require you to validate ownership by making some DNS change with values they specify
       - once ownership is proven: you will be given a digital cert for use on your domain server along with the key pair previously created
-
   - HTTP Strict Transport Security: HSTS; policy that ensures sensitive data (e.g. cookies) will not be sent during any initial connection over HTTP, and must wait for the TLS handshake to be completed
-    - when a user agent visits a site it has seen previously, it will automatically send back any cookies the website prviously supplied in the Cookie header
+    - when a user agent visits a site it has seen previously, it will automatically send back any cookies the website previously supplied in the Cookie header
     - if the initial connection was insecure, then the cookies will be sent back insecurely, even if subseqent requests were handled over HTTPS
 
 - SMTP: simple mail transport protocol
@@ -329,7 +308,6 @@
 - encryption key: a secret used to scramble data
 - decryption key: the corresponding key required to unscramble data
 - encryption algorithm: takes input data and scrambles it by using an encryption key
-
   - symmetric encryption: uses the same key to encrypt and decrypt data
     - usually operate as block ciphers: break the input data into fixed-size blocks that can be individually encrypted
     - ^ if the last block of input data is undersized, it will be padded to fill out the block size
@@ -363,53 +341,40 @@
   - application servers should not be reachable by the public
   - the application server will fullfil the request, and reply to the web server with the content, and the web server will forward the content back to the user agent that made the request
 - application server: computer program (e.g. nodejs) that hosts application code, and responds to HTTP requests from web servers, generally handles all requests for dynamic http content
-
 - CDN: content delivery network
-
   - will store duplicated copies of static resources in data centers around the world
   - enables prouction of responsive websites without a massive server expenditure
   - security issues:
     - allows a third party to serve content under your security certicate
-
 - CMS: content management systems
-
   - provide authoring tools requiring little/no technial knowedlge to wriet content
   - cms plugins provide additional tooling, e.g. anlytics
   - security issues
     - using a cms/plugins makes you more secure if you utilize high fidelity packages from reputable vendors
     - but also makes them a high profile target for hackers, e.g. wordpress is always getting fkn hacked
-
 - http session: the entire conversation (stateless/stateful) between a specific user agent & server
-
   - server could send a set-cookie header in the initial HTTP response containing data that identifies the user agent
     - the user agent will store & send back the same cookie on each subsequent response
-
 - resources
-
   - static: an object thats returned unaltered in HTTP responses
   - dynamic: an object thats executed/interpreted based on data in HTTP requests and computed before returned in HTTP responses
     - often the code loads data from a database in order to populate the http response
     - security issues
       - the dynamic interpolation of content can be vulnerable to attack
-
 - databases
-
   - database technology predates the web, since the 1960s
   - SQL databases
-
     - are relational, storing data in one/more tables that related to each other in formally prescribed ways
     - DDL: data definition language
       - any statement using CREATE, DROP or MODIFY to create, drop and modify table structures
     - DML: data manipulation language
       - any statement using SELECT, INSERT, UPDATE, and DELETE for CRUDing records
-
   - NoSQL databases
     - sacriface the strict data integrity requirements of SQL databases to achieve greater scalability
     - often schemaless, allowing you to add fields to new records with having to upgarde any data structures
   - distrubed caches
     - in-memory databases, that load data from disk and stores it in cache
     - caching refers to the process of storing a copy of data in an easily retrievable form to speed up responding to requests for that data
-
 - URL resolution
   - enable any URL to be mapped to a particular static resource
   - by unlinking the URL from a filepath, you have more freedom in organizing your code
@@ -418,7 +383,6 @@
 ### user agents
 
 - web browsers
-
   - javascript engine
   - rendering pipeline
   - connect with operating system to resolve and cache DNS addresses
@@ -426,7 +390,6 @@
   - encode requests in HTTPS
   - store and transmit cookies according to the web servers instructions
   - browser security model
-
     - dictates
       - js code must be executed within a sandbox,
         - disabling the following actions
@@ -444,13 +407,9 @@
           - ask for users location
           - ask permission to send desktop notifications
     - rendering pipeline: software component within a web browser responsible for transforming HTML into its visual representation
-
       - parse the HTML
-
         - tokenize
-
       - generate the DOM
-
         - an in-memory data structure that represents the browsers understanding of how the page is structured,
           - a series of nested elements called DOM nodes, each roughly equivalent to an HTML tag
         - parse the HTML into a DOM
@@ -458,18 +417,13 @@
             - i.e. script, style, image, font, video, etc tags all stop the rendering pipeline to retrieve the external thing
           - script tags
             - ensure the `defer` attribute is added so the script tag doesnt execute until the rendering pipeline is completed
-
       - generate the CSSOM
-
         - styling rules applied to each DOM element
           - which correspond to onscreen elemnts
           - how to paint each element relative to eachother
           - what styling to apply to each
-
       - DRAW/PAINT
-
         - draws the webpage on screen
-
       - EXECUTE JS
         - this step is actually interwoven between generation of the DOM and DRAW
         - the browser will load & execute any JS it comes across as it constructs the DOM
@@ -478,20 +432,14 @@
 ### sessions
 
 - session: HTTP conversation in which the browser sends a series of HTTP requests corresponding to a specific user, and the web server recognizes them as corresponding to the same user; the initial request is usually tagged with an ID, and that ID is sent back in the response
-
 - session ID: typically a large, randomly generated number: the minimal information the browser needs to transmit with each subsequen tHTTP request so the server can continue the HTTP conversation from the previous request
-
   - remember, these are generally just random integers
-
   - can be transmittd via URL, http header, body of requests
   - but best practice is to send as a session cookie via the `Set-Cookie` header of the http response
     - the browser will natively send this cookie & value back on subsequent requests automatically to the server that set it
-
 - server side sessions: the web server keeps the session state in locally/remotely (e.g. in file/cache/db/etc), and both the server & user agent pass the session ID back n forth
-
   - the server stores & retrieves other session state data in a remote/local DB/cache/file of some sort
   - scalability issues: requires that backend servers have access to other servers session information (e.g. in a load balanced architecture)
-
 - client side sessions: web servers send the serializes entire session state (and not just the session ID) in the cookie, this alleviates the need to share session state amongst BFF servers
   - security issues: attackers can manipulate/forge the data stored in the cookie and your BFFs will be none the wiser
 
@@ -500,7 +448,6 @@
 - authentication: correctly identifying a user when they return to th site
 - authorization: deciding which actions a user should and shouldnt be able to perform after they've identified themselves
 - permission checking: evaluating authorization at the point in time when a user attmpts to perform an action
-
 - a good access control strategy consists of three stages
   - designing an authorization model
     - acess control lists: create a list of permissions that are
@@ -532,29 +479,20 @@
 ## People & their prcoesses
 
 - programmers: need to roll out changes in an orderly and discplined fashion
-
   - however, its common for security vulnerabilities and bugs to creep in over time because of shortcuts taken in the face of deadlines
   - most security vulnerabilites are introduced not through a lack of develpment knowedlge, but because of a lack of attention to detail
-
 - SDLC: software development life cycle
-
   - the process a devleopment team follows when designing new software & software features, writing code, testing it and pushing out changes
-
   - phase 1: design and analysis
-
     - analyze the features you need to add and design their implementation
     - identifying the requirements the code is trying to address
-
   - phase 2: writing code
-
     - source control is the number one tool all dev teams need to use
       - four eyes principle: requires two people to see every code change before a release
       - distrubted source control
         - every copy of the code kept is a fully fledged repository
       - centralized source control
-
   - phase 3: pre-release testing
-
     - release code only after youve tested it throroughly to catch any potential bugs an densure that it works correctly
     - unit tests: should be simple and non brittle
     - CI: continuous integration
@@ -565,17 +503,13 @@
       - essential for detecting software defects
       - pose security risks if they are not properply managed
         - must be 100% segegrated and isolated from production env vars and workflows
-
   - phase 4: release
-
     - taking code from source control, deploying it to its final destination, and making it accessible to end users
     - reliable release process: means that you can guarantee what code, deps, rsources and configuration files get deployed during the release
       - release scripts typically use checksums (fingerprints) that ensure that the files copied onto the server are identical to those held in source control
     - reproducibe release process: one that you can rerun with the same results in different environments or with different versions of the code
     - revertible release process: allows you to roll back/undo releases
-
   - phase 5: post-rlease testing & observation
-
     - smoke testing: ensure the release process correctly deployed the latest version, and the way the code executs in prod matches expectations
     - penetration testing: tests for security vulnerabilities by externally probing a website
       - useful in both pre-rlease and post-rleases testing
@@ -591,7 +525,6 @@
       - error reporting: capture and record unexpected errors in the code
         - establish error conditions by picking them out of logs/catpuring & recording them in the code itself
         - many security intrusions exploit badly handled error conditions
-
   - dependency management: just as important and integral as the SDLC and should be monitored at every phase of the SDLC
 
 ## attack vectors

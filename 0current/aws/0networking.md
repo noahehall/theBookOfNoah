@@ -22,7 +22,6 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 ### best practices / gotchas
 
 - always
-
   - use immutable infrastructure
     - never patch/update resources, always create new, and force your architecture & dev cycle to support the dynamic destroying and creation of resources via service discovery
     - put an EIP infront of production services to enable blue/green deployments & failover strategies
@@ -44,12 +43,9 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
     - each subnet containing duplicate resources (e.g. a node application)
     - create a target group pointing to each resource
     - point a load balancer at the target group
-
 - sometimes
-
   - enable ssh & ICMP (ping) from anywhere while debugging
   - for absolute speed & security, stay off the public internet
-
 - never
   - delete the default VPC
     - renders some services unusable
@@ -58,7 +54,6 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 #### gotchas
 
 - troubleshooting connectivity
-
   - connecting to AWS resources
     - anything in your local environment? e.g. firewalls, network settings, etc
     - aws resource in a private subnet? you need a bastion host/private tunnel into the private subnet
@@ -74,39 +69,28 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - useful tools
     - vpc flow logs
     - cloudwatch logs (for load balancers)
-
 - securing traffic
-
   - public internet > internet gateway > VPC > NACL > subnet > route table > security group > some resource
-
 - network traffic
-
   - in a public/private subnet?
   - how are subnet routetables configured?
   - how are network ACLs configured?
   - how are the security group configured?
-
 - subnets
-
   - aws reserves the first 3 ips in every subnet for internal routing purposes
   - subnets not explicitly associated with a route table, end up in the VPCs main route table
   - you cannot alter the default route table that allows traffic on the same subnet
     - so any resource to resource connectivity problems must be at the security group level
-
 - security groups
-
   - are region specific
   - treats internal AWS resources as external resources if the traffic flows on the public internet
     - thus you need to specifically allow other AWS resources (even in the same VPC) access via the security groups
       - do this by adding/linking security groups, each attached to the resources you want to connect, add an inbound rule to the one receiving the connection, permitting the security group sending the connection
     - or you can connect them (e.g. via PrivateLink) using the internal AWS network
-
 - vpc peering
-
   - The IP space cannot overlap.
   - after creating the VPC peer in one VPC, you have to accept the request in the other
   - basic workflow: Configure VPC peering and the appropriate security group/NACL/route table settings.
-
 - [route53, s3, and cloudfront](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/RoutingToS3Bucket.html)
   - s3 buckets must be configured correctly
   - sometimes you need a CDN in front of the s3 bucket(s) and point route53 to it
@@ -137,51 +121,39 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - protocol
 - port range
 - source
-
 - ec2
   - to connect to instances, ensure ssh is enabled
 
 ## vpc
 
 - vpc: isolated network within your aws account in a specific region
-
-  - as big as a /16 and as small as a /28
+  - as big as /16 and as small as /28
     - the vpc cidr/block is called the `super net`, as it contains all IPs for all subnets, and thus all resources
     - ^ e.g the `10.0` super net, or the `198.0` super net
     - ^ `192.0.1` would be a specific subnet, and `192.0.1.0` would be a specific host
-
 - subnet: a range (subset) of ips within a vpc
-
   - the larger the /cidr, the smaller the number of ips just like a fraction
   - can contain public/private resources
     - private: for private resources
       - should point to the NAT GATEWAY in the public subnet for translating a resources private IP into a public one
     - public: for public resources
       - should point to the internet gateway to enable inbound/outbound traffic on the public net
-
 - route tables: specify how vpc traffic flows in/out of subnets
-
   - controls subnet routing & directs traffic between subnets
     - e.g. specify how a resource in a private subnet can connect to something in a public subnet
   - default route table: can be modified but not deleted
-
 - internet gateway: allows resources within a VPC access to the public internet
-
   - redundancy built in
   - highly available (i.e. you only need 1 per vpc)
   - configure subnet route tables to use the internet gateway
   - provides NAT for instances with a public IP
-
 - NAT gateway (managed): network address translation; enable resources in a private subnet to initiate & connect to the public internet
-
   - requires an EIP
     - useful for providing a consistent resource for apps & end users
     - if an ec2/resource fails, you can reassign the IP to another resource
   - has to be contained in a public subnet
   - map multiple private hosts to a single internet routable IP address
-
   - nat instance (unmanaged)
-
     - you create an ec2 within a public subnet,
     - have to manage the server yourself: updates, patches, security, etc
     - more operational responsbility & flexibility
@@ -189,7 +161,6 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
       - able to specify a private IP
       - supports port forwarding
       - acts as a bastion host
-
   - nat gateway (the managed service)
     - you dont have to do anything
     - use cases
@@ -199,22 +170,15 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
       - does not support port forwarding
       - inbound SSH via nat isnt supported
       - more expensive (but think about the time saved too)
-
 - egress-only internet gateway: allows VPC ipv6 outbound (but denies inbound)
-
 - VPC endpoints: enable resources within a VPC to privately access other AWS services without traversing the public internet
-
   - PrivateLink: uses the internal aws network instead of the public internet
-
     - per hourly charges
     - per GB charges
-
   - use cases
-
     - private access: if one vpc service needs to talk to another service, just use privatelink
     - simplifies network configuration (dont need an internet gateway)
     - improved secuirty posture (less configuration, no public internet)
-
   - types
     - interface:
       - powered by AWS PrivateLink
@@ -226,9 +190,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
       - serve as a target for a route in a route table for traffic destined for the service
     - gateway
       - serve as a target for a route in a route table for traffic destined for the service
-
 - transit gateway: simplify network management across multiple VPCs &/ on premise data centers
-
   - Transit Gateway connects on-premises resources to VPCs using a centralized hub. VPC Peering connects VPCs with each other, DirectConnect provides dedicated bandwidth, and a site-to-site VPN is a software approach for securing traffic.
   - use cases
     - centralizes & simplifies regional network management for a given region in single hub
@@ -244,47 +206,32 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
       - highly available
     - billed per hour, & per gb
       - only use for complex setups
-
 - customer gateway: CG: on premise; physical networking appliance, to which all aws bound network traffic is anchored
-
   - you buy it from like cisco
   - it creates the IPsec tunnel
-
 - virtual private gateway: VPG; enable external resources to connect privately to resources within a vpc
-
   - the virtual counterpart to a customer gateway; resides in aws; the anchor point for all customer gateway network traffic
-
 - site-to-site vpn: enables machines in a local data center (e.g. within a customer gateway) to connect to aws resources (e.g. via a virtual private gateway)
-
   - network traffic flows securely over a vpn tunnel
-
 - IPsec tunnel: internet protocol security vpn tunnel
-
   - needs an anchor configured on both sides to work
     - within aws: use a VPG and attach it to resources within AWS
     - on premise: use a CG:
     - the traffice is routed over the public internet
-
 - direct connect: alternative to the IPsec tunnel architecture
-
   - purchased from AWS
   - dedicated network connection to AWS
   - establishes a physical link from the router you own, and an AWS direct connect router
     - the traffic is routed over AWS network (not the public)
-
 - vpc peering: connect privately between AWS VPCs (within same/diff accounts/organizations)
-
   - doesnt need a gateway/vpn connection
   - makes use of internal AWS routing infrastructure
   - connections can span regions, accounts, organizations
-
 - DHCP option set: dynamic host configuration protocol
-
   - pass config info to hosts on a TCP/IP network
     - e.g. domain name, domain name server, etc
   - e.g. specify your own DNS servers
   - a VPC can only have 1 DHCP option set
-
 - network ACL: access control lists (pronounced NACL) (are real firewalls unlike security groups)
   - are specific to a single VPC
   - have 1:M relationship with subnets, 1 nacl has many subnets
@@ -300,7 +247,6 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 ### default VPC
 
 - components
-
   - vpc cidr block: `172.31.0.0/16` 65k ips
     - for all default vpcs in all regions
   - creates a subnet in each availability zone in its each region
@@ -310,7 +256,6 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
     - single rule that sends all outband traffic to the internet gateway
   - security group:
   - network ACL: allows all in/out traffic
-
 - use cases: where all ec2 instances get dumped if they arent assigned to a vpc
 
 ### creating VPCs
@@ -324,7 +269,6 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 ### vpc considerations
 
 - vpc
-
   - ipv4 cidr block
   - ipv6 cidr block
   - tenancy
@@ -332,13 +276,9 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
     - subnet
       - route table
   - private dns (route53)
-
 - internet gateway
-
   - vpc
-
 - vpc endpoints
-
   - type
   - aws service
   - vpc
@@ -346,13 +286,11 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - subnets
   - policy: what type of permissions do you want to provide to services using this endpoint to have for the AWS service the endpoint is associated with
     - never do the default policy (which is full access)
-
 - route table
   - destination (ip addr range e.g. 0.0.0.0/0)
   - target (resource e.g. internet gateway id)
 - network acl (pronounced NACL)
 - subnets
-
   - public
     - internet gateway
     - route table
@@ -365,7 +303,6 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
     - allocate a section of the VPC cidr
     - you generally need more IPs for private subnets
   - vpc endpoints
-
 - transit gateway
   - attachment: what can be connected
   - route table
@@ -382,20 +319,15 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - name address resolution: nirv.ai > 123.123.123.123
 
 - DNS failover: can detect website outage and redirect requests to a different IP
-
   - sends people to regionA, when it detects traffic failure, it can reroute to regionB
-
 - global traffic management: create traffic policies that optimize network flow
-
   - weighted round robin: i.e send 60% of traffic to regionA, and 40% to regionB
     - This option allows administrators to specify where the majority of traffic goes, so they can have more or less weight for each system.
   - latency-base routing: each DNS query will take the originating IP into account, compare the latency to available regions, and direct traffic to the one with the lowest latency
   - geolocation (geo dns) routing: route traffic to regions based on the originating IP
     - you have to configure a `default record resource set`
     - e.g. make application inaccessible from a specific country.
-
 - private DNS for a VPC: dns level routing
-
   - domains can have public, and multiple private hosted zones
     - public: for public internet traffic
     - private: for internal AWS traffic
@@ -408,16 +340,12 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - steps
     - create a private hosted zone that points to a VPC
     - create a simple A record pointing to a **private** IP address within the VPC
-
 - cloudfront as the zone apex within route53
   - zone apex: a root domain (e.g. www.mycompany.com)
 - s3 as the zone apex
 - ELB as the zone apex
-
   - route53 will handle the health checks for each instance behind the ELB
-
 - hosted zones: all the domains you managed with route53
-
   - SOA: start of authority
   - NS: name records
   - record sets: where should the domain be routed? for what type of request?
@@ -436,9 +364,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
     - NAPTR: name authority pointer
     - CAA: certification authority authorization
     - NS: name server
-
 - Alias resource record set: aws specific extension to DNS
-
   - alias cant point to any of the following (quick create record > a record > alias radio button)
     - s3 bucket thats configured to host a static website
     - elastic load balancer: e.g. when you have multiple ec2 instances behind the elb
@@ -448,23 +374,15 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
     - api gateway
     - VPC interface endpoint
   - manage the domain in route53
-
 - health checks
-
   - endpoints, calculated health checks, and CloudWatch alarms can be produced using the route53 domain management health checks.
-
   - latency graph: useful for domains with a global audience
   - invert health check status: useful for a canary page that only appears when an error has manifested
-
   - failover: when a health check determines a failed resource, you can failover & activate an alternative set of DNS records to route traffic to backup resources
-
     - active
     - passive
-
   - 3 types
-
     - endpoint health check: domain name/ip address
-
       - based on http with/out string matching/tcp
       - responses
         - tcp: must be received in 10 seconds
@@ -476,33 +394,24 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
       - failure rates
         - user defined based on regions
         - valid: if > 18% agents evaluate as healthy
-
     - calculated health check: monitors other health checks
-
       - a parent health check monitors up to 255 child health checks
       - configurable logic as to what constitutes as a lack of health
         - e.g. an API thats dependent on another external API, you want BOTH apis to be successful
-
     - cloudwatch alarm: useful when failing over to another resource based on an preconfigured alarm
       - what are the conditions for triggering an unhealthy check?
         - is cloudwatch okay === rute53 health check is okay
         - if cloudwatch alarm === route53 is bad
         - if cloudwatch is insufficient === you can configure if the route53 health check is good/bad
-
 - active routing options: traffic management policies
-
   - ensure health checks are setup and route53 will auto failover in case of outage
   - ensure autoscaling is configured for the resources to handle the increase load in the event of failover
-
   - weighted round-robin
-
     - route traffic to VPCs in different regions based on weights assigned to record sets
     - e.g. route 3:1 us-east:us-west === 3/4 -> useast, 1/4 -> uswest
-
   - latency based
     - route traffic to VPCs in different regions when response times are dynamic but load times are critical
     - each DNS query will take the originating IP into account, and compare the geo of the IP to the known latency of the regions of each VPC and route to the optimal resources
-
 - geolocation based
   - route traffic based on correlating IP address to physical locations
   - e.g. to comply with EUGDP (data protections) or china, you have to route users in those geos to resources in those regions
@@ -523,25 +432,18 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - static, public IP for use within an AWS Account
 - cannot be moved across regions
 - use cases
-
   - critical for high availability
   - use in concert with cloudwatch alarms, SNS (notifications), and lambda (logic) to automate responses to system events and orchestrate event driven failover
-
 - ec2
-
   - can move eip from one ec2 to another
     - software defined networking (SDN) at its finest
     - the ec2 has to be in a subnet which is publiclly accessible
   - free if used with a running instance
     - you just pay for the instance
-
 - vpc
-
   - can be moved across VPCs
     - helpful for blue/green deployments
-
 - nat gateway
-
   - enable private resources to access public internet
 
 ## cloudfront
@@ -563,9 +465,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - cache policy: how frequently cloudfront checks with the origin server for updates
 - price classes: each edge location has different prices
 - delivered logs to s3/kinesis data stream
-
 - reporting
-
   - cache statistics
     - select your cdn
     - good reports
@@ -588,7 +488,6 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
     - browsers tab
     - locations tab
     - operating systems tab
-
 - blocking requests by location
   - go to a distribution
   - restrictions tab
@@ -639,7 +538,6 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 ## global accelerator
 
 - use cases
-
   - for national/global infrastructure
   - isolate your infrastructure from general internet traffic patterns
   - routes network traffic using AWS global network
@@ -651,9 +549,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
       - outbound traffic
       - inbound traffic
       - per region?
-
 - global accelerator vs cloudfront
-
   - both
     - use the AWS global network to facilitate speed
   - accelerator
@@ -664,7 +560,6 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
     - caches assets at edge locations
     - CloudFront distributes content via edge locations,
     - **reduces load on the origin service via caching**
-
 - architecture
   - accelerator: basically a load balancer
   - listener: listens to inbound connections to the accelerator
@@ -765,13 +660,10 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - load balancer: highly available component (you only need 1)
 - mechanism for optimally routing requests to resources through a single service
 - resources could be other servers that provide responses, or additional load balancers (e.g. specific to a set of resources)
-
 - key elements
-
   - always add a route53 health check to your load balancer
   - external ELB for internet facing resources
   - internal ELB for private resources
-
 - use cases
   - critical for high availability, fault tolerance, redundancy, etc
   - offload many uses cases at the ELB
@@ -813,7 +705,6 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
 - the oldest load balancing solution
 - use an ALB/NLB for new applications
-
 - use cases
   - support layer 4 and layer 7 but with fewer features than using ALB/NLB directly
   - useful for existing customers who already have ELB implemented

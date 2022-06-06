@@ -47,20 +47,15 @@
 ### best practices/gotchas
 
 - implementation:
-
   - playaround with the oauth playground to test many of the major grant type (flows)
   - you can test each flow entirely with postman
   - make sure you choose the most secure grant type thats available for your application environment
-
 - validation: ID and access tokens should always be validated with the auth server **and** by the client before using it (in case its been stolen/expired)
-
   - you cant have a partially validated token
     - check the token: grab the public key, decode the token, grab the header, and resign the payload, it should match the original token
     - check the token payload: decode the payload, check the cid, aud, exp and iss, they should all be what you expect
   - if using oauth across multiple components (e.g. in a microservice architecture) its useful to have a distinct validation service that other services can use to validate their tokens
-
 - security
-
   - always think about the scopes your tokens permit to set a reasonable expiration timestamp
     - read only to public/sensitive info?
     - +write to public/sensitive info?
@@ -86,7 +81,6 @@
   - log & track oauth requests (but not anything sensitive) so you can spot malicious behavior
   - always implement rate limiting for oauth requests to mitigate brute force attacks
   - always use the best grant type, with the least amount of trust involved
-
 - scope naming conventions
   - be consistent
   - if using url-style, the real benefit is having the ORIGIN resolve (e.g. to a metadata doc) so that your API becomes self documenting
@@ -147,10 +141,8 @@
 ## Oauth
 
 - delegated authorization framework
-
   - pattern to request, receive and apply authorization policies across resources
   - very loose agreement, so shouldnt be considered a contract, as many things are left undefined for you to implement for flexibility
-
 - key elements
   - access & refresh tokens
   - authorization & token endpoints
@@ -159,29 +151,22 @@
 ### endpoints
 
 - authorize & token are the only endpoints defined in the spec, all other endpoints come through an extension
-
 - POST/authorize: interact witte user to confirm their identity: gets the authorization grant & user consent
-
   - used for ANY user facing grant types (e.g. auth code/implicit)
   - never fkn GET (even tho thats whats in the spec)
   - servers tend to log all get requests
-
 - POST/token: retrieve tokens
   - used when a user is confirmed/there isnt a user at all (e.g. client credential/password grants)
 
 #### endpoints: extensions
 
 - catch all, since many extensions reuse the same endpoints
-
 - these are expected names as defined in the extensions,
 - ^ but an oauth provider can name them anything, so verify the implementation details with the metadata doc
-
 - /.well-known/oauth-authorization-server: get the metadata/discovery doc
-
   - lists all the URL patterns for all endpoints
   - this is where you confirm the naming conventions of extension endpoints
   - all auth servers are required to provide this endpoint
-
 - /introspect: analyze & decode a token
 - /revoke: invalid an access/refresh token
 - /userinfo: publishes user profile data
@@ -192,21 +177,15 @@
 - combination of case-sensitive space delimited strings defined by the auth server
 - ^ each string adds an additional access range to the requested scope
 - open to the auth server to implement, however, a good pattern is to deploy a naming convention (github failed us)
-
 - types of naming conventions
-
   - simple strings: read|write|delete|admin_read|etc (e.g. github)
-
   - java-style namespace structure: expressive, granular, predictable, but can get incredibly long as your auth requirements get more complex
-
     - com.app.resource
     - com.app.resource.read
     - com.app.resource.attribute.read
     - com.app.resource.subresource.read
     - etc
-
   - url style: expressive, granular, predictable, the API becomes self documenting if the ORIGIN resolves to a metadata doc (e.g. google)
-
     - <https://api.company.com/resource>
     - ORIGIN/resource.read
     - ORIGIN/resource.subresource.write
@@ -216,40 +195,27 @@
 
 - access and refresh tokens form the foundation of oauth;
 - access token: string representing an authorization issued to a client
-
   - i.e. a specific set of scopes & durations of access, granted by the resource owner, and enforced by the resource server & authorization server
-
 - refresh token: string representing the authorization granted to the client by the resource owner
-
   - are opaque so only useful via the authservers/token endpoint
   - ^ the auth server will validate the refreshToken and issue a new access token
   - ^ can be revoked by hitting the authservers/revocation endpoint
-
 - the entire point of grant types revolve around requesting & receiving tokens in different context & environments
-
 - types of tokens
-
   - opaque: unique obsfucated string that acts as a database key; cant be decoded, extracted or decrypted (unless your the auth server that created it)
-
   - JWT: (pronounced JOT) plain text authorization & profile data
-
   - JWE: encrypted JWT;
-
 - validation: is how you establish trust; always decode the token, grab the header, recreate the signature and compare it against the token
-
   - retrieve the keys document: i.e. your sigingKeys; represent the public key that the token was signed with
     - GET/authserver/someendpoint
   - split the access token on each period
-
     - `[header.payload.signature] = accessToken.split('.')`
     - get all the claims: `{ typ, alg, kid } = decodeBase64(header)`
-
       - kid: key id
         - `signature = sign(signingKeys[kid], payload, alg)`
         - `canTrustToken = signature === accessToken`
       - alg: algorithm
       - typ: ...
-
     - decode the payload to view the token claims
       - `tokenPayload = decodeBase64(payload)`
       - acp: the scopes related to this specific token

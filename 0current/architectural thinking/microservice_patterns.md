@@ -16,31 +16,22 @@
 - architectural style: way of designing processes & building systems to facilitate an end goal, e.g cloud native is an architectural style
 - dependency graph:
 - call patterns
-
 - cloud native: designed to facilitate operating in the cloud
-
   - externalizing configuration
   - focusing on portable (global) and scalability (in & out)
   - making your apps start fast, and handle shutdowns gracefully
-
 - service types:
-
   - data service: connects to a data source within a system
   - business service: builds on top of data services; business domains that aggregate multiple data services to meet business objectives
   - translation service: any abstraction/decoratation/encapsulation of a third party operation under your own interface
   - edge service: serving data to other services based on the consuming services context
-
 - platform: everything within a microservices environment constitutes its platform
-
   - runtime: virtualization, baremetal services, containers, etc
   - ancillary services: message queues, cache services, oauth, etc; some are first class, others arent
   - operational (devops) components: log & metric aggregators, deployment services, etc
   - diagnostic components: enable you to connect to the runtime env of a microservice and inspect, analyze, diagnose, troubleshoot & improve performance
-
 - business process: logic that consumes one/more data domains to solve an issue
-
 - data pipeline: aggregating data from multiple sources in distinct formats, transforming each to match a single interface, and then storing the transformed data into a single graph/db
-
   - scheduler: manages retrieval from multiple data sources at different rates, and sending each into the matching data collector
   - data collectors: services geared toward retrieving data from a single data source, serializing and storing the raw data (e.g. in s3)
   - data convertors: convert raw serialized data into a common serialization format, with a defined interface and storing the new formatted data (e.g. back into s3)
@@ -49,7 +40,6 @@
 ## patterns
 
 - microservices: scoped units of services, that work in unison but scale independently to achieve a goal
-
   - breaking endpoints into distinct units of work that can be scaled independently
   - focus on data, business and function domains, analyze call patterns and dependency graphs, and determine boundaries between services that need to be scaled independently
 
@@ -66,17 +56,15 @@
 
 #### decoupling patterns
 
-- decoupled services: the degree of decoupling has significant implicatins on archtecture, performance and scalability
-
+- decoupled services: the degree of decoupling has significant implicatins on architecture, performance and scalability
 - direct service calls: either sync/async
 - producer/consumer: a single producer orchastrates the invocation of multiple consumers, and handles the responses
-- pipeline architectures: a form of producer/consumer, however the producer doesnt expect a response from the consumer, but passes accepts input from the previous stage, does its thing, and passes its output as input to the next stage
+- pipeline architectures: a form of producer/consumer, however the producer doesnt expect a response from the consumer, but accepts input from the previous stage, does its thing, and passes its output as input to the next stage
 
 #### domain based decomposition
 
 - functional pipelines in a system; create services that fulfill the needs of a particular domain
 - largely based on domain-driven design patterns, as that methodology lends itself to decomposing services by domains
-
 - product domain
 - inventory domain
 - etc etc, really scoped to a particular application/biz/tech context
@@ -84,7 +72,6 @@
 ##### data domain
 
 - services driven by the data itself and focus on serving data thats used by the system, as well as data specific logic
-
 - usually the lowest level of decomposition
   - start with the data model (from the perspective of the outside world), how its needed and how its consumed, what are the actions (not in terms of CRUD/REST, just plainspeak) that need to be performed on the model
   - scope the service contract, dont worry about implementation details just yet
@@ -112,9 +99,9 @@
   - atomicity: each statement (CRUD) in a transaction is treated as a single unit; either the entire statement is executed, or none of it is executed
   - consistency: transactions only make changes to tables in predefined, predictable ways
   - isolation: ensures concurrent tansactions dont interfere/effect with one another
-  - durability: changes to the data made by successfully executed transaction will be saved, even in the vent of system failure
-- provide failure domains & rollbacks; blocking API calls until the previous API call is complete, synchronous APIs work best/asyncrhonous with a guarantee callback mechanism
-  - always have clearly defined transactions, especially the conditions which cause commits to be rolledback
+  - durability: changes to the data made by successfully executed transaction will be saved, even in the event of system failure
+- provide failure domains & rollbacks; blocking API calls until the previous API call is complete, synchronous APIs work best/asynchronous with a guarantee callback mechanism
+  - always have clearly defined transactions, especially the conditions which cause commits to be rolled back
 - dont depend on distributed transactions, the complexity is far greater than just using a synchronous API
 
 #### strangler pattern
@@ -128,10 +115,10 @@
 
 #### sidecar pattern
 
-- promote separation of concerns; all about removing repetitive code from multiple microservices into a single embedded that can be utilized by each
-- offload services (e.g. operational/security functions) into distinct components that can be deployed alongside dependent services as runtime dependencies
+- promote separation of concerns; all about removing repetitive code from multiple microservices into a single embed that can be utilized by any service
+- offload services (e.g. operational/security functions) into distinct components that can be deployed alongside dependent services as runtime dependencies (inversion of control)
 - e.g. monitoring, logging, & security etc all lend themselves to this pattern, and can either be deployed as an embedded module (e.g. logging) or as a distinct microservice itself (e.g. oauth)
-- this pattern shouldnt create more microservices, but instead create child processes to existing microservices
+- this pattern generally shouldnt create more microservices, but instead create child processes to existing microservices
 
 ### integration patterns
 
@@ -146,7 +133,7 @@
 - the gateway provides aggregation/buffer/facade/proxy/decoration/oauth/etc to the services behind its fence, and is responsible for mutating, limiting and proxying requests
 - keep business logic out of the gateway, while it can be done, there are more appropriate patterns (see process aggregator) that should be responsible
 - adhere to strict api version control and ensure all changes are passive (non-aggressive)
-- implement clients (service wrappers) as distinct modules for service behind the gateway
+- implement clients (service wrappers) as distinct modules for services behind the gateway
 
 #### edge pattern
 
@@ -185,7 +172,7 @@
 #### shared service database
 
 - all data domains exist within a single database
-  - still you should break the data domains into schemas/keystores/etc to keep them somewhat distinct at the data level
+  - still, you should break the data domains into schemas/keystores/etc to keep them somewhat distinct at the data level
   - definitely you should still treat the data distinctly at the application code level
   - each user/service that consumes each distinct data domain should also have distinct credentials for accessing those services & data domains, even tho they are really accessing the same data store
     - ensure you have proper segmentation at the data & service level

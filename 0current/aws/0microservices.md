@@ -92,19 +92,15 @@
 #### serverless considerations
 
 - lambda fn (serverless) vs Fargate (containers)
-
   - lambda is best when logic needs to be run in response to an event, or periodically and can the processing can be complete in ~15 minutes
   - fargate is basest when compute time exceeds 15 minutes of execution time, or memory exceeds 3gb
     - i.e. use fargate whenever you exceed lambda limits
-
 - database options
-
   - first decide the type of data storage you need
   - then when multiple options exists for the db type, determine the use cases, limits, efficiencies, and costs associated with each
-
 - SQS vs SNS vs Kinesis
   - use SQS when delivery guarantees are required, but only a single consumer should handle each message, if the consumer fails, the message goes back into the queue
-  - use SNS when delivery guarnatees arent required, or when multiple consumers need to act on a single message
+  - use SNS when delivery guarantees arent required, or when multiple consumers need to act on a single message
     - you need to architect for failure, as once the message is taken from the topic, its up to the consumer to succeed, on failure the data is lost
   - use kinesis when delivery guarantees are required, ordering is important, AND Multiple consumers need to be updated on each message
     - like SQS, has message delivery gurantees
@@ -120,7 +116,6 @@
   - duration of each request
   - amount of memory lamba needs
 - use cases
-
   - execute data processing tasks
   - handling web requests
   - in response to changing code commits, changes to infrastructure
@@ -132,19 +127,15 @@
     - ensure to also add the cloudwatch policy, `AWSLambdaBasicExecuteRole`
   - can be used as a step function state machine task
     - inputs from state machines will be in `event.input.poop`
-
 - perhaps shouldnt be used
   - extreme real-time responses
   - complex compute: with high memory/long run times
 - limits
-
   - 15 min max execution time
   - 3k mb max ram
   - types of event/messages that can trigger lambda execution
   - each lambda fn must be fronted by an API Gateway
-
 - general process
-
   - upload code to lambda
     - a handler fn, either `async (event) =>` or `fn(event, context, callback) {}`
     - event: the data sent during invocation, interface changes depending on which resource triggered the fn
@@ -170,7 +161,6 @@
     - invocations: total fn invocations
     - duration: min, max & average execution time
     - error count & success rate
-
 - lamda designer: in the web console, after you click on a lamba fn name
   - see the different layers
   - add/remove triggers for a specific lambda fn
@@ -407,9 +397,7 @@ exports.handler = function (event, context, callback) {
     - phone numbers
     - email addrs
 - topics: logical access point & communication channel
-
   - publishers: create topics/get push permissions
-
 - service quotas
   - quotas: resources, actions and items have defined limits
     - breaching a limit will always increase costs or cause components to fail
@@ -456,7 +444,6 @@ exports.handler = function (event, context, callback) {
     - ec2 linux + networking: ec2 instead of fargate
     - ec2 windows + networking: ec2 instead of fargate
 - task definitions: provides details and resource requirements for a container that is passed to the Docker daemon. A task definition may contain one or more container definitions.
-
 - cloudwatch container insights: CloudWatch automatically collects metrics for many resources, such as CPU, memory, disk, and network.Container Insights also provides diagnostic information, such as container restart failures, that you use to isolate issues andresolve them quickly. You can also set CloudWatch alarms on metrics that Container Insights collects.
 
 ## fargate

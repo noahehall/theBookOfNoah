@@ -71,9 +71,7 @@
   - anonymouse user: 65a011a29cdf8ec533ec3d1ccaae921c
 - groups
 - CORS: JSON configuration defines a way for servers from domain X to interact with resources on domain Y
-
 - ARN: amazon resource name: identifier for a specific resource
-
   - can use wildcards as part of the resource ARN
     - `*` represents any combination of zero/more characers
     - `?` represents any single character
@@ -94,7 +92,6 @@
   - has the following syntax across all global services
     - `arn:partition:service:::relative-id`
       - notice the region & namespace are missing
-
 - tags
   - to ensure tags are shown in dashboard columns, they must be case-sensitive
     - i.e. `Name` !== `name`
@@ -105,13 +102,10 @@
   - cannot grant anonymous permissions to users, as you have to attach policies to a specific user/group/etc
 - resource policies: JSON object defining basic access permissions
 - ACL: access control list: ACLs predates resource-based policies and IAM
-
   - list of grants identifying grantee and permission granted
-
 - resource: an entity that you can work with (e.g. an s3 bucket, or an s3 bucket object)
-- resource > subresource: child of a reosurce
+- resource > subresource: child of a resource
 - resource owner: by default its the AWS account that creates the resource, but can be changed via resource/user based policies (e.g. to be the IAM user and not hte account owner)
-
 - policy JSON schema
   - version: e.g. "2012-10-17"
   - Statement: array of object permissions
@@ -183,6 +177,7 @@
   - distinct location within a region thats insulated from failures in other availability zones
   - each AZ within a region are connected through low-latency links
   - represented by a `letter`
+  - each reach region has at least two AZs
 - edge locations
   - independent of region & azs
   - power cloudfront CDN
@@ -304,7 +299,7 @@
 
 - AWS Serverless Application Model (SAM) CLI is an open-source CLI tool that helps you develop serverless applications containing Lambda functions, Step Functions, API Gateway, EventBridge, SQS, SNS and more. Some of the features it provides are:
 
-- docker is preqreq for testing applications locally and building deployment packages using the `--use-container` option
+- docker is prereq for testing applications locally and building deployment packages using the `--use-container` option
   - the sam cli uses the `DOCKER_HOST` env var to communcate with the docker daeon
 
 ```sh
