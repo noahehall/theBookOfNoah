@@ -2,6 +2,7 @@
 
 - all about the syntax
 - as usual, search for `// Something` or `# Something` to find what youre looking for
+- until this line is removed, i wouldnt trust everything in this file across scala versions
 
 ## links
 
@@ -38,6 +39,9 @@ scala --version
 - semi colons only required if multiple statements exist on the same line
 - all data types are objects, so that have a `someVar.someMember`
 - you can coerce numbers to strings, e.g. `"ima string " + 5`
+- there are no breaks/continues in scala
+  - use `return` statement to break out of a loop
+  - use an if statement to branch from the remaining code block
 
 ```java
 println("console log")
@@ -54,13 +58,21 @@ import scala.math.* // import all the math modules
 ## operators
 
 ```scala
-  thiz == that
-  thiz != that
-  thiz > that
-  + - / %
-  someNum += 1
-  someNum -= 1 // *= /=
-  // etc
+// conditionals
+// : == != > < <= =>
+thiz == that
+thiz != that
+thiz > that
+
+// logical
+// && || !
+
+
+// calculations
++ - / %
+someNum += 1
+someNum -= 1 // *= /=
+
 
   // extracts/flatMaps an element out of a thing
   // ^i.e if that.thiz: Option[Int], then thiz: Int
@@ -77,6 +89,9 @@ import scala.math.* // import all the math modules
 
 ```scala
   Nil
+  to // e.g. 1 to 10
+  until // e.g. 0 until poop.length
+
 ```
 
 ## variables
@@ -163,17 +178,8 @@ val poop: List[Int] = List(1,2,3)
 val emptyPoop: List[Int] = List()
 val emptyPoop: List[Int] = Nil
 
-// working with lists
-val poop: List[Int] = List(1,2,3)
-// prepend a value onto poop
-// can also use :+ and ++ operators
-0 +: poop // List(0,1,2,3)
-// get the distinct values in a new list
-poop.distinct
-// how many els
-poop.length
-// get first two els into a new list
-poop.take(2)
+// arrays
+val poop: Array[String]
 
 
 //////////////////////////////////
@@ -227,6 +233,12 @@ list
 list.map(n => n * n) // List(1, 4, 9, 9)
 list.map(_ * 3) // List(3, 6, 9, 9)
 list.flatMap(n => List(n, n)) // List(1, 1, 2, 2, 3, 3, 3, 3)
+
+// working with lists
+val poop: List[Int] = List(1,2,3)
+// prepend a value onto poop
+// can also use :+ operator
+0 +: poop // List(0,1,2,3)
 ```
 
 ## flow control
@@ -235,12 +247,20 @@ list.flatMap(n => List(n, n)) // List(1, 1, 2, 2, 3, 3, 3, 3)
 //////////////////////////////////
 // if statements
 //////////////////////////////////
-
+// ^ return values like js ternary
 
 if someVal then "do this" else "do that"
 if someVal > 1 then "do this"
   else if someValue < 0 then "this do"
   else "do that"
+// with curlys
+if (poop && wipe) {
+  "flush"
+} else if (poop && pee) {
+  "wipe"
+} else {
+  "keep pooping"
+}
 
 //////////////////////////////////
 // match statements
@@ -295,9 +315,62 @@ def combinations(xs: List[Int], ys: List[Int]): List[(Int, Int)] =
     y <- ys
   yield (x, y)
 end combinations
+
+//////////////////////////////////
+// for loop
+//////////////////////////////////
+var i = 0
+for (i <- 1 to 10)
+  println(i)
+
+var name = "poop"
+for (i <- 0 until name.length)
+  println(name(i))
+
+var list = List(1,2,3)
+for (i <- list)
+  println(i)
+
+// create a list of 20 things
+var list: List[Int] = for
+  i <-  1 to 20
+yield i
+
+// nested for loop
+// prints i, then every j, 1, 678910
+// increments i, then ever j, 2, 678910
+// etc
+for (i <- 1 to 5; j <- 6 to 10)
+  println(i)
+  println(j)
+//////////////////////////////////
+// while loop
+//////////////////////////////////
+object Poop {
+  def main(args: Array[String]) {
+    var i = 0
+    while (i <= 10)
+      println(i)
+      i += 1
+  }
+}
+
+//////////////////////////////////
+// do while loop
+//////////////////////////////////
+
+var i = 0
+do
+  println(i)
+  i += 1
+while (i <= 10)
+
+
 ```
 
 ## functions
+
+- invoke fns like `someFn` no `()` unless args are expected
 
 ```scala
 
