@@ -155,6 +155,21 @@ someVal match
   // ^ and make it available, e.g. case poop => s"the value was $poop"
   case _ => "default branch"
 
+
+//////////////////////////////////
+// for comprehensions
+//////////////////////////////////
+case class Poop(totalTurds: Option[Int], totalWipes: Option[Int])
+case class Flush(should: Boolean, poop: Option[Poop])
+val flush: Flush = Flush(true, Some(Poop(Some(10), Some(5))))
+// how do we get the average turds per wipe when we flush?
+// especially when dealing with Option types, where we want the primitive type (in this case Int)
+val averageTurdsPerWipe = for {
+  poop <- flush.poop // creates a val poop: Poop
+  totalTurds <- poop.totalTurds // creates totalTurds of Int, not Some[Int]
+  totalWipes <- poop.totalWipes // creates totalWipes of Int, not Some[int]
+  averageTurdsPerWipe = totalTurds / totalWipes
+} yield averageTurdsPerWipe // returns this
 ```
 
 ## functions
