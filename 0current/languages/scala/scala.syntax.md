@@ -41,9 +41,16 @@ scala --version
 ```scala
 
 // native types
+
+// vals are immutable
 val desc = "I am immutable, inferred type String"
 val desc: String = "I am also a string"
-val truthy: Boolean = false
+val descLong = s"inject another string here: $desc"
+
+val bool: Boolean = false
+val bool: Boolean =
+  if 1 > 0 then true
+  else false
 
 // import SomeObj.*
 // ^ at top of file so you can use prop instead of SomeObj.prop
@@ -56,8 +63,8 @@ object SomeObj {
 
 ````scala
 
-if someValue then "do this" else "do that"
-## fns
+if someVal then "do this" else "do that"
+if someVal > 1 then "do this" else "do that"
 
 ```scala
 

@@ -8,3 +8,7 @@
 - comparison with other languages
   - combines OOP and FP in one language
   - compile-time statically typed (with inference) language
+
+## basics
+
+- indentatin is important (think python)
