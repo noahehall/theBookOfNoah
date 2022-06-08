@@ -91,8 +91,9 @@ object SomeObj {
 }
 
 // handle the absense of data in an elegant way
-val poops: Option[String] = None // no default data
-val poops: Option[string] = Some("times") // default value
+// can either be a Some or a None
+val poops: Option[String] = None // no data
+val poops: Option[string] = Some("times") // has data
 
 
 
@@ -179,4 +180,16 @@ def isTruthy(me: Boolean): String = if me then "you are truthy" else "you are fa
 // map function exists on many types
 val poop: Option[String] = Some("flush")
 poop.map(word => word.toUpperCase) // FLUSH
+
+
+// flatten/flatMap exists on all scala collections
+case class Poop(totalPoops: Option[Int]) // im going to poop a total amount of times
+case class Wipe(totalWipes: Option(Poop)) // im going to wipe depending on how many times i poop
+val flush: Wipe(Some(Poop(5))) // flushing depends on pooping and wiping, you can see the nesting,
+// how does it look with a regular map?
+flush.totalWipes.map(totalWipes => totalWipes.totalPoops) // Option[Option[Int] : Some(Some(5)) ouch! we just wanted Some(5)
+// how does it look with flatten?
+flush.totalWipes.map(totalWipes => totalWipes.totalPoops).flatten // Option[Int] : Some(5)
+// looks even more concise with flatMap
+flush.totalWipes.flatMap(totalWipes => totalWipes.totalPoops) // Option[Int] : Some(5)
 ```
