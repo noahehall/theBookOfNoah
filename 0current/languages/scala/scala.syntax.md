@@ -36,6 +36,16 @@ scala --version
   println("console log")
 ```
 
+## operators
+
+```scala
+  thiz == that
+  thiz != that
+  thiz > that
+  // etc
+
+```
+
 ## types
 
 ```scala
@@ -46,6 +56,8 @@ scala --version
 val desc = "I am immutable, inferred type String"
 val desc: String = "I am also a string"
 val descLong = s"inject another string here: $desc"
+
+val num: Int = 100
 
 val bool: Boolean = false
 val bool: Boolean =
@@ -58,6 +70,16 @@ val bool: Boolean =
 object SomeObj {
   val prop: Boolean = true
 }
+
+// custom types
+
+// case classes are immutable
+case class MyType(name: String, age: Int)
+// val poop: MyType = MyType("poop", 200)
+// poop.name == "poop"
+// s"poops age is ${poop.age}"
+// val flush: MyType = poop.copy(name = "flush")
+// ^ creates a new MyType based on poop overriding the provided props
 ```
 
 ## flow control
