@@ -1,12 +1,15 @@
 # scala
 
 - all about the syntax
+- as usual, search for `// Something` or `# Something` to find what youre looking for
 
 ## links
 
 - [intellij toolbox, fkn use it](https://www.jetbrains.com/toolbox-app/)
 - [scala & intellij: getting started](https://docs.scala-lang.org/getting-started/intellij-track/getting-started-with-scala-in-intellij.html)
 - [example gitignore for scala](https://alvinalexander.com/source-code/scala/sample-gitignore-file-scala-sbt-intellij-eclipse/)
+- refs
+  - [List](https://www.scala-lang.org/api/current/scala/collection/immutable/List.html)
 
 ## basics
 
@@ -32,8 +35,20 @@ scala --version
 
 ### quickies
 
+- semi colons only required if multiple statements exist on the same line
+- all data types are objects, so that have a `someVar.someMember`
+- you can coerce numbers to strings, e.g. `"ima string " + 5`
+
 ```java
-  println("console log")
+println("console log")
+
+// single line comment
+/*
+multieline
+comment
+*/
+
+import scala.math.* // import all the math modules
 ```
 
 ## operators
@@ -42,7 +57,34 @@ scala --version
   thiz == that
   thiz != that
   thiz > that
+  + - / %
+  someNum += 1
+  someNum -= 1 // *= /=
   // etc
+
+  // extracts/flatMaps an element out of a thing
+  // ^i.e if that.thiz: Option[Int], then thiz: Int
+  thiz <- that.thiz
+  // prepend a value onto a collection
+  addthisToTheBegging +: ofThisCollection
+  // append a value onto a collection (not recommended as its innefficient)
+  addThiStoTheEnd :+ ofThisCollection
+  // concatenate two collections of the same type
+  addThis ++ toThis
+```
+
+## keywords
+
+```scala
+  Nil
+```
+
+## variables
+
+```scala
+
+val immutableValue: Boolean = true
+var mutableValue: Boolean = true
 
 ```
 
@@ -53,7 +95,20 @@ scala --version
 // native types
 //////////////////////////////////
 
-// vals are immutable
+// Byte -128 to 127
+// Boolean true | false
+// Char unsigned, 0 to 65535
+// Short -32768 to 32767
+// Int -2147483648 to 2147483647
+// BigInt wayyyy bigger than Int
+// Long dude its a long number
+// Float dude its a long decimal
+// Double a decimal longer than a Float, but only 15 digits of precision
+// BigDecimal longer than a Double
+// examples
+
+val superLongNumber: BigInt = BigInt("insert really long number here")
+
 val desc = "I am immutable, inferred type String"
 val desc: String = "I am also a string"
 val descLong = s"inject another string here: $desc"
@@ -84,17 +139,41 @@ def howLong(values: MyOtherValues): Int = values match
   case weekly @ Weekly => weekly.total
 
 
+// objects
 // import SomeObj.*
 // ^ at top of file so you can use prop instead of SomeObj.prop
 object SomeObj {
   val prop: Boolean = true
 }
 
+// Options
 // handle the absense of data in an elegant way
 // can either be a Some or a None
 val poops: Option[String] = None // no data
 val poops: Option[string] = Some("times") // has data
 
+
+// Lists (collection)
+// sequential immutable linked-list
+// each el has a pointer to the next el in the list
+// head: the first el in the list
+// tail: the ramining els
+// nil: the last element, which will always be of type nil
+val poop: List[Int] = List(1,2,3)
+val emptyPoop: List[Int] = List()
+val emptyPoop: List[Int] = Nil
+
+// working with lists
+val poop: List[Int] = List(1,2,3)
+// prepend a value onto poop
+// can also use :+ and ++ operators
+0 +: poop // List(0,1,2,3)
+// get the distinct values in a new list
+poop.distinct
+// how many els
+poop.length
+// get first two els into a new list
+poop.take(2)
 
 
 //////////////////////////////////
@@ -118,6 +197,7 @@ case class MyType(name: String, age: Int)
 val poop: String = "flush"
 poop
   .length // 5
+  .toUpperCase // FLUSH
 ```
 
 #### options
@@ -128,6 +208,25 @@ val poop: Option[String] = Some("flush")
 poop
   .getOrElse("use this if poop is a None option").length // 5 because poop is a Some so it returns flush
 
+```
+
+### lists
+
+```scala
+val list: List[Int] = List(1,2,3,3)
+
+// interface
+list
+  .head // Int: 1
+  .tail // List[Int]: List(2, 3, 3)
+  .distinct // List[Int]: List(1,2,3)
+  .take(2) // List[Int]: List(1,2)
+  .length // 4
+
+// fns on lists
+list.map(n => n * n) // List(1, 4, 9, 9)
+list.map(_ * 3) // List(3, 6, 9, 9)
+list.flatMap(n => List(n, n)) // List(1, 1, 2, 2, 3, 3, 3, 3)
 ```
 
 ## flow control
@@ -159,17 +258,43 @@ someVal match
 //////////////////////////////////
 // for comprehensions
 //////////////////////////////////
+// guard statements: any control statements that shortcircuits cmds within the body for that specific iteration
+// ^ i.e. guards are a good way to filter things before they're yielded
+// ^ e.g. like an if > continue statement in js
+
+// example 1
 case class Poop(totalTurds: Option[Int], totalWipes: Option[Int])
 case class Flush(should: Boolean, poop: Option[Poop])
 val flush: Flush = Flush(true, Some(Poop(Some(10), Some(5))))
 // how do we get the average turds per wipe when we flush?
 // especially when dealing with Option types, where we want the primitive type (in this case Int)
 val averageTurdsPerWipe = for {
+  // each step in the comprehension is a dependent step
+  // i.e. if flush.poop is a None (and not a Some) it will exit early
+  // also if any failures, the whole thing will fail
+  // thats why return value is still Option[Int] and not Int
   poop <- flush.poop // creates a val poop: Poop
   totalTurds <- poop.totalTurds // creates totalTurds of Int, not Some[Int]
-  totalWipes <- poop.totalWipes // creates totalWipes of Int, not Some[int]
+  totalWipes <- poop.totalWipes // creates totalWipes of Int, not Some[Int]
+  //if totalWipes > 6 // uncomment this line and it will not move on to the next line
   averageTurdsPerWipe = totalTurds / totalWipes
-} yield averageTurdsPerWipe // returns this
+} yield averageTurdsPerWipe // returns Option[int]: 2
+// and without the curly braces
+def somePoop(): Int
+  for
+    // line 1
+    //line 2
+  yield something
+end somePoop
+
+// list example
+// returns all the combinations of the elements in xs and ys
+def combinations(xs: List[Int], ys: List[Int]): List[(Int, Int)] =
+  for
+    x <- xs
+    y <- ys
+  yield (x, y)
+end combinations
 ```
 
 ## functions
@@ -187,6 +312,11 @@ def isTruthy(me: Boolean): String = if me then "you are truthy" else "you are fa
 // isTruthy(me = false)
 // ^ you can send in a named parameter for readability
 
+// multiline fn
+def isTruthy(): String =
+  // line 1
+  // line 2
+end isTruthy
 
 //////////////////////////////////
 // builtin
@@ -195,9 +325,11 @@ def isTruthy(me: Boolean): String = if me then "you are truthy" else "you are fa
 // map function exists on many types
 val poop: Option[String] = Some("flush")
 poop.map(word => word.toUpperCase) // FLUSH
+val poop: Option[Int] = Some(2)
+poop.map(_ * 2) // 4
 
-
-// flatten/flatMap exists on all scala collections
+// flatMap exists on all scala collections
+// flatten can be called on the result of a map
 case class Poop(totalPoops: Option[Int]) // im going to poop a total amount of times
 case class Wipe(totalWipes: Option(Poop)) // im going to wipe depending on how many times i poop
 val flush: Wipe(Some(Poop(5))) // flushing depends on pooping and wiping, you can see the nesting,
@@ -207,4 +339,39 @@ flush.totalWipes.map(totalWipes => totalWipes.totalPoops) // Option[Option[Int] 
 flush.totalWipes.map(totalWipes => totalWipes.totalPoops).flatten // Option[Int] : Some(5)
 // looks even more concise with flatMap
 flush.totalWipes.flatMap(totalWipes => totalWipes.totalPoops) // Option[Int] : Some(5)
+// even more concise with the underscore
+flush.totalWipes.flatMap(_.totalPoops) // Option[Int] : Some(5)
+// verbose syntax with curly braces
+flush.totalWipes.flatMap { totalWipes =>
+  totalWipes.totalPoops // Option[Int] : Some(5)
+}
+```
+
+## native modules
+
+### scala.math
+
+- includes the math modules and other math related keywords
+- doesnt include a bunch of stuff as im not the greatest mathematician
+
+```scala
+import scala.math.* // in the REPL you have to use import scala.math._
+
+abs(-8) // Int: 8
+cbrt(27) // Double: 3.0
+ceil(5.45) // Double: 6.0
+floor(5.99) // Double: 5
+round(5.45) // Long: 5
+exp(1) // Double 2.7 blah blah
+pow(3, 2) // Double 9.0
+sqrt(4) // Double 2.0
+log10(1000) // Double 3.0
+min(5, 10) // Int 5
+max(5, 10) // Int 10
+
+// random
+// ^ returns a double between 0 and almost 1
+(random * 10 + 1) // random Double between 1 and 10
+(random * 10 + 1).toInt // random integer between 1 and 10
+
 ```
