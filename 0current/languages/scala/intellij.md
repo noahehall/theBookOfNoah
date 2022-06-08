@@ -13,10 +13,8 @@ intellij is dreamweaver that just wont fkn die
   - ultimate adds support for server side freameworks, and multiple languages
     - apache jakarta, nodejs, springs, react view,
   - android studio is just intellij community with android studio plugin set as the default interface
-
 - jetbrains-toolbox: jetbrains app to install all of their expensive stuff
   - save to /opt
-
 - LightEdit: simple text editor; open files outside of intellij
   - automatically installed with intellij
   - doesnt havent any of the main editor plugins (e.g. build, run)
@@ -27,12 +25,10 @@ intellij is dreamweaver that just wont fkn die
   - `sout` `System.out.println();`
   - `main` `public static void main(String[] args) {}`
   - `tostring` `@Override \n public String toString () {}`
-
 - running code:
   - the play button
   - debug mode (the bug button)
     - useful when your iterating via `sout`
-
 - right click everything
 - keymaps
   - shift shift > search everywhere
@@ -40,18 +36,14 @@ intellij is dreamweaver that just wont fkn die
   - ctrl space > auto import the current thing
   - alt enter > import the current thing
   - ctrl alt / > comment selected code
-
 - scratch files
-  - create code butbut store it your user profile
+  - create code but store it in your user profile
   - your scratches are available in project dir window > scratches & consoles
-
 - external libraries
   - always check within project dir window > external libraries
-
 - building projects: compile java code into java class files
   - class files go into root > out > production
     - delete the `out` dir and rebuild to get a clean state
-
 - dependency management:
   - jar files: precompiled archive file
     - should be placed in `root/lib/poop.jar`
@@ -63,7 +55,6 @@ intellij is dreamweaver that just wont fkn die
         - also an easy way to add/remove dependencies
       - or look for a maven window in the editor
   - gradle:
-
 - distributing projects: package your code into a jar file
   - file > project structure > artifacts
     - click + > JAR file > from modules with dependencies
@@ -71,7 +62,6 @@ intellij is dreamweaver that just wont fkn die
   - out > artifacts > see your jar file
     - right click > open in > terminal
       - `$ java -jar poop.jar`
-
 - javadoc: generate documentation
   - same workflow as jsdocs
   - tools > generate javadoc
@@ -79,14 +69,13 @@ intellij is dreamweaver that just wont fkn die
 
 ### gotchas
 
-- empty package directories will be compressed
+- empty package directories will be compressed by default
   - fkn gets me every time `poop.flush` is two directories, not one
   - click the gear icon in the top right of the project window and disable that dumb azz shiz
-
 - java culture
   - its all about intellij & the gui;
     - intellij comes with a bunch of interconnected workflows to keep you out of the CLI
-  - try to stay within the boundaries of intellij automation, even if it makes you dumber
+  - try to stay within the boundaries of intellij automation, even if it makes you less adept at the cli
     - workflows you should get use to
       - using git from the GUI
       - reliance on boilerplate code generation (snippets)
@@ -111,18 +100,15 @@ intellij is dreamweaver that just wont fkn die
   - kotlin (its on the web)
   - scala
   - aws toolkit
-
 - dependency frameworks
   - maven
   - gradle
-
 - primary programming language & templates
   - java
     - command line app: basic java project
   - groovy
   - kotlin (designed by jetbrains)
   - scala
-
 - project settings: always review this, especially in an existing project
   - new project
     - welcome screen > gearbox in bottom left
@@ -142,11 +128,10 @@ intellij is dreamweaver that just wont fkn die
     - tools
     - version control: use the cli, fk intellij
     - language & frameworks
-
 - version: help about > YYYY.major.minor
 - update
   - via toolbox: open toolbox
-  - download: configure >  check for updates
+  - download: configure > check for updates
 
 ## GUI preferences
 
