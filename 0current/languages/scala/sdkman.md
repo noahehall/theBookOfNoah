@@ -3,7 +3,9 @@ http://sdkman.io/install
 ```sh
 
 $ sdk
+$ sdk version
 $ sdk install
+$ sdk list scala
 $ sdk install scala
 $ sdk install sbt
 $ sdk upgrade
