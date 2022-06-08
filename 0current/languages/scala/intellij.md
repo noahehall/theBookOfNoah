@@ -92,6 +92,8 @@ intellij is dreamweaver that just wont fkn die
         - find usages
         - new (class|interface|blah)
         - refactor
+- right clickability
+  - right clicking a src (e.g. a scala file) gives diff options than right clicking a random dir within your project
 
 ## intellij community
 
