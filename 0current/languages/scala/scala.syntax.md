@@ -50,6 +50,7 @@ val descLong = s"inject another string here: $desc"
 val bool: Boolean = false
 val bool: Boolean =
   if 1 > 0 then true
+  else if 0 > 1 then true
   else false
 
 // import SomeObj.*
@@ -61,10 +62,24 @@ object SomeObj {
 
 ## flow control
 
-````scala
+```scala
 
+// if statements
 if someVal then "do this" else "do that"
-if someVal > 1 then "do this" else "do that"
+if someVal > 1 then "do this"
+  else if someValue < 0 then "this do"
+  else "do that"
+
+// match statements
+someVal match
+  case "this thing" => "return this other thing"
+  case "thing this" => "thing other this return"
+  case "thing" | "this" => "one of"
+  // can alternative use a varName instead of _ which will capture the value
+  // ^ and make it available, e.g. case poop => s"the value was $poop"
+  case _ => "default branch"
+
+```
 
 ```scala
 
@@ -75,4 +90,4 @@ def sum(num1: Int, num2: Int): Int = num1 + num2
 def isTruthy(me: Boolean): String = if me then "you are truthy" else "you are falsy"
 // isTruthy(me = false)
 // ^ you can send in a named parameter for readability
-````
+```

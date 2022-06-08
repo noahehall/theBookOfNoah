@@ -11,4 +11,5 @@
 
 ## basics
 
-- indentatin is important (think python)
+- indentation is important (think python)
+- scala 3 doesnt require curly braces
