@@ -49,8 +49,9 @@ scala --version
 ## types
 
 ```scala
-
+//////////////////////////////////
 // native types
+//////////////////////////////////
 
 // vals are immutable
 val desc = "I am immutable, inferred type String"
@@ -89,11 +90,15 @@ object SomeObj {
   val prop: Boolean = true
 }
 
+// handle the absense of data in an elegant way
+val poops: Option[String] = None // no default data
+val poops: Option[string] = Some("times") // default value
 
 
 
-
+//////////////////////////////////
 // custom types
+//////////////////////////////////
 
 // case classes are immutable
 case class MyType(name: String, age: Int)
@@ -104,17 +109,43 @@ case class MyType(name: String, age: Int)
 // ^ creates a new MyType based on poop overriding the provided props
 ```
 
+### types in depth
+
+#### strings
+
+```scala
+val poop: String = "flush"
+poop
+  .length // 5
+```
+
+#### options
+
+```scala
+val poop: Option[String] = Some("flush")
+
+poop
+  .getOrElse("use this if poop is a None option").length // 5 because poop is a Some so it returns flush
+
+```
+
 ## flow control
 
 ```scala
-
+//////////////////////////////////
 // if statements
+//////////////////////////////////
+
+
 if someVal then "do this" else "do that"
 if someVal > 1 then "do this"
   else if someValue < 0 then "this do"
   else "do that"
 
+//////////////////////////////////
 // match statements
+//////////////////////////////////
+
 someVal match
   case "this thing" => "return this other thing"
   case "thing this" => "thing other this return"
@@ -125,8 +156,13 @@ someVal match
 
 ```
 
+## functions
+
 ```scala
 
+//////////////////////////////////
+// custom
+//////////////////////////////////
 def sum(num1: Int, num2: Int): Int = num1 + num2
 // sum(5, 5)
 // ^ without named parameters
@@ -134,4 +170,13 @@ def sum(num1: Int, num2: Int): Int = num1 + num2
 def isTruthy(me: Boolean): String = if me then "you are truthy" else "you are falsy"
 // isTruthy(me = false)
 // ^ you can send in a named parameter for readability
+
+
+//////////////////////////////////
+// builtin
+//////////////////////////////////
+
+// map function exists on many types
+val poop: Option[String] = Some("flush")
+poop.map(word => word.toUpperCase) // FLUSH
 ```
