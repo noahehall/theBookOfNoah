@@ -65,11 +65,33 @@ val bool: Boolean =
   else if 0 > 1 then true
   else false
 
+// import it so you dont have to do MyKnownValues.Poop
+// somewhere in the file, import MyKnownValues.*
+// if someVar == Poop ....
+enum MyKnownValues:
+  case Poop, Wipe, Flush
+
+// enum with parameters, each item has a value
+enum MyOtherValues(val total: Int):
+  case Daily extends MyOtherValues(total = 24)
+  case Weekly extends MyOtherValues(total = 7)
+
+// how to use the enum with parameters
+import MyOtherValues.*
+def howLong(values: MyOtherValues): Int = values match
+  case daily @ Daily => daily.total
+  case weekly @ Weekly => weekly.total
+
+
 // import SomeObj.*
 // ^ at top of file so you can use prop instead of SomeObj.prop
 object SomeObj {
   val prop: Boolean = true
 }
+
+
+
+
 
 // custom types
 
