@@ -68,8 +68,10 @@ thiz > that
 // && || !
 
 
-// calculations
-+ - / %
+// arithmetic
+// the result will always have the type of its widest operand
+// ^ 1 + 2.0 // Double
++ - / % *
 someNum += 1
 someNum -= 1 // *= /=
 
@@ -91,19 +93,34 @@ someNum -= 1 // *= /=
   Nil
   to // e.g. 1 to 10
   until // e.g. 0 until poop.length
-
+  ??? // placeholder for an expression/body of a def
+    // def poop: String = ???
+    // val blah: Int = ???
 ```
 
-## variables
+## names
+
+- i.e. variables
+- are evaluated only once, and generally used over defs for intermediate expressions
 
 ```scala
 
 val immutableValue: Boolean = true
 var mutableValue: Boolean = true
 
+// Int 100
+// generally you should pref defs for this kind of thing
+// ^ as vals are always evaluated once, while defs are only evaluated when invoked
+// ^^ makes sense for costly evaluations
+val interestingVal: Int =
+  val ten = 10
+  ten * ten
 ```
 
 ## types
+
+- types can automatically get wider, e.g. Int used in place of a Double, but never stricter,
+  - e.g. Double in place of Int will cause the compiler to throw an error
 
 ```scala
 //////////////////////////////////
@@ -114,12 +131,13 @@ var mutableValue: Boolean = true
 // Boolean true | false
 // Char unsigned, 0 to 65535
 // Short -32768 to 32767
-// Int -2147483648 to 2147483647
+// Int 32 bit signed -2147483648 to 2147483647
 // BigInt wayyyy bigger than Int
 // Long dude its a long number
 // Float dude its a long decimal
-// Double a decimal longer than a Float, but only 15 digits of precision
+// Double 64 bit floating point; a decimal longer than a Float, but only 15 digits of precision
 // BigDecimal longer than a Double
+// String text
 // examples
 
 val superLongNumber: BigInt = BigInt("insert really long number here")
@@ -246,14 +264,23 @@ val poop: List[Int] = List(1,2,3)
 ```scala
 //////////////////////////////////
 // if statements
+// evaluate to a value, i.e. always return a value
+// all conditions must be an expression of type Boolean, else type mismatch error
 //////////////////////////////////
-// ^ return values like js ternary
 
+// single line
 if someVal then "do this" else "do that"
-if someVal > 1 then "do this"
-  else if someValue < 0 then "this do"
-  else "do that"
-// with curlys
+
+// multiline
+if someVal > 1 then
+  "do this"
+else if someValue < 0 then
+  "this do"
+else
+  "do that"
+
+// scala 2
+// requires curlys and paranthesis around conditions and no then keyword
 if (poop && wipe) {
   "flush"
 } else if (poop && pee) {
@@ -368,34 +395,46 @@ while (i <= 10)
 
 ```
 
-## functions
+## definitions
 
+- i.e. methods, or fns
 - invoke fns like `someFn` no `()` unless args are expected
+- all parameters in method signatures require type annotations
+- block: all statements with the same level of indentation form a block
+  - a block always ends with the resulting final expression
+  - names are block scoped, thus variable declarations are not visible outside their containing block
 
 ```scala
 
-//////////////////////////////////
-// custom
-//////////////////////////////////
+// single line method
+// return type Int
 def sum(num1: Int, num2: Int): Int = num1 + num2
 // sum(5, 5)
 // ^ without named parameters
 
+// return type String
 def isTruthy(me: Boolean): String = if me then "you are truthy" else "you are falsy"
 // isTruthy(me = false)
 // ^ you can send in a named parameter for readability
 
-// multiline fn
+// def with no params
+def poop: Boolean = true // always returns true
+
+// scala 2 requires curly braces
+def poop(): String = {
+  //....
+}
+// multiline method
 def isTruthy(): String =
   // line 1
-  // line 2
-end isTruthy
+  // line 2 will automatically be returned
+end isTruthy // not required
 
 //////////////////////////////////
 // builtin
 //////////////////////////////////
 
-// map function exists on many types
+// map function exists on collection types
 val poop: Option[String] = Some("flush")
 poop.map(word => word.toUpperCase) // FLUSH
 val poop: Option[Int] = Some(2)
@@ -418,6 +457,21 @@ flush.totalWipes.flatMap(_.totalPoops) // Option[Int] : Some(5)
 flush.totalWipes.flatMap { totalWipes =>
   totalWipes.totalPoops // Option[Int] : Some(5)
 }
+```
+
+## errors
+
+```scala
+// applying an operation to an expression that isnt a member of the expressions type
+true.combine(false) // value combine is not a member of Boolean
+
+// applying an operation to an operand of a type incompatible wiht the type expectted by the operation
+true && "false" // type mismatch, found String("false"), required Boolean
+
+// running a program that contains unimplemented expressions
+val n: Int = ???
+println(n.abs) // scala.NotImplementedError: an implementation is missing
+
 ```
 
 ## native modules
