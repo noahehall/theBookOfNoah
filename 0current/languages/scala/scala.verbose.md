@@ -8,6 +8,8 @@
   - [fn programming and scala](https://chollinger.com/blog/2022/06/functional-programming-concepts-i-actually-like-a-bit-of-praise-for-scala-for-once/)
 - refs
   - [getting started](https://docs.scala-lang.org/getting-started/)
+  - [domain modeling constructs](https://docs.scala-lang.org/scala3/book/domain-modeling-tools.html)
+  - [scala 3 API, ctrl f through this](https://dotty.epfl.ch/api/index.html)
 
 ## background
 
@@ -70,6 +72,9 @@
   - e.g. `somePoop(flush = true)`
 - its typical to work with immutable data types
 - the vertical alignment of operators, symbols and names improves readability (check code block)
+- its common to see Sealed Traits, case classes, and objects all using the same name at the same time in the same file
+  - check the domain modeling link, theres a section on `companion objects`
+    - An object that has the same name as a class, and is declared in the same file as the class, is called a "companion object."
 
 ```scala
 // idiomatic to ensure vertical alignment across related lines
@@ -125,7 +130,7 @@ val window = 2 * 2
 val total = door + window
 
 // with modeling
-// arguably more readable nad less error-prone
+// arguably more readable and less error-prone
 // humans know and have expectations of Rectangles
 // also the implementation details are abstracted away
 // we can then code to the interface of a Rectangle
@@ -142,3 +147,18 @@ case class PostMessage(channel: Channel) extends Action
 case class Channel(name: String)
 // use like Subscribe(Channel("to this channel"))
 ```
+
+## standard library
+
+- domain-agnostic data structures and utility fns that are generally useful in a wide range of projects
+- peristent data structures: when operations on the data structure dont mutate its values, e.g. a list, as creating a new list from an existing list doesnt change the previous state of the list (a new one is created)
+
+### collections
+
+- all collection types are parameterized by the type of their elements, i.e. all elements must be of the same type
+
+### error Management
+
+### Math Fns
+
+### Asynchronous execution

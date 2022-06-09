@@ -5,6 +5,22 @@ intellij is dreamweaver that just wont fkn die
 ## LINKS
 
 - [toolbox](https://www.jetbrains.com/toolbox-app/download/download-thanks.html?platform=linux)
+- [intellij perf blog post](https://blog.jetbrains.com/kotlin/2021/06/simple-steps-for-improving-your-ide-performance/)
+
+## things to do
+
+- file > setttings > font
+  - increase the font size
+- file > settings > plugins
+  - disable everything git related
+  - disable almost everything not related to what your currenlty working on (theres a alot of shiz to disable by default)
+    - just remember to renenable
+- help > change memory settings
+  - increase available memory from 2 to 4 (4096) or 8 (8192) gb
+
+## things to remember
+
+- if you hover just to right of the vertical scrollbar, a viewbox will appear to quickview that line of code, really cool
 
 ## BASICS
 

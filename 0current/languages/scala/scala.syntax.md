@@ -11,6 +11,7 @@
 - [example gitignore for scala](https://alvinalexander.com/source-code/scala/sample-gitignore-file-scala-sbt-intellij-eclipse/)
 - refs
   - [List](https://www.scala-lang.org/api/current/scala/collection/immutable/List.html)
+  - [pattern matching](https://docs.scala-lang.org/tour/pattern-matching.html)
 
 ## basics
 
@@ -105,6 +106,12 @@ someNum -= 1 // *= /=
     // val blah: Int = ???
   _ // wildcard placeholder
   extends // e.g. case class Poop() extends BigerPoop
+  end Poop // optional syntax for signaling hte end of some thing, e.g. a case class/object/def/etc
+    // ^ think it can be appended to pretty much anything?
+  :: // represents a list with 2 elements, usually the subtype + nil, or the head + tail
+    // ^ can be used to create a new list from an existing list, with an el prepended to head
+      // its a constant time operation, as the existing list isnt copied, its reused
+
 ```
 
 ## names
@@ -181,6 +188,8 @@ val poops: Option[string] = Some("times") // has data
 //////////////////////////////////
 // List
 // sequential immutable linked-list
+// used to model collections of values where the order of elements may/not matter
+// elements of a list must all have the same type
 // each el has a pointer to the next el in the list
 // head: the first el in the list
 // tail: the ramining els
@@ -200,7 +209,10 @@ val poop: Array[String] = Array("one", "two")
 // case classes
 // define a type and a constructor
 // used for aggregating several values into a single concept (i.e. type)
-// instances are immutable
+// used to model immutable data structures
+// fields are public and immutable by default
+// the compiler auto generates the following methods
+// unapply, copy, equals, hashCode, toString
 //////////////////////////////////
 
 // without any members
@@ -216,6 +228,8 @@ val flush: MyType = poop.copy(name = "flush")
 // in scala 2 remove the : and use {} to denote the body
 case class MyType(name: String, age: Int):
   val ageNextDecade: Int = age + 10 // computed value, instance.ageNextDecade
+  def duplicateThisInstance: MyType =
+    copy(name = "some other name") // copy will return a new item of this (MyType)
 
 //////////////////////////////////
 // case objects
@@ -294,6 +308,7 @@ enum MyOtherValues(val total: Int):
   case Weekly extends MyOtherValues(total = 7)
 
 // how to use the enum with parameters
+// match example
 import MyOtherValues.*
 def howLong(values: MyOtherValues): Int = values match
   case daily @ Daily => daily.total
@@ -322,7 +337,7 @@ poop
 
 ```
 
-### lists
+#### lists
 
 ```scala
 val list: List[Int] = List(1,2,3,3)
@@ -334,6 +349,10 @@ list
   .distinct // List[Int]: List(1,2,3)
   .take(2) // List[Int]: List(1,2)
   .length // 4
+  .size // 4.filter
+  .contains(2) // true
+  .map(lamba) // returns new list
+  .filter(lambda) // lambda should return true for elements to keep
 
 // fns on lists
 list.map(n => n * n) // List(1, 4, 9, 9)
@@ -343,8 +362,10 @@ list.flatMap(n => List(n, n)) // List(1, 1, 2, 2, 3, 3, 3, 3)
 // working with lists
 val poop: List[Int] = List(1,2,3)
 // prepend a value onto poop
-// can also use :+ operator
-0 +: poop // List(0,1,2,3)
+// can also use :+ operator to append
+val poop2 = 0 +: poop // List(0,1,2,3)
+val poop2 = 0 :: poop // same as above
+
 ```
 
 ## flow control
@@ -386,6 +407,8 @@ if (poop && wipe) {
 // ^ and extract data from them at the same time
 //////////////////////////////////
 
+// literal pattern matching
+// your matching against literal values
 someVal match
   case "this thing" => "return this other thing"
   case "thing this" => "thing other this return"
@@ -395,6 +418,23 @@ someVal match
   // ^ and make it available, e.g. case poop => s"the value was $poop"
   case _ => "default branch"
 
+// typed pattern matching
+// you have to specify the fkn params, e.g. in case classes
+// uses scala 2 syntax
+notification match {
+    case Email(sender, title, _) => // _ means the third param isnt used
+      s"You got an email from $sender with title: $title"
+    case SMS(number, message) =>
+      s"You got an SMS from $number! Message: $message"
+    case VoiceRecording(name, link) =>
+      s"You received a Voice Recording from $name! Click the link to hear it: $link"
+  }
+
+// matching on type only
+def goIdle(device: Device) = device match {
+  case p: Phone => p.screenOff
+  case c: Computer => c.screenSaverOn
+}
 
 //////////////////////////////////
 // for comprehensions
@@ -489,14 +529,19 @@ while (i <= 10)
 
 ```
 
-## definitions
+## definitions and function literals
 
-- i.e. methods, or fns
 - invoke fns like `someFn` no `()` unless args are expected
 - all parameters in method signatures require type annotations
 - block: all statements with the same level of indentation form a block
   - a block always ends with the resulting final expression
   - names are block scoped, thus variable declarations are not visible outside their containing block
+- function literal: a lambda, an expression that evaluates to a fn
+- def vs function literals: because scala supports both OOP and FP
+  - function literals define a value that can be passed as a parameter/returned as a result
+    - this cannot be done with definitions
+      - however the compiler will most likely auto convert the definition into a fn literal and not throw an error
+  - the runtime creates an object for functions in memory, and thus fns are objects that can have members
 
 ```scala
 
@@ -524,9 +569,37 @@ def isTruthy(): String =
   // line 2 will automatically be returned
 end isTruthy // not required
 
+// function literals
+// with explicit annotation
+val lambda: Int => Int =
+  x =>
+    val result = x + 1
+    result
+// without annotation (but its inferred)
+// but you still need explicity type params as usuall
+val add =
+  (x: Int, y: Int) => x + y
+// oneliner with annotation
+val increment: Int => Int = x => x + 1
+// even shorter syntax
+// ^ whenever a fn uses its argument only once, you can use the placeholder _
+val increment: Int => Int = _ + 1
+val increment = (_: Int) + 1 // even shorter + annotation
+val add: (Int, Int) => Int = _ + _
+//////////////////////////////////
+// special fns and things like that
+//////////////////////////////////
+
+// apply
+// any object with an `apply` method can be invoked like a fn
+object poop:
+  def apply(x: int): Int = x + 10
+// poop(10) === 20
+
 //////////////////////////////////
 // builtin
 //////////////////////////////////
+
 
 // map function exists on collection types
 val poop: Option[String] = Some("flush")
