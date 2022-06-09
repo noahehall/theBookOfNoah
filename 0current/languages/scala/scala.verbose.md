@@ -4,6 +4,8 @@
 
 - [coursera: effective programming in scala](https://www.coursera.org/learn/effective-scala)
 - [scala metals vscode plugin](https://scalameta.org/metals/docs/editors/vscode)
+- good reads
+  - [fn programming and scala](https://chollinger.com/blog/2022/06/functional-programming-concepts-i-actually-like-a-bit-of-praise-for-scala-for-once/)
 - refs
   - [getting started](https://docs.scala-lang.org/getting-started/)
 
