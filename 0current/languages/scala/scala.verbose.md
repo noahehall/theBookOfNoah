@@ -62,6 +62,7 @@
   - its optional, however
 - generally, using named parameters when invoking methods improve readability
   - e.g. `somePoop(flush = true)`
+- its typical to work with immutable data types
 
 ### principles
 
@@ -79,6 +80,7 @@
 - finding the right level of abstraction
   - since abstractions require shared human knowledge, and all abstractions carry baggage, always pick the simplest idea (IMO)
 - modeling: the act of defining the concepts of a domain that map closely to our human reasoning
+  - case class and sealed traits are the building blocks of modeling business domains
 
 ```scala
 ////////////////////////////////////////////////////////////////////
@@ -100,4 +102,12 @@ val door = Rectangle(width = 5, height = 3)
 val window = Rectangle(width = 2, height = 2)
 val total = door.area + window.area
 
+// modeling the actions that user can perform in a messaging system
+sealed trait Action
+case class Subscribe(channel: Channel) extends Action
+case class Unsubscribe(channel: Channel) extends Action
+case class PostMessage(channel: Channel) extends Action
+
+case class Channel(name: String)
+// use like Subscribe(Channel("to this channel"))
 ```

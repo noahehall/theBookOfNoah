@@ -52,7 +52,8 @@ multieline
 comment
 */
 
-import scala.math.* // import all the math modules
+import scala.math._ // import all the math modules
+import someObj.* // make all the members of someObj available in the file
 ```
 
 ## operators
@@ -96,6 +97,8 @@ someNum -= 1 // *= /=
   ??? // placeholder for an expression/body of a def
     // def poop: String = ???
     // val blah: Int = ???
+  _ // wildcard placeholder
+  extends // e.g. case class Poop() extends BigerPoop
 ```
 
 ## names
@@ -144,6 +147,7 @@ val superLongNumber: BigInt = BigInt("insert really long number here")
 
 val desc = "I am immutable, inferred type String"
 val desc: String = "I am also a string"
+// intepolation
 val descLong = s"inject another string here: $desc"
 
 val num: Int = 100
@@ -153,24 +157,6 @@ val bool: Boolean =
   if 1 > 0 then true
   else if 0 > 1 then true
   else false
-
-// import it so you dont have to do MyKnownValues.Poop
-// somewhere in the file, import MyKnownValues.*
-// if someVar == Poop ....
-enum MyKnownValues:
-  case Poop, Wipe, Flush
-
-// enum with parameters, each item has a value
-enum MyOtherValues(val total: Int):
-  case Daily extends MyOtherValues(total = 24)
-  case Weekly extends MyOtherValues(total = 7)
-
-// how to use the enum with parameters
-import MyOtherValues.*
-def howLong(values: MyOtherValues): Int = values match
-  case daily @ Daily => daily.total
-  case weekly @ Weekly => weekly.total
-
 
 // objects
 // import SomeObj.*
@@ -201,16 +187,81 @@ val poop: Array[String]
 
 
 //////////////////////////////////
-// custom types
+// case classes
+// define a type and a constructor
+// used for aggregating several values into a single concept (i.e. type)
+// instances are immutable
 //////////////////////////////////
 
-// case classes are immutable
+// without any members
 case class MyType(name: String, age: Int)
-// val poop: MyType = MyType("poop", 200)
-// poop.name == "poop"
-// s"poops age is ${poop.age}"
-// val flush: MyType = poop.copy(name = "flush")
-// ^ creates a new MyType based on poop overriding the provided props
+
+// create an instance
+val poop: MyType = MyType("poop", 200)
+// poop.name == "poop" // Boolean: true
+// creates a new MyType based on poop overriding the provided props
+val flush: MyType = poop.copy(name = "flush")
+
+// with members and computed values
+// in scala 2 remove the : and use {} to denote the body
+case class MyType(name: String, age: Int):
+  val ageNextDecade: Int = age + 10 // computed value, instance.ageNextDecade
+
+
+//////////////////////////////////
+// sealed traits
+// represents one of several alternatives of a case class
+// defines a base (abstract) type from which case class (concrete) types can extend from
+// ^ i.e. case classes that extend from sealed traits are Subtypes of of the Sealed Trait
+// do not have constructors, thus you need to use the case class to create instances
+// the only useful thing you can do with sealed traits is determine the concrete type using pattern matching
+// however the modeling prowess of sealed traits are extensive
+//////////////////////////////////
+
+sealed trait Shape
+case class Rectangle(/* */) extends Shape
+case class Circle(/* */) extends Shape
+
+// create an instance
+val poop: Shape = Circle(/* */)
+
+// subtyping works as expected
+val poop: Circle = poop(/* */)
+val poop2: Shape = poop.copy() // works because Circle is a Shape
+
+// using pattern matching to aggregate logic across subtypes
+// in scala 2 the match block needs to enclosed in braces, i.e. match { ... }
+val getShapeAria =
+  someShape match
+    case Rectangle(width, heighT) => width * height
+    case Circle(radius) => radius * radius * 3.14
+
+
+//////////////////////////////////
+// enums
+// defines a type whose values are singletons
+// ^ and not classes of values like a case class
+// NOT available in scala 2
+//////////////////////////////////
+
+// import it so you dont have to do MyKnownValues.Poop
+// somewhere in the file, import MyKnownValues.*
+// if someVar == Poop ....
+enum MyKnownValues:
+  case Poop, Wipe, Flush
+
+// enum with parameters, each item has a value
+enum MyOtherValues(val total: Int):
+  case Daily extends MyOtherValues(total = 24)
+  case Weekly extends MyOtherValues(total = 7)
+
+// how to use the enum with parameters
+import MyOtherValues.*
+def howLong(values: MyOtherValues): Int = values match
+  case daily @ Daily => daily.total
+  case weekly @ Weekly => weekly.total
+
+
 ```
 
 ### types in depth
@@ -291,12 +342,18 @@ if (poop && wipe) {
 
 //////////////////////////////////
 // match statements
+// you have to cover ALL the cases or add a a default branch
+// else compiler throws warning at compile time, and error at runtime if any of the uncovered cases are used
+// very useful with sealed traits and concrete classes
+// ^ to aggregate logic across the concrete classes
+// ^ and extract data from them at the same time
 //////////////////////////////////
 
 someVal match
   case "this thing" => "return this other thing"
   case "thing this" => "thing other this return"
   case "thing" | "this" => "one of"
+  case poop: Poop => s"i pooped ${poop.times}"
   // can alternative use a varName instead of _ which will capture the value
   // ^ and make it available, e.g. case poop => s"the value was $poop"
   case _ => "default branch"
