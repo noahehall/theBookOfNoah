@@ -27,6 +27,10 @@
   - vals are always evaluated once, and the result is reused each time their name is used
   - the body of defs are evaluated each time the def is invoked, if its never invoked, their never evaluated
     - thus one reason to prefer defs over vals is to delay the evlaution of a computation until the oint in a progra where its effectively needed
+- sealed traits and objects can have the same name
+  - it refers to the object when its used on the right-hand side of a definition, or when it is passed as an argument to an operation
+  - it refers to the sealed trait (the type) when it is used in a type annotation
+  - check the syntax file for mimicking enums in scala 2
 
 ### scala 2 vs scala 3
 
@@ -36,6 +40,8 @@
   - scala 3: optional (nizzze)
 - scala 2: indentation wasnt signficant
   - scala 3: super significant (think python)
+- scala 2: doesnt have enums
+  - scala 3 enums are just syntactic sugar for a sealed trait and case objects that extend the trait
 
 ## terms
 
@@ -63,6 +69,14 @@
 - generally, using named parameters when invoking methods improve readability
   - e.g. `somePoop(flush = true)`
 - its typical to work with immutable data types
+- the vertical alignment of operators, symbols and names improves readability (check code block)
+
+```scala
+// idiomatic to ensure vertical alignment across related lines
+val one    = ???
+val oonnee = ???
+
+```
 
 ### principles
 
@@ -81,6 +95,23 @@
   - since abstractions require shared human knowledge, and all abstractions carry baggage, always pick the simplest idea (IMO)
 - modeling: the act of defining the concepts of a domain that map closely to our human reasoning
   - case class and sealed traits are the building blocks of modeling business domains
+  - no systematic methodology to modeling, but general advice includes
+    - useful to review the modeling docs somewhere in this repository
+    - idenitfy the concepts (in general nounse) that you are interested in
+    - identify the relations between them
+      - does one concept belong to another?
+        - e.g. a rectangle has a width and a height
+        - e.g. a `post message` action has a channel and a message
+      - does one concept generalize another one?
+        - e.g. a shape can be either a rectangle or a circle
+        - e.g. a subscription is a possible action
+    - translate each concept into a type definition
+      - concepts belonging to others become paramters of case classes
+      - concepts generalizing others become sealed traits
+    - implement the business logic as operations on the model
+      - check that you can construct meaningful values from your model
+        - also VALIDATE that you cannot construct nonsensical/illogical/invalid values from the model
+    - iterate on the domain model and business logic implementation
 
 ```scala
 ////////////////////////////////////////////////////////////////////

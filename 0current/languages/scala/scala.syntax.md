@@ -52,7 +52,13 @@ multieline
 comment
 */
 
-import scala.math._ // import all the math modules
+// imports
+// import some external module and make its members availabel in the current file
+// e.g. now math.abs is available as abs
+import scala.math._ // import all the members of the math module
+// import local collections and make their members available in the current file
+// somewhere in the file, import MyValues.*
+// MyValues.poop now available as poop
 import someObj.* // make all the members of someObj available in the file
 ```
 
@@ -126,10 +132,6 @@ val interestingVal: Int =
   - e.g. Double in place of Int will cause the compiler to throw an error
 
 ```scala
-//////////////////////////////////
-// native types
-//////////////////////////////////
-
 // Byte -128 to 127
 // Boolean true | false
 // Char unsigned, 0 to 65535
@@ -141,6 +143,8 @@ val interestingVal: Int =
 // Double 64 bit floating point; a decimal longer than a Float, but only 15 digits of precision
 // BigDecimal longer than a Double
 // String text
+// List[subtype]
+// Array[subtype]
 // examples
 
 val superLongNumber: BigInt = BigInt("insert really long number here")
@@ -165,26 +169,32 @@ object SomeObj {
   val prop: Boolean = true
 }
 
+//////////////////////////////////
 // Options
-// handle the absense of data in an elegant way
+// handle the absense (None | Nil) of data in an elegant way
 // can either be a Some or a None
+//////////////////////////////////
 val poops: Option[String] = None // no data
 val poops: Option[string] = Some("times") // has data
 
 
-// Lists (collection)
+//////////////////////////////////
+// List
 // sequential immutable linked-list
 // each el has a pointer to the next el in the list
 // head: the first el in the list
 // tail: the ramining els
 // nil: the last element, which will always be of type nil
+//////////////////////////////////
+
 val poop: List[Int] = List(1,2,3)
 val emptyPoop: List[Int] = List()
 val emptyPoop: List[Int] = Nil
 
-// arrays
-val poop: Array[String]
-
+//////////////////////////////////
+// Array
+//////////////////////////////////
+val poop: Array[String] = Array("one", "two")
 
 //////////////////////////////////
 // case classes
@@ -207,6 +217,27 @@ val flush: MyType = poop.copy(name = "flush")
 case class MyType(name: String, age: Int):
   val ageNextDecade: Int = age + 10 // computed value, instance.ageNextDecade
 
+//////////////////////////////////
+// case objects
+// can extend sealed traits
+// ^ but doesnt define a constructor like case classes, because case objects are already values
+//////////////////////////////////
+
+// mimicking enums in scala 2
+// uses the same pattern matching logic, check elseware
+sealed trait PrimaryColor
+object PrimaryColor:
+  case object Red extends PrimaryColor
+  case object Blue extends Primary Color
+  val values = Array(Red, Blue, Green)
+  def valueOf(label: String): PrimaryColor = ???
+
+// modeling a user, which can be anonymous or loggedin
+// note the use of case object and case class
+sealed trait User
+object User:
+  case object Guest extends User
+  case class Registered(id: UUID) extends User
 
 //////////////////////////////////
 // sealed traits
@@ -239,16 +270,23 @@ val getShapeAria =
 
 //////////////////////////////////
 // enums
-// defines a type whose values are singletons
-// ^ and not classes of values like a case class
-// NOT available in scala 2
+// defines a type whose values are a set of known singletons
+// NOT available in scala 2, instead used sealed traits and case objects
 //////////////////////////////////
 
-// import it so you dont have to do MyKnownValues.Poop
-// somewhere in the file, import MyKnownValues.*
-// if someVar == Poop ....
-enum MyKnownValues:
-  case Poop, Wipe, Flush
+enum MyKnownValues: // type
+  case Poop, Wipe, Flush // with these values
+
+MyKnownValues
+  .values // Array(MyKnownValues.Poop, etc) // get all enum values
+  .valueOf("Wipe") // MyKNownValues.Wipe // get the matching enum value from its string label || runtime error
+
+// match on enums via literal pattern matching
+def whichValue(value: MyKnownValues): String =
+  value match
+    case MyKnownValues.Poop => "i'm pooping"
+    case MyKnownValues.Wipe => "almost done"
+    case MyKnownValues.Flush => "wanna watch a movie"
 
 // enum with parameters, each item has a value
 enum MyOtherValues(val total: Int):
@@ -260,7 +298,6 @@ import MyOtherValues.*
 def howLong(values: MyOtherValues): Int = values match
   case daily @ Daily => daily.total
   case weekly @ Weekly => weekly.total
-
 
 ```
 
