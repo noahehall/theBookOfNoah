@@ -151,7 +151,8 @@ alias aptfixconfigure='sudo dpkg --configure --force-overwrite -a'
 alias aptsearchi3='apt search ^i3xrocks'
 alias aptsearchlooks='apt search ^regolith-look-'
 alias aptsearchpkgs='apt-cache search --names-only '
-
+alias aptaddppa='sudo add-apt-repository'
+alias aptremoveppa='sudo add-apt-repository --remove'
 # aws ----------------------------------
 alias awsconfig='sudo aws configure'
 alias awsconfiglist='aws configure list'

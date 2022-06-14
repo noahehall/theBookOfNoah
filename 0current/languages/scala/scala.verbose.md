@@ -27,9 +27,9 @@
   - except in worksheets, as there is no distinction between compile & runtime
 - vals vs defs
   - vals are always evaluated once, and the result is reused each time their name is used
-  - the body of defs are evaluated each time the def is invoked, if its never invoked, their never evaluated
-    - thus one reason to prefer defs over vals is to delay the evlaution of a computation until the oint in a progra where its effectively needed
-- sealed traits and objects can have the same name
+  - the body of defs are evaluated each time the def is invoked, if its never invoked then never evaluated
+    - thus one reason to prefer defs over vals is to delay the evlaution of a computation until the point in a progran where its effectively needed
+- companion objects: sealed traits and objects can have the same name
   - it refers to the object when its used on the right-hand side of a definition, or when it is passed as an argument to an operation
   - it refers to the sealed trait (the type) when it is used in a type annotation
   - check the syntax file for mimicking enums in scala 2

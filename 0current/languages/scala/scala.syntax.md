@@ -84,21 +84,30 @@ someNum += 1
 someNum -= 1 // *= /=
 
 
-  // extracts/flatMaps an element out of a thing
-  // ^i.e if that.thiz: Option[Int], then thiz: Int
-  thiz <- that.thiz
-  // prepend a value onto a collection
-  addthisToTheBegging +: ofThisCollection
-  // append a value onto a collection (not recommended as its innefficient)
-  addThiStoTheEnd :+ ofThisCollection
-  // concatenate two collections of the same type
-  addThis ++ toThis
+// extracts/flatMaps an element out of a thing
+// ^i.e if that.thiz: Option[Int], then thiz: Int
+thiz <- that.thiz
+
+// operators that end with : are all right-associative
+:: // represents a list with 2 elements, usually the subtype + nil, or the head + tail
+  // ^ can be used to create a new list from an existing list, with an el prepended to head
+    // its a constant time operation, as the existing list isnt copied, its reused
+    // List(alice, bob) == alice :: bob :: Nil
+    // is right-associative, i.e in the above example it starts from Nil, and moves list
+    // can be left associative via the comma operator on Nill,
+      // ^ Nil.::(bob).::(alice)
+// prepend a value onto a collection
+addthisToTheBegging +: ofThisCollection
+// append a value onto a collection (not recommended as its innefficient)
+addThiStoTheEnd :+ ofThisCollection
+// concatenate two collections of the same type
+addThis ++ toThis
 ```
 
 ## keywords
 
 ```scala
-  Nil
+  Nil // an empty list
   to // e.g. 1 to 10
   until // e.g. 0 until poop.length
   ??? // placeholder for an expression/body of a def
@@ -108,9 +117,7 @@ someNum -= 1 // *= /=
   extends // e.g. case class Poop() extends BigerPoop
   end Poop // optional syntax for signaling hte end of some thing, e.g. a case class/object/def/etc
     // ^ think it can be appended to pretty much anything?
-  :: // represents a list with 2 elements, usually the subtype + nil, or the head + tail
-    // ^ can be used to create a new list from an existing list, with an el prepended to head
-      // its a constant time operation, as the existing list isnt copied, its reused
+
 
 ```
 
@@ -316,9 +323,7 @@ def howLong(values: MyOtherValues): Int = values match
 
 ```
 
-### types in depth
-
-#### strings
+### strings
 
 ```scala
 val poop: String = "flush"
@@ -327,7 +332,7 @@ poop
   .toUpperCase // FLUSH
 ```
 
-#### options
+### options
 
 ```scala
 val poop: Option[String] = Some("flush")
@@ -337,7 +342,7 @@ poop
 
 ```
 
-#### lists
+### lists
 
 ```scala
 val list: List[Int] = List(1,2,3,3)
@@ -435,6 +440,11 @@ def goIdle(device: Device) = device match {
   case p: Phone => p.screenOff
   case c: Computer => c.screenSaverOn
 }
+
+// match on a list
+listOfContacts match
+  case contact :: tail => println(contact.name) // an element that contains a contact and a tail
+  case Nill => println("no contacts")
 
 //////////////////////////////////
 // for comprehensions

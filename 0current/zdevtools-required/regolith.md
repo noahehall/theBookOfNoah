@@ -1,5 +1,5 @@
 bookmark
-  <https://regolith-linux.org/docs/interface/advanced//>
+<https://regolith-linux.org/docs/interface/advanced//>
 
 # TLDR
 
@@ -78,6 +78,7 @@ focusing on keyboard > mouse usage for getting things done
 ```sh
   # keyboard bindings
   super
+    shift ? # see shortcuts
     # dont press
       p shift # power off?
       r shift # reset session?
