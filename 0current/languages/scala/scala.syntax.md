@@ -1,8 +1,7 @@
 # scala
 
 - all about the syntax
-- as usual, search for `// Something` or `# Something` to find what youre looking for
-- until this line is removed, i wouldnt trust everything in this file across scala versions
+- as usual, search for `/// Something` or `# Something` to find what youre looking for
 
 ## links
 
@@ -10,8 +9,26 @@
 - [scala & intellij: getting started](https://docs.scala-lang.org/getting-started/intellij-track/getting-started-with-scala-in-intellij.html)
 - [example gitignore for scala](https://alvinalexander.com/source-code/scala/sample-gitignore-file-scala-sbt-intellij-eclipse/)
 - refs
+  - [classes: inner classes](https://docs.scala-lang.org/tour/inner-classes.html)
+  - [classes: open classes](https://docs.scala-lang.org/scala3/reference/other-new-features/open-classes.html)
+  - [given instances and using clauses](https://docs.scala-lang.org/scala3/book/ca-given-using-clauses.html)
   - [List](https://www.scala-lang.org/api/current/scala/collection/immutable/List.html)
+  - [methods: extensions](https://docs.scala-lang.org/scala3/book/ca-extension-methods.html)
+  - [methods: polymorphic](https://docs.scala-lang.org/tour/polymorphic-methods.html)
+  - [multiversal equality](https://docs.scala-lang.org/scala3/book/ca-multiversal-equality.html)
+  - [pattern matching: match types](https://docs.scala-lang.org/scala3/reference/new-types/match-types.html)
   - [pattern matching](https://docs.scala-lang.org/tour/pattern-matching.html)
+  - [scala 3 reference](https://docs.scala-lang.org/scala3/reference/index.html)
+  - [type: type classes](https://docs.scala-lang.org/scala3/book/ca-type-classes.html)
+  - [type: generics](https://docs.scala-lang.org/scala3/book/types-generics.html)
+  - [type: intersections](https://docs.scala-lang.org/scala3/book/types-intersection.html)
+  - [type: lower bounds](https://docs.scala-lang.org/tour/lower-type-bounds.html)
+  - [type: unions](https://docs.scala-lang.org/scala3/book/types-union.html)
+  - [type: upper bounds](https://docs.scala-lang.org/tour/upper-type-bounds.html)
+  - [type: variance](https://docs.scala-lang.org/scala3/book/types-variance.html)
+  - [type: opaque](https://docs.scala-lang.org/scala3/book/types-opaque-types.html)
+  - [type: abstract types](https://docs.scala-lang.org/tour/abstract-type-members.html)
+  - [interacting with java](https://docs.scala-lang.org/scala3/book/interacting-with-java.html)
 
 ## basics
 
@@ -53,7 +70,7 @@ multieline
 comment
 */
 
-// imports
+/// imports
 // import some external module and make its members availabel in the current file
 // e.g. now math.abs is available as abs
 import scala.math._ // import all the members of the math module
@@ -66,17 +83,17 @@ import someObj.* // make all the members of someObj available in the file
 ## operators
 
 ```scala
-// conditionals
+/// conditionals
 // : == != > < <= =>
 thiz == that
 thiz != that
 thiz > that
 
-// logical
+/// logical
 // && || !
 
 
-// arithmetic
+/// arithmetic
 // the result will always have the type of its widest operand
 // ^ 1 + 2.0 // Double
 + - / % *
@@ -84,7 +101,8 @@ someNum += 1
 someNum -= 1 // *= /=
 
 
-// extracts/flatMaps an element out of a thing
+
+// a generator
 // ^i.e if that.thiz: Option[Int], then thiz: Int
 thiz <- that.thiz
 
@@ -102,28 +120,40 @@ addthisToTheBegging +: ofThisCollection
 addThiStoTheEnd :+ ofThisCollection
 // concatenate two collections of the same type
 addThis ++ toThis
+thisMutableThing ++= someOtherthing
+prependThis +=: ontoThisMutableThing
+thisMutableThing --= removeTheseFromTheLeftthing
+thisMutableThing -= 3 // removes the first 3 if found
+// map of symbols to alphabetic equivalents
+// + .updated
+// ++ .concat
+// - removed
+// -- removedAll
+// +: prepended
+// :+ appended
+// += addOne
+// ++= addAll
 ```
 
 ## keywords
 
 ```scala
-  Nil // an empty list
-  to // e.g. 1 to 10
-  until // e.g. 0 until poop.length
-  ??? // placeholder for an expression/body of a def
-    // def poop: String = ???
-    // val blah: Int = ???
-  _ // wildcard placeholder
-  extends // e.g. case class Poop() extends BigerPoop
-  end Poop // optional syntax for signaling hte end of some thing, e.g. a case class/object/def/etc
-    // ^ think it can be appended to pretty much anything?
+Nil // an empty list
+to // e.g. 1 to 10
+until // e.g. 0 until poop.length
+??? // placeholder for an expression/body of a def
+  // def poop: String = ???
+  // val blah: Int = ???
+_ // wildcard placeholder
+extends // e.g. case class Poop() extends BigerPoop
+end Poop // optional syntax for signaling hte end of some thing, e.g. a case class/object/def/etc
+  // ^ think it can be appended to pretty much anything?
 
 
 ```
 
-## names
+## variables
 
-- i.e. variables
 - are evaluated only once, and generally used over defs for intermediate expressions
 
 ```scala
@@ -146,19 +176,20 @@ val interestingVal: Int =
   - e.g. Double in place of Int will cause the compiler to throw an error
 
 ```scala
-// Byte -128 to 127
-// Boolean true | false
-// Char unsigned, 0 to 65535
-// Short -32768 to 32767
-// Int 32 bit signed -2147483648 to 2147483647
-// BigInt wayyyy bigger than Int
-// Long dude its a long number
-// Float dude its a long decimal
-// Double 64 bit floating point; a decimal longer than a Float, but only 15 digits of precision
-// BigDecimal longer than a Double
-// String text
-// List[subtype]
-// Array[subtype]
+/// Byte -128 to 127
+/// Boolean true | false
+/// Char unsigned, 0 to 65535
+/// Short -32768 to 32767
+/// Int 32 bit signed -2147483648 to 2147483647
+/// BigInt wayyyy bigger than Int
+/// Long dude its a long number
+/// Float dude its a long decimal
+/// Double 64 bit floating point; a decimal longer than a Float, but only 15 digits of precision
+/// BigDecimal longer than a Double
+/// String text
+/// List[subtype]
+/// Array[subtype]
+/// Unit i.e. void, doesnt return anything, often see it on definitions & the main class
 // examples
 
 val superLongNumber: BigInt = BigInt("insert really long number here")
@@ -169,6 +200,8 @@ val desc: String = "I am also a string"
 val descLong = s"inject another string here: $desc"
 
 val num: Int = 100
+val num: Int = 1_000 // nice
+
 
 val bool: Boolean = false
 val bool: Boolean =
@@ -176,92 +209,75 @@ val bool: Boolean =
   else if 0 > 1 then true
   else false
 
-// objects
+```
+
+#### strings
+
+```scala
+val poop: String = "flush"
+poop
+  .length // 5
+  .toUpperCase // FLUSH
+  .toLowerCase
+  .dropWhile(lambda).drop(1) // drop 1 char, could be any #, see .groupBy example
+```
+
+### domain modeling
+
+#### Class
+
+- a template for the creation of object instances
+  - can also extend traits and abstract classes
+- are generally immutable with fields defined with `var` (can read and write)
+  - however, you can use `val` or use a `case class` instead
+
+```scala
+
+// a Dog class with instance fields defined as params, and instance methods defined in the body
+// the body is initialized as part of the default constructr, so you can put any initializing logic there
+class Dog(var name: String, age: Int = 1_000):
+  println("dog is being created")
+  def speak() = println("woof")
+  def wagTail() = println("poop in your mouth")
+val dog = Dog("noah")
+dog.speak()
+```
+
+#### Object
+
+- a class with exactly one instance
+- lazy initialized only when one of its members are referenced, similar to a `lazy val`
+- usecase:
+  - grouping methods and fields under one namespace
+  - similar to static class methods in javascript
+
+```scala
+/// objects
 // import SomeObj.*
 // ^ at top of file so you can use prop instead of SomeObj.prop
 object SomeObj {
   val prop: Boolean = true
 }
 
+```
+
+#### Companion Object
+
+- ...
+
+#### Trait
+
+```scala
+trait Animal:
+  def speak(): Unit
+
+```
+
+#### sealed trait
+
+```scala
 //////////////////////////////////
-// Options
-// handle the absense (None | Nil) of data in an elegant way
-// can either be a Some or a None
-//////////////////////////////////
-val poops: Option[String] = None // no data
-val poops: Option[string] = Some("times") // has data
-
-
-//////////////////////////////////
-// List
-// sequential immutable linked-list
-// used to model collections of values where the order of elements may/not matter
-// elements of a list must all have the same type
-// each el has a pointer to the next el in the list
-// head: the first el in the list
-// tail: the ramining els
-// nil: the last element, which will always be of type nil
-//////////////////////////////////
-
-val poop: List[Int] = List(1,2,3)
-val emptyPoop: List[Int] = List()
-val emptyPoop: List[Int] = Nil
-
-//////////////////////////////////
-// Array
-//////////////////////////////////
-val poop: Array[String] = Array("one", "two")
-
-//////////////////////////////////
-// case classes
-// define a type and a constructor
-// used for aggregating several values into a single concept (i.e. type)
-// used to model immutable data structures
-// fields are public and immutable by default
-// the compiler auto generates the following methods
-// unapply, copy, equals, hashCode, toString
-//////////////////////////////////
-
-// without any members
-case class MyType(name: String, age: Int)
-
-// create an instance
-val poop: MyType = MyType("poop", 200)
-// poop.name == "poop" // Boolean: true
-// creates a new MyType based on poop overriding the provided props
-val flush: MyType = poop.copy(name = "flush")
-
-// with members and computed values
-// in scala 2 remove the : and use {} to denote the body
-case class MyType(name: String, age: Int):
-  val ageNextDecade: Int = age + 10 // computed value, instance.ageNextDecade
-  def duplicateThisInstance: MyType =
-    copy(name = "some other name") // copy will return a new item of this (MyType)
-
-//////////////////////////////////
-// case objects
-// can extend sealed traits
-// ^ but doesnt define a constructor like case classes, because case objects are already values
-//////////////////////////////////
-
-// mimicking enums in scala 2
-// uses the same pattern matching logic, check elseware
-sealed trait PrimaryColor
-object PrimaryColor:
-  case object Red extends PrimaryColor
-  case object Blue extends Primary Color
-  val values = Array(Red, Blue, Green)
-  def valueOf(label: String): PrimaryColor = ???
-
-// modeling a user, which can be anonymous or loggedin
-// note the use of case object and case class
-sealed trait User
-object User:
-  case object Guest extends User
-  case class Registered(id: UUID) extends User
-
-//////////////////////////////////
-// sealed traits
+/// sealed traits
 // represents one of several alternatives of a case class
 // defines a base (abstract) type from which case class (concrete) types can extend from
 // ^ i.e. case classes that extend from sealed traits are Subtypes of of the Sealed Trait
@@ -289,8 +305,17 @@ val getShapeAria =
     case Circle(radius) => radius * radius * 3.14
 
 
+```
+
+#### Abstract Classes
+
+- ...
+
+#### enums
+
+```scala
 //////////////////////////////////
-// enums
+/// enums
 // defines a type whose values are a set of known singletons
 // NOT available in scala 2, instead used sealed traits and case objects
 //////////////////////////////////
@@ -302,82 +327,415 @@ MyKnownValues
   .values // Array(MyKnownValues.Poop, etc) // get all enum values
   .valueOf("Wipe") // MyKNownValues.Wipe // get the matching enum value from its string label || runtime error
 
-// match on enums via literal pattern matching
-def whichValue(value: MyKnownValues): String =
-  value match
-    case MyKnownValues.Poop => "i'm pooping"
-    case MyKnownValues.Wipe => "almost done"
-    case MyKnownValues.Flush => "wanna watch a movie"
 
-// enum with parameters, each item has a value
-enum MyOtherValues(val total: Int):
-  case Daily extends MyOtherValues(total = 24)
-  case Weekly extends MyOtherValues(total = 7)
+// mimicking enums in scala 2
+// uses the same pattern matching logic, check elseware
+sealed trait PrimaryColor
+object PrimaryColor:
+  case object Red extends PrimaryColor
+  case object Blue extends Primary Color
+  val values = Array(Red, Blue, Green)
+  def valueOf(label: String): PrimaryColor = ???
+```
 
-// how to use the enum with parameters
-// match example
-import MyOtherValues.*
-def howLong(values: MyOtherValues): Int = values match
-  case daily @ Daily => daily.total
-  case weekly @ Weekly => weekly.total
+#### case class
+
+- define a type and a constructor
+- used for aggregating several values into a single concept (i.e. type)
+- used to model immutable data structures
+- fields are public and immutable by default
+- the compiler auto generates the following methods
+  - unapply, copy, equals, hashCode, toString
+
+```scala
+// without any members
+case class MyType(name: String, age: Int)
+
+// create an instance
+val poop: MyType = MyType("poop", 200)
+// poop.name == "poop" // Boolean: true
+// creates a new MyType based on poop overriding the provided props
+val flush: MyType = poop.copy(name = "flush")
+
+// with members and computed values
+// in scala 2 remove the : and use {} to denote the body
+case class MyType(name: String, age: Int):
+  val ageNextDecade: Int = age + 10 // computed value, instance.ageNextDecade
+  def duplicateThisInstance: MyType =
+    copy(name = "some other name") // copy will return a new item of this (MyType)
+
+// example with Option
+case class Poop (
+                  name: String,
+                  email: Option[String],
+                  phoneNumbers: List[String]
+                )
+val poop: Poop = Poop("noah", None, List("00000000"))
+```
+
+#### case object
+
+```scala
+//////////////////////////////////
+/// case objects
+// can extend sealed traits
+// ^ but doesnt define a constructor like case classes, because case objects are already values
+//////////////////////////////////
+
+// modeling a user, which can be anonymous or loggedin
+// note the use of case object and case class
+sealed trait User
+object User:
+  case object Guest extends User
+  case class Registered(id: UUID) extends User
+
 
 ```
 
-### strings
+### collections
+
+- generally all of the immutable collections are available, however, mutable collections need to be imported
+- generally all must have the same type (sans tuples)
+- place these somewhere
+  - Seq
+  - Vector
 
 ```scala
-val poop: String = "flush"
-poop
-  .length // 5
-  .toUpperCase // FLUSH
-```
 
-### options
+import scala.collection.immutable
+import scala.collection.mutable
 
-```scala
+val buffer = mutable.ArrayBuffer()
+
+
+// commonalities amongst all collections
+
+val empty = List.empty
+val empty = List.empty[Int] // preferred
+
+someCol
+  .contains(x) // pass a KEY for a map
+  .exists(predicate) // any match
+  .filter(predicate) // keep els returning true for between
+  .filterNot(predicate)
+  .find(lambda) // Option, find the first el returning true for the predicate
+  .flatMap
+  .foldLeft
+  .forall(predicate) // all match
+  .foreach(lambda) // doesnt return anything, only useful for sideffects
+  .isEmpty // boolean
+  .map
+  .nonEmpty // boolean
+  .size // number of els
+  .takeWhile(lambda)
+  .withFilter(predicate)
+  .zip(otherCollection) // creates pairs of els at each index of each collection
+
+
+/// map function
+// ^ cannot change the number of els in the collectoin
+// F[A].map(A => B) == F[B]
+// ^ F of A type els, els transformed into type B, F now contains type B
+// ^ i.e. primary usecase: the container type stays the same, but element type can change
+
 val poop: Option[String] = Some("flush")
+poop.map(word => word.toUpperCase) // FLUSH
+val poop: Option[Int] = Some(2)
+poop.map(_ * 2) // 4
+val poop: Map[String, Int] = Map("one" -> 1)
+poop.map((key, val) => key -> val * 2)
 
-poop
-  .getOrElse("use this if poop is a None option").length // 5 because poop is a Some so it returns flush
+/// flatMap
+// ^ can change the number of els in the collection
+// F[A].flatMap(A => F[B]) == F[B]
+// ^ F of A type els, els transformed into/are F of Bs, F is now F of B
+// ^ i.e. primary usecase: the container stays the same but els type can change, usually to remove/flatten a container layer
+
+/// flatten can be called on the result of a map
+case class Poop(totalPoops: Option[Int]) // im going to poop a total amount of times
+case class Wipe(totalWipes: Option(Poop)) // im going to wipe depending on how many times i poop
+val flush: Wipe(Some(Poop(5))) // flushing depends on pooping and wiping, you can see the nesting,
+// how does it look with a regular map?
+flush.totalWipes.map(totalWipes => totalWipes.totalPoops) // Option[Option[Int] : Some(Some(5)) ouch! we just wanted Some(5)
+// how does it look with flatten?
+flush.totalWipes.map(totalWipes => totalWipes.totalPoops).flatten // Option[Int] : Some(5)
+// looks even more concise with flatMap
+flush.totalWipes.flatMap(totalWipes => totalWipes.totalPoops) // Option[Int] : Some(5)
+// even more concise with the underscore
+flush.totalWipes.flatMap(_.totalPoops) // Option[Int] : Some(5)
+// verbose syntax with curly braces
+flush.totalWipes.flatMap { totalWipes =>
+  totalWipes.totalPoops // Option[Int] : Some(5)
+}
+
+/// foldleft
+// ^ javascript reduce
+// can transform a collection in anyway
+// F[A].foldLeft(B)((B, A) => B) == B
+// ^ F of A types, B is the new type of both F and A, a lambda is receives B and A and should return B,
+// ^ i.e. primary use case: reducing a container F of type A els, to a new type of B which can be anything
+
+someCol.foldLeft(initialValue)((accum, el) => ???)
+// example reverse a list
+someList.foldLeft(List.empty[Int])((accum, el) => el +: accum)
+
+/// groupBy
+// ^ groups the els of a collection according to a parittion fn
+
+val emails: List[String] = List("one@two.com", "two@two.com", "three@one.com")
+val domainPartition: String => String = email => email.dropWhile(x => x != '@').drop(1)
+val emailsByDomain: Map[String, List[String]] = emails.groupBy(domainPartition)
+
+
 
 ```
 
-### lists
+#### Option
+
+- special collection containing zero/one element
+- handle the absense (None) of data in an elegant way
+- can either be a Some(somevalue) or a None
 
 ```scala
-val list: List[Int] = List(1,2,3,3)
+
+val poops: Option[String] = None // None
+val poops: Option[string] = Some("times") // Some
+
+poop
+  .getOrElse("default value")
+  .zip(someOtherOption) // returns tuple if BOTH are Some, see example
+
+/// zip example
+// ^ if either options are None, returns None
+val first: Option[String] = Some("noah")
+val last: Option[String] = Some("hall")
+val name: Option[(String, String)] = first.zip(last)
+
+// some collection operations return an Option
+val poop: List[Int] = List(1, 2, 3)
+val found = poop.find(x => x == 1) // Some(1)
+val notFound = poop.find(x => x == 1000) // None
+
+```
+
+#### Tuple
+
+- collection of fixed size, but the values may have different types,
+
+```scala
+
+val poop = "first" -> 1 // shorthand, but is it really?
+val poop = ("first", 1)
+val poop: (string, Int) = ("first", 1)
+val (x, y) = poop // deconstruct a tuple
+poop(0) // random access, index starts at 0
+```
+
+#### Map
+
+- aka hash table, associative array, etc
+- immutable dictionary
+
+```scala
+
+val poop: Map[String, Boolean] = Map.empty[String, Boolean]
+val poop2 = poop + ("thiskey" -> true) // add an el to a map
+var poop7: Map[String, Boolean] = Map("Poop" -> true, "Flush" -> false)
+var poop8 = poop7 + ("another" -> false)
+
+poop
+  .get(key) // Option
+```
+
+#### HashMap
+
+- aka hash table, associative array, etc
+- MUTABLE dictionary
+
+```scala
+import scala.collection.mutable
+
+val data = mutable.HashMap.empty[String, Int]
+data += ("a" -> 0)
+data += ("b" -> 1) // HashMap[String, Int] = HashMap(a -> 0, b -> 1)
+
+```
+
+#### Set
+
+- contains only one instance of a given element
+
+```scala
+
+
+```
+
+#### BitSet
+
+- mutable collection containing a set of bits
+
+#### sequences
+
+- collection whose elements have a dienfed ordering, usually the order in which tye are inserted into the collection
+- can be accessed by index (starts at 0)
+
+```scala
+// common to all sequence type collections
+
+someSeq
+  .head // first el, // error on empty sequence
+  .headOption // returns Option, thus wont throw like .head
+  .tail // everything after the first el, // error on empty sequence
+  .sortBy(lambda)
+
+// example sortby
+val list: List[(String, Int)] = List(
+  "three" -> 20,
+  "two" -> 2,
+  "one" -> 1
+)
+list.sortBy((_, age) => age)
+list.sortBy((name, _) => name)
+```
+
+##### List
+
+- perf characteristics: not optimized for random access but support efficient head nd tail decomposition
+  - constant time: ::, head, tail
+  - linear time: random access, size
+- sequential/linear immutable linked-list; each el has a pointer to the next el in the list
+  - accessing the nth element requires iterating thrugh the first n-1 elements (i.e. all preceding els)
+  - ^ O(n) operation
+- used to model collections of values where the order matters
+- nil: the last element, which will always be of type nil
+- prefer over `ArrayBuffer` when there are many modifications to the underlying list
+
+```scala
+
+val poop: List[Int] = List(1,2,3)
+val emptyPoop: List[Int] = List()
+val emptyPoop: List[Int] = Nil
+
+// pre/append values
+val poop2 = 0 +: poop // List(0,1,2,3)
+val poop2 = 0 :: poop // same as above
+val poop2 = poop :+ 4 // List (0,1,2,3,4)
+val poop3 = List(1,2) ++ List(3,4) // List(1,2,3,4)
+
+// random access, not efficient on lists
+list(0) // first el
 
 // interface
 list
-  .head // Int: 1
-  .tail // List[Int]: List(2, 3, 3)
+  .head // first el
+  .tail // everything except the first el
+  .tail.head // second el
   .distinct // List[Int]: List(1,2,3)
   .take(2) // List[Int]: List(1,2)
   .length // 4
-  .size // 4.filter
+  .size // 4
   .contains(2) // true
-  .map(lamba) // returns new list
-  .filter(lambda) // lambda should return true for elements to keep
+  .map(lambda) // returns new list
+  .filter(predicate) // lambda should return true for elements to keep
+  .exists(lambda)
 
 // fns on lists
 list.map(n => n * n) // List(1, 4, 9, 9)
 list.map(_ * 3) // List(3, 6, 9, 9)
 list.flatMap(n => List(n, n)) // List(1, 1, 2, 2, 3, 3, 3, 3)
 
-// working with lists
-val poop: List[Int] = List(1,2,3)
-// prepend a value onto poop
-// can also use :+ operator to append
-val poop2 = 0 +: poop // List(0,1,2,3)
-val poop2 = 0 :: poop // same as above
+/// TODO
+List.range(1, 3)                          // List(1, 2)
+List.range(start = 1, end = 6, step = 2)  // List(1, 3, 5)
+List.fill(3)("foo")                       // List(foo, foo, foo)
+List.tabulate(3)(n => n * n)              // List(0, 1, 4)
+List.tabulate(4)(n => n * n)              // List(0, 1, 4, 9)
+
+val a = List(10, 20, 30, 40, 10)          // List(10, 20, 30, 40, 10)
+a.distinct                                // List(10, 20, 30, 40)
+a.drop(2)                                 // List(30, 40, 10)
+a.dropRight(2)                            // List(10, 20, 30)
+a.dropWhile(_ < 25)                       // List(30, 40, 10)
+a.filter(_ < 25)                          // List(10, 20, 10)
+a.filter(_ > 100)                         // List()
+a.find(_ > 20)                            // Some(30)
+a.head                                    // 10
+a.headOption                              // Some(10)
+a.init                                    // List(10, 20, 30, 40)
+a.intersect(List(19,20,21))               // List(20)
+a.last                                    // 10
+a.lastOption                              // Some(10)
+a.map(_ * 2)                              // List(20, 40, 60, 80, 20)
+a.slice(2, 4)                             // List(30, 40)
+a.tail                                    // List(20, 30, 40, 10)
+a.take(3)                                 // List(10, 20, 30)
+a.takeRight(2)                            // List(40, 10)
+a.takeWhile(_ < 30)                       // List(10, 20)
+a.filter(_ < 30).map(_ * 10)              // List(100, 200, 100)
+
+val nums = List(10, 5, 8, 1, 7)
+nums.sorted                               // List(1, 5, 7, 8, 10)
+nums.sortWith(_ < _)                      // List(1, 5, 7, 8, 10)
+nums.sortWith(_ > _)                      // List(10, 8, 7, 5, 1)
+```
+
+##### LazyList
+
+- members are only computed when accessed, e.g. when iterated over with .foldLeft
+- can have an infinite length
+
+```scala
+val empty: LazyList[Int] = LazyList.from(0)
+
+```
+
+##### ArrayBuffer
+
+- mutable indexed sequence
+- accessing an element at any index takes the same time,
+  - ^ O(1) operation
+- prefer over Lists when prioritizing fast access, and not there arent many adding/removing of els
+
+```scala
+import scala.collection.mutable
+
+val buffer = mutable.ArrayBuffer("poop", "flush")
+
+```
+
+##### Array
+
+```scala
+
+
+//////////////////////////////////
+/// Array
+//////////////////////////////////
+val poop: Array[String] = Array("one", "two")
+
+```
+
+##### Range
+
+```scala
+
+/// range
+// models a range of values
+// ^ to and until are operations on Int
+1 to 4 // Range 1 to 4
+0 to 10 by 2 // Range... to includes end value
+5 until 0 by -1 // Range... until excludes end value
+1.to(4).by(-1)
 
 ```
 
 ## flow control
 
+### if
+
 ```scala
 //////////////////////////////////
-// if statements
+/// if statements
 // evaluate to a value, i.e. always return a value
 // all conditions must be an expression of type Boolean, else type mismatch error
 //////////////////////////////////
@@ -403,8 +761,17 @@ if (poop && wipe) {
   "keep pooping"
 }
 
+```
+
+### match statements
+
+- pattern matching constructs are expressions that return values
+  - are often used as a the body of a method
+- in general, the pattern for deconstructing via pattern matching looks similar to the code for constructing the object
+
+```scala
 //////////////////////////////////
-// match statements
+/// match statements
 // you have to cover ALL the cases or add a a default branch
 // else compiler throws warning at compile time, and error at runtime if any of the uncovered cases are used
 // very useful with sealed traits and concrete classes
@@ -424,8 +791,8 @@ someVal match
   case _ => "default branch"
 
 // typed pattern matching
-// you have to specify the fkn params, e.g. in case classes
-// uses scala 2 syntax
+// you have to specify the params
+// example uses scala 2 syntax
 notification match {
     case Email(sender, title, _) => // _ means the third param isnt used
       s"You got an email from $sender with title: $title"
@@ -443,17 +810,84 @@ def goIdle(device: Device) = device match {
 
 // match on a list
 listOfContacts match
-  case contact :: tail => println(contact.name) // an element that contains a contact and a tail
-  case Nill => println("no contacts")
+  case contact :: tail => println(contact.name) // get the first el in a list
+  case first :: second :: Nil => printl("list with 2 els")
+  case Nil => println("no contacts")
+  case _ => println("a list with any amount of els")
 
-//////////////////////////////////
-// for comprehensions
-//////////////////////////////////
-// guard statements: any control statements that shortcircuits cmds within the body for that specific iteration
-// ^ i.e. guards are a good way to filter things before they're yielded
-// ^ e.g. like an if > continue statement in js
+// match a tuple
+(1, "one") match
+  case (num, str) => s"this matches and has values $num and $str"
+
+// match on option
+def matchOnOption(poop: Option[String]): Boolean =
+  poop match
+    case Some(blah) => blah.endsWith("yolo")
+    case None => false
+matchOnOption(Some("ends with yolo")) // true
+matchOnOption(Option("wtf")) // false
+matchOnOption(None) // false
+
+// match on enums via literal pattern matching
+def whichValue(value: MyKnownValues): String =
+  value match
+    case MyKnownValues.Poop => "i'm pooping"
+    case MyKnownValues.Wipe => "almost done"
+    case MyKnownValues.Flush => "wanna watch a movie"
+
+// enum with parameters, each item has a value
+enum MyOtherValues(val total: Int):
+  case Daily extends MyOtherValues(total = 24)
+  case Weekly extends MyOtherValues(total = 7)
+
+// how to use the enum with parameters
+// match example
+import MyOtherValues.*
+def howLong(values: MyOtherValues): Int = values match
+  case daily @ Daily => daily.total
+  case weekly @ Weekly => weekly.total
+```
+
+### loops
+
+- tailcall recursion: each tim ethe runtime evaluates a loop iteration, it pushes its paramter to the call stack
+  - call stack: a section of memory with a fixed size
+  - if there are too many iterations, you get a runtime error stackoverflow (i think)
+  - it is possible NOT to use the call stack space by putting the recursive call in tail position
+  - tail position: a recursive call is in tail position if it is the result of the recursive method, (i.e. there is no further operation applied to it, e.g. via closure)
+    - i.e. if you return a result/fn call, and not a recursive action
+    - ^ search for tailcall within this doc
+
+#### for expressions
+
+- aka for comprehensions
+- guard statements: any control statements that shortcircuits cmds within the body for that specific iteration
+- ^ e.g. like an if > continue statement in js
+
+```scala
+// for (s) yeild e
+// ^ s is a sequence (must start with a generator) of generators (has an <- ) & filters (an if condition)
+// ^ e is an expression whose value is returned by an interation
+
+// on one line
+for x <- values yield x * x
+
+// create a list of 20 things
+var list: List[Int] = for
+  i <-  1 to 20
+yield i
+
+
+// example 3
+val namesWithSFnumbers: List[(String, String)] =
+  for
+    contact <- contacts
+    phoneNumber <- contact.phoneNumbers
+    if phoneNumber.startsWith("415")
+  yield (contact.name, phoneNumber)
 
 // example 1
+// uses scala 2 syntax
 case class Poop(totalTurds: Option[Int], totalWipes: Option[Int])
 case class Flush(should: Boolean, poop: Option[Poop])
 val flush: Flush = Flush(true, Some(Poop(Some(10), Some(5))))
@@ -487,9 +921,12 @@ def combinations(xs: List[Int], ys: List[Int]): List[(Int, Int)] =
   yield (x, y)
 end combinations
 
-//////////////////////////////////
-// for loop
-//////////////////////////////////
+
+```
+
+#### for loop
+
+```scala
 var i = 0
 for (i <- 1 to 10)
   println(i)
@@ -502,10 +939,9 @@ var list = List(1,2,3)
 for (i <- list)
   println(i)
 
-// create a list of 20 things
-var list: List[Int] = for
-  i <-  1 to 20
-yield i
+// with optional do keyword
+for (x <- 1 to 10) do println(x * x)
+
 
 // nested for loop
 // prints i, then every j, 1, 678910
@@ -514,9 +950,32 @@ yield i
 for (i <- 1 to 5; j <- 6 to 10)
   println(i)
   println(j)
+
+```
+
+#### do while
+
+```scala
 //////////////////////////////////
-// while loop
+/// do while loop
 //////////////////////////////////
+
+var i = 0
+do
+  println(i)
+  i += 1
+while (i <= 10)
+
+
+```
+
+#### while do
+
+```scala
+
+while condition do
+  // body
+
 object Poop {
   def main(args: Array[String]) {
     var i = 0
@@ -526,16 +985,10 @@ object Poop {
   }
 }
 
-//////////////////////////////////
-// do while loop
-//////////////////////////////////
-
-var i = 0
-do
-  println(i)
-  i += 1
-while (i <= 10)
-
+// scala 2
+while (condition) {
+  // body, no do keyword
+}
 
 ```
 
@@ -555,24 +1008,24 @@ while (i <= 10)
 
 ```scala
 
-// single line method
 // return type Int
-def sum(num1: Int, num2: Int): Int = num1 + num2
 // sum(5, 5)
-// ^ without named parameters
+def sum(num1: Int, num2: Int): Int = num1 + num2
+
 
 // return type String
-def isTruthy(me: Boolean): String = if me then "you are truthy" else "you are falsy"
-// isTruthy(me = false)
-// ^ you can send in a named parameter for readability
+def isTruthy(a: Matchable) = a match
+  case 0 | "" => false
+  case _ => true
 
-// def with no params
+// def with no paramsdef with no params
 def poop: Boolean = true // always returns true
 
 // scala 2 requires curly braces
 def poop(): String = {
   //....
 }
+
 // multiline method
 def isTruthy(): String =
   // line 1
@@ -596,44 +1049,63 @@ val increment: Int => Int = x => x + 1
 val increment: Int => Int = _ + 1
 val increment = (_: Int) + 1 // even shorter + annotation
 val add: (Int, Int) => Int = _ + _
+
+// more then one param list
+// see .foldLeft for an example
+def poop(x: Int, y:Int)(f: (Int, Int) => Int): Int =
+  f(x, y)
+// invoke
+poop(1, 2)((a, b) => a * b)
+// invoke with braces
+poop(1, 2) { (a, b) =>
+  a * b
+}
+
 //////////////////////////////////
 // special fns and things like that
 //////////////////////////////////
 
-// apply
+/// apply
 // any object with an `apply` method can be invoked like a fn
 object poop:
   def apply(x: int): Int = x + 10
 // poop(10) === 20
 
-//////////////////////////////////
-// builtin
-//////////////////////////////////
+```
+
+### example defs
+
+```scala
+
+/// factorial
+// imperative factorial with a for loop
+def factorial(n: Int): Int =
+  var acc = 1
+  var i = 1
+  while i < n do
+    i += 1
+    acc *= i
+  acc
+// declarative factorial with .foldleft
+def factorial(n: Int): Int =
+  (1 to n).foldLeft(1)((result, x) => result * x)
+// declariative via .product operation from scala.collections
+def factorial(n: Int): Int = (1 to n).product
+// factorial with recursion
+def factorial(n: Int): Int =
+  if n == 0 then 1
+  else n * factorial(n - 1)
+// tailcall factorial recursion
+def factorial(n: Int): Int =
+  def factorialTailRec(x: Int, accumulator: Int): Int =
+    if x == 0 then accumulator
+    else factorialTailRec(x - 1, x * accumulator)
+  end factorialTailRec
+  factorialTailRec(n, 1)
+end factorial
 
 
-// map function exists on collection types
-val poop: Option[String] = Some("flush")
-poop.map(word => word.toUpperCase) // FLUSH
-val poop: Option[Int] = Some(2)
-poop.map(_ * 2) // 4
 
-// flatMap exists on all scala collections
-// flatten can be called on the result of a map
-case class Poop(totalPoops: Option[Int]) // im going to poop a total amount of times
-case class Wipe(totalWipes: Option(Poop)) // im going to wipe depending on how many times i poop
-val flush: Wipe(Some(Poop(5))) // flushing depends on pooping and wiping, you can see the nesting,
-// how does it look with a regular map?
-flush.totalWipes.map(totalWipes => totalWipes.totalPoops) // Option[Option[Int] : Some(Some(5)) ouch! we just wanted Some(5)
-// how does it look with flatten?
-flush.totalWipes.map(totalWipes => totalWipes.totalPoops).flatten // Option[Int] : Some(5)
-// looks even more concise with flatMap
-flush.totalWipes.flatMap(totalWipes => totalWipes.totalPoops) // Option[Int] : Some(5)
-// even more concise with the underscore
-flush.totalWipes.flatMap(_.totalPoops) // Option[Int] : Some(5)
-// verbose syntax with curly braces
-flush.totalWipes.flatMap { totalWipes =>
-  totalWipes.totalPoops // Option[Int] : Some(5)
-}
 ```
 
 ## errors
@@ -649,9 +1121,11 @@ true && "false" // type mismatch, found String("false"), required Boolean
 val n: Int = ???
 println(n.abs) // scala.NotImplementedError: an implementation is missing
 
+// when your pattern matching doesnt check for all possiblities
+// warning: match may not be exhaustive
 ```
 
-## native modules
+## standard library
 
 ### scala.math
 

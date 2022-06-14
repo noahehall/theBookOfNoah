@@ -7,6 +7,10 @@ intellij is dreamweaver that just wont fkn die
 - [toolbox](https://www.jetbrains.com/toolbox-app/download/download-thanks.html?platform=linux)
 - [intellij perf blog post](https://blog.jetbrains.com/kotlin/2021/06/simple-steps-for-improving-your-ide-performance/)
 
+## quickies
+
+- shift ctrl alt up/down: move a line up or down
+
 ## things to do
 
 - file > setttings > font

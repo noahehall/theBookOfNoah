@@ -91,10 +91,13 @@
   - vlc
     - sudo apt install vlc
     - sudo apt install vlc-plugin-access-extra libbluray-bdj libdvdcss2 vlc-plugin-svg vlc-plugin-video-output
-  - [brightness controller](https://techstoriesindia.blogspot.com/2020/05/reduce-external-monitor-brightness-ubuntu-linux.html)
+  - [brightness controller](https://techstoriesindia.blogspot.com/2020/05/reduce-external-monitor-brightness-ubuntu-linssux.html)
   - chromium: sudo apt install chromium-browser
   - simplescreenrecorder
   - gimp
+  - jetbrains toolbox
+  - sbt
+  - kazam
 
 - virtualization
 

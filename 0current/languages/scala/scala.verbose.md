@@ -1,24 +1,47 @@
 # scala
 
+- bookmarks
+  - https://docs.scala-lang.org/scala3/book/taste-hello-world.html
+  - https://docs.scala-lang.org/scala3/book/domain-modeling-intro.html
+    - need to finish this to get a better handle on coursera week2
+    - `Auxiliary constructors`
+
 ## links
 
 - [coursera: effective programming in scala](https://www.coursera.org/learn/effective-scala)
 - [scala metals vscode plugin](https://scalameta.org/metals/docs/editors/vscode)
 - good reads
   - [fn programming and scala](https://chollinger.com/blog/2022/06/functional-programming-concepts-i-actually-like-a-bit-of-praise-for-scala-for-once/)
+  - [heather miller: types in scala](https://heather.miller.am/blog/types-in-scala.html)
+  - [awesome scala](https://github.com/lauris/awesome-scala)
 - refs
   - [getting started](https://docs.scala-lang.org/getting-started/)
+  - [domain modeling intro](https://docs.scala-lang.org/scala3/book/domain-modeling-intro.html)
   - [domain modeling constructs](https://docs.scala-lang.org/scala3/book/domain-modeling-tools.html)
-  - [scala 3 API, ctrl f through this](https://dotty.epfl.ch/api/index.html)
+  - [scala 3 book](https://docs.scala-lang.org/scala3/book/introduction.html)
+  - [contextual abstractions](https://docs.scala-lang.org/scala3/reference/contextual/)
+  - [scala tools](https://docs.scala-lang.org/scala3/book/scala-tools.html)
 
 ## background
 
-- released in 2004 by martin O.; version 3 released in 21
+- released in 2004 by Martin Odersky; version 3 released in 21
+  - martin O: `Scala was designed to show that a fusion of functional and object-oriented programming is possible and practical`
 - means Scalable Language; designed to improve some of the weaknesses in java
 - compiles down to java bytecode and runs on the java virtual machine (so you can run Java and Scala in the same project)
+- The essence of Scala is the fusion of functional programming and object-oriented programming in a typed setting:
+  - fns for the logic
+  - objects for hte modularity
 - comparison with other languages
   - combines OOP and FP in one language
   - compile-time statically typed (with inference) language
+  - It’s used for server-side applications (including microservices), big data applications, and can also be used in the browser with Scala.js
+  - Everything in Scala is an expression that returns a value
+  - all types inherit from a top-level class Any
+    - whose immediate children are AnyVal (value types, such as Int and Boolean) and AnyRef (reference types, as in Java)
+- scala code runs on the Java virtual machine (JVM)
+  - provides security, preformance, memory management, portability and platform independence, and the ability to use existing java and JVM libraries free of charge
+- scala code runs in the browser (via Scala.js)
+- native executables can be build via Scala Native and GraalVM
 
 ## gotchas
 
@@ -33,6 +56,8 @@
   - it refers to the object when its used on the right-hand side of a definition, or when it is passed as an argument to an operation
   - it refers to the sealed trait (the type) when it is used in a type annotation
   - check the syntax file for mimicking enums in scala 2
+- dont forget about the special `apply` definition
+  - any entity with an `apply` definition can be invoked like a `fn()`
 
 ### scala 2 vs scala 3
 
@@ -47,6 +72,10 @@
 
 ## terms
 
+- term inference: Given a type, the compiler synthesizes a “canonical” term that has that type
+- parameter lists: generally methods can have more tha one parameter lists
+- predicate: a fn that returns boolean
+- vararg constructor: variable argument constructor; you can pass a vriable number of arguments to it
 - scala worksheet: a file containing Scala definitions and expressions that are evaluated from top to bottom; like a persistent REPL session that you can edit and run again
   - worksheets end in `.sc`
 - program: expresses a computation: e.g. `What is the result of adding one to one?`
@@ -75,6 +104,8 @@
 - its common to see Sealed Traits, case classes, and objects all using the same name at the same time in the same file
   - check the domain modeling link, theres a section on `companion objects`
     - An object that has the same name as a class, and is declared in the same file as the class, is called a "companion object."
+- its common to prefix identifiers of optional values with maybe,
+- prefer Option type over null values, null in scala only exists for interoperability with java
 
 ```scala
 // idiomatic to ensure vertical alignment across related lines
