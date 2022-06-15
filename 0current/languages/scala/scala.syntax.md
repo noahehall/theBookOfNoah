@@ -8,9 +8,14 @@
 - [intellij toolbox, fkn use it](https://www.jetbrains.com/toolbox-app/)
 - [scala & intellij: getting started](https://docs.scala-lang.org/getting-started/intellij-track/getting-started-with-scala-in-intellij.html)
 - [example gitignore for scala](https://alvinalexander.com/source-code/scala/sample-gitignore-file-scala-sbt-intellij-eclipse/)
+- examples
+  - [groupBy and groupMap](https://blog.genuine.com/2019/11/scalas-groupmap-and-groupmapreduce/)
 - refs
+  - [adt: algebraic data types](https://docs.scala-lang.org/scala3/book/types-adts-gadts.html)
   - [classes: inner classes](https://docs.scala-lang.org/tour/inner-classes.html)
   - [classes: open classes](https://docs.scala-lang.org/scala3/reference/other-new-features/open-classes.html)
+  - [enums: desugaring](https://docs.scala-lang.org/scala3/reference/enums/desugarEnums.html)
+  - [enums](https://docs.scala-lang.org/scala3/reference/enums/enums.html)
   - [given instances and using clauses](https://docs.scala-lang.org/scala3/book/ca-given-using-clauses.html)
   - [interacting with java](https://docs.scala-lang.org/scala3/book/interacting-with-java.html)
   - [List](https://www.scala-lang.org/api/current/scala/collection/immutable/List.html)
@@ -31,21 +36,13 @@
   - [type: unions](https://docs.scala-lang.org/scala3/book/types-union.html)
   - [type: upper bounds](https://docs.scala-lang.org/tour/upper-type-bounds.html)
   - [type: variance](https://docs.scala-lang.org/scala3/book/types-variance.html)
-  - [adt: algebraic data types](https://docs.scala-lang.org/scala3/book/types-adts-gadts.html)
-  - [enums](https://docs.scala-lang.org/scala3/reference/enums/enums.html)
+  - [Seq scala 2 ref](https://www.scala-lang.org/api/current/scala/collection/immutable/Seq.html)
 
 ## basics
 
 ### setup
 
-- scala application structure
-  - computer files
-    - `root/project` sbt's internal files
-    - `root/target` generated files
-  - your files
-    - `root/build.sbt` sbt's build definition file
-    - `root/src/main/scala` where all the scala src files live
-    - `root/src/main/scala/Main` the entry point to the application, must have a `Main` fn
+#### env setup
 
 ```sh
 
@@ -54,6 +51,44 @@ java --version # everything works on 17.0.3, everywhere else says to use v8, so 
 sbt --version
 scala --version
 
+```
+
+#### project setup
+
+- scala application structure
+  - computer files: see `sbt.md` for more indepth information
+    - `root/project` sbt's internal files
+    - `root/target` generated files
+  - developer files
+    - `root/build.sbt` sbt's build definition file
+    - `root/src/main/scala/*` where all your scala files go
+      - `.scala` are scala files;
+        - one of these files must have a top-level/object definition annotated with `@main` as the program entrypoint
+        - cant have top level statements, only top level definitions: def, val, var, object, trait and class
+      - `.sc` are scala worksheet files; evaluated top to bottom, line by line
+    - `root/src/test/scala/*` where all your test files go
+
+```scala
+// program entry point, can be in any source file
+@main def run(): Unit = ???
+
+// file: src/main/scala/poop/soup/woop/wtf.scala
+// package: assign a namespace to all things in this file
+// ^ imports of this file access its things as packageName.thing, e.g. poop.flush
+// ^ source files should mirror the packages structure on harddisk
+// ^ thus object Wtf in file src/main/scala/poop/soup/woop/Wtf.scala
+// ^^ should be in package poop.soup.woop
+package poop.soup.woop
+
+object Wtf:
+
+
+/// imports
+// ^ scala (e.g. scala.Int), java.lang and scala.Predef are automatically imported
+import scala.math._ // wildcard import in scala 2
+import someObj.* // wildcard import in scala 3
+import StringUtils.{truncate, containsWhitespace} //import some members of package
+import poop.Flush // import a specific member
 ```
 
 ### quickies
@@ -74,15 +109,6 @@ multieline
 comment
 */
 
-/// imports
-// import some external module and make its members availabel in the current file
-// e.g. now math.abs is available as abs
-import scala.math._ // import all the members of the math module
-// import local collections and make their members available in the current file
-// somewhere in the file, import MyValues.*
-// MyValues.poop now available as poop
-import someObj.* // make all the members of someObj available in the file
-import StringUtils.{truncate, containsWhitespace} //import some members of some object
 ```
 
 ## operators
@@ -207,13 +233,18 @@ val descLong = s"inject another string here: $desc"
 val num: Int = 100
 val num: Int = 1_000 // nice
 
-
 val bool: Boolean = false
 val bool: Boolean =
   if 1 > 0 then true
   else if 0 > 1 then true
   else false
 
+// working with types
+// generally there is a toInt, toPoop on everything,
+
+/// UPPER BOUNDS type
+// Poop is a subtype of Flush,
+type Poop <: Flush
 ```
 
 #### strings
@@ -239,6 +270,12 @@ poop
   - instances: can have their own private state
   - subtyping: use an instance of one class where an instance of a superclass is expected
   - access modifiers: control visilibity relative to other code
+- best practices for FP
+  - design your model with immutable enums, case classes and traits
+    - sum types: use enums to model different alternatives
+    - product types: use case classes for grouping/aggregating multiple components/things
+    - traits: specify the contract of the API as an interface
+  - define your pure behavior in other objects/definitions
 
 #### Class
 
@@ -249,10 +286,6 @@ poop
 - are generally immutable with fields defined with `var` (can read and write)
   - however, you can use `val` or use a `case class` instead
 - generally its best to use classes at the leafs of your inheritance model
-  - Traits `T1, T2, T3`
-  - Composed traits `S extends T1, T2, S extends T2, T3`
-  - Classes `C extends S, T3`
-  - Instances `C()`
 
 ```scala
 
@@ -262,6 +295,13 @@ class Dog(var name: String, age: Int = 1_000):
   println("dog is being created")
   def speak() = println("woof")
   def wagTail() = println("poop in your mouth")
+  // visibility
+  // only visible to the class/trait itself and to its companion object
+  private var someInstanceState: int = 0
+  def whatsMyState: Int = someInstanceState
+  //  also visible to subclasses of the class.
+  protected var someInheritedState: int = 0
+  def whatsMyInheritedState: int = someInheritedState
 val dog = Dog("noah")
 dog.speak()
 
@@ -334,8 +374,8 @@ object SomeObj {
 
 #### Companion Object
 
-- an object that has the same name as a class, and declared in the same file
-  - the class is called the objects `companion class`
+- an object that has the same name as a class, case class, or enum, and declared in the same file
+  - the other side is called the objects `companion class|case class|enum`
   - each can access the others private members
 - use case
   - provide methods/values that act as static class fields & methods (like in javascript)
@@ -396,6 +436,8 @@ val fred = Person("Fred", 29)
 - use case
   - primary tool for decomposition (and not classes)
     - traits can extend other traits
+    - Objects and classes can extend traits
+    - all can have nested objects, traits, and classes
   - modularize components and describe interfaces (required and provided)
     - required: abstract members that will be implemented by other entities
     - provided: concrete methods & fields
@@ -436,6 +478,50 @@ trait Pet(name: String):
 class Dog(name: String, var age: Int) extends Pet(name):
   val greeting = "Woof"
 
+//////////////////////////////////
+// service oriented design through scalable component abstractions
+// OOP example
+//////////////////////////////////
+
+// component SubjectObserver as a trait with two abstract type members,
+// ^ S (for subjects) and O (for observers):
+trait SubjectObserver:
+  // within this trait, we can refer to some abstraction S and O type
+  // ^ implementors must ensure they are subtypes of Subject & Observer
+  type S <: Subject
+  type O <: Observer
+  // two nested traits
+  // note how each refers to the types S, O above and NOT to their upper bounds
+  // self: S => is a self-type annotation
+  // ^ requires subtypes of Subject to also be subtypes of S
+  // ^ required to be able to use the `this` keyword in publish
+  // ^ if S was a concrete type, the self-type annotation would be `trait Subject extends S`
+  trait Subject { self: S =>
+    private var observers: List[O] = List()
+    def subscribe(obs: O): Unit =
+      observers = obs :: observers
+    def publish() =
+      for obs <- observers do obs.notify(this)
+  }
+  trait Observer {
+    def notify(sub: S): Unit
+  }
+// example implementation of SubjectObserver
+// defines the abstract type members to be concrete types
+object SensorReader extends SubjectObserver:
+  type S = Sensor
+  type O = Display
+  class Sensor(val label: String) extends Subject:
+    private var currentValue = 0.0
+    def value = currentValue
+    def changeValue(v: Double) =
+      currentValue = v
+      publish()
+  class Display extends Observer:
+    // can only safely access the label and value of sub
+    // ^ since we originally declared the parameter to be of type S
+    def notify(sub: Sensor) =
+      println(s"${sub.label} has value ${sub.value}")
 ```
 
 #### sealed trait
@@ -481,12 +567,40 @@ val getShapeAria =
   - used to define sets of constants, like the months in a year, the days in a week, directions like north/south/east/west, etc
 
 ```scala
-enum CrustSize:
-  case Small, Medium, Large
+// shorthand
+enum Color:
+  case Red, Green, Blue
+// longhand
+enum Color:
+  case Red   extends Color
+  case Green extends Color
+  case Blue  extends Color
+// with params
+enum Color(val rgb: Int):
+  case Red   extends Color(0xFF0000)
+  case Green extends Color(0x00FF00)
+  case Blue  extends Color(0x0000FF)
+println(Color.Green.rgb) // prints 65280
+// with fields and methods
+enum Planet(mass: Double, radius: Double):
+  private final val G = 6.67300E-11
+  def surfaceGravity = G * mass / (radius * radius)
+  def surfaceWeight(otherMass: Double) =
+    otherMass * surfaceGravity
+  case Mercury extends Planet(3.303e+23, 2.4397e6)
+  case Earth   extends Planet(5.976e+24, 6.37814e6)
+end Planet
+Planet.Mercury.surfaceGravity // some number
+Planet.Earth.surfaceWieght(1) // some number
+// with a companion object
+object Planet:
+  def main(args: Array[String]) =
+    val earthWeight = args(0).toDouble
+    val mass = earthWeight / Earth.surfaceGravity
+    for (p <- values)
+      println(s"Your weight on $p is ${p.surfaceWeight(mass)}")
 
-enum MyKnownValues: // type
-  case Poop, Wipe, Flush // with these values
-
+// interface
 MyKnownValues
   .values // Array(MyKnownValues.Poop, etc) // get all enum values
   .valueOf("Wipe") // MyKNownValues.Wipe // get the matching enum value from its string label || runtime error
@@ -512,24 +626,7 @@ currentCrustSize match
   case Medium => println("medium")
   case Large => println("large")
 
-// parameterized enums
-enum Color(val rgb: Int):
-  case Red   extends Color(0xFF0000)
-  case Green extends Color(0x00FF00)
-  case Blue  extends Color(0x0000FF)
 
-// with fields and methods
-enum Planet(mass: Double, radius: Double):
-  private final val G = 6.67300E-11
-  def surfaceGravity = G * mass / (radius * radius)
-  def surfaceWeight(otherMass: Double) =
-    otherMass * surfaceGravity
-
-  case Mercury extends Planet(3.303e+23, 2.4397e6)
-  case Earth   extends Planet(5.976e+24, 6.37814e6)
-end Planet
-Planet.Mercury.surfaceGravity // some number
-Planet.Earth.surfaceWieght(1) // some number
 ```
 
 #### case class
@@ -642,11 +739,15 @@ someCol
   .foldLeft
   .forall(predicate) // all match
   .foreach(lambda) // doesnt return anything, only useful for sideffects
+  .groupBy(lambda) // Partitions this immutable sequence into a map of immutable sequences according to some discriminator function.
+  .groupMap(lambdaForKey)(lambdaForValue) // Partitions this immutable sequence into a map of immutable sequences according to a discriminator function key.
   .isEmpty // boolean
+  .keys
   .map
   .nonEmpty // boolean
   .size // number of els
   .takeWhile(lambda)
+  .values
   .withFilter(predicate)
   .zip(otherCollection) // creates pairs of els at each index of each collection
 
@@ -700,7 +801,6 @@ someList.foldLeft(List.empty[Int])((accum, el) => el +: accum)
 
 /// groupBy
 // ^ groups the els of a collection according to a parittion fn
-
 val emails: List[String] = List("one@two.com", "two@two.com", "three@one.com")
 val domainPartition: String => String = email => email.dropWhile(x => x != '@').drop(1)
 val emailsByDomain: Map[String, List[String]] = emails.groupBy(domainPartition)
@@ -806,6 +906,8 @@ someSeq
   .headOption // returns Option, thus wont throw like .head
   .tail // everything after the first el, // error on empty sequence
   .sortBy(lambda)
+  .maxBy(lambda)
+  .diff(removeTheseOtherEls)
 
 // example sortby
 val list: List[(String, Int)] = List(
@@ -815,6 +917,15 @@ val list: List[(String, Int)] = List(
 )
 list.sortBy((_, age) => age)
 list.sortBy((name, _) => name)
+```
+
+##### Seq
+
+- trait, super of all sequence types
+
+```scala
+
+
 ```
 
 ##### List

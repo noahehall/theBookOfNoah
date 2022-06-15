@@ -2,18 +2,24 @@
 
 - bookmarks
   - https://docs.scala-lang.org/scala3/book/taste-hello-world.html
-  - https://docs.scala-lang.org/scala3/book/domain-modeling-oop.html
+  - https://docs.scala-lang.org/scala3/book/domain-modeling-fp.html
     - need to finish this to get a better handle on coursera week2
-    - `Instances and Private Mutable State`
+    - `Modules`
+    - https://docs.scala-lang.org/scala3/book/types-adts-gadts.html
+      - `Algebraic Datatypes (ADTs)`
+      - read this first
 
 ## links
 
 - [coursera: effective programming in scala](https://www.coursera.org/learn/effective-scala)
 - [scala metals vscode plugin](https://scalameta.org/metals/docs/editors/vscode)
+- [scala index: search for libraries](https://index.scala-lang.org/)
+- [scala index: awesome scala](https://index.scala-lang.org/awesome)
+- [awesome scala](https://github.com/lauris/awesome-scala)
 - good reads
   - [fn programming and scala](https://chollinger.com/blog/2022/06/functional-programming-concepts-i-actually-like-a-bit-of-praise-for-scala-for-once/)
   - [heather miller: types in scala](https://heather.miller.am/blog/types-in-scala.html)
-  - [awesome scala](https://github.com/lauris/awesome-scala)
+  - [scalable component abstractions](https://lampwww.epfl.ch/~odersky/papers/ScalableComponent.pdf)
 - refs
   - [getting started](https://docs.scala-lang.org/getting-started/)
   - [domain modeling intro](https://docs.scala-lang.org/scala3/book/domain-modeling-intro.html)
@@ -21,6 +27,7 @@
   - [scala 3 book](https://docs.scala-lang.org/scala3/book/introduction.html)
   - [contextual abstractions](https://docs.scala-lang.org/scala3/reference/contextual/)
   - [scala tools](https://docs.scala-lang.org/scala3/book/scala-tools.html)
+  - [scala build tools](https://docs.scala-lang.org/overviews/scala-book/scala-build-tool-sbt.html)
 
 ## background
 
@@ -72,6 +79,7 @@
 
 ## terms
 
+- pure functions: they do not mutate any data or have other side-effects (like throwing exceptions or writing to a file). All they do is simply receive values and compute the result.
 - term inference: Given a type, the compiler synthesizes a “canonical” term that has that type
 - parameter lists: generally methods can have more tha one parameter lists
 - predicate: a fn that returns boolean
@@ -116,12 +124,27 @@ val oonnee = ???
 
 ### principles
 
-- domain modeling: see below somewhere
 - principle of abstraction: where similar fns are carried out by distinct pieces of code, it is generally beneficial to combine them into one by abstracting out the varying parts
   - reduces maintence: the implementation is centralized in one place
   - structures code into abstraction levels
+- scalable copmonent abstractions: the goal is to define software components with a family of types that can be refined later in implementations of the component
+  - generalized OOP methodology: entities that encapsulate data and behaviors
+    - traits provide required (abstract) and provided (concrete) definitions and fields
+    - traits are extended from each other to share & reuse behavior
+    - classes extend from traits (and other classes)
+    - instances implement classes
+    - Objects can be used as companions/wrappers/etc
+- Separating functionality from your data lets you inspect your data without having to worry about behavior.
+  - generalized FP methdology: clear separation between data and behavior
+    - hard separation between
+      - the types you use to model the data (entities with attributes but no behavior),
+      - the companion objects & defs that provide pure behavior for those types
+        - in companion objects
+        - Use a modular programming style
+        - Use a “functional objects” approach
+        - Define the functionality in extension methods
 
-#### domain modeling
+### domain modeling
 
 - levels of abstraction: you have to make the cognitive effort to map a programs literals and names to the abstract concepts they related to
   - low level concepts: e.g. literal values
@@ -200,3 +223,19 @@ case class Channel(name: String)
 ### Math Fns
 
 ### Asynchronous execution
+
+## build tools
+
+- see buildtools dir
+- support compile, run & test, deploy & publish workflows; managing, coordinating & peforming various interdependent tasks
+- compilation:
+  - turn source files into executable JVM bytecode
+  - constructing the application classpath by fetching library dependencies
+  - generation of resources like assets, data type serializers, etc
+- running & testing: after compilation
+  - building an execution environment (i.e. a JVM with the correct classpath)
+  - invoking the entry points
+- deploying and publishing: after compilatoin, and definitely after testing
+  - publish an artifact on a library repository
+  - package the program an its deps as a single `.jar` file
+  - etc

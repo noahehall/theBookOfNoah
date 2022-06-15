@@ -25,6 +25,7 @@ intellij is dreamweaver that just wont fkn die
 ## things to remember
 
 - if you hover just to right of the vertical scrollbar, a viewbox will appear to quickview that line of code, really cool
+- file > invalidate caches: when you know your project settings are right but intellij still fusses
 
 ## BASICS
 
