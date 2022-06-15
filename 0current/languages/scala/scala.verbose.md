@@ -2,9 +2,9 @@
 
 - bookmarks
   - https://docs.scala-lang.org/scala3/book/taste-hello-world.html
-  - https://docs.scala-lang.org/scala3/book/domain-modeling-intro.html
+  - https://docs.scala-lang.org/scala3/book/domain-modeling-oop.html
     - need to finish this to get a better handle on coursera week2
-    - `Auxiliary constructors`
+    - `Instances and Private Mutable State`
 
 ## links
 
@@ -148,6 +148,13 @@ val oonnee = ???
       - check that you can construct meaningful values from your model
         - also VALIDATE that you cannot construct nonsensical/illogical/invalid values from the model
     - iterate on the domain model and business logic implementation
+- service-oriented component model and view: abstract vs concrete members defined on traits
+  - abstract members: should be required services to be implemented by another entity; all specify some form of requirement on the implementor of the trait
+    - abstract methods (def m(): T)
+    - abstract value definitions (val x: T)
+    - abstract type members (type T), potentially with bounds (type T <: S)
+    - abstract givens (given t: T)
+  - concrete members: provided services that are made avaliable to classes
 
 ```scala
 ////////////////////////////////////////////////////////////////////

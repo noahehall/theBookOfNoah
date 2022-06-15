@@ -12,23 +12,27 @@
   - [classes: inner classes](https://docs.scala-lang.org/tour/inner-classes.html)
   - [classes: open classes](https://docs.scala-lang.org/scala3/reference/other-new-features/open-classes.html)
   - [given instances and using clauses](https://docs.scala-lang.org/scala3/book/ca-given-using-clauses.html)
+  - [interacting with java](https://docs.scala-lang.org/scala3/book/interacting-with-java.html)
   - [List](https://www.scala-lang.org/api/current/scala/collection/immutable/List.html)
   - [methods: extensions](https://docs.scala-lang.org/scala3/book/ca-extension-methods.html)
   - [methods: polymorphic](https://docs.scala-lang.org/tour/polymorphic-methods.html)
   - [multiversal equality](https://docs.scala-lang.org/scala3/book/ca-multiversal-equality.html)
   - [pattern matching: match types](https://docs.scala-lang.org/scala3/reference/new-types/match-types.html)
+  - [pattern matching: option-less](https://docs.scala-lang.org/scala3/reference/changed-features/pattern-matching.html)
   - [pattern matching](https://docs.scala-lang.org/tour/pattern-matching.html)
   - [scala 3 reference](https://docs.scala-lang.org/scala3/reference/index.html)
-  - [type: type classes](https://docs.scala-lang.org/scala3/book/ca-type-classes.html)
+  - [trait parameters](https://docs.scala-lang.org/scala3/reference/other-new-features/trait-parameters.html)
+  - [type: abstract types](https://docs.scala-lang.org/tour/abstract-type-members.html)
   - [type: generics](https://docs.scala-lang.org/scala3/book/types-generics.html)
   - [type: intersections](https://docs.scala-lang.org/scala3/book/types-intersection.html)
   - [type: lower bounds](https://docs.scala-lang.org/tour/lower-type-bounds.html)
+  - [type: opaque](https://docs.scala-lang.org/scala3/book/types-opaque-types.html)
+  - [type: type classes](https://docs.scala-lang.org/scala3/book/ca-type-classes.html)
   - [type: unions](https://docs.scala-lang.org/scala3/book/types-union.html)
   - [type: upper bounds](https://docs.scala-lang.org/tour/upper-type-bounds.html)
   - [type: variance](https://docs.scala-lang.org/scala3/book/types-variance.html)
-  - [type: opaque](https://docs.scala-lang.org/scala3/book/types-opaque-types.html)
-  - [type: abstract types](https://docs.scala-lang.org/tour/abstract-type-members.html)
-  - [interacting with java](https://docs.scala-lang.org/scala3/book/interacting-with-java.html)
+  - [adt: algebraic data types](https://docs.scala-lang.org/scala3/book/types-adts-gadts.html)
+  - [enums](https://docs.scala-lang.org/scala3/reference/enums/enums.html)
 
 ## basics
 
@@ -78,6 +82,7 @@ import scala.math._ // import all the members of the math module
 // somewhere in the file, import MyValues.*
 // MyValues.poop now available as poop
 import someObj.* // make all the members of someObj available in the file
+import StringUtils.{truncate, containsWhitespace} //import some members of some object
 ```
 
 ## operators
@@ -216,20 +221,38 @@ val bool: Boolean =
 ```scala
 val poop: String = "flush"
 poop
-  .length // 5
-  .toUpperCase // FLUSH
-  .toLowerCase
   .dropWhile(lambda).drop(1) // drop 1 char, could be any #, see .groupBy example
+  .isEmpty
+  .length // 5
+  .matches(regex)
+  .take(num)
+  .toLowerCase
+  .toUpperCase // FLUSH
 ```
 
 ### domain modeling
 
+- best practices for OOP
+  - traits: enable abstract interfaces + concrete implementations
+  - mixed composition: compose components from smaller parts
+  - classes: implement interfaces specified by traits
+  - instances: can have their own private state
+  - subtyping: use an instance of one class where an instance of a superclass is expected
+  - access modifiers: control visilibity relative to other code
+
 #### Class
 
 - a template for the creation of object instances
-  - can also extend traits and abstract classes
+  - can also extend multiple traits but only a single super class
+  - ^ can be used anywhere the extended traits/super class are expected
+  - if the super class is defined in another file, it needs to be marked `open`
 - are generally immutable with fields defined with `var` (can read and write)
   - however, you can use `val` or use a `case class` instead
+- generally its best to use classes at the leafs of your inheritance model
+  - Traits `T1, T2, T3`
+  - Composed traits `S extends T1, T2, S extends T2, T3`
+  - Classes `C extends S, T3`
+  - Instances `C()`
 
 ```scala
 
@@ -241,20 +264,68 @@ class Dog(var name: String, age: Int = 1_000):
   def wagTail() = println("poop in your mouth")
 val dog = Dog("noah")
 dog.speak()
+
+// auxiliary constructors
+// ^ e.g. to a module a student in 3 different states
+// ^ 1. name and id: when first enrolling
+// ^ 2. name, id, application date: when application submitted
+// ^ 3. name, id, student Id: when fully enrroled
+// ^ you basically define the base case with the regular class params
+// ^ then define as many this(...) class methods that each call the base this()
+
+// [1] the primary constructor
+import java.time.* // for LocalDate
+
+class Student(
+  var name: String,
+  var govtId: String
+):
+  private var _applicationDate: Option[LocalDate] = None
+  private var _studentId: Int = 0
+
+  // [2] a constructor for when the student has completed
+  // their application
+  def this(
+    name: String,
+    govtId: String,
+    applicationDate: LocalDate
+  ) =
+    this(name, govtId)
+    _applicationDate = Some(applicationDate)
+
+  // [3] a constructor for when the student is approved
+  // and now has a student id
+  def this(
+    name: String,
+    govtId: String,
+    studentId: Int
+  ) =
+    this(name, govtId)
+    _studentId = studentId
+
+// class extending super class
+// if the super class is in another file, it needs to be marked open
+// in file A
+open class Person(name: String)
+// in file B
+class SoftwareDeveloper(name: String, favoriteLang: String)
+  extends Person(name)
+
 ```
 
 #### Object
 
 - a class with exactly one instance
-- lazy initialized only when one of its members are referenced, similar to a `lazy val`
+- lazy initialized only when its members are referenced, similar to a `lazy val`
 - usecase:
-  - grouping methods and fields under one namespace
-  - similar to static class methods in javascript
+  - grouping methods and fields under one namespace, i.e. creating an object to hold static methods and fields
 
 ```scala
-/// objects
-// import SomeObj.*
-// ^ at top of file so you can use prop instead of SomeObj.prop
+object PoopUtils:
+  def flush(done: Boolean): String =
+    if done == true then "flushing" else "still pooping!"
+
+// scala 2 syntax
 object SomeObj {
   val prop: Boolean = true
 }
@@ -263,19 +334,114 @@ object SomeObj {
 
 #### Companion Object
 
-- ...
+- an object that has the same name as a class, and declared in the same file
+  - the class is called the objects `companion class`
+  - each can access the others private members
+- use case
+  - provide methods/values that act as static class fields & methods (like in javascript)
+  - if they contain an `apply` method, act as factory fns to create new instances of companion classes
+  - if they contain an `unapply` method, can destructure companion classes, e.g. with pattern matching
+
+```scala
+import scala.math.*
+
+// example class with a simple companion object providing some utility fn
+case class Circle(radius: Double):
+  def area: Double = Circle.calculateArea(radius) // the companion object
+object Circle:
+  private def calculateArea(radius: Double): Double = Pi * pow(radius, 2.0)
+val circle1 = Circle(5.0)
+circle1.area
+
+
+// example class with a companion object providing a factory fn via 2 distinct apply defs
+class Person:
+  var name = ""
+  var age = 0
+  override def toString = s"$name is $age years old"
+object Person:
+  // a one-arg factory method
+  def apply(name: String): Person =
+    var p = new Person
+    p.name = name
+    p
+  // a two-arg factory method
+  def apply(name: String, age: Int): Person =
+    var p = new Person
+    p.name = name
+    p.age = age
+    p
+end Person
+val joe = Person("Joe")
+val fred = Person("Fred", 29)
+
+
+```
+
+#### Abstract Classes
+
+- same as `Trait` but has a constructor
+  - no longer true in scala 3, traits have parameters now
+- use case
+  - not using scala3, and need a base class with a constructor
+  - The rule of thumb is to:
+    - use classes whenever you want to create instances of a particular type,
+    - use traits when you want to decompose and reuse behaviour.
 
 #### Trait
 
+- contain abstract & concrete methods and fields
+  - scala 2: doesnt have a constructor
+  - scala 3: can take parameters
+- use case
+  - primary tool for decomposition (and not classes)
+    - traits can extend other traits
+  - modularize components and describe interfaces (required and provided)
+    - required: abstract members that will be implemented by other entities
+    - provided: concrete methods & fields
+  - create single responsibility, small modules that can be mixed & matched by their inheriting entities
+
 ```scala
-trait Animal:
-  def speak(): Unit
+
+// example 1
+trait Showable:
+  def show: String
+  def showHtml = "<p>" + show + "</p>" // note this depends on def show
+class Document(text: String) extends Showable:
+  def show = text
+
+// example 2
+trait HasLegs:
+  def numLegs: Int
+  def walk(): Unit
+  def stop() = println("Stopped walking")
+trait HasTail:
+  def tailColor: String
+  def wagTail() = println("Tail is wagging")
+  def stopTail() = println("Tail is stopped")
+class IrishSetter(name: String) extends HasLegs, HasTail:
+  val numLegs = 4
+  val tailColor = "Red"
+  def walk() = println("I’m walking")
+  override def toString = s"$name is a Dog"
+// mixed composition, traits extending from other traits
+trait Poop extends HasLegs, HasTail
+
+// trait with parameter
+trait Pet(name: String):
+  def greeting: String
+  def age: Int
+  override def toString = s"My name is $name, I say $greeting, and I’m $age"
+
+class Dog(name: String, var age: Int) extends Pet(name):
+  val greeting = "Woof"
 
 ```
 
 #### sealed trait
 
 ```scala
+// TODO: find in scala3 docs
 //////////////////////////////////
 /// sealed traits
 // represents one of several alternatives of a case class
@@ -307,18 +473,16 @@ val getShapeAria =
 
 ```
 
-#### Abstract Classes
-
-- ...
-
 #### enums
 
+- defines a type whose values are a set of known singletons
+- NOT available in scala 2, instead used sealed traits and case objects
+- use cases
+  - used to define sets of constants, like the months in a year, the days in a week, directions like north/south/east/west, etc
+
 ```scala
-//////////////////////////////////
-/// enums
-// defines a type whose values are a set of known singletons
-// NOT available in scala 2, instead used sealed traits and case objects
-//////////////////////////////////
+enum CrustSize:
+  case Small, Medium, Large
 
 enum MyKnownValues: // type
   case Poop, Wipe, Flush // with these values
@@ -336,28 +500,56 @@ object PrimaryColor:
   case object Blue extends Primary Color
   val values = Array(Red, Blue, Green)
   def valueOf(label: String): PrimaryColor = ???
+
+// useful to do `import CrustSize.*` so you can use the values directly
+// if/then
+if (currentCrustSize == Large)
+  println("You get a prize!")
+
+// match: see `# match` for more examples
+currentCrustSize match
+  case Small => println("small")
+  case Medium => println("medium")
+  case Large => println("large")
+
+// parameterized enums
+enum Color(val rgb: Int):
+  case Red   extends Color(0xFF0000)
+  case Green extends Color(0x00FF00)
+  case Blue  extends Color(0x0000FF)
+
+// with fields and methods
+enum Planet(mass: Double, radius: Double):
+  private final val G = 6.67300E-11
+  def surfaceGravity = G * mass / (radius * radius)
+  def surfaceWeight(otherMass: Double) =
+    otherMass * surfaceGravity
+
+  case Mercury extends Planet(3.303e+23, 2.4397e6)
+  case Earth   extends Planet(5.976e+24, 6.37814e6)
+end Planet
+Planet.Mercury.surfaceGravity // some number
+Planet.Earth.surfaceWieght(1) // some number
 ```
 
 #### case class
 
-- define a type and a constructor
-- used for aggregating several values into a single concept (i.e. type)
-- used to model immutable data structures
-- fields are public and immutable by default
-- the compiler auto generates the following methods
-  - unapply, copy, equals, hashCode, toString
+- immutabe class with some syntatic sugar
+  - fields are public and immutable by default
+  - the compiler auto generates the following methods (since all fields are immutable)
+    - unapply: enables pattern mmatching on a case class
+    - copy: create modified copies of an instance
+    - equals, hashCode: using structural equality; enables you to use instances in Maps
+    - toString: helpful for debugging
+- use case
+  - used to model immutable data structures (as opposed to classes which could be mutable)
 
 ```scala
-// without any members
+// notice you dont need to specify val/var in the param list like in classes
 case class MyType(name: String, age: Int)
-
 // create an instance
 val poop: MyType = MyType("poop", 200)
-// poop.name == "poop" // Boolean: true
-// creates a new MyType based on poop overriding the provided props
-val flush: MyType = poop.copy(name = "flush")
 
-// with members and computed values
 // in scala 2 remove the : and use {} to denote the body
 case class MyType(name: String, age: Int):
   val ageNextDecade: Int = age + 10 // computed value, instance.ageNextDecade
@@ -366,21 +558,49 @@ case class MyType(name: String, age: Int):
 
 // example with Option
 case class Poop (
-                  name: String,
-                  email: Option[String],
-                  phoneNumbers: List[String]
-                )
+  name: String,
+  email: Option[String],
+  phoneNumbers: List[String]
+)
 val poop: Poop = Poop("noah", None, List("00000000"))
+
+// exmaple of case class instance methods
+case class Person(name: String, relation: String)
+// Case classes can be used as patterns
+christina match
+  case Person(n, r) => println("name is " + n)
+// `equals` and `hashCode` methods generated for you
+val hannah = Person("Hannah", "niece")
+christina == hannah       // false
+// `toString` method
+println(christina)        // Person(Christina,niece)
+// create a new instance based on an existing instance
+val poop = hannah.copy(name = "poop")
 ```
 
 #### case object
 
+- Case objects are to objects what case classes are to classes:
+  - they provide a number of automatically-generated methods to make them more powerful.
+- whenever you need a singleton object that needs a little extra functionality,
+  - such as being used with pattern matching in match expressions.
+  - need to pass immutable messages around
+- generally extend from sealed traits
+
 ```scala
-//////////////////////////////////
-/// case objects
-// can extend sealed traits
-// ^ but doesnt define a constructor like case classes, because case objects are already values
-//////////////////////////////////
+sealed trait Message
+case class PlaySong(name: String) extends Message
+case class IncreaseVolume(amount: Int) extends Message
+case class DecreaseVolume(amount: Int) extends Message
+case object StopPlaying extends Message // the singleton case object
+
+// then you can pattern match on the Message Type (see above)
+// and provide extra fnality (define these right-hand definitions elseware)
+def handleMessages(message: Message): Unit = message match
+  case PlaySong(name)         => playSong(name)
+  case IncreaseVolume(amount) => changeVolume(amount)
+  case DecreaseVolume(amount) => changeVolume(-amount)
+  case StopPlaying            => stopPlayingSong()
 
 // modeling a user, which can be anonymous or loggedin
 // note the use of case object and case class
@@ -406,7 +626,6 @@ import scala.collection.immutable
 import scala.collection.mutable
 
 val buffer = mutable.ArrayBuffer()
-
 
 // commonalities amongst all collections
 
@@ -1007,6 +1226,10 @@ while (condition) {
   - the runtime creates an object for functions in memory, and thus fns are objects that can have members
 
 ```scala
+// visibility
+
+/// TODO
+private def poop:
 
 // return type Int
 // sum(5, 5)
@@ -1071,6 +1294,10 @@ object poop:
   def apply(x: int): Int = x + 10
 // poop(10) === 20
 
+
+/// TODO @see pattern matching: option-less
+/// unapply
+// ^ use to destructure objects
 ```
 
 ### example defs
@@ -1104,8 +1331,6 @@ def factorial(n: Int): Int =
   factorialTailRec(n, 1)
 end factorial
 
-
-
 ```
 
 ## errors
@@ -1126,6 +1351,17 @@ println(n.abs) // scala.NotImplementedError: an implementation is missing
 ```
 
 ## standard library
+
+### java stuff
+
+```scala
+import java.time.*
+
+/// LocalDate
+LocalDate
+  .now
+
+```
 
 ### scala.math
 
