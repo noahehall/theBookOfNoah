@@ -1,9 +1,10 @@
 # testing
 
-- read this file with a healthy amount of skepticism, unsure how early in my career this shiz was created
+- there has to be another file in this repo somehwere with bunches more stuff
 
 ## links
 
+- [Much Ado about Testing (great video)](https://www.youtube.com/watch?v=Jhzc7fxY5lw)
 - [testing react components](https://medium.freecodecamp.com/the-right-way-to-test-react-components-548a4736ab22)
 - [testing microservices](https://martinfowler.com/articles/microservice-testing/#agenda)
 - [monkey testing](https://en.wikipedia.org/wiki/Monkey_testing)
@@ -12,6 +13,17 @@
 - [bunch of definitions](http://xunitpatterns.com/Mocks,%20Fakes,%20Stubs%20and%20Dummies.html)
 
 ## basics
+
+### testing goals
+
+- intent vs reality: reading/reasoning about code works fine for small and conrete thing
+  - type systems aid in validating program logic against reality, but relies on the assumption that we correctly modeled things in the first place; in addition to only catch a small class of errors anyway
+  - tests can validate program execution against reality
+- programs are soft: code bases evolve over time, and consist of immutable & side effecting logic, thus chaning small things here and there could easily break a program that was previously correctly working
+  - testing aids in preventing these regressions from happening
+- increasing confidence: employing multiple testing techniques increases confidence that the program behaves as expected under the tested conditions
+- test quality: assess tests to ensure the validity and quality of tests
+  - test coverage: reports the code paths that are & arent tests, however it does not tell you if the test inputs are well covered, nor if the existing tests are correct & logical
 
 ### terms
 
@@ -25,6 +37,9 @@
 - System Under Test: aka SUT; the application and system you're testing, as well as the environment the tests are running in
 - test fixtures: set of objects used to run a test in a well-known environment
   - mocking: code designed to stand in for other pieces of code that contains external dependencies to enable unit tests; umbrella term for stubs, dummy objects, spies, etc
+    - consists of providing a fake implementation of a component that can be substituted for the purpose of testing another component in isolation
+    - tests run faster and wont be influenced bya bugs/sideeffects in dependency components (those that you mock)
+      - however, this does not test the whle system as it will be deployed to production
   - dummy objects: objects that the System Under Test (SUT) depends on, but are never actually used.
     - any object that is required to run/test some behavior, but is not actually used (e.g. a required parameter) and must resemble a real object
   - test stubs: an object to control the indirect input of the tested code. setting up state
@@ -41,6 +56,7 @@
 
 - TDD: test driven development; tests are written before code is developed
   - write a failing test first, then writing code to cause the test to pass
+  - opposite of mutation testing
 - BDD: behavior driven development:
   - implementing an application by describing its behavior from the perspective of its stakeholders in the form of 'it... should...'
   - describes a cycle of interactions with well-defined inputs, resulting in the delivery of working, tested software
@@ -48,10 +64,21 @@
 
 ## type of tests
 
-- unit tests: Unit Tests are functions and classes designed to prove the code performs within a set of guidelines
+- mutation tests: introduce a bug in a program and check that the tests catches the bug, opposite of TDD
+- unit tests: Unit Tests are functions and classes designed to prove the code performs within a set of guidelines; and validate the result of a program for some specific inputs
+  - you must think through all of the negative, positive and corner cases to check, and not just the happy/golden path
+- property-based tests: unit tests that support testing a large program domain, with an arbitrary amount of positive, negative and corner/edge cases.
+  - makes it easier to icnrease the coverage of unit tests and find corner/edge cases
+  - relies heavily on:
+    - generating random data to serve as inputs to unit tests
+    - testing logical properties of program execution that are true/false for all inputs and outputs
+      - e.g. testing an ADD method, a general property are two even numbers always equal an even number
+    - fnding invariants and identities (e.g. invertibility, idempotence, transformation relatoins, etc)
 - integration tests: tests to check the correct functioning of a system that rely on external dependencies
   - discern defects in the interfaces and in the interactions between itnegrated components/systems
   - collect modules together and test them as a subsystem in order to verify that they collaborate as intended to achieve some larger piece of behaviour.
+  - there should be no stubs/mocks, but fixtures are permitted; thus a hard requirement on the ability to setup all external deps & infrastructure stack to the specific state required to test the subsystem sucessfully
+  - in general, the tests should be as close to prod as possible
 - e2e test: the task of performing tests from the end users perspective; in the same way a user would
   - ui tests: testing an applications UI interface through automated tools
   - acceptance tests: ensures the requirements of a specification/contract/etc are met; only place manual QA tests still win over automation

@@ -186,3 +186,9 @@ intellij is dreamweaver that just wont fkn die
 - project dir list > right click where you want the `thing` to go
   - new (sub)package: package name > right click > new package
   - new component: package name > right click new class|interface|record|enum|annotation
+
+## Debugger
+
+- click the line # until a red circle is next to each line you want to debug
+- then click `run with debug`
+- on the console tab, continually click `step over|step into|etc` button(s) to move from debug point to debug point

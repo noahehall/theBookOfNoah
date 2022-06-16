@@ -3,6 +3,11 @@
 - all about the syntax
 - as usual, search for `/// Something` or `# Something` to find what youre looking for
 
+- todos
+  - find sealed traits in the scala docs
+  - todo: need to do a better job at categorizing operators, especially the mutable vs immutable ones
+  - extending, using `poop extends blah1, blah2` vs `poop extends blah1 with blah2`
+
 ## links
 
 - [intellij toolbox, fkn use it](https://www.jetbrains.com/toolbox-app/)
@@ -10,6 +15,7 @@
 - [example gitignore for scala](https://alvinalexander.com/source-code/scala/sample-gitignore-file-scala-sbt-intellij-eclipse/)
 - examples
   - [groupBy and groupMap](https://blog.genuine.com/2019/11/scalas-groupmap-and-groupmapreduce/)
+  - [scala 3 example project](https://github.com/scala/scala3-example-project)
 - refs
   - [adt: algebraic data types](https://docs.scala-lang.org/scala3/book/types-adts-gadts.html)
   - [classes: inner classes](https://docs.scala-lang.org/tour/inner-classes.html)
@@ -131,8 +137,6 @@ thiz > that
 someNum += 1
 someNum -= 1 // *= /=
 
-
-
 // a generator
 // ^i.e if that.thiz: Option[Int], then thiz: Int
 thiz <- that.thiz
@@ -177,9 +181,7 @@ until // e.g. 0 until poop.length
   // val blah: Int = ???
 _ // wildcard placeholder
 extends // e.g. case class Poop() extends BigerPoop
-end Poop // optional syntax for signaling hte end of some thing, e.g. a case class/object/def/etc
-  // ^ think it can be appended to pretty much anything?
-
+end Poop // optional syntax for signaling the end of some thing, e.g. a case class/object/def/etc
 
 ```
 
@@ -205,23 +207,31 @@ val interestingVal: Int =
 
 - types can automatically get wider, e.g. Int used in place of a Double, but never stricter,
   - e.g. Double in place of Int will cause the compiler to throw an error
+- are either
+  - sets of operatoins with an unbounded number of possible values
+  - sets of possible values with an unbounded number of operations
 
 ```scala
-/// Byte -128 to 127
-/// Boolean true | false
-/// Char unsigned, 0 to 65535
-/// Short -32768 to 32767
-/// Int 32 bit signed -2147483648 to 2147483647
-/// BigInt wayyyy bigger than Int
-/// Long dude its a long number
-/// Float dude its a long decimal
-/// Double 64 bit floating point; a decimal longer than a Float, but only 15 digits of precision
+// val types extend from scala.Any > scala.AnyVal (primitives types) >
 /// BigDecimal longer than a Double
-/// String text
-/// List[subtype]
+/// BigInt wayyyy bigger than Int
+/// Boolean true | false
+/// Byte -128 to 127
+/// Char unsigned, 0 to 65535
+/// Double 64 bit floating point; a decimal longer than a Float, but only 15 digits of precision
+/// Float dude its a long decimal
+/// Int 32 bit signed -2147483648 to 2147483647
+/// PosInt positive Ints
+/// Long dude its a long number
+/// Short -32768 to 32767
+/// Unit i.e. void, doesnt return anything
+
+// ref types extend from scala.Any > scala.AnyRef (reference types) >
 /// Array[subtype]
-/// Unit i.e. void, doesnt return anything, often see it on definitions & the main class
-// examples
+/// Iterable[subtype]
+/// List[subtype]
+/// Seq[subtype]
+/// String text
 
 val superLongNumber: BigInt = BigInt("insert really long number here")
 
@@ -240,14 +250,18 @@ val bool: Boolean =
   else false
 
 // working with types
-// generally there is a toInt, toPoop on everything,
+// generally there is a .toInt, .toIntOption, etc, on everything,
 
 /// UPPER BOUNDS type
 // Poop is a subtype of Flush,
 type Poop <: Flush
 ```
 
-#### strings
+### Int
+
+- the smallest integer ( Int.MinValue in Scala) has no positive representation. This has caused bugs in real systems, but is trivial to find with property based testing.
+
+### strings
 
 ```scala
 val poop: String = "flush"
@@ -261,8 +275,125 @@ poop
   .toUpperCase // FLUSH
 ```
 
+### Extensions
+
+- extend any type with NEW functionality
+  - you cannot OVERRIDE existing fnality
+  - you cannot refer to other class members via `this`
+  - if you get a `blah doesnt have poop`
+    - you need to import the extension into the file where its used; as they have to be in scope
+    - unless the extension is being applied to an opaque type, as the compiler will check the scope of the opaque type definition for you
+- see `# Opaque Type alias` for a real world example
+
+```scala
+
+extension (n: Int)
+  def isZero: Boolean = n == 0
+  // etc
+val five = 5
+five.isZero // false
+0.isZero // true
+```
+
+### Type Alias
+
+- alias an existing type/type expression under a distinct name
+- use cases
+  - incur 0 runtime costs
+  - provide shorthand name for a complex type expression
+  - can be used interchangably with the type they're aliasing
+
+```scala
+
+type MyType = String
+type MyComplexType = (Int, String, List[Map[String, Int]])
+```
+
+### Opaque Type Alias
+
+- zero cost type abstractions: increase type safety by creating abstraction layers between similar types
+- use cases
+  - encapsulate the type they are an alias to
+    - differentiating between same but logically different types, (see example)
+
+```scala
+def poop(flush: boolean)
+// poop(flush = true) // logical
+// iAmHungry: Boolean = true
+// poop(iAmHungry) // illogical, but compiler allows it
+
+// you can overcome the above limitation by creating a class with a companion object
+// but who wants to pay that cost of instantiating a class
+case class UserId private (value: Long)
+object UserId:
+    def parse(id: String): Option[UserId] =
+        id.toLongOption.map(str => UserId(str))
+// is Option[UserId] and NOT long as defined in the UserId class
+// as the only way to create it is via the UserId companion object
+val myId: Option[UserId] = UserId.parse("1234")
+
+// OR you can simply use a opaque type alias without having to define and instantiate a class
+// ^ note this is why opaque types are considered 0 cost abstractions
+
+// example opaque type for a Boolean
+// inside this block the parent type is transparent
+// ^ i.e. can be used interchangeably with the alias
+// outside this block the parent type is opaque and cant be determined
+// ^ thus the object that defines the opaque type alias
+// ^ MUST define methods that produce and consume the opaque types
+// ^^ see extensions for a shorter syntax
+object Poop:
+    opaque type IsPooping = Boolean
+    def parse(str: String): Option[IsPooping] = str.toBooleanOption
+    def value(poop: Option[IsPooping]): Boolean = poop.getOrElse(false)
+end Poop
+
+import Poop.IsPooping
+val amPooping: Option[IsPooping] = Poop.parse("true")
+val notPooping: Option[IsPooping] = Poop.parse("false")
+val dunno: Option[IsPooping] = Poop.parse("will be a none")
+
+val getPooping1 = Poop.value(amPooping) // true
+val getPooping2 = Poop.value(notPooping) // false
+val getPooping3 = Poop.value(dunno) // false
+
+// shorter syntax using extensions
+// and NOT using Option
+object IsPooping:
+    opaque type IsPooping = Boolean
+    extension(pooping: IsPooping)
+        def value: Boolean = pooping
+    def parse(bool: Boolean): IsPooping = bool
+end IsPooping
+import IsPooping.IsPooping
+val amPooping = IsPooping.parse(true) // val amPooping: IsPooping.IsPooping = true
+val getPooping4 = amPooping.value // val getPooping4: Boolean = true
+```
+
+### type directed programming
+
+- i.e. contextual abstractions
+  - instead of inferring TYPES from VALUES like `val x = 42 == Int`
+  - the scala compiler is able to do the opposite: infer VALUES from TYPES
+    - works when there is exactly ONE value for a type, the compiler can provide the value to us
+- use cases
+  - ...
+
+```scala
+
+
+```
+
 ### domain modeling
 
+- objects, classes, traits, and their variants
+  - objects can extend the others, but are singletons or companions
+  - case classes and sealed traits makes you think of types as a sets of possible values
+    - e.g. type Boolean has two possible values true and false
+    - whenever the set of possible values (subclasses) are bounded
+  - classes and traits make you think of types as intefaces that provide a set of specific operations
+    - e.g. type Boolean has logic operations like || and &&
+    - whenever the set of possible operations are bounded
 - best practices for OOP
   - traits: enable abstract interfaces + concrete implementations
   - mixed composition: compose components from smaller parts
@@ -277,15 +408,32 @@ poop
     - traits: specify the contract of the API as an interface
   - define your pure behavior in other objects/definitions
 
+```scala
+
+// visibility
+def poop: // visible to the world
+private def poop: // visible inside the class/trait/object  only
+protected def poop: // visible inside the class/trait/object/descendants
+
+// other modifiers
+override def poop: // override provided members in descendants
+  super.poop(): // call super type version
+final def poop: // prevent overrides in descendants
+  this.otherPoop() // this always refers to the current instance
+```
+
 #### Class
 
-- a template for the creation of object instances
-  - can also extend multiple traits but only a single super class
+- define a type and a constructor for encapsulating concepts
+  - by default constructor params are private (thus encapsulated within the class)
+- use cases
+  - can extend multiple traits but only a single super class
   - ^ can be used anywhere the extended traits/super class are expected
   - if the super class is defined in another file, it needs to be marked `open`
-- are generally immutable with fields defined with `var` (can read and write)
-  - however, you can use `val` or use a `case class` instead
+  - model a mutable datastructure
 - generally its best to use classes at the leafs of your inheritance model
+- uses reference equality, i.e instances must point to the same point in memory in order to be considered equal
+  - reference equality is important for mutable datastructures
 
 ```scala
 
@@ -430,9 +578,11 @@ val fred = Person("Fred", 29)
 
 #### Trait
 
-- contain abstract & concrete methods and fields
-  - scala 2: doesnt have a constructor
-  - scala 3: can take parameters
+- primary way to create an interface
+  - contain abstract & concrete methods and fields
+    - scala 2: doesnt have a constructor
+    - scala 3: no constructor, but can take parameters
+  - can have an unbound number of implementations, and those implementations can be in any file
 - use case
   - primary tool for decomposition (and not classes)
     - traits can extend other traits
@@ -526,8 +676,11 @@ object SensorReader extends SubjectObserver:
 
 #### sealed trait
 
+- have a bounded (i.e. limited/fixed) number of implementations, and those implementations must be in the same file
+  - thus exhaustivity checking in pattern matching is only possible with sealed traits
+
 ```scala
-// TODO: find in scala3 docs
+
 //////////////////////////////////
 /// sealed traits
 // represents one of several alternatives of a case class
@@ -631,6 +784,8 @@ currentCrustSize match
 
 #### case class
 
+- define a type and a constructor for aggregating concepts
+  - by default constructor params are public and immutable
 - immutabe class with some syntatic sugar
   - fields are public and immutable by default
   - the compiler auto generates the following methods (since all fields are immutable)
@@ -640,6 +795,8 @@ currentCrustSize match
     - toString: helpful for debugging
 - use case
   - used to model immutable data structures (as opposed to classes which could be mutable)
+    - equality (structural) is determined based on instances having identical values to be considered equal
+    - structural equality is important for immutable datastructures
 
 ```scala
 // notice you dont need to specify val/var in the param list like in classes
@@ -711,13 +868,16 @@ object User:
 
 ### collections
 
-- generally all of the immutable collections are available, however, mutable collections need to be imported
-- generally all must have the same type (sans tuples)
-- place these somewhere
-  - Seq
-  - Vector
+- each collection type comes with two variants
+  - immutable: are auto imported
+  - mutable: must be imported
+- generally all elements of a collection type must be of hte same type, except Tuple whose elements can be of anytype
 
 ```scala
+// general hierarchy
+// iterable
+// ^ set, seq, map
+// ^^ seq > list, vector
 
 import scala.collection.immutable
 import scala.collection.mutable
@@ -1059,6 +1219,10 @@ val poop: Array[String] = Array("one", "two")
 
 ```
 
+##### Vector
+
+- ...
+
 ## flow control
 
 ### if
@@ -1337,10 +1501,7 @@ while (condition) {
   - the runtime creates an object for functions in memory, and thus fns are objects that can have members
 
 ```scala
-// visibility
 
-/// TODO
-private def poop:
 
 // return type Int
 // sum(5, 5)

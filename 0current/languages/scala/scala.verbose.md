@@ -20,6 +20,7 @@
   - [fn programming and scala](https://chollinger.com/blog/2022/06/functional-programming-concepts-i-actually-like-a-bit-of-praise-for-scala-for-once/)
   - [heather miller: types in scala](https://heather.miller.am/blog/types-in-scala.html)
   - [scalable component abstractions](https://lampwww.epfl.ch/~odersky/papers/ScalableComponent.pdf)
+  - [BRICS: optimal purely functional priority Queues](https://www.brics.dk/RS/96/37/BRICS-RS-96-37.pdf)
 - refs
   - [getting started](https://docs.scala-lang.org/getting-started/)
   - [domain modeling intro](https://docs.scala-lang.org/scala3/book/domain-modeling-intro.html)
@@ -124,6 +125,16 @@ val oonnee = ???
 
 ### principles
 
+- prefer designs that enable reasoning locally about a program
+  - i.e. you dont need to know about the implementation details, or global entities, or side effects, etc, to change a unit of code
+  - break down complex programs into smaller programs, and combine them
+    - reduces the cognitive load to reason about programs because you only need to reason on a subset of the program
+    - only works if local reasoning is possible
+- avoid side effects at all costs: small changes can have alarge and unexpected consequences due to unknown side effects
+  - operations that modify the state of the program
+  - operations that communicate with the outside world (printing to a file, reading from a poop, etc)
+- prefer logic that describe (declarative, functional, referentially transparent) vs do (imperative)
+- depend on interfaces > implementations
 - principle of abstraction: where similar fns are carried out by distinct pieces of code, it is generally beneficial to combine them into one by abstracting out the varying parts
   - reduces maintence: the implementation is centralized in one place
   - structures code into abstraction levels
@@ -213,16 +224,6 @@ case class Channel(name: String)
 
 - domain-agnostic data structures and utility fns that are generally useful in a wide range of projects
 - peristent data structures: when operations on the data structure dont mutate its values, e.g. a list, as creating a new list from an existing list doesnt change the previous state of the list (a new one is created)
-
-### collections
-
-- all collection types are parameterized by the type of their elements, i.e. all elements must be of the same type
-
-### error Management
-
-### Math Fns
-
-### Asynchronous execution
 
 ## build tools
 
