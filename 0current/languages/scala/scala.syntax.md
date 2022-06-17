@@ -7,12 +7,18 @@
   - find sealed traits in the scala docs
   - todo: need to do a better job at categorizing operators, especially the mutable vs immutable ones
   - extending, using `poop extends blah1, blah2` vs `poop extends blah1 with blah2`
+  - definitions with signatures like `def poop(...) { (...) => ??? }`
+    - think this has something to do with currying, check coursera discussion
+  - definitions with signatures like `def poop(...)(...) => ???`
+    - basically your able to pass 2 sets of parameters, which are both available in the fn body
+  - scala.math.Ordering[A]: pretty sure i have the syntax wrong
+  - need to do better on the using, given explanations & examples
 
 ## links
 
 - [intellij toolbox, fkn use it](https://www.jetbrains.com/toolbox-app/)
 - [scala & intellij: getting started](https://docs.scala-lang.org/getting-started/intellij-track/getting-started-with-scala-in-intellij.html)
-- [example gitignore for scala](https://alvinalexander.com/source-code/scala/sample-gitignore-file-scala-sbt-intellij-eclipse/)
+- [example gitignore for scala](https://alvi nalexander.com/source-code/scala/sample-gitignore-file-scala-sbt-intellij-eclipse/)
 - examples
   - [groupBy and groupMap](https://blog.genuine.com/2019/11/scalas-groupmap-and-groupmapreduce/)
   - [scala 3 example project](https://github.com/scala/scala3-example-project)
@@ -266,6 +272,7 @@ type Poop <: Flush
 ```scala
 val poop: String = "flush"
 poop
+  .compareTo(someOtherString)
   .dropWhile(lambda).drop(1) // drop 1 char, could be any #, see .groupBy example
   .isEmpty
   .length // 5
@@ -368,20 +375,6 @@ end IsPooping
 import IsPooping.IsPooping
 val amPooping = IsPooping.parse(true) // val amPooping: IsPooping.IsPooping = true
 val getPooping4 = amPooping.value // val getPooping4: Boolean = true
-```
-
-### type directed programming
-
-- i.e. contextual abstractions
-  - instead of inferring TYPES from VALUES like `val x = 42 == Int`
-  - the scala compiler is able to do the opposite: infer VALUES from TYPES
-    - works when there is exactly ONE value for a type, the compiler can provide the value to us
-- use cases
-  - ...
-
-```scala
-
-
 ```
 
 ### domain modeling
@@ -1572,6 +1565,128 @@ object poop:
 // ^ use to destructure objects
 ```
 
+### type directed programming
+
+- i.e. contextual abstractions
+  - instead of inferring TYPES from VALUES like `val x = 42 == Int`
+  - the scala compiler is able to do the opposite: infer VALUES from TYPES
+    - works when there is exactly ONE value for a type, the compiler can provide the value to us
+- context parameters: instruct the compiler on how to pass values for you based on type annotations
+  - first: let the compiler know that we expect it to pass the value as a parameter to some def
+    - prefix the parameter with `using`
+    - the compiler will look for candidate values that MUST be a given definition (see below)
+  - second: provide candidate values for such parameters
+    - prefix potential values with `given`
+    - use an `alias` to define a given value that is equal to some existing value
+- generics: use type parameters to enable a type annotation to be used with more than one type
+- given instances search scope
+  - all instances that are visible (inherited, imported, or defined in any enclosing scope)
+  - given instances found in any companion object associated with the context parameter
+- context parameter given instance association
+  - companion objects associated with of any inherited types of the context parameter
+  - companion objects associated with the specific context paramater type
+  - if the context parameter is an inner class, the other objects in which it is embedded
+
+```scala
+//////////////////////////////////
+// using definitions
+//////////////////////////////////
+// definition with generic type parameter
+// myDef[Int](poop) // can specify the A if it cant be inferred
+def myDef[A](xs: List[A]): List[A]
+// ^ extended with an additional parameter list for consumer to pass additional fns specific to their type
+// ^ notice we specify the fn signature expected for the second parameter list
+// myDef(poop)(myLambdaMatchingSignature)
+def myDef[A](xs: List[A])(specificForThisA: (A, A) => Boolean): List[A] =
+  ???
+  specificforThisA(x, y)
+  ???
+
+// context parameters are prefixed with `using`
+// ^ remember this instructrs the compiler to pass a value based on the type!
+// the compiler knows to provide a value for poop based on the type A for Ordering
+// consumers now invoke the fn simply as myDef(...) without the second parameter list as before
+// myDef[Int](poop)
+// myDef[Int](poop)(using Ordering.Int) // can also explicity pass the value, but not necessary
+// ^ no need to specify [Int] if it can be inferred
+// ^ no need to specify the second parameter list, the compiler provides the value!
+def myDef[A](xs: List[A])(using poop: Ordering[A]): List[A] = ???
+
+// more syntax examples
+def myDef[A](...)(...)(....) // there can be multiple parameter lists
+def myDef[A](....)(using a: A, b: B) // both a and b are context parameters
+def myDef[A](...)(using a: A)(...)(using b: B) // context params can be mixed with regular params
+
+// context params can be anonymous,
+// ^ if the body doesnt mention the param by name,
+// ^ but simply passes it on as a context argument to subsequent methods
+def myDef[A](...)(using SomeType[A])
+
+// shorter syntax for context params
+// ^ i.e. type parameter A has one context bound: Ordering
+def myDef[A: Ordering](...) // same as myDef[A](...)(using Ordering[A])
+
+//////////////////////////////////
+// given definitions
+//////////////////////////////////
+
+// first create an object that can be used as a candidate value for each type you expect
+// ^ this one specifies a candidate value for type Ordering[Int]
+// ^ you would have to implement the ???
+object IntOrdering extends Ordering[Int]:
+  def compare(...): Int = ???
+// then create a given definition, that aliases Ordering[Int] to the above object
+// ^ this instance is evaluated ONCE the first time intOrdering is accessed
+// ^ the value is then reused by all subsequent invocations
+given intOrdering: Ordering[Int] = IntOrdering
+
+
+// alternative syntax
+// Given definitions can be anonymous
+// ^ the compiler will synthesize a name for an anonymous definition
+given Ordering[Double] with
+  def compare(...): Int = ??? // same from the object above, but without hte object def
+
+
+//////////////////////////////////
+// full example: using + given definitions
+//////////////////////////////////
+
+// trait that specifies the interface for implementing any type of poop
+trait Ordering[A]:
+  def compare(...): Int
+
+// object implementing the trait with given definitions
+// ^ remember the given definitions are required to provide canidate values for using parameters
+// given definitions must be visible at:
+// ^ the point of the method call
+// ^ or in a companion object associated with the context parameter
+// ^ else error is thrown
+object Ordering:
+  given Int: Ordering[Int] with
+    def compare(...): Int = ???
+  given String: Ordering[String] with
+    def compare(...): Int = ???
+
+// finally a definition that accepts a context parameter
+// ^ notice it uses the Trait defined above
+// ^ the compiler will use the object with given definitions as candidate values
+// ^^ based on whatever the consumer specifies A to be when the fn is invoked
+// myDef[Int](poop) will use given definition Ordering.Int
+// ^ remember no need to provide [Int] if it can be inferred
+def myDef[A](...)(using Ordering[A]): List[A] = ???
+  // ...
+  // summon is a predefined definition in the standard library
+  // enables you to refer to a named/anonymous instance by its type
+  import Ordering.{given Int} // the type has to be in scope else error
+  // one of these three are preferred as idiomatic scala
+  import Ordering.given // import all givens
+  import Ordering.{given Ordering[?]} // import all Ordering givens by type
+  import Ordering.{given Ordering[Int]} // import a specific ordering givens by type
+  summon[Ordering[Int]](poop)
+  // ...
+```
+
 ### example defs
 
 ```scala
@@ -1646,15 +1761,18 @@ import scala.math.* // in the REPL you have to use import scala.math._
 abs(-8) // Int: 8
 cbrt(27) // Double: 3.0
 ceil(5.45) // Double: 6.0
-floor(5.99) // Double: 5
-round(5.45) // Long: 5
 exp(1) // Double 2.7 blah blah
-pow(3, 2) // Double 9.0
-sqrt(4) // Double 2.0
+floor(5.99) // Double: 5
 log10(1000) // Double 3.0
-min(5, 10) // Int 5
 max(5, 10) // Int 10
-
+min(5, 10) // Int 5
+Ordering.Int // compare integers
+Ordering.Int.reverse // reverse sort, should be avaliable on all similar things
+Ordering.String // compare strings
+Ordering[A] // the type annotation for Ordering
+pow(3, 2) // Double 9.0
+round(5.45) // Long: 5
+sqrt(4) // Double 2.0
 // random
 // ^ returns a double between 0 and almost 1
 (random * 10 + 1) // random Double between 1 and 10

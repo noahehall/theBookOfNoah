@@ -9,6 +9,7 @@
 - [simple scala3 template](https://github.com/scala/scala3.g8)
 - [sbt](https://scala-sbt.org)
 - [scala index: search for libraries](https://index.scala-lang.org/)
+- [whats wrong with sbt?](https://www.lihaoyi.com/post/SowhatswrongwithSBT.html)
 - examples
   - [example build.sbt](https://github.com/noahehall/scala/blob/develop/examples/build.sbt)
   - [example project configuration](https://github.com/noahehall/scala/tree/develop/examples/project)

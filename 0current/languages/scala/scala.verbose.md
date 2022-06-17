@@ -21,6 +21,7 @@
   - [heather miller: types in scala](https://heather.miller.am/blog/types-in-scala.html)
   - [scalable component abstractions](https://lampwww.epfl.ch/~odersky/papers/ScalableComponent.pdf)
   - [BRICS: optimal purely functional priority Queues](https://www.brics.dk/RS/96/37/BRICS-RS-96-37.pdf)
+  - [scala almost succeeded](https://betterprogramming.pub/scala-almost-succeeded-c3b1028b02c5)
 - refs
   - [getting started](https://docs.scala-lang.org/getting-started/)
   - [domain modeling intro](https://docs.scala-lang.org/scala3/book/domain-modeling-intro.html)
