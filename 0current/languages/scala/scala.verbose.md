@@ -52,22 +52,6 @@
 - scala code runs in the browser (via Scala.js)
 - native executables can be build via Scala Native and GraalVM
 
-## gotchas
-
-- indentation is important (think python)
-- compiler evalutes type annotations at compile time, to guard against some kinds of errors at run-time
-  - except in worksheets, as there is no distinction between compile & runtime
-- vals vs defs
-  - vals are always evaluated once, and the result is reused each time their name is used
-  - the body of defs are evaluated each time the def is invoked, if its never invoked then never evaluated
-    - thus one reason to prefer defs over vals is to delay the evlaution of a computation until the point in a progran where its effectively needed
-- companion objects: sealed traits and objects can have the same name
-  - it refers to the object when its used on the right-hand side of a definition, or when it is passed as an argument to an operation
-  - it refers to the sealed trait (the type) when it is used in a type annotation
-  - check the syntax file for mimicking enums in scala 2
-- dont forget about the special `apply` definition
-  - any entity with an `apply` definition can be invoked like a `fn()`
-
 ### scala 2 vs scala 3
 
 - general differences, check syntax file for more concrete distinctions
@@ -98,6 +82,10 @@
 
 ## culture
 
+- polymorphism: achieved via type classes and subtyping
+  - type class: works at the type level
+  - subtyping: works at the instance level
+  - type classes are preferred > subtyping
 - prefer the infix syntax, e.g. `true && true` over dot notation, e.g. `true.&&(true)`
   - both are valid, however
 - large/long expressions should be avoided, break them down and assign results to variables across multiple lines

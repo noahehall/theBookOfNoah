@@ -13,6 +13,7 @@
     - basically your able to pass 2 sets of parameters, which are both available in the fn body
   - scala.math.Ordering[A]: pretty sure i have the syntax wrong
   - need to do better on the using, given explanations & examples
+  - conditional given definitions needs clarity
 
 ## links
 
@@ -51,6 +52,34 @@
   - [Seq scala 2 ref](https://www.scala-lang.org/api/current/scala/collection/immutable/Seq.html)
 
 ## basics
+
+### gotchas
+
+- todo: move this entire section into a code block
+  - indentation is important (think python)
+  - compiler evalutes type annotations at compile time, to guard against some kinds of errors at run-time
+    - except in worksheets, as there is no distinction between compile & runtime
+  - vals vs defs
+    - vals are always evaluated once, and the result is reused each time their name is used
+    - the body of defs are evaluated each time the def is invoked, if its never invoked then never evaluated
+      - thus one reason to prefer defs over vals is to delay the evlaution of a computation until the point in a progran where its effectively needed
+  - companion objects: sealed traits and objects can have the same name
+    - it refers to the object when its used on the right-hand side of a definition, or when it is passed as an argument to an operation
+    - it refers to the sealed trait (the type) when it is used in a type annotation
+    - check the syntax file for mimicking enums in scala 2
+  - dont forget about the special `apply` definition
+    - any entity with an `apply` definition can be invoked like a `fn()`
+  - several standard library definitions have context parameters (e.g anything that relies on Ordering, like List(...).min, or sort fns)
+    - each can be modified by defining given instance before invocation
+
+```scala
+
+// several standard library definitions use context parameters
+// given intReverseOrdering: Ordering[Int] = Ordering.Int.reverse
+// ^ uncomment this line and it outputs 3
+println(List(1, 2, 3).min) // should output 1
+
+```
 
 ### setup
 
@@ -291,6 +320,7 @@ poop
     - you need to import the extension into the file where its used; as they have to be in scope
     - unless the extension is being applied to an opaque type, as the compiler will check the scope of the opaque type definition for you
 - see `# Opaque Type alias` for a real world example
+- see `# type class` for how to use with type classes
 
 ```scala
 
@@ -375,6 +405,209 @@ end IsPooping
 import IsPooping.IsPooping
 val amPooping = IsPooping.parse(true) // val amPooping: IsPooping.IsPooping = true
 val getPooping4 = amPooping.value // val getPooping4: Boolean = true
+```
+
+### type directed programming
+
+- i.e. contextual abstractions
+  - instead of inferring TYPES from VALUES like `val x = 42 == Int`
+  - the scala compiler is able to do the opposite: infer VALUES from TYPES
+    - works when there is exactly ONE value for a type, the compiler can provide the value to us
+- generics: use type parameters to enable a type annotation to be used with more than one type
+- context parameters: instruct the compiler on how to inject values into code based on type annotations
+  - first: let the compiler know that we expect it to pass the value as a parameter to some def
+    - prefix the parameter with `using`
+    - the compiler will look for candidate values that MUST be a given definition (see below)
+  - second: provide candidate values for such parameters
+    - prefix potential values with `given`
+    - use an `alias` to define a given value that is equal to some existing value
+- given instances search scope
+  - all instances that are visible (inherited, imported, or defined in any enclosing scope)
+  - given instances found in any companion object associated with the context parameter
+  - error is thrown if: more than one given instance matches the requirement for a context parameter and they none have higher relative specifity
+    - e.g., given A is more specific than given B, whenever:
+      - a is in a closer lexical scope than b
+      - a is defined in a class/object which is a subclass of the class defining b
+      - type A is a subtpe of type B
+      - type A has more `fixed` parts than B
+- context parameter given instance association
+  - companion objects associated with of any inherited types of the context parameter
+  - companion objects associated with the specific context paramater type
+  - if the context parameter is an inner class, the other objects in which it is embedded
+- conditional given instances
+  - when an given instances also uses a context parameter
+  - e.g. ordering an addresses: order by zip code if zip codes are different, else order by street name
+    - base given instances: defines ordering of both zip codes and street names
+    - specifies 2 context parameters: ordering of zip coes, and ordering of street names
+
+```scala
+//////////////////////////////////
+/// using definitions
+//////////////////////////////////
+// definition with generic type parameter
+// myDef[Int](poop) // can specify the A if it cant be inferred
+def myDef[A](xs: List[A]): List[A]
+// ^ extended with an additional parameter list for consumer to pass additional fns specific to their type
+// ^ notice we specify the fn signature expected for the second parameter list
+// myDef(poop)(myLambdaMatchingSignature)
+def myDef[A](xs: List[A])(specificForThisA: (A, A) => Boolean): List[A] =
+  ???
+  specificforThisA(x, y)
+  ???
+
+// context parameters are prefixed with `using`
+// ^ remember this instructrs the compiler to pass a value based on the type!
+// the compiler knows to provide a value for poop based on the type A for Ordering
+// consumers now invoke the fn simply as myDef(...) without the second parameter list as before
+// myDef[Int](poop)
+// myDef[Int](poop)(using Ordering.Int) // can also explicity pass the value, but not necessary
+// ^ no need to specify [Int] if it can be inferred
+// ^ no need to specify the second parameter list, the compiler provides the value!
+def myDef[A](xs: List[A])(using poop: Ordering[A]): List[A] = ???
+
+// more syntax examples
+def myDef[A](...)(...)(....) // there can be multiple parameter lists
+def myDef[A](....)(using a: A, b: B) // both a and b are context parameters
+def myDef[A](...)(using a: A)(...)(using b: B) // context params can be mixed with regular params
+
+// context params can be anonymous,
+// ^ if the body doesnt mention the param by name,
+// ^ but simply passes it on as a context argument to subsequent methods
+def myDef[A](...)(using SomeType[A])
+
+// shorter syntax for context params
+// ^ i.e. type parameter A has one context bound: Ordering
+def myDef[A: Ordering](...) // same as myDef[A](...)(using Ordering[A])
+
+//////////////////////////////////
+/// given definitions
+//////////////////////////////////
+
+// first create an object that can be used as a candidate value for each type you expect
+// ^ this one specifies a candidate value for type Ordering[Int]
+// ^ you would have to implement the ???
+object IntOrdering extends Ordering[Int]:
+  def compare(...): Int = ???
+// then create a given definition, that aliases Ordering[Int] to the above object
+// ^ this instance is evaluated ONCE the first time intOrdering is accessed
+// ^ the value is then reused by all subsequent invocations
+given intOrdering: Ordering[Int] = IntOrdering
+
+
+// alternative syntax
+// Given definitions can be anonymous
+// ^ the compiler will synthesize a name for an anonymous definition
+given Ordering[Double] with
+  def compare(...): Int = ??? // same from the object above, but without hte object def
+
+// conditional given definitions
+// OrderingList: an ordering for Lists with elements of type A
+// ^ exists ONLY if there is an ordering for A (i.e. the using parameter list)
+given orderingList[A](using ord: Ordering[A]): Ordering[List[A]] with ???
+
+//////////////////////////////////
+// full example: using + given definitions
+//////////////////////////////////
+
+// trait that specifies the interface for implementing any type of poop
+trait Ordering[A]:
+  def compare(...): Int
+
+// object implementing the trait with given definitions
+// ^ remember the given definitions are required to provide canidate values for using parameters
+// given definitions must be visible at:
+// ^ the point of the method call
+// ^ or in a companion object associated with the context parameter
+// ^ else error is thrown
+object Ordering:
+  given Int: Ordering[Int] with
+    def compare(...): Int = ???
+  given String: Ordering[String] with
+    def compare(...): Int = ???
+
+// finally a definition that accepts a context parameter
+// ^ notice it uses the Trait defined above
+// ^ the compiler will use the object with given definitions as candidate values
+// ^^ based on whatever the consumer specifies A to be when the fn is invoked
+// myDef[Int](poop) will use given definition Ordering.Int
+// ^ remember no need to provide [Int] if it can be inferred
+def myDef[A](...)(using Ordering[A]): List[A] = ???
+  // ...
+  // summon is a predefined definition in the standard library
+  // enables you to refer to a named/anonymous instance by its type
+  import Ordering.{given Int} // the type has to be in scope else error
+  // one of these three are preferred as idiomatic scala
+  import Ordering.given // import all givens
+  import Ordering.{given Ordering[?]} // import all Ordering givens by type
+  import Ordering.{given Ordering[Int]} // import a specific ordering givens by type
+  summon[Ordering[Int]](poop)
+  // ...
+
+//////////////////////////////////
+// this entire section in scala 2
+//////////////////////////////////
+
+// context params are prefixed with implicit
+// only a single parameter list (specifically the last one) can be a context parameter
+// Scala 3
+def sort[A](as: List[A])(using ordering: Ordering[A]): List[A]
+// Scala 2
+def sort[A](as: List[A])(implicit ordering: Ordering[A]): List[A]
+
+// given definitions are prefixed with implicit
+// Any regular val, def, or object definition could be marked as implicit.
+// Scala 3
+given orderingInt: Ordering[Int] with
+  def compare(x: Int, y: Int): Int =
+    if x < y then -1 else if x > y then 1 else 0
+// Scala 2
+implicit object orderingInt extends Ordering[Int] {
+  def compare(x: Int, y: Int): Int =
+    if (x < y) -1 else if (x > y) 1 else 0
+}
+// ^ ... or
+implicit val orderingInt: Ordering[Int] = new Ordering[Int] {
+  def compare(x: Int, y: Int): Int =
+    if (x < y) -1 else if (x > y) 1 else 0
+}
+
+// ^ conditional given instances were defined by an implicit def taking implicit params
+// Scala 3
+given orderingPair[A, B](
+    using ordA: Ordering[A], ordB: Ordering[B]): Ordering[(A, B)] with
+  def compare(x: (A, B), y: (A, B)) = ...
+// Scala 2
+implicit def orderingPair[A, B](
+    implicit ordA: Ordering[A], ordB: Ordering[B]): Ordering[(A, B)] = new Ordering[(A, B)] {
+  def compare(x: (A, B), y: (A, B)) = ...
+}
+```
+
+#### Type class
+
+- type class: classify types by the operations they support
+  - pattern consisting of 3 elements
+    - trait: an interface defining a generic type parameter with arbitrary method signatures
+    - object: defining several given instances (candidates for context parameters) for expected types + implementations of the interface
+    - definition: a polymorphic method that takes a context parameter (see type directed programming) matching the interface (the compiler will auto choose the correct given instance implemneted in the object)
+- use cases
+  - support retroactive extension: the ability to extend a data type with new operations without changing hte original definition of the data type
+  - enable conditional given definitions
+
+```scala
+// example implementation of type class Ordering
+// interface: type parameter with method signature:
+// ^ this is the type Class that support comparison
+trait Ordering[A]:
+  def compare(x: A, b: A): Int
+// object: implementing interface for specific types
+object Ordering:
+  given Int: Ordering[Int] with
+    def compare(...) = ???
+  given String: Ordering[string] with
+    def compare(...) = ???
+// definition: polymorphic method with a context parameter matching the interface
+def poop[A](...)(using Ordering[A]) List[A] = ???
 ```
 
 ### domain modeling
@@ -1565,128 +1798,6 @@ object poop:
 // ^ use to destructure objects
 ```
 
-### type directed programming
-
-- i.e. contextual abstractions
-  - instead of inferring TYPES from VALUES like `val x = 42 == Int`
-  - the scala compiler is able to do the opposite: infer VALUES from TYPES
-    - works when there is exactly ONE value for a type, the compiler can provide the value to us
-- context parameters: instruct the compiler on how to pass values for you based on type annotations
-  - first: let the compiler know that we expect it to pass the value as a parameter to some def
-    - prefix the parameter with `using`
-    - the compiler will look for candidate values that MUST be a given definition (see below)
-  - second: provide candidate values for such parameters
-    - prefix potential values with `given`
-    - use an `alias` to define a given value that is equal to some existing value
-- generics: use type parameters to enable a type annotation to be used with more than one type
-- given instances search scope
-  - all instances that are visible (inherited, imported, or defined in any enclosing scope)
-  - given instances found in any companion object associated with the context parameter
-- context parameter given instance association
-  - companion objects associated with of any inherited types of the context parameter
-  - companion objects associated with the specific context paramater type
-  - if the context parameter is an inner class, the other objects in which it is embedded
-
-```scala
-//////////////////////////////////
-// using definitions
-//////////////////////////////////
-// definition with generic type parameter
-// myDef[Int](poop) // can specify the A if it cant be inferred
-def myDef[A](xs: List[A]): List[A]
-// ^ extended with an additional parameter list for consumer to pass additional fns specific to their type
-// ^ notice we specify the fn signature expected for the second parameter list
-// myDef(poop)(myLambdaMatchingSignature)
-def myDef[A](xs: List[A])(specificForThisA: (A, A) => Boolean): List[A] =
-  ???
-  specificforThisA(x, y)
-  ???
-
-// context parameters are prefixed with `using`
-// ^ remember this instructrs the compiler to pass a value based on the type!
-// the compiler knows to provide a value for poop based on the type A for Ordering
-// consumers now invoke the fn simply as myDef(...) without the second parameter list as before
-// myDef[Int](poop)
-// myDef[Int](poop)(using Ordering.Int) // can also explicity pass the value, but not necessary
-// ^ no need to specify [Int] if it can be inferred
-// ^ no need to specify the second parameter list, the compiler provides the value!
-def myDef[A](xs: List[A])(using poop: Ordering[A]): List[A] = ???
-
-// more syntax examples
-def myDef[A](...)(...)(....) // there can be multiple parameter lists
-def myDef[A](....)(using a: A, b: B) // both a and b are context parameters
-def myDef[A](...)(using a: A)(...)(using b: B) // context params can be mixed with regular params
-
-// context params can be anonymous,
-// ^ if the body doesnt mention the param by name,
-// ^ but simply passes it on as a context argument to subsequent methods
-def myDef[A](...)(using SomeType[A])
-
-// shorter syntax for context params
-// ^ i.e. type parameter A has one context bound: Ordering
-def myDef[A: Ordering](...) // same as myDef[A](...)(using Ordering[A])
-
-//////////////////////////////////
-// given definitions
-//////////////////////////////////
-
-// first create an object that can be used as a candidate value for each type you expect
-// ^ this one specifies a candidate value for type Ordering[Int]
-// ^ you would have to implement the ???
-object IntOrdering extends Ordering[Int]:
-  def compare(...): Int = ???
-// then create a given definition, that aliases Ordering[Int] to the above object
-// ^ this instance is evaluated ONCE the first time intOrdering is accessed
-// ^ the value is then reused by all subsequent invocations
-given intOrdering: Ordering[Int] = IntOrdering
-
-
-// alternative syntax
-// Given definitions can be anonymous
-// ^ the compiler will synthesize a name for an anonymous definition
-given Ordering[Double] with
-  def compare(...): Int = ??? // same from the object above, but without hte object def
-
-
-//////////////////////////////////
-// full example: using + given definitions
-//////////////////////////////////
-
-// trait that specifies the interface for implementing any type of poop
-trait Ordering[A]:
-  def compare(...): Int
-
-// object implementing the trait with given definitions
-// ^ remember the given definitions are required to provide canidate values for using parameters
-// given definitions must be visible at:
-// ^ the point of the method call
-// ^ or in a companion object associated with the context parameter
-// ^ else error is thrown
-object Ordering:
-  given Int: Ordering[Int] with
-    def compare(...): Int = ???
-  given String: Ordering[String] with
-    def compare(...): Int = ???
-
-// finally a definition that accepts a context parameter
-// ^ notice it uses the Trait defined above
-// ^ the compiler will use the object with given definitions as candidate values
-// ^^ based on whatever the consumer specifies A to be when the fn is invoked
-// myDef[Int](poop) will use given definition Ordering.Int
-// ^ remember no need to provide [Int] if it can be inferred
-def myDef[A](...)(using Ordering[A]): List[A] = ???
-  // ...
-  // summon is a predefined definition in the standard library
-  // enables you to refer to a named/anonymous instance by its type
-  import Ordering.{given Int} // the type has to be in scope else error
-  // one of these three are preferred as idiomatic scala
-  import Ordering.given // import all givens
-  import Ordering.{given Ordering[?]} // import all Ordering givens by type
-  import Ordering.{given Ordering[Int]} // import a specific ordering givens by type
-  summon[Ordering[Int]](poop)
-  // ...
-```
-
 ### example defs
 
 ```scala
@@ -1735,6 +1846,12 @@ println(n.abs) // scala.NotImplementedError: an implementation is missing
 
 // when your pattern matching doesnt check for all possiblities
 // warning: match may not be exhaustive
+
+// a conditional given instance that depends on itself creates a recursive given definition
+// occurs because loop uses an A (using a: A), but also depends on A (A = a)
+trait A
+given loop(using a: A): A = a // error: no implicit argument of type A was found....diverging implicit search...
+
 ```
 
 ## standard library
