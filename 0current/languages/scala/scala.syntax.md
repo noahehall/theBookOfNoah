@@ -2,18 +2,19 @@
 
 - all about the syntax
 - as usual, search for `/// Something` or `# Something` to find what youre looking for
+- there are 7 coursers on scala on coursera, take them.
 
 - todos
   - find sealed traits in the scala docs
   - todo: need to do a better job at categorizing operators, especially the mutable vs immutable ones
   - extending, using `poop extends blah1, blah2` vs `poop extends blah1 with blah2`
-  - definitions with signatures like `def poop(...) { (...) => ??? }`
-    - think this has something to do with currying, check coursera discussion
   - definitions with signatures like `def poop(...)(...) => ???`
     - basically your able to pass 2 sets of parameters, which are both available in the fn body
   - scala.math.Ordering[A]: pretty sure i have the syntax wrong
   - need to do better on the using, given explanations & examples
   - conditional given definitions needs clarity
+  - i keep seeing `lazy val ....` everywhere, find it in the docs
+  - in general look through all the coursera assignments for each week, there are bunches of stuff in there that wasnt explained in the course and could be a good starting point for grepping the docs
 
 ## links
 
@@ -267,6 +268,7 @@ val interestingVal: Int =
 /// List[subtype]
 /// Seq[subtype]
 /// String text
+/// Try[subtype]
 
 val superLongNumber: BigInt = BigInt("insert really long number here")
 
@@ -313,12 +315,16 @@ poop
 
 ### Extensions
 
-- extend any type with NEW functionality
+- extend any type with NEW functionality outside of the type definition
   - you cannot OVERRIDE existing fnality
   - you cannot refer to other class members via `this`
   - if you get a `blah doesnt have poop`
     - you need to import the extension into the file where its used; as they have to be in scope
     - unless the extension is being applied to an opaque type, as the compiler will check the scope of the opaque type definition for you
+  - reqs: extension methods for an expression of type T are valid if:
+    - they are visible (defined, inherited, imported) in a scope enclosing the point of the application, or
+    - they are defined in an object associated with type T, or
+    - they are defined n a given instance associated with type T
 - see `# Opaque Type alias` for a real world example
 - see `# type class` for how to use with type classes
 
@@ -600,6 +606,8 @@ implicit def orderingPair[A, B](
 // ^ this is the type Class that support comparison
 trait Ordering[A]:
   def compare(x: A, b: A): Int
+  extension (poop: A) // provide an extension to any type of A where there is an Ordering[A]
+    def flush (...): Boolean = ???
 // object: implementing interface for specific types
 object Ordering:
   given Int: Ordering[Int] with
@@ -608,6 +616,46 @@ object Ordering:
     def compare(...) = ???
 // definition: polymorphic method with a context parameter matching the interface
 def poop[A](...)(using Ordering[A]) List[A] = ???
+```
+
+#### Type conversions
+
+##### Implicit Conversions
+
+- automatically convert an expression of type A to type B
+  - relies on given instances, and at most ONE implicit conversion can be applied to a given expression
+- use cases
+  - usually for providing more ergonomic/intuitive interfaces & APIs
+
+```scala
+// example modeling some JSON values
+sealed trait Json
+case class JNumber(value: BigDecimal) extends Json
+case class JArray(els: List[Json]) extends Json
+case class JObject(fields: (String, Json)*) extends Json
+// default way to create json objects without implicit type conversion
+JObject("name" -> JString("Noah"), ...etc)
+// ergonomic way with implicit conversion
+object Json
+  // def that accepts a tuple of repeated params (key, value), (key value), etc
+  def obj(fields: (string, JsonField)*): Json =
+    JObject(fields.map(_.json)*)
+  // type that models any Json field
+  case class JsonField(json: Json)
+  // companion object providing implicit conversions via given instances
+  object JsonField:
+    // implicit conversions are given instances of type Conversion, from type A to type B
+    // ^ e.g. string to JsonField, Int to JsonField, etc
+    given fromString: Conversion[String, JsonField] with
+      def apply(s: String) = JsonField(JString(s))
+    // you need a given instance + apply (implicit conversion) for each type of JsonField
+    // additional givens for types
+    // ...
+    given fromJson:Conversion[Json, JsonField] with
+      def apply(j: Json) = JsonField(j)
+// how the consumer uses the implicit conversion
+import scala.language.implicitConversions // have to inform the compiler of our intent
+Json.obj("name" -> "noah", ...etc) // use the implicit conversion
 ```
 
 ### domain modeling
@@ -1226,6 +1274,7 @@ val notFound = poop.find(x => x == 1000) // None
 #### Tuple
 
 - collection of fixed size, but the values may have different types,
+- Tuples are not classes! The syntax `someObject.memberName` is for classes.
 
 ```scala
 
@@ -1234,6 +1283,17 @@ val poop = ("first", 1)
 val poop: (string, Int) = ("first", 1)
 val (x, y) = poop // deconstruct a tuple
 poop(0) // random access, index starts at 0
+
+// destructuring tuples
+// ^ assign to a val: spamEgg is a 2-Tuple
+v​al (x, y) = spamEgg
+// ^via pattern mattching
+spamEgg match
+    c​ase (x, y) => ???
+// via a def using a partial function (with curly braces) with a case expression
+spamEgg.map {​ case (x, y) => ??? }
+// via index params
+spamEgg.groupMap(_._1)(_._2) // first and second element in two parameter lists
 ```
 
 #### Map
@@ -1712,6 +1772,225 @@ while (condition) {
 
 ```
 
+### Error Handling
+
+- user facing errors: should give informative but not detailed (security risk) so they can fix bad input
+- internal facing errors: give detailed information (e.g. via logs) that relates to the source code to aid with debugging
+- error handling scenarios:
+  - exceptions: can be thrown to (unless caught) interrupt program execution
+    - any definition can throw any exception type without having to delcare it in its signature (like in java)
+    - scalas default exception handler stops the program after printing the stack trace to stderr
+    - Fatal errors: types of Throwables you should never try to catch
+    - Nonfatal Errors: types of throwables you could catch
+  - validations: validate entities that could possibly be/have invalid members
+    - invalid entities could potentially be aggregated and reported
+    - but generally shouldnt never stop program execution or throw exceptions
+
+#### try catch
+
+- exceptions & try blocks will stop execution flow as soon as an error is thrown
+  - see `# Either` for an alternative
+- flatMap & Map vs recover & recoverWith
+  - flatMap & Map immediately return their failures
+  - recover & recoverWith enable you to return arbitrary successes in the event of failures
+
+```scala
+// exception class hierarchy
+// Throwable >
+// Error: exceptions thrown by the JVM
+// ^ Error > OutOfMemoryError, StackoverflowError
+// Exception: for programs and library failures
+// ^ Exception > IOException, ArithmeticException, ...
+
+// exception types
+/// RuntimeException
+/// ArithmeticException
+
+// throw an exception to interrupt program execution
+throw RuntimeException("pooped on myself")
+
+// try catch
+// similar to pattern matching, you have to specify catch blocks for each error type
+def poop(): Unit =
+  try
+    thisBuggyMethod()
+  catch
+    case blah: RuntimeException =>
+      System.err.println(s"pooped myself: $blah")
+      println("stopping program:")
+    case blah: ArithmeticException =>
+      System.err.println(s"pooped myself again: $blah")
+      println("stopping program:")
+
+// try catch all non fatail errors
+import scala.util.control.NonFatail
+def poop() =
+  try
+    ???
+  catch
+    case NonFatal(throwable) => ???
+
+// try catch blocks are expressins, thus they return a value
+val poop: Boolean =
+  try
+    isThereToiletPaper()
+  catch
+    case NonFatal(mustntBeAny) =>
+      println(mustnBeAny)
+      false
+  finally
+    yolo()
+
+// explicitly indicate a failable definition via return type Try
+// ^ this forces consumers to deal with the failure branch
+import scala.util.Try // Try[A] = Success[A] || Failure
+def poop(): Try[Int] =
+  // wrap the entire implementation in the Try constructor
+  Try {
+    ???
+  }
+// consumers can recover in the event of Failure
+val didPoop = poop()
+  .recover { // return a sync result on failure
+    case blah: RuntimeException => ???
+  }
+  .recoverWith { // return an async result on failure, see `# Future`
+    ???
+  }
+
+// alternatively you can pattern match
+// ^ this forces consumers to deal with the failure branch
+import scala.util.{Try, Success, Failure}
+def poop(): Try[Boolean] = ???
+val didPoop = poop() match
+  case Success(bool) => bool
+  case Failure(throwable) => println(s"stopped up with exception $throwable ")
+
+// delaying catch via flatMap and map
+import java.time.{LocalDate, Period}
+import scala.util.Try
+// both flatMap and map wont invoke the supplied partialFn arguments if someTryParse fails
+def tryPeriod(a: String, b: String): Try[Period] =
+  someTryParse(a).flatMap { (aSuccess: LocalDate) =>
+    someTryParse(b).map { (bSuccess: LocalDate) =>
+      Period.between(aSuccess, bSuccess)
+    }
+  }
+
+// delaying catch via for expressions
+// fkn way cleaner than the the flatMap and map
+def tryPeriod (a: String, b: String): Try[Period] =
+  for
+    aSuccess <- someParser(a)
+    bSuccess <- someParser(b)
+  yeild
+    Period.between(aSuccess, bSuccess)
+```
+
+#### Either
+
+- enable capturing errors without stopping execution flow
+  - use case is to manage data validation and capturing of errors,
+- may want to use a third party library than rolling your own like in the examples below
+- general operations
+  - transform valid values with map: success should be on the right
+  - chain validation rules with flatMap + partialFn then map
+    - didnt include this in the example, but flatMap + partialFn then map pattern is elseware in this file
+  - aggregate validValues with validateBoth
+    - didnt include this in the example, but its a `zip` or `product` fn
+  - validate a list of things via validateEach
+    - didnt include this int he example, but its a `traverse` or `foreach` fn
+
+```scala
+// Define a type for aggregating error msgs
+type Errors = Seq[String]
+// define a type for something being a success // error
+// left & right can be arbitrary things, doesnt have to be used with Errors
+// but generally always put the success type on right (because map only transforms the right side)
+type Validated[A] = Either[Errors, A] // Left type and Right type
+// use the validation model
+val poop: Validated[Boolean] = Right(true)
+val cantPoop: Validated[Boolean] = Left(Seq("no toilet paper"))
+// or with pttern matching
+// can also be used, with .map and .flatMap like all the other dualistic types
+val didPoop = poop match
+  case Right(str) => "successfully pooped"
+  case Left(errs) => s"couldnt poop: $errs"
+
+// example parse date fn using Either
+// notice we invoke Try as a fn then call .toEither on the result
+def parseDate(str: String): Validated[LocalDate] =
+  Try(localDate.parse(Str)).toEither
+    .left.map(err => Seq(Error.getMessage))
+```
+
+### Concurrency
+
+- distributed computations: expressions evaluated across dsitributioned systems, i.e. more than one physical machines (nodes) or a single node but across cpus/processes/threads
+  - scenario 1: multiple clients writing/reading to the same machine
+  - scenario 2: a program spread across multiple machines (nodes), each handling a specific use case but reading/writing to the same datalayer & intercommunicating with each other
+  - scenario 3: a single node whose program is spread across CPUs/threads/processes, each interacting with and sharing the same memory
+  - scenario 4: etc etc etc
+- multi-threading: when leveraging multiple CPUs in a single program, ...
+- thread-safe data structures: when sharing data between several threads of execution, executing computations across threads requires Futures
+- transactions: sharing data between nodes in a database, ...
+  - see ACID elsewhere in this repo
+
+#### Future
+
+- represents a value that may not be available yet, but might be in the future, once an asynchronous computation has completed
+- future values are generally results of computations that occur across parallel and sequential branches
+  - the execution flow is similar to a directed graph
+
+```scala
+
+// both provide thread-safe data structures
+import java.util.current.atomic // TODO
+import scala.concurrent.Future
+
+
+// will eventually return the inserted user
+def insertUser(...): Future[User] = ???
+// even more realistic is modeling future user with Try and Option
+// ^ None: future is not yet settled
+// ^ Some(Success(User)): future succeeded
+// ^ Some(Failure(e)): future failed due to exception thrown
+def insertUser(...): Future[Option[Try[User]]]
+
+// operations on future include the usual destructuring stuff
+// ^ map, fatMap, try, Option, either, Future.traverse, recover, recoverWith, etc
+
+// chain two asynchronous computations that need to happen sequentlly via flatmap / map
+def poop(): Future[Boolean] =
+  asyncPoop.flatMap(pooped => futureFlush(pooped))
+
+// execute two asynchronous computations that need/could/might occur in parallel via zip / traverse (see below)
+val pooped: Future[Boolean] = asyncPoop()
+val farted: Future[Boolean] = asyncFart()
+def sharted: Future[(pooped, farted)] = pooped.zip(farted)
+
+// execute an arbitrary amount of async computations and get a final result containing all completed values
+// someAsyncFn is executed independently and in no particular order on each item in seqOfElements
+val wholeBunchOfStuff: Future[Seq[stuff]] = Future.traverse(seqOfElements)(someAsyncFn)
+
+// recover from a failure on a future and return a sync result
+val poop: Future[Boolean] =
+  someAsyncPoop()
+    .map(_ => true) // successful poop
+    .recover { case NonFatal(ouch) => false } // sync result
+    .recoverWith { ... } // async result
+
+// modefling common Future operations
+trait Future[A]:
+  def map[B](f: A => B): Future[B]
+  def zip[B](that: Future[B]): Future[(A, B)]
+  def flatMap[B](f: A => Future[B]): Future[B]
+  def recover(f: Throwable => A): Future[A]
+  def recoverWith(f: Throwable => Future[A]): Future[A]
+object Future:
+  def traverse[A, B](as: Seq[A])(f: A => Future[B]): Future[Seq[B]]
+```
+
 ## definitions and function literals
 
 - invoke fns like `someFn` no `()` unless args are expected
@@ -1739,8 +2018,14 @@ def isTruthy(a: Matchable) = a match
   case 0 | "" => false
   case _ => true
 
-// def with no paramsdef with no params
+// def with no params
 def poop: Boolean = true // always returns true
+
+// def with repeated params, i.e. blah... in javascript
+// ^ and like javascript, can only appear at the end of the parameter list
+// poop("one", "two")
+def poop(v: String*): Unit =
+    println(v) // ArraySeq(one, two)
 
 // scala 2 requires curly braces
 def poop(): String = {
@@ -1796,6 +2081,20 @@ object poop:
 /// TODO @see pattern matching: option-less
 /// unapply
 // ^ use to destructure objects
+```
+
+### partial fns
+
+- lambdas that may not be defined on all their domain type
+  - e.g. `PartialFn[Int, String]` may not be defined for some Int values
+  - definition can be verified via `if PartialFn.isDefinedAt(poop) then partFn(poop)`
+
+```scala
+
+// partial fn for Throwable of type Unit, but only for Throwable values also subtypes of RuntimeException
+val handler: PartialFunction[Throwable, Unit] =
+  case blah: RuntimeException => println("wtf")
+
 ```
 
 ### example defs
@@ -1856,14 +2155,65 @@ given loop(using a: A): A = a // error: no implicit argument of type A was found
 
 ## standard library
 
-### java stuff
+### auto imported stuff
+
+#### Using
+
+- see `# Source`
+- enables automatically (eventually) releasing of Source acquitions, even in the event of failure
+
+#### Source
 
 ```scala
-import java.time.*
+
+// def to read from a file
+def readFile(fpath: String): Try[Seq[String]] = Try {
+  val source = Source.fromFile("./some/path")
+  // but what if error occurs here?
+  val lines: Seq[String] = source.getLines.toSeq
+  // make sure to close the handler
+  // may not be called if error occurs above
+  source.close()
+  lines
+}
+// better definition to read from a file
+def readFile(fpath: String): Try[Seq[String]] =
+  // Using ensure that whatever resource is being used (in this case Source.fromFile)
+  // will eventually be released automatically
+  Using(Source.fromFile(fpath)) { source =>
+    source.getLines.toSeq
+  }
+
+// example reading a file containing a date string on each line
+def parseDates(fpath: String): Try[Seq[LocalDate]] =
+  // remember flatMap can take a partialFn to pull the seq[string] out of the try
+  readFile(fpath).flatMap{ (dateStrings: Seq[String]) =>
+    // iterate over each line and accumulate the date strings into a collection of local dates
+    // TODO: dunno why we specifically chose a vector
+    dataStrings.foldLeft[Try[Seq[LocalDate]]](Success(Vector.empty)) {
+      // this runs on each string in Seq[String] from readFile
+      // ^ i.e. on each line of the file
+      (tryDates, thisDateString) =>
+        for
+          dates <- tryDates
+          date <- someParseDateFn(dateString)
+        yield
+          dates :+ date // push this line into the accumulation of dates
+    }
+  }
+```
+
+### java stuff
+
+#### java.time
+
+```scala
+import java.time.{localDate, Period}
 
 /// LocalDate
 LocalDate
   .now
+  .parse(str)
 
 ```
 
@@ -1894,5 +2244,28 @@ sqrt(4) // Double 2.0
 // ^ returns a double between 0 and almost 1
 (random * 10 + 1) // random Double between 1 and 10
 (random * 10 + 1).toInt // random integer between 1 and 10
+
+```
+
+### scala.language
+
+```scala
+import scala.language.implicitConversions
+```
+
+### scala.util
+
+```scala
+
+import scala.util.control.NonFatail
+import scala.util.{Try, Failure, Success} // Try[A] = Success[A] || Failure
+
+```
+
+### scala.io
+
+```scala
+
+import scala.io.{Source}
 
 ```

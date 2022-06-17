@@ -22,6 +22,7 @@
   - [scalable component abstractions](https://lampwww.epfl.ch/~odersky/papers/ScalableComponent.pdf)
   - [BRICS: optimal purely functional priority Queues](https://www.brics.dk/RS/96/37/BRICS-RS-96-37.pdf)
   - [scala almost succeeded](https://betterprogramming.pub/scala-almost-succeeded-c3b1028b02c5)
+  - [scala center project roadmap](https://scala.epfl.ch/projects.html)
 - refs
   - [getting started](https://docs.scala-lang.org/getting-started/)
   - [domain modeling intro](https://docs.scala-lang.org/scala3/book/domain-modeling-intro.html)
@@ -65,9 +66,14 @@
 
 ## terms
 
+- category theory:
+  - map: defined by the type class Functor
+  - zip: defined by the type class Applicative
+  - flatMap: defined by the type class Monad
+  - traverse: defined by the type class Traverse
 - pure functions: they do not mutate any data or have other side-effects (like throwing exceptions or writing to a file). All they do is simply receive values and compute the result.
 - term inference: Given a type, the compiler synthesizes a “canonical” term that has that type
-- parameter lists: generally methods can have more tha one parameter lists
+- parameter lists: generally methods can shave more tha one parameter lists
 - predicate: a fn that returns boolean
 - vararg constructor: variable argument constructor; you can pass a vriable number of arguments to it
 - scala worksheet: a file containing Scala definitions and expressions that are evaluated from top to bottom; like a persistent REPL session that you can edit and run again
@@ -82,10 +88,14 @@
 
 ## culture
 
-- polymorphism: achieved via type classes and subtyping
+- defense programming can be inconvenient; prefer explicitly modeling the failable parts of your programs via type annotations
+  - exceptions should be used as a last resort only, unless consuming expressions known to use exceptions
+  - define an exception handler at hte beginning of the program/use the default handler provided by the runtime
+  - explicitly indicate known exceptions in definition result (return type) annotations
+    - prefer this over the others whenever failures are likely to happen: parsing data, file handling, remote calls, async stuff, etc.
+- polymorphism: achieved via type classes and subtyping; type classes are preferred > subtyping
   - type class: works at the type level
   - subtyping: works at the instance level
-  - type classes are preferred > subtyping
 - prefer the infix syntax, e.g. `true && true` over dot notation, e.g. `true.&&(true)`
   - both are valid, however
 - large/long expressions should be avoided, break them down and assign results to variables across multiple lines
