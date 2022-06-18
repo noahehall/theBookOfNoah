@@ -3,6 +3,9 @@
 - scala build tool quickies
 - install with sdkman and move on with your life
 
+- todo
+  - https://www.coursera.org/learn/scala-functional-programming/supplement/uV974/sbt-tutorial-and-submission-of-assignments-please-read
+
 ## links
 
 - [giter8 scala project templates](https://www.foundweekends.org/giter8/)
@@ -15,6 +18,7 @@
   - [example project configuration](https://github.com/noahehall/scala/tree/develop/examples/project)
 - refs
   - [sbt docs intro](https://www.scala-sbt.org/1.x/docs/)
+  - [organizing build files](https://www.scala-sbt.org/1.x/docs/Organizing-Build.html)
 - sbt plugins
   - [compilation errors summary](https://github.com/duhemm/sbt-errors-summary)
   - [static site generation, generally for library documentation](https://github.com/sbt/sbt-site)

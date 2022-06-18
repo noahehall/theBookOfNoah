@@ -1,8 +1,14 @@
 # scala
 
 - all about the syntax
+  - become one with this portal: https://dotty.epfl.ch/api/index.html
 - as usual, search for `/// Something` or `# Something` to find what youre looking for
-- there are 7 coursers on scala on coursera, take them.
+- there are 7 courses on scala on coursera, take them.
+
+- bookmark
+
+  - https://www.coursera.org/learn/scala-functional-programming/supplement/Sauv3/cheat-sheet
+    - pattern matching
 
 - todos
   - find sealed traits in the scala docs
@@ -15,16 +21,27 @@
   - conditional given definitions needs clarity
   - i keep seeing `lazy val ....` everywhere, find it in the docs
   - in general look through all the coursera assignments for each week, there are bunches of stuff in there that wasnt explained in the course and could be a good starting point for grepping the docs
+  - variance: check cheatsheet link or adt link
+    - covariant
+    - contravariant
+    - nonvariant
 
 ## links
 
+- [scala user Q&A forum](https://users.scala-lang.org/latest)
+- [scala cheatsheet](https://github.com/lampepfl/progfun-wiki/blob/gh-pages/CheatSheet.md)
 - [intellij toolbox, fkn use it](https://www.jetbrains.com/toolbox-app/)
 - [scala & intellij: getting started](https://docs.scala-lang.org/getting-started/intellij-track/getting-started-with-scala-in-intellij.html)
-- [example gitignore for scala](https://alvi nalexander.com/source-code/scala/sample-gitignore-file-scala-sbt-intellij-eclipse/)
+- [example gitignore for scala](https://alvinalexander.com/source-code/scala/sample-gitignore-file-scala-sbt-intellij-eclipse/)
+- [programming in scala 3 book](https://www.artima.com/shop/programming_in_scala_5ed)
 - examples
   - [groupBy and groupMap](https://blog.genuine.com/2019/11/scalas-groupmap-and-groupmapreduce/)
+  - [fn composition](https://www.baeldung.com/scala/function-composition)
   - [scala 3 example project](https://github.com/scala/scala3-example-project)
+  - [scala on stackoverflow: super useful](https://stackoverflow.com/tags/scala/info)
 - refs
+  - [scala 3 ref: fkn become one with this](https://dotty.epfl.ch/api/index.html)
+  - [long list of scala & fp terms](https://docs.scala-lang.org/glossary/)
   - [adt: algebraic data types](https://docs.scala-lang.org/scala3/book/types-adts-gadts.html)
   - [classes: inner classes](https://docs.scala-lang.org/tour/inner-classes.html)
   - [classes: open classes](https://docs.scala-lang.org/scala3/reference/other-new-features/open-classes.html)
@@ -53,6 +70,11 @@
   - [Seq scala 2 ref](https://www.scala-lang.org/api/current/scala/collection/immutable/Seq.html)
 
 ## basics
+
+- scope:
+  - entities within a block `{}` or `indentation in scala 3` are only visible from within the block
+  - ^ and shadow entities of the same names outside the block
+- semi colons only required to separate two statmeents on a single line
 
 ### gotchas
 
@@ -113,6 +135,8 @@ scala --version
 ```scala
 // program entry point, can be in any source file
 @main def run(): Unit = ???
+// alternative syntax
+object SomeAppName extends App: ???
 
 // file: src/main/scala/poop/soup/woop/wtf.scala
 // package: assign a namespace to all things in this file
@@ -131,6 +155,7 @@ import scala.math._ // wildcard import in scala 2
 import someObj.* // wildcard import in scala 3
 import StringUtils.{truncate, containsWhitespace} //import some members of package
 import poop.Flush // import a specific member
+import poop.{Flush as ShouldIFlush} // import as alias
 ```
 
 ### quickies
@@ -153,9 +178,35 @@ comment
 
 ```
 
-## operators
+## identifiers
+
+- i.e. operators, symbolic identifiers are what you would call operators in other languages
+- all operators are really identifiers (or definitions), thus can be called with dot operator
+  - `this.==(that)` the same as `this == that`
+  - same thing for fns attached to entites, e.g. `someObj.poop(true)` == `someObj poop true`
+- operators (i.e. definitions) names can be alphanumeric, symbolic (e.g. x1, \*, +?%&, vector*++, counter*=)
 
 ```scala
+/**
+The associativity of an operator is determined by its last character:
+^ Right-associative if ending with :
+^ Left-associative otherwise.
+operator precedence
+^ Note that assignment operators have lowest precedence.
+^ The precedence of an operator is determined by its first character, with the following increasing order of priority:
+
+(all letters)
+|
+^
+&
+< >
+= !
+:
++ -
+* / %
+(all other special characters)
+*/
+
 /// conditionals
 // : == != > < <= =>
 thiz == that
@@ -217,23 +268,26 @@ until // e.g. 0 until poop.length
   // val blah: Int = ???
 _ // wildcard placeholder
 extends // e.g. case class Poop() extends BigerPoop
-end Poop // optional syntax for signaling the end of some thing, e.g. a case class/object/def/etc
+end Poop // End Marker: optional syntax for signaling the end of some thing, e.g. a case class/object/def/if/etc, must align with the opening keyword
 
 ```
 
 ## variables
 
-- are evaluated only once, and generally used over defs for intermediate expressions
+- `val` are evaluated only once, at the point of definition, and generally used over defs for intermediate expressions
+  - i.e. by value
+- `def` are evaluated each time, when accessed, and preferred for expressoins that may not terminate (like loops)
+  - i.e. by name
 
 ```scala
 
 val immutableValue: Boolean = true
 var mutableValue: Boolean = true
+lazy val immutableValue: Boolean = true // evaluated when accessed
 
 // Int 100
 // generally you should pref defs for this kind of thing
-// ^ as vals are always evaluated once, while defs are only evaluated when invoked
-// ^^ makes sense for costly evaluations
+// ^ unless you want to always refer to this by value, and only evaluate it once
 val interestingVal: Int =
   val ten = 10
   ten * ten
@@ -249,17 +303,26 @@ val interestingVal: Int =
 
 ```scala
 // val types extend from scala.Any > scala.AnyVal (primitives types) >
+// 8 bit
+/// Byte 8 bit -128 to 127
+
+// 16 bit
+/// Char 16 bit unicode characters
+/// Short 16 bit integers -32768 to 32767
+
+// 32 bit
+/// Float 32 bit floating point
+/// Int 32 bit integers
+
+// 64 bit
+/// Long 64 bit integers
+/// Double 64 bit floating point
+
+// other
 /// BigDecimal longer than a Double
 /// BigInt wayyyy bigger than Int
 /// Boolean true | false
-/// Byte -128 to 127
-/// Char unsigned, 0 to 65535
-/// Double 64 bit floating point; a decimal longer than a Float, but only 15 digits of precision
-/// Float dude its a long decimal
-/// Int 32 bit signed -2147483648 to 2147483647
 /// PosInt positive Ints
-/// Long dude its a long number
-/// Short -32768 to 32767
 /// Unit i.e. void, doesnt return anything
 
 // ref types extend from scala.Any > scala.AnyRef (reference types) >
@@ -272,10 +335,7 @@ val interestingVal: Int =
 
 val superLongNumber: BigInt = BigInt("insert really long number here")
 
-val desc = "I am immutable, inferred type String"
-val desc: String = "I am also a string"
-// intepolation
-val descLong = s"inject another string here: $desc"
+
 
 val num: Int = 100
 val num: Int = 1_000 // nice
@@ -290,18 +350,50 @@ val bool: Boolean =
 // generally there is a .toInt, .toIntOption, etc, on everything,
 
 /// UPPER BOUNDS type
-// Poop is a subtype of Flush,
+// Poop is a subtype of Flush, or is Flush,
 type Poop <: Flush
+
+/// LOWER BOUNDS type
+// Poop must be a supertype of Flush
+type Poop >: Flush
 ```
 
-### Int
+### Boolean
+
+```scala
+
+// all evaluate to Boolean
+true
+false
+!true
+true && false // conjuction short-circuit
+false || true // disjunction short-circuit
+
+
+```
+
+### Number types
 
 - the smallest integer ( Int.MinValue in Scala) has no positive representation. This has caused bugs in real systems, but is trivial to find with property based testing.
+
+```scala
+
+0.001
+0.1e-20
+1.0e20
+
+```
 
 ### strings
 
 ```scala
 val poop: String = "flush"
+val desc = "I am immutable, inferred type String"
+val desc: String = "I am also a string"
+// string interpolation
+// anything prefixed with $ is treated as an expression
+val descLong = s"inject another string here: $desc, ${poop.flush}"
+
 poop
   .compareTo(someOtherString)
   .dropWhile(lambda).drop(1) // drop 1 char, could be any #, see .groupBy example
@@ -316,6 +408,7 @@ poop
 ### Extensions
 
 - extend any type with NEW functionality outside of the type definition
+  - generally any method that doesnt need access to internal members of the class should (or atleats could) be defined as extension methods
   - you cannot OVERRIDE existing fnality
   - you cannot refer to other class members via `this`
   - if you get a `blah doesnt have poop`
@@ -336,6 +429,19 @@ extension (n: Int)
 val five = 5
 five.isZero // false
 0.isZero // true
+
+// i.e. you could pretty much extend anything, like a class
+// SomeType.addThisMethod() // can be invoked directly on the entity its extending
+exension (p: SomeType):
+  def addThisMethod = ???
+
+extension (p: FakeInt):
+  def add = ???
+  // now you can do fakeIntPoop + fakeIntFlush as if they were fake integers
+  def + (y: FakeInt): FakeInt = p.add(y)
+  // now you can do fakeIntX blah fakeIntX
+  // ^ i.e. treat def blah as an infex operator
+  infix def blah(that: fakeInt): FakeInt = ???
 ```
 
 ### Type Alias
@@ -698,7 +804,7 @@ final def poop: // prevent overrides in descendants
 
 #### Class
 
-- define a type and a constructor for encapsulating concepts
+- define a type and a constructor for encapsulating concepts; the type & constructor are kept in different namespaces but behave as one to the programmer
   - by default constructor params are private (thus encapsulated within the class)
 - use cases
   - can extend multiple traits but only a single super class
@@ -708,12 +814,35 @@ final def poop: // prevent overrides in descendants
 - generally its best to use classes at the leafs of your inheritance model
 - uses reference equality, i.e instances must point to the same point in memory in order to be considered equal
   - reference equality is important for mutable datastructures
+- definitions inside a class are called methods
+- params inside a class constructor are called members
+- `this` always refers to the current object (instance) of a class
+  - a member of the class can be referred to be name, without `this.name` and simply `name`
+- primary constructor:
+  - takes the parameters defined in the class definition
+  - executes all statements in the class body
+- ## auxiliary constructor: any method named `this`
 
 ```scala
 
-// a Dog class with instance fields defined as params, and instance methods defined in the body
 // the body is initialized as part of the default constructr, so you can put any initializing logic there
-class Dog(var name: String, age: Int = 1_000):
+// type Dog, and an implicit (i.e. primary) constructor Dog(...) for creating instances (objects) of the type
+// access members of the objects (instances, lol) with the dot operator
+// ^ dog.name, dog.eman
+class Dog(
+  var name: String, // var auto generates a getter and a setter
+  val eman: String, // val auto generates a setter
+  age: Int = 1_000 // private, not available outside the class
+):
+  // throws IllegalARgumentException with the msg
+  // ^ used to enforce a precondition on the caller
+  // ^^ i.e. fault is with the caller
+  require(name.length > 0, "name must be a value")
+  // throws AssertionError
+  // ^ used to check the logic of the fn itself, not relatant to the caller
+  // ^^ i.e. fault is with the internal fn logic/implementation
+  // ^ thus this example doesnt match the use case, but whatev
+  assert(age > 18, "must be an adult")
   println("dog is being created")
   def speak() = println("woof")
   def wagTail() = println("poop in your mouth")
@@ -724,6 +853,7 @@ class Dog(var name: String, age: Int = 1_000):
   //  also visible to subclasses of the class.
   protected var someInheritedState: int = 0
   def whatsMyInheritedState: int = someInheritedState
+  override def toString = s"my name is $name"
 val dog = Dog("noah")
 dog.speak()
 
@@ -1520,8 +1650,8 @@ val poop: Array[String] = Array("one", "two")
 // all conditions must be an expression of type Boolean, else type mismatch error
 //////////////////////////////////
 
-// single line
-if someVal then "do this" else "do that"
+// conditional expressions
+val poop = if predicate then "do this" else "do that"
 
 // multiline
 if someVal > 1 then
@@ -1630,13 +1760,33 @@ def howLong(values: MyOtherValues): Int = values match
 
 ### loops
 
-- tailcall recursion: each tim ethe runtime evaluates a loop iteration, it pushes its paramter to the call stack
+#### recursion
+
+- recursion: each time the runtime evaluates a loop iteration, it pushes its paramter to the call stack
   - call stack: a section of memory with a fixed size
   - if there are too many iterations, you get a runtime error stackoverflow (i think)
   - it is possible NOT to use the call stack space by putting the recursive call in tail position
-  - tail position: a recursive call is in tail position if it is the result of the recursive method, (i.e. there is no further operation applied to it, e.g. via closure)
-    - i.e. if you return a result/fn call, and not a recursive action
-    - ^ search for tailcall within this doc
+  - tail position: a recursive call is in tail position if it is the result of the recursive method,
+    - i.e. if a fn calls itself as its last action, the fns stack frame can be reused
+
+```scala
+import scala.annotation.tailrec
+
+// in tail position, recursion expression only contains value expression (i.e. a-1)
+def poop(a) =
+  if a < 0 then a else poop(a - 1)
+// not in tail positoin, the recursive expression contains a definition invocatoin
+def poop(a) =
+  // both of these are issues due to the order of evaluation of fns
+  // poop(a) is evaluated first, THEN the expression
+  if a < 0 then a else poop(a) - 1 // the minus -1 is the problem
+  if a < 0 then a else -1 + poop(a) // the -1 + ... is the problem
+
+// throw an error if this recursive fn is NOT in tail-position
+// always do this
+@tailrec
+def somePoop(...) = ???
+```
 
 #### for expressions
 
@@ -2050,7 +2200,7 @@ trait Future[A]:
   def zip[B](that: Future[B])(using ExecutionContet): Future[(A, B)]
 ```
 
-## definitions and function literals
+## definitions
 
 - invoke fns like `someFn` no `()` unless args are expected
 - all parameters in method signatures require type annotations
@@ -2059,13 +2209,28 @@ trait Future[A]:
   - names are block scoped, thus variable declarations are not visible outside their containing block
 - function literal: a lambda, an expression that evaluates to a fn
 - def vs function literals: because scala supports both OOP and FP
-  - function literals define a value that can be passed as a parameter/returned as a result
-    - this cannot be done with definitions
-      - however the compiler will most likely auto convert the definition into a fn literal and not throw an error
+  - functions are first-class values: i.e. can be passed as a patameter and returned as a result
+    - function literals define a value that can be passed as a parameter/returned as a result
+      - this cannot be done with definitions
+        - however the compiler will most likely auto convert the definition into a fn literal and not throw an error
   - the runtime creates an object for functions in memory, and thus fns are objects that can have members
+- definition evaluation when invoked: i.e. the process by which evaluation reduces a definition expression to a value (as long as there are no side effects)
+  - evaluate arguments: left to right
+  - replace the fn name with the fn body
+  - replace the formal params by the actual arguments
+- evaluation strategies: both are identical (reduce to the same final value) as long as both are pure fns, and both evaluations terminate (e.g. no loops)
+  - call by name: only evaluates fn arguments that are actually used in the fn body
+  - call by value: (the default) evaluates every fn argument only once
+- recursive definitions require a return type
+  - non-recursive definitions dont
 
 ```scala
-
+// call by name: evaluates flush only if accessed within the fn
+def poop(flush: => Boolean): Boolean = ???
+// call by value: eveluates flush before stepping into the fn body
+def poop(flush: Boolean): Boolean = ???
+// bindings, aka javascript rest params, must be the last param in the parameter list
+def poop(totalWipes: Int*): Seq[Int] = ???
 
 // return type Int
 // sum(5, 5)
@@ -2078,13 +2243,7 @@ def isTruthy(a: Matchable) = a match
   case _ => true
 
 // def with no params
-def poop: Boolean = true // always returns true
-
-// def with repeated params, i.e. blah... in javascript
-// ^ and like javascript, can only appear at the end of the parameter list
-// poop("one", "two")
-def poop(v: String*): Unit =
-    println(v) // ArraySeq(one, two)
+def poop: Boolean = true
 
 // scala 2 requires curly braces
 def poop(): String = {
@@ -2154,6 +2313,71 @@ object poop:
 val handler: PartialFunction[Throwable, Unit] =
   case blah: RuntimeException => println("wtf")
 
+```
+
+### composition
+
+- higher order fns: fns that take other fns as parameters or that return fns as results
+
+```scala
+//////////////////////////////////
+/// higher order definitions
+//////////////////////////////////
+// sum takes a lambda: Int, then returns a fn:(Int, Int): Int back to the consumer
+def sum(f: Int => Int): (Int, Int) => Int =
+  def sumf(a: Int, b: Int): Int = f(a) + f(b)
+  sumf
+// same as above
+def sum(f: Int => Int)(a: Int, b: Int): Int = a + b
+// ^ both can be invoked the same way
+// ^ def add = sum(x => x), add(1, 2)
+// ^ or chained: val poop = sum(x => x)(1, 1)
+
+//////////////////////////////////
+/// currying
+//////////////////////////////////
+def f2(x: Int, y: Int): Int = x + y
+f2(1, 1) // == 2def f2(x: Int, y: Int): Int = x + y
+
+f2(1, 1)
+
+val f3 = f2.curried
+f3(1)(2)
+
+val f4 = Function.uncurried(f3)
+f4(1, 3)
+f3(1)(2) // = 3
+val f4 = Function.uncurried(f3)
+f4(1, 3) // = 4
+
+```
+
+### function literals & ADTs
+
+- function literals: anonymous definitions
+
+```scala
+
+// type of a fn that takes an argument of type A and returns a result of type B
+// type A => B: a fn that maps a parameter of type A to a result of type B
+val: Int => Int = ??? // maps integers to integers
+
+// curried fn: consecutive stepwise applications: i.e. a series of fn invocations that eventually return a result
+// ^ defined in scala as a definition with multiple parameter lists
+// type A => B => C
+// e.g. poop(a)(b)
+// ^ or accessing a multi dimensional array, someArr(0)(1)
+// sum(x => x + x)(1, 2)
+def sum(f: Int => Int)(a: Int, b: Int): Int =
+  if a > b then 0 else f(a) + sum(f)(a + 1, b)
+// product(x => x * x)(2, 4)
+def product(f: Int => Int)(a: Int, b: Int): Int =
+  if a > b then 1 else f(a) * product(f)(a+1, b)
+// factorial(5)
+def factorial(n: Int) = product(x => x)(1, n)
+
+// fixed point of fns
+// number X is a fixed point of fn X if f(x) = x
 ```
 
 ### example defs
@@ -2269,6 +2493,28 @@ def parseDates(fpath: String): Try[Seq[LocalDate]] =
   }
 ```
 
+#### Predef
+
+```scala
+// Assertions: assume, require, ensuring
+// ^ A set of assert functions are provided for use as a way to document and dynamically check invariants in code
+// require and ensuring are intended for use as a means of design-by-contract style specification of pre- and post-conditions on functions,
+
+// design by contract: bunch pre conditions
+def poop(did: Boolean, wipe: Boolean, flush: Boolean): Boolean =
+    require(did == true, "poop must be true")
+    assume(wipe == true, "have to wipe after pooping")
+    require(flush == true, "dont forget to flush")
+    true
+poop(true, true, false) // dont forget to flush
+
+// design by contract: post condition require {} around body of fn
+def postCondition(throwIt: Boolean): String = {
+    if throwIt == false then "wont throw" else ""
+} ensuring (_.length != 0, "fails if ensuring returns false")
+postCondition(true)
+```
+
 ### java stuff
 
 ```scala
@@ -2347,4 +2593,11 @@ import scala.concurrent.ExecutionContext.Implicits._
 Future
   .traverse(someSeq)(someAsyncFn)
   .onComplete(someFn)
+```
+
+### scala.annotation
+
+```scala
+import scala.annotation.tailrec // @tailrec throws error if a definition is not in tail-position
+
 ```

@@ -66,6 +66,8 @@
 
 ## terms
 
+- data abstraction: the ability to choose different implementations of data, logic, etc witout affecting consumers expectations or interface contract
+  - enables you to evolve and optimize programs overtime with 0 impact on consumers
 - category theory:
   - map: defined by the type class Functor
   - zip: defined by the type class Applicative
@@ -88,6 +90,11 @@
 
 ## culture
 
+- avoid name space pollution
+  - put all entities that are implementation details within the body of an interface, hidden from consumers
+  - only make accessible those entities required by consumers
+- avoid type Casts and type tests
+  - Never use isInstanceOf or asInstanceOf - there’s always a better solution,
 - defense programming can be inconvenient; prefer explicitly modeling the failable parts of your programs via type annotations
   - exceptions should be used as a last resort only, unless consuming expressions known to use exceptions
   - define an exception handler at hte beginning of the program/use the default handler provided by the runtime
