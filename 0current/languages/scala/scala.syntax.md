@@ -1938,6 +1938,7 @@ def parseDate(str: String): Validated[LocalDate] =
 
 #### Future
 
+- controls when (and how, parallel/sequential)async computations are executed
 - represents a value that may not be available yet, but might be in the future, once an asynchronous computation has completed
 - future values are generally results of computations that occur across parallel and sequential branches
   - the execution flow is similar to a directed graph
@@ -1948,6 +1949,10 @@ def parseDate(str: String): Validated[LocalDate] =
 import java.util.current.atomic // TODO
 import scala.concurrent.Future
 
+// immediately failed future
+val failed = Future.failed(Exception("fail fast"))
+// immediately successful future
+val success = Future.successful(true)
 
 // will eventually return the inserted user
 def insertUser(...): Future[User] = ???
@@ -1962,12 +1967,24 @@ def insertUser(...): Future[Option[Try[User]]]
 
 // chain two asynchronous computations that need to happen sequentlly via flatmap / map
 def poop(): Future[Boolean] =
-  asyncPoop.flatMap(pooped => futureFlush(pooped))
+  asyncPoop.flatMap(pooped => someAsyncFn(pooped))
+// chain an arbitrary amount of async computations that need to happen sequentially via foldLeft
+def poop(): Future[Seq[Boolean]] =
+  val thisManyPoops = 1 to theseMany
+  thisManyPoops.foldLeft[Future[Seq[Boolean]]](Future.successful(Vector.empty)) {
+    (accum, thisPoop) =>
+      accum.flatMap { prevPoops =>
+        asyncPoop(thisPoop)
+          .map(pooped => prevPops :+ pooped)
+      }
+  }
 
 // execute two asynchronous computations that need/could/might occur in parallel via zip / traverse (see below)
 val pooped: Future[Boolean] = asyncPoop()
 val farted: Future[Boolean] = asyncFart()
-def sharted: Future[(pooped, farted)] = pooped.zip(farted)
+def sharted: Future[(pooped, farted)] = pooped.zip(farted) { (didPoop, didFart) =>
+  (didPoop, didFart)
+}
 
 // execute an arbitrary amount of async computations and get a final result containing all completed values
 // someAsyncFn is executed independently and in no particular order on each item in seqOfElements
@@ -1981,6 +1998,8 @@ val poop: Future[Boolean] =
     .recoverWith { ... } // async result
 
 // modefling common Future operations
+// all of these operations take an implicit paramter list of type ExecutionContext
+// ^ i.e. append (using ExecutionContext) as the last parameter list
 trait Future[A]:
   def map[B](f: A => B): Future[B]
   def zip[B](that: Future[B]): Future[(A, B)]
@@ -1989,6 +2008,46 @@ trait Future[A]:
   def recoverWith(f: Throwable => Future[A]): Future[A]
 object Future:
   def traverse[A, B](as: Seq[A])(f: A => Future[B]): Future[Seq[B]]
+```
+
+#### ExecutionContext
+
+- controls where (which thread, CPU) async computations are executed
+- in the JVM, the main abstraction is threads
+- thread-pool: context for execution async computations
+  - by default it contains one thread per CPU on the device
+    - its optimized for non-blocking code, so wrap it concurrent.blocking for blocking calls
+  - i.e. ^ operations that combine future values in parallel (zip, traverse) have a parallelism level equal to the number of CPUs on the device
+
+```scala
+
+// by importing this at the callsite/begining of a file that contains an async operation
+// scala will automatically use the default execution context
+import scala.concurrent.ExecutionContext.Implicits.given
+import scala.concurrent
+
+// schedule a computation of some future expression in the available ExecutionContext
+Future {
+  someAsyncFn()
+}
+// example of a blocking thread
+// ^ it occupies a thread but does nothing useful
+Future {
+  Thread.sleep(10_000) // be a bum for 10 seconds
+}
+// create a virtual thread for a blocking expression
+// ^ generally interacting with storage, waiting for a response from a remote call, etc.
+Future {
+  concurrent.blocking {
+    Thread.sleep(10_000)
+  }
+}
+
+// all of these operations take an implicit paramter list of type ExecutionContext
+// see `# Future` for more ADTs
+trait Future[A]:
+  def map[B](f: A => B)(using ExecutionContet): Future[B]
+  def zip[B](that: Future[B])(using ExecutionContet): Future[(A, B)]
 ```
 
 ## definitions and function literals
@@ -2157,6 +2216,13 @@ given loop(using a: A): A = a // error: no implicit argument of type A was found
 
 ### auto imported stuff
 
+#### System
+
+```scala
+
+System.err.println("log an err msg")
+```
+
 #### Using
 
 - see `# Source`
@@ -2205,9 +2271,8 @@ def parseDates(fpath: String): Try[Seq[LocalDate]] =
 
 ### java stuff
 
-#### java.time
-
 ```scala
+import java.util.current.atomic
 import java.time.{localDate, Period}
 
 /// LocalDate
@@ -2257,9 +2322,12 @@ import scala.language.implicitConversions
 
 ```scala
 
+import scala.util.Random
 import scala.util.control.NonFatail
 import scala.util.{Try, Failure, Success} // Try[A] = Success[A] || Failure
 
+Random
+  .nextDouble()
 ```
 
 ### scala.io
@@ -2268,4 +2336,15 @@ import scala.util.{Try, Failure, Success} // Try[A] = Success[A] || Failure
 
 import scala.io.{Source}
 
+```
+
+### scala.concurrent
+
+```scala
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits._
+
+Future
+  .traverse(someSeq)(someAsyncFn)
+  .onComplete(someFn)
 ```
