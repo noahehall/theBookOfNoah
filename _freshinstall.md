@@ -98,6 +98,8 @@
   - jetbrains toolbox
   - sbt
   - kazam
+  - thunderbird
+  - thunderbird-gnome-support
 
 - virtualization
 

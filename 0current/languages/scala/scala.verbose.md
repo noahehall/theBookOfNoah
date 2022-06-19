@@ -11,6 +11,7 @@
 
 ## links
 
+- [coursera scala 5 course specialization](https://www.coursera.org/specializations/scala#courses)
 - [coursera: effective programming in scala](https://www.coursera.org/learn/effective-scala)
 - [scala metals vscode plugin](https://scalameta.org/metals/docs/editors/vscode)
 - [scala index: search for libraries](https://index.scala-lang.org/)
@@ -66,6 +67,18 @@
 
 ## terms
 
+- referential transparency: since pure functions dont have side effects; a term is equivalent ot the term to which it reduces
+  - i.e. you can replace the lhs of a fn with its rhs, and vice versa
+- natural induction: ...
+- structural induction: ...
+- object oriented decomposition: mixes data with operations on the data
+  - useful if theres:
+    - a need for encapsulation and data abstraction
+    - add new kinds of data (but hard to add new kinds of operations)
+  - however, increases complexity and adds new dependencies to classes
+- pattern matching: the fn approach to decomposition
+- dynamic binding: key to OOP: where a method is dependent on the runtime type of the receiver of a method
+  - i.e. dependent on where the method is defined within the hierarcy of classes
 - data abstraction: the ability to choose different implementations of data, logic, etc witout affecting consumers expectations or interface contract
   - enables you to evolve and optimize programs overtime with 0 impact on consumers
 - category theory:
@@ -101,7 +114,7 @@
   - explicitly indicate known exceptions in definition result (return type) annotations
     - prefer this over the others whenever failures are likely to happen: parsing data, file handling, remote calls, async stuff, etc.
 - polymorphism: achieved via type classes and subtyping; type classes are preferred > subtyping
-  - type class: works at the type level
+  - generics: type class: works at the type level
   - subtyping: works at the instance level
 - prefer the infix syntax, e.g. `true && true` over dot notation, e.g. `true.&&(true)`
   - both are valid, however
@@ -140,6 +153,8 @@ val oonnee = ???
   - operations that modify the state of the program
   - operations that communicate with the outside world (printing to a file, reading from a poop, etc)
 - prefer logic that describe (declarative, functional, referentially transparent) vs do (imperative)
+  - imperative: using loops
+  - functional: using higher order fns
 - depend on interfaces > implementations
 - principle of abstraction: where similar fns are carried out by distinct pieces of code, it is generally beneficial to combine them into one by abstracting out the varying parts
   - reduces maintence: the implementation is centralized in one place
