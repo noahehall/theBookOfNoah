@@ -19,6 +19,8 @@
 - intent vs reality: reading/reasoning about code works fine for small and conrete thing
   - type systems aid in validating program logic against reality, but relies on the assumption that we correctly modeled things in the first place; in addition to only catch a small class of errors anyway
   - tests can validate program execution against reality
+  - correctness of implementation: one way to define and show the correctness of an implementation consists of proving the laws that it respects
+    - common in functional programming as many of its paradigms on based on algebraic expressions (where its easy to determine what laws should always be respected by a particular unit/program)
 - programs are soft: code bases evolve over time, and consist of immutable & side effecting logic, thus chaning small things here and there could easily break a program that was previously correctly working
   - testing aids in preventing these regressions from happening
 - increasing confidence: employing multiple testing techniques increases confidence that the program behaves as expected under the tested conditions

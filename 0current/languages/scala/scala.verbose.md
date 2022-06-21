@@ -67,6 +67,19 @@
 
 ## terms
 
+- laziness: concept in functional program to speed up perf issues
+  - to compute a value only when its needed
+  - lazy evaluation: storing the previous result of a lazy value, so that on the next access it its not recomputed
+  - by-name evaluation: where a value is recomputed everytime its accessed, like a fn call
+  - strict evaluation: everything is computed once when its first accessed
+- the bullet proof principle (lol): an expression composed from Try, map, flatmap will never throw a non-fatal exception (it returns Failure(Exception) for you to handle)
+- monad: a paramerterized type with two operations, flatMap and unit, that have to satisfy some laws
+  - flatMap on a monad is also called bind
+  - a type that defines both flatMap and withFilter are called monads with zero
+  - 3 laws:
+    - associativity: related to how you can call successive flatmap operations, you should be able to take successive calls and create nested calls instead and receive the same result
+    - left unit: related to flatmap and unit: the lhs should always equal the rhs, i.e. no side effects
+    - right unit: related to flatMap and the thing flatmap is called on,
 - referential transparency: since pure functions dont have side effects; a term is equivalent ot the term to which it reduces
   - i.e. you can replace the lhs of a fn with its rhs, and vice versa
 - natural induction: ...

@@ -9,13 +9,18 @@
 
   - https://www.coursera.org/learn/scala-functional-program-design/home/info
   - https://www.coursera.org/learn/scala-akka-reactive/home/info
-  - when finished with coursera check out the scala 2 walkthrough via geeksforgeeks
+  - recommended topics
+    - functional programming and state
+    - parallel and distributed systems
 
-- todos
+- todoing
+
   - 100% positive the Type outline doesnt match the class hierarchy
     - vscode > outline > Type > shiz all over the place
     - if you go to the AAA scala api 3 link, click a type, click `supertypes` you can see the hierarchy
   - 100% positive type APIs arent Dry, e.g. lots of stuff under List should be under Seq, and many times they are duplicated
+
+- todos
   - find sealed traits in the scala docs
   - todo: need to do a better job at categorizing operators, especially the mutable vs immutable ones
   - extending, using `poop extends blah1, blah2` vs `poop extends blah1 with blah2`
@@ -24,7 +29,6 @@
   - scala.math.Ordering[A]: pretty sure i have the syntax wrong
   - need to do better on the using, given explanations & examples
   - conditional given definitions needs clarity
-  - i keep seeing `lazy val ....` everywhere, find it in the docs
   - in general look through all the coursera assignments for each week, there are bunches of stuff in there that wasnt explained in the course and could be a good starting point for grepping the docs
   - i didnt appreciate nor document type hierarchies in scala, swing back to this
 
@@ -36,6 +40,7 @@
 - [scala & intellij: getting started](https://docs.scala-lang.org/getting-started/intellij-track/getting-started-with-scala-in-intellij.html)
 - [example gitignore for scala](https://alvinalexander.com/source-code/scala/sample-gitignore-file-scala-sbt-intellij-eclipse/)
 - [programming in scala 3 book](https://www.artima.com/shop/programming_in_scala_5ed)
+- [47 degrees: scala exercises](https://www.scala-exercises.org/)
 - examples
   - [groupBy and groupMap](https://blog.genuine.com/2019/11/scalas-groupmap-and-groupmapreduce/)
   - [fn composition](https://www.baeldung.com/scala/function-composition)
@@ -94,8 +99,10 @@
     - it refers to the object when its used on the right-hand side of a definition, or when it is passed as an argument to an operation
     - it refers to the sealed trait (the type) when it is used in a type annotation
     - check the syntax file for mimicking enums in scala 2
-  - dont forget about the special `apply` definition
+  - dont forget about the special `apply` `unapply` and `toString` definition
     - any entity with an `apply` definition can be invoked like a `fn()`
+    - any entity with an `unapply` definition can be destructured
+    - any entity with an `toString` definition can be printed
   - several standard library definitions have context parameters (e.g anything that relies on Ordering, like List(...).min, or sort fns)
     - each can be modified by defining given instance before invocation
 
@@ -295,7 +302,7 @@ end Poop // End Marker: optional syntax for signaling the end of some thing, e.g
 
 val immutableValue: Boolean = true
 var mutableValue: Boolean = true
-lazy val immutableValue: Boolean = true // evaluated when accessed
+lazy val immutableValue: Boolean = true // rhs is evaluated only when its variable is used, and then the result is cached
 
 // Int 100
 // generally you should pref defs for this kind of thing
@@ -1129,6 +1136,12 @@ trait Pet(name: String):
 class Dog(name: String, var age: Int) extends Pet(name):
   val greeting = "Woof"
 
+// creating instances of trait, without extends
+// each will be an instance of an anonymous class that extends from the trait
+trait PoopOf[+T];
+val poopOfInts = new PoopOf[Int]
+val poopOfBools = new PoopOf[Boolean]
+
 //////////////////////////////////
 // service oriented design through scalable component abstractions
 // OOP example
@@ -1223,6 +1236,10 @@ val getShapeAria =
   - convenient way to construct data composed from cases
 - ordinal: the value of each enum field, starting at 0
   - only simple enum values have ordinal numbers, not parameterized values
+- preferred way to represent case class hierarchies
+  - i.e.
+    - instead of this: a hierarchy of abstract class > object of case classes with fields
+    - do this: an enum (abstract class) of parameterized fields
 
 ```scala
 // shorthand: with simple values
@@ -1287,12 +1304,32 @@ currentCrustSize match
   case Medium => println("medium")
   case Large => println("large")
 
-
+// class hierarchy for JSON
+// ^ note that we dont use the extends clause, because its optional
+enum JSON:
+  case Seq (elems: List[JSON])
+  case Obj (bindings: Map[String, JSON])
+  case Num (num: Double)
+  case Str (str: String)
+  case Bool (b: Boolean)
+  case Null
+// using the class hierarchy
+val jsData = JSON.Obj(Map(
+  "name" -> JSON.Str("noah"),
+  "mobile" -> JSON.Obj(Map(
+    "area" -> JSON.Num(415),
+    "number" -> JSON.Num(4154155)
+  )),
+  "skills" -> JSON.Seq(List(
+    JSON.Str("app dev"),
+    JSON.Str("growth hacking")
+  ))
+))
 ```
 
 #### case class
 
-- define a type and a constructor for aggregating concepts
+- define a type and a constructor for aggregating concepts; the preferred way to define complex data
   - by default constructor params are public and immutable
 - immutabe class with some syntatic sugar
   - fields are public and immutable by default
@@ -1421,27 +1458,84 @@ import scala.collection.mutable
 
 val buffer = mutable.ArrayBuffer()
 
-// commonalities amongst all collections
-
 val empty = List.empty
 val empty = List.empty[Int] // preferred
 
-someCol
+col
+  .to(SomeType) // convert col to SomeType, e.g. LazyList, List,
+```
+
+#### Tuple
+
+- collection of fixed size, but the values may have different types,
+- Tuples are not classes! The syntax `someObject.memberName` is for classes.
+- comes in two varieties
+  - TupleSmall: up to 22 els
+  - TupleXXL: over 22 els
+
+```scala
+
+val poop = "first" -> 1 // shorthand, but is it really?
+val poop = ("first", 1)
+val poop: (string, Int) = ("first", 1)
+val (x, y) = poop // deconstruct a tuple
+poop(0) // random access, index starts at 0
+
+// destructuring tuples
+// pull off items via their _N index
+val first = spamEgg._1
+val second = spamEgg._2
+// ^ assign to a val: spamEgg is a 2-Tuple
+v​al (x, y) = spamEgg
+// ^via pattern mattching
+spamEgg match
+    c​ase (x, y) => ???
+// via a def using a partial function (with curly braces) with a case expression
+spamEgg.map {​ case (x, y) => ??? }
+// via index params
+spamEgg.groupMap(_._1)(_._2) // first and second element in two parameter lists
+```
+
+#### Iterable
+
+- defined as an `object Iterable` and `trait Iterable`
+- filter vs withFilter
+  - if you have a .map/.flatMap following the .filter, use .withFilter
+
+```scala
+
+// general ops
+val concat = iter1 ++ iter2
+
+// https://dotty.epfl.ch/api/scala/collection/Iterable.html
+// ^ drop
+someIter
+  .collect(partialFn) // applies partial to all els on which the fn is defined
+  .collectFirst(partialFn) // applies partial to the first el on which the fn is defined
+  .concat(otherIter)
   .contains(x) // pass a KEY for a map
+  .copyToArray(someArray, start?, length?) // copy els to array
+  .corrosponds(otherIter)(predicate) // tests whether the predicate is true for corrosponding els in each iter
+  .count(predicate) // # of els satisfying predicate
   .exists(predicate) // any match
-  .filter(predicate) // keep els returning true for between
-  .filterNot(predicate)
+  .filter(predicate) // els that satisfy predicate
+  .filterNot(predicate) // all els that do not satisfy predicate
   .find(lambda) // Option, find the first el returning true for the predicate
   .flatMap
-  .foldLeft
+  .foldLeft(lambda) // same as reduceLeft, but takes an accumulator
+  .foldRight(lambda) // same as .foldLeft, but leans to the right
   .forall(predicate) // all match
   .foreach(lambda) // doesnt return anything, only useful for sideffects
   .groupBy(lambda) // Partitions a collection into a map of immutable sequences according to some discriminator function.
   .groupMap(lambdaForKey)(lambdaForValue) // Partitions this immutable sequence into a map of immutable sequences according to a discriminator function key.
   .isEmpty // boolean
   .keys
+  .lazyZip(otherIter) // same as zip, but lazy
   .map
+  .map(lambda) // returns new list
   .nonEmpty // boolean
+  .reduceLeft((x, y) => expr) // applies lambda to consequtive els in list, expr: x + y would reduce the list to a SUM of its elements
+  .reduceRight(lambda) // same as .reduceLeft, but leans to the right
   .reverse
   .size // number of els
   .sorted // sorts the collection with the native sort fn on the underlying type
@@ -1449,8 +1543,10 @@ someCol
   .takeWhile(lambda)
   .toList
   .toMap
+  .toSet
+  .toString
   .values
-  .withFilter(predicate)
+  .withFilter(predicate) // doenst produce an intermediate Iterable, instead applies any subsequent .map/.flatMap diectly to elements that satisfy the predicate
   .zip(otherCollection) // creates pairs of els at each index of each collection
 
 
@@ -1511,39 +1607,6 @@ val emailsByDomain: Map[String, List[String]] = emails.groupBy(domainPartition)
 
 ```
 
-#### Tuple
-
-- collection of fixed size, but the values may have different types,
-- Tuples are not classes! The syntax `someObject.memberName` is for classes.
-- comes in two varieties
-  - TupleSmall: up to 22 els
-  - TupleXXL: over 22 els
-
-```scala
-
-val poop = "first" -> 1 // shorthand, but is it really?
-val poop = ("first", 1)
-val poop: (string, Int) = ("first", 1)
-val (x, y) = poop // deconstruct a tuple
-poop(0) // random access, index starts at 0
-
-// destructuring tuples
-// pull off items via their _N index
-val first = spamEgg._1
-val second = spamEgg._2
-// ^ assign to a val: spamEgg is a 2-Tuple
-v​al (x, y) = spamEgg
-// ^via pattern mattching
-spamEgg match
-    c​ase (x, y) => ???
-// via a def using a partial function (with curly braces) with a case expression
-spamEgg.map {​ case (x, y) => ??? }
-// via index params
-spamEgg.groupMap(_._1)(_._2) // first and second element in two parameter lists
-```
-
-#### Iterable
-
 ##### Map
 
 - immutable dictionary associating keys T to values V
@@ -1570,7 +1633,7 @@ poop
   .toList // List[(K, V)]
 ```
 
-##### HashMap
+###### HashMap
 
 - aka hash table, associative array, etc
 - MUTABLE dictionary
@@ -1601,7 +1664,7 @@ set
 
 ```
 
-##### BitSet
+###### BitSet
 
 - mutable collection containing a set of bits
 
@@ -1703,20 +1766,13 @@ list
   .drop(n) // list of remaining els, after removing N els from front
   .dropWhile(predicate) // remainder of list after any leading els satisfying predicate have been removed
   .exists(lambda)
-  .filter(predicate) // els that satisfy predicate
-  .filterNot(predicate) // all els that do not satisfy predicate
   .head // first el
   .indexOf(x) // index of first el == x, or -1
   .init // list of all els except the last non Nil el
   .isEmpty // boolean
   .last // last non Nil element in list
   .length // # of els in list
-  .map(lambda) // returns new list
   .partition(predicate) // (list.filter(predicate), list.filterNot(predicate))
-  .reduceLeft((x, y) => expr) // applies lambda to consequtive els in list, expr: x + y would reduce the list to a SUM of its elements
-  .reduceRight(lambda) // same as .reduceLeft, but leans to the right
-  .foldLeft(lambda) // same as reduceLeft, but takes an accumulator, see elsewhere in this doc
-  .foldRight(lambda) // same as .foldLeft, but leans to the right
   .reverse // list with els in reverse order
   .size // 4
   .span(predicate) // (list.takeWhile(predicate), list.dropWhile(predicate))
@@ -1770,12 +1826,22 @@ nums.sortWith(_ > _)                      // List(10, 8, 7, 5, 1)
 
 ###### LazyList
 
-- members are only computed when accessed, e.g. when iterated over with .foldLeft
-- can have an infinite length
+- elements of a lazy last are evaluated only on demand
+- doesnt have the cons operator from list `::` instead uses `LazyList.cons(x, y)`
 
 ```scala
 val empty: LazyList[Int] = LazyList.from(0)
+val lazy = LazyList(1, 2, 3)
+val to1000 = (1 to 1000).to(LazyList)
+val concat = LazyList.cons(x, y) // concats x & y into a single lazy list
+val concat = x #:: y // same as above, pronounced hashcons
 
+// computing an infinite list
+// ^ since the values arent computed until accessed, you can create a list that contains an infinite amount of something
+// all natural numbers starting from start
+def infiniteInts(start: Int): LazyList[Int] = start  #:: from(n+1)
+val naturalNumbers = infiniteInts(0)
+val multiples of 4 = naturalNumbers.map(_ * 4)
 ```
 
 ###### ArrayBuffer
@@ -1836,7 +1902,7 @@ range
 ###### Vector
 
 - read/write perf: reasonably fast read and update characteristics relative to other sequences
-  - evenly balas order to change any element, you have to change all parent elements in the tree
+  - evenly balanced tree: in order to change any element, you have to change all parent elements in the tree
 
 ```scala
 val poop = Vector(1,2,3)
@@ -2027,7 +2093,8 @@ def somePoop(...) = ???
 #### for expressions
 
 - aka for comprehensions
-- generally easier to understand syntax, can use wherever you would use a flatMap/map/filter etc and related apis
+- generally easier to understand syntax, can use whenever you need to process/decompose/query (e.g. map, flatmap, filter) a dataset, e.g. a collection/database
+  - can be used with ANY datatype containing a map, flatMap and withFilter definition
 - guard statements: any control statements that shortcircuits cmds within the body for that specific iteration
 
 ```scala
@@ -2186,9 +2253,24 @@ while (condition) {
   - validations: validate entities that could possibly be/have invalid members
     - invalid entities could potentially be aggregated and reported
     - but generally shouldnt never stop program execution or throw exceptions
+- Exceptions:
+  - dont show up in the types of fns that throw them; i.e. a fns type annotation cannot include the type of exceptions it throws
+  - dont work in parallel computations, e.g. communicate an exception from one thread to another
 
 ```scala
+// class hierarchy
+// java.lang.Throwable > {java.lang.Exception, java.lang.Error}
+// ^ you can inherit from either Exception or Error
+// Error: exceptions thrown by the JVM
+// ^ Error > OutOfMemoryError, StackoverflowError
+// Exception: for programs and library failures
+// ^ Exception > IOException, ArithmeticException, ...
+// ^ values of Exception can be thrown
+
+
 /// Exceptions
+// RuntimeException
+// ArithmeticException
 // NoSuchElementException: trying to access an element in a col that doesnt exist
 // IndexOutOfBoundsException: trying to access an index of a col that doesnt exist
 // MatchError: thrown if no pattern matches an expression in a match statement
@@ -2198,6 +2280,10 @@ while (condition) {
 throw Exc
 throw new Exc("poop")
 throw Error("poop")
+throw RuntimeException("pooped on myself")
+
+class MyException(msg: String) extends extends Exception(msg)
+throw MyException("pooped")
 ```
 
 #### try catch
@@ -2209,20 +2295,6 @@ throw Error("poop")
   - recover & recoverWith enable you to return arbitrary successes in the event of failures
 
 ```scala
-// exception class hierarchy
-// Throwable >
-// Error: exceptions thrown by the JVM
-// ^ Error > OutOfMemoryError, StackoverflowError
-// Exception: for programs and library failures
-// ^ Exception > IOException, ArithmeticException, ...
-
-// exception types
-/// RuntimeException
-/// ArithmeticException
-
-// throw an exception to interrupt program execution
-throw RuntimeException("pooped on myself")
-
 // try catch
 // similar to pattern matching, you have to specify catch blocks for each error type
 def poop(): Unit =
@@ -2235,6 +2307,8 @@ def poop(): Unit =
     case blah: ArithmeticException =>
       System.err.println(s"pooped myself again: $blah")
       println("stopping program:")
+    // catch all other exceptions via the superclass & rethrow it after logging
+    case blah: Exception => println(s"$blah was thrown but not handled"); throw blah
 
 // try catch all non fatail errors
 import scala.util.control.NonFatail
@@ -2255,9 +2329,22 @@ val poop: Boolean =
   finally
     yolo()
 
-// explicitly indicate a failable definition via return type Try
-// ^ this forces consumers to deal with the failure branch
+```
+
+#### Try
+
+- overcomes the limitation of simple Throw mechanisms
+  - primary use as a means to:
+    - result type annotation signalling the potential throw of an exception
+    - passing between threads and processing results of computations that could fail with an exception
+
+```scala
+// try class hierarhcy
+// scala.util.try
+// is either a Success[T], or a Failure[Exception]
+
 import scala.util.Try // Try[A] = Success[A] || Failure
+// this forces consumers to deal with the failure branch
 def poop(): Try[Int] =
   // wrap the entire implementation in the Try constructor
   Try {
@@ -2293,12 +2380,14 @@ def tryPeriod(a: String, b: String): Try[Period] =
 
 // delaying catch via for expressions
 // fkn way cleaner than the the flatMap and map
+// the for expression either returns Success(whatevers yielded) or Failure(Exception)
 def tryPeriod (a: String, b: String): Try[Period] =
   for
     aSuccess <- someParser(a)
     bSuccess <- someParser(b)
-  yeild
+  yield
     Period.between(aSuccess, bSuccess)
+
 ```
 
 #### Either
@@ -2483,8 +2572,9 @@ trait Future[A]:
   - replace the fn name with the fn body
   - replace the formal params by the actual arguments
 - evaluation strategies: both are identical (reduce to the same final value) as long as both are pure fns, and both evaluations terminate (e.g. no loops)
-  - call by name: only evaluates fn arguments that are actually used in the fn body
-  - call by value: (the default) evaluates every fn argument only once
+  - call by name: by name evaluation: only evaluates fn arguments that are actually used in the fn body, but the values are recomputed everytime
+  - call by value: strict evaluation; (the default) evaluates every fn argument only once
+  - lazy evaluation: evaluation occurs 0 or 1 times, the first (and only) time is when the value is initially accessed, else is never evaluated
 - recursive definitions require a return type
   - non-recursive definitions dont
 
@@ -2614,6 +2704,13 @@ f3(1)(2) // = 3
 val f4 = Function.uncurried(f3)
 f4(1, 3) // = 4
 
+
+// standard library
+someDef
+  .apply(someArg) // runs someDef on someArg, i.e. someDef(someArg)
+  .andThen(thisFn) // runs somDef, then thisFn, i.e. thisFn(someDef(poop))
+  .compose(thisFn) // runs thisFn, then someDef, i.e. someDef(thisFn(poop))
+  .unlift // todo
 ```
 
 ### function literals & ADTs
@@ -2773,6 +2870,7 @@ def poop(did: Boolean, wipe: Boolean, flush: Boolean): Boolean =
 poop(true, true, false) // dont forget to flush
 
 // design by contract: post condition require {} around body of fn
+// verify a programs result has some expected property
 def postCondition(throwIt: Boolean): String = {
     if throwIt == false then "wont throw" else ""
 } ensuring (_.length != 0, "fails if ensuring returns false")
@@ -2790,6 +2888,10 @@ LocalDate
   .now
   .parse(str)
 
+/// java.util
+val r = java.util.Random()
+val randomInt = r.nextInt()
+val randomBoolean = r.nextInt() > 0 // should result of a 50% distribution
 ```
 
 ### scala.math
@@ -2833,7 +2935,7 @@ import scala.language.implicitConversions
 ```scala
 
 import scala.util.Random
-import scala.util.control.NonFatail
+import scala.util.control.NonFatal // matches all exceptions that dont halt program execution
 import scala.util.{Try, Failure, Success} // Try[A] = Success[A] || Failure
 
 Random

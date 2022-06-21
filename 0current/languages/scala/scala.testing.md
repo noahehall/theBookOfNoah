@@ -11,6 +11,8 @@
   - [scalacheck for munit](https://scalameta.org/munit/docs/integrations/scalacheck.html)
   - [on scaladex](https://index.scala-lang.org/typelevel/scalacheck)
   - [user guide](https://github.com/typelevel/scalacheck/blob/main/doc/UserGuide.md)
+- scalatest
+  - [website](https://www.scalatest.org/)
 - scalamock
   - [quickstart](https://scalamock.org/quick-start/)
   - [blah doesnt(and likely wont) work with munit](https://github.com/scalameta/munit/issues/75)
@@ -18,6 +20,10 @@
   - [sbt scoverage compiler plugin](https://github.com/scoverage/sbt-scoverage)
   - [scoverage: scala code coverage](https://github.com/scoverage/scalac-scoverage-plugin)
   - [scoverage sample project](https://github.com/ckipp01/scala3-example-project)
+
+## basics
+
+- ...
 
 ## MUnit
 
@@ -41,7 +47,7 @@ end YoloWurlSuite
 ## scalacheck
 
 - library for doing property-based testing
-- integrates with MUnit
+- integrates with MUnit and ScalaTest
 
 ```scala
 
@@ -63,6 +69,10 @@ end YoloWurlSuite
 
 
 ```
+
+## scalatest
+
+- scalatest is designed to increase teams productivity through simple, clear and executable sepcificatoin that improve both code and communication
 
 ## scoverage
 
