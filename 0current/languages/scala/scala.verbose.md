@@ -157,6 +157,10 @@ val oonnee = ???
 
 ### principles
 
+- guiding principles for good design
+  - name everything you can
+  - put operations into natural scopes
+  - keep degrees of freedom for future refinements: the interface of a module should not be concerned with the implementation details in that module
 - prefer designs that enable reasoning locally about a program
   - i.e. you dont need to know about the implementation details, or global entities, or side effects, etc, to change a unit of code
   - break down complex programs into smaller programs, and combine them

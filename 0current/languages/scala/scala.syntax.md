@@ -321,18 +321,6 @@ val interestingVal: Int =
   - sets of possible values with an unbounded number of operations
 - any type with an `apply` method can be called as a fn, e.g. myType()
 - any type with an `unapply` method can be destructured
-- variance: subtyping relationship varies with the type parameter
-  - covariant: C[A] <: C[B],
-    - a type that accepts mutations of its elements shoud not be ocvariant
-    - fns are always coveriant in their result type
-      - i.e. covariant type parameters can only appear in method results (not parameter lists)
-      - covariant type params may appear in lower bounds of method type parameters
-  - contravariant: C[A] >: C[B]
-    - fns are always contravariant in their argument types
-      - i.e. contravariant type params can only appear in method parameters (not result type)
-      - contract variant type params may appear in upper bounds
-  - nonvariant: neither C[A] nor C[B] is a subtype of the other
-    - these types can appear anywhere, why they are the default
 - data access patterns
   - linear: access to the first is faster than access to the middle/end , e.g. a List
   - balanced: evenly balanced across start, mid and end
@@ -393,36 +381,6 @@ val interestingVal: Int =
 //////////////////////////////////
 
 // type tests & type casts are discouraged in scala
-
-//////////////////////////////////
-/// Type Bounds
-// generally dictates how a type parameter relates to another type
-// ^ e.g. fn type parameter relative to fn return type
-// ^ e.g. super class type relative to subclass type
-//////////////////////////////////
-
-/// UPPER BOUNDS type
-// Poop is a subtype of Flush, or is Flush,
-// i.e. poop must confirm to the interface of Flush
-// i.e. liskov substitution principle:
-// ^ if A<: B, then everything you can do to a value of type B you can do to a value of type A
-type Poop <: Flush
-def someFn[MyInt <: Int](n: MyInt): Int = ???
-// shorthand
-class Poop[+A](...):
-
-/// LOWER BOUNDS type
-// Poop must is a super type of Flush, or Flush is a subtype of Poop
-type Poop >: Flush
-// shorthand
-class Poop[-A](...):
-
-// lower + upper bounds to restrict type S to an interval between 2 types
-def someFn[Poop >: Nothing <: Any](p: Poop): Poop = ???
-
-// nonvariant
-class Poop[A]
-
 
 
 ```
@@ -574,16 +532,83 @@ val amPooping = IsPooping.parse(true) // val amPooping: IsPooping.IsPooping = tr
 val getPooping4 = amPooping.value // val getPooping4: Boolean = true
 ```
 
-### type directed programming
+### Type Parameters
 
-- i.e. contextual abstractions
-  - instead of inferring TYPES from VALUES like `val x = 42 == Int`
-  - the scala compiler is able to do the opposite: infer VALUES from TYPES
-    - works when there is exactly ONE value for a type, the compiler can provide the value to us
 - type parameters: i.e. construct for implementing generics/polymorphism, enable a type to be consumed in multiple types
   - generics: a fn/class can be applied to arguments of many types; instances of a fn/class are creatd by type parameteriztion
   - a type can have instances of many types
-- type erasure: type arams do not affect evaluation; i.e. are removed before evaluating the program
+- variance: subtyping relationship varies with the type parameter
+  - covariant: C[A] <: C[B],
+    - a type that accepts mutations of its elements shoud not be ocvariant
+    - fns are always coveriant in their result type
+      - i.e. covariant type parameters can only appear in method results (not parameter lists)
+      - covariant type params may appear in lower bounds of method type parameters
+  - contravariant: C[A] >: C[B]
+    - fns are always contravariant in their argument types
+      - i.e. contravariant type params can only appear in method parameters (not result type)
+      - contract variant type params may appear in upper bounds
+  - nonvariant: neither C[A] nor C[B] is a subtype of the other
+    - these types can appear anywhere, why they are the default
+- type erasure: type params do not affect evaluation; i.e. are removed before evaluating the program
+
+```scala
+//////////////////////////////////
+/// Type Parameters
+// i.e. generics
+//////////////////////////////////
+// stringify[Int](1)
+// stringify[Boolean](true)
+def stringify[A](thing: A): A = thing.toString
+
+// Poop[Nothing] is a subtype of any type of Poop
+trait Poop[+A]
+object Empty extends Poop[Nothing]
+
+
+//////////////////////////////////
+/// Type Bounds
+// generally dictates how a type parameter relates to another type
+// ^ e.g. fn type parameter relative to fn return type
+// ^ e.g. super class type relative to subclass type
+//////////////////////////////////
+
+/// UPPER BOUNDS type
+// Poop is a subtype of Flush, or is Flush,
+// i.e. poop must confirm to the interface of Flush
+// i.e. liskov substitution principle:
+// ^ if A<: B, then everything you can do to a value of type B you can do to a value of type A
+type Poop <: Flush
+def someFn[MyInt <: Int](n: MyInt): Int = ???
+// shorthand
+class Poop[+A](...):
+
+/// LOWER BOUNDS type
+// Poop must is a super type of Flush, or Flush is a subtype of Poop
+type Poop >: Flush
+// shorthand
+class Poop[-A](...):
+
+// lower + upper bounds to restrict type S to an interval between 2 types
+def someFn[Poop >: Nothing <: Any](p: Poop): Poop = ???
+
+// nonvariant
+class Poop[A]
+
+
+```
+
+### type directed programming
+
+- contextual abstractions: When there is exactly one "obvious" value for a type, the compiler can find this value and provide it to you.
+  - instead of inferring TYPES from VALUES like `val x = 42 == Int`
+  - the scala compiler is able to do the opposite: infer VALUES from TYPES
+    - essentially what occurs:
+      - somewhere there exists a set of type(s) with a definition/value
+      - elsewhere there is an operation that expects a type
+        - you instruct the compiler that this expectation can be resolved via one of the types that exist
+        - if the compiler can deduce exactly one type is appropriate, it will use that types definition/value for you automatically
+  - FYI: you still have to explicity map TYPES to VALUES for which the compiler can choose
+    - the efficiency gained is that you dont have to explicitly use the mapping, everywhere its needed in your code, the compiler will do it for you
 - context parameters: instruct the compiler on how to inject values into code based on type annotations
   - first: let the compiler know that we expect it to pass the value as a parameter to some def
     - prefix the parameter with `using`
@@ -611,15 +636,6 @@ val getPooping4 = amPooping.value // val getPooping4: Boolean = true
     - specifies 2 context parameters: ordering of zip coes, and ordering of street names
 
 ```scala
-//////////////////////////////////
-/// Type Parameters
-// i.e. generics
-//////////////////////////////////
-// stringify[Int](1)
-// stringify[Boolean](true)
-def stringify[A](thing: A): A = thing.toString
-
-
 //////////////////////////////////
 /// using definitions
 //////////////////////////////////
@@ -726,15 +742,17 @@ def myDef[A](...)(using Ordering[A]): List[A] = ???
 // this entire section in scala 2
 //////////////////////////////////
 
-// context params are prefixed with implicit
-// only a single parameter list (specifically the last one) can be a context parameter
+// context params are prefixed with using|implicit
+// ^ only a single parameter list (specifically the last one) can be a context parameter
+// ^ instructs the compiler to supply the value based on the type for us!
+// ^^ in both cases below, the compiler choosing the correct Ordering[A] value based on the type of A
+// ^^ e.g. Ordering.{Int, String} would be selected if A was Int, or if A was String
 // Scala 3
 def sort[A](as: List[A])(using ordering: Ordering[A]): List[A]
 // Scala 2
 def sort[A](as: List[A])(implicit ordering: Ordering[A]): List[A]
 
-// given definitions are prefixed with implicit
-// Any regular val, def, or object definition could be marked as implicit.
+// given definitions are prefixed with given|implicit
 // Scala 3
 given orderingInt: Ordering[Int] with
   def compare(x: Int, y: Int): Int =
@@ -879,10 +897,6 @@ final def poop: // prevent overrides in descendants
 trait A
 class B extends A
 Object C extends B
-
-// Poop[Nothing] is a subtype of any type of Poop
-trait Poop[+A]
-object Empty extends Poop[Nothing]
 
 ```
 
@@ -2922,6 +2936,10 @@ sqrt(4) // Double 2.0
 (random * 10 + 1) // random Double between 1 and 10
 (random * 10 + 1).toInt // random integer between 1 and 10
 
+// Ordering
+import scala.math.Ordering // contains default sorting logic
+  .Int // sorting integers
+  .String // sorting strings
 ```
 
 ### scala.language
