@@ -100,6 +100,7 @@
   - kazam
   - thunderbird
   - thunderbird-gnome-support
+  - [drawio desktop](https://github.com/jgraph/drawio-desktop/releases)
 
 - virtualization
 
