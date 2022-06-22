@@ -77,6 +77,7 @@
   - [type: unions](https://docs.scala-lang.org/scala3/book/types-union.html)
   - [type: upper bounds](https://docs.scala-lang.org/tour/upper-type-bounds.html)
   - [type: variance](https://docs.scala-lang.org/scala3/book/types-variance.html)
+  - [context functions](https://docs.scala-lang.org/scala3/reference/contextual/context-functions.html)
 
 ## basics
 
