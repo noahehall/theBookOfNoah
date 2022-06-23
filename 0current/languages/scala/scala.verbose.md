@@ -157,6 +157,27 @@ val oonnee = ???
 
 ### principles
 
+- reactive systems & applications: readily responsive to stimulus
+  - event-driven: react to events
+    - events should be handled asynchronously, without blocking
+    - systems are composed of loosely coupled event handlers
+  - scalable: react to varying workload
+    - minimize shared mutable state
+      - see immutable infrastructure elsewhere in this repo
+    - scale up: make use of parallelism in multi-core systems
+    - scale out: make use of multiple server nodes in a cluster
+      - location transparency: it shouldnt matter where a node is located (same computer, across the world, etc)
+      - resilience: a failure in one node shouldnt impact other nodes/system/etc
+  - resilient: react to and [quickly] recover from failures; should be built into the design (and not added later)
+    - types of failures: software, hardware & connection failures
+    - loose coupling
+    - strong encapsulation of mutable state
+    - pervasive supervisor hierarchies
+  - responsive: react to users; provides rich, real-time interaction with users even under load and in the presence of failures
+    - algorithms
+    - system design
+    - back-pressure
+    - ...
 - guiding principles for good design
   - name everything you can
   - put operations into natural scopes
@@ -257,6 +278,34 @@ case class PostMessage(channel: Channel) extends Action
 case class Channel(name: String)
 // use like Subscribe(Channel("to this channel"))
 ```
+
+### event modeling
+
+- composable event abstractions
+  - events are first class
+  - events often represented as messages
+  - event handlers are first class
+  - complex handlers can be composed from primitive ones
+
+#### Futures
+
+- Abstraction over events
+
+#### Actors
+
+- message passing architecture
+
+#### Supervisors
+
+- Handling failures
+
+#### Distributed Actors
+
+- scaling out
+
+#### Reactive Streams / Flows
+
+- abstraction over event streams
 
 ## standard library
 

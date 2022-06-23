@@ -353,7 +353,7 @@ val interestingVal: Int =
 
 // other
 /// Boolean true | false
-/// Unit i.e. void, doesnt return anything
+/// Unit i.e. void, doesnt return anything but may have side effects
 
 // dunno where these go
 /// BigDecimal longer than a Double
@@ -543,6 +543,7 @@ val getPooping4 = amPooping.value // val getPooping4: Boolean = true
   - generics: a fn/class can be applied to arguments of many types; instances of a fn/class are creatd by type parameteriztion
   - a type can have instances of many types
 - variance: subtyping relationship varies with the type parameter
+  - Functions must be contravariant in their argument types and covariant in their result types,
   - covariant: C[A] <: C[B],
     - a type that accepts mutations of its elements shoud not be ocvariant
     - fns are always coveriant in their result type
@@ -1409,6 +1410,7 @@ object User:
 - each collection type comes with two variants
   - immutable: are auto imported
   - mutable: must be imported
+    - should only be used if there are performance issues with immutable types
 - generally all elements of a collection type must be of hte same type, except Tuple whose elements can be of anytype
 
 ```scala
@@ -1691,6 +1693,7 @@ poop
 ###### List
 
 - perf characteristics: not optimized for random access but support efficient head and tail decomposition
+  - provides fast sequential access
   - constant time: ::, head, tail
   - linear time: random access, size
 - sequential/linear immutable linked-list; each el has a pointer to the next el in the list
@@ -1862,6 +1865,7 @@ range
 ###### Vector
 
 - read/write perf: reasonably fast read and update characteristics relative to other sequences
+  - provides fast random access
   - evenly balanced tree: in order to change any element, you have to change all parent elements in the tree
 
 ```scala

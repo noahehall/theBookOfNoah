@@ -14,6 +14,7 @@
 - [scala index: search for libraries](https://index.scala-lang.org/)
 - [whats wrong with sbt?](https://www.lihaoyi.com/post/SowhatswrongwithSBT.html)
 - examples
+  - [sbt tutorial](https://github.com/shekhargulati/52-technologies-in-2016/blob/master/02-sbt/README.md)
   - [example build.sbt](https://github.com/noahehall/scala/blob/develop/examples/build.sbt)
   - [example project configuration](https://github.com/noahehall/scala/tree/develop/examples/project)
 - refs
