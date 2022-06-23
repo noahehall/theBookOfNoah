@@ -38,7 +38,6 @@
 ### general
 
 - lifecycle statuses (as reported by docker ps)
-
   - running
     - docker run
     - docker start
@@ -51,21 +50,16 @@
     - docker pause
   - restarting
     - docker restart
-
 - restart policies
-
   - never restart
   - attempt to restart when a failure is detected
   - attempt for some predetermined time to restart when a failure is detected
   - always restart the container regardless of the condition
-
 - components
-
   - image: the template for instantiating a container
   - container: a running image
   - volume: a filesystem for a container
   - network: dns for containers & volumes
-
 - common files
   - `.dockerignore`
   - `poop.Dockerfile`
