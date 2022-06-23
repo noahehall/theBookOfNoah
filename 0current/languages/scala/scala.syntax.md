@@ -604,6 +604,10 @@ class Poop[A]
 
 ### type directed programming
 
+- pattern of code combining parameterized types and implicits.
+  - defined a parameterized type SomeType[A], e.g. a Trait, or i.e. a Type Class
+  - implicit instances of SomeType for concrete types A, e.g. a companion object
+  - implicit parameters of type SomeType[A], e.g. a definition with context params
 - contextual abstractions: When there is exactly one "obvious" value for a type, the compiler can find this value and provide it to you.
   - the efficiency gained is that you dont have to explicitly use the provide a value whenever type A is used, the compiler will do it for you
   - the scala compiler is able to do the opposite: infer VALUES from TYPES
@@ -748,21 +752,7 @@ implicit def orderingPair[A, B](
   - enable conditional given definitions
 
 ```scala
-// example implementation of type class Ordering
-// interface: type parameter with method signature:
-// ^ this is the type Class that support comparison
-trait Ordering[A]:
-  def compare(x: A, b: A): Int
-  extension (poop: A) // provide an extension to any type of A where there is an Ordering[A]
-    def flush (...): Boolean = ???
-// object: implementing interface for specific types
-object Ordering:
-  given Int: Ordering[Int] with
-    def compare(...) = ???
-  given String: Ordering[string] with
-    def compare(...) = ???
-// definition: polymorphic method with a context parameter matching the interface
-def poop[A](...)(using Ordering[A]) List[A] = ???
+
 ```
 
 #### Type conversions
