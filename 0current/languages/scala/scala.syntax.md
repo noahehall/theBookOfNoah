@@ -1453,6 +1453,7 @@ v​al (x, y) = spamEgg
 spamEgg match
     c​ase (x, y) => ???
 // via a def using a partial function (with curly braces) with a case expression
+// partial fns get their type annotations from the outer fn, in this case map
 spamEgg.map {​ case (x, y) => ??? }
 // via index params
 spamEgg.groupMap(_._1)(_._2) // first and second element in two parameter lists
@@ -1666,7 +1667,7 @@ list.sortBy((_, age) => age)
 list.sortBy((name, _) => name)
 ```
 
-###### strings
+###### strings: indexed sequence (from java)
 
 - cannot be subclasses of Seq because it comes from java
 - support the same ops ans Seq and can implicity be converted to sequences as needed
@@ -1690,7 +1691,7 @@ poop
   .toUpperCase // FLUSH
 ```
 
-###### List
+###### List: linear sequence
 
 - perf characteristics: not optimized for random access but support efficient head and tail decomposition
   - provides fast sequential access
@@ -1822,7 +1823,7 @@ val buffer = mutable.ArrayBuffer("poop", "flush")
 
 ```
 
-###### Array
+###### Array: indexed sequence (from java)
 
 - cannot be subclasses of Seq because it comes from java
 - support the same ops ans Seq and can implicity be converted to sequences as needed
@@ -1862,10 +1863,10 @@ range
   .step // the step (by) value
 ```
 
-###### Vector
+###### Vector: indexed sequence
 
 - read/write perf: reasonably fast read and update characteristics relative to other sequences
-  - provides fast random access
+  - provides fast random access ()
   - evenly balanced tree: in order to change any element, you have to change all parent elements in the tree
 
 ```scala
@@ -2070,7 +2071,14 @@ def somePoop(...) = ???
 // ^ e is an expression whose value is a collection
 // filter: of the form if F
 // ^ F is a boolean expressions
-for s yield e
+for s <- ofThis yield e
+// left hand side is a type pattern
+// will filter ofThis to elements of type SomeType(s) and give you s
+for SomeType(s) <- ofThis yield e
+for s <- ofThis if s > 0 yield e
+// same as the above,
+// always use withFilter > filter as it doesnt produce intermediate entities
+for (y <- ofThis.withFilter(z => z > 0)) yield println(y)
 
 // identifer <- pronounced 'taken from'
 val squared = for x <- values yield x * x
@@ -2079,7 +2087,7 @@ val squared = for x <- values if x > 0 yield x * x
 // with multiple generators
 val poop = for
   (person, email) <- people.zip(peopleEmails)
-  if email.nonEmpty
+if email.nonEmpty
 yield (person, email)
 
 // create a list of 20 things
@@ -2619,18 +2627,33 @@ object poop:
 // ^ use to destructure objects
 ```
 
-### partial fns
+### partial function
 
 - lambdas that may not be defined on all their domain type
-  - e.g. `PartialFn[Int, String]` may not be defined for some Int values
+  - e.g. `PartialFunction[Int, String]` may not be defined for some Int values
   - definition can be verified via `if PartialFn.isDefinedAt(poop) then partFn(poop)`
 
 ```scala
 
-// partial fn for Throwable of type Unit, but only for Throwable values also subtypes of RuntimeException
-val handler: PartialFunction[Throwable, Unit] =
-  case blah: RuntimeException => println("wtf")
+// basically any fn that takes a fn can receive a partial fn
+// e.g. on map
+someList.map {
+  (x, y ) => doThisStuff(x,y)
+}
 
+// any lambda can be called as a partial fn
+val f: String => String = {
+  case "pong" => "ping"
+  case _ => "nope" // required or you get a MatchError
+}
+f("poop") // nope
+
+// Type PartialFunction enables you to not catch every case
+// ^ instead use isDefinedAt to check if the partial is defined for a value
+val x: PartialFunction[String, String] = {
+  case "pong" => "ping"
+}
+x.isDefinedAt("poop") // Boolean: false
 ```
 
 ### composition
