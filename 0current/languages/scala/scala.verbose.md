@@ -11,6 +11,7 @@
 
 ## links
 
+- [the reactive manifesto](https://www.reactivemanifesto.org/)
 - [coursera scala 5 course specialization](https://www.coursera.org/specializations/scala#courses)
 - [coursera: effective programming in scala](https://www.coursera.org/learn/effective-scala)
 - [scala metals vscode plugin](https://scalameta.org/metals/docs/editors/vscode)
@@ -160,6 +161,7 @@ val oonnee = ???
 - reactive systems & applications: readily responsive to stimulus
   - event-driven: react to events
     - events should be handled asynchronously, without blocking
+      - better resource efficiency: execution of computations without waiting for termination
     - systems are composed of loosely coupled event handlers
   - scalable: react to varying workload
     - minimize shared mutable state
@@ -291,10 +293,6 @@ case class Channel(name: String)
 
 - Abstraction over events
 
-#### Actors
-
-- message passing architecture
-
 #### Supervisors
 
 - Handling failures
@@ -306,6 +304,34 @@ case class Channel(name: String)
 #### Reactive Streams / Flows
 
 - abstraction over event streams
+
+#### Actor Model
+
+- message passing architecture
+  - represents objects and their interactions
+  - resembles human organizations
+  - built upon the laws of physics
+- creatd by Carl Hewit in 1973
+- invented for research on artificial intelligence
+- implemented in scala in 2006 by philipp Haller
+- Jonas Boner (nice) created Akka in 2009
+- inspiration
+  - cpus arent getting faster, they are getting wider
+    - multiple execution cores within one cip, sharing memory
+    - virutal cores sharing a single physical execution core
+  - program running on computers with multiple cores must utilize those cores
+    - multi-tasking: running programs in parallel
+    - multi-threading: running parts of the same program in parallel
+      - where each thread collaborate on a common task
+      - must communicate and sync with each other
+
+#### serialization
+
+- patterns for multi-threading safety
+  - demarcate gregions of code with `dont disturb` semantics
+  - make sure that all access to shared state is protected (serialized)
+- lock: aka mutex
+- semaphore
 
 ## standard library
 

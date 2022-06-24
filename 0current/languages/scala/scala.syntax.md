@@ -21,6 +21,7 @@
   - 100% positive type APIs arent Dry, e.g. lots of stuff under List should be under Seq, and many times they are duplicated
 
 - todos
+  - find Promise in the scala docs
   - find sealed traits in the scala docs
   - todo: need to do a better job at categorizing operators, especially the mutable vs immutable ones
   - extending, using `poop extends blah1, blah2` vs `poop extends blah1 with blah2`
@@ -224,7 +225,9 @@ operator precedence
 ^
 &
 < >
-= !
+=
+!something
+actor ! msg // in this case ! sends a msg to actor in Akka, pronounced till
 :
 + -
 * / %
@@ -2415,6 +2418,7 @@ def parseDate(str: String): Validated[LocalDate] =
 
 - controls when (and how, parallel/sequential)async computations are executed
 - represents a value that may not be available yet, but might be in the future, once an asynchronous computation has completed
+  - i.e. async values
 - future values are generally results of computations that occur across parallel and sequential branches
   - the execution flow is similar to a directed graph
 
@@ -2429,16 +2433,16 @@ val failed = Future.failed(Exception("fail fast"))
 // immediately successful future
 val success = Future.successful(true)
 
-// will eventually return the inserted user
+// will eventually return User, but lacks resiliency
 def insertUser(...): Future[User] = ???
 // even more realistic is modeling future user with Try and Option
 // ^ None: future is not yet settled
 // ^ Some(Success(User)): future succeeded
 // ^ Some(Failure(e)): future failed due to exception thrown
 def insertUser(...): Future[Option[Try[User]]]
-
-// operations on future include the usual destructuring stuff
-// ^ map, fatMap, try, Option, either, Future.traverse, recover, recoverWith, etc
+// doesnt return anything, but consumers can still use poop.onComplete
+def asyncPoop(): Future[Unit]
+asyncPoop().onComplete( runThisWhenDone )
 
 // chain two asynchronous computations that need to happen sequentlly via flatmap / map
 def poop(): Future[Boolean] =
@@ -2472,22 +2476,28 @@ val poop: Future[Boolean] =
     .recover { case NonFatal(ouch) => false } // sync result
     .recoverWith { ... } // async result
 
-// modefling common Future operations
-// all of these operations take an implicit paramter list of type ExecutionContext
-// ^ i.e. append (using ExecutionContext) as the last parameter list
-trait Future[A]:
-  def map[B](f: A => B): Future[B]
-  def zip[B](that: Future[B]): Future[(A, B)]
-  def flatMap[B](f: A => Future[B]): Future[B]
-  def recover(f: Throwable => A): Future[A]
-  def recoverWith(f: Throwable => Future[A]): Future[A]
-object Future:
-  def traverse[A, B](as: Seq[A])(f: A => Future[B]): Future[Seq[B]]
+// running futures sequentially
+def somEDef(): Future[T] =
+  for {
+    val1 <- someFuture()
+    val2 <- anotherFuture()
+  } yield (val1, val2)
+
+// future API: result type of a Future operation is always Future[???]
+myFuture
+  .flatMap(lambda)
+  .map(lambda)
+  .onComplete { partial }
+  .recover { partial } // returns value|failure
+  .recoverWith { partial } // returns Future[value]|failure
+  .traverse(someSeq)(someAsyncFn)
+  .zip(otherFuture): // Future[(A, B)] : failure if any fail, both are resolved concurrently (not one after the other)
 ```
 
 #### ExecutionContext
 
 - controls where (which thread, CPU) async computations are executed
+  - i.e. you can specify to execute on a single-thread, or a fixed-size thread pool
 - in the JVM, the main abstraction is threads
 - thread-pool: context for execution async computations
   - by default it contains one thread per CPU on the device
@@ -2497,8 +2507,12 @@ object Future:
 ```scala
 
 // by importing this at the callsite/begining of a file that contains an async operation
-// scala will automatically use the default execution context
+// the default execution context, no need to import it
+// use as many threads as available CPUs
+import scala.concurrent.ExecutionContext.Implicits.global
+// TODO
 import scala.concurrent.ExecutionContext.Implicits.given
+
 import scala.concurrent
 
 // schedule a computation of some future expression in the available ExecutionContext
@@ -2524,6 +2538,56 @@ trait Future[A]:
   def map[B](f: A => B)(using ExecutionContet): Future[B]
   def zip[B](that: Future[B])(using ExecutionContet): Future[(A, B)]
 ```
+
+#### Promise
+
+- TODO
+
+```scala
+// TODO
+def futureWrapper(blah): Future[Poop] =
+  val p = Promise[Poop]()
+  val someFuture = someTask()
+  val someResult = if someFuture then p.success(someFuture) else p.failure("didnt work")
+  p.future
+
+```
+
+#### Locks
+
+- every object in scala has a lock accessed via `poop.synchronized`
+  - fn modifying shared state needs to be synchronized
+- dead-lock: when two threads execute at the same time, creating lock on the same piece of code causes neither thread to finish
+- blocking synchronization: introduces dead-locks
+  - bad for CPU utilization
+  - synchronous communication couples sender and receiver
+
+```scala
+
+// forces all threads using this fn to synchronize their execution
+// two threads cannot execute the same synchronized block at the same time
+
+def poop(terds: Int): String = this.synchronized {
+  if (terds < 1) then "finished pooping" else poop(terds - 1)
+}
+poop(20)
+
+// Blocking synchronization: dont do this
+// ensures no one uses more toilet paper than exists on a roll
+// stall requires a synchronized msg wipe that reduces the amount of toilet paper left
+def passMeTheToiletPaper(from: Stall, to: Stall, ToiletPaper: Int): Unit = {
+  from.synchronized {
+    to.synchronized {
+      from.wipe(roll)
+      to.wipe(roll)
+    }
+  }
+}
+```
+
+#### Actor
+
+- see scala.akka file in this repo
 
 ## definitions
 
@@ -2869,7 +2933,7 @@ postCondition(true)
 ```scala
 import java.util.current.atomic
 import java.time.{localDate, Period}
-
+import  scala.collection.JavaConverters._ // converts java collections to scala collections
 /// LocalDate
 LocalDate
   .now
@@ -2947,9 +3011,19 @@ import scala.io.{Source}
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits._
 
-Future
-  .traverse(someSeq)(someAsyncFn)
-  .onComplete(someFn)
+
+// modefling common Future operations
+// all of these operations take an implicit paramter list of type ExecutionContext
+// ^ i.e. append (using ExecutionContext) as the last parameter list
+trait Future[A]:
+  def map[B](f: A => B): Future[B]
+  def zip[B](that: Future[B]): Future[(A, B)]
+  def flatMap[B](f: A => Future[B]): Future[B]
+  def recover(f: Throwable => A): Future[A]
+  def recoverWith(f: Throwable => Future[A]): Future[A]
+object Future:
+  def traverse[A, B](as: Seq[A])(f: A => Future[B]): Future[Seq[B]]
+
 ```
 
 ### scala.annotation

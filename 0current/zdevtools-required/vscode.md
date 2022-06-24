@@ -5,6 +5,8 @@
 
 # links
 
+- [setup profiles for different languages](https://dev.to/sulmanweb/vs-code-pro-tip-code-profiles-multi-environment-development-hg2)
+- [more of the same, but better user feedback in comments](https://dev.to/jsjoeio/how-to-create-code-profiles-in-vscode-3ofo)
 - [vscodium > vscode](https://github.com/VSCodium/vscodium/releases)
 - [disable unused builting extensions](https://stackoverflow.com/questions/48852007/type-aliases-can-only-be-used-in-a-ts-file/51034421)
 

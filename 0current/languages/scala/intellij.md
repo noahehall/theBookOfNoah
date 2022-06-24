@@ -2,6 +2,11 @@
 
 intellij is dreamweaver that just wont fkn die
 
+- todos
+  - [run configurations](https://www.jetbrains.com/help/idea/run-debug-configuration.html)
+    - set compiler options
+    - ...
+
 ## LINKS
 
 - [toolbox](https://www.jetbrains.com/toolbox-app/download/download-thanks.html?platform=linux)
