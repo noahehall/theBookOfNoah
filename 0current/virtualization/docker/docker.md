@@ -5,6 +5,7 @@
 
 ## links
 
+- [get the dockerfile from a running container](https://forums.docker.com/t/how-can-i-view-the-dockerfile-in-an-image/5687)
 - [docker docs](https://docs.docker.com/)
 - [docker ref](https://docs.docker.com/reference/)
 - [docker guides: overview](https://docs.docker.com/get-started/overview/)
@@ -16,6 +17,8 @@
 - [docker scan](https://docs.docker.com/engine/scan/)
 - [docker build](https://docs.docker.com/engine/reference/commandline/build/)
 - on the web
+  - [docker volumes in depth (oldy but goody)](https://container42.com/2014/11/03/docker-indepth-volumes/)
+  - [docker arg, env explanation](https://vsupalov.com/docker-arg-env-variable-guide/)
   - [uid & gid in docker containers](https://medium.com/@mccode/understanding-how-uid-and-gid-work-in-docker-containers-c37a01d01cf)
   - [vagrant vs docker](https://www.ctl.io/developers/blog/post/docker-vs-vagrant)
   - [k8s vs docker swarm](https://thenewstack.io/kubernetes-vs-docker-swarm-whats-the-difference/)
@@ -32,6 +35,7 @@
     - verifying author: importing PGP keys with the full fingerprint in the Dockerfile to check signatures;
     - verifying the content: embedding checksums directly in the Dockerfile
   - Only the instructions RUN, COPY, ADD create layers.
+  - data containers are so 1995, use named volumes instead
 
 ## basics
 
@@ -63,8 +67,24 @@
 - common files
   - `.dockerignore`
   - `poop.Dockerfile`
+    - sucks as then your dockerfiles arent sorted in the tree
+    - do `docker.poop.Dockerfile` lol instead, super ugly but at least they are all together
 
 ## quickies
+
+- docker ARG, vs ENV vs .env
+
+  - FYI: both ARG and ENV leave traces in the image
+  - build time
+    - ARG:
+      - settings vars for when building an image
+      - setting default runtime ENV values
+      - export vars to a file so subsequent images can access them
+  - runtime
+    - ENV:
+      - available at runtime
+      - can be set via ARGs
+    - .env: best place to set runtime vars
 
 ```sh
   docker help
@@ -183,7 +203,6 @@
 
 
   # An ENTRYPOINT allows you to configure a container that will run as an executable.
-  #
   ENTRYPOINT ["executable", "param1", "param2"]
   # exec form, is preferred
 
