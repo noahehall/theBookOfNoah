@@ -85,7 +85,10 @@ alias dockerdlog="$(echo journalctl -u docker.service)"
 alias dockerdss="(sudo ss -asmpex | grep dockerd)"
 #echo image1 image2 three | xargall docker pull
 alias dockerinspect="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
-
+# see volumes for a container
+alias dockercontainervols="docker inspect -f '{{range .Mounts}}{{println .Source}}{{println .Destination}}readWrite: {{.Mode}}{{println .RW}}{{end}}'"
+# get get ip addr for container
+alias dockercontainernetwork="docker inspect -f '{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}'"
 # node ---------------------------------
 alias npmglobals='npm list -g --depth=0'
 alias nvmaliasnode='nvm alias default node'
