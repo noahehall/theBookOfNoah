@@ -21,6 +21,8 @@
   - 100% positive type APIs arent Dry, e.g. lots of stuff under List should be under Seq, and many times they are duplicated
 
 - todos
+  - https://dzone.com/articles/executor-and-execution-context-objects-in-scala-1
+  - https://alvinalexander.com/scala/how-to-create-java-thread-runnable-in-scala/
   - find Promise in the scala docs
   - find sealed traits in the scala docs
   - todo: need to do a better job at categorizing operators, especially the mutable vs immutable ones
@@ -2934,6 +2936,7 @@ postCondition(true)
 import java.util.current.atomic
 import java.time.{localDate, Period}
 import  scala.collection.JavaConverters._ // converts java collections to scala collections
+
 /// LocalDate
 LocalDate
   .now
@@ -3010,7 +3013,7 @@ import scala.io.{Source}
 ```scala
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits._
-
+import scala.concurrent.duration._
 
 // modefling common Future operations
 // all of these operations take an implicit paramter list of type ExecutionContext

@@ -1,8 +1,13 @@
 # akka
 
+- will verify once I start building out some APIs
 - use the actor model to greatly simplify distributed and concurrent software applications
 - Akka is a toolkit for building highly concurrent, distributed, and resilient message-driven applications for Java and Scala.
 - Akka Insights is intelligent monitoring and observability purpose built for Akka.
+
+- todos
+  - while this line exists, consider all code to be pseudo-code taken from coursera
+  - generally verify the APIs with the akka ref
 
 ## links
 
@@ -30,15 +35,163 @@
 
 - Up to 50 million msg/sec on a single machine. Small memory footprint; ~2.5 million actors per GB of heap.
 
-## designing actor systems
+## designing reactive applications
 
-- define the problem to be solved
-- split the problem into concrete steps
-- define the actors in the system that will be responsible for each step
-- determine if multiple instances of an actor can parallelize their step into substeps
-- define what messages will be sent between actors
+- four tenants
+  - event driven
+  - scalable
+  - resilient
+  - responsive
+- reactive applications need to be non-blocking & event-driven from top to bottom
+  - only use async libraries & APIs
+    - any blocking code will affect the entire system
+- Actors are run by a dispatcher (potentially shared amongst actors) which can also run Futures
+- prefer immutable data structures
+  - they can be safely shared
+  - no issues sending them across thread boundaries
+- prefer `context.become` for actor state changes, with data local to the behavior
+- do not refer to actor state from code running asynchronously
+  - it would break the actor model encapsulation
+- impact of network communication on system design verse systems that run on the same process
+  - data can only be shared by value (memory cant be shared over the wire)
+    - you must serielize before sending, and deserialize on receipt
+  - lower bandwidth (has to go over the wire)
+  - higher latency (has to wait on network calls)
+  - partial failure
+  - data corruption
 
-## Actor
+```scala
+
+```
+
+### designing actor systems
+
+- basic outline
+  - define the problem to be solved
+  - split the problem into concrete steps
+  - define the actors in the system that will be responsible for each step
+    - actors are easily replaceable, and shortlived
+    - general types: the names are arbitrary
+      - actor actor: conceptually represent the highest level entities, e.g. that initiate a process
+      - controller: created by an actor, to act on their behalf
+      - getters: created by a controller, to perform an action
+  - determine if multiple instances of an actor can parallelize their step into substeps
+  - define what messages will be sent between actors
+    - optimizing the communication paths are important
+
+#### handling failures
+
+- the Actor Model is anthropomorphic
+  - actors work together in teams (systems)
+  - individual failures are handled by the team leader
+    - instead of sending failures back to the caller, send them as messages to some supervisor/controller etc which should handle all failures for their dependents
+- Resilient error handling: containment and delegation of failures
+  - containment: failures are isolated and incapable of spreading to other components
+  - delegation: failures shouldnt be handled by the failed component
+  - manditory parental supervision: handling of failures are delegated to the failed actors supervisor (i.e parent)
+    - can stop its subordinates
+    - can restart its subordinates
+    - can escalate to its supervisor
+
+##### The Error Kernel Pattern
+
+- move important data near the root (top level) of actor hierarchies
+- delegate risky behavior to leaves (bottom) of actor hierarchies
+- restarts
+  - are recursive: child actors and their state are part of the parent actors state: so avoid restarting parents as it forces restarts of all their children (and their children, recursively)
+  - restarts are more frequent near the leaves
+  - avoid restarting actors with important state
+
+#### persisting & recovering state
+
+- in-place updates: when actor state changes, it pushes the new state to an external db/file/etc
+  - recovery of latest state is constant time: you can pull the latest state in one call
+  - data volume depends on numbers of records, not their rate of change: i.e. you can recover an actor to a point in time by applying a single upate (rather than replaying a series of events)
+- append update calls: push the events that trigger changes to an external db/file etc for replay
+  - history can be replayed, audited or restored
+  - processing errors can be corrected retroactively
+  - insight gained on business processes
+  - writing an append-only stream optimizes IO bandwidth
+  - changes are immutable and freely replicated
+- snapshots: peristing immutable data
+  - persist series of events
+  - in a second process (offline), periodically apply those events to create a series of immutable snapshots and persist in a db
+  - when its time to recover an actors state, you can apply a snapshot (instead of the events) in constant time
+    - there may be subsequent events not yet processed, in which you would replay those events after applying the snapshot
+
+#### state persistence patterns
+
+- distinction
+  - command: something that will happen in the future
+  - events: something that has happened in the past
+
+##### command sourcing:
+
+- ensures an actor doesnt lose any cmds that changes state
+- persist the cmd before processing it
+  - e.g. msgs sent to an actor are intercepted via a Log actor, saved, and then forwarded to the actor
+- persist acknowledgement when processed
+  - after actor processes the cmd, it replies to a Channel actor that serializes and persists msgs, then forwards the acknowloedgement to the original sender
+- recovery
+  - the Channel actor should know that this is a recovery (because its seen this msg before) and does NOT forward the acknowledgement, as that would duplicate downstream affects already applied
+
+##### event sourcing
+
+- generate change requests (i.e. events) instead of modifying local state
+  - for each msg that requires a state change, generate an event representing the actual change taking place and send to a Log actor
+- persist and apply the events
+  - the Log actor persists the event (e.g. to a file, db, etc) and replies to the Actor acknowledgement
+  - the Actor now applies the event
+    - alternatively the actor could apply the event immediately after sending it, with out waiting for acknowledgement from the Log actor; but dont do this
+    - instead the actor should keep a queue of new cmds that are waiting to be persisted & applied, because they havent received acknowledgement that the prevoius event was persisted & subsequently applied
+      - that way you get persistent + eventual consistency
+      - see akkas `Stash` trait: enables the ability to postpone messages that cant yet be handled
+- recovery
+  - the actor applies the events saved in the log in order
+
+#### distributed actors
+
+- generally actors are run on different threads (physical CPUs or virtual cores)
+  - but could potentially be on different hosts as well
+
+### examples
+
+```scala
+// supervisor strategies:
+// ^ strategyName(maxNrOfRestarts = 10, withinTimeRange = 1.minute)
+// ^ after 10 restarts, if within 1 minute, subsequent restarts == stop
+// streategies
+// OneForOneStrategy: deals with each child in isolation
+// AllForOneStrategy: a failure in any is handled like a failure in all
+// ^ allow a fineite number of restarts
+// ^ allow a finite number of restarts in a time window
+// ^ if restriction violeted then stop instead of restart
+class Manager extends Actor with ActorLogging:
+  override val supervisorStrategy = OneForOneStrategy() {
+    case _: DBException => SupervisorStrategy.Restart // reconnect to DB
+    case _: ActorKilledException => SupervisorStrategy.Stop // someActor ! kill throws this err
+    case _: ServiceDownException => SupervisorStrategy.Escalate // manager escalates to its supervisor
+  }
+
+// actor with persistence and eventual consistency
+// akka Stash: used for defering handling of messages for eventual consistency
+class PoopProcessor extends Actor with Stash:
+  var state: State = ???
+  def receive = {
+    ???
+  }
+  def waiting(n: Int): Receive = {
+    case e: Event =>
+      state = state.updated(e)
+      if (n == 1) { context.unbecome(); unstashAll() }
+      else context.become(waiting(n - 1))
+    case _ => stash()
+  }
+```
+
+## akka API
+
+### Actor
 
 - model for concurrent, parallel programming
   - in scala you can have a couple thousand threads, and millions of actors
@@ -69,21 +222,125 @@
       - good balance: but sender needs to keep the msg in state in order to resend it
     - exactly once: i.e. guaranteed by the receiver; processing only first receiption delivers 1 time
       - most costly: as at least once still applies, + the receiver needs to keep state of ALL messages received
+- Actor Lifecycle
+  - start: context.actorOf
+    - only observable to the parent actor (i.e. the one that creates it)
+    - actor context creates a new actor instance, running the constructor of the actor class
+    - runs thisActor.preStart: executes before the first msg is processed
+  - failure: msg sent to supervisor for what to do
+    - restart: reset the actor to a previously known state: all changes are lost
+      - not externally visible, but the previous actorRef is still valid, and messages sent while restarting be handled once restart cycle is complete
+      - actor local state is trashed, only external actor state can exist beyond restarts
+      - runs thisActor.preRestart
+      - thisActor is terminated, and a new instance is started
+      - runs newActorInstance.postRestart
+    - stop: runs stop procedure
+  - stop
+    - thisActor.postStop
+    - thisActor is terminated
+  - DeathWatch: Lifecycle Monitoring;
+    - not a lifecycle method/eve nt, but helps to externally communicate if an actor is restarting, or stopped
+    - register listers via context.watch(thisActor)
+    - will receive a Terminated(thisActor) msg when thisActor is stopped
 
 ```scala
 import akka.actor.{Actor, Props}
 import akka.event.LoggingReceive
+
 // example actor
+class Poop extends Actor
+  def receive = { ??? } // partial for handling (match) messages
+  def unhandled(message: Any): Unit = ??? // handle (match) messages not caught in receive()
+  override def postStop(): Unit = ???
 
 // actor API
-someActor
+somePoop
+  // life cycle hooks: can be overridden as usual
+  .preStart
+  .preRestart
+  .postRestart
+  .postStop // run cleanup, e.g. unsubscribing from all events
+  // API
   .receive
   .sender
-  .! // or .tell ()
+  .! // send an actor a msg: e.g. somePoop | poop
+  .tell // see !
   .context
-    .become(currentState) // update the actors state,
+    .system // has .eventStream, see # EventStream
+    .actorOf(props, name) // create a child actor with a unique name
+    .become(nextState()) // transition to a new state, usually defined as a def
+    .child(name) // Option[ActorRef] // get the address of a specific child
+    .children // Iterable[ActorRef] // all children
+    .parent // the actor that created this actor
+    .stop(actorRef | self) // often applied to self, so an actor can stop itself
     .unbecome
-    .actorOf(props, name)
-    .stop(actorRef) // often applied to self, so an actor can stop itself
+    .unwatch(actorRef) // stop listening for termination events
+    .watch(actorRef) // listen for Termination events: True == stopped, False = never started
+
+```
+
+### Scheduler
+
+- a timer service optimized for high volume, short duration tasks and frequent cancelletion
+- use case
+  - sending a msg to an Actor at a future point in time
+
+### EventStream
+
+- enables publication of actor messages to an unknown audience
+  - by default, actors can only send messages to actors they know (i.e. if they have an address (actorRef))
+
+```scala
+
+// api
+PoopActor.context.system.eventStream
+  .subscribe(subscriberRef, classOf[EventType]) // Boolean: listen to poopevents about EventType
+  .unsubscribe(subscriberRef, classOf[EventType]) // Boolean: unsubscribe from a specific EventType
+  .unsubscribe(subscriberRef) // unsubscribe from all poopevents
+  .publish(event)
+```
+
+## Testing Actor Systems
+
+- tests can only verify externally observable effects via messages
+  - actor state is encapsulated, you cant reach in and pull out values
+  - i.e. test the response of msgs
+- dealing with Actors with dependencies/side effects
+  - dependency injection
+  - add overridable factory methods, e.g. to mock a db/api call
+- testing actor hierarchies
+  - start with the leaves, then work your way up
+
+### TestProbe
+
+- used for validating actor responses to messages
+- buffers actor messages in an internal queue so they can be inspected during tests
+
+```scala
+
+implicit val system = ActorSystem("My Test System")
+val somePoop = system.actorOf(Props[Poop])
+val p = TestProbe()
+
+p.send(somePoop, "this message")
+p.expectMsg("this response")
+p.expectNoMsg(1.second)
+system.shutdown()
+
+```
+
+### TestKit
+
+- run a test within the context of a test probe
+
+```scala
+import akka.testkit.TestKit
+
+new TestKit(ActorSystem("My Test System") with ImplicitSender)
+  val somePoop = system.actorOf(Props[Poop])
+  somePoop ! "this message"
+  expectMsg("this response")
+  expectNoMsg(1.second)
+  system.shutdown()
 
 ```

@@ -24,6 +24,9 @@
 
 # docs
 
+- [tutorials](https://www.arangodb.com/tutorials)
+- [arangodb packages](https://www.arangodb.com/docs/stable/programs.html)
+  - [arangodb server](https://www.arangodb.com/docs/stable/programs-arangod.html)
 - [config options](https://www.arangodb.com/docs/stable/administration-configuration.html)
 - [main docs](https://www.arangodb.com/documentation/)
 - [docker: setup](https://www.arangodb.com/download-major/docker/)
