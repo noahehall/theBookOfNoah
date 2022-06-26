@@ -220,3 +220,14 @@
     - not a lifecycle method/eve nt, but helps to externally communicate if an actor is restarting, or stopped
     - register listers via context.watch(thisActor)
     - will receive a Terminated(thisActor) msg when thisActor is stopped
+
+### Cluster
+
+- a set of nodes (actor systems) about which all members are in agreement and therefore can collaborate on a common task
+  - cluster membership can change overtime
+  - and only those nodes that are in agreement can be considered a cluster
+- cluster size
+  - 1: a node forming a cluster with itself, this is how a cluster starts
+  - n+1: a node sends a request to a cluster; once all nodes in that cluster know about the new node, then it is considered part of the cluster
+- gossip protocol: how messages are delivered between nodes in a cluster
+  - there is no leader/coordinator; thus no single point of failure
