@@ -648,13 +648,6 @@ object AddAnything:
   given String: AddAnything[String]  with
     def add(x: String, y: String): String = s"$x plus $y = ${Int.add(x.toInt, y.toInt)}"
 
-// make sure given instances are in scope using any of the following
-import AddAnything.{given Int} // the type has to be in scope else error
-// one of these three are preferred as idiomatic scala
-import AddAnything.given // import all givens
-import AddAnything.{given AddAnything[?]} // import all Ordering givens by type
-import AddAnything.{given AddAnything[Int]} // import a specific ordering givens by type
-
 // compiler replaces the type with a matching given candidate
 // i.e. based on type T, compiler will inject either addInt or addString
 def add[T](x: T, y: T)(using fn: AddAnything[T]): T =
@@ -728,6 +721,11 @@ myDef[Int](listOfInts)(Ordering.Int)
     - companion objects associated with any of T's inherited types
     - companion objects associated with any type argument in T
     - if T is an inner class, the outer objects in whic it is embedded
+- given instance specificity
+  - x is in a closer loexical scope than y
+  - x is in a class/object which is a subclass of the class defining y
+  - type X is a generic instance of type Y
+  - type X is a subtype of Y
 
 ```scala
 
@@ -762,15 +760,25 @@ def blah[A](x: A)(using Poop[A]): A =
 blah(1) // 2
 blah("1") // x was 1
 
-
-
-
 // TODO: conditional given definitions
 // ^ conditional given instances were defined by an implicit def taking implicit params
 // Scala 3
 given orderingPair[A, B](
     using ordA: Ordering[A], ordB: Ordering[B]): Ordering[(A, B)] with
   def compare(x: (A, B), y: (A, B)) = ...
+
+// given instances can be imported
+// ^ ensures given instances are in scope
+// ^ required if there is no companion object
+// import by name
+import AddAnything.Int // given instance Int
+import AddAnything.{given Int} // explicit given instance Int
+// import by type: this is the preferred import method
+import AddAnything.{given AddAnything[?]} // import all AddAnything givens
+import AddAnything.{given AddAnything[Int]} // import a specifiv AddAnything
+// import all
+import AddAnything.given // import all givens, no _ needed
+
 ```
 
 #### Type class
