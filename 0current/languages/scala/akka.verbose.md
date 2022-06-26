@@ -52,12 +52,13 @@
 - prefer `context.become` for actor state changes, with data local to the behavior
 - do not refer to actor state from code running asynchronously
   - it would break the actor model encapsulation
-- impact of network communication on system design verse systems that run on the same process
+- impact of network/inter-process communication on system design verse systems that run on the same process
+  - distributed computing breaks assuptions made by the synchronous programming model
   - data can only be shared by value (memory cant be shared over the wire)
     - you must serielize before sending, and deserialize on receipt
   - lower bandwidth (has to go over the wire)
   - higher latency (has to wait on network calls)
-  - partial failure
+  - partial failure: entire/part of messages may not be sent/reply may not be received
   - data corruption
 
 ```scala
@@ -153,43 +154,20 @@
 
 - generally actors are run on different threads (physical CPUs or virtual cores)
   - but could potentially be on different hosts as well
+- communication is asynchornous, one-way and not guaranteed
+- location transparency: encapsulation makes all actors look the same from the outside, regardless of where they live
+  - i.e. the only distinction externally is their actorRef address
+- actor paths: the full path to an actor, whether remote/local
+  - this is where you send messages
+  - contains an authority and path: together they make up the actor path
+    - authority: the address of the actor system
+      - local system: e.g. `akka://SomeSystemName`
+      - remote system: e.g. `akka.tcp://SomeSystemName@10.0.0.2:1234`
+    - path: e.g. `/user/someActorName`
+- actor Ref: points to an actor which was started. e.g. `s"${actorPath}#12345`
+  - this is what you watch
 
-### examples
-
-```scala
-// supervisor strategies:
-// ^ strategyName(maxNrOfRestarts = 10, withinTimeRange = 1.minute)
-// ^ after 10 restarts, if within 1 minute, subsequent restarts == stop
-// streategies
-// OneForOneStrategy: deals with each child in isolation
-// AllForOneStrategy: a failure in any is handled like a failure in all
-// ^ allow a fineite number of restarts
-// ^ allow a finite number of restarts in a time window
-// ^ if restriction violeted then stop instead of restart
-class Manager extends Actor with ActorLogging:
-  override val supervisorStrategy = OneForOneStrategy() {
-    case _: DBException => SupervisorStrategy.Restart // reconnect to DB
-    case _: ActorKilledException => SupervisorStrategy.Stop // someActor ! kill throws this err
-    case _: ServiceDownException => SupervisorStrategy.Escalate // manager escalates to its supervisor
-  }
-
-// actor with persistence and eventual consistency
-// akka Stash: used for defering handling of messages for eventual consistency
-class PoopProcessor extends Actor with Stash:
-  var state: State = ???
-  def receive = {
-    ???
-  }
-  def waiting(n: Int): Receive = {
-    case e: Event =>
-      state = state.updated(e)
-      if (n == 1) { context.unbecome(); unstashAll() }
-      else context.become(waiting(n - 1))
-    case _ => stash()
-  }
-```
-
-## akka API
+## data model
 
 ### Actor
 
@@ -242,105 +220,3 @@ class PoopProcessor extends Actor with Stash:
     - not a lifecycle method/eve nt, but helps to externally communicate if an actor is restarting, or stopped
     - register listers via context.watch(thisActor)
     - will receive a Terminated(thisActor) msg when thisActor is stopped
-
-```scala
-import akka.actor.{Actor, Props}
-import akka.event.LoggingReceive
-
-// example actor
-class Poop extends Actor
-  def receive = { ??? } // partial for handling (match) messages
-  def unhandled(message: Any): Unit = ??? // handle (match) messages not caught in receive()
-  override def postStop(): Unit = ???
-
-// actor API
-somePoop
-  // life cycle hooks: can be overridden as usual
-  .preStart
-  .preRestart
-  .postRestart
-  .postStop // run cleanup, e.g. unsubscribing from all events
-  // API
-  .receive
-  .sender
-  .! // send an actor a msg: e.g. somePoop | poop
-  .tell // see !
-  .context
-    .system // has .eventStream, see # EventStream
-    .actorOf(props, name) // create a child actor with a unique name
-    .become(nextState()) // transition to a new state, usually defined as a def
-    .child(name) // Option[ActorRef] // get the address of a specific child
-    .children // Iterable[ActorRef] // all children
-    .parent // the actor that created this actor
-    .stop(actorRef | self) // often applied to self, so an actor can stop itself
-    .unbecome
-    .unwatch(actorRef) // stop listening for termination events
-    .watch(actorRef) // listen for Termination events: True == stopped, False = never started
-
-```
-
-### Scheduler
-
-- a timer service optimized for high volume, short duration tasks and frequent cancelletion
-- use case
-  - sending a msg to an Actor at a future point in time
-
-### EventStream
-
-- enables publication of actor messages to an unknown audience
-  - by default, actors can only send messages to actors they know (i.e. if they have an address (actorRef))
-
-```scala
-
-// api
-PoopActor.context.system.eventStream
-  .subscribe(subscriberRef, classOf[EventType]) // Boolean: listen to poopevents about EventType
-  .unsubscribe(subscriberRef, classOf[EventType]) // Boolean: unsubscribe from a specific EventType
-  .unsubscribe(subscriberRef) // unsubscribe from all poopevents
-  .publish(event)
-```
-
-## Testing Actor Systems
-
-- tests can only verify externally observable effects via messages
-  - actor state is encapsulated, you cant reach in and pull out values
-  - i.e. test the response of msgs
-- dealing with Actors with dependencies/side effects
-  - dependency injection
-  - add overridable factory methods, e.g. to mock a db/api call
-- testing actor hierarchies
-  - start with the leaves, then work your way up
-
-### TestProbe
-
-- used for validating actor responses to messages
-- buffers actor messages in an internal queue so they can be inspected during tests
-
-```scala
-
-implicit val system = ActorSystem("My Test System")
-val somePoop = system.actorOf(Props[Poop])
-val p = TestProbe()
-
-p.send(somePoop, "this message")
-p.expectMsg("this response")
-p.expectNoMsg(1.second)
-system.shutdown()
-
-```
-
-### TestKit
-
-- run a test within the context of a test probe
-
-```scala
-import akka.testkit.TestKit
-
-new TestKit(ActorSystem("My Test System") with ImplicitSender)
-  val somePoop = system.actorOf(Props[Poop])
-  somePoop ! "this message"
-  expectMsg("this response")
-  expectNoMsg(1.second)
-  system.shutdown()
-
-```
