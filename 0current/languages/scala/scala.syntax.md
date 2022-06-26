@@ -610,33 +610,14 @@ class Poop[A]
 
 ### type directed programming
 
-- pattern of code combining parameterized types and implicits.
-  - defined a parameterized type SomeType[A], e.g. a Trait, or i.e. a Type Class
-  - implicit instances of SomeType for concrete types A, e.g. a companion object
-  - implicit parameters of type SomeType[A], e.g. a definition with context params
-- contextual abstractions: When there is exactly one "obvious" value for a type, the compiler can find this value and provide it to you.
-  - the efficiency gained is that you dont have to explicitly use the provide a value whenever type A is used, the compiler will do it for you
-  - the scala compiler is able to do the opposite: infer VALUES from TYPES
-    - essentially what occurs:
-      - given instances: somewhere there exists definitions that define a Type with values, that are candidates for context parameters
-      - using: you create a fn that relies on a specific VALUE whenever the TYPE of A is passed
-      - given imports: everywhere that fn is invoked, you must explicity import the given instances into the file
-- context parameters: instruct the compiler on how to inject values into code based on type annotations
-  - first: let the compiler know that we expect it to pass the value as a parameter to some def
-    - prefix the parameter with `using`
-    - the compiler will look for candidate values that MUST be a given definition (see below)
-  - second: provide candidate values for such parameters
-    - prefix potential values with `given`
-    - use an `alias` to define a given value that is equal to some existing value
-- given instances search scope
-  - all instances that are visible (inherited, imported, or defined in any enclosing scope)
-  - given instances found in any companion object associated with the context parameter
-  - error is thrown if: more than one given instance matches the requirement for a context parameter and they none have higher relative specifity
-    - e.g., given A is more specific than given B, whenever:
-      - a is in a closer lexical scope than b
-      - a is defined in a class/object which is a subclass of the class defining b
-      - type A is a subtpe of type B
-      - type A has more `fixed` parts than B
+- type inference: when the compiler infers types from values
+- term inference: when the compiler infers expressions (i.e. terms) from types
+  - When there is exactly one "obvious" value for a type, the compiler can find this value and provide it to you.
+
+#### Contextual Abstractions
+
+- todo: @see https://docs.scala-lang.org/scala3/book/ca-contextual-abstractions-intro.html
+
 - context parameter given instance association
   - companion objects associated with of any inherited types of the context parameter
   - companion objects associated with the specific context paramater type
@@ -656,8 +637,8 @@ class Poop[A]
 trait AddAnything[T]:
   def add(x: T, y: T): T
 
-// these are the candidates for a using clause
-// given definitions must be visible at:
+// given definitions: these are the candidates for a using clause
+// must be visible at:
 // ^ the point of the method call, e.g. defined in the same file or imported
 // ^ or in a companion object associated with the context parameter
 // ^ else error is thrown
@@ -684,25 +665,43 @@ add(10, 12) // 22
 add("10", "12") // 10 + 12 = 22
 
 // context params can be anonymous,
-// ^ if the body doesnt mention the param by name, instead uses the keyword summon
+// ^ if the body doesnt mention the param by name,
+// ^ and passes it on to an inner fn
+// ^ or calles it instead using the keyword summon
 // ^ summon is a predefined definition in the standard library
 def addAnon[T](x: T, y: T)(using AddAnything[T]): T =
   summon.add(x, y)
 addAnon(10, 12) // 22
 addAnon("10", "12") // 10 + 12 = 22
 
-// even shorter syntax: now you dont need the using parameter list
+// context bound syntax
+// ^ even shorter: now you dont need the using parameter list
 // ^ i.e. type parameter T has one context bound: AddAnything
 def addSuperAnon[T: AddAnything](x: T, y: T): T =
   summon.add(x, y)
 addAnon(10, 12) // 22
 addAnon("10", "12") // 10 + 12 = 22
 
-//////////////////////////////////
-/// using definitions: inform the compiler this fn relies on a given instance
-// define context parameters
-//////////////////////////////////
+```
 
+##### Context Params
+
+- context:
+  - the current configuration: at call site; inferred automatically, but can be overridden
+  - the current scope:
+  - the meaning of an operation on a type: e.g. `<` on a string vs int
+  - the user on behalf of which operation is performed
+  - the security level in effect
+- context (implicit) parameters: a parameter list prefixed with `using` that specifies a Type with concrete values the compiler should use when this fn is invoked
+- given instances search scope/resolution
+  - the given instance must be compatible with the type used at the call site
+  - either:
+    - all instances that are visible (inherited, imported, or defined in any enclosing scope)
+    - given instances found in any companion object associated with the context parameter
+  - if there is a single (most specific) instance, it will be used as the actual value injected
+    - error is thrown otherwise: e.g. more than one given instance matches the requirement for a context parameter and none have higher relative specifity
+
+```scala
 // syntax examples
 // context parameters are prefixed with `using (scala 3)|implicit (scala 2)` in their fn definition
 // ^ within a parameter list only the last param can be a context parameter
@@ -717,21 +716,54 @@ myDef[Int](listOfInts)
 // argument Explicitly provided
 myDef[Int](listOfInts)(Ordering.Int)
 
-//////////////////////////////////
-/// given instances
-// i.e. candidates for a using clause
-//////////////////////////////////
+```
 
-// create a given definition
-// ^ this instance is evaluated ONCE the first time intOrdering is accessed
+##### Given Instances
+
+- for a context parameter to work, there must be concrete instances given to the compiler
+- given instance search scope:
+  - all the given instances that are visible: inherited, imported, or defined in an enclosing scope
+  - the given instances found in a companion object associated with the type being used
+    - companion object of the class itself
+    - companion objects associated with any of T's inherited types
+    - companion objects associated with any type argument in T
+    - if T is an inner class, the outer objects in whic it is embedded
+
+```scala
+
+// interface defining operations for a Poop of A
+trait Poop[A]:
+  def flush(x: A): A
+
+// concrete implementation of Poop for each expected type of A
+// ^ reads as: given type of Int, which implements Poop of Int
+// e.g. a given instance of type Poop[String] named Poop.String
+// given instances are evaluated ONCE the first time intOrdering is accessed
 // ^ the value is then reused by all subsequent invocations
-given intOrdering: Ordering[Int] = IntOrdering
+object Poop:
+  given Int: Poop[Int] with
+    def flush(x: Int): Int = x * 2
+  given String: Poop[String] with
+    def flush(x: String): String = s"x was $x"
+// alternative syntax with anonymous given instance
+// compiler synthesizes a name: given_Poop_Double
+given Poop[Double] with
+  def flush(x: Double): Double = ???
 
-// alternative syntax
-// Given definitions can be anonymous
-// ^ the compiler will synthesize a name for an anonymous definition
-given Ordering[Double] with
-  def compare(...): Int = ???
+// different ways of invoking given instances
+def blah[A](x: A)(using fn: Poop[A]): A =
+  fn.flush(x)
+// anonymous without type
+def blah2[A](x: A)(using Poop[A]): A =
+  summon.flush(x)
+// anonymous with type
+def blah[A](x: A)(using Poop[A]): A =
+  summon[Poop[A]].flush(x)
+blah(1) // 2
+blah("1") // x was 1
+
+
+
 
 // TODO: conditional given definitions
 // ^ conditional given instances were defined by an implicit def taking implicit params
@@ -739,20 +771,16 @@ given Ordering[Double] with
 given orderingPair[A, B](
     using ordA: Ordering[A], ordB: Ordering[B]): Ordering[(A, B)] with
   def compare(x: (A, B), y: (A, B)) = ...
-// Scala 2
-implicit def orderingPair[A, B](
-    implicit ordA: Ordering[A], ordB: Ordering[B]): Ordering[(A, B)] = new Ordering[(A, B)] {
-  def compare(x: (A, B), y: (A, B)) = ...
-}
 ```
 
 #### Type class
 
-- type class: classify types by the operations they support
+- type class: enable the compiler to inject values based on the type requirements; general pattern for injecting values based on context
   - pattern consisting of 3 elements
-    - trait: an interface defining a generic type parameter with arbitrary method signatures
-    - object: defining several given instances (candidates for context parameters) for expected types + implementations of the interface
-    - definition: a polymorphic method that takes a context parameter (see type directed programming) matching the interface (the compiler will auto choose the correct given instance implemneted in the object)
+    - trait: an interface defining for grouping operations by by their type
+    - object: define concrete implementations of Interface for each type of A that are candidates to be injected wherever Interface[A] is needed
+    - definition: a polymorphic method that takes a context parameter matching the interface
+      - a fn that relies on a concret value of Interface[A]
 - use cases
   - support retroactive extension: the ability to extend a data type with new operations without changing hte original definition of the data type
   - enable conditional given definitions
@@ -1630,6 +1658,22 @@ val numbers = (1 to 6).toSet
 set
   .startsWith
 
+```
+
+###### TreeSet
+
+- Red-black trees are a form of balanced binary tree where some nodes are designated “red” and others designated “black.”
+- Like any balanced binary tree, operations on them reliably complete in time logarithmic to the size of the tree.
+- Scala provides implementations of immutable sets and maps that use a red-black tree internally. Access them under the names TreeSet and TreeMap.
+
+```scala
+
+import scala.collection.immutable._
+
+val x: TreeSet[Int] = TreeSet(1,3,5,7)
+
+println(x.minAfter(6)) // Some(7): the minimum value in tree after 6
+println(x.maxBefore(6)) // Some(5): maximum value in tree before 6
 ```
 
 ###### BitSet
