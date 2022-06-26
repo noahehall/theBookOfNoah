@@ -68,6 +68,7 @@
 
 ## terms
 
+- stateful object: an object has state if its behavior is influenced by its history, i.e. if behavior (future results) changes over time due to previous conditions
 - laziness: concept in functional program to speed up perf issues
   - to compute a value only when its needed
   - lazy evaluation: storing the previous result of a lazy value, so that on the next access it its not recomputed
@@ -332,6 +333,26 @@ case class Channel(name: String)
   - make sure that all access to shared state is protected (serialized)
 - lock: aka mutex
 - semaphore
+
+#### Functional Reactive Programming: FRP
+
+- reacting to sequences of events that happen over time
+  - started in 1997 by Conal Elliot and Paul Hudak
+  - popular modern examples Flapjax, Elm, REact.js
+- functional view: Aggregate an event sequence into a signal
+  - signal: a value that changes over time, with 2 fundamental operations
+    - obtain the value of the signal at the current time
+    - define a signal in terms of other signals
+    - general idea: does not prescribe whether signals are continuous/discrete//how a signal is evaluated
+      - a signal could be evaluated on demand, every time its value is needed
+      - a continuous signal could be sampled at certain points and interoplated in between
+      - updates to a discrete signal could be propagated automatically to dependent signals
+        - ^ this is the functional analog to the observer pattern
+  - represented as a fn from time to the value domain
+  - instead of propagating updates to mutable state, define new signals in terms of existing ones
+- mouse moving example
+  - [imperative] event based view: whenever the mouse moves, an event MouseMoved is fired
+  - [FRP] view: a signal, MousePosition, which at any point in time represents the current mouse position
 
 ## standard library
 

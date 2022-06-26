@@ -5,14 +5,6 @@
 - as usual, search for `/// Something` or `# Something` to find what youre looking for
 - there are 7 courses on scala on coursera, take them.
 
-- bookmark
-
-  - https://www.coursera.org/learn/scala-functional-program-design/home/info
-  - https://www.coursera.org/learn/scala-akka-reactive/home/info
-  - recommended topics
-    - functional programming and state
-    - parallel and distributed systems
-
 - todoing
 
   - 100% positive the Type outline doesnt match the class hierarchy
@@ -21,6 +13,7 @@
   - 100% positive type APIs arent Dry, e.g. lots of stuff under List should be under Seq, and many times they are duplicated
 
 - todos
+  - implicit function types sorta went over my head
   - https://dzone.com/articles/executor-and-execution-context-objects-in-scala-1
   - https://alvinalexander.com/scala/how-to-create-java-thread-runnable-in-scala/
   - find Promise in the scala docs
@@ -31,7 +24,6 @@
     - basically your able to pass 2 sets of parameters, which are both available in the fn body
   - scala.math.Ordering[A]: pretty sure i have the syntax wrong
   - need to do better on the using, given explanations & examples
-  - conditional given definitions needs clarity
   - in general look through all the coursera assignments for each week, there are bunches of stuff in there that wasnt explained in the course and could be a good starting point for grepping the docs
 
 ## links
@@ -313,7 +305,7 @@ end Poop // End Marker: optional syntax for signaling the end of some thing, e.g
 val immutableValue: Boolean = true
 var mutableValue: Boolean = true
 lazy val immutableValue: Boolean = true // rhs is evaluated only when its variable is used, and then the result is cached
-
+var unintializedVar: Int = _ // the _ is the key thing here
 // Int 100
 // generally you should pref defs for this kind of thing
 // ^ unless you want to always refer to this by value, and only evaluate it once
@@ -487,6 +479,8 @@ type MyComplexType = (Int, String, List[Map[String, Int]])
 - use cases
   - encapsulate the type they are an alias to
     - differentiating between same but logically different types, (see example)
+  - not inspectable from outside the scope in which they are defined
+    - great for concealing type values from prying eyes
 
 ```scala
 def poop(flush: boolean)
@@ -549,9 +543,10 @@ val getPooping4 = amPooping.value // val getPooping4: Boolean = true
   - a type can have instances of many types
 - variance: subtyping relationship varies with the type parameter
   - Functions must be contravariant in their argument types and covariant in their result types,
+    - mutable things are always invariant
   - covariant: C[A] <: C[B],
-    - a type that accepts mutations of its elements shoud not be ocvariant
-    - fns are always coveriant in their result type
+    - a type that accepts mutations of its elements shoud not be covariant
+    - fns are always (and ONLY) coveriant in their result type
       - i.e. covariant type parameters can only appear in method results (not parameter lists)
       - covariant type params may appear in lower bounds of method type parameters
   - contravariant: C[A] >: C[B]
@@ -572,6 +567,7 @@ val getPooping4 = amPooping.value // val getPooping4: Boolean = true
 def stringify[A](thing: A): A = thing.toString
 
 // Poop[Nothing] is a subtype of any type of Poop
+// +A === can only be in the result type, not argument types
 trait Poop[+A]
 object Empty extends Poop[Nothing]
 
@@ -622,11 +618,6 @@ class Poop[A]
   - companion objects associated with of any inherited types of the context parameter
   - companion objects associated with the specific context paramater type
   - if the context parameter is an inner class, the other objects in which it is embedded
-- conditional given instances
-  - when an given instances also uses a context parameter
-  - e.g. ordering an addresses: order by zip code if zip codes are different, else order by street name
-    - base given instances: defines ordering of both zip codes and street names
-    - specifies 2 context parameters: ordering of zip coes, and ordering of street names
 
 ```scala
 //////////////////////////////////
@@ -726,6 +717,11 @@ myDef[Int](listOfInts)(Ordering.Int)
   - x is in a class/object which is a subclass of the class defining y
   - type X is a generic instance of type Y
   - type X is a subtype of Y
+- best practices
+  - given instances should have specific types and/or be local in scope
+  - never use a common type (e.g. Int, String) as the type of a globally visible gien instance
+    - remember the compiler will simply match on the type `Int` and use its value, causing spurious errors and ambiguities
+  - generally you should use type alias, or opaque type aliases (if privacy is needed)
 
 ```scala
 
@@ -760,13 +756,6 @@ def blah[A](x: A)(using Poop[A]): A =
 blah(1) // 2
 blah("1") // x was 1
 
-// TODO: conditional given definitions
-// ^ conditional given instances were defined by an implicit def taking implicit params
-// Scala 3
-given orderingPair[A, B](
-    using ordA: Ordering[A], ordB: Ordering[B]): Ordering[(A, B)] with
-  def compare(x: (A, B), y: (A, B)) = ...
-
 // given instances can be imported
 // ^ ensures given instances are in scope
 // ^ required if there is no companion object
@@ -779,22 +768,62 @@ import AddAnything.{given AddAnything[Int]} // import a specifiv AddAnything
 // import all
 import AddAnything.given // import all givens, no _ needed
 
+// conditional givens
+// a given that maps its A to a List[A]
+object Blah:
+  given Something[A](using fn: Thing[A]) as Thing[List[A]] with
+    def someFn = ???
+```
+
+##### Implicit Function Types
+
+- todo: find this in the docs
+- trade types for parameters (where context params trade types for terms)
+  - you specify the return type of a method (e.g. in a type alias)
+  - and the compiler infers the method params that match the type
+
+```scala
+// define a type alias for an implicit fn
+// i.e. a lambda
+type Poop[A] = Poop ?=> A
+// now you can replace all using clauses of type Poop[A]
+def someDef(flush: Flush)(using Poop[A]): A = ???
+// and this
+def otherDef(p: Int, do: Poop => A) = ???
+// to this
+def someDef(flush: Flush): Poop[A] = ???
+def otherDef(p: Int, do: Poop[A]) = ???
 ```
 
 #### Type class
 
-- type class: enable the compiler to inject values based on the type requirements; general pattern for injecting values based on context
+- enable the compiler to inject values based on the type requirements; general pattern for injecting values based on context
+  - use cases
+    - support retroactive extension: the ability to extend a data type with new operations without changing hte original definition of the data type
+    - enable conditional given definitions
+    - ad hoc polyphormism: a type of Blah[A] has different implementations for different types of A
+- a generic trait (has a parameter) that has a companion object with given instances for type instances of that trait
+  - basically the pattern used in `Context Params` and `Given Instances` where the trait defines an interface, and an object defines concrete implementations for specific types of that interface
   - pattern consisting of 3 elements
     - trait: an interface defining for grouping operations by by their type
     - object: define concrete implementations of Interface for each type of A that are candidates to be injected wherever Interface[A] is needed
     - definition: a polymorphic method that takes a context parameter matching the interface
       - a fn that relies on a concret value of Interface[A]
-- use cases
-  - support retroactive extension: the ability to extend a data type with new operations without changing hte original definition of the data type
-  - enable conditional given definitions
+- conditional given instances
+  - when an given instances is defined generically with type params & has context params
+  - can only be defined via type classes: normal subtyping and inheritance cannot express this conditional
+    - becaue a class either inherits a trait or doesnt
+- can contain extensions like any other trait
+  - are visible whenever a given instance for the trait is available
 
 ```scala
 
+// type class trait
+trait SomeTrait[A]:
+  def someFn() = ???
+  extension(x: A)
+    def blah1() = someFn() + 1
+    def blah2() = someFn() + 2
 ```
 
 #### Type conversions
@@ -835,6 +864,30 @@ object Json
 // how the consumer uses the implicit conversion
 import scala.language.implicitConversions // have to inform the compiler of our intent
 Json.obj("name" -> "noah", ...etc) // use the implicit conversion
+```
+
+#### Retroactive Extension
+
+- the ability to extend a data type with new operations without changing hte original definition of the data type
+  - basically applying a contextual abstraction for a class, e.g. applying a sort method for a type Poop
+
+```scala
+// using the earlier examples in this block
+// lets add a flush method to wipe
+case class Wipe():
+  override def toString = "i am wiping"
+
+// we add a new given instance for types of Wipe
+object Poop:
+  given Wipe: Poop[Wipe] with
+    def flush(x: Wipe): Wipe =
+      println(x.toString); x
+
+// this operation now works for A of Wipe
+def blah3[A](x: A)(using Poop[A]): A =
+  summon[Poop[A]].flush(x)
+
+blah(Wipe()) // invokes the given Wipe definition
 ```
 
 ### domain modeling
@@ -1109,6 +1162,8 @@ abstract class PoopInterface:
 trait Showable:
   def show: String
   def showHtml = "<p>" + show + "</p>" // note this depends on def show
+  extension (x)
+    def blah() = ???
 class Document(text: String) extends Showable:
   def show = text
 
@@ -1802,7 +1857,7 @@ list
   .tail.head // second el
   .take(n) // the first N els, or all els
   .takeWhile(predicate) // longest prefix of list consisting of els that all satisfy predicate
-  .updated(n, x) // a new list with index N replaced with el X
+  .updated(n, x) // a new list, index N set to el X, i.e. when u do poop(n) = el
   .mkString(separator) // combines all els in list as a string separated by String separator
 
 // fns on lists
@@ -2219,6 +2274,8 @@ for (i <- list)
 // with optional do keyword
 for (x <- 1 to 10) do println(x * x)
 
+// super short syntax
+for i <- 0 until 3 do println(i)
 
 // nested for loop
 // prints i, then every j, 1, 678910
@@ -2252,6 +2309,7 @@ while (i <= 10)
 
 while condition do
   // body
+while condition do { /* body */ }
 
 object Poop {
   def main(args: Array[String]) {
@@ -2550,6 +2608,13 @@ myFuture
 
 #### ExecutionContext
 
+- the idea that some piece of information needs to be propagated widely to many places (call sites) in a program
+  - uses cases for propagating/passing execution context: implicitly providing a value e.g.
+    - the current configuration
+    - available set of capabilities
+    - security level in effect
+    - layout scheme to render some data
+    - the entities that have access to some data
 - controls where (which thread, CPU) async computations are executed
   - i.e. you can specify to execute on a single-thread, or a fixed-size thread pool
 - in the JVM, the main abstraction is threads
@@ -2557,8 +2622,17 @@ myFuture
   - by default it contains one thread per CPU on the device
     - its optimized for non-blocking code, so wrap it concurrent.blocking for blocking calls
   - i.e. ^ operations that combine future values in parallel (zip, traverse) have a parallelism level equal to the number of CPUs on the device
+- thread schedulers: required to execute computations in parallel
+  - thread schedulers are propagated in values of types ExecutionContext
 
 ```scala
+// the default executioncontext
+given global: ExecutionContext = ForkJoinContext()
+// or anonymously: without a name
+given ExecutionContext = ForkJoinContext()
+// define a fn that executes in parallel
+def someFn(...)(using ExecutionContext) = ???
+
 
 // by importing this at the callsite/begining of a file that contains an async operation
 // the default execution context, no need to import it
@@ -2580,6 +2654,7 @@ Future {
 }
 // create a virtual thread for a blocking expression
 // ^ generally interacting with storage, waiting for a response from a remote call, etc.
+// ^ generally never use a blocking expression
 Future {
   concurrent.blocking {
     Thread.sleep(10_000)
@@ -2639,9 +2714,59 @@ def passMeTheToiletPaper(from: Stall, to: Stall, ToiletPaper: Int): Unit = {
 }
 ```
 
-#### Actor
+### Event Handling
 
-- see scala.akka file in this repo
+#### Observer Pattern
+
+- widely used when views need to react to changes ina model
+- variants:
+  - publish/subscrib
+  - model/view/controller
+    - model: the publisher
+    - views: subscribers
+- the good
+  - decouples views from state
+  - allows to have a varying number of views of a given state
+  - simple to implement
+- the bad
+  - forces imperative style, since handlers are Unit typed
+  - many moving parts that need coordination
+  - concurrency makes things more complicated
+  - Views are still tightly bound to one state; view update happens immediately
+
+```scala
+// base pub sub model
+// ^ e.g. a BankAcount would extend Publisher, and Accounts would extend Subscriber
+// ^ logical Bankacount behavior would publish account changes
+// ^^ e.g. a deposit, withdrawal, etc
+trait Subscriber:
+  def handler(pub: PUblisher): Unit
+trait Publisher:
+  private var subscribers: Set[Subscriber] = Set()
+  def subscribe(subscriber: Subscriber): Unit =
+    subscribers += subscriber
+  def unsubscriber(subscriber: Subscriber): Unit =
+    subscribers -= Subscriber
+  def publish(): Unit =
+    subscribers.foreach(_.handler(this))
+
+```
+
+#### Functional Reactive Programming: FRP
+
+```scala
+// base model of Signal and Vars
+// Sinals are covariant, vars are not
+// ^ the full example was too complex for the purpose of this document
+// ^^ google it/use a library for implemnetation details
+trait Signal[+T]:
+  def apply(): T = ??? // get the value of signal at the current point in time
+object Signal
+  def apply[T](expr: => T) = ??? // creates a new signal at some point in time
+  class Var[T](expr: => T) extends Signal[T]
+    def update(expr: => T): Unit = ??? // change the value at future points of time
+
+```
 
 ## definitions
 

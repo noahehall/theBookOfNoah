@@ -3,9 +3,6 @@
 - scala build tool quickies
 - install with sdkman and move on with your life
 
-- todo
-  - https://www.coursera.org/learn/scala-functional-programming/supplement/uV974/sbt-tutorial-and-submission-of-assignments-please-read
-
 ## links
 
 - [giter8 scala project templates](https://www.foundweekends.org/giter8/)
