@@ -69,7 +69,7 @@ sbt
   session
     save # save overrides to build.sbt
     anyCmd # get help for this cmd
-
+  projects #list all (sub)projects
   ####################################
   # developer related cmds
   # each are tasks
@@ -82,6 +82,7 @@ sbt
     :paste #enters paste mode to enter a multi line program, ctrl-d to run it
   run # compiles and then Runs a main class, passing along arguments provided on the command line.
   compile # compile the project, by default all the files in src/main/scala
+    subProjectName/Compile # compile a subproject
   update # updates library dependencies based on the project settings
   publish # publishes project to repository specified in project settings
   reload # reload the sbt server when config files change
