@@ -1,9 +1,7 @@
 # scala
 
 - all about the syntax
-  - become one with this portal: https://dotty.epfl.ch/api/index.html
-- as usual, search for `/// Something` or `# Something` to find what youre looking for
-- there are 7 courses on scala on coursera, take them.
+- there are 7 scala courses on coursera, take them.
 
 - todoing
 
@@ -35,7 +33,8 @@
 - [example gitignore for scala](https://alvinalexander.com/source-code/scala/sample-gitignore-file-scala-sbt-intellij-eclipse/)
 - [programming in scala 3 book](https://www.artima.com/shop/programming_in_scala_5ed)
 - [47 degrees: scala exercises](https://www.scala-exercises.org/)
-- examples
+- ref
+  - [AAA scala vesions](https://github.com/lampepfl/dotty/tags)
   - [AAA scala 3 ref: fkn become one with this](https://dotty.epfl.ch/api/index.html)
   - [AAA scala 3 reference](https://docs.scala-lang.org/scala3/reference/index.html)
   - [adt: algebraic data types](https://docs.scala-lang.org/scala3/book/types-adts-gadts.html)
@@ -76,7 +75,6 @@
   - [type: unions](https://docs.scala-lang.org/scala3/book/types-union.html)
   - [type: upper bounds](https://docs.scala-lang.org/tour/upper-type-bounds.html)
   - [type: variance](https://docs.scala-lang.org/scala3/book/types-variance.html)
-- refs
 
 ## basics
 

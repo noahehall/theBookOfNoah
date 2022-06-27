@@ -56,31 +56,52 @@
 # downloads the scalaversion specified in build.sbt
 # loads global plugins, project definition
 # starts an interactive shell for invoking additional sbt tasks
+# creates required dirs & files if not found (project, target)
+# prefix any subcommand with ~ to rerun the cmd on file change, e.g. ~compile
 sbt
+  ####################################
+  # administrative cmds
+  ####################################
   --version
+  scalaVersion
+  help
+  set someBuildProp := "this value"  # override a build.sbt value
+  session
+    save # save overrides to build.sbt
+    anyCmd # get help for this cmd
+
+  ####################################
+  # developer related cmds
   # each are tasks
+  ####################################
   console # start a scala REPL to evaluate expressions
     # ^ every statement will return resX: Type = Value
     # ^ you can then use the auto assigned value (res1, res2, etc) in the next statement
     # ^ you also have access to all the entities in the project defined in source files
     # you can someValue. pres tab to see auto completion
-  run # compiles and then runs your project
+    :paste #enters paste mode to enter a multi line program, ctrl-d to run it
+  run # compiles and then Runs a main class, passing along arguments provided on the command line.
   compile # compile the project, by default all the files in src/main/scala
   update # updates library dependencies based on the project settings
   publish # publishes project to repository specified in project settings
   reload # reload the sbt server when config files change
   test # run the tests in src/test/scala/*
+  testQuick # run incremental tests, use with ~
+
+  ####################################
+  # inspection related cmds
+  # each are tasks
+  # in general, the / operator is the query operator, see below
+  # in general, the form is scope / key
+  ####################################
   show
     unmanagedSources # lists all project source files
+    sourceDirectory # query the src directory, returns full path
+      / includeFilter # which extensions are included as sourceFiles, e.g. {java, scala}
 
-# querying configuration
-# in general, the / operator is the query operator, see below
-# in general, the form is scope / key
-# known keys
-  sourceDirectory # query the src directory, returns full path
-  scalaVersion # query the scala version
-  / includeFilter # which extensions are included as sourceFiles, e.g. {java, scala}
-# explicit examples
+####################################
+  # explicit examples
+####################################
 # ^ current project, no configuration, unmanagedSource task
 unmanagedSources / includefilter
 # ^ Examples project, no configuration, unmanagedSource task
