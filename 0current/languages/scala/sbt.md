@@ -1,7 +1,13 @@
 # SBT
 
+- bookmark
+
+  - https://www.scala-sbt.org/1.x/docs/sbt-by-example.html
+
 - scala build tool quickies
 - install with sdkman and move on with your life
+- or install sbt via [coursier as recommended](https://www.scala-lang.org/download/)
+  - use the oneliner they provided, worked perfectly on ubuntu
 
 ## links
 
