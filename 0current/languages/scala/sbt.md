@@ -15,6 +15,7 @@
   - [example build.sbt](https://github.com/noahehall/scala/blob/develop/examples/build.sbt)
   - [example project configuration](https://github.com/noahehall/scala/tree/develop/examples/project)
 - refs
+  - [getting started guide](https://www.scala-sbt.org/1.x/docs/Getting-Started.html)
   - [sbt docs intro](https://www.scala-sbt.org/1.x/docs/)
   - [organizing build files](https://www.scala-sbt.org/1.x/docs/Organizing-Build.html)
 - sbt plugins
