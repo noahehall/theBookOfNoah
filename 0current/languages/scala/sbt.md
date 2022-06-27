@@ -2,7 +2,7 @@
 
 - bookmark
 
-  - https://www.scala-sbt.org/1.x/docs/sbt-by-example.html
+  - https://www.scala-sbt.org/1.x/docs/Basic-Def.html
 
 - scala build tool quickies
 - install with sdkman and move on with your life
@@ -20,10 +20,19 @@
   - [sbt tutorial](https://github.com/shekhargulati/52-technologies-in-2016/blob/master/02-sbt/README.md)
   - [example build.sbt](https://github.com/noahehall/scala/blob/develop/examples/build.sbt)
   - [example project configuration](https://github.com/noahehall/scala/tree/develop/examples/project)
-- refs
-  - [getting started guide](https://www.scala-sbt.org/1.x/docs/Getting-Started.html)
-  - [sbt docs intro](https://www.scala-sbt.org/1.x/docs/)
+- docs
+  - [AAA getting started guide](https://www.scala-sbt.org/1.x/docs/Getting-Started.html)
+  - [AAA sbt docs intro](https://www.scala-sbt.org/1.x/docs/)
+  - [build definition intro](https://www.scala-sbt.org/1.x/docs/Basic-Def.html)
+  - [input tasks](https://www.scala-sbt.org/1.x/docs/Input-Tasks.html)
   - [organizing build files](https://www.scala-sbt.org/1.x/docs/Organizing-Build.html)
+  - [running sbt](https://www.scala-sbt.org/1.x/docs/Running.html)
+- refs
+  - [global keys](https://www.scala-sbt.org/1.x/api/sbt/Keys$.html)
+  - [input keys](https://www.scala-sbt.org/1.x/api/sbt/InputKey.html)
+  - [project keys](https://www.scala-sbt.org/1.x/api/sbt/Project.html)
+  - [settings keys](https://www.scala-sbt.org/1.x/api/sbt/SettingKey.html)
+  - [task keys](https://www.scala-sbt.org/1.x/api/sbt/TaskKey.html)
 - sbt plugins
   - [compilation errors summary](https://github.com/duhemm/sbt-errors-summary)
   - [static site generation, generally for library documentation](https://github.com/sbt/sbt-site)
@@ -31,7 +40,12 @@
 ## basics
 
 - first build tool built specifically for scala
-- an sbt project is a directory with atleast two files: `root/build.sbt` and `root/project/build.properties`
+
+### terms
+
+- project: an sbt project is a directory with atleast two files: `root/build.sbt` and `root/project/build.properties`
+- subproject: each project defines subprojects, generally a root subproject and potentially 1/more subprojects
+  - a subproject is required to have atleast a name & scalaVersion settings expressions within its `.settings(...)` object
 
 ### main concepts
 
@@ -42,13 +56,36 @@
 - scopes: configurations, tasks, and multi project projects (each project) create distinct scopes, a single key e.g. `sourceDirectory` can have different values in different scopes, i.e. Compile vs Test scopes
   - i.e. keys are mapped to scopes, which are tasks & configuration, if no scope is found/specified, if it falls back to the default (Zero) scope
 
-### files
+### project structure
 
-- `root/build.sbt` : configures the project build, project settings e.g. library dependencies, etc,
+#### config files
+
+- `root/build.sbt` : build definition: configures the project build, project settings e.g. library dependencies, etc,
+  - any `whatever.sbt` takes part in the build definition
   - the location of this file defines the project root
+  - can contain: `val`, `lazy val` and `def` expressions
+    - Typically, lazy vals are used instead of vals to avoid initialization order problems.
 - `root/project/build.properties`: configures sbt
 - `root/project/plugins.sbt`: defines sbt plugins
-- `root/target`: cached output of compilation files, thus successive compiles are incrementally executed (changed file and dependents)
+- `root/project/whatever.scala`: define helper objects and one-off plugins
+  - can contain: `object` `classes` expressions
+
+#### developer files
+
+- directories not listed will be ignored
+- dot files will be ignored
+- `src/main/java/`: java specific sources
+- `src/main/resources/`: files to include in the main jar
+- `src/main/scala-${version}/`: scala specific sources
+- `src/main/scala/`: source code
+- `src/test/java/`: java sources
+- `src/test/resources/`: files to include in test jar
+- `src/test/scala-${version}/`: scala specific sources
+- `src/test/scala/`: test source code
+
+#### generated files
+
+- `root/target/`: build artifacts: cached output of compilation files, thus successive compiles are incrementally executed (changed file and dependents)
   - check in the dir that matches your scala version, _EXCELLENT_ way to see what your scala project looks like in java
 
 ```sh
@@ -60,19 +97,31 @@
 # prefix any subcommand with ~ to rerun the cmd on file change, e.g. ~compile
 sbt
   ####################################
-  # administrative cmds
+    # administrative cmds
   ####################################
   --version
   scalaVersion
+  clean # Deletes all generated files (in the target directory).
   help
+    anyCmd # get help for this cmd
+  inspect someCmd # config info for someCmd
+  inspect tree someCmd # recursively inspect someCmd and dependent tasks
   set someBuildProp := "this value"  # override a build.sbt value
   session
     save # save overrides to build.sbt
-    anyCmd # get help for this cmd
   projects #list all (sub)projects
+  project # list the current project
   ####################################
-  # developer related cmds
-  # each are tasks
+    # build related cmds
+  ####################################
+  package # Creates a jar file containing the files in src/main/resources and the classes compiled from src/main/scala and src/main/java.
+  compile #  	Compiles the main sources (src/main/scala && src/main/java)
+    subProjectName/Compile # compile a subproject
+  update # updates library dependencies based on the project settings
+  publish # publishes project to repository specified in project settings
+  ####################################
+    # developer related cmds
+    # each are tasks
   ####################################
   console # start a scala REPL to evaluate expressions
     # ^ every statement will return resX: Type = Value
@@ -81,21 +130,18 @@ sbt
     # you can someValue. pres tab to see auto completion
     :paste #enters paste mode to enter a multi line program, ctrl-d to run it
   run # compiles and then Runs a main class, passing along arguments provided on the command line.
-  compile # compile the project, by default all the files in src/main/scala
-    subProjectName/Compile # compile a subproject
-  update # updates library dependencies based on the project settings
-  publish # publishes project to repository specified in project settings
-  reload # reload the sbt server when config files change
-  test # run the tests in src/test/scala/*
+  reload # Reload  build definition (build.sbt, project/*.scala, project/*.sbt files)
+  test # Compiles and runs all tests.
   testQuick # run incremental tests, use with ~
+  testOnly blah bloop bleep
 
   ####################################
-  # inspection related cmds
-  # each are tasks
-  # in general, the / operator is the query operator, see below
-  # in general, the form is scope / key
+    # inspection related cmds
+    # each are tasks
+    # in general, the / operator is the query operator, see below
+    # in general, the form is scope / key
   ####################################
-  show
+  show # show output from running a task
     unmanagedSources # lists all project source files
     sourceDirectory # query the src directory, returns full path
       / includeFilter # which extensions are included as sourceFiles, e.g. {java, scala}
@@ -110,8 +156,70 @@ Examples / unmanagedSources / includeFilter
 # ^ examples project, Compile configuration, unmanagedSource task
 Examples / Compile / unmanagedSources / includeFilter
 
-
+####################################
+  # sbt in batch mode
+  # requires JVM spinup and JIT each time, so its much slower
+  # ^ than executing in sbt shell
+####################################
+# run any cmd in batch mode
+sbt cmd1 cmd2 cmd3
+sbt cmd1 "cmd2 arg1 arg2" # two cmds, second one takes arguments
 # git clone via sbt and start a new project based on the specified temlate
 sbt new scala/scala3.g8
 
+####################################
+  # plugin cmds
+  # add plugins in project/plugins.sbt:
+####################################
+
+# sbt-native-packager-plugin
+# plugins.sbt: addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.4")
+# build.sbt: lazy val poop(...).enablePlugins(JavaAppPackaging)
+sbt
+  dist # create a zip distribution of the project (check logs for output dir)
+  Docker/publishLocal # create a docker img from a zip distrobution
+
+```
+
+## Build Definitions
+
+- settings expressions: sbt DSL in the form `key := "value"` e.g. `name := "Poop"`
+  - T: is the expected value type, e.g. `String` or `Unit`
+  - sbt shell setting execution
+    - executing a setting key in sbt shell will return its value
+    - executing a task in sbt shell will execute the task but not display its value,
+      - use `show taskName` to show its value
+    - use `inspect anyKeyName` to see all configuration associated with a key
+- setting expression types:
+  - SettingKey[T]: computed once when loading the subproject and reused
+  - task types
+    - TaskKey[T]: computed each time, potentially with side effects
+      - define a task; operations e.g. `compile` or `package`
+    - InputKey[T]: keys of tasks that have cmd line args as input
+
+```scala
+///////////////////////////////////
+// imports
+///////////////////////////////////
+
+// implicit imports: available in all build.sbt files
+import sbt._
+import Keys._
+
+///////////////////////////////////
+// keys
+///////////////////////////////////
+
+// bare settings: dont need to be .settings(...)
+// recommended for all keys scope to ThisBuild
+ThisBuild / version := "1.0"
+ThisBuild / scalaVersion := "2.12.16"
+
+// define a new task
+// ^ e.g. to define a key for a new task called hello
+lazy val hello = taskKey[Unit]("An example task")
+lazy val root = (project in file("."))
+  .settings(
+    hello := { println("Hello!") }
+  )
 ```
