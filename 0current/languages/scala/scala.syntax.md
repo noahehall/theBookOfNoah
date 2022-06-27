@@ -2754,6 +2754,8 @@ trait Publisher:
 
 #### Functional Reactive Programming: FRP
 
+- [see scala.rx instead](https://github.com/lihaoyi/scala.rx)
+
 ```scala
 // base model of Signal and Vars
 // Sinals are covariant, vars are not
