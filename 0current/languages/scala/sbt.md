@@ -1,9 +1,13 @@
 # SBT
 
 - bookmark
-
-  - https://www.scala-sbt.org/1.x/docs/Basic-Def.html
-
+  - https://www.scala-sbt.org/1.x/docs/Task-Graph.html
+- skipped
+  - https://www.scala-sbt.org/1.x/docs/Multi-Project.html#Per-configuration+classpath+dependencies
+    - describes how to set task dependencies, e.g. project A test task depends on project Bs compile task
+    - e.g. to put utility code for tests in project TestUtils and use that code in other projects
+  - https://www.scala-sbt.org/1.x/docs/Multi-Project.html#Inter-project+dependencies
+    - describes how to limit the resource overhead of watching files in large projects with many dependent interconnected subprojects
 - scala build tool quickies
 - install with sdkman and move on with your life
 - or install sbt via [coursier as recommended](https://www.scala-lang.org/download/)
@@ -23,12 +27,14 @@
 - docs
   - [AAA getting started guide](https://www.scala-sbt.org/1.x/docs/Getting-Started.html)
   - [AAA sbt docs intro](https://www.scala-sbt.org/1.x/docs/)
-  - [build definition intro](https://www.scala-sbt.org/1.x/docs/Basic-Def.html)
   - [build definition in depth](https://www.scala-sbt.org/1.x/docs/Task-Graph.html)
+  - [build definition intro](https://www.scala-sbt.org/1.x/docs/Basic-Def.html)
   - [input tasks](https://www.scala-sbt.org/1.x/docs/Input-Tasks.html)
-  - [organizing build files](https://www.scala-sbt.org/1.x/docs/Organizing-Build.html)
-  - [running sbt](https://www.scala-sbt.org/1.x/docs/Running.html)
   - [library dependencies](https://www.scala-sbt.org/1.x/docs/Library-Dependencies.html)
+  - [multi project builds](https://www.scala-sbt.org/1.x/docs/Multi-Project.html)
+  - [organizing build files](https://www.scala-sbt.org/1.x/docs/Organizing-Build.html)
+  - [project directory structure](https://www.scala-sbt.org/1.x/docs/Directories.html)
+  - [running sbt](https://www.scala-sbt.org/1.x/docs/Running.html)
   - [scopes](https://www.scala-sbt.org/1.x/docs/Scopes.html)
 - refs
   - [global keys](https://www.scala-sbt.org/1.x/api/sbt/Keys$.html)
@@ -128,6 +134,7 @@ sbt
     save # save overrides to build.sbt
   projects #list all (sub)projects
   project # list the current project
+    projectName # sets the current project, on which all subsequent tasks are run
   ####################################
     # build related cmds
   ####################################
@@ -168,10 +175,10 @@ sbt
 ####################################
 # ^ current project, no configuration, unmanagedSource task
 unmanagedSources / includefilter
-# ^ Examples project, no configuration, unmanagedSource task
-Examples / unmanagedSources / includeFilter
-# ^ examples project, Compile configuration, unmanagedSource task
-Examples / Compile / unmanagedSources / includeFilter
+# ^ projectName project, no configuration, unmanagedSource task
+projectName / unmanagedSources / includeFilter
+# ^ projectName project, Compile configuration, unmanagedSource task
+projectName / Compile / unmanagedSources / includeFilter
 
 ####################################
   # sbt in batch mode
@@ -200,6 +207,9 @@ sbt
 
 ## sbt Build Definitions
 
+- locations:
+  - `root/build.sbt` is the project root, but in multi-project builds you can place a `build.sbt` in the base dir for that project
+  - SBT recommends putting all project declarations and settings in the root build.sbt
 - settings expressions: sbt DSL in the form `key := "value"` e.g. `name := "Poop"`
   - T: is the expected value type, e.g. `String` or `Unit`
   - sbt shell setting execution
@@ -213,6 +223,12 @@ sbt
     - TaskKey[T]: computed each time, potentially with side effects
       - define a task; operations e.g. `compile` or `package`
     - InputKey[T]: keys of tasks that have cmd line args as input
+- project dependencies:
+  - aggregated projects: tasks run against the aggregator are run against the aggregated, unless set to false in settings
+    - aggregation will run the aggregated tasks in parallel and with no defined ordering between them.
+  - classpath projects: when project A depends on project B, C, and D
+    - compile on project A will first compile the others
+    - project B, C and D will be in project A's classpath
 
 ```scala
 // imports
@@ -233,25 +249,30 @@ lazy val commonSettings = Seq(
   //...
 )
 
-
 // every project needs atleast one subproject
 // the val name (e.g. root) becomes the project ID, e.g in sbt shell
 // base dir for source files would be root/src/main/whateverThisDirectoryIs
 lazy val root = (project in file("."))
-.settings(
-  name := "BuildDefs", // project ID in intellij
-  libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12" % Test,
-)
+  .aggregate(poop, flush) // all tasks run against this project will run against poop && flush
+  .settings(
+    commonSettings,
+    name := "BuildDefs", // project ID in intellij
+    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12" % Test,
+    someTaskName / aggregate := false // dont run task someTaskName against aggregated projects
+  )
 
-// all files in root/src/main/poop/core
-// lazy val otherProject = (project in file("core"))
+// all files in root/src/main/whateverThisDirectoryIs/poop
+lazy val poop = (project in file("otherProject")).settings(...)
 // if the project name is the same as the directory name, you can shorten the syntax
-// lazy val projectName = project
+lazy val flush = project
+  .dependsOn(poop) // now poop is in flushes classpath
+  .settings(...)
 
 // define a new task
 // ^ e.g. to define a key for a new task called hello
+// ^ now in sbt shell: hello prints Hello!
 lazy val hello = taskKey[Unit]("An example task")
-lazy val root = (project in file("."))
+lazy val someProject = (project in file("."))
   .settings(
     hello := { println("Hello!") },
     commonSettings
