@@ -24,9 +24,12 @@
   - [AAA getting started guide](https://www.scala-sbt.org/1.x/docs/Getting-Started.html)
   - [AAA sbt docs intro](https://www.scala-sbt.org/1.x/docs/)
   - [build definition intro](https://www.scala-sbt.org/1.x/docs/Basic-Def.html)
+  - [build definition in depth](https://www.scala-sbt.org/1.x/docs/Task-Graph.html)
   - [input tasks](https://www.scala-sbt.org/1.x/docs/Input-Tasks.html)
   - [organizing build files](https://www.scala-sbt.org/1.x/docs/Organizing-Build.html)
   - [running sbt](https://www.scala-sbt.org/1.x/docs/Running.html)
+  - [library dependencies](https://www.scala-sbt.org/1.x/docs/Library-Dependencies.html)
+  - [scopes](https://www.scala-sbt.org/1.x/docs/Scopes.html)
 - refs
   - [global keys](https://www.scala-sbt.org/1.x/api/sbt/Keys$.html)
   - [input keys](https://www.scala-sbt.org/1.x/api/sbt/InputKey.html)
@@ -60,7 +63,7 @@
 
 #### config files
 
-- `root/build.sbt` : build definition: configures the project build, project settings e.g. library dependencies, etc,
+- `root/build.sbt` : build definition: configures the project build, project settings,library dependencies, etc,
   - any `whatever.sbt` takes part in the build definition
   - the location of this file defines the project root
   - can contain: `val`, `lazy val` and `def` expressions
@@ -69,6 +72,7 @@
 - `root/project/plugins.sbt`: defines sbt plugins
 - `root/project/whatever.scala`: define helper objects and one-off plugins
   - can contain: `object` `classes` expressions
+- `root/lib/`: directory `.jar` files for unmanaged dependencies
 
 #### developer files
 
@@ -87,6 +91,19 @@
 
 - `root/target/`: build artifacts: cached output of compilation files, thus successive compiles are incrementally executed (changed file and dependents)
   - check in the dir that matches your scala version, _EXCELLENT_ way to see what your scala project looks like in java
+
+## sbt DSL
+
+```scala
+// variable types
+lazy val singleVar := "set this single value"
+lazy val seqVar += "append this Seq[String] value"
+lazy val seqVar += "append another string onto seq"
+
+// scopes
+```
+
+## sbt shell
 
 ```sh
 
@@ -181,7 +198,7 @@ sbt
 
 ```
 
-## Build Definitions
+## sbt Build Definitions
 
 - settings expressions: sbt DSL in the form `key := "value"` e.g. `name := "Poop"`
   - T: is the expected value type, e.g. `String` or `Unit`
@@ -198,28 +215,45 @@ sbt
     - InputKey[T]: keys of tasks that have cmd line args as input
 
 ```scala
-///////////////////////////////////
 // imports
-///////////////////////////////////
-
-// implicit imports: available in all build.sbt files
+// 2 implicit imports are available in all build.sbt files
 import sbt._
 import Keys._
 
-///////////////////////////////////
-// keys
-///////////////////////////////////
+// bare settings: dont need to be in .settings(...)
+// auto-applied to all subprojects unless overriden
+// recommended for all keys that should always be applied to all projects
+ThisBuild / organization := "com.nirvai"
+ThisBuild / scalaVersion := "3.1.3"
+ThisBuild / version := "0.1.0-SNAPSHOT"
 
-// bare settings: dont need to be .settings(...)
-// recommended for all keys scope to ThisBuild
-ThisBuild / version := "1.0"
-ThisBuild / scalaVersion := "2.12.16"
+// group common settings
+lazy val commonSettings = Seq(
+  target := { baseDirectory.value / "target2" },
+  //...
+)
+
+
+// every project needs atleast one subproject
+// the val name (e.g. root) becomes the project ID, e.g in sbt shell
+// base dir for source files would be root/src/main/whateverThisDirectoryIs
+lazy val root = (project in file("."))
+.settings(
+  name := "BuildDefs", // project ID in intellij
+  libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12" % Test,
+)
+
+// all files in root/src/main/poop/core
+// lazy val otherProject = (project in file("core"))
+// if the project name is the same as the directory name, you can shorten the syntax
+// lazy val projectName = project
 
 // define a new task
 // ^ e.g. to define a key for a new task called hello
 lazy val hello = taskKey[Unit]("An example task")
 lazy val root = (project in file("."))
   .settings(
-    hello := { println("Hello!") }
+    hello := { println("Hello!") },
+    commonSettings
   )
 ```

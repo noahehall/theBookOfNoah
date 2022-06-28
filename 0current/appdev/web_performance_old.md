@@ -1,13 +1,3 @@
-# random at work with youtube in background
-
-- functional programming:
-  - is using functions to complete tasks (without relying on objects)
-  - utilizing pure functions (as opposed to functions relying on side effects)
-  - using higher order functions
-  - avoid mutating data (i.e. changing stuff in place)
-    - use persistent datastructures to get around copying huge objects everytime you need to create a new object
-    - e.g. if you have a huge array, but you need to change a single item, you'll have to create a new array (because its immutable)
-
 # boomshakala
 
 - [web prformance overview](https://developers.google.com/web/fundamentals/performance/why-performance-matters/)
