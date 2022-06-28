@@ -1,14 +1,16 @@
-# SBT
-
 - bookmark
-  - https://www.scala-sbt.org/1.x/docs/Task-Graph.html
+  - https://www.scala-sbt.org/1.x/docs/Library-Dependencies.html
 - skipped
   - https://www.scala-sbt.org/1.x/docs/Multi-Project.html#Per-configuration+classpath+dependencies
-    - describes how to set task dependencies, e.g. project A test task depends on project Bs compile task
-    - e.g. to put utility code for tests in project TestUtils and use that code in other projects
+    - describes how to set task dependenWe built our NoSQL database with a close-to-the-hardware, shared-nothing approach that optimizes raw performance, fully utilizes modern multi-core servers and minimizes the overhead to DevOps. ScyllaDB is API-compatible with both Cassandra and DynamoDB, yet is much faster, more consistent and with a lower TCO. tests in project TestUtils and use that code in other projects
   - https://www.scala-sbt.org/1.x/docs/Multi-Project.html#Inter-project+dependencies
     - describes how to limit the resource overhead of watching files in large projects with many dependent interconnected subprojects
-- scala build tool quickies
+  - https://www.scala-sbt.org/1.x/docs/Scope-Delegation.html
+    - describes how `poop.value` works in detail
+
+# SBT
+
+- scala build tool
 - install with sdkman and move on with your life
 - or install sbt via [coursier as recommended](https://www.scala-lang.org/download/)
   - use the oneliner they provided, worked perfectly on ubuntu
@@ -20,28 +22,40 @@
 - [sbt](https://scala-sbt.org)
 - [scala index: search for libraries](https://index.scala-lang.org/)
 - [whats wrong with sbt?](https://www.lihaoyi.com/post/SowhatswrongwithSBT.html)
+- [coursier: sbt uses it to implement managed deps](https://get-coursier.io/)
 - examples
   - [sbt tutorial](https://github.com/shekhargulati/52-technologies-in-2016/blob/master/02-sbt/README.md)
   - [example build.sbt](https://github.com/noahehall/scala/blob/develop/examples/build.sbt)
   - [example project configuration](https://github.com/noahehall/scala/tree/develop/examples/project)
 - docs
+  - [AAA best practices](https://www.scala-sbt.org/1.x/docs/Best-Practices.html)
+  - [AAA best practices: plugins](https://www.scala-sbt.org/1.x/docs/Plugins-Best-Practices.html)
   - [AAA getting started guide](https://www.scala-sbt.org/1.x/docs/Getting-Started.html)
   - [AAA sbt docs intro](https://www.scala-sbt.org/1.x/docs/)
-  - [build definition in depth](https://www.scala-sbt.org/1.x/docs/Task-Graph.html)
-  - [build definition intro](https://www.scala-sbt.org/1.x/docs/Basic-Def.html)
+  - [build: definition in depth](https://www.scala-sbt.org/1.x/docs/Task-Graph.html)
+  - [build: definition intro](https://www.scala-sbt.org/1.x/docs/Basic-Def.html)
+  - [build: organizing files](https://www.scala-sbt.org/1.x/docs/Organizing-Build.html)
+  - [cross building](https://www.scala-sbt.org/1.x/docs/Cross-Build.html)
   - [input tasks](https://www.scala-sbt.org/1.x/docs/Input-Tasks.html)
+  - [inspecting settings](https://www.scala-sbt.org/1.x/docs/Inspecting-Settings.html)
   - [library dependencies](https://www.scala-sbt.org/1.x/docs/Library-Dependencies.html)
+  - [library management](https://www.scala-sbt.org/1.x/docs/Library-Management.html)
   - [multi project builds](https://www.scala-sbt.org/1.x/docs/Multi-Project.html)
-  - [organizing build files](https://www.scala-sbt.org/1.x/docs/Organizing-Build.html)
+  - [plugins](https://www.scala-sbt.org/1.x/docs/Plugins.html)
   - [project directory structure](https://www.scala-sbt.org/1.x/docs/Directories.html)
+  - [repository resolvers](https://www.scala-sbt.org/1.x/docs/Resolvers.html)
   - [running sbt](https://www.scala-sbt.org/1.x/docs/Running.html)
+  - [scope delegation via .value lookup](https://www.scala-sbt.org/1.x/docs/Scope-Delegation.html)
   - [scopes](https://www.scala-sbt.org/1.x/docs/Scopes.html)
 - refs
+  - [available plugins](https://www.scala-sbt.org/1.x/docs/Community-Plugins.html)
   - [global keys](https://www.scala-sbt.org/1.x/api/sbt/Keys$.html)
   - [input keys](https://www.scala-sbt.org/1.x/api/sbt/InputKey.html)
+  - [ivy revisions](https://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision)
   - [project keys](https://www.scala-sbt.org/1.x/api/sbt/Project.html)
   - [settings keys](https://www.scala-sbt.org/1.x/api/sbt/SettingKey.html)
   - [task keys](https://www.scala-sbt.org/1.x/api/sbt/TaskKey.html)
+  - [defaults for keys](https://github.com/sbt/sbt/blob/develop/main/src/main/scala/sbt/Defaults.scala)
 - sbt plugins
   - [compilation errors summary](https://github.com/duhemm/sbt-errors-summary)
   - [static site generation, generally for library documentation](https://github.com/sbt/sbt-site)
@@ -52,6 +66,9 @@
 
 ### terms
 
+- hybrid flow-based programming: aka dependency-oriented programming
+  - de-duplication: a task is executed only once even when it is depended by multiple tasks
+  - parallel processing: Using the task graph, the task engine can schedule mutually non-dependent tasks in parallel
 - project: an sbt project is a directory with atleast two files: `root/build.sbt` and `root/project/build.properties`
 - subproject: each project defines subprojects, generally a root subproject and potentially 1/more subprojects
   - a subproject is required to have atleast a name & scalaVersion settings expressions within its `.settings(...)` object
@@ -70,8 +87,9 @@
 #### config files
 
 - `root/build.sbt` : build definition: configures the project build, project settings,library dependencies, etc,
-  - any `whatever.sbt` takes part in the build definition
   - the location of this file defines the project root
+  - in multi-project builds you can place a scoped `build.sbt` in the base dir for that project
+    - SBT recommends putting all project declarations and settings in the root build.sbt
   - can contain: `val`, `lazy val` and `def` expressions
     - Typically, lazy vals are used instead of vals to avoid initialization order problems.
 - `root/project/build.properties`: configures sbt
@@ -100,16 +118,233 @@
 
 ## sbt DSL
 
-```scala
-// variable types
-lazy val singleVar := "set this single value"
-lazy val seqVar += "append this Seq[String] value"
-lazy val seqVar += "append another string onto seq"
+- the build.sbt domain-specific language(DSL) constructs a DAG of settings and tasks
+  - The setting expressions encode settings, tasks and the dependencies among them.
+  - This structure is common to Make (1976), Ant (2000), and Rake (2003).
+- setting expression types: `key operator T`
+  - key types
+    - SettingKey[T]: computed once when loading the subproject and reused
+    - task types
+      - TaskKey[T]: computed each time, potentially with side effects
+        - define a task; operations e.g. `compile` or `package`
+      - InputKey[T]: a task with cmd line arguments
+  - operators: `:= += ++=`
+  - T: value type, e.g. String or Unit
+- Task Graph: tasks and their dependencies where the edges dentoe happens-before
 
-// scopes
+### Scopes
+
+- in an setting/key expression, e.g. `poop := flush`
+  - the key `poop` can have different values `wipe` instead of `flush` depending on the scope (context)
+    - multi build projects, each subproject can define a different value
+    - the `compile` key can have different values for `main` and `test` sources
+  - but there is always a single value for a given key for a given scope
+- scope axis: each key in task/setting expression can be scoped
+  - full scope: consists of all 3 for a specific value: `projectX / configX / task / someKey`
+  - subproject axis
+    - ThisBuild: scope for all subprojects in a build, generally used as a fallback incase a subproject doesnt explicitly define a setting
+  - dependency Configuration axis: defines a graph of library deps, potentially with its own classpath, sources, genreated packages, etc.
+    - needs to be capitalized
+    - `Compile` defines the main build in `src/main/scala`
+    - `Test` defines how to build tests in `src/test/scala`
+    - `Runtime` defines the classpath for the `run` task
+    - Provided
+    - Optional
+    - CompileInternal
+    - IntegrationTest
+    - etc
+  - task axis: settings that affect how a task works
+    - artifactName
+    - packageBin
+    - packageDoc
+    - packageOptions
+    - packageSrc
+    - baseDirectory: the projects root dir
+    - unmanagedBase: by default its the `lib` dir
+    - sourceDirectories: e.g. `src/main/scala`, append additional source dirs with `file()`
+    - Zero: universal fallback for all scope axes; its direct use should be reserved to sbt and plugin authors
+    - Global: sets Zero scope to all axes `Zero / Zero / Zero / someKey`
+    - etc
+- Using scopes in build defs:
+  - you need to specify a scope if the key in question is normally scoped. think of it as specifying the fully qualified domain name for a URL
+    - e.g. the FQNs for:
+      - `Compile`: `Compile / compile` i.e. the compile task in the Compile configuration
+      - `Test`: `Test / compile` i.e. the compile task in the Test configuration
+  - implicit scoping
+    - subproject scope: subProject.settings(...)
+    - ThisBuild scope: ThisBuild / ....
+    - global scope: Global / ...
+  - explicit scope
+    - fully scoped: blah / blah / blah / poop := value
+    - task scope: taskName / poop := value
+    - multi scope: Compile / packageBin / poop := value
+      - the packageBin task in the Compile ocnfiguration has poop set to value
+    - etc
+
+### custom settings & tasks
+
+- defining a key
+  - must be a (Setting|Task|Input)Key[T]
+  - can be defined in an sbt file, scala file, or an auto plugin
+    - any vals found under autoImport object of an enabled auto plugin will be auto imported into your sbt files
+
+### Library Dependencies
+
+- unmanaged dependencies: jar files inside lib dir
+  - automatically placed on the project classpath for compile, test, run and console
+    - you change by setting `Compile / dependencyClasspath` e.g.
+    - to change the base dir (instead of lib) use `unmanagedBase := baseDirectory.value / "usethis"`
+- managed dependencies: configured in the build definition via the `libraryDepdencencies` settings key
+  - sbt users coursier for managing library deps
+  - sbt uses the standard Maven2 repository by default for finding & retrievings deps
+  - uses ivy revision scheme for versions
+    - see link, but shouldnt matter as you should always fkn use explicit version anyway
+
+### Errors
+
+- `Reference to undefined setting` indicates you need to specify a FQN, as whatever you did is ambiguous
+- `Reference to undefined setting` the value you're setting is undefined
+
+### Plugins
+
+- extend the build definition, e.g. for adding new settings/tasks/etc
+-
+
+### sbt dsl examples
+
+```scala
+// global fns provided by sbt implicit imports
+log.info("console is so javascript")
+file("path/to/poop") // creates a new File
+// compute a value via Def.task partial fn
+// ^ useful in case the value is undefined at call site
+someTask += Def.task {
+  // returns this value to assign it to someTask which depends on it
+  myGenerator(baseDirectory.value, (Compile / managedClasspath).value)
+}
+// variable types
+lazy val singleVar := "set this value"
+lazy val seqVar := "replace cur val with this one"
+lazy val seqVar += "append this single value"
+// TODO
+lazy val seqVar ++= Seq("append multiple", "values")
+
+// setting/task dependencies
+thisTask := {
+  // .value is a scala macro that defines a dependency
+  // ^ which wil be lifted out and run before the body
+  poop = otherTask.value
+  // inlining a dependency on updates value
+  // ^ this will inject .take(3) at this location in the body
+  update.value.allConfigurations.take(3)
+  // a task can depend on a setting/task
+  // a setting cant depend on a setting (but not a task)
+  scalacOptions := List("-encoding", "utf8", "-Xfatal-warnings", "-deprecation", "-unchecked"),
+  // overrides the previous set scalacOptions
+  scalacOptions := {
+    val old = scalacOptions.value
+    scalaBinaryVersion.value match {
+      case "2.12" => old
+      case _      => old filterNot (Set("-Xfatal-warnings", "-deprecation").apply)
+    }
+  }
+
+  ...
+}
+
+// custom settings/task keys
+val poop = settingKey[String]("this is a description")
+val flush = taskKey[Unit]("this is a description")
+
+// repositories
+// ^ to add where sbt looks for deps use resolvers key
+// ^ to replace the default resolvers use externalResolvers key
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+
+// managed dependencies
+libraryDependencies += groupId % artifactId % revision % configuration // configuration is optional
+libraryDependencies += groupId %% artifactId % revision // %% appends your scala version to the artifactId
+libraryDependencies ++= Seq(
+  // sets a dependency only for the Test configuration
+  libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % Test
+)
+
+// plugins
+// ^ use the same schema as declaring a dependency
+// ^ go in root/project/plugins.sbt
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.11.2")
+```
+
+## sbt Build Definitions
+
+- setting/task expressions: should go inside `.settings(...)` or scoped to `ThisBuild / ...`
+- project dependencies:
+  - aggregated projects: tasks run against the aggregator are run against the aggregated, unless set to false in settings
+    - aggregation will run the aggregated tasks in parallel and with no defined ordering between them.
+  - classpath projects: when project A depends on project B, C, and D
+    - compile on project A will first compile the others
+    - project B, C and D will be in project A's classpath
+
+```scala
+// imports
+// 2 implicit imports are available in all build.sbt files
+import sbt._
+import Keys._
+
+// bare settings: dont need to be in .settings(...)
+// auto-applied to all subprojects unless overriden
+// recommended for all keys that should always be applied to all projects
+ThisBuild / organization := "com.nirvai"
+ThisBuild / scalaVersion := "3.1.3"
+ThisBuild / version := "0.1.0-SNAPSHOT"
+
+// group common settings
+lazy val commonSettings = Seq(
+  target := { baseDirectory.value / "target2" },
+  //...
+)
+
+// every project needs atleast one subproject
+// the val name (e.g. root) becomes the project ID, e.g in sbt shell
+// base dir for source files would be root/src/main/whateverThisDirectoryIs
+lazy val root = (project in file("."))
+  .enablePlugins(FooPlugin, BarPlugin) // explicitly enable plugins
+  .disablePlugins(plugins.IvyPlugin) // explicity disable plugins
+  .aggregate(poop, flush) // all tasks run against this project will run against poop && flush
+  .settings(
+    commonSettings,
+    name := "BuildDefs", // project ID in intellij
+    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12" % Test,
+    someTaskName / aggregate := false // dont run task someTaskName against aggregated projects
+  )
+
+// all files in root/src/main/whateverThisDirectoryIs/poop
+lazy val poop = (project in file("otherProject")).settings(...)
+// if the project name is the same as the directory name, you can shorten the syntax
+lazy val flush = project
+  .dependsOn(poop) // now poop is in flushes classpath
+  .settings(...)
+
+// define a new task
+// ^ e.g. to define a key for a new task called hello
+// ^ now in sbt shell: hello prints Hello!
+lazy val hello = taskKey[Unit]("An example task")
+lazy val someProject = (project in file("."))
+  .settings(
+    hello := { println("Hello!") },
+    commonSettings
+  )
 ```
 
 ## sbt shell
+
+- sbt shell setting execution
+  - executing a setting key in sbt shell will return its value
+  - executing a task in sbt shell will execute the task but not display its value,
+    - use `show taskName` to show its value
+  - use `inspect anyKeyName` to see all configuration, scopes, etc associated with a key
+    - e.g. to task the taks anyKeyName task depends on
 
 ```sh
 
@@ -132,6 +367,7 @@ sbt
   set someBuildProp := "this value"  # override a build.sbt value
   session
     save # save overrides to build.sbt
+  plugins # see the list of enabled plugins for the current subproject
   projects #list all (sub)projects
   project # list the current project
     projectName # sets the current project, on which all subsequent tasks are run
@@ -162,13 +398,14 @@ sbt
   ####################################
     # inspection related cmds
     # each are tasks
-    # in general, the / operator is the query operator, see below
-    # in general, the form is scope / key
+    # in general, the / operator is the query (scope) operator, see below
   ####################################
   show # show output from running a task
     unmanagedSources # lists all project source files
     sourceDirectory # query the src directory, returns full path
       / includeFilter # which extensions are included as sourceFiles, e.g. {java, scala}
+  inspect
+    Poop / fullClasspath # see everything related to Poop
 
 ####################################
   # explicit examples
@@ -203,78 +440,4 @@ sbt
   dist # create a zip distribution of the project (check logs for output dir)
   Docker/publishLocal # create a docker img from a zip distrobution
 
-```
-
-## sbt Build Definitions
-
-- locations:
-  - `root/build.sbt` is the project root, but in multi-project builds you can place a `build.sbt` in the base dir for that project
-  - SBT recommends putting all project declarations and settings in the root build.sbt
-- settings expressions: sbt DSL in the form `key := "value"` e.g. `name := "Poop"`
-  - T: is the expected value type, e.g. `String` or `Unit`
-  - sbt shell setting execution
-    - executing a setting key in sbt shell will return its value
-    - executing a task in sbt shell will execute the task but not display its value,
-      - use `show taskName` to show its value
-    - use `inspect anyKeyName` to see all configuration associated with a key
-- setting expression types:
-  - SettingKey[T]: computed once when loading the subproject and reused
-  - task types
-    - TaskKey[T]: computed each time, potentially with side effects
-      - define a task; operations e.g. `compile` or `package`
-    - InputKey[T]: keys of tasks that have cmd line args as input
-- project dependencies:
-  - aggregated projects: tasks run against the aggregator are run against the aggregated, unless set to false in settings
-    - aggregation will run the aggregated tasks in parallel and with no defined ordering between them.
-  - classpath projects: when project A depends on project B, C, and D
-    - compile on project A will first compile the others
-    - project B, C and D will be in project A's classpath
-
-```scala
-// imports
-// 2 implicit imports are available in all build.sbt files
-import sbt._
-import Keys._
-
-// bare settings: dont need to be in .settings(...)
-// auto-applied to all subprojects unless overriden
-// recommended for all keys that should always be applied to all projects
-ThisBuild / organization := "com.nirvai"
-ThisBuild / scalaVersion := "3.1.3"
-ThisBuild / version := "0.1.0-SNAPSHOT"
-
-// group common settings
-lazy val commonSettings = Seq(
-  target := { baseDirectory.value / "target2" },
-  //...
-)
-
-// every project needs atleast one subproject
-// the val name (e.g. root) becomes the project ID, e.g in sbt shell
-// base dir for source files would be root/src/main/whateverThisDirectoryIs
-lazy val root = (project in file("."))
-  .aggregate(poop, flush) // all tasks run against this project will run against poop && flush
-  .settings(
-    commonSettings,
-    name := "BuildDefs", // project ID in intellij
-    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12" % Test,
-    someTaskName / aggregate := false // dont run task someTaskName against aggregated projects
-  )
-
-// all files in root/src/main/whateverThisDirectoryIs/poop
-lazy val poop = (project in file("otherProject")).settings(...)
-// if the project name is the same as the directory name, you can shorten the syntax
-lazy val flush = project
-  .dependsOn(poop) // now poop is in flushes classpath
-  .settings(...)
-
-// define a new task
-// ^ e.g. to define a key for a new task called hello
-// ^ now in sbt shell: hello prints Hello!
-lazy val hello = taskKey[Unit]("An example task")
-lazy val someProject = (project in file("."))
-  .settings(
-    hello := { println("Hello!") },
-    commonSettings
-  )
 ```
