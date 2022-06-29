@@ -1,5 +1,5 @@
 - bookmark
-  - https://www.scala-sbt.org/1.x/docs/Library-Dependencies.html
+  - https://www.scala-sbt.org/1.x/docs/Faq.html#How+do+I+add+files+to+a+jar+package%3F
 - skipped
   - https://www.scala-sbt.org/1.x/docs/Multi-Project.html#Per-configuration+classpath+dependencies
     - describes how to set task dependenWe built our NoSQL database with a close-to-the-hardware, shared-nothing approach that optimizes raw performance, fully utilizes modern multi-core servers and minimizes the overhead to DevOps. ScyllaDB is API-compatible with both Cassandra and DynamoDB, yet is much faster, more consistent and with a lower TCO. tests in project TestUtils and use that code in other projects
@@ -34,28 +34,32 @@
   - [AAA sbt docs intro](https://www.scala-sbt.org/1.x/docs/)
   - [build: definition in depth](https://www.scala-sbt.org/1.x/docs/Task-Graph.html)
   - [build: definition intro](https://www.scala-sbt.org/1.x/docs/Basic-Def.html)
+  - [build: multi subprojects](https://www.scala-sbt.org/1.x/docs/Multi-Project.html)
   - [build: organizing files](https://www.scala-sbt.org/1.x/docs/Organizing-Build.html)
   - [cross building](https://www.scala-sbt.org/1.x/docs/Cross-Build.html)
   - [input tasks](https://www.scala-sbt.org/1.x/docs/Input-Tasks.html)
   - [inspecting settings](https://www.scala-sbt.org/1.x/docs/Inspecting-Settings.html)
   - [library dependencies](https://www.scala-sbt.org/1.x/docs/Library-Dependencies.html)
   - [library management](https://www.scala-sbt.org/1.x/docs/Library-Management.html)
-  - [multi project builds](https://www.scala-sbt.org/1.x/docs/Multi-Project.html)
-  - [plugins](https://www.scala-sbt.org/1.x/docs/Plugins.html)
+  - [plugins: basics](https://www.scala-sbt.org/1.x/docs/Using-Plugins.html)
+  - [plugins: intro](https://www.scala-sbt.org/1.x/docs/Plugins.html)
   - [project directory structure](https://www.scala-sbt.org/1.x/docs/Directories.html)
   - [repository resolvers](https://www.scala-sbt.org/1.x/docs/Resolvers.html)
   - [running sbt](https://www.scala-sbt.org/1.x/docs/Running.html)
   - [scope delegation via .value lookup](https://www.scala-sbt.org/1.x/docs/Scope-Delegation.html)
   - [scopes](https://www.scala-sbt.org/1.x/docs/Scopes.html)
 - refs
+  - [AAA sbt index of common entities](https://www.scala-sbt.org/1.x/docs/Name-Index.html)
   - [available plugins](https://www.scala-sbt.org/1.x/docs/Community-Plugins.html)
+  - [defaults for keys](https://github.com/sbt/sbt/blob/develop/main/src/main/scala/sbt/Defaults.scala)
   - [global keys](https://www.scala-sbt.org/1.x/api/sbt/Keys$.html)
   - [input keys](https://www.scala-sbt.org/1.x/api/sbt/InputKey.html)
   - [ivy revisions](https://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision)
   - [project keys](https://www.scala-sbt.org/1.x/api/sbt/Project.html)
+  - [sbt API](https://www.scala-sbt.org/1.x/api/sbt/index.html)
+  - [sbt.io](https://www.scala-sbt.org/1.x/api/sbt/io/IO$.html)
   - [settings keys](https://www.scala-sbt.org/1.x/api/sbt/SettingKey.html)
   - [task keys](https://www.scala-sbt.org/1.x/api/sbt/TaskKey.html)
-  - [defaults for keys](https://github.com/sbt/sbt/blob/develop/main/src/main/scala/sbt/Defaults.scala)
 - sbt plugins
   - [compilation errors summary](https://github.com/duhemm/sbt-errors-summary)
   - [static site generation, generally for library documentation](https://github.com/sbt/sbt-site)
@@ -86,6 +90,7 @@
 
 #### config files
 
+- any _.sbt and _.scala file can have any arbitrary name
 - `root/build.sbt` : build definition: configures the project build, project settings,library dependencies, etc,
   - the location of this file defines the project root
   - in multi-project builds you can place a scoped `build.sbt` in the base dir for that project
@@ -94,7 +99,8 @@
     - Typically, lazy vals are used instead of vals to avoid initialization order problems.
 - `root/project/build.properties`: configures sbt
 - `root/project/plugins.sbt`: defines sbt plugins
-- `root/project/whatever.scala`: define helper objects and one-off plugins
+- `root/project/Dependencies.scala` for tracking deps in one place, files for task implementations or to share values, such as keys, create then import into your build.sbt
+- `root/project/whatever.scala`: define helper objects and one-off plugins that can be imported into your build.sbt
   - can contain: `object` `classes` expressions
 - `root/lib/`: directory `.jar` files for unmanaged dependencies
 
@@ -113,6 +119,7 @@
 
 #### generated files
 
+- `root/project/project`: base dir for sbts meta-meta builds root project
 - `root/target/`: build artifacts: cached output of compilation files, thus successive compiles are incrementally executed (changed file and dependents)
   - check in the dir that matches your scala version, _EXCELLENT_ way to see what your scala project looks like in java
 
@@ -213,20 +220,24 @@
 ### sbt dsl examples
 
 ```scala
-// global fns provided by sbt implicit imports
+// global fns provided by sbt implicit imports?
 log.info("console is so javascript")
 file("path/to/poop") // creates a new File
+System.getProperty("user.home")
+Thread.sleep(500)
+
+
 // compute a value via Def.task partial fn
 // ^ useful in case the value is undefined at call site
 someTask += Def.task {
   // returns this value to assign it to someTask which depends on it
   myGenerator(baseDirectory.value, (Compile / managedClasspath).value)
 }
+
 // variable types
 lazy val singleVar := "set this value"
 lazy val seqVar := "replace cur val with this one"
 lazy val seqVar += "append this single value"
-// TODO
 lazy val seqVar ++= Seq("append multiple", "values")
 
 // setting/task dependencies
@@ -253,8 +264,19 @@ thisTask := {
 }
 
 // custom settings/task keys
+// first define a key
 val poop = settingKey[String]("this is a description")
 val flush = taskKey[Unit]("this is a description")
+// then set a definition for the task via a normal scala partial fn
+poop.settings(
+  poop := {
+    "tasks are executed sequentially"
+  }
+  flush := {
+    println("anything goes here but return value must match type T")
+  }
+
+)
 
 // repositories
 // ^ to add where sbt looks for deps use resolvers key
@@ -274,6 +296,33 @@ libraryDependencies ++= Seq(
 // ^ use the same schema as declaring a dependency
 // ^ go in root/project/plugins.sbt
 addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.11.2")
+
+// example project/Dependencies.scala
+import sbt._
+
+object Dependencies {
+  // Versions
+  lazy val akkaVersion = "2.6.19"
+  // Libraries
+  val akkaActor = "com.typesafe.akka" %% "akka-actor" % akkaVersion
+  val akkaCluster = "com.typesafe.akka" %% "akka-cluster" % akkaVersion
+  val specs2core = "org.specs2" %% "specs2-core" % "4.16.0"
+  // Projects
+  val backendDeps =
+    Seq(akkaActor, specs2core % Test)
+}
+// ^ example use within build.sbt
+import Dependencies._
+
+ThisBuild / organization := "com.example"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+ThisBuild / scalaVersion := "2.12.16"
+
+lazy val backend = (project in file("backend"))
+  .settings(
+    name := "backend",
+    libraryDependencies ++= backendDeps
+  )
 ```
 
 ## sbt Build Definitions
@@ -335,6 +384,8 @@ lazy val someProject = (project in file("."))
     hello := { println("Hello!") },
     commonSettings
   )
+
+
 ```
 
 ## sbt shell
@@ -394,6 +445,7 @@ sbt
   test # Compiles and runs all tests.
   testQuick # run incremental tests, use with ~
   testOnly blah bloop bleep
+  last someTaskName # get the verbose log of someTasks last execution
 
   ####################################
     # inspection related cmds
@@ -441,3 +493,9 @@ sbt
   Docker/publishLocal # create a docker img from a zip distrobution
 
 ```
+
+## sbt API
+
+### sbt.io
+
+- collection of file, url and I/O utility methods
