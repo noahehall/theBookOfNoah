@@ -1,6 +1,10 @@
 - db connection frameworks
-  - https://github.com/slick/slick
   - https://github.com/zio/zio-protoquill
+  - doobie
+    - https://github.com/tpolecat/doobie
+  - slick
+    - https://github.com/slick/slick
+    - walkthrough with postgres: https://www.youtube.com/watch?v=Uwqf_8nwYN4
 - big data
   - https://spark.apache.org/
   - https://medium.com/whatfix-techblog/real-time-data-processing-architecture-using-apache-spark-apache-kafka-and-click-house-ab8e98ad3f98
