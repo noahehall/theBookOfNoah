@@ -30,6 +30,7 @@ bookmark
   - [transactions](https://www.arangodb.com/docs/stable/transactions.html)
   - [web interface: getting started](https://www.arangodb.com/docs/stable/getting-started-web-interface.html)
   - [web interface](https://www.arangodb.com/docs/stable/programs-web-interface.html)
+  - [scaling arango](https://www.arangodb.com/docs/stable/scaling.html)
 
 ## basics
 

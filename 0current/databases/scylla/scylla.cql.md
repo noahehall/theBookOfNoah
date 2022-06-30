@@ -1,0 +1,3 @@
+# CQL
+
+- scylla query language
