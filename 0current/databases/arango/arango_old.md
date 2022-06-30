@@ -1,148 +1,123 @@
-# must do first
+# arangodb
 
-- [basic crud shit](https://www.arangodb.com/docs/stable/aql/operations-insert.html)
+- this file isnt worth saving, lets redo it
 
-- need to add
-- array of objects with indexes require a particular format when READING to ensure the index is used
-- see one of these shits
-- <https://www.arangodb.com/docs/3.6/indexing-index-basics.html>
-- <https://www.arangodb.com/docs/3.6/indexing-index-basics.html#indexing-array-values>
+## links
 
-# must do
+- stuff
+  - [tutorials](https://www.arangodb.com/tutorials)
+  - [libicu - used for word tokenization in fulltext indexes](https://packages.debian.org/sid/libicu-dev)
+- up next
+  - [everything in the left side bar](https://www.arangodb.com/docs/stable/data-modeling.html)
+  - [start here](https://www.arangodb.com/docs/stable/data-modeling-concepts.html)
+  - [arangodb performance course](https://www.arangodb.com/arangodb-performance-course/)
+  - [arangosearch](https://www.arangodb.com/docs/stable/arangosearch.html)
+  - [indexing portal](https://www.arangodb.com/docs/stable/indexing.html)
+  - [upgrading](https://www.arangodb.com/docs/stable/upgrading.html)
+  - in general, fuck arangodb docs, check the tests instead
+  - [here are many tests tests](https://github.com/arangodb/arangodb/tree/master/tests/js/common/shell)
+  - [working with indexes](https://www.arangodb.com/docs/stable/indexing-working-with-indexes.html)
+- docs
+  - [basic crud shit](https://www.arangodb.com/docs/stable/aql/operations-insert.html)
+  - [managing users](https://www.arangodb.com/docs/stable/administration-managing-users.html)
+  - [arangodb packages](https://www.arangodb.com/docs/stable/programs.html)
+    - [arangodb server](https://www.arangodb.com/docs/stable/programs-arangod.html)
+  - [config options](https://www.arangodb.com/docs/stable/administration-configuration.html)
+  - [main docs](https://www.arangodb.com/documentation/)
+  - [docker: setup](https://www.arangodb.com/download-major/docker/)
+  - [docker: main file](https://hub.docker.com/_/arangodb/)
+  - [installation](https://www.arangodb.com/docs/stable/getting-started-installation.html)
+  - [web interface](https://www.arangodb.com/docs/stable/getting-started-web-interface.html)
+  - [web interface main docs](https://www.arangodb.com/docs/stable/programs-web-interface.html)
+  - [data modeling concepts](https://www.arangodb.com/docs/stable/data-modeling-concepts.html)
+  - [data modeling naming conventions](https://www.arangodb.com/docs/stable/data-modeling-naming-conventions-document-keys.html)
+  - [misc aql functions](https://www.arangodb.com/docs/stable/aql/functions-miscellaneous.html)
+  - [aql](https://www.arangodb.com/docs/stable/aql/)
+  - [nodejs aql template tag](https://github.com/arangodb/arangojs/blob/master/docs/Drivers/JS/Reference/Database/Queries.md#aql)
+  - [indexes](https://www.arangodb.com/docs/stable/indexing-index-basics.html)
+  - [rocksdb storage engine, used by arango for backgroudn indexes](https://rocksdb.org/)
+  - [storage engines](https://www.arangodb.com/docs/stable/architecture-storage-engines.html)
+  - [switching storage engines](https://www.arangodb.com/docs/stable/administration-engine-switch-engine.html)
 
-- generally all arango courses if you decide to make arnagodb your DB of choice muther fucker
+## best practices
 
-- [everything in the left side bar](https://www.arangodb.com/docs/stable/data-modeling.html)
-- [start here](https://www.arangodb.com/docs/stable/data-modeling-concepts.html)
-- [arangodb performance course](https://www.arangodb.com/arangodb-performance-course/)
-- [arangosearch](https://www.arangodb.com/docs/stable/arangosearch.html)
-- [indexing portal](https://www.arangodb.com/docs/stable/indexing.html)
-- [upgrading](https://www.arangodb.com/docs/stable/upgrading.html)
-- in general, fuck arangodb docs, check the tests instead
-- [here are many tests tests](https://github.com/arangodb/arangodb/tree/master/tests/js/common/shell)
-- [working with indexes](https://www.arangodb.com/docs/stable/indexing-working-with-indexes.html)
+- generally
+  - any datum that needs to be sorted should be a skiplist index
+  - any unique value should be a form of a hash index
+  - set a docs creation time as a unix timestamp
+  - anything with an 0/1 value type should be a sparse index
+  - load high value indexes into memory
+    - iterates over all indexes of the collection and stores the indexed values, not the entire document data, in memory
+    - All lookups that could be found in the cache are much faster than lookups not stored in the cache so you get a nice performance boost
+    - It is also guaranteed that the cache is consistent with the stored data.
+- for indexes
+  - always build indexes during times with less load
+  - A non-unique hash index on an optional document attribute should be declared sparse so that it will not index documents for which the index attribute is not set.
+  - For high selectivity attributes
+    - skiplist indexes will have a higher overhead than hash indexes.
+    - For low selectivity attributes, skiplist indexes will be more efficient than non-unique hash indexes.
+    - skiplist indexes allow more use cases (e.g. range queries, sorting) than hash indexes.
+    - skiplists can be used for lookups based on a leftmost prefix of the index attributes.
+    - Sparse vs. non-sparse indexesPermalink
+      - A sparse index does not contain documents for which at least one of the index attribute is not set or contains a value of null
+        - i.e. a document can exist in a collection but not be included in the index
+        - enables faster indexing and can lead to reduced memory usage in case the indexed attribute does occur only in some, but not all documents of the collection.
+- joins
+  - if you intend to use joins it may be clever to use non-sparsity and maybe even uniqueness for that attribute,
 
-# docs
+## basics
 
-- [tutorials](https://www.arangodb.com/tutorials)
-- [arangodb packages](https://www.arangodb.com/docs/stable/programs.html)
-  - [arangodb server](https://www.arangodb.com/docs/stable/programs-arangod.html)
-- [config options](https://www.arangodb.com/docs/stable/administration-configuration.html)
-- [main docs](https://www.arangodb.com/documentation/)
-- [docker: setup](https://www.arangodb.com/download-major/docker/)
-- [docker: main file](https://hub.docker.com/_/arangodb/)
-- [installation](https://www.arangodb.com/docs/stable/getting-started-installation.html)
-- [web interface](https://www.arangodb.com/docs/stable/getting-started-web-interface.html)
-- [web interface main docs](https://www.arangodb.com/docs/stable/programs-web-interface.html)
-- [data modeling concepts](https://www.arangodb.com/docs/stable/data-modeling-concepts.html)
-- [data modeling naming conventions](https://www.arangodb.com/docs/stable/data-modeling-naming-conventions-document-keys.html)
-- [misc aql functions](https://www.arangodb.com/docs/stable/aql/functions-miscellaneous.html)
-- [aql](https://www.arangodb.com/docs/stable/aql/)
-- [nodejs aql template tag](https://github.com/arangodb/arangojs/blob/master/docs/Drivers/JS/Reference/Database/Queries.md#aql)
-- [indexes](https://www.arangodb.com/docs/stable/indexing-index-basics.html)
-- [libicu - used for word tokenization in fulltext indexes](https://packages.debian.org/sid/libicu-dev)
-- [rocksdb storage engine, used by arango for backgroudn indexes](https://rocksdb.org/)
-- by facebook, supported since arango 3.2, default since arango3.4
-- [storage engines](https://www.arangodb.com/docs/stable/architecture-storage-engines.html)
-- [switching storage engines](https://www.arangodb.com/docs/stable/administration-engine-switch-engine.html)
+## architecture
 
-# about
-
-- this shit is a javascript devs heaven
-
-- in general read the top section first
-- then find the examples/quickies below as they MAY contain more information
-- i hate duplicating shit, and sometimes its a waste of time finding the correct place to put something
-
-# best practices: my accepted best practices
-
-- any datum that needs to be sorted should be a skiplist index
-
-- any unique value should be a form of a hash index
-- set a docs creation time as a unix timestamp
-- anything with an 0/1 should be a sparse index
-  - e.g. active/non active
-- load high value indexes into memory
-  - iterates over all indexes of the collection and stores the indexed values, not the entire document data, in memory
-  - All lookups that could be found in the cache are much faster than lookups not stored in the cache so you get a nice performance boost
-    It is also guaranteed that the cache is consistent with the stored data.
-
-## best practices: indexes
-
-- always build indexes during times with less load
-- A non-unique hash index on an optional document attribute should be declared sparse so that it will not index documents for which the index attribute is not set.
-- For high selectivity attributes
-  - skiplist indexes will have a higher overhead than hash indexes.
-  - For low selectivity attributes, skiplist indexes will be more efficient than non-unique hash indexes.
-  - skiplist indexes allow more use cases (e.g. range queries, sorting) than hash indexes.
-  - skiplists can be used for lookups based on a leftmost prefix of the index attributes.
-  - Sparse vs. non-sparse indexesPermalink
-    - A sparse index does not contain documents for which at least one of the index attribute is not set or contains a value of null
-      - i.e. a document can exist in a collection but not be included in the index
-      - enables faster indexing and can lead to reduced memory usage in case the indexed attribute does occur only in some, but not all documents of the collection.
-
-## best practices: joins
-
-- if you intend to use joins it may be clever to use non-sparsity and maybe even uniqueness for that attribute,
-
-# architecture
-
-## engine types
+### engine types
 
 - rocksdb
-
 - mmfiles
 
-## `arangod`
+### arangod
 
 - the server
-
 - speaks http/rest
 - comes with a free web interface
 
-## indexes
+## data model
 
-- index handle - uniquely identifies an index in the database
+### indexes
 
-- `db.COL_NAME.index('COL_NAME/INDEX_IDENTIFIER')`
-- `db.COL_NAME.index('COLNAME/INDEX_NAME')
-- `db.COL_NAME.index('INDEX_NAME')
-- `db.\_index('COL_NAME/INDEX_IDENTIFIER')
-- index identifier - numeric value auto-generated by arangodb
-- `db.COL_NAME.index('INDEX_IDENTIFIER')`
+- index handle: uniquely identifies an index in the database
+  - `db.COL_NAME.index('COL_NAME/INDEX_IDENTIFIER')`
+  - `db.COL_NAME.index('COLNAME/INDEX_NAME')`
+  - `db.COL_NAME.index('INDEX_NAME')`
+- index identifier: numeric value auto-generated by arangodb
+  - `db.COL_NAME.index('INDEX_IDENTIFIER')`
 
-### general index properties
+#### general index properties
 
 - user-defined indexes can only be created on a collection level
-
 - unique: no two docs can have the same value
-- inserting docs with a duplicate key will lead to a unqiue constrint violation
+  - inserting docs with a duplicate key will lead to a unqiue constrint violation
 - sparse: only those docs whose index attribute has a value set to a NON NULL value will be indexed
-- i.e. not all docs have to be indexed
-- docs whose value is set to null will not be indexed
-- useful for optional attributes
-
+  - i.e. not all docs have to be indexed
+  - docs whose value is set to null will not be indexed
+  - useful for optional attributes
 - foreground index: only permitted under an exclusive collection lock
-- i.e the collection is not available while the index is being crated
+  - i.e the collection is not available while the index is being crated
 - background index: the collection remains mostly avialable during the index creation
-- only available in the `RocksDB` storage engine
+  - only available in the `RocksDB` storage engine
 
-### index types
+#### index types
 
 - hash, skiplist and persistent are identical when using rocksdb
-
 - just use the persistent index type whenever you need a hash/skiplist
-- [see this for more clarity](https://github.com/arangodb/arangojs/issues/648#issuecomment-590080580)
--
+  - [see this for more clarity](https://github.com/arangodb/arangojs/issues/648#issuecomment-590080580)
 - persistent index
 - sorted index with persistence
-
 - system indexes (automatically created)
 - primary key: \_id and_key
-- a hash index for the dockey keys of all documents in the collection
-- allows quick selection of documents using eith er the \_key or_id attributes
-- is an unsorted hash index
-  - i.e. cannot be used for non-equallity range queires or sorting
+  - a hash index for the dockey keys of all documents in the collection
+  - allows quick selection of documents using eith er the \_key or_id attributes
+  - is an unsorted hash index
+    - i.e. cannot be used for non-equallity range queires or sorting
 - cannot be
   - dropped
   - changed
