@@ -1,0 +1,99 @@
+# db architecture
+
+- there is so much duplication in this repository...
+
+## links
+
+- [scale up vs scale out](https://packetpushers.net/scale-up-vs-scale-out/)
+- [cap theorem](https://en.wikipedia.org/wiki/CAP_theorem)
+- [database transactions](https://en.wikipedia.org/wiki/Database_transaction)
+- [how to choose the right time series database](https://devopsprodigy.com/blog/chose-the-right-time-series-database/)
+- [data driven architecture: choosing the right db](https://sairamkrish.medium.com/choosing-your-database-data-driven-architecture-89d6633cd1e4)
+
+## terms
+
+- scale up/vertical: whatever you have now, but bigger
+- scale out/horizontal: whatever you have now, but duplicated
+- high availability:
+- fault tolerance:
+- cap theorem: any distributed data store can only provide 2 of three guarantees: consistency, availability, and partition tolerance; since every DB is susciptible to partition failure, its really a choice between consistency and availability
+- consistency: every read receives the most recent write/error
+- availability: every request receives a (non-error) response, without the guarantee that it contains the most recent write
+  - can be overcome via active replication: in the event of failure just switch to the redundant system
+- partition tolerance: the system continues to operate despite an arbitrary number of messages being dropped/delayed by the network between nodes
+- network partition failure: forces you to either cancel the operation & decrease availabilty but ensure consistency, or proceed with the operation and thus provide availability but risk consistency
+
+## sql
+
+- relational, structured
+- best for online analytical processing
+- scales up
+
+## nosql
+
+- hierarchical, unstructured
+- best for online transaction processing at scale
+- scales out
+- main distinctions are data model driven:
+  - the logical structure of the database is designed
+  - how the data relates to each other
+  - how the data is processed and stored inside the system
+- secondary distinctions is according to the cap thereom
+  - consistency: will every read receive the most recent write
+  - availability: will ever request receive a non-error response (but doesnt have to be the most recent write)
+  - partition tolerance: will the system operate in the face of network failures/msg loss
+
+### key /val
+
+- long list
+  - redis
+  - memcached
+- data model
+  - key value pairs: each key has only one value
+  - fast queries, no need for a query language
+
+### document store
+
+- long list
+  - mongodb
+  - couchbase
+  - ravendb
+- data model
+  - data stored in documents of tagged elements (like a row in rdbms)
+
+### column (oriented)
+
+- long list
+  - clickhouse
+- data model
+- characteristics
+  - wheres SQL stores record by record (row by row), column oriented dbs store column by column
+  - improves storage and retrieval performance
+
+### wide column store
+
+- long list
+  - cassandra
+  - dynamodb
+  - hbase
+  - scylla
+- data model
+  - store data in columns
+  - related columns are grouped into tables (column families)
+- characteristics
+  - supports large numbers of dynamic columns:
+  - aka 2 dimensional key value stores
+
+### graph
+
+- long list
+  - neo4j
+- data model
+  - use nodes & edges to store data
+
+### multi-model
+
+- go for the native multi models, and not the ones enhanced with extensions/plugins/etc
+
+- longlist
+  - arangodb

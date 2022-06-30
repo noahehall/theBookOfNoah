@@ -14,6 +14,7 @@ bookmark
 ## links
 
 - docs
+  - [clustering](https://www.arangodb.com/community-server/cluster/)
   - [administration](https://www.arangodb.com/docs/stable/administration.html)
   - [arangod: options](https://www.arangodb.com/docs/stable/programs-arangod-options.html)
   - [arangodb drivers](https://www.arangodb.com/docs/stable/drivers/)
