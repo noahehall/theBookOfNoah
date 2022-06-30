@@ -9,6 +9,8 @@
 - [database transactions](https://en.wikipedia.org/wiki/Database_transaction)
 - [how to choose the right time series database](https://devopsprodigy.com/blog/chose-the-right-time-series-database/)
 - [data driven architecture: choosing the right db](https://sairamkrish.medium.com/choosing-your-database-data-driven-architecture-89d6633cd1e4)
+- [scylladb vs clickhouse UFC Match](https://altinity.com/blog/2020/1/1/clickhouse-cost-efficiency-in-action-analyzing-500-billion-rows-on-an-intel-nuc)
+  - [YC discussion](https://news.ycombinator.com/item?id=21970952)
 
 ## terms
 
@@ -22,6 +24,13 @@
   - can be overcome via active replication: in the event of failure just switch to the redundant system
 - partition tolerance: the system continues to operate despite an arbitrary number of messages being dropped/delayed by the network between nodes
 - network partition failure: forces you to either cancel the operation & decrease availabilty but ensure consistency, or proceed with the operation and thus provide availability but risk consistency
+- garbage collection
+- compaction
+- node: generally a unit of storage, e.g. a single db instance
+- cluster: a group of nodes that work together; e.g. a 3 node cluster is the minimum for high availability
+- replication factor: the number of copies of a set of data, e.g. RF of 1, means theres 1 copy, RF 2 means there 2 identical copies, etc, generally you want 3
+- consistency level: how many nodes must validate a READ/WRITE before the request is considered successful
+- big data: generally the dataset is so huge it cant be contained in a single node, thus a cluster of nodes are required
 
 ## sql
 
@@ -93,7 +102,7 @@
 
 ### multi-model
 
-- go for the native multi models, and not the ones enhanced with extensions/plugins/etc
+- go for the native multi models, and not the ones enhanced with extensions/plugins/etc (timescale is dope tho)
 
 - longlist
   - arangodb
