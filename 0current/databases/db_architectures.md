@@ -14,9 +14,12 @@
 
 ## terms
 
-- scale up/vertical: whatever you have now, but bigger
-- scale out/horizontal: whatever you have now, but duplicated
-- high availability:
+- high scalability:
+  - scale up/vertical: whatever you have now, but optimized for multi-core, multi-cpu, and high capacity storage devices, usually on the fly
+  - scale out/horizontal: whatever you have now, but more of it; usually on the fly
+- high availability: low latency and remain highly accesible even in the event of hardware/system/network failures
+- high performance: run as close to the hardware as possible to deliver low and consistent latency with very high throughput
+- low maintenance: incluse ease-of-use features, e.g. automated capabilities & processes without the neeed for high technical expertise
 - fault tolerance:
 - cap theorem: any distributed data store can only provide 2 of three guarantees: consistency, availability, and partition tolerance; since every DB is susciptible to partition failure, its really a choice between consistency and availability
 - consistency: every read receives the most recent write/error
@@ -25,11 +28,13 @@
 - partition tolerance: the system continues to operate despite an arbitrary number of messages being dropped/delayed by the network between nodes
 - network partition failure: forces you to either cancel the operation & decrease availabilty but ensure consistency, or proceed with the operation and thus provide availability but risk consistency
 - garbage collection
-- compaction
-- node: generally a unit of storage, e.g. a single db instance
+- compaction: TODO
+- node: generally a unit of storage, e.g. a single db instance including all the software running on the hardware
 - cluster: a group of nodes that work together; e.g. a 3 node cluster is the minimum for high availability
-- replication factor: the number of copies of a set of data, e.g. RF of 1, means theres 1 copy, RF 2 means there 2 identical copies, etc, generally you want 3
+- replication: the process of replicating data across nodes ina cluster
+- replication factor: The total number of replica Nodes across a given Cluster; the number of copies of a set of data, e.g. RF of 1, means theres 1 copy, RF 2 means there 2 identical copies, etc, generally you want 3
 - consistency level: how many nodes must validate a READ/WRITE before the request is considered successful
+  - e.g. at least 2 nodes must acknowledge an operation/query/whatever for it to be considered 200
 - big data: generally the dataset is so huge it cant be contained in a single node, thus a cluster of nodes are required
 
 ## sql
@@ -43,11 +48,11 @@
 - hierarchical, unstructured
 - best for online transaction processing at scale
 - scales out
-- main distinctions are data model driven:
-  - the logical structure of the database is designed
+- main distinctions are data model driven: e.g. rdbms vs nosql vs wide-column etc
+  - the logical structure of the database is design
   - how the data relates to each other
   - how the data is processed and stored inside the system
-- secondary distinctions is according to the cap thereom
+- secondary distinctions is according to the cap thereom: usually a choice between C and A, as all are susceptible to P (failures)
   - consistency: will every read receive the most recent write
   - availability: will ever request receive a non-error response (but doesnt have to be the most recent write)
   - partition tolerance: will the system operate in the face of network failures/msg loss
