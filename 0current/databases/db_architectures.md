@@ -9,6 +9,7 @@
 - [database transactions](https://en.wikipedia.org/wiki/Database_transaction)
 - [how to choose the right time series database](https://devopsprodigy.com/blog/chose-the-right-time-series-database/)
 - [data driven architecture: choosing the right db](https://sairamkrish.medium.com/choosing-your-database-data-driven-architecture-89d6633cd1e4)
+- [shared nothing architecture](https://en.wikipedia.org/wiki/Shared-nothing_architecture)
 - [scylladb vs clickhouse UFC Match](https://altinity.com/blog/2020/1/1/clickhouse-cost-efficiency-in-action-analyzing-500-billion-rows-on-an-intel-nuc)
   - [YC discussion](https://news.ycombinator.com/item?id=21970952)
 

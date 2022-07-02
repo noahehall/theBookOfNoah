@@ -24,7 +24,7 @@ everything about postgresql
 - postgres
 
   - ref
-    - [managing users](https://aws.amazon.com/blogs/database/managing-postgresql-users-and-roles/)
+    - [managing users and roles](https://aws.amazon.com/blogs/database/managing-postgresql-users-and-roles/)
     - [version 14 docs](https://www.postgresql.org/docs/14/index.html)
     - [insert into](https://www.postgresql.org/docs/14/sql-insert.html)
     - [password authentication](https://www.postgresql.org/docs/14/auth-password.html)

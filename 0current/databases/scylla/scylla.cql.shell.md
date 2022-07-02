@@ -9,6 +9,7 @@
 ## links
 
 - [AAA cql getting started](https://docs.scylladb.com/getting-started/cqlsh/)
+- [map cpus to scylla shards](https://docs.scylladb.com/kb/map-cpu/)
 
 ## quickies
 
@@ -88,6 +89,7 @@ SELECT * FROM monkeySpecies;
 
 # check the number of physical cores on the server
 # ^ and how each map to a scylla shard
+# ^ @see https://docs.scylladb.com/kb/map-cpu/
 ./usr/lib/scylla/seastar-cpu-map.sh -n scylla
 
 ```

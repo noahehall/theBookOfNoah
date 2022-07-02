@@ -1,3 +1,7 @@
+- bookmark:
+  - https://university.scylladb.com/courses/scylla-essentials-overview/lessons/architecture/topic/shard/
+  - https://manager.docs.scylladb.com/stable/docker/index.html#
+
 # Scylladb
 
 - nosql, big data realtime wide-column db
@@ -33,7 +37,7 @@
 - use cases
   - replace cassandra + redis deployments (redis as cache layer fronting cassandra) clusters
   - metadata storage
-  - redis replacement
+  - redis replacement (yea right)
   - real time user tracking/interactions/reacting
 
 ### terms
