@@ -1427,13 +1427,11 @@ val poop = hannah.copy(name = "poop")
 
 ```scala
 
-val poops: Option[String] = None // None
-val poops: Option[string] = Some("times") // Some
+val some: Option[Int] = Some(1)
+val none: Option[Int] = None
 
-poop
-  .getOrElse("default value")
-  .zip(someOtherOption) // returns tuple if BOTH are Some, see example
-  .map(lambda)
+none.fold { 2 * 5} (_ * 3) // 10
+some.fold { 2 * 5} (_ * 3) // 3
 
 /// zip example
 // ^ if either options are None, returns None
@@ -1457,6 +1455,34 @@ val upper = for {
   upper <- Some(trimmed.toUpperCase) if trimmed.length != 0
 } yield upper
 println(upper getOrElse "")
+
+// api
+// generally always returns Some[B] with an operation performed on B,
+// ^ else may return B with an operation perform on B
+// ^ else returns None if B doesnt exist
+poop
+  .collect{ partial } // partial[A] => Option[B]
+  .contains(value) // x == value
+  .exists(predicate) // predicate[A, Boolean]: Boolean
+  .filter(predicate) // returns Option[A] if predicate[A, true]
+  .filterNot(predicate) // returns Option[A] if predicate[A, false]
+  .flatMap(lambda) // lambda[A] => Option[Any]
+  .fold(ifEmptyLambda)(lambda) // runs ifEmpty if empty, else lambda
+  .forall(predicate) // isEmpty then true || predicate[A, Boolean]
+  .foreach(lamba) // lambda[A] => Unit
+  .get // get val or error if empty
+  .getOrElse("default value")
+  .isDefined // tru if not empty
+  .isEmpty // true if empty
+  .lazyZip // see zip
+  .map(lambda) // lambda[A] => A
+  .nonEmpty // true if not empty
+  .orElse(lamdbda) // Option[A] || lambda[A, Option[B]]
+  .toList // List[A]
+  .unzip // (Some(x), Some(y)) || (None, None)
+  .unzip3 // see unzip2, but for 3
+  .zip(someOtherOption) // Some(x, y) || None
+  .zip3 // see zip but for 3
 ```
 
 #### case object
@@ -2889,7 +2915,7 @@ object poop:
 // basically any fn that takes a fn can receive a partial fn
 // e.g. on map
 someList.map {
-  (x, y ) => doThisStuff(x,y)
+  (x, y) => doThisStuff(x,y)
 }
 
 // any lambda can be called as a partial fn
