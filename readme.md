@@ -1,7 +1,9 @@
 # TLDR
 
 - appication development
-  - my sweet spot: web security, web architecture, virtualization, javascript, nimlang, bash, databases
+  - my sweet spot/interests: web security, web architecture, virtualization, javascript, ~nimlang~ scala, bash, databases
+    - regrettably i had to drop nimlang for scala
+    - however scala has proven to be butter on toast
 - **HECC-YA** system modeling: **h**ardware **e**nvironment **c**omponent **c**ommunication **y**ielding **a**rchitecture
   - I want to create (yield) a world (environment) for a set of living things (components) to live holistically (hardware) and socially (communication)
   - read more in [architectural thinking](/0current/architectural%20thinking/0heccya.md#hecc-ya-system-modeling)
