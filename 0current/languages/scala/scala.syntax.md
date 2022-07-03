@@ -1,5 +1,5 @@
 - bookmark
-  - https://scala-lang.org/api/3.x/scala/Option.html
+  - https://scala-lang.org/api/3.x/scala/PartialFunction.html
     - dropping through the list on the left sidebar
 
 # scala
