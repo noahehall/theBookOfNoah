@@ -1,3 +1,7 @@
+- bookmark
+  - https://scala-lang.org/api/3.x/scala/Option.html
+    - dropping through the list on the left sidebar
+
 # scala
 
 - all about the syntax
@@ -1415,10 +1419,9 @@ val poop = hannah.copy(name = "poop")
 
 - [option ref](https://scala-lang.org/api/3.x/scala/Option.html)
 - Represents optional values. Instances of Option are either an instance of $some or the object $none.
+  - allows for sophisticated chaining of $option values without having to check for the existence of a value.
 - The most idiomatic way to use an $option instance is to treat it as a collection or monad and use map,flatMap, filter, or foreach:
-- special case class containing zero/one element: safer alternative than `null` as it forces you to deal with the existence/abscense of a value
-  - handle the absense (None) of data in an elegant way
-  - can either be a Some(somevalue) or a None
+- special case class containing zero/one element: safer alternative than `null`
 - also support much of the API available on collections (even tho they are not a collection type)
 - None: represent non-existent values
 
