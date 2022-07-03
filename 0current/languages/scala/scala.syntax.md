@@ -33,6 +33,7 @@
 - [example gitignore for scala](https://alvinalexander.com/source-code/scala/sample-gitignore-file-scala-sbt-intellij-eclipse/)
 - [programming in scala 3 book](https://www.artima.com/shop/programming_in_scala_5ed)
 - [47 degrees: scala exercises](https://www.scala-exercises.org/)
+- [if expressions/guards on match/case expressions](https://alvinalexander.com/scala/how-to-use-if-then-expressions-guards-in-case-statements-scala/)
 - ref
   - [AAA scala vesions](https://github.com/lampepfl/dotty/tags)
   - [AAA scala 3 ref: fkn become one with this](https://dotty.epfl.ch/api/index.html)
@@ -1277,6 +1278,33 @@ val getShapeAria =
     - do this: an enum (abstract class) of parameterized fields
 
 ```scala
+// copypasta
+// ^ matching on numbers
+i match {
+    case a if 0 to 9 contains a => println("0-9 range: " + a)
+    case b if 10 to 19 contains b => println("10-19 range: " + b)
+    case c if 20 to 29 contains c => println("20-29 range: " + c)
+    case _ => println("Hmmm...")
+}
+num match {
+    case x if x == 1 => println("one, a lonely number")
+    case x if (x == 2 || x == 3) => println(x)
+    case _ => println("some other value")
+}
+// object type things
+stock match {
+    case x if (x.symbol == "XYZ" && x.price < 20) => buy(x)
+    case x if (x.symbol == "XYZ" && x.price > 50) => sell(x)
+    case _ => // do nothing
+}
+// extract fields from case classes
+def speak(p: Person) = p match {
+    case Person(name) if name == "Fred" => println("Yubba dubba doo")
+    case Person(name) if name == "Bam Bam" => println("Bam bam!")
+    case _ => println("Watch the Flintstones!")
+}
+
+
 // shorthand: with simple values
 enum Color:
   case Red, Green, Blue
@@ -2919,6 +2947,7 @@ someList.map {
 }
 
 // any lambda can be called as a partial fn
+// ^ but will NOT Have the API unless defined as PartialFunct[Int, Out]
 val f: String => String = {
   case "pong" => "ping"
   case _ => "nope" // required or you get a MatchError
@@ -2926,11 +2955,17 @@ val f: String => String = {
 f("poop") // nope
 
 // Type PartialFunction enables you to not catch every case
-// ^ instead use isDefinedAt to check if the partial is defined for a value
+// ^ can also use isDefinedAt to check if the partial is defined for a value
 val x: PartialFunction[String, String] = {
   case "pong" => "ping"
 }
-x.isDefinedAt("poop") // Boolean: false
+thisPartial
+  .andThen(otherParital(poop)) // i.e. thisFn(otherFn(poop))
+  .applyOrElse(defaultPartialFn(poop)) // i.e. thisPartial.isDefineDAt(poop) && thisPartial(poop) || defaultFn(poop)
+  .compose(thisFn) //  i.e. thisPartial(thisFn(poop))
+  .elementWise // todo
+  .isDefinedAt(value) // Boolean: if value exists with fns domain
+  .lift // returns thisFn converted to a plan fn with a return type of Option
 ```
 
 ### composition
