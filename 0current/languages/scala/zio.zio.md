@@ -35,3 +35,7 @@ object MainApp extends ZIOAppDefault:
   def run = Console.printLine("Hello, World")
 
 ```
+
+### zio
+
+- has 3 types params, `zio[R, E, A]`

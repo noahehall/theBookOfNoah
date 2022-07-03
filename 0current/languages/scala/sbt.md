@@ -499,3 +499,8 @@ sbt
 ### sbt.io
 
 - collection of file, url and I/O utility methods
+
+## giter8
+
+- is built into sbt, but can be installed separately
+- its like create react app for scala
