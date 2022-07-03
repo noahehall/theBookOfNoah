@@ -18,10 +18,6 @@
   - find sealed traits in the scala docs
   - todo: need to do a better job at categorizing operators, especially the mutable vs immutable ones
   - extending, using `poop extends blah1, blah2` vs `poop extends blah1 with blah2`
-  - definitions with signatures like `def poop(...)(...) => ???`
-    - basically your able to pass 2 sets of parameters, which are both available in the fn body
-  - scala.math.Ordering[A]: pretty sure i have the syntax wrong
-  - need to do better on the using, given explanations & examples
   - in general look through all the coursera assignments for each week, there are bunches of stuff in there that wasnt explained in the course and could be a good starting point for grepping the docs
 
 ## links
@@ -82,27 +78,15 @@
   - entities within a block `{}` or `indentation in scala 3` are only visible from within the block
   - ^ and shadow entities of the same names outside the block
 - semi colons only required to separate two statmeents on a single line
-
-### gotchas
-
-- todo: move this entire section into a code block
-  - indentation is important (think python)
-  - compiler evalutes type annotations at compile time, to guard against some kinds of errors at run-time
-    - except in worksheets, as there is no distinction between compile & runtime
-  - vals vs defs
-    - vals are always evaluated once, and the result is reused each time their name is used
-    - the body of defs are evaluated each time the def is invoked, if its never invoked then never evaluated
-      - thus one reason to prefer defs over vals is to delay the evlaution of a computation until the point in a progran where its effectively needed
-  - companion objects: sealed traits and objects can have the same name
-    - it refers to the object when its used on the right-hand side of a definition, or when it is passed as an argument to an operation
-    - it refers to the sealed trait (the type) when it is used in a type annotation
-    - check the syntax file for mimicking enums in scala 2
-  - dont forget about the special `apply` `unapply` and `toString` definition
-    - any entity with an `apply` definition can be invoked like a `fn()`
-    - any entity with an `unapply` definition can be destructured
-    - any entity with an `toString` definition can be printed
-  - several standard library definitions have context parameters (e.g anything that relies on Ordering, like List(...).min, or sort fns)
-    - each can be modified by defining given instance before invocation
+- indentation is important (think python)
+- compiler evalutes type annotations at compile time, to guard against some kinds of errors at run-time
+  - except in worksheets, as there is no distinction between compile & runtime
+- vals vs defs
+  - vals are always evaluated once, and the result is reused each time their name is used
+  - the body of defs are evaluated each time the def is invoked, if its never invoked then never evaluated
+    - thus one reason to prefer defs over vals is to delay the evlaution of a computation until the point in a progran where its effectively needed
+- several standard library definitions have context parameters (e.g anything that relies on Ordering, like List(...).min, or sort fns)
+  - each can be modified by defining given instance before invocation
 
 ```scala
 
@@ -128,18 +112,7 @@ scala --version
 
 #### project setup
 
-- scala application structure
-  - computer files: see `sbt.md` for more indepth information
-    - `root/project` sbt's internal files
-    - `root/target` generated files
-  - developer files
-    - `root/build.sbt` sbt's build definition file
-    - `root/src/main/scala/*` where all your scala files go
-      - `.scala` are scala files;
-        - one of these files must have a top-level/object definition annotated with `@main` as the program entrypoint
-        - cant have top level statements, only top level definitions: def, val, var, object, trait and class
-      - `.sc` are scala worksheet files; evaluated top to bottom, line by line
-    - `root/src/test/scala/*` where all your test files go
+- check the sbt docs in this repo
 
 ```scala
 // program entry point, can be in any source file
@@ -178,7 +151,7 @@ import poop.{Flush as ShouldIFlush} // import as alias
 ### quickies
 
 - semi colons only required if multiple statements exist on the same line
-- all data types are objects, so that have a `someVar.someMember`
+- all data types are objects, so everything has a `someVar.someMember`
 - you can coerce numbers to strings, e.g. `"ima string " + 5`
 - there are no breaks/continues in scala
   - use `return` statement to break out of a loop
@@ -197,6 +170,7 @@ comment
 
 ## identifiers
 
+- [rules for operators](https://docs.scala-lang.org/scala3/reference/changed-features/operators.html)
 - i.e. operators, symbolic identifiers are what you would call operators in other languages
 - all operators are really identifiers (or definitions), thus can be called with dot operator
   - `this.==(that)` the same as `this == that`
@@ -255,6 +229,7 @@ thiz <- that.thiz
   // is right-associative, i.e in the above example it starts from Nil, and moves list
   // can be left associative via the comma operator on Nill,
     // ^ Nil.::(bob).::(alice)
+// below: the : always points to the sequence
 // prepend a value onto a collection
 addthisToTheBegging +: ofThisCollection
 // append a value onto a collection (not recommended as its innefficient)
@@ -305,8 +280,6 @@ var mutableValue: Boolean = true
 lazy val immutableValue: Boolean = true // rhs is evaluated only when its variable is used, and then the result is cached
 var unintializedVar: Int = _ // the _ is the key thing here
 // Int 100
-// generally you should pref defs for this kind of thing
-// ^ unless you want to always refer to this by value, and only evaluate it once
 val interestingVal: Int =
   val ten = 10
   ten * ten
@@ -335,16 +308,16 @@ val interestingVal: Int =
 /// Byte 8 bit -128 to 127
 
 // 16 bit
-/// Char 16 bit unicode characters
+/// Char 16-bit unsigned integer (equivalent to Java's char primitive type)
 /// Short 16 bit integers -32768 to 32767
 
 // 32 bit
-/// Float 32 bit floating point
-/// Int 32 bit integers
+/// Float 32 bit floating point number (equivalent to Java's float primitive type)
+/// Int 32-bit signed integer (equivalent to Java's int primitive type)
 
 // 64 bit
-/// Long 64 bit integers
-/// Double 64 bit floating point
+/// Long 64-bit signed integer (equivalent to Java's long primitive type)
+/// Double 64 bit floating point number (equivalent to Java's double primitive type) i
 
 // other
 /// Boolean true | false
@@ -381,11 +354,11 @@ val interestingVal: Int =
 //////////////////////////////////
 
 // type tests & type casts are discouraged in scala
-
-
 ```
 
 ### Boolean
+
+- Boolean (equivalent to Java's boolean primitive type)
 
 ```scala
 
@@ -1080,6 +1053,9 @@ class Poop(...): ???
 - an object that has the same name as a class, case class, or enum, and declared in the same file
   - the other side is called the objects `companion class|case class|enum`
   - each can access the others private members
+  - it refers to the object when its used on the right-hand side of a definition, or when it is passed as an argument to an operation
+  - it refers to the sealed trait (the type) when it is used in a type annotation
+  - etc
 - use case
   - provide methods/values that act as static class fields & methods (like in javascript)
   - if they contain an `apply` method, act as factory fns to create new instances of companion classes
@@ -1437,10 +1413,14 @@ val poop = hannah.copy(name = "poop")
 
 ##### Option
 
+- [option ref](https://scala-lang.org/api/3.x/scala/Option.html)
+- Represents optional values. Instances of Option are either an instance of $some or the object $none.
+- The most idiomatic way to use an $option instance is to treat it as a collection or monad and use map,flatMap, filter, or foreach:
 - special case class containing zero/one element: safer alternative than `null` as it forces you to deal with the existence/abscense of a value
   - handle the absense (None) of data in an elegant way
   - can either be a Some(somevalue) or a None
 - also support much of the API available on collections (even tho they are not a collection type)
+- None: represent non-existent values
 
 ```scala
 
@@ -1463,6 +1443,17 @@ val poop: List[Int] = List(1, 2, 3)
 val found = poop.find(x => x == 1) // Some(1)
 val notFound = poop.find(x => x == 1000) // None
 
+// idiomatic scala
+val name: Option[String] = request getParameter "name"
+val upper = name map { _.trim } filter { _.length != 0 } map { _.toUpperCase }
+println(upper getOrElse "")
+// ^ same as above
+val upper = for {
+  name <- request getParameter "name"
+  trimmed <- Some(name.trim)
+  upper <- Some(trimmed.toUpperCase) if trimmed.length != 0
+} yield upper
+println(upper getOrElse "")
 ```
 
 #### case object
@@ -1933,8 +1924,16 @@ val buffer = mutable.ArrayBuffer("poop", "flush")
 
 ```
 
-###### Array: indexed sequence (from java)
+###### IArray
 
+- [IArray](https://scala-lang.org/api/3.x/scala/IArray$.html)
+- An immutable array.
+- An IArray[T] has the same representation as an Array[T], but it cannot be updated.
+- Unlike regular arrays, immutable arrays are covariant.
+
+###### Array
+
+- Arrays are mutable, indexed collections of values. Array[T] is Scala's representation for Java's T[].
 - cannot be subclasses of Seq because it comes from java
 - support the same ops ans Seq and can implicity be converted to sequences as needed
 - arrays are flat and mutable (elements can change)
@@ -1947,7 +1946,10 @@ val buffer = mutable.ArrayBuffer("poop", "flush")
 /// Array
 //////////////////////////////////
 val poop: Array[String] = Array("one", "two")
-
+val numbers = Array(1, 2, 3, 4)
+val first = numbers(0) // read the first element
+numbers(3) = 100 // replace the 4th array element with 100
+val biggerNumbers = numbers.map(_ * 2) // multiply all numbers by two
 ```
 
 ###### Range
@@ -1983,7 +1985,6 @@ range
 val poop = Vector(1,2,3)
 
 // api: same as list except it doesnt use ::
-// ^ : always points to the sequence !
 // ^ see List for general api methods
 val poop2 = 0 +: poop // Vector(0,1,2,3)
 val poop3 = poop2 :+ 4 // Vector(0,1,2,3,4)
@@ -2792,6 +2793,10 @@ object Signal
   - lazy evaluation: evaluation occurs 0 or 1 times, the first (and only) time is when the value is initially accessed, else is never evaluated
 - recursive definitions require a return type
   - non-recursive definitions dont
+- dont forget about the special `apply` `unapply` and `toString` definition
+  - any entity with an `apply` definition can be invoked like a `fn()`
+  - any entity with an `unapply` definition can be destructured
+  - any entity with an `toString` definition can be printed
 
 ```scala
 // call by name: evaluates flush only if accessed within the fn
@@ -2901,6 +2906,7 @@ x.isDefinedAt("poop") // Boolean: false
 
 ### composition
 
+- [Function object](https://dotty.epfl.ch/api/scala/Function$.html)
 - higher order fns: fns that take other fns as parameters or that return fns as results
 
 ```scala
@@ -2935,6 +2941,11 @@ val f4 = Function.uncurried(f3)
 f4(1, 3) // = 4
 
 
+def times2 (x: Int) : Int = x * 2
+def plus2 (x: Int) : Int = x + 2
+def runem = Function.chain(Seq(times2, plus2)) // 6
+
+runem(3)
 // standard library
 someDef
   .apply(someArg) // runs someDef on someArg, i.e. someDef(someArg)
@@ -3030,6 +3041,35 @@ given loop(using a: A): A = a // error: no implicit argument of type A was found
 ## standard library
 
 ### auto imported stuff
+
+- [scala ref](https://dotty.epfl.ch/api/scala.html)
+- Core Scala types. They are always available without an explicit import.
+
+#### App
+
+- [App Trait](https://dotty.epfl.ch/api/scala/App.html)
+- The App trait can be used to quickly turn objects into executable programs.
+
+```scala
+// No explicit main method is needed. Instead, the whole class body becomes the “main method”.
+// args returns the current command line arguments as an array.
+object Main extends App {
+  Console.println("Hello World: " + (args mkString ", "))
+}
+```
+
+#### Console
+
+- Implements functionality for printing Scala values on the terminal. For reading values use StdIn. Also defines constants for marking up text on ANSI terminals.
+
+```scala
+
+// Today the outside temperature is a balmy -137.0°C. -137.0°C beats the previous record of -135.1°C.
+Console.printf(
+  "Today the outside temperature is a balmy %.1f°C. %<.1f°C beats the previous record of %.1f°C.\n",
+  -137.0,
+  -135.05)
+```
 
 #### System
 

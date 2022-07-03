@@ -4,10 +4,8 @@ http://sdkman.io/install
 
 $ sdk
 $ sdk version
-$ sdk install
-$ sdk list scala
-$ sdk install scala
 $ sdk install sbt
+$ sdk list scala
 $ sdk upgrade
 $ sdk current
 $ sdk home scala 3.1.2
