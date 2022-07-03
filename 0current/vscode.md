@@ -28,25 +28,9 @@
   - `ctrl backtick` toggle terminal
 
 ```jsonc
-//default settings
 {
-  // often need to edit
-  // enable when in typescript project
-  "typescript.validate.enable": false,
-  "javascript.validate.enable": false,
-
-  // enable when in flow project
-  // https://github.com/flowtype/flow-for-vscode
-  "flow.useNPMPPackedFlow": true,
-  "flow.coverageSeverity": "info",
-  "flow.pathToFlow": "${workspaceFolder}/node_modules/.bin/flow",
-  "flow.runOnEdit": true,
-  "flow.showUncovered": true,
-  "flow.stopFlowOnExit": true,
-  "flow.useBundledFlow": false,
-  "flow.useCodeSnippetOnFunctionSuggest": true,
-
   // relativeliy stable
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.acceptSuggestionOnEnter": "smart",
   "editor.autoIndent": "advanced",
   "editor.cursorBlinking": "phase",
@@ -56,10 +40,10 @@
   "editor.formatOnSave": true,
   "editor.inlineSuggest.enabled": true,
   "editor.insertSpaces": true,
-  "editor.lineHeight": 28,
+  "editor.lineHeight": 34,
   "editor.linkedEditing": true,
   "editor.minimap.enabled": false,
-  "editor.rulers": [40, 80, 120],
+  "editor.rulers": [100, 150, 200],
   "editor.tabSize": 2,
   "editor.wordWrap": "wordWrapColumn",
   "editor.wordWrapColumn": 80,
@@ -70,11 +54,15 @@
   },
 
   "terminal.integrated.tabs.location": "left",
-  "workbench.experimental.sidePanel.enabled": true,
   "terminal.integrated.enableFileLinks": true,
   "terminal.integrated.copyOnSelection": true,
 
   "eslint.alwaysShowStatus": true,
+  "eslint.workingDirectories": [
+    {
+      "pattern": "./packages/*/"
+    }
+  ],
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -85,25 +73,24 @@
     "yml"
   ],
   "explorer.sortOrder": "default",
-
-  "files.autosave": false,
+  "explorer.compactFolders": false,
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "files.associations": {
     ".json": "jsonc",
-    ".jsonc": "jsonc"
+    ".jsonc": "jsonc",
+    "*.ts": "javascript",
+    "*.tsx": "javascript"
   },
 
   "workbench.editor.closeEmptyGroups": true,
-  "workbench.editor.enablePreview": true,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.showTabs": true,
   "workbench.editor.tabCloseButton": "right",
   "workbench.editor.tabSizing": "shrink",
   "workbench.panel.defaultLocation": "right",
   "workbench.settings.editor": "json",
-  "workbench.sideBar.location": "right",
 
   "outline.icons": true,
   "outline.problems.enabled": true,
@@ -112,11 +99,10 @@
 
   "terminal.integrated.allowChords": false,
   "terminal.integrated.defaultProfile.linux": "bash",
-  "terminal.integrated.fontsize": 18,
+  "terminal.integrated.fontSize": 18,
   "terminal.integrated.sendKeybindingsToShell": true,
   "terminal.explorerKind": "external",
 
-  "hediet.vscode-drawio.local-storage": "some key i dont want ot share with you",
   "redhat.telemetry.enabled": false,
   "sync.gist": "71451b778136a553e785868c37c7e9a0",
   "sync.autoUpload": true,
@@ -127,6 +113,57 @@
     "markdown": false
   },
   "editor.formatOnType": true,
-  "window.zoomLevel": 1
+  "workbench.sideBar.location": "right",
+  "files.autoSave": "afterDelay",
+  "sync.quietSync": true,
+  "sync.autoDownload": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "json.schemas": [],
+  "yaml.customTags": [
+    "!And",
+    "!And sequence",
+    "!If",
+    "!If sequence",
+    "!Not",
+    "!Not sequence",
+    "!Equals",
+    "!Equals sequence",
+    "!Or",
+    "!Or sequence",
+    "!FindInMap",
+    "!FindInMap sequence",
+    "!Base64",
+    "!Join",
+    "!Join sequence",
+    "!Cidr",
+    "!Ref",
+    "!Sub",
+    "!Sub sequence",
+    "!GetAtt",
+    "!GetAZs",
+    "!ImportValue",
+    "!ImportValue sequence",
+    "!Select",
+    "!Select sequence",
+    "!Split",
+    "!Split sequence"
+  ],
+  "aws.profile": "profile:nirv-noah",
+  "workbench.colorTheme": "Dracula At Night",
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.git": true,
+    "**/.bloop": true,
+    "**/.metals": true,
+    "**/.ammonite": true
+  },
+  "telemetry.telemetryLevel": "off",
+  "files.exclude": false,
+  "terminal.integrated.enableMultiLinePasteWarning": false
 }
 ```
