@@ -3,15 +3,15 @@
 - web performance in action
   - jeremy L wagner
   - reading: done
-  - copying: top of 108
-    - working with SVG images
+  - copying: top of 164
+    - faster fonts
 - todo
   - consolidate the old perf into this file
   - figure out http3
 
 ## links
 
-- [wikipedia http3](https://en.wikipedia.org/wiki/HTTP/3)
+- [wikipedia http3](https://en.wikipedia.org/wikiclear/HTTP/3)
 - [wikipedia http2](https://en.wikipedia.org/wiki/HTTP/2)
 - [web technology surveys](https://w3techs.com/)
 - tools
@@ -54,6 +54,9 @@
     - great for icons/pixel art
   - full color images: fully color png and lossless webp; support like 16 million colors + transparency
     - great for line art, iconography and photography
+- SVG: scalable vector graphics can be scaled to any size because their composed of mathematically calculated shapes and sizes
+  - browser rendering process: parsed > properties evaluated > mapped to the pixel-based display through rasterization; repeat on resize
+  - generally any image not a photograph thats comprised of solid colors and geometric shapes should be an svg, e.g. logos, iconogrpahy, line art
 
 ### browser rendering process
 
@@ -227,6 +230,44 @@ const someFn = () => {
   - reduce the amount of data transffered
   - reducing the # of requests (for http1, anti pattern in http2)
 
+### images
+
+#### format use cases
+
+| format         | colors | type   | compression  | best fit                                                                                                                                                   |
+| -------------- | ------ | ------ | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| PNG            | FULL   | RASTER | LOSSLESS     | - content requiring full range of colors<br>- some quality loss is acceptable;<br>- content requires full trnasparency<br>- doesnt compress as well as JPG |
+| PNG-8BIT       | 256    | RASTER | LOSSLESS     | - content not requiring full range colors<br>- only requires single-bit transparency<br>- icons/pixel art                                                  |
+| GIF            | 256    | RASTER | LOSSLESS     | - same as png 8-bit use case<br>- lower compression performance<br>- supports animation                                                                    |
+| JPEG           | FULL   | RASTER | LOSSY        | - content requiring full range of colors<br>- quality loss is acceptable<br>- no transparency<br>- good for photographs                                    |
+| SVG            | FULL   | VECTOR | UNCOMPRESSED | - content not requiring full range of colors<br>- content requiring HIGH quality when scaled<br>- good for non photographic content                        |
+| WEBP (LOSSY)   | FULL   | RASTER | LOSSY        | - same as jpeg<br>- supports the full range of colors<br>- better compression performance                                                                  |
+| WEBP (LOSSLESS | FULL   | RASTER | LOSSLESS     | - same as full-color png<br>- better compression performance                                                                                               |
+
+#### delivery
+
+- see the languages/htmlcss file in this repository
+  - generally all require some mix of:
+    - media queries (resolution, screen with, device-pixel-ration)
+    - picture element
+    - srcsets + sizes,
+    - responsive images,
+    - background image + background-size
+    - etc: google for the latest tricks if none of the above work (e.g container queries is about to drop)
+- resolution problem: picking the right same image based on  screen dimensions/qualities like high DPI
+- art direction problem:: when resolution problem cant be resolved with simple scaling, but requires cropping/content changes
+- image sprites: combining multiple images (e.g. a bunch of logos) into one, then using css background-position to display only a portion
+  - anti pattern in http2
+- compression
+  - generally raster images can handle some degree of compression
+- minification
+  - generally SVGs can handle some degree of minification
+- encoding
+  - generally convert raster image formats into googles WebP if your users are generally on browser verisons that support it
+    - lossy raster formats > lossy webp
+    - lossless raster formats > lossless webp
+- lazy load images
+  - generally an image shouldnt be fetched until its some % from the viewport
 ### CSS
 
 - prefer mobile-first over desktop-first when appropriate
@@ -288,8 +329,10 @@ const someFn = () => {
 
 #### critical css
 
-- inline critical CSS for Above The Fold Content for http1
+- inline critical CSS/svgs for Above The Fold Content for http1
   - antipattern in http2, use server-push instead
+    - inlining anything in html when served via http2 protocol is an antipattern
+    - optimize for max networ requests as thats where http2 shines
 - the user senses a perceived decrease in page-load time owing to faster page rendering
 
 ### javascript techniques
