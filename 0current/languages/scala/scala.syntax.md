@@ -1,5 +1,5 @@
 - bookmark
-  - https://scala-lang.org/api/3.x/scala/PartialFunction.html
+  - https://scala-lang.org/api/3.x/scala/Some.html
     - dropping through the list on the left sidebar
 
 # scala
@@ -79,6 +79,7 @@
 
 ## basics
 
+- knowing how to read algebraic data types (type annotations) is critical to using scala
 - scope:
   - entities within a block `{}` or `indentation in scala 3` are only visible from within the block
   - ^ and shadow entities of the same names outside the block
@@ -314,7 +315,7 @@ val interestingVal: Int =
 
 // 16 bit
 /// Char 16-bit unsigned integer (equivalent to Java's char primitive type)
-/// Short 16 bit integers -32768 to 32767
+/// Short 6-bit signed integer (equivalent to Java's short primitive type) -32768 to 32767
 
 // 32 bit
 /// Float 32 bit floating point number (equivalent to Java's float primitive type)
@@ -1443,10 +1444,45 @@ println(christina)        // Person(Christina,niece)
 val poop = hannah.copy(name = "poop")
 ```
 
-##### Option
+#### case object
+
+- Case objects are to objects what case classes are to classes:
+  - they provide a number of automatically-generated methods to make them more powerful.
+- whenever you need a singleton object that needs a little extra functionality,
+  - such as being used with pattern matching in match expressions.
+  - need to pass immutable messages around
+- generally extend from sealed traits
+
+```scala
+sealed trait Message
+case class PlaySong(name: String) extends Message
+case class IncreaseVolume(amount: Int) extends Message
+case class DecreaseVolume(amount: Int) extends Message
+case object StopPlaying extends Message // the singleton case object
+
+// then you can pattern match on the Message Type (see above)
+// and provide extra fnality (define these right-hand definitions elseware)
+def handleMessages(message: Message): Unit = message match
+  case PlaySong(name)         => playSong(name)
+  case IncreaseVolume(amount) => changeVolume(amount)
+  case DecreaseVolume(amount) => changeVolume(-amount)
+  case StopPlaying            => stopPlayingSong()
+
+// modeling a user, which can be anonymous or loggedin
+// note the use of case object and case class
+sealed trait User
+object User:
+  case object Guest extends User
+  case class Registered(id: UUID) extends User
+
+
+```
+
+
+#### Option
 
 - [option ref](https://scala-lang.org/api/3.x/scala/Option.html)
-- Represents optional values. Instances of Option are either an instance of $some or the object $none.
+- Represents optional values. Instances of Option are either an instance of Some or None.
   - allows for sophisticated chaining of $option values without having to check for the existence of a value.
 - The most idiomatic way to use an $option instance is to treat it as a collection or monad and use map,flatMap, filter, or foreach:
 - special case class containing zero/one element: safer alternative than `null`
@@ -1455,7 +1491,10 @@ val poop = hannah.copy(name = "poop")
 
 ```scala
 
+/// Some: Object > Iterable > Serializable > Option
 val some: Option[Int] = Some(1)
+
+/// None
 val none: Option[Int] = None
 
 none.fold { 2 * 5} (_ * 3) // 10
@@ -1511,40 +1550,6 @@ poop
   .unzip3 // see unzip2, but for 3
   .zip(someOtherOption) // Some(x, y) || None
   .zip3 // see zip but for 3
-```
-
-#### case object
-
-- Case objects are to objects what case classes are to classes:
-  - they provide a number of automatically-generated methods to make them more powerful.
-- whenever you need a singleton object that needs a little extra functionality,
-  - such as being used with pattern matching in match expressions.
-  - need to pass immutable messages around
-- generally extend from sealed traits
-
-```scala
-sealed trait Message
-case class PlaySong(name: String) extends Message
-case class IncreaseVolume(amount: Int) extends Message
-case class DecreaseVolume(amount: Int) extends Message
-case object StopPlaying extends Message // the singleton case object
-
-// then you can pattern match on the Message Type (see above)
-// and provide extra fnality (define these right-hand definitions elseware)
-def handleMessages(message: Message): Unit = message match
-  case PlaySong(name)         => playSong(name)
-  case IncreaseVolume(amount) => changeVolume(amount)
-  case DecreaseVolume(amount) => changeVolume(-amount)
-  case StopPlaying            => stopPlayingSong()
-
-// modeling a user, which can be anonymous or loggedin
-// note the use of case object and case class
-sealed trait User
-object User:
-  case object Guest extends User
-  case class Registered(id: UUID) extends User
-
-
 ```
 
 ### collections
@@ -2959,13 +2964,36 @@ f("poop") // nope
 val x: PartialFunction[String, String] = {
   case "pong" => "ping"
 }
+
+// applyOrElse example
+val times2: PartialFunction[Int, Int] = {
+  case x if x < 3 => val y = x * 2; println(y); y
+}
+val times3: PartialFunction[Int, Int] = {
+  case x if x > 3 => val y = x * 20; println(y); y
+}
+var blah = times2.applyOrElse(10, times3) // applies it to a specific value
+
+// orElse example
+val times2: PartialFunction[Int, Int] = {
+  case x if x < 3 => val y = x * 2; println(y); y
+}
+val times3: PartialFunction[Int, Int] = {
+  case x if x >= 3 => val y = x * 20; println(y); y
+}
+
+val poop = Array(1,2,3).map(times2 orElse times3) // provide a fallback partial
+
 thisPartial
   .andThen(otherParital(poop)) // i.e. thisFn(otherFn(poop))
-  .applyOrElse(defaultPartialFn(poop)) // i.e. thisPartial.isDefineDAt(poop) && thisPartial(poop) || defaultFn(poop)
+  .applyOrElse(poop, elseUseThisFn) // i.e. thisPartial.isDefineDAt(poop) && thisPartial(poop) || defaultFn(poop)
   .compose(thisFn) //  i.e. thisPartial(thisFn(poop))
-  .elementWise // todo
+  .elementWise // TODO: create an example of this
   .isDefinedAt(value) // Boolean: if value exists with fns domain
   .lift // returns thisFn converted to a plan fn with a return type of Option
+  .compose(otherPartial) // thisFn(otherFn(poop))
+  .orElse(runThis) // thisPartial(poop) || otherPartial(poop)
+  .runWith(lambda)  // lambda(thisPartial(poop))
 ```
 
 ### composition
