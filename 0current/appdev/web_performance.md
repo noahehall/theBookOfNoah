@@ -268,6 +268,21 @@ const someFn = () => {
     - lossless raster formats > lossless webp
 - lazy load images
   - generally an image shouldnt be fetched until its some % from the viewport
+
+### fonts
+- see the csshtml file in this repo for more in depth discussion
+- font types
+  - standard: wide support but uncompressed
+    - TrueType: .tff
+    - Embedded OpenType: .eot
+  - modern: compressed; optimal for embedding
+    - WOFF: .woff
+    - WOFF2: .woff2
+- in general
+  - use @font-face cascading from modern to standard types; browsers will pick the first they support
+  - use font-dislay to control how fonts are displayed
+  - font variants are largely determined by the font-weight; thus choose wisely to whats actually being used and only ship those to the browser
+    - you should map font weight numbers to categories, e.g. 300 = light, 400 = regular, etc
 ### CSS
 
 - prefer mobile-first over desktop-first when appropriate
