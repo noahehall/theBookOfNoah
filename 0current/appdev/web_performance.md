@@ -3,8 +3,9 @@
 - web performance in action
   - jeremy L wagner
   - reading: done
-  - copying: top of 164
-    - faster fonts
+  - copying: top of 223
+    - boosting performance with service works
+    - FYI theres an entire file on service workes somewhere in this repo
 - todo
   - consolidate the old perf into this file
   - figure out http3
@@ -21,6 +22,10 @@
   - [analysis: webhints](https://webhint.io/)
   - [analysis: firefox profiler](https://profiler.firefox.com/docs/#/)
   - [loadCss](https://github.com/filamentgroup/loadCSS)
+  - [unocde range charts](https://unicode.org/charts/)
+  - [fonttools: manipulate fonts with python](https://github.com/fonttools/fonttools)
+  - [mdn font loading API](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Font_Loading_API)
+  - [fontface observer tool](https://fontfaceobserver.com/)
 
 ## basics
 
@@ -40,6 +45,8 @@
 
 ### terms
 
+- unicode: standard for normalizing the way characters for all languages are represented
+  - each language gets a range out of the unicode map
 - web performance: refers primarily to the speed at which a website loads, and [IMO] reacts to user interactions once loaded
 - Above The Fold: ATF: content the user sees without scrolling
 - frame: the amount of work the browser does in one frame per second of display time
@@ -61,10 +68,12 @@
 ### browser rendering process
 
 - high level
-  - parse HTML to DOM
-    - a hierarchical representation of the HTML documents structure
-  - parse CSS to CSSOM
-    - presents the way CSS rules are applied to the document
+  - parse:
+    - render blocking: when browsers find any links/scripts/etc to external resources are found, the browser stops doing whatever its doing to fetch them
+    - parse HTML to DOM
+      - a hierarchical representation of the HTML documents structure
+    - parse CSS to CSSOM
+      - presents the way CSS rules are applied to the document
   - layout elements
     - CSSOM + DOM are combined to create a render tree
     - start the layout process: CSS rules are applied and elements are laid out on the page
@@ -142,6 +151,7 @@ const someFn = () => {
     - idle
   - flame chart: represents the events that occur in a callstack
     - call stack: hierarchical representation of recorded page activity
+- devtools > network tab > capture screenshots: useful way to determine when FOIT occurs, and the exact momemt when custom fonts are donwloaded especially on localhost
 - dns caching
   - in chrome: chrome://network-internals#dns
 - simulating & monitoring devices
@@ -204,6 +214,7 @@ const someFn = () => {
 
 ## performance issues
 
+- FOIT: flash of invisible text; similar to FOUC; only instead your dealing with text becoming visible before the font files are donwloaded; thus being shown in the browsers default fonts, and then rerendering to use the fonts once there fetched
 - FOUC: flash of unstyled content: occurs when css is loaded after content and the browser is forced to repaint
 - jank: the effect of interactions and animations that stutter/fail to render smoothly
   - generally always caused by suboptimal programming techniques
@@ -221,7 +232,8 @@ const someFn = () => {
 - head of line blocking: the browser limits the number of requests it will make at a single time per batch
   - generally 6 requests per batch, and batch 1 must finish before batch 2 starts
 - render blocking: any activity that keeps the browser from painting content to the screen ona pages initial load
-  - rendering blocking due to CSS is acceptable; else you risk FOUC
+  - render blocking due to CSS is [sometimes] acceptable; else you risk FOUC
+  - render blocking due to script tags is less acceptable, but stil required in certain contexts
   - filter the event log by paint events, and look at the first Paint activities start time, thats the delay before painting occurs
 
 ## performance tactics
@@ -230,7 +242,12 @@ const someFn = () => {
   - reduce the amount of data transffered
   - reducing the # of requests (for http1, anti pattern in http2)
 
-### images
+### in general
+
+- always use progressive enhancement implementation patterns
+- always use noscript for users with JS disabled
+
+### image techniques
 
 #### format use cases
 
@@ -254,7 +271,7 @@ const someFn = () => {
     - responsive images,
     - background image + background-size
     - etc: google for the latest tricks if none of the above work (e.g container queries is about to drop)
-- resolution problem: picking the right same image based on  screen dimensions/qualities like high DPI
+- resolution problem: picking the right same image based on screen dimensions/qualities like high DPI
 - art direction problem:: when resolution problem cant be resolved with simple scaling, but requires cropping/content changes
 - image sprites: combining multiple images (e.g. a bunch of logos) into one, then using css background-position to display only a portion
   - anti pattern in http2
@@ -269,21 +286,38 @@ const someFn = () => {
 - lazy load images
   - generally an image shouldnt be fetched until its some % from the viewport
 
-### fonts
+
+#### image optimization
+
+- in general
+  - maintaining multiple sets of images for different screen sizes to ship right sized image based on device dimensions
+    - rescaling oversized images to fit small sizes takes time
+    - rescaling undersized images to fit large devices takes time & distorts the image
+  - depending on the device capabilities, e.g. High DPI Screens (like retina on apple) need large dimension images
+- always compare the pre- and post- image as too much compression can reduce the quality
+
+### font techniques
+
 - see the csshtml file in this repo for more in depth discussion
-- font types
-  - standard: wide support but uncompressed
+- font types: generally you can find tools to convert from older formats to newer formats
+  - standard: wide support but uncompressed; compress server side before shipping to clients
     - TrueType: .tff
     - Embedded OpenType: .eot
   - modern: compressed; optimal for embedding
     - WOFF: .woff
     - WOFF2: .woff2
 - in general
-  - use @font-face cascading from modern to standard types; browsers will pick the first they support
-  - use font-dislay to control how fonts are displayed
+  - use @font-face cascading (i.e multiple values in src attribute) from modern (most compressed) to standard (least compressed) types; browsers will pick the first they support
+    - then you can style specific sections via the font-family declaration pointing to a font-face
+  - use font-dislay to control how fonts are displayed: auto, block, swap (preferred?), fallback, optional values
   - font variants are largely determined by the font-weight; thus choose wisely to whats actually being used and only ship those to the browser
     - you should map font weight numbers to categories, e.g. 300 = light, 400 = regular, etc
-### CSS
+- subsetting fonts: the practice of selecting only the characters you need ina font file and discarding the rest
+  - e.g. subsetting by language (do you really need the zulu dictionary on your engish site?)
+- use unicode-range to serve fonts for multilingual websites; make sure to set the html.lang prop in html
+- use the font loading API (or fontface observer tool on github) to control how fonts are loaded
+
+### CSS techniques
 
 - prefer mobile-first over desktop-first when appropriate
   - if there is a mobile webapp version of some site, start there as its usually the most minimal, then build ontop of that to a large desktop
@@ -331,6 +365,12 @@ const someFn = () => {
     - loss of portability
     - etc, all the other logical conclusions
 - use loadCss library for link tags fetching external stylesheets
+- critical css
+  - inline critical CSS/svgs for Above The Fold Content for http1
+  - antipattern in http2, use server-push instead
+    - inlining anything in html when served via http2 protocol is an antipattern
+    - optimize for max networ requests as thats where http2 shines
+- the user senses a perceived decrease in page-load time owing to faster page rendering
 
 ```html
 <!-- loadCss -->
@@ -342,19 +382,24 @@ const someFn = () => {
 />
 ```
 
-#### critical css
-
-- inline critical CSS/svgs for Above The Fold Content for http1
-  - antipattern in http2, use server-push instead
-    - inlining anything in html when served via http2 protocol is an antipattern
-    - optimize for max networ requests as thats where http2 shines
-- the user senses a perceived decrease in page-load time owing to faster page rendering
 
 ### javascript techniques
 
 - animations
   - when css transitions dont meet your needs, always use requestAnimationFrame and will-change
     - will-change is the propery way (vs the translateZ 0 hack) to inform the browser this thing will animate, and to have that animation handled by the GPU instead of the CPU
+    - requestAnimationFrame will always be faster than setTimout/setInterval techniques
+- script tags:
+  - placement: hiden rendering if placed within head, put as as low in the body as possible unless required to be in head
+  - loading behavior: different script attributes affect loading behavior
+    - without async: script donwloads > browser waits for other scripts > browser executes scripts
+    - with async: script donwloads > browser executes script
+      - race conditions: issues with when one script depends on another, e.g. depending on react to be available
+        - AMD modules get around this issue; but dont use requirejs just use webpack
+        - es6 modules is the more modern approach
+- DOM perf: generally native DOM API (e.g. querySelectorAll, classList, etc) will always be faster that whatever your library/framework provides
+
+#### service workers
 
 ### asset minification & customization
 
@@ -381,15 +426,6 @@ const someFn = () => {
   - dont compress already compressed files, e.g. mpg, jpg png, gif, woff, woff2 without knowing what you're doing
 - directly impacts
   - load times
-
-### image optimization
-
-- in general
-  - maintaining multiple sets of images for different screen sizes to ship right sized image based on device dimensions
-    - rescaling oversized images to fit small sizes takes time
-    - rescaling undersized images to fit large devices takes time & distorts the image
-  - depending on the device capabilities, e.g. High DPI Screens (like retina on apple) need large dimension images
-- always compare the pre- and post- image as too much compression can reduce the quality
 
 ### http2
 

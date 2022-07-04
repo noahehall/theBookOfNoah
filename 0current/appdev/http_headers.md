@@ -1,3 +1,5 @@
+todo
+- theres an entire fkn file on http headers in this repo somewhere, think its in the browser.md file or something
 # HTTP headers
 
 ## categories
