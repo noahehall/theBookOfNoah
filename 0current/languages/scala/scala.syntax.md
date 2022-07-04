@@ -12,6 +12,8 @@
   - and ctrl-f `# whatever your looking for` as generally things have a `# Category`, e.g. `# Type Parameters`
 
 - todos
+  - how to use the the function higher order methods: https://users.scala-lang.org/t/creating-scala-3-functions/8626
+    - once thats figured out add relavent api to `# Functions`
   - implicit function types sorta went over my head
   - https://dzone.com/articles/executor-and-execution-context-objects-in-scala-1
   - https://alvinalexander.com/scala/how-to-create-java-thread-runnable-in-scala/
@@ -33,6 +35,7 @@
 - [programming in scala 3 book](https://www.artima.com/shop/programming_in_scala_5ed)
 - [47 degrees: scala exercises](https://www.scala-exercises.org/)
 - [if expressions/guards on match/case expressions](https://alvinalexander.com/scala/how-to-use-if-then-expressions-guards-in-case-statements-scala/)
+- [floating point arithmetic](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html)
 - ref
   - [AAA kind polymorphism](https://docs.scala-lang.org/scala3/reference/other-new-features/kind-polymorphism.html)
   - [AAA scala 3 ref: fkn become one with this](https://dotty.epfl.ch/api/index.html)
@@ -316,6 +319,7 @@ val interestingVal: Int =
 
 #### AnyKind
 
+- [final abstract class AnyKind](https://scala-lang.org/api/3.x/scala/AnyKind.html)
 - AnyKind: the super-type of ALL types
   - see the Kind Polymorphism link
 
@@ -330,37 +334,91 @@ def poop[T <: AnyKind] = ???
 
 ```
 
-##### AnyVal
+#### Any
 
+- [abstract open class Any](https://scala-lang.org/api/3.x/scala/Any.html)
+- the root of the scala class hierarchy
+- every other class [in]directly inherits from Any
+- if a trait extends from Any, its called a `universal trait`
+
+##### universal traits
+
+- a trait that:
+  - extends Any
+  - only has def members
+  - does no initialization
+- use cases
+  - allow basic inheritance of methods for value classes, _but_ they incur the overhead of allocation
+
+```scala
+trait Printable extends Any {
+  def print(): Unit = println(this)
+}
+class Wrapper(val underlying: Int) extends AnyVal with Printable // thiis a value class
+
+val w = new Wrapper(3) // incur overhead of allocation
+w.print() // still performant, albeit with the above allocation
+
+```
+
+#### AnyVal
+
+- [abstract open class AnyVal](https://scala-lang.org/api/3.x/scala/AnyVal.html)
 - the root of all value types; i.e. primitives, i.e. values not implemented as objects
 - numeric value types: Double, Float, Long, Int, Char, Short, Byte
   - subrange types: Byte, Short Char
   - Integer types: subrange types + Int, Long
   - floating point types: Float, Double
 - non-numeric value typeS: Unit, Boolean
+
+##### Value Classes
+
 - user defined value classes: any entity that extends from AnyVal
-  - treated specially by the compiler;
-  - provide a way to improve performance on user defined types by:
-    - avoiding object allocation at runtime
-      - must have a single val param that is the underlying runtime representation
-      - can define defs, but no vals, vars, or nested entities
-      - can extend no other trait (except AnyVal)
-      - cannot be used in type tests/pattern matching
-      - cannot override equals or hashcode defs
-    - replacing virtual method invocations with static method invocations
+- treated specially by the compiler to enhance runtime performance
+- requirements
+  - must have a single val param that is the underlying runtime representation
+  - can define defs, but no vals, vars, or nested entities
+  - can only extend universal traits and itself cannot be extended from
+  - cannot be used in type tests/pattern matching
+  - cannot override equals or hashcode defs
+- use cases (all related to improving runtime performance for user defined types)
+  - avoiding object allocation at runtime (i.e. at runtime its a static method, not an instance method)
+  - replacing virtual method invocations with static method invocations
+  - combined with implicit classes provides a more convenient syntax for defining extension methods
+    - this also removes the runtime overhead of extensions
+  - get the type safety of a data type without the runtime allocation overhead
 
 ```scala
 // user defined value class
+// ^ notice the recursive call in its defs, generally all defs do this
 class Wrapper(val underlying: Int) extends AnyVal {
   def foo: Wrapper = new Wrapper(underlying * 19)
 }
-val poop = Wrapper(3)
+val poop = Wrapper(3) // Wrapper: 3
+poop.foo // Wrapper: 57
 
+// value class for representing a distance
+class Meter(val value: Double) extends AnyVal {
+  def +(m: Meter): Meter = new Meter(value + m.value)
+}
+val x = Meter(3.4) // Meter: 3.4
+val y = Meter(4.3) // Meter: 4.3
+val z = x + y // Meter: 7.699999999999999 // floating point arithmetic is never what you think
+
+// more conventient syntax for simple extension methods
+// ^ implicit class extends AnyVal to  enable 123.toHexString
+// ^ at runtime toHexStirng is considered a static method, and not an instance method
+implicit class RichInt(val self: Int) extends AnyVal {
+  def toHexString: String = java.lang.Integer.toHexString(self)
+}
+val myRichInt = RichInt(5) // RichInt: 5
+myRichInt.toHexString // String: 5
 
 ```
 
-##### AnyRef
+#### AnyRef
 
+- [class AnyRef](https://scala-lang.org/api/3.x/scala/AnyRef.html)
 - the root of all reference types
 - ^ you generally need to decompose them to get to the data they encapsulate
   - e.g. via pattern matching / for comprehensions
@@ -378,6 +436,8 @@ anyref
 
 ### Boolean
 
+- [final abstract class Boolean extends AnyVal](https://scala-lang.org/api/3.x/scala/Boolean.html)
+- [object Boolean](https://scala-lang.org/api/3.x/scala/Boolean$.html)
 - Boolean (equivalent to Java's boolean primitive type)
 - subtype of AnyVal
 
@@ -421,9 +481,15 @@ val superLongNumber: BigInt = BigInt("insert really long number here")
 
 ##### Char 16-bit unsigned integer
 
+- [final abstract class Char extends AnyVal](https://scala-lang.org/api/3.x/scala/Char.html)
+- [object Char](https://scala-lang.org/api/3.x/scala/Char$.html)
+
 #### signed integer types
 
 ##### Byte 8 bit -128 to 127
+
+- [final abstract class Byte extends AnyVal](https://scala-lang.org/api/3.x/scala/Byte.html)
+- [object Byte](https://scala-lang.org/api/3.x/scala/Byte$.html)
 
 ##### Short 16-bit -32768 to 32767
 
@@ -435,7 +501,13 @@ val superLongNumber: BigInt = BigInt("insert really long number here")
 
 ##### Float 32 bit
 
+- [final abstract class Float extends AnyVal](https://scala-lang.org/api/3.x/scala/Float.html)
+- [object Float](https://scala-lang.org/api/3.x/scala/Float$.html)
+
 ##### Double 64 bit
+
+- [final abstract class Double extends AnyVal](https://scala-lang.org/api/3.x/scala/Double.html)
+- [object Double](https://scala-lang.org/api/3.x/scala/Double$.html)
 
 ### Unit
 
@@ -443,7 +515,6 @@ val superLongNumber: BigInt = BigInt("insert really long number here")
 - not represented by any object in the underlying runtime system
 - a method with type Unit is analogous to javascripts (or javas) void
   - doesnt return anything but may have side effects
-
 
 ### Nothin
 
@@ -963,12 +1034,6 @@ final def poop: // prevent overrides in descendants
   this.otherPoop() // this always refers to the current instance
 ```
 
-#### Any
-
-- the root of the scala class hierarchy
-- every other class [in]directly inherits from Any
-- if a trait extends from Any, its called a `universal trait`
-
 #### Type Hierarchies
 
 - various ways to model concepts
@@ -1341,33 +1406,6 @@ val getShapeAria =
     - do this: an enum (abstract class) of parameterized fields
 
 ```scala
-// copypasta
-// ^ matching on numbers
-i match {
-    case a if 0 to 9 contains a => println("0-9 range: " + a)
-    case b if 10 to 19 contains b => println("10-19 range: " + b)
-    case c if 20 to 29 contains c => println("20-29 range: " + c)
-    case _ => println("Hmmm...")
-}
-num match {
-    case x if x == 1 => println("one, a lonely number")
-    case x if (x == 2 || x == 3) => println(x)
-    case _ => println("some other value")
-}
-// object type things
-stock match {
-    case x if (x.symbol == "XYZ" && x.price < 20) => buy(x)
-    case x if (x.symbol == "XYZ" && x.price > 50) => sell(x)
-    case _ => // do nothing
-}
-// extract fields from case classes
-def speak(p: Person) = p match {
-    case Person(name) if name == "Fred" => println("Yubba dubba doo")
-    case Person(name) if name == "Bam Bam" => println("Bam bam!")
-    case _ => println("Watch the Flintstones!")
-}
-
-
 // shorthand: with simple values
 enum Color:
   case Red, Green, Blue
@@ -1452,6 +1490,11 @@ val jsData = JSON.Obj(Map(
   ))
 ))
 ```
+
+##### enumerations
+
+- dont use
+- see https://users.scala-lang.org/t/scala-3-enum-vs-enumerations/8625/2
 
 #### case class
 
@@ -1637,6 +1680,10 @@ col
 
 #### Tuple
 
+- [object Tuple](https://scala-lang.org/api/3.x/scala/Tuple$.html)
+- [sealed trait Tuple extends Product](https://scala-lang.org/api/3.x/scala/Tuple.html)
+- [object EmptyTuple extends Tuple](https://scala-lang.org/api/3.x/scala/EmptyTuple$.html)
+  - a tuple of 0 elements is an EmptyTuple
 - collection of fixed size, but the values may have different types,
 - Tuples are not classes! The syntax `someObject.memberName` is for classes.
 - comes in two varieties
@@ -1646,7 +1693,7 @@ col
 ```scala
 
 val poop = "first" -> 1 // shorthand, but is it really?
-val poop = ("first", 1)
+val poop = ("first", 1) // requires 1 extra char, but () is easier than -> at least for my fingers
 val poop: (string, Int) = ("first", 1)
 val (x, y) = poop // deconstruct a tuple
 poop(0) // random access, index starts at 0
@@ -2032,6 +2079,34 @@ val naturalNumbers = infiniteInts(0)
 val multiples of 4 = naturalNumbers.map(_ * 4)
 ```
 
+###### Array
+
+- [final class Array[T](\_length: Int) extends Serializable with Cloneable](https://scala-lang.org/api/3.x/scala/Array.html)
+- [object Array](https://scala-lang.org/api/3.x/scala/Array$.html)
+- Arrays are mutable, indexed collections of values. Array[T] is Scala's representation for Java's T[].
+- cannot be subclasses of Seq because it comes from java
+- support the same ops ans Seq and can implicity be converted to sequences as needed
+- arrays are flat and mutable (elements can change)
+  - list are recursive (list(list(list))) and immutable (elements cant change)
+- generally the Collections API is available on Arrays
+
+```scala
+
+val poop: Array[String] = Array("one", "two")
+val numbers = Array(1, 2, 3, 4)
+val first = numbers(0) // read the first element
+numbers(3) = 100 // replace the 4th array element with 100
+val biggerNumbers = numbers.map(_ * 2) // multiply all numbers by two
+
+```
+
+###### IArray
+
+- [object IArray](https://scala-lang.org/api/3.x/scala/IArray$.html)
+- An immutable array.
+- An IArray[T] has the same representation as an Array[T], but it cannot be updated.
+- Unlike regular arrays, immutable arrays are covariant.
+
 ###### ArrayBuffer
 
 - defined in java, and upcast to be a subtype of Sequence
@@ -2044,33 +2119,6 @@ val multiples of 4 = naturalNumbers.map(_ * 4)
 import scala.collection.mutable
 
 val buffer = mutable.ArrayBuffer("poop", "flush")
-
-```
-
-###### IArray
-
-- [IArray](https://scala-lang.org/api/3.x/scala/IArray$.html)
-- An immutable array.
-- An IArray[T] has the same representation as an Array[T], but it cannot be updated.
-- Unlike regular arrays, immutable arrays are covariant.
-
-###### Array
-
-- Arrays are mutable, indexed collections of values. Array[T] is Scala's representation for Java's T[].
-- cannot be subclasses of Seq because it comes from java
-- support the same ops ans Seq and can implicity be converted to sequences as needed
-- arrays are flat and mutable (elements can change)
-  - list are recursive (list(list(list))) and immutable (elements cant change)
-- generally the Collections API is available on Arrays
-
-```scala
-
-
-val poop: Array[String] = Array("one", "two")
-val numbers = Array(1, 2, 3, 4)
-val first = numbers(0) // read the first element
-numbers(3) = 100 // replace the 4th array element with 100
-val biggerNumbers = numbers.map(_ * 2) // multiply all numbers by two
 
 ```
 
@@ -2256,6 +2304,32 @@ trait Poop:
   override def toString: String = this match
     case DidPoop(n) => s"i pooped $n"
     case WillPoop(x, y) => s"will poop at $x or $y"
+
+// copypasta
+// ^ matching on numbers
+i match {
+    case a if 0 to 9 contains a => println("0-9 range: " + a)
+    case b if 10 to 19 contains b => println("10-19 range: " + b)
+    case c if 20 to 29 contains c => println("20-29 range: " + c)
+    case _ => println("Hmmm...")
+}
+num match {
+    case x if x == 1 => println("one, a lonely number")
+    case x if (x == 2 || x == 3) => println(x)
+    case _ => println("some other value")
+}
+// object type things
+stock match {
+    case x if (x.symbol == "XYZ" && x.price < 20) => buy(x)
+    case x if (x.symbol == "XYZ" && x.price > 50) => sell(x)
+    case _ => // do nothing
+}
+// extract fields from case classes
+def speak(p: Person) = p match {
+    case Person(name) if name == "Fred" => println("Yubba dubba doo")
+    case Person(name) if name == "Bam Bam" => println("Bam bam!")
+    case _ => println("Watch the Flintstones!")
+}
 ```
 
 ### loops
@@ -2997,6 +3071,16 @@ object poop:
 // ^ use to destructure objects
 ```
 
+### Function
+
+- [object Function](https://scala-lang.org/api/3.x/scala/Function$.html)
+- a module defining utility methods for higher-order functional programming
+
+```scala
+
+
+```
+
 ### partial function
 
 - lambdas that may not be defined on all their domain type
@@ -3190,16 +3274,34 @@ given loop(using a: A): A = a // error: no implicit argument of type A was found
 
 ```
 
+## Working with the terminal
+
+### Console
+
+- [object Console extends AnsiColor](https://scala-lang.org/api/3.x/scala/Console$.html)
+- for printing scala values to stdout
+- For reading values use scala.io.StdIn
+
+```scala
+Console.printf(
+  "Today the outside temperature is a balmy %.1f°C. %<.1f°C beats the previous record of %.1f°C.\n",
+  -137.0,
+  -135.05)
+// Today the outside temperature is a balmy -137.0°C. -137.0°C beats the previous record of -135.1°C.
+
+```
+
 ## standard library
 
 ### auto imported stuff
 
 - [scala ref](https://dotty.epfl.ch/api/scala.html)
-- Core Scala types. They are always available without an explicit import.
+- Core Scala types not documented above somwhere
+- They are always available without an explicit import since they are top level members of the `scala` object
 
 #### App
 
-- [App Trait](https://dotty.epfl.ch/api/scala/App.html)
+- [trait App extends DelayedInit](https://dotty.epfl.ch/api/scala/App.html)
 - The App trait can be used to quickly turn objects into executable programs.
 
 ```scala
@@ -3208,19 +3310,6 @@ given loop(using a: A): A = a // error: no implicit argument of type A was found
 object Main extends App {
   Console.println("Hello World: " + (args mkString ", "))
 }
-```
-
-#### Console
-
-- Implements functionality for printing Scala values on the terminal. For reading values use StdIn. Also defines constants for marking up text on ANSI terminals.
-
-```scala
-
-// Today the outside temperature is a balmy -137.0°C. -137.0°C beats the previous record of -135.1°C.
-Console.printf(
-  "Today the outside temperature is a balmy %.1f°C. %<.1f°C beats the previous record of %.1f°C.\n",
-  -137.0,
-  -135.05)
 ```
 
 #### System
@@ -3278,6 +3367,9 @@ def parseDates(fpath: String): Try[Seq[LocalDate]] =
 
 #### Predef
 
+- [predef](https://scala-lang.org/api/3.x/scala/Predef$.html)
+- provides definitions that are always accessible without explicit imports
+
 ```scala
 // Assertions: assume, require, ensuring
 // ^ A set of assert functions are provided for use as a way to document and dynamically check invariants in code
@@ -3297,24 +3389,6 @@ def postCondition(throwIt: Boolean): String = {
     if throwIt == false then "wont throw" else ""
 } ensuring (_.length != 0, "fails if ensuring returns false")
 postCondition(true)
-```
-
-### java stuff
-
-```scala
-import java.util.current.atomic
-import java.time.{localDate, Period}
-import  scala.collection.JavaConverters._ // converts java collections to scala collections
-
-/// LocalDate
-LocalDate
-  .now
-  .parse(str)
-
-/// java.util
-val r = java.util.Random()
-val randomInt = r.nextInt()
-val randomBoolean = r.nextInt() > 0 // should result of a 50% distribution
 ```
 
 ### scala.math
@@ -3421,4 +3495,22 @@ import scala.annotation.tailrec // @tailrec throws error if a definition is not 
 
 ```scala
 val p: Symbol = Symbol("string")
+```
+
+### java stuff
+
+```scala
+import java.util.current.atomic
+import java.time.{localDate, Period}
+import  scala.collection.JavaConverters._ // converts java collections to scala collections
+
+/// LocalDate
+LocalDate
+  .now
+  .parse(str)
+
+/// java.util
+val r = java.util.Random()
+val randomInt = r.nextInt()
+val randomBoolean = r.nextInt() > 0 // should result of a 50% distribution
 ```
