@@ -4,6 +4,13 @@ todo
 
 # HTTP headers
 
+## links
+
+- [performance related http headers](https://www.keycdn.com/blog/http-headers)
+- [http headers for optimal performance](https://www.oreilly.com/library/view/practical-mod_perl/0596002270/ch16.html)
+- docs
+  - [Link header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link)
+
 ## categories
 
 - headers generally belong to a few use cases, and primarily to one

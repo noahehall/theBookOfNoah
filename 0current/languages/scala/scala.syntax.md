@@ -379,6 +379,7 @@ anyref
 ### Boolean
 
 - Boolean (equivalent to Java's boolean primitive type)
+- subtype of AnyVal
 
 ```scala
 
@@ -439,7 +440,10 @@ val superLongNumber: BigInt = BigInt("insert really long number here")
 ### Unit
 
 - i.e. javascript void
-- doesnt return anything but may have side effects
+- not represented by any object in the underlying runtime system
+- a method with type Unit is analogous to javascripts (or javas) void
+  - doesnt return anything but may have side effects
+
 
 ### Nothin
 

@@ -3,7 +3,7 @@
 - web performance in action
   - jeremy L wagner
   - reading: done
-  - copying: top of 223
+  - copying: top of 243 compressing assets
     - boosting performance with service works
     - FYI theres an entire file on service workes somewhere in this repo
 - todo
@@ -15,6 +15,16 @@
 - [wikipedia http3](https://en.wikipedia.org/wikiclear/HTTP/3)
 - [wikipedia http2](https://en.wikipedia.org/wiki/HTTP/2)
 - [web technology surveys](https://w3techs.com/)
+- [web vs service workers](https://web.dev/workers-overview/)
+- [performance related http headers](https://www.keycdn.com/blog/http-headers)
+- [http headers for optimal performance](https://www.oreilly.com/library/view/practical-mod_perl/0596002270/ch16.html)
+- docs
+  - [web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+  - [service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
+  - [cache storage API](https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage)
+  - [chrome devtools docs](https://developer.chrome.com/docs/devtools/)
+  - [largest contentful paint](https://web.dev/lcp/)
+  - [user centric perfomance metrics](https://web.dev/user-centric-performance-metrics/)
 - tools
   - [google mobile friendly tester](https://search.google.com/test/mobile-friendly)
   - [image optimizatin: tinypng](https://tinypng.com)
@@ -179,6 +189,7 @@ const someFn = () => {
 
 ## metrics
 
+- TODO: review the user centric perf metrics links up top
 - metric without a section
   - page views: number of hits a page receives
   - Avg Page Load Time: the average seconds some page takes to load
@@ -191,11 +202,21 @@ const someFn = () => {
 - SSL handshake
 - etc
 
-### Time to First Byte: TTFB
+### Time To First Byte: TTFB
 
 - the amount of time between the moment a request and the arrival of the first byte
 - factors
   - network conditions like distance between server & user, server performance, application backend issues
+
+### Time To First Paint: TTFP
+
+### First Meaningful Paint
+
+- deprecated in lighthouse, recommended to use Largest Contenful Paint
+
+### Largest Contentful Paint
+
+- see docs
 
 ### Latency
 
@@ -247,6 +268,13 @@ const someFn = () => {
 - always use progressive enhancement implementation patterns
 - always use noscript for users with JS disabled
 
+### html
+
+- resource hints: enhancements to the link tag/ Link http header to:
+  - prefetch DNS information for other hosts
+  - preload assets
+  - prerender pages
+
 ### image techniques
 
 #### format use cases
@@ -285,7 +313,6 @@ const someFn = () => {
     - lossless raster formats > lossless webp
 - lazy load images
   - generally an image shouldnt be fetched until its some % from the viewport
-
 
 #### image optimization
 
@@ -382,7 +409,6 @@ const someFn = () => {
 />
 ```
 
-
 ### javascript techniques
 
 - animations
@@ -399,8 +425,45 @@ const someFn = () => {
         - es6 modules is the more modern approach
 - DOM perf: generally native DOM API (e.g. querySelectorAll, classList, etc) will always be faster that whatever your library/framework provides
 
-#### service workers
+#### workers
 
+- FYI: theres an entire file on server workers somewhere in this repo
+- commonalities
+  - no access to document/window object
+  - execute in separate thread from the main thread
+  - communicate with scripts in the main thread via messages
+
+##### service workers
+
+- see elseware in this repo for indepth explanation on service workers
+  - cache busting
+  - lifecycle & events
+  - etc
+- there can only be 1 server worker for the pages/tabs under its control
+- a service worker continues to live even after its tab is closed
+- you can bust the cache by updating the cache identifer (e.g. v1 > v2) when pushing objects to cache
+- you can update your service worker code via devtools
+  - ensure theres no Cache-Control response header on the serverWorker file, as they can make things tricky
+  - you can version your assets via query params
+    - "src=poop.js?123"
+- use cases
+  - generally more related to acting as a network proxy, handling background tasks, and things like caching and offline
+  - intercept & cache network requests & responses
+  - listen for push events
+  - make stuff (e.g. assets, json blobs, etc) available offline via CacheStorage
+    - serviceWorker caching is generally slightly faster (quicker TTFP) than browser cache
+
+##### web workers
+
+- there can be multiple workers spawned, irrespective of page/tab
+- a web worker dies when its tab is closed
+- use cases
+  - generally for offloading compute heavy tasks from the main thread to secondary thread
+
+#### CacheStorage
+
+- available to workers & window scripts
+- ensure you delete old caches /orphaned items in cache to not bloat the users storage
 ### asset minification & customization
 
 - FYI
@@ -434,4 +497,8 @@ const someFn = () => {
 
 #### server push
 
-### reducing Jank
+### network
+
+#### CDNs
+
+- content delivery networks: geographically dispered servers for edge caching
