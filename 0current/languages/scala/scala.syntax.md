@@ -1,18 +1,15 @@
 - bookmark
   - https://scala-lang.org/api/3.x/scala/Some.html
     - dropping through the list on the left sidebar
+    - skipped on the symbol types, swing back to these
 
 # scala
 
 - all about the syntax
 - there are 7 scala courses on coursera, take them.
+- this is a really long file, suggest using the outline (e.g. in vscode) to see the hierarchy
 
-- todoing
-
-  - 100% positive the Type outline doesnt match the class hierarchy
-    - vscode > outline > Type > shiz all over the place
-    - if you go to the AAA scala api 3 link, click a type, click `supertypes` you can see the hierarchy
-  - 100% positive type APIs arent Dry, e.g. lots of stuff under List should be under Seq, and many times they are duplicated
+  - and ctrl-f `# whatever your looking for` as generally things have a `# Category`, e.g. `# Type Parameters`
 
 - todos
   - implicit function types sorta went over my head
@@ -26,6 +23,8 @@
 
 ## links
 
+- [scala 3 migration guide: dropped features](https://docs.scala-lang.org/scala3/guides/migration/incompat-dropped-features.html)
+- [scala 3 new features](https://docs.scala-lang.org/scala3/reference/other-new-features/index.html)
 - [scala user Q&A forum](https://users.scala-lang.org/latest)
 - [scala cheatsheet](https://github.com/lampepfl/progfun-wiki/blob/gh-pages/CheatSheet.md)
 - [intellij toolbox, fkn use it](https://www.jetbrains.com/toolbox-app/)
@@ -35,19 +34,20 @@
 - [47 degrees: scala exercises](https://www.scala-exercises.org/)
 - [if expressions/guards on match/case expressions](https://alvinalexander.com/scala/how-to-use-if-then-expressions-guards-in-case-statements-scala/)
 - ref
-  - [AAA scala vesions](https://github.com/lampepfl/dotty/tags)
+  - [AAA kind polymorphism](https://docs.scala-lang.org/scala3/reference/other-new-features/kind-polymorphism.html)
   - [AAA scala 3 ref: fkn become one with this](https://dotty.epfl.ch/api/index.html)
   - [AAA scala 3 reference](https://docs.scala-lang.org/scala3/reference/index.html)
+  - [AAA scala vesions](https://github.com/lampepfl/dotty/tags)
   - [adt: algebraic data types](https://docs.scala-lang.org/scala3/book/types-adts-gadts.html)
   - [BBB scala 2 examples](https://www.geeksforgeeks.org/scala-programming-language/?ref=lbp)
   - [classes: inner classes](https://docs.scala-lang.org/tour/inner-classes.html)
   - [classes: open classes](https://docs.scala-lang.org/scala3/reference/other-new-features/open-classes.html)
   - [context functions](https://docs.scala-lang.org/scala3/reference/contextual/context-functions.html)
   - [context: contextual abstractions](https://docs.scala-lang.org/scala3/reference/contextual/index.html)
-  - [context: given instances](https://docs.scala-lang.org/scala3/reference/contextual/givens.html)
-  - [context: using clauses](https://docs.scala-lang.org/scala3/reference/contextual/using-clauses.html)
   - [context: given imports](https://docs.scala-lang.org/scala3/reference/contextual/given-imports.html)
+  - [context: given instances](https://docs.scala-lang.org/scala3/reference/contextual/givens.html)
   - [context: implicit conversions](https://docs.scala-lang.org/scala3/reference/contextual/conversions.html)
+  - [context: using clauses](https://docs.scala-lang.org/scala3/reference/contextual/using-clauses.html)
   - [enums: desugaring](https://docs.scala-lang.org/scala3/reference/enums/desugarEnums.html)
   - [enums](https://docs.scala-lang.org/scala3/reference/enums/enums.html)
   - [fn composition](https://www.baeldung.com/scala/function-composition)
@@ -76,6 +76,7 @@
   - [type: unions](https://docs.scala-lang.org/scala3/book/types-union.html)
   - [type: upper bounds](https://docs.scala-lang.org/tour/upper-type-bounds.html)
   - [type: variance](https://docs.scala-lang.org/scala3/book/types-variance.html)
+  - [value classes and universal traits](https://docs.scala-lang.org/overviews/core/value-classes.html)
 
 ## basics
 
@@ -296,70 +297,83 @@ val interestingVal: Int =
 - types can automatically get wider, e.g. Int used in place of a Double, but never stricter,
   - e.g. Double in place of Int will cause the compiler to throw an error
 - are either
-  - sets of operatoins with an unbounded number of possible values
+  - sets of operations with an unbounded number of possible values
   - sets of possible values with an unbounded number of operations
 - any type with an `apply` method can be called as a fn, e.g. myType()
 - any type with an `unapply` method can be destructured
 - data access patterns
   - linear: access to the first is faster than access to the middle/end , e.g. a List
   - balanced: evenly balanced across start, mid and end
+- type tests & type casts are discouraged in scala
+- generally there is a .toInt, .toIntOption, etc, on everything,
+
+### Kind Polymorphism
+
+- generally type parameters are partitioned into kinds
+  - first level types are types of values
+  - higher kinded types are type constructors (e.g. List, Map) that require subtypes
+- a type can be used only as prescribed by its kind
+
+#### AnyKind
+
+- AnyKind: the super-type of ALL types
+  - see the Kind Polymorphism link
 
 ```scala
-//////////////////////////////////
-// val types extend from scala.Any > scala.AnyVal (primitives types) > blah
-// val types are passed by val, or encapsulated in ref types
-//////////////////////////////////
 
-// 8 bit
-/// Byte 8 bit -128 to 127
+// a def that can be used with for paramters of any kind
+// ^ by setting an upperbound on AnyKind
+// ^ this is kind polymorphism
+// use this sparingly
+def poop[T <: AnyKind] = ???
 
-// 16 bit
-/// Char 16-bit unsigned integer (equivalent to Java's char primitive type)
-/// Short 6-bit signed integer (equivalent to Java's short primitive type) -32768 to 32767
 
-// 32 bit
-/// Float 32 bit floating point number (equivalent to Java's float primitive type)
-/// Int 32-bit signed integer (equivalent to Java's int primitive type)
+```
 
-// 64 bit
-/// Long 64-bit signed integer (equivalent to Java's long primitive type)
-/// Double 64 bit floating point number (equivalent to Java's double primitive type) i
+##### AnyVal
 
-// other
-/// Boolean true | false
-/// Unit i.e. void, doesnt return anything but may have side effects
+- the root of all value types; i.e. primitives, i.e. values not implemented as objects
+- numeric value types: Double, Float, Long, Int, Char, Short, Byte
+  - subrange types: Byte, Short Char
+  - Integer types: subrange types + Int, Long
+  - floating point types: Float, Double
+- non-numeric value typeS: Unit, Boolean
+- user defined value classes: any entity that extends from AnyVal
+  - treated specially by the compiler;
+  - provide a way to improve performance on user defined types by:
+    - avoiding object allocation at runtime
+      - must have a single val param that is the underlying runtime representation
+      - can define defs, but no vals, vars, or nested entities
+      - can extend no other trait (except AnyVal)
+      - cannot be used in type tests/pattern matching
+      - cannot override equals or hashcode defs
+    - replacing virtual method invocations with static method invocations
 
-// dunno where these go
-/// BigDecimal longer than a Double
-/// BigInt wayyyy bigger than Int
-/// PosInt positive Ints
+```scala
+// user defined value class
+class Wrapper(val underlying: Int) extends AnyVal {
+  def foo: Wrapper = new Wrapper(underlying * 19)
+}
+val poop = Wrapper(3)
 
-//////////////////////////////////
-// ref types extend from scala.Any > scala.AnyRef (java.lang.Object) > blah
-// ref types are containers for primitives
-// ^ you generally need to decompose them to get to the data they encapsulate
-// ^ e.g. via pattern matching
-//////////////////////////////////
 
-/// all user defined types
-/// Array[subtype]
-/// Iterable[subtype]
-/// List[subtype]
-/// Seq[subtype]
-/// String text
-/// Try[subtype]
+```
 
-/// Nothing: represents a computation that never returns a value
-// ^ nothing: is a subtype of all other types
-// ^ used to signal abnormal termination (e.g. all exceptions have type Nothing)
-// ^^ as an element type of empty collections
+##### AnyRef
 
-//////////////////////////////////
-// working with types
-// generally there is a .toInt, .toIntOption, etc, on everything,
-//////////////////////////////////
+- the root of all reference types
+- ^ you generally need to decompose them to get to the data they encapsulate
+  - e.g. via pattern matching / for comprehensions
 
-// type tests & type casts are discouraged in scala
+```scala
+
+anyref
+  .eq // a == b
+  .ne // a != b
+  .notify() // see elseware
+  .notifyAll() // todo
+  .synchronized(poop) // see elseware
+  .wait() // todo
 ```
 
 ### Boolean
@@ -380,11 +394,16 @@ val bool: Boolean =
   if 1 > 0 then true
   else if 0 > 1 then true
   else false
+
+a & b == a && b // the & and && work the same for bools
+a | b == a || b // the | and || work the same for bools
+a ^ b // true if a && b are different
 ```
 
 ### Number types
 
-- the smallest integer ( Int.MinValue in Scala) has no positive representation. This has caused bugs in real systems, but is trivial to find with property based testing.
+- the smallest integer ( Int.MinValue in Scala) has no positive representation.
+- ^ This has caused bugs in real systems, but is trivial to find with property based testing.
 
 ```scala
 
@@ -396,6 +415,39 @@ val num: Int = 100
 val num: Int = 1_000 // nice
 val superLongNumber: BigInt = BigInt("insert really long number here")
 ```
+
+#### unsigned integer types
+
+##### Char 16-bit unsigned integer
+
+#### signed integer types
+
+##### Byte 8 bit -128 to 127
+
+##### Short 16-bit -32768 to 32767
+
+##### Int 32-bit
+
+##### Long 64-bit signed integer
+
+#### floating point
+
+##### Float 32 bit
+
+##### Double 64 bit
+
+### Unit
+
+- i.e. javascript void
+- doesnt return anything but may have side effects
+
+### Nothin
+
+- represents a computation that never returns a value
+- is a subtype of all other types
+- use cases
+  - signal abnormal termination (e.g. all exceptions have type Nothing)
+  - as an element type of empty collections
 
 ### Extensions
 
@@ -906,6 +958,12 @@ override def poop: // override provided members in descendants
 final def poop: // prevent overrides in descendants
   this.otherPoop() // this always refers to the current instance
 ```
+
+#### Any
+
+- the root of the scala class hierarchy
+- every other class [in]directly inherits from Any
+- if a trait extends from Any, its called a `universal trait`
 
 #### Type Hierarchies
 
@@ -1478,7 +1536,6 @@ object User:
 
 ```
 
-
 #### Option
 
 - [option ref](https://scala-lang.org/api/3.x/scala/Option.html)
@@ -2000,18 +2057,17 @@ val buffer = mutable.ArrayBuffer("poop", "flush")
 - support the same ops ans Seq and can implicity be converted to sequences as needed
 - arrays are flat and mutable (elements can change)
   - list are recursive (list(list(list))) and immutable (elements cant change)
+- generally the Collections API is available on Arrays
 
 ```scala
 
 
-//////////////////////////////////
-/// Array
-//////////////////////////////////
 val poop: Array[String] = Array("one", "two")
 val numbers = Array(1, 2, 3, 4)
 val first = numbers(0) // read the first element
 numbers(3) = 100 // replace the 4th array element with 100
 val biggerNumbers = numbers.map(_ * 2) // multiply all numbers by two
+
 ```
 
 ###### Range
@@ -3343,4 +3399,22 @@ object Future:
 ```scala
 import scala.annotation.tailrec // @tailrec throws error if a definition is not in tail-position
 
+```
+
+### Deprecations (in scala 3)
+
+- see the scala 3 migration guide link
+
+#### Symbol (DEPRECATED)
+
+- Although the Symbol class is useful during the transition
+  - beware that it is deprecated and will be removed from the scala-library in a future version.
+  - You are recommended, as a second step, to replace every use of Symbol with a plain string literals "abc" or a custom dedicated class.
+- simple way to get unique objects for equal strings
+- can be compared using reference equality
+- used to establish bindings between a name and the entity it refers to, such as a class or a method.
+- Anything you define and can give a name to in Scala has an associated symbol.
+
+```scala
+val p: Symbol = Symbol("string")
 ```
