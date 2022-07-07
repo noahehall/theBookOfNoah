@@ -50,7 +50,7 @@
       - `git config --global -e`
       - setup private email
       - [include this file](linux/.gitconfig)
-  - [install node via this script](linux/.install_node.sh)
+  - install node via nvm
   - [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cliv2-linux-install)
     - [aws command completion](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html)
   - [dbeaver](https://dbeaver.io/download/?start&os=linux&arch=x86_64&dist=deb)
