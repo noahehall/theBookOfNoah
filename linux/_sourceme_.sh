@@ -11,6 +11,7 @@ THISDIR="$(
 [ -f "$THISDIR"/.bash_aliases.sh ] && . "$THISDIR"/.bash_aliases.sh
 [ -f "$THISDIR"/.bash_variables.sh ] && . "$THISDIR"/.bash_variables.sh
 [ -f "$THISDIR"/.bash_addons.sh ] && . "$THISDIR"/.bash_addons.sh
+[ -f "$THISDIR"/.bash_app_quickies.sh ] && . "$THISDIR"/.bash_app_quickies.sh
 
 # update path
 USER_LOCAL_BIN="$HOME"/.local/bin
