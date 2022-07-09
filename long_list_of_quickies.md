@@ -3,10 +3,7 @@
 - [configuring global vs project intellij sdks](https://stackoverflow.com/questions/31506278/unable-to-set-project-sdk-in-intellij)
 - [mac git autocomplete](https://www.macinstruct.com/tutorials/how-to-enable-git-tab-autocomplete-on-your-mac/)
 
-# intellij
 
-- keymap
-  - option shift arrow: move line
 
 # git
 ```sh
@@ -26,8 +23,17 @@ Feat
 Delete etc...
 ```
 
-# kafka
-## mac
+# mac
+
+## docker
+
+## intellij
+
+- keymap
+  - option shift arrow: move line
+
+## kafka
+
 - To restart kafka after an upgrade:
   - brew services restart kafka
 - Or, if you don't want/need a background service you can just run:
