@@ -502,5 +502,17 @@ sbt
 
 ## giter8
 
+- [list of giter8 templates](https://github.com/foundweekends/giter8/wiki/giter8-templates)
 - is built into sbt, but can be installed separately
 - its like create react app for scala
+
+```sh
+# general scala project
+sbt new
+  scala/scala-seed.g8 # general scala
+  scala/scala3.g8
+  scala/hello-world.g8  # minimal scala project
+  scala/scalatest-example.g8
+  akka/akka-scala-seed.g8  # akka + scala build
+  http4s/http4s.g8 # http4s services
+```
