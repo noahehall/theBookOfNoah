@@ -3,7 +3,7 @@
 - web performance in action
   - jeremy L wagner
   - reading: done
-  - copying: top of 243 compressing assets
+  - bookmark: top of 243 compressing assets
     - boosting performance with service works
     - FYI theres an entire file on service workes somewhere in this repo
 - todo

@@ -1,5 +1,6 @@
 # TLDR
-
+- todo
+  - need better interoperability between archs; everything works with ubuntu, add uname checks for arm4 especially within the linux dir
 - appication development
   - my sweet spot/interests: web security, web architecture, virtualization, javascript, ~nimlang~ scala, bash, databases
     - regrettably i had to drop nimlang for scala
