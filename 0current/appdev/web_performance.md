@@ -3,8 +3,7 @@
 - web performance in action
   - jeremy L wagner
   - reading: done
-  - bookmark: top of 243 compressing assets
-    - boosting performance with service works
+  - bookmark: 253 using the cache-control headers max-age directive
     - FYI theres an entire file on service workes somewhere in this repo
 - todo
   - consolidate the old perf into this file
@@ -55,6 +54,8 @@
 
 ### terms
 
+- umprimed: a cache with 0 content; generally on the first visit by a user
+- primed: a cache with content that short circuits requests to a server
 - unicode: standard for normalizing the way characters for all languages are represented
   - each language gets a range out of the unicode map
 - web performance: refers primarily to the speed at which a website loads, and [IMO] reacts to user interactions once loaded
@@ -464,6 +465,7 @@ const someFn = () => {
 
 - available to workers & window scripts
 - ensure you delete old caches /orphaned items in cache to not bloat the users storage
+
 ### asset minification & customization
 
 - FYI
@@ -475,20 +477,33 @@ const someFn = () => {
 - slim frameworks
   - many frameworks enable you to customize & download only the features you need, always do & prefer these types of frameworks
 
-### server side compression
+### compression
 
-- FYI
-  - can occur during development, or as part of the request-response cycle
-  - reducing file sizes via some algorithm, before sending it to the user-agent which will decompress it before rendering
-  - http headers: request tells server what it accepts, response tells UA what it used
-    - request: Accept-Encoding: gzip, deflate, etc
-    - response: Content-Encoding: gzip
+- can occur during development, or as part of the request-response cycle
+  - server compression: the server compresses assets (specified in the `Content-Encoding` header) before responding to requests based on the `Accept-Encoding` request header
+- reducing file sizes via some algorithm, before sending it to the user-agent which will decompress it before rendering
+- http headers: request tells server what it accepts, response tells UA what it used
+  - request: Accept-Encoding: gzip, deflate, etc
+  - response: Content-Encoding: gzip
 - gotchas
+  - generally use the latest compression algorithm supported by the UA, e.g. brotli > anything else
+    - but always compare the selected compression algorithm across the full compression levels i.e. not just level 1 brotli vs level 1 gzip
   - too much compression can affect the user experience
+    - the UA always has to decompress the assets on receipt
+    - you have to consider the type of asset being requested and the type of compression alogrithms the requester supports
+    - always ensure the time it takes to compress relative to the delay in responding to requests is worth it; definitely check the reduction in size to load times
+    - impact load times as the client waits for the server to compress assets
+    - too much compression can degrade usability
   - youre reducing load times by shipping less data but increasing server compute
   - dont compress already compressed files, e.g. mpg, jpg png, gif, woff, woff2 without knowing what you're doing
 - directly impacts
-  - load times
+  - load times related metrics (e.g. TTFB)
+
+| file type                             | should compress |
+| ------------------------------------- | --------------- |
+| image types (sans svg)                |                 |
+| font types (sans TTF, EOT)            |                 |
+| text based (e.g. svg, xml, html, etc) | x               |
 
 ### http2
 
@@ -499,6 +514,13 @@ const someFn = () => {
 
 ### network
 
-#### CDNs
+#### caching
+
+- only relevant for returning users
+- after receiving an asset for the first time, the UA saves received content based on the servers caching policy
+
+##### CDNs
 
 - content delivery networks: geographically dispered servers for edge caching
+- should have fallback content in the unlikely event a cdn fails
+- always verify content sourced from cdns with subresource integrity checks
