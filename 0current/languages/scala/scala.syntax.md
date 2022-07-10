@@ -2083,6 +2083,7 @@ val multiples of 4 = naturalNumbers.map(_ * 4)
 
 - [final class Array[T](\_length: Int) extends Serializable with Cloneable](https://scala-lang.org/api/3.x/scala/Array.html)
 - [object Array](https://scala-lang.org/api/3.x/scala/Array$.html)
+- [arrays in depth by martin](https://docs.scala-lang.org/overviews/collections/arrays.html)
 - Arrays are mutable, indexed collections of values. Array[T] is Scala's representation for Java's T[].
 - cannot be subclasses of Seq because it comes from java
 - support the same ops ans Seq and can implicity be converted to sequences as needed
