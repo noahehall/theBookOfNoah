@@ -13,7 +13,9 @@
 ### links
 
 - [cake pattern: dependency injection](http://jonasboner.com/real-world-scala-dependency-injection-di/)
+
 ### stuff
+
 - generalities
   - everything is block scoped
   - all values are objects
@@ -38,8 +40,6 @@
   - logical requirements based on code, e.g. runtime parameters, guards, etc
 
 ### terms
-
-- structural recursion: ...
 
 ## gotchas / distinctions with scala 3
 
@@ -162,6 +162,7 @@ println(notdadaddy.inspect(Poop("hall", "noah")))
 - sealed: all subtyped must be defined in the same file as the sealed entity
 - final: disallow all extensions of an entity prohibiting creation of any additional subtypes
 - with: allows extending beyond 1 entity, A extends B with C with D with etc
+
 #### algebraic data types
 
 - any data that uses the Sum or Product type patterns
@@ -185,6 +186,16 @@ trait A {
 }
 ```
 
+#### Structural recursion
+
+- recursively decomposing algebraic data types into their respective parts/smaller pieces
+- polymorphic decomposition: OOP style; where a trait provides a method thats expected to be overridden by its subtypes
+- pattern matching decomposition: functional style: where a trait requires a method thats required to be implemented by its subtypes
+
+```scala
+
+
+```
 ### Nothing
 
 - the type for throw expressions
