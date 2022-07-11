@@ -6,6 +6,8 @@
 # or how to use it
 
 # random stuff -----------------------------------------------------------------
+# general
+alias getfns='declare -F'
 
 # refresh shell
 # @see https://askubuntu.com/questions/19772/how-to-reinitialize-a-terminal-window-instead-of-closing-it-and-starting-a-new-o
