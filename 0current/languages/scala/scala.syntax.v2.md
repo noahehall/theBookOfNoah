@@ -1,7 +1,7 @@
 # scala syntax for scala 2.11.4
 
 - bookmark
-  - page 100: working with data
+  - page 109: recursive data
 - specifically for scala 2, and generally only when it deviates from `./scala.syntax.md`
   - start in `scala.syntax.md` and move here if syntax errs fk u up
 - taken largely from
@@ -188,14 +188,61 @@ trait A {
 
 #### Structural recursion
 
-- recursively decomposing algebraic data types into their respective parts/smaller pieces
-- polymorphic decomposition: OOP style; where a trait provides a method thats expected to be overridden by its subtypes
-- pattern matching decomposition: functional style: where a trait requires a method thats required to be implemented by its subtypes
+- recursively decomposing algebraic data types into their respective parts/smaller pieces in a mechanical way
+  - i.e. decompose data into its component parts based on the shape (mechanics) of the data
+- polymorphic decomposition: OOP style;
+  - product types: where a trait provides a method thats expected to be overridden by its subtypes
+  - sumtypes: where a trait requires a method thats required to be implemented by its subtypes
+- pattern matching decomposition: functional style:
+- when to choose which: depends on the kind of extensibility required in the future
+  - polymorphic: adding new data doesnt require changing existing code
+    - you simply add the new data to the base trait / companion object
+  - functional: adding new methods doesnt require changing existing code
+    - you simply provide the method in the base trait and update the pattern match in the trait/companion object
 
 ```scala
+// structural recursion with polymorphic dispatch (aka polymorphism)
+sealed trait SuperPoop {
+  def fname: String
+  def lname: String
+  // product type: expected to be overridden by subtypes
+  def hasa: String = "structural recursion"
+  // sum type: required to be implemented
+  def isa: String
+}
+final case class Poop(fname: String, lname: String) extends SuperPoop{
+  override def hasa: String = "data that returns a string"
+  def isa: String = "type of string"
+}
+println(Poop("noah","hall").hasa)
+println(Poop("hall","noah").isa)
 
-
+// structural recursion with pattern matching
+sealed trait SuperPoop {
+  def fname: String
+  def lname: String
+  // both could also be in a companion object
+  // you could also convert to an abstract method
+  // ^ just have an override if needing specific implementations
+  // ^ and defining it in the trait is DRYer
+  // ^ if the method defepens on external data, then it shouldnt be in the trait
+  def hasa: String =
+    this match {
+      // matching on the data it has
+      case Poop(fname, lname) => s"name is: $fname $lname"
+    }
+  def isa(something: SuperPoop): String =
+    something match {
+      // matching on the subtype it is
+      case Poop(_, _) => s"Poop isa subtype of SuperPoop"
+    }
+}
+final case class Poop(fname: String, lname: String) extends SuperPoop
+val whatAmI = Poop("noah","hall")
+println(whatAmI.hasa)
+println(whatAmI.isa(whatAmI))
 ```
+
 ### Nothing
 
 - the type for throw expressions
@@ -237,6 +284,7 @@ case class Poop(fname: String, lname: String) extends SuperPoop{
 
 - traits whose subtypes are defined in the same file
 - informs the compiler that this is the full set of subtypes of this trait
+  - the compiler will give better errs at compile time
 
 ### objects
 
