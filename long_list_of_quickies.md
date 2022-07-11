@@ -5,7 +5,8 @@
 - [multi-arch build and images](https://docs.docker.com/desktop/multi-arch/)
 - [asdf](https://asdf-vm.com/guide/introduction.html)
 - [java PKIX ssl cert whatever the fk failure](https://stackoverflow.com/questions/9619030/resolving-javax-net-ssl-sslhandshakeexception-sun-security-validator-validatore)
-
+- [docker on apple silicon review](https://earthly.dev/blog/using-apple-silicon-m1-as-a-cloud-engineer-two-months-in/)
+- [docker apple silicon issues & resolutions](https://pythonspeed.com/articles/docker-build-problems-mac/)
 # git
 ```sh
 # git commit template

@@ -8,6 +8,8 @@
 export KAFKA_DIR=/opt/homebrew/Cellar/kafka/3.2.0/libexec
 export KAFKA_DATA_DIR=$KAFKA_DIR/data
 
+# required by kafka
+## ^ however 3.2 doesnt require the --zookeeper arg
 zoostart () {
 	zookeeper-server-start $KAFKA_DIR/config/zookeeper.properties
 }
@@ -35,4 +37,16 @@ kafkadescribetopic () {
 }
 kafkalisttopics () {
     kafka-topics --list --bootstrap-server localhost:9092
+}
+kafkalistgroupids () {
+    kafka-consumer-groups  --list --bootstrap-server localhost:9092
+}
+
+#######
+# docker
+
+# startup a registry
+# @see https://docs.docker.com/registry/deploying/
+dockerstartregistry () {
+    docker run -d -p 5001:5001 --restart=always --name registry registry:2
 }
