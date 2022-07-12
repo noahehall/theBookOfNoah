@@ -41,7 +41,16 @@ kafkalisttopics () {
 kafkalistgroupids () {
     kafka-consumer-groups  --list --bootstrap-server localhost:9092
 }
+kafkaclean () {
+    if [ -z ${KAFKA_DATA_DIR+x} ]
+        then
+            echo "KAFKA_DATA_DIR is not set; exiting"
+        else
+            echo "removing files $KAFKA_DATA_DIR/{kafka,zookeeper}/*"
+            rm -rf $KAFKA_DATA_DIR/{zookeeper,kafka}/*
+    fi
 
+}
 #######
 # docker
 
@@ -49,4 +58,12 @@ kafkalistgroupids () {
 # @see https://docs.docker.com/registry/deploying/
 dockerstartregistry () {
     docker run -d -p 5001:5001 --restart=always --name registry registry:2
+}
+dockerbashup () {
+    docker run --rm -it ubuntu:trusty bash
+    # ip addr show eth0 # get container ip
+    # route # get host IP
+}
+dockerbashuphost () {
+    docker run --rm -it --network host ubuntu:trusty bash
 }
