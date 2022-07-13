@@ -1,7 +1,7 @@
 # zio v1 syntax
 
 - bookmark
-  - page 9 ZIO Environment
+  - page 12 structured concurrency
 - taken from
   - zionomicon
     - john de goes and adam fraser
@@ -39,7 +39,30 @@
 - fiber: cooperatively-yielding virtual thread
 - fork: create a new thread
 - join: consume a fork
+- structured concurrency: a paradigm that provides strong guarantees around the lifespans of operations performed concurrently
 
-## ZStream
+## Zio Types?
+
+### Has
+
+- type-indexed heterogeneous map
+
+### ZLayer
+
+- construct larger ZIO environments from smaller pieces
+  - relicates netflix's Polynote
+  - a more powerful version of Java & Scala constructors; can build multiple services in terms of their dependencies
+  - supports resources, asynchronous creation & finalization, retrying and other features
+### Zio STM
+
+### Zio Environment
+
+## other stuff?
+
+### Zio Test
+
+- includes an alternative (generator) to scalacheck
+
+### ZStream
 
 - a high perofmrance, composable concurrent streams & sinks with strong guarantees of resource safety

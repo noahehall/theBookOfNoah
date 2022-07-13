@@ -11,12 +11,12 @@
 - [kafka configuration docs](https://kafka.apache.org/documentation/#configuration)
 
 ## files
-
+- should do
+  - update the data dir so its not stored in /tmp by editing {zookeeper,server}.properties
 - base dir
   - mac silicon: /opt/homebrew/Cellar/kafka/3.2.0/libexec
   - mac intel: ...
   - \*nix: ...
-- update the data dir so its not stored in /tmp by editing zookeeper.properties
   - /opt/homebrew/Cellar/kafka/3.2.0/libexec/data
 - basedir/config: contains various config files
   - zookeeper.properties: required for starting zookeeper

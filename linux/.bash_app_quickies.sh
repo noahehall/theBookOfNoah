@@ -23,23 +23,23 @@ kafkastop () {
 }
 kafkacreatetopic () {
     if [[ $# -eq 1 ]]; then
-        kafka-topics --create --topic $1 --bootstrap-server localhost:9092
+        kafka-topics --create --topic $1 --bootstrap-server 192.168.4.28:9092
     else
         echo "\$1 === topic_name"
     fi
 }
 kafkadescribetopic () {
     if [[ $# -eq 1 ]]; then
-        kafka-topics --describe --topic $1 --bootstrap-server localhost:9092
+        kafka-topics --describe --topic $1 --bootstrap-server 192.168.4.28:9092
     else
         echo "\$1 === topic_name"
     fi
 }
 kafkalisttopics () {
-    kafka-topics --list --bootstrap-server localhost:9092
+    kafka-topics --list --bootstrap-server 192.168.4.28:9092
 }
 kafkalistgroupids () {
-    kafka-consumer-groups  --list --bootstrap-server localhost:9092
+    kafka-consumer-groups  --list --bootstrap-server 192.168.4.28:9092
 }
 kafkaclean () {
     if [ -z ${KAFKA_DATA_DIR+x} ]
