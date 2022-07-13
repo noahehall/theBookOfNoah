@@ -3,6 +3,18 @@
 # theres a todo to fix that
 ###########
 
+# git
+gitundolastcommit () {
+    git reset HEAD~
+}
+
+# bash
+redirectALL () {
+    echo "redirecting stdout & err to ./redirectALL.log"
+    # Note: & (in 2>&1) specifies that 1 is not a file name but a file descriptor.
+    $@ > .redirectALL.log 2>&1
+}
+
 # kafka stuff
 #@ see https://kafka.apache.org/quickstart
 export KAFKA_DIR=/opt/homebrew/Cellar/kafka/3.2.0/libexec

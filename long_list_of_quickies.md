@@ -1,5 +1,6 @@
 # links
 
+- [sbt docker plugin for building images](https://www.scala-sbt.org/sbt-native-packager/formats/docker.html)
 - [configuring global vs project intellij sdks](https://stackoverflow.com/questions/31506278/unable-to-set-project-sdk-in-intellij)
 - [mac git autocomplete](https://www.macinstruct.com/tutorials/how-to-enable-git-tab-autocomplete-on-your-mac/)
 - [multi-arch build and images](https://docs.docker.com/desktop/multi-arch/)
@@ -7,22 +8,25 @@
 - [java PKIX ssl cert whatever the fk failure](https://stackoverflow.com/questions/9619030/resolving-javax-net-ssl-sslhandshakeexception-sun-security-validator-validatore)
 - [docker on apple silicon review](https://earthly.dev/blog/using-apple-silicon-m1-as-a-cloud-engineer-two-months-in/)
 - [docker apple silicon issues & resolutions](https://pythonspeed.com/articles/docker-build-problems-mac/)
+
 # git
+
 ```sh
 # git commit template
 ## subject(scope): description
 ## body...
-Add
-Create
-Refactor
-Fix
-Release
-Document
-Modify
-Update
-Remove
-Feat
-Delete etc...
+  Add
+  Create
+  Refactor
+  Fix
+  Release
+  Document
+  Modify
+  Update
+  Remove
+  Feat
+  Delete etc...
+
 ```
 
 # mac (Silicon)
@@ -30,8 +34,17 @@ Delete etc...
 - fk iterm, just use the normal terminal, and set Option as meta to getaway from those weird azz shortcuts
   - now option arrows work as you would expect to jump around
 
-## docker
+## k8s related
 
+```sh
+# change k8s version to match whatever env
+kbenv install 1.17.14
+kbenv use 1.17.14
+
+
+```
+
+## docker
 
 ```sh
 
@@ -50,10 +63,22 @@ docker buildx use mybuilder
 ## inspect your builder
 docker buildx inspect --bootstrap
 ```
-## intellij
+
+## intellij/scala/sbt/etc
 
 - keymap
   - option shift arrow: move line
+
+```sh
+# see which java version sbt is using
+sbt 'eval System.getProperty("java.home")'
+
+# force intellij sbt to use the current SDK java version
+## preferences > build, execution > build tools > sbt > JRE
+## also update the project setting (right click project > module settings)
+/Users/$USER/.sdkman/candidates/java/current
+
+```
 
 ## kafka
 
