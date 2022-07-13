@@ -1,7 +1,7 @@
 # zio v1 syntax
 
 - bookmark
-  - page 12 structured concurrency
+  - page 17 first steps with ZIO
 - taken from
   - zionomicon
     - john de goes and adam fraser
@@ -22,17 +22,28 @@
       - thats what statically typed `things` are all about anyway
 - use cases
   - build concurrent/asynchronous applications
+    - never blocks threads or deadlocks
+    - can run a lot of virtual threads concurrently
+    - concurrent streams with any ([un]structured) data source
+    - never leaks resources
+  - global application efficiency
+    - automatically cancels running compuitations when the result is no longer necessary
+  - static error handling
+    - the compiler can tell you which code has handled its errors, which (and how) code can fail
+    - captures all errors, including parallel & finalization errs + stack tracks
+  - automatically manages the lifetime of resource
+    - safely acquires & releases even in the presence of concurrency & errors
   - compositional scheduling: retry/repeat effects according to arbitrary schedules
   - asynchronous queues
   - encapsulating resources via Managed: provides compositional resource safety supporting parallelism and safe interruption
-  - some compatibility with Cats (i think its a competitor tho)
+  - limited compatibility with Cats (even tho its a competitor)
     - thus you can use it with Doobie, http4s and FS2
-  - Zio Streams
-    - competitor to Akka Streams but without the Akka and dependency on Scalas Future
-    - competitor to FS2 but without the Cats and better typer safety
-- fnal programming will [generally] never be as fast as bare-metal, abstract-free hand optimzied precedural (i miss you nimlang) procedural code
-- procedural code will never [generally] never be as intuitive and poetic as fnal programming (ooowee hella scala)
-
+  - dependency inference enables testing interfaces
+    - ships with testable clocks, console & other modules
+- alternatives
+  - akka
+  - monix
+  - cats effect
 ## terms
 
 - reactive programming: patterns for designing applications that are responsive, resilient, elastic and event-driven
@@ -53,6 +64,7 @@
   - relicates netflix's Polynote
   - a more powerful version of Java & Scala constructors; can build multiple services in terms of their dependencies
   - supports resources, asynchronous creation & finalization, retrying and other features
+
 ### Zio STM
 
 ### Zio Environment
@@ -66,3 +78,5 @@
 ### ZStream
 
 - a high perofmrance, composable concurrent streams & sinks with strong guarantees of resource safety
+- competitor to Akka Streams but without the Akka and dependency on Scalas Future
+- competitor to FS2 but without the Cats and better typer safety
