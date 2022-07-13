@@ -5,7 +5,7 @@
 - when you sign into a hotel (auth server)
   - you give the front desk your ID & credit card (authentication)
   - they give you a roomkey (access token), that enables (authorization) access (scopes) to a dope azz top floor suite, the jacuzi, weight room, and free breakfast and massages (resources)
-  - when you later come back with your roomkey (token), they again ask you for your ID (establish trust) to confirm you should still (expiration) be permitted (validation)
+  - when you later come back with your roomkey (token), they again ask you for your ID (re-establish trust) to confirm you should still (expiration) be permitted (validation)
 
 ## links
 
@@ -27,7 +27,7 @@
   - [open banking](https://www.reuters.com/business/finance/what-is-open-banking-2021-07-09/)
 
 - RFCs
-
+  - [HTTP Auth: Basic & Digest Access Auth RFC 2617](https://datatracker.ietf.org/doc/html/rfc2617#section-2)
   - [oauth 2.0 rfc 6749](https://datatracker.ietf.org/doc/html/rfc6749)
   - [jwt rfc 7519: all tokens should adhere to this spec](https://datatracker.ietf.org/doc/html/rfc7519)
   - [token revocation rfc 7009](https://datatracker.ietf.org/doc/html/rfc7009)
