@@ -1,7 +1,7 @@
 # zio v1 syntax
 
 - bookmark
-  - page 17 first steps with ZIO
+  - page 20 sequential composition
 - taken from
   - zionomicon
     - john de goes and adam fraser
@@ -46,13 +46,43 @@
   - cats effect
 ## terms
 
+- direct execution: in procedural programming, when a line of code is constructed to a value it must directly interact with its lexical context
 - reactive programming: patterns for designing applications that are responsive, resilient, elastic and event-driven
 - fiber: cooperatively-yielding virtual thread
 - fork: create a new thread
 - join: consume a fork
 - structured concurrency: a paradigm that provides strong guarantees around the lifespans of operations performed concurrently
 
-## Zio Types?
+## API
+
+### Zio[R, E, A]
+
+- a functional effect: blueprint for concurrent workflows; describes what to do, but not its execution
+  - R: the environment affect; an expression to be executed, returns either E or A
+    - E: the error type
+    - A: the success type
+
+
+```scala
+// somewhere define what your workflow does
+import zio._
+val goPoop = ZIO.effect(println("wheres the tp"))
+
+// elseware define when your workflow does it
+import zio.clock._
+import zio.duration._
+val goPoopLater = goPoop.delay(1.hour)
+
+# finally execute your effects
+import zio._
+object Bathroom extends App {
+  def run(args: List[String]): =
+    // exitCode required by App trait
+    // ^ converts all failures to exitCode(1)
+    // ^ and successes to exitCode(0)
+    goPoop.exitCode
+}
+```
 
 ### Has
 
@@ -69,8 +99,7 @@
 
 ### Zio Environment
 
-## other stuff?
-
+-
 ### Zio Test
 
 - includes an alternative (generator) to scalacheck
