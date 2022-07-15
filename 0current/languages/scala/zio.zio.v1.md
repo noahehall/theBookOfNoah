@@ -1,7 +1,7 @@
 # zio v1 syntax
 
 - bookmark
-  - page 20 sequential composition
+  - page 22 other sequential operators
 - taken from
   - zionomicon
     - john de goes and adam fraser
@@ -44,6 +44,7 @@
   - akka
   - monix
   - cats effect
+
 ## terms
 
 - direct execution: in procedural programming, when a line of code is constructed to a value it must directly interact with its lexical context
@@ -57,13 +58,26 @@
 
 ### Zio[R, E, A]
 
-- a functional effect: blueprint for concurrent workflows; describes what to do, but not its execution
-  - R: the environment affect; an expression to be executed, returns either E or A
-    - E: the error type
-    - A: the success type
-
+- the super trait in which everything else extends from?
+- R: the environment affect; an expression to be executed, returns either E or A
+  - E: the error type
+  - A: the success type
 
 ```scala
+
+someEffect
+  .flatMap[B](result => otherEffect(result)): ZIO[R,E,B] = ??? // sequently run effects
+
+```
+
+### zio.effect
+
+- a functional effect: blueprint for concurrent workflows; describes what to do, but not its execution
+
+```scala
+// quickies
+val whatev = ZIO.effect(anyAsyncFn)
+
 // somewhere define what your workflow does
 import zio._
 val goPoop = ZIO.effect(println("wheres the tp"))
@@ -73,7 +87,7 @@ import zio.clock._
 import zio.duration._
 val goPoopLater = goPoop.delay(1.hour)
 
-# finally execute your effects
+// finally execute your effects
 import zio._
 object Bathroom extends App {
   def run(args: List[String]): =
@@ -82,6 +96,42 @@ object Bathroom extends App {
     // ^ and successes to exitCode(0)
     goPoop.exitCode
 }
+
+```
+
+### core API
+
+- i.e. `import zio.\_
+- not quite sure...
+
+#### clock
+
+```scala
+
+// live in
+import zio.clock._
+
+someEffect
+  .delay(???) // transform one effect into another whose execution is delayed in the future
+```
+
+#### duration
+
+### zio + natie scala
+
+#### for comprehensions
+
+- prefer for comprehensions over nested flatMaps
+
+```scala
+import zio._
+
+val whatev = for {
+  result1 <- someEffect
+  _ <- println("on to next effect")
+  result2 <- otherEffect(result1)
+} yield result2 // or yield () to yield nothing (but then dont assign to a var)
+
 ```
 
 ### Has
@@ -99,7 +149,6 @@ object Bathroom extends App {
 
 ### Zio Environment
 
--
 ### Zio Test
 
 - includes an alternative (generator) to scalacheck

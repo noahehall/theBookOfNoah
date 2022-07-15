@@ -83,7 +83,7 @@
 - tasks: performan actions (download, compile, run, etc), are evaluated at each invocation
   - can be paramterized by settings and other tasks results
 - plugins: provide additional tasks/predefined settings; are part of the build definnition and define how the build is managed
-- scopes: configurations, tasks, and multi project projects (each project) create distinct scopes, a single key e.g. `sourceDirectory` can have different values in different scopes, i.e. Compile vs Test scopes
+- scopes: configurations, tasks, and multi subproject projects (each subproject) create distinct scopes, a single key e.g. `sourceDirectory` can have different values in different scopes, i.e. Compile vs Test scopes
   - i.e. keys are mapped to scopes, which are tasks & configuration, if no scope is found/specified, if it falls back to the default (Zero) scope
 
 ### project structure
@@ -150,7 +150,7 @@
   - full scope: consists of all 3 for a specific value: `projectX / configX / task / someKey`
   - subproject axis
     - ThisBuild: scope for all subprojects in a build, generally used as a fallback incase a subproject doesnt explicitly define a setting
-  - dependency Configuration axis: defines a graph of library deps, potentially with its own classpath, sources, genreated packages, etc.
+  - Configuration (dependency) axis: defines a graph of library deps, potentially with its own classpath, sources, genreated packages, etc
     - needs to be capitalized
     - `Compile` defines the main build in `src/main/scala`
     - `Test` defines how to build tests in `src/test/scala`
@@ -210,12 +210,11 @@
 ### Errors
 
 - `Reference to undefined setting` indicates you need to specify a FQN, as whatever you did is ambiguous
-- `Reference to undefined setting` the value you're setting is undefined
+
 
 ### Plugins
 
 - extend the build definition, e.g. for adding new settings/tasks/etc
--
 
 ### sbt dsl examples
 
@@ -226,7 +225,6 @@ file("path/to/poop") // creates a new File
 System.getProperty("user.home")
 Thread.sleep(500)
 
-
 // compute a value via Def.task partial fn
 // ^ useful in case the value is undefined at call site
 someTask += Def.task {
@@ -235,8 +233,7 @@ someTask += Def.task {
 }
 
 // variable types
-lazy val singleVar := "set this value"
-lazy val seqVar := "replace cur val with this one"
+lazy val simpleOrSeqVar := "set/replace this value"
 lazy val seqVar += "append this single value"
 lazy val seqVar ++= Seq("append multiple", "values")
 
@@ -269,10 +266,10 @@ val poop = settingKey[String]("this is a description")
 val flush = taskKey[Unit]("this is a description")
 // then set a definition for the task via a normal scala partial fn
 poop.settings(
-  poop := {
+  taskA := {
     "tasks are executed sequentially"
   }
-  flush := {
+  taskB := {
     println("anything goes here but return value must match type T")
   }
 
