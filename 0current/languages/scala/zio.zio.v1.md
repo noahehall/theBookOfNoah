@@ -2,8 +2,7 @@
 
 - wouldnt trust anything in this file until this line is removed
 - bookmark
-  - page 36 converting async callbacks
-    - put it under `effectAsync`
+  - page 41 console
 - taken from
   - zionomicon
     - john de goes and adam fraser
@@ -92,6 +91,10 @@ object Bathroom extends App {
 
 ```
 
+### best practices
+
+- always code to interfaces, ensuring a fns type signature matches the actual implementation
+
 ### comparison with scala Future
 
 - a zio effect is a functional effect
@@ -108,6 +111,19 @@ object Bathroom extends App {
   - no way of modeling dependencies
 
 ## API
+
+- methods available to all effects
+
+```scala
+// e.g.
+val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
+// API
+ZIO
+  .fold(errLam, sucLamb) // handle both failure and success preceduarely
+  .foldM(errEffect, sucEffect) // handle both fail & succ effectively
+  .foreach(Seq) { partialFn } // returns a single effect that executes on each el of a Seq
+  .collectAll(Seq[effects]) // collects the results of a sequence of effects
+```
 
 ### Zio[-R, +E, +A]
 
@@ -133,9 +149,8 @@ someEffect // i.e. Zio[R,E,A]
 
 #### R: Environemnt Type
 
-- R: the input environment effect; the context in which this effect executes; think scala givens/implicits
-  - the environment required for the effect to be executed; think dependency injection
-    - within the effect you have access to the inputs, e.g. access to a db connection/configuration/etc
+- R: the input environment effect; comprehensive dependency injection
+  - the environment (dependencies) required for the effect to be executed
   - set to `Any` if no dependencies are required
 
 #### E: Error Type
@@ -248,9 +263,25 @@ val couldThrow = ZIO.fromTry[A](a: => Try[A]): Task[A] = ???
 
 ```
 
+#### fromFuture
+
+- converts a fn that returns a Future into a zio effect of type `Task[A]`
+  - remember it doesnt take a future, it takes a function that returns a future based on some ExecutionContext (all future require ExecutionContext)
+  - you dont need to use the exectionContext, but if you do then ZIO will manage where the Future runs at higher-levels
+  - make sure the implementation of the make fn (See below) creates a new future
+    - instead of returning a Future that is already running
+
+```scala
+// origin fn
+def goPoopOG(implicit ec: ExecutionContext): Future[Unit] = ???
+// converted to a ZIO Effect
+def goPoop: Task[Unit] - Task.fromFuture(implicit ec => goPoopOG)
+
+```
+
 #### effect
 
-- converts an asynchronous procedural code into a functional effect of type `ZIO[Any, Throwable, A]`
+- converts any asynchronous procedural code into a functional effect of type `ZIO[Any, Throwable, A]`
   - converts exceptions into zio.fail
   - converts successes into zio.success
   - i.e. converts non pure expressions/functions into pure values
@@ -282,42 +313,80 @@ val alwaysGood = ZIO.effectTotal[A](a: => A): ZIO[Any, Nothing , A] = ???
 
 #### effectAsync
 
-- converts asynchronous/callback code into functional effects
+- converts fns with callbacks into a zio effect
+- ^ but only if the callback is invoked exactly once
+  - see ZStream elseware
 
 ```scala
+// e.g. this fn which expects a callback
+def didPoopAsync(p: Poop)(cb: Boolean => Unit): Unit =
+  println("these lines run immediately")
+  println("the next line runs when didPoop is invoked")
+  cb(true)
+// and this invocation of the callback
+didPoopAsync(poop) {
+  case true => println("i pooped")
+  case _ => println("i peed")
+}
+// can be wrapped in asyncEffect
+// you can now replace all invocations of didPoopAsync with didPoop
+def didPoop(p: Poop): ZIO[Any, Nothing, Boolean] =
+  ZIO.effectAsync { cb =>
+    didPoopAsync(p) {
+      case true => cb(ZIO.succeed("i pooped"))
+      case _ => cb(ZIO.succeed("i peed"))
+    }
+  }
 
 
 ```
 
-### ZIO
+### Services
 
-- shiz available on `ZIO.`
+- relying on these services enables you to easily test any code without actually interacting with production implementations
+- when using a service, always update the type signature of the underlying effect, .e.g `ZIO[Clock, Nothing, Unit]`
 
-```scala
-// e.g.
-val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
-// API
-ZIO
-  .fold(errLam, sucLamb) // handle both failure and success preceduarely
-  .foldM(errEffect, sucEffect) // handle both fail & succ effectively
-  .foreach(Seq) { partialFn } // returns a single effect that executes on each el of a Seq
-  .collectAll(Seq[effects]) // collects the results of a sequence of effects
-```
+#### Clock [todo]
 
-### top level imports
-
-#### clock
+- methods related to time and scheduling
+- logic related to retrying, repitition, timing, etc should utilize the Clock service
+- use cases
+  - the current time/date/offsets in different units
+  - sleep
+  - delay
 
 ```scala
 
-// live in
 import zio.clock._
 
-someEffect
-  .delay(???) // transform one effect into another whose execution is delayed in the future
+
 ```
 
-#### duration
+##### duration
+
+```scala
+
+import zio.duration._
+
+```
+
+#### Console
+
+- methods related to console input/output
+
+#### System
+
+- methods for getting system & env vars
+
+#### Random
+
+- methods for generating random values
+- the `live` implementation delegates to `scala.util.Random`
+
+#### Blocking
+
+- methods for running blocking tasks on a separate `Executor` optimized for these types of workloads
+  - only available on the JVM (blocking isnt available in scala)
 
 ### examples
 
@@ -345,17 +414,13 @@ val whatev = for {
 #### ZLayer
 
 - construct larger ZIO environments from smaller pieces
-  - relicates netflix's Polynote
+  - replicates netflix's Polynote
   - a more powerful version of Java & Scala constructors; can build multiple services in terms of their dependencies
   - supports resources, asynchronous creation & finalization, retrying and other features
 
 #### Zio STM
 
 #### Zio Environment
-
-#### Zio Test
-
-- includes an alternative (generator) to scalacheck
 
 #### ZStream
 
