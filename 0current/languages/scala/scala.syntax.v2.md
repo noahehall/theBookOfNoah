@@ -1,7 +1,7 @@
 # scala syntax for scala 2.11.4
 
 - bookmark
-  - page 109: recursive data
+  - page 129: function types
 - specifically for scala 2, and generally only when it deviates from `./scala.syntax.md`
   - start in `scala.syntax.md` and move here if syntax errs fk u up
 - taken largely from
@@ -43,8 +43,14 @@
 
 ## gotchas / distinctions with scala 3
 
-- everything generally within curly braces
+- generally you need to wrap the body of things within curly braces
 - use the `new` keyword when instantiating things
+  - the `apply` def can still be used without `new` to instantiate instances
+- functions vs methods
+  - both are defined with `def`
+  - a method however is attached to an entity, and is passed by name
+  - a function is defined outside an entity
+    - can be passed as a value to another fn, or returned from a method
 
 ## quickies
 
@@ -63,7 +69,7 @@ scala
 ## operators
 
 ```scala
-# eq compares by reference identity
+// eq compares by reference identity
 someObj eq otherObj // true if they have the same hashCode
 
 ```
@@ -73,14 +79,15 @@ someObj eq otherObj // true if they have the same hashCode
 ### vals / vars
 
 ```scala
-val fname = "poop"
-var lname = "flush"
+val fname: String = "poop"
+var lname: String = "flush"
 
 ```
 
 ### defs
 
 ```scala
+// the curly braces arent necessary here
 def name: String = {
   val fname = "poop"
   var lname = "flush"
@@ -128,7 +135,7 @@ if (1 < 2) "yes" else "no"
 
 ### pattern matching
 
-- like an extended if expressions that enables us to evaluate an expression depending on the shape of its operand
+- like an extended if expression that enables us to evaluate an expression depending on the shape of its operand
 
 ```scala
 
@@ -154,16 +161,47 @@ println(notdadaddy.inspect(Poop("hall", "noah")))
 
 - value types: evaluted when defined
 - reference types: evaluated when called
-  - be careful, side effects within reference types (e.g. objects, classes) e.g. println statements are evaluted when the entity is loaded
+  - be careful, side effects within reference types (e.g. objects, classes) like println statements are evaluted when the entity is loaded and not when the reference is invoked
   - the value is executed only when invoked tho
+- in general
+  - prefer case objects & classes over objects/classes where appropriate
+  - prefer sealed traits over traits
+  - prefix entities with `final` by default and remove it only when need actually need to extend from the entity
 
-#### modifiers
+### modifiers
 
-- sealed: all subtyped must be defined in the same file as the sealed entity
+- sealed: all subtypes must be defined in the same file as the sealed entity
 - final: disallow all extensions of an entity prohibiting creation of any additional subtypes
-- with: allows extending beyond 1 entity, A extends B with C with D with etc
+- with: allows extending beyond 1 entity, e.g. A extends B with C with D with etc
 
-#### algebraic data types
+### generics
+
+- specified at signature and provided at call site
+- enables the caller to send in any datatype that quacks like a duck
+- generic types are abstract types, and are made concrete when the class is instantiated
+
+```scala
+// accepts generic type param A
+// determined at callsite
+
+// e.g. in a class signature
+final case class Poop[A](p: A)
+Poop(true); Poop("string")
+
+// e.g. in a def signature
+// ^ generally scala can infer the type
+// ^ else specify it in [] at callsite
+def boop[A](p: A): A = ??
+boop[Int](1); boop[String]("etc")
+
+// e.g. in an algebraic sum type
+sealed trait Poop[A]
+final case class Boop[A](blah: A) extends Poop[A]
+val flush = new Boop[Boolean](true)
+
+```
+
+### algebraic data types
 
 - any data that uses the Sum or Product type patterns
 - sum type: is-a relationship; modal data that can be one of a set of types
@@ -188,17 +226,19 @@ trait A {
 
 #### Structural recursion
 
-- recursively decomposing algebraic data types into their respective parts/smaller pieces in a mechanical way
+- recursively decomposing algebraic data types into their respective parts in a mechanical way
   - i.e. decompose data into its component parts based on the shape (mechanics) of the data
+  - basically its whenever you implement logic based on the shape of some entity; enabling you to abstract over subtypes of the domain
 - polymorphic decomposition: OOP style;
-  - product types: where a trait provides a method thats expected to be overridden by its subtypes
-  - sumtypes: where a trait requires a method thats required to be implemented by its subtypes
+  - product types: where a trait provides a concrete method thats expected to be overridden by its subtypes
+  - sumtypes: where a trait provides an abstract method thats required to be implemented by its subtypes
 - pattern matching decomposition: functional style:
+  - i.e. whenever you use a match statement
 - when to choose which: depends on the kind of extensibility required in the future
-  - polymorphic: adding new data doesnt require changing existing code
+  - polymorphic: adding new data doesnt require changing existing code (because you provide the implementation on the base entity)
     - you simply add the new data to the base trait / companion object
   - functional: adding new methods doesnt require changing existing code
-    - you simply provide the method in the base trait and update the pattern match in the trait/companion object
+    - you add the concrete method to a base trait, which pattern matches across all subtypes and applies (potentially) a distinct implementation for each subtype
 
 ```scala
 // structural recursion with polymorphic dispatch (aka polymorphism)
@@ -241,6 +281,32 @@ final case class Poop(fname: String, lname: String) extends SuperPoop
 val whatAmI = Poop("noah","hall")
 println(whatAmI.hasa)
 println(whatAmI.isa(whatAmI))
+```
+
+#### Recursive data
+
+- data that is defined in terms of itself
+- enables you to describe data of potentially unbounded size without stack overflows
+- the idea is to create a class, and an object that extends from that class
+  - the class will be used to create instances of specific value of the domain (e.g. an integer within the domain of all integers)
+  - the object is used to specify the base case (in recursion) representing the end of the recursive loop
+    - the base case should return the identity for the data domain,
+      - i.e. a value that doesnt change the result (like adding 0 to a number)
+- or just use a lazy data type, e.g LazyList, check scala 3 syntax
+
+```scala
+import scala.annotation.tailrec
+
+sealed trait MyUnboundedData {
+  // throws err if this fn cant be put into tailcall recursion
+  // ^ you generally need to add an accumulator to the fn signature
+  // ^^ transforms stack allocation into heap allication
+  @tailrec
+  def someRecurseFn(x: MyUnboundedData): MyUnboundedData = ???
+}
+case object MyUnboundedDataBaseCase extends MyUnboundedData
+final case class MyUnboundedDataCase(data: MyUnboundedData) extends MyUnboundedData
+
 ```
 
 ### Nothing
