@@ -2,7 +2,8 @@
 
 - wouldnt trust anything in this file until this line is removed
 - bookmark
-  - page 29 a future is a running effect
+  - page 36 converting async callbacks
+    - put it under `effectAsync`
 - taken from
   - zionomicon
     - john de goes and adam fraser
@@ -15,13 +16,17 @@
 
 ## terms
 
-- a functional effect: blueprint for concurrent workflows; describes what to do, but not its execution
+- functional effect: blueprint for concurrent workflows; describes what to do, but not its execution
+  - are referentially transparent
 - direct execution: in procedural programming, when a line of code is constructed to a value it must directly interact with its lexical context
 - reactive programming: patterns for designing applications that are responsive, resilient, elastic and event-driven
 - fiber: cooperatively-yielding virtual thread
 - fork: create a new thread
 - join: consume a fork
 - structured concurrency: a paradigm that provides strong guarantees around the lifespans of operations performed concurrently
+- referencial transparency: an expression is referentially transparent if you can replace (refer to) the expression with its result and still have same runtime behavior
+  - generally any expression with side effects is NOT referentially transparent, as the side effect is dependent on the runtime (when its invoked)
+- pure: an expression/function is pure if it doesnt have any side effects
 
 ## basics
 
@@ -61,7 +66,46 @@
   - cats effect
 - relies heavily on scala's variance annotations to improve type inference
 
-### comaprison with scala Future
+### gotchas
+
+- generally all lambdas/partials passed to ZIO must be passed by name =>
+
+```scala
+// somewhere define what your workflow does
+import zio._
+val goPoop = ZIO.effect(println("wheres the tp"))
+
+// elseware define when your workflow does it
+import zio.clock._
+import zio.duration._
+val goPoopLater = goPoop.delay(1.hour)
+
+// finally execute your effects
+import zio._
+object Bathroom extends App {
+  def run(args: List[String]): =
+    // exitCode required by App trait
+    // ^ converts all failures to exitCode(1)
+    // ^ and successes to exitCode(0)
+    goPoop.exitCode
+}
+
+```
+
+### comparison with scala Future
+
+- a zio effect is a functional effect
+  - i.e. everything is passed by name, so even the input environment (context) execution is delayed
+  - can run any `Executor`, and it doesnt need to be provided until the effect is actually invoked (not when defined)
+  - can define arbitrary Error types
+  - direct support of dependency injection via Environment type parameter
+- a scala future is a running effect (i.e. direct execution)
+  - executes its input environment (context) immediately
+  - cant delay the execution of the code it wraps
+  - cant retry a future in the event of failure
+    - all future error types are Throwable
+  - requires an implicit `ExecutionContext` ins cope whenever you invoke methods on Future
+  - no way of modeling dependencies
 
 ## API
 
@@ -113,32 +157,137 @@ someEffect // i.e. Zio[R,E,A]
 
 - A: the (output) success return type; i.e. the return type
 
-#### Type Aliases
+### Type Aliases
 
 - optional type aliases to common `ZIO[R,E,A]` type parameters
 - if you dont need to provide specific R,E,A values, use a type alias
   - since the type alias constructors require less parameters, you get improved type inference
 - each have a companion object with useful static methods
 
-##### IO[+E, +A]
+#### IO[+E, +A]
 
 - aka `ZIO[Any, E, A]`
 
-##### Task[+A]
+#### Task[+A]
 
 - aka `ZIO[Any, Throwable, A]`
 
-##### RIO[-R, +A]
+#### RIO[-R, +A]
 
 - aka `ZIO[R, Throwable, A]`
 
-##### UIO[+A]
+#### UIO[+A]
 
 - aka `ZIO[Any, Nothing, A]`
 
-##### URIO[-R, +A]
+#### URIO[-R, +A]
 
 - aka `ZIO[R, Nothing, A]`
+
+### Constructors
+
+- convert standard scala data types into zio effects
+
+#### fail[E]
+
+- a constructor that converta pure code into a zio effect that fails with the result of its execution
+
+```scala
+
+val oops = ZIO.fail[E](e: => E): ZIO[Any, E, Nothing] = ???
+
+```
+
+#### succeed[A]
+
+- a constructor that converts pure code into a zio.effect that succeeds with the result of its execution
+- any value that actually fails or _runs forever_ should be considered a failure
+  - often use `Nothing` as the result type (especially forever code)
+
+```scala
+
+val win = ZIO.succeed[A](a: => A): ZIO[Any, Nothing, A] = ???
+
+```
+
+#### fromEither
+
+- converts a scala Either into an IO[E, A]
+  - if its a left: returns a zio.fail
+  - if its a right: returns a zio.success
+
+```scala
+
+val oneof = ZIO.fromEither[E, A](ea: => Either[E, A]): IO[E, A] = ???
+
+```
+
+#### fromOption
+
+- converts a scala Option to an IO
+  - if theres no value will always returns None (options are either Success/None)
+    - its an IO because a scala Option can never fail, it simply returns None with no information
+  - if theres a value will return a zio.success
+
+```scala
+
+val maybe = ZIO.fromOption[A](na: => Option[A]): IO[None.type, A] = ???
+
+```
+
+#### fromTry
+
+- converts a scala Try into a zio Task
+  - on failure returns a ZIO.fail with type fixed to Throwable (scala Trys always return throwable)
+  - on success returns a zio.success
+
+```scala
+import scala.util.Try
+
+val couldThrow = ZIO.fromTry[A](a: => Try[A]): Task[A] = ???
+
+```
+
+#### effect
+
+- converts an asynchronous procedural code into a functional effect of type `ZIO[Any, Throwable, A]`
+  - converts exceptions into zio.fail
+  - converts successes into zio.success
+  - i.e. converts non pure expressions/functions into pure values
+- use cases
+  - migrating a codebase to zio
+  - converting impure expressions/functions into referentially transparent pure versions
+- avoid using it when:
+  - the code is already pure/referentially transparent
+  - the code throws a specific error, or doesnt throw at all
+  - the code is synchronous, it would require you register a callback
+  - the code is wrapped in another data type like Option, Either, Try, or Future
+
+```scala
+// zio.effect[A](a: => A): ZIO[Any, Throwable, A]
+// somethingAsync must be passed by name =>
+val whatev = ZIO.effect(somethingAsync)
+
+```
+
+#### effectTotal
+
+- converts procedural async code into a functional effect that cannot fail
+
+```scala
+
+val alwaysGood = ZIO.effectTotal[A](a: => A): ZIO[Any, Nothing , A] = ???
+
+```
+
+#### effectAsync
+
+- converts asynchronous/callback code into functional effects
+
+```scala
+
+
+```
 
 ### ZIO
 
@@ -149,18 +298,15 @@ someEffect // i.e. Zio[R,E,A]
 val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
 // API
 ZIO
-  .effectTotal
   .fold(errLam, sucLamb) // handle both failure and success preceduarely
   .foldM(errEffect, sucEffect) // handle both fail & succ effectively
   .foreach(Seq) { partialFn } // returns a single effect that executes on each el of a Seq
   .collectAll(Seq[effects]) // collects the results of a sequence of effects
 ```
 
-### succeed
+### top level imports
 
-- `ZIO.succeed(poop)`
-
-### clock
+#### clock
 
 ```scala
 
@@ -171,41 +317,7 @@ someEffect
   .delay(???) // transform one effect into another whose execution is delayed in the future
 ```
 
-### duration
-
-### effect
-
-- wraps a block of code in a functional effect returning `ZIO[Any, Throwable, A]`
-  - converts exceptions into Es
-  - converts successes into As
-
-```scala
-// quickies
-val whatev = ZIO.effect(anything)
-
-// somewhere define what your workflow does
-import zio._
-val goPoop = ZIO.effect(println("wheres the tp"))
-
-// elseware define when your workflow does it
-import zio.clock._
-import zio.duration._
-val goPoopLater = goPoop.delay(1.hour)
-
-// finally execute your effects
-import zio._
-object Bathroom extends App {
-  def run(args: List[String]): =
-    // exitCode required by App trait
-    // ^ converts all failures to exitCode(1)
-    // ^ and successes to exitCode(0)
-    goPoop.exitCode
-}
-
-// notice the input param is passed by name =>
-zio.effect[A](a: => A): ZIO[Any, Throwable, A]
-  .todo
-```
+#### duration
 
 ### examples
 
