@@ -18,7 +18,7 @@
 - [type theory](https://en.wikipedia.org/wiki/Type_theory)
 - [class patterns in scala](https://gist.github.com/chaotic3quilibrium/58e78a2e21ce43bfe0042bbfbb93e7dc)
 - [free excerpts from scala cookbook book](https://alvinalexander.com/scala/how-to-create-factory-method-in-scala-apply-object-trait/)
-
+- [scala online playground](https://scastie.scala-lang.org/)
 ### stuff
 
 - generalities

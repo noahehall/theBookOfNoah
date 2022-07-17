@@ -64,10 +64,11 @@ docker buildx use mybuilder
 docker buildx inspect --bootstrap
 ```
 
-## intellij/scala/sbt/etc
+## intellij/scala/sbt/etc/vscode
 
 - keymap
   - option shift arrow: move line
+    - or just option arrow, one of them should work
 
 ```sh
 # see which java version sbt is using
