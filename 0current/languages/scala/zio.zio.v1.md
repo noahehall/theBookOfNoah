@@ -2,9 +2,9 @@
 
 - wouldnt trust anything in this file until this line is removed
 - bookmark
-  - page 42 blocking
-    - continue at object blocking {...}
-- taken from
+  - https://zio.dev/version-1.x/overview/
+    - start at the top
+- largely taken from
   - zionomicon
     - john de goes and adam fraser
 - john de goes: creator of zio
@@ -427,14 +427,23 @@ zio.system
   - by default ZIO is optimized for async code and computationally bound tasks
     - its critical that blocking tasks run on a separate blcoking thread pool
       - else you could exhaust all of ZIOs default threads
+- use cases
+  - wrap any synchronous code for execution on the blocking thread pool
 
 ```scala
 
 import zio.blocking._
 
-zio.blocking
-  .blocking ...
+// example wrapping some sync call
+def thisTakesHellaLong(p: Poop): IO[Unit, String] = ???
+// ensure its executed on the blocking thread pool
+def hellaLongBlocking(p: Poop): ZIO[Blocking, Unit, String] =
+  blocking(thisTakesHellaLong(p))
 
+// api
+zio.blocking
+  .blocking[R <: Blocking, E, A](zio: ZIO[R, E, A]): ZIO[R, E, A] = ???
+  .effectBlocking // TODO: not sure if this goes here, maybe with the other effects?
 ```
 
 ### examples
@@ -454,6 +463,22 @@ val whatev = for {
 
 ```
 
+#### recursion
+
+- zio effects are stack safe for arbitrarily deep recursive effects
+  - you can write recursive ZIO fns without working about the thread running out of stack space and throwing a stack overflow
+
+```scala
+// recursively asking the user for data on the cli
+import zio.console._
+laz val readIntOrRetry: URIO[Console, Int] =
+  readInt
+    .orElse(
+      console.putStrLn("tell me your secrets")
+      .zipRight(readIntOrRetry)
+    )
+
+```
 ### todo
 
 #### Has
