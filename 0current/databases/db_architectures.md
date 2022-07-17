@@ -3,7 +3,8 @@
 - there is so much duplication in this repository...
 
 ## links
-
+- [data lake vs warehouse](https://www.talend.com/resources/data-lake-vs-data-warehouse/)
+- [data mesh vs lake](https://www.dataversity.net/data-mesh-vs-data-lake-which-is-better-for-your-business/)
 - [scale up vs scale out](https://packetpushers.net/scale-up-vs-scale-out/)
 - [cap theorem](https://en.wikipedia.org/wiki/CAP_theorem)
 - [database transactions](https://en.wikipedia.org/wiki/Database_transaction)
@@ -14,7 +15,13 @@
   - [YC discussion](https://news.ycombinator.com/item?id=21970952)
 
 ## terms
-
+- data mesh: enables collection, integration and analysis of data from disparate systems concurrently in a single location
+  - it connects to disaparate systems, to pull data on the fly
+- data lake: allows storing yuuuge amounts of raw, structured, and/or unstructured data in a single repository enabling comprehensive analysis from a single location
+  - i.e. you push any and everything into a data lake, whether or not the data has a purpose
+  - it doesnt connect to disparate systems, you have to push it into the lake
+- data warehouse: allows storing yuuuge amounts of structured, filtered data that has already been processed for a specific purpose (like data already in use by app/biz)
+  - i.e. you push filtered data into a warehouse, for later analysis
 - high scalability:
   - scale up/vertical: whatever you have now, but optimized for multi-core, multi-cpu, and high capacity storage devices, usually on the fly
   - scale out/horizontal: whatever you have now, but more of it; usually on the fly

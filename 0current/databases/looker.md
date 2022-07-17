@@ -1,6 +1,6 @@
 # looker
 
-- data viz tool for sql databases
+- data (mesh) viz tool for sql databases
 
 ## links
 
@@ -24,7 +24,7 @@
 
 ### filtering
 
-- basic: just the GUI dropdown
+- basic: drop down selectors
 - advanced matches: extended match conditions for a specfic field
 - custom filters: are used to create a database query
   - you cannot refer to measures in a custom filter, or use any functions that rely on query results
@@ -35,7 +35,7 @@
 ### limits
 
 - supports 4k rows & unlimited columns
-- however you should limit the rows/columns renders at any single time
+- however you should limit the rows/columns rendered at any given time
 - FYI
   - if you reach a row limit, you cannot sort by row totals or table calculations
 
@@ -52,13 +52,13 @@
 - sharing
   - data delivery
     - snapshot in time
-    - snapshot current
+    - snapshot current (i.e. justa link to the dashboard)
     - scheduled
 
 ### Explores
 
 - reusable queries written in LookML modeling language
-- these explores can then be reused across Looks ()
+- these explores can then be reused across Looks
 
 ### Looks
 
