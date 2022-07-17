@@ -16,6 +16,8 @@
 - [<: operator](https://stackoverflow.com/questions/6828875/what-does-mean-in-scala?newreg=c55692592975422f8ffb9480691e2236)
 - [subtyping](https://en.wikipedia.org/wiki/Subtyping)
 - [type theory](https://en.wikipedia.org/wiki/Type_theory)
+- [class patterns in scala](https://gist.github.com/chaotic3quilibrium/58e78a2e21ce43bfe0042bbfbb93e7dc)
+- [free excerpts from scala cookbook book](https://alvinalexander.com/scala/how-to-create-factory-method-in-scala-apply-object-trait/)
 
 ### stuff
 

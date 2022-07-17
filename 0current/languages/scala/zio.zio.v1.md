@@ -13,7 +13,7 @@
 ## links
 
 - [documentation start page](https://zio.dev/version-1.x/overview/)
-- [handling errors[(https://zio.dev/version-1.x/overview/overview_handling_errors/)
+- [handling errors](https://zio.dev/version-1.x/overview/overview_handling_errors/)
 
 ## terms
 
@@ -177,10 +177,18 @@ someEffect // i.e. Zio[R,E,A]
 
 ### Type Aliases
 
-- optional type aliases to common `ZIO[R,E,A]` type parameters
+- type aliases with predefined values for `ZIO[R,E,A]` type parameters
 - if you dont need to provide specific R,E,A values, use a type alias
   - since the type alias constructors require less parameters, you get improved type inference
 - each have a companion object with useful static methods
+
+#### UIO[+A]
+
+- aka `ZIO[Any, Nothing, A]`
+
+#### URIO[-R, +A]
+
+- aka `ZIO[R, Nothing, A]`
 
 #### IO[+E, +A]
 
@@ -194,13 +202,6 @@ someEffect // i.e. Zio[R,E,A]
 
 - aka `ZIO[R, Throwable, A]`
 
-#### UIO[+A]
-
-- aka `ZIO[Any, Nothing, A]`
-
-#### URIO[-R, +A]
-
-- aka `ZIO[R, Nothing, A]`
 
 ### Constructors
 

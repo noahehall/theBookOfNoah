@@ -1,6 +1,6 @@
 # looker
 
-- data viz tool connects to sql databases
+- data viz tool for sql databases
 
 ## links
 
