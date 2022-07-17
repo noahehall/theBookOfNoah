@@ -112,6 +112,7 @@ object Bathroom extends App {
   - requires an implicit `ExecutionContext` ins cope whenever you invoke methods on Future
   - no way of modeling dependencies
 
+
 ## API
 
 - methods available to all effects

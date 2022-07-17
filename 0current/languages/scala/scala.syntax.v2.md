@@ -13,6 +13,9 @@
 ### links
 
 - [cake pattern: dependency injection](http://jonasboner.com/real-world-scala-dependency-injection-di/)
+- [<: operator](https://stackoverflow.com/questions/6828875/what-does-mean-in-scala?newreg=c55692592975422f8ffb9480691e2236)
+- [subtyping](https://en.wikipedia.org/wiki/Subtyping)
+- [type theory](https://en.wikipedia.org/wiki/Type_theory)
 
 ### stuff
 
@@ -38,6 +41,55 @@
   - type correct
 - evaluation requirements
   - logical requirements based on code, e.g. runtime parameters, guards, etc
+
+### variance
+
+```scala
+// subtypes
+trait First
+trait Second extends First
+trait Third extends Second
+
+/////
+// type variance applies to both type params and return types
+// ^ e.g. can you pass a subtype of A (like a B) where A is expected
+////
+
+// invariant type
+// ^ subtypes of T have no relationship with each other
+// ^ you cant mix Pipeline[Second] with a Pipeline[First]
+// invariant types are usually producers & consumers, and not one or the other
+trait Pipeline[T]: // only accepts a T
+  def process(t: T): T // will always return a T
+
+// covariant type: flows down the type hierarchy
+// forces concrete implementations to return a T or a subtype of T
+// ^ i.e implement me with a B
+// ^^ and make() will return a B or a C
+// i.e. covariant types produces types of T
+trait Producer[+T]:
+  def make: T // invariant in return position
+
+// contravariant type: flows up the type hierarchy
+// ^ forces concrete implementations to accept a T or a superclass of T
+// i.e. implement me with a C
+// ^ and take() will accept a C or any superclass of C
+// i.e. contravariant types consumes types of T
+def Consumer[-T]:
+  def take(t: T): Unit // contravariant in argument position
+
+// makes sense if you think of it in producing / consuming in the real world
+// apply accepts A or any superclass of A
+// apply returns B or any subtype of B
+trait Function[-A, +B]:
+  def apply(a: A): B
+
+// operators
+type Inheritsfrom <: A // this is a subtype of A
+class Home(T <: Person) // will accept any subtype of Person
+
+
+```
 
 ### terms
 
