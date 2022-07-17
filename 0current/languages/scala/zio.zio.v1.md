@@ -2,7 +2,8 @@
 
 - wouldnt trust anything in this file until this line is removed
 - bookmark
-  - page 41 console
+  - page 42 blocking
+    - continue at object blocking {...}
 - taken from
   - zionomicon
     - john de goes and adam fraser
@@ -11,6 +12,7 @@
 
 ## links
 
+- [documentation start page](https://zio.dev/version-1.x/overview/)
 - [handling errors[(https://zio.dev/version-1.x/overview/overview_handling_errors/)
 
 ## terms
@@ -344,9 +346,10 @@ def didPoop(p: Poop): ZIO[Any, Nothing, Boolean] =
 ### Services
 
 - relying on these services enables you to easily test any code without actually interacting with production implementations
+  - ability to replace implementation details during tests with specifi values for testing
 - when using a service, always update the type signature of the underlying effect, .e.g `ZIO[Clock, Nothing, Unit]`
 
-#### Clock [todo]
+#### Clock
 
 - methods related to time and scheduling
 - logic related to retrying, repitition, timing, etc should utilize the Clock service
@@ -358,7 +361,16 @@ def didPoop(p: Poop): ZIO[Any, Nothing, Boolean] =
 ```scala
 
 import zio.clock._
+import zio.duration._
 
+// implementing a delay
+def delay[R, E, A](zio: ZIO[R,E,A])(d: Duration): ZIO[R with Clock, E, A] =
+  clock.sleep(Duration) *> zio
+
+// api
+zio.clock
+  .nanoTime: URIO[Clock, Long]
+  .sleep(d: => Duration): URIO[Clock, Unit]
 
 ```
 
@@ -373,20 +385,57 @@ import zio.duration._
 #### Console
 
 - methods related to console input/output
+- use cases
+  - cli tools
+
+```scala
+
+zio.console
+  .getStrLn: ZIO[Console, IOException, String]
+  .putStr(line: => String): URIO[Console, Unit]
+  .putStrLn(line: => String): URIO[Console, Unit]
+
+```
 
 #### System
 
 - methods for getting system & env vars
+- use cases
+  - handling configuration values
+
+```scala
+
+zio.system
+  .env(k: String): IO[SecurityException, Option[String]] // env var
+  .property(p: String): IO[Throwable, Option[String]] // system prop
+```
 
 #### Random
 
 - methods for generating random values
-- the `live` implementation delegates to `scala.util.Random`
+- the `live` implementation delegates to `scala.util.Random` and has the same interface
+
+```scala
+
+
+```
 
 #### Blocking
 
-- methods for running blocking tasks on a separate `Executor` optimized for these types of workloads
+- methods for running blocking tasks on a separate `Executor` optimized for blocking tasks
   - only available on the JVM (blocking isnt available in scala)
+  - by default ZIO is optimized for async code and computationally bound tasks
+    - its critical that blocking tasks run on a separate blcoking thread pool
+      - else you could exhaust all of ZIOs default threads
+
+```scala
+
+import zio.blocking._
+
+zio.blocking
+  .blocking ...
+
+```
 
 ### examples
 
