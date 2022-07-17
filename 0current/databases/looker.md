@@ -101,6 +101,16 @@
   - when a new LookerML project is created, dimensions will automatically be generated for each column in your db table
   - after a project is created, you can click `create view from table` to add additional views for new tables created in the db
 
+## GUI
+
+### Develop
+
+- projects > develop dropdown > toggle enable development
+
+### Explore
+
+### Admin
+
 ## workflows
 
 - in general
