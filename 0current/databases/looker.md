@@ -143,6 +143,7 @@ persist_with: dunno
 explore: my_api_name {
   // everything at this level is considered the base view
   label: "my display name"
+  view_name: "base view name"
   hidden: no
   discription: "display me as a tooltip on hover"
   group_label: "group me under this label instead of the model label in the GUI"

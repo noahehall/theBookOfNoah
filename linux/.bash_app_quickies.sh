@@ -35,23 +35,59 @@ kafkastop () {
 }
 kafkacreatetopic () {
     if [[ $# -eq 1 ]]; then
-        kafka-topics --create --topic $1 --bootstrap-server 192.168.4.28:9092
+        KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
+        kafka-topics --create --topic $1 --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
     else
         echo "\$1 === topic_name"
     fi
 }
 kafkadescribetopic () {
     if [[ $# -eq 1 ]]; then
-        kafka-topics --describe --topic $1 --bootstrap-server 192.168.4.28:9092
+        KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
+        kafka-topics --describe --topic $1 --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
     else
         echo "\$1 === topic_name"
     fi
 }
 kafkalisttopics () {
-    kafka-topics --list --bootstrap-server 192.168.4.28:9092
+    KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
+    kafka-topics --list --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
 }
 kafkalistgroupids () {
-    kafka-consumer-groups  --list --bootstrap-server 192.168.4.28:9092
+    KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
+    kafka-consumer-groups  --list --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
+}
+
+kafkasend () {
+    if [[ $# -eq 1 ]]; then
+        # echo -e "sending\n---\n${@:2}\n---"
+        # echo "to this topic: $1"
+        KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
+        kafka-console-producer --topic $1 --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
+    else
+        echo "\$1 === topic_name, then paste in events, ctrlD exit"
+    fi
+}
+
+kafkalisttopicpartitions () {
+    if [[ $# -eq 1 ]]; then
+        KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
+        kafka-run-class kafka.tools.GetOffsetShell --broker-list $KAFKA_BOOTSTRAP_SERVER --topic $1
+    else
+        echo "\$1 === topic_name, then paste in events, ctrlD exit"
+    fi
+}
+
+kafkalisttopicevents () {
+    if [[ $# -eq 2 ]]; then
+        # echo -e "sending\n---\n${@:2}\n---"
+        # echo "to this topic: $1"
+        KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
+        kafka-console-consumer --bootstrap-server $KAFKA_BOOTSTRAP_SERVER --topic $1 --offset 20 --partition $2
+
+    else
+        echo "\$1 === topic_name, \$2 === partition"
+    fi
 }
 kafkaclean () {
     if [ -z ${KAFKA_DATA_DIR+x} ]
@@ -61,8 +97,8 @@ kafkaclean () {
             echo "removing files $KAFKA_DATA_DIR/{kafka,zookeeper}/*"
             rm -rf $KAFKA_DATA_DIR/{zookeeper,kafka}/*
     fi
-
 }
+
 #######
 # docker
 
