@@ -3,26 +3,34 @@
 - data (mesh) analysis/viz tool for sql databases
 - bookmark
   - https://connect.looker.com/learning
-    - lookml dev > creating explorers > creating measures
+    - lookml dev > creating explorers > Filtering Explores
 
 ## links
 
 - [looker user guides](https://connect.looker.com/)
 - docs
+  - [000 best practices](https://help.looker.com/hc/en-us/articles/360001766908-Best-Practice-Create-a-Positive-Experience-for-Looker-Users)
+  - [000 how projects work](https://docs.looker.com/data-modeling/getting-started/how-project-works)
+  - [000 model & view files](https://docs.looker.com/data-modeling/getting-started/model-development)
+  - [000 other project files](https://docs.looker.com/data-modeling/getting-started/other-project-files)
   - [changing GUI explore menu & field picker](https://docs.looker.com/data-modeling/learning-lookml/explore-menu-and-field-picker)
-  - [working with joins](https://docs.looker.com/data-modeling/learning-lookml/working-with-joins)
-  - [how looker generates sql](https://docs.looker.com/data-modeling/learning-lookml/how-looker-generates-sql)
-  - [filtering & limiting data](https://docs.looker.com/exploring-data/filtering-and-limiting)
   - [creating looker expressions](https://docs.looker.com/exploring-data/creating-looker-expressions)
   - [exploring data](https://docs.looker.com/exploring-data/exploring-data)
-  - [using table calculations](https://docs.looker.com/exploring-data/using-table-calculations)
-  - [sql runner basics](https://docs.looker.com/data-modeling/learning-lookml/sql-runner)
+  - [filtering & limiting data](https://docs.looker.com/exploring-data/filtering-and-limiting)
+  - [how looker generates sql](https://docs.looker.com/data-modeling/learning-lookml/how-looker-generates-sql)
   - [how to optimize sql with explain](https://community.looker.com/technical-tips-tricks-1021/how-to-optimize-sql-with-explain-30772)
+  - [sql runner basics](https://docs.looker.com/data-modeling/learning-lookml/sql-runner)
+  - [using table calculations](https://docs.looker.com/exploring-data/using-table-calculations)
+  - [working with joins](https://docs.looker.com/data-modeling/learning-lookml/working-with-joins)
 - ref
-  - [index](https://docs.looker.com/reference)
+  - [000 index](https://docs.looker.com/reference)
+  - [000 lookml syntax basics](https://docs.looker.com/data-modeling/learning-lookml/what-is-lookml)
   - [dimension filter and parameter types](https://docs.looker.com/reference/field-reference/dimension-type-reference)
+  - [dimension groups](https://docs.looker.com/reference/field-params/dimension_group)
+  - [dimensions](https://docs.looker.com/reference/field-params/dimension)
+  - [explore](https://docs.looker.com/reference/explore-params/explore)
   - [filter expressions](https://docs.looker.com/reference/filter-expressions)
-  - [lookml syntax basics](https://docs.looker.com/data-modeling/learning-lookml/what-is-lookml)
+  - [measure](https://docs.looker.com/reference/field-params/measure)
 
 ## basics
 
@@ -64,6 +72,16 @@
   - fields: either a dimension/measure, populate the `SELECT` clause in a query
   - filter: expressions applied to fields, populate the `WHERE` and `HAVING` clauses
   - sort order: the fields & type of sort, populate the `ORDER BY` clause
+- basic syntax
+  - strings can be wrapped in double quotes
+  - sql statements end in `;;`
+  - generally any object accepts one of:
+    - description: displayed in a tooltip on hover and other detail places
+    - group_label: combines explores/views/fields into custom groups
+    - hidden:
+    - label: the display name
+    - view_label: for explores/views/joins
+      - if given the same name as another entity, the fields of this view will be placed with that other entity in the GUI
 
 ```sql
 
@@ -82,7 +100,18 @@ LIMIT <limit>
 
 ```
 
-```jsonc
+### Project
+
+- container for models
+
+#### Model
+
+- `some_name.model` file
+- determines which DB connections are permitted for child explores
+- specifies a database connection and the set of Explores that use those connection(s).
+- defines the Explores themselves and their relationships to other views.
+
+```scala
 // example model file
 
 /// model fields
@@ -92,54 +121,67 @@ label: "displayed in GUI"
 include: "views/to/include/path"
 persist_with: dunno
 
-/// list of explores definitions avail in the model
-explore: give_me_a_name {...}
+// list of explores definitions avail in the model (see explores)
 ```
-
-### Project
-
-- container for models
-
-#### Model
-
-- determines which DB connections are permitted for child explores
-- specifies a database connection and the set of Explores that use those connection(s).
-- defines the Explores themselves and their relationships to other views.
 
 ##### Explores
 
 - a view that users can query, goes in the `FROM` clause in an SQL query
   - can be created from a single view/table, or combine multiple views by using a `join: {...}`
-  - the explore technically is the base table + any joins, and looker puts this whole thing into an SQL from clause
+  - the explore technically is the base table (view) + any joins (other views, but actually poop.view files), and looker puts this whole thing into an SQL from clause
 - indirect joins: dont join to a base table, but to another view in the explorer
   - causes perf issues as it doesnt join on keys, but on dimensions
 - these explores can then be reused across Looks
 - creating
   - when a new LookerML project is created, dimensions will automatically be generated for each column in your db table
   - after a project is created, you can click `create view from table` to add additional views for new tables created in the db
-- components
-  - explorer: some_name; a name for the base view, is used in the `FROM `
-  - label: the display name
-  - description: displayed in a tooltip on hover
-  - fields: limits the scope of fields that are available within an explor/view
-  - group_label: combines expores into custom groups
-  - join: combine multiple views
-    - from: used if you need to alias the base table, e.g. to join the same view twice
-    - view_label: the display name for a view
-      - can merge multiple views by giving them the same view label name,
-    - type: the type of join (right joins not supported)
-      - left\_[outer|inner] (default)
-      - full_outer
-      - cross
-    - sql_on: the keys to use in the join
-    - relationship: one*to*[one|many], many*to*[one|many]
 
-##### views
 
-- represent actual tables in a database or a derived table (like a CTE)
-- atleast ONE dimension in a view needs to be defined as a primarty_key
+```scala
+// example explore definition
 
-##### dimensions
+explore: my_api_name {
+  // everything at this level is considered the base view
+  label: "my display name"
+  hidden: no
+  discription: "display me as a tooltip on hover"
+  group_label: "group me under this label instead of the model label in the GUI"
+  fields: [
+    explore_name.only_this_field,
+    explore_name.and_this.field
+   ]
+
+  join: poop {
+    // define another view directly on the explore
+    // @see # Joins
+    ...
+  }
+}
+
+```
+
+#### views
+
+- `somename.view` declaring LookML + SQL statements for analyzing a particluar sql table, the dimensions, etc
+  - represent actual tables in a database or a derived table (like a CTE)
+  - atleast ONE dimension in a view needs to be defined as a primarty_key
+  - views can be part of multiple models by being included within a model definition
+- field picker: the fields (dimensions, measures, etc) listed in the view will be grouped under the View name on the explores detail screen
+
+```scala
+// example view file
+view: my_api_name {
+  label: "overrides view_label in all explores & joins"
+  description: "yada yada yada"
+  hidden: yes|no // only hides it, but still accessible
+  sql_table_name: some_sql_table ;;
+
+  // then a list of dimensions (see dimensions)
+}
+
+```
+
+#### dimensions
 
 - you will spend a chunk of your time in here creating dimensions for biz
   - learn how to setup various dimensions, that will surface a number a different value types for a single db field (e.g. ways to view a date (monthly, quarterly etc))
@@ -162,7 +204,30 @@ explore: give_me_a_name {...}
     - time: for time time fields
       - timeframes: cast a date/timestamp into different forms of time
 
-##### measures
+```scala
+// example dimensions
+
+// number but same with string
+dimension: account_number {
+  primary_key: yes
+  type: number
+  sql: ${TABLE}.account_number ;;
+  label: "display name"
+  view_label: "put me under the view with this name"
+  group_label: "put me under this group instead of anything else"
+  group_item_label: "with this name when in a group"
+}
+
+// time with dimension group
+dimension_group: created {
+  type: time
+  timeframes: [raw, time, date, week, month, quarter, year]
+  sql: ${TABLE}.created_date ;;
+}
+
+```
+
+#### measures
 
 - algebra across multiple rows in a table
   - similar to aggregate fns in SQL e.g. COUNT()
@@ -172,7 +237,18 @@ explore: give_me_a_name {...}
   - count: only counts the primary key of a table, doesnt require a `sql: ...` param
   - count_distinct: can count any dimension, requires an `sql: ${poop}`
 
-##### filters
+```scala
+// example measures
+
+measure: average_annual_revenue {
+  type: average
+  sql: ${annual_revenue} ;;
+  value_format_name: custom_amount_value_format
+}
+
+```
+
+#### filters
 
 - basic: drop down selectors
 - advanced matches: extended match conditions for a specfic field
@@ -181,6 +257,25 @@ explore: give_me_a_name {...}
 - FYI
   - filtering on dimensions removes raw data before ANY calculations are made
   - filtering on measures occur after results are calculated
+
+#### joins
+
+- can be in an explore/view definition file
+- combine multiple views
+  - from: used if you need to alias the base table, e.g. to join the same view twice
+  - type: the type of join (right joins not supported)
+    - left\_[outer|inner] (default)
+    - full_outer
+    - cross
+  - sql_on: the keys to use in the join
+  - relationship: one*to*[one|many], many*to*[one|many]
+
+```scala
+join: some_other_view {
+  view_label: "in the gui"
+  ...
+}
+```
 
 ## GUI
 
@@ -215,7 +310,7 @@ explore: give_me_a_name {...}
   - you can play around with data, and most importantly view the SQL behind looker queries
 - model list: with a list of child explores for each, click one to launch the explore
   - main view: shows folders and dashboards
-- explore details: after clicking an explore, it will show you a list of fields available to begin your data viz journey
+- explore details: after clicking an explore, it will show you a list of views with their child fields (field picker in docs) available to begin your data viz journey
   - main view
     - data tab:
       - click SQL to view what sql
