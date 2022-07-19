@@ -5,12 +5,6 @@
 
 # scala
 
-- all about the syntax
-- there are 7 scala courses on coursera, take them.
-- this is a really long file, suggest using the outline (e.g. in vscode) to see the hierarchy
-
-  - and ctrl-f `# whatever your looking for` as generally things have a `# Category`, e.g. `# Type Parameters`
-
 - todos
   - how to use the the function higher order methods: https://users.scala-lang.org/t/creating-scala-3-functions/8626
     - once thats figured out add relavent api to `# Functions`
@@ -18,9 +12,7 @@
   - https://dzone.com/articles/executor-and-execution-context-objects-in-scala-1
   - https://alvinalexander.com/scala/how-to-create-java-thread-runnable-in-scala/
   - find Promise in the scala docs
-  - find sealed traits in the scala docs
   - todo: need to do a better job at categorizing operators, especially the mutable vs immutable ones
-  - extending, using `poop extends blah1, blah2` vs `poop extends blah1 with blah2`
   - in general look through all the coursera assignments for each week, there are bunches of stuff in there that wasnt explained in the course and could be a good starting point for grepping the docs
 
 ## links
@@ -42,7 +34,6 @@
   - [AAA scala 3 reference](https://docs.scala-lang.org/scala3/reference/index.html)
   - [AAA scala vesions](https://github.com/lampepfl/dotty/tags)
   - [adt: algebraic data types](https://docs.scala-lang.org/scala3/book/types-adts-gadts.html)
-  - [BBB scala 2 examples](https://www.geeksforgeeks.org/scala-programming-language/?ref=lbp)
   - [classes: inner classes](https://docs.scala-lang.org/tour/inner-classes.html)
   - [classes: open classes](https://docs.scala-lang.org/scala3/reference/other-new-features/open-classes.html)
   - [context functions](https://docs.scala-lang.org/scala3/reference/contextual/context-functions.html)
@@ -68,7 +59,6 @@
   - [pattern matching](https://docs.scala-lang.org/tour/pattern-matching.html)
   - [scala 3 example project](https://github.com/scala/scala3-example-project)
   - [scala on stackoverflow: super useful](https://stackoverflow.com/tags/scala/info)
-  - [Seq scala 2 ref](https://www.scala-lang.org/api/current/scala/collection/immutable/Seq.html)
   - [trait parameters](https://docs.scala-lang.org/scala3/reference/other-new-features/trait-parameters.html)
   - [type: abstract types](https://docs.scala-lang.org/tour/abstract-type-members.html)
   - [type: generics](https://docs.scala-lang.org/scala3/book/types-generics.html)
@@ -83,19 +73,18 @@
 
 ## basics
 
-- knowing how to read algebraic data types (type annotations) is critical to using scala
 - scope:
   - entities within a block `{}` or `indentation in scala 3` are only visible from within the block
   - ^ and shadow entities of the same names outside the block
 - semi colons only required to separate two statmeents on a single line
 - indentation is important (think python)
-- compiler evalutes type annotations at compile time, to guard against some kinds of errors at run-time
+- compiler evaluates type annotations at compile time, to guard against some kinds of errors at run-time
   - except in worksheets, as there is no distinction between compile & runtime
 - vals vs defs
   - vals are always evaluated once, and the result is reused each time their name is used
   - the body of defs are evaluated each time the def is invoked, if its never invoked then never evaluated
     - thus one reason to prefer defs over vals is to delay the evlaution of a computation until the point in a progran where its effectively needed
-- several standard library definitions have context parameters (e.g anything that relies on Ordering, like List(...).min, or sort fns)
+- several standard library definitions have context parameters (think dependency injection)
   - each can be modified by defining given instance before invocation
 
 ```scala
@@ -151,7 +140,6 @@ object Wtf:
 // so you dont have to use the fully qualified name of some entity
 // e.g. scala.math.blah.blah works without importing, but importing makes it easier
 // ^ scala (e.g. scala.Int), java.lang and scala.Predef are automatically imported
-import scala.math._ // wildcard import in scala 2
 import someObj.* // wildcard import in scala 3
 import StringUtils.{truncate, containsWhitespace} //import some members of package
 import poop.Flush // import a specific member
@@ -791,7 +779,7 @@ addAnon("10", "12") // 10 + 12 = 22
 
 ```scala
 // syntax examples
-// context parameters are prefixed with `using (scala 3)|implicit (scala 2)` in their fn definition
+// context parameters are prefixed with `using` in their fn definition
 // ^ within a parameter list only the last param can be a context parameter
 // ^ instructs the compiler to supply the value based on the type for us!
 // ^^ in both cases below, the compiler chooses the correct value based on the type of A
@@ -1169,11 +1157,6 @@ object PoopUtils:
   def flush(done: Boolean): String =
     if done == true then "flushing" else "still pooping!"
 
-// scala 2 syntax
-object SomeObj {
-  val prop: Boolean = true
-}
-
 object Poop extends SomeOtherEntity:
   def definedOnObjectPoop: = ???
 
@@ -1250,7 +1233,6 @@ abstract class PoopInterface:
 
 - primary way to create an interface, its like an abstract class without the limitation of single inheritance
   - contain parameters (scala3), abstract & concrete methods and fields
-    - scala 2: doesnt have a constructor
     - scala 3: no constructor, but can take parameters
   - can have an unbound number of implementations, and those implementations can be in any file
 - use case
@@ -1381,12 +1363,10 @@ val poop: Circle = poop(/* */)
 val poop2: Shape = poop.copy() // works because Circle is a Shape
 
 // using pattern matching to aggregate logic across subtypes
-// in scala 2 the match block needs to enclosed in braces, i.e. match { ... }
 val getShapeAria =
   someShape match
     case Rectangle(width, heighT) => width * height
     case Circle(radius) => radius * radius * 3.14
-
 
 ```
 
@@ -1394,7 +1374,6 @@ val getShapeAria =
 
 - defines a type whose values are a set of known singletons
   - are shorthands for classes with companion objects
-- NOT available in scala 2, instead used sealed traits and case objects
 - use cases
   - used to define sets of constants, like the months in a year, the days in a week, directions like north/south/east/west, etc
   - convenient way to construct data composed from cases
@@ -1446,16 +1425,6 @@ MyKnownValues
   .values // Array(MyKnownValues.Poop, etc) // get all enum values
   .values(0) // get the first one
   .valueOf("Wipe") // MyKNownValues.Wipe // get the matching enum value from its string label || runtime error
-
-
-// mimicking enums in scala 2
-// uses the same pattern matching logic, check elseware
-sealed trait PrimaryColor
-object PrimaryColor:
-  case object Red extends PrimaryColor
-  case object Blue extends PrimaryColor
-  val values = Array(Red, Blue, Green)
-  def valueOf(label: String): PrimaryColor = ???
 
 // useful to do `import CrustSize.*` so you can use the values directly
 // if/then
@@ -1522,7 +1491,6 @@ case class MyType(name: String, age: Int)
 // create an instance
 val poop: MyType = MyType("poop", 200)
 
-// in scala 2 remove the : and use {} to denote the body
 case class MyType(name: String, age: Int):
   val ageNextDecade: Int = age + 10 // computed value, instance.ageNextDecade
   def duplicateThisInstance: MyType =
@@ -2186,16 +2154,6 @@ else if someValue < 0 then
 else
   "do that"
 
-// scala 2
-// requires curlys and paranthesis around conditions and no then keyword
-if (poop && wipe) {
-  "flush"
-} else if (poop && pee) {
-  "wipe"
-} else {
-  "keep pooping"
-}
-
 ```
 
 ### match statements
@@ -2514,11 +2472,6 @@ object Poop {
       println(i)
       i += 1
   }
-}
-
-// scala 2
-while (condition) {
-  // body, no do keyword
 }
 
 ```
@@ -3015,11 +2968,6 @@ def isTruthy(a: Matchable) = a match
 
 // def with no params
 def poop: Boolean = true
-
-// scala 2 requires curly braces
-def poop(): String = {
-  //....
-}
 
 // multiline method
 def isTruthy(): String =

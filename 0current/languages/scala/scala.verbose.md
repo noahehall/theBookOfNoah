@@ -68,48 +68,14 @@
 
 ## terms
 
-- stateful object: an object has state if its behavior is influenced by its history, i.e. if behavior (future results) changes over time due to previous conditions
-- laziness: concept in functional program to speed up perf issues
-  - to compute a value only when its needed
-  - lazy evaluation: storing the previous result of a lazy value, so that on the next access it its not recomputed
-  - by-name evaluation: where a value is recomputed everytime its accessed, like a fn call
-  - strict evaluation: everything is computed once when its first accessed
 - the bullet proof principle (lol): an expression composed from Try, map, flatmap will never throw a non-fatal exception (it returns Failure(Exception) for you to handle)
-- monad: a paramerterized type with two operations, flatMap and unit, that have to satisfy some laws
-  - flatMap on a monad is also called bind
-  - a type that defines both flatMap and withFilter are called monads with zero
-  - 3 laws:
-    - associativity: related to how you can call successive flatmap operations, you should be able to take successive calls and create nested calls instead and receive the same result
-    - left unit: related to flatmap and unit: the lhs should always equal the rhs, i.e. no side effects
-    - right unit: related to flatMap and the thing flatmap is called on,
-- referential transparency: since pure functions dont have side effects; a term is equivalent ot the term to which it reduces
-  - i.e. you can replace the lhs of a fn with its rhs, and vice versa
-- natural induction: ...
-- structural induction: ...
-- object oriented decomposition: mixes data with operations on the data
-  - useful if theres:
-    - a need for encapsulation and data abstraction
-    - add new kinds of data (but hard to add new kinds of operations)
-  - however, increases complexity and adds new dependencies to classes
 - pattern matching: the fn approach to decomposition
-- dynamic binding: key to OOP: where a method is dependent on the runtime type of the receiver of a method
-  - i.e. dependent on where the method is defined within the hierarcy of classes
-- data abstraction: the ability to choose different implementations of data, logic, etc witout affecting consumers expectations or interface contract
-  - enables you to evolve and optimize programs overtime with 0 impact on consumers
-- category theory:
-  - map: defined by the type class Functor
-  - zip: defined by the type class Applicative
-  - flatMap: defined by the type class Monad
-  - traverse: defined by the type class Traverse
-- pure functions: they do not mutate any data or have other side-effects (like throwing exceptions or writing to a file). All they do is simply receive values and compute the result.
-- term inference: Given a type, the compiler synthesizes a “canonical” term that has that type
-- parameter lists: generally methods can shave more tha one parameter lists
+- parameter lists: generally methods cans have more tha one parameter lists
 - predicate: a fn that returns boolean
 - vararg constructor: variable argument constructor; you can pass a vriable number of arguments to it
 - scala worksheet: a file containing Scala definitions and expressions that are evaluated from top to bottom; like a persistent REPL session that you can edit and run again
   - worksheets end in `.sc`
 - program: expresses a computation: e.g. `What is the result of adding one to one?`
-  - const of names (vars), literals, expressions, operations, and finally evaluations
 - type: defines a set of possible values, e.g. `Boolean` has two possible values, and `String` have an unbounded number of possible values
   - define how expressions can be combined by applying operations on them
   - type mismatch: attempting to evaluate an operation against two incompatible types, e.g. `true && "false"`

@@ -1,4 +1,4 @@
-# scala syntax for scala 2.11.4
+# scala 2 syntax
 
 - bookmark
   - page 129: function types
@@ -12,13 +12,15 @@
 
 ### links
 
+- [BBB scala 2 examples](https://www.geeksforgeeks.org/scala-programming-language/?ref=lbp)
 - [cake pattern: dependency injection](http://jonasboner.com/real-world-scala-dependency-injection-di/)
 - [<: operator](https://stackoverflow.com/questions/6828875/what-does-mean-in-scala?newreg=c55692592975422f8ffb9480691e2236)
-- [subtyping](https://en.wikipedia.org/wiki/Subtyping)
-- [type theory](https://en.wikipedia.org/wiki/Type_theory)
 - [class patterns in scala](https://gist.github.com/chaotic3quilibrium/58e78a2e21ce43bfe0042bbfbb93e7dc)
 - [free excerpts from scala cookbook book](https://alvinalexander.com/scala/how-to-create-factory-method-in-scala-apply-object-trait/)
 - [scala online playground](https://scastie.scala-lang.org/)
+- refs
+  - [Seq scala 2 ref](https://www.scala-lang.org/api/current/scala/collection/immutable/Seq.html)
+
 ### stuff
 
 - generalities
@@ -108,6 +110,11 @@ class Home(T <: Person) // will accept any subtype of Person
 
 ## quickies
 
+```scala
+//
+import scala.math._ // wildcard import in scala 2
+```
+
 ### scala REPL
 
 ```sh
@@ -141,13 +148,16 @@ var lname: String = "flush"
 ### defs
 
 ```scala
-// the curly braces arent necessary here
 def name: String = {
   val fname = "poop"
   var lname = "flush"
   s"$fname $lname"
 }
 
+// scala 2 requires curly braces
+def poop(): String = {
+  //....
+}
 ```
 
 ### blocks
@@ -185,11 +195,21 @@ def name: String = {
 ```scala
 if (1 < 2) "yes" else "no"
 
+// scala 2
+// requires curlys and paranthesis around conditions and no then keyword
+if (poop && wipe) {
+  "flush"
+} else if (poop && pee) {
+  "wipe"
+} else {
+  "keep pooping"
+}
 ```
 
 ### pattern matching
 
 - like an extended if expression that enables us to evaluate an expression depending on the shape of its operand
+- the match block needs to enclosed in braces, i.e. `poop match { ... }`
 
 ```scala
 
@@ -202,6 +222,7 @@ val boop: Poop = new Poop("noah", "hall")
 object notdadaddy {
   def inspect (p: Poop): String =
     p match {
+      // typed pattern matching
       case Poop("noah", "hall") => "You are not the father"
       case _ => "you are the father"
     }
@@ -209,8 +230,21 @@ object notdadaddy {
 
 println(notdadaddy.inspect(boop))
 println(notdadaddy.inspect(Poop("hall", "noah")))
+
+
 ```
 
+### loops
+
+#### while
+
+```scala
+// scala 2
+while (condition) {
+  // body, no do keyword
+}
+
+```
 ## data types
 
 - value types: evaluted when defined
@@ -494,3 +528,25 @@ boop.hashCode // some random int
 
 - classes that extend from AnyVal
 -
+
+### enums
+
+- NOT available in scala 2, instead used sealed traits and case objects
+
+```scala
+
+// mimicking enums in scala 2
+// uses the same pattern matching logic, check elseware
+sealed trait PrimaryColor
+object PrimaryColor:
+  case object Red extends PrimaryColor
+  case object Blue extends PrimaryColor
+  val values = Array(Red, Blue, Green)
+  def valueOf(label: String): PrimaryColor = ???
+```
+
+### type directect programming
+
+### contextual abstractions
+
+- context parameters are prefixed with `implicit` in their fn definition

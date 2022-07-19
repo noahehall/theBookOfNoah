@@ -19,15 +19,7 @@
 
 - functional effect: blueprint for concurrent workflows; describes what to do, but not its execution
   - are referentially transparent
-- direct execution: in procedural programming, when a line of code is constructed to a value it must directly interact with its lexical context
-- reactive programming: patterns for designing applications that are responsive, resilient, elastic and event-driven
 - fiber: cooperatively-yielding virtual thread
-- fork: create a new thread
-- join: consume a fork
-- structured concurrency: a paradigm that provides strong guarantees around the lifespans of operations performed concurrently
-- referencial transparency: an expression is referentially transparent if you can replace (refer to) the expression with its result and still have same runtime behavior
-  - generally any expression with side effects is NOT referentially transparent, as the side effect is dependent on the runtime (when its invoked)
-- pure: an expression/function is pure if it doesnt have any side effects
 
 ## basics
 
@@ -100,7 +92,7 @@ object Bathroom extends App {
 ### comparison with scala Future
 
 - a zio effect is a functional effect
-  - i.e. everything is passed by name, so even the input environment (context) execution is delayed
+  - the input environment (context) execution is delayed
   - can run any `Executor`, and it doesnt need to be provided until the effect is actually invoked (not when defined)
   - can define arbitrary Error types
   - direct support of dependency injection via Environment type parameter
@@ -111,7 +103,6 @@ object Bathroom extends App {
     - all future error types are Throwable
   - requires an implicit `ExecutionContext` ins cope whenever you invoke methods on Future
   - no way of modeling dependencies
-
 
 ## API
 
@@ -125,7 +116,7 @@ ZIO
   .fold(errLam, sucLamb) // handle both failure and success preceduarely
   .foldM(errEffect, sucEffect) // handle both fail & succ effectively
   .foreach(Seq) { partialFn } // returns a single effect that executes on each el of a Seq
-  .collectAll(Seq[effects]) // collects the results of a sequence of effects
+  .collectAll(Seq[effects, ...]) // collects the results of a sequence of effects
 ```
 
 ### Zio[-R, +E, +A]
@@ -201,7 +192,6 @@ someEffect // i.e. Zio[R,E,A]
 #### RIO[-R, +A]
 
 - aka `ZIO[R, Throwable, A]`
-
 
 ### Constructors
 
@@ -481,6 +471,7 @@ laz val readIntOrRetry: URIO[Console, Int] =
     )
 
 ```
+
 ### todo
 
 #### Has
