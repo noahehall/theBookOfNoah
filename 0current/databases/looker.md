@@ -115,12 +115,21 @@ LIMIT <limit>
 // example model file
 
 /// model fields
+access_grant: identifier
+case_sensitive: yes or no
 connection: "some_db_connection"
 datagroup: some_name {...}
+explore: identifier
+fiscal_month_offset: number
+include: "include/these/views/can/use/**/wildcard"
 label: "displayed in GUI"
-include: "views/to/include/path"
-persist_with: dunno
-
+map_layer: identifier
+named_value_format: identifier
+persist_for: "string"
+persist_with: datagroup-ref string dunno
+test: identifier
+view: identifier
+week_start_day: monday or ...
 // list of explores definitions avail in the model (see explores)
 ```
 
