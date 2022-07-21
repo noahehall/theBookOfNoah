@@ -2,7 +2,7 @@
 
 - wouldnt trust anything in this file until this line is removed
 - bookmark
-  - https://zio.dev/version-1.x/overview/
+  - https://zio.dev/version-1.x/overview/overview_basic_operations
     - start at the top
 - largely taken from
   - zionomicon
@@ -14,6 +14,8 @@
 
 - [documentation start page](https://zio.dev/version-1.x/overview/)
 - [handling errors](https://zio.dev/version-1.x/overview/overview_handling_errors/)
+- [thread pool best practices with zio](https://degoes.net/articles/zio-threads)
+- [articles by john a de goes](https://degoes.net/articles/)
 
 ## terms
 
@@ -61,7 +63,8 @@
 
 ### gotchas
 
-- generally all lambdas/partials passed to ZIO must be passed by name =>
+- generally all arguments are passed by name to ensure side effects are managed by ZIO at runtime and not directly executed when instantiated
+- any value that actually fails or runs forever should be considered a failure and not a success
 
 ```scala
 // somewhere define what your workflow does
@@ -121,7 +124,8 @@ ZIO
 
 ### Zio[-R, +E, +A]
 
-- any entity with type `Zio[-R, +E, +A]` is a functional effect (see zio.effect elseware)
+- any entity with type `Zio[-R, +E, +A]` is a functional effect
+  - an effectful version of `R => Either[E, A]`
   - the input R is contravariant and pass down the callstack
   - the outputs E & A are covariant and pass up the callstack
 - FYI
@@ -147,7 +151,7 @@ someEffect // i.e. Zio[R,E,A]
   - the environment (dependencies) required for the effect to be executed
   - set to `Any` if no dependencies are required
 
-#### E: Error Type
+#### E: Failure Type
 
 - E: the (output) type of error(s) that can occur during execution of the effect
   - the potential ways an effect can fail
@@ -157,7 +161,7 @@ someEffect // i.e. Zio[R,E,A]
   - defer errors to higher level (effects)
     - the caller of the effect is required to deal with the error,
     - no error handling logic is required within the effect implementation
-  - explicitly state at each level (specific effect) how it can fail
+  - explicitly state how an effect can fail
   - enables focusing on the happy (success) path since erorrs short circuit the effect stack execution
 - handle errors
   - generally all the `.fold` type defs, but the `.foldM` is recommended
@@ -165,17 +169,30 @@ someEffect // i.e. Zio[R,E,A]
 #### A: Success Type
 
 - A: the (output) success return type; i.e. the return type
+  - set to `Unit`, for void
+  - set to `Nothing`, if the effect runs forever/until failure
 
 ### Type Aliases
 
-- type aliases with predefined values for `ZIO[R,E,A]` type parameters
-- if you dont need to provide specific R,E,A values, use a type alias
-  - since the type alias constructors require less parameters, you get improved type inference
+- predefined values for `ZIO[R,E,A]` type parameters
+  - if you dont need to provide specific R,E,A values, prefer a type alias for improved type inference vs setting `[Any, Throwable, A]` etc
 - each have a companion object with useful static methods
+
+```scala
+
+(anyAlias || ZIO)
+  .succeed
+  .fail
+  .effect
+  .blocking
+  .fromPoop // see constructors below
+
+```
 
 #### UIO[+A]
 
 - aka `ZIO[Any, Nothing, A]`
+- useful for describing infallible effects, including those resulting from handling all errors.
 
 #### URIO[-R, +A]
 
@@ -188,10 +205,12 @@ someEffect // i.e. Zio[R,E,A]
 #### Task[+A]
 
 - aka `ZIO[Any, Throwable, A]`
+- corresponds most closely to the Future data type built into Scala's standard library.
 
 #### RIO[-R, +A]
 
 - aka `ZIO[R, Throwable, A]`
+- allows you to thread environments through third-party libraries and your application.
 
 ### Constructors
 
@@ -205,43 +224,51 @@ someEffect // i.e. Zio[R,E,A]
 
 val oops = ZIO.fail[E](e: => E): ZIO[Any, E, Nothing] = ???
 
+val f1 = ZIO.fail("Uh oh!")
+val f2 = Task.fail(new Exception("Uh oh!"))
+
 ```
 
 #### succeed[A]
 
 - a constructor that converts pure code into a zio.effect that succeeds with the result of its execution
-- any value that actually fails or _runs forever_ should be considered a failure
-  - often use `Nothing` as the result type (especially forever code)
+- use `ZIO.effectTotal` in place of `.succeed` if the fn has side effects
 
 ```scala
 
 val win = ZIO.succeed[A](a: => A): ZIO[Any, Nothing, A] = ???
+
+val s1 = ZIO.succeed(42)
 
 ```
 
 #### fromEither
 
 - converts a scala Either into an IO[E, A]
-  - if its a left: returns a zio.fail
-  - if its a right: returns a zio.success
+  - The error type will be whatever type the Left case has
+  - success type will be whatever type the Right case has.
 
 ```scala
 
 val oneof = ZIO.fromEither[E, A](ea: => Either[E, A]): IO[E, A] = ???
 
+val zeither = ZIO.fromEither(Right("Success!"))
 ```
 
 #### fromOption
 
 - converts a scala Option to an IO
   - if theres no value will always returns None (options are either Success/None)
-    - its an IO because a scala Option can never fail, it simply returns None with no information
   - if theres a value will return a zio.success
 
 ```scala
 
 val maybe = ZIO.fromOption[A](na: => Option[A]): IO[None.type, A] = ???
 
+val zoption: IO[Option[Nothing], Int] = ZIO.fromOption(Some(2))
+
+// ^ You can change the Option[Nothing] into a more specific error type using ZIO#mapError:
+val zoption2: IO[String, Int] = zoption.mapError(_ => "It wasn't there!")
 ```
 
 #### fromTry
@@ -259,50 +286,70 @@ val couldThrow = ZIO.fromTry[A](a: => Try[A]): Task[A] = ???
 
 #### fromFuture
 
-- converts a fn that returns a Future into a zio effect of type `Task[A]`
-  - remember it doesnt take a future, it takes a function that returns a future based on some ExecutionContext (all future require ExecutionContext)
-  - you dont need to use the exectionContext, but if you do then ZIO will manage where the Future runs at higher-levels
-  - make sure the implementation of the make fn (See below) creates a new future
-    - instead of returning a Future that is already running
+- converts a future / fn that returns a Future into a zio effect of type `Task[A]`
+  - The error type will always be Throwable, because Future can only fail with values of type Throwable
+  - you dont need to use the exectionContext, but if you do then ZIO will manage where the Future is executed
 
 ```scala
+import scala.concurrent.Future
+
 // origin fn
 def goPoopOG(implicit ec: ExecutionContext): Future[Unit] = ???
 // converted to a ZIO Effect
 def goPoop: Task[Unit] - Task.fromFuture(implicit ec => goPoopOG)
 
+lazy val future = Future.successful("Hello!")
+val zfuture: Task[String] =
+  ZIO.fromFuture { implicit ec =>
+    future.map(_ => "Goodbye!")
+  }
+```
+
+#### fromFunction
+
+- converts lambdas of type `A => B` into zio effects
+
+```scala
+val zfun: URIO[Int, Int] =
+  ZIO.fromFunction((i: Int) => i * i)
+
 ```
 
 #### effect
 
-- converts any asynchronous procedural code into a functional effect of type `ZIO[Any, Throwable, A]`
-  - converts exceptions into zio.fail
-  - converts successes into zio.success
-  - i.e. converts non pure expressions/functions into pure values
+- converts any synchronous code into a functional effect of type `ZIO[Any, Throwable, A]`
+  - The error type will always be Throwable, because side-effects may throw exceptions with any value of type Throwable.
+    - If no errors are thrown, then use ZIO.effectTotal
 - use cases
   - migrating a codebase to zio
   - converting impure expressions/functions into referentially transparent pure versions
 - avoid using it when:
   - the code is already pure/referentially transparent
   - the code throws a specific error, or doesnt throw at all
-  - the code is synchronous, it would require you register a callback
   - the code is wrapped in another data type like Option, Either, Try, or Future
 
 ```scala
 // zio.effect[A](a: => A): ZIO[Any, Throwable, A]
-// somethingAsync must be passed by name =>
-val whatev = ZIO.effect(somethingAsync)
+
+import scala.io.StdIn
+val getStrLn: Task[String] =
+  ZIO.effect(StdIn.readLine())
 
 ```
 
 #### effectTotal
 
 - converts procedural async code into a functional effect that cannot fail
+- The value passed to effectTotal will only be constructed if absolutely required.
 
 ```scala
 
 val alwaysGood = ZIO.effectTotal[A](a: => A): ZIO[Any, Nothing , A] = ???
 
+val now = ZIO.effectTotal(System.currentTimeMillis())
+
+def putStrLn(line: String): UIO[Unit] =
+  ZIO.effectTotal(println(line))
 ```
 
 #### effectAsync
@@ -312,27 +359,19 @@ val alwaysGood = ZIO.effectTotal[A](a: => A): ZIO[Any, Nothing , A] = ???
   - see ZStream elseware
 
 ```scala
-// e.g. this fn which expects a callback
-def didPoopAsync(p: Poop)(cb: Boolean => Unit): Unit =
-  println("these lines run immediately")
-  println("the next line runs when didPoop is invoked")
-  cb(true)
-// and this invocation of the callback
-didPoopAsync(poop) {
-  case true => println("i pooped")
-  case _ => println("i peed")
+object legacy {
+  def login(
+    onSuccess: User => Unit,
+    onFailure: AuthError => Unit): Unit = ???
 }
-// can be wrapped in asyncEffect
-// you can now replace all invocations of didPoopAsync with didPoop
-def didPoop(p: Poop): ZIO[Any, Nothing, Boolean] =
-  ZIO.effectAsync { cb =>
-    didPoopAsync(p) {
-      case true => cb(ZIO.succeed("i pooped"))
-      case _ => cb(ZIO.succeed("i peed"))
-    }
+
+val login: IO[AuthError, User] =
+  IO.effectAsync[AuthError, User] { callback =>
+    legacy.login(
+      user => callback(IO.succeed(user)),
+      err  => callback(IO.fail(err))
+    )
   }
-
-
 ```
 
 ### Services
@@ -412,30 +451,57 @@ zio.system
 
 ```
 
-#### Blocking
+#### Blocking (package)
 
 - methods for running blocking tasks on a separate `Executor` optimized for blocking tasks
   - only available on the JVM (blocking isnt available in scala)
   - by default ZIO is optimized for async code and computationally bound tasks
     - its critical that blocking tasks run on a separate blcoking thread pool
       - else you could exhaust all of ZIOs default threads
-- use cases
-  - wrap any synchronous code for execution on the blocking thread pool
 
 ```scala
 
 import zio.blocking._
+import scala.io.{ Codec, Source }
 
-// example wrapping some sync call
-def thisTakesHellaLong(p: Poop): IO[Unit, String] = ???
-// ensure its executed on the blocking thread pool
-def hellaLongBlocking(p: Poop): ZIO[Blocking, Unit, String] =
-  blocking(thisTakesHellaLong(p))
+def download(url: String) =
+  Task.effect {
+    Source.fromURL(url)(Codec.UTF8).mkString
+  }
 
-// api
-zio.blocking
-  .blocking[R <: Blocking, E, A](zio: ZIO[R, E, A]): ZIO[R, E, A] = ???
-  .effectBlocking // TODO: not sure if this goes here, maybe with the other effects?
+def safeDownload(url: String) =
+  blocking(download(url))
+```
+
+
+##### effectBlocking
+
+- converts code that use blocking IO/put a thread intoa waiting state into a zio effect
+  - The effect will be executed on a separate thread pool optimized for blocking effects
+  - can be interrupted by invoking Thread.interrupt using the effectBlockingInterrupt method
+
+```scala
+import zio.blocking._
+
+val sleeping =
+  effectBlocking(Thread.sleep(Long.MaxValue))
+
+```
+
+##### effectBlockingCancelable
+
+- see `effectBlocking`
+  - specifically for blocking code that can only be interrupted by invoking a cancellation effect
+
+```scala
+
+import java.net.ServerSocket
+import zio.UIO
+import zio.blocking._
+
+def accept(l: ServerSocket) =
+  effectBlockingCancelable(l.accept())(UIO.effectTotal(l.close()))
+
 ```
 
 ### examples
@@ -447,11 +513,13 @@ zio.blocking
 ```scala
 import zio._
 
+// basic
 val whatev = for {
   result1 <- someEffect
   _ <- println("on to next effect")
   result2 <- otherEffect(result1)
 } yield result2 // or yield () to yield nothing (but then dont assign to a var)
+
 
 ```
 
@@ -469,6 +537,19 @@ laz val readIntOrRetry: URIO[Console, Int] =
       console.putStrLn("tell me your secrets")
       .zipRight(readIntOrRetry)
     )
+
+```
+
+#### refineToOrDie
+
+- refine the error type of an effect by treating other errors as fatal
+
+```scala
+
+import java.io.IOException
+
+val getStrLn2: IO[IOException, String] =
+  ZIO.effect(StdIn.readLine()).refineToOrDie[IOException]
 
 ```
 
