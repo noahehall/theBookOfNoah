@@ -25,7 +25,8 @@
 - ref
   - [000 index](https://docs.looker.com/reference)
   - [000 lookml syntax basics](https://docs.looker.com/data-modeling/learning-lookml/what-is-lookml)
-  - [dimension filter and parameter types](https://docs.looker.com/reference/field-reference/dimension-type-reference)
+  - [field reference](https://docs.looker.com/reference/field-reference)
+  - [field types](https://docs.looker.com/reference/field-reference/dimension-type-reference)
   - [dimension groups](https://docs.looker.com/reference/field-params/dimension_group)
   - [dimensions](https://docs.looker.com/reference/field-params/dimension)
   - [explore](https://docs.looker.com/reference/explore-params/explore)
@@ -37,6 +38,8 @@
 - its all about enabling developers to aggregate disparate SQL databses and surface the data mesh to biz for doing their thing
 - generates SQL queries and submits them against a database connection
 - formulates SQL queries based on a LookML project that describes the relationship between tables and columns in the database
+- fanout problem: when aggregating values after a table join (e.g. one to many) the many side of the table causes duplicate values of the one side of the table in the resulting table, because each row of the many will cause the single row of the one to be listed for each tuple
+
 
 ### terms
 
@@ -135,6 +138,7 @@ week_start_day: monday or ...
 
 ##### Explores
 
+- explore adds an existing view to the Explore menu of Looker. Although an explore can be written inside of a view file, it is almost always best practice to write it within a model file instead.
 - a view that users can query, goes in the `FROM` clause in an SQL query
   - can be created from a single view/table, or combine multiple views by using a `join: {...}`
   - the explore technically is the base table (view) + any joins (other views, but actually poop.view files), and looker puts this whole thing into an SQL from clause
@@ -144,7 +148,6 @@ week_start_day: monday or ...
 - creating
   - when a new LookerML project is created, dimensions will automatically be generated for each column in your db table
   - after a project is created, you can click `create view from table` to add additional views for new tables created in the db
-
 
 ```scala
 // example explore definition
@@ -191,14 +194,14 @@ view: my_api_name {
 
 ```
 
-#### dimensions
+#### fields
 
-- you will spend a chunk of your time in here creating dimensions for biz
-  - learn how to setup various dimensions, that will surface a number a different value types for a single db field (e.g. ways to view a date (monthly, quarterly etc))
-- a groupable field that can be used to filter query results
-  - a column in a table
-  - a fact/numerical value
-  - a derived value, based on the values of other fields
+- a field can be a dimension, dimension group, measure, filter or Parameter
+- type groupings (see field types link)
+  - dimenions, field, parameter: date, date_time, number, string, yesno
+  - dimensions: bin, distance, location, tier, zipcode, duration
+  - dimension group: time
+  - parameter: unquoted
 - types
   - string
   - number
@@ -213,6 +216,18 @@ view: my_api_name {
       - intervals: e.g. second, minute,hour, etc
     - time: for time time fields
       - timeframes: cast a date/timestamp into different forms of time
+- symmetric aggregation: lookers solution to the fan out problem with 2 premises
+  - must use primary keys in the views
+  - correctly specify the relationship between tables in the join
+
+##### dimensions
+
+- you will spend a chunk of your time in here creating dimensions for biz
+  - learn how to setup various dimensions, that will surface a number a different value types for a single db field (e.g. ways to view a date (monthly, quarterly etc))
+- a groupable field that can be used to filter query results
+  - a column in a table
+  - a fact/numerical value
+  - a derived value, based on the values of other fields
 
 ```scala
 // example dimensions
@@ -237,7 +252,7 @@ dimension_group: created {
 
 ```
 
-#### measures
+##### measures
 
 - algebra across multiple rows in a table
   - similar to aggregate fns in SQL e.g. COUNT()
@@ -258,7 +273,7 @@ measure: average_annual_revenue {
 
 ```
 
-#### filters
+##### filters
 
 - basic: drop down selectors
 - advanced matches: extended match conditions for a specfic field
@@ -267,6 +282,8 @@ measure: average_annual_revenue {
 - FYI
   - filtering on dimensions removes raw data before ANY calculations are made
   - filtering on measures occur after results are calculated
+
+##### Parameters
 
 #### joins
 

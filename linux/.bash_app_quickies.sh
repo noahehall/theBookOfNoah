@@ -78,7 +78,7 @@ kafkalisttopicpartitions () {
     fi
 }
 
-kafkalisttopicevents () {
+kafkalistenfortopicevents () {
     if [[ $# -eq 2 ]]; then
         # echo -e "sending\n---\n${@:2}\n---"
         # echo "to this topic: $1"
