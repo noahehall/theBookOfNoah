@@ -2,7 +2,7 @@
     // relativeliy stable
     "terminal.integrated.profiles.osx": {
       "bash": {
-        "path": "/opt/homebrew/bin/bash",
+        "path": "/opt/homebrew/bin/bash"
       }
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode",

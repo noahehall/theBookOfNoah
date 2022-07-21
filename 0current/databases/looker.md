@@ -3,7 +3,7 @@
 - data (mesh) analysis/viz tool for sql databases
 - bookmark
   - https://connect.looker.com/learning
-    - lookml dev > creating explorers > Filtering Explores
+    - The Looker Marketplace
 
 ## links
 
@@ -39,7 +39,6 @@
 - generates SQL queries and submits them against a database connection
 - formulates SQL queries based on a LookML project that describes the relationship between tables and columns in the database
 - fanout problem: when aggregating values after a table join (e.g. one to many) the many side of the table causes duplicate values of the one side of the table in the resulting table, because each row of the many will cause the single row of the one to be listed for each tuple
-
 
 ### terms
 
@@ -216,9 +215,13 @@ view: my_api_name {
       - intervals: e.g. second, minute,hour, etc
     - time: for time time fields
       - timeframes: cast a date/timestamp into different forms of time
-- symmetric aggregation: lookers solution to the fan out problem with 2 premises
-  - must use primary keys in the views
+- symmetric aggregation: lookers automatic solution to the fan out problem with 2 premises
+  - must set a primary key(s) in the view
   - correctly specify the relationship between tables in the join
+  - how it works
+    - count(\*): applies a COUNT(DISTINCT primarykey) clause in the sql
+    - SUM|AVG: applies a DISTINCT(SUM (MD5 has to the primary key)) - MD5(primary) in the sql
+      - just google both to get the algebra if you're not in looker land
 
 ##### dimensions
 
@@ -296,6 +299,9 @@ measure: average_annual_revenue {
     - cross
   - sql_on: the keys to use in the join
   - relationship: one*to*[one|many], many*to*[one|many]
+    - the left side is the outer view
+    - the right side join: this_view
+    - check: [one|many] of outer vew can have [one|many] of inner view
 
 ```scala
 join: some_other_view {
@@ -303,6 +309,34 @@ join: some_other_view {
   ...
 }
 ```
+
+#### Folders
+
+##### dashboards
+
+- are per folder, and based on the Looks within that folder
+  - to include in the default dashboard folder, you have to add it via include in the `.model` file of the lookml project
+    - generally you include all dashboards at the model level via `include: "*.dashboard.lookml"`
+- collection of queries & filters displayed as visualizations
+- dashboard types: you can convert between the two
+  - user defined: created by devs/end users in the GUI
+    - updated: when the dashboard/underlying look is edited
+    - persisted: in the users/shared folder
+  - lookml: created by devs in a yaml file
+    - updated: when the lookml file is updated
+    - in git repo that manages the looker project
+- viz types
+  - categorical data: column, grouped column, bar
+  - time series: line, overlay
+  - pairs: table
+  - relations: scatter plot, heat map
+  - distributions: line histogram, colum histogram, scatter plot
+  - data composition: donut, pie, area, stacked bar, stacked percent, stacked column
+- sharing
+  - data delivery
+    - snapshot in time
+    - snapshot current (i.e. justa link to the dashboard)
+    - scheduled
 
 ## GUI
 
@@ -346,20 +380,6 @@ join: some_other_view {
 ### Admin
 
 ### dashboards
-
-- are per folder, and based on the Looks within that folder
-- viz types
-  - categorical data: column, grouped column, bar
-  - time series: line, overlay
-  - pairs: table
-  - relations: scatter plot, heat map
-  - distributions: line histogram, colum histogram, scatter plot
-  - data composition: donut, pie, area, stacked bar, stacked percent, stacked column
-- sharing
-  - data delivery
-    - snapshot in time
-    - snapshot current (i.e. justa link to the dashboard)
-    - scheduled
 
 ## workflows
 
