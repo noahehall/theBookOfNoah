@@ -13,6 +13,7 @@
 ## quickies
 
 - shift ctrl alt up/down: move a line up or down
+- cmd shift a: command pallete
 
 ## things to do
 

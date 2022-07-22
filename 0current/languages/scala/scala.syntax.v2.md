@@ -34,7 +34,7 @@
     - types
 - infix operator: can be used with any method that takes one parameter
   - regular: `"poop".split" "`
-  - infex: `"poop" split " "
+  - infex: `"poop" split " "`
 - other (less common) operators
   - prefix
   - postfix
@@ -56,12 +56,12 @@ trait Third extends Second
 
 /////
 // type variance applies to both type params and return types
-// ^ e.g. can you pass a subtype of A (like a B) where A is expected
+// ^ e.g. can you pass a subtype of A (e.g. B) where A is expected depends on the variance
 ////
 
 // invariant type
 // ^ subtypes of T have no relationship with each other
-// ^ you cant mix Pipeline[Second] with a Pipeline[First]
+// ^ you cant send Pipeline[Second] instead of Pipeline[First]
 // invariant types are usually producers & consumers, and not one or the other
 trait Pipeline[T]: // only accepts a T
   def process(t: T): T // will always return a T

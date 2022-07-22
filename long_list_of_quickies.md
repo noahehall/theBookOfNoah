@@ -1,5 +1,8 @@
-# links
+# links: move these into the appropriate files
 
+- [sbt library management](https://www.scala-sbt.org/1.x/docs/Library-Management.html)
+- [dealing with sbt version conflicts](https://stackoverflow.com/questions/45531198/warnings-while-building-scala-spark-project-with-sbt)
+- [sbt version conflicts](https://www.scala-lang.org/blog/2021/02/16/preventing-version-conflicts-with-versionscheme.html)
 - [sbt docker plugin for building images](https://www.scala-sbt.org/sbt-native-packager/formats/docker.html)
 - [configuring global vs project intellij sdks](https://stackoverflow.com/questions/31506278/unable-to-set-project-sdk-in-intellij)
 - [mac git autocomplete](https://www.macinstruct.com/tutorials/how-to-enable-git-tab-autocomplete-on-your-mac/)
@@ -8,7 +11,7 @@
 - [java PKIX ssl cert whatever the fk failure](https://stackoverflow.com/questions/9619030/resolving-javax-net-ssl-sslhandshakeexception-sun-security-validator-validatore)
 - [docker on apple silicon review](https://earthly.dev/blog/using-apple-silicon-m1-as-a-cloud-engineer-two-months-in/)
 - [docker apple silicon issues & resolutions](https://pythonspeed.com/articles/docker-build-problems-mac/)
-
+- [sbt: specify main method/class to run](https://alvinalexander.com/scala/sbt-how-specify-main-method-class-to-run-in-project/)
 # git
 
 ```sh
@@ -33,6 +36,10 @@
 
 - fk iterm, just use the normal terminal, and set Option as meta to getaway from those weird azz shortcuts
   - now option arrows work as you would expect to jump around
+  - use [kitty](https://sw.kovidgoyal.net/kitty/overview/#tabs-and-windows)
+    - cmd t: new tab
+    - cmd enter: new window in current tab
+    - cmd shift d: close active window in current tab
 
 ## k8s related
 
@@ -78,6 +85,7 @@ sbt 'eval System.getProperty("java.home")'
 # force intellij sbt to use the current SDK java version
 ## preferences > build, execution > build tools > sbt > JRE
 ## also update the project setting (right click project > module settings)
+## ^ or file > project structure > module
 /Users/$USER/.sdkman/candidates/java/current
 
 ```

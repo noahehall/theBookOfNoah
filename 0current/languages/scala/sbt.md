@@ -389,7 +389,7 @@ lazy val someProject = (project in file("."))
 
 - sbt shell setting execution
   - executing a setting key in sbt shell will return its value
-  - executing a task in sbt shell will execute the task but not display its value,
+  - executing a task in sbt shell will execute the task but not display its value
     - use `show taskName` to show its value
   - use `inspect anyKeyName` to see all configuration, scopes, etc associated with a key
     - e.g. to task the taks anyKeyName task depends on
@@ -459,7 +459,10 @@ sbt
 ####################################
   # explicit examples
 ####################################
-# ^ current project, no configuration, unmanagedSource task
+# in a multi subproject project, run a specific project
+projectName / run
+
+# current project, no configuration, unmanagedSource task
 unmanagedSources / includefilter
 # ^ projectName project, no configuration, unmanagedSource task
 projectName / unmanagedSources / includeFilter
