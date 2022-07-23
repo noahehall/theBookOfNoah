@@ -68,7 +68,7 @@
   - `.dockerignore`
   - `poop.Dockerfile`
     - sucks as then your dockerfiles arent sorted in the tree
-    - do `docker.poop.Dockerfile` lol instead, super ugly but at least they are all together
+    - use `d.poop.Dockerfile` lol instead, super ugly but at least they are all grouped together
 
 ## quickies
 
@@ -77,14 +77,14 @@
   - FYI: both ARG and ENV leave traces in the image
   - build time
     - ARG:
-      - settings vars for when building an image
+      - build time vars
       - setting default runtime ENV values
-      - export vars to a file so subsequent images can access them
+      - can export vars to a file so subsequent images can access them
   - runtime
     - ENV:
-      - available at runtime
-      - can be set via ARGs
-    - .env: best place to set runtime vars
+      - cli env vars take precedence over .env vars
+      - can use ARG values for defaults
+    - .env: prefer over cli vars to set defaults and allow the consumer to override via cli
 
 ```sh
   # on mac
