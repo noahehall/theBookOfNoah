@@ -2,8 +2,8 @@
 
 - wouldnt trust anything in this file until this line is removed
 - bookmark
-  - https://zio.dev/version-1.x/overview/overview_basic_operations
-    - start at the top
+  - https://zio.dev/version-1.x/overview/overview_basic_concurrency
+    - start at top
 - largely taken from
   - zionomicon
     - john de goes and adam fraser
@@ -107,43 +107,17 @@ object Bathroom extends App {
   - requires an implicit `ExecutionContext` ins cope whenever you invoke methods on Future
   - no way of modeling dependencies
 
-## API
-
-- methods available to all effects
-
-```scala
-// e.g.
-val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
-// API
-ZIO
-  .fold(errLam, sucLamb) // handle both failure and success preceduarely
-  .foldM(errEffect, sucEffect) // handle both fail & succ effectively
-  .foreach(Seq) { partialFn } // returns a single effect that executes on each el of a Seq
-  .collectAll(Seq[effects, ...]) // collects the results of a sequence of effects
-```
 
 ### Zio[-R, +E, +A]
 
 - any entity with type `Zio[-R, +E, +A]` is a functional effect
-  - an effectful version of `R => Either[E, A]`
+  - naively an effectful version of `R => Either[E, A]`
   - the input R is contravariant and pass down the callstack
   - the outputs E & A are covariant and pass up the callstack
 - FYI
   - the zipLeft|Right operators are useful when the results of intermediate effects arent needed
     - but you just need to run the effects sequentially
 
-```scala
-// run two effects sequentially discarding their returns
-val poop = ZIO.effect(println("hello")) *> ZIO.effect(println("world"))
-
-someEffect // i.e. Zio[R,E,A]
-  .flatMap[B](result => otherEffect(result)): ZIO[R,E,B] = ??? // sequently run effects
-  .zip // sequentially... returns a tuple
-  .zipLeft // i.e. <* sequentlly... returns the result of the first
-  .zipRight // i.e. *> sequentially... returns the result of the second
-  .zipWith(otherEffect)(lambda(a, b)) // sequentially combine effects
-
-```
 
 #### R: Environemnt Type
 
@@ -172,22 +146,52 @@ someEffect // i.e. Zio[R,E,A]
   - set to `Unit`, for void
   - set to `Nothing`, if the effect runs forever/until failure
 
+
+## API
+
+- methods available to all/most effects
+- generally an operation on an effect always returns another effect
+  - however, check for comprehensions for creating a sequential pipeline for decomposing effects and doing stuff with the data within
+
+```scala
+// e.g.
+val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
+
+// API
+(ZIO/alias/effect)
+  .absolve(effect) // submerge failures, opposite of .either: converts ZIO[R, Nothing, Either[E, A]] to ZIO[R, E, A]
+  .blocking // see `# blocking`
+  .bracket(finallyEffect) { partialEffect } // for handling resources, finally should release the resource, partial should acquire & consume it
+  .catchall(lambda) // catch & recover from all types of errors
+  .catchSome { patternMatch } // case over specific error types to catch & recover
+  .collectAll(Seq[effects, ...]) // collects the results of a sequence of effects
+  .effect // see `# Effect`
+  .either // surface failures, converts ZIO[R, E, A] to ZIO[R, Nothing, Either[E, A]]
+  .ensuring(finallyEffect) // runs finally if prev effect fails for any reason, aka tryThis.ensuring(thisRunsOnFailure)
+  .fail(anything) // see `# Fail`
+  .flatMap[B](result => effect(result)) // sequently run effects
+  .fold(errLam, sucLamb) // handle both failure and success non-effectively, success receives the result of err if its called
+  .foldM(errEffect, sucEffect) // handle both fail & succ effectively, success receives the result of err if its called
+  .foreach(Seq) { partialFn } // returns a single effect that executes on each el of a Seq
+  .map(succLamb) // transform the success value
+  .mapError(errLamb) // transform the failure value
+  .orElse(2ndEffect) // run 2ndEffect on failure
+  .retry(Schedule.poop) // returns a new effect that retries the effect on failure
+  .retryOrElse(Schedule.poop, finallyLambda) // retires according to schedule, else runs finally if schedules finishes with error
+  .retryOrElseEither(Schedule.poop, finallyLambda) // same as retryOrElse, except you have to return an Either
+  .succeed(anything) // see  `# Succeed`
+  .zip(2ndEffect) // sequentially... returns a tuple if both succeed (first, second)
+  .zipLeft(2ndEffect) // i.e. <* sequentially... returns the result of the first
+  .zipRight(2ndEffect) // i.e. *> sequentially... returns the result of the second
+  .zipWith(2ndEffect)(lambda(a, b)) // sequentially combine effects
+```
+
 ### Type Aliases
 
 - predefined values for `ZIO[R,E,A]` type parameters
   - if you dont need to provide specific R,E,A values, prefer a type alias for improved type inference vs setting `[Any, Throwable, A]` etc
 - each have a companion object with useful static methods
 
-```scala
-
-(anyAlias || ZIO)
-  .succeed
-  .fail
-  .effect
-  .blocking
-  .fromPoop // see constructors below
-
-```
 
 #### UIO[+A]
 
@@ -506,9 +510,15 @@ def accept(l: ServerSocket) =
 
 ### examples
 
+#### Basic Operations
+
+
+
+
 #### for comprehensions
 
 - prefer comprehensions over nested flatMaps
+- sequentially run effects
 
 ```scala
 import zio._

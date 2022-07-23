@@ -1,5 +1,6 @@
 # links: move these into the appropriate files
 
+- [sbt err multiple resolvers have different access mechanism](https://stackoverflow.com/questions/29802766/multiple-resolvers-having-different-access-mechanism-configured-with-same-name)
 - [sbt library management](https://www.scala-sbt.org/1.x/docs/Library-Management.html)
 - [dealing with sbt version conflicts](https://stackoverflow.com/questions/45531198/warnings-while-building-scala-spark-project-with-sbt)
 - [sbt version conflicts](https://www.scala-lang.org/blog/2021/02/16/preventing-version-conflicts-with-versionscheme.html)
