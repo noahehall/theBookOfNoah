@@ -2,8 +2,7 @@
 
 - wouldnt trust anything in this file until this line is removed
 - bookmark
-  - https://zio.dev/version-1.x/overview/overview_basic_concurrency
-    - start at top
+  - https://zio.dev/version-1.x/overview/overview_testing_effects
 - largely taken from
   - zionomicon
     - john de goes and adam fraser
@@ -12,11 +11,12 @@
 
 ## links
 
-- [documentation start page](https://zio.dev/version-1.x/overview/)
-- [handling errors](https://zio.dev/version-1.x/overview/overview_handling_errors/)
 - [thread pool best practices with zio](https://degoes.net/articles/zio-threads)
 - [articles by john a de goes](https://degoes.net/articles/)
-
+- [zio test: intro blog/tutorial](https://scalac.io/blog/zio-test-what-why-how/)
+- docs
+  - [000 documentation start page](https://zio.dev/version-1.x/overview/)
+  - [handling errors](https://zio.dev/version-1.x/overview/overview_handling_errors/)
 ## terms
 
 - functional effect: blueprint for concurrent workflows; describes what to do, but not its execution
@@ -173,10 +173,12 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
   .map(succLamb) // transform the success value
   .mapError(errLamb) // transform the failure value
   .orElse(2ndEffect) // run 2ndEffect on failure
+  .race(otherEffect) // run effects in parallel, returning the first successful
   .retry(Schedule.poop) // returns a new effect that retries the effect on failure
   .retryOrElse(Schedule.poop, finallyLambda) // retires according to schedule, else runs finally if schedules finishes with error
   .retryOrElseEither(Schedule.poop, finallyLambda) // same as retryOrElse, except you have to return an Either
   .succeed(anything) // see  `# Succeed`
+  .timeout(duration) // returns a new Option[effect], None indicates timeout occurred
   .zip(2ndEffect) // sequentially... returns a tuple if both succeed (first, second)
   .zipLeft(2ndEffect) // i.e. <* sequentially... returns the result of the first
   .zipRight(2ndEffect) // i.e. *> sequentially... returns the result of the second
@@ -409,7 +411,13 @@ zio.clock
 
 ```scala
 
+// adds properties & methods onto integers
 import zio.duration._
+
+val someInt = 10
+
+someInt
+  .seconds
 
 ```
 
@@ -554,11 +562,48 @@ for {
   fiber <- IO.succeed("Hi!").forever.fork
   _     <- fiber.interrupt.fork // I don't care!
 } yield ()
+
+// combine two fibers into a tuple, both succeed or fails
+for {
+  fiber1 <- IO.succeed("Hi!").fork
+  fiber2 <- IO.succeed("Bye!").fork
+  fiber   = fiber1.zip(fiber2) // or .zipWith
+  tuple  <- fiber.join
+} yield tuple
+
+// provide a fallback incase fiber fails
+for {
+  fiber1 <- IO.fail("Uh oh!").fork
+  fiber2 <- IO.succeed("Hurray!").fork
+  fiber   = fiber1.orElse(fiber2)
+  message  <- fiber.join
+} yield message
+
+// API
+// ^ generally methds that take 2 fibers are executed sequentially,
+// ^ append Par, e.g. zipPar, to run in parallel
+someFiber
+  .await
+  .collectAll
+  .foreach
+  .fork
+  .join
+  .mergeAll
+  .orElse
+  .reduceAll
+  .tupled
+  .zip
+  .zipWith
 ```
 
-### examples
+## tests
 
-#### for comprehensions
+- a toolkit for testing ZIO applications with implementations for each of ZIOs standard services
+- includes an alternative (generator) to scalacheck
+
+## examples
+
+### for comprehensions
 
 - prefer comprehensions over nested flatMaps
 - sequentially run effects
@@ -576,7 +621,7 @@ val whatev = for {
 
 ```
 
-#### recursion
+### recursion
 
 - zio effects are stack safe for arbitrarily deep recursive effects
   - you can write recursive ZIO fns without working about the thread running out of stack space and throwing a stack overflow
@@ -593,7 +638,7 @@ laz val readIntOrRetry: URIO[Console, Int] =
 
 ```
 
-#### refineToOrDie
+### refineToOrDie
 
 - refine the error type of an effect by treating other errors as fatal
 
@@ -606,24 +651,22 @@ val getStrLn2: IO[IOException, String] =
 
 ```
 
-### todo
+## todo
 
-#### Has
+### Has
 
 - type-indexed heterogeneous map
 
-#### ZLayer
+### ZLayer
 
 - construct larger ZIO environments from smaller pieces
   - replicates netflix's Polynote
   - a more powerful version of Java & Scala constructors; can build multiple services in terms of their dependencies
   - supports resources, asynchronous creation & finalization, retrying and other features
 
-#### Zio STM
+### Zio STM
 
-#### Zio Environment
-
-#### ZStream
+### ZStream
 
 - a high perofmrance, composable concurrent streams & sinks with strong guarantees of resource safety
 - competitor to Akka Streams but without the Akka and dependency on Scalas Future
