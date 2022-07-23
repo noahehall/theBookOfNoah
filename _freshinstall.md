@@ -149,7 +149,12 @@
 - setup bash as defualt shell (FCK ZSH)
 - [macports](https://www.scrim.psu.edu/support/userspace-macports.html)
 - continue with ubuntu setup
-
+- fk iterm, just use kitty, and set Option as meta to getaway from those weird azz shortcuts
+  - now option arrows work as you would expect to jump around
+  - use [kitty](https://sw.kovidgoyal.net/kitty/overview/#tabs-and-windows)
+    - cmd t: new tab
+    - cmd enter: new window in current tab
+    - cmd shift d: close active window in current tab
 ### remote server setup
 
 1. setup non root user with sudo priv

@@ -58,62 +58,77 @@ long list of git
 ## quickies
 
 ```sh
-  # delete a branch locally & remote
-    git branch -d BRANCH_NAME
-    git push origin --delete BRANCH_NAME
-  # reset SOMEBRANCH to whatever is upstream
-    git fetch SOMEBRANCH
-    git reset --hard origin/SOMEBRANCH
-    git reset --soft HEAD^
-    # other options
-      git reset --soft HEAD^ # undo commits, but leave staged
-      git reset HEAD^ # undo commits & staged, but leave work tree
-      git reset --hard HEAD^ # undo everthing
+# git commit template
+## subject(scope): description
+## body...
+  Add
+  Create
+  Refactor
+  Fix
+  Release
+  Document
+  Modify
+  Update
+  Remove
+  Feat
+  Delete etc...
 
-  # other shit
-    git config --list
-    git config --list --show-origin
-    git config --global -e # edit global config in default editor
+# delete a branch locally & remote
+  git branch -d BRANCH_NAME
+  git push origin --delete BRANCH_NAME
+# reset SOMEBRANCH to whatever is upstream
+  git fetch SOMEBRANCH
+  git reset --hard origin/SOMEBRANCH
+  git reset --soft HEAD^
+  # other options
+    git reset --soft HEAD^ # undo commits, but leave staged
+    git reset HEAD^ # undo commits & staged, but leave work tree
+    git reset --hard HEAD^ # undo everthing
 
-  # rebasing
-    git rebase -i shaOfFirstCommitToRewrite^ # use this and move on
-    git rebase -i shaOfLastGoodCOmmitButNotINclude
-    git rebase -i HEAD~n
-        n === # of commits to rewrite
+# other shit
+  git config --list
+  git config --list --show-origin
+  git config --global -e # edit global config in default editor
 
-  # commit diff between two branches
-  git log --oneline --graph --decorate --abbrev-commit master..develop
+# rebasing
+  git rebase -i shaOfFirstCommitToRewrite^ # use this and move on
+  git rebase -i shaOfLastGoodCOmmitButNotINclude
+  git rebase -i HEAD~n
+      n === # of commits to rewrite
 
-  git status -s # short status
-  # [staging][workingtree] FILENAME
-  # ?? somefile # untracked
-  # A somfile # staged
-  #  M somefile # modified in working directory but not yet staged
-  # M somefile # modified and staged
-  # MM somefile # modified, staged, then modified again
+# commit diff between two branches
+git log --oneline --graph --decorate --abbrev-commit master..develop
 
-  git diff  # everything unstaged (not added)
-  git diff --staged  # everything added, but not staged (commited)
+git status -s # short status
+# [staging][workingtree] FILENAME
+# ?? somefile # untracked
+# A somfile # staged
+#  M somefile # modified in working directory but not yet staged
+# M somefile # modified and staged
+# MM somefile # modified, staged, then modified again
 
-  git commit -a -m 'ur msg' # but be sure you want to add all changed files
+git diff  # everything unstaged (not added)
+git diff --staged  # everything added, but not staged (commited)
 
-  git rm --cached dont/track/this/file/and/remove/from/staging
+git commit -a -m 'ur msg' # but be sure you want to add all changed files
 
-  git mv prevname newname # better than doing a linux mv
+git rm --cached dont/track/this/file/and/remove/from/staging
 
-  # debugging
-    git ls-files # information about files in the index and working tree
-    git cat-file # content/type+size info about repository objects
-      -p HEAD:file_or_directory_path
-    git log -n 5 #show the recent 5 commits
-    git log --since=2016-01-15 #show commits since january 15 2016
-    git log --author="noahehall" #all commits by noahehall
+git mv prevname newname # better than doing a linux mv
 
-  # managing remotes
-    git clone <url> <newname>
-    git remote -v # check where git push will send the files
-    git remote rm origin # disconnect your local dir from the remote repo, e.g. if 4. your changing the remote url
-    git remote add origin <url> # add a remote repo to your local dir
+# debugging
+  git ls-files # information about files in the index and working tree
+  git cat-file # content/type+size info about repository objects
+    -p HEAD:file_or_directory_path
+  git log -n 5 #show the recent 5 commits
+  git log --since=2016-01-15 #show commits since january 15 2016
+  git log --author="noahehall" #all commits by noahehall
+
+# managing remotes
+  git clone <url> <newname>
+  git remote -v # check where git push will send the files
+  git remote rm origin # disconnect your local dir from the remote repo, e.g. if 4. your changing the remote url
+  git remote add origin <url> # add a remote repo to your local dir
 
 ```
 
@@ -133,14 +148,14 @@ long list of git
  sudo apt install git-all
  sudo apt install install-info # for debian (e.g. ubuntu), only if installed from source
 
-  git config user.name # see what your username is
+git config user.name # see what your username is
  git config --show-origin user.name # see where the value for user.name is coming from
 
 
  git config --global user.name "poop"
  git config --global user.email "poop@users.noreply.github.com" # always use the noreply, thank me later
  # ^ set your editor
- git config --global core.editor vscode # or nano, but why arent you using vscode for everything?
+ git config --global core.editor nano # or e.g. vscode
  # ^ default branch for new repositories
  git config --global init.defaultBranch develop
  #

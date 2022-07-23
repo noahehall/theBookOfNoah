@@ -21,7 +21,6 @@
 
 - functional effect: blueprint for concurrent workflows; describes what to do, but not its execution
   - are referentially transparent
-- fiber: cooperatively-yielding virtual thread
 
 ## basics
 
@@ -107,7 +106,6 @@ object Bathroom extends App {
   - requires an implicit `ExecutionContext` ins cope whenever you invoke methods on Future
   - no way of modeling dependencies
 
-
 ### Zio[-R, +E, +A]
 
 - any entity with type `Zio[-R, +E, +A]` is a functional effect
@@ -117,7 +115,6 @@ object Bathroom extends App {
 - FYI
   - the zipLeft|Right operators are useful when the results of intermediate effects arent needed
     - but you just need to run the effects sequentially
-
 
 #### R: Environemnt Type
 
@@ -146,7 +143,6 @@ object Bathroom extends App {
   - set to `Unit`, for void
   - set to `Nothing`, if the effect runs forever/until failure
 
-
 ## API
 
 - methods available to all/most effects
@@ -173,6 +169,7 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
   .fold(errLam, sucLamb) // handle both failure and success non-effectively, success receives the result of err if its called
   .foldM(errEffect, sucEffect) // handle both fail & succ effectively, success receives the result of err if its called
   .foreach(Seq) { partialFn } // returns a single effect that executes on each el of a Seq
+  .forever // dunno
   .map(succLamb) // transform the success value
   .mapError(errLamb) // transform the failure value
   .orElse(2ndEffect) // run 2ndEffect on failure
@@ -191,7 +188,6 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
 - predefined values for `ZIO[R,E,A]` type parameters
   - if you dont need to provide specific R,E,A values, prefer a type alias for improved type inference vs setting `[Any, Throwable, A]` etc
 - each have a companion object with useful static methods
-
 
 #### UIO[+A]
 
@@ -477,7 +473,6 @@ def safeDownload(url: String) =
   blocking(download(url))
 ```
 
-
 ##### effectBlocking
 
 - converts code that use blocking IO/put a thread intoa waiting state into a zio effect
@@ -508,12 +503,60 @@ def accept(l: ServerSocket) =
 
 ```
 
+#### Fiber[E, A]
+
+- fiber: cooperatively-yielding virtual thread for modeling effects that are already running and have already acquired their `R` environment
+- low-level data type for dealing with concurrency (naively similar to scala Future)
+  - always prefer higher-level operations rather than using fibers directly
+- all effects are implicitely run on a fiber (e.g. the Main fiber) which acts as a handle on the running computation
+- consume little memory, have elastic stacks, dont wast resources blocking, automatic GC if suspended/unreachable
+- multitasking built in (even in single-threaded environments)
+  - scheduled via ZIO runtime
+  - cooperatively yield to other fibers enabling
+
+```scala
+
+// random effect
+def fib(n: Long): UIO[Long] = UIO {
+  if (n <= 1) UIO.succeed(n)
+  else fib(n - 1).zipWith(fib(n - 2))(_ + _)
+}.flatten
+
+// run any effect by forking it
+val fib100Fiber: UIO[Fiber[Nothing, Long]] =
+  for {
+    fiber <- fib(100).fork
+  } yield fiber
+
+// run multiple fibers by joining them
+for {
+  fiber   <- IO.succeed("Hi!").fork // fiber1
+  message <- fiber.join // fiber2
+} yield message
+
+// await on fibers to get their Exit (execution result) information
+for {
+  fiber <- IO.succeed("Hi!").fork
+  exit  <- fiber.await
+} yield exit
+
+// immediately terminate a running fiber if its no longet needed
+// ^ the effect returned by Fiber#interrupt does not resume until the fiber has completed termination
+// ^ so you have to wait to get the Exit info
+for {
+  fiber <- IO.succeed("Hi!").forever.fork
+  exit  <- fiber.interrupt
+} yield exit
+
+// fork an interrupted fiber for it to resume (complete) immediately
+// ^ however now you dont get the Exit information
+for {
+  fiber <- IO.succeed("Hi!").forever.fork
+  _     <- fiber.interrupt.fork // I don't care!
+} yield ()
+```
+
 ### examples
-
-#### Basic Operations
-
-
-
 
 #### for comprehensions
 

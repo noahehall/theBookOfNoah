@@ -15,6 +15,15 @@
 - shift ctrl alt up/down: move a line up or down
 - cmd shift a: command pallete
 
+```sh
+
+# force intellij sbt to use the current SDK java version
+## preferences > build, execution > build tools > sbt > JRE
+## also update the project setting (right click project > module settings)
+## ^ or file > project structure > module
+/Users/$USER/.sdkman/candidates/java/current # on mac
+
+```
 ## things to do
 
 - file > setttings > font
