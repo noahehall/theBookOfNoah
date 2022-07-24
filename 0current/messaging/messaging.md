@@ -1,6 +1,10 @@
 # Messaging
 
-- general messaging/event streaming applicable to all providers
+- general messaging
+
+## links
+
+- [kafka vs pulsar vs rabbitmq](https://www.confluent.io/kafka-vs-pulsar/)
 
 ## terms
 
