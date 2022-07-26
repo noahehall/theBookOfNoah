@@ -23,13 +23,18 @@
 - [scala index: search for libraries](https://index.scala-lang.org/)
 - [whats wrong with sbt?](https://www.lihaoyi.com/post/SowhatswrongwithSBT.html)
 - [coursier: sbt uses it to implement managed deps](https://get-coursier.io/)
+- wtf
+  - [unmanaged deps + single/multi subpojects](https://stackoverflow.com/questions/7733028/sbt-how-can-i-add-a-local-filesystem-jar-to-my-project)
+  - [sbt err multiple resolvers have different access mechanism](https://stackoverflow.com/questions/29802766/multiple-resolvers-having-different-access-mechanism-configured-with-same-name)
+  - [dealing with sbt version conflicts](https://stackoverflow.com/questions/45531198/warnings-while-building-scala-spark-project-with-sbt)
+  - [sbt version conflicts](https://www.scala-lang.org/blog/2021/02/16/preventing-version-conflicts-with-versionscheme.html)
 - examples
   - [sbt tutorial](https://github.com/shekhargulati/52-technologies-in-2016/blob/master/02-sbt/README.md)
   - [example build.sbt](https://github.com/noahehall/scala/blob/develop/examples/build.sbt)
   - [example project configuration](https://github.com/noahehall/scala/tree/develop/examples/project)
 - docs
-  - [AAA best practices](https://www.scala-sbt.org/1.x/docs/Best-Practices.html)
   - [AAA best practices: plugins](https://www.scala-sbt.org/1.x/docs/Plugins-Best-Practices.html)
+  - [AAA best practices](https://www.scala-sbt.org/1.x/docs/Best-Practices.html)
   - [AAA getting started guide](https://www.scala-sbt.org/1.x/docs/Getting-Started.html)
   - [AAA sbt docs intro](https://www.scala-sbt.org/1.x/docs/)
   - [build: definition in depth](https://www.scala-sbt.org/1.x/docs/Task-Graph.html)
@@ -37,9 +42,11 @@
   - [build: multi subprojects](https://www.scala-sbt.org/1.x/docs/Multi-Project.html)
   - [build: organizing files](https://www.scala-sbt.org/1.x/docs/Organizing-Build.html)
   - [cross building](https://www.scala-sbt.org/1.x/docs/Cross-Build.html)
+  - [docker plugin for building images](https://www.scala-sbt.org/sbt-native-packager/formats/docker.html)
   - [input tasks](https://www.scala-sbt.org/1.x/docs/Input-Tasks.html)
   - [inspecting settings](https://www.scala-sbt.org/1.x/docs/Inspecting-Settings.html)
   - [library dependencies](https://www.scala-sbt.org/1.x/docs/Library-Dependencies.html)
+  - [library management](https://www.scala-sbt.org/1.x/docs/Library-Management.html)
   - [library management](https://www.scala-sbt.org/1.x/docs/Library-Management.html)
   - [plugins: basics](https://www.scala-sbt.org/1.x/docs/Using-Plugins.html)
   - [plugins: intro](https://www.scala-sbt.org/1.x/docs/Plugins.html)
@@ -103,6 +110,7 @@
 - `root/project/whatever.scala`: define helper objects and one-off plugins that can be imported into your build.sbt
   - can contain: `object` `classes` expressions
 - `root/lib/`: directory `.jar` files for unmanaged dependencies
+  - in multi sub project projects, create & place jars in each subproject  `lib` dir
 
 #### developer files
 
@@ -167,7 +175,7 @@
     - packageOptions
     - packageSrc
     - baseDirectory: the projects root dir
-    - unmanagedBase: by default its the `lib` dir
+    - unmanagedBase: by default its the `lib` dir, but will include lib dirs for each subproject if multiproject
     - sourceDirectories: e.g. `src/main/scala`, append additional source dirs with `file()`
     - Zero: universal fallback for all scope axes; its direct use should be reserved to sbt and plugin authors
     - Global: sets Zero scope to all axes `Zero / Zero / Zero / someKey`

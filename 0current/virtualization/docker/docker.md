@@ -87,11 +87,7 @@
     - .env: prefer over cli vars to set defaults and allow the consumer to override via cli
 
 ```sh
-  # on mac
-    brew install --cask docker
-    brew install docker-compose
-    # then open the docker app, start the docker desktop
-    # then docker run --rm hello-world should work
+
   # basics
   docker help
   docker help cp

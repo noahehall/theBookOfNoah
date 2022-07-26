@@ -1431,7 +1431,7 @@ MyKnownValues
 if (currentCrustSize == Large)
   println("You get a prize!")
 
-// match: see `# match` for more examples
+// match: see `# pattern matching` for more examples
 currentCrustSize match
   case Small => println("small")
   case Medium => println("medium")
@@ -2156,7 +2156,7 @@ else
 
 ```
 
-### match statements
+### pattern match
 
 - a general pattern for accessing data encapsulating in an entity
   - works like a switch but for entity decomposition
