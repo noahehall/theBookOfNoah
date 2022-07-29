@@ -2,7 +2,7 @@
 
 - wouldnt trust anything in this file until this line is removed
 - bookmark
-  - https://zio.dev/version-1.x/overview/overview_testing_effects
+  - https://zio.dev/version-1.x/overview/overview_testing_effects/#environmental-effects
 - largely taken from
   - zionomicon
     - john de goes and adam fraser
@@ -120,7 +120,36 @@ object Bathroom extends App {
 
 - R: the input environment effect; comprehensive dependency injection
   - the environment (dependencies) required for the effect to be executed
+  - Effects that require an environment cannot be run without first providing their environment
   - set to `Any` if no dependencies are required
+
+```scala
+
+// any zio effect can access the environment via a for comp
+for {
+  env <- ZIO.environment[Int]
+  _   <- putStrLn(s"The value of the environment is: $env")
+} yield env
+
+// when the environment is a type with fields, use ZIO.access
+final case class Config(server: String, port: Int)
+val configString: URIO[Config, String] =
+  for {
+    server <- ZIO.access[Config](_.server)
+    port   <- ZIO.access[Config](_.port)
+  } yield s"Server: $server, port: $port"
+
+// when the environment is itself an effect, use ZIO.accessM to execute and return the output of the effect
+trait DatabaseOps {
+  def getTableNames: Task[List[String]]
+  def getColumnNames(table: String): Task[List[String]]
+}
+val tablesAndColumns: ZIO[DatabaseOps, Throwable, (List[String], List[String])] =
+  for {
+    tables  <- ZIO.accessM[DatabaseOps](_.getTableNames)
+    columns <- ZIO.accessM[DatabaseOps](_.getColumnNames("user_table"))
+  } yield (tables, columns)
+```
 
 #### E: Failure Type
 
