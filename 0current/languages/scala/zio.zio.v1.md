@@ -2,7 +2,11 @@
 
 - wouldnt trust anything in this file until this line is removed
 - bookmark
+  - access zio 1 reference here, then you can click around via hamburger menu without forcing you to zio 2
   - https://zio.dev/version-1.x/overview/overview_testing_effects/#environmental-effects
+    - didnt quite understand the remainder of this section
+  - https://zio.dev/version-1.x/datatypes/contextual/zlayer
+    - start at top and run down the list
 - largely taken from
   - zionomicon
     - john de goes and adam fraser
@@ -11,12 +15,14 @@
 
 ## links
 
+- [pure fp book](https://www.manning.com/books/functional-programming-in-scala-second-edition)
 - [thread pool best practices with zio](https://degoes.net/articles/zio-threads)
 - [articles by john a de goes](https://degoes.net/articles/)
 - [zio test: intro blog/tutorial](https://scalac.io/blog/zio-test-what-why-how/)
 - docs
   - [000 documentation start page](https://zio.dev/version-1.x/overview/)
   - [handling errors](https://zio.dev/version-1.x/overview/overview_handling_errors/)
+
 ## terms
 
 - functional effect: blueprint for concurrent workflows; describes what to do, but not its execution
@@ -122,9 +128,25 @@ object Bathroom extends App {
   - the environment (dependencies) required for the effect to be executed
   - Effects that require an environment cannot be run without first providing their environment
   - set to `Any` if no dependencies are required
+- TODO: `.live` vs non live?
 
 ```scala
+/// Specifying Dependencies ////////////////////////////
+// you can specify a single dependency
+val blah: ZIO[Poop, Nothing, Unit] = ???
+// or multiple dependencies
+val blah: ZIO[Poop with Flush with Etc, Nothing, Unit] = ???
+// or with from services
+// ^ TODO: this should be somewhere else
+val live: URLayer[Clock with Console, Logging] =
+      ZLayer.fromServices[Clock.Service, Console.Service, Logging.Service]
 
+/// Providing Dependencies ////////////////////////////
+// use the ++ operator to provide multiple deps
+// builtin ZIO services dont need to be provided
+val mainApp: ZIO[Any, Nothing, Unit] = effect.provideLayer(Console.live ++ Random.live)
+
+/// Accessing Dependencies ////////////////////////////
 // any zio effect can access the environment via a for comp
 for {
   env <- ZIO.environment[Int]
@@ -149,7 +171,77 @@ val tablesAndColumns: ZIO[DatabaseOps, Throwable, (List[String], List[String])] 
     tables  <- ZIO.accessM[DatabaseOps](_.getTableNames)
     columns <- ZIO.accessM[DatabaseOps](_.getColumnNames("user_table"))
   } yield (tables, columns)
+
+
+// API
+ZIO
+  .access[SomeInterface](lambda(implementation)) // retrieve the implementation of some environment class/object/etc
+  .accessM[SomeInterface](lambda(implementation)) // retrieve the implementation of some environment effect
+  .serviceWith // returns an effect that requires the corrosponding service to be defined with the Has[_] data type; used with accessor methods
+  .provide(someServiceImplementation) // provide a specific implementation to an effect that requires it
+  .provideCustomLayer(someServiceImplementation) // provide services not part of ZEnv (i.e. builtin services)
+  .provideLayer(SomeEnv.live ++ otherEnv.live)
+  .provideSomeLayer() // partially provide some layers to an effect
+
 ```
+
+##### Has[A]
+
+- represents a dependency on a service of type A
+  - wire/binds service interfaces to their implementations
+  - horizontally combine multiple services together with the `++` operator
+- enables us to combine different services and provide them to the ZIO Environment.
+
+```scala
+// define deps that will propagate through the environment
+val iRequire: Has[ServiceInterface] = Has(serviceImplementation)
+val requireMultiple: Has[AInterface] with Has[BInterface] = aImplementation ++ bImplementation
+
+// retrieve deps from the environment
+val imB = requireMultiple.get[BInterface]
+```
+
+##### ZLayer[-RIn, +E, +ROut]
+
+- build an environment composed of input(s) RIn and outputing type ROut; possibly producing an error E during creation
+  - its sole purpose to define the dependency graph of an application/its services
+  - use `++` operator to horizontally compose layerA and layerB into a single layerC that has requirements on both A and B
+  - use `>>>` operator to vertically compose layerA as input env to layerB
+    - the first layer must output all services required by layerB
+    - ^ but can be defered using `ZLayer.identity`
+- module patterns: idiomatic ZIO service creation
+  - both patterns require you to:
+    - define a service whose implementation is coded to an interface
+    - define a layer that wraps the live implementation
+    - provide the layer to the application that runs the service
+    - potentially provide downstream services with the service data type and ZIO will inject it automatically
+  - [module pattern 1.0](https://zio.dev/version-1.x/datatypes/contextual/#module-pattern-10)
+    - a single object that encapsulates the full service definition & implementation, live implementation and accessor methods
+  - [module pattern 2.0](https://zio.dev/version-1.x/datatypes/contextual/#module-pattern-20)
+    - use classes to implement services, and constructores to define service dependencies
+
+```scala
+
+// API
+ZLayer
+  .fromServices[Depx, ..Y]{ (depX: DepX, y...) => ??? } // wrapper of the live implementation
+  .fromService
+  .succeed { partial } // wrapper of a live implementation without deps
+```
+
+##### ULayer
+
+- todo...
+
+##### URLayer
+
+- todo...
+
+##### ZEnv
+
+- e.g. `ZIO[ZEnv, Blah, Blah]`
+- data type that includes all ZIO builtin services
+  - clock, console, system, random, and blocking
 
 #### E: Failure Type
 
@@ -692,6 +784,7 @@ val getStrLn2: IO[IOException, String] =
   - replicates netflix's Polynote
   - a more powerful version of Java & Scala constructors; can build multiple services in terms of their dependencies
   - supports resources, asynchronous creation & finalization, retrying and other features
+- Whenever we lift a service value into ZLayer with the ZLayer.succeed constructor or toLayer, ZIO will wrap our service with Has data type.
 
 ### Zio STM
 
