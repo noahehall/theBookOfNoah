@@ -5,8 +5,9 @@
   - access zio 1 reference here, then you can click around via hamburger menu without forcing you to zio 2
   - https://zio.dev/version-1.x/overview/overview_testing_effects/#environmental-effects
     - didnt quite understand the remainder of this section
-  - https://zio.dev/version-1.x/datatypes/contextual/zlayer
-    - start at top and run down the list
+  - https://zio.dev/version-1.x/can_fail/
+    - haha you cant event fkn get to this link on the site/google
+  - https://zio.dev/version-1.x/datatypes/contextual/zlayer#updating-local-dependencies
 - largely taken from
   - zionomicon
     - john de goes and adam fraser
@@ -112,7 +113,20 @@ object Bathroom extends App {
   - requires an implicit `ExecutionContext` ins cope whenever you invoke methods on Future
   - no way of modeling dependencies
 
-### Zio[-R, +E, +A]
+### Operators
+
+- full details listed elseware
+
+```scala
+
+// compose two/more layers horizontally, i.e. no dependencies between them
+layerC = layerA ++ layerB // layerC provides both A & B
+// compose two/more layers vertically, layerB requires layerA as a dep
+layerC = layerA >>> layerB // layerC provides layerB
+
+```
+
+## Zio[-R, +E, +A]
 
 - any entity with type `Zio[-R, +E, +A]` is a functional effect
   - naively an effectful version of `R => Either[E, A]`
@@ -122,13 +136,12 @@ object Bathroom extends App {
   - the zipLeft|Right operators are useful when the results of intermediate effects arent needed
     - but you just need to run the effects sequentially
 
-#### R: Environemnt Type
+### R: Environemnt Type
 
 - R: the input environment effect; comprehensive dependency injection
   - the environment (dependencies) required for the effect to be executed
   - Effects that require an environment cannot be run without first providing their environment
   - set to `Any` if no dependencies are required
-- TODO: `.live` vs non live?
 
 ```scala
 /// Specifying Dependencies ////////////////////////////
@@ -185,65 +198,13 @@ ZIO
 
 ```
 
-##### Has[A]
-
-- represents a dependency on a service of type A
-  - wire/binds service interfaces to their implementations
-  - horizontally combine multiple services together with the `++` operator
-- enables us to combine different services and provide them to the ZIO Environment.
-
-```scala
-// define deps that will propagate through the environment
-val iRequire: Has[ServiceInterface] = Has(serviceImplementation)
-val requireMultiple: Has[AInterface] with Has[BInterface] = aImplementation ++ bImplementation
-
-// retrieve deps from the environment
-val imB = requireMultiple.get[BInterface]
-```
-
-##### ZLayer[-RIn, +E, +ROut]
-
-- build an environment composed of input(s) RIn and outputing type ROut; possibly producing an error E during creation
-  - its sole purpose to define the dependency graph of an application/its services
-  - use `++` operator to horizontally compose layerA and layerB into a single layerC that has requirements on both A and B
-  - use `>>>` operator to vertically compose layerA as input env to layerB
-    - the first layer must output all services required by layerB
-    - ^ but can be defered using `ZLayer.identity`
-- module patterns: idiomatic ZIO service creation
-  - both patterns require you to:
-    - define a service whose implementation is coded to an interface
-    - define a layer that wraps the live implementation
-    - provide the layer to the application that runs the service
-    - potentially provide downstream services with the service data type and ZIO will inject it automatically
-  - [module pattern 1.0](https://zio.dev/version-1.x/datatypes/contextual/#module-pattern-10)
-    - a single object that encapsulates the full service definition & implementation, live implementation and accessor methods
-  - [module pattern 2.0](https://zio.dev/version-1.x/datatypes/contextual/#module-pattern-20)
-    - use classes to implement services, and constructores to define service dependencies
-
-```scala
-
-// API
-ZLayer
-  .fromServices[Depx, ..Y]{ (depX: DepX, y...) => ??? } // wrapper of the live implementation
-  .fromService
-  .succeed { partial } // wrapper of a live implementation without deps
-```
-
-##### ULayer
-
-- todo...
-
-##### URLayer
-
-- todo...
-
-##### ZEnv
+#### ZEnv
 
 - e.g. `ZIO[ZEnv, Blah, Blah]`
 - data type that includes all ZIO builtin services
   - clock, console, system, random, and blocking
 
-#### E: Failure Type
+### E: Failure Type
 
 - E: the (output) type of error(s) that can occur during execution of the effect
   - the potential ways an effect can fail
@@ -258,11 +219,218 @@ ZLayer
 - handle errors
   - generally all the `.fold` type defs, but the `.foldM` is recommended
 
-#### A: Success Type
+### A: Success Type
 
 - A: the (output) success return type; i.e. the return type
   - set to `Unit`, for void
   - set to `Nothing`, if the effect runs forever/until failure
+
+## Layers
+
+### Has[A]
+
+- Has can be thought of as a Map[K, V] which keys are service types and values are service implementations
+- represents a dependency on a service of type A
+  - wire/binds service interfaces to their implementations
+  - horizontally combine multiple services together with the `++` operator
+- enables us to combine different services and provide them to the ZIO Environment.
+- its a Wrapper of some code, that converts its value into a service thats providable as a layer
+  - haha need to check on that definition
+
+```scala
+// define deps that will propagate through the environment
+val iRequire: Has[ServiceInterface] = Has(serviceImplementation)
+val iRequireMultiple: Has[AInterface] with Has[BInterface] = aImplementation ++ bImplementation
+
+// retrieve deps from the environment
+val imB = requireMultiple.get[BInterface]
+```
+
+### ZLayer[-RIn, +E, +ROut]
+
+- build an env of services composed of input(s) RIn that outputs an env of services ROut; possibly producing an error E during creation
+  - its sole purpose is to define an async dependency graph of services
+  - use `++` operator to horizontally compose layerA and layerB into a single layerC that has requirements on both A and B
+  - use `>>>` operator to vertically compose layerA as input env to layerB
+    - the first layer must output all services required by layerB
+    - ^ but can be defered using `ZLayer.identity`
+- construct larger ZIO environments from smaller pieces
+  - replicates netflix's Polynote
+  - a more powerful version of Java & Scala constructors; can build multiple services in terms of their dependencies
+  - supports resources, asynchronous creation & finalization, retrying and other features
+- gotchas
+  - Whenever we lift a service value into ZLayer with the ZLayer.succeed constructor or toLayer, ZIO will wrap our service with Has data type.
+  - layers are memoized, i.e. a layer used in multiple places is still only instantiated once shared between all deps
+    - use `ZLayer.fresh(...)` to provide an isolated instance
+
+```scala
+// create a layer that provides a string value
+val nameLayer: ULayer[Has[String]] = ZLayer.succeed("Adam")
+
+// create a layer from an acquirable & releasable value
+def acquire = ZIO.effect(new FileInputStream("file.txt"))
+def release(resource: Closeable) = ZIO.effectTotal(resource.close())
+val inputStreamLayer = ZLayer.fromAcquireRelease(acquire)(release)
+
+// API
+// generallly all have suffixes
+// ^ blahM: build a service effectfully
+// ^ blahManaged: resourcefully (e.g. db acquistion & release)
+// ^ blahMany: build multiple serfvices
+ZLayer
+  .fromAcquireRelease(acquireValue)(releaseValue) // create a layer from a resource acquisition/release
+  .fromEffect(someEffect) // create a layer form an effect
+  .fromFunction // create a layer from a function
+  .fromService((gotService) => { liveServiceImplementation }) // build a layer from a service retrieved from the environment
+  .fromServices[Depx, ..Y](depX: DepX, y...) => ??? // wrapper of the live implementation
+  .identity // express the requirfrom for a layer (wtf ?)
+  .succeed[A](a => A) // convert a value into a layer of type ULayer[Has[A]]
+  .succeedMany // create a layer from multiple services
+  .fromManaged(someZManagedValue) // convert a managed resource into a layer
+  .fresh // provide an isolated instance of this layer
+
+```
+
+#### ULayer
+
+- todo...
+
+#### URLayer
+
+- todo...
+
+### ZManaged
+
+- its ZLayer but for managed resources
+  - i.e. resource that require acquisition & release, like a db/file handle
+- any ZManaged value can be converted to a ZLayer by a providing a manged resource to the ZIO.fromManaged constructor
+
+```scala
+val managedFile = ZManaged.fromAutoCloseable(
+  ZIO.effect(scala.io.Source.fromFile("file.txt"))
+)
+// convert to layer via fromManaged
+val fileLayer: ZLayer[Any, Throwable, Has[BufferedSource]] = ZLayer.fromManaged(managedFile)
+// or via toLayer
+val fileLayer: ZLayer[Any, Throwable, Has[BufferedSource]] = managedFile.toLayer
+
+// API
+someZmanagedThing
+  .toLayer // convert the managed resource into a layer
+```
+
+## Services
+
+- the culmination of `ZIO[R, E, A]` + Layers
+- a zio-fied app is a collection of services
+- module patterns: idiomatic ZIO service creation
+  - both patterns require you to:
+    - define a service whose implementation is coded to an interface
+    - define a layer that wraps the live implementation
+    - provide the layer to the application that runs the service
+    - potentially provide downstream services with the service data type and ZIO will inject it automatically
+  - [module pattern 1.0](https://zio.dev/version-1.x/datatypes/contextual/#module-pattern-10)
+    - a single object that encapsulates the full service definition & implementation, live implementation and accessor methods
+  - [module pattern 2.0](https://zio.dev/version-1.x/datatypes/contextual/#module-pattern-20)
+    - use classes to implement services, and constructores to define service dependencies
+- gotchas
+  - with the fkn companion objects its difficult to tell at first wtf is going on
+    - thus things are renamed to include poopInterface to visually inform that you're coding to (and generally passing around) the interface, not the live implementation or layer
+
+```scala
+///////////////////////
+// the whole purpose is to convert a service from idiomatic scala
+// into idiomatic zio with dependency injection
+///////////////////////
+
+// interfaces
+trait ServiceA {}
+trait ServiceB {}
+trait FooService {}
+class FooServiceImpl(a: ServiceA, b: ServiceB) {} //depends on A and B
+// runtime
+val fooService = new FooServiceImpl(new ServiceAImpl, new ServiceBImpl)
+
+///////////////////////
+// service pattern 1.0
+///////////////////////
+
+// lowercase containerName: the module name for this service
+// ^encapsulates the full service definition + implementation + accessor methods
+object terminal {
+  // let the environment know what service you provide
+  type TerminalInterface = Has[Terminal.Service]
+  // uppercase companion object for the Type alias above
+  object TerminalInterface {
+    // define the interface for the service
+    trait Service {
+      def putStrLn(line: String): UIO[Unit]
+    }
+    // concrete implemenetation of the service + any dependencies this service requires
+    // ^ the poop.Service.live is what you turn into a layer for other services to consume
+    // remember: the value of a liveService should generally be some type of effect
+    // ^ notice the final value is ZIO.effectTotal
+    object Service {
+      val live: ULayer[TerminalInterface] = ZLayer.succeed {
+        new Service {
+          override def putStrLn(line: String): UIO[Unit] =
+            ZIO.effectTotal(println(line))
+        }
+      }
+      // ^ example of live implementation with dependencies specified
+      val live: URLayer[Clock with Console, Logging] =
+        ZLayer.fromServices[Clock.Service, Console.Service, Logging.Service] {
+          (clock: Clock.Service, console: Console.Service) =>
+            new Service {
+              override def log(line: String): UIO[Unit] =
+                for {
+                  current <- clock.currentDateTime.orDie
+                  _ <- console.putStrLn(current.toString + "--" + line).orDie
+                } yield ()
+            }
+        }
+    }
+  }
+  // Accessor Methods
+  // remember if the underlying services has deps
+  // ^ you need to retrieve the deps from the environment, e.g. via one of the ZIO.access apis
+  def log(line: => String): URIO[LoggingInterface, Unit] =
+    // .log is defined on LoggingInterface
+    // .get is made available via accessM which returns the Has map of all the environments?
+    ZIO.accessM(_.get.log(line))
+}
+
+///////////////////////
+// service pattern 2.0
+// decomposing the 1.0 object monolith into discrete components
+///////////////////////
+
+// define the interface
+trait LoggingInterface { ... }
+// provide accessor methods on the interface
+object LoggingInterface {
+  def log(line: String): URIO[Has[LoggingInterface], Unit] = ZIO.serviceWith[LoggingInterface](_.log(line))
+}
+// implement the interface
+case class LoggingLive() extends LoggingInterface {
+  override def log(line: String): UIO[Unit] =
+    ZIO.effectTotal(print(line))
+}
+// ^ example with deps
+case class LoggingLive(console: Console.Service, clock: Clock.Service) extends Logging {
+  override def log(line: String): UIO[Unit] =
+    for {
+      current <- clock.currentDateTime.orDie
+      _       <- console.putStrLn(current.toString + "--" + line).orDie
+    } yield ()
+}
+// companion object that provides the live implementation + layer
+// ^ example using URLayer to specify deps required for this service
+object LoggingLive {
+  val layer: URLayer[Has[Console.Service] with Has[Clock.Service], Has[Logging]] =
+    (LoggingLive(_, _)).toLayer
+}
+```
 
 ## API
 
@@ -300,11 +468,16 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
   .retryOrElseEither(Schedule.poop, finallyLambda) // same as retryOrElse, except you have to return an Either
   .succeed(anything) // see  `# Succeed`
   .timeout(duration) // returns a new Option[effect], None indicates timeout occurred
+  .toLayer // convert this effect into a layer
   .zip(2ndEffect) // sequentially... returns a tuple if both succeed (first, second)
   .zipLeft(2ndEffect) // i.e. <* sequentially... returns the result of the first
   .zipRight(2ndEffect) // i.e. *> sequentially... returns the result of the second
   .zipWith(2ndEffect)(lambda(a, b)) // sequentially combine effects
 ```
+
+### dunno
+
+- ZManaged
 
 ### Type Aliases
 
@@ -335,7 +508,7 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
 - aka `ZIO[R, Throwable, A]`
 - allows you to thread environments through third-party libraries and your application.
 
-### Constructors
+### Effect Constructors
 
 - convert standard scala data types into zio effects
 
@@ -774,17 +947,7 @@ val getStrLn2: IO[IOException, String] =
 
 ## todo
 
-### Has
-
-- type-indexed heterogeneous map
-
-### ZLayer
-
-- construct larger ZIO environments from smaller pieces
-  - replicates netflix's Polynote
-  - a more powerful version of Java & Scala constructors; can build multiple services in terms of their dependencies
-  - supports resources, asynchronous creation & finalization, retrying and other features
-- Whenever we lift a service value into ZLayer with the ZLayer.succeed constructor or toLayer, ZIO will wrap our service with Has data type.
+- [e.g. here (scroll down a bit), when to use poop.apply \_ ).toLayer](https://zio.dev/version-1.x/datatypes/contextual/zlayer#vertical-and-horizontal-composition)
 
 ### Zio STM
 
