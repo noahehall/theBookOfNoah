@@ -5,9 +5,10 @@
   - access zio 1 reference here, then you can click around via hamburger menu without forcing you to zio 2
   - https://zio.dev/version-1.x/overview/overview_testing_effects/#environmental-effects
     - didnt quite understand the remainder of this section
+    - todo: swing back through, sure it'll make sense now
   - https://zio.dev/version-1.x/can_fail/
     - haha you cant event fkn get to this link on the site/google
-  - https://zio.dev/version-1.x/datatypes/contextual/zlayer#updating-local-dependencies
+  - https://zio.dev/version-1.x/datatypes/fiber/
 - largely taken from
   - zionomicon
     - john de goes and adam fraser
@@ -71,6 +72,7 @@
 
 - generally all arguments are passed by name to ensure side effects are managed by ZIO at runtime and not directly executed when instantiated
 - any value that actually fails or runs forever should be considered a failure and not a success
+- Constructors in classes are always synchronous, use ZLayer for asynchronous creation of services (especially in non-blocking applications)
 
 ```scala
 // somewhere define what your workflow does
@@ -115,15 +117,27 @@ object Bathroom extends App {
 
 ### Operators
 
-- full details listed elseware
+- full details (should be) listed elseware
 
 ```scala
 
 // compose two/more layers horizontally, i.e. no dependencies between them
 layerC = layerA ++ layerB // layerC provides both A & B
+
 // compose two/more layers vertically, layerB requires layerA as a dep
+// ^ note that LHS layers are hidden in the type definition of layerC
+// ^ and are magically provided to the consumer
+// see ZLayer.identity to force the consumer to provide the layer themselves
+// ^ e.g. layerC = ZLayer.identity(layerA) >>> layerB
 layerC = layerA >>> layerB // layerC provides layerB
 
+// consume and pass through dependencies to all downstream services
+lazy val all: ZLayer[Any, Nothing, Baker with Ingredients with Oven with Dough with Cake] =
+  baker >+>       // Baker
+  ingredients >+> // Baker with Ingredients
+  oven >+>        // Baker with Ingredients with Oven
+  dough >+>       // Baker with Ingredients with Oven with Dough
+  cake            // Baker with Ingredients with Oven with Dough with Cake
 ```
 
 ## Zio[-R, +E, +A]
@@ -249,7 +263,7 @@ val imB = requireMultiple.get[BInterface]
 ### ZLayer[-RIn, +E, +ROut]
 
 - build an env of services composed of input(s) RIn that outputs an env of services ROut; possibly producing an error E during creation
-  - its sole purpose is to define an async dependency graph of services
+  - an alternative to a class constructor for creating services with dependencies
   - use `++` operator to horizontally compose layerA and layerB into a single layerC that has requirements on both A and B
   - use `>>>` operator to vertically compose layerA as input env to layerB
     - the first layer must output all services required by layerB
@@ -272,6 +286,22 @@ def acquire = ZIO.effect(new FileInputStream("file.txt"))
 def release(resource: Closeable) = ZIO.effectTotal(resource.close())
 val inputStreamLayer = ZLayer.fromAcquireRelease(acquire)(release)
 
+// replace a dependency with a different implementation
+// ^ via blah.update
+val newService = prevService.update[SomeDepInterface] {
+  prevDep => new SomeDepInterface {
+    ...
+  }
+}
+// ^ or overriding the layer that contains the dep you want to replace
+val newService = prevService ++ otherLayer
+
+// partially provide dependencies via ZLayer.identity
+// the consumer will have to provide the missing deps
+val stillMissing: ZLayer[Has[ThisDep]], Nothing, Poop] =
+  ZLayer.identity[Has[ThisDep]] >>> Blah
+
+
 // API
 // generallly all have suffixes
 // ^ blahM: build a service effectfully
@@ -288,16 +318,29 @@ ZLayer
   .succeedMany // create a layer from multiple services
   .fromManaged(someZManagedValue) // convert a managed resource into a layer
   .fresh // provide an isolated instance of this layer
+  .requires[SomeInterface] // no fkn clue, it just appeared in the examples
 
 ```
 
-#### ULayer
+#### RLayer[-RIn, +ROut]
 
-- todo...
+- type alias for `ZLayer[RIn, Throwable, ROut]`
 
-#### URLayer
+#### ULayer[+ROut]
 
-- todo...
+- type alias for `ZLayer[Any, Nothing, ROut]`
+
+#### Layer[+E, +ROut]
+
+- type alias for `ZLayer[Any, E, ROut]`
+
+#### URLayer[-RIn, +ROut]
+
+- type alias for `ZLayer[RIn, Nothing, ROut]`
+
+#### TaskLayer[+ROut]
+
+- type alias for `ZLayer[Any, Throwable, ROut]`
 
 ### ZManaged
 
@@ -431,6 +474,10 @@ object LoggingLive {
     (LoggingLive(_, _)).toLayer
 }
 ```
+
+## ZIO applications
+
+- [grab some of the examples](https://zio.dev/version-1.x/datatypes/contextual/zlayer#examples)
 
 ## API
 
