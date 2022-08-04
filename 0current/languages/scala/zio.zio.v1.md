@@ -8,7 +8,7 @@
     - todo: swing back through, sure it'll make sense now
   - https://zio.dev/version-1.x/can_fail/
     - haha you cant event fkn get to this link on the site/google
-  - https://zio.dev/version-1.x/datatypes/fiber/
+  - https://zio.dev/version-1.x/datatypes/fiber/#error-model
 - largely taken from
   - zionomicon
     - john de goes and adam fraser
@@ -138,6 +138,7 @@ lazy val all: ZLayer[Any, Nothing, Baker with Ingredients with Oven with Dough w
   oven >+>        // Baker with Ingredients with Oven
   dough >+>       // Baker with Ingredients with Oven with Dough
   cake            // Baker with Ingredients with Oven with Dough with Cake
+
 ```
 
 ## Zio[-R, +E, +A]
@@ -362,7 +363,7 @@ someZmanagedThing
   .toLayer // convert the managed resource into a layer
 ```
 
-## Services
+## Custom Services
 
 - the culmination of `ZIO[R, E, A]` + Layers
 - a zio-fied app is a collection of services
@@ -475,6 +476,284 @@ object LoggingLive {
 }
 ```
 
+
+## Native Services
+
+- relying on these services enables you to easily test any code without actually interacting with production implementations
+  - ability to replace implementation details during tests with specific values for testing
+- when using a service, always update the type signature of the underlying effect, .e.g `ZIO[Clock, Nothing, Unit]`
+
+### Clock
+
+- methods related to time and scheduling
+- logic related to retrying, repitition, timing, etc should utilize the Clock service
+- use cases
+  - the current time/date/offsets in different units
+  - sleep
+  - delay
+
+```scala
+
+import zio.clock._
+import zio.duration._
+
+// implementing a delay
+def delay[R, E, A](zio: ZIO[R,E,A])(d: Duration): ZIO[R with Clock, E, A] =
+  clock.sleep(Duration) *> zio
+
+// api
+zio.clock
+  .nanoTime: URIO[Clock, Long]
+  .sleep(d: => Duration): URIO[Clock, Unit]
+
+```
+
+#### duration
+
+```scala
+
+// adds properties & methods onto integers
+import zio.duration._
+
+val someInt = 10
+
+someInt
+  .seconds
+
+```
+
+### Console
+
+- methods related to console input/output
+- use cases
+  - cli tools
+
+```scala
+
+zio.console
+  .getStrLn: ZIO[Console, IOException, String]
+  .putStr(line: => String): URIO[Console, Unit]
+  .putStrLn(line: => String): URIO[Console, Unit]
+
+```
+
+### System
+
+- methods for getting system & env vars
+- use cases
+  - handling configuration values
+
+```scala
+
+zio.system
+  .env(k: String): IO[SecurityException, Option[String]] // env var
+  .property(p: String): IO[Throwable, Option[String]] // system prop
+```
+
+### Random
+
+- methods for generating random values
+- the `live` implementation delegates to `scala.util.Random` and has the same interface
+
+```scala
+
+
+```
+
+### Blocking (package)
+
+- methods for running blocking tasks on a separate `Executor` optimized for blocking tasks
+  - only available on the JVM (blocking isnt available in scala)
+  - by default ZIO is optimized for async code and computationally bound tasks
+    - its critical that blocking tasks run on a separate blcoking thread pool
+      - else you could exhaust all of ZIOs default threads
+
+```scala
+
+import zio.blocking._
+import scala.io.{ Codec, Source }
+
+def download(url: String) =
+  Task.effect {
+    Source.fromURL(url)(Codec.UTF8).mkString
+  }
+
+def safeDownload(url: String) =
+  blocking(download(url))
+```
+
+#### effectBlocking
+
+- converts code that use blocking IO/put a thread intoa waiting state into a zio effect
+  - The effect will be executed on a separate thread pool optimized for blocking effects
+  - can be interrupted by invoking Thread.interrupt using the effectBlockingInterrupt method
+
+```scala
+import zio.blocking._
+
+val sleeping =
+  effectBlocking(Thread.sleep(Long.MaxValue))
+
+```
+
+#### effectBlockingCancelable
+
+- see `effectBlocking`
+  - specifically for blocking code that can only be interrupted by invoking a cancellation effect
+
+```scala
+
+import java.net.ServerSocket
+import zio.UIO
+import zio.blocking._
+
+def accept(l: ServerSocket) =
+  effectBlockingCancelable(l.accept())(UIO.effectTotal(l.close()))
+
+```
+
+### Fiber[E, A]
+
+- fiber: concurrently run an effect without blocking the current process (naively similar to scala Future)
+  - always prefer higher-level operations rather than using fibers directly
+  - all effects are implicitely run on a fiber (e.g. the Main fiber) which acts as a handle on the running computation
+- more info
+  - cooperatively-yielding virtual thread for modeling effects that are already running and have already acquired their `R` environment
+    - On the JVM, fibers will use threads, but will not consume unlimited threads. Instead, fibers yield cooperatively during periods of high-contention.
+  - consume little memory, have elastic stacks, dont wast resources blocking, automatic GC if suspended/unreachable
+  - multitasking built in (even in single-threaded environments)
+    - scheduled via ZIO runtime
+- API in detail
+  - effect.fork: any `IO[E, A]` to immediately yield an `UIO[Fiber[A, A]]`
+    - forking executes the effect on the fiber (i.e. thread)
+  - effect.fork0: specify the supervisor to receive any non-recoverable errors/those that occur in finalizers
+    - if no supervisor is provided, then it traverses up the stack to the root handler supervisor which by default prints the stack trace
+  - effect.forkDaemon: fork an effect into a fiber attached to the global scope
+    - when the fiber executing the effect terminates, the forked fiber will continue running
+    - basically when effectA is wrapped inside effectB and is forkedDaemon
+      - if effectB is terminated, it wont terminate effectA (because its attached to the main fiber and not effectBs fiber)
+  - fiber.join: resume execution after the current fibers value is realized
+    - i.e. join the fiber back to the main thread to retrieve the effects value
+    - if the current fiber failed that the result returned by join will also fail with the same error
+  - fiber.interrupt: schedules termination of the current fiber
+    - the operation doesnt complete until
+      - all resources acquired during execution are released
+      - all finalizers have been run
+  - fiber.await: await on fibers to terminate & get their Exit (execution result) information
+    - e.g. to inspect if the fib er successfuly executed
+
+```scala
+//////////////////////////////
+////// doc examples
+//////////////////////////////
+
+// general execution of effects on fibers
+// ^ and rejoining on the main thread to get their value
+val analyzed = for {
+    fiber1   <- analyzeData(data).fork  // IO[E, Analysis]
+    fiber2   <- validateData(data).fork // IO[E, Boolean]
+    // Do other stuff
+    valid    <- fiber2.join
+    _        <- if (!valid) fiber1.interrupt
+                else IO.unit
+    analyzed <- fiber1.join
+} yield analyzed
+
+// awaiting fibers to get success status
+for {
+  b <- nextBoolean
+  fiber <- (if (b) ZIO.succeed(10) else ZIO.fail("The boolean was not true")).fork
+  exitValue <- fiber.await
+  _ <- exitValue match {
+    case Exit.Success(value) => putStrLn(s"Fiber succeeded with $value")
+    case Exit.Failure(cause) => putStrLn(s"Fiber failed")
+  }
+} yield ()
+
+// running effects in parallel
+// ^ if any fiber fails, the other fiber is interrupted
+for {
+    t <- computeInverse(m1).zipPar(computeInverse(m2))
+    (i1, i2) = t
+    r <- applyMatrices(i1, i2, v)
+  } yield r
+
+// run effects in parallel, but interrupt after the first completes successfully
+// theres also raceWith
+// ^ enables execution of user-defined logic when the first fiber succeeds
+fib(100) race fib(200)
+
+//////////////////////////////
+////// BOOK examples
+//////////////////////////////
+
+// run any effect by forking it
+val fib100Fiber: UIO[Fiber[Nothing, Long]] =
+  for {
+    fiber <- someEffect.fork
+  } yield fiber
+
+// run multiple fibers by joining them
+for {
+  fiber   <- IO.succeed("Hi!").fork // fiber1
+  message <- fiber.join // fiber2
+} yield message
+
+// await on fibers to get their Exit (execution result) information
+for {
+  fiber <- IO.succeed("Hi!").fork
+  exit  <- fiber.await
+} yield exit
+
+// immediately terminate a running fiber if its no longet needed
+// ^ the effect returned by Fiber#interrupt does not resume until the fiber has completed termination
+// ^ so you have to wait to get the Exit info
+for {
+  fiber <- IO.succeed("Hi!").forever.fork
+  exit  <- fiber.interrupt
+} yield exit
+
+// fork an interrupted fiber for it to resume (complete) immediately
+// ^ however now you dont get the Exit information
+for {
+  fiber <- IO.succeed("Hi!").forever.fork
+  _     <- fiber.interrupt.fork // I don't care!
+} yield ()
+
+// combine two fibers into a tuple, both succeed or fails
+for {
+  fiber1 <- IO.succeed("Hi!").fork
+  fiber2 <- IO.succeed("Bye!").fork
+  fiber   = fiber1.zip(fiber2) // or .zipWith
+  tuple  <- fiber.join
+} yield tuple
+
+// provide a fallback incase fiber fails
+for {
+  fiber1 <- IO.fail("Uh oh!").fork
+  fiber2 <- IO.succeed("Hurray!").fork
+  fiber   = fiber1.orElse(fiber2)
+  message  <- fiber.join
+} yield message
+
+// API
+// ^ generally methods that take 2 fibers are executed sequentially,
+// ^ append Par, e.g. zipPar, to run in parallel
+someFiber
+  .await
+  .collectAll
+  .foreach
+  .fork
+  .fork0
+  .join
+  .mergeAll
+  .orElse
+  .reduceAll
+  .tupled
+  .zip
+  .zipWith
+```
+
 ## ZIO applications
 
 - [grab some of the examples](https://zio.dev/version-1.x/datatypes/contextual/zlayer#examples)
@@ -505,7 +784,7 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
   .fold(errLam, sucLamb) // handle both failure and success non-effectively, success receives the result of err if its called
   .foldM(errEffect, sucEffect) // handle both fail & succ effectively, success receives the result of err if its called
   .foreach(Seq) { partialFn } // returns a single effect that executes on each el of a Seq
-  .forever // dunno
+  .forever // TODO dunno
   .map(succLamb) // transform the success value
   .mapError(errLamb) // transform the failure value
   .orElse(2ndEffect) // run 2ndEffect on failure
@@ -516,15 +795,13 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
   .succeed(anything) // see  `# Succeed`
   .timeout(duration) // returns a new Option[effect], None indicates timeout occurred
   .toLayer // convert this effect into a layer
+  .unit // TODO: dunno
   .zip(2ndEffect) // sequentially... returns a tuple if both succeed (first, second)
   .zipLeft(2ndEffect) // i.e. <* sequentially... returns the result of the first
   .zipRight(2ndEffect) // i.e. *> sequentially... returns the result of the second
   .zipWith(2ndEffect)(lambda(a, b)) // sequentially combine effects
+
 ```
-
-### dunno
-
-- ZManaged
 
 ### Type Aliases
 
@@ -715,226 +992,6 @@ val login: IO[AuthError, User] =
       err  => callback(IO.fail(err))
     )
   }
-```
-
-### Services
-
-- relying on these services enables you to easily test any code without actually interacting with production implementations
-  - ability to replace implementation details during tests with specifi values for testing
-- when using a service, always update the type signature of the underlying effect, .e.g `ZIO[Clock, Nothing, Unit]`
-
-#### Clock
-
-- methods related to time and scheduling
-- logic related to retrying, repitition, timing, etc should utilize the Clock service
-- use cases
-  - the current time/date/offsets in different units
-  - sleep
-  - delay
-
-```scala
-
-import zio.clock._
-import zio.duration._
-
-// implementing a delay
-def delay[R, E, A](zio: ZIO[R,E,A])(d: Duration): ZIO[R with Clock, E, A] =
-  clock.sleep(Duration) *> zio
-
-// api
-zio.clock
-  .nanoTime: URIO[Clock, Long]
-  .sleep(d: => Duration): URIO[Clock, Unit]
-
-```
-
-##### duration
-
-```scala
-
-// adds properties & methods onto integers
-import zio.duration._
-
-val someInt = 10
-
-someInt
-  .seconds
-
-```
-
-#### Console
-
-- methods related to console input/output
-- use cases
-  - cli tools
-
-```scala
-
-zio.console
-  .getStrLn: ZIO[Console, IOException, String]
-  .putStr(line: => String): URIO[Console, Unit]
-  .putStrLn(line: => String): URIO[Console, Unit]
-
-```
-
-#### System
-
-- methods for getting system & env vars
-- use cases
-  - handling configuration values
-
-```scala
-
-zio.system
-  .env(k: String): IO[SecurityException, Option[String]] // env var
-  .property(p: String): IO[Throwable, Option[String]] // system prop
-```
-
-#### Random
-
-- methods for generating random values
-- the `live` implementation delegates to `scala.util.Random` and has the same interface
-
-```scala
-
-
-```
-
-#### Blocking (package)
-
-- methods for running blocking tasks on a separate `Executor` optimized for blocking tasks
-  - only available on the JVM (blocking isnt available in scala)
-  - by default ZIO is optimized for async code and computationally bound tasks
-    - its critical that blocking tasks run on a separate blcoking thread pool
-      - else you could exhaust all of ZIOs default threads
-
-```scala
-
-import zio.blocking._
-import scala.io.{ Codec, Source }
-
-def download(url: String) =
-  Task.effect {
-    Source.fromURL(url)(Codec.UTF8).mkString
-  }
-
-def safeDownload(url: String) =
-  blocking(download(url))
-```
-
-##### effectBlocking
-
-- converts code that use blocking IO/put a thread intoa waiting state into a zio effect
-  - The effect will be executed on a separate thread pool optimized for blocking effects
-  - can be interrupted by invoking Thread.interrupt using the effectBlockingInterrupt method
-
-```scala
-import zio.blocking._
-
-val sleeping =
-  effectBlocking(Thread.sleep(Long.MaxValue))
-
-```
-
-##### effectBlockingCancelable
-
-- see `effectBlocking`
-  - specifically for blocking code that can only be interrupted by invoking a cancellation effect
-
-```scala
-
-import java.net.ServerSocket
-import zio.UIO
-import zio.blocking._
-
-def accept(l: ServerSocket) =
-  effectBlockingCancelable(l.accept())(UIO.effectTotal(l.close()))
-
-```
-
-#### Fiber[E, A]
-
-- fiber: cooperatively-yielding virtual thread for modeling effects that are already running and have already acquired their `R` environment
-- low-level data type for dealing with concurrency (naively similar to scala Future)
-  - always prefer higher-level operations rather than using fibers directly
-- all effects are implicitely run on a fiber (e.g. the Main fiber) which acts as a handle on the running computation
-- consume little memory, have elastic stacks, dont wast resources blocking, automatic GC if suspended/unreachable
-- multitasking built in (even in single-threaded environments)
-  - scheduled via ZIO runtime
-  - cooperatively yield to other fibers enabling
-
-```scala
-
-// random effect
-def fib(n: Long): UIO[Long] = UIO {
-  if (n <= 1) UIO.succeed(n)
-  else fib(n - 1).zipWith(fib(n - 2))(_ + _)
-}.flatten
-
-// run any effect by forking it
-val fib100Fiber: UIO[Fiber[Nothing, Long]] =
-  for {
-    fiber <- fib(100).fork
-  } yield fiber
-
-// run multiple fibers by joining them
-for {
-  fiber   <- IO.succeed("Hi!").fork // fiber1
-  message <- fiber.join // fiber2
-} yield message
-
-// await on fibers to get their Exit (execution result) information
-for {
-  fiber <- IO.succeed("Hi!").fork
-  exit  <- fiber.await
-} yield exit
-
-// immediately terminate a running fiber if its no longet needed
-// ^ the effect returned by Fiber#interrupt does not resume until the fiber has completed termination
-// ^ so you have to wait to get the Exit info
-for {
-  fiber <- IO.succeed("Hi!").forever.fork
-  exit  <- fiber.interrupt
-} yield exit
-
-// fork an interrupted fiber for it to resume (complete) immediately
-// ^ however now you dont get the Exit information
-for {
-  fiber <- IO.succeed("Hi!").forever.fork
-  _     <- fiber.interrupt.fork // I don't care!
-} yield ()
-
-// combine two fibers into a tuple, both succeed or fails
-for {
-  fiber1 <- IO.succeed("Hi!").fork
-  fiber2 <- IO.succeed("Bye!").fork
-  fiber   = fiber1.zip(fiber2) // or .zipWith
-  tuple  <- fiber.join
-} yield tuple
-
-// provide a fallback incase fiber fails
-for {
-  fiber1 <- IO.fail("Uh oh!").fork
-  fiber2 <- IO.succeed("Hurray!").fork
-  fiber   = fiber1.orElse(fiber2)
-  message  <- fiber.join
-} yield message
-
-// API
-// ^ generally methds that take 2 fibers are executed sequentially,
-// ^ append Par, e.g. zipPar, to run in parallel
-someFiber
-  .await
-  .collectAll
-  .foreach
-  .fork
-  .join
-  .mergeAll
-  .orElse
-  .reduceAll
-  .tupled
-  .zip
-  .zipWith
 ```
 
 ## tests
