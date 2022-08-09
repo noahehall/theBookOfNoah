@@ -10,7 +10,8 @@
     - https://static.sched.com/hosted_files/kccnceu19/12/Building%20images%20%20efficiently%20and%20securely%20on%20Kubernetes%20with%20BuildKit.pdf
 
 
-[check this](https://github.com/moby/buildkit/tree/master/examples/kubernetes)
+- [helm upgrade failed](https://medium.com/nerd-for-tech/kubernetes-helm-error-upgrade-failed-another-operation-install-upgrade-rollback-is-in-progress-52ea2c6fcda9)
+- [check this](https://github.com/moby/buildkit/tree/master/examples/kubernetes)
 
 [enable mkcert](https://github.com/FiloSottile/mkcert#installation)
 

@@ -1,5 +1,5 @@
 # links: move these into the appropriate files
-
+- [gitlab vars](https://docs.gitlab.com/ee/ci/variables/)
 - [java http package](https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/package-summary.html)
 - [httpclient ref](https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpClient.html)
 - [another java11 http client walkthrough](https://openjdk.org/groups/net/httpclient/intro.html)

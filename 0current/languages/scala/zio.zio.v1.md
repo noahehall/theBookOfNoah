@@ -17,6 +17,7 @@
 
 ## links
 
+- [found the api docs](https://zio.dev/api/)
 - [pure fp book](https://www.manning.com/books/functional-programming-in-scala-second-edition)
 - [thread pool best practices with zio](https://degoes.net/articles/zio-threads)
 - [articles by john a de goes](https://degoes.net/articles/)
