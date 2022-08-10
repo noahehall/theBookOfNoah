@@ -4,6 +4,11 @@
 - bookmark
   - https://connect.looker.com/learning
     - The Looker Marketplace
+  - https://docs.looker.com/sharing-and-publishing/action-hub
+    - all about actions (integrations)
+      - enable dev mode > admin > actions
+    -  https://github.com/looker-open-source/actions/blob/master/docs/action_api.md
+
 
 ## links
 
