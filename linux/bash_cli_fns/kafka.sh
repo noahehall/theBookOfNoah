@@ -3,6 +3,10 @@
 export KAFKA_DIR=/opt/homebrew/Cellar/kafka/3.2.0/libexec
 export KAFKA_DATA_DIR=$KAFKA_DIR/data
 
+# copypasta some of these
+## https://gist.github.com/sahilsk/d2a6ec384f5f2333e3fef40a581a97e1
+## https://github.com/lensesio/kafka-cheat-sheet
+## and definitely this: https://medium.com/@TimvanBaarsen/apache-kafka-cli-commands-cheat-sheet-a6f06eac01b
 
 # required by kafka
 ## ^ however 3.2 doesnt require the --zookeeper arg
