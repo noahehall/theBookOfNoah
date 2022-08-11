@@ -155,6 +155,7 @@
     - cmd t: new tab
     - cmd enter: new window in current tab
     - cmd shift d: close active window in current tab
+- [window manager](https://github.com/ianyh/Amethyst)
 ### remote server setup
 
 1. setup non root user with sudo priv
