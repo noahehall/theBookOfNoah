@@ -6,12 +6,7 @@ THISDIR="$(
 	cd "$(echo "${BASH_SOURCE[0]%/*}")" || exit
 	pwd
 )"
-
-[ -f "$THISDIR"/.bash_functions.sh ] && . "$THISDIR"/.bash_functions.sh
-[ -f "$THISDIR"/.bash_aliases.sh ] && . "$THISDIR"/.bash_aliases.sh
-[ -f "$THISDIR"/.bash_variables.sh ] && . "$THISDIR"/.bash_variables.sh
-[ -f "$THISDIR"/.bash_addons.sh ] && . "$THISDIR"/.bash_addons.sh
-[ -f "$THISDIR"/.bash_app_quickies.sh ] && . "$THISDIR"/.bash_app_quickies.sh
+for file in $THISDIR/bash_cli_fns/\.bash_*; do source $file; done
 
 # update path
 USER_LOCAL_BIN="$HOME"/.local/bin

@@ -348,6 +348,7 @@ sealed trait SuperPoop {
     something match {
       // matching on the subtype it is
       case Poop(_, _) => s"Poop isa subtype of SuperPoop"
+      case Poop(a, b) if a > 2 => "just an example"
     }
 }
 final case class Poop(fname: String, lname: String) extends SuperPoop
