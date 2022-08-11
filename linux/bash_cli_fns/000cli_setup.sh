@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 
 # TODO
 # @see https://bashrcgenerator.com/
@@ -45,11 +44,6 @@ shopt -s nocaseglob 2>/dev/null
 # ensure SIGHUP is sent to all jobs when an interactive login shell exits
 shopt -s huponexit 2>/dev/null
 
-
-
-# usage:
-# docker ps --format="$DOCKER_FORMAT"
-export DOCKER_FORMAT="ID\t{{.ID}}\nNAME\t{{.Names}}\nIMAGE\t{{.Image}}\nPORTS\t{{.Ports}}\nCOMMAND\t{{.Command}}\nCREATED\t{{.CreatedAt}}\nSTATUS\t{{.Status}}\n"
 
 MAGENTA="\[\033[0;35m\]"
 LIGHT_GRAY="\[\033[0;37m\]"
