@@ -15,8 +15,8 @@ brew install --cask rancher
 # if theres no arm64 image, run an intel image under emulation
 ## filesystem change notification (inotify) wont work
 
---platform linux/armd64
-#^  or try linux/amd64
+--platform linux/amd64
+#^  or try linux/arm64
 # https://github.com/docker/cli/issues/3286
 # using buildx for multiarch images
 ## review which builders you have

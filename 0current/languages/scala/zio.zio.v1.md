@@ -121,6 +121,14 @@ object Bathroom extends App {
 - full details (should be) listed elseware
 
 ```scala
+//////////////////////////
+// effect operators
+//////////////////////////
+
+
+//////////////////////////
+// dendency / env operators
+//////////////////////////
 
 // compose two/more layers horizontally, i.e. no dependencies between them
 layerC = layerA ++ layerB // layerC provides both A & B
