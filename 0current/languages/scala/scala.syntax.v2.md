@@ -70,7 +70,7 @@ trait Pipeline[T]: // only accepts a T
 // forces concrete implementations to return a T or a subtype of T
 // ^ i.e implement me with a B
 // ^^ and make() will return a B or a C
-// i.e. covariant types produces types of T
+// i.e. covariant types pÍroduces types of T
 trait Producer[+T]:
   def make: T // invariant in return position
 
@@ -154,23 +154,8 @@ def name: String = {
   s"$fname $lname"
 }
 
-// scala 2 requires curly braces
-def poop(): String = {
+def poop(blah: Flush): String = {
   //....
-}
-```
-
-### blocks
-
-- group sequences of expressions returning the last one
-- use cases
-  - execute side-effects before calculating a final value
-  - create a scope for naming intermediate results
-
-```scala
-{
-  println("p")
-  "oop"
 }
 ```
 
@@ -250,7 +235,7 @@ while (condition) {
 - value types: evaluted when defined
 - reference types: evaluated when called
   - be careful, side effects within reference types (e.g. objects, classes) like println statements are evaluted when the entity is loaded and not when the reference is invoked
-  - the value is executed only when invoked tho
+  - the value is evaluated only when invoked tho
 - in general
   - prefer case objects & classes over objects/classes where appropriate
   - prefer sealed traits over traits

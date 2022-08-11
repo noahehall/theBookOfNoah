@@ -17,6 +17,13 @@
 
 ## fresh install
 
+### logi keyboard & mouse
+- [setup guide for keyboard](https://www.logitech.com/en-us/setup/mxsetup.html)
+- [log+ options app](https://www.logitech.com/en-us/software/logi-options-plus.html)
+
+- hold for 3 seconds to optimize for OS
+  - mac: fn O
+  - win/linux: fn P
 ### ubuntu:dev
 
 - do first
