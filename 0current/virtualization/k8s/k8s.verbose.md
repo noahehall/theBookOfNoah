@@ -1,8 +1,10 @@
 # k8s
 
 - bookmark
-  - reading: 19 (start at try it now)
+  - reading: 40 ch3
   - copying: not started
+- todos
+  - chap2 lab: page 39
 - largely taken from learn k8s in a month of lunches by elton stoneman
 - recommendations
   - k8s in action by Marko Luksa
