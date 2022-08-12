@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-
 # ^ you really want that to point to /bin/dash, but whatev
 # ^ https://wiki.ubuntu.com/DashAsBinSh
+echo "when the fk are you going to clean up your bash scripts?"
 
 THISDIR="$(
 	cd "$(echo "${BASH_SOURCE[0]%/*}")" || exit

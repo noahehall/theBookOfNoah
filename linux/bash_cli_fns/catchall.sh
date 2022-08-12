@@ -123,8 +123,10 @@ alias getfns='declare -F'
 # refresh shell
 # @see https://askubuntu.com/questions/19772/how-to-reinitialize-a-terminal-window-instead-of-closing-it-and-starting-a-new-o
 refreshshell(){
-  reset
-  exec sudo --login --user "$USER" /bin/sh -c "cd '$PWD'; exec '$SHELL' -l"
+    reset
+    [ `uname` = "Darwin" ] \
+        && exec $SHELL \
+        || exec sudo --login --user "$USER" /bin/sh -c "cd '$PWD'; exec '$SHELL' -l"
 }
 
 # returns current dir of this script, optionally appending a path
