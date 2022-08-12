@@ -59,6 +59,7 @@ long list of git
 
 ```sh
 # git commit template
+# @see https://www.conventionalcommits.org/en/v1.0.0/
 ## subject(scope): description
 ## body...
   Add
@@ -70,8 +71,12 @@ long list of git
   Modify
   Update
   Remove
-  Feat
+  FeatFeat
   Delete etc...
+
+  Feat(api)!: breaking change
+  Feat(api): regular feat related to api
+  Feat: regular feat
 
 # delete a branch locally & remote
   git branch -d BRANCH_NAME

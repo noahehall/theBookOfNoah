@@ -15,9 +15,15 @@
 - john de goes: creator of zio
   - previously created Aff for purescript and impressively a bunch of other stuff for other things
 
+## catchall / review
+
+```scala
+
+```
+
 ## links
 
-- [found the api docs](https://zio.dev/api/)
+- [found the api docs](https://javadoc.io/doc/dev.zio/zio_2.13/latest/zio/index.html)
 - [pure fp book](https://www.manning.com/books/functional-programming-in-scala-second-edition)
 - [thread pool best practices with zio](https://degoes.net/articles/zio-threads)
 - [articles by john a de goes](https://degoes.net/articles/)
@@ -74,7 +80,10 @@
 - generally all arguments are passed by name to ensure side effects are managed by ZIO at runtime and not directly executed when instantiated
 - any value that actually fails or runs forever should be considered a failure and not a success
 - Constructors in classes are always synchronous, use ZLayer for asynchronous creation of services (especially in non-blocking applications)
-- to run multiple effects you have to ensure there part of a pipeline, e.g. `effect1 *> effect`
+- to run multiple effects you have to ensure they're part of a pipeline, e.g. `effect1 *> effect`
+- theres two core workflows
+  - compile time programming: ensure type definitions are accurate
+  - runtime programming: consuming services from the environment and creating effect pipelines
 
 ```scala
 // somewhere define what your workflow does
@@ -820,6 +829,7 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
   .foldM(errEffect, sucEffect) // handle both fail & succ effectively, success receives the result of err if its called
   .foreach(Seq) { partialFn } // returns a single effect that executes on each el of a Seq
   .forever // TODO dunno
+  .ignore // Returns a new effect that ignores the success or failure of this effect.
   .map(succLamb) // transform the success value
   .mapError(errLamb) // transform the failure value
   .orElse(2ndEffect) // run 2ndEffect on failure
