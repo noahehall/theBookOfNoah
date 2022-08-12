@@ -5,6 +5,11 @@
 - [views vs tables](https://docs.snowflake.com/en/user-guide/views-introduction.html)
 - docs
   - [loading data into snowflake](https://docs.snowflake.com/en/user-guide-data-load.html)
+  - [altering a stage](https://docs.snowflake.com/en/sql-reference/sql/alter-stage.html)
+  - [date and time input and output](https://docs.snowflake.com/en/user-guide/date-time-input-output.html)
+  - [describe stage to get file format, copy and location](https://docs.snowflake.com/en/sql-reference/sql/desc-stage.html)
+- errors
+  - [query failed with timestamp is not recognized](https://community.snowflake.com/s/article/Query-Failed-With-Error-Timestamp-2020-09-01-is-not-recognized)
 
 ```sh
 
@@ -46,7 +51,7 @@ CREATE OR REPLACE STAGE my_stage
   FILE_FORMAT = my_csv_format;
 CREATE OR REPLACE STAGE my_stage
   file_format = (type = 'CSV' FIELD_DELIMITER = '|' SKIP_HEADER = 1);
-
+# ^^ set set FORCE = TRUE to override when loading data from stage
 
 ## uploading from local to a user stage
 ### from /data/data.csv on your local to /staged/data.csv
