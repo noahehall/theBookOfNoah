@@ -135,6 +135,7 @@ someObj eq otherObj // true if they have the same hashCode
 
 ```
 
+
 ## vals, vars, functions
 
 ### vals / vars
@@ -209,6 +210,7 @@ object notdadaddy {
     p match {
       // typed pattern matching
       case Poop("noah", "hall") => "You are not the father"
+      case Poop(blah, bloop) if bloop > 2 => "then return this"
       case _ => "you are the father"
     }
 }

@@ -74,6 +74,7 @@
 - generally all arguments are passed by name to ensure side effects are managed by ZIO at runtime and not directly executed when instantiated
 - any value that actually fails or runs forever should be considered a failure and not a success
 - Constructors in classes are always synchronous, use ZLayer for asynchronous creation of services (especially in non-blocking applications)
+- to run multiple effects you have to ensure there part of a pipeline, e.g. `effect1 *> effect`
 
 ```scala
 // somewhere define what your workflow does
@@ -125,6 +126,18 @@ object Bathroom extends App {
 // effect operators
 //////////////////////////
 
+// sequential
+effect1 *> effect2 // zipRight operator, ignores the result of the first effect
+effect1 <* effect2 // zipLeft operator, ignores result of second effect
+effect1 && effect2 // boolean short circuit for the effect
+effect1 &&& effect2 // returns (result1, result2)
+effect <*> efffect // alias for &&&
+
+// parallel operators
+effect1 &> effect2 // returns effect2, if either fails, the other is interrupted
+effect1 <& effect2 // returns effect1, if either fails, the other is interrupted
+effect1 <&> effect2 // returns tuple, if either fails, the other is interrupted
+<+> // TODO: continue here
 
 //////////////////////////
 // dendency / env operators
@@ -147,6 +160,19 @@ lazy val all: ZLayer[Any, Nothing, Baker with Ingredients with Oven with Dough w
   oven >+>        // Baker with Ingredients with Oven
   dough >+>       // Baker with Ingredients with Oven with Dough
   cake            // Baker with Ingredients with Oven with Dough with Cake
+
+// TODO
+***  // Splits the environment, providing the first part to this effect and the second part to that effect.
++++ // Depending on provided environment, returns either this one or the other effect lifted in Left or Right, respectively.
+```
+
+## keywords
+
+```scala
+// TODO: needs confo, found in zio docs
+def poop = {
+  self.blah {...} // runs blah on the current object
+}
 
 ```
 
@@ -326,6 +352,7 @@ ZLayer
   .identity // express the requirfrom for a layer (wtf ?)
   .succeed[A](a => A) // convert a value into a layer of type ULayer[Has[A]]
   .succeedMany // create a layer from multiple services
+  .succeedNow(poop) // TODO:
   .fromManaged(someZManagedValue) // convert a managed resource into a layer
   .fresh // provide an isolated instance of this layer
   .requires[SomeInterface] // no fkn clue, it just appeared in the examples
@@ -484,7 +511,6 @@ object LoggingLive {
     (LoggingLive(_, _)).toLayer
 }
 ```
-
 
 ## Native Services
 
