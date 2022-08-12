@@ -114,3 +114,64 @@ alias listfilesystem='df -ha'
 # @see https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key
 alias gpglistkeys='gpg --list-keys'
 alias gpglistkeyslong='gpg --list-keys --keyid-format=long'
+
+
+# random stuff -----------------------------------------------------------------
+# general
+alias getfns='declare -F'
+
+# refresh shell
+# @see https://askubuntu.com/questions/19772/how-to-reinitialize-a-terminal-window-instead-of-closing-it-and-starting-a-new-o
+refreshshell(){
+  reset
+  exec sudo --login --user "$USER" /bin/sh -c "cd '$PWD'; exec '$SHELL' -l"
+}
+
+# returns current dir of this script, optionally appending a path
+function getpath() {
+    # https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself
+    local THISDIR="$( cd "$( echo "${BASH_SOURCE[0]%/*}" )" || exit; pwd )"
+
+    if [[ $# -lt 1 ]]; then
+        # no filename
+        echo "$THISDIR"
+    else
+        # with filename
+        echo "${THISDIR}/$1"
+    fi
+}
+
+function checkpkgupgrade () {
+    if [[ $# -eq 1 ]]; then
+        apt-cache policy "$1"
+    else
+        echo "\$1 === some_pkg_name"
+    fi
+}
+function sourceifexists() {
+    if [[ $# -eq 1 && -f "$1" ]]; then
+        . "$1"
+    fi
+}
+
+
+# completation aware g<alias bash aliases for each git alias
+# https://gist.github.com/mwhite/6887990
+# TODO: doesnt work like expected
+function_exists() {
+     declare -f -F "$1" > /dev/null
+     return $?
+}
+
+cmdtime() {
+    time "$@"
+}
+
+# security -----------------------------
+makechecksum() {
+    if [[ $# -eq 1 ]]; then
+        md5sum "$1"
+    else
+        echo "\$1 === filename"
+    fi
+}
