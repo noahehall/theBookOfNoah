@@ -1,7 +1,7 @@
 # k8s
 
 - bookmark
-  - reading: 40 ch3
+  - reading: 46 ch3: listing 3.2
   - copying: not started
 - todos
   - chap2 lab: page 39
