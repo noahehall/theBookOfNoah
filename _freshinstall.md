@@ -162,6 +162,7 @@
     - cmd t: new tab
     - cmd enter: new window in current tab
     - cmd shift d: close active window in current tab
+    - [desktop integration worked perfectly for regolith](https://sw.kovidgoyal.net/kitty/binary/#desktop-integration-on-linux)
 - [window manager](https://github.com/ianyh/Amethyst)
 ### remote server setup
 
