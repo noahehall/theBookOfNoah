@@ -2,7 +2,9 @@
 
 - bookmark
   - reading: 46 ch3: listing 3.2
-  - copying: not started
+  - copying:
+    - verbose chapter 2
+    - examples: page 16 try it now
 - todos
   - all the labs
 - largely taken from learn k8s in a month of lunches by elton stoneman
