@@ -110,13 +110,14 @@
   - [drawio desktop](https://github.com/jgraph/drawio-desktop/releases)
 
 - virtualization
-
-  - [compose](https://docs.docker.com/compose/install/)
-  - [dive](https://github.com/wagoodman/dive)
-  - [ctop](https://github.com/bcicen/ctop)
-  - [dockly](https://github.com/lirantal/dockly)
-  - [k8s](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
-    - todo: I suck at k8s
+  - if you just need docker
+    - [compose](https://docs.docker.com/compose/install/)
+    - [dive](https://github.com/wagoodman/dive)
+    - [ctop](https://github.com/bcicen/ctop)
+    - [dockly](https://github.com/lirantal/dockly)
+  - if you want docker + k8s
+    - [download rancher desktop from github releases](https://github.com/rancher-sandbox/rancher-desktop/releases)
+    - unzip and symlink rancher-desktop somehwere in your path
   - [vagrant](https://www.vagrantup.com/)
   - [virtualbox](https://www.virtualbox.org/manual/ch02.html)
     - make sure to get the guest additions iso
