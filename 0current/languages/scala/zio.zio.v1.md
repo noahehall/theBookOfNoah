@@ -821,6 +821,7 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
   .catchSome { patternMatch } // case over specific error types to catch & recover
   .collectAll(Seq[effects, ...]) // collects the results of a sequence of effects
   .effect // see `# Effect`
+  .effectTotal // convert sync logic to a zio effect, CANNOT be used if errors could be thrown
   .either // surface failures, converts ZIO[R, E, A] to ZIO[R, Nothing, Either[E, A]]
   .ensuring(finallyEffect) // runs finally if prev effect fails for any reason, aka tryThis.ensuring(thisRunsOnFailure)
   .fail(anything) // see `# Fail`
@@ -858,6 +859,7 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
 
 - aka `ZIO[Any, Nothing, A]`
 - useful for describing infallible effects, including those resulting from handling all errors.
+-
 
 #### URIO[-R, +A]
 
