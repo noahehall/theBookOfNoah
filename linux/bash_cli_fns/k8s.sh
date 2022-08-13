@@ -1,7 +1,7 @@
 k8s_get_nodes () {
-read -r -d '' HELP <<-"EOF"
+read -r -d '' HELP << "EOF"
 prints basic details about all nodes in cluster
-all options are forward to kubectl
+$ kubectl get nodes $@
 EOF
 
   [[ $1 == "-h" ]] \
@@ -10,9 +10,9 @@ EOF
 }
 
 k8s_pod_ready () {
-read -r -d '' HELP <<-"EOF"
+read -r -d '' HELP << "EOF"
 waits for a pod to be ready
-$1 == podname
+$ kubectl wait --for=condition=Ready pod $1
 EOF
 
   [[ $1 == "-h" ]] \
