@@ -18,7 +18,6 @@ EOF
   [[ $1 == "-h" ]] \
     && echo "$HELP" \
     || kubectl wait --for=condition=Ready pod $1
-
 }
 
 k8s_run_pod () {

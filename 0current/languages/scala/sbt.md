@@ -108,8 +108,7 @@
 - `root/project/plugins.sbt`: defines sbt plugins
 - `root/project/Dependencies.scala` for tracking deps in one place, files for task implementations or to share values, such as keys, create then import into your build.sbt
 - `root/project/whatever.scala`: define helper objects and one-off plugins that can be imported into your build.sbt
-  - can contain: `object` `classes` expressions
-- `root/lib/`: directory `.jar` files for unmanaged dependencies
+- `root/lib/`: directory for `.jar` files each being unmanaged dependencies
   - in multi sub project projects, create & place jars in each subproject  `lib` dir
 
 #### developer files

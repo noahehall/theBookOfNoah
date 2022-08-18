@@ -1,4 +1,7 @@
 # links: move these into the appropriate files
+- [scala for comprehension](https://stackoverflow.com/questions/14598990/confused-with-the-for-comprehension-to-flatmap-map-transformation)
+- [scala format](https://scalameta.org/scalafmt/docs/installation.html)
+- [create some bash fns for gitblame](https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-blame)
 - [checkout obsidian.md](https://help.obsidian.md/Obsidian/Index)
 - [mkcert: trusting local certs](https://github.com/FiloSottile/mkcert#installation)
 - [gitlab vars](https://docs.gitlab.com/ee/ci/variables/)

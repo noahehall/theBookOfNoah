@@ -9,13 +9,15 @@
   - https://zio.dev/version-1.x/can_fail/
     - haha you cant event fkn get to this link on the site/google
   - https://zio.dev/version-1.x/datatypes/fiber/#error-model
+  - https://zio.dev/version-1.x/datatypes/concurrency/ref/
+    - `# Ref[A]
 - largely taken from
   - zionomicon
     - john de goes and adam fraser
 - john de goes: creator of zio
   - previously created Aff for purescript and impressively a bunch of other stuff for other things
 
-## catchall / review
+## catchall / review / todo
 
 ```scala
 
@@ -86,16 +88,8 @@
   - runtime programming: consuming services from the environment and creating effect pipelines
 
 ```scala
-// somewhere define what your workflow does
-import zio._
-val goPoop = ZIO.effect(println("wheres the tp"))
 
-// elseware define when your workflow does it
-import zio.clock._
-import zio.duration._
-val goPoopLater = goPoop.delay(1.hour)
-
-// finally execute your effects
+// basic app
 import zio._
 object Bathroom extends App {
   def run(args: List[String]): =
@@ -110,6 +104,7 @@ object Bathroom extends App {
 ### best practices
 
 - always code to interfaces, ensuring a fns type signature matches the actual implementation
+- Use constructors to require dependencies, use layers to make dependencies, use environment to access context (scopes, transactions, etc.) that is eliminated with layers (since layers are also algebraic effect handlers).
 
 ### comparison with scala Future
 
