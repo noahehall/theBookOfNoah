@@ -2,7 +2,10 @@
 
 - wouldnt trust anything in this file until this line is removed
 - bookmark
-  - access zio 1 reference here, then you can click around via hamburger menu without forcing you to zio 2
+  - start here
+    https://zio.dev/version-1.x/datatypes/core/runtime
+  - somehow you got to here
+    - https://zio.dev/version-1.x/datatypes/fiber/#error-model
   - https://zio.dev/version-1.x/overview/overview_testing_effects/#environmental-effects
     - didnt quite understand the remainder of this section
     - todo: swing back through, sure it'll make sense now
@@ -10,7 +13,7 @@
     - haha you cant event fkn get to this link on the site/google
   - https://zio.dev/version-1.x/datatypes/fiber/#error-model
   - https://zio.dev/version-1.x/datatypes/concurrency/ref/
-    - `# Ref[A]
+    - `# Ref[A]`
 - largely taken from
   - zionomicon
     - john de goes and adam fraser
@@ -18,6 +21,10 @@
   - previously created Aff for purescript and impressively a bunch of other stuff for other things
 
 ## catchall / review / todo
+
+- someEffect.run
+  - doesnt work in my worksheet
+  - maybe need to execute in a program.run?
 
 ```scala
 
@@ -31,7 +38,7 @@
 - [articles by john a de goes](https://degoes.net/articles/)
 - [zio test: intro blog/tutorial](https://scalac.io/blog/zio-test-what-why-how/)
 - docs
-  - [000 documentation start page](https://zio.dev/version-1.x/overview/)
+  - [000 zio1 intro](https://zio.dev/version-1.x/overview/)
   - [handling errors](https://zio.dev/version-1.x/overview/overview_handling_errors/)
 
 ## terms
@@ -273,11 +280,47 @@ ZIO
 - handle errors
   - generally all the `.fold` type defs, but the `.foldM` is recommended
 
+#### Cause[E]
+
+- the full story of a failure
+- in general E contains limited (hah!) information, whereas Cause will contain the hole shebang
+  - unexpected exceptions or defects,
+  - stack and execution traces,
+  - cause of fiber interruptions
+  - etc
+
+```scala
+import zio._
+import zio.duration._
+for {
+  // Fail[+E](value: E) contains the cause of expected failure of type E.
+  failExit <- ZIO.fail("Oh! Error!").run
+  // Die(value: Throwable) contains the cause of a defect or in other words, an unexpected failure of type Throwable. If we have a bug in our code and something throws an unexpected exception, that information would be described inside a Die.
+  dieExit  <- ZIO.effectTotal(5 / 0).run
+  // Both(left, right) & Then(left, right)
+  // If we perform ZIO's analog of try-finally (e.g. ZIO#ensuring), and both of try and finally blocks fail, so their causes are encoded with Then.
+  thenExit <- ZIO.fail("first").ensuring(ZIO.die(throw new Exception("second"))).run
+  // If we run two parallel fibers with zipPar and all of them fail, so their causes will be encoded with Both.
+  bothExit <- ZIO.fail("first").zipPar(ZIO.die(throw new Exception("second"))).run
+  fiber    <- ZIO.sleep(1.second).fork
+  _        <- fiber.interrupt
+  // Interrupt(fiberId) contains information of the fiber id that causes fiber interruption.
+  interruptionExit <- fiber.join.run
+} yield ()
+
+```
+
+
+-
 ### A: Success Type
 
 - A: the (output) success return type; i.e. the return type
   - set to `Unit`, for void
   - set to `Nothing`, if the effect runs forever/until failure
+
+## Runtime[R]
+
+- ...
 
 ## Layers
 
@@ -709,19 +752,6 @@ for {
   }
 } yield ()
 
-// running effects in parallel
-// ^ if any fiber fails, the other fiber is interrupted
-for {
-    t <- computeInverse(m1).zipPar(computeInverse(m2))
-    (i1, i2) = t
-    r <- applyMatrices(i1, i2, v)
-  } yield r
-
-// run effects in parallel, but interrupt after the first completes successfully
-// theres also raceWith
-// ^ enables execution of user-defined logic when the first fiber succeeds
-fib(100) race fib(200)
-
 //////////////////////////////
 ////// BOOK examples
 //////////////////////////////
@@ -793,9 +823,26 @@ someFiber
   .zipWith
 ```
 
-## ZIO applications
+#### Exit[E, A]
 
-- [grab some of the examples](https://zio.dev/version-1.x/datatypes/contextual/zlayer#examples)
+- describes whether a fiber ended successfully
+  - E: failure cause of type E
+  - A: success value of type A
+
+```scala
+import zio._
+import zio.console._
+for {
+  successExit <- ZIO.succeed(1).run
+  _ <- successExit match {
+    case Exit.Success(value) =>
+      putStrLn(s"exited with success value: ${value}")
+    case Exit.Failure(cause) =>
+      putStrLn(s"exited with failure state: $cause")
+  }
+} yield ()
+
+```
 
 ## API
 
@@ -863,6 +910,7 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
 #### IO[+E, +A]
 
 - aka `ZIO[Any, E, A]`
+- is polymorphic in values of type E and can work with any error type
 
 #### Task[+A]
 
@@ -1036,12 +1084,7 @@ val login: IO[AuthError, User] =
   }
 ```
 
-## tests
-
-- a toolkit for testing ZIO applications with implementations for each of ZIOs standard services
-- includes an alternative (generator) to scalacheck
-
-## examples
+## effects in practice
 
 ### for comprehensions
 
@@ -1090,6 +1133,35 @@ val getStrLn2: IO[IOException, String] =
   ZIO.effect(StdIn.readLine()).refineToOrDie[IOException]
 
 ```
+
+### parallelism
+
+```scala
+
+// ^ if either fails, the other is interrupted
+for {
+    t <- computeInverse(m1).zipPar(computeInverse(m2))
+    (i1, i2) = t
+    r <- applyMatrices(i1, i2, v)
+  } yield r
+
+// IO actions can be raced
+// return the first to complete (with a value) and interrupts the other
+fib(100) race fib(200)
+
+// raceWith
+// ^ allows executing user-defined logic when the first of two actions succeeds.
+
+```
+
+## tests
+
+- a toolkit for testing ZIO applications with implementations for each of ZIOs standard services
+- includes an alternative (generator) to scalacheck
+
+## ZIO applications
+
+- [grab some of the examples](https://zio.dev/version-1.x/datatypes/contextual/zlayer#examples)
 
 ## todo
 
