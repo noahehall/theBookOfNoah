@@ -3,12 +3,11 @@
 - wouldnt trust anything in this file until this line is removed
 - bookmark
   - start here
-    https://zio.dev/version-1.x/datatypes/core/runtime
-  - somehow you got to here
     - https://zio.dev/version-1.x/datatypes/fiber/#error-model
-  - https://zio.dev/version-1.x/overview/overview_testing_effects/#environmental-effects
-    - didnt quite understand the remainder of this section
-    - todo: swing back through, sure it'll make sense now
+  - save this for last once you've completed all other docs; testing only makes sense once you understand zio
+    - https://zio.dev/version-1.x/overview/overview_testing_effects/#environmental-effects
+      - didnt quite understand the remainder of this section
+      - todo: swing back through, sure it'll make sense now
   - https://zio.dev/version-1.x/can_fail/
     - haha you cant event fkn get to this link on the site/google
   - https://zio.dev/version-1.x/datatypes/fiber/#error-model
@@ -32,11 +31,13 @@
 
 ## links
 
-- [found the api docs](https://javadoc.io/doc/dev.zio/zio_2.13/latest/zio/index.html)
+- [api docs](https://javadoc.io/doc/dev.zio/zio_2.13/1.0.16/index.html)
 - [pure fp book](https://www.manning.com/books/functional-programming-in-scala-second-edition)
 - [thread pool best practices with zio](https://degoes.net/articles/zio-threads)
 - [articles by john a de goes](https://degoes.net/articles/)
 - [zio test: intro blog/tutorial](https://scalac.io/blog/zio-test-what-why-how/)
+- examples
+  - [zio applications](https://zio.dev/version-1.x/datatypes/contextual/zlayer#examples)
 - docs
   - [000 zio1 intro](https://zio.dev/version-1.x/overview/)
   - [handling errors](https://zio.dev/version-1.x/overview/overview_handling_errors/)
@@ -84,29 +85,21 @@
   - cats effect
 - relies heavily on scala's variance annotations to improve type inference
 
+### thoughts
+
+- theres two core workflows
+  - compile time programming: setting up your algebras so scala & ZIO can do some magic (see type directed programming elseware)
+    - this is critical, there is so much fkn magic that you will spend a majority of your time here
+  - runtime programming: consuming services from the environment and creating effect pipelines
+
 ### gotchas
 
 - generally all arguments are passed by name to ensure side effects are managed by ZIO at runtime and not directly executed when instantiated
 - any value that actually fails or runs forever should be considered a failure and not a success
 - Constructors in classes are always synchronous, use ZLayer for asynchronous creation of services (especially in non-blocking applications)
 - to run multiple effects you have to ensure they're part of a pipeline, e.g. `effect1 *> effect`
-- theres two core workflows
-  - compile time programming: ensure type definitions are accurate
-  - runtime programming: consuming services from the environment and creating effect pipelines
-
-```scala
-
-// basic app
-import zio._
-object Bathroom extends App {
-  def run(args: List[String]): =
-    // exitCode required by App trait
-    // ^ converts all failures to exitCode(1)
-    // ^ and successes to exitCode(0)
-    goPoop.exitCode
-}
-
-```
+- So the most [important] thing we should keep in mind when we are working with a functional effect system like ZIO is that when we are writing code, printing a string onto the console, reading a file, querying a database, and so forth; We are just writing a workflow or blueprint of an application. We are just building a data structure.
+  - i.e. it doesnt fkn execute anything, you have to specifically RUN it see the `Runtime` section
 
 ### best practices
 
@@ -128,74 +121,13 @@ object Bathroom extends App {
   - requires an implicit `ExecutionContext` ins cope whenever you invoke methods on Future
   - no way of modeling dependencies
 
-### Operators
-
-- full details (should be) listed elseware
-
-```scala
-//////////////////////////
-// effect operators
-//////////////////////////
-
-// sequential
-effect1 *> effect2 // zipRight operator, ignores the result of the first effect
-effect1 <* effect2 // zipLeft operator, ignores result of second effect
-effect1 && effect2 // boolean short circuit for the effect
-effect1 &&& effect2 // returns (result1, result2)
-effect <*> efffect // alias for &&&
-
-// parallel operators
-effect1 &> effect2 // returns effect2, if either fails, the other is interrupted
-effect1 <& effect2 // returns effect1, if either fails, the other is interrupted
-effect1 <&> effect2 // returns tuple, if either fails, the other is interrupted
-<+> // TODO: continue here
-
-//////////////////////////
-// dendency / env operators
-//////////////////////////
-
-// compose two/more layers horizontally, i.e. no dependencies between them
-layerC = layerA ++ layerB // layerC provides both A & B
-
-// compose two/more layers vertically, layerB requires layerA as a dep
-// ^ note that LHS layers are hidden in the type definition of layerC
-// ^ and are magically provided to the consumer
-// see ZLayer.identity to force the consumer to provide the layer themselves
-// ^ e.g. layerC = ZLayer.identity(layerA) >>> layerB
-layerC = layerA >>> layerB // layerC provides layerB
-
-// consume and pass through dependencies to all downstream services
-lazy val all: ZLayer[Any, Nothing, Baker with Ingredients with Oven with Dough with Cake] =
-  baker >+>       // Baker
-  ingredients >+> // Baker with Ingredients
-  oven >+>        // Baker with Ingredients with Oven
-  dough >+>       // Baker with Ingredients with Oven with Dough
-  cake            // Baker with Ingredients with Oven with Dough with Cake
-
-// TODO
-***  // Splits the environment, providing the first part to this effect and the second part to that effect.
-+++ // Depending on provided environment, returns either this one or the other effect lifted in Left or Right, respectively.
-```
-
-## keywords
-
-```scala
-// TODO: needs confo, found in zio docs
-def poop = {
-  self.blah {...} // runs blah on the current object
-}
-
-```
-
 ## Zio[-R, +E, +A]
 
 - any entity with type `Zio[-R, +E, +A]` is a functional effect
+  - all effects are just data structure that describes the execution of a concurrent program.
   - naively an effectful version of `R => Either[E, A]`
   - the input R is contravariant and pass down the callstack
   - the outputs E & A are covariant and pass up the callstack
-- FYI
-  - the zipLeft|Right operators are useful when the results of intermediate effects arent needed
-    - but you just need to run the effects sequentially
 
 ### R: Environemnt Type
 
@@ -310,8 +242,8 @@ for {
 
 ```
 
-
 -
+
 ### A: Success Type
 
 - A: the (output) success return type; i.e. the return type
@@ -320,7 +252,133 @@ for {
 
 ## Runtime[R]
 
-- ...
+- the runtime system: the only way to execute effects within an environment (layers) R
+  - provides a threadpool (fibers?) with the environment R that the effects need
+- runtime workflow: takes a zio effect `ZIO[R, E, A]` definition and the environment R (layers satsifying the R in the effect) -> exexutes the effects -> returns the result as Either[E, A]
+  - executes the effect pipeline in a while loop
+  - handle (un)expected errors
+  - spawn concurrent fibers everytime `.fork` is called on an effect
+  - cooperatively yield to other fibers ensuring no single fiber michael jordans CPU resources
+  - Capture execution and stack traces
+  - Ensure finalizers are run appropriately ensuring resources are closed & cleanup logic is executed
+  - handle async callbacks so you dont have to (in zio everything is ASYNC without the callbacks)
+- two runtime patterns for executing effect pipelines
+  - extending some zio.App/variant and calling poop.exitCode
+  - wrapping the pipeline within zio.Runtime.default.unsafeRun and executing it within a scala app
+    - useful for wrapping legacy non-effectful code
+
+```scala
+// zio.APP type def
+package zio
+trait App {
+  def run(args: List[String]): URIO[ZEnv, ExitCode]
+}
+
+// default runtime & platform type def
+// ^ notice the constructor using live versions of interfaces
+// ^ Platform.default: designed for mainstream usage
+object Runtime {
+  lazy val default: Runtime[ZEnv] = Runtime(ZEnv.Services.live, Platform.default)
+}
+
+// ^ default runtime has different ZEnv configs for each platform
+// ^^ Default JS environment
+type ZEnv = Clock with Console with System with Random
+// ^^ Default JVM environment
+type ZEnv = Clock with Console with System with Random with Blocking
+
+
+// pattern 1: execute the pipeline via zio.App/some variant
+object MyApp extends zio.App {
+  final def run(args: List[String]) =
+    myAppLogic.exitCode
+}
+
+// pattern 2: execute the pipeline via unsafeRun
+object RunZIOEffectUsingUnsafeRun extends scala.App {
+  zio.Runtime.default.unsafeRun(myAppLogic)
+}
+
+```
+
+### Custom Runtimes
+
+- whenever one/more effects require a user-defined environment &/ platform
+
+```scala
+trait AInterface
+object AInterface
+case class ALive extends AInterface
+trait BInterface
+object BInterface
+case class BLive extends BInterface
+
+// custom runtime
+// ^ that contains the implementations in its environment
+val testableRuntime = Runtime(
+  Has.allOf[AInterface, BInterface](ALive(), BLive()),
+  Platform.default
+)
+// custom runtime that extends the default runtime
+val testableRuntime: Runtime[zio.ZEnv with Has[AInterface] with Has[BInterface]] =
+  Runtime.default
+    .map((zenv: zio.ZEnv) =>
+      zenv ++ Has.allOf[AInterface, BInterface](ALive(), BLive())
+    )
+
+// now you can write your effect pipelines
+testableRuntime.unsafeRun(
+  for {
+    _ <- A.someDef
+    _ <- B.otherDef
+  } yield ()
+)
+```
+
+### User-defined Executor
+
+- an executor is responsible for executing effects
+- a customer executor is required because threading, scheduling & etc is separated from the caller, so to customize the aforementioned a user defined one can be provided to the runtime
+
+```scala
+
+import zio.internal.Executor
+import java.util.concurrent.{ThreadPoolExecutor, TimeUnit, LinkedBlockingQueue}
+
+val runtime = Runtime.default.mapPlatform(
+  _.withExecutor(
+    Executor.fromThreadPoolExecutor(_ => 1024)(
+      new ThreadPoolExecutor(
+        5,
+        10,
+        5000,
+        TimeUnit.MILLISECONDS,
+        new LinkedBlockingQueue[Runnable]()
+      )
+    )
+  )
+)
+
+```
+
+#### Benchmarking
+
+- disable tracing and auto-yielding
+- and use `Platform.benchmark`
+
+```scala
+
+val benchmarkRuntime = Runtime.default.mapPlatform(_ => Platform.benchmark)
+
+```
+
+### Application Tracing
+
+- [continue here](https://zio.dev/version-1.x/datatypes/core/runtime/#application-tracing)
+- skipped because (per the docs)
+  - Execution tracing has full of junk
+  - has a tremendous impact on the complexity of the application runtime.
+  - Users often turn off tracing in critical areas of their application
 
 ## Layers
 
@@ -446,7 +504,9 @@ someZmanagedThing
   .toLayer // convert the managed resource into a layer
 ```
 
-## Custom Services
+## Services
+
+### Custom Services
 
 - the culmination of `ZIO[R, E, A]` + Layers
 - a zio-fied app is a collection of services
@@ -559,13 +619,13 @@ object LoggingLive {
 }
 ```
 
-## Native Services
+### Native Services
 
 - relying on these services enables you to easily test any code without actually interacting with production implementations
   - ability to replace implementation details during tests with specific values for testing
 - when using a service, always update the type signature of the underlying effect, .e.g `ZIO[Clock, Nothing, Unit]`
 
-### Clock
+#### Clock
 
 - methods related to time and scheduling
 - logic related to retrying, repitition, timing, etc should utilize the Clock service
@@ -590,7 +650,7 @@ zio.clock
 
 ```
 
-#### duration
+##### duration
 
 ```scala
 
@@ -604,7 +664,7 @@ someInt
 
 ```
 
-### Console
+#### Console
 
 - methods related to console input/output
 - use cases
@@ -619,7 +679,7 @@ zio.console
 
 ```
 
-### System
+#### System
 
 - methods for getting system & env vars
 - use cases
@@ -632,7 +692,7 @@ zio.system
   .property(p: String): IO[Throwable, Option[String]] // system prop
 ```
 
-### Random
+#### Random
 
 - methods for generating random values
 - the `live` implementation delegates to `scala.util.Random` and has the same interface
@@ -642,7 +702,7 @@ zio.system
 
 ```
 
-### Blocking (package)
+#### Blocking (package)
 
 - methods for running blocking tasks on a separate `Executor` optimized for blocking tasks
   - only available on the JVM (blocking isnt available in scala)
@@ -664,7 +724,7 @@ def safeDownload(url: String) =
   blocking(download(url))
 ```
 
-#### effectBlocking
+##### effectBlocking
 
 - converts code that use blocking IO/put a thread intoa waiting state into a zio effect
   - The effect will be executed on a separate thread pool optimized for blocking effects
@@ -678,7 +738,7 @@ val sleeping =
 
 ```
 
-#### effectBlockingCancelable
+##### effectBlockingCancelable
 
 - see `effectBlocking`
   - specifically for blocking code that can only be interrupted by invoking a cancellation effect
@@ -694,7 +754,7 @@ def accept(l: ServerSocket) =
 
 ```
 
-### Fiber[E, A]
+#### Fiber[E, A]
 
 - fiber: concurrently run an effect without blocking the current process (naively similar to scala Future)
   - always prefer higher-level operations rather than using fibers directly
@@ -823,7 +883,7 @@ someFiber
   .zipWith
 ```
 
-#### Exit[E, A]
+##### Exit[E, A]
 
 - describes whether a fiber ended successfully
   - E: failure cause of type E
@@ -891,7 +951,58 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
 
 ```
 
-### Type Aliases
+### Operators
+
+- full details (should be) listed elseware
+- the zipLeft|Right operators are useful when the results of intermediate effects arent needed
+  - but you just need to run the effects sequentially
+
+```scala
+//////////////////////////
+// effect operators
+//////////////////////////
+
+// sequential
+effect1 *> effect2 // zipRight operator, ignores the result of the first effect
+effect1 <* effect2 // zipLeft operator, ignores result of second effect
+effect1 && effect2 // boolean short circuit for the effect
+effect1 &&& effect2 // returns (result1, result2)
+effect <*> efffect // alias for &&&
+
+// parallel operators
+effect1 &> effect2 // returns effect2, if either fails, the other is interrupted
+effect1 <& effect2 // returns effect1, if either fails, the other is interrupted
+effect1 <&> effect2 // returns tuple, if either fails, the other is interrupted
+<+> // TODO: continue here
+
+//////////////////////////
+// dendency / env operators
+//////////////////////////
+
+// compose two/more layers horizontally, i.e. no dependencies between them
+layerC = layerA ++ layerB // layerC provides both A & B
+
+// compose two/more layers vertically, layerB requires layerA as a dep
+// ^ note that LHS layers are hidden in the type definition of layerC
+// ^ and are magically provided to the consumer
+// see ZLayer.identity to force the consumer to provide the layer themselves
+// ^ e.g. layerC = ZLayer.identity(layerA) >>> layerB
+layerC = layerA >>> layerB // layerC provides layerB
+
+// consume and pass through dependencies to all downstream services
+lazy val all: ZLayer[Any, Nothing, Baker with Ingredients with Oven with Dough with Cake] =
+  baker >+>       // Baker
+  ingredients >+> // Baker with Ingredients
+  oven >+>        // Baker with Ingredients with Oven
+  dough >+>       // Baker with Ingredients with Oven with Dough
+  cake            // Baker with Ingredients with Oven with Dough with Cake
+
+// TODO
+***  // Splits the environment, providing the first part to this effect and the second part to that effect.
++++ // Depending on provided environment, returns either this one or the other effect lifted in Left or Right, respectively.
+```
+
+### Effect Type Aliases
 
 - predefined values for `ZIO[R,E,A]` type parameters
   - if you dont need to provide specific R,E,A values, prefer a type alias for improved type inference vs setting `[Any, Throwable, A]` etc
@@ -1159,10 +1270,6 @@ fib(100) race fib(200)
 - a toolkit for testing ZIO applications with implementations for each of ZIOs standard services
 - includes an alternative (generator) to scalacheck
 
-## ZIO applications
-
-- [grab some of the examples](https://zio.dev/version-1.x/datatypes/contextual/zlayer#examples)
-
 ## todo
 
 - [e.g. here (scroll down a bit), when to use poop.apply \_ ).toLayer](https://zio.dev/version-1.x/datatypes/contextual/zlayer#vertical-and-horizontal-composition)
@@ -1174,3 +1281,8 @@ fib(100) race fib(200)
 - a high perofmrance, composable concurrent streams & sinks with strong guarantees of resource safety
 - competitor to Akka Streams but without the Akka and dependency on Scalas Future
 - competitor to FS2 but without the Cats and better typer safety
+
+### Zio ZMX
+
+- [docs](https://zio.github.io/zio-zmx/docs/overview/overview_index)
+- ZIO ZMX lets you observe everything that goes on [at runtime] in your ZIO application.

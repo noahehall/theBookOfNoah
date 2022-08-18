@@ -1,4 +1,6 @@
 # links: move these into the appropriate files
+- [add these aliases as bash fns](https://docs.gitlab.com/ee/user/project/merge_requests/reviews/index.html#checkout-merge-requests-locally-through-the-head-ref)
+- [CVE database](https://vuldb.com/)
 - [scala for comprehension](https://stackoverflow.com/questions/14598990/confused-with-the-for-comprehension-to-flatmap-map-transformation)
 - [scala format](https://scalameta.org/scalafmt/docs/installation.html)
 - [create some bash fns for gitblame](https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-blame)
