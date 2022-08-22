@@ -2,6 +2,10 @@
 
 # ^ you really want that to point to /bin/dash, but whatev
 # ^ https://wiki.ubuntu.com/DashAsBinSh
+# todos
+## implement getops everywhere
+## implement -h
+## switch on uname
 echo "when the fk are you going to clean up your bash scripts?"
 
 THISDIR="$(

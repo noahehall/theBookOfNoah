@@ -10,18 +10,19 @@ export KAFKA_DATA_DIR=$KAFKA_DIR/data
 
 # required by kafka
 ## ^ however 3.2 doesnt require the --zookeeper arg
-zoostart () {
+zoo_start () {
 	zookeeper-server-start $KAFKA_DIR/config/zookeeper.properties
 }
 
-kafkastart () {
+kafka_start () {
 	kafka-server-start $KAFKA_DIR/config/server.properties
 }
 
-kafkastop () {
+kafka_stop () {
     kafka-server-stop
 }
-kafkacreatetopic () {
+
+kafka_create_topic () {
     if [[ $# -eq 1 ]]; then
         KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
         kafka-topics --create --topic $1 --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
@@ -29,7 +30,8 @@ kafkacreatetopic () {
         echo "\$1 === topic_name"
     fi
 }
-kafkadescribetopic () {
+
+kafka_describe_topic () {
     if [[ $# -eq 1 ]]; then
         KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
         kafka-topics --describe --topic $1 --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
@@ -37,16 +39,18 @@ kafkadescribetopic () {
         echo "\$1 === topic_name"
     fi
 }
-kafkalisttopics () {
+
+kafka_list_topics () {
     KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
     kafka-topics --list --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
 }
-kafkalistgroupids () {
+
+kafka_list_group_ids () {
     KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
     kafka-consumer-groups  --list --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
 }
 
-kafkasend () {
+kafka_send () {
     if [[ $# -eq 1 ]]; then
         # echo -e "sending\n---\n${@:2}\n---"
         # echo "to this topic: $1"
@@ -57,7 +61,7 @@ kafkasend () {
     fi
 }
 
-kafkalisttopicpartitions () {
+kafka_list_topic_partitions () {
     if [[ $# -eq 1 ]]; then
         KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
         kafka-run-class kafka.tools.GetOffsetShell --broker-list $KAFKA_BOOTSTRAP_SERVER --topic $1
@@ -66,7 +70,7 @@ kafkalisttopicpartitions () {
     fi
 }
 
-kafkalistenfortopicevents () {
+kafka_listen_for_topic_events () {
     if [[ $# -eq 2 ]]; then
         # echo -e "sending\n---\n${@:2}\n---"
         # echo "to this topic: $1"
@@ -77,7 +81,8 @@ kafkalistenfortopicevents () {
         echo "\$1 === topic_name, \$2 === partition"
     fi
 }
-kafkaclean () {
+
+kafka_clean () {
     if [ -z ${KAFKA_DATA_DIR+x} ]
         then
             echo "KAFKA_DATA_DIR is not set; exiting"
