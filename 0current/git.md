@@ -71,7 +71,7 @@ long list of git
   Modify
   Update
   Remove
-  FeatFeat
+  Feat
   Delete etc...
 
   Feat(api)!: breaking change

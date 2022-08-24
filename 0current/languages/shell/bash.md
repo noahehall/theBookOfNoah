@@ -510,7 +510,7 @@ $! # process number of last bg cmd, fkn always save this
 $0 # first word; the cmd name, or full pathname if cmd found via PATH search
 $n # positional parameters, e.g. $1, use ${n} to get params > 9
 $*, $@ # all args
-"$*" # "all args as one string"
+$* # "all args as one string"
 "#@" # "all" "args" "as" "sep" "strings"
 
 # automatically set based on context
