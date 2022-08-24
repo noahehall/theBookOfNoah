@@ -1,5 +1,8 @@
 - bookmark
-  - https://www.scala-sbt.org/1.x/docs/Faq.html#How+do+I+add+files+to+a+jar+package%3F
+  - continue here
+    - https://www.scala-sbt.org/1.x/docs/sbt-by-example.html
+  - eventually get back to this
+    - https://www.scala-sbt.org/1.x/docs/Faq.html#How+do+I+add+files+to+a+jar+package%3F
 - skipped
   - https://www.scala-sbt.org/1.x/docs/Multi-Project.html#Per-configuration+classpath+dependencies
     - describes how to set task dependenWe built our NoSQL database with a close-to-the-hardware, shared-nothing approach that optimizes raw performance, fully utilizes modern multi-core servers and minimizes the overhead to DevOps. ScyllaDB is API-compatible with both Cassandra and DynamoDB, yet is much faster, more consistent and with a lower TCO. tests in project TestUtils and use that code in other projects

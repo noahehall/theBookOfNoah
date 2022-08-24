@@ -1,4 +1,5 @@
 # links: move these into the appropriate files
+- [zio intellij plugin](https://github.com/zio/zio-intellij)
 - [postgres timestamp](https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-timestamp/)
 - [another bash loop discussion](https://stackoverflow.com/questions/169511/how-do-i-iterate-over-a-range-of-numbers-defined-by-variables-in-bash)
 - [great refresher on bash loops](https://www.cyberciti.biz/faq/bash-for-loop/)
