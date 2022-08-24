@@ -3,14 +3,13 @@
 - wouldnt trust anything in this file until this line is removed
 - bookmark
   - start here
-    - https://zio.dev/version-1.x/datatypes/fiber/#error-model
+    - https://zio.dev/version-1.x/datatypes/fiber/#fiber-interruption
   - save this for last once you've completed all other docs; testing only makes sense once you understand zio
     - https://zio.dev/version-1.x/overview/overview_testing_effects/#environmental-effects
       - didnt quite understand the remainder of this section
       - todo: swing back through, sure it'll make sense now
   - https://zio.dev/version-1.x/can_fail/
     - haha you cant event fkn get to this link on the site/google
-  - https://zio.dev/version-1.x/datatypes/fiber/#error-model
   - https://zio.dev/version-1.x/datatypes/concurrency/ref/
     - `# Ref[A]`
 - largely taken from
@@ -20,10 +19,6 @@
   - previously created Aff for purescript and impressively a bunch of other stuff for other things
 
 ## catchall / review / todo
-
-- someEffect.run
-  - doesnt work in my worksheet
-  - maybe need to execute in a program.run?
 
 ```scala
 
@@ -99,7 +94,6 @@
 - Constructors in classes are always synchronous, use ZLayer for asynchronous creation of services (especially in non-blocking applications)
 - to run multiple effects you have to ensure they're part of a pipeline, e.g. `effect1 *> effect`
 - So the most [important] thing we should keep in mind when we are working with a functional effect system like ZIO is that when we are writing code, printing a string onto the console, reading a file, querying a database, and so forth; We are just writing a workflow or blueprint of an application. We are just building a data structure.
-  - i.e. it doesnt fkn execute anything, you have to specifically RUN it see the `Runtime` section
 
 ### best practices
 
@@ -142,20 +136,20 @@
 val blah: ZIO[Poop, Nothing, Unit] = ???
 // or multiple dependencies
 val blah: ZIO[Poop with Flush with Etc, Nothing, Unit] = ???
-// or with from services
-// ^ TODO: this should be somewhere else
-val live: URLayer[Clock with Console, Logging] =
-      ZLayer.fromServices[Clock.Service, Console.Service, Logging.Service]
 
 /// Providing Dependencies ////////////////////////////
+// ^ see # Zlayer for more
 // use the ++ operator to provide multiple deps
-// builtin ZIO services dont need to be provided
 val mainApp: ZIO[Any, Nothing, Unit] = effect.provideLayer(Console.live ++ Random.live)
+
+// or from existing services
+val live: URLayer[Clock with Console, Logging] =
+      ZLayer.fromServices[Clock.Service, Console.Service, Logging.Service]
 
 /// Accessing Dependencies ////////////////////////////
 // any zio effect can access the environment via a for comp
 for {
-  env <- ZIO.environment[Int]
+  env <- ZIO.environment[SomeInterface]
   _   <- putStrLn(s"The value of the environment is: $env")
 } yield env
 
@@ -181,8 +175,8 @@ val tablesAndColumns: ZIO[DatabaseOps, Throwable, (List[String], List[String])] 
 
 // API
 ZIO
-  .access[SomeInterface](lambda(implementation)) // retrieve the implementation of some environment class/object/etc
-  .accessM[SomeInterface](lambda(implementation)) // retrieve the implementation of some environment effect
+  .access[SomeInterface](_.someProp) // retrieve the implementation of some environment class/object/etc
+  .accessM[SomeInterface](_.someProp)) // retrieve the implementation of some environment effect
   .serviceWith // returns an effect that requires the corrosponding service to be defined with the Has[_] data type; used with accessor methods
   .provide(someServiceImplementation) // provide a specific implementation to an effect that requires it
   .provideCustomLayer(someServiceImplementation) // provide services not part of ZEnv (i.e. builtin services)
@@ -224,6 +218,7 @@ ZIO
 ```scala
 import zio._
 import zio.duration._
+// fyi: .run returns success/failure
 for {
   // Fail[+E](value: E) contains the cause of expected failure of type E.
   failExit <- ZIO.fail("Oh! Error!").run
@@ -759,6 +754,7 @@ def accept(l: ServerSocket) =
 - fiber: concurrently run an effect without blocking the current process (naively similar to scala Future)
   - always prefer higher-level operations rather than using fibers directly
   - all effects are implicitely run on a fiber (e.g. the Main fiber) which acts as a handle on the running computation
+    - thus all of this section applies to all other effect sections
 - more info
   - cooperatively-yielding virtual thread for modeling effects that are already running and have already acquired their `R` environment
     - On the JVM, fibers will use threads, but will not consume unlimited threads. Instead, fibers yield cooperatively during periods of high-contention.
@@ -888,6 +884,14 @@ someFiber
 - describes whether a fiber ended successfully
   - E: failure cause of type E
   - A: success value of type A
+- reasons for termination
+  - fiber self termianted/interrupted by another
+    - the main fiber cannot be interrupted because it was not forked
+  - failed to handle some error fo type E
+    - only occurs when an IO.fail is not handled
+  - has a defect that leads to a non-recoverable error
+    - partial fn passed to a higher order fn like map/flatMap, and fails
+    - error throwing code was embedded within some effect (e.g. effectTotal) that doesnt handle failures
 
 ```scala
 import zio._
@@ -924,7 +928,7 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
   .collectAll(Seq[effects, ...]) // collects the results of a sequence of effects
   .effect // see `# Effect`
   .effectTotal // convert sync logic to a zio effect, CANNOT be used if errors could be thrown
-  .either // surface failures, converts ZIO[R, E, A] to ZIO[R, Nothing, Either[E, A]]
+  .either // catches all failures, i.e surface failures, converts ZIO[R, E, A] to ZIO[R, Nothing, Either[E, A]]
   .ensuring(finallyEffect) // runs finally if prev effect fails for any reason, aka tryThis.ensuring(thisRunsOnFailure)
   .fail(anything) // see `# Fail`
   .flatMap[B](result => effect(result)) // sequently run effects
@@ -940,6 +944,7 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
   .retry(Schedule.poop) // returns a new effect that retries the effect on failure
   .retryOrElse(Schedule.poop, finallyLambda) // retires according to schedule, else runs finally if schedules finishes with error
   .retryOrElseEither(Schedule.poop, finallyLambda) // same as retryOrElse, except you have to return an Either
+  .run // Returns an effect that semantically runs the effect on a fiber, producing an Exit (success/failure) for the completion value of the fiber. see # Exit
   .succeed(anything) // see  `# Succeed`
   .timeout(duration) // returns a new Option[effect], None indicates timeout occurred
   .toLayer // convert this effect into a layer
@@ -1021,7 +1026,23 @@ lazy val all: ZLayer[Any, Nothing, Baker with Ingredients with Oven with Dough w
 #### IO[+E, +A]
 
 - aka `ZIO[Any, E, A]`
-- is polymorphic in values of type E and can work with any error type
+- is polymorphic in values of type E and can work with (and never loses) any error type
+- preferred over `try/catch/finally` which can lose errors
+
+##### Error model
+
+- errors are recoverable by using the either monad, which causes an effect to never fail because the failure is exposed as part of the Either success case
+- the fibers supervisor is responsible for handling fiber failures
+  - log, print restart the fiber, etc.
+
+```scala
+for {
+  _ <- IO.fail(new RuntimeException("this will fail")).either // Task[String]
+  error <- IO.fail(new RuntimeException("this will not fail")).either // ZIO[Any, Nothing, Either[Throwable, String]]
+  _ <- ZIO.succeed(println(s"got error $error")) // got error Left(java.lang.RuntimeException: Some Error)
+} yield ()
+
+```
 
 #### Task[+A]
 

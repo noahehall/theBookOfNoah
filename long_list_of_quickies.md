@@ -1,4 +1,7 @@
 # links: move these into the appropriate files
+- [postgres timestamp](https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-timestamp/)
+- [another bash loop discussion](https://stackoverflow.com/questions/169511/how-do-i-iterate-over-a-range-of-numbers-defined-by-variables-in-bash)
+- [great refresher on bash loops](https://www.cyberciti.biz/faq/bash-for-loop/)
 - [add these aliases as bash fns](https://docs.gitlab.com/ee/user/project/merge_requests/reviews/index.html#checkout-merge-requests-locally-through-the-head-ref)
 - [CVE database](https://vuldb.com/)
 - [scala for comprehension](https://stackoverflow.com/questions/14598990/confused-with-the-for-comprehension-to-flatmap-map-transformation)
