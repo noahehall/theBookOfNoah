@@ -22,7 +22,6 @@ everything about postgresql
 ## links
 
 - postgres
-
   - ref
     - [managing users and roles](https://aws.amazon.com/blogs/database/managing-postgresql-users-and-roles/)
     - [version 14 docs](https://www.postgresql.org/docs/14/index.html)
@@ -32,11 +31,8 @@ everything about postgresql
     - [create db examples](https://www.guru99.com/postgresql-create-database.html)
     - [create db if it doesnt exist](https://stackoverflow.com/questions/18389124/simulate-create-database-if-not-exists-for-postgresql)
     - [create table if ot exists](https://stackoverflow.com/questions/1766046/postgresql-create-table-if-not-exists)
-
 - docker
-
   - [postgres docker docs](https://hub.docker.com/_/postgres)
-
 - categorize the following
   - [accessing a DB](https://www.postgresql.org/docs/current/static/tutorial-accessdb.html)
   - [postgres cheatsheet](https://gist.github.com/Kartones/dd3ff5ec5ea238d4c546)
@@ -90,34 +86,33 @@ everything about postgresql
 
 - install commands
 
-  ```sql
-    sudo apt update
-    sudo apt install postgresql postgresql-contrib
-  ```
+```sql
+  sudo apt update
+  sudo apt install postgresql postgresql-contrib
+```
 
 - post install
-
   - installation process creates a user account called `postgres` that is associated wiht the default postgres role
-
     - in order to use postgres, you can log into that account
 
-      ```sql
-        -- option 1: switch over to postgres account via intermediary bash shell
-          sudo -i -u postgres -- switch to postgres linux user
-          psql -- access postgres prompt
-          \q -- exit out of postgresql prompt
+```sql
+  -- option 1: switch over to postgres account via intermediary bash shell
+    sudo -i -u postgres -- switch to postgres linux user
+    psql -- access postgres prompt
+    \q -- exit out of postgresql prompt
 
-        -- include flag E
-          sudo -i -u postgres psql -E
-        -- option 2: accessing postgres prompt without switching accounts via sudo
-          sudo -u postgres psql
+  -- include flag E
+    sudo -i -u postgres psql -E
+  -- option 2: accessing postgres prompt without switching accounts via sudo
+    sudo -u postgres psql
 
-      -- setup formatting so responses fit to the width of the screen
-        \x auto
-      ```
+-- setup formatting so responses fit to the width of the screen
+  \x auto
+```
 
 ## quickies
 
+### general
 ```sh
   # pgadmin
   # ^ right click everything to see the menus
@@ -129,8 +124,6 @@ everything about postgresql
     docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' CONTAINER_NAME
     # connect to the running container
     docker exec -it CONTAINER_NAME /bin/bash
-      # now you can run your normal *nix cmds e.g.
-      psql -U pgadmin -d db_name_if_not_pgadmin
 
     # run a shell script in the running docker container
     docker exec -it CONTAINER_NAME /bin/bash path/to/some/file/in/container/poop.sh
@@ -144,50 +137,64 @@ everything about postgresql
           start SERVICE_NAME # start a specific servic in the file
 ```
 
+### psql
+
 ```sql
-  -- quick psql cmds
-    psql -U somename -d somedb -- connect to db as user
-    -- once connected
-    \x -- toggle enhanced view for display query results
-    \a -- toggle aligned/non aligned column output
-    \s -- display command history
-    \s /path/to/file -- save cmd history to file
-    \i /path/to/file -- execute psql cmds from file
-    \? -- list all available cmds
-    \h CMD -- get help on a specific cmd
-    \timing -- toggle the display of query execution time
-    \g -- execute previous command
+-- quick psql cmds
+psql -U somename -d somedb -- connect to db as user
+-- once connected
+\x -- toggle enhanced view for display query results
+\a -- toggle aligned/non aligned column output
+\s -- display command history
+\s /path/to/file -- save cmd history to file
+\i /path/to/file -- execute psql cmds from file
+\? -- list all available cmds
+\h CMD -- get help on a specific cmd
+\timing -- toggle the display of query execution time
+\g -- execute previous command
 
 
-  -- quick admin-level cmds
-    -- user admin
-      \du -- List users
-      \du __username__ -- List a username if present.
-      create role __test1__ -- Create a role with an existing username.
-      create role __test2__ noinherit login password __passsword__; -- Create a role with username and password.
-      set role __test__; -- Change role for current session to __test__.
-      grant __test2__ to __test1__; -- Allow __test1__ to set its role as __test2__.
+-- quick admin-level cmds
+-- user admin
+\du -- List users
+\du __username__ -- List a username if present.
+create role __test1__ -- Create a role with an existing username.
+create role __test2__ noinherit login password __passsword__; -- Create a role with username and password.
+set role __test__; -- Change role for current session to __test__.
+grant __test2__ to __test1__; -- Allow __test1__ to set its role as __test2__.
 
-    -- db admin
-      select version(); -- show postgres version
-      \c DBNAME -- Connect to a database
-      \c dbname username -- connect to db as user
-      \l -- list all dbs
-      \dn -- list all schema of current db
-      \df -- list all available functions of current db
-      create database NAME -- create
-      alter database dbname rename to newname -- rename db
-      pg_restore -U USERNAME -d DBNAME -l /path/to/db_data.tar -- load data into a db
+-- db admin
+select version(); -- show postgres version
+\c DBNAME -- Connect to a database
+\c dbname username -- connect to db as user
+\l -- list all dbs
+\dn -- list all schema of current db
+\df -- list all available functions of current db
+create database NAME -- create
+alter database dbname rename to newname -- rename db
+pg_restore -U USERNAME -d DBNAME -l /path/to/db_data.tar -- load data into a db
 
-    -- table admin
-      select pg_relation_size('dbname'); -- returns the size of the table in bytes, not included indexes or additional objects.
-      select pg_total_relation_size('dbname'); -- returns the size of the table in bytes, including indexes or additional objects.
-      SELECT pg_size_pretty (pg_relation_size('actor')); -- convert bytes to kb/mb/gb/tb
-      \dt -- list all tables in current db
-      \d+ -- describe table
-      \dv -- list all views
+-- table admin
+-- you generall always want to prefix shiz with schemaName.
+select pg_relation_size('dbname'); -- returns the size of the table in bytes, not included indexes or additional objects.
+select pg_total_relation_size('dbname'); -- returns the size of the table in bytes, including indexes or additional objects.
+SELECT pg_size_pretty (pg_relation_size('actor')); -- convert bytes to kb/mb/gb/tb
+\dt -- list all tables in current schema
+\dt+ -- extended info
+\dt schemaName.*
+\d+ -- describe table
+\dv -- list all views
 ```
 
+### sql
+
+```sql
+-- copy some file into a table
+copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv, delimiter ',', header false);
+
+-- inserts
+-- Strings always have to be surrounded by single quotes (');
+```
 ## reference
 
 ### tables

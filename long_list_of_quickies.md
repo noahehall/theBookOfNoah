@@ -1,4 +1,6 @@
 # links: move these into the appropriate files
+- [kuvebal validate k8s conf files](https://www.kubeval.com/)
+- [down at the bottom theres a good review of unsetting envs vars on login](https://stackoverflow.com/questions/6877727/how-do-i-delete-an-exported-environment-variable)
 - [zio intellij plugin](https://github.com/zio/zio-intellij)
 - [postgres timestamp](https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-timestamp/)
 - [another bash loop discussion](https://stackoverflow.com/questions/169511/how-do-i-iterate-over-a-range-of-numbers-defined-by-variables-in-bash)
@@ -31,3 +33,8 @@
 - [docker on apple silicon review](https://earthly.dev/blog/using-apple-silicon-m1-as-a-cloud-engineer-two-months-in/)
 - [docker apple silicon issues & resolutions](https://pythonspeed.com/articles/docker-build-problems-mac/)
 - [sbt: specify main method/class to run](https://alvinalexander.com/scala/sbt-how-specify-main-method-class-to-run-in-project/)
+
+```sh
+# prefix each line with a value
+sed -e 's/^/0002,/' inthisfile.csv > copytothisfile.csv
+```
