@@ -3,11 +3,11 @@
 - wouldnt trust anything in this file until this line is removed
 - bookmark
   - start here
-    - https://zio.dev/version-1.x/datatypes/fiber/#fiber-interruption
-  - save this for last once you've completed all other docs; testing only makes sense once you understand zio
     - https://zio.dev/version-1.x/overview/overview_testing_effects/#environmental-effects
-      - didnt quite understand the remainder of this section
-      - todo: swing back through, sure it'll make sense now
+  - then here
+    - https://zio.dev/version-1.x/datatypes/fiber/#thread-shifting---jvm
+  - then continue here
+    - https://zio.dev/version-1.x/services/
   - https://zio.dev/version-1.x/can_fail/
     - haha you cant event fkn get to this link on the site/google
   - https://zio.dev/version-1.x/datatypes/concurrency/ref/
@@ -36,6 +36,7 @@
 - docs
   - [000 zio1 intro](https://zio.dev/version-1.x/overview/)
   - [handling errors](https://zio.dev/version-1.x/overview/overview_handling_errors/)
+  - [zio native services docs](https://zio.dev/version-1.x/services/)
 
 ## terms
 
@@ -651,12 +652,20 @@ zio.clock
 
 // adds properties & methods onto integers
 import zio.duration._
-
-val someInt = 10
-
-someInt
-  .seconds
-
+for {
+      fiber <- putStrLn("Working on the first job")
+        .schedule(Schedule.fixed(1.seconds))
+        .ensuring {
+          (putStrLn(
+            "Finalizing or releasing a resource that is time-consuming"
+          ) *> ZIO.sleep(7.seconds)).orDie
+        }
+        .fork
+      _ <- fiber.interrupt.delay(4.seconds)
+      _ <- putStrLn(
+        "Starting another task when the interruption of the previous task finished"
+      )
+} yield ()
 ```
 
 #### Console
@@ -699,6 +708,8 @@ zio.system
 
 #### Blocking (package)
 
+- [start of docs](https://zio.dev/version-1.x/services/blocking/)
+
 - methods for running blocking tasks on a separate `Executor` optimized for blocking tasks
   - only available on the JVM (blocking isnt available in scala)
   - by default ZIO is optimized for async code and computationally bound tasks
@@ -717,11 +728,16 @@ def download(url: String) =
 
 def safeDownload(url: String) =
   blocking(download(url))
+
+// blocking API
+zio.blocking
+  .effectBlocking
+  .effectBlockingInterruptible
 ```
 
 ##### effectBlocking
 
-- converts code that use blocking IO/put a thread intoa waiting state into a zio effect
+- converts code that use blocking IO/put a thread into a waiting state into a zio effect
   - The effect will be executed on a separate thread pool optimized for blocking effects
   - can be interrupted by invoking Thread.interrupt using the effectBlockingInterrupt method
 
@@ -751,7 +767,7 @@ def accept(l: ServerSocket) =
 
 #### Fiber[E, A]
 
-- fiber: concurrently run an effect without blocking the current process (naively similar to scala Future)
+- fiber: concurrently run an effect without block ing the current process (naively similar to scala Future)
   - always prefer higher-level operations rather than using fibers directly
   - all effects are implicitely run on a fiber (e.g. the Main fiber) which acts as a handle on the running computation
     - thus all of this section applies to all other effect sections
@@ -862,21 +878,31 @@ for {
 } yield message
 
 // API
+// ^ generally call .fork after all the other calls
 // ^ generally methods that take 2 fibers are executed sequentially,
 // ^ append Par, e.g. zipPar, to run in parallel
 someFiber
   .await
   .collectAll
+  .delay
   .foreach
   .fork
   .fork0
+  .forkDaemon
+  .forkIn
+  .interrupt // schedule a fiber to stop
+  .interruptible // make it interruptable
   .join
   .mergeAll
   .orElse
   .reduceAll
+  .schedule
   .tupled
+  .uninterruptible // make it uninterruptable
   .zip
   .zipWith
+  .disconnect // stops an uninterruptable fiber from blocking the thread if .interrupt is accidently called
+  .interruptFork // fast interruption: executs the fibers interruption int he bg/separate daemon fiber
 ```
 
 ##### Exit[E, A]
@@ -892,6 +918,14 @@ someFiber
   - has a defect that leads to a non-recoverable error
     - partial fn passed to a higher order fn like map/flatMap, and fails
     - error throwing code was embedded within some effect (e.g. effectTotal) that doesnt handle failures
+- interruption
+  - when a fiber is done/interrupted, it's finalizer is guaranteed to be executed
+    - joining an interrupted fiber will still execute its finalizer (unlike other effect systems which deadlock the joining fiber)
+  - automatic interruption: zio will eventually interrupt all fibers if you dont explicityly cancel them
+    - structured concurrency: if a parent fiber terminates, then all child fibers are interrupted
+    - parallelism: if one effect fails during execution of many in parallel, the others will be canceled
+    - timeouts: if a running effect being timedout has not completed, the execution is canceled
+    - racing: the loser of a race, if still running is canceled
 
 ```scala
 import zio._
@@ -935,10 +969,12 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
   .fold(errLam, sucLamb) // handle both failure and success non-effectively, success receives the result of err if its called
   .foldM(errEffect, sucEffect) // handle both fail & succ effectively, success receives the result of err if its called
   .foreach(Seq) { partialFn } // returns a single effect that executes on each el of a Seq
+  .foreachPar
   .forever // TODO dunno
   .ignore // Returns a new effect that ignores the success or failure of this effect.
   .map(succLamb) // transform the success value
   .mapError(errLamb) // transform the failure value
+  .orDie
   .orElse(2ndEffect) // run 2ndEffect on failure
   .race(otherEffect) // run effects in parallel, returning the first successful
   .retry(Schedule.poop) // returns a new effect that retries the effect on failure
@@ -946,9 +982,11 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
   .retryOrElseEither(Schedule.poop, finallyLambda) // same as retryOrElse, except you have to return an Either
   .run // Returns an effect that semantically runs the effect on a fiber, producing an Exit (success/failure) for the completion value of the fiber. see # Exit
   .succeed(anything) // see  `# Succeed`
+  .succeedLazy
   .timeout(duration) // returns a new Option[effect], None indicates timeout occurred
   .toLayer // convert this effect into a layer
   .unit // TODO: dunno
+  .zipPar
   .zip(2ndEffect) // sequentially... returns a tuple if both succeed (first, second)
   .zipLeft(2ndEffect) // i.e. <* sequentially... returns the result of the first
   .zipRight(2ndEffect) // i.e. *> sequentially... returns the result of the second
@@ -1084,78 +1122,6 @@ val s1 = ZIO.succeed(42)
 
 ```
 
-#### fromEither
-
-- converts a scala Either into an IO[E, A]
-  - The error type will be whatever type the Left case has
-  - success type will be whatever type the Right case has.
-
-```scala
-
-val oneof = ZIO.fromEither[E, A](ea: => Either[E, A]): IO[E, A] = ???
-
-val zeither = ZIO.fromEither(Right("Success!"))
-```
-
-#### fromOption
-
-- converts a scala Option to an IO
-  - if theres no value will always returns None (options are either Success/None)
-  - if theres a value will return a zio.success
-
-```scala
-
-val maybe = ZIO.fromOption[A](na: => Option[A]): IO[None.type, A] = ???
-
-val zoption: IO[Option[Nothing], Int] = ZIO.fromOption(Some(2))
-
-// ^ You can change the Option[Nothing] into a more specific error type using ZIO#mapError:
-val zoption2: IO[String, Int] = zoption.mapError(_ => "It wasn't there!")
-```
-
-#### fromTry
-
-- converts a scala Try into a zio Task
-  - on failure returns a ZIO.fail with type fixed to Throwable (scala Trys always return throwable)
-  - on success returns a zio.success
-
-```scala
-import scala.util.Try
-
-val couldThrow = ZIO.fromTry[A](a: => Try[A]): Task[A] = ???
-
-```
-
-#### fromFuture
-
-- converts a future / fn that returns a Future into a zio effect of type `Task[A]`
-  - The error type will always be Throwable, because Future can only fail with values of type Throwable
-  - you dont need to use the exectionContext, but if you do then ZIO will manage where the Future is executed
-
-```scala
-import scala.concurrent.Future
-
-// origin fn
-def goPoopOG(implicit ec: ExecutionContext): Future[Unit] = ???
-// converted to a ZIO Effect
-def goPoop: Task[Unit] - Task.fromFuture(implicit ec => goPoopOG)
-
-lazy val future = Future.successful("Hello!")
-val zfuture: Task[String] =
-  ZIO.fromFuture { implicit ec =>
-    future.map(_ => "Goodbye!")
-  }
-```
-
-#### fromFunction
-
-- converts lambdas of type `A => B` into zio effects
-
-```scala
-val zfun: URIO[Int, Int] =
-  ZIO.fromFunction((i: Int) => i * i)
-
-```
 
 #### effect
 
@@ -1215,6 +1181,85 @@ val login: IO[AuthError, User] =
     )
   }
 ```
+
+#### from scala data types
+
+- generally you can do `ZIO.fromPoop` to convert poop into a zio effect
+
+
+##### fromEither
+
+- converts a scala Either into an IO[E, A]
+  - The error type will be whatever type the Left case has
+  - success type will be whatever type the Right case has.
+
+```scala
+
+val oneof = ZIO.fromEither[E, A](ea: => Either[E, A]): IO[E, A] = ???
+
+val zeither = ZIO.fromEither(Right("Success!"))
+```
+
+##### fromOption
+
+- converts a scala Option to an IO
+  - if theres no value will always returns None (options are either Success/None)
+  - if theres a value will return a zio.success
+
+```scala
+
+val maybe = ZIO.fromOption[A](na: => Option[A]): IO[None.type, A] = ???
+
+val zoption: IO[Option[Nothing], Int] = ZIO.fromOption(Some(2))
+
+// ^ You can change the Option[Nothing] into a more specific error type using ZIO#mapError:
+val zoption2: IO[String, Int] = zoption.mapError(_ => "It wasn't there!")
+```
+
+##### fromTry
+
+- converts a scala Try into a zio Task
+  - on failure returns a ZIO.fail with type fixed to Throwable (scala Trys always return throwable)
+  - on success returns a zio.success
+
+```scala
+import scala.util.Try
+
+val couldThrow = ZIO.fromTry[A](a: => Try[A]): Task[A] = ???
+
+```
+
+##### fromFuture
+
+- converts a future / fn that returns a Future into a zio effect of type `Task[A]`
+  - The error type will always be Throwable, because Future can only fail with values of type Throwable
+  - you dont need to use the exectionContext, but if you do then ZIO will manage where the Future is executed
+
+```scala
+import scala.concurrent.Future
+
+// origin fn
+def goPoopOG(implicit ec: ExecutionContext): Future[Unit] = ???
+// converted to a ZIO Effect
+def goPoop: Task[Unit] - Task.fromFuture(implicit ec => goPoopOG)
+
+lazy val future = Future.successful("Hello!")
+val zfuture: Task[String] =
+  ZIO.fromFuture { implicit ec =>
+    future.map(_ => "Goodbye!")
+  }
+```
+
+##### fromFunction
+
+- converts lambdas of type `A => B` into zio effects
+
+```scala
+val zfun: URIO[Int, Int] =
+  ZIO.fromFunction((i: Int) => i * i)
+
+```
+
 
 ## effects in practice
 
