@@ -3,7 +3,8 @@
 - wouldnt trust anything in this file until this line is removed
 - bookmark
   - start here
-    - https://zio.dev/version-1.x/overview/overview_testing_effects/#environmental-effects
+    - https://zio.dev/version-1.x/overview/overview_testing_effects/#implement-test-service
+      - add these notes under module pattern 1.5
   - then here
     - https://zio.dev/version-1.x/datatypes/fiber/#thread-shifting---jvm
   - then continue here
@@ -262,6 +263,8 @@ for {
   - extending some zio.App/variant and calling poop.exitCode
   - wrapping the pipeline within zio.Runtime.default.unsafeRun and executing it within a scala app
     - useful for wrapping legacy non-effectful code
+- FYI
+  - in order to execute an effect in a runtime, all of the effects dependencies must be provided
 
 ```scala
 // zio.APP type def
@@ -582,6 +585,47 @@ object terminal {
     // .get is made available via accessM which returns the Has map of all the environments?
     ZIO.accessM(_.get.log(line))
 }
+
+///////////////////////
+// module pattern 1.5
+// not specificaly labeled 1.5
+// but a pattern copied from the testing docs
+///////////////////////
+
+// step 1
+// define a companion object
+// with a single trait specifying the capabilities of the service
+object MyPoop {
+  trait service {
+    def poop(): Task[Poop]
+  }
+}
+// define a module which provides access to the service
+trait MyPoop {
+  def myPoop: MyPoop.service
+}
+// step 2
+// define the live module which interacts with production resources
+trait MyPoopLive extends MyPoop {
+  def myPoop: MyPoop.service =
+    new MyPoop.service {
+      def poop(): Task[poop] = ???
+    }
+}
+// companion object for the live version
+object MyPoopLive extends MyPoopLive {
+  ...
+}
+// step 3
+// define the test version
+
+// define an object containing getters for the Service
+// ^ for easier to access the service as an environment effect
+// ^ now you can use myPoop.poop at the call site(s), instead of having to write ZIO.accessM at the call site(s)
+object myPoop {
+  def poop(): RIO[Nothing, Poop] = ZIO.accessM(...)
+}
+
 
 ///////////////////////
 // service pattern 2.0
@@ -964,6 +1008,7 @@ val printNums = ZIO.foreach(1 to 100) { n => println(n.toString) }
   .effectTotal // convert sync logic to a zio effect, CANNOT be used if errors could be thrown
   .either // catches all failures, i.e surface failures, converts ZIO[R, E, A] to ZIO[R, Nothing, Either[E, A]]
   .ensuring(finallyEffect) // runs finally if prev effect fails for any reason, aka tryThis.ensuring(thisRunsOnFailure)
+  .environment[T] // retrieves the effect matching type T, its return type should be Any indicating all requirements have been satisfied
   .fail(anything) // see `# Fail`
   .flatMap[B](result => effect(result)) // sequently run effects
   .fold(errLam, sucLamb) // handle both failure and success non-effectively, success receives the result of err if its called
@@ -1336,6 +1381,10 @@ fib(100) race fib(200)
 - a toolkit for testing ZIO applications with implementations for each of ZIOs standard services
 - includes an alternative (generator) to scalacheck
 
+```scala
+// ZIO.accessM & ZIO.provide should be all thats necessary to use effects in tests
+
+```
 ## todo
 
 - [e.g. here (scroll down a bit), when to use poop.apply \_ ).toLayer](https://zio.dev/version-1.x/datatypes/contextual/zlayer#vertical-and-horizontal-composition)
