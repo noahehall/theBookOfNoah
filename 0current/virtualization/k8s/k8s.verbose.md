@@ -1,10 +1,10 @@
 # kubernetes
 
 - bookmark
-  - reading: 46 ch3: listing 3.2
+  - reading: 73 start after figure 4.6
   - copying:
-    - verbose chapter 2
-    - examples: page 16 try it now
+    - verbose: pg 18 try it now
+    - examples: page 18 try it now
 - todos
   - all the labs
 - largely taken from learn k8s in a month of lunches by elton stoneman
@@ -16,6 +16,7 @@
 
 ## links
 
+- [kubectl cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 - learn
   - [elton stonemans blogs](https://blog.sixeyed.com/)
   - [pdf: k8s with buildkit](https://static.sched.com/hosted_files/kccnceu19/12/Building%20images%20%20efficiently%20and%20securely%20on%20Kubernetes%20with%20BuildKit.pdf)
@@ -30,6 +31,8 @@
 - a container orchestrator
   - infrastructure-level concerns like load balancing, networking, storage and compute into app configuration
   - platform for running containers: instantiation, updates, maintenance, scaling, security, etc
+  - all k8s objects/resources/etc are abstractions around lowerlevel things, same way docker containers/images/etc are abstractions
+
 
 ### terms
 
@@ -39,12 +42,11 @@
 
 - how you define your applications; generally in yaml and send the specification state to the k8s API, which is responsible for ensuring the runtime state matches the specification state (like terraform)
 
-
 #### application manifests
 
 - IaaC adhering to the k8s api; defines one of the kubernetes object
 - yaml definition
-- json definition
+- json definition?
 
 ##### services
 
@@ -52,7 +54,20 @@
 
 ##### Pods
 
+- k8s object for managing 1/more containers
+  - every container belongs to a pod, typically one-to-one,
+    - you can deploy many containers to a single pod and they will all share the same virtual env, network address, and can communicate over localhost
+  - pods inturn are generally managed by other k8s objects (e.g. deployments)
+- a unit of compute; basic building block of k8s;
+  - runs on a single node in a cluster
+  - k8s manages the pod, but not the container
+    - instead it passes the responsibilty container management to the container runtime installed on the node, e.g. docker/containerd/etc
+- state
+  - virtual ip: managed by k8s
+
 ##### Deployments
+
+- k8s object for managing pods
 
 ##### ReplicaSets
 
@@ -64,8 +79,10 @@
 
 ### cluster
 
-- a bunch of servers, which runc ontainers, joined into a group
+- a bunch of servers, which run containers, joined into a group
 - a single logical unit composed of many server nodes
+- state
+  - virtual network: all pods in a cluster can communicate with each other, even if deployed to different nodes within the cluster
 
 #### distributed db
 
@@ -97,7 +114,6 @@
   - cloud-native architecture across microservices in multiple containers
   - legacy monoliths in one big containers
   - linux, (fk) windows OS
-
 
 #### API nodes
 
