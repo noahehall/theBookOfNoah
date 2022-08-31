@@ -1,4 +1,6 @@
 # links: move these into the appropriate files
+- [good review of normal forms & normalization of sql schemas](https://www.guru99.com/database-normalization.html)
+- [checkout kamon telemetry](https://github.com/kamon-io/Kamon)
 - [kuvebal validate k8s conf files](https://www.kubeval.com/)
 - [down at the bottom theres a good review of unsetting envs vars on login](https://stackoverflow.com/questions/6877727/how-do-i-delete-an-exported-environment-variable)
 - [zio intellij plugin](https://github.com/zio/zio-intellij)
