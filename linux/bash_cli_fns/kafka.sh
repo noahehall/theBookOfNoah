@@ -1,6 +1,7 @@
 # kafka stuff
-#@ see https://kafka.apache.org/quickstart
-export KAFKA_DIR=/opt/homebrew/Cellar/kafka/3.2.0/libexec
+# @see https://kafka.apache.org/quickstart
+# TODO: this will only work on apple + brew install
+export KAFKA_DIR=/opt/homebrew/Cellar/kafka/3.2.1/libexec
 export KAFKA_DATA_DIR=$KAFKA_DIR/data
 
 # copypasta some of these
@@ -11,6 +12,7 @@ export KAFKA_DATA_DIR=$KAFKA_DIR/data
 # required by kafka
 ## ^ however 3.2 doesnt require the --zookeeper arg
 zoo_start () {
+    ## make sure you update zookeeper properties when updating kafka versions
 	zookeeper-server-start $KAFKA_DIR/config/zookeeper.properties
 }
 

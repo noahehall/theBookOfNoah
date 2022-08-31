@@ -1,4 +1,7 @@
 # links: move these into the appropriate files
+- [curl manual](https://curl.se/docs/manpage.html)
+- [jq manual](https://stedolan.github.io/jq/manual/)
+- [nice review of jq, bash & curl](https://thom4.net/2016/pipelining-http/)
 - [good review of normal forms & normalization of sql schemas](https://www.guru99.com/database-normalization.html)
 - [checkout kamon telemetry](https://github.com/kamon-io/Kamon)
 - [kuvebal validate k8s conf files](https://www.kubeval.com/)
