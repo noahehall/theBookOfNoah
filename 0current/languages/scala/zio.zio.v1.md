@@ -2,9 +2,6 @@
 
 - wouldnt trust anything in this file until this line is removed
 - bookmark
-  - start here
-    - https://zio.dev/version-1.x/overview/overview_testing_effects/#implement-test-service
-      - add these notes under module pattern 1.5
   - then here
     - https://zio.dev/version-1.x/datatypes/fiber/#thread-shifting---jvm
   - then continue here
@@ -36,8 +33,7 @@
   - [zio applications](https://zio.dev/version-1.x/datatypes/contextual/zlayer#examples)
 - docs
   - [000 zio1 intro](https://zio.dev/version-1.x/overview/)
-  - [handling errors](https://zio.dev/version-1.x/overview/overview_handling_errors/)
-  - [zio native services docs](https://zio.dev/version-1.x/services/)
+  - [001 zio intro data types](https://zio.dev/version-1.x/datatypes/)
 
 ## terms
 
@@ -616,8 +612,6 @@ trait MyPoopLive extends MyPoop {
 object MyPoopLive extends MyPoopLive {
   ...
 }
-// step 3
-// define the test version
 
 // define an object containing getters for the Service
 // ^ for easier to access the service as an environment effect
@@ -1167,7 +1161,6 @@ val s1 = ZIO.succeed(42)
 
 ```
 
-
 #### effect
 
 - converts any synchronous code into a functional effect of type `ZIO[Any, Throwable, A]`
@@ -1230,7 +1223,6 @@ val login: IO[AuthError, User] =
 #### from scala data types
 
 - generally you can do `ZIO.fromPoop` to convert poop into a zio effect
-
 
 ##### fromEither
 
@@ -1305,7 +1297,6 @@ val zfun: URIO[Int, Int] =
 
 ```
 
-
 ## effects in practice
 
 ### for comprehensions
@@ -1378,13 +1369,14 @@ fib(100) race fib(200)
 
 ## tests
 
-- a toolkit for testing ZIO applications with implementations for each of ZIOs standard services
-- includes an alternative (generator) to scalacheck
+- ZIO.accessM & ZIO.provide should be all thats necessary to use effects in tests
 
 ```scala
-// ZIO.accessM & ZIO.provide should be all thats necessary to use effects in tests
+// define a Mock service that satisfies the interface contract of some trait
+// provide that mock service to the effect within the test
 
 ```
+
 ## todo
 
 - [e.g. here (scroll down a bit), when to use poop.apply \_ ).toLayer](https://zio.dev/version-1.x/datatypes/contextual/zlayer#vertical-and-horizontal-composition)
