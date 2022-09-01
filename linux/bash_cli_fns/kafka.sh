@@ -1,6 +1,9 @@
 # kafka stuff
 # @see https://kafka.apache.org/quickstart
 # TODO: this will only work on apple + brew install
+## and updating it via brew fkn breaks shiz, so be careful
+## TODO: check in one of the config files if something is pointing to kafka/3.2.0/
+### ^ it should now be pointing to kafka/3.2.1/
 export KAFKA_DIR=/opt/homebrew/Cellar/kafka/3.2.1/libexec
 export KAFKA_DATA_DIR=$KAFKA_DIR/data
 
