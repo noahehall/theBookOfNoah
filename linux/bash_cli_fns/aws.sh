@@ -4,25 +4,25 @@
 [ -f /usr/local/bin/aws_completer ] &&complete -C '/usr/local/bin/aws_completer' aws
 
 
-alias awsconfig='sudo aws configure'
-alias awsconfiglist='aws configure list'
-alias awsconfigprofiles='aws configure list-profiles'
-alias awsaccounts='aws iam list-account-aliases'
-alias awswhoami='aws sts get-caller-identity'
-alias awspgversions='aws rds describe-db-engine-versions --default-only --engine postgres'
-alias nanoconfig='sudo nano ~/.aws/config'
-alias nanocreds='sudo nano ~/.aws/credentials'
+alias aws_config_manual='sudo aws configure'
+alias aws_config_current='aws configure list'
+alias aws_profile_list='aws configure list-profiles'
+alias aws_accounts='aws iam list-account-aliases'
+alias aws_whoami='aws sts get-caller-identity'
+alias aws_pg_versions='aws rds describe-db-engine-versions --default-only --engine postgres'
+alias aws_config_edit='sudo nano ~/.aws/config'
+alias aws_ocreds_edit='sudo nano ~/.aws/credentials'
 
 
-awslists3() {
+aws_s3_list() {
     aws s3 ls
 }
 
-awsliststatemachines() {
+aws_statemachines_list() {
     aws stepfunctions list-state-machines
 }
 
-awsrunstatemachine() {
+aws_statemachine_run () {
     # todo
     aws stepfunctions start-execution help
     # args:
@@ -31,26 +31,26 @@ awsrunstatemachine() {
 }
 # @see https://github.com/donnemartin/saws
 
-awsprofileset() {
+aws_profile_set() {
     if [[ $# -eq 1 ]]; then
         export AWS_DEFAULT_PROFILE="$1"
     fi
 }
 
-awsregionset() {
+aws_region_set() {
     if [[ $# -eq 1 ]]; then
         export AWS_DEFAULT_REGION="$1"
     fi
 }
 
-awscreatekeypair() {
+aws_keypair_create() {
     if [[ $# -eq 1 ]]; then
         aws ec2 create-key-pair --key-name "$1" --query 'KeyMaterial' --output text > "$1".pem
     fi
 
 }
 
-awscreatesubnet() {
+aws_subnet_create() {
     if [[ $# -eq 4 ]]; then
         echo 'subnet creation dry-run'
         echo 'ec2 create-subnet --dry-run --vpc-id "$1" --cidr-block "$2" --availability-zone "$3" --profile "$4"'
@@ -68,14 +68,14 @@ awscreatesubnet() {
     fi
 }
 
-awscreateroutetable() {
+aws_routetable_create() {
     # $1 vpc-id
     # $2 profile
     # aws ec2 create-route-table --vpc-id $1 --profile $2
     echo 'not setup'
 }
 
-awscreateroutetableroute() {
+aws_routetable_route_create() {
     # $1 route table ID (make sure its the one attached to the subnet you want)
     # $2 destination (ip cidr range)
     # $3 this links it to an internet gateway
@@ -86,13 +86,13 @@ awscreateroutetableroute() {
     echo 'not setup'
 }
 
-awscreateinternetgateway() {
+aws_internetgateway_create() {
     # $1 profile
     # aws ec2 create-internet-gateway --profile $1
     echo 'not setup'
 }
 
-awscreatetags() {
+aws_tag_create() {
     # $1 resource ids
     # $2 tagKey e.g. Name
     # $3 tagValue e.g. poop-dev
@@ -102,7 +102,7 @@ awscreatetags() {
     echo 'not setup'
 }
 
-awslinkroutetable() {
+aws_routetable_link() {
     # $1 route table id
     # $2 subnet-id
     # $3 profile
@@ -110,7 +110,7 @@ awslinkroutetable() {
     echo 'not setup'
 }
 
-awslinkinternetgateway() {
+aws_internetgateway_link() {
     # $1 gateway id
     # $2 vpc id
     # $3 profile
@@ -119,7 +119,7 @@ awslinkinternetgateway() {
 }
 
 # todo: i need to setup named params before using any of this
-awsruninstances() {
+aws_instance_run() {
     # $1 ami-id
     # $2 count of instances e.g. 1
     # $3 instance type e.g. t2.micro
