@@ -1,4 +1,5 @@
 # links: move these into the appropriate files
+- [checkout localstack](https://localstack.cloud/)
 - [curl manual](https://curl.se/docs/manpage.html)
 - [jq manual](https://stedolan.github.io/jq/manual/)
 - [nice review of jq, bash & curl](https://thom4.net/2016/pipelining-http/)
