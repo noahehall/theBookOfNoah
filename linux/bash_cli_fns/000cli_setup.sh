@@ -1,6 +1,9 @@
+#!/bin/env bash
 
 # TODO
 # @see https://bashrcgenerator.com/
+
+export TERM=linux
 
 export EDITOR=nano
 

@@ -1,4 +1,4 @@
-
+#!/bin/env bash
 
 # terraform ----------------------------
 alias tfplan='terraform plan -out tfplan'

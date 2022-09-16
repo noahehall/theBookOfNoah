@@ -1,3 +1,4 @@
+#!/bin/env bash
 
 # nim
 alias cnim='choosenim'

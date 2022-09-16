@@ -1,16 +1,13 @@
-############
-# likely all of these only works for apple silicon due to hardcoding
-# theres a todo to fix that
-###########
+#!/bin/env bash
 
 # bash
 redirectALL () {
     echo "redirecting stdout & err to ./redirectALL.log"
     # Note: & (in 2>&1) specifies that 1 is not a file name but a file descriptor.
-    $@ > .redirectALL.log 2>&1
+    "$@" > .redirectALL.log 2>&1
 }
 
-#https://github.com/dylanaraps/neofetch
+# https://github.com/dylanaraps/neofetch
 if type neofetch &>/dev/null;
 	# --config /path/to/config
 	# --config none
@@ -21,11 +18,7 @@ if type neofetch &>/dev/null;
 		--memory_unit gib \
 		--os_arch on \
 		--stdout
-
-
-
 # --disk_percent on --disk_subtitle name --disk_show /
-
 else
 	echo 'neofetch not installed'
 fi
@@ -35,7 +28,7 @@ fi
 if hash bpytop 2>/dev/null; then
 	alias oldtop='/usr/bin/top'
 	alias top='/usr/bin/bpytop'
-else echo 'should really use bpytop > top'
+else echo 'unable to ovelroad top with bpytop'
 fi
 
 
@@ -49,7 +42,7 @@ alias treedir='tree --dirsfirst --charset=ascii'
 alias tree1='tree -L 1'
 alias tree2='tree -L 2'
 alias tree3='tree -L 3'
-alias cdmedia="cd /media/$(whoami)/"
+alias cdmedia='cd /media/$(whoami)/'
 
 # grep ---------------------------------
 alias grepfilenames='grep -iRl'
@@ -58,15 +51,15 @@ alias grepfilenames='grep -iRl'
 alias dpkgi='grep " install " /var/log/dpkg.log'
 alias apti='grep " install " /var/log/apt/history.log'
 alias installed='(dpkgi;apti) | less'
-alias whatsmyipmac='ifconfig -a | grep inet'
-alias whatsmyip="hostname -I | cut -d' ' -f1"
-alias whatsmyipexternal='curl -s http://ipecho.net/plain'
-alias whatsmyipextended='curl http://ipinfo.io'
 alias untar='tar -xvf'
 
 # networking
 alias getwifi='sudo iwlist wlp3s0 scan | grep ESSID'
 alias whatsonport='sudo netstat -tulpn' # | grep 8080
+alias whatsmyipmac='ifconfig -a | grep inet'
+alias whatsmyip="hostname -I | cut -d' ' -f1"
+alias whatsmyipexternal='curl -s http://ipecho.net/plain'
+alias whatsmyipextended='curl http://ipinfo.io'
 
 # random
 alias xargall='xargs -p -t -n 1'
@@ -123,25 +116,15 @@ alias getfns='declare -F'
 # refresh shell
 # @see https://askubuntu.com/questions/19772/how-to-reinitialize-a-terminal-window-instead-of-closing-it-and-starting-a-new-o
 refreshshell(){
-    reset
-    [ `uname` = "Darwin" ] \
-        && exec $SHELL \
-        || exec sudo --login --user "$USER" /bin/sh -c "cd '$PWD'; exec '$SHELL' -l"
-}
-
-# returns current dir of this script, optionally appending a path
-function getpath() {
-    # https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself
-    local THISDIR="$( cd "$( echo "${BASH_SOURCE[0]%/*}" )" || exit; pwd )"
-
-    if [[ $# -lt 1 ]]; then
-        # no filename
-        echo "$THISDIR"
+    #reset # this hangs kitty
+    if [ "$(uname)" = "Darwin" ]
+    then
+        exec $SHELL
     else
-        # with filename
-        echo "${THISDIR}/$1"
+        exec sudo --login --user "$USER" /bin/sh -c "cd '$PWD'; exec '$SHELL' -l"
     fi
 }
+
 
 function checkpkgupgrade () {
     if [[ $# -eq 1 ]]; then
@@ -149,24 +132,6 @@ function checkpkgupgrade () {
     else
         echo "\$1 === some_pkg_name"
     fi
-}
-function sourceifexists() {
-    if [[ $# -eq 1 && -f "$1" ]]; then
-        . "$1"
-    fi
-}
-
-
-# completation aware g<alias bash aliases for each git alias
-# https://gist.github.com/mwhite/6887990
-# TODO: doesnt work like expected
-function_exists() {
-     declare -f -F "$1" > /dev/null
-     return $?
-}
-
-cmdtime() {
-    time "$@"
 }
 
 # security -----------------------------

@@ -1,7 +1,7 @@
-# aws ----------------------------------
+#!/bin/env bash
 
 # ^ enable command completion
-[ -f /usr/local/bin/aws_completer ] &&complete -C '/usr/local/bin/aws_completer' aws
+[ -f /usr/local/bin/aws_completer ] && complete -C '/usr/local/bin/aws_completer' aws
 
 
 alias aws_config_manual='sudo aws configure'

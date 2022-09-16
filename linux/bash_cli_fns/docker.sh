@@ -1,6 +1,4 @@
-
-# docker
-
+#!/bin/env bash
 
 # usage:
 # docker ps --format="$DOCKER_FORMAT"
@@ -23,10 +21,10 @@ dockerbashuphost () {
 
 
 # docker -------------------------------
-alias dockerseeme="$(echo docker run --rm -it alpine ping -c4 $(whatsmyip))"
+alias dockerseeme='$(echo docker run --rm -it alpine ping -c4 $(whatsmyip))'
 alias dockerps="docker ps --no-trunc -a --format 'table {{.Names}}...{{.Image}}...{{.Status}}...{{.Command}}\n'"
 alias dockerdremoteurl="sudo netstat -lntp | grep dockerd"
-alias dockerdlog="$(echo journalctl -u docker.service)"
+alias dockerdlog='$(echo journalctl -u docker.service)'
 # get netstats (use ss on ubuntu)
 alias dockerdss="(sudo ss -asmpex | grep dockerd)"
 #echo image1 image2 three | xargall docker pull

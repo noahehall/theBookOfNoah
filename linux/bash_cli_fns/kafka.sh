@@ -1,4 +1,5 @@
-# kafka stuff
+#!/bin/env bash
+
 # @see https://kafka.apache.org/quickstart
 # TODO: this will only work on apple + brew install
 ## and updating it via brew fkn breaks shiz, so be careful
@@ -30,7 +31,7 @@ kafka_stop () {
 kafka_create_topic () {
     if [[ $# -eq 1 ]]; then
         KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
-        kafka-topics --create --topic $1 --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
+        kafka-topics --create --topic "$1" --bootstrap-server "$KAFKA_BOOTSTRAP_SERVER"
     else
         echo "\$1 === topic_name"
     fi
@@ -39,7 +40,7 @@ kafka_create_topic () {
 kafka_describe_topic () {
     if [[ $# -eq 1 ]]; then
         KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
-        kafka-topics --describe --topic $1 --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
+        kafka-topics --describe --topic "$1" --bootstrap-server "$KAFKA_BOOTSTRAP_SERVER"
     else
         echo "\$1 === topic_name"
     fi
@@ -47,12 +48,12 @@ kafka_describe_topic () {
 
 kafka_list_topics () {
     KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
-    kafka-topics --list --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
+    kafka-topics --list --bootstrap-server "$KAFKA_BOOTSTRAP_SERVER"
 }
 
 kafka_list_group_ids () {
     KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
-    kafka-consumer-groups  --list --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
+    kafka-consumer-groups  --list --bootstrap-server "$KAFKA_BOOTSTRAP_SERVER"
 }
 
 kafka_send () {
@@ -60,7 +61,7 @@ kafka_send () {
         # echo -e "sending\n---\n${@:2}\n---"
         # echo "to this topic: $1"
         KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
-        kafka-console-producer --topic $1 --bootstrap-server $KAFKA_BOOTSTRAP_SERVER
+        kafka-console-producer --topic "$1" --bootstrap-server "$KAFKA_BOOTSTRAP_SERVER"
     else
         echo "\$1 === topic_name, then paste in events, ctrlD exit"
     fi
@@ -69,7 +70,7 @@ kafka_send () {
 kafka_list_topic_partitions () {
     if [[ $# -eq 1 ]]; then
         KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
-        kafka-run-class kafka.tools.GetOffsetShell --broker-list $KAFKA_BOOTSTRAP_SERVER --topic $1
+        kafka-run-class kafka.tools.GetOffsetShell --broker-list "$KAFKA_BOOTSTRAP_SERVER" --topic "$1"
     else
         echo "\$1 === topic_name, then paste in events, ctrlD exit"
     fi
@@ -80,7 +81,7 @@ kafka_listen_for_topic_events () {
         # echo -e "sending\n---\n${@:2}\n---"
         # echo "to this topic: $1"
         KAFKA_BOOTSTRAP_SERVER="${KBS:-localhost:9092}"
-        kafka-console-consumer --bootstrap-server $KAFKA_BOOTSTRAP_SERVER --topic $1 --offset 20 --partition $2
+        kafka-console-consumer --bootstrap-server "$KAFKA_BOOTSTRAP_SERVER" --topic "$1" --offset 20 --partition "$2"
 
     else
         echo "\$1 === topic_name, \$2 === partition"

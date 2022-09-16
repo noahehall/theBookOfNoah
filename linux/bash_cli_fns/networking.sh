@@ -1,6 +1,10 @@
+#!/bin/env bash
+
+# TODO: missing cmdtime
+## ^^ should be in 000util.sh
 
 # networking -------------------------------------------------------------------
-responseheaders() {
+response_headers() {
     if [[ $# -eq 1 ]]; then
         curl -I "$1"
     else
@@ -8,7 +12,7 @@ responseheaders() {
     fi
 }
 
-responsetime() {
+response_time() {
     if [[ $# -eq 1 ]]; then
         cmdtime responseheaders "$1"
     else
@@ -16,7 +20,7 @@ responsetime() {
     fi
 }
 
-responseDoS() {
+response_dos() {
     if [[ $# -eq 1 ]]; then
         while true; do
             responsetime "$1"

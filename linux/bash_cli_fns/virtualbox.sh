@@ -1,3 +1,4 @@
+#!/bin/env bash
 
 # virtualbox
 # --help will always console help, even if invalid for the cmd
@@ -11,7 +12,7 @@ alias vblistall='VBoxManage list vms'
 alias vbrunning='VBoxManage list runningvms'
 alias vbstart='VBoxManage startvm'
 
-# vagrant, overriding vg i'll never use it
+# vagrant, overriding vgt i'll never use it
 
 alias vgt='vagrant'
 alias vgtdestroy='vagrant destroy' # delete everything, but keep vagrantfile

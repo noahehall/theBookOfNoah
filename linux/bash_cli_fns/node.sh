@@ -1,3 +1,5 @@
+#!/bin/env bash
+
 # node ---------------------------------
 alias npmglobals='npm list -g --depth=0'
 alias nvmaliasnode='nvm alias default node'

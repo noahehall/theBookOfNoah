@@ -1,3 +1,5 @@
+#!/bin/env bash
+
 k8s_get_nodes () {
 read -r -d '' HELP << "EOF"
 prints basic details about all nodes in cluster
@@ -28,7 +30,7 @@ EOF
 
   [[ $1 == "-h" ]] \
     && echo "$HELP" \
-    || kubectl describe pod $1
+    || kubectl describe pod "$1"
 }
 
 k8s_pod_ready () {
@@ -39,7 +41,7 @@ EOF
 
   [[ $1 == "-h" ]] \
     && echo "$HELP" \
-    || kubectl wait --for=condition=Ready pod $1
+    || kubectl wait --for=condition=Ready pod "$1"
 }
 
 k8s_run_pod () {
@@ -51,5 +53,5 @@ EOF
 
   [[ $1 == "-h" ]] \
     && echo "$HELP" \
-    || kubectl run $1 --image=$2 --restart=Never
+    || kubectl run "$1" --image="$2" --restart=Never
 }
