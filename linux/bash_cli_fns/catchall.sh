@@ -115,7 +115,7 @@ alias getfns='declare -F'
 
 # refresh shell
 # @see https://askubuntu.com/questions/19772/how-to-reinitialize-a-terminal-window-instead-of-closing-it-and-starting-a-new-o
-refreshshell(){
+refresh_shell(){
     #reset # this hangs kitty
     if [ "$(uname)" = "Darwin" ]
     then
