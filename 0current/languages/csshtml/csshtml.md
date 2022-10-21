@@ -1259,7 +1259,6 @@ background-size: contain|no-repeat|cover|%|% %;
 #### flexbox & Grid
 
 - useful terms
-
   - grid: pattern used by designers to align design elements for consistent flow & symmetrical layouts
     - equal width rows & columns are added as guides
       - generually using 12 columns, as its divisible by 2,3,4,6 for targeting general devices & creating consistent designs
@@ -1270,24 +1269,18 @@ background-size: contain|no-repeat|cover|%|% %;
   - justify-content
     - space-around: place half of hte vaiable psace on each side of the box
       - e.g. 4 boxes with flexbasis @ 24%, that means a 0.5% is placed on each side of each box
-
 - Versus rap battle
-
   - both
-
     - can use any css length unit, e.g. %, vh, px, rem, etc
       - but both works best with `fr`
       - ^ fractional unit: you dont specify the `fr` in flex, but you do in grid
         - 1 === distribute evently
         - 2 = give this one 2/totalColsOrRows etc
-
   - GRID:
-
     - layout in layout: the specified layout truly controls the layout, child element content are forced to fit within the specifications
     - 2 dimensions at the same time
     - additional groups of items have the same dimensions as previous group by defualt
     - declare dimensions for grid-items in the parent, via a single property
-
   - FLEXBOX
     - content out layout: the child elements content truly controls the layout of the box model
     - 1 dimension
@@ -1297,7 +1290,7 @@ background-size: contain|no-repeat|cover|%|% %;
 ##### flexbox
 
 - always think about parents and children, flex containers and flex items
-  - parent determines how flow of the children
+  - parent determines the flow of the children
 - gotchas
   - dont use the width property on flex items, use flex-basis (or just flex)
 - 1-dimensional alignment of content, ordering items, and implementing flexible sizing
@@ -1306,7 +1299,6 @@ background-size: contain|no-repeat|cover|%|% %;
     - items can wrap to create additional groupings
     - flex containers can be nested to create additional dimensions
 - flex-direction: determines which dimension is the main & cross axis
-
   - but also depends on the writing order of the document
   - column: consider height & ignore width
   - row: consider width & ignore height
@@ -1317,7 +1309,6 @@ background-size: contain|no-repeat|cover|%|% %;
     - cross axis: vertical for row
       - items start & end -> top to bottom
   - row-reverse: flips start & end on both dimensions
-
   - column: the parent is a column, children render top to bottom, additional columns created when wrapping
     - height is an input var to the flex algorithm
     - when wrapping occurs, additional columns are created
@@ -1326,14 +1317,11 @@ background-size: contain|no-repeat|cover|%|% %;
     - cross axis: horizontal
       - items start & end -> left to right
   - column-reverse: flips start & end on both dimensions
-
 - flex-wrap: is per group on main axis
-
   - i.e. if you set to wrap,
     - and 2 groups are created are created on the main axis (because there wasnt enough space on first group)
       - flex-items in the second group will have there own computed values
       - e.g. the first group of 4 is 10px each, whlie the second group of 2 is 20 px each
-
 - order: change the visual layout order of flex items without changing the HTML
   - default is 0 for all flex items
   - 1 -> first item on main exis, incremented as expected

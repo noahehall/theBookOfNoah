@@ -83,7 +83,7 @@
 ## gotchas
 
 - remember: typescript is compile time type-checking
-  - so all of this goodiness is removed when shipped to prod
+  - so all of this goodiness should be removed when shipped to prod
 
 ```js
 // @ts-ignore
@@ -114,7 +114,7 @@ const poop = someFn();
   // JSX element type 'Component' does not have any construct or call signatures.
   // ^ means you need to set the annotation to FC<whatever>
   // ^ or it means the component has already been rendered, and you are trying to render it again
-  // ^ or it means youave specified an object type annotation instead of a fn type annotation
+  // ^ or it means youve specified an object type annotation instead of a fn type annotation
   // ^ or it means your fn has someFn(SomeComp) instead of someFn({ SomeComp })
   // ^ easy fix by doing {Component} instead of <Component />
   // ^ or see below
@@ -176,7 +176,7 @@ const poop = someFn();
     const array: Array<number> = React.Children.toArray(children); // flatten the array
 
   // need a better example
-  // this is the ost abstract representation of a react component
+  // this is the most abstract representation of a react component
   // useful for HOCs and library definitions
   React.AbstractComponent<Config, Instance>
 
