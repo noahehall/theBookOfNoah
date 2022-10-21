@@ -412,6 +412,11 @@ type someOpts = string | string[];
 // intersections
 type Combined = { a: number } & { b: string }; // combined == { a: number, b: string }
 type Conflicting = { a: number } & { a: string }; // error
+
+// destructuring with types
+// action_type = string, data = playerdataorerrortype
+const { ACTION_TYPE, ...data } = formData as ACTION_TYPE &
+        PlayerDataOrErrorType;
 ```
 
 ### interfaces & type aliases
@@ -552,7 +557,13 @@ function multiply(n: number, ...m: number[]) {
 ### generics
 
 ```js
-
+class Component<Props = any, State = any> {
+    props: Props;
+    state: State;
+  }
+export interface ValidateNewPlayerInterface<T = ValidateNewPlayerType> extends ActionFunctionArgs {
+  data: T;
+}
 // generics
 // a fn where the type of the input relate to the type of the output
 // ^ or where the types of two inputs relate in some way
