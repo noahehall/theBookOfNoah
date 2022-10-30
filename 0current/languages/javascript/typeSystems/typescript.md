@@ -5,6 +5,8 @@
     - this is the beginning of the reference
     - eventually you want to get through this shiz
 - todos
+  - [ambient modules](https://www.typescriptlang.org/docs/handbook/modules.html#ambient-modules)
+  - [namespaces](https://www.typescriptlang.org/docs/handbook/namespaces.html)
   - [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
   - [typecript cheatsheet extended utility types](https://github.com/typescript-cheatsheets/utilities)
   - [typescript advanced utility types](https://react-typescript-cheatsheet.netlify.app/docs/advanced/utility_types/)

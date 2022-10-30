@@ -1,14 +1,16 @@
 #!/bin/env bash
 
 # git
-gitundolastcommit () {
+gitundolastcommit() {
     git reset HEAD~
 }
-
 
 # git ----------------------------------
 # @see https://gist.github.com/chrismccoy/8775224
 ## quick
+alias git_prune_check='git prune --dry-run --verbose'
+alias git_prune=' git fetch --prune'
+alias git_rm_cache='git rm --cached -r .'
 alias gita='git add -A'
 alias gitb='git branch'
 alias gitba='git branch -a'
@@ -19,22 +21,21 @@ alias gitp='git push'
 alias gitpf='git push --force'
 alias gitpl='git pull'
 alias gitplf='git pull --force'
-alias gitprune=' git fetch --prune'
-alias gitprunecheck='git prune --dry-run --verbose'
-alias gitrmcache='git rm --cached -r .'
 alias gits='git status -sb'
 alias gitsw='git switch'
 ## extended
-alias gitcontributors='git log --format="%ae" | sort -u'
-alias gitconfig='git config --list'
-alias gitconfigedit='git config --global -e'
-alias gitdiffdevelop='git diff origin/develop --stat'
-alias gitdiffdevelopv='git diff origin/develop'
-alias gitdiffmaster='git diff origin/master --stat'
-alias gitdiffmasterv='git diff origin/master'
-alias gitloglast='git log -1 HEAD --stat'
-alias gitstash='git stash -u'
-alias gitstashlist='git stash list'
-alias gitstashpop='git stash pop'
-alias gitprune='git fetch --prune && git prune'
-alias gitamend='git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend'
+alias git_amend='git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend'
+alias git_config_edit='git config --global -e'
+alias git_config='git config --list'
+alias git_contributors='git log --format="%ae" | sort -u'
+alias git_diff_deploy='git diff origin/deploy --stat'
+alias git_diff_deployv='git diff origin/deploy'
+alias git_diff_develop='git diff origin/develop --stat'
+alias git_diff_developv='git diff origin/develop'
+alias git_diff_master='git diff origin/master --stat'
+alias git_diff_masterv='git diff origin/master'
+alias git_log_last='git log -1 HEAD --stat'
+alias git_prune='git fetch --prune && git prune'
+alias git_stash_all='git stash -u'
+alias git_stash_list='git stash list'
+alias git_stash_pop='git stash pop'
