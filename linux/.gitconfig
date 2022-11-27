@@ -21,8 +21,10 @@
   gpgSign = true
 
 [push]
-  default = simple
+  default = current
+  autoSetupRemote = true
   followTags = true
+
 
 [pull]
   rebase = true

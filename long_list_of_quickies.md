@@ -1,4 +1,9 @@
+# desktop integration
+
+- [read this on how kitty cli does it](https://sw.kovidgoyal.net/kitty/binary/)
+
 # links: move these into the appropriate files
+
 - [checkout localstack](https://localstack.cloud/)
 - [curl manual](https://curl.se/docs/manpage.html)
 - [jq manual](https://stedolan.github.io/jq/manual/)
