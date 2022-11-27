@@ -9,8 +9,9 @@ gitundolastcommit() {
 # @see https://gist.github.com/chrismccoy/8775224
 ## quick
 alias git_prune_check='git prune --dry-run --verbose'
-alias git_prune=' git fetch --prune'
-alias git_rm_cache='git rm --cached -r .'
+alias git_prune='git fetch --prune'
+alias git_rm_all_from_cache='echo -e "check bfg on github for sensitive files"; git rm --cached -r ./'
+alias git_rm_file_from_cache='echo -e "check bfg on github for sensitive files"; git rm --cached --ignore-unmatch'
 alias gita='git add -A'
 alias gitb='git branch'
 alias gitba='git branch -a'
