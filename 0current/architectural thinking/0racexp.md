@@ -48,6 +48,7 @@ THE RACE
   - `FAST lane` too many of these means all your trophies are gold plated, but hey - you can fill your team with cheap engineers and junior devs
   - `THE LAST LAP` if our users arent using it then its not providing utility, and usually not useful to consider the ticket done, so use the last lap for this usecase
     - there are a lot of stats and insights to glean from plotting tickets on these 4 dimensions over time...
+  - `DEPLOYED`: refrain from the use of `DONE` status, DONE doesnt exist in the real world; this also supports the adoption of `refactoring as a lifestyle`
 
 [RACING FLAGS](https://en.wikipedia.org/wiki/Racing_flags)
 
