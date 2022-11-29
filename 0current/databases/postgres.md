@@ -113,6 +113,7 @@ everything about postgresql
 ## quickies
 
 ### general
+
 ```sh
   # pgadmin
   # ^ right click everything to see the menus
@@ -195,6 +196,7 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
 -- inserts
 -- Strings always have to be surrounded by single quotes (');
 ```
+
 ## reference
 
 ### tables

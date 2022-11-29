@@ -19,6 +19,9 @@
 - [foreign data](https://www.postgresql.org/docs/current/ddl-foreign-data.html)
 - [controlling text search](https://www.postgresql.org/docs/current/textsearch-controls.html)
   - likely you will need to reread this every
+- [optimizing order by in a full text search query](https://dba.stackexchange.com/questions/16437/optimizing-order-by-in-a-full-text-search-query)
+  - but ALSO read the last statement where she talks about using tgram (already setup) for whole words searches
+- [another quickie for trgm](https://stackoverflow.com/questions/2513501/postgresql-full-text-search-how-to-search-partial-words)
 
 ### gotchas
 
@@ -148,6 +151,8 @@ text @@ text
 
 ### controlling text search
 
+- you should reread the controlling text search link (see above) as it contains really good examples
+
 #### indexes
 
 - you must specify the text configuration when using expression indexes for full text search,
@@ -170,6 +175,7 @@ text @@ text
 
 ```sql
 -- creates a GIN index using column (which MUST be of type tsvector)
+-- see examples for a more
 CREATE INDEX name ON table USING GIN (column);
 
 
