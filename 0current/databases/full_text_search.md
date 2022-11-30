@@ -22,6 +22,8 @@
 - [optimizing order by in a full text search query](https://dba.stackexchange.com/questions/16437/optimizing-order-by-in-a-full-text-search-query)
   - but ALSO read the last statement where she talks about using tgram (already setup) for whole words searches
 - [another quickie for trgm](https://stackoverflow.com/questions/2513501/postgresql-full-text-search-how-to-search-partial-words)
+- [fast search with trigram text indexes](https://about.gitlab.com/blog/2016/03/18/fast-search-using-postgresql-trigram-indexes/)
+- [full text search in postgres](https://www.lateral.io/resources-blog/full-text-search-in-milliseconds-with-postgresql)
 
 ### gotchas
 
@@ -229,7 +231,7 @@ CREATE INDEX pgweb_idx ON pgweb USING GIN (to_tsvector('english', title || ' ' |
   - queries can utilize the default_text_search_config
   - queries will be faster, since its not necessary to redo the `to_tsvector` calls to verify index matches
 
-````sql
+`````sql
 -- first create the tsvector column
 -- then create a GIN index to speed up queries
 ALTER TABLE pgweb ADD COLUMN textsearchable_index_col tsvector
@@ -249,13 +251,12 @@ ORDER BY last_mod_date DESC LIMIT 10;
 
 ### more examples
 
-- you generally want to always coaslesce NULL values unless,... you dont
+- you generally want to always coaslesce NULL values unless you dont
 
-```sql
--- get the title of each tuple that contains the word friend/friendly/friends/etc in the body field
--- omit english to use whatever configuration is set by default_text_Search_config
+````sql
+-- get the title of each record that contains the word friend/friendly/friends/etc in the body field
 SELECT title FROM pgweb WHERE to_tsvector('english', body) @@ to_tsquery('english', 'friend');
 -- select the 10 most recent documents that contain create and table in the title or body
 SELECT title FROM pgweb WHERE to_tsvector(title || ' ' || body) @@ to_tsquery('create & table')
 ORDER BY last_mod_date DESC LIMIT 10;
-````
+`````

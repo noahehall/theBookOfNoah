@@ -5,7 +5,7 @@
 - automate this shiz like the guy did his with ansible
 - [checkout spack](https://spack-tutorial.readthedocs.io/en/latest/)
 - [checkout nix](https://nixos.org/)
-
+- [increase inotify watchers](https://dev.to/rubiin/ubuntu-increase-inotify-watcher-file-watch-limit-kf4)
 ## links
 
 - [initial server setup](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)

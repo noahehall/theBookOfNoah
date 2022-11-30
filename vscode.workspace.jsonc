@@ -1,12 +1,18 @@
 {
+  // force vscode to use the local version
+  // alternatively (if your not using typescript-eslint)
+  // ^ install microsofts nightly typescript vscode plugin
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  // manually set each of your top level folders
   "folders": [
     {
       "path": "abs/path/to/folder"
-    },
+    }
   ],
   "settings": {
     "git.ignoreLimitWarning": true,
-    "eslint.nodePath": "node_modules/.bin/eslint",
+    "eslint.nodePath": "./node_modules/.bin/eslint",
+    // if in monorepo
     "eslint.workingDirectories": [
       {
         "pattern": "./packages/*/"
