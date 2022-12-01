@@ -1,8 +1,12 @@
 #!/bin/env bash
 
 # git
-gitundolastcommit() {
+git_undo_last() {
     git reset HEAD~
+}
+
+git_undo_all() {
+    git reset --hard
 }
 
 # git ----------------------------------
