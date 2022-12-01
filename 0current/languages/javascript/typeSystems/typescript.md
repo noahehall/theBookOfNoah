@@ -84,6 +84,8 @@
 
 ## gotchas
 
+- DONT FKN USE a union type for anything other than simple types (strings, numbers, etc)
+  - or fear the fkn memory leaks
 - remember: typescript is compile time type-checking
   - so all of this goodiness should be removed when shipped to prod
 
