@@ -1,6 +1,19 @@
 #!/bin/env bash
 
 # git
+
+# git ----------------------------------
+git_delete_all_commits_but_keep_code() {
+    # @see https://stackoverflow.com/questions/13716658/how-to-delete-all-commit-history-in-github
+    git checkout --orphan $(date +%s)
+    git add -A
+    git commit -am 'initial commit'
+    git branch -D develop
+    git branch -m develop
+    # check out the the .gitconfig in this repo so yto auto setup tracking branch
+    git push -f
+}
+
 git_undo_last() {
     git reset HEAD~
 }
@@ -8,8 +21,6 @@ git_undo_last() {
 git_undo_all() {
     git reset --hard
 }
-
-# git ----------------------------------
 # @see https://gist.github.com/chrismccoy/8775224
 ## quick
 alias git_prune_check='git prune --dry-run --verbose'
