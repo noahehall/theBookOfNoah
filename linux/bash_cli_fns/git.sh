@@ -3,6 +3,22 @@
 # git
 
 # git ----------------------------------
+git_delete_remove_branch() {
+    if [[ $# -eq 1 ]]; then
+        git fetch --all
+        git push origin --delete $1
+    else
+        echo "\$1 === branch_name"
+    fi
+}
+git_force_pull() {
+    if [[ $# -eq 1 ]]; then
+        git fetch --all
+        git reset --hard origin/$1
+    else
+        echo "\$1 === branch_name"
+    fi
+}
 git_delete_all_commits_but_keep_code() {
     # @see https://stackoverflow.com/questions/13716658/how-to-delete-all-commit-history-in-github
     git checkout --orphan $(date +%s)
