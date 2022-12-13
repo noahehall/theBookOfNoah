@@ -18,6 +18,7 @@ dk_start_bash_host() {
     docker run --rm -it --network host ubuntu:trusty bash
 }
 
+alias dk_ls_images='docker image ls --format="table {{.Repository}}\t{{.Size}}"'
 alias dk_see_me='$(echo docker run --rm -it alpine ping -c4 $(whatsmyip))'
 alias dk_ps="docker ps --no-trunc -a --format 'table {{.Names}}...{{.Image}}...{{.Status}}...{{.Command}}\n'"
 alias dk_d_remote_url="sudo netstat -lntp | grep dockerd"
