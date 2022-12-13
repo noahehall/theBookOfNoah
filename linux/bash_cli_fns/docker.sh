@@ -20,7 +20,7 @@ dk_start_bash_host() {
 
 alias dk_ls_images='docker image ls --format="table {{.Repository}}\t{{.Size}}"'
 alias dk_see_me='$(echo docker run --rm -it alpine ping -c4 $(whatsmyip))'
-alias dk_ps="docker ps --no-trunc -a --format 'table {{.Names}}\n\t{{.Image}}\n\t{{.Status}}\n\t{{.Command}}\n\n'"
+alias dk_ps="docker ps --no-trunc -a --format 'table {{.Names}}\n\t{{.Image}}\n\t{{.Status}}\n\t{{.Command}}\n\n' | tac"
 alias dk_d_remote_url="sudo netstat -lntp | grep dockerd"
 alias dk_logs='$(echo journalctl -u docker.service)'
 # get netstats (use ss on ubuntu)
