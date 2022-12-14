@@ -3,7 +3,6 @@
 # ^ enable command completion
 [ -f /usr/local/bin/aws_completer ] && complete -C '/usr/local/bin/aws_completer' aws
 
-
 alias aws_config_manual='sudo aws configure'
 alias aws_config_current='aws configure list'
 alias aws_profile_list='aws configure list-profiles'
@@ -13,7 +12,6 @@ alias aws_pg_versions='aws rds describe-db-engine-versions --default-only --engi
 alias aws_config_edit='sudo nano ~/.aws/config'
 alias aws_ocreds_edit='sudo nano ~/.aws/credentials'
 
-
 aws_s3_list() {
     aws s3 ls
 }
@@ -22,7 +20,7 @@ aws_statemachines_list() {
     aws stepfunctions list-state-machines
 }
 
-aws_statemachine_run () {
+aws_statemachine_run() {
     # todo
     aws stepfunctions start-execution help
     # args:
@@ -34,6 +32,9 @@ aws_statemachine_run () {
 aws_profile_set() {
     if [[ $# -eq 1 ]]; then
         export AWS_DEFAULT_PROFILE="$1"
+    else
+        echo '$1 === profile name; available profiles:'
+        aws_profile_list
     fi
 }
 
@@ -45,7 +46,7 @@ aws_region_set() {
 
 aws_keypair_create() {
     if [[ $# -eq 1 ]]; then
-        aws ec2 create-key-pair --key-name "$1" --query 'KeyMaterial' --output text > "$1".pem
+        aws ec2 create-key-pair --key-name "$1" --query 'KeyMaterial' --output text >"$1".pem
     fi
 
 }
