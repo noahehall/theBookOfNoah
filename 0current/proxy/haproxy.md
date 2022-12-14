@@ -1,7 +1,12 @@
 # haproxy
 
-- [we use haproxy 2.4](https://cbonte.github.io/haproxy-dconv/2.4/intro.html)
-- [doc for search & finding information](https://www.haproxy.org/download/2.4/doc/configuration.txt)
+- [haproxy 2.4](https://cbonte.github.io/haproxy-dconv/2.4/intro.html)
+- [haproxy 2.8 search & find](http://www.haproxy.org/download/2.8/doc/configuration.txt)
+- [haproxy official docker](https://hub.docker.com/u/haproxytech)
+- [haproxy load balancing](https://www.haproxy.com/blog/haproxy-configuration-basics-load-balance-your-servers/)
+- [haproxy intel docker](https://hub.docker.com/r/bitnami/haproxy-intel/)
+- [haproxy and websockets](https://www.haproxy.com/blog/websockets-load-balancing-with-haproxy/)
+- [haproxy ssl termination](https://www.haproxy.com/blog/haproxy-ssl-termination/)
 
 ## links
 
