@@ -29,6 +29,10 @@ aws_statemachine_run() {
 }
 # @see https://github.com/donnemartin/saws
 
+aws_get_temp_creds() {
+    aws sts get-session-token --duration-seconds 900
+}
+
 aws_profile_set() {
     if [[ $# -eq 1 ]]; then
         export AWS_DEFAULT_PROFILE="$1"
