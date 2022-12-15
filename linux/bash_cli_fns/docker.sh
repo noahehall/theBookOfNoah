@@ -23,8 +23,8 @@ dk_start_bash_host() {
 
 dk_ls_images() {
     docker image ls --forma="table {{.Repository}}\t{{.Size}}"
-
 }
+export -f dk_ls_images
 
 dk_see_me() {
     docker run --rm -it alpine ping -c4 $(whatsmyip)
@@ -33,10 +33,12 @@ dk_see_me() {
 dk_ps() {
     docker ps --no-trunc -a --format 'table {{.Names}}\n\t{{.Image}}\n\t{{.Status}}\n\t{{.Command}}\n\n' | tac
 }
+export -f dk_ps
 
 dk_d_remote_url() {
     sudo netstat -lntp | grep dockerd
 }
+export -f dk_d_remote_url
 
 dk_logs() {
     journalctl -u docker.service
@@ -51,26 +53,31 @@ dl_d_ss() {
 dk_inspect() {
     docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
 }
+export -f dk_inspect
 
 # see volumes for a container
 dk_container_volumes() {
     docker inspect -f '{{range .Mounts}}{{println .Source}}{{println .Destination}}readWrite: {{.Mode}}{{println .RW}}{{end}}'
 }
+export -f dk_container_volumes
 
 # get get ip addr for container
 dk_container_network() {
     docker inspect -f '{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}'
 }
+export -f dk_container_network
 
 dk_rm_containers_sigterm() {
     docker stop $(docker ps -aq)
     docker rm $(docker ps -aq)
 }
+export -f dk_rm_containers_sigterm
 
 dk_rm_containers_sigkill() {
     docker kill $(docker ps -aq)
     docker rm $(docker ps -aq)
 }
+export -f dk_rm_containers_sigkill
 
 dk_rm_all() {
     dk_rm_containers_sigterm
@@ -79,3 +86,4 @@ dk_rm_all() {
     docker volume rm $(docker volume ls --filter dangling=true -q)
     docker rmi -f $(docker images -qa)
 }
+export -f dk_rm_all
