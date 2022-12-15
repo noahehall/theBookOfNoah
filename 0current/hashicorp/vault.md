@@ -52,8 +52,8 @@
       variable.
     - `-dev-tls`
       - Enable TLS development mode. In this mode, Vault runs in-memory= and starts unsealed, with a generated TLS CA, certificate and key.
-    - `-dev-tls-cert-dir=<string>`
-      - Directory where generated TLS files are created if `-dev-tls` is specified. If left unset, files are generated in a temporary directory.
+  - `-dev-tls-cert-dir=<string>`
+    - Directory where generated TLS files are created if `-dev-tls` is specified. If left unset, files are generated in a temporary directory.
 
 ```sh
 # ensure you set this after execing into container
@@ -71,8 +71,32 @@ echo "y2AAvt7uusE0X5KWd2GkyWkVqCqEWQ9mklxpEttc7b0=" > unseal.key
 - interacts with the server over a TLS connection
 
 ```sh
-# check status of server
-vault status
+vault
+  read
+  write
+  delete
+  list
+  login
+  agent
+  unwrap
+  audit
+  auth
+  debug
+  kv
+  lease
+  monitor
+  namespace
+  operator
+  path-help
+  plugin
+  policy
+  print
+  secrets
+  ssh
+  token
+  status # check status of server
+  server
+    -help
 ```
 
 ### server
