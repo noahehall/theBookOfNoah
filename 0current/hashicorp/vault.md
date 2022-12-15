@@ -19,11 +19,66 @@
 ## links
 
 - [vault docker](https://hub.docker.com/_/vault)
+- [dev mode](https://developer.hashicorp.com/vault/docs/commands/server#dev)
 
 ## terms
 
 - secret engines
 - authentication methods
+- sealed/unsealed: whether the root token and access key are encrypted
+
+## modes
+
+### dev mode
+
+- dev server is built-in and pre-configured vault server
+  - not secure, in memory storage by default, and vault is unsealed
+- use cases: dev, testing,
+
+## dev mode
+
+- e.g. `entrypoint: vault server -dev`
+  - `-dev`
+    - Vault runs in-memory and starts unsealed. As the name implies, do not run "dev" mode in production.
+  - `-dev-listen-address=<string>`
+    - The default is 127.0.0.1:8200
+    - can also be specified via the VAULT_DEV_LISTEN_ADDRESS
+  - `-dev-no-store-token`
+    - do not persist the dev root token to the token helper (usually the local filesystem) for use in future requests.
+    - The token will only be displayed
+  - `-dev-root-token-id=<string>`
+    - Initial root token. This only applies when running in "dev" mode.
+    - can also be specified via the VAULT_DEV_ROOT_TOKEN_ID environment
+      variable.
+    - `-dev-tls`
+      - Enable TLS development mode. In this mode, Vault runs in-memory= and starts unsealed, with a generated TLS CA, certificate and key.
+    - `-dev-tls-cert-dir=<string>`
+      - Directory where generated TLS files are created if `-dev-tls` is specified. If left unset, files are generated in a temporary directory.
+
+```sh
+# ensure you set this after execing into container
+# find the values from docker compose logs
+export VAULT_ADDR='http://0.0.0.0:8200'
+export VAULT_DEV_ROT_TOKEN=poop
+echo "y2AAvt7uusE0X5KWd2GkyWkVqCqEWQ9mklxpEttc7b0=" > unseal.key
+
+```
+
+## components
+
+### cli
+
+- interacts with the server over a TLS connection
+
+```sh
+# check status of server
+vault status
+```
+
+### server
+
+- only component that interacts with the data storage and backends
+- the vault_addr is where you can access it
 
 ## docker
 

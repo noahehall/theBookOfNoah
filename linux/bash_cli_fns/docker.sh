@@ -81,9 +81,9 @@ export -f dk_rm_containers_sigkill
 
 dk_rm_all() {
     dk_rm_containers_sigterm
-    docker network prune -f
-    docker rmi -f $(docker images --filter dangling=true -qa)
-    docker volume rm $(docker volume ls --filter dangling=true -q)
-    docker rmi -f $(docker images -qa)
+    docker network prune -f || true
+    docker rmi -f $(docker images --filter dangling=true -qa) || true
+    docker volume rm $(docker volume ls --filter dangling=true -q) || true
+    # docker rmi -f $(docker images -qa)
 }
 export -f dk_rm_all
