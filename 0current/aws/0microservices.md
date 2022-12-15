@@ -1,6 +1,6 @@
 # TLDR
 
-- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS, cloudwatch, EKS, Step Functions, SES, ECR
+- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS, cloudwatch, EKS, Step Functions, SES, ECR, ECS
 
 - lumping serverless into this file
 
@@ -437,6 +437,7 @@ exports.handler = function (event, context, callback) {
 
 ## ECS
 
+- no cost for ec2 launch type, farget has costs for vcpu and memory resources
 - amazon container service
 - cluster: regional grouping of one or more container instances on which you can run task requests; tasks are deployed to clusters
   - template types
