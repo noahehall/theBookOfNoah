@@ -683,3 +683,18 @@
         docker -H tcp://HOST_IP:2375 SOME_CMD
 
 ```
+
+### docker ecs context
+
+- [docs](https://docs.docker.com/cloud/ecs-integration/)
+
+```sh
+# see all your contexts
+docker context ls
+
+# create aws context
+## make sure DOCKER_CLI_EXPERIMENTAL var is to enabled
+## ^ see bash_cli_fns
+docker context create ecs POOP
+
+```
