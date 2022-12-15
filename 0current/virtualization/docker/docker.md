@@ -693,8 +693,12 @@
 docker context ls
 
 # create aws context
-## make sure DOCKER_CLI_EXPERIMENTAL var is to enabled
-## ^ see bash_cli_fns
+## requires fkn docker desktop
 docker context create ecs POOP
 
 ```
+
+## docker desktop for linux
+
+- [install](https://docs.docker.com/desktop/install/linux-install/)
+- [docs](https://docs.docker.com/desktop/faqs/linuxfaqs/#what-is-the-difference-between-docker-desktop-for-linux-and-docker-engine)
