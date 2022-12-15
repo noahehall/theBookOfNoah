@@ -26,6 +26,7 @@ todo: should be in order
     - [preview access when creating policies](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-policies.html)
     - [managing IAM policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage.html)
     - [IAM customer managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create-console.html)
+    - [permission sets](https://aws.amazon.com/premiumsupport/knowledge-center/create-sso-permission-set/)
   - reference
     - [aws managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies)
       - [aws managed policies for job functions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html)
