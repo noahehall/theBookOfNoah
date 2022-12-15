@@ -288,10 +288,13 @@ git remote prune origin
 - [labels with self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/using-labels-with-self-hosted-runners)
 - [github hosted runners & hardware resources](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners)
 - [all github hosted runners](https://github.com/actions/virtual-environments)
+- [automated builds and tests](https://docs.github.com/en/actions/automating-builds-and-tests)
+- [starter workflows](https://github.com/actions/starter-workflows)
+- [build and testing with nodejs](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs)
 
 ### terms
 
-- workflow: triggered in response to an event; a configurable automated process that wil lrun one/more jobs
+- workflow: triggered in response to an event; a configurable automated process that will run one/more jobs
 - jobs: one/more tasks that make up a workflow; each run inside a runner (a VM/container), executed sequentially/parallel
   - a job will execute all its steps on a single runner
   - by defualt jobs are isolated, but you can force dependencies, e.g. to share a build job with a deploy job
@@ -310,7 +313,6 @@ git remote prune origin
 ### actions
 
 - see finding and customizing actions link
-
 - action sources
   - in your repo
   - in any public repo
@@ -336,7 +338,7 @@ git remote prune origin
 ### caches
 
 - once the cache is created, it is available to all workflows in the same repository
-- dont store any sensitive info in te cache of public repos
+- dont store any sensitive info in the cache of public repos
   - especially cmdline programs like `docker login` which store creds in a config file
   - anyone with read access can create a pull request and access the contents of the cache
     - even with forks by making a pull request to the base branch

@@ -7,6 +7,8 @@
 - [haproxy intel docker](https://hub.docker.com/r/bitnami/haproxy-intel/)
 - [haproxy and websockets](https://www.haproxy.com/blog/websockets-load-balancing-with-haproxy/)
 - [haproxy ssl termination](https://www.haproxy.com/blog/haproxy-ssl-termination/)
+- [haproxy acls overview](https://www.haproxy.com/documentation/hapee/latest/configuration/acls/overview/)
+- [haproxy http/s same port](https://timjrobinson.com/haproxy-how-to-run-http-https-on-the-same-port/)
 
 ## links
 
