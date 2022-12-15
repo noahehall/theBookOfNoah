@@ -44,7 +44,9 @@
 # running vault in development mode with in-memory storage
 docker run --cap-add=IPC_LOCK -d --name=dev-vault vault
 
-# same as above; but sets initial root token and the ip:port of the server listener
+## same as above; but sets initial root token and the ip:port of the server listener
 docker run --cap-add=IPC_LOCK -e 'VAULT_DEV_ROOT_TOKEN_ID=myroot' -e 'VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:1234' vault
 
+## same as above; but runs in server mode wiht the file storage backend
+docker run --cap-add=IPC_LOCK -e 'VAULT_LOCAL_CONFIG={"storage": {"file": {"path": "/vault/file"}}, "listener": [{"tcp": { "address": "0.0.0.0:8200", "tls_disable": true}}], "default_lease_ttl": "168h", "max_lease_ttl": "720h", "ui": true}' -p 8200:8200 vault server
 ```
