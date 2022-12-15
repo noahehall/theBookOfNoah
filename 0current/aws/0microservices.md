@@ -447,6 +447,15 @@ exports.handler = function (event, context, callback) {
 - task definitions: provides details and resource requirements for a container that is passed to the Docker daemon. A task definition may contain one or more container definitions.
 - cloudwatch container insights: CloudWatch automatically collects metrics for many resources, such as CPU, memory, disk, and network.Container Insights also provides diagnostic information, such as container restart failures, that you use to isolate issues andresolve them quickly. You can also set CloudWatch alarms on metrics that Container Insights collects.
 
+### ec2 launch type
+
+- [creating a container for use on ecs](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-container-image.html)
+- [deploying docker containers on ecs](https://docs.docker.com/cloud/ecs-integration/)
+
+### fargate launch type
+
+### ecs on aws outposts
+
 ## fargate
 
 - fully managed infrastructure for serverless container based applications

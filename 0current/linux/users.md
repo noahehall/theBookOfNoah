@@ -68,3 +68,21 @@ managing users across debian & arch
     passwd USERNAME # set a users password
 
 ```
+
+## pass
+
+- [setup pass for password management](https://linuxhint.com/pass-ubuntu/)
+
+```sh
+# create a gpg key
+gpg --full-generate-key
+
+# initialize pass
+pass init GPG_ID
+
+# create a new password
+## password are stored in folders,
+## pass insert folderName/subFolderName/emailOrWebsiteUrl
+## e.g. pass insert email/gmail/poop@yomama.com
+### then it will ask you for a pw
+```
