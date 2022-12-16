@@ -25,10 +25,8 @@
 ## links
 
 - [vault docker](https://hub.docker.com/_/vault)
-- [vault server](https://developer.hashicorp.com/vault/docs/commands/server)
-- [secrets engines](https://developer.hashicorp.com/vault/docs/secrets)
-- [vault docker example](https://www.misterpki.com/vault-docker/)
-- todos
+- [vault server](https://dto /vault/data/
+  gpg --export 0BCA08FACC74025F | base
   - [database secrets engine](https://developer.hashicorp.com/vault/tutorials/db-credentials/database-secrets)
   - [secrets management tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management)
   - [auth methods](https://developer.hashicorp.com/vault/docs/auth)
@@ -39,7 +37,6 @@
   - [raft: integrated storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft)
   - [tcp listener configuration](https://developer.hashicorp.com/vault/docs/configuration/listener/tcp)
   - [configuring vault](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
-  - [using pgp, gnupg and keybase](https://developer.hashicorp.com/vault/docs/concepts/pgp-gpg-keybase)
   - [app integration tutorials](https://developer.hashicorp.com/vault/tutorials/app-integration)
   - [database credentials tutorial](https://developer.hashicorp.com/vault/tutorials/db-credentials)
   - [security best practices tutorial](https://developer.hashicorp.com/well-architected-framework/security)
@@ -409,6 +406,7 @@ path "secret/data/foo" {
 - the vault_addr is where you can access it
 - the vault server is the SINGLE policy authority
   - there can be multiple authentication methods, but vault controls ALL authorization defined by vault policies for all authenticated humans and bots
+- follow the docs for gpg in links above, was super straight forward, no need for keybase
 
 ```sh
 # initial a new vault server
