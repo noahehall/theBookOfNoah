@@ -25,9 +25,16 @@
 ## links
 
 - [vault docker](https://hub.docker.com/_/vault)
-- [vault server](https://dto /vault/data/
-  gpg --export 0BCA08FACC74025F | base
+- [vault server](https://developer.hashicorp.com/vault/docs/commands/server)
+- [secrets engines](https://developer.hashicorp.com/vault/docs/secrets)
+- [vault docker example](https://www.misterpki.com/vault-docker/)
+- [tcp listener](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
+- [configuring vault](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
+- todos
   - [database secrets engine](https://developer.hashicorp.com/vault/tutorials/db-credentials/database-secrets)
+  - [postgres database plugin](https://developer.hashicorp.com/vault/docs/secrets/databases/postgresql)
+  - [postgres database plugin api](https://developer.hashicorp.com/vault/api-docs/secret/databases/postgresql)
+  - [database engine docs](https://developer.hashicorp.com/vault/docs/secrets/databases)
   - [secrets management tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management)
   - [auth methods](https://developer.hashicorp.com/vault/docs/auth)
   - [vault kv secrets engine](https://developer.hashicorp.com/vault/docs/secrets/kv/kv-v2)
@@ -35,8 +42,6 @@
   - [vault http api](https://developer.hashicorp.com/vault/api-docs)
   - [identity: entities and groups](https://developer.hashicorp.com/vault/tutorials/auth-methods/identity)
   - [raft: integrated storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft)
-  - [tcp listener configuration](https://developer.hashicorp.com/vault/docs/configuration/listener/tcp)
-  - [configuring vault](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
   - [app integration tutorials](https://developer.hashicorp.com/vault/tutorials/app-integration)
   - [database credentials tutorial](https://developer.hashicorp.com/vault/tutorials/db-credentials)
   - [security best practices tutorial](https://developer.hashicorp.com/well-architected-framework/security)

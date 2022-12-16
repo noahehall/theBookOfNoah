@@ -59,13 +59,13 @@ export -f dk_inspect
 
 # see volumes for a container
 dk_container_volumes() {
-    docker inspect -f '{{range .Mounts}}{{println .Source}}{{println .Destination}}readWrite: {{.Mode}}{{println .RW}}{{end}}'
+    docker inspect -f '{{range .Mounts}}{{println .Source}}{{println .Destination}}readWrite: {{.Mode}}{{println .RW}}{{end}}' $1
 }
 export -f dk_container_volumes
 
 # get get ip addr for container
 dk_container_network() {
-    docker inspect -f '{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}'
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}' $1
 }
 export -f dk_container_network
 
