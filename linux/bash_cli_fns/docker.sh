@@ -1,5 +1,7 @@
 #!/bin/env bash
 
+# @see https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes
+
 export DOCKER_CLI_EXPERIMENTAL=enabled
 # usage:
 # docker ps --format="$DOCKER_FORMAT"
