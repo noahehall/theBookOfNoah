@@ -16,6 +16,9 @@
 - [docker buildx](https://docs.docker.com/buildx/working-with-buildx/)
 - [docker scan](https://docs.docker.com/engine/scan/)
 - [docker build](https://docs.docker.com/engine/reference/commandline/build/)
+- [docker container networking](https://docs.docker.com/config/containers/container-networking/)
+- [docker network tutorial](https://docs.docker.com/network/network-tutorial-standalone)
+- [configure docker to use a proxy network](https://docs.docker.com/network/proxy/)
 - on the web
   - [docker volumes in depth (oldy but goody)](https://container42.com/2014/11/03/docker-indepth-volumes/)
   - [docker arg, env explanation](https://vsupalov.com/docker-arg-env-variable-guide/)
@@ -324,6 +327,15 @@
     - made up of routes between participating containers and the wider network where the host is attached
   - multi-host virtual networks
     - provide an overlay where any container on a participating host can have its on routable IP address from any other container in the network
+- a container can only start connected to a single network
+  - you can assign additional networks after the container starts via `docker network connect`
+- by default a container inherits the DNS settings of the host as defined in `/etc/resolv.conf`
+  - even containers that use a custom network inherit the /etc/hosts of the HOST
+  - `--hostname` is local only to the container
+- three things you need to consinder
+  - the containers name
+  - the containers hostname
+  - the containers dns record
 
 ```sh
   # create a user defined network

@@ -30,7 +30,12 @@
 - [vault docker example](https://www.misterpki.com/vault-docker/)
 - [tcp listener](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
 - [configuring vault](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
+- [pki engine tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management/pki-engine)
+- [app role auth method](https://developer.hashicorp.com/vault/docs/auth/approle)
 - todos
+  - [approle pull](https://developer.hashicorp.com/vault/tutorials/auth-methods/approle)
+  - [tls certificate auth method](https://developer.hashicorp.com/vault/docs/auth/cert)
+  - [pki secrets engine](https://developer.hashicorp.com/vault/docs/secrets/pki)
   - [database secrets engine](https://developer.hashicorp.com/vault/tutorials/db-credentials/database-secrets)
   - [postgres database plugin](https://developer.hashicorp.com/vault/docs/secrets/databases/postgresql)
   - [postgres database plugin api](https://developer.hashicorp.com/vault/api-docs/secret/databases/postgresql)
@@ -38,7 +43,6 @@
   - [secrets management tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management)
   - [auth methods](https://developer.hashicorp.com/vault/docs/auth)
   - [vault kv secrets engine](https://developer.hashicorp.com/vault/docs/secrets/kv/kv-v2)
-  - [app role auth method](https://developer.hashicorp.com/vault/docs/auth/approle)
   - [vault http api](https://developer.hashicorp.com/vault/api-docs)
   - [identity: entities and groups](https://developer.hashicorp.com/vault/tutorials/auth-methods/identity)
   - [raft: integrated storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft)
@@ -49,7 +53,7 @@
 ## terms
 
 - secret engines: store, generate/encrypt secrets
-- authentication methods
+- authentication methods: schemes for providing clients credentials to access secrets
 - sealed/unsealed: whether the root token and access key are encrypted; to unseal a sealed token you need at least 3 of the 5 key shares provided during server initialization before it can accept requires; you can change this to be more/less redundant (defense in depth tho) - keep the root token and unsealed keys far from each other as together they will fk up your whole weekend
 - unsealing vault: an initialized server restarts in a sealed state and has no access to anything other than an encrypted storage; the process of teaching the server how to decrypt the data is unsealing
 - secrets: are always encrypted and written to backend storage
@@ -211,11 +215,11 @@ curl \
     --data '{"type": "approle"}' \
     http://127.0.0.1:8200/v1/sys/auth/approle
 
-# create an app role
+# create a policy
 curl \
     --header "X-Vault-Token: $VAULT_TOKEN" \
     --request PUT \
-    --data '{"policy":"# Dev servers have version 2 of KV secrets engine mounted by default, so will\n# need these paths to grant permissions:\npath \"secret/data/*\" {\n  capabilities = [\"create\", \"update\"]\n}\n\npath \"secret/data/foo\" {\n  capabilities = [\"read\"]\n}\n"}' \
+    --data need to find approle policy \
     http://127.0.0.1:8200/v1/sys/policies/acl/my-policy
 
 
@@ -233,7 +237,7 @@ curl \
      http://127.0.0.1:8200/v1/auth/approle/role/my-role/role-id | jq -r ".data"
 
 # create a new secret id under my-role
-## wo;; retirm the secret id + other things
+## returns the secret id + other things
 curl \
     --header "X-Vault-Token: $VAULT_TOKEN" \
     --request POST \
@@ -322,6 +326,11 @@ export VAULT_TOKEN="$(vault token create -field token -policy=my-policy)"
 vault token lookup | grep policies
 ```
 
+#### TLS certificates (cert) auth method
+
+- authenticating using SSL/TLS client certs that are signed by a CA/self
+- configured at `/cert` path, and cannot read certs from an external source
+
 #### github
 
 - enables a human to authenticate with vault by providing their github creds
@@ -358,8 +367,8 @@ vault write auth/approle/role/poop-app \
   token_num_uses=10 \
   token_ttl=20m \
   token_max_ttl=30m \
-  secret_id_num_uses=40 \
-  token_policies=poop-policy
+  secret_id_num_uses=1000 \
+  token_policies=bff
 
 
 # authenticate as poop-app
@@ -387,6 +396,8 @@ vault policy read default
 
 - use hcl, but it accepts json for ACLs
 - the default and root polices cant be deleted
+- describe enabled authorizations for paths,
+- you associate users & machines with policies, which authorize actions on paths
 
   - default: a common set of permissions assigned to all tokens by default
 
