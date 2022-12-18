@@ -1,15 +1,39 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # terraform ----------------------------
-alias tfplan='terraform plan -out tfplan'
-alias tfplandestroy='terraform plan -destroy -out destroy.tfplan'
-alias tfapply='terraform apply tfplan'
-alias tfshow='terraform show tfplan'
-alias tfgraph='terraform graph -plan tfplan'
-alias tfdestroy='terraform apply destroy.tfplan'
-alias tffmt='terraform fmt'
-alias tfvalidate='terraform validate'
-alias tfstatelist='terraform state list'
-alias tfstatepull='terraform state pull'
-alias tfstateshow='terraform state show'
-alias tfrefresh='terraform apply -refresh-only'
+tf_plan() {
+  terraform plan -out tfplan
+}
+tf_plandestroy() {
+  terraform plan -destroy -out destroy.tfplan
+}
+tf_apply() {
+  terraform apply tfplan
+}
+tf_show() {
+  terraform show tfplan
+}
+tf_graph() {
+  terraform graph -plan tfplan
+}
+tf_destroy() {
+  terraform apply destroy.tfplan
+}
+tf_fmt() {
+  terraform fmt
+}
+tf_validate() {
+  terraform validate
+}
+tf_statelist() {
+  terraform state list
+}
+tf_statepull() {
+  terraform state pull
+}
+tf_stateshow() {
+  terraform state show
+}
+tf_refresh() {
+  terraform apply -refresh-only
+}

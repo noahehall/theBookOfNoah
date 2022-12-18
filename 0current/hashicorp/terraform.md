@@ -1,3 +1,5 @@
+# terraform
+
 <https://learn.hashicorp.com/collections/terraform/docker-get-started>
 
 todo
@@ -35,6 +37,7 @@ todo
 - blogs
   - [updating rds using terraform](https://medium.com/hashicorp-engineering/upgrading-aurora-rds-using-terraform-3836a62757f)
 - specs
+
   - [all terraform docs](https://www.terraform.io/docs/index.html)
   - [remote state](https://www.terraform.io/docs/language/state/remote-state-data.html)
   - [output values](https://www.terraform.io/docs/language/values/outputs.html)
@@ -55,7 +58,6 @@ todo
   - completed
     - [terraform + docker](https://learn.hashicorp.com/collections/terraform/docker-get-started)
     - [aws getting started](https://learn.hashicorp.com/collections/terraform/aws-get-started)
-
 - providers
   - [all providers](https://registry.terraform.io/browse/providers)
   - [all aws documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
@@ -75,11 +77,10 @@ todo
   - output values
     - always specify an `outputs.tf` file specifying which runtime values need to be available for other infrastructure components
       - this is how you connect terraform projects with ohter parts of your infrastructure, or with other terraform projects
-
 - SOMETIMES
   - split out configuration into multiple files and module directories
     - the amount of files & modules depends on your strategy for managing the complexity technically, and socially with your team
-    - SINGLE `main.tf`  file: things to watch for
+    - SINGLE `main.tf` file: things to watch for
       - understanding and navigating the config files will become increasingly difficult
       - updating configuration will be more risky: as an update to one sectin may cause unintended consequences in otther parts of the configuration
       - there will be increased duplication of similar blocks of configuration, e.g. when creating dev/staging/productin environments
@@ -96,7 +97,6 @@ todo
         - use local modules to organize & encapsulate your code,
           - even if you arent publishing remote modules, by starting with modules its easier to maintain and update while the project is new than transforming an existing monolith
         - rely on modules from public registry (as you would in any other setting) and dont reinvent the wheel
-
 - NEVER
   - workspaces
     - dont use a single terraform workspace to manage everything that makes up production/staging/etc
@@ -106,15 +106,17 @@ todo
 ### about
 
 - terraform: IaC tool for building, changing, and versioning infrastructure
-  - e.g. compute instances, storage and networking, DNS entries, SaaS features
 
+  - e.g. compute instances, storage and networking, DNS entries, SaaS features
   - key features
+
     - DSL: human readable & declarative config files utilizing hashicorp HCL
     - execution plans: describes what it will do and asks for approval before making any infrastructure CRUD changes
     - resource graph: creates a resource graph then creates|modifies non-dependent resources in parallel
     - change automation: can apply complex changesets to infrastructure wiht minimal human interaction
 
   - uses cases
+
     - multi-tier applications
     - self-serve infrastucture
     - software appliances
@@ -126,7 +128,9 @@ todo
       - can be used in layers: setup physical infrastructure running the scheudlers as well as provisioning onto the shceduled grid
 
   - opinions & paradigms
+
     - technical complexity: different providers use different interfaces for provisioning new resources (e.g. aws vs gcp), terraform addresses this by:
+
       - separating the provisioning workload via a single core engine to read configurations and determine the relationships between resources
       - uses provider plugins to create, modify and destroy resources on the infratstructure providers (e.g. aws, gcp, github, dnsimple, etc)
 
@@ -154,8 +158,9 @@ todo
 main unit of organization and primary tool for delegating control
 
 - workspace structure should match your organization permissions structure
-  - e.g. one workspace for each environment of a given component (i.e. configurations * env = workspaces)
+  - e.g. one workspace for each environment of a given component (i.e. configurations \* env = workspaces)
 - collection of everything terraform needs to run
+
   - configuration files
   - values for configuration variables
   - state data to keep track of operations between runs
@@ -206,6 +211,7 @@ main unit of organization and primary tool for delegating control
 ### terraform remote backends
 
 - execution mode
+
   - remote: plans and applies occur on terraform cloud
     - e.g. if setup as VCS, apply/plan runs on git commit/merge
   - local: plans and applies occur on users computer
@@ -272,9 +278,11 @@ This core workflow is a loop; the next time you want to make changes, you start 
 - plan: preview changes terraform will make to match your configuration: involves iterating on your `main.tf` and dependent files
   - when you are satisfied with the current plan, always commit your changes
 - apply: provision reproducible infrastructure
+
   - provision the resources and do a final commit
   - always include the terraform plan output in the description for the PR
   - key questions
+
     - do you expect any service disruption from this change?
     - any part of the execution plan is high risk?
     - what should you watch for as you're applying the change?
@@ -287,6 +295,7 @@ This core workflow is a loop; the next time you want to make changes, you start 
 - you must specify a `remote backend` block, e.g. in the `main|versions.tf` file
 
 - UI
+
   - runs: list of all the plan and apply actions that have been executed
   - states: state of the workspace after each successful run
   - variables: configure terraform & environment variables
