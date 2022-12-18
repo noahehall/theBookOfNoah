@@ -2,6 +2,10 @@
 
 - aws cli v2, aws sam cli
 
+## links
+
+- [export current profile as AWS\_\* keys](https://stackoverflow.com/questions/40852223/is-there-a-way-to-export-an-aws-cli-profile-to-environment-variables)
+
 ## aws CLI
 
 ### quickies

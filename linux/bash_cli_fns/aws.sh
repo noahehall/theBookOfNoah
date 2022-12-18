@@ -50,14 +50,16 @@ aws_get_temp_creds() {
 }
 
 aws_profile_set() {
-    if [[ $# -eq 1 ]]; then
-        export AWS_DEFAULT_PROFILE="$1"
-    else
+    if [[ $# -eq 0 ]]; then
         echo '$1 === profile name; available profiles:'
         aws_profile_list
+        return 1
     fi
 
-    aws_whoami
+    export AWS_DEFAULT_PROFILE="$1"
+
+    aws_profile_to_env_vars "$1"
+
 }
 
 aws_region_set() {
@@ -155,4 +157,21 @@ aws_instance_run() {
     # $10 tag value e.g. poop-dev
     # aws ec2 run-instances --image-id $1 --count $2 --instance-type $3 --key-name $4 --subnet-id $5 --security-group-ids $6 --user-data $7 --tag-specifications --profile $8 "ResourceType=instance,Tags=[{Key=$9,Value=$10}]"
     echo 'not setup'
+}
+
+aws_profile_to_env_vars() {
+    # @see https://gist.github.com/mjul/f93ee7d144c5090e6e3c463f5f312587
+
+    if [ "$#" -eq 0 ]; then
+        echo "invalid args: \$1 === profile name"
+        return 1
+    fi
+
+    export AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id --profile $1)
+    export AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key --profile $1)
+    export AWS_DEFAULT_REGION=$(aws configure get region --profile $1)
+    export AWS_SESSION_TOKEN=$(aws configure get aws_session_token --profile "$1")
+    export AWS_SECURITY_TOKEN=$(aws configure get aws_security_token --profile "$1")
+
+    aws_whoami
 }
