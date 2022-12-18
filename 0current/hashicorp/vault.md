@@ -32,11 +32,20 @@
 - [configuring vault](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
 - [pki engine tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management/pki-engine)
 - [app role auth method](https://developer.hashicorp.com/vault/docs/auth/approle)
+- [database secrets engine](https://developer.hashicorp.com/vault/tutorials/db-credentials/database-secrets)
+- Http api
+  - FYI: the UI is fkn stupid: click the hamburger menu to see all of the things related to the current page
+  - lol but if you read the page it explicitly says to `click the hamburger to see the list of APIs` maybe im the stupid one
+  - [system backend](https://developer.hashicorp.com/vault/api-docs/system)
+    - [vault status: sys/health](https://developer.hashicorp.com/vault/api-docs/system/health)
+    - [vault seal status: sys/seal-status](https://developer.hashicorp.com/vault/api-docs/system/seal-status)
+  - [auth methods](https://developer.hashicorp.com/vault/api-docs/auth)
+    - [app role: /auth/approle](https://developer.hashicorp.com/vault/api-docs/auth/approle)
 - todos
+  - [policies](https://developer.hashicorp.com/vault/docs/concepts/policies)
   - [approle pull](https://developer.hashicorp.com/vault/tutorials/auth-methods/approle)
   - [tls certificate auth method](https://developer.hashicorp.com/vault/docs/auth/cert)
   - [pki secrets engine](https://developer.hashicorp.com/vault/docs/secrets/pki)
-  - [database secrets engine](https://developer.hashicorp.com/vault/tutorials/db-credentials/database-secrets)
   - [postgres database plugin](https://developer.hashicorp.com/vault/docs/secrets/databases/postgresql)
   - [postgres database plugin api](https://developer.hashicorp.com/vault/api-docs/secret/databases/postgresql)
   - [database engine docs](https://developer.hashicorp.com/vault/docs/secrets/databases)
@@ -49,6 +58,7 @@
   - [app integration tutorials](https://developer.hashicorp.com/vault/tutorials/app-integration)
   - [database credentials tutorial](https://developer.hashicorp.com/vault/tutorials/db-credentials)
   - [security best practices tutorial](https://developer.hashicorp.com/well-architected-framework/security)
+  - [acl policy path templating](https://developer.hashicorp.com/vault/tutorials/policies/policy-templating)
 
 ## terms
 
@@ -396,12 +406,11 @@ vault policy read default
 
 - use hcl, but it accepts json for ACLs
 - the default and root polices cant be deleted
-- describe enabled authorizations for paths,
+- describe enabled/disabled authorizations for paths,
 - you associate users & machines with policies, which authorize actions on paths
-
   - default: a common set of permissions assigned to all tokens by default
-
 - cmds like `list` needs access to the `sys` path
+- The only way to specify non-static paths in ACL policies: use globs (\*) at the end of paths. Or, use plus-sign (+) for a single directory wildcard matching.
 
 ```sh
 # Dev servers have version 2 of KV secrets engine mounted by default
