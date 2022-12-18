@@ -189,8 +189,10 @@ This core workflow is a loop; the next time you want to make changes, you start 
   - the basic unit of terraform cloud infrastructure configuration
   - contains terraform config files, env vars, input vars, and state files
     - everything needed to managed a given collection of infrastructure
-- scope: identify the infratsructure for a project
+- scope: identify the infrastructure for the workspace
+  - you'll need to identify every single resource
 - write: author infrastructure as code
+  - for every resource in scope, write configuration files that can be used to recreate them
 - initialize: install the plugins terraform needs to manage the infrastructure
 - plan: preview changes terraform will make to match your configuration: involves iterating on your `main.tf` and dependent files
   - when you are satisfied with the current plan, always commit your changes
@@ -240,6 +242,13 @@ This core workflow is a loop; the next time you want to make changes, you start 
   - you can run plan locally
   - you can run apply only via UI/github PR on merge
 
+#### terraform cloud
+
+- share tfstate with team
+- stable env for terraform to run it
+- prevent race conditions
+- connect to Version control to apply changes automatically vcs events
+
 ## components
 
 ### workspace
@@ -269,6 +278,7 @@ This core workflow is a loop; the next time you want to make changes, you start 
 ### state
 
 - track resourse changes across deployments
+- everything that terraform manages will be in this file
 
 ### providers
 
