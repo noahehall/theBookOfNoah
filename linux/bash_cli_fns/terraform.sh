@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # terraform ----------------------------
+alias tf='terraform'
+
 tf_plan() {
   terraform plan -out tfplan
 }

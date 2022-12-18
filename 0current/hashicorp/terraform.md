@@ -69,6 +69,11 @@ todo
 
 ### best practices
 
+- NEVER
+  - workspaces
+    - dont use a single terraform workspace to manage everything that makes up production/staging/etc
+      - instead make smaller workspaces that are easy to delegate and drop
+        - e.g. UAT doesnt make sense for security infrastructure
 - ALWAYS
   - workspaces
     - should be named with both their component and their env, e.g. appname-dev, appname-staging
@@ -76,20 +81,20 @@ todo
       - e.g. appname-dev is owned by one tam, and to promote to appname-staging another team is responsible (or perhaps the same lead) for approving infrastructure changes
   - output values
     - always specify an `outputs.tf` file specifying which runtime values need to be available for other infrastructure components
-      - this is how you connect terraform projects with ohter parts of your infrastructure, or with other terraform projects
+      - this is how you connect terraform projects with other parts of your infrastructure, or with other terraform projects
 - SOMETIMES
   - split out configuration into multiple files and module directories
     - the amount of files & modules depends on your strategy for managing the complexity technically, and socially with your team
     - SINGLE `main.tf` file: things to watch for
       - understanding and navigating the config files will become increasingly difficult
-      - updating configuration will be more risky: as an update to one sectin may cause unintended consequences in otther parts of the configuration
+      - updating configuration will be more risky: as an update to one sectin may cause unintended consequences in other parts of the configuration
       - there will be increased duplication of similar blocks of configuration, e.g. when creating dev/staging/productin environments
       - sharing parts of the config between projects and teams will involve a lot of copypasta
     - modules:
       - use cases
         - organization configuration: easier to navigate, understand, update and organize configuration into logical components
         - encapsulate configuration: into distinct logical components; prevents leakage, e.g. a change to one part of the config causing changes to other parts;
-        - re-use ocnfiguration: moduels can be re-used across teams, projects, and organizations (if they publish modules to the cloud)
+        - re-use configuration: modules can be re-used across teams, projects, and organizations (if they publish modules to the cloud)
         - provide consistency and best practices: by re-using modules, you ensure you can leverage the right practices used by more experiences devs
       - recommendations
         - name your provider `terraform-PROVIDER-NAME` (must be followed to publish this to terraform cloud/enterprise registries)
@@ -97,11 +102,6 @@ todo
         - use local modules to organize & encapsulate your code,
           - even if you arent publishing remote modules, by starting with modules its easier to maintain and update while the project is new than transforming an existing monolith
         - rely on modules from public registry (as you would in any other setting) and dont reinvent the wheel
-- NEVER
-  - workspaces
-    - dont use a single terraform workspace to manage everything that makes up production/staging/etc
-      - instead make smaller workspaces that are easy to delegate and drop
-        - e.g. UAT doesnt make sense for security infrastructure
 
 ### about
 
@@ -109,31 +109,24 @@ todo
 
   - e.g. compute instances, storage and networking, DNS entries, SaaS features
   - key features
-
     - DSL: human readable & declarative config files utilizing hashicorp HCL
     - execution plans: describes what it will do and asks for approval before making any infrastructure CRUD changes
     - resource graph: creates a resource graph then creates|modifies non-dependent resources in parallel
     - change automation: can apply complex changesets to infrastructure wiht minimal human interaction
-
   - uses cases
-
     - multi-tier applications
     - self-serve infrastucture
     - software appliances
     - disposable environments
     - software defined networking
-    - resource scheduling: i.e. dynamic assignmen of applications to virtual machines
+    - resource scheduling: i.e. dynamic assignment of applications to virtual machines
       - e.g. borg, mesos, YARN, kubernetes
       - terraform can use these (as well as physical providers like AWS) as providers to request resources for thim
-      - can be used in layers: setup physical infrastructure running the scheudlers as well as provisioning onto the shceduled grid
-
+      - can be used in layers: setup physical infrastructure running the scheudlers as well as provisioning onto the schedule grid
   - opinions & paradigms
-
     - technical complexity: different providers use different interfaces for provisioning new resources (e.g. aws vs gcp), terraform addresses this by:
-
       - separating the provisioning workload via a single core engine to read configurations and determine the relationships between resources
       - uses provider plugins to create, modify and destroy resources on the infratstructure providers (e.g. aws, gcp, github, dnsimple, etc)
-
     - organizational complexity: large organizations often have multiple teams relying on the same resources, terraform addresses this by:
       - delegating infrastructure in the same way application components are delegated
       - split infrastructure into modules, each having its own terraform configuration with limited scope and can be owned by specific teams
@@ -153,34 +146,31 @@ todo
 
 ## components
 
-### terraform workspace
+### workspace
 
-main unit of organization and primary tool for delegating control
-
+- main unit of organization and primary tool for delegating control
 - workspace structure should match your organization permissions structure
-  - e.g. one workspace for each environment of a given component (i.e. configurations \* env = workspaces)
+  - e.g. one workspace for each environment of a given component (i.e. configurations / env = workspaces)
 - collection of everything terraform needs to run
-
   - configuration files
   - values for configuration variables
   - state data to keep track of operations between runs
     - local: a state file on disk
     - cloud: peristent shared resources that can be assigned own controls, monitor run states, etc
-
 - access controls
   - teams that manage a component can start terraform runs and edit vars in dev/staging
   - owners/senior contributors of a component can start terraform runs in production, after reviewing other contributors work
   - central IT/organization architects can administer permissions on all workspaces, to ensure everyone has what they need to work
   - teams that have no role in managing a given component dont have access to its workspaces
 
-### terraform configuration
+### configuration
 
 - the set of files used to describe infrastructure
   - can be just a single `main.tf` or split into multiple files
     - terraform loads all `.tf` files so it doesnt matter what you name them
   - each configuration must be in its own working directory
 
-### terraform modules
+### modules
 
 - set of config files in a single directory
 - root module: the root directory containing the configuration files, and any child module directories
@@ -188,12 +178,12 @@ main unit of organization and primary tool for delegating control
   - terraform will only use the confg files from a single directory,
   - however, using the `module {}` blocks in a configuration will cause terraform to use configuration in other directories
 
-### terraform providers
+### providers
 
 - a plugin that terraform uses to create and manage resources
   - multiple providers blocks can be used in a single configuration to manage resources from different providers
 
-#### terraform resources
+#### resources
 
 - each resource defines a component of your infrastructure
   - physical
@@ -208,28 +198,28 @@ main unit of organization and primary tool for delegating control
   - together the resource TYPE & NAME must be distinct and provide the ID to the resource
     - e.g. `docker_image.nginx`
 
-### terraform remote backends
+### backends
 
-- execution mode
+#### execution mode
 
-  - remote: plans and applies occur on terraform cloud
-    - e.g. if setup as VCS, apply/plan runs on git commit/merge
-  - local: plans and applies occur on users computer
-    - i.e. in your console
+- remote: plans and applies occur on terraform cloud
+  - e.g. if setup as VCS, apply/plan runs on git commit/merge
+- local: plans and applies occur on users computer
+  - i.e. in your console
 
-  ```js
-    terraform {
-      // remote indicates terraform cloud
-      backend "remote" {
+```sh
+terraform {
+  # remote indicates terraform cloud
+  backend "remote" {
 
-        organization = "my-org"
-        workspaces {
-          prefix = "my-app-"
-        }
-      }
+    organization = "my-org"
+    workspaces {
+      prefix = "my-app-"
     }
+  }
+}
 
-  ```
+```
 
 ## workflow
 
@@ -269,6 +259,8 @@ This core workflow is a loop; the next time you want to make changes, you start 
   terraform destroy # destroy all resources
 ```
 
+### dev cycle
+
 - workspace: the basic unit of terraform cloud infrastructure configuration
   - contains terraform config files, env vars, input vars, and state files
     - everything needed to managed a given collection of infrastructure
@@ -278,24 +270,18 @@ This core workflow is a loop; the next time you want to make changes, you start 
 - plan: preview changes terraform will make to match your configuration: involves iterating on your `main.tf` and dependent files
   - when you are satisfied with the current plan, always commit your changes
 - apply: provision reproducible infrastructure
-
   - provision the resources and do a final commit
   - always include the terraform plan output in the description for the PR
   - key questions
-
     - do you expect any service disruption from this change?
     - any part of the execution plan is high risk?
     - what should you watch for as you're applying the change?
     - who needs to be notified that this change is happening?
 
-    -
-
 ### VCS-driven workflow
 
 - you must specify a `remote backend` block, e.g. in the `main|versions.tf` file
-
 - UI
-
   - runs: list of all the plan and apply actions that have been executed
   - states: state of the workspace after each successful run
   - variables: configure terraform & environment variables
@@ -312,7 +298,6 @@ This core workflow is a loop; the next time you want to make changes, you start 
   - lock icon: if locked, no one can trigger runs
   - actions: lock the workspace/trigger new runs
     - e.g. if you change vars defined in the UI, you can execute a plan to refresh the provisioned resources
-
 - write: create/update config files
 - commit: commit config files to github
 - workspace: connect the git repo to a new/existing terraform cloud workspace
@@ -330,130 +315,128 @@ This core workflow is a loop; the next time you want to make changes, you start 
   - you can run plan locally
   - you can run apply only via UI/github PR on merge
 
-## terraform cmd reference
+## cmd reference
 
-### reference
+### files and locations
 
-- files and locations
+```sh
+  #################################### recommended file names
+  main.tf # the main configuration file
+  variables.tf # for input variables
+  outputs.tf # for output values that can be queried via `terraform output`
 
-  ```sh
-    #################################### recommended file names
-    main.tf # the main configuration file
-    variables.tf # for input variables
-    outputs.tf # for output values that can be queried via `terraform output`
+  #################################### auto-generated files
+  # exact provider versions to use
+  # ^ dont modify versions here, use the main.tf file
+  .terrform.lock.hcl
 
-    #################################### auto-generated files
-    # exact provider versions to use
-    # ^ dont modify versions here, use the main.tf file
-    .terrform.lock.hcl
+  # contains all the data specific to each resource provisioned
+  # ^ i.e. IDs and properties of all resources terraform manages
+  # ^ often contains sensitive information, so store it securely and restrict access to only trusted team members who manage infrastructure
+  # ^^ i.e. store it remotely and lock it down like you would credentials
+  # ^ output after terraform apply
+  # ^ super useful information
+  # ^ can be viewed in terminal via terraform show
+  # ^ any value in the state file can be referenced in configuration, even if its not known until after provisioning
+  terrform.tfstate
 
-    # contains all the data specific to each resource provisioned
-    # ^ i.e. IDs and properties of all resources terraform manages
-    # ^ often contains sensitive information, so store it securely and restrict access to only trusted team members who manage infrastructure
-    # ^^ i.e. store it remotely and lock it down like you would credentials
-    # ^ output after terraform apply
-    # ^ super useful information
-    # ^ can be viewed in terminal via terraform show
-    # ^ any value in the state file can be referenced in configuration, even if its not known until after provisioning
-    terrform.tfstate
-
-    #################################### auto-generated directoreis
-    # downloaded providers and other things
-    .terraform/
+  #################################### auto-generated directoreis
+  # downloaded providers and other things
+  .terraform/
 
 
 
 
-  ```
+```
 
-- api reference
+### api reference
 
-  ```sh
-    # initialize terraform whenever you create/checkout a configuration
-    # ^ by default uses main.tf in pwd
-    # ^ will also install any required plugins
-    terraform init
-      -upgrade #
+```sh
+  # initialize terraform whenever you create/checkout a configuration
+  # ^ by default uses main.tf in pwd
+  # ^ will also install any required plugins
+  terraform init
+    -upgrade #
 
-    # format your configuration files
-    # ^ will print names of any files it has modified
-    # ^^ or none if no formatting is required
-    terraform fmt
+  # format your configuration files
+  # ^ will print names of any files it has modified
+  # ^^ or none if no formatting is required
+  terraform fmt
 
-    # validate syntax
-    terraform validate
+  # validate syntax
+  terraform validate
 
-    # review the infrastructure plan
-    # ^ use this as check
-    terroform plan
-      -out=main.plan # save plan to main.plan
+  # review the infrastructure plan
+  # ^ use this as check
+  terroform plan
+    -out=main.plan # save plan to main.plan
 
-    # displays the final plan before making any changes
-    # ^ use this for the final review
-    # ^ prints + next to things it creates
-    # ^ known after apply - indicates this value is only known after the resource is creatd, e.g. a docker container ID which is actually generated by docker (and not terraform)
-    # ^ apply can be run even if resources are already provisioned (i.e. running locally/cloud)
-    # ^^ terraform manages the shutdown and restart
-    terraform apply # apply based on main.tf
-      "main.plan" # use the plan in file "main.plan"
-      -var "key=value" # set input var on the fly, not saved to stated
+  # displays the final plan before making any changes
+  # ^ use this for the final review
+  # ^ prints + next to things it creates
+  # ^ known after apply - indicates this value is only known after the resource is creatd, e.g. a docker container ID which is actually generated by docker (and not terraform)
+  # ^ apply can be run even if resources are already provisioned (i.e. running locally/cloud)
+  # ^^ terraform manages the shutdown and restart
+  terraform apply # apply based on main.tf
+    "main.plan" # use the plan in file "main.plan"
+    -var "key=value" # set input var on the fly, not saved to stated
 
-    # review the statefile created by terraform apply
-    terraform show
+  # review the statefile created by terraform apply
+  terraform show
 
-    # advanced state management
-    terraform state
-      list # see all resources in the state file
+  # advanced state management
+  terraform state
+    list # see all resources in the state file
 
-    # destroy all provisioned resources
-    # ^ do this e.g. instead of docker stop ...
-    # ^^ if you managed everything with terraform, your better able to see the changes between provisions
-    terraform destroy
+  # destroy all provisioned resources
+  # ^ do this e.g. instead of docker stop ...
+  # ^^ if you managed everything with terraform, your better able to see the changes between provisions
+  terraform destroy
 
-    # manage workspaces
-    terraform workspace
-      select APP_NAME
-  ```
+  # manage workspaces
+  terraform workspace
+    select APP_NAME
+```
 
-- terrform configuration reference
+### configuration reference
 
-  ```js
-    // all terraform settings and required providers
-    terrform {
-      // terraform uses these to provision your infrastructure
-      // ^ installs from the terraform registry by default
-      required_providers {
-        docker = {
-          // i.e. registry.terraform.io/kreuzwerker/docker
-          source = "kreuzwerker/docker"
-          // specify version, else it installs latest
-          version = "~> 2.13.0"
-        }
+```js
+  // all terraform settings and required providers
+  terrform {
+    // terraform uses these to provision your infrastructure
+    // ^ installs from the terraform registry by default
+    required_providers {
+      docker = {
+        // i.e. registry.terraform.io/kreuzwerker/docker
+        source = "kreuzwerker/docker"
+        // specify version, else it installs latest
+        version = "~> 2.13.0"
       }
     }
+  }
 
-    // configure the docker provider
-    // ^ set to empty to use defualt settings
-    provider "docker" {}
+  // configure the docker provider
+  // ^ set to empty to use defualt settings
+  provider "docker" {}
 
-    // all resources specified as TYPE NAME
-    // ^ the prefix of the type maps to the providers name
-    // ^ each being a component of your infrastructure
-    resource "docker_image" "nginx" {
-      // vailable settings specified in the provider docs
-      // https://www.terraform.io/docs/providers/index.html
-      name         = "nginx:latest"
-      keep_locally = false
+  // all resources specified as TYPE NAME
+  // ^ the prefix of the type maps to the providers name
+  // ^ each being a component of your infrastructure
+  resource "docker_image" "nginx" {
+    // vailable settings specified in the provider docs
+    // https://www.terraform.io/docs/providers/index.html
+    name         = "nginx:latest"
+    keep_locally = false
+  }
+
+  resource "docker_container" "nginx" {
+    // uses image from the resource
+    image = docker_image.nginx.latest
+    // container name, verify via `docker ps`
+    name  = "tutorial"
+    ports {
+      internal = 80
+      external = 8000
     }
-
-    resource "docker_container" "nginx" {
-      // uses image from the resource
-      image = docker_image.nginx.latest
-      // container name, verify via `docker ps`
-      name  = "tutorial"
-      ports {
-        internal = 80
-        external = 8000
-      }
-    }
-  ```
+  }
+```
