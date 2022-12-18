@@ -1,6 +1,6 @@
 # TLDR
 
-- ec2, AMI (amazon machine images)
+- ec2, AMI (amazon machine images), aws compute optimizer
 
 ## links
 
@@ -12,6 +12,8 @@
   - [prereqs for connecting to an e2 instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connection-prereqs.html)
 - ami
   - [getting started](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html#finding-quick-start-ami)
+- compute optimizer
+  - [landing page](https://us-east-1.console.aws.amazon.com/compute-optimizer/home?#/)
 
 ## basics
 
@@ -108,3 +110,9 @@
   - storage
   - security group
 - always change the default user password if using public AMIs
+
+# compute optimizer
+
+- identify optimal aws compute resources for workloads
+- AWS Compute Optimizer analyzes your resources and utilization data
+- opt in: must have [iam:CreateServiceLinkedRole](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html) permission
