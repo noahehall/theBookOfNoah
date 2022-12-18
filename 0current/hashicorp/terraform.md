@@ -70,10 +70,11 @@ todo
 ### best practices
 
 - NEVER
+
   - workspaces
     - dont use a single terraform workspace to manage everything that makes up production/staging/etc
       - instead make smaller workspaces that are easy to delegate and drop
-        - e.g. UAT doesnt make sense for security infrastructure
+
 - ALWAYS
   - workspaces
     - should be named with both their component and their env, e.g. appname-dev, appname-staging
@@ -170,18 +171,18 @@ todo
     - terraform loads all `.tf` files so it doesnt matter what you name them
   - each configuration must be in its own working directory
 
-### modules
+### state
 
-- set of config files in a single directory
-- root module: the root directory containing the configuration files, and any child module directories
-- child modules
-  - terraform will only use the confg files from a single directory,
-  - however, using the `module {}` blocks in a configuration will cause terraform to use configuration in other directories
+- track resourse changes across deployments
 
 ### providers
 
-- a plugin that terraform uses to create and manage resources
-  - multiple providers blocks can be used in a single configuration to manage resources from different providers
+- a plugin that terraform uses to create and manage individual units of infrasture
+- multiple providers blocks can be used in a single configuration to manage resources from different providers
+
+#### registry
+
+- repository for provider plugins
 
 #### resources
 
@@ -198,12 +199,24 @@ todo
   - together the resource TYPE & NAME must be distinct and provide the ID to the resource
     - e.g. `docker_image.nginx`
 
+### modules
+
+- set of config files in a single directory
+  - combines multiple resources into a single configuration
+- root module: the root directory containing the configuration files, and any child module directories
+- child modules
+  - terraform will only use the confg files from a single directory,
+  - however, using the `module {}` blocks in a configuration will cause terraform to use configuration in other directories
+
 ### backends
 
-#### execution mode
+#### remote
 
 - remote: plans and applies occur on terraform cloud
   - e.g. if setup as VCS, apply/plan runs on git commit/merge
+
+#### local
+
 - local: plans and applies occur on users computer
   - i.e. in your console
 
