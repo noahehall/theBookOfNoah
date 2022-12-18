@@ -1,17 +1,20 @@
 # TLDR
 
-- ec2, AMI (amazon machine images), aws compute optimizer
+- ec2, AMI (amazon machine images), aws compute optimizer, ec2 launch templates, ec2 instanct connect
 
 ## links
 
 - ec2
   - [ec2 instance IP addressing](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html)
+  - [custom primary private ips](https://aws.amazon.com/premiumsupport/knowledge-center/custom-private-primary-address-ec2/)
+  - [ec2 instant connect](https://docs.amazonaws.cn/en_us/AWSEC2/latest/UserGuide/ec2-instance-connect-set-up.html)
 - tuts
   - [3 ways to connect to ec2 instances from linux](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html)
   - [ec2 key pairs & linux instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
   - [prereqs for connecting to an e2 instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connection-prereqs.html)
 - ami
   - [getting started](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html#finding-quick-start-ami)
+  - [create ami from instance](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/tkv-create-ami-from-instance.html)
 - compute optimizer
   - [landing page](https://us-east-1.console.aws.amazon.com/compute-optimizer/home?#/)
 
@@ -28,35 +31,11 @@
   - AMIs are region specific
     - so an AMI ID for us-east-1 (nyc) wont work in us-west-2 (oregon)
 
-## AMI amazon machine images
-
-- templates from which EC2 instances can be launched
-
-- user data: field to pass a shell script/file that executes on first boot of an EC2
-
-  - remember, this adds to the time it takes for the ec2 to launch and be ready for use!
-  - so how important is the initial boot time?
-    - long lived instances may not be as critical (e.g. a db instance)
-    - but short lived instances (e.g. servers in an autoscale config) need fast boot times
-  - anything you can script can be accomplished on startup
-  - ^ e.g. software patches, download latest software, etc
-  - data scripts run as the root user on linux and only execute on the initial boot
-    - are critical for AMIs, as they always contain obsolete software you'll want to update before launching ec2s
-
-- use cases
-  - critical for high availability
-  - can pass parameters/instructions (e.g. shell script) to the AMI on launch using the user data field (e.g. to specify the versions of arbitrary software thats installed when booting a new EC2 from an AMI)
-- considerations
-  - what type of AMI? minimal? public? privately bought AMI?
-  - whats going to be part of the base AMI used across your stack?
-  - how frequently are you going to update the base AMI?
-  - what mechanism are you going to use to update the base AMI?
-  - how are you going to manage use rdata?
-  - are you going to incorporate ansible? chef? system manager? puppet? opswork? etc
-  - what are the incplications of onboat and on reboot scripts?
-
 ## ec2
 
+- gotchas
+  - you can only associate a custom primary ip at instance creation
+  - yopu cant move an ec2 instance across subnets, AZs or VPC after creation
 - servers in the cloud
 - instance connect: connect to an instance from the browser
 - Auto scaling is a great way to have the E2C services change when needed.
@@ -111,8 +90,42 @@
   - security group
 - always change the default user password if using public AMIs
 
-# compute optimizer
+### AMI amazon machine images
+
+- machine configuration, OS, software, patches, kernels, etc
+- user data: field to pass a shell script/file that executes on first boot of an EC2
+  - remember, this adds to the time it takes for the ec2 to launch and be ready for use!
+  - so how important is the initial boot time?
+    - long lived instances may not be as critical (e.g. a db instance)
+    - but short lived instances (e.g. servers in an autoscale config) need fast boot times
+  - anything you can script can be accomplished on startup
+  - ^ e.g. software patches, download latest software, etc
+  - data scripts run as the root user on linux and only execute on the initial boot
+    - are critical for AMIs, as they always contain obsolete software you'll want to update before launching ec2s
+- use cases
+  - critical for high availability
+  - can pass parameters/instructions (e.g. shell script) to the AMI on launch using the user data field (e.g. to specify the versions of arbitrary software thats installed when booting a new EC2 from an AMI)
+- considerations
+  - what type of AMI? minimal? public? privately bought AMI?
+  - whats going to be part of the base AMI used across your stack?
+  - how frequently are you going to update the base AMI?
+  - what mechanism are you going to use to update the base AMI?
+  - how are you going to manage use rdata?
+  - are you going to incorporate ansible? chef? system manager? puppet? opswork? etc
+  - what are the incplications of onboat and on reboot scripts?
+
+### ec2 launch templates
+
+- templates from which AMIs can be launched
+- all about configuring AWS details, security groups, network settings, instance types, storage, etc
+
+## compute optimizer
 
 - identify optimal aws compute resources for workloads
 - AWS Compute Optimizer analyzes your resources and utilization data
 - opt in: must have [iam:CreateServiceLinkedRole](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html) permission
+
+## instant connect
+
+- secure way to connect to your Linux instances using Secure Shell (SSH)
+- you use Amazon Identity and Access Management (IAM) policies and principals to control SSH access to your instances, removing the need to share and manage SSH keys

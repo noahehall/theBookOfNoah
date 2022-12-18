@@ -8,12 +8,15 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - [making amazon route53 the DNS service for an existing domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/MigratingDNS.html)
   - [making route53 the dns for a domain thats in use](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/migrate-dns-domain-in-use.html)
   - [making route53 the dns for an inactive domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/migrate-dns-domain-inactive.html)
+  - [create a new subdomain](https://aws.amazon.com/premiumsupport/knowledge-center/create-subdomain-route-53/)
 - vpc
   - [working with VPCs](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html)
   - [reachability analyzer](https://docs.aws.amazon.com/vpc/latest/reachability/what-is-reachability-analyzer.html)
   - [vpc costs](https://aws.amazon.com/vpc/pricing/)
   - tuts
     - [deleting a VPC](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html#VPC_Deleting)
+- internet gatway
+  - [connect to the net](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html)
 
 ## basics
 
@@ -126,6 +129,8 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
 ## vpc
 
+- gotchases
+  - to connect to resources on a private subnet requires a private network using an SSH client or the EC2 Instance Connect CLI
 - vpc: isolated network within your aws account in a specific region
   - as big as /16 and as small as /28
     - the vpc cidr/block is called the `super net`, as it contains all IPs for all subnets, and thus all resources
@@ -317,7 +322,6 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - dns & traffic flow management
 - can be configured to dynamically reroute traffic to overcome component failure across regions
 - name address resolution: nirv.ai > 123.123.123.123
-
 - DNS failover: can detect website outage and redirect requests to a different IP
   - sends people to regionA, when it detects traffic failure, it can reroute to regionB
 - global traffic management: create traffic policies that optimize network flow
@@ -435,6 +439,8 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - critical for high availability
   - use in concert with cloudwatch alarms, SNS (notifications), and lambda (logic) to automate responses to system events and orchestrate event driven failover
 - ec2
+  - never associate directly to an EC2
+    - always with a network interface, then you can move network interface between instances in 1 go and everything moves with it
   - can move eip from one ec2 to another
     - software defined networking (SDN) at its finest
     - the ec2 has to be in a subnet which is publiclly accessible

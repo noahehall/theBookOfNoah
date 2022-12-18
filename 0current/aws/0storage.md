@@ -72,6 +72,13 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
       - [cors ocnfiguration](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ManageCorsUsing.html)
       - [configuring cors](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html)
       - [troubleshooting](https://docs.aws.amazon.com/AmazonS3/latest/userguide/cors-troubleshooting.html)
+- ec2
+  - [pricing](https://aws.amazon.com/ec2/pricing/)
+  - [aws nitro](https://aws.amazon.com/ec2/nitro/)]
+- ebs
+  - [multi-attach](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volumes-multi.html)
+  - [requires costly azz nitro system](https://aws.amazon.com/marketplace/pp/prodview-37z6ersmwouq2)
+  - [ebs pricing](https://aws.amazon.com/ebs/pricing/)
 
 ## best practices
 
@@ -379,6 +386,10 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 - snapshots are stored in s3
 - both EBS volumes and any corrosponding snapshots can be encrypted
   - if the volume is encrypted, the snapshots will be encrypted, and any subsequent EBS volumes created from the snapshot
+
+### multi-attach
+
+- enables you to attach a single EBS to multiple EC2s
 
 ### EBS snapshots
 
