@@ -3,14 +3,30 @@
 # ^ enable command completion
 [ -f /usr/local/bin/aws_completer ] && complete -C '/usr/local/bin/aws_completer' aws
 
-alias aws_config_manual='sudo aws configure'
-alias aws_config_current='aws configure list'
-alias aws_profile_list='aws configure list-profiles'
-alias aws_accounts='aws iam list-account-aliases'
-alias aws_whoami='aws sts get-caller-identity'
-alias aws_pg_versions='aws rds describe-db-engine-versions --default-only --engine postgres'
-alias aws_config_edit='sudo nano ~/.aws/config'
-alias aws_ocreds_edit='sudo nano ~/.aws/credentials'
+aws_config_manual() {
+    sudo aws configure
+}
+aws_config_current() {
+    aws configure list
+}
+aws_profile_list() {
+    aws configure list-profiles
+}
+aws_accounts() {
+    aws iam list-account-aliases
+}
+aws_whoami() {
+    aws sts get-caller-identity
+}
+aws_pg_versions() {
+    aws rds describe-db-engine-versions --default-only --engine postgres
+}
+aws_config_edit() {
+    sudo nano ~/.aws/config
+}
+aws_ocreds_edit() {
+    sudo nano ~/.aws/credentials
+}
 
 aws_s3_list() {
     aws s3 ls
@@ -40,6 +56,8 @@ aws_profile_set() {
         echo '$1 === profile name; available profiles:'
         aws_profile_list
     fi
+
+    aws_whoami
 }
 
 aws_region_set() {
