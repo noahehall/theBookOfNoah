@@ -129,3 +129,7 @@
 
 - secure way to connect to your Linux instances using Secure Shell (SSH)
 - you use Amazon Identity and Access Management (IAM) policies and principals to control SSH access to your instances, removing the need to share and manage SSH keys
+- IMO
+  - setup a fkn jump box with instant connect
+  - and enable the jump box access to other resources
+  - dont assign public ips to fkn resources in private subnets
