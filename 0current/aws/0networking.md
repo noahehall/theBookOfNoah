@@ -4,6 +4,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
 ## links
 
+- [ingress vs egress](https://www.dictionary.com/e/ingress-vs-egress/)
 - route53
   - [making amazon route53 the DNS service for an existing domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/MigratingDNS.html)
   - [making route53 the dns for a domain thats in use](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/migrate-dns-domain-in-use.html)
@@ -17,6 +18,10 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
     - [deleting a VPC](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html#VPC_Deleting)
 - internet gatway
   - [connect to the net](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html)
+- route table
+  - [configure route tables](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html#gateway-route-tables)
+- network acl
+  - [default network acl configuration](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html#default-network-acl)
 
 ## basics
 
@@ -719,3 +724,5 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
 - route to a group of ec2 instances/IP/lambda fns based on host, path, http header, http method, query param, source IP cidr
 - perform health checks on the targets
+
+# route tables

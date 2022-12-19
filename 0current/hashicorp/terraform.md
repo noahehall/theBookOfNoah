@@ -37,7 +37,6 @@ todo
 - blogs
   - [updating rds using terraform](https://medium.com/hashicorp-engineering/upgrading-aurora-rds-using-terraform-3836a62757f)
 - specs
-
   - [all terraform docs](https://www.terraform.io/docs/index.html)
   - [remote state](https://www.terraform.io/docs/language/state/remote-state-data.html)
   - [output values](https://www.terraform.io/docs/language/values/outputs.html)
@@ -47,7 +46,8 @@ todo
     - [terraform modules](https://www.terraform.io/docs/language/modules/develop/index.html)
     - [terraform input variables](https://www.terraform.io/docs/language/values/variables.html)
   - [terraform state](https://www.terraform.io/docs/cli/commands/state/index.html)
-
+  - [terraform cidrsubnet fn](https://developer.hashicorp.com/terraform/language/functions/cidrsubnet)
+  - [named values in tf files](https://developer.hashicorp.com/terraform/language/expressions/references)
 - tuts
   - [all preparation for associate certification](https://learn.hashicorp.com/collections/terraform/certification)
   - [all aws tutorials](https://learn.hashicorp.com/collections/terraform/aws-get-started)
@@ -64,6 +64,7 @@ todo
     - [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc)
   - [vault](https://registry.terraform.io/providers/hashicorp/vault/latest/docs)
   - [docker provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest)
+  - [hashicorp aws](https://registry.terraform.io/providers/hashicorp/aws/latest)
 
 ## basics
 
@@ -191,6 +192,7 @@ This core workflow is a loop; the next time you want to make changes, you start 
     - everything needed to managed a given collection of infrastructure
 - scope: identify the infrastructure for the workspace
   - you'll need to identify every single resource
+  - if they already exist, you can use `tf import`
 - write: author infrastructure as code
   - for every resource in scope, write configuration files that can be used to recreate them
 - initialize: install the plugins terraform needs to manage the infrastructure
@@ -420,6 +422,8 @@ terraform {
   # manage workspaces
   terraform workspace
     select APP_NAME
+
+  terraform import provider_api.poop-name aws-id-here
 ```
 
 ### configuration reference

@@ -79,6 +79,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
   - [multi-attach](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volumes-multi.html)
   - [requires costly azz nitro system](https://aws.amazon.com/marketplace/pp/prodview-37z6ersmwouq2)
   - [ebs pricing](https://aws.amazon.com/ebs/pricing/)
+  - [ebs block device names, important for terraform](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/device_naming.html)
 
 ## best practices
 

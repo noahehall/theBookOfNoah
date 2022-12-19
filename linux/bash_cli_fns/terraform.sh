@@ -4,6 +4,11 @@
 alias tf='terraform'
 
 tf_plan() {
+  echo -e "running tf_fmt"
+  tf_fmt
+  echo -e "running tf_validate"
+  tf_validate
+  echo -e "generating tfplan file"
   terraform plan -out tfplan
 }
 tf_plandestroy() {
@@ -32,6 +37,9 @@ tf_statelist() {
 }
 tf_statepull() {
   terraform state pull
+}
+tf_staterm() {
+  terraform state rm $1
 }
 tf_stateshow() {
   terraform state show

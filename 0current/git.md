@@ -291,6 +291,17 @@ git remote prune origin
 - [automated builds and tests](https://docs.github.com/en/actions/automating-builds-and-tests)
 - [starter workflows](https://github.com/actions/starter-workflows)
 - [build and testing with nodejs](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs)
+- cd with github actions
+  - [github starter deployment workflows](https://github.com/actions/starter-workflows/tree/main/deployments)
+  - [about cd with github](https://docs.github.com/en/actions/deployment/about-deployments/about-continuous-deployment)
+  - [run terraform github action](https://github.com/actions/starter-workflows/blob/main/deployments/terraform.yml)
+  - [connect to AWS via github action](https://github.com/actions/starter-workflows/blob/main/deployments/aws.yml)
+  - [security hardening with openid connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
+  - [deploying with github actions](https://docs.github.com/en/actions/deployment/about-deployments/deploying-with-github-actions)
+  - [using environments for deployment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment)
+  - [from aws perspective](https://aws.amazon.com/blogs/devops/integrating-with-github-actions-ci-cd-pipeline-to-deploy-a-web-app-to-amazon-ec2/)
+- semantic release
+  - [docs](https://semantic-release.gitbook.io/semantic-release/)
 
 ### terms
 
