@@ -38,7 +38,6 @@ todo
 - blogs
   - [updating rds using terraform](https://medium.com/hashicorp-engineering/upgrading-aurora-rds-using-terraform-3836a62757f)
 - specs
-
   - [all terraform docs](https://www.terraform.io/docs/index.html)
   - [remote state](https://www.terraform.io/docs/language/state/remote-state-data.html)
   - [providers](https://www.terraform.io/docs/language/providers/index.html)
@@ -46,18 +45,28 @@ todo
   - [terraform .tf syntax](https://www.terraform.io/docs/language/index.html)
   - [terraform state](https://www.terraform.io/docs/cli/commands/state/index.html)
   - [terraform cidrsubnet fn](https://developer.hashicorp.com/terraform/language/functions/cidrsubnet)
-
+- resources
+  - [resource behavior](https://developer.hashicorp.com/terraform/language/resources/behavior#resource-dependencies)
+  - [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc)
 - variables
   - [output values](https://www.terraform.io/docs/language/values/outputs.html)
   - [named values in tf files](https://developer.hashicorp.com/terraform/language/expressions/references)
   - [input variables](https://developer.hashicorp.com/terraform/language/values/variables)
+  - [terraform cloud workspace vars](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/aws-remote)
+  - [blog post](https://yellowdesert.consulting/2021/05/31/terraform-map-and-object-patterns/)
 - modules
   - [terraform modules list](https://github.com/terraform-aws-modules)
   - [overview](https://developer.hashicorp.com/terraform/tutorials/modules/module)
   - [terraform modules](https://www.terraform.io/docs/language/modules/develop/index.html)
+  - [build and use local modules](https://developer.hashicorp.com/terraform/tutorials/modules/module-create)
+  - [example git](https://github.com/hashicorp/learn-terraform-modules-create)
+  - [refactoring modules with move block](https://developer.hashicorp.com/terraform/language/modules/develop/refactoring)
+  - [module composition](https://developer.hashicorp.com/terraform/language/modules/develop/composition)
 - functions
   - [merge objects/maps](https://developer.hashicorp.com/terraform/language/functions/merge)
   - [all fns](https://developer.hashicorp.com/terraform/language/functions)
+  - [expressions: for, splat, blocks, repeated dynamic blocks, etc](https://developer.hashicorp.com/terraform/language/expressions)]
+  - [dynamic blocks](https://developer.hashicorp.com/terraform/language/expressions/dynamic-blocks)
 - tuts
   - [all preparation for associate certification](https://learn.hashicorp.com/collections/terraform/certification)
   - [all aws tutorials](https://learn.hashicorp.com/collections/terraform/aws-get-started)
@@ -71,12 +80,15 @@ todo
 - providers
   - [all providers](https://registry.terraform.io/browse/providers)
   - [all aws documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
-    - [aws_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc)
   - [vault](https://registry.terraform.io/providers/hashicorp/vault/latest/docs)
   - [docker provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest)
   - [hashicorp aws](https://registry.terraform.io/providers/hashicorp/aws/latest)
+  - [cloud init provider](https://registry.terraform.io/providers/hashicorp/cloudinit/latest/docs)
 - cloud
   - [migrate state to cloud](https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate)
+- provisioning
+  - [via cloud-init](https://developer.hashicorp.com/terraform/tutorials/provision/cloud-init)
+  - [via packer (todo)]
 
 ## basics
 
@@ -330,7 +342,7 @@ This core workflow is a loop; the next time you want to make changes, you start 
 - use cases
   - sharing modules across projects, teams, etc
   - configuration organization & reusability
-  -
+- any local directory referenced in the source argument of a module block as a module
 
 ### backends
 

@@ -3,35 +3,54 @@
 # terraform ----------------------------
 alias tf='terraform'
 
+tf_reset_aws_env_vars() {
+  export TF_VAR_AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID"
+  export TF_VAR_AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
+  export TF_VAR_AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION"
+  export TF_VAR_AWS_SESSION_TOKEN="$AWS_SESSION_TOKEN"
+  export TF_VAR_AWS_SECURITY_TOKEN="$AWS_SECURITY_TOKEN"
+}
+
 tf_plan() {
+  tf init
+  echo -e "resetting tf aws vars"
+  tf_reset_aws_env_vars
   echo -e "running tf_fmt"
   tf_fmt
   echo -e "running tf_validate"
   tf_validate
   echo -e "generating tfplan file"
-  terraform plan -out tfplan
-  echo -e "querying outputs"
-  tf_output
+
+  # if using terraform cloud, ensure its setup to run local
+  tf_plan_local
 }
+
+tf_plan_local() {
+  terraform plan -out tfplan
+}
+
 tf_plandestroy() {
   terraform plan -destroy -out destroy.tfplan
 }
 tf_apply() {
-  echo -e "applying tfplan"
-  terraform apply tfplan
+  echo -e "resetting tf aws vars"
+  tf_reset_aws_env_vars
+  if [ ! -z "$1" ]; then
+    echo -e 'applying local tfplan'
+    terraform apply
+  else
+    echo -e 'applying terrarform cloud tfplan'
+    terraform apply
+  fi
 }
 tf_output() {
-  terraform output
+  terraform output --json
 }
 tf_show() {
-  if [ "$#" -eq 0 ]; then
-    echo -e "getting current state of infrastructre"
-    terraform show
-    echo -e "to see diff with current plan: tf_show 1"
-  else
-    echo -e "getting current state drift from tfplan"
-    terraform show tfplan
-  fi
+  echo -e "getting current state of infrastructre"
+  # if using terraform cloud: ensure tf is set to run locally
+  echo -e "getting current state drift from tfplan"
+  terraform show tfplan
   echo ""
   echo -e "we mare managing the following resources:"
   tf_statelist
