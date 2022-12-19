@@ -38,20 +38,26 @@ todo
 - blogs
   - [updating rds using terraform](https://medium.com/hashicorp-engineering/upgrading-aurora-rds-using-terraform-3836a62757f)
 - specs
+
   - [all terraform docs](https://www.terraform.io/docs/index.html)
   - [remote state](https://www.terraform.io/docs/language/state/remote-state-data.html)
-  - [output values](https://www.terraform.io/docs/language/values/outputs.html)
   - [providers](https://www.terraform.io/docs/language/providers/index.html)
   - [terraform registry publishing](https://www.terraform.io/docs/registry/index.html)
   - [terraform .tf syntax](https://www.terraform.io/docs/language/index.html)
-    - [terraform modules](https://www.terraform.io/docs/language/modules/develop/index.html)
-    - [terraform input variables](https://www.terraform.io/docs/language/values/variables.html)
   - [terraform state](https://www.terraform.io/docs/cli/commands/state/index.html)
   - [terraform cidrsubnet fn](https://developer.hashicorp.com/terraform/language/functions/cidrsubnet)
+
+- variables
+  - [output values](https://www.terraform.io/docs/language/values/outputs.html)
   - [named values in tf files](https://developer.hashicorp.com/terraform/language/expressions/references)
   - [input variables](https://developer.hashicorp.com/terraform/language/values/variables)
+- modules
+  - [terraform modules list](https://github.com/terraform-aws-modules)
+  - [overview](https://developer.hashicorp.com/terraform/tutorials/modules/module)
+  - [terraform modules](https://www.terraform.io/docs/language/modules/develop/index.html)
 - functions
   - [merge objects/maps](https://developer.hashicorp.com/terraform/language/functions/merge)
+  - [all fns](https://developer.hashicorp.com/terraform/language/functions)
 - tuts
   - [all preparation for associate certification](https://learn.hashicorp.com/collections/terraform/certification)
   - [all aws tutorials](https://learn.hashicorp.com/collections/terraform/aws-get-started)
@@ -318,8 +324,13 @@ This core workflow is a loop; the next time you want to make changes, you start 
   - combines multiple resources into a single configuration
 - root module: the root directory containing the configuration files, and any child module directories
 - child modules
+  - can be local / remote
   - terraform will only use the confg files from a single directory,
   - however, using the `module {}` blocks in a configuration will cause terraform to use configuration in other directories
+- use cases
+  - sharing modules across projects, teams, etc
+  - configuration organization & reusability
+  -
 
 ### backends
 

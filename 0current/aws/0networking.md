@@ -20,6 +20,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - [connect to the net](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html)
 - route table
   - [configure route tables](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html#gateway-route-tables)
+  - [working with route tables](https://docs.aws.amazon.com/vpc/latest/userguide/WorkWithRouteTables.html)
 - network acl
   - [default network acl configuration](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html#default-network-acl)
 

@@ -10,12 +10,18 @@ tf_plan() {
   tf_validate
   echo -e "generating tfplan file"
   terraform plan -out tfplan
+  echo -e "querying outputs"
+  tf_output
 }
 tf_plandestroy() {
   terraform plan -destroy -out destroy.tfplan
 }
 tf_apply() {
+  echo -e "applying tfplan"
   terraform apply tfplan
+}
+tf_output() {
+  terraform output
 }
 tf_show() {
   if [ "$#" -eq 0 ]; then
