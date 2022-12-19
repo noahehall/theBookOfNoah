@@ -18,7 +18,17 @@ tf_apply() {
   terraform apply tfplan
 }
 tf_show() {
-  terraform show tfplan
+  if [ "$#" -eq 0 ]; then
+    echo -e "getting current state of infrastructre"
+    terraform show
+    echo -e "to see diff with current plan: tf_show 1"
+  else
+    echo -e "getting current state drift from tfplan"
+    terraform show tfplan
+  fi
+  echo ""
+  echo -e "we mare managing the following resources:"
+  tf_statelist
 }
 tf_graph() {
   terraform graph -plan tfplan

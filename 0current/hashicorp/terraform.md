@@ -34,6 +34,7 @@ todo
 - [evaluating existing infrastructure](https://www.terraform.io/docs/cloud/guides/recommended-practices/part2.html)
 - [aws provider examples on github](https://github.com/hashicorp/terraform-provider-aws/tree/master/examples)
 - [hashicorp github terroform example](https://github.com/hashicorp/tfc-guide-example)
+- [terraform usescases with links to docs](https://developer.hashicorp.com/terraform/intro/use-cases)
 - blogs
   - [updating rds using terraform](https://medium.com/hashicorp-engineering/upgrading-aurora-rds-using-terraform-3836a62757f)
 - specs
@@ -48,6 +49,9 @@ todo
   - [terraform state](https://www.terraform.io/docs/cli/commands/state/index.html)
   - [terraform cidrsubnet fn](https://developer.hashicorp.com/terraform/language/functions/cidrsubnet)
   - [named values in tf files](https://developer.hashicorp.com/terraform/language/expressions/references)
+  - [input variables](https://developer.hashicorp.com/terraform/language/values/variables)
+- functions
+  - [merge objects/maps](https://developer.hashicorp.com/terraform/language/functions/merge)
 - tuts
   - [all preparation for associate certification](https://learn.hashicorp.com/collections/terraform/certification)
   - [all aws tutorials](https://learn.hashicorp.com/collections/terraform/aws-get-started)
@@ -65,6 +69,8 @@ todo
   - [vault](https://registry.terraform.io/providers/hashicorp/vault/latest/docs)
   - [docker provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest)
   - [hashicorp aws](https://registry.terraform.io/providers/hashicorp/aws/latest)
+- cloud
+  - [migrate state to cloud](https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate)
 
 ## basics
 
