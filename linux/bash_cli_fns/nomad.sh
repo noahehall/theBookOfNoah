@@ -30,6 +30,11 @@ nmd_agent() {
   esac
 }
 
+# @see https://developer.hashicorp.com/nomad/tutorials/get-started/get-started-jobs
+nmd_plan() {
+  echo -e "creating job plan for $1"
+  nmd job plan $1.nomad
+}
 nmd_job() {
   case $1 in
   init)
