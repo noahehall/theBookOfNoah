@@ -7,12 +7,17 @@
 - [nomad ui web interface](https://developer.hashicorp.com/nomad/tutorials/get-started/get-started-ui)
 - tuts
   - [all tuts](https://developer.hashicorp.com/nomad/tutorials)
+  - [variable interpolation](https://developer.hashicorp.com/nomad/docs/runtime/interpolation)
+- drivers/integrations
+  - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
+  - [docker](https://developer.hashicorp.com/nomad/docs/drivers/docker)
 - provisioning
   - [hashicorp nomad on aws](https://aws.amazon.com/quickstart/architecture/nomad/)
   - [provision nomad clusters in the cloud](https://github.com/hashicorp/nomad/tree/main/terraform)
   - [deploy & manage nomad jobs](https://developer.hashicorp.com/nomad/tutorials/manage-jobs)
   - [operating nomad clusters](https://developer.hashicorp.com/nomad/tutorials/manage-clusters)
   - [monitoring logs](https://developer.hashicorp.com/nomad/docs/commands/monitor)
+  - [secure nomad with access control](https://developer.hashicorp.com/nomad/tutorials/access-control)
 - agents
   - [status](https://developer.hashicorp.com/nomad/docs/commands/status)
 - jobs
@@ -23,6 +28,7 @@
 - tasks
   - [status](https://developer.hashicorp.com/nomad/docs/commands/alloc/status)
   - [logs](https://developer.hashicorp.com/nomad/docs/commands/alloc/logs)
+  - [configuring tasks](https://developer.hashicorp.com/nomad/tutorials/manage-jobs/jobs-configuring)
 
 ## terms
 
@@ -83,6 +89,19 @@
 ## provisioning
 
 - wow made it to the end! you should now have enuff knowledge to deploy and operate a nomad cluster
+
+### general workflow
+
+- new jobs
+  - create a job specification
+  - plan and review changes with a nomad server
+  - submit job file to a nomad server
+  - review job status and logs
+- exiting jobs
+  - modify existing job file
+  - plan and review changes with a nomad server
+  - submit job file to nomad server
+  - review job status and logs
 
 ## examples
 
