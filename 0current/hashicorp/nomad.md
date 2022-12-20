@@ -4,8 +4,25 @@
 
 - [nomad homagepage](https://www.nomadproject.io)
 - [server-force-leave command](https://www.nomadproject.io/docs/commands/server-force-leave.html)
-- cmds
+- [nomad ui web interface](https://developer.hashicorp.com/nomad/tutorials/get-started/get-started-ui)
+- tuts
+  - [all tuts](https://developer.hashicorp.com/nomad/tutorials)
+- provisioning
+  - [hashicorp nomad on aws](https://aws.amazon.com/quickstart/architecture/nomad/)
+  - [provision nomad clusters in the cloud](https://github.com/hashicorp/nomad/tree/main/terraform)
+  - [deploy & manage nomad jobs](https://developer.hashicorp.com/nomad/tutorials/manage-jobs)
+  - [operating nomad clusters](https://developer.hashicorp.com/nomad/tutorials/manage-clusters)
+  - [monitoring logs](https://developer.hashicorp.com/nomad/docs/commands/monitor)
+- agents
+  - [status](https://developer.hashicorp.com/nomad/docs/commands/status)
+- jobs
   - [job init](https://developer.hashicorp.com/nomad/docs/commands/job/init)
+  - [jobspec](https://developer.hashicorp.com/nomad/docs/job-specification)
+  - [run](https://developer.hashicorp.com/nomad/docs/commands/job/run)
+  - [stop](https://developer.hashicorp.com/nomad/docs/commands/job/stop)
+- tasks
+  - [status](https://developer.hashicorp.com/nomad/docs/commands/alloc/status)
+  - [logs](https://developer.hashicorp.com/nomad/docs/commands/alloc/logs)
 
 ## terms
 
@@ -28,6 +45,30 @@
 
 ## components
 
+### UI
+
+- by default runs on http://localhost:4646
+
+#### jobs
+
+- lists all jobs, click to see status (like `nomad job status`)
+
+#### servers
+
+- view of all server agents
+
+##### monitor
+
+- nomad application logs with option to set the log level
+
+#### clients
+
+- view of all client agents
+
+#### topology
+
+- view of the cluster and running workload, useful for complex nomad environments
+
 ### agents
 
 - long running (but lightweight) process that must run on every machine in the cluster
@@ -38,6 +79,10 @@
 ### jobs
 
 ### schedular
+
+## provisioning
+
+- wow made it to the end! you should now have enuff knowledge to deploy and operate a nomad cluster
 
 ## examples
 
