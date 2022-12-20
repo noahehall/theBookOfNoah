@@ -41,8 +41,58 @@
 
 ## examples
 
-```sh
-# start agent in dev mode
-sudo nomad agent -dev -bind 0.0.0.0 -log-level INFO
+```json
 
+job "poop" {
+  datacenters = [str]
+  type = str
+  update {
+    max_parallel = num
+    min_health_time = str
+    health_deadline = str
+    progress_deadline = str
+    auto_revert = bool
+    canary = num
+  }
+  migrate {
+    max_parallel
+    health_check
+    min_healthy_time
+    healthy_deadline
+  }
+  group "cache" {
+    count
+    network {
+      port "db" {
+        to =
+      }
+      service {
+        name
+        tags
+        port
+        provider
+      }
+      restart {
+        attempts
+        interval
+        delay
+        mode
+      }
+      ephemeral_disk {
+        size
+
+      }
+      task "redis" {
+        driver
+        config {
+          {...driver config...}
+        }
+        resources {
+          cpu
+          memory
+        }
+      }
+    }
+  }
+}
 ```
