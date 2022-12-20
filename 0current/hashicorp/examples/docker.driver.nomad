@@ -3,8 +3,6 @@
 task "docs" {
   driver = "docker"
 
-  # Drivers support interpreting node attributes and runtime environment
-  # variables
   config {
     image = "my-app"
 
