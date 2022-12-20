@@ -37,3 +37,18 @@ task "docs" {
     VERSION = "v0.3"
   }
 }
+
+
+## accessing env vars
+### env was added in nomad 0.9
+
+task "redis" {
+  driver = "docker"
+  config {
+    image  = "redis:7"
+    labels {
+      label1 = "${env["invalid...name"]}"
+      label2 = "${env["valid.name"]}"
+    }
+  }
+}
