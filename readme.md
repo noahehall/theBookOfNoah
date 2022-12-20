@@ -1,4 +1,6 @@
 # TLDR
+
+- [many scripts moved to nirvai/scripts](https://github.com/nirv-ai/scripts)
 - todo
   - need better interoperability between archs; everything works with ubuntu, add uname checks for arm4 especially within the linux dir
 - appication development
