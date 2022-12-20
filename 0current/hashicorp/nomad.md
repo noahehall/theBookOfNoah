@@ -7,25 +7,35 @@
 - [nomad ui web interface](https://developer.hashicorp.com/nomad/tutorials/get-started/get-started-ui)
 - tuts
   - [all tuts](https://developer.hashicorp.com/nomad/tutorials)
+- variables
   - [variable interpolation](https://developer.hashicorp.com/nomad/docs/runtime/interpolation)
+  - [env stanza](https://developer.hashicorp.com/nomad/docs/job-specification/env)
+  - [template stanza](https://developer.hashicorp.com/nomad/docs/job-specification/template)
+  - [consul template used by template stanza](https://github.com/hashicorp/consul-template)
+  - [external configuration](https://developer.hashicorp.com/nomad/docs/job-specification/artifact)
 - drivers/integrations
   - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
   - [docker](https://developer.hashicorp.com/nomad/docs/drivers/docker)
   - [fork/exec](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
 - provisioning
+  - [enable tls](https://developer.hashicorp.com/nomad/tutorials/transport-security/security-enable-tls)
   - [hashicorp nomad on aws](https://aws.amazon.com/quickstart/architecture/nomad/)
   - [provision nomad clusters in the cloud](https://github.com/hashicorp/nomad/tree/main/terraform)
   - [deploy & manage nomad jobs](https://developer.hashicorp.com/nomad/tutorials/manage-jobs)
   - [operating nomad clusters](https://developer.hashicorp.com/nomad/tutorials/manage-clusters)
   - [monitoring logs](https://developer.hashicorp.com/nomad/docs/commands/monitor)
+  - [monitoring nomad](https://developer.hashicorp.com/nomad/docs/operations/monitoring-nomad)
   - [secure nomad with access control](https://developer.hashicorp.com/nomad/tutorials/access-control)
 - agents
   - [status](https://developer.hashicorp.com/nomad/docs/commands/status)
+  - [server configuration](https://developer.hashicorp.com/nomad/docs/configuration/server)
 - jobs
+  - [accessing logs](https://developer.hashicorp.com/nomad/tutorials/manage-jobs/jobs-accessing-logs)
   - [job init](https://developer.hashicorp.com/nomad/docs/commands/job/init)
   - [jobspec](https://developer.hashicorp.com/nomad/docs/job-specification)
   - [run](https://developer.hashicorp.com/nomad/docs/commands/job/run)
   - [stop](https://developer.hashicorp.com/nomad/docs/commands/job/stop)
+  - [status](https://developer.hashicorp.com/nomad/docs/commands/status)
 - tasks
   - [status](https://developer.hashicorp.com/nomad/docs/commands/alloc/status)
   - [logs](https://developer.hashicorp.com/nomad/docs/commands/alloc/logs)
@@ -85,9 +95,35 @@
 
 ### jobs
 
+- the job spec is contained in a single file and should be checked into git
+- workflow
+  - create a job file
+  - plan and review changes with a server agent
+  - submit the job file to a server
+  - review job status and logs
+
 ### schedular
 
 ### variables
+
+#### env
+
+- env vars
+  - are injected into the task env before starting
+  - are always injected as strings
+
+#### template
+
+- template stanza: instantiates an instance ofa templare renderer
+  - useful to interpolate configuration files for downstream services, e.g. docker, consul, vault, etc
+  - useful for providing environment vars to the workload
+  - uses consul template for interpolation
+
+#### artifact
+
+- external configuration: can be downloaded via the `artifact` block
+  - downloaded config files can be used in the `template` block
+- can fetch any and unpack any file, eg tarball, binary, etc
 
 #### interpolation
 

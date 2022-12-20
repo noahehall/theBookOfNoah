@@ -1,5 +1,9 @@
 #!/bin/bash bash
 
+function kill_service_on_port() {
+    fuser -k $1/tcp
+}
+
 function sourceifexists() {
     if [[ $# -eq 1 && -f "$1" ]]; then
         . "$1"

@@ -3,6 +3,26 @@
 task "docs" {
   driver = "docker"
 
+   # Environment variables are interpreted and can contain both runtime and
+  # node attributes. These environment variables are passed into the task.
+  env {
+    DC      = "Running on datacenter ${node.datacenter}"
+    VERSION = "Version ${NOMAD_META_VERSION}"
+    "discovery.type" = "single-node" # keys with dots must be quoted
+  }
+
+  # Constraints only support node attributes as runtime environment variables
+  # are only defined after the task is placed on a node.
+  constraint {
+    attribute = "${attr.kernel.name}"
+    value     = "linux"
+  }
+
+  # Meta keys are also interpretable.
+  meta {
+    VERSION = "v0.3"
+  }
+
   config {
     image = "my-app"
 
@@ -16,25 +36,6 @@ task "docs" {
     port_map {
       RPC = 6379
     }
-  }
-
-  # Constraints only support node attributes as runtime environment variables
-  # are only defined after the task is placed on a node.
-  constraint {
-    attribute = "${attr.kernel.name}"
-    value     = "linux"
-  }
-
-  # Environment variables are interpreted and can contain both runtime and
-  # node attributes. These environment variables are passed into the task.
-  env {
-    DC      = "Running on datacenter ${node.datacenter}"
-    VERSION = "Version ${NOMAD_META_VERSION}"
-  }
-
-  # Meta keys are also interpretable.
-  meta {
-    VERSION = "v0.3"
   }
 }
 
