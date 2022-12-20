@@ -40,8 +40,19 @@ nmd_job() {
     # todo: check that file exists before running
     echo -e "running job $2"
     nmd job run ${2}.nomad
-
     ;;
-  *) echo -e 'init | run ..' ;;
+  s)
+    echo -e "status for job $2:"
+    nmd job status $2
+    ;;
+  loc)
+    echo -e "checking allocation for id $2"
+    nmd alloc status $2
+    ;;
+  loc-logs)
+    echo -e "fetching task $3 logs for allocation id $2 "
+    nmd alloc logs $2 $3
+    ;;
+  *) echo -e 'init | run | s | loc | loc-logs ...' ;;
   esac
 }
