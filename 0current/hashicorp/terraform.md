@@ -54,7 +54,11 @@ todo
   - [input variables](https://developer.hashicorp.com/terraform/language/values/variables)
   - [terraform cloud workspace vars](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/aws-remote)
   - [blog post](https://yellowdesert.consulting/2021/05/31/terraform-map-and-object-patterns/)
+  - [dynamic key expressions](https://stackoverflow.com/questions/35491987/variable-keys-in-terraform-maps)
+  - [test for string emptyness](https://stackoverflow.com/questions/56967975/is-an-non-empty-string-truthy-in-terraform)
+  - [operators](https://developer.hashicorp.com/terraform/language/expressions/operators)
 - modules
+  - [creation pattern best practices](https://developer.hashicorp.com/terraform/tutorials/modules/pattern-module-creation)
   - [terraform modules list](https://github.com/terraform-aws-modules)
   - [overview](https://developer.hashicorp.com/terraform/tutorials/modules/module)
   - [terraform modules](https://www.terraform.io/docs/language/modules/develop/index.html)
@@ -86,6 +90,7 @@ todo
   - [cloud init provider](https://registry.terraform.io/providers/hashicorp/cloudinit/latest/docs)
 - cloud
   - [migrate state to cloud](https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-migrate)
+  - [sharing data across cloud workspaces](https://developer.hashicorp.com/terraform/tutorials/cloud/cloud-run-triggers)
 - provisioning
   - [via cloud-init](https://developer.hashicorp.com/terraform/tutorials/provision/cloud-init)
   - [via packer (todo)]
@@ -375,6 +380,11 @@ terraform {
 ### files and locations
 
 ```sh
+  # assign values to variables that have already been declared in *.tf files
+  # to create new variables, just set them in *.tf files
+  *.auto.tfvars
+
+
   #################################### recommended file names
   main.tf # the main configuration file
   variables.tf # for input variables

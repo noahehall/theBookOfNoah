@@ -63,6 +63,7 @@ repeat the last video; too many distractions
 - dependencies are created in the correct order
 - a languauge for describing infrastructure
 - config management tool can then be used to manage the apps on the deployed resources
+
   - i.e. terraform sets up the canvas
   - i.e. config manage (e.g. packer) paints the picture
     - can be handled by provisioners
@@ -78,6 +79,7 @@ repeat the last video; too many distractions
   - each resource is scoped to the provider
   - i.e. aws and gcp providers have different types for resources
 - module: an isolated, reusable sub-configuration
+
   - cant be deployed on its own, but can be included in other configs
   - input vars are used to define module behavior
 
@@ -139,10 +141,12 @@ repeat the last video; too many distractions
 #### vpc
 
 - isolated software defined network
+
   - dont use the default one, just create one
   - its more manageable
 
 - internet gateway
+
   - routes requests from the public internet to the vpc and the vpc subnets
 
 - route tables
@@ -151,6 +155,7 @@ repeat the last video; too many distractions
 #### ec2s
 
 - FYI
+
   - all ec2s must be assigned to a subnet
 
 - [see your subscriptions](https://console.aws.amazon.com/marketplace/home/subscriptions?#/subscriptions)
@@ -200,6 +205,7 @@ repeat the last video; too many distractions
 ### terraform syntax
 
 - conventions
+
   - terraform filenames
     - `component-env-region-etc.tf`
       - ^ `specific-to-general-decription.tf`
@@ -328,7 +334,7 @@ repeat the last video; too many distractions
 
     # using defaults -------------------
     # ^ 2 default subnets in the defualt vpc
-    "aws_default_subnet" "default_az1" {
+    "aws_default_subnet" "default_az-1" {
       availability_zone = "us-west-2a"
     }
     "aws_default_subnet" "default_az2" {
@@ -364,7 +370,7 @@ repeat the last video; too many distractions
       name
       instances = aws_instance.NAME[*].id
       subnets = [
-        aws_default_subnet.default_az1.id,
+        aws_default_subnet.default_az-1.id,
         aws_default_subnet.default_az2.id
       ]
       security_groups = [
