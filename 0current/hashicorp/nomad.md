@@ -11,6 +11,7 @@
 - drivers/integrations
   - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
   - [docker](https://developer.hashicorp.com/nomad/docs/drivers/docker)
+  - [fork/exec](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
 - provisioning
   - [hashicorp nomad on aws](https://aws.amazon.com/quickstart/architecture/nomad/)
   - [provision nomad clusters in the cloud](https://github.com/hashicorp/nomad/tree/main/terraform)
@@ -85,6 +86,19 @@
 ### jobs
 
 ### schedular
+
+### variables
+
+#### interpolation
+
+- two types of variable interpolation: node attributribes and runtime environment vars
+- node attributes: in constraints, task env vars, and certain driver fields
+- runtime env vars: not itnerpretable in constraints because they are only defined once the scheduler has place them on a particular node
+
+```sh
+# basic shell interpolation via ${poop}
+
+```
 
 ## provisioning
 
