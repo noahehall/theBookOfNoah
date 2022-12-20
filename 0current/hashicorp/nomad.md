@@ -6,7 +6,8 @@
 - [server-force-leave command](https://www.nomadproject.io/docs/commands/server-force-leave.html)
 - [nomad ui web interface](https://developer.hashicorp.com/nomad/tutorials/get-started/get-started-ui)
 - tuts
-  - [all tuts](https://developer.hashicorp.com/nomad/tutorials)
+  - [all tuts via nomad portal](https://developer.hashicorp.com/nomad/tutorials)
+  - [all tuts via developer portal (i like this one better)](https://developer.hashicorp.com/tutorials/library?product=nomad)
 - variables
   - [variable interpolation](https://developer.hashicorp.com/nomad/docs/runtime/interpolation)
   - [env stanza](https://developer.hashicorp.com/nomad/docs/job-specification/env)
@@ -19,6 +20,7 @@
   - [fork/exec](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
 - provisioning
   - [enable tls](https://developer.hashicorp.com/nomad/tutorials/transport-security/security-enable-tls)
+  - [encryption tutorials](https://developer.hashicorp.com/nomad/tutorials/transport-security)
   - [hashicorp nomad on aws](https://aws.amazon.com/quickstart/architecture/nomad/)
   - [provision nomad clusters in the cloud](https://github.com/hashicorp/nomad/tree/main/terraform)
   - [deploy & manage nomad jobs](https://developer.hashicorp.com/nomad/tutorials/manage-jobs)
