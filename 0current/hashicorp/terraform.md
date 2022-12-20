@@ -1,31 +1,5 @@
 # terraform
 
-<https://learn.hashicorp.com/collections/terraform/docker-get-started>
-
-todo
-
-- in order
-  - <https://learn.hashicorp.com/collections/terraform/cloud-get-started>
-    - skipp (due to costs)
-      - enforce a policy
-      - control costs with policies
-  - <https://learn.hashicorp.com/collections/terraform/cloud>
-  - <https://learn.hashicorp.com/tutorials/terraform/module>
-  - <https://learn.hashicorp.com/collections/terraform/cli>
-  - <https://learn.hashicorp.com/collections/terraform/configuration-language>
-  - <https://learn.hashicorp.com/collections/terraform/provision>
-  - <https://learn.hashicorp.com/collections/terraform/state>
-  - <https://www.terraform.io/docs/language/settings/backends/index.html>
-  - <https://www.terraform.io/docs/cloud/workspaces/index.html>
-- then do these
-  - <https://learn.hashicorp.com/collections/terraform/certification-associate-tutorials>
-    - do this one last and get the certification
-  - <https://learn.hashicorp.com/collections/terraform/gcp-get-started>
-  - <https://learn.hashicorp.com/tutorials/terraform/cloud-migrate?in=terraform/cloud>
-  - <https://www.terraform.io/docs/language/providers/index.html>
-
-# TLDR
-
 ## links
 
 - [terraform cloud](https://app.terraform.io/app/getting-started)
@@ -37,6 +11,9 @@ todo
 - [terraform usescases with links to docs](https://developer.hashicorp.com/terraform/intro/use-cases)
 - blogs
   - [updating rds using terraform](https://medium.com/hashicorp-engineering/upgrading-aurora-rds-using-terraform-3836a62757f)
+  - [terraform design pattern 1](https://apparently.me.uk/terraform-environment-application-pattern/bonus-patterns.html)
+  - [design pattern 2](https://apparently.me.uk/terraform-environment-application-pattern/join-environment-module.html)
+  - [module output](https://jeffbrown.tech/terraform-module-output/)
 - specs
   - [all terraform docs](https://www.terraform.io/docs/index.html)
   - [remote state](https://www.terraform.io/docs/language/state/remote-state-data.html)
@@ -57,6 +34,7 @@ todo
   - [dynamic key expressions](https://stackoverflow.com/questions/35491987/variable-keys-in-terraform-maps)
   - [test for string emptyness](https://stackoverflow.com/questions/56967975/is-an-non-empty-string-truthy-in-terraform)
   - [operators](https://developer.hashicorp.com/terraform/language/expressions/operators)
+  - [output values](https://developer.hashicorp.com/terraform/language/values/outputs)
 - modules
   - [creation pattern best practices](https://developer.hashicorp.com/terraform/tutorials/modules/pattern-module-creation)
   - [terraform modules list](https://github.com/terraform-aws-modules)
