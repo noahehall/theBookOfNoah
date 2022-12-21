@@ -2,6 +2,7 @@
 
 - nomad templating tool
 - dont use this: use nomad pack
+  - fk it, use it until you break it
 
 ## links
 

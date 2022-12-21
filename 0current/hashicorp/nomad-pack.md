@@ -8,6 +8,13 @@
 - [pack community registry](https://github.com/hashicorp/nomad-pack-community-registry)
 - [intro tutorial](https://developer.hashicorp.com/nomad/tutorials/nomad-pack/nomad-pack-intro)
 
+## docker quickies
+
+```sh
+
+pack render simple_service
+```
+
 ## packs
 
 ### simple service
@@ -16,7 +23,9 @@
 
 ```sh
 ## specify the image to deploy, along with the whatever
-nomad-pack run simple_service --var image="httpd:latest"
+pack render simple_service \
+  --var image="nirvai-core-vault:development" \
+  --var-file=.env.development.compose.json
 ```
 
 ## cmds
