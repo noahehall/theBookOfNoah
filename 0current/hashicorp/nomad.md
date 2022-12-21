@@ -9,15 +9,20 @@
   - [all tuts via nomad portal](https://developer.hashicorp.com/nomad/tutorials)
   - [all tuts via developer portal (i like this one better)](https://developer.hashicorp.com/tutorials/library?product=nomad)
   - [tips and tricks by daniela](https://danielabaron.me/blog/nomad-tips-and-tricks/)
+- users
+  - [users with exec driver & host volumes](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/exec-users-host-volumes)
 - variables
   - [variable interpolation](https://developer.hashicorp.com/nomad/docs/runtime/interpolation)
   - [env stanza](https://developer.hashicorp.com/nomad/docs/job-specification/env)
   - [template stanza](https://developer.hashicorp.com/nomad/docs/job-specification/template)
   - [consul template used by template stanza](https://github.com/hashicorp/consul-template)
   - [external configuration](https://developer.hashicorp.com/nomad/docs/job-specification/artifact)
+- plugins
+  - [plugin stanza](https://developer.hashicorp.com/nomad/docs/configuration/plugin)
 - drivers/integrations
   - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
   - [docker](https://developer.hashicorp.com/nomad/docs/drivers/docker)
+  - [vault](https://developer.hashicorp.com/nomad/docs/configuration/vault#address)
   - [fork/exec](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
 - provisioning
   - [enable tls](https://developer.hashicorp.com/nomad/tutorials/transport-security/security-enable-tls)
@@ -40,10 +45,12 @@
   - [run](https://developer.hashicorp.com/nomad/docs/commands/job/run)
   - [stop](https://developer.hashicorp.com/nomad/docs/commands/job/stop)
   - [status](https://developer.hashicorp.com/nomad/docs/commands/status)
+  - [parameterized jobs](https://developer.hashicorp.com/nomad/tutorials/job-specifications/job-spec-parameterized)
 - tasks
   - [status](https://developer.hashicorp.com/nomad/docs/commands/alloc/status)
   - [logs](https://developer.hashicorp.com/nomad/docs/commands/alloc/logs)
   - [configuring tasks](https://developer.hashicorp.com/nomad/tutorials/manage-jobs/jobs-configuring)
+  - [task stanza](https://developer.hashicorp.com/nomad/docs/job-specification/task#user)
 
 ## terms
 
@@ -96,6 +103,12 @@
 - registers the host machine with (cluster) server agents
 - performs heart-beating
 - runs tasks assigned to them
+- configuration: can send a single file or a dir (but not recursively)
+  - defaults are in /etc/nomad
+    - non empty values replace earlier configs: "", 0, false are considered empty
+    - thus you cannot disable a truthy value, so design accordingly
+    - plugin blocks are replaced and not merged
+  - can be loaded like `nomad agent -config=single.conf -config=/etc/nomad -config=even.json -config=or.hcl`
 
 ### jobs
 
