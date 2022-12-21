@@ -1,8 +1,6 @@
 # haproxy
 
-- [haproxy 2.4](https://cbonte.github.io/haproxy-dconv/2.4/intro.html)
-- [haproxy 2.8 search & find](http://www.haproxy.org/download/2.8/doc/configuration.txt)
-- [haproxy official docker](https://hub.docker.com/u/haproxytech)
+- [haproxy official docker](https://hub.docker.com/_/haproxy)
 - [haproxy load balancing](https://www.haproxy.com/blog/haproxy-configuration-basics-load-balance-your-servers/)
 - [haproxy intel docker](https://hub.docker.com/r/bitnami/haproxy-intel/)
 - [haproxy and websockets](https://www.haproxy.com/blog/websockets-load-balancing-with-haproxy/)
@@ -11,6 +9,9 @@
 - [haproxy http/s same port](https://timjrobinson.com/haproxy-how-to-run-http-https-on-the-same-port/)
 - [example configurations](http://git.haproxy.org/?p=haproxy-2.3.git;a=tree;f=examples)
 - [haproxy docs (start here)](https://docs.haproxy.org/)
+- configuration
+  - [defaults](https://www.haproxy.com/documentation/hapee/latest/configuration/config-sections/defaults/)
+  - [globals](https://www.haproxy.com/documentation/hapee/latest/configuration/config-sections/global/)
 
 ## links
 
