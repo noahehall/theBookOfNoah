@@ -11,7 +11,7 @@
   - [tips and tricks by daniela](https://danielabaron.me/blog/nomad-tips-and-tricks/)
 - users
   - [users with exec driver & host volumes](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/exec-users-host-volumes)
-- variables
+- variables: just use levant, thank me later
   - [variable interpolation](https://developer.hashicorp.com/nomad/docs/runtime/interpolation)
   - [env stanza](https://developer.hashicorp.com/nomad/docs/job-specification/env)
   - [template stanza](https://developer.hashicorp.com/nomad/docs/job-specification/template)
@@ -39,6 +39,7 @@
   - [server configuration](https://developer.hashicorp.com/nomad/docs/configuration/server)
   - [nomad configuration](https://developer.hashicorp.com/nomad/docs/configuration)
 - jobs
+  - [networking](https://developer.hashicorp.com/nomad/docs/job-specification/network)
   - [accessing logs](https://developer.hashicorp.com/nomad/tutorials/manage-jobs/jobs-accessing-logs)
   - [job init](https://developer.hashicorp.com/nomad/docs/commands/job/init)
   - [jobspec](https://developer.hashicorp.com/nomad/docs/job-specification)

@@ -78,11 +78,9 @@
 ### best practices
 
 - NEVER
-
   - workspaces
     - dont use a single terraform workspace to manage everything that makes up production/staging/etc
       - instead make smaller workspaces that are easy to delegate and drop
-
 - ALWAYS
   - workspaces
     - should be named with both their component and their env, e.g. appname-dev, appname-staging

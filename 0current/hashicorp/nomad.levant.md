@@ -6,6 +6,9 @@
 
 - [releases](https://releases.hashicorp.com/levant/)
 - [docs](https://github.com/hashicorp/levant/tree/main/docs)
+- [templates](https://github.com/hashicorp/levant/blob/main/docs/templates.md)
+- [commands](https://github.com/hashicorp/levant/blob/main/docs/commands.md)
+- [clients](https://github.com/hashicorp/levant/blob/main/docs/clients.md)
 
 ## install
 
@@ -27,7 +30,7 @@
 
 ```sh
 
-levant deploy -log-level=debug -address=nomad.devoops -var-file=var.yaml -var 'var=test' example.nomad
+levant deploy -log-level=debug -address=nomad.devoops -var-file=.env.development.compose.json -var 'var=test' development.vault.nomad
 
 ```
 
@@ -36,7 +39,7 @@ levant deploy -log-level=debug -address=nomad.devoops -var-file=var.yaml -var 'v
 - dispatch a nomad parameterized job
 
 ```sh
-levant deploy -log-level=debug -address=nomad.devoops -var-file=var.yaml -var 'var=test' example.nomad
+levant deploy -log-level=debug -address=nomad.devoops -var-file=.env.development.compose.json -var 'var=test' development.vault.nomad
 ```
 
 ### plan
@@ -45,7 +48,7 @@ levant deploy -log-level=debug -address=nomad.devoops -var-file=var.yaml -var 'v
 
 ```sh
 
-levant plan -log-level=debug -address=nomad.devoops -var-file=var.yaml -var 'var=test' example.nomad
+levant plan -log-level=debug -var-file=.env.development.compose.yaml development.vault.nomad
 
 ```
 
@@ -55,7 +58,7 @@ levant plan -log-level=debug -address=nomad.devoops -var-file=var.yaml -var 'var
 
 ```sh
 
-levant render -var-file=var.yaml -var 'var=test' example.nomad
+levant render -var-file=.env.development.compose.yaml development.vault.nomad
 
 ```
 
