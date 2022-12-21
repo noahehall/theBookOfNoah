@@ -1,6 +1,7 @@
 # levant
 
 - nomad templating tool
+- dont use this: use nomad pack
 
 ## links
 
