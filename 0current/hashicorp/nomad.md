@@ -110,7 +110,7 @@
     - plugin blocks are replaced and not merged
   - can be loaded like `nomad agent -config=single.conf -config=/etc/nomad -config=even.json -config=or.hcl`
 
-### jobs
+### job spec
 
 - the job spec is contained in a single file and should be checked into git
 - workflow
@@ -118,6 +118,19 @@
   - plan and review changes with a server agent
   - submit the job file to a server
   - review job status and logs
+
+#### JOB
+
+- each job spec should have a single job
+- each job may have multiple groups
+
+##### GROUP
+
+- a single group can have multiple tasks
+
+###### TASK
+
+- a task is a single unit of work, e.g. a docker container
 
 ### schedular
 
