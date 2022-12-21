@@ -8,6 +8,7 @@
 - tuts
   - [all tuts via nomad portal](https://developer.hashicorp.com/nomad/tutorials)
   - [all tuts via developer portal (i like this one better)](https://developer.hashicorp.com/tutorials/library?product=nomad)
+  - [tips and tricks by daniela](https://danielabaron.me/blog/nomad-tips-and-tricks/)
 - variables
   - [variable interpolation](https://developer.hashicorp.com/nomad/docs/runtime/interpolation)
   - [env stanza](https://developer.hashicorp.com/nomad/docs/job-specification/env)
@@ -31,6 +32,7 @@
 - agents
   - [status](https://developer.hashicorp.com/nomad/docs/commands/status)
   - [server configuration](https://developer.hashicorp.com/nomad/docs/configuration/server)
+  - [nomad configuration](https://developer.hashicorp.com/nomad/docs/configuration)
 - jobs
   - [accessing logs](https://developer.hashicorp.com/nomad/tutorials/manage-jobs/jobs-accessing-logs)
   - [job init](https://developer.hashicorp.com/nomad/docs/commands/job/init)
