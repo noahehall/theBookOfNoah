@@ -9,6 +9,8 @@
 - [haproxy ssl termination](https://www.haproxy.com/blog/haproxy-ssl-termination/)
 - [haproxy acls overview](https://www.haproxy.com/documentation/hapee/latest/configuration/acls/overview/)
 - [haproxy http/s same port](https://timjrobinson.com/haproxy-how-to-run-http-https-on-the-same-port/)
+- [example configurations](http://git.haproxy.org/?p=haproxy-2.3.git;a=tree;f=examples)
+- [haproxy docs (start here)](https://docs.haproxy.org/)
 
 ## links
 
