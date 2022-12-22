@@ -127,7 +127,8 @@ job "dev_core" {
         entrypoint = "${local.vault.entrypoint}"
         volumes = [
           "${local.vault.volumes[0].source}:${local.vault.volumes[0].target}",
-          "${local.vault.volumes[1].source}:${local.vault.volumes[1].target}"
+          "${local.vault.volumes[1].source}:${local.vault.volumes[1].target}",
+          "${local.vault.volumes[2].source}:${local.vault.volumes[2].target}"
         ]
       }
 

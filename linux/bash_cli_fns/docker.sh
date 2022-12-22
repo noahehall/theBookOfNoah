@@ -36,7 +36,7 @@ dk_see_me() {
 export -f dk_see_me
 
 dk_ps() {
-    docker ps --no-trunc -a --format 'table {{.Names}}\n\t{{.Image}}\n\t{{.Status}}\n\t{{.Command}}\n\n' | tac
+    docker ps --no-trunc -a --format 'table {{.Names}}\n\t{{.Image}}\n\t{{.Status}}\n\t{{.Command}}\n\t{{.ID}}\n\n' | tac
 }
 export -f dk_ps
 
