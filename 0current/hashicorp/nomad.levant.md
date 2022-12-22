@@ -3,6 +3,8 @@
 - nomad templating tool
 - dont use this: use nomad pack
   - fk it, use it until you break it
+  - didnt take long to break it, dont use leviant or maybe find a fkn example
+  - check the examples dir of using a a converted docker convert json and plain on variable delcarations
 
 ## links
 
