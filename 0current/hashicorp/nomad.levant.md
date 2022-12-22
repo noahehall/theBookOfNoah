@@ -32,7 +32,15 @@
 
 ```sh
 
-levant deploy -log-level=debug -address=nomad.devoops -var-file=.env.development.compose.json -var 'var=test' development.vault.nomad
+# start a server in dev mode
+./script.nmd.sh start -config=development.leader.nomad
+
+# deploy a job
+levant deploy \
+  -log-level=debug \
+  -address="http://0.0.0.0:4646" \
+  -var-file=.env.development.compose.yaml \
+  development.vault.nomad
 
 ```
 
@@ -41,7 +49,10 @@ levant deploy -log-level=debug -address=nomad.devoops -var-file=.env.development
 - dispatch a nomad parameterized job
 
 ```sh
-levant deploy -log-level=debug -address=nomad.devoops -var-file=.env.development.compose.json -var 'var=test' development.vault.nomad
+levant dispatch \
+  -log-level=debug \
+  -var-file=.env.development.compose.yaml \
+  development.vault.nomad
 ```
 
 ### plan
@@ -50,7 +61,10 @@ levant deploy -log-level=debug -address=nomad.devoops -var-file=.env.development
 
 ```sh
 
-levant plan -log-level=debug -var-file=.env.development.compose.yaml development.vault.nomad
+levant plan \
+  -log-level=debug \
+  -var-file=.env.development.compose.yaml \
+  development.vault.nomad
 
 ```
 
@@ -60,7 +74,9 @@ levant plan -log-level=debug -var-file=.env.development.compose.yaml development
 
 ```sh
 
-levant render -var-file=.env.development.compose.yaml development.vault.nomad
+levant render \
+  -var-file=.env.development.compose.yaml \
+  development.vault.nomad
 
 ```
 
