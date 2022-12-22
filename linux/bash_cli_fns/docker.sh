@@ -9,6 +9,7 @@ export DOCKER_FORMAT="ID\t{{.ID}}\nNAME\t{{.Names}}\nIMAGE\t{{.Image}}\nPORTS\t{
 
 # startup a registry
 # @see https://docs.docker.com/registry/deploying/
+# @see nirvai/scripts/script.registry.sh
 dk_start_registry() {
     docker run --rm -d -p 5001:5001 --restart=always --name registry registry:2
 }
@@ -23,8 +24,8 @@ dk_start_bash_host() {
     docker run --rm -it --network host ubuntu:trusty bash
 }
 
-dk_ls_images() {
-    docker image ls --forma="table {{.Repository}}\t{{.Size}}"
+dk_imgs() {
+    docker images --no-trunc --format="table {{.Repository}}\t{{.Size}}\t{{.ID}}\t{{.Digest}}"
 }
 export -f dk_ls_images
 

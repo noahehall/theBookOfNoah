@@ -134,8 +134,6 @@ job "dev_core" {
     value     = "linux"
   }
 
-  # Specify this job to have rolling updates, two-at-a-time, with
-  # 30 second intervals.
   update {
     stagger      = "30s"
     max_parallel = 1
