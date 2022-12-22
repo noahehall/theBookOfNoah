@@ -1,13 +1,54 @@
-# this is how you get the variables file
-// echo -e "forcing .env.${ENV}.compose.[yaml, json] in current dir"
-// docker compose convert | yq -r -o=json >.env.${ENV}.compose.json
-// docker compose convert >.env.${ENV}.compose.yaml
-// this shit took hours, i mean hella fucking hours
-
 variable "name" {
-  type = string
+  type    = string
+  default = ""
 }
+
 variable "services" {
+  default = {
+    core_vault = {
+      build          = {}
+      cap_add        = []
+      container_name = ""
+      entrypoint     = []
+      environment = {
+        BFF_SERVICE_NAME      = ""
+        DATA_CENTER           = ""
+        DEFAULT_DB            = ""
+        DEFAULT_DB_HOST       = ""
+        DEFAULT_DB_PORT       = ""
+        ENV                   = ""
+        POSTGRES_SERVICE_NAME = ""
+        PROJECT_HOST_NAME     = ""
+        PROJECT_NAME          = ""
+        PROXY_SERVICE_NAME    = ""
+        R_ROLE                = ""
+        REGION                = ""
+        RW_ROLE               = ""
+        UI_SERVICE_NAME       = ""
+        VAULT_ADDR            = ""
+        VAULT_CONT_PORT_A     = ""
+        VAULT_HOST_PORT_A     = ""
+        VAULT_SERVICE_NAME    = ""
+      }
+      hostname = ""
+      image    = ""
+      networks = {}
+      ports = [{
+        mode      = ""
+        target    = 0
+        published = ""
+        protocol  = ""
+      }]
+      volumes = [{
+        type   = ""
+        source = ""
+        target = ""
+        bind = {
+          create_host_path = true
+        }
+    }] }
+  }
+
   type = object({
     core_vault = object({
       build          = map(string)
@@ -54,7 +95,13 @@ variable "services" {
     })
   })
 }
+
 variable "networks" {
+  default = {
+    proxynetwork = {
+      name = ""
+    }
+  }
   type = object({
     proxynetwork = object({
       name = string
@@ -63,6 +110,12 @@ variable "networks" {
 }
 
 variable "volumes" {
+  default = {
+    nirvai_core_postgres = {
+      name     = ""
+      external = true
+    }
+  }
   type = object({
     nirvai_core_postgres = object({
       name     = string
@@ -70,6 +123,7 @@ variable "volumes" {
     })
   })
 }
+
 job "dev_core" {
   datacenters = ["${var.services.core_vault.environment.DATA_CENTER}"]
   region      = "${var.services.core_vault.environment.REGION}"
@@ -95,7 +149,7 @@ job "dev_core" {
       hostname = "${var.services.core_vault.hostname}"
 
       port "vault" {
-        static = "${var.services.core_vault.environment.VAULT_HOST_PORT_A}"
+        static = parseint(var.services.core_vault.environment.VAULT_HOST_PORT_A, 10)
       }
     }
 
