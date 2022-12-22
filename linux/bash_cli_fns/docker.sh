@@ -32,6 +32,7 @@ export -f dk_ls_images
 dk_see_me() {
     docker run --rm -it alpine ping -c4 $(whatsmyip)
 }
+export -f dk_see_me
 
 dk_ps() {
     docker ps --no-trunc -a --format 'table {{.Names}}\n\t{{.Image}}\n\t{{.Status}}\n\t{{.Command}}\n\n' | tac
@@ -46,11 +47,13 @@ export -f dk_d_remote_url
 dk_logs() {
     journalctl -u docker.service
 }
+export -f dk_logs
 
 # get netstats (use ss on ubuntu)
-dl_d_ss() {
+dk_d_ss() {
     sudo ss -asmpex | grep dockerd
 }
+export dk_d_ss
 
 #echo image1 image2 three | xargall docker pull
 dk_inspect() {
@@ -70,23 +73,12 @@ dk_container_network() {
 }
 export -f dk_container_network
 
-dk_rm_containers_sigterm() {
-    docker stop $(docker ps -aq)
-    docker rm $(docker ps -aq)
-}
-export -f dk_rm_containers_sigterm
-
-dk_rm_containers_sigkill() {
-    docker kill $(docker ps -aq)
-    docker rm $(docker ps -aq)
-}
-export -f dk_rm_containers_sigkill
-
 dk_rm_all() {
-    dk_rm_containers_sigterm
-    docker network prune -f || true
-    docker rmi -f $(docker images --filter dangling=true -qa) || true
+    docker network prune -a -ff || true
+    docker stop $(docker ps -a -q) || true
+    docker rm $(docker ps -a -q) || true
+    docker rmi -f $(docker images -a -q) || true
     docker volume rm $(docker volume ls --filter dangling=true -q) || true
-    # docker rmi -f $(docker images -qa)
+
 }
 export -f dk_rm_all
