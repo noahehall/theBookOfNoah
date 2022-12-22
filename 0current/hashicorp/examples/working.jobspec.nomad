@@ -1,55 +1,8 @@
 variable "name" {
-  type    = string
-  default = ""
+  type = string
 }
 
 variable "services" {
-  default = {
-    core_vault = {
-      build          = {}
-      cap_add        = []
-      container_name = ""
-      entrypoint     = []
-      environment = {
-        BFF_SERVICE_NAME      = ""
-        DATA_CENTER           = ""
-        DEFAULT_DB            = ""
-        DEFAULT_DB_HOST       = ""
-        DEFAULT_DB_PORT       = ""
-        ENV                   = ""
-        POSTGRES_SERVICE_NAME = ""
-        PROJECT_HOST_NAME     = ""
-        PROJECT_NAME          = ""
-        PROXY_SERVICE_NAME    = ""
-        R_ROLE                = ""
-        REG_HOST_PORT         = ""
-        REGION                = ""
-        RW_ROLE               = ""
-        UI_SERVICE_NAME       = ""
-        VAULT_ADDR            = ""
-        VAULT_CONT_PORT_A     = ""
-        VAULT_HOST_PORT_A     = ""
-        VAULT_SERVICE_NAME    = ""
-      }
-      hostname = ""
-      image    = ""
-      networks = {}
-      ports = [{
-        mode      = ""
-        target    = 0
-        published = ""
-        protocol  = ""
-      }]
-      volumes = [{
-        type   = ""
-        source = ""
-        target = ""
-        bind = {
-          create_host_path = true
-        }
-    }] }
-  }
-
   type = object({
     core_vault = object({
       build          = map(string)
@@ -99,11 +52,6 @@ variable "services" {
 }
 
 variable "networks" {
-  default = {
-    proxynetwork = {
-      name = ""
-    }
-  }
   type = object({
     proxynetwork = object({
       name = string
@@ -112,12 +60,6 @@ variable "networks" {
 }
 
 variable "volumes" {
-  default = {
-    nirvai_core_postgres = {
-      name     = ""
-      external = true
-    }
-  }
   type = object({
     nirvai_core_postgres = object({
       name     = string
@@ -173,7 +115,7 @@ job "dev_core" {
           disable = true
         }
         auth_soft_fail = true # dont fail on auth errors
-        force_pull     = false
+        force_pull     = true
         image          = "${local.vaultenv.PROJECT_HOST_NAME}:${local.vaultenv.REG_HOST_PORT}/${local.vault.image}"
         // hostname = "${local.vaultenv.PROJECT_HOST_NAME}"
         cap_add = [
