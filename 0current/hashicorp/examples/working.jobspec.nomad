@@ -22,6 +22,7 @@ variable "services" {
         PROJECT_NAME          = ""
         PROXY_SERVICE_NAME    = ""
         R_ROLE                = ""
+        REG_HOST_PORT         = ""
         REGION                = ""
         RW_ROLE               = ""
         UI_SERVICE_NAME       = ""
@@ -67,6 +68,7 @@ variable "services" {
         PROJECT_NAME          = string
         PROXY_SERVICE_NAME    = string
         R_ROLE                = string
+        REG_HOST_PORT         = string
         REGION                = string
         RW_ROLE               = string
         UI_SERVICE_NAME       = string
@@ -124,16 +126,25 @@ variable "volumes" {
   })
 }
 
+locals {
+  networks = var.networks
+  volumes  = var.volumes
+  vault    = var.services.core_vault
+  vaultenv = var.services.core_vault.environment
+}
+
 job "dev_core" {
-  datacenters = ["${var.services.core_vault.environment.DATA_CENTER}"]
-  region      = "${var.services.core_vault.environment.REGION}"
-  // type        = "service"
+  datacenters = ["${local.vaultenv.DATA_CENTER}"]
+  region      = "${local.vaultenv.REGION}"
+  type        = "service"
 
   constraint {
     attribute = "${attr.kernel.name}"
     value     = "linux"
   }
 
+  # Specify this job to have rolling updates, two-at-a-time, with
+  # 30 second intervals.
   update {
     stagger      = "30s"
     max_parallel = 1
@@ -141,13 +152,16 @@ job "dev_core" {
 
   group "vault_group" {
     count = 1
+    restart {
+      attempts = 0
+    }
 
     network {
-      mode     = "bridge"
-      hostname = "${var.services.core_vault.hostname}"
+      mode = "bridge" //cant be used with hostname
+      // hostname = "${local.vault.hostname}"
 
       port "vault" {
-        static = parseint(var.services.core_vault.environment.VAULT_HOST_PORT_A, 10)
+        static = parseint(local.vaultenv.VAULT_HOST_PORT_A, 10)
       }
     }
 
@@ -155,47 +169,52 @@ job "dev_core" {
       driver = "docker"
 
       config {
-        image    = "${var.services.core_vault.image}"
-        hostname = "${var.services.core_vault.environment.PROJECT_HOST_NAME}"
+        healthchecks {
+          disable = true
+        }
+        auth_soft_fail = true # dont fail on auth errors
+        force_pull     = false
+        image          = "${local.vaultenv.PROJECT_HOST_NAME}:${local.vaultenv.REG_HOST_PORT}/${local.vault.image}"
+        // hostname = "${local.vaultenv.PROJECT_HOST_NAME}"
         cap_add = [
-          "${var.services.core_vault.cap_add[0]}"
+          "${local.vault.cap_add[0]}"
         ]
 
         ports = ["vault"]
 
-        entrypoint = "${var.services.core_vault.entrypoint}"
+        entrypoint = "${local.vault.entrypoint}"
         volumes = [
-          "${var.services.core_vault.volumes[0].source}:${var.services.core_vault.volumes[0].target}",
-          "${var.services.core_vault.volumes[1].source}:${var.services.core_vault.volumes[1].target}"
+          "${local.vault.volumes[0].source}:${local.vault.volumes[0].target}",
+          "${local.vault.volumes[1].source}:${local.vault.volumes[1].target}"
         ]
       }
 
       # @see https://developer.hashicorp.com/nomad/docs/job-specification/env
       env {
-        BFF_SERVICE_NAME      = "${var.services.core_vault.environment.BFF_SERVICE_NAME}"
-        DATA_CENTER           = "${var.services.core_vault.environment.DATA_CENTER}"
-        DEFAULT_DB            = "${var.services.core_vault.environment.DEFAULT_DB}"
-        DEFAULT_DB_HOST       = "${var.services.core_vault.environment.DEFAULT_DB_HOST}"
-        DEFAULT_DB_PORT       = "${var.services.core_vault.environment.DEFAULT_DB_PORT}"
-        ENV                   = "${var.services.core_vault.environment.ENV}"
-        POSTGRES_SERVICE_NAME = "${var.services.core_vault.environment.POSTGRES_SERVICE_NAME}"
-        PROJECT_HOST_NAME     = "${var.services.core_vault.environment.PROJECT_HOST_NAME}"
-        PROJECT_NAME          = "${var.services.core_vault.environment.PROJECT_NAME}"
-        PROXY_SERVICE_NAME    = "${var.services.core_vault.environment.PROXY_SERVICE_NAME}"
-        R_ROLE                = "${var.services.core_vault.environment.R_ROLE}"
-        REGION                = "${var.services.core_vault.environment.REGION}"
-        RW_ROLE               = "${var.services.core_vault.environment.RW_ROLE}"
-        UI_SERVICE_NAME       = "${var.services.core_vault.environment.UI_SERVICE_NAME}"
-        VAULT_ADDR            = "${var.services.core_vault.environment.VAULT_ADDR}"
-        VAULT_CONT_PORT_A     = "${var.services.core_vault.environment.VAULT_CONT_PORT_A}"
-        VAULT_HOST_PORT_A     = "${var.services.core_vault.environment.VAULT_HOST_PORT_A}"
-        VAULT_SERVICE_NAME    = "${var.services.core_vault.environment.VAULT_SERVICE_NAME}"
+        BFF_SERVICE_NAME      = "${local.vaultenv.BFF_SERVICE_NAME}"
+        DATA_CENTER           = "${local.vaultenv.DATA_CENTER}"
+        DEFAULT_DB            = "${local.vaultenv.DEFAULT_DB}"
+        DEFAULT_DB_HOST       = "${local.vaultenv.DEFAULT_DB_HOST}"
+        DEFAULT_DB_PORT       = "${local.vaultenv.DEFAULT_DB_PORT}"
+        ENV                   = "${local.vaultenv.ENV}"
+        POSTGRES_SERVICE_NAME = "${local.vaultenv.POSTGRES_SERVICE_NAME}"
+        PROJECT_HOST_NAME     = "${local.vaultenv.PROJECT_HOST_NAME}"
+        PROJECT_NAME          = "${local.vaultenv.PROJECT_NAME}"
+        PROXY_SERVICE_NAME    = "${local.vaultenv.PROXY_SERVICE_NAME}"
+        R_ROLE                = "${local.vaultenv.R_ROLE}"
+        REGION                = "${local.vaultenv.REGION}"
+        RW_ROLE               = "${local.vaultenv.RW_ROLE}"
+        UI_SERVICE_NAME       = "${local.vaultenv.UI_SERVICE_NAME}"
+        VAULT_ADDR            = "${local.vaultenv.VAULT_ADDR}"
+        VAULT_CONT_PORT_A     = "${local.vaultenv.VAULT_CONT_PORT_A}"
+        VAULT_HOST_PORT_A     = "${local.vaultenv.VAULT_HOST_PORT_A}"
+        VAULT_SERVICE_NAME    = "${local.vaultenv.VAULT_SERVICE_NAME}"
       }
 
-      resources {
-        cpu    = 500
-        memory = 256
-      }
+      // resources {
+      //   cpu    = 500
+      //   memory = 256
+      // }
     }
   }
 }
