@@ -87,16 +87,16 @@ plugin "docker" {
   config {
     endpoint = "unix:///var/run/docker.sock"
 
-    auth {
-      config = "/etc/docker-auth.json"
-      helper = "ecr-login"
-    }
+    // auth {
+    //   config = "/etc/docker-auth.json"
+    //   helper = "ecr-login"
+    // }
 
-    tls {
-      cert = "/etc/nomad/nomad.pub"
-      key  = "/etc/nomad/nomad.pem"
-      ca   = "/etc/nomad/nomad.cert"
-    }
+    // tls {
+    //   cert = "/etc/nomad/nomad.pub"
+    //   key  = "/etc/nomad/nomad.pem"
+    //   ca   = "/etc/nomad/nomad.cert"
+    // }
 
     extra_labels = ["job_name", "job_id", "task_group_name", "task_name", "namespace", "node_name", "node_id"]
 
