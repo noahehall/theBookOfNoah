@@ -1,6 +1,7 @@
 #!/bin/env bash
 
 # @see https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes
+# @see https://docs.docker.com/config/formatting/
 
 export DOCKER_CLI_EXPERIMENTAL=enabled
 # usage:
@@ -25,7 +26,7 @@ dk_start_bash_host() {
 }
 
 dk_imgs() {
-    docker images --no-trunc --format="table {{.Repository}}\t{{.Size}}\t{{.ID}}\t{{.Digest}}"
+    docker images --no-trunc -a --format="table {{.Repository}}\n\t{{.ID}}\n\t{{.Tag}}\n\n" | tac
 }
 export -f dk_ls_images
 
