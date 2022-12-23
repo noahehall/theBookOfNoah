@@ -28,7 +28,7 @@ dk_start_bash_host() {
 dk_imgs() {
     docker images --no-trunc -a --format="table {{.Repository}}\n\t{{.ID}}\n\t{{.Tag}}\n\n" | tac
 }
-export -f dk_ls_images
+export -f dk_imgs
 
 dk_see_me() {
     docker run --rm -it alpine ping -c4 $(whatsmyip)
