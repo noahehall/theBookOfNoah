@@ -25,40 +25,42 @@
 ## links
 
 - [vault docker](https://hub.docker.com/_/vault)
-- [vault server](https://developer.hashicorp.com/vault/docs/commands/server)
-- [secrets engines](https://developer.hashicorp.com/vault/docs/secrets)
 - [vault docker example](https://www.misterpki.com/vault-docker/)
-- [tcp listener](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
-- [configuring vault](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
-- [pki engine tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management/pki-engine)
-- [app role auth method](https://developer.hashicorp.com/vault/docs/auth/approle)
-- [database secrets engine](https://developer.hashicorp.com/vault/tutorials/db-credentials/database-secrets)
-- Http api
-  - FYI: the UI is fkn stupid: click the hamburger menu to see all of the things related to the current page
-  - lol but if you read the page it explicitly says to `click the hamburger to see the list of APIs` maybe im the stupid one
-  - [system backend](https://developer.hashicorp.com/vault/api-docs/system)
-    - [vault status: sys/health](https://developer.hashicorp.com/vault/api-docs/system/health)
-    - [vault seal status: sys/seal-status](https://developer.hashicorp.com/vault/api-docs/system/seal-status)
-  - [auth methods](https://developer.hashicorp.com/vault/api-docs/auth)
-    - [app role: /auth/approle](https://developer.hashicorp.com/vault/api-docs/auth/approle)
-- todos
-  - [policies](https://developer.hashicorp.com/vault/docs/concepts/policies)
-  - [approle pull](https://developer.hashicorp.com/vault/tutorials/auth-methods/approle)
-  - [tls certificate auth method](https://developer.hashicorp.com/vault/docs/auth/cert)
-  - [pki secrets engine](https://developer.hashicorp.com/vault/docs/secrets/pki)
-  - [postgres database plugin](https://developer.hashicorp.com/vault/docs/secrets/databases/postgresql)
-  - [postgres database plugin api](https://developer.hashicorp.com/vault/api-docs/secret/databases/postgresql)
-  - [database engine docs](https://developer.hashicorp.com/vault/docs/secrets/databases)
-  - [secrets management tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management)
-  - [auth methods](https://developer.hashicorp.com/vault/docs/auth)
-  - [vault kv secrets engine](https://developer.hashicorp.com/vault/docs/secrets/kv/kv-v2)
-  - [vault http api](https://developer.hashicorp.com/vault/api-docs)
-  - [identity: entities and groups](https://developer.hashicorp.com/vault/tutorials/auth-methods/identity)
+- [security best practices tutorial](https://developer.hashicorp.com/well-architected-framework/security)
+- configuration
+  - [tcp listener](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
+  - [configuring vault](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
   - [raft: integrated storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft)
   - [app integration tutorials](https://developer.hashicorp.com/vault/tutorials/app-integration)
   - [database credentials tutorial](https://developer.hashicorp.com/vault/tutorials/db-credentials)
-  - [security best practices tutorial](https://developer.hashicorp.com/well-architected-framework/security)
-  - [acl policy path templating](https://developer.hashicorp.com/vault/tutorials/policies/policy-templating)
+- authentication
+  - [app role](https://developer.hashicorp.com/vault/docs/auth/approle)
+  - [auth methods](https://developer.hashicorp.com/vault/api-docs/auth)
+  - [approle tutorial](https://developer.hashicorp.com/vault/tutorials/auth-methods/approle)
+  - [identity tutorial](https://developer.hashicorp.com/vault/tutorials/auth-methods/identity)
+  - [tls certificate auth method](https://developer.hashicorp.com/vault/docs/auth/cert)
+- authorization
+  - [policies](https://developer.hashicorp.com/vault/docs/concepts/policies)
+  - [policy templating tutorial](https://developer.hashicorp.com/vault/tutorials/policies/policy-templating)
+- secrets engines
+  - [secrets management tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management)
+  - [key-value 2](https://developer.hashicorp.com/vault/docs/secrets/kv/kv-v2)
+  - [pki](https://developer.hashicorp.com/vault/docs/secrets/pki)
+  - [pki tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management/pki-engine)
+  - [database/postgres](https://developer.hashicorp.com/vault/docs/secrets/databases/postgresql)
+  - [database](https://developer.hashicorp.com/vault/docs/secrets/databases)
+  - [database-secrets](https://developer.hashicorp.com/vault/tutorials/db-credentials/database-secrets)
+  - [secrets engines](https://developer.hashicorp.com/vault/docs/secrets)
+- cli
+  - [vault server](https://developer.hashicorp.com/vault/docs/commands/server)
+- http api
+  - [kv2 engine](https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2)
+  - [app role](https://developer.hashicorp.com/vault/api-docs/auth/approle)
+  - [vault status](https://developer.hashicorp.com/vault/api-docs/system/health)
+  - [vault seal status](https://developer.hashicorp.com/vault/api-docs/system/seal-status)
+  - [system backend](https://developer.hashicorp.com/vault/api-docs/system)
+  - [vault http api](https://developer.hashicorp.com/vault/api-docs)
+  - [postgres database plugin api](https://developer.hashicorp.com/vault/api-docs/secret/databases/postgresql)
 
 ## terms
 

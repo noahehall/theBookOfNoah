@@ -13,7 +13,7 @@ function kill_service_by_name() {
         echo -e 'syntax: kill_service_by_name poop'
     else
         # sudo kill -9 $(pidof $1)
-        killall $1
+        sudo killall $1 # handles it more gracefully
     fi
 }
 
