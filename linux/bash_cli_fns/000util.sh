@@ -1,7 +1,28 @@
 #!/bin/bash bash
 
 function kill_service_on_port() {
-    fuser -k $1/tcp
+    if [ "$#" -eq 0 ]; then
+        echo -e 'syntax: kill_service_on_port 8080'
+    else
+        fuser -k $1/tcp
+    fi
+}
+
+function kill_service_by_name() {
+    if [ "$#" -eq 0 ]; then
+        echo -e 'syntax: kill_service_by_name poop'
+    else
+        # sudo kill -9 $(pidof $1)
+        killall $1
+    fi
+}
+
+get_service_by_name() {
+    if [ "$#" -eq 0 ]; then
+        echo -e 'syntax: get_service_by_name poop'
+    else
+        ps -aux | grep $1
+    fi
 }
 
 function sourceifexists() {
