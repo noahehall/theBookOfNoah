@@ -35,11 +35,13 @@
   - [database credentials tutorial](https://developer.hashicorp.com/vault/tutorials/db-credentials)
   - [recovery mode tutorial](https://developer.hashicorp.com/vault/tutorials/monitoring/recovery-mode)
   - [recovery mode concepts](https://developer.hashicorp.com/vault/docs/concepts/recovery-mode)
-  - [token management](https://developer.hashicorp.com/vault/tutorials/tokens/token-management)
+  - [server seal/unseal](https://developer.hashicorp.com/vault/docs/concepts/seal#seal-unseal)
+  - [auto unseal](https://developer.hashicorp.com/vault/docs/enterprise/sealwrap)
 - observability
   - [prom and graf](https://developer.hashicorp.com/vault/tutorials/monitoring/monitor-telemetry-grafana-prometheus)
   - [troubleshooting & observability tutorials](https://developer.hashicorp.com/vault/tutorials/monitoring)
 - authentication
+  - [token management](https://developer.hashicorp.com/vault/tutorials/tokens/token-management)
   - [tokens](https://developer.hashicorp.com/vault/tutorials/tokens/tokens)
   - [token auth](https://developer.hashicorp.com/vault/docs/auth/token)
   - [token concepts](https://developer.hashicorp.com/vault/docs/concepts/tokens)
@@ -53,7 +55,7 @@
   - [policies](https://developer.hashicorp.com/vault/docs/concepts/policies)
   - [policy templating tutorial](https://developer.hashicorp.com/vault/tutorials/policies/policy-templating)
   - [policies getting started tutorial](https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-policies)
-- secrets engines
+- secrets (storage) engines
   - [secrets management tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management)
   - [key-value 2](https://developer.hashicorp.com/vault/docs/secrets/kv/kv-v2)
   - [pki](https://developer.hashicorp.com/vault/docs/secrets/pki)
@@ -64,6 +66,7 @@
   - [secrets engines](https://developer.hashicorp.com/vault/docs/secrets)
 - cli
   - [vault server](https://developer.hashicorp.com/vault/docs/commands/server)
+  - [vault operator](https://developer.hashicorp.com/vault/docs/commands/operator)
 - http api
   - [token auth](https://developer.hashicorp.com/vault/api-docs/auth/token)
   - [kv2 engine](https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2)
@@ -113,16 +116,28 @@
   - `-dev-tls-cert-dir=<string>`
     - Directory where generated TLS files are created if `-dev-tls` is specified. If left unset, files are generated in a temporary directory.
 
-```sh
-# ensure you set this after execing into container
-# find the values from docker compose logs
-export VAULT_ADDR='http://0.0.0.0:8200'
-export VAULT_DEV_ROT_TOKEN=poop
-echo "y2AAvt7uusE0X5KWd2GkyWkVqCqEWQ9mklxpEttc7b0=" > unseal.key
-
-```
-
 ### recovery mode
+
+## configuration
+
+### server initialization
+
+- the process by which vaults storage backend is prepared to receive data
+- vault servers share the same storage BE in HA mode, so initialize only noccurs once
+- side effects
+  - root key generation, encryption and storage
+  - unseal database
+
+#### seal/unseal: preferred for systems not involved in automation
+
+- an initial server is configured to know where and ohw to access storage, doesnt know how to decrypt any of it
+- unsealing: the process of obtaining the root key neccesary to read the decryption key to decrypt the data
+  - without unsealing: no useful operations can be executed against the vault server
+  - in order to unseal data: vault needs to decrypt the encryption key using the rootkey
+- sealing: requires a single operator with root priveledges
+  - that way the vault can be locked quickly to minimize damage from any intrusions
+
+##### auto unseal: preferred for networked systems involved in automation
 
 ## http api
 
@@ -204,7 +219,7 @@ curl --request POST \
 - multiple instances of secret engines can be mounted at different paths
 
 ```sh
-# enable another instance of kv
+# enable another instance of kv at a different path
 vault secrets enable -path=poop kv
 
 # revoke an previously accessed secret, e.g. aws access creds
@@ -268,18 +283,19 @@ vault read aws/creds/my-poop-user
 ### token authentication
 
 - automatically enabled with the root token being assigned the root policy
-- every other authentication relies on the this method
+- every vault authentication scheme utilizes token authentication for their implementation
 - recovery tokens: used when operating vault in recovery mode
 
 #### batch tokens
 
-- are not persisted
-- cannot be listed or manually revoked
-- encrypted BLOBS that carry enough info to perform vault actions; flexible, scalable and lightweight
-- are not part of the data replication process because they are self contained
+- encrypted BLOBS that carry enough info to perform vault actions without going through token renewal process
 - use cases:
-  - a service (e.g. nomad) starting 1000 containers, all requesting tokens from vault
+  - a service (e.g. nomad) starting 1000 containers, all requesting tokens from vault to perform their init process
+    - instead: the server agent can create batch token(s) with a short TTL
 - prohibited features
+  - are not part of the data replication process because they are self contained
+  - are not persisted
+  - cant be listed or manually revoked
   - cant be root
   - cant create children
   - cant be manually revoked
@@ -289,6 +305,7 @@ vault read aws/creds/my-poop-user
   - doesnt have accessors
   - stops working if parent is revoked
 - enabled features
+  - flexible, scalable and lightweight
   - can be orphan
   - fixed TTL (set it as SHORT As fkn possible to complete a task)
   - creation scales with performance standby count
@@ -590,7 +607,15 @@ vault
   namespace
   operator
     init # initializes a new vault server
+    key-status
+    members
+    migrate
+    raft
     rekey
+    rotate
+    seal
+    step-down
+    unseal
   path-help # get help for a specific path
     aws
   plugin
