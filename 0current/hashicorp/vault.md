@@ -318,7 +318,7 @@ vault read aws/creds/my-poop-user
 
 ######################### authz
 ## the fkn syntax is horrible to manually create on the cli
-## the policy value is just hcl stringified: {policy: some/path capabilities [x, y, z] }
+## the policy value is just hcl stringified: {policy: some/path capabilities = [x, y, z] }
 ## "policy": "path \"auth/token/create\" {\n   capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\", \"sudo\"]\n}"
 
 # create a policy
