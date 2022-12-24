@@ -285,6 +285,7 @@ vault read aws/creds/my-poop-user
   - doesnt have accessors
   - stops working if parent is revoked
 - enabled features
+  - can be orphan
   - fixed TTL (set it as SHORT As fkn possible to complete a task)
   - creation scales with performance standby count
 
@@ -316,8 +317,8 @@ vault read aws/creds/my-poop-user
 # example in https://github.com/nirv-ai/scripts/tree/develop/config/vault
 
 ######################### authz
-## the fkn syntax is horrible on the http api
-## the policy value is a json stringified: {policy: "insert that bullshiz here" }
+## the fkn syntax is horrible to manually create on the cli
+## the policy value is just hcl stringified: {policy: some/path capabilities [x, y, z] }
 ## "policy": "path \"auth/token/create\" {\n   capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\", \"sudo\"]\n}"
 
 # create a policy
