@@ -33,7 +33,11 @@
   - [raft: integrated storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft)
   - [app integration tutorials](https://developer.hashicorp.com/vault/tutorials/app-integration)
   - [database credentials tutorial](https://developer.hashicorp.com/vault/tutorials/db-credentials)
+  - [recovery mode tutorial](https://developer.hashicorp.com/vault/tutorials/monitoring/recovery-mode)
+  - [recovery mode concepts](https://developer.hashicorp.com/vault/docs/concepts/recovery-mode)
 - authentication
+  - [tokens](https://developer.hashicorp.com/vault/tutorials/tokens/tokens)
+  - [token auth](https://developer.hashicorp.com/vault/docs/auth/token)
   - [app role](https://developer.hashicorp.com/vault/docs/auth/approle)
   - [auth methods](https://developer.hashicorp.com/vault/api-docs/auth)
   - [approle tutorial](https://developer.hashicorp.com/vault/tutorials/auth-methods/approle)
@@ -54,6 +58,7 @@
 - cli
   - [vault server](https://developer.hashicorp.com/vault/docs/commands/server)
 - http api
+  - [token auth](https://developer.hashicorp.com/vault/api-docs/auth/token)
   - [kv2 engine](https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2)
   - [app role](https://developer.hashicorp.com/vault/api-docs/auth/approle)
   - [vault status](https://developer.hashicorp.com/vault/api-docs/system/health)
@@ -110,9 +115,299 @@ echo "y2AAvt7uusE0X5KWd2GkyWkVqCqEWQ9mklxpEttc7b0=" > unseal.key
 
 ```
 
-## components
+### recovery mode
 
-### cli
+## http api
+
+- can do anything the cli can do but over http, and more
+- some vault features are only accessible via the http api
+
+```sh
+# initialize a fresh vault server with POOR security
+curl \
+    --request POST \
+    --data '{"secret_shares": 1, "secret_threshold": 1}' \
+    http://127.0.0.1:8200/v1/sys/init | jq
+
+# unseal a vault, may have to repeat multiple times depending on secret_shreshold
+curl \
+    --request POST \
+    --data '{"key": "SOME_KEY_NOT_ROOT_TOKEN"}' \
+    http://127.0.0.1:8200/v1/sys/unseal | jq
+
+# check if a vault is unsealed and initalized
+curl http://127.0.0.1:8200/v1/sys/init
+
+# enable kv v2
+curl \
+    --header "X-Vault-Token: $VAULT_TOKEN" \
+    --request POST \
+    --data '{ "type":"kv-v2" }' \
+    http://127.0.0.1:8200/v1/sys/mounts/secret
+
+# enable the approle auth scheme
+## equivalent to: vault auth enable approle
+## you can get the curl equiv with
+### vault auth enable -output-curl-string approle
+curl \
+    --header "X-Vault-Token: $VAULT_TOKEN" \
+    --request POST \
+    --data '{"type": "approle"}' \
+    http://127.0.0.1:8200/v1/sys/auth/approle
+
+# create a policy
+curl \
+    --header "X-Vault-Token: $VAULT_TOKEN" \
+    --request PUT \
+    --data need to find approle policy \
+    http://127.0.0.1:8200/v1/sys/policies/acl/my-policy
+
+
+# specify that tokens created with approle my-role be associated with my-policy
+curl \
+    --header "X-Vault-Token: $VAULT_TOKEN" \
+    --request POST \
+    --data '{"policies": ["my-policy"]}' \
+    http://127.0.0.1:8200/v1/auth/approle/role/my-role
+
+# get the roleid for my-role
+## will return the role ID for use later
+curl \
+    --header "X-Vault-Token: $VAULT_TOKEN" \
+     http://127.0.0.1:8200/v1/auth/approle/role/my-role/role-id | jq -r ".data"
+
+# create a new secret id under my-role
+## returns the secret id + other things
+curl \
+    --header "X-Vault-Token: $VAULT_TOKEN" \
+    --request POST \
+    http://127.0.0.1:8200/v1/auth/approle/role/my-role/secret-id | jq -r ".data"
+
+# login to vault with the new role
+## will return bunches of stuff, like especially the client_token & accessor, lease duration, etc
+## use the client token to authneticate with vault
+curl --request POST \
+       --data '{"role_id": "SOME_ROLE_ID", "secret_id": "SOME_SECRET_ID"}' \
+       http://127.0.0.1:8200/v1/auth/approle/login | jq -r ".auth"
+```
+
+## secrets engines
+
+- all CRUD operations are forwarded to a secrets engine
+- multiple instances of secret engines can be mounted at different paths
+
+```sh
+# enable another instance of kv
+vault secrets enable -path=poop kv
+
+# revoke an previously accessed secret, e.g. aws access creds
+## ^ this is how you delete the aws IAM role
+vault lease revoke some/lease/id
+```
+
+### database
+
+- generates dynamic, ondemand database (e.g. postgres) credentials
+
+### aws
+
+- generates dynamic, ondemand aws access credentials
+- requires priviledged account creds
+
+```sh
+
+vault secrets enable -path=aws aws
+
+# add any existing keys as root
+# will be used to interact with AWS on future requests
+## you should set access & secret key as env vars to make it easier
+vault write aws/config/root \
+access_key=$POOP_ACCESS_KEY  \
+secret_key=$POOP_SECRET_KEY \
+region=us-west-1
+
+# map a vault role to am aws IAM role and policy
+# vault will create an IAM role for for the vault role to the aws policy
+# then clients can retrieve access creds from vault for the role in aws
+## everytime my-poop-user is requested
+## a role in aws is created with the attached policy
+vault write aws/roles/my-poop-user \
+credential_type=iam_user \
+policy_document=-<<EOF
+{
+  ...
+  ...
+  ...
+}
+EOF
+
+# retrieve access creds for a previously created vault role
+vault read aws/creds/my-poop-user
+```
+
+### kv2
+
+- by default mounted at `secret`
+- accessed via `vault kv` see cli section
+
+### user pass
+
+## authentication
+
+### token authentication
+
+- automatically enabled with the root token being assigned the root policy
+- every other authentication relies on the this method
+- service tokens: persisted in vaults storage backend and can be renewed depending on the lease policy
+- batch tokens: not persisted; encrypted BLOBS that carry enough info to perform vault actions; flexible, scalable and lightweight
+
+```sh
+# create a token and assign it a policy
+export VAULT_TOKEN="$(vault token create -field token -policy=my-policy)"
+
+# check a tokens policies
+vault token lookup | grep policies
+```
+
+### TLS certificates (cert) auth method
+
+- authenticating using SSL/TLS client certs that are signed by a CA/self
+- configured at `/cert` path, and cannot read certs from an external source
+
+### github
+
+- enables a human to authenticate with vault by providing their github creds
+- best practice
+  - to require the user to have a github profile, belong to a specific team in a github org and generated a github access token with read:org scope
+  - each team should have defined actions for specific repos and secrets
+
+```sh
+# enable github auth
+vault auth enable github
+
+# enable all users in nirv-ai to authenticate with vault
+vault write auth/github/config organization=nirv-ai
+
+# assign poop and scoop policies to the bigTurds team
+vault write auuth/github/map/teams/bigTurds value=poop,scoop
+
+# login with github
+vault login -method=github
+```
+
+### approle
+
+```sh
+
+# enable approle
+vault auth enable approle
+
+# create an approle for poop and assign it the poop policy
+vault write auth/approle/role/poop-app \
+  secret_id_ttl=10m \
+  token_num_uses=10 \
+  token_ttl=20m \
+  token_max_ttl=30m \
+  secret_id_num_uses=1000 \
+  token_policies=bff
+
+
+# authenticate as poop-app
+## you will receive token and related token_* things
+## first get the poop role id
+export ROLE_ID="$(vault read -field=role_id auth/approle/role/poop-app/role-id)"
+## next get a secret id to use as a pw for apps of type poop
+export SECRET_ID="$(vault write -f -field=secret_id auth/approle/role/poop-app/secret-id)"
+## finally authenticate
+vault write auth/approle/login role_id="$ROLE_ID" secret_id="$SECRET_ID"
+```
+
+## authorization
+
+- all auth methods map identities back to the policies that are configured in vault, which determine what an authenticated user can access
+- the most specific path prefix takes precidence: an exact match or longest glob
+
+```sh
+# check all the perms provided by the default policy
+vault policy read default
+
+```
+
+### policies
+
+- use hcl, but it accepts json for ACLs
+- the default and root polices cant be deleted
+- describe enabled/disabled authorizations for paths,
+- you associate users & machines with policies, which authorize actions on paths
+  - default: a common set of permissions assigned to all tokens by default
+- cmds like `list` needs access to the `sys` path
+- The only way to specify non-static paths in ACL policies: use globs (\*) at the end of paths. Or, use plus-sign (+) for a single directory wildcard matching.
+
+```sh
+# Dev servers have version 2 of KV secrets engine mounted by default
+## can create/update to any path under secret/data
+path "secret/data/*" {
+  capabilities = ["create", "update"]
+}
+## but can only read from secret located at /secret/data/foo
+path "secret/data/foo" {
+  capabilities = ["read"]
+}
+
+```
+
+## server configuration
+
+- only component that interacts with the data storage and backends
+- the vault_addr is where you can access it
+- the vault server is the SINGLE policy authority
+  - there can be multiple authentication methods, but vault controls ALL authorization defined by vault policies for all authenticated humans and bots
+- follow the docs for gpg in links above, was super straight forward, no need for keybase
+
+```sh
+# initial a new vault server
+## only accepted when a server is started against a new backend
+## in HA mode this occurs once per cluster (not server)
+## returns root token and a set of unsealed keys
+vault operator init
+
+# unseal a sealed vault server
+## occurs whenever an initialized server restarts
+## requires that you can meet the unsealed keys threshold limit
+### 3 of 5 by default
+### can be provided by multiple mechanisms on multiple computers
+### when the value for sealed === false, your good to go
+vault operator unseal
+
+## now you can login, e.g. with the root token
+
+
+# gonna be a long fkn example
+
+api_addr = "http://127.0.0.1:8200" # where to route client requests
+cluster_addr = "https://127.0.0.1:8201" # for vault nodes in a cluster
+ui = true
+disable_mlock = false # should NEVER be true, fix ur fkn errors
+
+# raft integrated storage: production ready backend
+## delete the path will clear our all the data
+storage "raft" {
+  path    = "/vault/data"
+  node_id = "node1"
+}
+
+# listener is actually an array, you can define it multiple times
+## this defines where vault listens for api requests
+## you set this address as `VAULT_ADDR=poop` in client apps that have a vault client binary available
+listener "tcp" {
+  address     = "127.0.0.1:8200"
+  tls_disable = "true" # this should always be false in prod
+}
+
+
+```
+
+## cli
 
 - interacts with the server over a TLS connection
 
@@ -187,301 +482,6 @@ vault
   status # check status of server
   server
     -help
-```
-
-### http api
-
-- can do anything the cli can be over http, and more
-- some vault features are only accessible via the http api
-
-```sh
-# initialize a fresh vault server with POOR security
-curl \
-    --request POST \
-    --data '{"secret_shares": 1, "secret_threshold": 1}' \
-    http://127.0.0.1:8200/v1/sys/init | jq
-
-# unseal a vault, may have to repeat multiple times depending on secret_shreshold
-curl \
-    --request POST \
-    --data '{"key": "SOME_KEY_NOT_ROOT_TOKEN"}' \
-    http://127.0.0.1:8200/v1/sys/unseal | jq
-
-# check if a vault is unsealed and initalized
-curl http://127.0.0.1:8200/v1/sys/init
-
-# enable kv v2
-curl \
-    --header "X-Vault-Token: $VAULT_TOKEN" \
-    --request POST \
-    --data '{ "type":"kv-v2" }' \
-    http://127.0.0.1:8200/v1/sys/mounts/secret
-
-# enable the approle auth scheme
-## equivalent to: vault auth enable approle
-## you can get the curl equiv with
-### vault auth enable -output-curl-string approle
-curl \
-    --header "X-Vault-Token: $VAULT_TOKEN" \
-    --request POST \
-    --data '{"type": "approle"}' \
-    http://127.0.0.1:8200/v1/sys/auth/approle
-
-# create a policy
-curl \
-    --header "X-Vault-Token: $VAULT_TOKEN" \
-    --request PUT \
-    --data need to find approle policy \
-    http://127.0.0.1:8200/v1/sys/policies/acl/my-policy
-
-
-# specify that tokens created with approle my-role be associated with my-policy
-curl \
-    --header "X-Vault-Token: $VAULT_TOKEN" \
-    --request POST \
-    --data '{"policies": ["my-policy"]}' \
-    http://127.0.0.1:8200/v1/auth/approle/role/my-role
-
-# get the roleid for my-role
-## will return the role ID for use later
-curl \
-    --header "X-Vault-Token: $VAULT_TOKEN" \
-     http://127.0.0.1:8200/v1/auth/approle/role/my-role/role-id | jq -r ".data"
-
-# create a new secret id under my-role
-## returns the secret id + other things
-curl \
-    --header "X-Vault-Token: $VAULT_TOKEN" \
-    --request POST \
-    http://127.0.0.1:8200/v1/auth/approle/role/my-role/secret-id | jq -r ".data"
-
-# login to vault with the new role
-## will return bunches of stuff, like especially the client_token & accessor, lease duration, etc
-## use the client token to authneticate with vault
-curl --request POST \
-       --data '{"role_id": "SOME_ROLE_ID", "secret_id": "SOME_SECRET_ID"}' \
-       http://127.0.0.1:8200/v1/auth/approle/login | jq -r ".auth"
-```
-
-### secrets engines
-
-- all CRUD operations are forwarded to a secrets engine
-- multiple instances of secret engines can be mounted at different paths
-
-```sh
-# enable another instance of kv
-vault secrets enable -path=poop kv
-
-# revoke an previously accessed secret, e.g. aws access creds
-## ^ this is how you delete the aws IAM role
-vault lease revoke some/lease/id
-```
-
-#### database
-
-- generates dynamic, ondemand database (e.g. postgres) credentials
-
-#### aws
-
-- generates dynamic, ondemand aws access credentials
-- requires priviledged account creds
-
-```sh
-
-vault secrets enable -path=aws aws
-
-# add any existing keys as root
-# will be used to interact with AWS on future requests
-## you should set access & secret key as env vars to make it easier
-vault write aws/config/root \
-access_key=$POOP_ACCESS_KEY  \
-secret_key=$POOP_SECRET_KEY \
-region=us-west-1
-
-# map a vault role to am aws IAM role and policy
-# vault will create an IAM role for for the vault role to the aws policy
-# then clients can retrieve access creds from vault for the role in aws
-## everytime my-poop-user is requested
-## a role in aws is created with the attached policy
-vault write aws/roles/my-poop-user \
-credential_type=iam_user \
-policy_document=-<<EOF
-{
-  ...
-  ...
-  ...
-}
-EOF
-
-# retrieve access creds for a previously created vault role
-vault read aws/creds/my-poop-user
-```
-
-#### database
-
-#### kv key value
-
-- by default mounted at `secret`
-- accessed via `vault kv` see cli section
-
-### authentication
-
-#### token authentication
-
-- automatically enabled with the root token being assigned the root policy
-
-```sh
-# create a token and assign it a policy
-export VAULT_TOKEN="$(vault token create -field token -policy=my-policy)"
-
-# check a tokens policies
-vault token lookup | grep policies
-```
-
-#### TLS certificates (cert) auth method
-
-- authenticating using SSL/TLS client certs that are signed by a CA/self
-- configured at `/cert` path, and cannot read certs from an external source
-
-#### github
-
-- enables a human to authenticate with vault by providing their github creds
-- best practice
-  - to require the user to have a github profile, belong to a specific team in a github org and generated a github access token with read:org scope
-  - each team should have defined actions for specific repos and secrets
-
-```sh
-# enable github auth
-vault auth enable github
-
-# enable all users in nirv-ai to authenticate with vault
-vault write auth/github/config organization=nirv-ai
-
-# assign poop and scoop policies to the bigTurds team
-vault write auuth/github/map/teams/bigTurds value=poop,scoop
-
-# login with github
-vault login -method=github
-```
-
-#### userpass
-
-#### approle
-
-```sh
-
-# enable approle
-vault auth enable approle
-
-# create an approle for poop and assign it the poop policy
-vault write auth/approle/role/poop-app \
-  secret_id_ttl=10m \
-  token_num_uses=10 \
-  token_ttl=20m \
-  token_max_ttl=30m \
-  secret_id_num_uses=1000 \
-  token_policies=bff
-
-
-# authenticate as poop-app
-## you will receive token and related token_* things
-## first get the poop role id
-export ROLE_ID="$(vault read -field=role_id auth/approle/role/poop-app/role-id)"
-## next get a secret id to use as a pw for apps of type poop
-export SECRET_ID="$(vault write -f -field=secret_id auth/approle/role/poop-app/secret-id)"
-## finally authenticate
-vault write auth/approle/login role_id="$ROLE_ID" secret_id="$SECRET_ID"
-```
-
-### authorization
-
-- all auth methods map identities back to the policies that are configured in vault, which determine what an authenticated user can access
-- the most specific path prefix takes precidence: an exact match or longest glob
-
-```sh
-# check all the perms provided by the default policy
-vault policy read default
-
-```
-
-#### policies
-
-- use hcl, but it accepts json for ACLs
-- the default and root polices cant be deleted
-- describe enabled/disabled authorizations for paths,
-- you associate users & machines with policies, which authorize actions on paths
-  - default: a common set of permissions assigned to all tokens by default
-- cmds like `list` needs access to the `sys` path
-- The only way to specify non-static paths in ACL policies: use globs (\*) at the end of paths. Or, use plus-sign (+) for a single directory wildcard matching.
-
-```sh
-# Dev servers have version 2 of KV secrets engine mounted by default
-## can create/update to any path under secret/data
-path "secret/data/*" {
-  capabilities = ["create", "update"]
-}
-## but can only read from secret located at /secret/data/foo
-path "secret/data/foo" {
-  capabilities = ["read"]
-}
-
-```
-
-### server
-
-- only component that interacts with the data storage and backends
-- the vault_addr is where you can access it
-- the vault server is the SINGLE policy authority
-  - there can be multiple authentication methods, but vault controls ALL authorization defined by vault policies for all authenticated humans and bots
-- follow the docs for gpg in links above, was super straight forward, no need for keybase
-
-```sh
-# initial a new vault server
-## only accepted when a server is started against a new backend
-## in HA mode this occurs once per cluster (not server)
-## returns root token and a set of unsealed keys
-vault operator init
-
-# unseal a sealed vault server
-## occurs whenever an initialized server restarts
-## requires that you can meet the unsealed keys threshold limit
-### 3 of 5 by default
-### can be provided by multiple mechanisms on multiple computers
-### when the value for sealed === false, your good to go
-vault operator unseal
-
-## now you can login, e.g. with the root token
-
-```
-
-#### configuration
-
-- can use json/stdin, but fkn just use hcl and get use to it
-
-```sh
-# gonna be a long fkn example
-
-api_addr = "http://127.0.0.1:8200" # where to route client requests
-cluster_addr = "https://127.0.0.1:8201" # for vault nodes in a cluster
-ui = true
-disable_mlock = false # should NEVER be true, fix ur fkn errors
-
-# raft integrated storage: production ready backend
-## delete the path will clear our all the data
-storage "raft" {
-  path    = "/vault/data"
-  node_id = "node1"
-}
-
-# listener is actually an array, you can define it multiple times
-## this defines where vault listens for api requests
-## you set this address as `VAULT_ADDR=poop` in client apps that have a vault client binary available
-listener "tcp" {
-  address     = "127.0.0.1:8200"
-  tls_disable = "true" # this should always be false in prod
-}
-
-
 ```
 
 ## docker
