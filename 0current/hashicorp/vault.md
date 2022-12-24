@@ -35,6 +35,7 @@
   - [database credentials tutorial](https://developer.hashicorp.com/vault/tutorials/db-credentials)
   - [recovery mode tutorial](https://developer.hashicorp.com/vault/tutorials/monitoring/recovery-mode)
   - [recovery mode concepts](https://developer.hashicorp.com/vault/docs/concepts/recovery-mode)
+  - [token management](https://developer.hashicorp.com/vault/tutorials/tokens/token-management)
 - authentication
   - [tokens](https://developer.hashicorp.com/vault/tutorials/tokens/tokens)
   - [token auth](https://developer.hashicorp.com/vault/docs/auth/token)
@@ -277,7 +278,7 @@ vault read aws/creds/my-poop-user
   - a service (e.g. nomad) starting 1000 containers, all requesting tokens from vault
 - prohibited features
   - cant be root
-  - cant create childs
+  - cant create children
   - cant be manually revoked
   - cant be periodic
   - cant have a maxTTL (must use a fixed TTL)
@@ -328,11 +329,16 @@ curl --header "X-Vault-Token: $VAULT_TOKEN" \
    $VAULT_ADDR/v1/sys/policies/acl/test
 
 ######################### authn
+# create a batch token
+## find the HTTP api, we shouldnt use the cli for anything except initial bootstrap
+vault token create -type=batch -policy=test -ttl=20m
+
 # create a child token
 curl --header "X-Vault-Token: $VAULT_TOKEN" \
     --request POST  \
     --data '{ "policies": ["default"], "num_uses":2, "ttl": "1h" }' \
     $VAULT_ADDR/v1/auth/token/create | jq .auth
+
 
 # created an orphan token
 # /create-orphan doesnt require root/sudo to create orphan tokens (/token/create does)
