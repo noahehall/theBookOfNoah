@@ -139,6 +139,8 @@
 
 ##### auto unseal: preferred for networked systems involved in automation
 
+- requires vualt enterprise? damn thought cant afford it...
+
 ## http api
 
 - can do anything the cli can do but over http, and more
