@@ -27,7 +27,10 @@
 - [vault docker](https://hub.docker.com/_/vault)
 - [vault docker example](https://www.misterpki.com/vault-docker/)
 - [security best practices tutorial](https://developer.hashicorp.com/well-architected-framework/security)
+- errors
+  - [tls error: x509 signed by unknown authority](https://github.com/hashicorp/vault/issues/7400)
 - configuration
+  - [vault server configuration](https://developer.hashicorp.com/vault/docs/configuration)
   - [tcp listener](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
   - [configuring vault](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
   - [raft: integrated storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft)
@@ -55,7 +58,8 @@
   - [policies](https://developer.hashicorp.com/vault/docs/concepts/policies)
   - [policy templating tutorial](https://developer.hashicorp.com/vault/tutorials/policies/policy-templating)
   - [policies getting started tutorial](https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-policies)
-- secrets (storage) engines
+- secrets engines
+  - [transit secrets engine](https://developer.hashicorp.com/vault/docs/secrets/transit)
   - [secrets management tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management)
   - [key-value 2](https://developer.hashicorp.com/vault/docs/secrets/kv/kv-v2)
   - [pki](https://developer.hashicorp.com/vault/docs/secrets/pki)
@@ -65,8 +69,9 @@
   - [database-secrets](https://developer.hashicorp.com/vault/tutorials/db-credentials/database-secrets)
   - [secrets engines](https://developer.hashicorp.com/vault/docs/secrets)
 - cli
-  - [vault server](https://developer.hashicorp.com/vault/docs/commands/server)
-  - [vault operator](https://developer.hashicorp.com/vault/docs/commands/operator)
+  - [server](https://developer.hashicorp.com/vault/docs/commands/server)
+  - [operator](https://developer.hashicorp.com/vault/docs/commands/operator)
+  - [operator unseal](https://developer.hashicorp.com/vault/docs/commands/operator/unseal)
 - http api
   - [token auth](https://developer.hashicorp.com/vault/api-docs/auth/token)
   - [kv2 engine](https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2)
@@ -139,7 +144,9 @@
 
 ##### auto unseal: preferred for networked systems involved in automation
 
-- requires vualt enterprise? damn thought cant afford it...
+##### seal wrapping
+
+- requires vualt enterprise? damn yo cant afford it...
 
 ## http api
 

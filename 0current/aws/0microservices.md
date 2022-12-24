@@ -1,6 +1,6 @@
 # TLDR
 
-- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS, cloudwatch, EKS, Step Functions, SES, ECR, ECS
+- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS, cloudwatch, EKS, Step Functions, SES, ECR, ECS, kms
 
 - lumping serverless into this file
 
@@ -46,6 +46,10 @@
   - lambda outside a VPC have internet access
     - lambda inside a VPC may not have internet access
       - if they do, there must be a NAT gateway setup
+
+### kms
+
+- [$1 per key](https://aws.amazon.com/kms/pricing/)
 
 ### serverless
 
