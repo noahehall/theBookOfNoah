@@ -38,14 +38,17 @@
 - authentication
   - [tokens](https://developer.hashicorp.com/vault/tutorials/tokens/tokens)
   - [token auth](https://developer.hashicorp.com/vault/docs/auth/token)
+  - [token concepts](https://developer.hashicorp.com/vault/docs/concepts/tokens)
   - [app role](https://developer.hashicorp.com/vault/docs/auth/approle)
   - [auth methods](https://developer.hashicorp.com/vault/api-docs/auth)
   - [approle tutorial](https://developer.hashicorp.com/vault/tutorials/auth-methods/approle)
   - [identity tutorial](https://developer.hashicorp.com/vault/tutorials/auth-methods/identity)
   - [tls certificate auth method](https://developer.hashicorp.com/vault/docs/auth/cert)
+  - [batch tokens](https://developer.hashicorp.com/vault/tutorials/tokens/batch-tokens)
 - authorization
   - [policies](https://developer.hashicorp.com/vault/docs/concepts/policies)
   - [policy templating tutorial](https://developer.hashicorp.com/vault/tutorials/policies/policy-templating)
+  - [policies getting started tutorial](https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-policies)
 - secrets engines
   - [secrets management tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management)
   - [key-value 2](https://developer.hashicorp.com/vault/docs/secrets/kv/kv-v2)
@@ -205,6 +208,10 @@ vault secrets enable -path=poop kv
 vault lease revoke some/lease/id
 ```
 
+### cubbyhole
+
+- enabled by default
+
 ### database
 
 - generates dynamic, ondemand database (e.g. postgres) credentials
@@ -258,8 +265,117 @@ vault read aws/creds/my-poop-user
 
 - automatically enabled with the root token being assigned the root policy
 - every other authentication relies on the this method
-- service tokens: persisted in vaults storage backend and can be renewed depending on the lease policy
-- batch tokens: not persisted; encrypted BLOBS that carry enough info to perform vault actions; flexible, scalable and lightweight
+- recovery tokens: used when operating vault in recovery mode
+
+#### batch tokens
+
+- are not persisted
+- cannot be listed or manually revoked
+- encrypted BLOBS that carry enough info to perform vault actions; flexible, scalable and lightweight
+- are not part of the data replication process because they are self contained
+- use cases:
+  - a service (e.g. nomad) starting 1000 containers, all requesting tokens from vault
+- prohibited features
+  - cant be root
+  - cant create childs
+  - cant be manually revoked
+  - cant be periodic
+  - cant have a maxTTL (must use a fixed TTL)
+  - cant use cubbyhole
+  - doesnt have accessors
+  - stops working if parent is revoked
+- enabled features
+  - fixed TTL (set it as SHORT As fkn possible to complete a task)
+  - creation scales with performance standby count
+
+#### service tokens
+
+- persisted in vaults storage backend and can be renewed depending on the lease policy
+  - are replicated across all servers in a vault cluster
+- every non root service token has a TTL (lease_duration), after which vault revokes its
+  - every non root token potentially has a parent; when the parent is revoked, all child tokens are revoked as well (ignoring the childs TTL)
+  - if a token is renewable: use `vault token renew` before the TTL is reached
+    - vault returns `token not found` if TTL the token ha expired
+- every non root token has a maxTTL relative to creation timestamp: after which it can no longer be renewed
+
+#### service token patterns
+
+- orphan tokens: tokens without a parent (can only be created by root/sudo)
+  - do not expire when their creator does (because the creator isnt set as parent)
+  - still expire by TTL and maxTTL constraints
+- use-limited tokens: tokens that can be invoked X number of times
+- periodic service tokens: tokens without a maxTTL and will only be revoked if not rewed with in TTL;
+  - can only be created by root/sudo users
+  - the `period` param becomes the tokens renewal period TTL
+- short-lived tokens: tokens with a particularly short TTL and maxTTL value
+- token role: a role that specifies associated tokens policies and token lifecycle
+
+```sh
+################################### long list of things to add to vault.sh
+# move these blocks out of here 1 by 1
+# example in https://github.com/nirv-ai/scripts/tree/develop/config/vault
+
+######################### authz
+## the fkn syntax is horrible on the http api
+## the policy value is a json stringified: {policy: "insert that bullshiz here" }
+## "policy": "path \"auth/token/create\" {\n   capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\", \"sudo\"]\n}"
+
+# create a policy
+curl --header "X-Vault-Token: $VAULT_TOKEN" \
+   --request PUT \
+   --data @payload.json \
+   $VAULT_ADDR/v1/sys/policies/acl/test
+
+######################### authn
+# create a child token
+curl --header "X-Vault-Token: $VAULT_TOKEN" \
+    --request POST  \
+    --data '{ "policies": ["default"], "num_uses":2, "ttl": "1h" }' \
+    $VAULT_ADDR/v1/auth/token/create | jq .auth
+
+# created an orphan token
+# /create-orphan doesnt require root/sudo to create orphan tokens (/token/create does)
+curl --header "X-Vault-Token: $VAULT_TOKEN" \
+   --request POST \
+   $VAULT_ADDR/v1/auth/token/create-orphan | jq -r ".auth.client_token" > orphan_token.txt
+
+# create a token role
+curl --header "X-Vault-Token: $VAULT_TOKEN" \
+     --request POST \
+     --data @payload.json \
+     $VAULT_ADDR/v1/auth/token/roles/any_role_here
+
+# generate a token for a previously created role
+curl --header "X-Vault-Token: $VAULT_TOKEN" \
+    --request POST \
+    $VAULT_ADDR/v1/auth/token/create/any_role_here | jq .auth
+
+
+# renew a token
+curl --header "X-Vault-Token: $VAULT_TOKEN" \
+    --request POST \
+    --data { "token": "$( cat payload.json )" } \
+    $VAULT_ADDR/v1/auth/token/renew | jq .auth
+
+# revoke a token
+## instead of passing the payload token, you can pass the tokens `accessor parameter
+curl --header "X-Vault-Token: $VAULT_TOKEN" \
+    --request POST \
+    --data { "token": "$(cat @payload.json)" } \
+    $VAULT_ADDR/v1/auth/token/revoke
+
+# lookup information about your token
+curl --header "X-Vault-Token: $MY_TOKEN" \
+      $VAULT_ADDR/v1/auth/token/lookup-self | jq .data
+
+# lookup someone elses token
+curl --header "X-Vault-Token: $VAULT_TOKEN" \
+    --request POST \
+    --data @payload.json \
+    $VAULT_ADDR/v1/auth/token/lookup | jq
+
+
+```
 
 ```sh
 # create a token and assign it a policy
@@ -267,6 +383,8 @@ export VAULT_TOKEN="$(vault token create -field token -policy=my-policy)"
 
 # check a tokens policies
 vault token lookup | grep policies
+
+
 ```
 
 ### TLS certificates (cert) auth method
