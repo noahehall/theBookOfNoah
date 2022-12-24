@@ -36,6 +36,9 @@
   - [recovery mode tutorial](https://developer.hashicorp.com/vault/tutorials/monitoring/recovery-mode)
   - [recovery mode concepts](https://developer.hashicorp.com/vault/docs/concepts/recovery-mode)
   - [token management](https://developer.hashicorp.com/vault/tutorials/tokens/token-management)
+- observability
+  - [prom and graf](https://developer.hashicorp.com/vault/tutorials/monitoring/monitor-telemetry-grafana-prometheus)
+  - [troubleshooting & observability tutorials](https://developer.hashicorp.com/vault/tutorials/monitoring)
 - authentication
   - [tokens](https://developer.hashicorp.com/vault/tutorials/tokens/tokens)
   - [token auth](https://developer.hashicorp.com/vault/docs/auth/token)
@@ -329,6 +332,11 @@ curl --header "X-Vault-Token: $VAULT_TOKEN" \
    $VAULT_ADDR/v1/sys/policies/acl/test
 
 ######################### authn
+# get the count of total service tokens
+curl --header "X-Vault-Token:root" \
+       $VAULT_ADDR/v1/sys/internal/counters/tokens | jq .data
+
+
 # create a batch token
 ## find the HTTP api, we shouldnt use the cli for anything except initial bootstrap
 vault token create -type=batch -policy=test -ttl=20m
