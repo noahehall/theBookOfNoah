@@ -40,6 +40,7 @@
   - [recovery mode concepts](https://developer.hashicorp.com/vault/docs/concepts/recovery-mode)
   - [server seal/unseal](https://developer.hashicorp.com/vault/docs/concepts/seal#seal-unseal)
   - [auto unseal](https://developer.hashicorp.com/vault/docs/enterprise/sealwrap)
+  - [deploy vault](https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-deploy)
 - observability
   - [prom and graf](https://developer.hashicorp.com/vault/tutorials/monitoring/monitor-telemetry-grafana-prometheus)
   - [troubleshooting & observability tutorials](https://developer.hashicorp.com/vault/tutorials/monitoring)
@@ -55,6 +56,7 @@
   - [tls certificate auth method](https://developer.hashicorp.com/vault/docs/auth/cert)
   - [batch tokens](https://developer.hashicorp.com/vault/tutorials/tokens/batch-tokens)
 - authorization
+  - [hcl to json converter](https://www.convertsimple.com/convert-hcl-to-json/)
   - [policies](https://developer.hashicorp.com/vault/docs/concepts/policies)
   - [policy templating tutorial](https://developer.hashicorp.com/vault/tutorials/policies/policy-templating)
   - [policies getting started tutorial](https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-policies)
@@ -81,6 +83,7 @@
   - [system backend](https://developer.hashicorp.com/vault/api-docs/system)
   - [vault http api](https://developer.hashicorp.com/vault/api-docs)
   - [postgres database plugin api](https://developer.hashicorp.com/vault/api-docs/secret/databases/postgresql)
+  - [policy endpoint](https://developer.hashicorp.com/vault/api-docs/system/policy)
 
 ## terms
 
@@ -347,17 +350,14 @@ vault read aws/creds/my-poop-user
 # example in https://github.com/nirv-ai/scripts/tree/develop/config/vault
 
 ######################### authz
-## the fkn syntax is horrible to manually create on the cli
-## the policy value is just hcl stringified: {policy: some/path capabilities = [x, y, z] }
-## "policy": "path \"auth/token/create\" {\n   capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\", \"sudo\"]\n}"
 
-# create a policy
-curl --header "X-Vault-Token: $VAULT_TOKEN" \
-   --request PUT \
-   --data @payload.json \
-   $VAULT_ADDR/v1/sys/policies/acl/test
 
 ######################### authn
+curl --header "X-Vault-Token: $VAULT_TOKEN" \
+   --request POST \
+   --data '{"type": "userpass"}' \
+   $VAULT_ADDR/v1/sys/auth/userpass
+
 # get the count of total service tokens
 curl --header "X-Vault-Token:root" \
        $VAULT_ADDR/v1/sys/internal/counters/tokens | jq .data
@@ -367,18 +367,7 @@ curl --header "X-Vault-Token:root" \
 ## find the HTTP api, we shouldnt use the cli for anything except initial bootstrap
 vault token create -type=batch -policy=test -ttl=20m
 
-# create a child token
-curl --header "X-Vault-Token: $VAULT_TOKEN" \
-    --request POST  \
-    --data '{ "policies": ["default"], "num_uses":2, "ttl": "1h" }' \
-    $VAULT_ADDR/v1/auth/token/create | jq .auth
 
-
-# created an orphan token
-# /create-orphan doesnt require root/sudo to create orphan tokens (/token/create does)
-curl --header "X-Vault-Token: $VAULT_TOKEN" \
-   --request POST \
-   $VAULT_ADDR/v1/auth/token/create-orphan | jq -r ".auth.client_token" > orphan_token.txt
 
 # create a token role
 curl --header "X-Vault-Token: $VAULT_TOKEN" \
@@ -398,22 +387,6 @@ curl --header "X-Vault-Token: $VAULT_TOKEN" \
     --data { "token": "$( cat payload.json )" } \
     $VAULT_ADDR/v1/auth/token/renew | jq .auth
 
-# revoke a token
-## instead of passing the payload token, you can pass the tokens `accessor parameter
-curl --header "X-Vault-Token: $VAULT_TOKEN" \
-    --request POST \
-    --data { "token": "$(cat @payload.json)" } \
-    $VAULT_ADDR/v1/auth/token/revoke
-
-# lookup information about your token
-curl --header "X-Vault-Token: $MY_TOKEN" \
-      $VAULT_ADDR/v1/auth/token/lookup-self | jq .data
-
-# lookup someone elses token
-curl --header "X-Vault-Token: $VAULT_TOKEN" \
-    --request POST \
-    --data @payload.json \
-    $VAULT_ADDR/v1/auth/token/lookup | jq
 
 
 ```
