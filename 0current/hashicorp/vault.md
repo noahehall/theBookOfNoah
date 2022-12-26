@@ -30,9 +30,9 @@
 - errors
   - [tls error: x509 signed by unknown authority](https://github.com/hashicorp/vault/issues/7400)
 - configuration
+  - [duration format strings](https://developer.hashicorp.com/vault/docs/concepts/duration-format)
   - [app integration tutorials](https://developer.hashicorp.com/vault/tutorials/app-integration)
   - [database credentials tutorial](https://developer.hashicorp.com/vault/tutorials/db-credentials)
-  - [raft: integrated storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft)
   - [recovery mode concepts](https://developer.hashicorp.com/vault/docs/concepts/recovery-mode)
   - [recovery mode tutorial](https://developer.hashicorp.com/vault/tutorials/monitoring/recovery-mode)
   - [seal: auto unseal](https://developer.hashicorp.com/vault/docs/enterprise/sealwrap)
@@ -41,6 +41,10 @@
   - [vault: config tcp listener](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
   - [vault: config tutorial](https://developer.hashicorp.com/vault/tutorials/operations/configure-vault)
   - [vault: deploy tutorial](https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-deploy)
+- storage
+  - [postgres storage backend](https://developer.hashicorp.com/vault/docs/configuration/storage/postgresql)
+  - [storage stanza](https://developer.hashicorp.com/vault/docs/configuration/storage)
+  - [raft: recommended integrated storage](https://developer.hashicorp.com/vault/docs/configuration/storage/raft)
 - observability
   - [prom and graf](https://developer.hashicorp.com/vault/tutorials/monitoring/monitor-telemetry-grafana-prometheus)
   - [troubleshooting & observability tutorials](https://developer.hashicorp.com/vault/tutorials/monitoring)
@@ -65,7 +69,9 @@
   - [database-secrets](https://developer.hashicorp.com/vault/tutorials/db-credentials/database-secrets)
   - [database](https://developer.hashicorp.com/vault/docs/secrets/databases)
   - [database/postgres](https://developer.hashicorp.com/vault/docs/secrets/databases/postgresql)
+  - [database/postgres tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management/vault-postgres)
   - [key-value 2](https://developer.hashicorp.com/vault/docs/secrets/kv/kv-v2)
+  - [key-value 1](https://developer.hashicorp.com/vault/docs/secrets/kv/kv-v1)
   - [pki tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management/pki-engine)
   - [pki](https://developer.hashicorp.com/vault/docs/secrets/pki)
   - [secrets engines](https://developer.hashicorp.com/vault/docs/secrets)
@@ -82,6 +88,7 @@
   - [database api](https://developer.hashicorp.com/vault/api-docs/secret/databases)
   - [database postgres plugin api](https://developer.hashicorp.com/vault/api-docs/secret/databases/postgresql)
   - [kv2 engine](https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2)
+  - [kv1 engine](https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v1)
   - [policy endpoint](https://developer.hashicorp.com/vault/api-docs/system/policy)
   - [system backend](https://developer.hashicorp.com/vault/api-docs/system)
   - [token auth](https://developer.hashicorp.com/vault/api-docs/auth/token)
@@ -301,6 +308,7 @@ vault read aws/creds/my-poop-user
 - automatically enabled with the root token being assigned the root policy
 - every vault authentication scheme utilizes token authentication for their implementation
 - recovery tokens: used when operating vault in recovery mode
+- token roles: templates you can apply to tokens so you dont need need send a config on token creation
 
 #### batch tokens
 
