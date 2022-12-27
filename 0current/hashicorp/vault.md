@@ -50,7 +50,7 @@
   - [troubleshooting & observability tutorials](https://developer.hashicorp.com/vault/tutorials/monitoring)
 - authentication
   - [token management](https://developer.hashicorp.com/vault/tutorials/tokens/token-management)
-  - [tokens](https://developer.hashicorp.com/vault/tutorials/tokens/tokens)
+  - [token tutorial (very good)](https://developer.hashicorp.com/vault/tutorials/tokens/tokens)
   - [token auth](https://developer.hashicorp.com/vault/docs/auth/token)
   - [token concepts](https://developer.hashicorp.com/vault/docs/concepts/tokens)
   - [app role](https://developer.hashicorp.com/vault/docs/auth/approle)
@@ -66,7 +66,8 @@
   - [policies getting started tutorial](https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-policies)
 - secrets engines
   - [cubbyhole](https://developer.hashicorp.com/vault/docs/secrets/cubbyhole)
-  - [database-secrets](https://developer.hashicorp.com/vault/tutorials/db-credentials/database-secrets)
+  - [database root credential rotation](https://developer.hashicorp.com/vault/tutorials/db-credentials/database-root-rotation)
+  - [database-secrets tutorial](https://developer.hashicorp.com/vault/tutorials/db-credentials/database-secrets)
   - [database](https://developer.hashicorp.com/vault/docs/secrets/databases)
   - [database/postgres](https://developer.hashicorp.com/vault/docs/secrets/databases/postgresql)
   - [database/postgres tutorial](https://developer.hashicorp.com/vault/tutorials/secrets-management/vault-postgres)
