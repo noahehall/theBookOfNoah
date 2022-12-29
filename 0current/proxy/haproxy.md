@@ -3,6 +3,7 @@
 ## links
 
 - [haproxy docs (start here)](https://docs.haproxy.org/)
+- [haproxy enterprise docs](https://www.haproxy.com/documentation/hapee/)
 - [haproxy community](https://www.haproxy.org/)
 - [haproxy community docs](https://www.haproxy.org/#docs)
 - [starter guide with links at top](https://cbonte.github.io/haproxy-dconv/2.6/snapshot/intro.html)
@@ -23,6 +24,7 @@
   - [seamless reloads](https://www.haproxy.com/blog/truly-seamless-reloads-with-haproxy-no-more-hacks/)
   - [load balancing with haproxy service discovery integration & consul](https://learn.hashicorp.com/tutorials/consul/load-balancing-haproxy)
   - [example configurations](http://git.haproxy.org/?p=haproxy-2.3.git;a=blob;f=examples/acl-content-sw.cfg;h=1872789ac2d1198f4321e77c0dad4f382cc8f206;hb=HEAD)
+  - [multithreading in haproxy](https://www.haproxy.com/blog/multithreading-in-haproxy/)
 - observability
   - [log formats](https://www.sumologic.com/blog/haproxy-log-format/)
   - [stats page](https://www.haproxy.com/blog/exploring-the-haproxy-stats-page/)
@@ -52,6 +54,7 @@
   - _nbproc_ vs _nbthread_
     - use _nbthread_ (threads) when resources are limited; dont scale as well as nbproc (multiple processes)
     - use _nbproc_ to support multi processes; scale far superior than threads (nbthread)
+    - always set `cpu-map` when using either to pin processes to a specific core for max performance
 - somtimes
   - add _deny_stats_ argument to a _http-request deny_ directive to set custom response codes when rejecting request
 
@@ -139,46 +142,46 @@
 
 ### defaults
 
-- defaults: helps reduce duplication
-  - apply to all frontend & backend sections that come after it
-  - defaults cascade: i.e. you can group [defaults > frontend > backend] to create config types, e.g. one group for TCP layer 4 and another group for HTTP layer 7
+- helps reduce duplication
+- apply to all frontend & backend sections that come after it
+- defaults cascade: i.e. you can group [defaults > frontend > backend] to create config types, e.g. one group for TCP layer 4 and another group for HTTP layer 7
 
 ### frontend
 
-- frontend: when using haproxy as a reverse proxy;
-  - accepts incoming (external) requests: routes requests to backends
-  - defines the IPs and PORTS clients can connect to
+- accepts incoming (external) requests: routes requests to backends
+- defines the IPs and PORTS clients can connect to
 
 ### backend
 
-- backend: fulfills incoming requests accepted by frontends
-  - each backend defines a group of servers to be load balanced
+- fulfills incoming requests accepted by frontends
+- each backend defines a group of servers to be load balanced
 
 ### listen
 
-- listen: combines _backend_ and _frontend_ sections into one
-  - only use for simple things (if any!)
+- combines _backend_ and _frontend_ sections into one
+- only use for simple things (if any!)
 
 ### peers
 
-- peers: section for syncing multiple haproxy servers
+- section for syncing multiple haproxy servers
 
 ### mailers
 
-- mailers: section to configure mail notifications
+- section to configure mail notifications
 
 ### resolvers
 
-- resolvers: section to configure and setup DNS resolution
+- section to configure and setup DNS resolution
 
 ## configuration directives
 
 - statements to configure each section boundary
-  - many overlap and cascade, e.g. the same directive in global > defaults > [frontend,backend] can be overridden
+- many overlap and cascade, e.g. the same directive in global > defaults > [frontend,backend] can be overridden
 
 ### security
 
-- maxconn: set the max # of connections; always set in both _global_ and _defaults_ section
+- maxconn: maximum per-process number of concurrent connections; always set in both _global_ and _defaults_ section
+  - Proxies will stop accepting connections when this limit is reached
   - in _global_ at the process level
   - in _defaults_ at the _backend_ or _frontend_ level
     - in which they share the total max connections set at the _global_ level
@@ -206,8 +209,17 @@
 ### haproxy
 
 - stats socket: enables the runtime api
+  - use to dynamically disable servers and health checks, change the load balancing weights of servers, and pull other useful levers
 - group: run as this pre-existing group after initalizing as root
+  - uses the GID of group name <group name> from /etc/group.
 - user: user as this pre-existing user after initializing as root
+  - uses the UID of user name <user name> from /etc/passwd.
+- nbproc: # of processes to spawn at startup: each has _its own_ stats, stick tables, etc
+  - be sure to set `cpu-map` to ensure processes are pinned to a specific core for max perf
+- nbthread: # of threads to spawn at startup: each _share_ stats, stick tables, etc
+  - be sure to set `cpu-map` to ensure processes are pinned to a specific core for max perf
+- cpu-map: pin processes & threads to a specific cpu core
+  - always use when setting nbproc/nbthread
 
 ### frontend listeners
 
@@ -266,12 +278,6 @@
     - mode http: layer 7 http servers: slower than tcp but has access to all the metadata about the request
   - mapfile: stores key/value associations in memory
     - e.g. concat & store host/path key and set the host/path value as a name for a backend to manage ACL routing rules
-  - nbproc: # of processes to spawn at startup
-    - each has its own stats, stick tables, etc
-  - nbthread: # of threads to spawn at startup
-    - each share stats, stick tables, etc
-  - cpu-map: pin processes & threads to a specific cpu core
-    - alwys use when setting nbproc/nbthread
   - option:
     - option httplog: use verbose log format in _mode http_
     - option tcplog: use verbose log format in _mode tcp_
