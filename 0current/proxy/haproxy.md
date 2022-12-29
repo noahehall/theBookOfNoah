@@ -6,8 +6,6 @@
 - [haproxy enterprise docs](https://www.haproxy.com/documentation/hapee/)
 - [haproxy community](https://www.haproxy.org/)
 - [haproxy community docs](https://www.haproxy.org/#docs)
-- [starter guide with links at top](https://cbonte.github.io/haproxy-dconv/2.6/snapshot/intro.html)
-- [installation steps for 2.4](https://haproxy.debian.net/#?distribution=Ubuntu&release=focal&version=2.4)
 - docker
   - [haproxy intel docker](https://hub.docker.com/r/bitnami/haproxy-intel/)
   - [haproxy official docker](https://hub.docker.com/_xxxxxxxxxxxxxxxxx_/haproxy)
