@@ -76,7 +76,7 @@
 - dynamic configuration
   - runtime API: a unix socket to dynamically configure a running haproxy server,
     - enable/disable servers, health checks, load balancing, etc
-- http routing: route incoming requests to services based on ANY data in the request head//body; e.g. url path, query string, headers, etc
+- http routing: route incoming requests to services based on ANY data in the request head/body; e.g. url path, query string, headers, etc
 - load balancing: when services are replicated (to improve performance & resilience); the api gateway routes requests between them based on some balancing strategy
   - roundrobin: for quick and short requests
   - leastconn: for long lives connections, e.g. websockets
@@ -111,36 +111,60 @@
 
 - lb-update: read map files and refresh ACLs without reloading
 
-## components
-
-### section boundaries
+## configuration
 
 - define how the server performs as a whole
-  - set default settings
+  - configure default settings
   - determines how requests are received (frontend)
   - determines where requests are routed (backend)
 - each section can be in a separate file for easier reuse
+
+### default file locations
+
+- /etc/haproxy/\**/*someconfig.cfg
+
+### global
+
 - global: process wide security and performance tuning at a low level
   - all about sizing and resources
   - other sections describe traffic and processing rules
+
+### defaults
+
 - defaults: helps reduce duplication
   - apply to all frontend & backend sections that come after it
   - defaults cascade: i.e. you can group [defaults > frontend > backend] to create config types, e.g. one group for TCP layer 4 and another group for HTTP layer 7
+
+### frontend
+
 - frontend: when using haproxy as a reverse proxy;
   - accepts incoming (external) requests: routes requests to backends
   - defines the IPs and PORTS clients can connect to
+
+### backend
+
 - backend: fulfills incoming requests accepted by frontends
   - each backend defines a group of servers to be load balanced
+
+### listen
+
 - listen: combines _backend_ and _frontend_ sections into one
   - only use for simple things (if any!)
+
+### peers
+
 - peers: section for syncing multiple haproxy servers
+
+### mailers
+
 - mailers: section to configure mail notifications
+
+### resolvers
+
 - resolvers: section to configure and setup DNS resolution
 
-### directives
+## configuration directives
 
-- TODO: separate directives by the section they are permitted in?
-  - or at least specify which sections that can be in (if multiple)
 - statements to configure each section boundary
   - many overlap and cascade, e.g. the same directive in global > defaults > [frontend,backend] can be overridden
 - observability/monitoring
@@ -262,12 +286,6 @@
     - the activity should be logged using `sendmsg()`
       - if not: restart using strace on top of haproxy
         - if still not: something HAS (oh yea?) to be wrong with the config
-
-## management
-
-### default file locations
-
-- /etc/haproxy/\**/*someconfig.cfg
 
 ## example spec
 
