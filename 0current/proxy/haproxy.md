@@ -88,13 +88,6 @@
     - enable/disable servers, health checks, load balancing, etc
 - http routing: route incoming requests to services based on ANY data in the request head/body; e.g. url path, query string, headers, etc
 - load balancing: when services are replicated (to improve performance & resilience); the api gateway routes requests between them based on some balancing strategy
-  - roundrobin: for quick and short requests
-  - leastconn: for long lives connections, e.g. websockets
-  - uri: route to services optimized to handle speicfic types of requests
-  - first: the first server with available connection slots receives the connection
-    - once a server reaches its maxconn value, the next is used
-  - source: the source IP address is hashed & divided by total weight of the running servers to designate which server will receive teh request
-    - the same IP address will always reach the same server while the servers stay the same
 - rate limiting: limit # of requests clients can make within a period of time
   - haproxy can track clients by IP, cookies, api tokens, headers, etc
   - daily limit: useful when creating tiered services, e.g. free > base > premium limits
@@ -153,13 +146,12 @@
 
 ### backend
 
-- fulfills incoming requests accepted by frontends
-- each backend defines a group of servers to be load balanced
+- responds to requests received from frontends
 
 ### listen
 
 - combines backend and frontend sections into one
-- only use for simple things (if any!)
+- only use for the stats page
 
 ### peers
 
@@ -172,6 +164,13 @@
 ### resolvers
 
 - section to configure and setup DNS resolution
+- Creates a new name server list labeled <resolvers id>
+  - nameserver
+  - acepted_payload_size:
+    hold:
+    reoslution_pool_size
+    resolve_retries
+    timeout
 
 ## configuration directives
 
@@ -293,24 +292,44 @@
   - tarpit
   - unless
   - unset-var
-- default-server: configures defaults for any server lines that follow it
 
 ### backend: server responders
 
 - server: heart of the backend section; can be specified multiple times to specify settings and URI for your physical backend servers that fullfil the requests
-  - each server must opt into health checks via the check argument on the server or default-server line
+  - each server must explicitly opt into health checks via the `check` argument on the server or default-server line
+  - set default settings on default-server:, then customer on server:
+  - specifying an ip addr/hostname will force resolution at haproxy startup
+  - specifying resolvers: will allow resolution at runtime
 - server-template placeholders for service discovery tools to populate server directives dynamically
+- balance: specifies load balancing strategy for a backend
+  - is ignored if a request mathes a persistence strategy
+    - e.g. an ACL forcing a request to route to specific server based on cookie
+  - algorithms:
+    - roundrobin: for quick and short requests; each server is used in turns; smoothest and fairest algorithm when the server's processing time remains equally distributed
+    - static-rr: similar to roundrobin except that it is static, which means that changing a server's weight on the fly will have no effect
+    - leastconn: for long lives connections, e.g. websockets; The server with the lowest number of connections receives the connection
+    - uri: route to services optimized to handle speicfic types of requests; hashes either the left part of the URI (before the question mark) or the whole URI (if the "whole" parameter is present) and divides the hash value by the total weight of the running servers
+    - first: the first server with available connection slots receives the connection
+      - once a server reaches its maxconn value, the next is used
+    - source: the source IP address is hashed & divided by total weight of the running servers to designate which server will receive the request
+      - the same IP address will always reach the same server while the servers stay the same
+      - generally used in TCP mode where no cookie may be inserted
+    - url_parem: The URL parameter specified in argument will be looked up in
+      the query string of each HTTP GET request.
+    - hdr(name): The HTTP header <name> will be looked up in each HTTP request
+- cookie: enables cookie-based peristence
+  - SERVERUSED: send this as a cookie to the client; the value is the server that handles the initial request; the client will always go to this server for this session
+    - the name of the server is set by the cookie argument on the server line
+- option httpchk: send layer 7 (http) health checks to backend server
+  - has to respond with 2xx|3xx to be considerd healthy
+  - tcp only has to respond (e.g. even a 5xx) to be considered health
+  - will default to send the request as OPTIONS /
+  - can be used with servers in mode tcp if they respond with http at the route specified
+- default-server: configures defaults for any server lines that follow it
 
 ### needs categorization
 
-- routing
-  - acl: ...
-  - balance: specifies load balancing strategy for a backend
-    - is ignored if ar equest mathes a persistence strategy
-      - (e.g. an ACL forcing a request to route to specific server based on cookie)
-  - cookie: enables cookie-based peristence
-    - SERVERUSED: send this as a cookie to the client; the value is the server that handles the initial request; the client will always go to this server for this session
-      - the name of the server is set by the cookie argument on the server line
+- acl: ..
 - environemnt & variables
   - variables scopes
     - proc{}: var is available during all phases
@@ -332,13 +351,7 @@
   - mapfile: stores key/value associations in memory
     - e.g. concat & store host/path key and set the host/path value as a name for a backend to manage ACL routing rules
   - option:
-    - option httpchk: send layer 7 (http) health checks to backend server
-      - has to respond with 2xx|3xx to be considerd healthy
-      - tcp only has to respond (e.g. even a 5xx) to be considered health
-      - will default to send the request as OPTIONS /
-      - can be used with servers in mode tcp if they respond with http at the route specified
   - log-option: set a custom log format
-  - http-check: customize http health checks via arguments
 - arguments: appended to directives to modify behavior
   - setting time:
     - 10 i.e. 10 milliseconds
@@ -390,6 +403,48 @@ nbproc 2
 nbthread 4
 bind :8080  process 1
 
+
+# backend specific
+balance roundrobin
+default-server check maxconn 20
+server server1 10.0.1.3:80 cookie server1 maxconn 5
+server server2 10.0.1.4:80 cookie server2 maxconn 5
+server s1 app1.domain.com:80 check resolvers mydns maxconn 10
+
+## load balancing
+balance <alog> <args>
+
+## cookies
+cookie COOKIE_WOOKIE insert indirect nocache
+
+## health checks
+option httpchk HEAD /
+option httpchk
+option httpchk <uri>
+option httpchk <method> <uri>
+option httpchk <method> <uri> <version>
+
+
+# resolvers
+resolvers mydns
+  nameserver dns1 10.0.0.1:53
+  nameserver dns2 10.0.0.2:53
+  resolve_retries       3
+  timeout resolve       1s
+  timeout retry         1s
+  hold other           30s
+  hold refused         30s
+  hold nx              30s
+  hold timeout         30s
+  hold valid           10s
+  hold obsolete        30s
+
+# listen (only use for stats)
+listen stats
+    bind *:8404
+    stats enable
+    stats uri /monitor
+    stats refresh 5s
 
 ################## OLD
 # view haproxy help
