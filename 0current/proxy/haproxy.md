@@ -53,7 +53,7 @@
 
 - is designed to run with very limited privs
 - always isolate the haproxy process in a chroot jail and drop its privs to a non-root user without any perms inside the jail
-  - it needs to START AS ROOT and but should never RUN AS ROOT
+  - it should START AS ROOT but never RUN AS ROOT
     - changing from the root UID prior to starting haproxy reduces the effective security implications
     - you NEED to START AS ROOT to set the correct restrictions
       - adjust file descriptor limits
@@ -62,7 +62,7 @@
       - transparently listen to a foreign address
       - isolate itself inside a chroot jail
       - drop to another non-priviledged uid
-    - you NEED to RUN AS ROOT to (rarely required)
+    - running as RUN AS ROOT would allow
       - bind to an interface for outgoing connections
       - bind to privileged source ports for outgoing connections
       - transparently bind to a foreign address for outgoing connections
@@ -70,7 +70,7 @@
 ## terminology
 
 - api gateway: handles load balancing, security, rate limiting, monitoring and other cross-cutting conerns for api services
-  - combines disparate APIs behind as ingle, unifying URL to consolidate the way consumers access services
+  - combines disparate APIs behind a single, unifying URL to consolidate the way consumers access services
   - a single reference point enables access to all services
   - orchestration layer that forwards requests; enables the decoupling of frontend & backend services
 - dynamic configuration

@@ -6,6 +6,7 @@
 - [checkout spack](https://spack-tutorial.readthedocs.io/en/latest/)
 - [checkout nix](https://nixos.org/)
 - [increase inotify watchers](https://dev.to/rubiin/ubuntu-increase-inotify-watcher-file-watch-limit-kf4)
+
 ## links
 
 - [initial server setup](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)
@@ -18,12 +19,14 @@
 ## fresh install
 
 ### logi keyboard & mouse
+
 - [setup guide for keyboard](https://www.logitech.com/en-us/setup/mxsetup.html)
 - [log+ options app](https://www.logitech.com/en-us/software/logi-options-plus.html)
 
 - hold for 3 seconds to optimize for OS
   - mac: fn O
   - win/linux: fn P
+
 ### ubuntu:dev
 
 - do first
@@ -95,6 +98,7 @@
   - [duf](https://github.com/muesli/duf)
   - [dog](https://github.com/ogham/dog)
   - [tree](https://www.geeksforgeeks.org/tree-command-unixlinux/)
+  - [socat](https://www.redhat.com/sysadmin/getting-started-socat)
   - vlc
     - sudo apt install vlc
     - sudo apt install vlc-plugin-access-extra libbluray-bdj libdvdcss2 vlc-plugin-svg vlc-plugin-video-output
@@ -110,6 +114,7 @@
   - [drawio desktop](https://github.com/jgraph/drawio-desktop/releases)
 
 - virtualization
+
   - if you just need docker
     - [compose](https://docs.docker.com/compose/install/)
     - [dive](https://github.com/wagoodman/dive)
@@ -165,6 +170,7 @@
     - cmd shift d: close active window in current tab
     - [desktop integration worked perfectly for regolith](https://sw.kovidgoyal.net/kitty/binary/#desktop-integration-on-linux)
 - [window manager](https://github.com/ianyh/Amethyst)
+
 ### remote server setup
 
 1. setup non root user with sudo priv
