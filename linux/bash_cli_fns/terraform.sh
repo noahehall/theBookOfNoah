@@ -29,9 +29,19 @@ tf_plan_local() {
   terraform plan -out tfplan
 }
 
-tf_plandestroy() {
+tf_plan_destroy() {
+  tf init
+  echo -e "resetting tf aws vars"
+  tf_reset_aws_env_vars
+  echo -e "running tf_fmt"
+  tf_fmt
+  echo -e "running tf_validate"
+  tf_validate
+  echo -e "generating destroy.tfplan file"
+
   terraform plan -destroy -out destroy.tfplan
 }
+
 tf_apply() {
   echo -e "resetting tf aws vars"
   tf_reset_aws_env_vars
@@ -43,9 +53,11 @@ tf_apply() {
     terraform apply
   fi
 }
+
 tf_output() {
   terraform output --json
 }
+
 tf_show() {
   echo -e "getting current state of infrastructre"
   # if using terraform cloud: ensure tf is set to run locally
@@ -55,30 +67,39 @@ tf_show() {
   echo -e "we mare managing the following resources:"
   tf_statelist
 }
+
 tf_graph() {
   terraform graph -plan tfplan
 }
+
 tf_destroy() {
   terraform apply destroy.tfplan
 }
+
 tf_fmt() {
   terraform fmt
 }
+
 tf_validate() {
   terraform validate
 }
-tf_statelist() {
+
+tf_state_list() {
   terraform state list
 }
-tf_statepull() {
+
+tf_state_pull() {
   terraform state pull
 }
-tf_staterm() {
+
+tf_state_rm() {
   terraform state rm $1
 }
-tf_stateshow() {
+
+tf_state_show() {
   terraform state show
 }
+
 tf_refresh() {
   terraform apply -refresh-only
 }

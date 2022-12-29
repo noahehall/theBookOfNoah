@@ -351,7 +351,7 @@ vault read aws/creds/my-poop-user
   - do not expire when their creator does (because the creator isnt set as parent)
   - still expire by TTL and maxTTL constraints
 - use-limited tokens: tokens that can be invoked X number of times
-- periodic service tokens: tokens without a maxTTL and will only be revoked if not rewed with in TTL;
+- periodic service tokens: tokens without a maxTTL and will only be revoked if not renewed with in TTL;
   - can only be created by root/sudo users
   - the `period` param becomes the tokens renewal period TTL
 - short-lived tokens: tokens with a particularly short TTL and maxTTL value

@@ -11,8 +11,7 @@
   - [tips and tricks by daniela](https://danielabaron.me/blog/nomad-tips-and-tricks/)
 - users
   - [users with exec driver & host volumes](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/exec-users-host-volumes)
-- variables: just use levant, thank me later
-  - [variable interpolation](https://developer.hashicorp.com/nomad/docs/runtime/interpolation)
+- variables
   - [env stanza](https://developer.hashicorp.com/nomad/docs/job-specification/env)
   - [template stanza](https://developer.hashicorp.com/nomad/docs/job-specification/template)
   - [consul template used by template stanza](https://github.com/hashicorp/consul-template)
@@ -21,6 +20,7 @@
   - [plugin stanza](https://developer.hashicorp.com/nomad/docs/configuration/plugin)
 - drivers/integrations
   - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
+  - [nomad consul connect stanza](https://developer.hashicorp.com/nomad/docs/job-specification/connect)
   - [docker](https://developer.hashicorp.com/nomad/docs/drivers/docker)
   - [vault](https://developer.hashicorp.com/nomad/docs/configuration/vault#address)
   - [fork/exec](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
@@ -52,6 +52,8 @@
   - [logs](https://developer.hashicorp.com/nomad/docs/commands/alloc/logs)
   - [configuring tasks](https://developer.hashicorp.com/nomad/tutorials/manage-jobs/jobs-configuring)
   - [task stanza](https://developer.hashicorp.com/nomad/docs/job-specification/task#user)
+- networking
+  - [network stanza](https://developer.hashicorp.com/nomad/docs/job-specification/network)
 
 ## terms
 
@@ -163,7 +165,7 @@
 - runtime env vars: not itnerpretable in constraints because they are only defined once the scheduler has place them on a particular node
 
 ```sh
-# basic shell interpolation via ${poop}
+# basic shell interpolation
 
 #############
 ## env vars

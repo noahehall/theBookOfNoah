@@ -35,7 +35,7 @@
 ```sh
 
 # start a server in dev mode
-./script.nmd.sh start -config=development.leader.nomad
+nmd.sh start -config=development.leader.nomad
 
 # deploy a job
 levant deploy \
