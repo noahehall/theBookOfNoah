@@ -2,7 +2,7 @@
 
 ## links
 
-- [haproxy docs (start here)](https://docs.haproxy.org/)
+- [haproxy docs (start here and ctrl f it)](https://docs.haproxy.org/)
 - [haproxy enterprise docs](https://www.haproxy.com/documentation/hapee/)
 - [haproxy community](https://www.haproxy.org/)
 - [haproxy community docs](https://www.haproxy.org/#docs)
@@ -36,6 +36,8 @@
   - [haproxy http/s same port](https://timjrobinson.com/haproxy-how-to-run-http-https-on-the-same-port/)
   - [haproxy and websockets](https://www.haproxy.com/blog/websockets-load-balancing-with-haproxy/)
 - ssl
+  - [ssl tut by mozilla](https://wiki.mozilla.org/Security/Server_Side_TLS)
+  - [ssl cipher suite generator](https://mozilla.github.io/server-side-tls/ssl-config-generator/)
   - [ssl server test](https://www.ssllabs.com/ssltest/)
   - [ssl termination](https://www.haproxy.com/blog/haproxy-ssl-termination/)
   - [ssl redirect](https://www.haproxy.com/blog/redirect-http-to-https-with-haproxy/)
@@ -46,6 +48,13 @@
 
 - never
   - connecting external consumers directly to backend services: creates tight coupling between frontenda and backend components
+  - use these options as haproxy docs say they increase attack vectors
+    - external-check
+    - h1-accept-payload-with-any-method
+    - insecure-fork-wanted
+    - using external checks which are strongly recommended against
+    - insecure-setuid-wanted
+    - ...
 - always
   - each server should have a maxconn setting; even if its just a guess
     - you can modify this to adapt to your environment
@@ -61,6 +70,9 @@
 
 - is designed to run with very limited privs
 - always isolate the haproxy process in a chroot jail and drop its privs to a non-root user without any perms inside the jail
+  - requires:
+    - haproxy process starts as root
+    - the chroot dir is both empty and nonwritable
   - it should START AS ROOT but never RUN AS ROOT
     - changing from the root UID prior to starting haproxy reduces the effective security implications
     - you NEED to START AS ROOT to set the correct restrictions
@@ -126,9 +138,14 @@
 
 ### global
 
-- global: process wide security and performance tuning at a low level
-  - all about sizing and resources
-  - other sections describe traffic and processing rules
+- global: Parameters are process-wide and often OS-specific
+  - process management and security
+  - performance tuning
+  - presetenv: set env var X to default Y, if X exists, it is not overwritten
+  - setenv: force env var X to Y
+  - set-var: sets process-wide var X to expression Y
+  - set-var-fmt: set var X to string Y
+  - stats maxconn: increase the stats maxconn to more than the default 10
 
 ### admin
 
@@ -188,10 +205,13 @@
     - loadbalancing: roughly spread the global maxxconn evenly between servers so they get a fair share of connections
 - stick-table: used for rate limiting
 - rateabuse:
-- ssl-default-bind-ciphers: ssl & tls ciphers every bind directive will use by default
+- ssl-default-bind-ciphers: sets the default string describing the list of cipher algorithms ("cipher suite") that are negotiated during the SSL/TLS handshake up to TLSv1.2
   - HAProxy will select the first one listed that the client also supports, unless the prefer-client-ciphers option is enabled
 - ssl-default-bind-options: configures SSL/TLS options such as ssl-min-ver to disable support for older protocols
 - prefer-client-cipher: will use client ciphers over the ones specified in ssl-default-bind-ciphers
+- ssl-default-server-ciphers: for the server
+- ssl-default-server-ciphersuites: same for the server
+  -ssl-default-server-options: same for the server
 - timeout: when a timeout expires haproxy closes the connection;
   - reduces the risk of deadlocked processes tying up connections
   - in `mode tcp`: server & client timeout should be identical; haproxy doesnt know who is speaking
@@ -222,7 +242,7 @@
 
 ### haproxy
 
-- stats socket: enables the runtime api
+- stats socket: enables the runtime api, accepts same values as `bind`
   - use to dynamically disable servers and health checks, change the load balancing weights of servers, and pull other useful levers
   - All parameters supported by "bind" lines are supported, for instance to
 - group: run as this pre-existing group after initalizing as root
@@ -325,26 +345,29 @@
   - can be used with servers in mode tcp if they respond with http at the route specified
 - default-server: configures defaults for any server lines that follow it
 
+### environemnt & variables
+
+- variables scopes
+  - proc{}: var is available during all phases
+  - sess{}: var is available during a clients entire TCP session
+  - txn{}: var is available during an entire http request-response transaction
+  - req: var is available during the http request phase only
+  - res: var is available during the http response phase only
+- setenv: set & override variables
+  - `setnenv VARNAME VALUE`
+- presetenv: set (dont override) variables
+  - `presetenv VARNAME USETHISIFMISSING`
+- env(): use an environment variable
+  - `env(VARNAME)`
+- set-var(): set a variable for later use
+  - `set-var(SCOPE.KEY)`
+- var(): use a variable previously set
+  - `var(SCOPE.KEY)`
+
 ### needs categorization
 
 - acl: ..
-- environemnt & variables
-  - variables scopes
-    - proc{}: var is available during all phases
-    - sess{}: var is available during a clients entire TCP session
-    - txn{}: var is available during an entire http request-response transaction
-    - req: var is available during the http request phase only
-    - res: var is available during the http response phase only
-  - setenv: set & override variables
-    - `setnenv VARNAME VALUE`
-  - presetenv: set (dont override) variables
-    - `presetenv VARNAME USETHISIFMISSING`
-  - env(): use an environment variable
-    - `env(VARNAME)`
-  - set-var(): set a variable for later use
-    - `set-var(SCOPE.KEY)`
-  - var(): use a variable previously set
-    - `var(SCOPE.KEY)`
+
 - general configuration
   - mapfile: stores key/value associations in memory
     - e.g. concat & store host/path key and set the host/path value as a name for a backend to manage ACL routing rules
@@ -383,6 +406,13 @@
   -
 
 ```sh
+#3################ GLOBAL
+presetenv envKey defaultValue
+setenv envKey forceThisValue
+set-var proc.current_state str(primary)
+set-var-fmt proc.current_state "primary"
+ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
+
 ################## FRONTEND
 # bind
 bind :80,:443
@@ -399,8 +429,28 @@ usebackend apiservers if { pathbeg /api/ }
 # multithreading
 nbproc 2
 nbthread 4
-bind :8080  process 1
+bind :8080  process 1 # think you should use cpu-map instead
+## all these lines bind thread 1 to the cpu 0, the thread 2 to cpu 1, etc
+cpu-map auto:1/1-4   0-3
+cpu-map auto:1/1-4   0-1 2-3
+cpu-map auto:1/1-4   3 2 1 0
+## bind each thread to exactly one CPU using all/odd/even keyword
+cpu-map auto:1/all   0-63
+cpu-map auto:1/even  0-31
+cpu-map auto:1/odd   32-63
+# map 40 threads of those 4 groups to individual CPUs
+cpu-map auto:1/1-10   0-9
+cpu-map auto:2/1-10   10-19
+cpu-map auto:3/1-10   20-29
+cpu-map auto:4/1-10   30-39
 
+# Map 80 threads to one physical socket and 80 others to another socket
+# without forcing assignment. These are split into 4 groups since no
+# group may have more than 64 threads.
+cpu-map 1/1-40   0-39 80-119    # node0, siblings 0 & 1
+cpu-map 2/1-40   0-39 80-119
+cpu-map 3/1-40   40-79 120-159  # node1, siblings 0 & 1
+cpu-map 4/1-40   40-79 120-159
 
 # backend specific
 balance roundrobin
@@ -486,8 +536,9 @@ sudo systemctl restart haproxy
 # ++ force daemon mode
 # ++ store existing pids in a pidfile
 # ++ notify old processes to finish before leaving
+# ALWAYS DOOOO THIS... or just set `daemon` in global ;)
 haproxy -f /some/config.cfg \
-  -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid) \ # ALWAYS DOOOO THIS
+  -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid) \
 
 
 # + load specific configs in a specific order
