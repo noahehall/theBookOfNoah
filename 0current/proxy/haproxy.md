@@ -1,89 +1,117 @@
 # haproxy
 
-- [haproxy official docker](https://hub.docker.com/_/haproxy)
-- [haproxy load balancing](https://www.haproxy.com/blog/haproxy-configuration-basics-load-balance-your-servers/)
-- [haproxy intel docker](https://hub.docker.com/r/bitnami/haproxy-intel/)
-- [haproxy and websockets](https://www.haproxy.com/blog/websockets-load-balancing-with-haproxy/)
-- [haproxy ssl termination](https://www.haproxy.com/blog/haproxy-ssl-termination/)
-- [haproxy acls overview](https://www.haproxy.com/documentation/hapee/latest/configuration/acls/overview/)
-- [haproxy http/s same port](https://timjrobinson.com/haproxy-how-to-run-http-https-on-the-same-port/)
-- [example configurations](http://git.haproxy.org/?p=haproxy-2.3.git;a=tree;f=examples)
-- [haproxy docs (start here)](https://docs.haproxy.org/)
-- configuration
-  - [defaults](https://www.haproxy.com/documentation/hapee/latest/configuration/config-sections/defaults/)
-  - [globals](https://www.haproxy.com/documentation/hapee/latest/configuration/config-sections/global/)
-
 ## links
 
-- [observability types with haproxy](https://www.dotconferences.com/2018/06/willy-tarreau-observability-tips-with-haproxy)
-
-### haproxy guides, docs, and specs
-
-- [load balancing with haproxy service discovery integration & consul](https://learn.hashicorp.com/tutorials/consul/load-balancing-haproxy)
-- [4 major sections of a haproxy config](https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/)
-  - use this to verify/update information on this page
+- [haproxy docs (start here)](https://docs.haproxy.org/)
 - [haproxy community](https://www.haproxy.org/)
 - [haproxy community docs](https://www.haproxy.org/#docs)
 - [management guide](https://cbonte.github.io/haproxy-dconv/2.4/management.html)
-
-  - didnt finish
-
-    - unix socket commands
-      - somewhere around the prompt cmd
-    - tricks for easier configuration management
-    - well known traps to avoid
-    - debugging and performance issues
-    - security considerations
-
-  - skipped
-    - stopping and restarting
-    - file descriptor limitations
-    - memory management
-    - cpu usage
-    - statistics and monitoring
-    - master cli
-    -
-
-- [configuration guide](https://cbonte.github.io/haproxy-dconv/2.4/configuration.html)
-
--
-
-## baremetal
-
 - [installation steps for 2.4](https://haproxy.debian.net/#?distribution=Ubuntu&release=focal&version=2.4)
+- docker
+  - [haproxy intel docker](https://hub.docker.com/r/bitnami/haproxy-intel/)
+  - [haproxy official docker](https://hub.docker.com/_/haproxy)
+- configuration
+  - [basic configuration guide](https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/)
+  - [dynamic configuration](https://www.haproxy.com/blog/dynamic-configuration-haproxy-runtime-api/)
+  - [configuration guide](https://cbonte.github.io/haproxy-dconv/2.4/configuration.html)
+  - [defaults](https://www.haproxy.com/documentation/hapee/latest/configuration/config-sections/defaults/)
+  - [globals](https://www.haproxy.com/documentation/hapee/latest/configuration/config-sections/global/)
+  - [example configurations](http://git.haproxy.org/?p=haproxy-2.3.git;a=tree;f=examples)
+  - [haproxy load balancing](https://www.haproxy.com/blog/haproxy-configuration-basics-load-balance-your-servers/)
+  - [stats page](https://www.haproxy.com/blog/exploring-the-haproxy-stats-page/)
+  - [logging](https://www.haproxy.com/blog/introduction-to-haproxy-logging/)
+  - [dns service discovery](https://www.haproxy.com/blog/dns-service-discovery-haproxy/)
+  - [seamless reloads](https://www.haproxy.com/blog/truly-seamless-reloads-with-haproxy-no-more-hacks/)
+  - [load balancing with haproxy service discovery integration & consul](https://learn.hashicorp.com/tutorials/consul/load-balancing-haproxy)
+  - [observability types with haproxy](https://www.dotconferences.com/2018/06/willy-tarreau-observability-tips-with-haproxy)
+- acls
+  - [intro](https://www.haproxy.com/blog/introduction-to-haproxy-acls/)
+  - [haproxy acls overview](https://www.haproxy.com/documentation/hapee/latest/configuration/acls/overview/)
+- protocols
+  - [haproxy http/s same port](https://timjrobinson.com/haproxy-how-to-run-http-https-on-the-same-port/)
+  - [haproxy and websockets](https://www.haproxy.com/blog/websockets-load-balancing-with-haproxy/)
+- ssl
+  - [haproxy ssl termination](https://www.haproxy.com/blog/haproxy-ssl-termination/)
+- frontends
+- backends
 
-## docker
-
-# best practices
+## best practices
 
 - never
-  - connecting external consumers directly to backend services: creates tight coupling between frontend Y backen d components; difficult to manage and scale
-- somtimes
-  - add _deny_stats_ argument to a _http-request deny_ directive to set custom response codes when rejecting request
+  - connecting external consumers directly to backend services: creates tight coupling between frontenda and backend components
+- always
+  - each _server_ should have a _maxconn_ setting; even if its just a guess
+    - you can modify this to adapt to your environment
   - place the global section in its own file to be reused between multiple instances/machines
   - _nbproc_ vs _nbthread_
     - use _nbthread_ (threads) when resources are limited; dont scale as well as nbproc (multiple processes)
     - use _nbproc_ to support multi processes; scale far superior than threads (nbthread)
-- always
-  - each _server_ should have a _maxconn_ setting; even if its just a guess
-    - you can modify this to adapt to your environment
+- somtimes
+  - add _deny_stats_ argument to a _http-request deny_ directive to set custom response codes when rejecting request
+
+### security
+
+- is designed to run with very limited privs
+- always isolate the haproxy process in a chroot jail and drop its privs to a non-root user without any perms inside the jail
+  - it needs to START AS ROOT and but should never RUN AS ROOT
+    - changing from the root UID prior to starting haproxy reduces the effective security implications
+    - you NEED to START AS ROOT to set the correct restrictions
+      - adjust file descriptor limits
+      - bind to privileged port numbers
+      - bind to a specific network interface
+      - transparently listen to a foreign address
+      - isolate itself inside a chroot jail
+      - drop to another non-priviledged uid
+    - you NEED to RUN AS ROOT to (rarely required)
+      - bind to an interface for outgoing connections
+      - bind to privileged source ports for outgoing connections
+      - transparently bind to a foreign address for outgoing connections
+
+## terminology
+
+- api gateway: handles load balancing, security, rate limiting, monitoring and other cross-cutting conerns for api services
+  - combines disparate APIs behind as ingle, unifying URL to consolidate the way consumers access services
+  - a single reference point enables access to all services
+  - orchestration layer that forwards requests; enables the decoupling of frontend & backend services
+- dynamic configuration
+  - runtime API: a unix socket to dynamically configure a running haproxy server,
+    - enable/disable servers, health checks, load balancing, etc
+- http routing: route incoming requests to services based on ANY data in the request head//body; e.g. url path, query string, headers, etc
+- load balancing: when services are replicated (to improve performance & resilience); the api gateway routes requests between them based on some balancing strategy
+  - roundrobin: for quick and short requests
+  - leastconn: for long lives connections, e.g. websockets
+  - uri: route to services optimized to handle speicfic types of requests
+  - first: the first server with available connection slots receives the connection
+    - once a server reaches its _maxconn_ value, the next is used
+  - source: the source IP address is hashed & divided by total weight of the running servers to designate which server will receive teh request
+    - the same IP address will always reach the same server while the servers stay the same
+- rate limiting: limit # of requests clients can make within a period of time
+  - haproxy can track clients by IP, cookies, api tokens, headers, etc
+  - daily limit: useful when creating tiered services, e.g. free > base > premium limits
+  - rate of requests: useful to prevent abuse/runaway processes
+- monitoring: tells you HOW WELL something (doesnt) work
+  - i.e. you monitor an observable system
+- observability: helps you DETECT what is/not WORKING and WHY
+  - a measure of how well internal states of a system can be inferred from knowledge of its external outputs; i.e. WTF IS GOING ON!!! (lol @willytarreau)
+  - features
+    - statistics dashboard: html stats page, view tabular data containing metrics for each frontend, backend & bind directive
+      - hit the runtime api and get the same data as json
+    - logs: hella shit related to each API call
+- connection queuing
+- authentication
+- device detection
+- security
 
 ## companion tech
 
 - socat: the swiss army knife for piping connectinos, connecting one thing to another
   - used to query haproxy runtime API on the cli, potentially piping it into other things
 
-# terminology
+### enterprise modules
 
-- api gateway: handles load balancing, security, rate limiting, monitoring and other cross-cutting conerns for api services
+- lb-update: read map files and refresh ACLs without reloading
 
-  - combines disparate APIs behind as ingle, unifying URL to consolidate the way consumers access services
-  - a single reference point enables access to all services
-  - orchestration layer that forwards requests; enables the decoupling of frontend & backend services
-
--
-
-## haproxy specific
+## components
 
 ### section boundaries
 
@@ -92,12 +120,9 @@
   - determines how requests are received (frontend)
   - determines where requests are routed (backend)
 - each section can be in a separate file for easier reuse
-
 - global: process wide security and performance tuning at a low level
-
   - all about sizing and resources
   - other sections describe traffic and processing rules
-
 - defaults: helps reduce duplication
   - apply to all frontend & backend sections that come after it
   - defaults cascade: i.e. you can group [defaults > frontend > backend] to create config types, e.g. one group for TCP layer 4 and another group for HTTP layer 7
@@ -224,65 +249,6 @@
   - maxconn: use the previous maxconn setting
   - deny-status: set the status when denying a request
 
-# main features
-
-- dynamic configuration
-  - runtime API: a unix socket to dynamically configure a running haproxy server,
-    - enable/disable servers, health checks, load balancing, etc
-- http routing: route incoming requests to services based on ANY data in the request head//body; e.g. url path, query string, headers, etc
-- load balancing: when services are replicated (to improve performance & resilience); the api gateway routes requests between them based on some balancing strategy
-  - roundrobin: for quick and short requests
-  - leastconn: for long lives connections, e.g. websockets
-  - uri: route to services optimized to handle speicfic types of requests
-  - first: the first server with available connection slots receives the connection
-    - once a server reaches its _maxconn_ value, the next is used
-  - source: the source IP address is hashed & divided by total weight of the running servers to designate which server will receive teh request
-    - the same IP address will always reach the same server while the servers stay the same
-- rate limiting: limit # of requests clients can make within a period of time
-  - haproxy can track clients by IP, cookies, api tokens, headers, etc
-  - daily limit: useful when creating tiered services, e.g. free > base > premium limits
-  - rate of requests: useful to prevent abuse/runaway processes
-- monitoring: tells you HOW WELL something (doesnt) work
-  - i.e. you monitor an observable system
-- observability: helps you DETECT what is/not WORKING and WHY
-  - a measure of how well internal states of a system can be inferred from knowledge of its external outputs; i.e. WTF IS GOING ON!!! (lol @willytarreau)
-  - features
-    - statistics dashboard: html stats page, view tabular data containing metrics for each frontend, backend & bind directive
-      - hit the runtime api and get the same data as json
-    - logs: hella shit related to each API call
-- connection queuing
-- authentication
-- device detection
-- security
-
-## enterprise modules
-
-- lb-update: read map files and refresh ACLs without reloading
-
-## management
-
-### default file locations
-
-- /etc/haproxy/\**/*someconfig.cfg
-
-### security
-
-- is designed to run with very limited privs
-- always isolate the haproxy process in a chroot jail and drop its privs to a no-root user without any perms inside the jail
-  - START AS ROOT and RUN AS ROOT are TWO SEP THINGS BTCH
-    - changing from the root UID prior to starting haproxy reduces the effective ecurity restrictions
-    - you NEED to START AS ROOT to set the correct restrictions
-      - adjust file descriptor limits
-      - bind to privileged port numbers
-      - bind to a specific network interface
-      - transparently listen to a foreign address
-      - isolate itself inside a chroot jail
-      - drop to another non-priviledged uid
-    - you NEED to RUN AS ROOT to (rarely required)
-      - bind to an interface for outgoing connections
-      - bind to privileged source ports for outgoing connections
-      - transparently bind to a foreign address for outgoing connections
-
 ### log management
 
 - set the log server ip:port in the globals section
@@ -297,7 +263,13 @@
       - if not: restart using strace on top of haproxy
         - if still not: something HAS (oh yea?) to be wrong with the config
 
-### put somewhere else
+## management
+
+### default file locations
+
+- /etc/haproxy/\**/*someconfig.cfg
+
+## example spec
 
 - cli > config options
   - you can modify runtime ops quickly without changing the config file
