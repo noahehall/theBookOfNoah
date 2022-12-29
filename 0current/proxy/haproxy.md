@@ -5,11 +5,12 @@
 - [haproxy docs (start here)](https://docs.haproxy.org/)
 - [haproxy community](https://www.haproxy.org/)
 - [haproxy community docs](https://www.haproxy.org/#docs)
-- [management guide](https://cbonte.github.io/haproxy-dconv/2.4/management.html)
+- [starter guide with links at top](https://cbonte.github.io/haproxy-dconv/2.6/snapshot/intro.html)
 - [installation steps for 2.4](https://haproxy.debian.net/#?distribution=Ubuntu&release=focal&version=2.4)
 - docker
   - [haproxy intel docker](https://hub.docker.com/r/bitnami/haproxy-intel/)
   - [haproxy official docker](https://hub.docker.com/_/haproxy)
+  - [haproxy ubuntu](https://hub.docker.com/r/haproxytech/haproxy-ubuntu)
 - configuration
   - [basic configuration guide](https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/)
   - [dynamic configuration](https://www.haproxy.com/blog/dynamic-configuration-haproxy-runtime-api/)
@@ -18,20 +19,25 @@
   - [globals](https://www.haproxy.com/documentation/hapee/latest/configuration/config-sections/global/)
   - [example configurations](http://git.haproxy.org/?p=haproxy-2.3.git;a=tree;f=examples)
   - [haproxy load balancing](https://www.haproxy.com/blog/haproxy-configuration-basics-load-balance-your-servers/)
-  - [stats page](https://www.haproxy.com/blog/exploring-the-haproxy-stats-page/)
-  - [logging](https://www.haproxy.com/blog/introduction-to-haproxy-logging/)
   - [dns service discovery](https://www.haproxy.com/blog/dns-service-discovery-haproxy/)
   - [seamless reloads](https://www.haproxy.com/blog/truly-seamless-reloads-with-haproxy-no-more-hacks/)
   - [load balancing with haproxy service discovery integration & consul](https://learn.hashicorp.com/tutorials/consul/load-balancing-haproxy)
+  - [example configurations](http://git.haproxy.org/?p=haproxy-2.3.git;a=blob;f=examples/acl-content-sw.cfg;h=1872789ac2d1198f4321e77c0dad4f382cc8f206;hb=HEAD)
+- observability
+  - [log formats](https://www.sumologic.com/blog/haproxy-log-format/)
+  - [stats page](https://www.haproxy.com/blog/exploring-the-haproxy-stats-page/)
+  - [logging](https://www.haproxy.com/blog/introduction-to-haproxy-logging/)
   - [observability types with haproxy](https://www.dotconferences.com/2018/06/willy-tarreau-observability-tips-with-haproxy)
 - acls
   - [intro](https://www.haproxy.com/blog/introduction-to-haproxy-acls/)
   - [haproxy acls overview](https://www.haproxy.com/documentation/hapee/latest/configuration/acls/overview/)
+  - [path based routing](https://www.haproxy.com/blog/path-based-routing-with-haproxy/)
 - protocols
   - [haproxy http/s same port](https://timjrobinson.com/haproxy-how-to-run-http-https-on-the-same-port/)
   - [haproxy and websockets](https://www.haproxy.com/blog/websockets-load-balancing-with-haproxy/)
 - ssl
-  - [haproxy ssl termination](https://www.haproxy.com/blog/haproxy-ssl-termination/)
+  - [ssl termination](https://www.haproxy.com/blog/haproxy-ssl-termination/)
+  - [ssl redirect](https://www.haproxy.com/blog/redirect-http-to-https-with-haproxy/)
 - frontends
 - backends
 
@@ -129,6 +135,8 @@
   - all about sizing and resources
   - other sections describe traffic and processing rules
 
+### admin
+
 ### defaults
 
 - defaults: helps reduce duplication
@@ -167,40 +175,74 @@
 
 - statements to configure each section boundary
   - many overlap and cascade, e.g. the same directive in global > defaults > [frontend,backend] can be overridden
-- observability/monitoring
-  - log: startup|runtime warnings & errors; specify which syslog to use (e.g. Syslog/journald)
-    - you need to setup the syslog daemon in order to read logs output by haproxy
-    - log /dev/log: traditional nix socket where Syslog & journald listen
-    - log local0: syslog facility for custom use
-    - log global: informs each subsequent _frontend_ to use these log settings
-  - stats:
-    - stats socket: enables the runtime api
+
+### security
+
+- maxconn: set the max # of connections; always set in both _global_ and _defaults_ section
+  - in _global_ at the process level
+  - in _defaults_ at the _backend_ or _frontend_ level
+    - in which they share the total max connections set at the _global_ level
+  - protect against running out of memory
+- stick-table: used for rate limiting
+- rate_abuse:
+- timeout: when a timeout expires haproxy closes the connection;
+  - reduces the risk of deadlocked processes tying up connections
+  - in `mode tcp`: server & client timeout should be identical; haproxy doesnt know who is speaking
+  - timeout connect: how long to wait for a tcp connection to ab ackend server to be established
+  - timeout client: measures inactivity during periods we expect the client to be speaking (e.g. sending tcp segments)
+  - timeout server: measures inactivity when we expect the backend server to be speaking
+- ssl-default-bind-ciphers: ssl & tls ciphers every bind directive will ue by default in order of preference
+- ssl-default-bind-options: configure ssl/tls options
+- prefer-client-cipher: will use client ciphers over the ones specified in _ssl-default-bind-ciphers_
+
+### observability/monitoring
+
+- log: startup|runtime warnings & errors; specify which syslog to use (e.g. Syslog/journald)
+  - you need to setup the syslog daemon in order to read logs output by haproxy
+  - log stdout: likely what you want
+  - log /dev/log: traditional nix socket where Syslog & journald listen
+  - log local0: syslog facility for custom use
+
+### haproxy
+
+- stats socket: enables the runtime api
+- group: run as this pre-existing group after initalizing as root
+- user: user as this pre-existing user after initializing as root
+
+### frontend listeners
+
+- bind: assigns a listener to a given IP:PORT
+  - can be specified multiple times
+  - omit the IP to bind to all addresses
+  - port can be a single, range, or comma separated list
+  - arguments
+    - ssl: manage ssl terminations
+    - crt: manage TLS terminations
+    - process: when _nbproc_ is enabled; specifies which process to use e.g. _process 1_
+- use_backend: forward requests that match the ACL argument to this backend server
+- default_backend: route all requires to this server that dont match any other ACLs
+  - if a request isnt processed by a _use_backend_ or _default_backend_ haproxy responds with _503_
+- http-request: access control for layer 7 requests
+  - http-request redirect: respond with a redirect
+  - http-request deny: deny a incomming http request
+- default-server: configures defaults for any server lines that follow it
+
+### backend servers
+
+- server: heart of the backend section; can be specified multiple times to specify settings and URI for your physical backend servers that fullfil the requests
+  - each server must opt into health checks via the _check_ argument on the _server_ or _default-server_ line
+- server-template placeholders for service discovery tools to populate _server_ directives dynamically
+
+### needs categorization
+
 - routing
-  - acl:
-  - bind: assigns a listener to a given IP:PORT
-    - can be specified multiple times
-    - omit the IP to bind to all addresses
-    - port can be a single, range, or comma separated list
-    - arguments
-      - ssl: manage ssl terminations
-      - crt: manage TLS terminations
-      - process: when _nbproc_ is enabled; specifies which process to use e.g. _process 1_
+  - acl: ...
   - balance: specifies load balancing strategy for a _backend_
     - is ignored if ar equest mathes a persistence strategy
       - (e.g. an ACL forcing a request to route to specific server based on cookie)
   - cookie: enables cookie-based peristence
     - SERVERUSED: send this as a cookie to the client; the value is the _server_ that handles the initial request; the client will always go to this server for this session
       - the name of the server is set by the _cookie_ argument on the _server_ line
-  - use_backend: forward requests that match the ACL argument to this backend server
-  - default_backend: route all requires to this server that dont match any other ACLs
-    - if a request isnt processed by a _use_backend_ or _default_backend_ haproxy responds with _503_
-  - http-request: access control for layer 7 requests
-    - http-request redirect: respond with a redirect
-    - http-request deny: deny a incomming http request
-  - default-server: configures defaults for any server lines that follow it
-  - server: heart of the backend section; can be specified multiple times to specify settings and URI for your physical backend servers that fullfil the requests
-    - each server must opt into health checks via the _check_ argument on the _server_ or _default-server_ line
-  - server-template placeholders for service discovery tools to populate _server_ directives dynamically
 - environemnt & variables
   - variables scopes
     - proc{}: var is available during all phases
@@ -240,30 +282,6 @@
       - can be used with servers in _mode tcp_ if they respond with http at the route specified
   - log-option: set a custom log format
   - http-check: customize http health checks via arguments
-    - TODO
-- security related
-  - maxconn: set the max # of connections; always set in both _global_ and _defaults_ section
-    - in _global_ at the process level
-    - in _defaults_ at the _backend_ or _frontend_ level
-      - in which they share the total max connections set at the _global_ level
-    - protect against running out of memory
-  - stick-table: used for rate limiting
-  - rate_abuse:
-  - timeout: when a timeout expires haproxy closes the connection;
-    - reduces the risk of deadlocked processes tying up connections
-    - in `mode tcp`: server & client timeout should be identical; haproxy doesnt know who is speaking
-    - timeout connect: how long to wait for a tcp connection to ab ackend server to be established
-    - timeout client: measures inactivity during periods we expect the client to be speaking (e.g. sending tcp segments)
-    - timeout server: measures inactivity when we expect the backend server to be speaking
-- user/group related
-  - group: to run as after initalizing (as root)
-    - need to already exist
-  - user: user to run as after initializing (as root)
-    - need to already exist
-- ssl/tls related
-  - ssl-default-bind-ciphers: ssl & tls ciphers every bind directive will ue by default in order of preference
-  - ssl-default-bind-options: configure ssl/tls options
-  - prefer-client-cipher: will use client ciphers over the ones specified in _ssl-default-bind-ciphers_
 - arguments: appended to directives to modify behavior
   - setting time:
     - 10 i.e. 10 milliseconds
@@ -279,6 +297,9 @@
   - this way it is centralized
   - configure your syslog daemon to listen to udp traffic
     - some may need customization to enable this, dork it
+
+## workflows
+
 - testing syslog functionality
   - restart haproxy: each frontend & backend logs one line indicating its restarting; if you see this, its working
   - run `strace -tt -s100 -etrace=sendmsg -p HAPROXY_PID`
