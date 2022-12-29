@@ -10,7 +10,7 @@
 - [installation steps for 2.4](https://haproxy.debian.net/#?distribution=Ubuntu&release=focal&version=2.4)
 - docker
   - [haproxy intel docker](https://hub.docker.com/r/bitnami/haproxy-intel/)
-  - [haproxy official docker](https://hub.docker.com/_/haproxy)
+  - [haproxy official docker](https://hub.docker.com/_xxxxxxxxxxxxxxxxx_/haproxy)
   - [haproxy ubuntu](https://hub.docker.com/r/haproxytech/haproxy-ubuntu)
 - configuration
   - [basic configuration guide](https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/)
@@ -49,15 +49,15 @@
 - never
   - connecting external consumers directly to backend services: creates tight coupling between frontenda and backend components
 - always
-  - each _server_ should have a _maxconn_ setting; even if its just a guess
+  - each server should have a maxconn setting; even if its just a guess
     - you can modify this to adapt to your environment
   - place the global section in its own file to be reused between multiple instances/machines
-  - _nbproc_ vs _nbthread_
-    - use _nbthread_ (threads) when resources are limited; dont scale as well as nbproc (multiple processes)
-    - use _nbproc_ to support multi processes; scale far superior than threads (nbthread)
+  - nbproc vs nbthread
+    - use nbthread (threads) when resources are limited; dont scale as well as nbproc (multiple processes)
+    - use nbproc to support multi processes; scale far superior than threads (nbthread)
     - always set `cpu-map` when using either to pin processes to a specific core for max performance
 - somtimes
-  - add _deny_stats_ argument to a _http-request deny_ directive to set custom response codes when rejecting request
+  - add denystats argument to a http-request deny directive to set custom response codes when rejecting request
 
 ### security
 
@@ -92,7 +92,7 @@
   - leastconn: for long lives connections, e.g. websockets
   - uri: route to services optimized to handle speicfic types of requests
   - first: the first server with available connection slots receives the connection
-    - once a server reaches its _maxconn_ value, the next is used
+    - once a server reaches its maxconn value, the next is used
   - source: the source IP address is hashed & divided by total weight of the running servers to designate which server will receive teh request
     - the same IP address will always reach the same server while the servers stay the same
 - rate limiting: limit # of requests clients can make within a period of time
@@ -158,7 +158,7 @@
 
 ### listen
 
-- combines _backend_ and _frontend_ sections into one
+- combines backend and frontend sections into one
 - only use for simple things (if any!)
 
 ### peers
@@ -180,21 +180,21 @@
 
 ### security
 
-- maxconn: maximum per-process number of concurrent connections; always set in both _global_ and _defaults_ section
+- maxconn: maximum per-process number of concurrent connections; always set in both global and defaults section
   - Proxies will stop accepting connections when this limit is reached
-  - in _global_ at the process level
-  - in _defaults_ at the _backend_ or _frontend_ level
-    - in which they share the total max connections set at the _global_ level
+  - in global at the process level
+  - in defaults at the backend or frontend level
+    - in which they share the total max connections set at the global level
   - protect against running out of memory
   - when set on frontends:
     - development: set equal to global maxxconn
     - loadbalancing: roughly spread the global maxxconn evenly between servers so they get a fair share of connections
 - stick-table: used for rate limiting
-- rate_abuse:
+- rateabuse:
 - ssl-default-bind-ciphers: ssl & tls ciphers every bind directive will use by default
   - HAProxy will select the first one listed that the client also supports, unless the prefer-client-ciphers option is enabled
 - ssl-default-bind-options: configures SSL/TLS options such as ssl-min-ver to disable support for older protocols
-- prefer-client-cipher: will use client ciphers over the ones specified in _ssl-default-bind-ciphers_
+- prefer-client-cipher: will use client ciphers over the ones specified in ssl-default-bind-ciphers
 - timeout: when a timeout expires haproxy closes the connection;
   - reduces the risk of deadlocked processes tying up connections
   - in `mode tcp`: server & client timeout should be identical; haproxy doesnt know who is speaking
@@ -232,50 +232,85 @@
   - uses the GID of group name <group name> from /etc/group.
 - user: user as this pre-existing user after initializing as root
   - uses the UID of user name <user name> from /etc/passwd.
-- nbproc: # of processes to spawn at startup: each has _its own_ stats, stick tables, etc
+- nbproc: # of processes to spawn at startup: each has its own stats, stick tables, etc
   - be sure to set `cpu-map` to ensure processes are pinned to a specific core for max perf
-- nbthread: # of threads to spawn at startup: each _share_ stats, stick tables, etc
+- nbthread: # of threads to spawn at startup: each share stats, stick tables, etc
   - be sure to set `cpu-map` to ensure processes are pinned to a specific core for max perf
 - cpu-map: pin processes & threads to a specific cpu core
   - always use when setting nbproc/nbthread
 - mode:
   - mode tcp: layer 4 tcp servers; faster than http but no access to higher layer information
   - mode http: layer 7 http servers: slower than tcp but has access to all the metadata about the request
+- option httplog: enable rich logging of http request, session state and timers;
+  - overrides any previous `log-format` directive
+  - shouldnt be used in tcp mode
+- option tcplog: enable rich logging of tcp connections with session state and timers
+  - shouldnt be used in http mode
+- log-format: specifies the log format string to use for traffic logs
+  - it can be as rich as option [http|tcp]log but you have to set it yourself
 
-### frontend listeners
+### frontend: reverse proxy client listeners
 
-- bind: assigns a listener to a given IP:PORT
+- bind: listen on one/more addresses and/ports when used as a reverse proxy
   - can be specified multiple times
   - omit the IP to bind to all addresses
   - port can be a single, range, or comma separated list
   - arguments
+    - address & ports
+      - address: hostname, ip, \*/unset to listen to all ipv4 addrs, use ';;' for ipv6
+        - 'ipv4@' only ipv4
+        - 'ipv6@' only ipv6
+        - 'unix@' only a local unix socket
+        - 'abns@' abstract linux namespace
+      - port range: '80', '8000-8080',
     - ssl: manage ssl terminations
     - crt: manage TLS terminations
-    - process: when _nbproc_ is enabled; specifies which process to use e.g. _process 1_
-- use_backend: forward requests that match the ACL argument to this backend server
-- default_backend: route all requires to this server that dont match any other ACLs
-  - if a request isnt processed by a _use_backend_ or _default_backend_ haproxy responds with _503_
-- http-request: access control for layer 7 requests
-  - http-request redirect: respond with a redirect
-  - http-request deny: deny a incomming http request
+    - process: when nbproc is enabled; specifies which process to use e.g. process 1
+    - process-set: all|odd|even|number
+    - thread-set: all|odd|even|number
+- usebackend: forward requests `if|unless` the acl condition matches
+- defaultbackend: default handler after all other usebackends
+  - if a request isnt processed by a usebackend or defaultbackend haproxy responds with 503
+- http-request: access control for layer 7 request processing
+  - add-header
+  - allow
+  - auth
+  - capture
+  - del-header
+  - denystatus
+  - deny: deny a incomming http request
+  - if
+  - redirect: respond with a
+  - reject
+  - replace-header
+  - set-header
+  - set-log-level
+  - set-method
+  - set-path
+  - set-query
+  - set-uri
+  - set-var
+  - tarpit
+  - unless
+  - unset-var
 - default-server: configures defaults for any server lines that follow it
 
-### backend servers
+### backend: server responders
 
 - server: heart of the backend section; can be specified multiple times to specify settings and URI for your physical backend servers that fullfil the requests
-  - each server must opt into health checks via the _check_ argument on the _server_ or _default-server_ line
-- server-template placeholders for service discovery tools to populate _server_ directives dynamically
+  - each server must opt into health checks via the check argument on the server or default-server line
+- server-template placeholders for service discovery tools to populate server directives dynamically
 
 ### needs categorization
 
 - routing
   - acl: ...
-  - balance: specifies load balancing strategy for a _backend_
+  - balance: specifies load balancing strategy for a backend
     - is ignored if ar equest mathes a persistence strategy
       - (e.g. an ACL forcing a request to route to specific server based on cookie)
   - cookie: enables cookie-based peristence
-    - SERVERUSED: send this as a cookie to the client; the value is the _server_ that handles the initial request; the client will always go to this server for this session
-      - the name of the server is set by the _cookie_ argument on the _server_ line
+    - SERVERUSED: send this as a cookie to the client; the value is the server that handles the initial request; the client will always go to this server for this session
+      - the name of the server is set by the cookie argument on the server line
 - environemnt & variables
   - variables scopes
     - proc{}: var is available during all phases
@@ -297,13 +332,11 @@
   - mapfile: stores key/value associations in memory
     - e.g. concat & store host/path key and set the host/path value as a name for a backend to manage ACL routing rules
   - option:
-    - option httplog: use verbose log format in _mode http_
-    - option tcplog: use verbose log format in _mode tcp_
     - option httpchk: send layer 7 (http) health checks to backend server
       - has to respond with 2xx|3xx to be considerd healthy
       - tcp only has to respond (e.g. even a 5xx) to be considered health
-      - will default to send the request as _OPTIONS /_
-      - can be used with servers in _mode tcp_ if they respond with http at the route specified
+      - will default to send the request as OPTIONS /
+      - can be used with servers in mode tcp if they respond with http at the route specified
   - log-option: set a custom log format
   - http-check: customize http health checks via arguments
 - arguments: appended to directives to modify behavior
@@ -326,7 +359,7 @@
 
 - testing syslog functionality
   - restart haproxy: each frontend & backend logs one line indicating its restarting; if you see this, its working
-  - run `strace -tt -s100 -etrace=sendmsg -p HAPROXY_PID`
+  - run `strace -tt -s100 -etrace=sendmsg -p HAPROXYPID`
     - perform some activity that should be logged
     - the activity should be logged using `sendmsg()`
       - if not: restart using strace on top of haproxy
@@ -339,131 +372,151 @@
   -
 
 ```sh
-  # view haproxy help
-  haproxy
+################## FRONTEND
+# bind
+bind :80,:443
+bind poop:80,soup:443
+bind :80-8080
 
-  # start haproxy with X number of config files
-  # + each cfg must start on a section boundary
-  haproxy -- cfg1 cfg2 cfgX
-  # + start haproxy loading ALL someconfig.cfg in the directory
-  # + files loaded in lexical order (using LC_COLLATE=C)
-  haproxy -f cfgdir
+# ssl
+bind 10.0.0.3:443 ssl crt /etc/ssl/certs/mysite.pem
+http-request redirect scheme https unless { sslfc }
+
+# acls
+usebackend apiservers if { pathbeg /api/ }
+
+# multithreading
+nbproc 2
+nbthread 4
+bind :8080  process 1
+
+
+################## OLD
+# view haproxy help
+haproxy
+
+# start haproxy with X number of config files
+# + each cfg must start on a section boundary
+haproxy -- cfg1 cfg2 cfgX
+# + start haproxy loading ALL someconfig.cfg in the directory
+# + files loaded in lexical order (using LCCOLLATE=C)
+haproxy -f cfgdir
 
 # security tasks (keep this shit first)
 
 # + set the chroot jail inside the config
 # ++ after creating the location on the cmd line
-  chroot /var/empty
-  mkdir /var/empty && chmod = /var/empty || echo "failed" # must be done first before starting haproxy
+chroot /var/empty
+mkdir /var/empty && chmod = /var/empty || echo "failed" # must be done first before starting haproxy
 
 
 # debug tasks
 # + validate haproxy config
-  haproxy -c -f /some/haproxy.cfg
+haproxy -c -f /some/haproxy.cfg
 
 
 # other common tasks
 
 # + routing tasks
 # ++ route requests to a backend server NAME if path begins with /api/
-  use_backend NAME if {path_beg /api/ }
+usebackend NAME if {pathbeg /api/ }
 
 # ++ specify servers to be used in a backend
-  server NAME1 IP:PORT args
-  server NAME2 domain.com:PORT args
-  server NAME3 IP:PORT check args # opt into health checking
+server NAME1 IP:PORT args
+server NAME2 domain.com:PORT args
+server NAME3 IP:PORT check args # opt into health checking
 
 # + restart haproxy
-  sudo systemctl restart haproxy
+sudo systemctl restart haproxy
 
 # + start haproxy from an init file
 # ++ force daemon mode
 # ++ store existing pids in a pidfile
 # ++ notify old processes to finish before leaving
-  haproxy -f /some/config.cfg \
-    -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid) \ # ALWAYS DOOOO THIS
+haproxy -f /some/config.cfg \
+  -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid) \ # ALWAYS DOOOO THIS
 
 
 # + load specific configs in a specific order
-  haproxy -f config1.cfg -f config2.cfg \
-    -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)
+haproxy -f config1.cfg -f config2.cfg \
+  -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)
 
 # + load an unknown number of files
 # ++ ALWAYS load them after default cfgs and after --
-  haproxy -f default.cfg -f other.cfg \
-    -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid) \
-    -- arbitrary/dir/with/files/*
+haproxy -f default.cfg -f other.cfg \
+  -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid) \
+  -- arbitrary/dir/with/files/*
 
 
 
 # stats shit
 # + listen section to setup the stats page without using both frontend and backend section boundaries
-  listen stats
-    bind *:8404
-    stats enable
-    stats uri /monitor
-    stats refresh 5s
+listen stats
+  bind *:8404
+  stats enable
+  stats uri /monitor
+  stats refresh 5s
 
 # socat specific
 # + 2 methods for interacting with haproxy via soxy
 # ++ HAPROXY.sock is any sock, e.g.  /var/run/haproxy.sock
-  socat HAPROXY.sock stdio # use in scripts
-  socat HAPROXY.sock readline # issuing cmds by hand
+socat HAPROXY.sock stdio # use in scripts
+socat HAPROXY.sock readline # issuing cmds by hand
 # + example noninteractive mode
 # ++ e.g. via a script
-  echo "show info; show stat; show table" | socat HAPROXY.sock stdio
+echo "show info; show stat; show table" | socat HAPROXY.sock stdio
 
 # long list of options
 # + common options
-  -C dir #change to dir before loading config files
-  -D # start as a daemon, ALWAYS in an script to prevent a fault cfg from prevent a system unable to boot
-  -q # enable quiet mode
-  -m n # set total allocatable memory in megabytes for ALL processes (shared)
-  -n n # set the per process connection limit; @see maxconn
-  -N n # set the per-proxy maxconn; default 2000
-  -p file #write all processes pids into file during startup
+-C dir #change to dir before loading config files
+-D # start as a daemon, ALWAYS in an script to prevent a fault cfg from prevent a system unable to boot
+-q # enable quiet mode
+-m n # set total allocatable memory in megabytes for ALL processes (shared)
+-n n # set the per process connection limit; @see maxconn
+-N n # set the per-proxy maxconn; default 2000
+-p file #write all processes pids into file during startup
 
 # + prod
-  -q # enable quiet mode; use with `-c` to ONLY check if a cfg is valid
+-q # enable quiet mode; use with `-c` to ONLY check if a cfg is valid
 
 # + dev
-  -dB # disable bg mode and multi-process mode; USE in dev/tests NEVER in init scripts
+-dB # disable bg mode and multi-process mode; USE in dev/tests NEVER in init scripts
 
 # + master-worker mode
-  -W # master-worker mode; master will monitor workers; recomennded with multiprocesses and systemd; enables reloading haproxy via SIGUSR2 to the master
-  -Ws # master-worker mode + notify supportl have to build haproxy with `USE_SYSTEMD` enabled
-  -S bind,opts,opts # bind a master CLI, permits access to all processes; bind the master to a local unix socket
+-W # master-worker mode; master will monitor workers; recomennded with multiprocesses and systemd; enables reloading haproxy via SIGUSR2 to the master
+-Ws # master-worker mode + notify supportl have to build haproxy with `USESYSTEMD` enabled
+-S bind,opts,opts # bind a master CLI, permits access to all processes; bind the master to a local unix socket
 
 # + lifecycle
-  -sf pids # finish (SIGUSR1) to old processes after new boot completion (after finishing tasks); accepts a list of pids e.g. from pidof or pgrep
-  -st pids # terminate (SIGTERM) to old processes after new boot completion (without completing their tasks)
-  -x socket # connect to a unix socket and retrieve listening sockets from the old process; useful to avoid missing new connections when reloading cfgs on linux; enable the stats socket using `expose-fd listeners` in the cfg
+-sf pids # finish (SIGUSR1) to old processes after new boot completion (after finishing tasks); accepts a list of pids e.g. from pidof or pgrep
+-st pids # terminate (SIGTERM) to old processes after new boot completion (without completing their tasks)
+-x socket # connect to a unix socket and retrieve listening sockets from the old process; useful to avoid missing new connections when reloading cfgs on linux; enable the stats socket using `expose-fd listeners` in the cfg
 
 # + debugging
-  -v # version and build date
-  -vv # version, build options, library versions and usable pollers
-  -V # enable verbose mode
-  -c # check configuration files and exit; use with `-q` to ONLY check the cfg
-  -d # enable debug mode; disables daemon mode; NEVER use in an init script
-  -dD # enable diagnostic mode; output extra warnings about suspicious cfg statements
-  -dS # use this when inspecting via strace
-  -dV # disable ssl verify; review when debugging prod
-  -dW # refuse to start if warnigns exist in cfg
-  -de # disable epoll poller
-  -dk # disable kqueue poller
-  -dp # disable poll poller
-  -dr #ignore server address resolution; using for debugging prod configs
+-v # version and build date
+-vv # version, build options, library versions and usable pollers
+-V # enable verbose mode
+-c # check configuration files and exit; use with `-q` to ONLY check the cfg
+-d # enable debug mode; disables daemon mode; NEVER use in an init script
+-dD # enable diagnostic mode; output extra warnings about suspicious cfg statements
+-dS # use this when inspecting via strace
+-dV # disable ssl verify; review when debugging prod
+-dW # refuse to start if warnigns exist in cfg
+-de # disable epoll poller
+-dk # disable kqueue poller
+-dp # disable poll poller
+-dr #ignore server address resolution; using for debugging prod configs
 
 
 # + edge case options
 # ++ peering
-  -L name #set the local peer name when using peers replication
+-L name #set the local peer name when using peers replication
 # ++ skipped shit
-  -dG
-  -dM
+-dG
+-dM
 
 
 
 # env vars
-  $HAPROXY_LOCALPEER #get the peer name when using peers replication
+$HAPROXYLOCALPEER #get the peer name when using peers replication
 ```
