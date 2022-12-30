@@ -3,6 +3,8 @@
 ## links
 
 - [haproxy docs (start here and ctrl f it)](https://docs.haproxy.org/)
+  - hide that dumb ass sidebar: `document.getElementById('sidebar').style.display = 'none' `
+  - a sorted list of links is at the very bottom: likely where you want to be for exploration
 - [haproxy enterprise docs](https://www.haproxy.com/documentation/hapee/)
 - [haproxy community](https://www.haproxy.org/)
 - [haproxy community docs](https://www.haproxy.org/#docs)
@@ -146,6 +148,8 @@
   - set-var: sets process-wide var X to expression Y
   - set-var-fmt: set var X to string Y
   - stats maxconn: increase the stats maxconn to more than the default 10
+- fd-hard-limit: Sets an upper bound to the maximum number of file descriptors that the process will use, regardless of system limits
+- quiet: Do not display any message during startup. It is equivalent to the command-line argument "-q".
 
 ### admin
 
@@ -153,120 +157,15 @@
 
 - apply to all frontend & backend sections that come after it
 - defaults cascade: i.e. you can group [defaults > frontend > backend] to create config types, e.g. one group for TCP layer 4 and another group for HTTP layer 7
+- option forwardfor: Enable insertion of the X-Forwarded-For header to requests sent to servers
+- timeout http-keep-alive: Set the maximum allowed time to wait for a new HTTP request to appear
+- timeout http-request: the maximum allowed time to wait for a complete http request
+- timeout tarpit: Set the duration for which tarpitted connections will be maintained
 
 ### frontend
 
 - accepts incoming (external) requests: routes requests to backends
 - defines the IPs and PORTS clients can connect to
-
-### backend
-
-- responds to requests received from frontends
-
-### listen
-
-- combines backend and frontend sections into one
-- only use for the stats page
-
-### peers
-
-- section for syncing multiple haproxy servers
-
-### mailers
-
-- section to configure mail notifications
-
-### resolvers
-
-- section to configure and setup DNS resolution
-- Creates a new name server list labeled <resolvers id>
-  - nameserver
-  - acepted_payload_size:
-    hold:
-    reoslution_pool_size
-    resolve_retries
-    timeout
-
-## configuration directives
-
-- statements to configure each section boundary
-- many overlap and cascade, e.g. the same directive in global > defaults > [frontend,backend] can be overridden
-
-### security
-
-- maxconn: maximum per-process number of concurrent connections; always set in both global and defaults section
-  - Proxies will stop accepting connections when this limit is reached
-  - in global at the process level
-  - in defaults at the backend or frontend level
-    - in which they share the total max connections set at the global level
-  - protect against running out of memory
-  - when set on frontends:
-    - development: set equal to global maxxconn
-    - loadbalancing: roughly spread the global maxxconn evenly between servers so they get a fair share of connections
-- stick-table: used for rate limiting
-- rateabuse:
-- ssl-default-bind-ciphers: sets the default string describing the list of cipher algorithms ("cipher suite") that are negotiated during the SSL/TLS handshake up to TLSv1.2
-  - HAProxy will select the first one listed that the client also supports, unless the prefer-client-ciphers option is enabled
-- ssl-default-bind-options: configures SSL/TLS options such as ssl-min-ver to disable support for older protocols
-- prefer-client-cipher: will use client ciphers over the ones specified in ssl-default-bind-ciphers
-- ssl-default-server-ciphers: for the server
-- ssl-default-server-ciphersuites: same for the server
-  -ssl-default-server-options: same for the server
-- timeout: when a timeout expires haproxy closes the connection;
-  - reduces the risk of deadlocked processes tying up connections
-  - in `mode tcp`: server & client timeout should be identical; haproxy doesnt know who is speaking
-    - in http mode they should `generally` be equal as well
-  - timeout connect: maximum time to wait for a successful connection to a backend server
-    - if the server is located on the same LAN as haproxy, the connection should be less than a few milliseconds
-  - timeout client: maximum inactivity time on the client side; client must acknowledge/send data within this period
-    - in http mode:
-      - in first phase when the client sends the request
-        - prefer setting the `timeout http-request` to protect haproxy from sloworis like attacks
-      - in the response phase the client is reading data received from the server
-  - timeout server: maximum inactivity time on the server side; server must acknowledge/send data within this period
-    - in http mode:
-      - in first phase when the server sends the http headers
-        - directly represents the servers processing time for the request
-        - start with unnacceptable times, then increase until you find an optimal setting
-          - you can check the logs to observe the response time distribution
-  - timeout http-request: the maximum allowed time to wait for a complete http request
-
-### observability/monitoring
-
-- log: startup|runtime warnings & errors; specify which syslog to use (e.g. Syslog/journald)
-  - you need to setup the syslog daemon in order to read logs output by haproxy
-  - log stdout: likely what you want
-  - log /dev/log: traditional nix socket where Syslog & journald listen
-  - log local0: syslog facility for custom use
-  - log global: informs frontends to use the log setting defined in the global section
-
-### haproxy
-
-- stats socket: enables the runtime api, accepts same values as `bind`
-  - use to dynamically disable servers and health checks, change the load balancing weights of servers, and pull other useful levers
-  - All parameters supported by "bind" lines are supported, for instance to
-- group: run as this pre-existing group after initalizing as root
-  - uses the GID of group name <group name> from /etc/group.
-- user: user as this pre-existing user after initializing as root
-  - uses the UID of user name <user name> from /etc/passwd.
-- nbproc: # of processes to spawn at startup: each has its own stats, stick tables, etc
-  - be sure to set `cpu-map` to ensure processes are pinned to a specific core for max perf
-- nbthread: # of threads to spawn at startup: each share stats, stick tables, etc
-  - be sure to set `cpu-map` to ensure processes are pinned to a specific core for max perf
-- cpu-map: pin processes & threads to a specific cpu core
-  - always use when setting nbproc/nbthread
-- mode:
-  - mode tcp: layer 4 tcp servers; faster than http but no access to higher layer information
-  - mode http: layer 7 http servers: slower than tcp but has access to all the metadata about the request
-- option httplog: enable rich logging of http request, session state and timers;
-  - overrides any previous `log-format` directive
-  - shouldnt be used in tcp mode
-- option tcplog: enable rich logging of tcp connections with session state and timers
-  - shouldnt be used in http mode
-- log-format: specifies the log format string to use for traffic logs
-  - it can be as rich as option [http|tcp]log but you have to set it yourself
-
-### frontend: reverse proxy client listeners
 
 - bind: listen on one/more addresses and/ports when used as a reverse proxy
   - can be specified multiple times
@@ -310,15 +209,34 @@
   - tarpit
   - unless
   - unset-var
+- option contstats: enable continuous traffic statistics updates
+- option http-ignore-probes: even more restrictive than `option dontlognull` as it prevents messages from being sent to the client
+- option dontlognull: Enable or disable logging of null connections; a connection on which no data has been transferred will not be logged
+- option httplog: enable rich logging of http request, session state and timers;
+  - overrides any previous `log-format` directive
+  - shouldnt be used in tcp mode
+- option tcplog: enable rich logging of tcp connections with session state and timers
+  - shouldnt be used in http mode
+- log-format: specifies the log format string to use for traffic logs
+  - it can be as rich as option [http|tcp]log but you have to set it yourself
+- timeout client: maximum inactivity time on the client side; client must acknowledge/send data within this period
+  - in http mode:
+    - in first phase when the client sends the request
+      - prefer setting the `timeout http-request` to protect haproxy from sloworis like attacks
+    - in the response phase the client is reading data received from the server
 
-### backend: server responders
+### backend
+
+- responds to requests received from frontends
 
 - server: heart of the backend section; can be specified multiple times to specify settings and URI for your physical backend servers that fullfil the requests
   - each server must explicitly opt into health checks via the `check` argument on the server or default-server line
   - set default settings on default-server:, then customer on server:
   - specifying an ip addr/hostname will force resolution at haproxy startup
   - specifying resolvers: will allow resolution at runtime
-- server-template placeholders for service discovery tools to populate server directives dynamically
+- server-template: placeholders for service discovery tools to populate server directives dynamically
+- default-server: configures defaults for any server lines that follow it
+  - init-addr last,libc,none: never fail on address resolution
 - balance: specifies load balancing strategy for a backend
   - is ignored if a request mathes a persistence strategy
     - e.g. an ACL forcing a request to route to specific server based on cookie
@@ -343,7 +261,102 @@
   - tcp only has to respond (e.g. even a 5xx) to be considered health
   - will default to send the request as OPTIONS /
   - can be used with servers in mode tcp if they respond with http at the route specified
-- default-server: configures defaults for any server lines that follow it
+- option redispatch: Enable or disable session redistribution in case of connection failure
+- option http-server-close: Enable or disable HTTP connection closing on the server side
+- retries: the number of times a request/connection attempt should be retried on a server after a failure
+- timeout server: maximum inactivity time on the server side; server must acknowledge/send data within this period
+  - in http mode:
+    - in first phase when the server sends the http headers
+      - directly represents the servers processing time for the request
+      - start with unnacceptable times, then increase until you find an optimal setting
+        - you can check the logs to observe the response time distribution
+- timeout connect: maximum time to wait for a successful connection to a backend server
+  - if the server is located on the same LAN as haproxy, the connection should be less than a few milliseconds
+- timeout queue: Set the maximum time to wait in the queue for a connection slot to be free
+
+### listen
+
+- combines backend and frontend sections into one
+- only use for the stats page
+
+### peers
+
+- section for syncing multiple haproxy servers
+
+### mailers
+
+- section to configure mail notifications
+
+### resolvers
+
+- section to configure and setup DNS resolution
+- Creates a new name server list labeled <resolvers id>
+  - nameserver
+  - acepted_payload_size:
+    hold:
+    reoslution_pool_size
+    resolve_retries
+    timeout
+
+## configuration directives
+
+- statements to configure each section boundary
+- many overlap and cascade, e.g. the same directive in global > defaults > [frontend,backend] can be overridden
+
+### security
+
+- never set `option dontlognull` in uncontrolled environments
+- maxconn: maximum per-process number of concurrent connections; always set in both global and defaults section
+  - Proxies will stop accepting connections when this limit is reached
+  - in global at the process level
+  - in defaults at the backend or frontend level
+    - in which they share the total max connections set at the global level
+  - protect against running out of memory
+  - when set on frontends:
+    - development: set equal to global maxxconn
+    - loadbalancing: roughly spread the global maxxconn evenly between servers so they get a fair share of connections
+- stick-table: used for rate limiting
+- rateabuse:
+- ssl-default-bind-ciphers: sets the default string describing the list of cipher algorithms ("cipher suite") that are negotiated during the SSL/TLS handshake up to TLSv1.2
+  - HAProxy will select the first one listed that the client also supports, unless the prefer-client-ciphers option is enabled
+- ssl-default-bind-options: configures SSL/TLS options such as ssl-min-ver to disable support for older protocols
+- prefer-client-cipher: will use client ciphers over the ones specified in ssl-default-bind-ciphers
+- ssl-default-server-ciphers: for the server
+- ssl-default-server-ciphersuites: same for the server
+  -ssl-default-server-options: same for the server
+- timeout: when a timeout expires haproxy closes the connection;
+  - reduces the risk of deadlocked processes tying up connections
+  - in `mode tcp`: server & client timeout should be identical; haproxy doesnt know who is speaking
+    - in http mode they should `generally` be equal as well
+- ssl-default-bind-ciphers: efault string describing the list of cipher algorithms ("cipher suite") that are negotiated during the SSL/TLS handshake up to TLSv1.2
+
+### observability/monitoring
+
+- log: startup|runtime warnings & errors; specify which syslog to use (e.g. Syslog/journald); Enable per-instance logging of events and traffic.
+  - you need to setup the syslog daemon in order to read logs output by haproxy
+  - log stdout: likely what you want
+  - log /dev/log: traditional nix socket where Syslog & journald listen
+  - log local0: syslog facility for custom use
+  - log global: informs frontends to use the log setting defined in the global section
+
+### haproxy
+
+- stats socket: enables the runtime api, accepts same values as `bind`
+  - use to dynamically disable servers and health checks, change the load balancing weights of servers, and pull other useful levers
+  - All parameters supported by "bind" lines are supported, for instance to
+- group: run as this pre-existing group after initalizing as root
+  - uses the GID of group name <group name> from /etc/group.
+- user: user as this pre-existing user after initializing as root
+  - uses the UID of user name <user name> from /etc/passwd.
+- nbproc: # of processes to spawn at startup: each has its own stats, stick tables, etc
+  - be sure to set `cpu-map` to ensure processes are pinned to a specific core for max perf
+- nbthread: # of threads to spawn at startup: each share stats, stick tables, etc
+  - be sure to set `cpu-map` to ensure processes are pinned to a specific core for max perf
+- cpu-map: pin processes & threads to a specific cpu core
+  - always use when setting nbproc/nbthread
+- mode:
+  - mode tcp: layer 4 tcp servers; faster than http but no access to higher layer information
+  - mode http: layer 7 http servers: slower than tcp but has access to all the metadata about the request
 
 ### environemnt & variables
 
