@@ -23,6 +23,7 @@
   - [haproxy ubuntu](https://hub.docker.com/r/haproxytech/haproxy-ubuntu)
 - interwebs
   - [server hostnames are static](https://serverfault.com/questions/771477/haproxy-dynamic-server-address-based-off-of-header-value)
+  - [ssl handshake + hello message](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/)
 - configuration
   - [basic configuration guide](https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/)
   - [dynamic configuration](https://www.haproxy.com/blog/dynamic-configuration-haproxy-runtime-api/)
@@ -57,6 +58,8 @@
   - [ssl server test](https://www.ssllabs.com/ssltest/)
   - [ssl termination](https://www.haproxy.com/blog/haproxy-ssl-termination/)
   - [ssl redirect](https://www.haproxy.com/blog/redirect-http-to-https-with-haproxy/)
+- variables
+  - [syntax](https://www.haproxy.com/documentation/hapee/latest/configuration/variables/syntax/)
 - frontends
 - backends
 
@@ -178,6 +181,14 @@
 - timeout http-request: the maximum allowed time to wait for a complete http request
 - timeout tarpit: Set the duration for which tarpitted connections will be maintained
 
+#### tcp
+
+- tcp-request: access client requests when in tcp mode
+  - inspect-delay: for tcp routing decisions, you have to delay the request to give haproxy time to inspect it,
+    - e.g `tcp-request inspect-delay 1s` sets a maximum time of 1s for haproxy to actually receive data from the client, and not just empty buffers
+
+#### http
+
 ### frontend
 
 - accepts incoming (external) requests: routes requests to backends
@@ -204,23 +215,26 @@
 - defaultbackend: default handler after all other usebackends
   - if a request isnt processed by a usebackend or defaultbackend haproxy responds with 503
 - http-request: access control for layer 7 request processing
-  - add-header
+  - add-header: set/add a header
   - allow
   - auth
   - capture
-  - del-header
+  - del-header: delete header
   - denystatus
   - deny: deny a incomming http request
-  - if
-  - redirect: respond with a
+  - redirect: perform some type of redirect
+    - prefix: e.g. redirect all requests to /poop `http-request redirect prefix /poop if !{ path_beg /poop/ }`
+    - scheme: e.g. redirect to h > s: `http-request redirect scheme https`
+      - append use a 301 `redirect scheme code 301 https if !{ ssl_fc }`
   - reject
-  - replace-header
-  - set-header
+  - replace-header: regex replacement of an existing header
+  - set-header: set/overwrite a header
   - set-log-level
   - set-method
-  - set-path
-  - set-query
-  - set-uri
+  - set-path: set the path the client requested
+    - e.g. `set-path /poop%[path] if !{ path_beg /poop }` prepends poop to all requests
+  - set-query: set the query string
+  - set-uri: set the path and query string
   - set-var
   - tarpit
   - unless
@@ -290,6 +304,8 @@
   - if the server is located on the same LAN as haproxy, the connection should be less than a few milliseconds
 - timeout queue: Set the maximum time to wait in the queue for a connection slot to be free
 - max-keep-alive-queue:the maximum server queue size for maintaining keep-alive connections; set a threshold on the number of queued connections at which HAProxy stops trying to reuse the same server and prefers to find another one
+- http-response: modify the response
+  - set-header: set a response header
 
 ### listen
 
@@ -347,15 +363,6 @@
     - in http mode they should `generally` be equal as well
 - ssl-default-bind-ciphers: efault string describing the list of cipher algorithms ("cipher suite") that are negotiated during the SSL/TLS handshake up to TLSv1.2
 
-### observability/monitoring
-
-- log: startup|runtime warnings & errors; specify which syslog to use (e.g. Syslog/journald); Enable per-instance logging of events and traffic.
-  - you need to setup the syslog daemon in order to read logs output by haproxy
-  - log stdout: likely what you want
-  - log /dev/log: traditional nix socket where Syslog & journald listen
-  - log local0: syslog facility for custom use
-  - log global: informs frontends to use the log setting defined in the global section
-
 ### haproxy
 
 - stats socket: enables the runtime api, accepts same values as `bind`
@@ -408,7 +415,7 @@
     - 10 i.e. 10 milliseconds
     - 10s i.e. 10 seconds
     - 10m i.e. 10 minutes
-  - check:
+  - check: each server must opt into health checking
   - maxconn: use the previous maxconn setting
   - deny-status: set the status when denying a request
 
@@ -418,6 +425,49 @@
   - this way it is centralized
   - configure your syslog daemon to listen to udp traffic
     - some may need customization to enable this, dork it
+
+## variables
+
+- set-var(txn.poop) toilet: set variable poop to toilet for this request
+- var(txn.poop): retrieve the value of txn.poop
+
+### simple
+
+- src: client IP address that that made the request
+- path: the path the client requested
+- path_beg: shorthand for `-m beg`
+- url_param(poop): returns the value of poop
+- HTTP: true if the request was an http request
+- TRUE: not quite sure how this actually works, check the proxy-stats it compares against the AUTH
+- ssl_fc: true if the connection was made over SSL and haproxy is locally deciphering it
+
+### req
+
+- req: an object containing the full request
+- req.ssl_hello_type: retrieves the number from the ssl handshake, greater than 0 if ssl is/was negotiated
+- req.hdr(poop): returns the value of the request header
+
+### txn
+
+- the current request
+
+## observability/monitoring
+
+### log
+
+- log: startup|runtime warnings & errors; specify which syslog to use (e.g. Syslog/journald); Enable per-instance logging of events and traffic.
+  - you need to setup the syslog daemon in order to read logs output by haproxy
+  - log stdout: likely what you want
+  - log /dev/log: traditional nix socket where Syslog & journald listen
+  - log local0: syslog facility for custom use
+  - log global: informs frontends to use the log setting defined in the global section
+
+## log-format rules
+
+- can be used in acls with
+- syntax `%[static|dynamic value]`
+  - e.g. `%[hdr(host)]` returns host header
+  - e.g. `%[capture.req.uri]`
 
 ## ACLs
 
@@ -445,20 +495,11 @@
 
 ### fetches
 
+- see also `# variables`
 - some fetches have shorthands with built-in flags
   - e.g. `path_beg` is shorthand for `path -m beg` that combines fetch path with flag `-m beg`
   - FYI: if you chain a fetch with a converter you have to specify it using a flag
     - best to just stay away from shorthands all together
-- src: client IP address that that made the request
-- path: the path the client requested
-- path_beg: shorthand for `-m beg`
-- url_param(poop): returns the value of poop
-- req: an object containing the full request
-  - ssl_hello_type
-  - hdr(poop): returns the value of the request header
-- HTTP: true if the request was an http request
-- TRUE: not quite sure how this actually works, check the proxy-stats it compares against the AUTH
-- ssl_fc: true if the connection was made over SSL and haproxy is locally deciphering it
 
 ### converters
 
@@ -473,6 +514,7 @@
 
 ### flags
 
+- gt: if X > Y, e.g. `if { req.ssl_hello_type gt 0 }`
 - -i: case insensitive match
 - -m: specifies the match type
   - beg: match on the beginning of the string
@@ -490,10 +532,22 @@
 - if: `thisAction if thisAcl`
 - unless: `thisAction unless thisAcl`
 
-### functions
+### acl caching
+
+- enables caching of resources based on ACLs
+- should be used along with `http-response cache-store`
+
+-
+
+## functions
 
 - replace-path: e.g. to remove the api from from domain.com/api/poop
   - `http-request replace-path /api(/)?(.*) /\2`
+
+## cache-stores
+
+- create and use a simple cache store
+- see examples
 
 ## workflows
 
@@ -505,19 +559,30 @@
       - if not: restart using strace on top of haproxy
         - if still not: something HAS (oh yea?) to be wrong with the config
 
-## example spec
-
-- cli > config options
-  - you can modify runtime ops quickly without changing the config file
-  -
+## examples
 
 ```sh
-#3################ GLOBAL
+################## security tasks (keep this shit first)
+# first create the location on the cmd line
+# then set the chroot jail inside the config
+mkdir /var/empty && chmod = /var/empty || echo "failed"
+chroot /var/empty
+
+
+################## GLOBAL
 presetenv envKey defaultValue
 setenv envKey forceThisValue
 set-var proc.current_state str(primary)
 set-var-fmt proc.current_state "primary"
 ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
+
+################## health checks
+# enable healthchecking for servers with `check`
+option httpchk HEAD /
+option httpchk
+option httpchk <uri>
+option httpchk <method> <uri>
+option httpchk <method> <uri> <version>
 
 ################## FRONTEND
 # bind
@@ -533,6 +598,7 @@ http-request redirect scheme https unless { sslfc }
 usebackend apiservers if { pathbeg /api/ }
 # case insensitive match against patterns in a file
 path -i -m beg -f /etc/hapee/paths_secret.acl
+
 # multithreading
 nbproc 2
 nbthread 4
@@ -551,28 +617,21 @@ cpu-map auto:2/1-10   10-19
 cpu-map auto:3/1-10   20-29
 cpu-map auto:4/1-10   30-39
 
-# backend specific
+################## backend
 balance roundrobin
 default-server check maxconn 20
 server server1 10.0.1.3:80 cookie server1 maxconn 5
 server server2 10.0.1.4:80 cookie server2 maxconn 5
 server s1 app1.domain.com:80 check resolvers mydns maxconn 10
 
-## load balancing
+# load balancing
 balance <alog> <args>
 
-## cookies
+# cookies
 cookie POOP insert indirect nocache
 
-## health checks
-option httpchk HEAD /
-option httpchk
-option httpchk <uri>
-option httpchk <method> <uri>
-option httpchk <method> <uri> <version>
 
-
-# resolvers
+################## resolvers
 resolvers mydns
   nameserver dns1 10.0.0.1:53
   nameserver dns2 10.0.0.2:53
@@ -586,14 +645,21 @@ resolvers mydns
   hold valid           10s
   hold obsolete        30s
 
-# listen (only use for stats)
+################## listen
 listen stats
     bind *:8404
     stats enable
     stats uri /monitor
     stats refresh 5s
 
-################## OLD
+
+################## cache stores
+http-request set-var(txn.path) path
+acl is_icons_path var(txn.path) -m beg /icons/
+http-request cache-use icons if is_icons_path
+http-response cache-store icons if is_icons_path
+
+################## haproxy cli
 # view haproxy help
 haproxy
 
@@ -603,71 +669,8 @@ haproxy -- cfg1 cfg2 cfgX
 # + start haproxy loading ALL someconfig.cfg in the directory
 # + files loaded in lexical order (using LCCOLLATE=C)
 haproxy -f cfgdir
-
-# security tasks (keep this shit first)
-
-# + set the chroot jail inside the config
-# ++ after creating the location on the cmd line
-chroot /var/empty
-mkdir /var/empty && chmod = /var/empty || echo "failed" # must be done first before starting haproxy
-
-
-# debug tasks
 # + validate haproxy config
 haproxy -c -f /some/haproxy.cfg
-
-
-# other common tasks
-
-# + routing tasks
-# ++ route requests to a backend server NAME if path begins with /api/
-usebackend NAME if {pathbeg /api/ }
-
-# ++ specify servers to be used in a backend
-server NAME1 IP:PORT args
-server NAME2 domain.com:PORT args
-server NAME3 IP:PORT check args # opt into health checking
-
-# + restart haproxy
-sudo systemctl restart haproxy
-
-# + start haproxy from an init file
-# ++ force daemon mode
-# ++ store existing pids in a pidfile
-# ++ notify old processes to finish before leaving
-# ALWAYS DOOOO THIS... or just set `daemon` in global ;)
-haproxy -f /some/config.cfg \
-  -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid) \
-
-
-# + load specific configs in a specific order
-haproxy -f config1.cfg -f config2.cfg \
-  -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)
-
-# + load an unknown number of files
-# ++ ALWAYS load them after default cfgs and after --
-haproxy -f default.cfg -f other.cfg \
-  -D -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid) \
-  -- arbitrary/dir/with/files/*
-
-
-
-# stats shit
-# + listen section to setup the stats page without using both frontend and backend section boundaries
-listen stats
-  bind *:8404
-  stats enable
-  stats uri /monitor
-  stats refresh 5s
-
-# socat specific
-# + 2 methods for interacting with haproxy via soxy
-# ++ HAPROXY.sock is any sock, e.g.  /var/run/haproxy.sock
-socat HAPROXY.sock stdio # use in scripts
-socat HAPROXY.sock readline # issuing cmds by hand
-# + example noninteractive mode
-# ++ e.g. via a script
-echo "show info; show stat; show table" | socat HAPROXY.sock stdio
 
 # long list of options
 # + common options
@@ -719,7 +722,15 @@ echo "show info; show stat; show table" | socat HAPROXY.sock stdio
 -dM
 
 
+################## socat
+# + 2 methods for interacting with haproxy via soxy
+# ++ HAPROXY.sock is any sock, e.g.  /var/run/haproxy.sock
+socat HAPROXY.sock stdio # use in scripts
+socat HAPROXY.sock readline # issuing cmds by hand
+# + example noninteractive mode
+# ++ e.g. via a script
+echo "show info; show stat; show table" | socat HAPROXY.sock stdio
 
-# env vars
+################## env vars
 $HAPROXYLOCALPEER #get the peer name when using peers replication
 ```
