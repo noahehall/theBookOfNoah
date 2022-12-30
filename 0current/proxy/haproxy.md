@@ -3,7 +3,7 @@
 ## links
 
 - [haproxy docs (start at configuration manaul and ctrl f it)](https://docs.haproxy.org/)
-  - hide that dumb ass sidebar taking up 80% of the real estate: `document.getElementById('sidebar').style.display = 'none' `
+  - hide the sidebar taking up 80% of the real estate: `document.getElementById('sidebar').style.display = 'none' `
   - a sorted list of links somewhere on that screen: likely where you want to be for exploration
 - [haproxy enterprise docs](https://www.haproxy.com/documentation/hapee/)
 - [haproxy community](https://www.haproxy.org/)
@@ -275,6 +275,7 @@
 - timeout connect: maximum time to wait for a successful connection to a backend server
   - if the server is located on the same LAN as haproxy, the connection should be less than a few milliseconds
 - timeout queue: Set the maximum time to wait in the queue for a connection slot to be free
+- max-keep-alive-queue:the maximum server queue size for maintaining keep-alive connections; set a threshold on the number of queued connections at which HAProxy stops trying to reuse the same server and prefers to find another one
 
 ### listen
 
