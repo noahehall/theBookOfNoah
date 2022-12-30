@@ -2,9 +2,9 @@
 
 ## links
 
-- [haproxy docs (start here and ctrl f it)](https://docs.haproxy.org/)
-  - hide that dumb ass sidebar: `document.getElementById('sidebar').style.display = 'none' `
-  - a sorted list of links is at the very bottom: likely where you want to be for exploration
+- [haproxy docs (start at configuration manaul and ctrl f it)](https://docs.haproxy.org/)
+  - hide that dumb ass sidebar taking up 80% of the real estate: `document.getElementById('sidebar').style.display = 'none' `
+  - a sorted list of links somewhere on that screen: likely where you want to be for exploration
 - [haproxy enterprise docs](https://www.haproxy.com/documentation/hapee/)
 - [haproxy community](https://www.haproxy.org/)
 - [haproxy community docs](https://www.haproxy.org/#docs)
@@ -12,6 +12,8 @@
   - [haproxy intel docker](https://hub.docker.com/r/bitnami/haproxy-intel/)
   - [haproxy official docker](https://hub.docker.com/_xxxxxxxxxxxxxxxxx_/haproxy)
   - [haproxy ubuntu](https://hub.docker.com/r/haproxytech/haproxy-ubuntu)
+- interwebs
+  - [server hostnames are static](https://serverfault.com/questions/771477/haproxy-dynamic-server-address-based-off-of-header-value)
 - configuration
   - [basic configuration guide](https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/)
   - [dynamic configuration](https://www.haproxy.com/blog/dynamic-configuration-haproxy-runtime-api/)
