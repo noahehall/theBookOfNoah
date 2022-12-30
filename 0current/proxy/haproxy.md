@@ -449,6 +449,7 @@
 - HTTP: true if the request was an http request
 - TRUE: not quite sure how this actually works, check the proxy-stats it compares against the AUTH
 - ssl_fc: true if the connection was made over SSL and haproxy is locally deciphering it
+- dst_port: the port the client requested
 
 ### req
 
@@ -530,7 +531,7 @@
 
 ### fetches
 
-- see also `# variables`
+- see `# Variables` for fetch sources
 - some fetches have shorthands with built-in flags
   - e.g. `path_beg` is shorthand for `path -m beg` that combines fetch path with flag `-m beg`
   - FYI: if you chain a fetch with a converter you have to specify it using a flag
@@ -667,6 +668,11 @@ bind 10.0.0.3:443 ssl crt /etc/ssl/certs/mysite.pem verify required ca-file /etc
 
 # acls
 usebackend apiservers if { pathbeg /api/ }
+use_backend special if { dst_port 81 }
+if { hdr(host) -m dom example.local }
+if { path_end .jpg .png }
+if { src 127.0.0.1/8 }
+if { method POST PUT }
 # case insensitive match against patterns in a file
 path -i -m beg -f /etc/hapee/paths_secret.acl
 
