@@ -12,7 +12,7 @@
 ## links
 
 - [haproxy docs (start at configuration manaul and ctrl f it)](https://docs.haproxy.org/)
-  - hide the sidebar taking up 80% of the real estate: `document.getElementById('sidebar').style.display = 'none' `
+  - hide the sidebar taking up too much real estate: `document.getElementById('sidebar').style.display = 'none' `
   - a sorted list of links somewhere on that screen: likely where you want to be for exploration
 - [haproxy enterprise docs](https://www.haproxy.com/documentation/hapee/)
 - [haproxy community](https://www.haproxy.org/)
@@ -43,6 +43,7 @@
   - [observability types with haproxy](https://www.dotconferences.com/2018/06/willy-tarreau-observability-tips-with-haproxy)
 - acls
   - [intro](https://www.haproxy.com/blog/introduction-to-haproxy-acls/)
+  - [acl fetching samples](https://docs.haproxy.org/2.7//onepage/#7.3)
   - [haproxy acls overview](https://www.haproxy.com/documentation/hapee/latest/configuration/acls/overview/)
   - [path based routing](https://www.haproxy.com/blog/path-based-routing-with-haproxy/)
 - protocols
@@ -420,12 +421,11 @@
 
 - query and set conditions for any information in a request or response before taking some action
   - routing decisions, redirectin requests, static responses, etc
-- syntax: acl NAME SRC [FLAGS] METHOD VALUE
+- syntax: acl NAME FETCH.this [FLAGS] METHOD FETCH.that
   - name: to assign the acl to a var for reuse
-  - src: where to find it in the request
+  - fetch: compare [this] against [that]
   - flags: modifies the comparison
   - method: modifies the comparison
-  - value: what to compare against
 - named acl: `acl is_static path -i -m beg /static/`
 - anonymous: `use_backend be_static if { path -i -m beg /static/ }`
 - NOT conditions: `http-request deny if !{ src 10.0.0.0/16 }`
@@ -441,6 +441,19 @@
   - `http-request deny if { path -i -m beg /api/ } { src 10.0.0.0/16 }`
 - import args from file: `http-request deny if{ src -f /list/of/ip/addrs.acl }`
 
+### fetches
+
+- src: client IP address that that made the request
+- path: the path the client requested
+- path_beg: compares against the beginning of the requested path
+- url_param(poop): returns the value of poop
+- req: an object containing the full request
+  - ssl_hello_type
+  - hdr(poop): returns the value of the request header
+- HTTP: true if the request was an http request
+- TRUE: not quite sure how this actually works, check the proxy-stats it compares against the AUTH
+- ssl_fc: true if the connection was made over SSL and haproxy is locally deciphering it
+
 ### flags
 
 - `-i`: case insensitive match
@@ -453,6 +466,11 @@
 
 - if: `thisAction if thisAcl`
 - unless: `thisAction unless thisAcl`
+
+### functions
+
+- replace-path: e.g. to remove the api from from domain.com/api/poop
+  - `http-request replace-path /api(/)?(.*) /\2`
 
 ## workflows
 
