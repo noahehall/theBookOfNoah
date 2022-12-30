@@ -509,14 +509,6 @@ cpu-map auto:2/1-10   10-19
 cpu-map auto:3/1-10   20-29
 cpu-map auto:4/1-10   30-39
 
-# Map 80 threads to one physical socket and 80 others to another socket
-# without forcing assignment. These are split into 4 groups since no
-# group may have more than 64 threads.
-cpu-map 1/1-40   0-39 80-119    # node0, siblings 0 & 1
-cpu-map 2/1-40   0-39 80-119
-cpu-map 3/1-40   40-79 120-159  # node1, siblings 0 & 1
-cpu-map 4/1-40   40-79 120-159
-
 # backend specific
 balance roundrobin
 default-server check maxconn 20
@@ -528,7 +520,7 @@ server s1 app1.domain.com:80 check resolvers mydns maxconn 10
 balance <alog> <args>
 
 ## cookies
-cookie COOKIE_WOOKIE insert indirect nocache
+cookie POOP insert indirect nocache
 
 ## health checks
 option httpchk HEAD /
