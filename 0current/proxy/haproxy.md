@@ -42,6 +42,7 @@
   - [stats page](https://www.haproxy.com/blog/exploring-the-haproxy-stats-page/)
   - [logging](https://www.haproxy.com/blog/introduction-to-haproxy-logging/)
   - [observability types with haproxy](https://www.dotconferences.com/2018/06/willy-tarreau-observability-tips-with-haproxy)
+  - [stick tables: stateful requests](https://www.haproxy.com/blog/introduction-to-haproxy-stick-tables/)
 - acls
   - [intro](https://www.haproxy.com/blog/introduction-to-haproxy-acls/)
   - [acl basics](https://docs.haproxy.org/2.7/configuration.html#7.1)
@@ -52,6 +53,11 @@
 - protocols
   - [haproxy http/s same port](https://timjrobinson.com/haproxy-how-to-run-http-https-on-the-same-port/)
   - [haproxy and websockets](https://www.haproxy.com/blog/websockets-load-balancing-with-haproxy/)
+- security
+  - [common web threats](https://www.haproxy.com/blog/website-security-threats/)
+  - [app layer ddos protection](https://www.haproxy.com/blog/application-layer-ddos-attack-protection-with-haproxy/)
+  - [rate limiting](https://www.haproxy.com/blog/four-examples-of-haproxy-rate-limiting/)
+  - [secure cookies](https://www.haproxy.com/blog/how-to-secure-cookies-using-haproxy-enterprise/)
 - ssl
   - [ssl tut by mozilla](https://wiki.mozilla.org/Security/Server_Side_TLS)
   - [ssl cipher suite generator](https://mozilla.github.io/server-side-tls/ssl-config-generator/)
@@ -83,7 +89,7 @@
     - use nbproc to support multi processes; scale far superior than threads (nbthread)
     - always set `cpu-map` when using either to pin processes to a specific core for max performance
 - somtimes
-  - add denystats argument to a http-request deny directive to set custom response codes when rejecting request
+  - add deny_stats argument to a http-request deny directive to set custom response codes when rejecting request
 
 ### security
 
@@ -220,8 +226,8 @@
   - auth
   - capture
   - del-header: delete header
-  - denystatus
-  - deny: deny a incomming http request
+  - deny_status: set a custom respond code for deny and tarpet directives
+  - deny: deny a incomming http request with 403
   - redirect: perform some type of redirect
     - prefix: e.g. redirect all requests to /poop `http-request redirect prefix /poop if !{ path_beg /poop/ }`
     - scheme: e.g. redirect to h > s: `http-request redirect scheme https`
@@ -236,7 +242,9 @@
   - set-query: set the query string
   - set-uri: set the path and query string
   - set-var
-  - tarpit
+  - silent-drop: stop processing the rquest but dont notify the client
+  - tarpit: keep a request until `timeout tarpit` is reached then return a 500
+    - useful foir slowing down bots by overloading their connection tables
   - unless
   - unset-var
 - option contstats: enable continuous traffic statistics updates
@@ -568,6 +576,23 @@
 mkdir /var/empty && chmod = /var/empty || echo "failed"
 chroot /var/empty
 
+# deny all http1.0 requests which are often attacks
+http-request deny if HTTP_1.0
+# deny all requests whose user-agents contain a random md5sum (exactly 32) or <= 32 chars
+http-request deny if { req.hdr(user-agent) -m len le 32 }
+# prevent access to hidden files or directories
+http-request deny if { path -m sub /. }
+
+################## socat
+# + 2 methods for interacting with haproxy runtime api
+# ++ HAPROXY.sock is any sock, e.g.  /var/run/haproxy.sock
+socat HAPROXY.sock stdio # use in scripts
+socat HAPROXY.sock readline # issuing cmds by hand
+
+# + example noninteractive mode
+echo "show info; show stat; show table" | socat HAPROXY.sock stdio
+# interact with the runtime api
+echo "add acl /etc/hapee-1.8/whitelist.acl 1.2.3.4" |  socat HAPROXY.sock stdio
 
 ################## GLOBAL
 presetenv envKey defaultValue
@@ -599,6 +624,9 @@ usebackend apiservers if { pathbeg /api/ }
 # case insensitive match against patterns in a file
 path -i -m beg -f /etc/hapee/paths_secret.acl
 
+# if the user-agent header contains the word evil
+{ req.hdr(user-agent) -m sub evil }
+
 # multithreading
 nbproc 2
 nbthread 4
@@ -616,6 +644,9 @@ cpu-map auto:1/1-10   0-9
 cpu-map auto:2/1-10   10-19
 cpu-map auto:3/1-10   20-29
 cpu-map auto:4/1-10   30-39
+
+# deny a request and use a specific respond code
+http-request deny deny_status 429
 
 ################## backend
 balance roundrobin
@@ -722,14 +753,7 @@ haproxy -c -f /some/haproxy.cfg
 -dM
 
 
-################## socat
-# + 2 methods for interacting with haproxy via soxy
-# ++ HAPROXY.sock is any sock, e.g.  /var/run/haproxy.sock
-socat HAPROXY.sock stdio # use in scripts
-socat HAPROXY.sock readline # issuing cmds by hand
-# + example noninteractive mode
-# ++ e.g. via a script
-echo "show info; show stat; show table" | socat HAPROXY.sock stdio
+
 
 ################## env vars
 $HAPROXYLOCALPEER #get the peer name when using peers replication
