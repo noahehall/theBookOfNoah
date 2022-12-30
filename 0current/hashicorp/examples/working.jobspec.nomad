@@ -17,7 +17,7 @@ variable "services" {
         DEFAULT_DB_PORT       = string
         ENV                   = string
         POSTGRES_SERVICE_NAME = string
-        PROJECT_HOST_NAME     = string
+        PROJECT_HOSTNAME     = string
         PROJECT_NAME          = string
         PROXY_SERVICE_NAME    = string
         R_ROLE                = string
@@ -116,8 +116,8 @@ job "dev_core" {
         }
         auth_soft_fail = true # dont fail on auth errors
         force_pull     = true
-        image          = "${local.vaultenv.PROJECT_HOST_NAME}:${local.vaultenv.REG_HOST_PORT}/${local.vault.image}"
-        // hostname = "${local.vaultenv.PROJECT_HOST_NAME}"
+        image          = "${local.vaultenv.PROJECT_HOSTNAME}:${local.vaultenv.REG_HOST_PORT}/${local.vault.image}"
+        // hostname = "${local.vaultenv.PROJECT_HOSTNAME}"
         cap_add = [
           "${local.vault.cap_add[0]}"
         ]
@@ -141,7 +141,7 @@ job "dev_core" {
         DEFAULT_DB_PORT       = "${local.vaultenv.DEFAULT_DB_PORT}"
         ENV                   = "${local.vaultenv.ENV}"
         POSTGRES_SERVICE_NAME = "${local.vaultenv.POSTGRES_SERVICE_NAME}"
-        PROJECT_HOST_NAME     = "${local.vaultenv.PROJECT_HOST_NAME}"
+        PROJECT_HOSTNAME     = "${local.vaultenv.PROJECT_HOSTNAME}"
         PROJECT_NAME          = "${local.vaultenv.PROJECT_NAME}"
         PROXY_SERVICE_NAME    = "${local.vaultenv.PROXY_SERVICE_NAME}"
         R_ROLE                = "${local.vaultenv.R_ROLE}"

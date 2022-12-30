@@ -34,7 +34,7 @@ job "dev-core" {
       config {
         image = "[[ .services.core_vault.image ]]"
         ports = "[[ .services.core_vault.environment.VAULT_HOST_PORT_A ]]"
-        hostname = "[[ .services.core_vault.environment.PROJECT_HOST_NAME ]]"
+        hostname = "[[ .services.core_vault.environment.PROJECT_HOSTNAME ]]"
         cap_add = "[[ .services.core_vault.cap_add ]]"
         entrypoint = "[[ .services.core_vault.entrypoint ]]"
         ports = [ "vault "]
@@ -54,7 +54,7 @@ job "dev-core" {
         DEFAULT_DB_PORT = "[[ .services.core_vault.environment.DEFAULT_DB_PORT ]]"
         ENV = "[[ .services.core_vault.environment.ENV ]]"
         POSTGRES_SERVICE_NAME = "[[ .services.core_vault.environment.POSTGRES_SERVICE_NAME ]]"
-        PROJECT_HOST_NAME = "[[ .services.core_vault.environment.PROJECT_HOST_NAME ]]"
+        PROJECT_HOSTNAME = "[[ .services.core_vault.environment.PROJECT_HOSTNAME ]]"
         PROJECT_NAME = "[[ .services.core_vault.environment.PROJECT_NAME ]]"
         PROXY_SERVICE_NAME = "[[ .services.core_vault.environment.PROXY_SERVICE_NAME ]]"
         R_ROLE = "[[ .services.core_vault.environment.R_ROLE ]]"
