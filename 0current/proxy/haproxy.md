@@ -43,7 +43,9 @@
   - [observability types with haproxy](https://www.dotconferences.com/2018/06/willy-tarreau-observability-tips-with-haproxy)
 - acls
   - [intro](https://www.haproxy.com/blog/introduction-to-haproxy-acls/)
+  - [acl basics](https://docs.haproxy.org/2.7/configuration.html#7.1)
   - [acl fetching samples](https://docs.haproxy.org/2.7//onepage/#7.3)
+  - [acl converters](https://docs.haproxy.org/2.7/configuration.html#7.3.1)
   - [haproxy acls overview](https://www.haproxy.com/documentation/hapee/latest/configuration/acls/overview/)
   - [path based routing](https://www.haproxy.com/blog/path-based-routing-with-haproxy/)
 - protocols
@@ -421,11 +423,11 @@
 
 - query and set conditions for any information in a request or response before taking some action
   - routing decisions, redirectin requests, static responses, etc
-- syntax: acl NAME FETCH.this [FLAGS] METHOD FETCH.that
+- syntax: acl NAME FETCH.this[,converters,...X] [FLAGS] FETCH.that
   - name: to assign the acl to a var for reuse
   - fetch: compare [this] against [that]
+  - converters: transforms the fetch
   - flags: modifies the comparison
-  - method: modifies the comparison
 - named acl: `acl is_static path -i -m beg /static/`
 - anonymous: `use_backend be_static if { path -i -m beg /static/ }`
 - NOT conditions: `http-request deny if !{ src 10.0.0.0/16 }`
@@ -443,9 +445,13 @@
 
 ### fetches
 
+- some fetches have shorthands with built-in flags
+  - e.g. `path_beg` is shorthand for `path -m beg` that combines fetch path with flag `-m beg`
+  - FYI: if you chain a fetch with a converter you have to specify it using a flag
+    - best to just stay away from shorthands all together
 - src: client IP address that that made the request
 - path: the path the client requested
-- path_beg: compares against the beginning of the requested path
+- path_beg: shorthand for `-m beg`
 - url_param(poop): returns the value of poop
 - req: an object containing the full request
   - ssl_hello_type
@@ -454,13 +460,30 @@
 - TRUE: not quite sure how this actually works, check the proxy-stats it compares against the AUTH
 - ssl_fc: true if the connection was made over SSL and haproxy is locally deciphering it
 
+### converters
+
+- lower: lowercase
+- upper: uppercase
+- base64: base64 encodes
+- field: extract a value based on a word boundary like awk
+  - e.g. `field("a|b|c")` returns `c`
+- map: retrieve a value from a map file
+- regsub(regex): uses regex to transform
+  - e.g. remove `/static` from the start of the path `path,regsub(^/static,/)`
+
 ### flags
 
-- `-i`: case insensitive match
-
-### methods
-
-- `beg`: match on the beginning of the string
+- -i: case insensitive match
+- -m: specifies the match type
+  - beg: match on the beginning of the string
+  - str: exact string match
+  - end: end of string
+  - sub: substring match: poopsoupbloop matches poop, soup and bloop
+  - reg: CPU hungry match using regex
+  - found: true if the fetch is found, doesnt take any args
+    - e.g. `req.hdr(poop) -m found` returns true if request contains header poop
+  - len: returns the length of the fetch
+- -f: match against a list of strings in a file; strings in file cannot contain regex
 
 ### statements
 
@@ -508,7 +531,8 @@ http-request redirect scheme https unless { sslfc }
 
 # acls
 usebackend apiservers if { pathbeg /api/ }
-
+# case insensitive match against patterns in a file
+path -i -m beg -f /etc/hapee/paths_secret.acl
 # multithreading
 nbproc 2
 nbthread 4
