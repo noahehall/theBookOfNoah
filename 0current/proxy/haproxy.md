@@ -12,7 +12,8 @@
 ## links
 
 - [haproxy docs (start at configuration manaul and ctrl f it)](https://docs.haproxy.org/)
-  - hide the sidebar taking up too much real estate: `document.getElementById('sidebar').style.display = 'none' `
+  - hide the sidebar taking up too much real estate:
+    - document.getElementById('sidebar').style.display = 'none'
   - a sorted list of links somewhere on that screen: likely where you want to be for exploration
 - [haproxy enterprise docs](https://www.haproxy.com/documentation/hapee/)
 - [haproxy community](https://www.haproxy.org/)
@@ -38,9 +39,9 @@
   - [example configurations](http://git.haproxy.org/?p=haproxy-2.3.git;a=blob;f=examples/acl-content-sw.cfg;h=1872789ac2d1198f4321e77c0dad4f382cc8f206;hb=HEAD)
   - [multithreading in haproxy](https://www.haproxy.com/blog/multithreading-in-haproxy/)
 - observability
+  - [log intro](https://www.haproxy.com/blog/introduction-to-haproxy-logging/)
   - [log formats](https://www.sumologic.com/blog/haproxy-log-format/)
   - [stats page](https://www.haproxy.com/blog/exploring-the-haproxy-stats-page/)
-  - [logging](https://www.haproxy.com/blog/introduction-to-haproxy-logging/)
   - [observability types with haproxy](https://www.dotconferences.com/2018/06/willy-tarreau-observability-tips-with-haproxy)
   - [stick tables: stateful requests](https://www.haproxy.com/blog/introduction-to-haproxy-stick-tables/)
 - acls
@@ -81,7 +82,7 @@
     - insecure-setuid-wanted
     - ...
 - always
-  - each server should have a maxconn setting; even if its just a guess
+  - each frontend should have a maxconn setting; even if its just a guess
     - you can modify this to adapt to your environment
   - place the global section in its own file to be reused between multiple instances/machines
   - nbproc vs nbthread
@@ -136,7 +137,6 @@
   - features
     - statistics dashboard: html stats page, view tabular data containing metrics for each frontend, backend & bind directive
       - hit the runtime api and get the same data as json
-    - logs: hella shit related to each API call
 - connection queuing
 - authentication
 - device detection
@@ -146,6 +146,8 @@
 
 - socat: the swiss army knife for piping connectinos, connecting one thing to another
   - used to query haproxy runtime API on the cli, potentially piping it into other things
+- HALog: log analysis tool that’s shipped with HAProxy; designed to be deployed onto production servers where it can help with manual troubleshooting, such as when facing live issues
+  - e.g. `halog -srv -H < haproxy.log | column -t`
 
 ### enterprise modules
 
@@ -186,6 +188,9 @@
 - timeout http-keep-alive: Set the maximum allowed time to wait for a new HTTP request to appear
 - timeout http-request: the maximum allowed time to wait for a complete http request
 - timeout tarpit: Set the duration for which tarpitted connections will be maintained
+- http-response: modify the response; when used in a frontend, you must declare what your catpuring, see examples
+  - capture: extract details from the response for use in other actions, e.g. logging
+  - set-header: set a response header
 
 #### tcp
 
@@ -212,8 +217,8 @@
         - 'unix@' only a local unix socket
         - 'abns@' abstract linux namespace
       - port range: '80', '8000-8080',
-    - ssl: manage ssl terminations
-    - crt: manage TLS terminations
+    - ssl: manage ssl
+    - crt: specify where the location to a file/folder of certifications
     - process: when nbproc is enabled; specifies which process to use e.g. process 1
     - process-set: all|odd|even|number
     - thread-set: all|odd|even|number
@@ -224,7 +229,7 @@
   - add-header: set/add a header
   - allow
   - auth
-  - capture
+  - capture: extract additional details out of the request for use in other actions, e.g. logging or acls
   - del-header: delete header
   - deny_status: set a custom respond code for deny and tarpet directives
   - deny: deny a incomming http request with 403
@@ -235,7 +240,8 @@
   - reject
   - replace-header: regex replacement of an existing header
   - set-header: set/overwrite a header
-  - set-log-level
+  - set-log-level: change the log level of the current request when a certain
+    condition is met
   - set-method
   - set-path: set the path the client requested
     - e.g. `set-path /poop%[path] if !{ path_beg /poop }` prepends poop to all requests
@@ -250,18 +256,19 @@
 - option contstats: enable continuous traffic statistics updates
 - option http-ignore-probes: even more restrictive than `option dontlognull` as it prevents messages from being sent to the client
 - option dontlognull: Enable or disable logging of null connections; a connection on which no data has been transferred will not be logged
+- option dontlog-normal: ignores everything that isnt a timeout, retry or error
 - option httplog: enable rich logging of http request, session state and timers;
   - overrides any previous `log-format` directive
   - shouldnt be used in tcp mode
 - option tcplog: enable rich logging of tcp connections with session state and timers
   - shouldnt be used in http mode
-- log-format: specifies the log format string to use for traffic logs
-  - it can be as rich as option [http|tcp]log but you have to set it yourself
 - timeout client: maximum inactivity time on the client side; client must acknowledge/send data within this period
   - in http mode:
     - in first phase when the client sends the request
       - prefer setting the `timeout http-request` to protect haproxy from sloworis like attacks
     - in the response phase the client is reading data received from the server
+- maxconn: can be applied to a frontend
+- ssl-min-ver: set the minimum SSL version supported
 
 ### backend
 
@@ -312,8 +319,7 @@
   - if the server is located on the same LAN as haproxy, the connection should be less than a few milliseconds
 - timeout queue: Set the maximum time to wait in the queue for a connection slot to be free
 - max-keep-alive-queue:the maximum server queue size for maintaining keep-alive connections; set a threshold on the number of queued connections at which HAProxy stops trying to reuse the same server and prefers to find another one
-- http-response: modify the response
-  - set-header: set a response header
+- maxconn: can be applied to a specific server line
 
 ### listen
 
@@ -354,8 +360,8 @@
     - in which they share the total max connections set at the global level
   - protect against running out of memory
   - when set on frontends:
-    - development: set equal to global maxxconn
-    - loadbalancing: roughly spread the global maxxconn evenly between servers so they get a fair share of connections
+    - development: set equal to global maxconn
+    - loadbalancing: roughly spread the global maxconn evenly between servers so they get a fair share of connections
 - stick-table: used for rate limiting
 - rateabuse:
 - ssl-default-bind-ciphers: sets the default string describing the list of cipher algorithms ("cipher suite") that are negotiated during the SSL/TLS handshake up to TLSv1.2
@@ -411,33 +417,28 @@
 
 ### needs categorization
 
-- acl: ..
-
 - general configuration
   - mapfile: stores key/value associations in memory
     - e.g. concat & store host/path key and set the host/path value as a name for a backend to manage ACL routing rules
-  - option:
-  - log-option: set a custom log format
 - arguments: appended to directives to modify behavior
   - setting time:
     - 10 i.e. 10 milliseconds
     - 10s i.e. 10 seconds
     - 10m i.e. 10 minutes
-  - check: each server must opt into health checking
-  - maxconn: use the previous maxconn setting
-  - deny-status: set the status when denying a request
 
-### log management
+## SSL
 
-- set the log server ip:port in the globals section
-  - this way it is centralized
-  - configure your syslog daemon to listen to udp traffic
-    - some may need customization to enable this, dork it
+- Elliptic Curve (EC) and RSA certificates must be saved with `.rsa` and `.ecdsa` extensions, haproxy will choose the one the client supports, see example
 
 ## variables
 
 - set-var(txn.poop) toilet: set variable poop to toilet for this request
 - var(txn.poop): retrieve the value of txn.poop
+
+## formatting
+
+- str("Not API")
+- num("10")
 
 ### simple
 
@@ -451,9 +452,15 @@
 
 ### req
 
-- req: an object containing the full request
+- req: the request object
 - req.ssl_hello_type: retrieves the number from the ssl handshake, greater than 0 if ssl is/was negotiated
 - req.hdr(poop): returns the value of the request header
+- req.cook(cookiewookie)
+
+### res
+
+- res: the response object
+- res.hdr(poop)
 
 ### txn
 
@@ -461,16 +468,36 @@
 
 ## observability/monitoring
 
+### log management
+
+- centralize one/more log configurations in global
+  - e.g. you may send certain logs to certain places
+- then set `log global` in defaults, or specifically in frontends, backends and listens
+- When logging to a local Syslog service, writing to a UNIX socket can be faster than targeting the TCP loopback address
+  - UNIX socket listening for Syslog messages is available at /dev/log because this is where the syslog() function of the GNU C library is sending messages by default
+
+### log levels (increasing levels of verbosity)
+
+- emerge: process errors
+- alert: unexpected events
+- err: haproxy errors
+- warning: non critical errors
+- notice: server state changes
+- info: tcp/http request details and errors
+- debug
+
 ### log
 
 - log: startup|runtime warnings & errors; specify which syslog to use (e.g. Syslog/journald); Enable per-instance logging of events and traffic.
   - you need to setup the syslog daemon in order to read logs output by haproxy
-  - log stdout: likely what you want
-  - log /dev/log: traditional nix socket where Syslog & journald listen
-  - log local0: syslog facility for custom use
-  - log global: informs frontends to use the log setting defined in the global section
+- log /dev/log: traditional nix socket where Syslog & journald listen
+- log local0: syslog facility for custom use
+- log global: informs frontends to use the log setting defined in the global section
+- log-format: specifies the log format string to use for traffic logs
+- when running haproxy in a container:\
+  - log [stdout|stderr] format raw local0 info
 
-## log-format rules
+### log-format in acls
 
 - can be used in acls with
 - syntax `%[static|dynamic value]`
@@ -573,6 +600,7 @@
 ################## security tasks (keep this shit first)
 # first create the location on the cmd line
 # then set the chroot jail inside the config
+## supposedly haproxy will create the directory for you
 mkdir /var/empty && chmod = /var/empty || echo "failed"
 chroot /var/empty
 
@@ -582,6 +610,16 @@ http-request deny if HTTP_1.0
 http-request deny if { req.hdr(user-agent) -m len le 32 }
 # prevent access to hidden files or directories
 http-request deny if { path -m sub /. }
+
+# exact random things out of a request
+http-request capture req.hdr(Host) len 10
+http-request capture req.hdr(User-Agent) len 100
+http-response capture res.hdr(Content-Type) id 1
+
+# extract random things out of a response
+declare capture response len 20
+# you must point to the id of the thing, assigned in lexical order
+http-response capture res.hdr(Server) id 0
 
 ################## socat
 # + 2 methods for interacting with haproxy runtime api
@@ -618,6 +656,14 @@ bind :80-8080
 # ssl
 bind 10.0.0.3:443 ssl crt /etc/ssl/certs/mysite.pem
 http-request redirect scheme https unless { sslfc }
+
+# let haproxy choose which ssl cert to servce by leaving off the extension
+# mycert.pem.rsa && mycert.pem.ecdsa can be served via
+bind 10.0.0.3:443 ssl crt /etc/ssl/certs/mycert.pem
+
+# restrict access to the frontend to clients who dont provide the correct crt
+# see the `verify required` clause
+bind 10.0.0.3:443 ssl crt /etc/ssl/certs/mysite.pem verify required ca-file /etc/ssl/certs/ca.pem crl-file /etc/ssl/certs/crl.pem
 
 # acls
 usebackend apiservers if { pathbeg /api/ }
@@ -690,6 +736,21 @@ acl is_icons_path var(txn.path) -m beg /icons/
 http-request cache-use icons if is_icons_path
 http-response cache-store icons if is_icons_path
 
+################## log formats
+
+# format of option tcplog
+log-format "%ci:%cp [%t] %ft %b/%s %Tw/%Tc/%Tt %B %ts %ac/%fc/%bc/%sc/%rc %sq/%bq"
+
+# format of option httplog
+log-format "%ci:%cp [%tr] %ft %b/%s %TR/%Tw/%Tc/%Tr/%Ta %ST %B %CC %CS %tsc %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs %{+Q}r"
+
+# capture the result of an ACL
+# you have to save it in a variable and capture it
+acl is_api path_beg /api
+http-request set-var(req.is_api) str("Not API")
+http-request set-var(req.is_api) str("Is API") if is_api
+http-request capture var(req.is_api) len 10
+
 ################## haproxy cli
 # view haproxy help
 haproxy
@@ -751,8 +812,6 @@ haproxy -c -f /some/haproxy.cfg
 # ++ skipped shit
 -dG
 -dM
-
-
 
 
 ################## env vars
