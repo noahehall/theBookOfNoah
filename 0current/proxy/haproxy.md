@@ -1,5 +1,14 @@
 # haproxy
 
+- if something is in `# DEFAULTS`
+  - it can go anywhere
+- if something is in `# FRONTEND`
+  - it can NOT go in backend
+- if something is in `# BACKEND`
+  - it cannot go in frontend
+- if something can go in frontend / backend but not defaults
+  - havent figured where to put this shiz yet
+
 ## links
 
 - [haproxy docs (start at configuration manaul and ctrl f it)](https://docs.haproxy.org/)
