@@ -72,6 +72,8 @@
 
 ### security
 
+- TODO: remove this section and put directives in one of the others
+  - then add security to best practices with pointers to where things are
 - is designed to run with very limited privs
 - always isolate the haproxy process in a chroot jail and drop its privs to a non-root user without any perms inside the jail
   - requires:
