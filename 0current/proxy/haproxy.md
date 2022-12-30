@@ -416,6 +416,44 @@
   - configure your syslog daemon to listen to udp traffic
     - some may need customization to enable this, dork it
 
+## ACLs
+
+- query and set conditions for any information in a request or response before taking some action
+  - routing decisions, redirectin requests, static responses, etc
+- syntax: acl NAME SRC [FLAGS] METHOD VALUE
+  - name: to assign the acl to a var for reuse
+  - src: where to find it in the request
+  - flags: modifies the comparison
+  - method: modifies the comparison
+  - value: what to compare against
+- named acl: `acl is_static path -i -m beg /static/`
+- anonymous: `use_backend be_static if { path -i -m beg /static/ }`
+- NOT conditions: `http-request deny if !{ src 10.0.0.0/16 }`
+- OR conditions:
+  - `http-request deny if { path -i -m beg /evil/ } || { path -i -m end /evil }`
+  - http-request deny if starts_evil || ends_evil
+  - path starts with /evil/ (e.g. /evil/foo) or ends with /evil (e.g. /foo/evil) will be denied.
+- OR shorthand: specify the same acl NAME with multiple conditions
+  - `acl evil path_beg /evil/`
+  - `acl evil path_end /evil`
+  - `http-request deny if evil`
+- AND conditions: acls separated by spaces
+  - `http-request deny if { path -i -m beg /api/ } { src 10.0.0.0/16 }`
+- import args from file: `http-request deny if{ src -f /list/of/ip/addrs.acl }`
+
+### flags
+
+- `-i`: case insensitive match
+
+### methods
+
+- `beg`: match on the beginning of the string
+
+### statements
+
+- if: `thisAction if thisAcl`
+- unless: `thisAction unless thisAcl`
+
 ## workflows
 
 - testing syslog functionality
