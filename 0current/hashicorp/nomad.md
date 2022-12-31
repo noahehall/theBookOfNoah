@@ -22,7 +22,9 @@
   - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
   - [nomad consul connect stanza](https://developer.hashicorp.com/nomad/docs/job-specification/connect)
   - [docker](https://developer.hashicorp.com/nomad/docs/drivers/docker)
-  - [vault](https://developer.hashicorp.com/nomad/docs/configuration/vault#address)
+  - [vault](https://developer.hashicorp.com/nomad/docs/configuration/vault)
+  - [vault jobspec stanza](https://developer.hashicorp.com/nomad/docs/job-specification/vault)
+  - [vault config stanza](https://developer.hashicorp.com/nomad/docs/configuration/vault)
   - [fork/exec](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
 - provisioning
   - [enable tls](https://developer.hashicorp.com/nomad/tutorials/transport-security/security-enable-tls)
