@@ -20,7 +20,6 @@
 ### best practices/gotchas
 
 - generally never use kev=value pairs when you can send data via a file
-- only use consul/raft for storage backends to align with vault enterprise
 
 ## links
 
@@ -101,7 +100,7 @@
 
 - secret engines: store, generate/encrypt secrets
 - authentication methods: schemes for providing clients credentials to access secrets
-- sealed/unsealed: whether the root token and access key are encrypted; to unseal a sealed token you need at least 3 of the 5 key shares provided during server initialization before it can accept requires; you can change this to be more/less redundant (defense in depth tho) - keep the root token and unsealed keys far from each other as together they will fk up your whole weekend
+- sealed/unsealed: to unseal a sealed token you need at least x of the Y key shares provided during server initialization before its considered unsealed; you can change this to be more/less redundant (defense in depth tho) - keep the root token and unsealed keys far from each other as together they will fk up your whole weekend
 - unsealing vault: an initialized server restarts in a sealed state and has no access to anything other than an encrypted storage; the process of teaching the server how to decrypt the data is unsealing
 - secrets: are always encrypted and written to backend storage
 - leases: how long a secret can be accessed, lease_id & lease_duration (seconds) are most important
@@ -118,7 +117,7 @@
 - dev server is built-in and pre-configured vault server
   - not secure, in memory storage by default, and vault is unsealed
 - use cases: dev, testing,
-- e.g. `entrypoint: vault server -dev`
+- docker `entrypoint: vault server -dev`
   - `-dev`
     - Vault runs in-memory and starts unsealed. As the name implies, do not run "dev" mode in production.
   - `-dev-listen-address=<string>`
@@ -142,7 +141,7 @@
 
 ### server initialization
 
-- the process by which vaults storage backend is prepared to receive data
+- the process by which vault's storage backend is prepared to receive data
 - vault servers share the same storage BE in HA mode, so initialize only noccurs once
 - side effects
   - root key generation, encryption and storage
@@ -150,7 +149,8 @@
 
 #### seal/unseal: preferred for systems not involved in automation
 
-- an initial server is configured to know where and ohw to access storage, doesnt know how to decrypt any of it
+- we've automated this process in nirv-core
+- an initial server is configured to know where and how to access storage, doesnt know how to decrypt any of it
 - unsealing: the process of obtaining the root key neccesary to read the decryption key to decrypt the data
   - without unsealing: no useful operations can be executed against the vault server
   - in order to unseal data: vault needs to decrypt the encryption key using the rootkey
@@ -167,6 +167,7 @@
 
 - can do anything the cli can do but over http, and more
 - some vault features are only accessible via the http api
+  - script.vault.sh should be 99% http already
 
 ```sh
 # initialize a fresh vault server with POOR security
@@ -254,10 +255,11 @@ vault lease revoke some/lease/id
 ### cubbyhole
 
 - enabled by default
+- still not sure wtf this is, but i think each authenticated token gets a personal cubbyhole
 
 ### database
 
-- generates dynamic, ondemand database (e.g. postgres) credentials
+- some can generate dynamic, ondemand database (e.g. postgres) credentials
 
 ### aws
 
@@ -311,12 +313,20 @@ vault read aws/creds/my-poop-user
 - recovery tokens: used when operating vault in recovery mode
 - token roles: templates you can apply to tokens so you dont need need send a config on token creation
 
+#### token roles
+
+- token role: a role that specifies a tokens policies and token lifecycle
+- IMO:
+  - no token should be issued without a role
+  - no token should be issued that drifts from its assigned role
+
 #### batch tokens
 
 - encrypted BLOBS that carry enough info to perform vault actions without going through token renewal process
 - use cases:
   - a service (e.g. nomad) starting 1000 containers, all requesting tokens from vault to perform their init process
     - instead: the server agent can create batch token(s) with a short TTL
+  - nomad docs actually recommend a periodic token for the nomad server itself, but i think the notes above still apply to the services nomad starts
 - prohibited features
   - are not part of the data replication process because they are self contained
   - are not persisted
@@ -345,17 +355,25 @@ vault read aws/creds/my-poop-user
     - vault returns `token not found` if TTL the token ha expired
 - every non root token has a maxTTL relative to creation timestamp: after which it can no longer be renewed
 
-#### service token patterns
+#### orphan tokens
 
 - orphan tokens: tokens without a parent (can only be created by root/sudo)
   - do not expire when their creator does (because the creator isnt set as parent)
   - still expire by TTL and maxTTL constraints
+
+#### use-limited tokens
+
 - use-limited tokens: tokens that can be invoked X number of times
+
+#### periodic service tokens
+
 - periodic service tokens: tokens without a maxTTL and will only be revoked if not renewed with in TTL;
   - can only be created by root/sudo users
   - the `period` param becomes the tokens renewal period TTL
+
+#### short-lived tokens
+
 - short-lived tokens: tokens with a particularly short TTL and maxTTL value
-- token role: a role that specifies associated tokens policies and token lifecycle
 
 ```sh
 ################################### long list of things to add to vault.sh
