@@ -163,6 +163,67 @@
 
 - requires vualt enterprise? damn yo cant afford it...
 
+### server configuration
+
+- only component that interacts with the data storage and backends
+- the vault_addr is where you can access it
+- the vault server is the SINGLE policy authority
+  - there can be multiple authentication methods, but vault controls ALL authorization defined by vault policies for all authenticated humans and bots
+- follow the docs for gpg in links above, was super straight forward, no need for keybase
+
+```sh
+# initial a new vault server
+## only accepted when a server is started against a new backend
+## in HA mode this occurs once per cluster (not server)
+## returns root token and a set of unsealed keys
+vault operator init
+
+# unseal a sealed vault server
+## occurs whenever an initialized server restarts
+## requires that you can meet the unsealed keys threshold limit
+### 3 of 5 by default
+### can be provided by multiple mechanisms on multiple computers
+### when the value for sealed === false, your good to go
+vault operator unseal
+
+## now you can login, e.g. with the root token
+
+
+# gonna be a long fkn example
+
+api_addr = "http://127.0.0.1:8200" # where to route client requests
+cluster_addr = "https://127.0.0.1:8201" # for vault nodes in a cluster
+ui = true
+disable_mlock = false # should NEVER be true, fix ur fkn errors
+
+# raft integrated storage: production ready backend
+## delete the path will clear our all the data
+storage "raft" {
+  path    = "/vault/data"
+  node_id = "node1"
+}
+
+# listener is actually an array, you can define it multiple times
+## this defines where vault listens for api requests
+## you set this address as `VAULT_ADDR=poop` in client apps that have a vault client binary available
+listener "tcp" {
+  address     = "127.0.0.1:8200"
+  tls_disable = "true" # this should always be false in prod
+}
+
+
+```
+
+### storage
+
+#### raft storage
+
+- recommended for prod
+
+#### file storage
+
+- not quite sure what this is for
+
 ## http api
 
 - can do anything the cli can do but over http, and more
@@ -355,6 +416,12 @@ vault read aws/creds/my-poop-user
     - vault returns `token not found` if TTL the token ha expired
 - every non root token has a maxTTL relative to creation timestamp: after which it can no longer be renewed
 
+##### periodic service tokens
+
+- periodic service tokens: tokens without a maxTTL and will only be revoked if not renewed within TTL;
+  - can only be created by root/sudo users
+  - the `period` param becomes the tokens renewal period TTL
+
 #### orphan tokens
 
 - orphan tokens: tokens without a parent (can only be created by root/sudo)
@@ -364,12 +431,6 @@ vault read aws/creds/my-poop-user
 #### use-limited tokens
 
 - use-limited tokens: tokens that can be invoked X number of times
-
-#### periodic service tokens
-
-- periodic service tokens: tokens without a maxTTL and will only be revoked if not renewed with in TTL;
-  - can only be created by root/sudo users
-  - the `period` param becomes the tokens renewal period TTL
 
 #### short-lived tokens
 
@@ -516,57 +577,6 @@ path "secret/data/*" {
 path "secret/data/foo" {
   capabilities = ["read"]
 }
-
-```
-
-## server configuration
-
-- only component that interacts with the data storage and backends
-- the vault_addr is where you can access it
-- the vault server is the SINGLE policy authority
-  - there can be multiple authentication methods, but vault controls ALL authorization defined by vault policies for all authenticated humans and bots
-- follow the docs for gpg in links above, was super straight forward, no need for keybase
-
-```sh
-# initial a new vault server
-## only accepted when a server is started against a new backend
-## in HA mode this occurs once per cluster (not server)
-## returns root token and a set of unsealed keys
-vault operator init
-
-# unseal a sealed vault server
-## occurs whenever an initialized server restarts
-## requires that you can meet the unsealed keys threshold limit
-### 3 of 5 by default
-### can be provided by multiple mechanisms on multiple computers
-### when the value for sealed === false, your good to go
-vault operator unseal
-
-## now you can login, e.g. with the root token
-
-
-# gonna be a long fkn example
-
-api_addr = "http://127.0.0.1:8200" # where to route client requests
-cluster_addr = "https://127.0.0.1:8201" # for vault nodes in a cluster
-ui = true
-disable_mlock = false # should NEVER be true, fix ur fkn errors
-
-# raft integrated storage: production ready backend
-## delete the path will clear our all the data
-storage "raft" {
-  path    = "/vault/data"
-  node_id = "node1"
-}
-
-# listener is actually an array, you can define it multiple times
-## this defines where vault listens for api requests
-## you set this address as `VAULT_ADDR=poop` in client apps that have a vault client binary available
-listener "tcp" {
-  address     = "127.0.0.1:8200"
-  tls_disable = "true" # this should always be false in prod
-}
-
 
 ```
 
