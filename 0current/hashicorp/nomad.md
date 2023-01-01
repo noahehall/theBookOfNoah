@@ -76,33 +76,31 @@
 - spread scheduling: opposite of binpacking, goal is to distribute deployment loads across as many machines as possible
 - gossip protocol: used to connect all the server instances together
 
-## components
-
-### UI
+## UI
 
 - by default runs on http://localhost:4646
 
-#### jobs
+### jobs
 
 - lists all jobs, click to see status (like `nomad job status`)
 
-#### servers
+### servers
 
 - view of all server agents
 
-##### monitor
+#### monitor
 
 - nomad application logs with option to set the log level
 
-#### clients
+### clients
 
 - view of all client agents
 
-#### topology
+### topology
 
 - view of the cluster and running workload, useful for complex nomad environments
 
-### agents
+## agents
 
 - long running (but lightweight) process that must run on every machine in the cluster
 - registers the host machine with (cluster) server agents
@@ -115,7 +113,7 @@
     - plugin blocks are replaced and not merged
   - can be loaded like `nomad agent -config=single.conf -config=/etc/nomad -config=even.json -config=or.hcl`
 
-### job spec
+## job spec
 
 - the job spec is contained in a single file and should be checked into git
 - workflow
@@ -124,43 +122,43 @@
   - submit the job file to a server
   - review job status and logs
 
-#### JOB
+### JOB
 
 - each job spec should have a single job
 - each job may have multiple groups
 
-##### GROUP
+#### GROUP
 
 - a single group can have multiple tasks
 
-###### TASK
+##### TASK
 
 - a task is a single unit of work, e.g. a docker container
 
-### schedular
+## schedular
 
-### variables
+## variables
 
-#### env
+### env
 
 - env vars
   - are injected into the task env before starting
   - are always injected as strings
 
-#### template
+### template
 
 - template stanza: instantiates an instance ofa templare renderer
   - useful to interpolate configuration files for downstream services, e.g. docker, consul, vault, etc
   - useful for providing environment vars to the workload
   - uses consul template for interpolation
 
-#### artifact
+### artifact
 
 - external configuration: can be downloaded via the `artifact` block
   - downloaded config files can be used in the `template` block
 - can fetch any and unpack any file, eg tarball, binary, etc
 
-#### interpolation
+### interpolation
 
 - two types of variable interpolation: node attributribes and runtime environment vars
 - node attributes: in constraints, task env vars, and certain driver fields
@@ -269,6 +267,27 @@ ${attr.os.version} # poop ur majesty
   - plan and review changes with a nomad server
   - submit job file to nomad server
   - review job status and logs
+
+### vault integration
+
+- nomad servers and clients retrieve vault tokens that enables the nomad tasks to complete their duties
+- nomad servers automates token renewal for nomad clients
+- vault workflow
+  - create token role for nomad server:
+    - copypasta the policy to create and manage tokens for nomad clients.
+  - create token role use by nomad server thats enabled to create tokens of the type needed by nomad clients for their tasks in nomad jobspecs
+    - this token role is the parent token used to derive child tokens for jobs requesting tokens
+    - this token role should be limited to the policies needed by tasks in job specs
+      - allowed_policies: tasks may only request vault policies in this list
+        - always use this type
+      - disallowed_policies: tasks may request any vault policy thats not in this list
+  - Configure Nomad to use the created token role.
+  - create a period token assigned to the token role and give it to nomad server(s)
+- nomad workflow
+  - use the vault stanza in the nomad server configuration to setup vault integration
+    - dont use the root token in prod, or ever, its like dev mode
+    - provide vault server(s) with a periodic service token with assigned token role
+  - use the vault stanza in the jobspec task section to secure created infrastructure
 
 ## examples
 

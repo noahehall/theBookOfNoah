@@ -8,13 +8,13 @@
   - it cannot go in frontend
 - if something can go in frontend / backend but not defaults
   - havent figured where to put this shiz yet
+  - so always check the `ctrl f it` docs link
 
 ## links
 
 - [haproxy docs (start at configuration manaul and ctrl f it)](https://docs.haproxy.org/)
   - hide the sidebar taking up too much real estate:
     - document.getElementById('sidebar').style.display = 'none'
-  - a sorted list of links somewhere on that screen: likely where you want to be for exploration
 - [haproxy enterprise docs](https://www.haproxy.com/documentation/hapee/)
 - [haproxy community](https://www.haproxy.org/)
 - [haproxy community docs](https://www.haproxy.org/#docs)
