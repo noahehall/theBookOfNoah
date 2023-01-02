@@ -1,7 +1,32 @@
-# Links
+# Consul
 
-- [consul on docker hub](https://hub.docker.com/_/consul/)
--
+- Consul is a datacenter runtime that provides service discovery, configuration, and orchestration.
+
+## Links
+
+- [docs & tuts](https://developer.hashicorp.com/consul)
+- [docker hub](https://hub.docker.com/_/consul/)
+- [github for docker-consul](https://github.com/hashicorp/docker-consul)
+- [the dockerfile](https://github.com/hashicorp/docker-consul/blob/master/0.X/Dockerfile)
+- [github](https://github.com/hashicorp/consul)
+- [consul vocabulary](https://developer.hashicorp.com/consul/docs/install/glossary)
+- [service mesh proxy overview](https://developer.hashicorp.com/consul/docs/connect/proxies)
+- tuts
+  - [getting started](https://learn.hashicorp.com/tutorials/consul/get-started-service-discovery?utm_source=docs)
+  - [deploy consul server](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-deploy)
+  - [day 2](https://developer.hashicorp.com/consul/tutorials/datacenter-operations)
+- architecture
+  - [consul architecture guide](https://developer.hashicorp.com/consul/docs/architecture)
+  - [reference architecture tutorial](https://developer.hashicorp.com/consul/tutorials/production-deploy/reference-architecture)
+  - [gossip protocol](https://developer.hashicorp.com/consul/docs/architecture/gossip)
+  - [consensus protocol](https://developer.hashicorp.com/consul/docs/architecture/consensus)
+- server
+- agent
+  - [agent config reference](https://developer.hashicorp.com/consul/docs/agent/config/config-files)
+- registration
+  - [register services](https://developer.hashicorp.com/consul/docs/discovery/services)
+  - [health checks](https://developer.hashicorp.com/consul/docs/discovery/checks)
+- provision
 
 # terminology
 
@@ -63,10 +88,9 @@
 1. host services register with consul agent clients
 2. host applications query consul agent servers, e.g. foo.service.consul
 
-
-    - receives a randomly shuffled subset of all the hosts providing service 'foo'
-      - this allows applications to locate services and balance the load without any intermediate proxies
-      -
+   - receives a randomly shuffled subset of all the hosts providing service 'foo'
+     - this allows applications to locate services and balance the load without any intermediate proxies
+     -
 
 # cmds
 

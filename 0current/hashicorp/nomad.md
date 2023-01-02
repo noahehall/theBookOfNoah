@@ -67,6 +67,8 @@
   - [task stanza](https://developer.hashicorp.com/nomad/docs/job-specification/task#user)
 - networking
   - [network stanza](https://developer.hashicorp.com/nomad/docs/job-specification/network)
+- services
+  - [service stanza](https://developer.hashicorp.com/nomad/docs/job-specification/service)
 
 ## terms
 
