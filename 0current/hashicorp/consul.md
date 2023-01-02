@@ -44,23 +44,16 @@
   - maintain a centralized view of the cluster's state
   - respond to queries from other agents in the cluster
   - at least one required in a consul cluster, and usually 3 - 5 for high availability
+- control plane: enables you to register, query and secure services deployed across a network
+- data plane: processes data requests
 
-## variables
+## basics
 
-- cluster address (ip): the address at which other consul agents may contact a given agent
-  - aka `bind=EXTERNAL_IP`
-  - set `CONSUL_BIND_INTERFACE` env var to a interface name and consul will automatically set the bind address
-- client address (ip): the address where other processes on the host contact consul in order to make HTTP/DNS requests
-  - set `CONSUL_CLIENT_INTERFACE` env var to an interface name and consul will automatically st the client ip
+- consul maintains a central registry to track services and their respective ips; a distributed system than runs on clusters of nodes
+- each host in a consul cluster runs the consul agent
+- Services: register with their local host consul agents
 
-## docker
-
-- consul should always be run with `--net=host` in docker because consul's consensus and gossip protocols are sensitive to delays and packet loss
-  - cluster address: is the host IP address
-    - aka `bind=EXTERNAL_IP`
-  - client address: is the consul agent IP address for host processes to make HTTP/DNS queries
-
-## locations
+### locations
 
 - `/consul/data` for persisted state when not in dev mode
   - client agents: information about the cluster and the client's health checks in case the container is restarted
@@ -69,19 +62,36 @@
 - `/consul/config` agent config files
   - alternative configs can be added by passing the configuration JSON via environment variable `CONSUL_LOCAL_CONFIG`
 
-## basics
+### docker
 
-- each host in a consul cluster runs the consul agent
-- Host Applications
-  - apps running on a given host only communicate with their local consul agent via HTTP/DNS
-- Host Services
-  - register with their local host consul agents
-  -
+- consul should always be run with `--net=host` in docker because consul's consensus and gossip protocols are sensitive to delays and packet loss
+  - cluster address: is the host IP address
+    - aka `bind=EXTERNAL_IP`
+  - client address: is the consul agent IP address for host processes to make HTTP/DNS queries
 
-## flow
+### flow
 
-1. host services register with consul agent clients
-2. host applications query consul agent servers, e.g. foo.service.consul
-   - receives a randomly shuffled subset of all the hosts providing service 'foo'
-     - this allows applications to locate services and balance the load without any intermediate proxies
-     -
+- register: add services to the consul registry; the runtime source of truth for all services and theri addresses
+- query: find healthy services registered with consul; services access eachother through their local proxy according to identity-baed policies
+- secure: consul manages authnz for service-to-service communication
+
+## server agents
+
+## client agents
+
+## variables
+
+- cluster address (ip): the address
+  - aka ``
+  - set `` env var to a interface name and
+
+```sh
+# consul will automatically st the client ip address where other processes on the host contact consul in order to make HTTP/DNS requests
+CONSUL_CLIENT_INTERFACE=eth0
+
+# consul will automatically set the bind address at which other consul agents may contact a given agent
+CONSUL_BIND_INTERFACE=eth0?
+
+# address at which other consul agents may contact a given agent
+bind=external.ip.addr
+```
