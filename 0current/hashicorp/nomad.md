@@ -9,15 +9,22 @@
   - [all tuts via nomad portal](https://developer.hashicorp.com/nomad/tutorials)
   - [all tuts via developer portal (i like this one better)](https://developer.hashicorp.com/tutorials/library?product=nomad)
   - [tips and tricks by daniela](https://danielabaron.me/blog/nomad-tips-and-tricks/)
-- users
   - [users with exec driver & host volumes](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/exec-users-host-volumes)
+- storage
+  - [stateful workloads with host volumes tutorial](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/stateful-workloads-host-volumes)
+  - [client config host volumes](https://developer.hashicorp.com/nomad/docs/configuration/client#host_volume-stanza)
+  - [group config volumes](https://developer.hashicorp.com/nomad/docs/job-specification/volume)
+  - [task config volumes](https://developer.hashicorp.com/nomad/docs/job-specification/volume_mount)
 - variables
+  - [runtime vars](https://developer.hashicorp.com/nomad/docs/runtime/environment)
   - [env stanza](https://developer.hashicorp.com/nomad/docs/job-specification/env)
   - [template stanza](https://developer.hashicorp.com/nomad/docs/job-specification/template)
   - [consul template used by template stanza](https://github.com/hashicorp/consul-template)
   - [external configuration](https://developer.hashicorp.com/nomad/docs/job-specification/artifact)
 - plugins
   - [plugin stanza](https://developer.hashicorp.com/nomad/docs/configuration/plugin)
+  - [container networking plugins](https://github.com/containernetworking/plugins/releases/tag)
+  - [csi plugins: container storage volumes](https://developer.hashicorp.com/nomad/docs/job-specification/csi_plugin)
 - drivers/integrations
   - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
   - [nomad consul connect stanza](https://developer.hashicorp.com/nomad/docs/job-specification/connect)
@@ -26,6 +33,7 @@
   - [vault jobspec stanza](https://developer.hashicorp.com/nomad/docs/job-specification/vault)
   - [vault config stanza](https://developer.hashicorp.com/nomad/docs/configuration/vault)
   - [fork/exec](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
+  - [consul connect](https://developer.hashicorp.com/nomad/docs/integrations/consul-connect)
 - provisioning
   - [enable tls](https://developer.hashicorp.com/nomad/tutorials/transport-security/security-enable-tls)
   - [encryption tutorials](https://developer.hashicorp.com/nomad/tutorials/transport-security)
@@ -40,8 +48,11 @@
   - [status](https://developer.hashicorp.com/nomad/docs/commands/status)
   - [server configuration](https://developer.hashicorp.com/nomad/docs/configuration/server)
   - [nomad configuration](https://developer.hashicorp.com/nomad/docs/configuration)
-- jobs
+  - [client configuration](https://developer.hashicorp.com/nomad/docs/configuration/client#cni_path)
+  - network
+    - [network stanza](https://developer.hashicorp.com/nomad/docs/job-specification/network#bridge)
   - [networking](https://developer.hashicorp.com/nomad/docs/job-specification/network)
+- jobs
   - [accessing logs](https://developer.hashicorp.com/nomad/tutorials/manage-jobs/jobs-accessing-logs)
   - [job init](https://developer.hashicorp.com/nomad/docs/commands/job/init)
   - [jobspec](https://developer.hashicorp.com/nomad/docs/job-specification)
@@ -122,16 +133,26 @@
   - submit the job file to a server
   - review job status and logs
 
-### JOB
+### job
 
 - each job spec should have a single job
 - each job may have multiple groups
 
-#### GROUP
+#### group
 
-- a single group can have multiple tasks
+- defines a series of tasks that should be co-located on the same nomad client
 
-##### TASK
+##### network
+
+- network requirements, (e.g. network mode and ports) to provided to tasks they boot
+- only appropriate for services that want to listen on a port
+  - services that make only outbound coonections do not need port allocations
+- bridge mode: all takss in the group share the same network namespace (required for consul connect)
+  - requires CNI plugins to be installed at the location specified in teh clients cni_path configuration
+  - tasks running in a network namespace are not visible to applications outside the namespace ont he same host
+  - enables connect-enabled apps to bind only to localhost within the shared network stack, and use the proxy for in/out traffic
+
+##### task
 
 - a task is a single unit of work, e.g. a docker container
 
