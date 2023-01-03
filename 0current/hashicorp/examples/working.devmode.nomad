@@ -5,7 +5,7 @@
 data_dir   = "/var/lib/nomad"
 datacenter = "us_east"
 log_level  = "INFO"
-name       = "development_nirvai_core_leader"
+name       = "development_nirvai_web_leader"
 region     = "global"
 
 # not used when addresses is {}" defined

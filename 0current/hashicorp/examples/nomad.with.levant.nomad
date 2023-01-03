@@ -1,6 +1,6 @@
 job "dev-core" {
-  datacenters = [ "[[ .services.core_vault.environment.DATA_CENTER ]]" ]
-  region      = "[[ .services.core_vault.environment.REGION ]]"
+  datacenters = [ "[[ .services.web_vault.environment.DATA_CENTER ]]" ]
+  region      = "[[ .services.web_vault.environment.REGION ]]"
 
   type = "service"
 
@@ -21,10 +21,10 @@ job "dev-core" {
 
     network {
       mode   = "bridge"
-      hostname = "[[ .services.core_vault.hostname ]]"
+      hostname = "[[ .services.web_vault.hostname ]]"
 
       port "vault" {
-        static = "[[ .services.core_vault.environment.VAULT_HOST_PORT_A ]]"
+        static = "[[ .services.web_vault.environment.VAULT_HOST_PORT_A ]]"
       }
     }
 
@@ -32,14 +32,14 @@ job "dev-core" {
       driver = "docker"
 
       config {
-        image = "[[ .services.core_vault.image ]]"
-        ports = "[[ .services.core_vault.environment.VAULT_HOST_PORT_A ]]"
-        hostname = "[[ .services.core_vault.environment.PROJECT_HOSTNAME ]]"
-        cap_add = "[[ .services.core_vault.cap_add ]]"
-        entrypoint = "[[ .services.core_vault.entrypoint ]]"
+        image = "[[ .services.web_vault.image ]]"
+        ports = "[[ .services.web_vault.environment.VAULT_HOST_PORT_A ]]"
+        hostname = "[[ .services.web_vault.environment.PROJECT_HOSTNAME ]]"
+        cap_add = "[[ .services.web_vault.cap_add ]]"
+        entrypoint = "[[ .services.web_vault.entrypoint ]]"
         ports = [ "vault "]
         volumes = [
-          [[ range $vol := $.services.core_vault.volumes ]]
+          [[ range $vol := $.services.web_vault.volumes ]]
             "[[ $vol.source ]]:[[ $vol.target ]]"
           [[ end ]]
         ]
@@ -47,24 +47,24 @@ job "dev-core" {
 
       # @see https://developer.hashicorp.com/nomad/docs/job-specification/env
       env {
-        BFF_SERVICE_NAME = "[[ .services.core_vault.environment.BFF_SERVICE_NAME ]]"
-        DATA_CENTER = "[[ .services.core_vault.environment.DATA_CENTER ]]"
-        DEFAULT_DB = "[[ .services.core_vault.environment.DEFAULT_DB ]]"
-        DEFAULT_DB_HOST = "[[ .services.core_vault.environment.DEFAULT_DB_HOST ]]"
-        DEFAULT_DB_PORT = "[[ .services.core_vault.environment.DEFAULT_DB_PORT ]]"
-        ENV = "[[ .services.core_vault.environment.ENV ]]"
-        POSTGRES_SERVICE_NAME = "[[ .services.core_vault.environment.POSTGRES_SERVICE_NAME ]]"
-        PROJECT_HOSTNAME = "[[ .services.core_vault.environment.PROJECT_HOSTNAME ]]"
-        PROJECT_NAME = "[[ .services.core_vault.environment.PROJECT_NAME ]]"
-        PROXY_SERVICE_NAME = "[[ .services.core_vault.environment.PROXY_SERVICE_NAME ]]"
-        R_ROLE = "[[ .services.core_vault.environment.R_ROLE ]]"
-        REGION = "[[ .services.core_vault.environment.REGION ]]"
-        RW_ROLE = "[[ .services.core_vault.environment.RW_ROLE ]]"
-        UI_SERVICE_NAME = "[[ .services.core_vault.environment.UI_SERVICE_NAME ]]"
-        VAULT_ADDR = "[[ .services.core_vault.environment.VAULT_ADDR ]]"
-        VAULT_CONT_PORT_A = "[[ .services.core_vault.environment.VAULT_CONT_PORT_A ]]"
-        VAULT_HOST_PORT_A = "[[ .services.core_vault.environment.VAULT_HOST_PORT_A ]]"
-        VAULT_SERVICE_NAME = "[[ .services.core_vault.environment.VAULT_SERVICE_NAME ]]"
+        WEB_BFF_HOSTNAME = "[[ .services.web_vault.environment.WEB_BFF_HOSTNAME ]]"
+        DATA_CENTER = "[[ .services.web_vault.environment.DATA_CENTER ]]"
+        DEFAULT_DB = "[[ .services.web_vault.environment.DEFAULT_DB ]]"
+        DEFAULT_DB_HOST = "[[ .services.web_vault.environment.DEFAULT_DB_HOST ]]"
+        DEFAULT_DB_PORT = "[[ .services.web_vault.environment.DEFAULT_DB_PORT ]]"
+        ENV = "[[ .services.web_vault.environment.ENV ]]"
+        WEB_POSTGRES_HOSTNAME = "[[ .services.web_vault.environment.WEB_POSTGRES_HOSTNAME ]]"
+        PROJECT_HOSTNAME = "[[ .services.web_vault.environment.PROJECT_HOSTNAME ]]"
+        PROJECT_NAME = "[[ .services.web_vault.environment.PROJECT_NAME ]]"
+        PROXY_SERVICE_NAME = "[[ .services.web_vault.environment.PROXY_SERVICE_NAME ]]"
+        R_ROLE = "[[ .services.web_vault.environment.R_ROLE ]]"
+        REGION = "[[ .services.web_vault.environment.REGION ]]"
+        RW_ROLE = "[[ .services.web_vault.environment.RW_ROLE ]]"
+        WEB_UI_HOSTNAME = "[[ .services.web_vault.environment.WEB_UI_HOSTNAME ]]"
+        VAULT_ADDR = "[[ .services.web_vault.environment.VAULT_ADDR ]]"
+        VAULT_CONT_PORT_A = "[[ .services.web_vault.environment.VAULT_CONT_PORT_A ]]"
+        VAULT_HOST_PORT_A = "[[ .services.web_vault.environment.VAULT_HOST_PORT_A ]]"
+        VAULT_SERVICE_NAME = "[[ .services.web_vault.environment.VAULT_SERVICE_NAME ]]"
       }
 
       resources {

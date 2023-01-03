@@ -4,19 +4,19 @@ variable "name" {
 
 variable "services" {
   type = object({
-    core_vault = object({
+    web_vault = object({
       build          = map(string)
       cap_add        = list(string)
       container_name = string
       entrypoint     = list(string)
       environment = object({
-        BFF_SERVICE_NAME      = string
+        WEB_BFF_HOSTNAME      = string
         DATA_CENTER           = string
         DEFAULT_DB            = string
         DEFAULT_DB_HOST       = string
         DEFAULT_DB_PORT       = string
         ENV                   = string
-        POSTGRES_SERVICE_NAME = string
+        WEB_POSTGRES_HOSTNAME = string
         PROJECT_HOSTNAME     = string
         PROJECT_NAME          = string
         PROXY_SERVICE_NAME    = string
@@ -24,7 +24,7 @@ variable "services" {
         REG_HOST_PORT         = string
         REGION                = string
         RW_ROLE               = string
-        UI_SERVICE_NAME       = string
+        WEB_UI_HOSTNAME       = string
         VAULT_ADDR            = string
         VAULT_CONT_PORT_A     = string
         VAULT_HOST_PORT_A     = string
@@ -61,7 +61,7 @@ variable "networks" {
 
 variable "volumes" {
   type = object({
-    nirvai_core_postgres = object({
+    nirvai_web_postgres = object({
       name     = string
       external = bool
     })
@@ -71,8 +71,8 @@ variable "volumes" {
 locals {
   networks = var.networks
   volumes  = var.volumes
-  vault    = var.services.core_vault
-  vaultenv = var.services.core_vault.environment
+  vault    = var.services.web_vault
+  vaultenv = var.services.web_vault.environment
 }
 
 job "dev_core" {
@@ -134,20 +134,20 @@ job "dev_core" {
 
       # @see https://developer.hashicorp.com/nomad/docs/job-specification/env
       env {
-        BFF_SERVICE_NAME      = "${local.vaultenv.BFF_SERVICE_NAME}"
+        WEB_BFF_HOSTNAME      = "${local.vaultenv.WEB_BFF_HOSTNAME}"
         DATA_CENTER           = "${local.vaultenv.DATA_CENTER}"
         DEFAULT_DB            = "${local.vaultenv.DEFAULT_DB}"
         DEFAULT_DB_HOST       = "${local.vaultenv.DEFAULT_DB_HOST}"
         DEFAULT_DB_PORT       = "${local.vaultenv.DEFAULT_DB_PORT}"
         ENV                   = "${local.vaultenv.ENV}"
-        POSTGRES_SERVICE_NAME = "${local.vaultenv.POSTGRES_SERVICE_NAME}"
+        WEB_POSTGRES_HOSTNAME = "${local.vaultenv.WEB_POSTGRES_HOSTNAME}"
         PROJECT_HOSTNAME     = "${local.vaultenv.PROJECT_HOSTNAME}"
         PROJECT_NAME          = "${local.vaultenv.PROJECT_NAME}"
         PROXY_SERVICE_NAME    = "${local.vaultenv.PROXY_SERVICE_NAME}"
         R_ROLE                = "${local.vaultenv.R_ROLE}"
         REGION                = "${local.vaultenv.REGION}"
         RW_ROLE               = "${local.vaultenv.RW_ROLE}"
-        UI_SERVICE_NAME       = "${local.vaultenv.UI_SERVICE_NAME}"
+        WEB_UI_HOSTNAME       = "${local.vaultenv.WEB_UI_HOSTNAME}"
         VAULT_ADDR            = "${local.vaultenv.VAULT_ADDR}"
         VAULT_CONT_PORT_A     = "${local.vaultenv.VAULT_CONT_PORT_A}"
         VAULT_HOST_PORT_A     = "${local.vaultenv.VAULT_HOST_PORT_A}"

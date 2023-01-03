@@ -1,5 +1,16 @@
 # docker
 
+```sh
+put these somewhere
+###################### READ FIRST
+# @see [repo] https://github.com/distribution/distribution
+# @see [docs] https://github.com/docker/docs/tree/main/registry
+# @see https://www.marcusturewicz.com/blog/build-and-publish-docker-images-with-github-packages/
+## @see https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
+######################
+
+```
+
 - my (2022) docker cheatsheet
 - TODO: finish copying stuff from the old docker cheatsheet
 
