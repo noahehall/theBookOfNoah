@@ -9,6 +9,7 @@
 - [docker ref](https://docs.docker.com/reference/)
 - [docker guides: overview](https://docs.docker.com/get-started/overview/)
 - [docker dev best practices](https://docs.docker.com/develop/dev-best-practices/)
+- [container runtimes](https://github.com/opencontainers/runtime-spec/blob/main/implementations.md)
 - interwebs
   - [docker + buildkit](https://devopsspiral.com/articles/containers/modernize-image-builds/)
   - [docker arg, env explanation](https://vsupalov.com/docker-arg-env-variable-guide/)
@@ -314,12 +315,26 @@ services:
   SERVICE_Y:
     # definition
 
-# service is enabled when environment matches one these values
-# services without a profies: are always active
-profiles:
-  - test
-networks:
-  - point to name in top level networks
+### security
+init: true # run an init process (PID 1) that forwards signals & reaps processes
+cap_add: # list of linux capabilities to enable
+cap_drop: # list of linux capabilities to disable
+cgroup_parent: poop # parent cgroup for this service
+group_add: # the USER will be added as member of the group
+  - poopgroup
+# configures IPC isolation mode
+ipc: "shareable" # this service is isolated, but other services can join
+ipc: "service:poop" # join poops ipc
+isolation: ? # specifies the services isolation technology
+logging:
+  driver: syslog
+  syslog-address: "tcp://192.168.0.42:123"
+platform: linux/arm64/v8/ # target plaform services will run on
+privileged: true|false # run with elevated privileges
+
+
+### file system
+read_only: false #
 secrets:
   - point to name in top level secrets
 volumes:
@@ -352,23 +367,6 @@ mem_swappiness: 100 # sets all anonymouse pages as swappable
 # requires deploy.limits.memory to also be set
 memswap_limit: ?
 
-### security
-init: true # run an init process (PID 1) that forwards signals & reaps processes
-cap_add: # list of linux capabilities to enable
-cap_drop: # list of linux capabilities to disable
-cgroup_parent: poop # parent cgroup for this service
-group_add: # the USER will be added as member of the group
-  - poopgroup
-# configures IPC isolation mode
-ipc: "shareable" # this service is isolated, but other services can join
-ipc: "service:poop" # join poops ipc
-isolation: ? # specifies the services isolation technology
-logging:
-  driver: syslog
-  syslog-address: "tcp://192.168.0.42:123"
-platform: linux/arm64/v8/ # target plaform services will run on
-
-
 ### networking
 container_name: poop # cant scale pass 1 if set, see extends for workaround
 hostname: a.b.c. # of the container: should be unique to avoid resolution issues
@@ -376,15 +374,6 @@ domainname: b.c. # of the container
 mac_address: ? # sets the MAC address
 extra_hosts: # added to /etc/hosts
   - poop:123.123.123.123
-healthcheck: # overrides HEALTHCHECK defined in dockerfile
-  test: ["CMD", "curl", "-f", "http://localhost"]
-  test: ["CMD-SHELL", "curl -f http://localhost || exit 1"]
-  test: curl -f https://localhost || exit 1 # same as CMD-SHELL
-  interval: 1m30s
-  timeout: 10s
-  retries: 3
-  start_period: 40s
-  disable: true # disable healthcheck set by the image
 network_mode: "none" # disable all container networking
 network_mode: "host" # raw access to host network interface
 network_mode: "service:poop" # access only to poop
@@ -397,6 +386,8 @@ networks: # reference top-level networks
     ipv4_address: 123.123.123.123 # for this service
     ipv6_address: 123.123.123.123 # for this service
 # cant be used with network_mode: host
+# ranges are useful when scaling services
+# ^ to restrict specific services to specific ports
 ports:
   - "127.0.0.1:5000-5010:5000-5010"
   # expose container port(s)
@@ -408,12 +399,28 @@ ports:
   - "6060:6060/udp" # or tcp
   # expanded format
   - target: 80 # container
-    host_ip: 127.0.0.1
+    host_ip: 127.0.0.1 # if unset binds to 0.0.0.0
     published: 8080 # host
     protocol: tcp
     mode: host
 
-### basic
+### runtime
+healthcheck: # overrides HEALTHCHECK defined in dockerfile
+  test: ["CMD", "curl", "-f", "http://localhost"]
+  test: ["CMD-SHELL", "curl -f http://localhost || exit 1"]
+  test: curl -f https://localhost || exit 1 # same as CMD-SHELL
+  interval: 1m30s
+  timeout: 10s
+  retries: 3
+  start_period: 40s
+  disable: true # disable healthcheck set by the image
+
+restart: "no|always|on-failure|unless-stopped"
+# service is enabled when current profile matches
+# services without a profies: are always active
+profiles:
+  - test
+
 labels:
   com.docker.compose.project: "always set to the project name"
   com.docker.compose.service: "always set to the service name"
@@ -433,6 +440,8 @@ entrypoint: /in/container/poop.sh
 
 
 ### build
+# if the image is pulled from registry and if its rebuilt
+pull_policy: "always|never|missing|build"
 # template for a container
 image: redis
 image: redis:5
