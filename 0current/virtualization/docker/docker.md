@@ -250,76 +250,99 @@ COMPOSE_PROJECT_NAME # name:
   - volumes live outside of the container (just a mounted filesystem) so changes here are reflected in running containers
   - volumes override anything mounted in the image (i.e. add, copy cmds) at the same location
 - configs: read only files mounted into the container (sorta like volumes) for platform/runtime configuration
-- secret: read only sensitive data that should not be exposed
+- secrets: read only sensitive data that should not be exposed
 - name: project name to enable individual deployment of an application on a platform
   - groups and isolate resources, resource names are prefixed with this value
   - you can deploy the same compose on the same host just by setting the project name
 
 ```sh
+############################### top level components
 # version: '3.8'  # dont set a version, its ignored
+
+
+############### project name
 name: ${PROJECT_NAME}
+
+############### services
 services:
   SERVICE_X:
-    # u cannot scale a service beyond 1 container
-    # if supplying a static container name
-    container_name: poop
+    # definition
+  SERVICE_Y:
+    # definition
 
-    # service is enabled when environment matches one these values
-    # services without a profies: are always active
-    profiles:
-      - test
+# u cannot scale a service beyond 1 container
+# if supplying a static container name
+container_name: poop
 
-    # grant access to pre-existing configs
-    # mounted at /configname in container
-    configs:
-      # short
-        - config1
-        - configX
-      # exanded
-        - source: configname
-        target: /mount/path/configname
-        uid: 'owner'
-        gid: 'group'
-        mode: 0444 # default
-    # override the default cmd
-    command: any linux cmd here
-    command: ['or', 'as', 'a', 'list', 'when', 'passing', 'args']
+# service is enabled when environment matches one these values
+# services without a profies: are always active
+profiles:
+  - test
+networks:
+  - point to name in top level networks
+secrets:
+  - point to name in top level secrets
+volumes:
+  - point to name in top level volumes
+configs:
+  # short
+    - point to name in top level configs
+  # exanded
+    - source: point to name in top level configs
+    target: /mount/path/configname
+    uid: 'owner'
+    gid: 'group'
+    mode: 0444 # default
 
-    image: SOME_NAME:SOME_TAG
-    # string/object, but not both
+### perf
+cpu_count: 2 # total usable cpus
+cpu_percent: 50 # usable % per cpu
+cpu_shares: ? # weighted cpu allocation relative to other containers
+cpu_quota: ? # configure CFS period; only for linux (winning)
 
-    build: ./dir/with/dockerfile
-    build:
-        # path/url
-        # path - containing dockerfile
-        # url - git repository
-        context: ./build/context
-        # if specified, context required
-        dockerfile: /path/some.dockerfile
-        # accessible only during build process
-        # must exist in dockerfile
-        args:
-            - ARGX=VALX
-            - ARGY #take val from env
+# @see https://docs.docker.com/compose/compose-file/#blkio_config
+# defines config options for block storage IO limits
+blkio_config:
 
-        # list of images the engine uses
-        # for cache resolution
-        cache_from:
-            - alpine:latest
-            - corp/web:123.4
+# override the default cmd
+command: any linux cmd here
+command: ['or', 'as', 'a', 'list', 'when', 'passing', 'args']
 
-        # metadata for the resulting image
-        # best practice use reverse-DNS notation
-        labels:
-            - "com.SERVICENAME.LABELX=VALUE"
-            - "com.SERVICENAME.LABEL=VALUE"
+image: SOME_NAME:SOME_TAG
+# string/object, but not both
 
-        # label this build stage
-        # used for multi-stage builds
-        target: prod
+build: ./dir/with/dockerfile
+build:
+    # path/url
+    # path - containing dockerfile
+    # url - git repository
+    context: ./build/context
+    # if specified, context required
+    dockerfile: /path/some.dockerfile
+    # accessible only during build process
+    # must exist in dockerfile
+    args:
+        - ARGX=VALX
+        - ARGY #take val from env
 
-# todos
-blkio_config # defines config options for block storage IO limits
+    # list of images the engine uses
+    # for cache resolution
+    cache_from:
+        - alpine:latest
+        - corp/web:123.4
+
+    # metadata for the resulting image
+    # best practice use reverse-DNS notation
+    labels:
+        - "com.SERVICENAME.LABELX=VALUE"
+        - "com.SERVICENAME.LABEL=VALUE"
+
+    # label this build stage
+    # used for multi-stage builds
+    target: prod
+
+
+# TODOS
 credential_spec
 cap_add
 cap_drop
@@ -335,6 +358,33 @@ SHM_SIZE
         - servicenameX
 
 
+############### volumes
+volumes:
+  db-data:
+    driver: flocker
+    driver_opts:
+      size: "10GiB"
+
+
+############### networks
+networks:
+  front-tier: {}
+  back-tier:
+    name: "force-this-name"
+
+
+############### configs
+# grant access to pre-existing configs
+# mounted at /configname in container
+configs:
+  httpd-config:
+    external: true
+
+
+############### secrets
+secrets:
+  certs:
+    externa:true
 ```
 
 #### compose cli
