@@ -199,108 +199,128 @@ docker -H tcp://HOST_IP:2375 SOME_CMD
 
 ```
 
-### compose.yml
+### compose.yaml
 
+- compose.yaml is the canonical name and overrides all other backward compatible file names
 - options specified in the dockerfile are respected by default
   - you dont need to specify them again in the compose file
 - YAML boolean values must be enclosed in quotes
-- true, false, yes, no, on off
+  - true, false, yes, no, on off
 - some keys accept lists or mappings
-- lists
-  - `- key=value`
-- mapping
-  - `key: value`
-- service definition
-  - i.e. docker container create
-  - if build + image are specified: value of image becomes image name
+  - lists
+    - `- key=value`
+  - mapping
+    - `key: value`
+
+#### env vars
+
+- .env: env file available for use in the compose file
+- env_file: env file available for use in the container
 - ARG
   - build time arguments
   - value lookup: dockerfile -> compose file build -> env vars
-- network definition
+
+#### top level components
+
+- services: each service is a machine
+  - i.e. docker container create
+  - if build + image are specified: value of image becomes image name
+- networks: define inter-container communication
   - i.e. docker network create
-- volume definition
+  - establishes an IP route between containers within connected services
+- volumes: ro/rw store and share persistent data as system mounts with global options
   - i.e. docker volume create
+- configs: read only files mounted into the container (sorta like volumes) for platform/runtime configuration
+- secret: read only sensitive data that should not be exposed
+- name: project name to enable individual deployment of an application on a platform
+  - groups and isolate resources, resource names are prefixed with this value
+  - you can deploy the same compose on the same machine just by setting the project name
 
 ```sh
-  # build, (re)creates, starts, and attaches to containers for a service
+# version: '3.8'  # dont set a version, its ignored
+name: ${PROJECT_NAME}
+services:
+  SERVICE_X:
+    # skipped cuz f windows
+    credential_spec
+    # useful but skipped
+    cap_add:
+    - something
+    cap_drop:
+    - something
+    cgroup_parent: something
 
-  docker-compose up \
+    # u cannot scale a service beyond 1 container
+    # if supplying a static container name
+    container_name: poop
+
+
+    # impacts compose up and stop
+    # waits for the container to be started
+    # not for the service to be ready
+    depends_on:
+        - servicenameX
+        - servicenameX
+    # grant access to pre-existing configs
+    # mounted at /configname in container
+    configs:
+        - config1
+        - configX
+    # or long syntax
+    configs:
+        - source: configname
+        target: /mount/path/configname
+        uid: 'owner'
+        gid: 'group'
+        mode: 0444 # default
+    # override the default cmd
+    command: any linux cmd here
+    command: ['or', 'as', 'a', 'list']
+
+    image: SOME_NAME:SOME_TAG
+    # string/object, but not both
+    build: ./dir/with/dockerfile
+    build:
+        # path/url
+        # path - containing dockerfile
+        # url - git repository
+        context: ./build/context
+        # if specified, context required
+        dockerfile: /path/some.dockerfile
+        # accessible only during build process
+        # must exist in dockerfile
+        args:
+            - ARGX=VALX
+            - ARGY #take val from env
+
+        # list of images the engine uses
+        # for cache resolution
+        cache_from:
+            - alpine:latest
+            - corp/web:123.4
+
+        # metadata for the resulting image
+        # best practice use reverse-DNS notation
+        labels:
+            - "com.SERVICENAME.LABELX=VALUE"
+            - "com.SERVICENAME.LABEL=VALUE"
+
+        # label this build stage
+        # used for multi-stage builds
+        target: prod
+
+        # skipped
+        SHM_SIZE: '2gb'
+        # end build
+
+```
+
+#### compose cli
+
+```sh
+# build, (re)creates, starts, and attaches to containers for a service
+docker-compose up \
       -d #detached + only way to pass ARG to ENTRYPOINT exec form and overrides matching ARG in CMD
-
-  version: '3.8'
-  services:
-    SOME_SERVICE_NAME:
-      # skipped cuz f windows
-      credential_spec
-      # useful but skipped
-      cap_add:
-      - something
-      cap_drop:
-      - something
-      cgroup_parent: something
-
-      # u cannot scale a service beyond 1 container
-      # if supplying a static container name
-      container_name: poop
-
-
-      # impacts compose up and stop
-      # waits for the container to be started
-      # not for the service to be ready
-      depends_on:
-          - servicenameX
-          - servicenameX
-      # grant access to pre-existing configs
-      # mounted at /configname in container
-      configs:
-          - config1
-          - configX
-      # or long syntax
-      configs:
-          - source: configname
-          target: /mount/path/configname
-          uid: 'owner'
-          gid: 'group'
-          mode: 0444 # default
-      # override the default cmd
-      command: any linux cmd here
-      command: ['or', 'as', 'a', 'list']
-
-      image: SOME_NAME:SOME_TAG
-      # string/object, but not both
-      build: ./dir/with/dockerfile
-      build:
-          # path/url
-          # path - containing dockerfile
-          # url - git repository
-          context: ./build/context
-          # if specified, context required
-          dockerfile: /path/some.dockerfile
-          # accessible only during build process
-          # must exist in dockerfile
-          args:
-              - ARGX=VALX
-              - ARGY #take val from env
-
-          # list of images the engine uses
-          # for cache resolution
-          cache_from:
-              - alpine:latest
-              - corp/web:123.4
-
-          # metadata for the resulting image
-          # best practice use reverse-DNS notation
-          labels:
-              - "com.SERVICENAME.LABELX=VALUE"
-              - "com.SERVICENAME.LABEL=VALUE"
-
-          # label this build stage
-          # used for multi-stage builds
-          target: prod
-
-          # skipped
-          SHM_SIZE: '2gb'
-          # end build
 
 ```
 
