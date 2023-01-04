@@ -11,6 +11,7 @@
 - [docker dev best practices](https://docs.docker.com/develop/dev-best-practices/)
 - [container runtimes](https://github.com/opencontainers/runtime-spec/blob/main/implementations.md)
 - interwebs
+  - [/dev/shm and its practical usage](https://www.cyberciti.biz/tips/what-is-devshm-and-its-practical-usage.html)
   - [docker + buildkit](https://devopsspiral.com/articles/containers/modernize-image-builds/)
   - [docker arg, env explanation](https://vsupalov.com/docker-arg-env-variable-guide/)
   - [docker volumes in depth (oldy but goody)](https://container42.com/2014/11/03/docker-indepth-volumes/)
@@ -56,6 +57,8 @@
   - [publishing images via github action](https://docs.github.com/en/actions/publishing-packages/publishing-docker-images)
 - mac
   - [multi-arch images](https://medium.com/nttlabs/buildx-multiarch-2c6c2df00ca2)
+- docker engine (i.e. cli)
+  - [docker run](https://docs.docker.com/engine/reference/commandline/run/)
 
 ## best practices / gotchas
 
@@ -293,7 +296,7 @@ networks:
 
 
 ############### configs
-# grant access to pre-existing configs
+# creates but doesnt mount
 # mounted at /configname in container
 configs:
   httpd-config:
@@ -303,9 +306,11 @@ configs:
 
 
 ############### secrets
+# creates but doesnt mount secret
 secrets:
   certs:
-    externa:true
+    externa:true|false
+    file: ./poop.cert
 
 
 ############### services
@@ -331,12 +336,24 @@ logging:
   syslog-address: "tcp://192.168.0.42:123"
 platform: linux/arm64/v8/ # target plaform services will run on
 privileged: true|false # run with elevated privileges
+security_opt: # overrides labeling scheme
+  - label:user:USER
+  - label:role:ROLE
+stop_grace_period: 10s # how long to wait before SIGKILL is sent after SIGTERM/stop
+stop_signal: SIGTERM | the stop signal
 
 
 ### file system
 read_only: false #
 secrets:
-  - point to name in top level secrets
+  # short
+  - somesecret # mounted at /run/secrets/somesecret
+  # expanded
+  - source: somesecret
+    target: server.cert # mounted at /run/secrets/server.cert; defaults to source
+    uid: "103" # defaults to USER
+    gid: "103" # defaults to USER
+    mode: 0440 # in octal; writable ignored; executable may be set
 volumes:
   - point to name in top level volumes
 configs:
@@ -347,8 +364,12 @@ configs:
     target: /mount/path/source/remed/to/this.txt
     uid: "123" # defaults to USER
     gid: "321" # defaults to USER
-    mode: 0440 # linux perm in octal; writable ignored; executable cannot be set
-
+    mode: 0440 # linux perm in octal; writable ignored; executable may be set
+storage_opt: # various storage driver options
+  size: '1G'
+tmpfs: # mount a temp file system
+  - /run
+  - /tmp
 
 ### perf
 cpu_count: 2 # total usable cpus
@@ -366,7 +387,7 @@ mem_swappiness: 100 # sets all anonymouse pages as swappable
 # allows the container to write excess mem reqs to disk when avail is exhausted
 # requires deploy.limits.memory to also be set
 memswap_limit: ?
-
+shm_size ? # size of shared memory (/dev/shm) allowed by the service
 ### networking
 container_name: poop # cant scale pass 1 if set, see extends for workaround
 hostname: a.b.c. # of the container: should be unique to avoid resolution issues
@@ -405,6 +426,7 @@ ports:
     mode: host
 
 ### runtime
+runtime: runc # specify an oci runtime
 healthcheck: # overrides HEALTHCHECK defined in dockerfile
   test: ["CMD", "curl", "-f", "http://localhost"]
   test: ["CMD-SHELL", "curl -f http://localhost || exit 1"]
@@ -516,7 +538,6 @@ links:
 
 ### TODOS: require a deep dive
 credential_spec
-SHM_SIZE
 device_cgroup_rules
 devices
 dns
@@ -525,8 +546,10 @@ dns_search
 link_local_ips
 oom_kill_disable
 oom_score_adj
-pid
-
+pid # set the pid mode
+stdin_open # allocated stdin, think this is just normal redirection
+sysctls: # set kernel params
+tty: # run with a TTY
 ```
 
 #### compose cli
