@@ -28,6 +28,9 @@
 - compose
   - [compose in prod](https://docs.docker.com/compose/production/)
   - [compose file spec](https://docs.docker.com/compose/compose-file/)
+  - [compose build spec](https://docs.docker.com/compose/compose-file/build/)
+  - [compose deploy spec](https://docs.docker.com/compose/compose-file/deploy/)
+  - [compose faq](https://docs.docker.com/compose/faq/)
 - security
   - [docker scan](https://docs.docker.com/engine/scan/)
 - images
@@ -51,6 +54,8 @@
 
 ## best practices / gotchas
 
+- compose
+  - never use depends_on: always architect your services for resiliency
 - dockerfile
   - stable lines come before frequently changing lines
   - interception attacks during build
@@ -211,14 +216,26 @@ docker -H tcp://HOST_IP:2375 SOME_CMD
     - `- key=value`
   - mapping
     - `key: value`
+- decomposing compose files
+  - merges always occur via the expanded form
+  - sections and values therein are appended/overridden
+  - simple attributes & maps are overridden
+  - lists get merged by appending
+  - relative paths resolve from the first compose files parent dir
 
 #### env vars
 
 - .env: env file available for use in the compose file
 - env_file: env file available for use in the container
+- environment: override values set in an .env/env_file
 - ARG
   - build time arguments
   - value lookup: dockerfile -> compose file build -> env vars
+
+```sh
+COMPOSE_PROJECT_NAME # name:
+
+```
 
 #### top level components
 
@@ -230,44 +247,35 @@ docker -H tcp://HOST_IP:2375 SOME_CMD
   - establishes an IP route between containers within connected services
 - volumes: ro/rw store and share persistent data as system mounts with global options
   - i.e. docker volume create
+  - volumes live outside of the container (just a mounted filesystem) so changes here are reflected in running containers
+  - volumes override anything mounted in the image (i.e. add, copy cmds) at the same location
 - configs: read only files mounted into the container (sorta like volumes) for platform/runtime configuration
 - secret: read only sensitive data that should not be exposed
 - name: project name to enable individual deployment of an application on a platform
   - groups and isolate resources, resource names are prefixed with this value
-  - you can deploy the same compose on the same machine just by setting the project name
+  - you can deploy the same compose on the same host just by setting the project name
 
 ```sh
 # version: '3.8'  # dont set a version, its ignored
 name: ${PROJECT_NAME}
 services:
   SERVICE_X:
-    # skipped cuz f windows
-    credential_spec
-    # useful but skipped
-    cap_add:
-    - something
-    cap_drop:
-    - something
-    cgroup_parent: something
-
     # u cannot scale a service beyond 1 container
     # if supplying a static container name
     container_name: poop
 
+    # service is enabled when environment matches one these values
+    # services without a profies: are always active
+    profiles:
+      - test
 
-    # impacts compose up and stop
-    # waits for the container to be started
-    # not for the service to be ready
-    depends_on:
-        - servicenameX
-        - servicenameX
     # grant access to pre-existing configs
     # mounted at /configname in container
     configs:
+      # short
         - config1
         - configX
-    # or long syntax
-    configs:
+      # exanded
         - source: configname
         target: /mount/path/configname
         uid: 'owner'
@@ -275,10 +283,11 @@ services:
         mode: 0444 # default
     # override the default cmd
     command: any linux cmd here
-    command: ['or', 'as', 'a', 'list']
+    command: ['or', 'as', 'a', 'list', 'when', 'passing', 'args']
 
     image: SOME_NAME:SOME_TAG
     # string/object, but not both
+
     build: ./dir/with/dockerfile
     build:
         # path/url
@@ -309,9 +318,22 @@ services:
         # used for multi-stage builds
         target: prod
 
-        # skipped
-        SHM_SIZE: '2gb'
-        # end build
+# todos
+blkio_config # defines config options for block storage IO limits
+credential_spec
+cap_add
+cap_drop
+cgroup_parent
+SHM_SIZE
+
+# anti-pattern in well-architected services
+    # impacts compose up and stop
+    # waits for the container to be started
+    # not for the service to be ready
+    depends_on:
+        - servicenameX
+        - servicenameX
+
 
 ```
 
