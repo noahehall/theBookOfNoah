@@ -1,36 +1,36 @@
 # docker
 
-```sh
-put these somewhere
-###################### READ FIRST
-# @see [repo] https://github.com/distribution/distribution
-# @see [docs] https://github.com/docker/docs/tree/main/registry
-# @see https://www.marcusturewicz.com/blog/build-and-publish-docker-images-with-github-packages/
-## @see https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
-######################
-
-```
-
 - my (2022) docker cheatsheet
 - TODO: finish copying stuff from the old docker cheatsheet
 
 ## links
 
-- [get the dockerfile from a running container](https://forums.docker.com/t/how-can-i-view-the-dockerfile-in-an-image/5687)
 - [docker docs](https://docs.docker.com/)
 - [docker ref](https://docs.docker.com/reference/)
 - [docker guides: overview](https://docs.docker.com/get-started/overview/)
 - [docker dev best practices](https://docs.docker.com/develop/dev-best-practices/)
-- [compose in prod](https://docs.docker.com/compose/production/)
-- [buildx github](https://github.com/docker/buildx)
-- [docker buildkit backend](https://docs.docker.com/engine/reference/builder/#buildkit)
-- [docker buildx](https://docs.docker.com/buildx/working-with-buildx/)
-- [docker scan](https://docs.docker.com/engine/scan/)
-- [docker build](https://docs.docker.com/engine/reference/commandline/build/)
-- [docker container networking](https://docs.docker.com/config/containers/container-networking/)
-- [docker network tutorial](https://docs.docker.com/network/network-tutorial-standalone)
-- [configure docker to use a proxy network](https://docs.docker.com/network/proxy/)
-- on the web
+- integrations
+  - [journalctl blog post](https://www.digitalocean.com/community/tutorials/how-to-use-journalctl-to-view-and-manipulate-systemd-logs)
+  - [systemctl blog post](https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units)
+  - [buildkit systemd example](https://github.com/moby/buildkit/tree/master/examples/systemd)
+  - [buildkit bake](https://github.com/docker/buildx/tree/master/bake)
+- obversability
+- compose
+  - [compose in prod](https://docs.docker.com/compose/production/)
+- security
+  - [docker scan](https://docs.docker.com/engine/scan/)
+- images
+  - [pdf: build efficient images with buildkit](https://static.sched.com/hosted_files/kccnceu19/12/Building%20images%20%20efficiently%20and%20securely%20on%20Kubernetes%20with%20BuildKit.pdf)
+  - [buildx github](https://github.com/docker/buildx)
+  - [docker buildkit backend](https://docs.docker.com/build/buildkit/)
+  - [docker buildx](https://docs.docker.com/buildx/working-with-buildx/)
+  - [docker build](https://docs.docker.com/engine/reference/commandline/build/)
+- networking
+  - [docker container networking](https://docs.docker.com/config/containers/container-networking/)
+  - [configure docker to use a proxy network](https://docs.docker.com/network/proxy/)
+  - [docker network tutorial](https://docs.docker.com/network/network-tutorial-standalone)
+- interwebs
+  - [get the dockerfile from a running container](https://forums.docker.com/t/how-can-i-view-the-dockerfile-in-an-image/5687)
   - [docker volumes in depth (oldy but goody)](https://container42.com/2014/11/03/docker-indepth-volumes/)
   - [docker arg, env explanation](https://vsupalov.com/docker-arg-env-variable-guide/)
   - [uid & gid in docker containers](https://medium.com/@mccode/understanding-how-uid-and-gid-work-in-docker-containers-c37a01d01cf)
@@ -39,6 +39,13 @@ put these somewhere
   - [hella dockerfile examples](https://github.com/jessfraz/dockerfiles)
   - [pretty good docker cheetsheet](https://github.com/wsargent/docker-cheat-sheet)
   - [docker + buildkit](https://devopsspiral.com/articles/containers/modernize-image-builds/)
+- registry
+  - [registry distribution github](https://github.com/distribution/distribution)
+  - [registry docs](https://github.com/docker/docs/tree/main/registry)
+  - [registry blog post](https://www.marcusturewicz.com/blog/build-and-publish-docker-images-with-github-packages/)
+  - [publishing images via github action](https://docs.github.com/en/actions/publishing-packages/publishing-docker-images)
+- mac
+  - [multi-arch images](https://medium.com/nttlabs/buildx-multiarch-2c6c2df00ca2)
 
 ## best practices / gotchas
 
@@ -50,6 +57,10 @@ put these somewhere
     - verifying the content: embedding checksums directly in the Dockerfile
   - Only the instructions RUN, COPY, ADD create layers.
   - data containers are so 1995, use named volumes instead
+- support building all the images of your app together (or separately)
+  - let the users define project specific reusable build flows
+- build cmds should be envokable by by general-purpose cmd runners (e.g. make)
+  - however, `docker buildx bake` permits executing in parallel
 
 ## basics
 
@@ -84,10 +95,9 @@ put these somewhere
     - sucks as then your dockerfiles arent sorted in the tree
     - use `d.poop.Dockerfile` lol instead, super ugly but at least they are all grouped together
 
-## quickies
+### quickies
 
 - docker ARG, vs ENV vs .env
-
   - FYI: both ARG and ENV leave traces in the image
   - build time
     - ARG:
@@ -101,23 +111,16 @@ put these somewhere
     - .env: prefer over cli vars to set defaults and allow the consumer to override via cli
 
 ```sh
-
-  # basics
-  docker help
-  docker help cp
-  docker help run | grep OPTION
+sudo systemctl disable docker.service
+sudo systemctl disable containerd.service
+sudo systemctl restart docker.service
 
 
-  docker ps # show running
-  docker ps -a # show all
-  docker ps -q # only show the container UIDs
-  docker ps -l # show the last created container
-  CID=$(docker ps -l -q) # save the UID of the last created container
-
-  docker run --rm --name containername -p 8080:80 -d runthisimage:version
 ```
 
-## dockerfile
+## files and locations
+
+### dockerfile
 
 - defining & using variables in dockerfile
   - $variable_name
@@ -276,9 +279,38 @@ put these somewhere
 
 ```
 
-## docker cli
+### docker config
 
-### docker inspect
+- /etc/docker/daemon.json
+
+  ```js
+  {
+    features: {
+      buildkit: true; // enable buildkit
+    }
+  }
+  ```
+
+## docker desktop for linux
+
+- [install](https://docs.docker.com/desktop/install/linux-install/)
+- [docs](https://docs.docker.com/desktop/faqs/linuxfaqs/#what-is-the-difference-between-docker-desktop-for-linux-and-docker-engine)
+
+### docker ecs context
+
+- [docs](https://docs.docker.com/cloud/ecs-integration/)
+
+```sh
+# see all your contexts
+docker context ls
+
+# create aws context
+## requires fkn docker desktop
+docker context create ecs POOP
+
+```
+
+## docker inspect
 
 - use cases
   - inspect a container to see the values of variables
@@ -289,7 +321,7 @@ put these somewhere
 
 ```
 
-### docker rm
+## docker rm
 
 - remove docker containers
 
@@ -299,18 +331,18 @@ put these somewhere
 
 ```
 
-### docker rmi
+## docker rmi
 
 - remove docker images
 
-### docker cp
+## docker cp
 
 ```sh
   # copy files from host into data container
       docker cp /some/file CONT_NAME:/place/here
 ```
 
-### docker create
+## docker create
 
 ```sh
   # create a data container using an existing volume based on busybox
@@ -318,7 +350,7 @@ put these somewhere
         ---name CONT_NAME busybox
 ```
 
-### docker tag
+## docker tag
 
 ```sh
   # tag an image with id XXXX with repository noahehall and name poop with version 69
@@ -326,7 +358,7 @@ put these somewhere
 
 ```
 
-### docker network
+## docker network
 
 - types
   - bridge network
@@ -360,7 +392,7 @@ put these somewhere
 
 ```
 
-### docker volume
+## docker volume
 
 - `create` create a volume
 - `inspect` display d5tailed information volume(s)
@@ -387,7 +419,7 @@ put these somewhere
 
 ```
 
-### docker image
+## docker image
 
 ```sh
 
@@ -404,7 +436,7 @@ put these somewhere
 
 ```
 
-### docker run
+## docker run
 
 ```sh
   # examples of options
@@ -472,7 +504,7 @@ put these somewhere
       -u root busybox
 ```
 
-### docker build
+## docker build
 
 - build an image from a Dockerfile and a context
 - the entire contet gets sent to the docker daemon for build
@@ -528,7 +560,7 @@ put these somewhere
 
 ```
 
-### docker exec
+## docker exec
 
 ```sh
   # see what process 1 is, and the options passed to it
@@ -536,7 +568,7 @@ put these somewhere
 
 ```
 
-### docker compose
+## docker compose
 
 - options specified in the dockerfile are respected by default
   - you dont need to specify them again in the compose file
@@ -641,7 +673,7 @@ put these somewhere
 
 ```
 
-### docker daemon
+## docker daemon
 
 - generally all changes requires restarting the docker
 - daemon and thus all running containers
@@ -706,22 +738,3 @@ put these somewhere
         docker -H tcp://HOST_IP:2375 SOME_CMD
 
 ```
-
-### docker ecs context
-
-- [docs](https://docs.docker.com/cloud/ecs-integration/)
-
-```sh
-# see all your contexts
-docker context ls
-
-# create aws context
-## requires fkn docker desktop
-docker context create ecs POOP
-
-```
-
-## docker desktop for linux
-
-- [install](https://docs.docker.com/desktop/install/linux-install/)
-- [docs](https://docs.docker.com/desktop/faqs/linuxfaqs/#what-is-the-difference-between-docker-desktop-for-linux-and-docker-engine)
