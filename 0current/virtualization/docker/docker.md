@@ -65,8 +65,9 @@
 
 ## best practices / gotchas
 
+- never hardcode runtime values
 - compose
-  - never use depends_on: always architect your services for resiliency
+  - see the anti-pattern list at the bottom of compose spec sh
 - dockerfile
   - stable lines come before frequently changing lines
   - interception attacks during build
@@ -273,18 +274,29 @@ COMPOSE_PROJECT_NAME # name:
 
 
 ############### project name
+# is prefixed to container names, networks, etc
+# all resources become ${PROJECT_NAME}_resourceName
 name: ${PROJECT_NAME}
 
 ############### deploy
 # todo...
 
 ############### volumes
-# for reusable volumes across multiple containers
+# for persistent & reusable volumes across multiple containers
 volumes:
-  db-data:
-    driver: flocker
+  poop: # uses the default volume settings
+  moop:
+    external: true # lifecycle managed outside of compose
+    name: "use this name" # only param valid for external volumes
+  loop:
+    labels:
+    ai.nirv.desc: "loopa dooper ruper scooper mooper tooper dooper blooper"
+    driver: soup
     driver_opts:
       size: "10GiB"
+      type: "nfs"
+      o: "addr=10.40.0.199,nolock,soft,rw"
+      device: ":/docker/example"
 
 
 ############### networks
@@ -294,7 +306,12 @@ volumes:
 networks:
   soupnet: {} # define with default settings
   poopnet:
+    external: true # this networks lifecycle its outside the boundary of compose
+    name: "is required for externally managed networks"
   boobnet:
+    labels:
+      ai.nirv.desc: "my poop net"
+    internal: true # this network is externally isolated
     name: "external network name|host|none" # only way to use host|none networks
     attachable: true|false # allow external containers to attach & communicate
     enable_ipv6: false # why the hate with ipv6 anyway?
@@ -431,6 +448,8 @@ mem_swappiness: 100 # sets all anonymouse pages as swappable
 # requires deploy.limits.memory to also be set
 memswap_limit: ?
 shm_size ? # size of shared memory (/dev/shm) allowed by the service
+
+
 ### networking
 container_name: poop # cant scale pass 1 if set, see extends for workaround
 hostname: a.b.c. # of the container: should be unique to avoid resolution issues
@@ -446,6 +465,7 @@ networks: # reference top-level networks
   - poopnet
   - boopnet:
     - myhostname # for this service
+    - default # useful to add the default network
     # requires the network to have an ipam block subnet configuration
     ipv4_address: 123.123.123.123 # for this service
     ipv6_address: 123.123.123.123 # for this service
@@ -472,6 +492,8 @@ ulimits: # override defualt ulimits
   nofile:
     soft: 20000
     hard: 40000
+
+
 ### runtime
 working_dir: /usr/src/apps/nodejsapp # override the working directory set in the image
 runtime: runc # specify an oci runtime
