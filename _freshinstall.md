@@ -47,6 +47,7 @@
   - terminator
   - [azlux repo](https://packages.azlux.fr/)
   - [firefox dev](https://www.mozilla.org/en-US/firefox/developer/)
+    - [disable security warning](https://medium.com/volosoft/how-to-disable-firefox-warning-potential-security-risk-ahead-f081fbf81a4f)
   - vscode
     - [insiders](https://code.visualstudio.com/insiders/)
     - [vscode settings](https://gist.github.com/noahehall/71451b778136a553e785868c37c7e9a0)
