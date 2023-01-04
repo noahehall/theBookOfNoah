@@ -33,6 +33,8 @@
   - [compose faq](https://docs.docker.com/compose/faq/)
 - security
   - [docker scan](https://docs.docker.com/engine/scan/)
+  - [capp_add/drop: linux capabilities](https://man7.org/linux/man-pages/man7/capabilities.7.html)
+  - [cgroup_parent: linux control groups](https://man7.org/linux/man-pages/man7/cgroups.7.html)
 - images
   - [build](https://docs.docker.com/engine/reference/commandline/build/)
   - [buildkit backend](https://docs.docker.com/build/buildkit/)
@@ -237,7 +239,7 @@ COMPOSE_PROJECT_NAME # name:
 
 ```
 
-#### top level components
+#### compose spec
 
 - services: each service is a machine
   - i.e. docker container create
@@ -262,6 +264,35 @@ COMPOSE_PROJECT_NAME # name:
 
 ############### project name
 name: ${PROJECT_NAME}
+
+
+############### volumes
+volumes:
+  db-data:
+    driver: flocker
+    driver_opts:
+      size: "10GiB"
+
+
+############### networks
+networks:
+  front-tier: {}
+  back-tier:
+    name: "force-this-name"
+
+
+############### configs
+# grant access to pre-existing configs
+# mounted at /configname in container
+configs:
+  httpd-config:
+    external: true
+
+
+############### secrets
+secrets:
+  certs:
+    externa:true
 
 ############### services
 services:
@@ -299,11 +330,18 @@ cpu_count: 2 # total usable cpus
 cpu_percent: 50 # usable % per cpu
 cpu_shares: ? # weighted cpu allocation relative to other containers
 cpu_quota: ? # configure CFS period; only for linux (winning)
-
+cpu_rt_runtime: '400ms' # configure cpu allocation for realtime scheduler
+cpu_rt_period: '1400us' # configure cpu allocatino for realtime scheduler
+cpuset: 0-3|0,1 # range or set, define the explicit runtime cpu
 # @see https://docs.docker.com/compose/compose-file/#blkio_config
-# defines config options for block storage IO limits
-blkio_config:
+blkio_config: # defines config options for block storage IO limits
 
+### security
+cap_add: # list of linux capabilities to enable
+cap_drop: # list of linux capabilities to disable
+cgroup_parent: poop # parent cgroup for this service
+
+### basic
 # override the default cmd
 command: any linux cmd here
 command: ['or', 'as', 'a', 'list', 'when', 'passing', 'args']
@@ -344,47 +382,17 @@ build:
 
 # TODOS
 credential_spec
-cap_add
-cap_drop
-cgroup_parent
 SHM_SIZE
 
-# anti-pattern in well-architected services
-    # impacts compose up and stop
-    # waits for the container to be started
-    # not for the service to be ready
-    depends_on:
-        - servicenameX
-        - servicenameX
+### anti-pattern in well-architected services
+# impacts compose up and stop
+# waits for the container to be started
+# not for the service to be ready
+depends_on:
+    - servicenameX
+    - servicenameX
 
 
-############### volumes
-volumes:
-  db-data:
-    driver: flocker
-    driver_opts:
-      size: "10GiB"
-
-
-############### networks
-networks:
-  front-tier: {}
-  back-tier:
-    name: "force-this-name"
-
-
-############### configs
-# grant access to pre-existing configs
-# mounted at /configname in container
-configs:
-  httpd-config:
-    external: true
-
-
-############### secrets
-secrets:
-  certs:
-    externa:true
 ```
 
 #### compose cli
