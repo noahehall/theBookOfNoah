@@ -15,6 +15,7 @@
       - integrating a metadata cache (i.e. redis)
       - streamline blob transfer with storage middleware
       - integrating through notifications (webhooks)
+    - really wish i wouldnt haved skipped these fkn sections
 
 - Docker in practice
   - ian miell
