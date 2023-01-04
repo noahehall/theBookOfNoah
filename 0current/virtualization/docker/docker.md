@@ -9,6 +9,16 @@
 - [docker ref](https://docs.docker.com/reference/)
 - [docker guides: overview](https://docs.docker.com/get-started/overview/)
 - [docker dev best practices](https://docs.docker.com/develop/dev-best-practices/)
+- interwebs
+  - [docker + buildkit](https://devopsspiral.com/articles/containers/modernize-image-builds/)
+  - [docker arg, env explanation](https://vsupalov.com/docker-arg-env-variable-guide/)
+  - [docker volumes in depth (oldy but goody)](https://container42.com/2014/11/03/docker-indepth-volumes/)
+  - [get the dockerfile from a running container](https://forums.docker.com/t/how-can-i-view-the-dockerfile-in-an-image/5687)
+  - [hella dockerfile examples](https://github.com/jessfraz/dockerfiles)
+  - [k8s vs docker swarm](https://thenewstack.io/kubernetes-vs-docker-swarm-whats-the-difference/)
+  - [pretty good docker cheetsheet](https://github.com/wsargent/docker-cheat-sheet)
+  - [uid & gid in docker containers](https://medium.com/@mccode/understanding-how-uid-and-gid-work-in-docker-containers-c37a01d01cf)
+  - [vagrant vs docker](https://www.ctl.io/developers/blog/post/docker-vs-vagrant)
 - integrations
   - [journalctl blog post](https://www.digitalocean.com/community/tutorials/how-to-use-journalctl-to-view-and-manipulate-systemd-logs)
   - [systemctl blog post](https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units)
@@ -17,28 +27,20 @@
 - obversability
 - compose
   - [compose in prod](https://docs.docker.com/compose/production/)
+  - [compose file spec](https://docs.docker.com/compose/compose-file/)
 - security
   - [docker scan](https://docs.docker.com/engine/scan/)
 - images
-  - [pdf: build efficient images with buildkit](https://static.sched.com/hosted_files/kccnceu19/12/Building%20images%20%20efficiently%20and%20securely%20on%20Kubernetes%20with%20BuildKit.pdf)
+  - [build](https://docs.docker.com/engine/reference/commandline/build/)
+  - [buildkit backend](https://docs.docker.com/build/buildkit/)
+  - [buildkit examples](https://github.com/moby/buildkit/tree/master/examples)
+  - [buildkit pdf: build efficient images with buildkit](https://static.sched.com/hosted_files/kccnceu19/12/Building%20images%20%20efficiently%20and%20securely%20on%20Kubernetes%20with%20BuildKit.pdf)
   - [buildx github](https://github.com/docker/buildx)
-  - [docker buildkit backend](https://docs.docker.com/build/buildkit/)
-  - [docker buildx](https://docs.docker.com/buildx/working-with-buildx/)
-  - [docker build](https://docs.docker.com/engine/reference/commandline/build/)
+  - [buildx](https://docs.docker.com/buildx/working-with-buildx/)
 - networking
   - [docker container networking](https://docs.docker.com/config/containers/container-networking/)
   - [configure docker to use a proxy network](https://docs.docker.com/network/proxy/)
   - [docker network tutorial](https://docs.docker.com/network/network-tutorial-standalone)
-- interwebs
-  - [get the dockerfile from a running container](https://forums.docker.com/t/how-can-i-view-the-dockerfile-in-an-image/5687)
-  - [docker volumes in depth (oldy but goody)](https://container42.com/2014/11/03/docker-indepth-volumes/)
-  - [docker arg, env explanation](https://vsupalov.com/docker-arg-env-variable-guide/)
-  - [uid & gid in docker containers](https://medium.com/@mccode/understanding-how-uid-and-gid-work-in-docker-containers-c37a01d01cf)
-  - [vagrant vs docker](https://www.ctl.io/developers/blog/post/docker-vs-vagrant)
-  - [k8s vs docker swarm](https://thenewstack.io/kubernetes-vs-docker-swarm-whats-the-difference/)
-  - [hella dockerfile examples](https://github.com/jessfraz/dockerfiles)
-  - [pretty good docker cheetsheet](https://github.com/wsargent/docker-cheat-sheet)
-  - [docker + buildkit](https://devopsspiral.com/articles/containers/modernize-image-builds/)
 - registry
   - [registry distribution github](https://github.com/distribution/distribution)
   - [registry docs](https://github.com/docker/docs/tree/main/registry)
@@ -120,7 +122,189 @@ sudo systemctl restart docker.service
 
 ## files and locations
 
-### dockerfile
+### daemon.json
+
+- /etc/docker/daemon.json
+- generally all changes requires restarting the docker
+- daemon and thus all running containers
+
+```jsonc
+{
+  features: {
+    buildkit: true; // enable buildkit
+  }
+}
+```
+
+#### docker daemon
+
+```sh
+
+# disable inter-container communication
+# any traffic from one container will be blocked
+# by the host firewall except where explicitly permitted
+
+docker -d --icc=false...
+
+
+# define the ip addr of the  bridge network
+
+docker -d --bip "192.168.0.128"
+
+
+# define the ip addr and subnet range
+# of the bridge network
+# docker0 = 192.168.0.128
+# container ip range = 192.168.0.129...255
+
+docker -d --fixed-cdr "192.168.0.128/25"
+
+
+# set the maximum size of a packet
+# from default of 1500 to 1200
+
+docker -d -mtu 1200
+
+
+# set the docker bridge to a custom bridge
+# you need to define it first
+
+docker -d -b YOURBRIDGE_NAME
+
+
+# open the docker daemon to the world
+# e.g. to invoke docker remotely
+# shutdown docker dameon
+
+sudo docker stop
+
+
+# make docker available on tcp socket :2375
+# normally available on /var/run/docker.sock
+# anything that has access to your host can invoke docker
+# 0.0.0.0 makes docker listen on all public and private network interfaces
+# instead you should pick a specific IP
+
+sudo docker daemon -H tcp://0.0.0.0:2375
+
+
+# export the above as an alias
+# cannot be used if you require sudo to run docker
+
+export DOCKER_HOST=tcp://YOUR_HOST_IP:2375
+
+# connect to docker via the tcp socket
+
+docker -H tcp://HOST_IP:2375 SOME_CMD
+
+```
+
+### compose.yml
+
+- options specified in the dockerfile are respected by default
+  - you dont need to specify them again in the compose file
+- YAML boolean values must be enclosed in quotes
+- true, false, yes, no, on off
+- some keys accept lists or mappings
+- lists
+  - `- key=value`
+- mapping
+  - `key: value`
+- service definition
+  - i.e. docker container create
+  - if build + image are specified: value of image becomes image name
+- ARG
+  - build time arguments
+  - value lookup: dockerfile -> compose file build -> env vars
+- network definition
+  - i.e. docker network create
+- volume definition
+  - i.e. docker volume create
+
+```sh
+  # build, (re)creates, starts, and attaches to containers for a service
+
+  docker-compose up \
+      -d #detached + only way to pass ARG to ENTRYPOINT exec form and overrides matching ARG in CMD
+
+  version: '3.8'
+  services:
+    SOME_SERVICE_NAME:
+      # skipped cuz f windows
+      credential_spec
+      # useful but skipped
+      cap_add:
+      - something
+      cap_drop:
+      - something
+      cgroup_parent: something
+
+      # u cannot scale a service beyond 1 container
+      # if supplying a static container name
+      container_name: poop
+
+
+      # impacts compose up and stop
+      # waits for the container to be started
+      # not for the service to be ready
+      depends_on:
+          - servicenameX
+          - servicenameX
+      # grant access to pre-existing configs
+      # mounted at /configname in container
+      configs:
+          - config1
+          - configX
+      # or long syntax
+      configs:
+          - source: configname
+          target: /mount/path/configname
+          uid: 'owner'
+          gid: 'group'
+          mode: 0444 # default
+      # override the default cmd
+      command: any linux cmd here
+      command: ['or', 'as', 'a', 'list']
+
+      image: SOME_NAME:SOME_TAG
+      # string/object, but not both
+      build: ./dir/with/dockerfile
+      build:
+          # path/url
+          # path - containing dockerfile
+          # url - git repository
+          context: ./build/context
+          # if specified, context required
+          dockerfile: /path/some.dockerfile
+          # accessible only during build process
+          # must exist in dockerfile
+          args:
+              - ARGX=VALX
+              - ARGY #take val from env
+
+          # list of images the engine uses
+          # for cache resolution
+          cache_from:
+              - alpine:latest
+              - corp/web:123.4
+
+          # metadata for the resulting image
+          # best practice use reverse-DNS notation
+          labels:
+              - "com.SERVICENAME.LABELX=VALUE"
+              - "com.SERVICENAME.LABEL=VALUE"
+
+          # label this build stage
+          # used for multi-stage builds
+          target: prod
+
+          # skipped
+          SHM_SIZE: '2gb'
+          # end build
+
+```
+
+### Dockerfile
 
 - defining & using variables in dockerfile
   - $variable_name
@@ -189,7 +373,6 @@ sudo systemctl restart docker.service
   # SHELL ["cmd", "/S", "/C"]
   # RUN echo hello
 
-
   RUN <command>
   # executes ina shell as `RUN /bin/sh -c <command>`
 
@@ -205,7 +388,7 @@ sudo systemctl restart docker.service
   # can specify multiple src paths
   # dest is absolute path, or relative to WORKDIR
   # Using numeric IDs requires no lookup and will not depend on container root filesystem content.
-  #
+
   ADD [--chown=<user>:<group>] <src>... <dest>
   ADD [--chown=<user>:<group>] ["<src>",... "<dest>"]
   # required in spaces are contained in paths
@@ -215,11 +398,9 @@ sudo systemctl restart docker.service
   COPY --from=<see FROM syntax above>
   # COPY instructions considers file mtime changes to be a cache bust,
 
-
   VOLUME
 
   USER
-
 
   # An ENTRYPOINT allows you to configure a container that will run as an executable.
   ENTRYPOINT ["executable", "param1", "param2"]
@@ -236,7 +417,6 @@ sudo systemctl restart docker.service
   # This signal can be a valid unsigned number that matches a position in the kernel’s syscall table, for instance 9, or a signal name in the format SIGNAME, for instance SIGKILL.
 
 
-
   HEALTHCHECK [OPTIONS] CMD command
   # options
   #   --interval=DURATION (default: 30s)
@@ -246,7 +426,6 @@ sudo systemctl restart docker.service
   # check container health by running a command inside the container
   HEALTHCHECK NONE
   # disable any healthcheck inherited from the base image)
-
 
 
   # does not execute a shell so there is no var replacement
@@ -278,18 +457,6 @@ sudo systemctl restart docker.service
 
 
 ```
-
-### docker config
-
-- /etc/docker/daemon.json
-
-  ```js
-  {
-    features: {
-      buildkit: true; // enable buildkit
-    }
-  }
-  ```
 
 ## docker desktop for linux
 
@@ -565,177 +732,6 @@ docker context create ecs POOP
 ```sh
   # see what process 1 is, and the options passed to it
   docker exec -it CONTAINER_NAME ps aux
-
-```
-
-## docker compose
-
-- options specified in the dockerfile are respected by default
-  - you dont need to specify them again in the compose file
-- YAML boolean values must be enclosed in quotes
-- true, false, yes, no, on off
-- some keys accept lists or mappings
-- lists
-  - `- key=value`
-- mapping
-  - `key: value`
-- service definition
-  - i.e. docker container create
-  - if build + image are specified: value of image becomes image name
-- ARG
-  - build time arguments
-  - value lookup: dockerfile -> compose file build -> env vars
-- network definition
-  - i.e. docker network create
-- volume definition
-  - i.e. docker volume create
-
-```sh
-  # build, (re)creates, starts, and attaches to containers for a service
-
-  docker-compose up \
-      -d #detached + only way to pass ARG to ENTRYPOINT exec form and overrides matching ARG in CMD
-
-  version: '3.8'
-  services:
-    SOME_SERVICE_NAME:
-      # skipped cuz f windows
-      credential_spec
-      # useful but skipped
-      cap_add:
-      - something
-      cap_drop:
-      - something
-      cgroup_parent: something
-
-      # u cannot scale a service beyond 1 container
-      # if supplying a static container name
-      container_name: poop
-
-
-      # impacts compose up and stop
-      # waits for the container to be started
-      # not for the service to be ready
-      depends_on:
-          - servicenameX
-          - servicenameX
-      # grant access to pre-existing configs
-      # mounted at /configname in container
-      configs:
-          - config1
-          - configX
-      # or long syntax
-      configs:
-          - source: configname
-          target: /mount/path/configname
-          uid: 'owner'
-          gid: 'group'
-          mode: 0444 # default
-      # override the default cmd
-      command: any linux cmd here
-      command: ['or', 'as', 'a', 'list']
-
-      image: SOME_NAME:SOME_TAG
-      # string/object, but not both
-      build: ./dir/with/dockerfile
-      build:
-          # path/url
-          # path - containing dockerfile
-          # url - git repository
-          context: ./build/context
-          # if specified, context required
-          dockerfile: /path/some.dockerfile
-          # accessible only during build process
-          # must exist in dockerfile
-          args:
-              - ARGX=VALX
-              - ARGY #take val from env
-
-          # list of images the engine uses
-          # for cache resolution
-          cache_from:
-              - alpine:latest
-              - corp/web:123.4
-
-          # metadata for the resulting image
-          # best practice use reverse-DNS notation
-          labels:
-              - "com.SERVICENAME.LABELX=VALUE"
-              - "com.SERVICENAME.LABEL=VALUE"
-
-          # label this build stage
-          # used for multi-stage builds
-          target: prod
-
-          # skipped
-          SHM_SIZE: '2gb'
-          # end build
-
-```
-
-## docker daemon
-
-- generally all changes requires restarting the docker
-- daemon and thus all running containers
-
-```sh
-
-    # disable inter-container communication
-    # any traffic from one container will be blocked
-    # by the host firewall except where explicitly permitted
-
-        docker -d --icc=false...
-
-
-    # define the ip addr of the  bridge network
-
-        docker -d --bip "192.168.0.128"
-
-
-    # define the ip addr and subnet range
-    # of the bridge network
-    # docker0 = 192.168.0.128
-    # container ip range = 192.168.0.129...255
-
-        docker -d --fixed-cdr "192.168.0.128/25"
-
-
-    # set the maximum size of a packet
-    # from default of 1500 to 1200
-
-        docker -d -mtu 1200
-
-
-    # set the docker bridge to a custom bridge
-    # you need to define it first
-
-        docker -d -b YOURBRIDGE_NAME
-
-
-    # open the docker daemon to the world
-    # e.g. to invoke docker remotely
-    # shutdown docker dameon
-
-        sudo docker stop
-
-
-    # make docker available on tcp socket :2375
-    # normally available on /var/run/docker.sock
-    # anything that has access to your host can invoke docker
-    # 0.0.0.0 makes docker listen on all public and private network interfaces
-    # instead you should pick a specific IP
-
-        sudo docker daemon -H tcp://0.0.0.0:2375
-
-
-    # export the above as an alias
-    # cannot be used if you require sudo to run docker
-
-        export DOCKER_HOST=tcp://YOUR_HOST_IP:2375
-
-    # connect to docker via the tcp socket
-
-        docker -H tcp://HOST_IP:2375 SOME_CMD
 
 ```
 
