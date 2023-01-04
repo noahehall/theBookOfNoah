@@ -268,6 +268,8 @@ COMPOSE_PROJECT_NAME # name:
 ############### project name
 name: ${PROJECT_NAME}
 
+############### deploy
+# todo...
 
 ############### volumes
 volumes:
@@ -282,6 +284,11 @@ networks:
   front-tier: {}
   back-tier:
     name: "force-this-name"
+    ipam: # enable containers to specify ipv4|6_address
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"
+        - subnet: "2001:3984:3989::/64"
 
 
 ############### configs
@@ -307,15 +314,6 @@ services:
   SERVICE_Y:
     # definition
 
-# u cannot scale a service beyond 1 if set
-# however you can bypass this creating another service that extends from this one
-container_name: poop
-
-# create a service based off another one
-# the base service cannot have depends_on, volumes_from, or circular references
-extends:
-  file: if/in/other/compose.yml
-  service: poop
 # service is enabled when environment matches one these values
 # services without a profies: are always active
 profiles:
@@ -336,6 +334,7 @@ configs:
     gid: "321" # defaults to USER
     mode: 0440 # linux perm in octal; writable ignored; executable cannot be set
 
+
 ### perf
 cpu_count: 2 # total usable cpus
 cpu_percent: 50 # usable % per cpu
@@ -346,6 +345,12 @@ cpu_rt_period: '1400us' # configure cpu allocatino for realtime scheduler
 cpuset: 0-3|0,1 # range or set, define the explicit runtime cpu
 # @see https://docs.docker.com/compose/compose-file/#blkio_config
 blkio_config: # defines config options for block storage IO limits
+mem_swappiness: 0-100 # % for the host kernal to swap out anon memory pages
+mem_swappiness: 0 # turns it off
+mem_swappiness: 100 # sets all anonymouse pages as swappable
+# allows the container to write excess mem reqs to disk when avail is exhausted
+# requires deploy.limits.memory to also be set
+memswap_limit: ?
 
 ### security
 init: true # run an init process (PID 1) that forwards signals & reaps processes
@@ -354,10 +359,21 @@ cap_drop: # list of linux capabilities to disable
 cgroup_parent: poop # parent cgroup for this service
 group_add: # the USER will be added as member of the group
   - poopgroup
+# configures IPC isolation mode
+ipc: "shareable" # this service is isolated, but other services can join
+ipc: "service:poop" # join poops ipc
+isolation: ? # specifies the services isolation technology
+logging:
+  driver: syslog
+  syslog-address: "tcp://192.168.0.42:123"
+platform: linux/arm64/v8/ # target plaform services will run on
+
 
 ### networking
-hostname: a.b.c. # of the container
+container_name: poop # cant scale pass 1 if set, see extends for workaround
+hostname: a.b.c. # of the container: should be unique to avoid resolution issues
 domainname: b.c. # of the container
+mac_address: ? # sets the MAC address
 extra_hosts: # added to /etc/hosts
   - poop:123.123.123.123
 healthcheck: # overrides HEALTHCHECK defined in dockerfile
@@ -369,16 +385,54 @@ healthcheck: # overrides HEALTHCHECK defined in dockerfile
   retries: 3
   start_period: 40s
   disable: true # disable healthcheck set by the image
+network_mode: "none" # disable all container networking
+network_mode: "host" # raw access to host network interface
+network_mode: "service:poop" # access only to poop
+# adding multiple networks seems to be an issue in my trials
+networks: # reference top-level networks
+  - poopnet
+  - boopnet:
+    - myhostname # for this service
+    # requires the network to have an ipam block subnet configuration
+    ipv4_address: 123.123.123.123 # for this service
+    ipv6_address: 123.123.123.123 # for this service
+# cant be used with network_mode: host
+ports:
+  - "127.0.0.1:5000-5010:5000-5010"
+  # expose container port(s)
+  - "3000"
+  - "3000-3005"
+  # map host to container on all network interfaces
+  - "8080:80"
+  # specify protocol
+  - "6060:6060/udp" # or tcp
+  # expanded format
+  - target: 80 # container
+    host_ip: 127.0.0.1
+    published: 8080 # host
+    protocol: tcp
+    mode: host
 
 ### basic
+labels:
+  com.docker.compose.project: "always set to the project name"
+  com.docker.compose.service: "always set to the service name"
+  ai.nirv.description: "poop"
+  ai.nirv.emptyvalue: ""
+labels
+  - "ai.nirv.description=Poop"
+  - "ai.nirv.emptyvalue"
+
 # override the default image cmd
 # this is whats passed to entrypoint (in image/compose)
 command: any linux cmd here
 command: ['or', 'as', 'a', 'list']
 
 # override CMD and ENTRYPOINT set in image
-# entrypoint: /in/container/poop.sh
+entrypoint: /in/container/poop.sh
 
+
+### build
 # template for a container
 image: redis
 image: redis:5
@@ -387,8 +441,13 @@ image: library/redis
 image: docker.io/library/redis
 image: my_private.registry:5000/redis
 
-# string/object, but not both
+# create a service based off another one
+# the base service cannot have depends_on, volumes_from, or circular references
+extends:
+  file: if/in/other/compose.yml
+  service: poop
 
+# string/object, but not both
 build: ./dir/with/dockerfile
 build:
     # path/url
@@ -422,29 +481,43 @@ build:
 
 
 ### anti-pattern in well-architected services
+# specify the order in which a container joins a network
+# prefer to architect your service runtime for resiliancy
 
-# impacts compose up and stop
+priority: 100
 # waits for the container to be started
 # not for the service to be ready
 depends_on:
     - servicenameX
     - servicenameX
 
+# creates an implicit depends_on
 # link to services managed outside this compose spec
 # prefer to set this up with normal dns/http integration vs encoding in compose
 external_links:
   - redis
   - serviceName:alias
 
-# TODOS: require a deep dive
+# creates an implicit depends_on
+# define network links to another service
+links:
+  - db
+  - serviceName:alias
+
+
+### TODOS: require a deep dive
 credential_spec
 SHM_SIZE
-deploy
 device_cgroup_rules
 devices
 dns
 dns_opt
 dns_search
+link_local_ips
+oom_kill_disable
+oom_score_adj
+pid
+
 ```
 
 #### compose cli
