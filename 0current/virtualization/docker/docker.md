@@ -36,6 +36,7 @@
   - [capp_add/drop: linux capabilities](https://man7.org/linux/man-pages/man7/capabilities.7.html)
   - [cgroup_parent: linux control groups](https://man7.org/linux/man-pages/man7/cgroups.7.html)
 - images
+  - [really good image name format post](https://github.com/opencontainers/.github/blob/master/docs/docs/introduction/digests.md)
   - [build](https://docs.docker.com/engine/reference/commandline/build/)
   - [buildkit backend](https://docs.docker.com/build/buildkit/)
   - [buildkit examples](https://github.com/moby/buildkit/tree/master/examples)
@@ -43,6 +44,7 @@
   - [buildx github](https://github.com/docker/buildx)
   - [buildx](https://docs.docker.com/buildx/working-with-buildx/)
 - networking
+  - [rfc 1123: domain/hostnames](https://www.rfc-editor.org/rfc/rfc1123)
   - [docker container networking](https://docs.docker.com/config/containers/container-networking/)
   - [configure docker to use a proxy network](https://docs.docker.com/network/proxy/)
   - [docker network tutorial](https://docs.docker.com/network/network-tutorial-standalone)
@@ -93,39 +95,6 @@
   - attempt to restart when a failure is detected
   - attempt for some predetermined time to restart when a failure is detected
   - always restart the container regardless of the condition
-- components
-  - image: the template for instantiating a container
-  - container: a running image
-  - volume: a filesystem for a container
-  - network: dns for containers & volumes
-- common files
-  - `.dockerignore`
-  - `poop.Dockerfile`
-    - sucks as then your dockerfiles arent sorted in the tree
-    - use `d.poop.Dockerfile` lol instead, super ugly but at least they are all grouped together
-
-### quickies
-
-- docker ARG, vs ENV vs .env
-  - FYI: both ARG and ENV leave traces in the image
-  - build time
-    - ARG:
-      - build time vars
-      - setting default runtime ENV values
-      - can export vars to a file so subsequent images can access them
-  - runtime
-    - ENV:
-      - cli env vars take precedence over .env vars
-      - can use ARG values for defaults
-    - .env: prefer over cli vars to set defaults and allow the consumer to override via cli
-
-```sh
-sudo systemctl disable docker.service
-sudo systemctl disable containerd.service
-sudo systemctl restart docker.service
-
-
-```
 
 ## files and locations
 
@@ -146,6 +115,9 @@ sudo systemctl restart docker.service
 #### docker daemon
 
 ```sh
+sudo systemctl disable docker.service
+sudo systemctl disable containerd.service
+sudo systemctl restart docker.service
 
 # disable inter-container communication
 # any traffic from one container will be blocked
@@ -225,16 +197,47 @@ docker -H tcp://HOST_IP:2375 SOME_CMD
   - lists get merged by appending
   - relative paths resolve from the first compose files parent dir
 
-#### env vars
+#### vars deep dive (sans config, secrets)
 
 - .env: env file available for use in the compose file
-- env_file: env file available for use in the container
+- env_file: addds/unsets vars available for use in the container
+  - if relative, its to the compose.fil parent dir
+  - all values are raw strings and not interpolated by docker (so quotes are included)
 - environment: override values set in an .env/env_file
-- ARG
-  - build time arguments
-  - value lookup: dockerfile -> compose file build -> env vars
+  - bool values must be quoted so their not interpolated by the yaml parser
+- docker ARG, vs ENV vs .env
+  - FYI: both ARG and ENV leave traces in the image
+    - use configs/secrets instead
+  - build time
+    - ARG:
+      - build time vars that serve as defaults for runtime vars
+      - value lookup: dockerfile -> compose file build -> env vars
+      - can export vars to a file so subsequent images can access them
+  - runtime
+    - ENV:
+      - cli env vars take precedence over .env vars
+      - can use ARG values for defaults
+    - .env: prefer over cli vars to set defaults and allow the consumer to override via cli
 
 ```sh
+# env_file
+POOP= #empty string
+BOOP=soup # raw string
+DOOP="LOOP" # "LOOP" in container
+COOP # unset
+
+# services environment key
+# map syntax
+environment:
+  poop: # retrieve at runtime or unset
+  mybool: "true"
+
+# list syntax
+environment:
+  - a=b
+  - c
+
+# env vars
 COMPOSE_PROJECT_NAME # name:
 
 ```
@@ -286,13 +289,16 @@ networks:
 # mounted at /configname in container
 configs:
   httpd-config:
-    external: true
+    external: true|false
+    file: ./poop.txt
+
 
 
 ############### secrets
 secrets:
   certs:
     externa:true
+
 
 ############### services
 services:
@@ -301,10 +307,15 @@ services:
   SERVICE_Y:
     # definition
 
-# u cannot scale a service beyond 1 container
-# if supplying a static container name
+# u cannot scale a service beyond 1 if set
+# however you can bypass this creating another service that extends from this one
 container_name: poop
 
+# create a service based off another one
+# the base service cannot have depends_on, volumes_from, or circular references
+extends:
+  file: if/in/other/compose.yml
+  service: poop
 # service is enabled when environment matches one these values
 # services without a profies: are always active
 profiles:
@@ -317,13 +328,13 @@ volumes:
   - point to name in top level volumes
 configs:
   # short
-    - point to name in top level configs
-  # exanded
-    - source: point to name in top level configs
-    target: /mount/path/configname
-    uid: 'owner'
-    gid: 'group'
-    mode: 0444 # default
+    - someconfig # mounted at /someconfig
+  # expanded
+    - source: someconfig
+    target: /mount/path/source/remed/to/this.txt
+    uid: "123" # defaults to USER
+    gid: "321" # defaults to USER
+    mode: 0440 # linux perm in octal; writable ignored; executable cannot be set
 
 ### perf
 cpu_count: 2 # total usable cpus
@@ -337,16 +348,45 @@ cpuset: 0-3|0,1 # range or set, define the explicit runtime cpu
 blkio_config: # defines config options for block storage IO limits
 
 ### security
+init: true # run an init process (PID 1) that forwards signals & reaps processes
 cap_add: # list of linux capabilities to enable
 cap_drop: # list of linux capabilities to disable
 cgroup_parent: poop # parent cgroup for this service
+group_add: # the USER will be added as member of the group
+  - poopgroup
+
+### networking
+hostname: a.b.c. # of the container
+domainname: b.c. # of the container
+extra_hosts: # added to /etc/hosts
+  - poop:123.123.123.123
+healthcheck: # overrides HEALTHCHECK defined in dockerfile
+  test: ["CMD", "curl", "-f", "http://localhost"]
+  test: ["CMD-SHELL", "curl -f http://localhost || exit 1"]
+  test: curl -f https://localhost || exit 1 # same as CMD-SHELL
+  interval: 1m30s
+  timeout: 10s
+  retries: 3
+  start_period: 40s
+  disable: true # disable healthcheck set by the image
 
 ### basic
-# override the default cmd
+# override the default image cmd
+# this is whats passed to entrypoint (in image/compose)
 command: any linux cmd here
-command: ['or', 'as', 'a', 'list', 'when', 'passing', 'args']
+command: ['or', 'as', 'a', 'list']
 
-image: SOME_NAME:SOME_TAG
+# override CMD and ENTRYPOINT set in image
+# entrypoint: /in/container/poop.sh
+
+# template for a container
+image: redis
+image: redis:5
+image: redis@sha256:0ed5d5928d4737458944eb604cc8509e245c3e19d02ad83935398bc4b991aac7
+image: library/redis
+image: docker.io/library/redis
+image: my_private.registry:5000/redis
+
 # string/object, but not both
 
 build: ./dir/with/dockerfile
@@ -380,11 +420,9 @@ build:
     target: prod
 
 
-# TODOS
-credential_spec
-SHM_SIZE
 
 ### anti-pattern in well-architected services
+
 # impacts compose up and stop
 # waits for the container to be started
 # not for the service to be ready
@@ -392,7 +430,21 @@ depends_on:
     - servicenameX
     - servicenameX
 
+# link to services managed outside this compose spec
+# prefer to set this up with normal dns/http integration vs encoding in compose
+external_links:
+  - redis
+  - serviceName:alias
 
+# TODOS: require a deep dive
+credential_spec
+SHM_SIZE
+deploy
+device_cgroup_rules
+devices
+dns
+dns_opt
+dns_search
 ```
 
 #### compose cli
