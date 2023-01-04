@@ -1,6 +1,7 @@
 # docker
 
-- my (2022) docker cheatsheet
+- [bookmark](https://docs.docker.com/compose/compose-file/#internal)
+- my (2023) docker cheatsheet
 - TODO: finish copying stuff from the old docker cheatsheet
 
 ## links
@@ -11,6 +12,8 @@
 - [docker dev best practices](https://docs.docker.com/develop/dev-best-practices/)
 - [container runtimes](https://github.com/opencontainers/runtime-spec/blob/main/implementations.md)
 - interwebs
+  - [linux ulimits](https://phoenixnap.com/kb/ulimit-linux-command)
+  - [history of TTY](https://itsfoss.com/what-is-tty-in-linux/)
   - [/dev/shm and its practical usage](https://www.cyberciti.biz/tips/what-is-devshm-and-its-practical-usage.html)
   - [docker + buildkit](https://devopsspiral.com/articles/containers/modernize-image-builds/)
   - [docker arg, env explanation](https://vsupalov.com/docker-arg-env-variable-guide/)
@@ -276,6 +279,7 @@ name: ${PROJECT_NAME}
 # todo...
 
 ############### volumes
+# for reusable volumes across multiple containers
 volumes:
   db-data:
     driver: flocker
@@ -284,15 +288,33 @@ volumes:
 
 
 ############### networks
+# enable service-to-service communication
+# at runtime services.networks resolve to a specific ip
+# this specifies the implementation details of the resolution process
 networks:
-  front-tier: {}
-  back-tier:
-    name: "force-this-name"
+  soupnet: {} # define with default settings
+  poopnet:
+  boobnet:
+    name: "external network name|host|none" # only way to use host|none networks
+    attachable: true|false # allow external containers to attach & communicate
+    enable_ipv6: false # why the hate with ipv6 anyway?
+    driver: overlay|host|none
+    driver_opts: # pass these to the driver
+      poop: woop
+      soup: loop
     ipam: # enable containers to specify ipv4|6_address
       driver: default
       config:
-        - subnet: "172.16.238.0/24"
-        - subnet: "2001:3984:3989::/64"
+        - subnet: 172.28.0.0/16
+          ip_range: 172.28.5.0/24
+          gateway: 172.28.5.254
+          aux_addresses:
+            host1: 172.28.1.5
+            host2: 172.28.1.6
+            host3: 172.28.1.7
+      options:
+        foo: bar
+        baz: "0"
 
 
 ############### configs
@@ -341,7 +363,8 @@ security_opt: # overrides labeling scheme
   - label:role:ROLE
 stop_grace_period: 10s # how long to wait before SIGKILL is sent after SIGTERM/stop
 stop_signal: SIGTERM | the stop signal
-
+user: "poop" # override user set in image
+userns_mode: "host" # set the user namespace
 
 ### file system
 read_only: false #
@@ -355,7 +378,27 @@ secrets:
     gid: "103" # defaults to USER
     mode: 0440 # in octal; writable ignored; executable may be set
 volumes:
-  - point to name in top level volumes
+  # short
+  - "reusable:/path/in/cunt:ro" # "rw,ro,z,Z" z=shared with other services,Z=private
+  - "`pwd`/host/path:/path/in/cunt"
+  # expanded
+  - type: volume|bind|tmpfs|npipe
+    source: db-data|/host/path
+    target: /cunt/path
+    read_only: true|false
+    bind:
+      propagation: ? # propagation mode for bind mounts
+      create_host_path: true|false # create host path if doesnt exist
+      selinux: z|Z
+    volume:
+      nocopy: true|false # disable copying data from container when volume is created
+    tmpfs:
+      size: "in bytes"
+      mode: 0440
+    consistency: ? # consistency for mount
+volumes_from: # mounts all volumes from another service/container
+  - poopService:ro|rw
+  - container:externalPoopContainer
 configs:
   # short
     - someconfig # mounted at /someconfig
@@ -424,8 +467,13 @@ ports:
     published: 8080 # host
     protocol: tcp
     mode: host
-
+ulimits: # override defualt ulimits
+  nprox: 65535
+  nofile:
+    soft: 20000
+    hard: 40000
 ### runtime
+working_dir: /usr/src/apps/nodejsapp # override the working directory set in the image
 runtime: runc # specify an oci runtime
 healthcheck: # overrides HEALTHCHECK defined in dockerfile
   test: ["CMD", "curl", "-f", "http://localhost"]
