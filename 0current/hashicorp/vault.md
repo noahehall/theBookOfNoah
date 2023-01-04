@@ -28,10 +28,12 @@
 - [security best practices tutorial](https://developer.hashicorp.com/well-architected-framework/security)
 - errors
   - [tls error: x509 signed by unknown authority](https://github.com/hashicorp/vault/issues/7400)
-- configuration
-  - [duration format strings](https://developer.hashicorp.com/vault/docs/concepts/duration-format)
+- integrations
+  - [vault + haproxy](https://discuss.hashicorp.com/t/vault-ha-failover-using-haproxy/41346)
   - [app integration tutorials](https://developer.hashicorp.com/vault/tutorials/app-integration)
   - [database credentials tutorial](https://developer.hashicorp.com/vault/tutorials/db-credentials)
+- configuration
+  - [duration format strings](https://developer.hashicorp.com/vault/docs/concepts/duration-format)
   - [recovery mode concepts](https://developer.hashicorp.com/vault/docs/concepts/recovery-mode)
   - [recovery mode tutorial](https://developer.hashicorp.com/vault/tutorials/monitoring/recovery-mode)
   - [seal: auto unseal](https://developer.hashicorp.com/vault/docs/enterprise/sealwrap)
