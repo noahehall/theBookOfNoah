@@ -102,6 +102,9 @@
   - within compose you still reference things by the resource key
 - generally all relative paths are from compose files parent dir
   - thus `../this` is a SIBLING to `thisDir/compose.yaml`
+  - except:
+    - build.dockerfile: is relative to context
+    - build.context: is relative to the compose file (and not the parent dir)
 
 ## basics
 
@@ -684,8 +687,7 @@ deploy:
 # if the image is pulled from registry and if its rebuilt
 pull_policy: "always|never|missing|build"
 # pull the image if build isnt set
-# else build the image and tag it with this name
-# pushing built services requires image to bet set
+# else use the value for tagging and pushing to registry
 image: redis
 image: redis:5
 image: redis@sha256:0ed5d5928d4737458944eb604cc8509e245c3e19d02ad83935398bc4b991aac7
@@ -699,14 +701,16 @@ extends:
   file: /path/to/other/compose.yml
   service: poop
 
+# build a docker image from source and tag [and push] using the image: value
 # string/object, but not both
-# if specified image: is ignored
 build: ./dir/with/dockerfile/is/required
 build:
-    # path: absolute/relative to compose parent dir
-    # url: git repository
+    # either a git repo or path on disk
+    # one of the few paths thats relative to the compose file
+    # ^ and not the compose files parent
     context: ./build/context
     # if specified, context required
+    # relative paths are relative to the context
     dockerfile: /path/some.dockerfile
     # accessible only during build process
     # must exist in dockerfile
