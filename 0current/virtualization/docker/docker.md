@@ -71,6 +71,11 @@
 
 ## best practices / gotchas
 
+- pushing built services to registry
+  - lol alot of the shiz we did in script.registry.sh is still useful
+  - but you can just prefix the fkn `image: poop` directly in compose ;)
+- only build upstream
+  - downstream envs should use an image built and targeted for that environment
 - never hardcode runtime values
 - some values accept a list/map, prefer to use the map for readability
   - environment, labels, sysctls
@@ -95,6 +100,8 @@
   - thats the external name outside of compose
   - should be set to an `${ENV_VAR}` for dynamic lookup at runtime
   - within compose you still reference things by the resource key
+- generally all relative paths are from compose files parent dir
+  - thus `../this` is a SIBLING to `thisDir/compose.yaml`
 
 ## basics
 
@@ -673,10 +680,12 @@ deploy:
 
 
 
-# build ###############
+# buildtime ###############
 # if the image is pulled from registry and if its rebuilt
 pull_policy: "always|never|missing|build"
-# template for a container
+# pull the image if build isnt set
+# else build the image and tag it with this name
+# pushing built services requires image to bet set
 image: redis
 image: redis:5
 image: redis@sha256:0ed5d5928d4737458944eb604cc8509e245c3e19d02ad83935398bc4b991aac7
@@ -687,15 +696,15 @@ image: my_private.registry:5000/redis
 # create a service based off another one
 # the base service cannot have depends_on, volumes_from, or circular references
 extends:
-  file: if/in/other/compose.yml
+  file: /path/to/other/compose.yml
   service: poop
 
 # string/object, but not both
-build: ./dir/with/dockerfile
+# if specified image: is ignored
+build: ./dir/with/dockerfile/is/required
 build:
-    # path/url
-    # path - containing dockerfile
-    # url - git repository
+    # path: absolute/relative to compose parent dir
+    # url: git repository
     context: ./build/context
     # if specified, context required
     dockerfile: /path/some.dockerfile
