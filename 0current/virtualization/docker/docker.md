@@ -1,7 +1,10 @@
 # docker
 
 - my (2023) docker cheatsheet
-- TODO: finish copying stuff from the old docker cheatsheet
+- TODO:
+  - finish copying stuff from the old docker cheatsheet
+  - redo the buildkit notes, doesnt look like we finished and surely dont remember them
+    - might also be in one of the other 100000 dockerfiles
 
 ## links
 
@@ -29,6 +32,10 @@
 - integrations
   - [journalctl blog post](https://www.digitalocean.com/community/tutorials/how-to-use-journalctl-to-view-and-manipulate-systemd-logs)
   - [systemctl blog post](https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units)
+- buildkit
+  - [HLB + buildkit](https://openllb.github.io/hlb/)
+  - [rootless mode](https://github.com/moby/buildkit/blob/master/docs/rootless.md)
+  - [buildkit github](https://github.com/moby/buildkit)
   - [buildkit systemd example](https://github.com/moby/buildkit/tree/master/examples/systemd)
   - [buildkit bake](https://github.com/docker/buildx/tree/master/bake)
 - obversability
@@ -38,6 +45,8 @@
   - [compose build spec](https://docs.docker.com/compose/compose-file/build/)
   - [compose faq](https://docs.docker.com/compose/faq/)
   - [compose deploy spec](https://docs.docker.com/compose/compose-file/deploy/)
+  - [compose spec github](https://github.com/compose-spec/compose-spec)
+  - [compose v2 github](https://github.com/docker/compose)
 - security
   - [docker scan](https://docs.docker.com/engine/scan/)
   - [capp_add/drop: linux capabilities](https://man7.org/linux/man-pages/man7/capabilities.7.html)
@@ -715,14 +724,38 @@ build:
     # accessible only during build process
     # must exist in dockerfile
     args:
-        - ARGX=VALX
-        - ARGY #take val from env
+      ARGX: VALX
+      ARGY: #take val from env
+    # ssh auth the operatorshould use
+    # e.g. cloning private repo
+    ## in dockerfile: RUN --mount=type=ssh,id=mysshkey git clone
+    ssh:
+      - default # mount the default ssh agent
+      - mysshkey=~/.ssh/path/to/cert.pem
 
-    # list of images the engine uses
-    # for cache resolution
+
+    # where to source previous build cache for rebuilds
     cache_from:
-        - alpine:latest
-        - corp/web:123.4
+      - alpine:latest
+      - type=local,src=path/to/cache
+      - type=gha
+    # where to save cache of this build
+    cache_to:
+      - user/app:cache
+      - type=local,dest=path/to/cache
+    # whether cache should be used, or rebuild all image layers
+    no_cache: true|false
+    # pull referenced images specified in the dockerfile `FROM`
+    # even if they are available locally
+    pull: true|false
+
+    # same syntax as runtime extra_hosts
+    # but adds it to the image
+    # updates /etc/hosts -> 162.242.195.82  somehost
+    extra_hosts:
+      - "somehost:162.242.195.82"
+    # platform specific
+    isolation: ?
 
     # metadata for the resulting image
     # best practice use reverse-DNS notation
@@ -730,9 +763,25 @@ build:
         - "com.SERVICENAME.LABELX=VALUE"
         - "com.SERVICENAME.LABEL=VALUE"
 
-    # label this build stage
-    # used for multi-stage builds
+    # size of shared memory available for building the image
+    shmz_size: '4gb'
+
+    # which Dockerfile stage to build
     target: prod
+
+    # add the secret to the resulting image
+    # same syntax as runtime def
+    secrets:
+
+    # add extra tags, ontop of whats defined in image:
+    tags:
+      - "myimage:mytag"
+      - "registry/username/myrepos:my-other-tag"
+
+    # multi-arch images
+    platforms:
+      - "linux/amd64"
+      - "linux/arm64"
 
 
 ############################################################
@@ -1245,9 +1294,6 @@ docker buildx inspect --bootstrap
   - `buildctl` client
 
 ### BUILDKITD
-
-[check this](https://openllb.github.io/hlb/)
-[and this](https://github.com/moby/buildkit/blob/master/docs/rootless.md)
 
 - only available for linux
 
