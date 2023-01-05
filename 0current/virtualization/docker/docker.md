@@ -11,6 +11,9 @@
 - [docker guides: overview](https://docs.docker.com/get-started/overview/)
 - [docker dev best practices](https://docs.docker.com/develop/dev-best-practices/)
 - [container runtimes](https://github.com/opencontainers/runtime-spec/blob/main/implementations.md)
+- configuration
+  - [reusing compose values via fragments](https://docs.docker.com/compose/compose-file/#fragments)
+  - [add arbitrary values anywhere in compose via extensions](https://docs.docker.com/compose/compose-file/#extension)
 - interwebs
   - [linux ulimits](https://phoenixnap.com/kb/ulimit-linux-command)
   - [history of TTY](https://itsfoss.com/what-is-tty-in-linux/)
@@ -80,6 +83,13 @@
   - let the users define project specific reusable build flows
 - build cmds should be envokable by by general-purpose cmd runners (e.g. make)
   - however, `docker buildx bake` permits executing in parallel
+
+### gotchas
+
+- generally when you apply a `name` to something
+  - thats the external name outside of compose
+  - should be set to an `${ENV_VAR}` for dynamic lookup at runtime
+  - within compose you still reference things by the resource key
 
 ## basics
 
@@ -205,7 +215,7 @@ docker -H tcp://HOST_IP:2375 SOME_CMD
   - lists get merged by appending
   - relative paths resolve from the first compose files parent dir
 
-#### vars deep dive (sans config, secrets)
+#### vars, vars and vars (sans config, secrets)
 
 - .env: env file available for use in the compose file
 - env_file: addds/unsets vars available for use in the container
@@ -250,6 +260,28 @@ COMPOSE_PROJECT_NAME # name:
 
 ```
 
+#### fragments and extensions
+
+- enable increased reusability
+
+```sh
+
+# define an x-logging extenstion with an &anchor fragment
+x-logging: &default-logging
+  options:
+    max-size: "12m"
+    max-file: "5"
+  driver: json-file
+
+services:
+  frontend:
+    image: awesome/webapp
+    logging: *default-logging # reusing the &anchor fragment
+  backend:
+    image: awesome/database
+    logging: *default-logging # reuse it again
+```
+
 #### compose spec
 
 - services: each service is a machine
@@ -276,6 +308,7 @@ COMPOSE_PROJECT_NAME # name:
 ############### project name
 # is prefixed to container names, networks, etc
 # all resources become ${PROJECT_NAME}_resourceName
+# ^ unless: name attribute is specified or external set to true
 name: ${PROJECT_NAME}
 
 ############### deploy
@@ -285,9 +318,9 @@ name: ${PROJECT_NAME}
 # for persistent & reusable volumes across multiple containers
 volumes:
   poop: # uses the default volume settings
-  moop:
+  moop: # use this name inside of compose
     external: true # lifecycle managed outside of compose
-    name: "use this name" # only param valid for external volumes
+    name: "${LOOK_ME_UP}" # only param valid for external volumes
   loop:
     labels:
     ai.nirv.desc: "loopa dooper ruper scooper mooper tooper dooper blooper"
@@ -307,12 +340,12 @@ networks:
   soupnet: {} # define with default settings
   poopnet:
     external: true # this networks lifecycle its outside the boundary of compose
-    name: "is required for externally managed networks"
+    name: "${LOOK_ME_UP}"
   boobnet:
     labels:
       ai.nirv.desc: "my poop net"
     internal: true # this network is externally isolated
-    name: "external network name|host|none" # only way to use host|none networks
+    name: "${LOOK_ME_UP}|host|none" # only way to use host|none networks
     attachable: true|false # allow external containers to attach & communicate
     enable_ipv6: false # why the hate with ipv6 anyway?
     driver: overlay|host|none
@@ -335,21 +368,30 @@ networks:
 
 
 ############### configs
-# creates but doesnt mount
-# mounted at /configname in container
+# mounted at /poopconf in containers that opt in
+# enables adding dynamic config to a service
+# ^ without having to rebuild an image
+# must be owned by the compose operator
+# ^ but can be overridden by service def
+# must be world readable by default
+# ^ but can be overridden by service def
 configs:
-  httpd-config:
-    external: true|false
+  poopconf:
+    name: "${LOOK_ME_UP}"
+    external: true|false # lifecycle exists outside of compose
     file: ./poop.txt
 
 
 
 ############### secrets
-# creates but doesnt mount secret
+# configs for sensitive data
+
 secrets:
-  certs:
-    externa:true|false
-    file: ./poop.cert
+  privatepoop:
+    name: "${LOOK_ME_UP}"
+    environment: "POOP_ENV_VAR" # cant be used with file
+    external: true|false # lifecycle exists outside of compose
+    file: ./poop.txt # cant be used with environment
 
 
 ############### services
