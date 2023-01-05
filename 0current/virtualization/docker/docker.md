@@ -356,8 +356,6 @@ services:
 # ^ unless: name attribute is specified or external set to true
 name: ${PROJECT_NAME}
 
-############### deploy
-# todo...
 
 ############### volumes
 # for persistent & reusable volumes across multiple containers
@@ -594,6 +592,7 @@ healthcheck: # overrides HEALTHCHECK defined in dockerfile
   start_period: 40s
   disable: true # disable healthcheck set by the image
 
+# can be overridden by deploy > restart_policy
 restart: "no|always|on-failure|unless-stopped"
 # service is enabled when current profile matches
 # services without a profies: are always active
@@ -639,6 +638,10 @@ deploy:
       datacenter: us-east
   # machine resources
   ## a range reservations --> limits
+  ## cpus: % of cores
+  ## memory: % of memory
+  ## pids: limit
+  ## devices: configuration
   resources:
     ## threshold: minimum resource allocations
     reservations:
@@ -649,6 +652,25 @@ deploy:
       cpus: '0.50'
       memory: 50M
       pids: 1
+  # overrides service restart: definition
+  restart_policy:
+    condition: none|on-failure|any
+    delay: 10s
+    ## i.e. restart as many times until we have 5 failed windows (120s each)
+    max_attempts: 5 # maximum failed windows,
+    window: 120s # consider a restart failed
+  # rollback strategy in event of failed update
+  rollback_config:
+    parallelism: 0 # rollback all containers simultaneously
+    delay: 0s # time to wait between each group (defined by parallelism if > 0)
+    failure_action: pause|continue # when rollback fails
+    monitor: 0s # how long to monitor an update to detect a failure
+    max_failure_ration: 0 # think this is a percentage
+    order: stop-first|start-first # transition between old and new
+  # update strategy
+  update_config: # same options as rollback_config
+    failure_action: continue|rollback|pause # adds rollback option
+
 
 
 # build ###############
