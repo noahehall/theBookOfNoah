@@ -1,6 +1,5 @@
 # docker
 
-- [bookmark](https://docs.docker.com/compose/compose-file/#internal)
 - my (2023) docker cheatsheet
 - TODO: finish copying stuff from the old docker cheatsheet
 
@@ -245,6 +244,7 @@ DOOP="LOOP" # "LOOP" in container
 COOP # unset
 
 # services environment key
+# interpolation rules same as bash
 # map syntax
 environment:
   poop: # retrieve at runtime or unset
@@ -254,6 +254,15 @@ environment:
 environment:
   - a=b
   - c
+  - $var
+  - ${var} # prefer this one
+  - ${var:-use_this_if_unset_or_empty}
+  - ${var:+if_set_use_this_instead}
+  - ${var:?required if unset or empty err msg}
+  - ${var?required if unset err msg}
+  - ${VARIABLE:-${FOO}}
+  - ${VARIABLE?$FOO}
+  - ${VARIABLE:-${FOO:-default}}
 
 # env vars
 COMPOSE_PROJECT_NAME # name:
@@ -280,6 +289,20 @@ services:
   backend:
     image: awesome/database
     logging: *default-logging # reuse it again
+```
+
+#### durations and bytes
+
+```sh
+
+############ bytes
+# {integer}{unit}
+100b|k|kb|(m|mb)|(g|gb)
+
+############ durations
+# {integer}{unit}
+100us|ms|s|h
+1h30m10s
 ```
 
 #### compose spec
@@ -675,11 +698,6 @@ docker-compose up \
 
 ### Dockerfile
 
-- defining & using variables in dockerfile
-  - $variable_name
-  - ${variable_name}
-  - ${variable:-default_value}
-  - ${variable:+if_set_use_this_instead}
 - keywords
   - ADD
   - CMD
