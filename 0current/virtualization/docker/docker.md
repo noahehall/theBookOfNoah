@@ -36,8 +36,8 @@
   - [compose in prod](https://docs.docker.com/compose/production/)
   - [compose file spec](https://docs.docker.com/compose/compose-file/)
   - [compose build spec](https://docs.docker.com/compose/compose-file/build/)
-  - [compose deploy spec](https://docs.docker.com/compose/compose-file/deploy/)
   - [compose faq](https://docs.docker.com/compose/faq/)
+  - [compose deploy spec](https://docs.docker.com/compose/compose-file/deploy/)
 - security
   - [docker scan](https://docs.docker.com/engine/scan/)
   - [capp_add/drop: linux capabilities](https://man7.org/linux/man-pages/man7/capabilities.7.html)
@@ -60,14 +60,20 @@
   - [registry docs](https://github.com/docker/docs/tree/main/registry)
   - [registry blog post](https://www.marcusturewicz.com/blog/build-and-publish-docker-images-with-github-packages/)
   - [publishing images via github action](https://docs.github.com/en/actions/publishing-packages/publishing-docker-images)
-- mac
-  - [multi-arch images](https://medium.com/nttlabs/buildx-multiarch-2c6c2df00ca2)
 - docker engine (i.e. cli)
   - [docker run](https://docs.docker.com/engine/reference/commandline/run/)
+- docker desktop for linux: breaks hashicorp, dont use it
+  - [install](https://docs.docker.com/desktop/install/linux-install/)
+  - [docs](https://docs.docker.com/desktop/faqs/linuxfaqs/#what-is-the-difference-between-docker-desktop-for-linux-and-docker-engine)
+  - [docs](https://docs.docker.com/cloud/ecs-integration/)
+- mac
+  - [multi-arch images](https://medium.com/nttlabs/buildx-multiarch-2c6c2df00ca2)
 
 ## best practices / gotchas
 
 - never hardcode runtime values
+- some values accept a list/map, prefer to use the map for readability
+  - environment, labels, sysctls
 - compose
   - see the anti-pattern list at the bottom of compose spec sh
 - dockerfile
@@ -112,6 +118,22 @@
   - attempt to restart when a failure is detected
   - attempt for some predetermined time to restart when a failure is detected
   - always restart the container regardless of the condition
+
+## docker desktop for linux
+
+- breaks hashicorp, dont use it
+
+### docker ecs context
+
+```sh
+# see all your contexts
+docker context ls
+
+# create aws context
+## requires fkn docker desktop
+docker context create ecs POOP
+
+```
 
 ## files and locations
 
@@ -424,7 +446,7 @@ services:
   SERVICE_Y:
     # definition
 
-### security
+# security ###############
 init: true # run an init process (PID 1) that forwards signals & reaps processes
 cap_add: # list of linux capabilities to enable
 cap_drop: # list of linux capabilities to disable
@@ -448,7 +470,7 @@ stop_signal: SIGTERM | the stop signal
 user: "poop" # override user set in image
 userns_mode: "host" # set the user namespace
 
-### file system
+# file system ###############
 read_only: false #
 secrets:
   # short
@@ -496,7 +518,7 @@ tmpfs: # mount a temp file system
   - /run
   - /tmp
 
-### perf
+# perf ###############
 cpu_count: 2 # total usable cpus
 cpu_percent: 50 # usable % per cpu
 cpu_shares: ? # weighted cpu allocation relative to other containers
@@ -515,7 +537,7 @@ memswap_limit: ?
 shm_size ? # size of shared memory (/dev/shm) allowed by the service
 
 
-### networking
+# networking ###############
 container_name: poop # cant scale pass 1 if set, see extends for workaround
 hostname: a.b.c. # of the container: should be unique to avoid resolution issues
 domainname: b.c. # of the container
@@ -559,7 +581,7 @@ ulimits: # override defualt ulimits
     hard: 40000
 
 
-### runtime
+# runtime ###############
 working_dir: /usr/src/apps/nodejsapp # override the working directory set in the image
 runtime: runc # specify an oci runtime
 healthcheck: # overrides HEALTHCHECK defined in dockerfile
@@ -595,8 +617,41 @@ command: ['or', 'as', 'a', 'list']
 # override CMD and ENTRYPOINT set in image
 entrypoint: /in/container/poop.sh
 
+# set runtime specific requirements/metadata
+# useful in dynamic/immutable infrastructure scenarios
+# where you need to inform the orchestrator of optimal resource needs
+deploy:
+  labels: # same as everywhere else
+  # service discovery: mode, replicas, and endpoint_mode
+  ## global: 1 container per machine
+  ## replicated: multiple instances with different ports i guess
+  mode: replicated # replication modal;
+  replicas: 2 # if replicated, total instances to run
+  ## vip: use a virtual ip to find us
+  ## dnsrr: use a dns name to find us
+  endpoint_mode: vip|dnsrr # service discovery method
+  # machine configuration
+  placement:
+    ## requirements
+    constraints:
+      disktype: ssd
+    ## preferences
+      datacenter: us-east
+  # machine resources
+  ## a range reservations --> limits
+  resources:
+    ## threshold: minimum resource allocations
+    reservations:
+      cpus: '0.25'
+      memory: 20M
+    ## prevention: restrictions placed on running container
+    limits:
+      cpus: '0.50'
+      memory: 50M
+      pids: 1
 
-### build
+
+# build ###############
 # if the image is pulled from registry and if its rebuilt
 pull_policy: "always|never|missing|build"
 # template for a container
@@ -645,12 +700,12 @@ build:
     target: prod
 
 
-
-### anti-pattern in well-architected services
+############################################################
+# anti-patterns in well-architected services
+############################################################
 # specify the order in which a container joins a network
-# prefer to architect your service runtime for resiliancy
-
 priority: 100
+
 # waits for the container to be started
 # not for the service to be ready
 depends_on:
@@ -671,7 +726,9 @@ links:
   - serviceName:alias
 
 
-### TODOS: require a deep dive
+#############################################
+### TODOS: require a deeper dive
+#############################################
 credential_spec
 device_cgroup_rules
 devices
@@ -685,15 +742,6 @@ pid # set the pid mode
 stdin_open # allocated stdin, think this is just normal redirection
 sysctls: # set kernel params
 tty: # run with a TTY
-```
-
-#### compose cli
-
-```sh
-# build, (re)creates, starts, and attaches to containers for a service
-docker-compose up \
-      -d #detached + only way to pass ARG to ENTRYPOINT exec form and overrides matching ARG in CMD
-
 ```
 
 ### Dockerfile
@@ -845,26 +893,22 @@ docker-compose up \
 
 ```
 
-## docker desktop for linux
+## compose cli
 
-- [install](https://docs.docker.com/desktop/install/linux-install/)
-- [docs](https://docs.docker.com/desktop/faqs/linuxfaqs/#what-is-the-difference-between-docker-desktop-for-linux-and-docker-engine)
+- see the `docker engine` section as compose cli is almost 1 to 1
 
-### docker ecs context
+## docker engine (cli)
 
-- [docs](https://docs.docker.com/cloud/ecs-integration/)
+### docker convert
 
-```sh
-# see all your contexts
-docker context ls
+- get the canonical specification for a container
+- docker compose convert: converts a compose file to canonical form
 
-# create aws context
-## requires fkn docker desktop
-docker context create ecs POOP
+### docker config
 
-```
+- manage docker configs
 
-## docker inspect
+### docker inspect
 
 - use cases
   - inspect a container to see the values of variables
@@ -875,7 +919,7 @@ docker context create ecs POOP
 
 ```
 
-## docker rm
+### docker rm
 
 - remove docker containers
 
@@ -885,18 +929,18 @@ docker context create ecs POOP
 
 ```
 
-## docker rmi
+### docker rmi
 
 - remove docker images
 
-## docker cp
+### docker cp
 
 ```sh
   # copy files from host into data container
       docker cp /some/file CONT_NAME:/place/here
 ```
 
-## docker create
+### docker create
 
 ```sh
   # create a data container using an existing volume based on busybox
@@ -904,7 +948,7 @@ docker context create ecs POOP
         ---name CONT_NAME busybox
 ```
 
-## docker tag
+### docker tag
 
 ```sh
   # tag an image with id XXXX with repository noahehall and name poop with version 69
@@ -912,7 +956,7 @@ docker context create ecs POOP
 
 ```
 
-## docker network
+### docker network
 
 - types
   - bridge network
@@ -946,7 +990,7 @@ docker context create ecs POOP
 
 ```
 
-## docker volume
+### docker volume
 
 - `create` create a volume
 - `inspect` display d5tailed information volume(s)
@@ -973,7 +1017,7 @@ docker context create ecs POOP
 
 ```
 
-## docker image
+### docker image
 
 ```sh
 
@@ -990,7 +1034,7 @@ docker context create ecs POOP
 
 ```
 
-## docker run
+### docker run
 
 ```sh
   # examples of options
@@ -1058,7 +1102,7 @@ docker context create ecs POOP
       -u root busybox
 ```
 
-## docker build
+### docker build
 
 - build an image from a Dockerfile and a context
 - the entire contet gets sent to the docker daemon for build
@@ -1114,7 +1158,7 @@ docker context create ecs POOP
 
 ```
 
-## docker exec
+### docker exec
 
 ```sh
   # see what process 1 is, and the options passed to it
