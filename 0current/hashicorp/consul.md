@@ -17,6 +17,8 @@
   - [haproxy conf post with comparisons with other proxies](https://www.haproxy.com/blog/haproxyconf-2022-recap/)
     - just in case your thinking about switching from haproxy because consul uses it
 - tuts
+  - [bunch of hashicorp copypasta](https://github.com/hashicorp-education)
+  - [consul scripts](https://github.com/hashicorp-education/learn-consul-get-started-vms)
   - [what is consul](https://developer.hashicorp.com/consul/docs/intro)
   - [getting started](https://developer.hashicorp.com/consul/tutorials/get-started-vms)
   - [deploy consul server](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-deploy)
@@ -29,6 +31,7 @@
   - [consensus protocol](https://developer.hashicorp.com/consul/docs/architecture/consensus)
   - [outage recovery](https://developer.hashicorp.com/consul/tutorials/datacenter-operations/recovery-outage)
 - integrations
+  - [docker file](https://github.com/hashicorp/consul/blob/main/Dockerfile)
   - [list of consul tools](https://developer.hashicorp.com/consul/docs/integrate/download-tools)
   - [vault as secrets backend](https://developer.hashicorp.com/consul/docs/k8s/deployment-configurations/vault)
   - [nomad integration](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration#service-discovery)
@@ -44,6 +47,8 @@
 - api gateway
   - [intro](https://developer.hashicorp.com/consul/docs/api-gateway)
 - provision
+- cli
+  - [docs](https://developer.hashicorp.com/consul/commands)
 - http
   - [agent api](https://developer.hashicorp.com/consul/api-docs/agent/service)
 
