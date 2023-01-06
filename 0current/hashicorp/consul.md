@@ -36,6 +36,8 @@
   - [service discovery](https://developer.hashicorp.com/consul/docs/discovery/services)
   - [health checks](https://developer.hashicorp.com/consul/docs/discovery/checks)
   - [dns queries](https://developer.hashicorp.com/consul/docs/discovery/dns)
+- api gateway
+  - [intro](https://developer.hashicorp.com/consul/docs/api-gateway)
 - provision
 - http
   - [agent api](https://developer.hashicorp.com/consul/api-docs/agent/service)
@@ -55,6 +57,11 @@
 - data plane: processes data requests
 - mTLS: mutual transport layer security
 - service mesh: connect and managet network services
+- north-south traffic: refers tot he flow of data into and out of a specific env
+- service catalog: single source of truth for available services in the service registry
+- client-side discovery: consumers are responsible for determining the access information of service instances and load balancing requests between them: query catelog > select a service > make request to service
+- server-side discovery: consumers use an intermediary to query the catalog and make requests: query consul > consul queries the catelog > consul load balances requests to service instances
+  - dont be fooled: consul + something like haproxy (it uses envoy) is still the best in class architecture
 
 ## basics
 
@@ -83,8 +90,14 @@
 
 ### control plane
 
-- service discovery: centralized registry to track (ips/hostnames) services in/out
+#### service discovery
+
+- centralized registry to track (ips/hostnames) as services start, scale in/out and die
 - also includes basic DNS functionality: lookups, alternate domains & access controls
+- services are registered based on identity instead of ip & port
+- consumers use dns queries to retrieve the ip & hostnames for registered identities
+
+#### service mesh
 
 ### data plane
 
@@ -104,6 +117,12 @@
 ### NS1
 
 ### DNSimple
+
+### k8s api gateway
+
+- add-on for controlling access to services running with a consuls service mesh
+  - authn at point of entry and provide clients with TLS certs
+  - load balance requests across services
 
 ### flow
 
