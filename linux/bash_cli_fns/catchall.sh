@@ -1,36 +1,34 @@
 #!/bin/env bash
 
 # bash
-redirectALL () {
+redirectALL() {
     echo "redirecting stdout & err to ./redirectALL.log"
     # Note: & (in 2>&1) specifies that 1 is not a file name but a file descriptor.
-    "$@" > .redirectALL.log 2>&1
+    "$@" >.redirectALL.log 2>&1
 }
 
 # https://github.com/dylanaraps/neofetch
-if type neofetch &>/dev/null;
-	# --config /path/to/config
-	# --config none
-	then neofetch \
-		--config none \
-		--cpu_temp F \
-		--gpu_type all \
-		--memory_unit gib \
-		--os_arch on \
-		--stdout
+if type neofetch &>/dev/null; then # --config /path/to/config
+    # --config none
+    neofetch \
+        --config none \
+        --cpu_temp F \
+        --gpu_type all \
+        --memory_unit gib \
+        --os_arch on \
+        --stdout
 # --disk_percent on --disk_subtitle name --disk_show /
 else
-	echo 'neofetch not installed'
+    echo 'neofetch not installed'
 fi
-
 
 # use bashtop if its installed
 if hash bpytop 2>/dev/null; then
-	alias oldtop='/usr/bin/top'
-	alias top='/usr/bin/bpytop'
-else echo 'unable to ovelroad top with bpytop'
+    alias oldtop='/usr/bin/top'
+    alias top='/usr/bin/bpytop'
+else
+    echo 'unable to ovelroad top with bpytop'
 fi
-
 
 # random cli ---------------------------
 alias echopath='echo $PATH | tr -s ":" "\n"'
@@ -53,14 +51,6 @@ alias apti='grep " install " /var/log/apt/history.log'
 alias installed='(dpkgi;apti) | less'
 alias untar='tar -xvf'
 
-# networking
-alias getwifi='sudo iwlist wlp3s0 scan | grep ESSID'
-alias whatsonport='sudo netstat -tulpn' # | grep 8080
-alias whatsmyipmac='ifconfig -a | grep inet'
-alias whatsmyip="hostname -I | cut -d' ' -f1"
-alias whatsmyipexternal='curl -s http://ipecho.net/plain'
-alias whatsmyipextended='curl http://ipinfo.io'
-
 # random
 alias xargall='xargs -p -t -n 1'
 alias copyssh='pbcopy < ~/.ssh/id_rsa.pub'
@@ -77,7 +67,6 @@ alias ufwstatus='sudo ufw status verbose'
 alias sizeit='du -ahc'
 # e.g. curl get/some/json | prettyjson
 alias prettyjson='python -m json.tool | less'
-
 
 # get all ufw firewall config files
 alias ufwconfigs='sudo find / -name "*.rules" -exec ls -l {} \; | grep ufw'
@@ -102,12 +91,10 @@ alias listcpusfull='cat /proc/cpuinfo'
 alias listdisks='duf -all'
 alias listfilesystem='df -ha'
 
-
 # gpg|ssh keys -------------------------
 # @see https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key
 alias gpglistkeys='gpg --list-keys'
 alias gpglistkeyslong='gpg --list-keys --keyid-format=long'
-
 
 # random stuff -----------------------------------------------------------------
 # general
@@ -115,18 +102,16 @@ alias getfns='declare -F'
 
 # refresh shell
 # @see https://askubuntu.com/questions/19772/how-to-reinitialize-a-terminal-window-instead-of-closing-it-and-starting-a-new-o
-refresh_shell(){
+refresh_shell() {
     #reset # this hangs kitty
-    if [ "$(uname)" = "Darwin" ]
-    then
+    if [ "$(uname)" = "Darwin" ]; then
         exec $SHELL
     else
         exec sudo --login --user "$USER" /bin/sh -c "cd '$PWD'; exec '$SHELL' -l"
     fi
 }
 
-
-function checkpkgupgrade () {
+function checkpkgupgrade() {
     if [[ $# -eq 1 ]]; then
         apt-cache policy "$1"
     else

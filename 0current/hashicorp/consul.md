@@ -27,15 +27,17 @@
   - [reference architecture tutorial](https://developer.hashicorp.com/consul/tutorials/production-deploy/reference-architecture)
   - [gossip protocol](https://developer.hashicorp.com/consul/docs/architecture/gossip)
   - [consensus protocol](https://developer.hashicorp.com/consul/docs/architecture/consensus)
+  - [outage recovery](https://developer.hashicorp.com/consul/tutorials/datacenter-operations/recovery-outage)
 - integrations
   - [list of consul tools](https://developer.hashicorp.com/consul/docs/integrate/download-tools)
   - [vault as secrets backend](https://developer.hashicorp.com/consul/docs/k8s/deployment-configurations/vault)
+  - [nomad integration](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration#service-discovery)
   - [ns1](https://help.ns1.com/hc/en-us/articles/360039417093-NS1-Consul-Integration-Overview)
   - [dnsimple](https://blog.dnsimple.com/2022/05/consul-integration/)
 - server
 - agent
   - [agent config reference](https://developer.hashicorp.com/consul/docs/agent/config/config-files)
-- service discovery
+- service mesh
   - [service discovery](https://developer.hashicorp.com/consul/docs/discovery/services)
   - [health checks](https://developer.hashicorp.com/consul/docs/discovery/checks)
   - [dns queries](https://developer.hashicorp.com/consul/docs/discovery/dns)
@@ -83,14 +85,62 @@
   - server agents: client information + snapshots and data related to the consensus and other state like consul's key/value store and catalog
     - if this is bind mounted then ownership will be changed to the consul user when the container starts
 - `/consul/config` agent config files
-  - alternative configs can be added by passing the configuration JSON via environment variable `CONSUL_LOCAL_CONFIG`
 
-### docker
+### docker (official img)
 
-- consul should always be run with `--net=host` in docker because consul's consensus and gossip protocols are sensitive to delays and packet loss
-  - cluster address: is the host IP address
-    - aka `bind=EXTERNAL_IP`
-  - client address: is the consul agent IP address for host processes to make HTTP/DNS queries
+- generally should be run with `net=host`
+- uses dumb-init for pid1 and gosu to stepdown from root
+- by default starts in development mode
+- cluster address: ip where other consul agents may content other consul agents
+- client address: ip for host processes to query consul
+
+#### vars
+
+```sh
+# alternative configs can be added by passing the configuration JSON via environment variable
+CONSUL_LOCAL_CONFIG=
+
+# statically set consuls cluster & client address
+-bind=<external ip>
+-client=<interface ip>
+
+# dynamically set consuls cluster & client address
+CONSUL_CLIENT_INTERFACE=<network interface id>
+CONSUL_BIND_INTERFACE=<network interface id>
+```
+
+#### examples
+
+```sh
+
+# dev mode: in-memory server agent + default bridge networking
+# no services exposed on the host
+docker run -d --name=dev-consul -e CONSUL_BIND_INTERFACE=eth0 consul
+
+# add another server to an existing consul cluster
+docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0.2
+
+# add an agent to an existing consul cluster
+docker run -d --net=host -e 'CONSUL_LOCAL_CONFIG={"leave_on_terminate": true}' consul agent -bind=<external ip> -retry-join=<root agent ip>
+
+# expose consul to containers on a bridge network
+# the cluster address still requires the host network
+docker run -d --net=host consul agent -bind=<external ip> -client=<bridge ip> -retry-join=<root agent ip>
+
+# start consul server
+$ docker run -d --net=host -e 'CONSUL_LOCAL_CONFIG={"skip_leave_on_interrupt": true}' consul agent -server -bind=<external ip> -retry-join=<root agent ip> -bootstrap-expect=<number of server agents>
+
+# expose consul dns on port 53 instead of 8600
+# you also need to update /etc/resolv.conf to use 127.0.0.1 as the primary dns server
+## or configure consul to listen on a non-localhost address
+## reachable from within other containers
+$ docker run -d --net=host -e 'CONSUL_ALLOW_PRIVILEGED_PORTS=' consul -dns-port=53 -recursor=8.8.8.8
+
+## ^ add -bind=<bridge ip> to join a bridge network
+### containers on that network should use the -dns option pointed at consul
+$ docker run -i --dns=<bridge ip> -t ubuntu sh -c "apt-get update && apt-get install -y dnsutils && dig consul.service.consul"
+
+```
 
 ### service mesh
 
@@ -113,6 +163,10 @@
 - automatically gnerates an SSL cert for each service and its instances to encrypt comms over tcp/upd/grpc
 - fine-grained service level (not ip-based) authz policies
 
+### UI
+
+- available @ 8500
+
 ## integrations
 
 ### Consul-Terraform-Sync
@@ -124,6 +178,8 @@
 
 - use vaults PKI engine to generate & store TLS certs on both the data and control plane
 
+### nomad integration
+
 ### NS1
 
 ### DNSimple
@@ -134,7 +190,7 @@
   - authn at point of entry and provide clients with TLS certs
   - load balance requests across services
 
-### flow
+## flow
 
 - register: add services to the consul registry; the runtime source of truth for all services and theri addresses
 - query: find healthy services registered with consul; services access eachother through their local proxy according to identity-baed policies
@@ -154,15 +210,12 @@
 
 ### client agents
 
-## variables
+## cli
 
 ```sh
-# consul will automatically st the client ip address where other processes on the host contact consul in order to make HTTP/DNS requests
-CONSUL_CLIENT_INTERFACE=eth0
+# get all agents
+consul members
 
-# consul will automatically set the bind address at which other consul agents may contact a given agent
-CONSUL_BIND_INTERFACE=eth0?
-
-# address at which other consul agents may contact a given agent
-bind=external.ip.addr
+# get cluster status
+curl http://localhost:8500/v1/health/service/consul?pretty
 ```
