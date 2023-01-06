@@ -14,9 +14,14 @@
 - [docker dev best practices](https://docs.docker.com/develop/dev-best-practices/)
 - [container runtimes](https://github.com/opencontainers/runtime-spec/blob/main/implementations.md)
 - configuration
+  - [env vars in compose file](https://docs.docker.com/compose/environment-variables/)
   - [reusing compose values via fragments](https://docs.docker.com/compose/compose-file/#fragments)
   - [add arbitrary values anywhere in compose via extensions](https://docs.docker.com/compose/compose-file/#extension)
+  - [yaml anchors](https://yaml.org/spec/1.2-old/spec.html#id2765878)
+  - [yaml merge (for maps only!)](https://yaml.org/type/merge.html)
 - interwebs
+  - [linux memory management](https://www.kernel.org/doc/gorman/html/understand/understand016.html)
+  - [portainer and orchestrator wars](https://www.portainer.io/blog/orchestrator-wars-continue)
   - [linux ulimits](https://phoenixnap.com/kb/ulimit-linux-command)
   - [history of TTY](https://itsfoss.com/what-is-tty-in-linux/)
   - [/dev/shm and its practical usage](https://www.cyberciti.biz/tips/what-is-devshm-and-its-practical-usage.html)
@@ -51,7 +56,10 @@
   - [docker scan](https://docs.docker.com/engine/scan/)
   - [capp_add/drop: linux capabilities](https://man7.org/linux/man-pages/man7/capabilities.7.html)
   - [cgroup_parent: linux control groups](https://man7.org/linux/man-pages/man7/cgroups.7.html)
+- perf
+  - [resource constraints](https://docs.docker.com/config/containers/resource_constraints/)
 - images
+  - [multi arch](https://docs.docker.com/build/building/multi-platform/)
   - [really good image name format post](https://github.com/opencontainers/.github/blob/master/docs/docs/introduction/digests.md)
   - [build](https://docs.docker.com/engine/reference/commandline/build/)
   - [buildkit backend](https://docs.docker.com/build/buildkit/)
@@ -68,7 +76,10 @@
   - [registry distribution github](https://github.com/distribution/distribution)
   - [registry docs](https://github.com/docker/docs/tree/main/registry)
   - [registry blog post](https://www.marcusturewicz.com/blog/build-and-publish-docker-images-with-github-packages/)
-  - [publishing images via github action](https://docs.github.com/en/actions/publishing-packages/publishing-docker-images)
+  - [publishing images via github action](https://docs.github.com/en/actions/publishing-packages/publishing-docker-images)\
+- swarm
+  - [configs & secrets in swarm](https://docs.docker.com/engine/swarm/configs/)
+  - [moby swarmkit](https://github.com/moby/swarmkit)
 - docker engine (i.e. cli)
   - [docker run](https://docs.docker.com/engine/reference/commandline/run/)
 - docker desktop for linux: breaks hashicorp, dont use it
@@ -80,6 +91,10 @@
 
 ## best practices / gotchas
 
+- always set runtime resource constraints: by default a container has none
+  - refrain from adjusting OOM priority via --oom-score-adj or --oom-kill-disable on containers, docker automatically adjusts the OOM priority of the daemon
+    - however things like an edge/vault could have oom-score-adj to prefer killing other processes first
+- public images should be atleast `linux/amd64` and `linux/arm64`
 - pushing built services to registry
   - lol alot of the shiz we did in script.registry.sh is still useful
   - but you can just prefix the fkn `image: poop` directly in compose ;)
@@ -313,6 +328,11 @@ COMPOSE_PROJECT_NAME # name:
 #### fragments and extensions
 
 - enable increased reusability
+- extensions
+  - allowed at the root of service, volume, network, config and secret definitions.
+- fragments
+  - anchor resolution event precedes variable interpolation
+    - i.e. you cant use variables in anchors/aliases
 
 ```sh
 
@@ -326,10 +346,12 @@ x-logging: &default-logging
 services:
   frontend:
     image: awesome/webapp
-    logging: *default-logging # reusing the &anchor fragment
+    logging: *default-logging # reusing reuse it as is
   backend:
     image: awesome/database
-    logging: *default-logging # reuse it again
+    logging:
+      <<: *default-logging # reuse it with merge
+      poop: soup # so you can override a value
 ```
 
 #### durations and bytes
@@ -371,9 +393,9 @@ services:
 
 ############### project name
 # is prefixed to container names, networks, etc
-# all resources become ${PROJECT_NAME}_resourceName
+# all resources become ${PROJECT_NAME}_resourceName-1 # -1 if container name not set
 # ^ unless: name attribute is specified or external set to true
-name: ${PROJECT_NAME}
+name: ${COMPOSE_PROJECT_NAME}
 
 
 ############### volumes
@@ -382,7 +404,7 @@ volumes:
   poop: # uses the default volume settings
   moop: # use this name inside of compose
     external: true # lifecycle managed outside of compose
-    name: "${LOOK_ME_UP}" # only param valid for external volumes
+    name: "${BOOP}" # only param valid for external volumes
   loop:
     labels:
     ai.nirv.desc: "loopa dooper ruper scooper mooper tooper dooper blooper"
@@ -402,12 +424,12 @@ networks:
   soupnet: {} # define with default settings
   poopnet:
     external: true # this networks lifecycle its outside the boundary of compose
-    name: "${LOOK_ME_UP}"
+    name: "${BOOP}"
   boobnet:
     labels:
       ai.nirv.desc: "my poop net"
     internal: true # this network is externally isolated
-    name: "${LOOK_ME_UP}|host|none" # only way to use host|none networks
+    name: "${BOOP}|host|none" # only way to use host|none networks
     attachable: true|false # allow external containers to attach & communicate
     enable_ipv6: false # why the hate with ipv6 anyway?
     driver: overlay|host|none
@@ -439,10 +461,9 @@ networks:
 # ^ but can be overridden by service def
 configs:
   poopconf:
-    name: "${LOOK_ME_UP}"
+    name: "${BOOP}"
     external: true|false # lifecycle exists outside of compose
     file: ./poop.txt
-
 
 
 ############### secrets
@@ -450,7 +471,7 @@ configs:
 
 secrets:
   privatepoop:
-    name: "${LOOK_ME_UP}"
+    name: "${BOOP}"
     environment: "POOP_ENV_VAR" # cant be used with file
     external: true|false # lifecycle exists outside of compose
     file: ./poop.txt # cant be used with environment
@@ -463,7 +484,11 @@ services:
   SERVICE_Y:
     # definition
 
+
 # security ###############
+# also see runtime > deploy section
+oom_kill_disable: true # disable kernel from kill service in the event of OOM
+oom_score_adj: ? # relative to other processes, should this service be killed
 init: true # run an init process (PID 1) that forwards signals & reaps processes
 cap_add: # list of linux capabilities to enable
 cap_drop: # list of linux capabilities to disable
@@ -477,7 +502,7 @@ isolation: ? # specifies the services isolation technology
 logging:
   driver: syslog
   syslog-address: "tcp://192.168.0.42:123"
-platform: linux/arm64/v8/ # target plaform services will run on
+platform: linux/amd64 # machine platform:
 privileged: true|false # run with elevated privileges
 security_opt: # overrides labeling scheme
   - label:user:USER
@@ -486,6 +511,72 @@ stop_grace_period: 10s # how long to wait before SIGKILL is sent after SIGTERM/s
 stop_signal: SIGTERM | the stop signal
 user: "poop" # override user set in image
 userns_mode: "host" # set the user namespace
+
+
+# perf ###############
+# also see runtime > deploy section
+cpu_count: 2 # usable cpus
+cpu_percent: 50? # % of total available cpus
+cpu_shares: 1024 # weighted cpu allocation relative to other containers
+cpu_quota: ? # configure CFS period; only for linux, easier to just set cpu_count
+cpu_rt_runtime: '400ms' # configure cpu allocation for realtime scheduler
+cpu_rt_period: '1400us' # configure cpu allocatino for realtime scheduler
+cpuset: 0-3|0,1 # range or set, define the explicit runtime cpu
+# @see https://docs.docker.com/compose/compose-file/#blkio_config
+blkio_config: # defines config options for block storage IO limits
+mem_swappiness: 0-100 # % for the host kernal to swap out anon memory pages to disk
+mem_swappiness: 0 # turns it off
+mem_swappiness: 100 # sets all anonymouse pages as swappable
+# allows the container to write excess mem reqs to disk when avail is exhausted
+# requires deploy.limits.memory to also be set
+memswap_limit: ?
+shm_size ? # size of shared memory (/dev/shm) allowed by the service
+
+
+# networking ###############
+container_name: poop # cant scale pass 1 if set, see extends for workaround
+hostname: a.b.c. # of the container: should be unique to avoid resolution issues
+domainname: b.c. # of the container
+mac_address: ? # sets the MAC address
+extra_hosts: # added to /etc/hosts -> 123.123.123.123 poop
+  - poop:123.123.123.123
+network_mode: "none" # disable all container networking
+network_mode: "host" # raw access to host network interface
+network_mode: "service:poop" # access only to poop
+# adding multiple networks seems to be an issue in my trials
+networks: # reference top-level networks
+  - default # join the default network
+  - poopnet # join this network
+  - boopnet: # join and configure network
+    aliases:
+      - myhostname # add another hostname for this container on the network
+    # requires the network to have an ipam block subnet configuration
+    ipv4_address: 123.123.123.123 # for this service
+    ipv6_address: 123.123.123.123 # for this service
+# port mapping CANT be used with network_mode: host
+# ranges are useful when scaling services
+# ^ to restrict specific services to specific ports
+ports:
+  - "127.0.0.1:5000-5010:5000-5010"
+  # expose container port(s)
+  - "3000"
+  - "3000-3005"
+  # map host 8080 to container 80 on all network interfaces
+  - "8080:80"
+  # specify protocol
+  - "6060:6060/udp" # or tcp
+  # expanded format
+  - target: 80 # container
+    host_ip: 127.0.0.1 # if unset binds to 0.0.0.0
+    published: 8080 # host
+    protocol: tcp
+    mode: host
+ulimits: # override defualt ulimits
+  nprox: 65535
+  nofile:
+    soft: 20000
+    hard: 40000
+
 
 # file system ###############
 read_only: false #
@@ -525,7 +616,7 @@ configs:
     - someconfig # mounted at /someconfig
   # expanded
     - source: someconfig
-    target: /mount/path/source/remed/to/this.txt
+    target: /mount/path/in/cunt/this.txt
     uid: "123" # defaults to USER
     gid: "321" # defaults to USER
     mode: 0440 # linux perm in octal; writable ignored; executable may be set
@@ -534,68 +625,6 @@ storage_opt: # various storage driver options
 tmpfs: # mount a temp file system
   - /run
   - /tmp
-
-# perf ###############
-cpu_count: 2 # total usable cpus
-cpu_percent: 50 # usable % per cpu
-cpu_shares: ? # weighted cpu allocation relative to other containers
-cpu_quota: ? # configure CFS period; only for linux (winning)
-cpu_rt_runtime: '400ms' # configure cpu allocation for realtime scheduler
-cpu_rt_period: '1400us' # configure cpu allocatino for realtime scheduler
-cpuset: 0-3|0,1 # range or set, define the explicit runtime cpu
-# @see https://docs.docker.com/compose/compose-file/#blkio_config
-blkio_config: # defines config options for block storage IO limits
-mem_swappiness: 0-100 # % for the host kernal to swap out anon memory pages
-mem_swappiness: 0 # turns it off
-mem_swappiness: 100 # sets all anonymouse pages as swappable
-# allows the container to write excess mem reqs to disk when avail is exhausted
-# requires deploy.limits.memory to also be set
-memswap_limit: ?
-shm_size ? # size of shared memory (/dev/shm) allowed by the service
-
-
-# networking ###############
-container_name: poop # cant scale pass 1 if set, see extends for workaround
-hostname: a.b.c. # of the container: should be unique to avoid resolution issues
-domainname: b.c. # of the container
-mac_address: ? # sets the MAC address
-extra_hosts: # added to /etc/hosts
-  - poop:123.123.123.123
-network_mode: "none" # disable all container networking
-network_mode: "host" # raw access to host network interface
-network_mode: "service:poop" # access only to poop
-# adding multiple networks seems to be an issue in my trials
-networks: # reference top-level networks
-  - poopnet
-  - boopnet:
-    - myhostname # for this service
-    - default # useful to add the default network
-    # requires the network to have an ipam block subnet configuration
-    ipv4_address: 123.123.123.123 # for this service
-    ipv6_address: 123.123.123.123 # for this service
-# cant be used with network_mode: host
-# ranges are useful when scaling services
-# ^ to restrict specific services to specific ports
-ports:
-  - "127.0.0.1:5000-5010:5000-5010"
-  # expose container port(s)
-  - "3000"
-  - "3000-3005"
-  # map host to container on all network interfaces
-  - "8080:80"
-  # specify protocol
-  - "6060:6060/udp" # or tcp
-  # expanded format
-  - target: 80 # container
-    host_ip: 127.0.0.1 # if unset binds to 0.0.0.0
-    published: 8080 # host
-    protocol: tcp
-    mode: host
-ulimits: # override defualt ulimits
-  nprox: 65535
-  nofile:
-    soft: 20000
-    hard: 40000
 
 
 # runtime ###############
@@ -703,6 +732,7 @@ image: redis@sha256:0ed5d5928d4737458944eb604cc8509e245c3e19d02ad83935398bc4b991
 image: library/redis
 image: docker.io/library/redis
 image: my_private.registry:5000/redis
+image: someurl:5000/orgname/imagename:tagname
 
 # create a service based off another one
 # the base service cannot have depends_on, volumes_from, or circular references
@@ -758,7 +788,6 @@ build:
     isolation: ?
 
     # metadata for the resulting image
-    # best practice use reverse-DNS notation
     labels:
         - "com.SERVICENAME.LABELX=VALUE"
         - "com.SERVICENAME.LABEL=VALUE"
@@ -820,8 +849,6 @@ dns
 dns_opt
 dns_search
 link_local_ips
-oom_kill_disable
-oom_score_adj
 pid # set the pid mode
 stdin_open # allocated stdin, think this is just normal redirection
 sysctls: # set kernel params
@@ -849,6 +876,7 @@ tty: # run with a TTY
   # syntax=docker/dockerfile:1.0
   # syntax=docker.io/docker/dockerfile:1
   # syntax=docker/dockerfile:1.0.0-experimental
+  # syntax=docker/dockerfile:1.4
   # syntax=example.com/user/repo:tag@sha256:abcdef...
       # directive cmds must appear before ANYTHING (event comments) and do not add layer/appear as a build step
       # only if you've enabled the buildkit backend
@@ -982,6 +1010,11 @@ tty: # run with a TTY
 - see the `docker engine` section as compose cli is almost 1 to 1
 
 ## docker engine (cli)
+
+### docker info
+
+- display system wide host & docker info
+- start your debugging here
 
 ### docker convert
 

@@ -27,12 +27,15 @@
 - integrations
   - [list of consul tools](https://developer.hashicorp.com/consul/docs/integrate/download-tools)
   - [vault as secrets backend](https://developer.hashicorp.com/consul/docs/k8s/deployment-configurations/vault)
+  - [ns1](https://help.ns1.com/hc/en-us/articles/360039417093-NS1-Consul-Integration-Overview)
+  - [dnsimple](https://blog.dnsimple.com/2022/05/consul-integration/)
 - server
 - agent
   - [agent config reference](https://developer.hashicorp.com/consul/docs/agent/config/config-files)
 - service discovery
   - [service discovery](https://developer.hashicorp.com/consul/docs/discovery/services)
   - [health checks](https://developer.hashicorp.com/consul/docs/discovery/checks)
+  - [dns queries](https://developer.hashicorp.com/consul/docs/discovery/dns)
 - provision
 - http
   - [agent api](https://developer.hashicorp.com/consul/api-docs/agent/service)
@@ -80,12 +83,27 @@
 
 ### control plane
 
-- service discovery
+- service discovery: centralized registry to track (ips/hostnames) services in/out
+- also includes basic DNS functionality: lookups, alternate domains & access controls
 
 ### data plane
 
-- configuration management
 - dynamically configure services based on service & node status
+
+## integrations
+
+### Consul-Terraform-Sync
+
+- automates updates to network infrastructure based on scale in/out of each service
+- trigger tf plan & apply to reflect latest changes
+
+### vault integration
+
+- use vaults PKI engine to generate & store TLS certs on both the data and control plane
+
+### NS1
+
+### DNSimple
 
 ### flow
 
@@ -96,7 +114,8 @@
 ## consul connect
 
 - uses envoy as the sidecar proxy attached to every service
-- manages service-to-service comms: ensuring
+- manages service-to-service authnz, comms, and msg encryption
+- enables traffric management to support canary testing, a/b tests, and blue/green deployments
 
 ## consul agent
 
@@ -107,10 +126,6 @@
 ### client agents
 
 ## variables
-
-- cluster address (ip): the address
-  - aka ``
-  - set `` env var to a interface name and
 
 ```sh
 # consul will automatically st the client ip address where other processes on the host contact consul in order to make HTTP/DNS requests

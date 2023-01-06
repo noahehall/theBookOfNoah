@@ -45,6 +45,8 @@
   - [stats page](https://www.haproxy.com/blog/exploring-the-haproxy-stats-page/)
   - [observability types with haproxy](https://www.dotconferences.com/2018/06/willy-tarreau-observability-tips-with-haproxy)
   - [stick tables: stateful requests](https://www.haproxy.com/blog/introduction-to-haproxy-stick-tables/)
+  - [health checks](https://www.haproxy.com/blog/how-to-enable-health-checks-in-haproxy/)
+  - [retries and redispatches](https://www.haproxy.com/blog/haproxy-layer-7-retries-and-chaos-engineering/)
 - acls
   - [intro](https://www.haproxy.com/blog/introduction-to-haproxy-acls/)
   - [acl basics](https://docs.haproxy.org/2.7/configuration.html#7.1)
@@ -56,6 +58,7 @@
   - [haproxy http/s same port](https://timjrobinson.com/haproxy-how-to-run-http-https-on-the-same-port/)
   - [haproxy and websockets](https://www.haproxy.com/blog/websockets-load-balancing-with-haproxy/)
 - security
+  - [response policies](https://www.haproxy.com/blog/use-haproxy-response-policies-to-stop-threats/)
   - [common web threats](https://www.haproxy.com/blog/website-security-threats/)
   - [app layer ddos protection](https://www.haproxy.com/blog/application-layer-ddos-attack-protection-with-haproxy/)
   - [rate limiting](https://www.haproxy.com/blog/four-examples-of-haproxy-rate-limiting/)
