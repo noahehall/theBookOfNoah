@@ -27,6 +27,10 @@
   - mac: fn O
   - win/linux: fn P
 
+### vanilla os
+
+- [looks sweeeet](https://vanillaos.org/)
+
 ### ubuntu:dev
 
 - do first

@@ -56,8 +56,9 @@
 - control plane: enables you to register, query and secure services deployed across a network
 - data plane: processes data requests
 - mTLS: mutual transport layer security
-- service mesh: connect and managet network services
+- service mesh: connect and managet service-to-service communication
 - north-south traffic: refers tot he flow of data into and out of a specific env
+- east-west traffic: refers to inter-env traffic, or federated service-mesh traffic (across datacenters)
 - service catalog: single source of truth for available services in the service registry
 - client-side discovery: consumers are responsible for determining the access information of service instances and load balancing requests between them: query catelog > select a service > make request to service
 - server-side discovery: consumers use an intermediary to query the catalog and make requests: query consul > consul queries the catelog > consul load balances requests to service instances
@@ -88,20 +89,23 @@
     - aka `bind=EXTERNAL_IP`
   - client address: is the consul agent IP address for host processes to make HTTP/DNS queries
 
-### control plane
+### service mesh
 
-#### service discovery
+- specializes in the network management of services and inter-service communication
+  - as apposed to an api gateway's primary concern of client request-response cycle
+
+#### control plane
 
 - centralized registry to track (ips/hostnames) as services start, scale in/out and die
 - also includes basic DNS functionality: lookups, alternate domains & access controls
 - services are registered based on identity instead of ip & port
 - consumers use dns queries to retrieve the ip & hostnames for registered identities
+- responsibilities
+  - securing the mesh, service discovery, health checking, policy enforcement, etc
 
-#### service mesh
+#### data plane
 
-### data plane
-
-- dynamically configure services based on service & node status
+- network layer for s-to-s comms & service discovery
 
 ## integrations
 
