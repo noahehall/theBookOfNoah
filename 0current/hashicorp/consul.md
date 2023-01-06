@@ -13,6 +13,9 @@
 - [docs landing](https://developer.hashicorp.com/consul/docs)
 - [consul service mesh](https://developer.hashicorp.com/consul/docs/consul-vs-other/service-mesh-compare)
 - [consul dns](https://developer.hashicorp.com/consul/docs/consul-vs-other/dns-tools-compare)
+- interwebs
+  - [haproxy conf post with comparisons with other proxies](https://www.haproxy.com/blog/haproxyconf-2022-recap/)
+    - just in case your thinking about switching from haproxy because consul uses it
 - tuts
   - [what is consul](https://developer.hashicorp.com/consul/docs/intro)
   - [getting started](https://developer.hashicorp.com/consul/tutorials/get-started-vms)
@@ -106,6 +109,9 @@
 #### data plane
 
 - network layer for s-to-s comms & service discovery
+- uses envoy as service sidecar proxy
+- automatically gnerates an SSL cert for each service and its instances to encrypt comms over tcp/upd/grpc
+- fine-grained service level (not ip-based) authz policies
 
 ## integrations
 
