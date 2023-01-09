@@ -1,0 +1,90 @@
+# Cloudflare CFSSL
+
+- includes notes on certificate authorities in general, as my knowledge here is about 0.5%
+
+## links
+
+- [certificate signing request](https://www.ssl.com/faqs/what-is-a-csr/)
+- [certificate authority](https://www.ssl.com/faqs/what-is-a-certificate-authority/)
+- [public CA baseline requirements](https://cabforum.org/baseline-requirements-documents/)
+
+## terms
+
+- domain: second level: domain.x
+- top level domain: first level: x.toplevel
+- root domain: second + first: domain.y
+- subdomain: third++ : www.x.y
+- fully qualified domain name: FQDN: complete and unambiguous domain name that specifies an exact location for an object in a DNS hierarchy; generally its the domain + top level
+- common name: the fully qualified domain name
+- wildcard certs: groups multiple subdomains under a single cert, e.g. `*.domain.com`
+- SAN Certificate: Subject Alternate Name; group multiple domains under a single cert, e.g. `boop.com` and `soup.com`
+- entity: website, biz, person, machine, etc
+
+## Basics
+
+### certificate signing request
+
+- encoded text file: data related to the entity requesting a certificate from a certificate authority and signed with the entity's priv key
+- CN: common name
+- O: organization
+- L: city/locality
+- S: state/province
+- C: country
+- email address
+- pubkey (never share the privkey)
+
+### digital certificate
+
+- see one of the security docs in this dir for a deep dive
+- authentication
+- encryption
+- integrity
+
+### end-entity certificate
+
+- generally the the website, biz, or person
+- aka leaf certificate, subscriber certificate
+- certificate provided to a specific entity, signed by one/more intermediate certificates, itself signed by the trust anchor
+- cannot issue certificates
+
+### intermediate certificate
+
+- provide a structure for conferring the validity of the trust anchor to additional intermediate and end-entity certificates in the chain
+- there are different types, each with a specific purpose, e.g.
+  - issuing ssl/tls
+  - coding signing certificates
+  - confer the root CA's trust to other organizations
+- all intermediate certificates provide a buffer between end-entity certs and the root ca; protecting the priv root key from being compromised
+
+### CA: certificate authority
+
+- aka trust anchor
+- entity that validates the identities bound to cryptographic keys through the issuance of digital certificates
+- signs and issues intermediate certificates
+
+#### private CAs
+
+- this is the knowledge you dont have
+
+### public CAs
+
+- cant issue end-entity certificates directly; end-entity certs must come from intermediate certs
+
+### chain of trust
+
+- hierarchy of certificates used to verify the validity of a certificates issuer
+- lower trust certs are signed and issued by higher trust certs; and provide a link from the end-entity all the way up to the trust anchor
+- trust anchor: the originating certificate authority; has the ability
+- intermediate certificate: atleat one; serves as insulation between the CA and end-entity certificate
+- end-entity certirficate: used to validate the identity of an entity
+
+## flow
+
+- generate pub key and privkey
+- create a CSR and sign it with the privkey
+- give the CSR & pubkey to the CA
+- the CA validates the CSR, and returns a digitally signed server certificate and the CA's issuing privkey
+- when a third party needs to verify the entity, they can:
+  - confirm the certificate is valid: use the CA's pubkey to validate the certificate
+  - confirm the entity is valid: does this entity have the right to provide this certificate signed by the CA and is their issuing privkey valid
+  - integrity: has the certificate been altered

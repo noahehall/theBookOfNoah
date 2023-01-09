@@ -22,7 +22,6 @@
 
 - [setup guide for keyboard](https://www.logitech.com/en-us/setup/mxsetup.html)
 - [log+ options app](https://www.logitech.com/en-us/software/logi-options-plus.html)
-
 - hold for 3 seconds to optimize for OS
   - mac: fn O
   - win/linux: fn P
@@ -36,7 +35,7 @@
 - do first
 
   - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
-  - [switch to regolith & restart](https://regolith-linux.org/docs/getting-started/)
+  - [switch to regolith & restart](https://regolith-desktop.com/)
     - `sudo apt search ^i3xrocks`
       - install some plugins
     - `sudo apt search ^regolith-look-`
@@ -45,10 +44,8 @@
         - ^ switch to theme
 
 - essential
-
   - [mozilla vpn](https://support.mozilla.org/en-US/kb/how-install-mozilla-vpn-linux-computer)
   - resolvconf
-  - terminator
   - [azlux repo](https://packages.azlux.fr/)
   - [firefox dev](https://www.mozilla.org/en-US/firefox/developer/)
     - [disable security warning](https://medium.com/volosoft/how-to-disable-firefox-warning-potential-security-risk-ahead-f081fbf81a4f)
@@ -65,6 +62,14 @@
       - `git config --global -e`
       - setup private email
       - [include this file](linux/.gitconfig)
+  - [kitty](https://sw.kovidgoyal.net/kitty/overview/#tabs-and-windows)
+    - kitty on mac
+      - fk iterm, just use kitty, and set Option as meta to getaway from those weird azz shortcuts
+        - now option arrows work as you would expect to jump around
+    - cmd t: new tab
+    - cmd enter: new window in current tab
+    - cmd shift d: close active window in current tab
+    - [desktop integration worked perfectly for regolith](https://sw.kovidgoyal.net/kitty/binary/#desktop-integration-on-linux)
   - install node via nvm
   - [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cliv2-linux-install)
     - [aws command completion](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html)
@@ -77,9 +82,9 @@
       - ^ dont fkn install this one, but read its notes
     - [read this first](https://docs.alfa.com.tw/Support/Linux/RTL8814AU/#ubuntu)
     - [read this first](https://miloserdov.org/?p=5493)
-
 - base apps
-
+  - [consul, tf, nomad](https://developer.hashicorp.com/consul/downloads)
+    - you just need to setup the archive once for all 3
   - [jq: use apt](https://stedolan.github.io/jq/)
   - [postman](https://www.postman.com/downloads/)
   - [obs studio](https://obsproject.com/wiki/install-instructions#ubuntumint-installation)
@@ -117,9 +122,7 @@
   - thunderbird
   - thunderbird-gnome-support
   - [drawio desktop](https://github.com/jgraph/drawio-desktop/releases)
-
 - virtualization
-
   - if you just need docker
     - [compose](https://docs.docker.com/compose/install/)
     - [dive](https://github.com/wagoodman/dive)
@@ -132,11 +135,8 @@
   - [virtualbox](https://www.virtualbox.org/manual/ch02.html)
     - make sure to get the guest additions iso
   - [gnome-boxes](https://wiki.gnome.org/Apps/Boxes)
-
 - [gnome extensions](https://extensions.gnome.org/)
-
   - dont use this if using regolith
-  - maybe not since we are now using regloith
   - extensions are by computer, not per login so you have to reinstall
     - [basic steps with some good ext](https://thelinuxuser.com/install-gnome-shell-extensions/)
     - cafeeine
@@ -149,7 +149,6 @@
     - sound input & output device chooser
     - user themes
     - workspace indicator
-
 - maybe installs
   - [opensnitch](https://github.com/evilsocket/opensnitch)
   - [signal](https://signal.org/en/download/)]
@@ -166,15 +165,8 @@
 - upgrade bash (apple refuses to update pass bash v3.2) cuz fk apple
 - setup bash as defualt shell (FCK ZSH)
 - [macports](https://www.scrim.psu.edu/support/userspace-macports.html)
-- continue with ubuntu setup
-- fk iterm, just use kitty, and set Option as meta to getaway from those weird azz shortcuts
-  - now option arrows work as you would expect to jump around
-  - use [kitty](https://sw.kovidgoyal.net/kitty/overview/#tabs-and-windows)
-    - cmd t: new tab
-    - cmd enter: new window in current tab
-    - cmd shift d: close active window in current tab
-    - [desktop integration worked perfectly for regolith](https://sw.kovidgoyal.net/kitty/binary/#desktop-integration-on-linux)
 - [window manager](https://github.com/ianyh/Amethyst)
+- continue with ubuntu setup
 
 ### remote server setup
 

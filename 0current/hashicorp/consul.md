@@ -6,22 +6,17 @@
 
 - [docs & tuts](https://developer.hashicorp.com/consul)
 - [docker hub](https://hub.docker.com/_/consul/)
-- [github for docker-consul](https://github.com/hashicorp/docker-consul)
-- [the dockerfile](https://github.com/hashicorp/docker-consul/blob/master/0.X/Dockerfile)
 - [github](https://github.com/hashicorp/consul)
-- [consul vocabulary](https://developer.hashicorp.com/consul/docs/install/glossary)
 - [docs landing](https://developer.hashicorp.com/consul/docs)
-- [consul service mesh](https://developer.hashicorp.com/consul/docs/consul-vs-other/service-mesh-compare)
-- [consul dns](https://developer.hashicorp.com/consul/docs/consul-vs-other/dns-tools-compare)
+- [what is consul](https://developer.hashicorp.com/consul/docs/intro)
+- [install](https://developer.hashicorp.com/consul/docs/install)
 - interwebs
-  - [haproxy conf post with comparisons with other proxies](https://www.haproxy.com/blog/haproxyconf-2022-recap/)
-    - just in case your thinking about switching from haproxy because consul uses it
+  - [haproxy adverturial with comparisons with other proxies](https://www.haproxy.com/blog/haproxyconf-2022-recap/)
 - tuts
+  - [consul in dev](https://developer.hashicorp.com/consul/tutorials/day-0)
   - [bunch of hashicorp copypasta](https://github.com/hashicorp-education)
   - [consul scripts](https://github.com/hashicorp-education/learn-consul-get-started-vms)
-  - [what is consul](https://developer.hashicorp.com/consul/docs/intro)
   - [getting started](https://developer.hashicorp.com/consul/tutorials/get-started-vms)
-  - [deploy consul server](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-deploy)
   - [day 2](https://developer.hashicorp.com/consul/tutorials/datacenter-operations)
 - architecture
   - [service mesh proxy overview](https://developer.hashicorp.com/consul/docs/connect/proxies)
@@ -30,27 +25,48 @@
   - [gossip protocol](https://developer.hashicorp.com/consul/docs/architecture/gossip)
   - [consensus protocol](https://developer.hashicorp.com/consul/docs/architecture/consensus)
   - [outage recovery](https://developer.hashicorp.com/consul/tutorials/datacenter-operations/recovery-outage)
+  - [dns comparison](https://developer.hashicorp.com/consul/docs/consul-vs-other/dns-tools-compare)
+  - [consul vocabulary](https://developer.hashicorp.com/consul/docs/install/glossary)
 - integrations
-  - [docker file](https://github.com/hashicorp/consul/blob/main/Dockerfile)
   - [list of consul tools](https://developer.hashicorp.com/consul/docs/integrate/download-tools)
-  - [vault as secrets backend](https://developer.hashicorp.com/consul/docs/k8s/deployment-configurations/vault)
-  - [nomad integration](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration#service-discovery)
   - [ns1](https://help.ns1.com/hc/en-us/articles/360039417093-NS1-Consul-Integration-Overview)
   - [dnsimple](https://blog.dnsimple.com/2022/05/consul-integration/)
-- server
+- nomad
+  - [nomad integration](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration#service-discovery)
+- vault
+  - [vault as secrets backend](https://developer.hashicorp.com/consul/docs/k8s/deployment-configurations/vault)
+  - [generate mtls for consul with vault](https://developer.hashicorp.com/consul/tutorials/vault-secure/vault-pki-consul-secure-tls)
+- docker
+  - [github for docker-consul](https://github.com/hashicorp/docker-consul)
+  - [docker-consul main](https://github.com/hashicorp/docker-consul/blob/master/0.X/Dockerfile)
+  - [dockerfile main](https://github.com/hashicorp/consul/blob/main/Dockerfile)
+  - [consul + docker tuts](https://developer.hashicorp.com/consul/tutorials/docker)
+  - [consul in containers](https://developer.hashicorp.com/consul/tutorials/day-0/docker-container-agents)
+- ui
+  - [ui visualization](https://developer.hashicorp.com/consul/docs/connect/observability/ui-visualization)
+  - [ui agent configuration](https://developer.hashicorp.com/consul/docs/agent/config/config-files#ui-parameters)
+- tls
+  - [tls agent configuration](https://developer.hashicorp.com/consul/docs/agent/config/config-files#tls-configuration-reference)
+  - [securing consul agents](https://developer.hashicorp.com/consul/tutorials/security-operations/tls-encryption-openssl-secure)
+  - [tls example config](https://developer.hashicorp.com/consul/docs/agent/config/config-files#example-configuration-file-with-tls)
 - agent
   - [agent config reference](https://developer.hashicorp.com/consul/docs/agent/config/config-files)
 - service mesh
+  - [consul service mesh](https://developer.hashicorp.com/consul/docs/consul-vs-other/service-mesh-compare)
   - [service discovery](https://developer.hashicorp.com/consul/docs/discovery/services)
   - [health checks](https://developer.hashicorp.com/consul/docs/discovery/checks)
   - [dns queries](https://developer.hashicorp.com/consul/docs/discovery/dns)
+  - [required ports](https://developer.hashicorp.com/consul/docs/install/ports)
 - api gateway
   - [intro](https://developer.hashicorp.com/consul/docs/api-gateway)
-- provision
 - cli
   - [docs](https://developer.hashicorp.com/consul/commands)
+  - [tls ca create](https://developer.hashicorp.com/consul/commands/tls/ca)
+  - [tls for agents](https://developer.hashicorp.com/consul/tutorials/security/tls-encryption-secure)
 - http
   - [agent api](https://developer.hashicorp.com/consul/api-docs/agent/service)
+- provision
+  - [deploy consul server](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-deploy)
 
 ## vocab
 
@@ -100,6 +116,8 @@
 - client address: ip for host processes to query consul
 
 #### vars
+
+- Environment variables cannot be used to configure the Consul client. They can be used when running other consul CLI commands that connect with a running agent
 
 ```sh
 # alternative configs can be added by passing the configuration JSON via environment variable
@@ -201,7 +219,7 @@ $ docker run -i --dns=<bridge ip> -t ubuntu sh -c "apt-get update && apt-get ins
 - query: find healthy services registered with consul; services access eachother through their local proxy according to identity-baed policies
 - secure: consul manages authnz for service-to-service communication
 
-## consul connect
+## consul connect (service mesh product name)
 
 - uses envoy as the sidecar proxy attached to every service
 - manages service-to-service authnz, comms, and msg encryption

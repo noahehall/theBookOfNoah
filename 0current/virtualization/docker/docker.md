@@ -586,8 +586,8 @@ secrets:
   # expanded
   - source: somesecret
     target: server.cert # mounted at /run/secrets/server.cert; defaults to source
-    uid: "103" # defaults to USER
-    gid: "103" # defaults to USER
+    uid: "1234" # defaults to USER
+    gid: "1234" # defaults to USER
     mode: 0440 # in octal; writable ignored; executable may be set
 volumes:
   # short
