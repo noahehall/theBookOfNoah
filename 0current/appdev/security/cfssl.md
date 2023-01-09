@@ -5,6 +5,7 @@
 ## links
 
 - [cfssl github](https://github.com/cloudflare/cfssl)
+- [intro blog post](https://blog.cloudflare.com/introducing-cfssl/)
 - general notes
   - [certificate signing request](https://www.ssl.com/faqs/what-is-a-csr/)
   - [certificate authority](https://www.ssl.com/faqs/what-is-a-certificate-authority/)
@@ -106,10 +107,6 @@
 
 
 ```
-
-### mkbundle
-
-- used to build certificate pool bundles
 
 ### cfssl
 
@@ -234,6 +231,17 @@ selfsign
 ### cfssljson
 
 - cli: takes the json output from cfssl and multirootca and writes certificates, keys, CSRs and bundles to disk
+- logic
+  - if cert|certificate: basename.pem
+  - if key|private_key: basename-key.pem
+  - if csr|certificate_request: basename.csr
+  - if bundle: basename-bundle.pem
+  - if ocspResponse: basename-response.der
+
+```sh
+
+
+```
 
 ### multirootca
 
@@ -243,3 +251,15 @@ selfsign
 
 
 ```
+
+### mkbundle (cfssl-mkbundle)
+
+- used to build the root and intermediate bundles used in verifying certificates. It can be installed with
+
+### cfssl-bundle
+
+### cfssl-certinfo
+
+### cfssl-newkey
+
+### cfssl-scan
