@@ -4,9 +4,11 @@
 
 ## links
 
-- [certificate signing request](https://www.ssl.com/faqs/what-is-a-csr/)
-- [certificate authority](https://www.ssl.com/faqs/what-is-a-certificate-authority/)
-- [public CA baseline requirements](https://cabforum.org/baseline-requirements-documents/)
+- [cfssl github](https://github.com/cloudflare/cfssl)
+- general notes
+  - [certificate signing request](https://www.ssl.com/faqs/what-is-a-csr/)
+  - [certificate authority](https://www.ssl.com/faqs/what-is-a-certificate-authority/)
+  - [public CA baseline requirements](https://cabforum.org/baseline-requirements-documents/)
 
 ## terms
 
@@ -20,7 +22,7 @@
 - SAN Certificate: Subject Alternate Name; group multiple domains under a single cert, e.g. `boop.com` and `soup.com`
 - entity: website, biz, person, machine, etc
 
-## Basics
+## ramping up
 
 ### certificate signing request
 
@@ -88,3 +90,156 @@
   - confirm the certificate is valid: use the CA's pubkey to validate the certificate
   - confirm the entity is valid: does this entity have the right to provide this certificate signed by the CA and is their issuing privkey valid
   - integrity: has the certificate been altered
+
+## cloudflare
+
+- both a CLI and HTTP api server for signing, verifying and budnling TLS certs
+
+### files & locations
+
+```sh
+# private keys
+/etc/ssl/private/*.pem
+
+# certificates
+/etc/ssl/certs/*.pem
+
+
+```
+
+### mkbundle
+
+- used to build certificate pool bundles
+
+### cfssl
+
+- cli: the entrypoint to cloudflare cfssl
+- only uses a single single signing key, use `multirootca` if multiple signing keys are needed
+
+```sh
+
+# CFSSL ###################
+############
+# everythign can be specified via a json file
+# cli flags override shiz in the json
+############
+# cmds TODO
+# gencrl
+# ocsprefresh
+# certinfo
+# serve
+# ocspdump
+# scan
+# ocspserve
+# info
+# ocspsign
+# print-defaults
+# revoke
+
+### CSR examples
+
+# minimum required
+{
+    "CN": "example.com",
+    "names": [
+        {
+            "C":  "US",
+            "L":  "San Francisco",
+            "O":  "Internet Widgets, Inc.",
+            "OU": "WWW",
+            "ST": "California"
+        }
+    ]
+}
+# self signed root-ca and priv key for multiple hosts
+{
+    "hosts": [
+        "example.com",
+        "www.example.com",
+        "https://www.example.com",
+        "jdoe@example.com",
+        "127.0.0.1"
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C":  "US",
+            "L":  "San Francisco",
+            "O":  "Internet Widgets, Inc.",
+            "OU": "WWW",
+            "ST": "California"
+        }
+    ]
+}
+
+
+
+### generate a privkey and certificate request
+#
+genkey csr.json
+
+# self signed roto CA and privkey
+genkey -initca csr.json | cfssljson -bare ca
+
+
+### generate a privkey and certificate
+# remote-issued certificate and private key.
+# has a remote CFSSL server sign and issue the certificate
+gencert \
+  -remote=remote_server \
+  -hostname=comma,separated,hostnames \
+  csr.json
+# local-issued certificate and private key.
+#
+cfssl gencert \
+  -ca ca.cert.pem \
+  -ca-key ca.privkey.pem \
+  -hostname=comma,separated,hostnames \
+  csr.json
+
+cfssl gencert -ca cert -ca-key key [-hostname=comma,separated,hostnames] csr.json
+
+
+### sign a certificate
+
+# via flags
+sign \
+  -ca ca.cert.pem \
+  -ca-key ca.privkey.pem \
+  -hostname x.com,y.com,z.com \
+  ./xyz.com
+
+# via csr
+sign ..... -csr /path/to/csr.json
+
+
+### build a certificate bundle
+# @see https://github.com/cloudflare/cfssl#bundling
+# used for the root and intermediate certificate pools
+bundle
+
+
+### start the api server
+serve
+
+
+### generate a self signed certificate
+selfsign
+
+```
+
+### cfssljson
+
+- cli: takes the json output from cfssl and multirootca and writes certificates, keys, CSRs and bundles to disk
+
+### multirootca
+
+- certificate authority server that can use multiple signing keys
+
+```sh
+
+
+```
