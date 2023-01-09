@@ -1,12 +1,16 @@
 # Cloudflare CFSSL
 
-- includes notes on certificate authorities in general, as my knowledge here is about 0.5%
+- CFSSL and CA in generall
+- open source toolkit for everything TLS/SSL
+- used internally by cloudflare for budnling tls/ssl certificate chains, and internal certificate authority infrastructure
+- used for all of their tls certificates
 
 ## links
 
 - [cfssl github](https://github.com/cloudflare/cfssl)
 - [intro blog post](https://blog.cloudflare.com/introducing-cfssl/)
 - general notes
+  - [public key infrastructure (wikipedia)](https://en.wikipedia.org/wiki/Public_key_infrastructure)
   - [certificate signing request](https://www.ssl.com/faqs/what-is-a-csr/)
   - [certificate authority](https://www.ssl.com/faqs/what-is-a-certificate-authority/)
   - [public CA baseline requirements](https://cabforum.org/baseline-requirements-documents/)
@@ -27,6 +31,7 @@
 
 ### certificate signing request
 
+- aka certificate signature request
 - encoded text file: data related to the entity requesting a certificate from a certificate authority and signed with the entity's priv key
 - CN: common name
 - O: organization
@@ -39,14 +44,17 @@
 ### digital certificate
 
 - see one of the security docs in this dir for a deep dive
+- contains the entity's public key and is signed by the issuing certificate authority so receivers of the certificate know with whom to verify the providers authenticity
 - authentication
 - encryption
 - integrity
 
 ### end-entity certificate
 
-- generally the the website, biz, or person
 - aka leaf certificate, subscriber certificate
+- generally the the website, biz, or person
+  - binds domain names to server names
+  - binds comany names to locations
 - certificate provided to a specific entity, signed by one/more intermediate certificates, itself signed by the trust anchor
 - cannot issue certificates
 
@@ -59,15 +67,17 @@
   - confer the root CA's trust to other organizations
 - all intermediate certificates provide a buffer between end-entity certs and the root ca; protecting the priv root key from being compromised
 
-### CA: certificate authority
+### root CA: certificate authority
 
 - aka trust anchor
 - entity that validates the identities bound to cryptographic keys through the issuance of digital certificates
 - signs and issues intermediate certificates
+- all browsers/operating systems come with a default set of trusted root CAs
+  - older browsers & things will have outdated CAs, or CAs with poor ssl versions
 
 #### private CAs
 
-- this is the knowledge you dont have
+- this is what you're trying to do with consul
 
 ### public CAs
 
@@ -76,10 +86,24 @@
 ### chain of trust
 
 - hierarchy of certificates used to verify the validity of a certificates issuer
+  - will always contain 1 leaf, 1 root, and 1..X many intermediates
 - lower trust certs are signed and issued by higher trust certs; and provide a link from the end-entity all the way up to the trust anchor
 - trust anchor: the originating certificate authority; has the ability
 - intermediate certificate: atleat one; serves as insulation between the CA and end-entity certificate
 - end-entity certirficate: used to validate the identity of an entity
+- chain of trust works by following the keys used to sign certificates, and there can be multiple chains of trust for the same keys.
+  - i.e. your single leaf certificate, will be issued by a single ca
+  - however that CA will be trusted by an arbitrary amount of intermediates
+
+#### bundling
+
+- leaf certs cant present their single cert, but must bundle the leaf and intermediates, so recipients can verify the providers claims with the CA
+  - the leaf should point to the intermediates, and the intermediates should eventually point to the CA
+  - you have to provide as many intermediates as it takes for the recipients to match against a CA they already trust
+- FYI
+  - Different browsers trust different root certificates.
+  - Older systems might have old root stores.
+  - Older systems don't support modern cryptography.
 
 ## flow
 
@@ -137,25 +161,32 @@
 
 # minimum required
 {
-    "CN": "example.com",
+    "CN": "customer.com",
+    "hosts": [
+      "example.com",
+      "www.example.com",
+      "https://www.example.com",
+      "jdoe@example.com",
+      "127.0.0.1"
+    ],
+    "key": {
+      "algo": "rsa",
+      "size": 2048
+    },
     "names": [
         {
-            "C":  "US",
-            "L":  "San Francisco",
-            "O":  "Internet Widgets, Inc.",
-            "OU": "WWW",
-            "ST": "California"
+          "C": "US",
+          "L": "San Francisco",
+          "O": "Customer",
+          "OU": "Website",
+          "ST": "California"
         }
     ]
 }
 # self signed root-ca and priv key for multiple hosts
 {
     "hosts": [
-        "example.com",
-        "www.example.com",
-        "https://www.example.com",
-        "jdoe@example.com",
-        "127.0.0.1"
+
     ],
     "key": {
         "algo": "rsa",
@@ -175,10 +206,8 @@
 
 
 ### generate a privkey and certificate request
-#
-genkey csr.json
-
-# self signed roto CA and privkey
+### cfssl root CAs: for creating & signing leaf certs
+# self signed root CA and privkey
 genkey -initca csr.json | cfssljson -bare ca
 
 
@@ -201,6 +230,7 @@ cfssl gencert -ca cert -ca-key key [-hostname=comma,separated,hostnames] csr.jso
 
 
 ### sign a certificate
+### requires the rootca cert and privkey
 
 # via flags
 sign \
@@ -214,9 +244,14 @@ sign ..... -csr /path/to/csr.json
 
 
 ### build a certificate bundle
-# @see https://github.com/cloudflare/cfssl#bundling
-# used for the root and intermediate certificate pools
-bundle
+### @see https://github.com/cloudflare/cfssl#bundling
+### used for the root and intermediate certificate pools
+# syntax
+cfssl bundle [-ca-bundle bundle] [-int-bundle bundle] \
+             [-metadata metadata_file] [-flavor bundle_flavor] \
+             -cert certificate_file [-key key_file]
+# create a certificate bundle
+bundle -cert mycert.crt
 
 
 ### start the api server
