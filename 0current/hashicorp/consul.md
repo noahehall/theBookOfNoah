@@ -31,8 +31,9 @@
   - [list of consul tools](https://developer.hashicorp.com/consul/docs/integrate/download-tools)
   - [ns1](https://help.ns1.com/hc/en-us/articles/360039417093-NS1-Consul-Integration-Overview)
   - [dnsimple](https://blog.dnsimple.com/2022/05/consul-integration/)
-- nomad
+- nomad / service mesh
   - [nomad integration](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration#service-discovery)
+  - [mesh configuration](https://developer.hashicorp.com/consul/docs/connect/configuration)
 - vault
   - [vault as secrets backend](https://developer.hashicorp.com/consul/docs/k8s/deployment-configurations/vault)
   - [generate mtls for consul with vault](https://developer.hashicorp.com/consul/tutorials/vault-secure/vault-pki-consul-secure-tls)
@@ -42,10 +43,12 @@
   - [dockerfile main](https://github.com/hashicorp/consul/blob/main/Dockerfile)
   - [consul + docker tuts](https://developer.hashicorp.com/consul/tutorials/docker)
   - [consul in containers](https://developer.hashicorp.com/consul/tutorials/day-0/docker-container-agents)
+  - [deployment guide (do last)](https://developer.hashicorp.com/consul/tutorials/production-deploy/deployment-guide)
 - ui
   - [ui visualization](https://developer.hashicorp.com/consul/docs/connect/observability/ui-visualization)
   - [ui agent configuration](https://developer.hashicorp.com/consul/docs/agent/config/config-files#ui-parameters)
 - tls
+  - [start @ cfssl and thank me later](https://github.com/cloudflare/cfssl/wiki/Creating-a-new-CSR)
   - [tls agent configuration](https://developer.hashicorp.com/consul/docs/agent/config/config-files#tls-configuration-reference)
   - [securing consul agents](https://developer.hashicorp.com/consul/tutorials/security-operations/tls-encryption-openssl-secure)
   - [tls example config](https://developer.hashicorp.com/consul/docs/agent/config/config-files#example-configuration-file-with-tls)
@@ -61,6 +64,7 @@
   - [intro](https://developer.hashicorp.com/consul/docs/api-gateway)
 - cli
   - [docs](https://developer.hashicorp.com/consul/commands)
+  - [agent cli](https://developer.hashicorp.com/consul/docs/agent/config/cli-flags)
   - [tls ca create](https://developer.hashicorp.com/consul/commands/tls/ca)
   - [tls for agents](https://developer.hashicorp.com/consul/tutorials/security/tls-encryption-secure)
 - http
@@ -219,11 +223,18 @@ $ docker run -i --dns=<bridge ip> -t ubuntu sh -c "apt-get update && apt-get ins
 - query: find healthy services registered with consul; services access eachother through their local proxy according to identity-baed policies
 - secure: consul manages authnz for service-to-service communication
 
-## consul connect (service mesh product name)
+## discovery
+
+- you can have service discovery without enabling consul connect
+
+## connect (service mesh product name)
 
 - uses envoy as the sidecar proxy attached to every service
 - manages service-to-service authnz, comms, and msg encryption
 - enables traffric management to support canary testing, a/b tests, and blue/green deployments
+- is enabled by default when running in dev mode
+- to enable in non dev mode
+  - add `connect { enabled = true }` to the server, no change is required for clients
 
 ## consul agent
 

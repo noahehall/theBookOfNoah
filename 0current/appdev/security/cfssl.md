@@ -147,15 +147,16 @@
 # cmds TODO
 # gencrl
 # ocsprefresh
-# certinfo
 # serve
 # ocspdump
 # scan
 # ocspserve
-# info
+# info: Get info about a remote signer
 # ocspsign
 # print-defaults
 # revoke
+
+### certinfo: output certinfo about the given cert
 
 ### CSR examples
 
@@ -183,27 +184,6 @@
         }
     ]
 }
-# self signed root-ca and priv key for multiple hosts
-{
-    "hosts": [
-
-    ],
-    "key": {
-        "algo": "rsa",
-        "size": 2048
-    },
-    "names": [
-        {
-            "C":  "US",
-            "L":  "San Francisco",
-            "O":  "Internet Widgets, Inc.",
-            "OU": "WWW",
-            "ST": "California"
-        }
-    ]
-}
-
-
 
 ### generate a privkey and certificate request
 ### cfssl root CAs: for creating & signing leaf certs
@@ -274,8 +254,7 @@ selfsign
   - if ocspResponse: basename-response.der
 
 ```sh
-
-
+# -bare: the response from CFSSL isnt wrapped in the api repsonse
 ```
 
 ### multirootca
