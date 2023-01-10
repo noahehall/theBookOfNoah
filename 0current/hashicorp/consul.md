@@ -31,9 +31,8 @@
   - [list of consul tools](https://developer.hashicorp.com/consul/docs/integrate/download-tools)
   - [ns1](https://help.ns1.com/hc/en-us/articles/360039417093-NS1-Consul-Integration-Overview)
   - [dnsimple](https://blog.dnsimple.com/2022/05/consul-integration/)
-- nomad / service mesh
+- nomad
   - [nomad integration](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration#service-discovery)
-  - [mesh configuration](https://developer.hashicorp.com/consul/docs/connect/configuration)
 - vault
   - [vault as secrets backend](https://developer.hashicorp.com/consul/docs/k8s/deployment-configurations/vault)
   - [generate mtls for consul with vault](https://developer.hashicorp.com/consul/tutorials/vault-secure/vault-pki-consul-secure-tls)
@@ -54,19 +53,27 @@
   - [tls example config](https://developer.hashicorp.com/consul/docs/agent/config/config-files#example-configuration-file-with-tls)
 - agent
   - [agent config reference](https://developer.hashicorp.com/consul/docs/agent/config/config-files)
+  - [cloud autojoin](https://developer.hashicorp.com/consul/docs/install/cloud-auto-join)
+- service discovery
+  - [tutorial](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-service-discovery)
+  - [service discovery](https://developer.hashicorp.com/consul/docs/discovery/services)
 - service mesh
   - [consul service mesh](https://developer.hashicorp.com/consul/docs/consul-vs-other/service-mesh-compare)
-  - [service discovery](https://developer.hashicorp.com/consul/docs/discovery/services)
   - [health checks](https://developer.hashicorp.com/consul/docs/discovery/checks)
   - [dns queries](https://developer.hashicorp.com/consul/docs/discovery/dns)
   - [required ports](https://developer.hashicorp.com/consul/docs/install/ports)
+  - [mesh configuration](https://developer.hashicorp.com/consul/docs/connect/configuration)
+  - [migrating from discovery to connect](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-service-mesh)
 - api gateway
   - [intro](https://developer.hashicorp.com/consul/docs/api-gateway)
+- tokens
+  - [acl tokens](https://developer.hashicorp.com/consul/docs/security/acl/acl-tokens)
 - cli
   - [docs](https://developer.hashicorp.com/consul/commands)
   - [agent cli](https://developer.hashicorp.com/consul/docs/agent/config/cli-flags)
   - [tls ca create](https://developer.hashicorp.com/consul/commands/tls/ca)
   - [tls for agents](https://developer.hashicorp.com/consul/tutorials/security/tls-encryption-secure)
+  - [acl cli](https://developer.hashicorp.com/consul/commands/acl)
 - http
   - [agent api](https://developer.hashicorp.com/consul/api-docs/agent/service)
 - provision
@@ -102,6 +109,15 @@
 - configuration: consul provides a kv store for service configuration
 - connect: each services proxy sidecar gets a TLS cert for identification, enables management of service-to-service comms at a logical level vs IP addrs
 - service graph: after services are identified, the service graph provides logical rules specifying communication rules
+
+### install
+
+```sh
+# @see https://developer.hashicorp.com/consul/tutorials/production-deploy/deployment-guide#install-consul
+consul -autocomplete-install
+complete -C /usr/bin/consul consul
+
+```
 
 ### locations
 
@@ -226,6 +242,9 @@ $ docker run -i --dns=<bridge ip> -t ubuntu sh -c "apt-get update && apt-get ins
 ## discovery
 
 - you can have service discovery without enabling consul connect
+- discovery vs mesh
+  - discovery is manual: each client machine needs to have their own acls, tokens, etc on the machine, including the consul client
+  - connect: service registration is handled by the server, which auto provisions tls certs, each client machine is expected to have consul client + envoy proxy
 
 ## connect (service mesh product name)
 

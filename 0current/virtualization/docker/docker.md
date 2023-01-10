@@ -5,6 +5,7 @@
   - finish copying stuff from the old docker cheatsheet
   - redo the buildkit notes, doesnt look like we finished and surely dont remember them
     - might also be in one of the other 100000 dockerfiles
+  - redo the dockerfile notes: its been awhile since you took a hardlook at the reference
 
 ## links
 
@@ -59,6 +60,7 @@
 - perf
   - [resource constraints](https://docs.docker.com/config/containers/resource_constraints/)
 - images
+  - [dockerfile reference](https://docs.docker.com/engine/reference/builder/)
   - [multi arch](https://docs.docker.com/build/building/multi-platform/)
   - [really good image name format post](https://github.com/opencontainers/.github/blob/master/docs/docs/introduction/digests.md)
   - [build](https://docs.docker.com/engine/reference/commandline/build/)
