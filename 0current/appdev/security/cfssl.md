@@ -14,6 +14,7 @@
   - [certificate signing request](https://www.ssl.com/faqs/what-is-a-csr/)
   - [certificate authority](https://www.ssl.com/faqs/what-is-a-certificate-authority/)
   - [public CA baseline requirements](https://cabforum.org/baseline-requirements-documents/)
+  - [oracle docs for webserver 2.1](https://docs.oracle.com/cd/E19957-01/805-7698/ssl-config-chap-391/index.html)
 
 ## terms
 
@@ -33,12 +34,14 @@
 
 - aka certificate signature request
 - encoded text file: data related to the entity requesting a certificate from a certificate authority and signed with the entity's priv key
-- CN: common name
-- O: organization
-- L: city/locality
-- S: state/province
-- C: country
-- email address
+- distinguished names: DN: the signing request is bound to the names, from most specific to least specific (more names exist than the ones listed here)
+  - CN: common name
+  - EM: email address
+  - OU: organization unit
+  - O: organization
+  - L: city/locality
+  - ST: state/province
+  - C: country
 - pubkey (never share the privkey)
 
 ### digital certificate

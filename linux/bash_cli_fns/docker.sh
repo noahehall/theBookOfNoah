@@ -8,22 +8,34 @@ export DOCKER_CLI_EXPERIMENTAL=enabled
 # docker ps --format="$DOCKER_FORMAT"
 export DOCKER_FORMAT="ID\t{{.ID}}\nNAME\t{{.Names}}\nIMAGE\t{{.Image}}\nPORTS\t{{.Ports}}\nCOMMAND\t{{.Command}}\nCREATED\t{{.CreatedAt}}\nSTATUS\t{{.Status}}\n"
 
+dk_show_hack_user_group() {
+    echo -e "\nto hack /etc/{passwd,group}\ndepending if user/group exists\n\n"
+    echo 'grep -qE "^uname:" ./etc/passwd && "add user&group" || "replace user&group"'
+    echo 'replace USER_ID and GROUP_ID only:'
+    echo 'RUN sed -i "s/^uname:.*:[0-9]\{1,\}:[0-9]\{1,\}:/uname:x:$USER_ID:$GROUP_ID:/i" /etc/passwd'
+    echo 'RUN sed -i "s/^gname:.*:[0-9]\{1,\}:/gname:x:$GROUP_ID:/i" /etc/group'
+}
+export -f dk_show_hack_user_group
+
 # startup a registry
 # @see https://docs.docker.com/registry/deploying/
 # @see nirvai/scripts/script.registry.sh
 dk_start_registry() {
     docker run --rm -d -p 5001:5001 --restart=always --name registry registry:2
 }
+export -f dk_start_registry
 
 dk_start_bash() {
     docker run --rm -it ubuntu:trusty bash
     # ip addr show eth0 # get container ip
     # route # get host IP
 }
+export -f dk_start_bash
 
 dk_start_bash_host() {
     docker run --rm -it --network host ubuntu:trusty bash
 }
+export -f dk_start_bash_host
 
 dk_imgs() {
     docker images --no-trunc -a --format="table {{.Repository}}\n\t{{.ID}}\n\t{{.Tag}}\n\n" | tac

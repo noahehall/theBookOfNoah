@@ -71,6 +71,7 @@
   - [ssl redirect](https://www.haproxy.com/blog/redirect-http-to-https-with-haproxy/)
 - variables
   - [syntax](https://www.haproxy.com/documentation/hapee/latest/configuration/variables/syntax/)
+  - [environment vars](https://www.haproxy.com/documentation/hapee/latest/configuration/variables/environment-variables/)
 - frontends
 - backends
 

@@ -6,6 +6,7 @@
   - redo the buildkit notes, doesnt look like we finished and surely dont remember them
     - might also be in one of the other 100000 dockerfiles
   - redo the dockerfile notes: its been awhile since you took a hardlook at the reference
+  - [alpine user handbook](https://docs.alpinelinux.org/user-handbook/0.1a/index.html)
 
 ## links
 

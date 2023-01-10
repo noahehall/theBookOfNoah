@@ -3,6 +3,15 @@
 # TODO: missing cmdtime
 ## ^^ should be in 000util.sh
 
+get_hosts() {
+    echo $(getent hosts)
+}
+get_networks() {
+    echo $(getent networks)
+}
+get_services() {
+    echo $(getent services)
+}
 response_headers() {
     if [[ $# -eq 1 ]]; then
         curl -I "$1"
