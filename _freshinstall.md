@@ -85,7 +85,9 @@
 - base apps
   - [consul, tf, nomad](https://developer.hashicorp.com/consul/downloads)
     - you just need to setup the archive once for all 3
+    - other hashicorp products should use docker
   - [jq: use apt](https://stedolan.github.io/jq/)
+  - [yq: jq for yaml](https://github.com/mikefarah/yq)
   - [postman](https://www.postman.com/downloads/)
   - [obs studio](https://obsproject.com/wiki/install-instructions#ubuntumint-installation)
   - sudo apt install preload
@@ -163,7 +165,7 @@
 - $ touch ~/.bashrc
 - $ echo ". ~/.bashrc" > ~/.bash_profile
 - upgrade bash (apple refuses to update pass bash v3.2) cuz fk apple
-- setup bash as defualt shell (FCK ZSH)
+- setup bash as defualt shell (FCK ZSH, just because they force it on me)
 - [macports](https://www.scrim.psu.edu/support/userspace-macports.html)
 - [window manager](https://github.com/ianyh/Amethyst)
 - continue with ubuntu setup

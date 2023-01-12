@@ -9,6 +9,10 @@
 
 - [cfssl github](https://github.com/cloudflare/cfssl)
 - [intro blog post](https://blog.cloudflare.com/introducing-cfssl/)
+- cfssl
+  - [cmd docs: very good](https://github.com/cloudflare/cfssl/blob/master/doc/cmd/cfssl.txt)
+  - [signing -profiles](https://github.com/cloudflare/cfssl/blob/master/doc/cmd/cfssl.txt#L72)
+  - [mininmal profile configuration](https://github.com/cloudflare/cfssl/blob/master/doc/cmd/cfssl.txt#L179)
 - general notes
   - [public key infrastructure (wikipedia)](https://en.wikipedia.org/wiki/Public_key_infrastructure)
   - [certificate signing request](https://www.ssl.com/faqs/what-is-a-csr/)
