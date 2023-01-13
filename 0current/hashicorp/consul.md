@@ -58,6 +58,8 @@
   - [agent config reference](https://developer.hashicorp.com/consul/docs/agent/config/config-files)
   - [cloud autojoin](https://developer.hashicorp.com/consul/docs/install/cloud-auto-join)
 - service discovery
+  - [plz read this first: install envoy on the agent](https://developer.hashicorp.com/consul/tutorials/developer-mesh/service-mesh-with-envoy-proxy?utm_source=docs)]
+  - [func-e to install binary](https://func-e.io/)
   - [tutorial](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-service-discovery)
   - [service discovery](https://developer.hashicorp.com/consul/docs/discovery/services)
 - service mesh

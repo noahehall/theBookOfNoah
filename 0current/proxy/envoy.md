@@ -19,7 +19,10 @@
 
 - [getting started](https://www.envoyproxy.io/docs/envoy/latest/start/start)
 - [installing envoy](https://www.envoyproxy.io/docs/envoy/latest/start/install)
-- [envoy dockerfile](https://github.com/envoyproxy/envoy/blob/main/ci/Dockerfile-envoy)
+- [funce](https://func-e.io/)
+- docker
+  - [using the docker img](https://www.envoyproxy.io/docs/envoy/latest/start/docker)
+  - [envoy dockerfile](https://github.com/envoyproxy/envoy/blob/main/ci/Dockerfile-envoy)
 
 ## best practices/gotchas
 
@@ -49,3 +52,10 @@
 ## listener filters
 
 - process connections before network level filters for manipulating the connection metadata and subsequent processing
+
+## examples
+
+```sh
+
+docker run -d --name envoy -p 9901:9901 -p 10000:10000 envoyproxy
+```
