@@ -21,8 +21,31 @@
 - [installing envoy](https://www.envoyproxy.io/docs/envoy/latest/start/install)
 - [envoy dockerfile](https://github.com/envoyproxy/envoy/blob/main/ci/Dockerfile-envoy)
 
+## best practices/gotchas
+
+- run a single envoy per machine, regardless of the number of configured listeners
+
 ## terms
 
 - host: any entity capable of network communication; a machine can have multiple hosts
 - downstream: connects to envoy sends requests and receives responses
 - upstream: receives connections and requests from envoy and returns responses
+- listener: named network location (e.g. port, socket, etc) that can be connected to by downstream clients
+- cluster: group of logically similar hosts that envoy connects to
+- mesh: group of hosts that coorde a consistent network topology
+- envoy mesh:group of envoy proxies that form a message passing substrate for a distributed system
+- runtime configuration: out of band realtime conf system deployed alongside envoy
+
+## tcp listeners
+
+- composed of filter chains, composed of one/more L3/L4 filters
+- a filter selected based on its match criteria
+- filters: different arch than udp listener filters but same purpose
+
+## udp listeners
+
+- filters: instantianted once per worker and global to that worker
+
+## listener filters
+
+- process connections before network level filters for manipulating the connection metadata and subsequent processing

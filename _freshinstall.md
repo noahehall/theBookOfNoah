@@ -26,6 +26,34 @@
   - mac: fn O
   - win/linux: fn P
 
+#### pwr solaar
+
+- https://github.com/pwr-Solaar/Solaar
+- https://pwr-solaar.github.io/Solaar/installation
+- https://github.com/pwr-Solaar/Solaar/blob/master/share/autostart/solaar.desktop
+
+```sh
+pip install --user solaar
+
+# @see https://winaero.com/fix-bluetooth-mouse-lag-on-linux-for-device-without-transmitter/
+get_bluetooth_devices
+/var/lib/bluetooth/somedir/your-device-id-here/info
+
+[ConnectionParameters]
+MinInterval=6
+MaxInterval=6
+
+
+# @see https://askubuntu.com/questions/1320412/bluetooth-mouse-lag-ubuntu-20-04
+sudo nano /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash btusb.enable_autosuspend=0"
+sudo update-grub
+reboot
+# @see https://askubuntu.com/questions/1180242/lag-when-using-bluetooth-mouse
+sudo tee /etc/modprobe.d/iwlwifi-opt.conf <<< "options iwlwifi bt_coex_active=0"
+reboot
+```
+
 ### vanilla os
 
 - [looks sweeeet](https://vanillaos.org/)
