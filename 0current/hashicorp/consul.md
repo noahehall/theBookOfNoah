@@ -51,6 +51,9 @@
   - [tls agent configuration](https://developer.hashicorp.com/consul/docs/agent/config/config-files#tls-configuration-reference)
   - [securing consul agents](https://developer.hashicorp.com/consul/tutorials/security-operations/tls-encryption-openssl-secure)
   - [tls example config](https://developer.hashicorp.com/consul/docs/agent/config/config-files#example-configuration-file-with-tls)
+  - [troubleshooting ACLs](https://developer.hashicorp.com/consul/tutorials/security/access-control-troubleshoot?in=consul%2Fsecurity)
+  - [common errors](https://developer.hashicorp.com/consul/docs/troubleshoot/common-errors)
+  - [failed to decrypt the message err](https://discuss.hashicorp.com/t/failed-to-join-no-installed-keys-could-decrypt-the-message/33324)
 - agent
   - [agent config reference](https://developer.hashicorp.com/consul/docs/agent/config/config-files)
   - [cloud autojoin](https://developer.hashicorp.com/consul/docs/install/cloud-auto-join)
@@ -78,6 +81,10 @@
   - [agent api](https://developer.hashicorp.com/consul/api-docs/agent/service)
 - provision
   - [deploy consul server](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-deploy)
+
+## best practices / gotchas
+
+- tokens do not expire (unless -expires-ttl=<duration>), it is up to the operator to delete tokens that are not in use.
 
 ## vocab
 
@@ -189,6 +196,15 @@ $ docker run -i --dns=<bridge ip> -t ubuntu sh -c "apt-get update && apt-get ins
 
 - specializes in the network management of services and inter-service communication
   - as apposed to an api gateway's primary concern of client request-response cycle
+- enables zero trust via authnz at the network level, securing service-to-service comms via PKI certs
+  - requires sidecar proxy (envoy by default)
+  - requires creation of service intentions
+
+#### intentions
+
+- allow/deny comms between services
+- destination oriented: create intentions for the destination then define which services can access it
+  - i.e. destionation X needs to be reached by Y
 
 #### control plane
 
