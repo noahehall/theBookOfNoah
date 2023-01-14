@@ -57,18 +57,24 @@
 - agent
   - [agent config reference](https://developer.hashicorp.com/consul/docs/agent/config/config-files)
   - [cloud autojoin](https://developer.hashicorp.com/consul/docs/install/cloud-auto-join)
+- healthchecks
+  - [ensuring health services](https://developer.hashicorp.com/consul/tutorials/developer-discovery/service-registration-health-checks)
+  - [health checks](https://developer.hashicorp.com/consul/docs/discovery/checks)
 - service discovery
   - [plz read this first: install envoy on the agent](https://developer.hashicorp.com/consul/tutorials/developer-mesh/service-mesh-with-envoy-proxy?utm_source=docs)]
   - [func-e to install binary](https://func-e.io/)
+  - [func-e linux platforms](https://github.com/tetratelabs/func-e/releases)
   - [tutorial](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-service-discovery)
   - [service discovery](https://developer.hashicorp.com/consul/docs/discovery/services)
 - service mesh
   - [consul service mesh](https://developer.hashicorp.com/consul/docs/consul-vs-other/service-mesh-compare)
-  - [health checks](https://developer.hashicorp.com/consul/docs/discovery/checks)
+  - [consul connect envoy](https://developer.hashicorp.com/consul/commands/connect/envoy)
+  - [consul conect with custom proxies](https://developer.hashicorp.com/consul/docs/connect/proxies/integrate)
   - [dns queries](https://developer.hashicorp.com/consul/docs/discovery/dns)
   - [required ports](https://developer.hashicorp.com/consul/docs/install/ports)
   - [mesh configuration](https://developer.hashicorp.com/consul/docs/connect/configuration)
   - [migrating from discovery to connect](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-service-mesh)
+  - [ingress gateway](https://developer.hashicorp.com/consul/tutorials/developer-mesh/service-mesh-ingress-gateways)
 - api gateway
   - [intro](https://developer.hashicorp.com/consul/docs/api-gateway)
 - tokens

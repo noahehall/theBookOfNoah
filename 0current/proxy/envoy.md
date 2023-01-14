@@ -20,9 +20,11 @@
 - [getting started](https://www.envoyproxy.io/docs/envoy/latest/start/start)
 - [installing envoy](https://www.envoyproxy.io/docs/envoy/latest/start/install)
 - [funce](https://func-e.io/)
+- [tetrate tuts](https://academy.tetrate.io/courses/envoy-fundamentals)
 - docker
   - [using the docker img](https://www.envoyproxy.io/docs/envoy/latest/start/docker)
   - [envoy dockerfile](https://github.com/envoyproxy/envoy/blob/main/ci/Dockerfile-envoy)
+  - [running as non root user](https://www.envoyproxy.io/docs/envoy/latest/start/docker.html?highlight=user#permissions-for-running-docker-envoy-containers-as-a-non-root-user)
 
 ## best practices/gotchas
 
