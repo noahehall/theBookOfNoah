@@ -37,6 +37,7 @@
   - [vault as secrets backend](https://developer.hashicorp.com/consul/docs/k8s/deployment-configurations/vault)
   - [generate mtls for consul with vault](https://developer.hashicorp.com/consul/tutorials/vault-secure/vault-pki-consul-secure-tls)
 - docker
+  - [docker-entrypoint.sh](https://github.com/hashicorp/docker-consul/blob/master/0.X/docker-entrypoint.sh)
   - [github for docker-consul](https://github.com/hashicorp/docker-consul)
   - [docker-consul main](https://github.com/hashicorp/docker-consul/blob/master/0.X/Dockerfile)
   - [dockerfile main](https://github.com/hashicorp/consul/blob/main/Dockerfile)
@@ -47,6 +48,7 @@
   - [ui visualization](https://developer.hashicorp.com/consul/docs/connect/observability/ui-visualization)
   - [ui agent configuration](https://developer.hashicorp.com/consul/docs/agent/config/config-files#ui-parameters)
 - tls
+  - [security tuts](https://developer.hashicorp.com/consul/tutorials/security)
   - [start @ cfssl and thank me later](https://github.com/cloudflare/cfssl/wiki/Creating-a-new-CSR)
   - [tls agent configuration](https://developer.hashicorp.com/consul/docs/agent/config/config-files#tls-configuration-reference)
   - [securing consul agents](https://developer.hashicorp.com/consul/tutorials/security-operations/tls-encryption-openssl-secure)
@@ -57,24 +59,34 @@
 - agent
   - [agent config reference](https://developer.hashicorp.com/consul/docs/agent/config/config-files)
   - [cloud autojoin](https://developer.hashicorp.com/consul/docs/install/cloud-auto-join)
+  - [server performance](https://developer.hashicorp.com/consul/docs/install/performance)
 - healthchecks
   - [ensuring health services](https://developer.hashicorp.com/consul/tutorials/developer-discovery/service-registration-health-checks)
   - [health checks](https://developer.hashicorp.com/consul/docs/discovery/checks)
-- service discovery
-  - [plz read this first: install envoy on the agent](https://developer.hashicorp.com/consul/tutorials/developer-mesh/service-mesh-with-envoy-proxy?utm_source=docs)]
+- deployments
+  - [canary deployments](https://developer.hashicorp.com/consul/tutorials/get-started-hcp/hcp-gs-canary-deployments)
+- service discovery: read this but prefer to implement service mesh
   - [func-e to install binary](https://func-e.io/)
   - [func-e linux platforms](https://github.com/tetratelabs/func-e/releases)
   - [tutorial](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-service-discovery)
   - [service discovery](https://developer.hashicorp.com/consul/docs/discovery/services)
-- service mesh
-  - [consul service mesh](https://developer.hashicorp.com/consul/docs/consul-vs-other/service-mesh-compare)
-  - [consul connect envoy](https://developer.hashicorp.com/consul/commands/connect/envoy)
-  - [consul conect with custom proxies](https://developer.hashicorp.com/consul/docs/connect/proxies/integrate)
   - [dns queries](https://developer.hashicorp.com/consul/docs/discovery/dns)
+- service mesh
+  - [plz read this first: install envoy on the agent](https://developer.hashicorp.com/consul/tutorials/developer-mesh/service-mesh-with-envoy-proxy?utm_source=docs)]
+  - [read this first](https://developer.hashicorp.com/consul/docs/connect/registration/sidecar-service)
+  - [then read this](https://developer.hashicorp.com/consul/docs/connect/proxies/envoy)
+  - [consul connect envoy](https://developer.hashicorp.com/consul/commands/connect/envoy)
+  - [consul service mesh](https://developer.hashicorp.com/consul/docs/consul-vs-other/service-mesh-compare)
+  - [consul conect with custom proxies](https://developer.hashicorp.com/consul/docs/connect/proxies/integrate)
   - [required ports](https://developer.hashicorp.com/consul/docs/install/ports)
   - [mesh configuration](https://developer.hashicorp.com/consul/docs/connect/configuration)
   - [migrating from discovery to connect](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-service-mesh)
+  - [intentions](https://developer.hashicorp.com/consul/docs/connect/intentions)
+  - [intentions schema](https://developer.hashicorp.com/consul/docs/connect/config-entries/service-intentions)
+  - [intentions http api](https://developer.hashicorp.com/consul/api-docs/connect/intentions)
   - [ingress gateway](https://developer.hashicorp.com/consul/tutorials/developer-mesh/service-mesh-ingress-gateways)
+- haproxy
+  - [haproxy + consul for dns](https://www.haproxy.com/blog/haproxy-and-consul-with-dns-for-service-discovery/)
 - api gateway
   - [intro](https://developer.hashicorp.com/consul/docs/api-gateway)
 - tokens
@@ -109,7 +121,7 @@
 - data plane: processes data requests
 - mTLS: mutual transport layer security
 - service mesh: connect and managet service-to-service communication
-- north-south traffic: refers tot he flow of data into and out of a specific env
+- north-south traffic: refers to the flow of data into and out of a specific env
 - east-west traffic: refers to inter-env traffic, or federated service-mesh traffic (across datacenters)
 - service catalog: single source of truth for available services in the service registry
 - client-side discovery: consumers are responsible for determining the access information of service instances and load balancing requests between them: query catelog > select a service > make request to service
@@ -210,9 +222,11 @@ $ docker run -i --dns=<bridge ip> -t ubuntu sh -c "apt-get update && apt-get ins
 
 #### intentions
 
-- allow/deny comms between services
+- allow/deny comms between services: when multiple rules exist, only 1 will be used
 - destination oriented: create intentions for the destination then define which services can access it
   - i.e. destionation X needs to be reached by Y
+- identity based: L4 intentions: identities authn and comms authz by metadata in agent TLS certs;
+- application based: L7 intentions: authnz enforced by L7 request attributes in addition to tls identity
 
 #### control plane
 
@@ -235,6 +249,20 @@ $ docker run -i --dns=<bridge ip> -t ubuntu sh -c "apt-get update && apt-get ins
 - available @ 8500
 
 ## integrations
+
+### haproxy + consul dns
+
+- components
+  - consul: service registry & monitoring;
+    - kv store for for haproxy conf fragments
+  - envoy: east-west proxy: service-to-service authnz
+  - haproxy: north-south proxy: tcp edge & rev proxy load balancer from outside in
+    - uses dns to query consul and dynamically scaling backend servers
+  - consul template: reloading haproxy & generating haproxy conf
+- domain translations
+  - haproxy > consul
+  - backend > service
+  - backend server > service node
 
 ### Consul-Terraform-Sync
 
