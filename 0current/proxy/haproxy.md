@@ -23,7 +23,9 @@
   - [haproxy official docker](https://hub.docker.com/_xxxxxxxxxxxxxxxxx_/haproxy)
   - [haproxy ubuntu](https://hub.docker.com/r/haproxytech/haproxy-ubuntu)
 - interwebs
+  - [haproxy + haproxy dataplane + consul](https://www.haproxy.com/blog/consul-service-discovery-for-haproxy/)
   - [ssl handshake + hello message](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/)
+  - [preferred server](https://stackoverflow.com/questions/42019031/haproxy-configuring-with-prefered-server)
 - configuration
   - [basic configuration guide](https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/)
   - [configuration guide](https://cbonte.github.io/haproxy-dconv/2.4/configuration.html)

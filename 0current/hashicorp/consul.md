@@ -70,6 +70,8 @@
   - [func-e linux platforms](https://github.com/tetratelabs/func-e/releases)
   - [tutorial](https://developer.hashicorp.com/consul/tutorials/get-started-vms/virtual-machine-gs-service-discovery)
   - [service discovery](https://developer.hashicorp.com/consul/docs/discovery/services)
+- dns
+  - [query services with dns](https://developer.hashicorp.com/consul/docs/discovery/dns)
   - [dns queries](https://developer.hashicorp.com/consul/docs/discovery/dns)
 - service mesh
   - [plz read this first: install envoy on the agent](https://developer.hashicorp.com/consul/tutorials/developer-mesh/service-mesh-with-envoy-proxy?utm_source=docs)]
