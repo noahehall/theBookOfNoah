@@ -18,8 +18,6 @@ if type neofetch &>/dev/null; then # --config /path/to/config
         --os_arch on \
         --stdout
 # --disk_percent on --disk_subtitle name --disk_show /
-else
-    echo 'neofetch not installed'
 fi
 
 # use bashtop if its installed
@@ -99,17 +97,6 @@ alias gpglistkeyslong='gpg --list-keys --keyid-format=long'
 # random stuff -----------------------------------------------------------------
 # general
 alias getfns='declare -F'
-
-# refresh shell
-# @see https://askubuntu.com/questions/19772/how-to-reinitialize-a-terminal-window-instead-of-closing-it-and-starting-a-new-o
-refresh_shell() {
-    #reset # this hangs kitty
-    if [ "$(uname)" = "Darwin" ]; then
-        exec $SHELL
-    else
-        exec sudo --login --user "$USER" /bin/sh -c "cd '$PWD'; exec '$SHELL' -l"
-    fi
-}
 
 function checkpkgupgrade() {
     if [[ $# -eq 1 ]]; then
