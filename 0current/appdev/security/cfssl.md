@@ -22,10 +22,12 @@
 
 ## terms
 
-- domain: second level: domain.x
+- domain: second level: domain.x; and generally setup to point to an ip addr
 - top level domain: first level: x.toplevel
 - root domain: second + first: domain.y
 - subdomain: third++ : www.x.y
+  - in some contexts this is the hostname: hostname.x.y
+  - e.g. on linux servers it will be yourName@hostname
 - fully qualified domain name: FQDN: complete and unambiguous domain name that specifies an exact location for an object in a DNS hierarchy; generally its the domain + top level
 - common name: the fully qualified domain name
 - wildcard certs: groups multiple subdomains under a single cert, e.g. `*.domain.com`
