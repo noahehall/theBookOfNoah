@@ -73,8 +73,9 @@
 ## terms
 
 - agent: processing running on a server in server/client mode
+- server agent: agent running in server mode: the scheduler
+- client agent: agent running clinet mode: the deployer
 - dev agent: runs in server & client mode and does not persist state to disk, useful for experiments and development only
-- server: agent running in server mode
 - leader: server agent responsible for cluster mgmt
 - follower: server agent that isnt the leader
 - client: agent running in client mode, executes tasks assigned from servers
