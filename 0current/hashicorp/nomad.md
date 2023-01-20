@@ -73,20 +73,19 @@
 ## terms
 
 - agent: processing running on a server in server/client mode
-- server agent: agent running in server mode: the scheduler
-- client agent: agent running clinet mode: the deployer
 - dev agent: runs in server & client mode and does not persist state to disk, useful for experiments and development only
-- leader: server agent responsible for cluster mgmt
-- follower: server agent that isnt the leader
-- client: agent running in client mode, executes tasks assigned from servers
+- server agent: agent running in server mode: the scheduler
+- leader (server): server agent responsible for cluster mgmt
+- follower (server): server agent that isnt the leader
+- client agent: agent running clinet mode: the deployer
+- job specification: aka jobspec; schema for nomad jobs
 - job: one/more task groups with one/more tasks
-- job specification: schema for nomad jobs
 - task group: set of tasks that must run together
-- task driver: means of executing a task, e.g. docker
 - task: smallest unit of work in nomad, executed by task drivers
+- task driver: means of executing a task, e.g. docker
 - allocation: mapping between a task group in a job and a client node, created by server agents to assign jobs to client agents
 - evaluation: how nomad makes scheduling decisions
-- bin packing: scheduling algorithm; attempts to create the most-desnse arrangement deployments to decrease costs related to over-provisioning
+- bin packing: scheduling algorithm; attempts to create the most-desnse arrangement deployments to decrease TCO related to over-provisioning; nomad will pack as many tasks into a machine as possible, aiming to go from ~2% utilization to 20-30% utilization following the law of small numbers
 - spread scheduling: opposite of binpacking, goal is to distribute deployment loads across as many machines as possible
 - gossip protocol: used to connect all the server instances together
 
@@ -118,7 +117,7 @@
 
 - long running (but lightweight) process that must run on every machine in the cluster
 - registers the host machine with (cluster) server agents
-- performs heart-beating
+- performs health checks
 - runs tasks assigned to them
 - configuration: can send a single file or a dir (but not recursively)
   - defaults are in /etc/nomad
@@ -139,7 +138,7 @@
 ### job
 
 - each job spec should have a single job
-- each job may have multiple groups
+- each job may have multiple groups which multiple tasks
 
 #### group
 
