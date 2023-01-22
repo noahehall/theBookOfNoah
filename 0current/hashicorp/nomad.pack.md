@@ -7,12 +7,14 @@
 - [nightly installs](https://github.com/hashicorp/nomad-pack/releases/tag/nightly)
 - [pack community registry](https://github.com/hashicorp/nomad-pack-community-registry)
 - [intro tutorial](https://developer.hashicorp.com/nomad/tutorials/nomad-pack/nomad-pack-intro)
+- [writing your own packs](https://github.com/hashicorp/nomad-pack/blob/main/docs/writing-packs.md)
+- [custom registry tutorial](https://developer.hashicorp.com/nomad/tutorials/nomad-pack/nomad-pack-writing-packs)
 
 ## docker quickies
 
 ```sh
 
-pack render simple_service
+npack render simple_service
 ```
 
 ## packs
@@ -34,7 +36,7 @@ pack render simple_service \
   - other wise it conflicts with nomad and makes you tab twice
 
 ```sh
-pack() {
+npack() {
   nomad-pack "$@"
 }
 ```
@@ -43,13 +45,16 @@ pack() {
 
 ```sh
 
-pack registry
+npack registry
   list # packs available to display
   add # add new packs
     community [git.url] # add community packs
   delete # delet packs, same syntax as add
   render
     packName --to-dir /here -var takes=precedence --var-file=/over/this/file --render-output-template
+  run packName
+    --var poop=toilet # pass a single var
+    -f varfile.hcl # pass a file
 
 
 ########################## examples

@@ -78,9 +78,9 @@
 - leader (server): server agent responsible for cluster mgmt
 - follower (server): server agent that isnt the leader
 - client agent: agent running clinet mode: the deployer
-- job specification: aka jobspec; schema for nomad jobs
+- job specification: aka jobspec; conf for nomad jobs
 - job: one/more task groups with one/more tasks
-- task group: set of tasks that must run together
+- task group: set of tasks that must run on the same machine
 - task: smallest unit of work in nomad, executed by task drivers
 - task driver: means of executing a task, e.g. docker
 - allocation: mapping between a task group in a job and a client node, created by server agents to assign jobs to client agents
@@ -88,30 +88,6 @@
 - bin packing: scheduling algorithm; attempts to create the most-desnse arrangement deployments to decrease TCO related to over-provisioning; nomad will pack as many tasks into a machine as possible, aiming to go from ~2% utilization to 20-30% utilization following the law of small numbers
 - spread scheduling: opposite of binpacking, goal is to distribute deployment loads across as many machines as possible
 - gossip protocol: used to connect all the server instances together
-
-## UI
-
-- by default runs on http://localhost:4646
-
-### jobs
-
-- lists all jobs, click to see status (like `nomad job status`)
-
-### servers
-
-- view of all server agents
-
-#### monitor
-
-- nomad application logs with option to set the log level
-
-### clients
-
-- view of all client agents
-
-### topology
-
-- view of the cluster and running workload, useful for complex nomad environments
 
 ## agents
 
@@ -369,3 +345,27 @@ job "poop" {
   }
 }
 ```
+
+## UI
+
+- by default runs on http://localhost:4646
+
+### jobs
+
+- lists all jobs, click to see status (like `nomad job status`)
+
+### servers
+
+- view of all server agents
+
+#### monitor
+
+- nomad application logs with option to set the log level
+
+### clients
+
+- view of all client agents
+
+### topology
+
+- view of the cluster and running workload, useful for complex nomad environments
