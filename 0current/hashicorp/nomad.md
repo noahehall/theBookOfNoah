@@ -1,15 +1,39 @@
 # nomad
 
+- this doc is split into 4 main sections (level 2 headings)
+  - architecture: shiz you should read first
+  - jobspec: shiz you should read next
+  - examples: case you get stuck, but maybe will delete this section
+  - ui: breaking of the UI information arch
+
 ## links
 
 - [nomad homagepage](https://www.nomadproject.io)
-- [server-force-leave command](https://www.nomadproject.io/docs/commands/server-force-leave.html)
-- [nomad ui web interface](https://developer.hashicorp.com/nomad/tutorials/get-started/get-started-ui)
+- [pre + post install](https://developer.hashicorp.com/nomad/tutorials/get-started/get-started-install)
 - tuts
+  - [nomad ui web interface](https://developer.hashicorp.com/nomad/tutorials/get-started/get-started-ui)
   - [all tuts via nomad portal](https://developer.hashicorp.com/nomad/tutorials)
   - [all tuts via developer portal (i like this one better)](https://developer.hashicorp.com/tutorials/library?product=nomad)
   - [tips and tricks by daniela](https://danielabaron.me/blog/nomad-tips-and-tricks/)
   - [users with exec driver & host volumes](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/exec-users-host-volumes)
+- plugins
+  - [container storage plugin](https://github.com/container-storage-interface/spec)
+  - [storage csi plugins](https://kubernetes-csi.github.io/docs/drivers.html)
+  - [container networking plugins](https://github.com/containernetworking/plugins)
+  - [cni nomad docs](https://developer.hashicorp.com/nomad/docs/networking/cni)
+  - [cni spec](https://www.cni.dev/docs/spec/)
+  - [storage plugin docs](https://developer.hashicorp.com/nomad/docs/concepts/plugins/csi)
+  - [csi_plugin docs](https://developer.hashicorp.com/nomad/docs/job-specification/csi_plugin)
+  - [plugin stanza](https://developer.hashicorp.com/nomad/docs/configuration/plugin)
+- drivers/integrations
+  - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
+  - [nomad consul connect stanza](https://developer.hashicorp.com/nomad/docs/job-specification/connect)
+  - [docker](https://developer.hashicorp.com/nomad/docs/drivers/docker)
+  - [vault](https://developer.hashicorp.com/nomad/docs/configuration/vault)
+  - [vault jobspec stanza](https://developer.hashicorp.com/nomad/docs/job-specification/vault)
+  - [vault config stanza](https://developer.hashicorp.com/nomad/docs/configuration/vault)
+  - [fork/exec](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
+  - [consul connect](https://developer.hashicorp.com/nomad/docs/integrations/consul-connect)
 - storage
   - [stateful workloads with host volumes tutorial](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/stateful-workloads-host-volumes)
   - [client config host volumes](https://developer.hashicorp.com/nomad/docs/configuration/client#host_volume-stanza)
@@ -21,19 +45,6 @@
   - [template stanza](https://developer.hashicorp.com/nomad/docs/job-specification/template)
   - [consul template used by template stanza](https://github.com/hashicorp/consul-template)
   - [external configuration](https://developer.hashicorp.com/nomad/docs/job-specification/artifact)
-- plugins
-  - [plugin stanza](https://developer.hashicorp.com/nomad/docs/configuration/plugin)
-  - [container networking plugins](https://github.com/containernetworking/plugins/releases/tag)
-  - [csi plugins: container storage volumes](https://developer.hashicorp.com/nomad/docs/job-specification/csi_plugin)
-- drivers/integrations
-  - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
-  - [nomad consul connect stanza](https://developer.hashicorp.com/nomad/docs/job-specification/connect)
-  - [docker](https://developer.hashicorp.com/nomad/docs/drivers/docker)
-  - [vault](https://developer.hashicorp.com/nomad/docs/configuration/vault)
-  - [vault jobspec stanza](https://developer.hashicorp.com/nomad/docs/job-specification/vault)
-  - [vault config stanza](https://developer.hashicorp.com/nomad/docs/configuration/vault)
-  - [fork/exec](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
-  - [consul connect](https://developer.hashicorp.com/nomad/docs/integrations/consul-connect)
 - provisioning
   - [enable tls](https://developer.hashicorp.com/nomad/tutorials/transport-security/security-enable-tls)
   - [encryption tutorials](https://developer.hashicorp.com/nomad/tutorials/transport-security)
@@ -69,27 +80,16 @@
   - [network stanza](https://developer.hashicorp.com/nomad/docs/job-specification/network)
 - services
   - [service stanza](https://developer.hashicorp.com/nomad/docs/job-specification/service)
+- cmds
+  - [server-force-leave command](https://www.nomadproject.io/docs/commands/server-force-leave.html)
 
-## terms
+## basics
 
-- agent: processing running on a server in server/client mode
-- dev agent: runs in server & client mode and does not persist state to disk, useful for experiments and development only
-- server agent: agent running in server mode: the scheduler
-- leader (server): server agent responsible for cluster mgmt
-- follower (server): server agent that isnt the leader
-- client agent: agent running clinet mode: the deployer
-- job specification: aka jobspec; conf for nomad jobs
-- job: one/more task groups with one/more tasks
-- task group: set of tasks that must run on the same machine
-- task: smallest unit of work in nomad, executed by task drivers
-- task driver: means of executing a task, e.g. docker
-- allocation: mapping between a job's task group and a client node, i.e. groups are allocated to client nodes
-- evaluation: how nomad makes scheduling decisions; job changes trigger evaluations, which may result in new allocations
-- bin packing: scheduling algorithm; attempts to create the most-desnse arrangement deployments to decrease TCO related to over-provisioning; nomad will pack as many tasks into a machine as possible, aiming to go from ~2% utilization to 20-30% utilization following the law of small numbers
-- spread scheduling: opposite of binpacking, goal is to distribute deployment loads across as many machines as possible
-- gossip protocol: used to connect all the server instances together
+### terms
 
-## install
+### install
+
+- check the install link, you need to install the CNI plugins and update /etc/something/here with a conf file
 
 ```sh
 # running Nomad without root requires adding nomad to the docker group
@@ -97,6 +97,71 @@ sudo usermod -G docker -a nomad
 ```
 
 ## architecture
+
+### plugins
+
+- nomad has builtin support for scheduling compute resources like cpu memory and networking
+- third party plugins enhance task driver, device, storage and networking functionality
+- every plugin requires two fields
+  - driver: the name of the plugin
+  - config: the conf for the plugin
+    - command: the executable
+    - args: args for the cmd
+
+#### task driver plugins
+
+- task driver: means of executing a task, e.g. docker
+- runtime task execution
+- the driver process lifecycle isnt bound to the client
+- only one instance of a driver will ever be running per datacenter? (or per client)
+- need to be installed and configured on each client
+- remote task drivers: plugin that execute tasks on a different machine than a nomad client
+
+#### device plugins
+
+- used for shceduling tasks with non CPU, memory or networking devices (e.g. gpus)
+- need to be installed and configured on each client
+
+#### storage plugins
+
+- enables scheduling tasks with externally created storage volumes
+- storage plugins extend freom the container storage interface (see links)
+- are created dynamically as nomad jobs: only the csi_plugin type is supported (see links)
+- nomad tracks which clients have instances of a given plugin
+- providers
+  - aws: e.g. EBS volumes
+  - gcp: e.g. persistent disks
+  - ceph
+  - portworx
+  - vsphere
+
+##### csi plugins
+
+- types
+  - controller plugins: communicate with storage providers APIs: e.g. aws ebs volume
+  - node plugins: do work on a client node, e.g. creating mount points
+  - monolith plugins: perform both controller and node roles on the same client
+- plugins mount and unmount volumes
+  - arent in the data path once the volume is mounted for a task
+  - plugin tasks are needed when tasks using their volumes stop because tasks should be left running until all dependent tasks are stopped
+    - `nomad node drain` handles this automatically
+- expose a unix domain socket `csi.sock` inside each plugin tasks and communicates over gRPC
+  - the `mount_dir` tells nomad where the plugin expects to find the socket file
+- `stage_publish_base_dir` tells nomad where to instruct the plugin to mount volumes for staging/publishing
+
+###### volumes
+
+- the scheduler determines whether a given client can run an allocation based onw hether it has a node plugin present for the volume
+- before a task can use a volume the client needs to claim the volume for the allocation
+
+#### network plugins
+
+- need to be installed and configure don each client
+- certain nomad networking functionality requires the CNI reference plugins
+- the client `cni_path` informs nomad where to find CNI binaries
+- `cni_config_dir` contains conf files loaded during plugin execution
+  - `.conflist` loaded as network configurations;
+  - `.conf` and `.json`` loaded as individual plugin confs for a specific network
 
 ### regions
 
@@ -115,6 +180,8 @@ sudo usermod -G docker -a nomad
 - registers the host machine with (cluster) server agents
 - performs health checks
 - runs tasks assigned to them
+- agent: processing running on a server in server/client mode
+- dev agent: runs in server & client mode and does not persist state to disk, useful for experiments and development only
 - configuration: can send a single file or a dir (but not recursively)
   - defaults are in /etc/nomad
     - non empty values replace earlier configs: "", 0, false are considered empty
@@ -122,40 +189,115 @@ sudo usermod -G docker -a nomad
     - plugin blocks are replaced and not merged
   - can be loaded like `nomad agent -config=single.conf -config=/etc/nomad -config=even.json -config=or.hcl`
 
-#### servers in depth
+#### server agents in depth
 
 - operate at the region level
-
-##### schedular
+- server agent: agent running in server mode: the scheduler
+- leader (server): server agent responsible for cluster mgmt
+- follower (server): server agent that isnt the leader
 
 ##### consensus
 
 - servers (3-5) in each region form a singel consensus group: they work together to elect a singel leader
 - leader: responsible for processing queries and transactions
+- gossip protocol: used to connect all the server instances together
 
-#### clients in depth
+##### schedular
+
+- is the CORE function of nomad
+- the process of assigning tasks from jobs to client machines
+
+###### jobs
+
+- submitted by humans and represent a desired state
+- tasks: are bounded by constraints like resource requirements and run on nodes (clients)
+- job: one/more task groups with one/more tasks
+- task group: set of tasks that must run on the same machine
+- task: smallest unit of work in nomad, executed by task drivers
+- system jobs
+  - e.g. node plugins so they can moutn volumes on any client
+- service jobs
+  - e.g. controller plugins because they create and attach volumes anywhere with a storage providers api
+  - service jobs should have more than one instance for high availability
+
+###### nodes
+
+-
+
+###### allocations
+
+- allocation: mapping between a job's task group and a client node, i.e. groups are allocated to client nodes
+- its all about assigning a task group to a client for evaluation
+
+###### evaluations
+
+- evaluation: how nomad makes scheduling decisions;
+  - triggers: jobspec changes (new/update), node failure
+- bin packing: scheduling algorithm; attempts to create the most-desnse arrangement deployments to decrease TCO related to over-provisioning; nomad will pack as many tasks into a machine as possible, aiming to go from ~2% utilization to 20-30% utilization following the law of small numbers
+- spread scheduling: opposite of binpacking, goal is to distribute deployment loads across as many machines as possible
+- nomad evaluates the world state and reconciles it with the desired state
+- lifecycle
+  - pending: whenever something triggers an evaluation
+  - enqeue: the evaluation broker runs on the leader server; manages the queue of pending evaluations and determines executation order and job delivery
+  - dequeue: evaluations are moved from queue to scheduled on a server
+  - scheduled: servers run 1 worker per core to process evaluations and create an allocation plan
+    - planned: allocations are evicted, updated or created
+    - feasbility checking: are there healthy client nodes available for work?
+    - ranking: which client nodes would best execute this allocation
+  - plan queue: manages pending plans, priority ordering, and race conditions
+    - i.e. servers have determined scheduling, selected a node, and allocated a plan to a node
+    - now its time for a node to take an allocation out of its queue and execute it
+
+#### client agents in depth
 
 - operate at the datacenter level
 - communicate via RPC for registration, heartbeats, receiving allocations and dispatching allocation updates
-
-### plugins
-
-- enhance task driver and device components
-- every plugin requires two fields
-  - driver: the name of the plugin
-  - config: the conf for the plugin
-    - command: the executable
-    - args: args for the cmd
-
-#### task drivers
-
-- runtime task execution
-- the driver process lifecycle isnt bound to the client
+- client agent: agent running clinet mode: the deployer
 
 ### permissions
 
-## job spec
+### provisioning
 
+- general workflow
+  - new jobs
+    - create a job specification
+    - plan and review changes with a nomad server
+    - submit job file to a nomad server
+    - review job status and logs
+  - existing jobs
+    - modify existing job file
+    - plan and review changes with a nomad server
+    - submit job file to nomad server
+    - review job status and logs
+
+### integrations
+
+#### vault integration
+
+- nomad servers and clients retrieve vault tokens that enables the nomad tasks to complete their duties
+- nomad servers automates token renewal for nomad clients
+- vault workflow
+  - create token role for nomad server:
+    - copypasta the policy to create and manage tokens for nomad clients.
+  - create token role use by nomad server thats enabled to create tokens of the type needed by nomad clients for their tasks in nomad jobspecs
+    - this token role is the parent token used to derive child tokens for jobs requesting tokens
+    - this token role should be limited to the policies needed by tasks in job specs
+      - allowed_policies: tasks may only request vault policies in this list
+        - always use this type
+      - disallowed_policies: tasks may request any vault policy thats not in this list
+  - Configure Nomad to use the created token role.
+  - create a period token assigned to the token role and give it to nomad server(s)
+- nomad workflow
+  - use the vault stanza in the nomad server configuration to setup vault integration
+    - dont use the root token in prod, or ever, its like dev mode
+    - provide vault server(s) with a periodic service token with assigned token role
+  - use the vault stanza in the jobspec task section to secure created infrastructure
+
+## jobspec
+
+### job spec
+
+- job specification: aka jobspec; conf for nomad jobs
 - the job spec is contained in a single file and should be checked into git
 - workflow
   - create a job file
@@ -294,42 +436,6 @@ ${attr.platform.aws.placement.availability-zone} #	Availability Zone of the clie
 ${attr.os.name} #	Operating system of the client (e.g. ubuntu, windows, darwin)
 ${attr.os.version} # poop ur majesty
 ```
-
-## provisioning
-
-### general workflow
-
-- new jobs
-  - create a job specification
-  - plan and review changes with a nomad server
-  - submit job file to a nomad server
-  - review job status and logs
-- exiting jobs
-  - modify existing job file
-  - plan and review changes with a nomad server
-  - submit job file to nomad server
-  - review job status and logs
-
-### vault integration
-
-- nomad servers and clients retrieve vault tokens that enables the nomad tasks to complete their duties
-- nomad servers automates token renewal for nomad clients
-- vault workflow
-  - create token role for nomad server:
-    - copypasta the policy to create and manage tokens for nomad clients.
-  - create token role use by nomad server thats enabled to create tokens of the type needed by nomad clients for their tasks in nomad jobspecs
-    - this token role is the parent token used to derive child tokens for jobs requesting tokens
-    - this token role should be limited to the policies needed by tasks in job specs
-      - allowed_policies: tasks may only request vault policies in this list
-        - always use this type
-      - disallowed_policies: tasks may request any vault policy thats not in this list
-  - Configure Nomad to use the created token role.
-  - create a period token assigned to the token role and give it to nomad server(s)
-- nomad workflow
-  - use the vault stanza in the nomad server configuration to setup vault integration
-    - dont use the root token in prod, or ever, its like dev mode
-    - provide vault server(s) with a periodic service token with assigned token role
-  - use the vault stanza in the jobspec task section to secure created infrastructure
 
 ## examples
 
