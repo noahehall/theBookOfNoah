@@ -109,8 +109,6 @@ sudo usermod -G docker -a nomad
 
 - groups of client nodes; clients can be in different datacenters than their server, but not different region
 
-### consensus
-
 ### agents
 
 - long running (but lightweight) process that must run on every machine in the cluster
@@ -124,7 +122,35 @@ sudo usermod -G docker -a nomad
     - plugin blocks are replaced and not merged
   - can be loaded like `nomad agent -config=single.conf -config=/etc/nomad -config=even.json -config=or.hcl`
 
-### schedular
+#### servers in depth
+
+- operate at the region level
+
+##### schedular
+
+##### consensus
+
+- servers (3-5) in each region form a singel consensus group: they work together to elect a singel leader
+- leader: responsible for processing queries and transactions
+
+#### clients in depth
+
+- operate at the datacenter level
+- communicate via RPC for registration, heartbeats, receiving allocations and dispatching allocation updates
+
+### plugins
+
+- enhance task driver and device components
+- every plugin requires two fields
+  - driver: the name of the plugin
+  - config: the conf for the plugin
+    - command: the executable
+    - args: args for the cmd
+
+#### task drivers
+
+- runtime task execution
+- the driver process lifecycle isnt bound to the client
 
 ### permissions
 
