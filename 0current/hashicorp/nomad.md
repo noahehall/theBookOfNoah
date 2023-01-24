@@ -83,13 +83,35 @@
 - task group: set of tasks that must run on the same machine
 - task: smallest unit of work in nomad, executed by task drivers
 - task driver: means of executing a task, e.g. docker
-- allocation: mapping between a task group in a job and a client node, created by server agents to assign jobs to client agents
-- evaluation: how nomad makes scheduling decisions
+- allocation: mapping between a job's task group and a client node, i.e. groups are allocated to client nodes
+- evaluation: how nomad makes scheduling decisions; job changes trigger evaluations, which may result in new allocations
 - bin packing: scheduling algorithm; attempts to create the most-desnse arrangement deployments to decrease TCO related to over-provisioning; nomad will pack as many tasks into a machine as possible, aiming to go from ~2% utilization to 20-30% utilization following the law of small numbers
 - spread scheduling: opposite of binpacking, goal is to distribute deployment loads across as many machines as possible
 - gossip protocol: used to connect all the server instances together
 
-## agents
+## install
+
+```sh
+# running Nomad without root requires adding nomad to the docker group
+sudo usermod -G docker -a nomad
+```
+
+## architecture
+
+### regions
+
+- servers are associated with regions first and datacenters second;
+- contain datacenters
+- independent and isolated from other regions: dont share jobs, clients or state
+- loosely coupled with other regions via gossip: enables users to submit & query servers transparently
+
+### datacenters
+
+- groups of client nodes; clients can be in different datacenters than their server, but not different region
+
+### consensus
+
+### agents
 
 - long running (but lightweight) process that must run on every machine in the cluster
 - registers the host machine with (cluster) server agents
@@ -102,6 +124,10 @@
     - plugin blocks are replaced and not merged
   - can be loaded like `nomad agent -config=single.conf -config=/etc/nomad -config=even.json -config=or.hcl`
 
+### schedular
+
+### permissions
+
 ## job spec
 
 - the job spec is contained in a single file and should be checked into git
@@ -110,17 +136,14 @@
   - plan and review changes with a server agent
   - submit the job file to a server
   - review job status and logs
-
-### job
-
 - each job spec should have a single job
 - each job may have multiple groups which multiple tasks
 
-#### group
+### group
 
 - defines a series of tasks that should be co-located on the same nomad client
 
-##### network
+#### network
 
 - network requirements, (e.g. network mode and ports) to provided to tasks they boot
 - only appropriate for services that want to listen on a port
@@ -130,46 +153,35 @@
   - tasks running in a network namespace are not visible to applications outside the namespace ont he same host
   - enables connect-enabled apps to bind only to localhost within the shared network stack, and use the proxy for in/out traffic
 
-##### task
+#### task
 
 - a task is a single unit of work, e.g. a docker container
 
-## schedular
-
-## variables
-
-### env
-
-- env vars
-  - are injected into the task env before starting
-  - are always injected as strings
-
-### template
+#### template
 
 - template stanza: instantiates an instance ofa templare renderer
   - useful to interpolate configuration files for downstream services, e.g. docker, consul, vault, etc
   - useful for providing environment vars to the workload
   - uses consul template for interpolation
 
-### artifact
+#### artifact
 
 - external configuration: can be downloaded via the `artifact` block
   - downloaded config files can be used in the `template` block
 - can fetch any and unpack any file, eg tarball, binary, etc
 
-### interpolation
+### variables
 
+- env vars
+  - are injected into the task env before starting
+  - are always injected as strings
 - two types of variable interpolation: node attributribes and runtime environment vars
 - node attributes: in constraints, task env vars, and certain driver fields
 - runtime env vars: not itnerpretable in constraints because they are only defined once the scheduler has place them on a particular node
 
+#### nomad job vars
+
 ```sh
-# basic shell interpolation
-
-#############
-## env vars
-#############
-
 NOMAD_ALLOC_DIR	# The path to the shared alloc/ directory. See here for more information.
 NOMAD_TASK_DIR	# The path to the task local/ directory. See here for more information.
 NOMAD_SECRETS_DIR	# Path to the task's secrets directory. See here for more information.
@@ -193,9 +205,11 @@ NOMAD_REGION	# Region in which the allocation is running
 NOMAD_META_<key> #	The metadata value given by key on the task's metadata. Note that this is different from ${meta.<key>} which are keys in the node's metadata.
 VAULT_TOKEN	# The task's Vault token. See Vault Integration for more details
 
+```
 
-## network env vars
+#### nomad network vars
 
+```sh
 NOMAD_IP_<label>	# Host IP for the given port label. See here for more information.
 NOMAD_PORT_<label>	# Port for the given port label. Driver-specified port when a port map is used, otherwise the host's static or dynamic port allocation. Services should bind to this port. See here for more information.
 NOMAD_ADDR_<label>	# Host IP:Port pair for the given port label.
@@ -206,9 +220,11 @@ NOMAD_UPSTREAM_PORT_<service> #	Port for the given service when defined as a Con
 NOMAD_UPSTREAM_ADDR_<service>	# Host IP:Port for the given service when defined as a Consul Connect upstream.
 NOMAD_ENVOY_ADMIN_ADDR_<service> #	Local address 127.0.0.2:Port for the admin port of the envoy sidecar for the given service when defined as a Consul Connect enabled service. Envoy runs inside the group network namespace unless configured for host networking.
 NOMAD_ENVOY_READY_ADDR_<service>	# Local address 127.0.0.1:Port for the ready port of the envoy sidecar for the given service when defined as a Consul Connect enabled service. Envoy runs inside the group network namespace unless configured for host networking.
+```
 
-## consule related env vars
+#### consul vars
 
+```sh
 CONSUL_HTTP_ADDR	# Specifies the address to the local Consul agent. Will be automatically set to a unix domain socket in bridge networking mode, or a tcp address in host networking mode.
 CONSUL_HTTP_TOKEN	# Specifies the Consul ACL token used to authorize with Consul. Will be automatically set to a generated Connect service identity token specific to the service instance if Consul ACLs are enabled.
 CONSUL_HTTP_SSL	# Specifies whether HTTPS should be used when communicating with consul. Will be automatically set to true if Nomad is configured to communicate with Consul using TLS.
@@ -217,11 +233,11 @@ CONSUL_CACERT #	Specifies the path to the CA certificate used for Consul communi
 CONSUL_CLIENT_CERT #	Specifies the path to the Client certificate used for Consul communication. Will be automatically set if Nomad is configured with the consul.share_ssl option.
 CONSUL_CLIENT_KEY	# Specifies the path to the CLient Key certificate used for Consul communication. Will be automatically set if Nomad is configured with the consul.share_ssl option.
 CONSUL_TLS_SERVER_NAME #	Specifies the server name to use as the SNI host for Consul communication. Will be automatically set if Consul is configured to use TLS and the task is in a group using bridge networking mode.
+```
 
-###########
-## node variables
-###########
+#### node variables
 
+```sh
 ${node.unique.id } #	36 character unique client identifier	9afa5da1-8f39-25a2-48dc-ba31fd7c0023
 ${node.region} #	Client's region	global
 ${node.datacenter} # Client's datacenter	dc1
@@ -229,8 +245,11 @@ ${node.unique.name}	# Client's name	nomad-client-10-1-2-4
 ${node.class} #	Client's class	linux-64bit
 ${attr.<property>} #	Property given by property on the client	${attr.cpu.arch} => amd64
 ${meta.<key>}	# Metadata value given by key on the client	${meta.foo} => bar
+```
 
-## common node attributes
+#### node attributes
+
+```sh
 ${attr.cpu.arch}	# CPU architecture of the client (e.g. amd64, 386)
 ${attr.cpu.numcores} #	Number of CPU cores on the client. May differ from how many cores are available for reservation due to OS or configuration. See cpu.reservablecores.
 ${attr.cpu.reservablecores} #	Number of CPU cores on the client avaible for scheduling. Number of cores used by the scheduler when placing work with resources.cores set.
@@ -251,8 +270,6 @@ ${attr.os.version} # poop ur majesty
 ```
 
 ## provisioning
-
-- wow made it to the end! you should now have enuff knowledge to deploy and operate a nomad cluster
 
 ### general workflow
 
@@ -369,3 +386,7 @@ job "poop" {
 ### topology
 
 - view of the cluster and running workload, useful for complex nomad environments
+
+```
+
+```
