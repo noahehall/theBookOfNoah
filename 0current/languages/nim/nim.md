@@ -38,7 +38,7 @@
   - interpreter: e.g. like javascript
   - compiler: e.g. like nim
 - methods === precedures === functions === subroutines
-  - method: conext of OOP
+  - method: context of OOP
   - proecure; context of precedural programming
   - function: used in functional programming
   - subroutine: used with saltine crackers
@@ -51,20 +51,15 @@
 
 - developed by Andreas Rumpf in 2005
 - general purpose statically typed compiled precedural multi-paradigm programming language designed to be efficient > expressive > elegant
-
   - efficient: just as fast as C, 13 times faster than python
   - expressive
   - elegant: as beautiful as python
   - multi-paradigm: doesnt focus on OOP, but has varying support for OOP, functional, declarative, concurrent, and other programming styles
-
 - shares many of pythons traits
-
   - use of indentation to delimit scope
   - tendency to use words > symbols for certain operators
   - super user-friendly exceptin tracebacks
-
 - use cases
-
   - systems programming: since nim compiles to C and C is supported virtually all systems and allows direct access to the physical hardware of the machime
     - operating systems
     - compilers
@@ -83,9 +78,7 @@
     - has an improved type system
     - supports generics
     - advanced metaprogramming
-
 - core features
-
   - metaprogramming: read, generate, analyze and transform source (see elseware in this doc)
   - style-insensitive variable, function and types `poOpFluSh, poop_flush and poopFlush` all point to the same thing
     - nim only considers the case of the FIRST character, so `poop` and `Poop` DO point to different things
@@ -104,7 +97,6 @@
     - variables are always initialized by nim to default values
       - prevents variables containing unexpected & corrupt data
   - generics programming: allows for code reuse without sacrificing type safety, e.g. fn overloading
-
 - differences with:
   - java
     - java has the JVM, to enable its JAR executable to be run everywhere, however the end-user needs to have the JVM installed
