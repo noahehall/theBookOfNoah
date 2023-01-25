@@ -1,5 +1,6 @@
 # nomad
 
+- Nomad is a flexible workload orchestrator to deploy and manage any containerized or legacy application using a single, unified workflow. It can run diverse workloads including Docker, non-containerized, microservice, and batch applications.
 - this doc is split into 4 main sections (level 2 headings)
   - architecture: shiz you should read first
   - jobspec: shiz you should read next
@@ -10,6 +11,7 @@
 
 - [nomad homagepage](https://www.nomadproject.io)
 - [pre + post install](https://developer.hashicorp.com/nomad/tutorials/get-started/get-started-install)
+- [nomad scheduling: secret lives of data](http://thesecretlivesofdata.com/raft/)
 - tuts
   - [nomad ui web interface](https://developer.hashicorp.com/nomad/tutorials/get-started/get-started-ui)
   - [all tuts via nomad portal](https://developer.hashicorp.com/nomad/tutorials)
@@ -24,14 +26,11 @@
   - [cni spec](https://www.cni.dev/docs/spec/)
   - [storage plugin docs](https://developer.hashicorp.com/nomad/docs/concepts/plugins/csi)
   - [csi_plugin docs](https://developer.hashicorp.com/nomad/docs/job-specification/csi_plugin)
-  - [plugin stanza](https://developer.hashicorp.com/nomad/docs/configuration/plugin)
 - drivers/integrations
   - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
-  - [nomad consul connect stanza](https://developer.hashicorp.com/nomad/docs/job-specification/connect)
+  - [consul servish mesh](https://developer.hashicorp.com/nomad/tutorials/integrate-consul/consul-service-mesh)
   - [docker](https://developer.hashicorp.com/nomad/docs/drivers/docker)
-  - [vault](https://developer.hashicorp.com/nomad/docs/configuration/vault)
-  - [vault jobspec stanza](https://developer.hashicorp.com/nomad/docs/job-specification/vault)
-  - [vault config stanza](https://developer.hashicorp.com/nomad/docs/configuration/vault)
+  - [vault integration docs](https://developer.hashicorp.com/nomad/docs/integrations/vault-integration)
   - [fork/exec](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
   - [consul connect](https://developer.hashicorp.com/nomad/docs/integrations/consul-connect)
 - storage
@@ -40,33 +39,37 @@
   - [group config volumes](https://developer.hashicorp.com/nomad/docs/job-specification/volume)
   - [task config volumes](https://developer.hashicorp.com/nomad/docs/job-specification/volume_mount)
 - variables
+  - [nomad variables](https://developer.hashicorp.com/nomad/docs/concepts/variables)
   - [runtime vars](https://developer.hashicorp.com/nomad/docs/runtime/environment)
-  - [env stanza](https://developer.hashicorp.com/nomad/docs/job-specification/env)
-  - [template stanza](https://developer.hashicorp.com/nomad/docs/job-specification/template)
-  - [consul template used by template stanza](https://github.com/hashicorp/consul-template)
-  - [external configuration](https://developer.hashicorp.com/nomad/docs/job-specification/artifact)
-- provisioning
+- security
+  - [security model](https://developer.hashicorp.com/nomad/docs/concepts/security)
   - [enable tls](https://developer.hashicorp.com/nomad/tutorials/transport-security/security-enable-tls)
   - [encryption tutorials](https://developer.hashicorp.com/nomad/tutorials/transport-security)
+  - [secure nomad with access control](https://developer.hashicorp.com/nomad/tutorials/access-control)
+  - [nomad secrets engine](https://developer.hashicorp.com/vault/docs/secrets/nomad)
+  - [workload identity](https://developer.hashicorp.com/nomad/docs/concepts/workload-identity)
+  - [acl policy spec](https://developer.hashicorp.com/nomad/docs/other-specifications/acl-policy)
+- provisioning
   - [hashicorp nomad on aws](https://aws.amazon.com/quickstart/architecture/nomad/)
   - [provision nomad clusters in the cloud](https://github.com/hashicorp/nomad/tree/main/terraform)
   - [deploy & manage nomad jobs](https://developer.hashicorp.com/nomad/tutorials/manage-jobs)
   - [operating nomad clusters](https://developer.hashicorp.com/nomad/tutorials/manage-clusters)
   - [monitoring logs](https://developer.hashicorp.com/nomad/docs/commands/monitor)
   - [monitoring nomad](https://developer.hashicorp.com/nomad/docs/operations/monitoring-nomad)
-  - [secure nomad with access control](https://developer.hashicorp.com/nomad/tutorials/access-control)
+  - [preemption scheduling](https://developer.hashicorp.com/nomad/docs/concepts/scheduling/preemption)
+  - [consensus protocol](https://developer.hashicorp.com/nomad/docs/concepts/consensus)
+  - [nomad filesystem arch](https://developer.hashicorp.com/nomad/docs/concepts/filesystem)
 - agents
   - [status](https://developer.hashicorp.com/nomad/docs/commands/status)
   - [server configuration](https://developer.hashicorp.com/nomad/docs/configuration/server)
   - [nomad configuration](https://developer.hashicorp.com/nomad/docs/configuration)
   - [client configuration](https://developer.hashicorp.com/nomad/docs/configuration/client#cni_path)
   - network
-    - [network stanza](https://developer.hashicorp.com/nomad/docs/job-specification/network#bridge)
   - [networking](https://developer.hashicorp.com/nomad/docs/job-specification/network)
 - jobs
+  - [jobspec](https://developer.hashicorp.com/nomad/docs/job-specification)
   - [accessing logs](https://developer.hashicorp.com/nomad/tutorials/manage-jobs/jobs-accessing-logs)
   - [job init](https://developer.hashicorp.com/nomad/docs/commands/job/init)
-  - [jobspec](https://developer.hashicorp.com/nomad/docs/job-specification)
   - [run](https://developer.hashicorp.com/nomad/docs/commands/job/run)
   - [stop](https://developer.hashicorp.com/nomad/docs/commands/job/stop)
   - [status](https://developer.hashicorp.com/nomad/docs/commands/status)
@@ -75,11 +78,22 @@
   - [status](https://developer.hashicorp.com/nomad/docs/commands/alloc/status)
   - [logs](https://developer.hashicorp.com/nomad/docs/commands/alloc/logs)
   - [configuring tasks](https://developer.hashicorp.com/nomad/tutorials/manage-jobs/jobs-configuring)
-  - [task stanza](https://developer.hashicorp.com/nomad/docs/job-specification/task#user)
-- networking
-  - [network stanza](https://developer.hashicorp.com/nomad/docs/job-specification/network)
-- services
-  - [service stanza](https://developer.hashicorp.com/nomad/docs/job-specification/service)
+- stanzas
+  - [affinity](https://developer.hashicorp.com/nomad/docs/job-specification/affinity)
+  - [artifact](https://developer.hashicorp.com/nomad/docs/job-specification/artifact)
+  - [change_script](https://developer.hashicorp.com/nomad/docs/job-specification/change_script)
+  - [check_restart](https://developer.hashicorp.com/nomad/docs/job-specification/check_restart)
+  - [check](https://developer.hashicorp.com/nomad/docs/job-specification/check)
+  - [connect](https://developer.hashicorp.com/nomad/docs/job-specification/connect)
+  - [constraint](https://developer.hashicorp.com/nomad/docs/job-specification/constraint)
+  - [env](https://developer.hashicorp.com/nomad/docs/job-specification/env)
+  - [network](https://developer.hashicorp.com/nomad/docs/job-specification/network)
+  - [plugin](https://developer.hashicorp.com/nomad/docs/configuration/plugin)
+  - [service](https://developer.hashicorp.com/nomad/docs/job-specification/service)
+  - [task](https://developer.hashicorp.com/nomad/docs/job-specification/task#user)
+  - [template](https://developer.hashicorp.com/nomad/docs/job-specification/template)
+  - [vault config](https://developer.hashicorp.com/nomad/docs/configuration/vault)
+  - [vault](https://developer.hashicorp.com/nomad/docs/job-specification/vault)
 - cmds
   - [server-force-leave command](https://www.nomadproject.io/docs/commands/server-force-leave.html)
 
@@ -116,6 +130,12 @@ sudo usermod -G docker -a nomad
 - only one instance of a driver will ever be running per datacenter? (or per client)
 - need to be installed and configured on each client
 - remote task drivers: plugin that execute tasks on a different machine than a nomad client
+
+##### docker
+
+##### raw_exec
+
+- disabled by default because it runs as root
 
 #### device plugins
 
@@ -174,6 +194,76 @@ sudo usermod -G docker -a nomad
 
 - groups of client nodes; clients can be in different datacenters than their server, but not different region
 
+### filesystem
+
+- remember: this directory is meant to serve as an abstraction to the underlying machine file system
+  - thus clients running on different hardware can use this same hierarchy
+- filesystem lifecycle
+  - allocation dir is created
+  - empheral disk data is migrated from previous allocations
+  - csi volumes are staged
+  - task working dir is created
+  - dispatch payloads are written
+  - artifacts are downloaded
+  - templates are rendered
+  - taskX is started
+    - bind & volume mounts initialized
+- `data_dir`
+  - server file system
+    - checkpoint-signature
+    - server
+      - keystore
+      - node-id
+      - raft
+        - peers.info
+        - raft.db
+        - snapshots
+        - version
+      - serf
+        - snapshot
+      - server.keyring
+  - client file system
+    - checkpoint-signature
+    - client
+      - client-id
+      - secret-id
+      - state.db
+    - alloc/locId
+      - alloc: `NOMAD_ALLOC_DIR`; shared across all tasks (read-write); should ALWAYS use the envvar
+        - data: location used by the ephemeral_disk stanza for shared data
+        - logs/{taskName}.std{err,out}.0
+        - tmp
+      - {taskName}: for a specific task, not shared with other tasks in group;
+        - local: `NOMAD_TASK_DIR` private to the task
+        - secrets: `NOMAD_SECRETS_DIR` secret data not visible outside of the task
+        - tmp
+      - hosts
+
+#### image isolation mode
+
+- e.g. docker/qemu
+- tasks filesystems are created as machine images owned by the task drivers external process and not by the nomad user
+- docker: /var/run/docker/containerd/cuntUid/here
+- the following dirs are bind mounted into the container
+  - you need to place all assets for your application into one of these dirs
+    - e.g. templates, artifacts, payloads, etc. must be within here
+    - `NOMAD_ALLOC_DIR`:
+    - `NOMAD_TASK_DIR`:
+    - `NOMAD_SECRETS_DIR`:
+  - can workaround this by bind mounting the above dirs to a different location
+    - [check somewhere on this page](https://developer.hashicorp.com/nomad/docs/concepts/filesystem#image-isolation)
+
+#### chroot isolation
+
+- e.g. exec/java
+- task filesystems are chroot/pivot_root
+- these arent bind mounted like image isolation
+
+#### none isolation
+
+- e.g. raw_exec/java on windows (eeww)
+- filesystems arent isolated, and the task user can read-write anywhere the nomad user can
+
 ### agents
 
 - long running (but lightweight) process that must run on every machine in the cluster
@@ -189,25 +279,36 @@ sudo usermod -G docker -a nomad
     - plugin blocks are replaced and not merged
   - can be loaded like `nomad agent -config=single.conf -config=/etc/nomad -config=even.json -config=or.hcl`
 
-#### server agents in depth
+#### agent configuration
+
+- you generally want to split it into multiple files, and load the entire dir
+- each file is processed in lexical order
+  - non-empty next values either merged/append/replace current values
+    - empty string, 0, false are considereed empty
+    - that means you cant modify a truthy value with an empty value
+    - plugin blocks are always replaced
+
+### server agents in depth
 
 - operate at the region level
 - server agent: agent running in server mode: the scheduler
 - leader (server): server agent responsible for cluster mgmt
 - follower (server): server agent that isnt the leader
 
-##### consensus
+#### consensus
 
 - servers (3-5) in each region form a singel consensus group: they work together to elect a singel leader
 - leader: responsible for processing queries and transactions
 - gossip protocol: used to connect all the server instances together
 
-##### schedular
+#### schedular
 
 - is the CORE function of nomad
 - the process of assigning tasks from jobs to client machines
+- FYI: i skipped the preemption docs (see links)
+- FYI: skipped the consensus protocol docs (see links)
 
-###### jobs
+#### jobs
 
 - submitted by humans and represent a desired state
 - tasks: are bounded by constraints like resource requirements and run on nodes (clients)
@@ -219,17 +320,22 @@ sudo usermod -G docker -a nomad
 - service jobs
   - e.g. controller plugins because they create and attach volumes anywhere with a storage providers api
   - service jobs should have more than one instance for high availability
+- batch jobs
+- sysbatch jobs
+- parameterized jobs
+  - a job that executes a specific action: e.g. encode a video
+  - uses the `paramaterized` stanza
 
-###### nodes
+#### nodes
 
--
+- i.e. client agents
 
-###### allocations
+#### allocations
 
 - allocation: mapping between a job's task group and a client node, i.e. groups are allocated to client nodes
 - its all about assigning a task group to a client for evaluation
 
-###### evaluations
+#### evaluations
 
 - evaluation: how nomad makes scheduling decisions;
   - triggers: jobspec changes (new/update), node failure
@@ -248,7 +354,7 @@ sudo usermod -G docker -a nomad
     - i.e. servers have determined scheduling, selected a node, and allocated a plan to a node
     - now its time for a node to take an allocation out of its queue and execute it
 
-#### client agents in depth
+### client agents in depth
 
 - operate at the datacenter level
 - communicate via RPC for registration, heartbeats, receiving allocations and dispatching allocation updates
@@ -293,11 +399,21 @@ sudo usermod -G docker -a nomad
     - provide vault server(s) with a periodic service token with assigned token role
   - use the vault stanza in the jobspec task section to secure created infrastructure
 
+### security
+
+- start with security model link after you have something to play with
+- nomad is insecure by default
+
+#### mTLS
+
+#### ACLs
+
+- each task has an implicit ACL that allows them access to their own data
+
+#### namespaces
+
 ## jobspec
 
-### job spec
-
-- job specification: aka jobspec; conf for nomad jobs
 - the job spec is contained in a single file and should be checked into git
 - workflow
   - create a job file
@@ -305,47 +421,169 @@ sudo usermod -G docker -a nomad
   - submit the job file to a server
   - review job status and logs
 - each job spec should have a single job
-- each job may have multiple groups which multiple tasks
+- each job may have multiple groups which multiple tasks that should be colocated on a client machine
+- definitely recommend reviewing the stanza links up top to get the full digest of options
+- attrs
+  - type: type of job, defaults to service
+  - region: determines which servers are able to schedule this job
+  - datacenters: determines which clients are able to execute tasks in this job
+
+### update
+
+- determines how tasks are updated
+- attrs
+  - stagger: interval between updates
+  - max_parallel: concurrent evaluations
+
+### affinity
+
+- node preferences where a job, group or task should be allocated
+- matching nodes gets their scores boosted when determining scheduling
+- can be placed anywhere (job, group, or task)
+
+### constraint
+
+- valid at job, group, or task level
+- resticts the set of eligible clients to those whose resources meet the specification
+- attrs: are used together to provide an expression
+  - e.g. poop > 3
+  - attribute: poop
+  - value: 3
+  - operator: >
 
 ### group
 
 - defines a series of tasks that should be co-located on the same nomad client
+- attrs
+  - count: total instances of this group
+
+#### restart
+
+- attrs
+  - attempts
+  - delay
+  - interval
+  - mode
+
+#### service
+
+- register this server with consul/nomad for discovery & monitoring
+- can be specified at group/task level
+  - group level: enables registering services with consul connect support; must include a connect stanza
+- attrs
+  - port: where consul should monitor the service
+  - provider:
+  - name:
+
+##### check
+
+- register a healthcheck
+
+##### check_restart
+
+- can be within server or server > check
+- when to restart tasks with unhealhty service checks
+
+##### connect
+
+- configuring options for consul connect
+- only valid for group service stanza
 
 #### network
 
 - network requirements, (e.g. network mode and ports) to provided to tasks they boot
 - only appropriate for services that want to listen on a port
   - services that make only outbound coonections do not need port allocations
-- bridge mode: all takss in the group share the same network namespace (required for consul connect)
+- bridge mode: all tasks in the group share the same network namespace (required for consul connect)
   - requires CNI plugins to be installed at the location specified in teh clients cni_path configuration
-  - tasks running in a network namespace are not visible to applications outside the namespace ont he same host
+  - tasks running in a network namespace are not visible to applications outside the namespace on the same host
   - enables connect-enabled apps to bind only to localhost within the shared network stack, and use the proxy for in/out traffic
+- attrs
+  - mode: e.g. bridge
+
+##### port
+
+- port "somename" {} uses a dynamic port
+- attrs
+  - `static = 123` restricts a task to 1 per host, since there is only one 123 port per host
 
 #### task
 
 - a task is a single unit of work, e.g. a docker container
+- attrs
+  - driver: e.g. docker
+  - config {}: specific to the task driver
+  - env {}: runtime env vars
+  - resources {}: max resources, e.g. cpu & memory
 
-#### template
+##### artifact
 
-- template stanza: instantiates an instance ofa templare renderer
-  - useful to interpolate configuration files for downstream services, e.g. docker, consul, vault, etc
-  - useful for providing environment vars to the workload
-  - uses consul template for interpolation
-
-#### artifact
-
+- fetch and unpack any remote resource
 - external configuration: can be downloaded via the `artifact` block
   - downloaded config files can be used in the `template` block
-- can fetch any and unpack any file, eg tarball, binary, etc
+- can fetch any and unpack any file, eg tarball, binary, docker imagem, etc
+- outputs artifacts relative to the task working directory
+  - prefix all of your paths with one of the file system vars
+
+##### template
+
+- template stanza: instantiates an instance of a templare renderer
+  - render config files
+  - providing environment vars to the workload
+  - uses consul template for interpolation
+- outputs templates relative to the task working directory
+  - prefix all of your paths with one of the file system vars
+
+###### change_script
+
+- configure scripts that execute when a template is changed
 
 ### variables
 
 - env vars
   - are injected into the task env before starting
   - are always injected as strings
-- two types of variable interpolation: node attributribes and runtime environment vars
-- node attributes: in constraints, task env vars, and certain driver fields
-- runtime env vars: not itnerpretable in constraints because they are only defined once the scheduler has place them on a particular node
+- variable interpolation
+  - node attributes: in constraints, task env vars, and certain driver fields
+  - runtime env vars: not itnerpretable in constraints because they are only defined once the scheduler has place them on a particular node
+- secrets
+  - are encrypted and replicated between servers via raft
+  - controlled via ACL policies
+
+#### example task env
+
+- `env` inside a running consul task
+
+```sh
+HOSTNAME=ac8d28bcdc1e
+NOMAD_ADDR_consul_ui=192.168.0.16:30501
+NOMAD_ALLOC_DIR=/alloc
+NOMAD_ALLOC_ID=5fa1d4b8-9010-84fb-d829-86bc320bf70e
+NOMAD_ALLOC_INDEX=0
+NOMAD_ALLOC_NAME=core.consul[0]
+NOMAD_ALLOC_PORT_consul_ui=8501
+NOMAD_CPU_LIMIT=100
+NOMAD_DC=us_east
+NOMAD_GROUP_NAME=consul
+NOMAD_HOST_ADDR_consul_ui=192.168.0.16:30501
+NOMAD_HOST_IP_consul_ui=192.168.0.16
+NOMAD_HOST_PORT_consul_ui=30501
+NOMAD_IP_consul_ui=192.168.0.16
+NOMAD_JOB_ID=core
+NOMAD_JOB_NAME=core
+NOMAD_MEMORY_LIMIT=300
+NOMAD_META_run_uuid=0defb583-5f9b-4c9a-a230-1e761bcfb119
+NOMAD_META_RUN_UUID=0defb583-5f9b-4c9a-a230-1e761bcfb119
+NOMAD_NAMESPACE=default
+NOMAD_PARENT_CGROUP=nomad.slice
+NOMAD_PORT_consul_ui=8501
+NOMAD_REGION=global
+NOMAD_SECRETS_DIR=/secrets
+NOMAD_SHORT_ALLOC_ID=5fa1d4b8
+NOMAD_TASK_DIR=/local
+NOMAD_TASK_NAME=core-consul
+SHLVL=1
+```
 
 #### nomad job vars
 
