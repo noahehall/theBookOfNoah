@@ -48,7 +48,6 @@
   - [stateful workloads with host volumes tutorial](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/stateful-workloads-host-volumes)
   - [client config host volumes](https://developer.hashicorp.com/nomad/docs/configuration/client#host_volume-stanza)
   - [group config volumes](https://developer.hashicorp.com/nomad/docs/job-specification/volume)
-  - [task config volumes](https://developer.hashicorp.com/nomad/docs/job-specification/volume_mount)
 - variables
   - [interpolation](https://developer.hashicorp.com/nomad/docs/runtime/interpolation)
   - [nomad variables](https://developer.hashicorp.com/nomad/docs/concepts/variables)
@@ -101,6 +100,7 @@
   - [constraint](https://developer.hashicorp.com/nomad/docs/job-specification/constraint)
   - [csi_plugin](https://developer.hashicorp.com/nomad/docs/job-specification/csi_plugin)
   - [device](https://developer.hashicorp.com/nomad/docs/job-specification/device)
+  - [dispatch_payload](https://developer.hashicorp.com/nomad/docs/job-specification/dispatch_payload)
   - [env](https://developer.hashicorp.com/nomad/docs/job-specification/env)
   - [ephemeral_disk](https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk)
   - [expose](https://developer.hashicorp.com/nomad/docs/job-specification/expose)
@@ -128,6 +128,7 @@
   - [template](https://developer.hashicorp.com/nomad/docs/job-specification/template)
   - [vault config](https://developer.hashicorp.com/nomad/docs/configuration/vault)
   - [vault](https://developer.hashicorp.com/nomad/docs/job-specification/vault)
+  - [volume_mount](https://developer.hashicorp.com/nomad/docs/job-specification/volume_mount)
 - cmds
   - [server-force-leave command](https://www.nomadproject.io/docs/commands/server-force-leave.html)
 
@@ -454,6 +455,11 @@ sudo usermod -G docker -a nomad
     - provide vault server(s) with a periodic service token with assigned token role
   - use the vault stanza in the jobspec task section to secure created infrastructure
 
+##### vault stanza
+
+- valid in job, group and task
+- skipped
+
 ### security
 
 - start with security model link after you have something to play with
@@ -714,12 +720,13 @@ NOMAD_ADDR_poop # the combined ip:port for poop
 
 #### task
 
-- a task is a single unit of work, e.g. a docker container
+- a task is a single unit of work, e.g. a docker container/batch processing
 - attrs
   - driver: e.g. docker
   - config {}: specific to the task driver
   - env {}: runtime env vars
   - resources {}: max resources, e.g. cpu & memory
+  - see elseware for: constraint, affinity, meta, vault
 
 ##### artifact
 
@@ -729,6 +736,12 @@ NOMAD_ADDR_poop # the combined ip:port for poop
 - can fetch any and unpack any file, eg tarball, binary, docker imagem, etc
 - outputs artifacts relative to the task working directory
   - prefix all of your paths with one of the file system vars
+- attrs
+  - destination
+  - mode: any|file|dir
+  - options {}
+  - headers {}
+  - source
 
 ##### csi_plugin
 
@@ -753,6 +766,7 @@ env {
 ##### dispatch_payload
 
 - only used with parameterized jobs that expects a payload
+- skipped
 
 ##### lifecycle
 
@@ -767,7 +781,7 @@ env {
 
 ```sh
 
-# runs before main task and doesnt restart
+# init pattern: runs before main task and doesnt restart
 task "wait-for-db" {
   lifecycle {
     hook = "prestart"
@@ -781,8 +795,8 @@ task "wait-for-db" {
   }
 }
 
+# sidecar pattern: lives for as long as the main task is running
 # sidecar = true so it restarts on failure
-# and lives for as long as the main task is running
 task "fluentd" {
   lifecycle {
     hook = "poststart"
@@ -797,6 +811,25 @@ task "fluentd" {
   template {
     destination = "local/fluentd.conf"
     data = ...
+  }
+}
+
+# cleanup/postprocess pattern
+# runs after main tasks have stopped
+task "announce" {
+  lifecycle {
+    hook = "poststop"
+  }
+
+  driver = "docker"
+  config {
+    image = "alpine/httpie"
+    command = "http"
+    args = [
+      "POST",
+      "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX",
+      "text='All done!'"
+    ]
   }
 }
 ```
@@ -814,7 +847,7 @@ task "fluentd" {
 - review the docs for best practices (somewher at the bottom of th page)
 - attrs
   - cpu: in MHZ; cant be specified with cores
-  - cores: reserve entire cpu cores for a task
+  - cores: reserve entire cpu cores for a task, cores arent shared with other tasks
   - memory: in MB
   - memory_max: in MB; the total it can use if extra capacity exists
 
@@ -824,17 +857,58 @@ task "fluentd" {
 
 ##### template
 
-- useful for populating dynamic data retrieved from consul/vault
-- template stanza: instantiates an instance of a templare renderer
+- useful for populating dynamic data retrieved from env/consul/vault
+  - can reference nomad runtime vars, node attrs/meta, service regs, and nomad vars
+- instantiates an instance of a templare renderer
   - render config files
   - providing environment vars to the workload
   - uses consul template for interpolation
 - outputs templates relative to the task working directory
   - prefix all of your paths with one of the file system vars
+- attrs
+  - change_mode: restart|noop|signal|script
 
 ###### change_script
 
 - configure scripts that execute when a template is changed
+- attrs
+  - command
+  - args
+  - timeout
+  - fail_on_error
+
+```sh
+# with file
+template {
+  data        = "{{key \"my_key\"}}"
+  destination = "local/test"
+  change_mode = "script"
+
+  change_script {
+    command = "/local/script.sh"
+  }
+}
+
+# with heredoc
+template {
+    data        = <<EOF
+#!/usr/bin/env bash
+echo "Running change_mode script"
+sleep 10
+echo "Done"
+EOF
+    destination = "local/script.sh"
+    perms       = "777"
+  }
+}
+```
+
+##### volume_mount
+
+- specify how a group volume should be mounted
+- will fail if conf disagrees with client volume conf
+- attrs
+  - sdf
 
 ### variables
 
