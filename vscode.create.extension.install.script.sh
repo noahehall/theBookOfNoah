@@ -2,6 +2,6 @@
 
 #@see https://stackoverflow.com/questions/35773299/how-can-you-export-the-visual-studio-code-extension-list
 
-echo -e "saving installed extensions to ./0current/vscode.extensions.sh"
+echo -e "install these extensions with ./vscode.install.extensions.sh"
 set -ex
-code --list-extensions | xargs -L 1 echo code --install-extension >"./0current/vscode.installed.extensions.sh"
+code-insiders --list-extensions | xargs -L 1 echo code-insiders --install-extension >"./vscode.install.extensions.sh"
