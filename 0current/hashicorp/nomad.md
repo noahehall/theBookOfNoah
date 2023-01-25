@@ -121,7 +121,10 @@
   - [restart](https://developer.hashicorp.com/nomad/docs/job-specification/restart)
   - [scaling](https://developer.hashicorp.com/nomad/docs/job-specification/scaling)
   - [service](https://developer.hashicorp.com/nomad/docs/job-specification/service)
-  - [task](https://developer.hashicorp.com/nomad/docs/job-specification/task#user)
+  - [sidecar_service](https://developer.hashicorp.com/nomad/docs/job-specification/sidecar_service)
+  - [sidecar_task](https://developer.hashicorp.com/nomad/docs/job-specification/sidecar_task)
+  - [spread](https://developer.hashicorp.com/nomad/docs/job-specification/spread)
+  - [task](https://developer.hashicorp.com/nomad/docs/job-specification/task)
   - [template](https://developer.hashicorp.com/nomad/docs/job-specification/template)
   - [vault config](https://developer.hashicorp.com/nomad/docs/configuration/vault)
   - [vault](https://developer.hashicorp.com/nomad/docs/job-specification/vault)
@@ -475,6 +478,9 @@ sudo usermod -G docker -a nomad
 - each job spec should have a single job
 - each job may have multiple groups which multiple tasks that should be colocated on a client machine
 - definitely recommend reviewing the stanza links up top to get the full digest of options
+- FYI:
+  - when stanzas have multiple placements, child stanzas inherit parent stanzas
+  - {} stanzas generally can be specified multiple times
 - attrs
   - type: type of nomad scheduler; service, system, batch, sysbatch
   - region: determines which servers are able to schedule this job
@@ -537,6 +543,37 @@ sudo usermod -G docker -a nomad
 - attrs
   - stagger: interval between updates
   - max_parallel: concurrent evaluations
+
+### spread
+
+- valid in job/group
+- enables operators to increase failure tolerance by specifying a node attribute that allocations should be spread over
+- i.e instead of a single client, spread allocations over nodes with matching attributes, e.g. dc, avaliability zone, machine attrs or client meta
+  - criteria is softly judged, if no matching nodes are found allocations are still evaluated
+- clients are scored to how closely they match the desired targets and combined with other factors e.g. bin packing
+- by default tasks are evenly distributed
+- attrs
+  - attribute: name/var reference
+  - target: one/more % for each value of attribute
+  - weight: 0 > 100
+
+```sh
+# job: Spread allocations over all datacenter
+spread {
+  attribute = "${node.datacenter}"
+}
+
+# group: Spread allocations over each rack based on desired percentage
+spread {
+  attribute = "${meta.rack}"
+  target "r1" {
+    percent = 60
+  }
+  target "r2" {
+    percent = 40
+  }
+}
+```
 
 ### group
 
@@ -634,7 +671,10 @@ NOMAD_ADDR_poop # the combined ip:port for poop
   - deregistering:
     - task services: deregistered when associated task exits
 - attrs
-  - port: alloc|driver|host|123|poop| advertised port of the service
+  - port: advertised port of the service
+    - alloc: advertise the to value if set, else the allocated host port
+    - driver: advertise the port determined by the drivers' (e.g. docker) ports field
+    - host: advertise the host port for this service in the matching network stanza
   - provider: consul|nomad
   - name: defaults to "${JOB}-{$TASKGROUP}-${TASK}"
   - tags: applied to running services
@@ -642,7 +682,7 @@ NOMAD_ADDR_poop # the combined ip:port for poop
   - enable_tag_override: consul related
   - address: override the advertised addr
   - tagged_addresses: consul related
-  - address_mode: alloc|auto|driver|host which address to advertise
+  - address_mode: alloc|auto|driver|host which address to advertise (see port)
   - task: the name of the nomad task associated with this service definition for group services
   - meta
   - canary_meta
@@ -665,6 +705,8 @@ NOMAD_ADDR_poop # the combined ip:port for poop
   - expose
   - gateway
   - proxy
+  - sidecar_service
+  - sidecar_task
 
 #### volume
 

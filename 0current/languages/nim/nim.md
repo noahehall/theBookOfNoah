@@ -9,6 +9,8 @@
 
 ## links
 
+- new links
+  - [importing in nim](https://narimiran.github.io/2019/07/01/nim-import.html)
 - [changes since nimlang book (2017)](https://deepakg.github.io/nim/2019/09/28/nim-in-action-errata.html)
 - [nimlang on github](https://github.com/nim-lang/)
 - [objective C and iOS](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
