@@ -2,6 +2,9 @@
 
 ## links
 
+- todo
+  - [learn go templates](https://developer.hashicorp.com/nomad/tutorials/templates/go-template-syntax)
+  - [consul template docs](https://github.com/hashicorp/consul-template/blob/main/docs/templating-language.md)
 - [interpolation](https://developer.hashicorp.com/nomad/docs/runtime/interpolation)
 - [vars](https://developer.hashicorp.com/nomad/docs/job-specification/hcl2/variables)
 - [local vars](https://developer.hashicorp.com/nomad/docs/job-specification/hcl2/locals)

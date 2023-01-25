@@ -33,7 +33,7 @@
   - [cni spec](https://www.cni.dev/docs/spec/)
   - [cni spec on github](https://github.com/containernetworking/cni/blob/main/SPEC.md)
   - [storage plugin docs](https://developer.hashicorp.com/nomad/docs/concepts/plugins/csi)
-- drivers/integrations
+- integrations/drivers
   - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
   - [consul servish mesh](https://developer.hashicorp.com/nomad/tutorials/integrate-consul/consul-service-mesh)
   - [docker](https://developer.hashicorp.com/nomad/docs/drivers/docker)
@@ -44,10 +44,10 @@
   - [damon cli dashboard](https://github.com/hashicorp/damon)
   - [nomad autoscaler](https://github.com/hashicorp/nomad-autoscaler)
   - [autoscaler docs](https://developer.hashicorp.com/nomad/tools/autoscaling)
+  - [community task drivers](https://developer.hashicorp.com/nomad/plugins/drivers/community)
 - storage
   - [stateful workloads with host volumes tutorial](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/stateful-workloads-host-volumes)
   - [client config host volumes](https://developer.hashicorp.com/nomad/docs/configuration/client#host_volume-stanza)
-  - [group config volumes](https://developer.hashicorp.com/nomad/docs/job-specification/volume)
 - variables
   - [interpolation](https://developer.hashicorp.com/nomad/docs/runtime/interpolation)
   - [nomad variables](https://developer.hashicorp.com/nomad/docs/concepts/variables)
@@ -128,6 +128,7 @@
   - [template](https://developer.hashicorp.com/nomad/docs/job-specification/template)
   - [vault config](https://developer.hashicorp.com/nomad/docs/configuration/vault)
   - [vault](https://developer.hashicorp.com/nomad/docs/job-specification/vault)
+  - [volume](https://developer.hashicorp.com/nomad/docs/job-specification/volume)
   - [volume_mount](https://developer.hashicorp.com/nomad/docs/job-specification/volume_mount)
 - cmds
   - [server-force-leave command](https://www.nomadproject.io/docs/commands/server-force-leave.html)
@@ -722,10 +723,13 @@ NOMAD_ADDR_poop # the combined ip:port for poop
 
 - a task is a single unit of work, e.g. a docker container/batch processing
 - attrs
-  - driver: e.g. docker
+  - driver: docker|exec|qemu|etc
   - config {}: specific to the task driver
-  - env {}: runtime env vars
-  - resources {}: max resources, e.g. cpu & memory
+  - kill_timeout
+  - kill_signal
+  - leader
+  - shutdown_delay
+  - user
   - see elseware for: constraint, affinity, meta, vault
 
 ##### artifact
@@ -750,7 +754,7 @@ NOMAD_ADDR_poop # the combined ip:port for poop
 
 ##### env
 
-- env vars are populated before the task starts
+- runtime env vars are populated before the task starts
 - dashes in key names will be converted to underscores
 
 ```sh
@@ -844,7 +848,7 @@ task "announce" {
 ##### resources
 
 - specifies machine requirements for a task
-- review the docs for best practices (somewher at the bottom of th page)
+- review the docs for best practices (somewher at the bottom of the page)
 - attrs
   - cpu: in MHZ; cant be specified with cores
   - cores: reserve entire cpu cores for a task, cores arent shared with other tasks
@@ -908,7 +912,13 @@ EOF
 - specify how a group volume should be mounted
 - will fail if conf disagrees with client volume conf
 - attrs
-  - sdf
+  - volume
+  - destination
+  - read_only
+  - propagation_mode
+    - private: task not allowed access to nested mounts
+    - host-to-task: external mounts visible inside task
+    - bidirectional: host-to-task + task can create new mounts; requires rw; task must cleanup created mounts before exiting
 
 ### variables
 
