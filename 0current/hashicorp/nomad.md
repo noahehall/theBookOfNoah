@@ -1,4 +1,7 @@
 - bookmark: https://developer.hashicorp.com/nomad/docs/job-specification/network
+  - [immediately read this next](https://developer.hashicorp.com/nomad/docs/networking#bridge-networking)
+    - fix the ADRs that assumed we would need an overlay network for nomad
+    - haha it also explains the fkn issue with the docker bridge network we were experiencing
 
 # nomad
 
