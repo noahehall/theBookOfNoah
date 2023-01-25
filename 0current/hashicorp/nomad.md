@@ -1,3 +1,5 @@
+- bookmark: https://developer.hashicorp.com/nomad/docs/job-specification/network
+
 # nomad
 
 - Nomad is a flexible workload orchestrator to deploy and manage any containerized or legacy application using a single, unified workflow. It can run diverse workloads including Docker, non-containerized, microservice, and batch applications.
@@ -97,6 +99,9 @@
   - [group](https://developer.hashicorp.com/nomad/docs/job-specification/group)
   - [job](https://developer.hashicorp.com/nomad/docs/job-specification/job)
   - [lifecycle](https://developer.hashicorp.com/nomad/docs/job-specification/lifecycle)
+  - [logs](https://developer.hashicorp.com/nomad/docs/job-specification/logs)
+  - [meta](https://developer.hashicorp.com/nomad/docs/job-specification/meta)
+  - [migrate](https://developer.hashicorp.com/nomad/docs/job-specification/migrate)
   - [network](https://developer.hashicorp.com/nomad/docs/job-specification/network)
   - [plugin](https://developer.hashicorp.com/nomad/docs/configuration/plugin)
   - [service](https://developer.hashicorp.com/nomad/docs/job-specification/service)
@@ -459,13 +464,6 @@ sudo usermod -G docker -a nomad
   - namespace: this is no longer enterprise only
   - priority: between 1 and 100
 
-### update
-
-- determines how tasks are updated
-- attrs
-  - stagger: interval between updates
-  - max_parallel: concurrent evaluations
-
 ### affinity
 
 - node preferences where a job, group or task should be allocated
@@ -481,6 +479,28 @@ sudo usermod -G docker -a nomad
   - attribute: poop
   - value: 3
   - operator: >
+
+### meta
+
+- valid in job, group or task stanzas
+- set user-defined key-value pairs that are available in a tasks runtime env
+
+### migrate
+
+- valid in job/group stanzas
+- specifies the groups strategy for migrating allocations when clients are drained
+- applicable to service jobs with a count greater than 1
+
+### multiregion
+
+- [enterprise only](https://developer.hashicorp.com/nomad/docs/job-specification/multiregion)
+
+### update
+
+- determines how tasks are updated
+- attrs
+  - stagger: interval between updates
+  - max_parallel: concurrent evaluations
 
 ### group
 
@@ -607,6 +627,52 @@ env {
 - prestart tasks: executed before main tasks
 - poststart tasks: executed after main tasks are running
 - poststop: executed after main tasks are dead
+- attrs
+  - hook: {pre,post}start|poststop
+  - sidecar: true if this is a long lived task and not an init task
+
+```sh
+
+# runs before main task and doesnt restart
+task "wait-for-db" {
+  lifecycle {
+    hook = "prestart"
+    sidecar = false
+  }
+
+  driver = "exec"
+  config {
+    command = "sh"
+    args = ["-c", "while ! nc -z db.service.local.consul 8080; do sleep 1; done"]
+  }
+}
+
+# sidecar = true so it restarts on failure
+# and lives for as long as the main task is running
+task "fluentd" {
+  lifecycle {
+    hook = "poststart"
+    sidecar = true
+  }
+
+  driver = "docker"
+  config {
+    image = "fluentd/fluentd"
+  }
+
+  template {
+    destination = "local/fluentd.conf"
+    data = ...
+  }
+}
+```
+
+##### logs
+
+- configures a task log rotation policy for stdout and stderr
+- attrs
+  - max_files
+  - max_file_size
 
 ##### resources
 
