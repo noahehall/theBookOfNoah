@@ -610,11 +610,14 @@ NOMAD_ADDR_poop # the combined ip:port for poop
 
 - valid in group/task
   - group: policy is always horizontal application scaling and sets the count value for the group
-  - task: policy is always dynamic application sizing and controls the resource values of the task
+  - task: policy is always dynamic application sizing and controls the resource values of the task and must be labeled with the resource it controls
 - requires nomad autoscaler or use via nomad UI
 - doesnt support system jobs
 - attrs
-  - f
+  - min
+  - max
+  - enabled
+  - policy {}
 
 ##### policy
 
@@ -622,11 +625,28 @@ NOMAD_ADDR_poop # the combined ip:port for poop
 
 - register this server with consul/nomad for discovery & monitoring
 - can be specified at group/task level
-  - group level: enables registering services with consul connect support; must include a connect stanza
+  - group level: if provider === consul enables registering services with consul connect support; must include a connect stanza
+- lifecycle: managed by nomad
+  - registration:
+    - group services: service registration & checks before starting any tasks
+    - task services: service registration & checks after starting tasks
+  - updating: occurs without restarting any associated tasks
+  - deregistering:
+    - task services: deregistered when associated task exits
 - attrs
-  - port: where consul should monitor the service
-  - provider:
-  - name:
+  - port: alloc|driver|host|123|poop| advertised port of the service
+  - provider: consul|nomad
+  - name: defaults to "${JOB}-{$TASKGROUP}-${TASK}"
+  - tags: applied to running services
+  - canary_tags: applied to service only in canary phase of booting
+  - enable_tag_override: consul related
+  - address: override the advertised addr
+  - tagged_addresses: consul related
+  - address_mode: alloc|auto|driver|host which address to advertise
+  - task: the name of the nomad task associated with this service definition for group services
+  - meta
+  - canary_meta
+  - on_update: require_healthy|ignore_warnings|ignore how checks should be evaluated when determining deployment health
 
 ##### check
 
@@ -640,7 +660,7 @@ NOMAD_ADDR_poop # the combined ip:port for poop
 ##### connect
 
 - configuring options for consul connect
-- only valid for group service stanza
+- only valid for group service stanza when provider = consul
 - skipped stanzas
   - expose
   - gateway
