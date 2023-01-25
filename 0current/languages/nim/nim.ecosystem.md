@@ -2,15 +2,21 @@
 
 - extended information about third-party nim stuff
 
+## choosenim
+
+- nim manager
+- [github](https://github.com/dom96/choosenim)
+
 ## nimble
 
+- nim package manager
 - [github](https://github.com/nim-lang/nimble)
 
 ## nodejs
 
 - [github](https://github.com/juancarlospaco/nodejs)
 - stdlib for nim for NodEJS/Javascript targets
- 
+
 ## jester
 
 - [github](https://github.com/dom96/jester)

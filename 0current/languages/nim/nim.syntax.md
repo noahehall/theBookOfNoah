@@ -1,3 +1,6 @@
+- starting from scratch, its been awhile
+  - control flow: https://narimiran.github.io/nim-basics/
+
 # nim
 
 - pure syntax related notes, see examples doc for real world examples
@@ -113,21 +116,32 @@
 - builtin types & variables are lowercase
 - user-defined types are PascalCase
 
-## compilation flags
+## compiling and running
 
-```python
+```sh
+
+nim c poop.nim # compile poop binary
+nim c -r  poop.nim # compile and run poop
+
+```
+
+### flags
+
+```sh
   --gc:GC_NAME # chose the type of garbage collector to use
   --boundsChecks # perform runtime checks, less perf > greater safety
   -d:release # turns off a variety of things, like boundsChecks
 
 ```
 
-## other stuff, keywords e.g.
+## tips n tricks n gotchas
+
+- TABS are not allowed, ensure your editor is setup for spaces
 
 ```python
-# comments
 # single line comment
-#[ multline comment
+#[
+  multline comment
 ]#
 # comment out code
 when false:
@@ -146,24 +160,57 @@ discard someProc() # discard the return value of someProc
 ```python
   | # or, e.g. a | b
   $ # converts its input to a string, e.g. $someVar
-  mod # modulo
+  mod # modulo: always an int
+  div # integer division: outputs an int
+  & # string concatenation, returns new string
+  == > < != # etc
+  * - / # etc
+  and or not xor
 
 ```
 
 ## variables
 
+- case insensitive: except the first letter
+  - distinct: Poop poop
+  - identical: pOOp pOoP
+- under-score insensitive: p_oop and poo_p are the same thing
+
 ```python
-# keyword name: type = value
-# cant start with a number/contain two consecutive _
-# case insensitive EXCEPT the first letter
-# style insensitive, pOoP, poop, and p_o_o_p all point to the same thing
-let poop = "hello" # runtime immutable, value must be known at runtime
 var poop = "flush" # runtime mutable
-const poop = "flush" # compile time immutable, value must be computable at compile, most effiecient
+let poop = "hello" # runtime immutable
+const poop = "flush" # compile time immutable
 let `let` = "stropping"; echo(`let`) # stropping enables keywords as identifiers
 
 # concatenation
 echo "hello " & poop
+
+```
+
+## control flow
+
+### if / when / case
+
+```python
+# runtime check
+if 42 > 0:
+  echo "true"
+# ternary i just an if..else inline
+if conditional: "true" else: false
+
+# compile time check
+when true:
+  echo("this is a compile time if statement")
+```
+
+### loops
+
+```python
+for i in 0 .. <10:
+  echo(i)
+
+for thing in list:
+  echo(thing)
 
 ```
 
@@ -175,43 +222,46 @@ echo "hello " & poop
 ### builtin primitives
 
 ```python
-  # int
-  int # signed integers, 32bit/64bit depending on system
-    let
+  # signed integers, 32bit/64bit depending on system
+  # dividing 2 ints produces a float unless you use `div` operator
+  int
+    const
       a = 100
       b: int8 = 100
       c = 100'i8
+      d: int = 1
   int8,16,32,64 # 8 = +-127, 16 = +-~32k, 32 = +-~2.1billion
   uint # positive integers, 32/64 bit depending on system,
-    let
+    const
       b: uint8 = 100
       c = 100'u8
   uint8,16,32,64 # 8 = 0 -> 2550, 16 = ~65k, 32 = ~4billion
 
   # float
-  float # decimals
-    let
+  float
+    const
       a = 100.0
       b = 100.0'f32
+      c = 4e7 # 4 * 10^7
   float32,64
 
-  # string
-  string # must be enclosed in double quotes
+  # must be enclosed in double quotes
+  # escape sequences are parsed
+  # always mutable
+  string
     let
       poop = "flush"
       flush = r"raw string, no escape sequences required"
       multiline = """can be split on multiple lines, no escape sequences required"""
 
-  # boolean
-  bool # true | false
-    let t = true
 
-  # character
-  char # single ASCII characters, enclosed in single quotes
+  # single ASCII characters, enclosed in single quotes
+  char
     let
       a = 'a'
       b = '\109'
       c = '\x79'
+
   # escape sequences with chars, but you might as well use a string
     let
       carriageReturn = '\r'
@@ -221,8 +271,14 @@ echo "hello " & poop
       singleQuote = '\''
       doubleQuote = '\"'
 
+  # true | false
+  bool
+    let t = true
+
+  # used as procedure return types, for type inference
+  auto
+
   void
-  auto # used as procedure return types, for type inference
 
 
 ```
@@ -317,33 +373,6 @@ proc resultVar2: string =
 proc resultVar3: string =
   result = "I am the result"
   "I will cause an error"
-
-```
-
-## control flow
-
-### if / when / case
-
-```python
-# runtime check
-if 42 > 0:
-  echo "true"
-# ternary i just an if..else inline
-if conditional: "true" else: false
-
-# compile time check
-when true:
-  echo("this is a compile time if statement")
-```
-
-### loops
-
-```python
-for i in 0 .. <10:
-  echo(i)
-
-for thing in list:
-  echo(thing)
 
 ```
 
