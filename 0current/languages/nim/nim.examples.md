@@ -24,7 +24,6 @@ let list = @["dominik picheta", "andreas rumpf", "desmond hume"]
 list.map(
   (x: string) -> (string, string) => (x.split[0], x.split[1])
 ).echo
-
 # doing the samething using procedural programming
 import strutils
 for name in list:
