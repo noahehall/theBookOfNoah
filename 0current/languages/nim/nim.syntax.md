@@ -1,5 +1,5 @@
 - starting from scratch, its been awhile
-  - control flow: https://narimiran.github.io/nim-basics/
+  - containers: https://narimiran.github.io/nim-basics/
 
 # nim
 
