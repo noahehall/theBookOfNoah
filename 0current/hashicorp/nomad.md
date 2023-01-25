@@ -1,7 +1,8 @@
 - bookmark: https://developer.hashicorp.com/nomad/docs/job-specification/network
-  - [immediately read this next](https://developer.hashicorp.com/nomad/docs/networking#bridge-networking)
+  - [networking docs](https://developer.hashicorp.com/nomad/docs/networking)
     - fix the ADRs that assumed we would need an overlay network for nomad
     - haha it also explains the fkn issue with the docker bridge network we were experiencing
+  - [task deps tut](https://developer.hashicorp.com/nomad/tutorials/task-deps)
 
 # nomad
 
@@ -30,6 +31,7 @@
   - [container networking plugins](https://github.com/containernetworking/plugins)
   - [cni nomad docs](https://developer.hashicorp.com/nomad/docs/networking/cni)
   - [cni spec](https://www.cni.dev/docs/spec/)
+  - [cni spec on github](https://github.com/containernetworking/cni/blob/main/SPEC.md)
   - [storage plugin docs](https://developer.hashicorp.com/nomad/docs/concepts/plugins/csi)
 - drivers/integrations
   - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
@@ -38,6 +40,10 @@
   - [vault integration docs](https://developer.hashicorp.com/nomad/docs/integrations/vault-integration)
   - [fork/exec](https://developer.hashicorp.com/nomad/docs/drivers/raw_exec)
   - [consul connect](https://developer.hashicorp.com/nomad/docs/integrations/consul-connect)
+  - [all nomad tools](https://developer.hashicorp.com/nomad/tools)
+  - [damon cli dashboard](https://github.com/hashicorp/damon)
+  - [nomad autoscaler](https://github.com/hashicorp/nomad-autoscaler)
+  - [autoscaler docs](https://developer.hashicorp.com/nomad/tools/autoscaling)
 - storage
   - [stateful workloads with host volumes tutorial](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/stateful-workloads-host-volumes)
   - [client config host volumes](https://developer.hashicorp.com/nomad/docs/configuration/client#host_volume-stanza)
@@ -106,7 +112,14 @@
   - [meta](https://developer.hashicorp.com/nomad/docs/job-specification/meta)
   - [migrate](https://developer.hashicorp.com/nomad/docs/job-specification/migrate)
   - [network](https://developer.hashicorp.com/nomad/docs/job-specification/network)
+  - [parameterized](https://developer.hashicorp.com/nomad/docs/job-specification/parameterized)
+  - [periodic](https://developer.hashicorp.com/nomad/docs/job-specification/periodic)
   - [plugin](https://developer.hashicorp.com/nomad/docs/configuration/plugin)
+  - [proxy](https://developer.hashicorp.com/nomad/docs/job-specification/proxy)
+  - [reschedule](https://developer.hashicorp.com/nomad/docs/job-specification/reschedule)
+  - [resource](https://developer.hashicorp.com/nomad/docs/job-specification/resources)
+  - [restart](https://developer.hashicorp.com/nomad/docs/job-specification/restart)
+  - [scaling](https://developer.hashicorp.com/nomad/docs/job-specification/scaling)
   - [service](https://developer.hashicorp.com/nomad/docs/job-specification/service)
   - [task](https://developer.hashicorp.com/nomad/docs/job-specification/task#user)
   - [template](https://developer.hashicorp.com/nomad/docs/job-specification/template)
@@ -413,6 +426,10 @@ sudo usermod -G docker -a nomad
 
 ### integrations
 
+#### autoscaler
+
+- todo: see links
+
 #### vault integration
 
 - nomad servers and clients retrieve vault tokens that enables the nomad tasks to complete their duties
@@ -498,6 +515,22 @@ sudo usermod -G docker -a nomad
 
 - [enterprise only](https://developer.hashicorp.com/nomad/docs/job-specification/multiregion)
 
+### parameterized
+
+- skipped
+- but has to do with dispatch_payload and running jobs as fns/actions
+
+### periodic
+
+- skipped
+- but has to do with running jobs at set intervals like cron
+
+### reschedule
+
+- valid in job/group with group taking precedence after merging both
+- specifies the rescheduling strategy when a task fails
+- not valid for system/sysbatch jobs (they run on every node)
+
 ### update
 
 - determines how tasks are updated
@@ -526,29 +559,64 @@ sudo usermod -G docker -a nomad
 
 #### network
 
-- network requirements, (e.g. network mode and ports) to provided to tasks they boot
+- network mode and allocations for the entire group, and provisioned to tasks when they start
 - only appropriate for services that want to listen on a port
   - services that make only outbound coonections do not need port allocations
-- bridge mode: all tasks in the group share the same network namespace (required for consul connect)
+- bridge mode: all tasks in the group share the same network namespace
+  - required for consul connect; enables task with `connect` stanza to only bind to localhost and use the proxy for in/egress
   - requires CNI plugins to be installed at the location specified in teh clients cni_path configuration
   - tasks running in a network namespace are not visible to applications outside the namespace on the same host
   - enables connect-enabled apps to bind only to localhost within the shared network stack, and use the proxy for in/out traffic
+- host mode: each task will join the host network namespace
+- none mode: isolated without any network interfaces
 - attrs
-  - mode: e.g. bridge
+  - mode: bridge|host|none|cni/cni_network_name
+  - hostname: only supported with bridge mode using docker driver
 
 ##### port
 
-- port "somename" {} uses a dynamic port
+- port "poop" {} uses a dynamic port
 - attrs
-  - `static = 123` restricts a task to 1 per host, since there is only one 123 port per host
+  - static: restricts a task to 1 per host, since there is only one 123 port per host
+  - to: only for bidge mode to configure port mapping, availabe in `NOMAD_PORT_poop` enables your app to listen on a fixed port thats mapped to a dynamic host port
+  - host_network: sets the host network name to use, e.g., default|public|private
+
+```sh
+
+NOMAD_IP_poop # the ip to bind for poop
+NOMAD_PORT_poop # the port value for poop
+NOMAD_ADDR_poop # the combined ip:port for poop
+```
+
+##### dns
+
+- sets the dns configuration for allocation instead of using the client nodes configuration
+- attrs
+  - servers: set the dns name servers
+  - searches: set the search list for hostname lookup
+  - options: set internal resolver vars
 
 #### restart
 
+- valid in group/task with task taking precedence after merge
+- configures restart on failure behavior
 - attrs
   - attempts
   - delay
   - interval
-  - mode
+  - mode: fail|delay
+
+#### scaling
+
+- valid in group/task
+  - group: policy is always horizontal application scaling and sets the count value for the group
+  - task: policy is always dynamic application sizing and controls the resource values of the task
+- requires nomad autoscaler or use via nomad UI
+- doesnt support system jobs
+- attrs
+  - f
+
+##### policy
 
 #### service
 
@@ -576,6 +644,7 @@ sudo usermod -G docker -a nomad
 - skipped stanzas
   - expose
   - gateway
+  - proxy
 
 #### volume
 
@@ -679,7 +748,15 @@ task "fluentd" {
 
 ##### resources
 
-###### devices
+- specifies machine requirements for a task
+- review the docs for best practices (somewher at the bottom of th page)
+- attrs
+  - cpu: in MHZ; cant be specified with cores
+  - cores: reserve entire cpu cores for a task
+  - memory: in MB
+  - memory_max: in MB; the total it can use if extra capacity exists
+
+###### device
 
 - create a scheduling & runtime requirement for a device; e.g. GPUs, FPGAs, and TPUs
 
