@@ -18,6 +18,7 @@
   - [all tuts via developer portal (i like this one better)](https://developer.hashicorp.com/tutorials/library?product=nomad)
   - [tips and tricks by daniela](https://danielabaron.me/blog/nomad-tips-and-tricks/)
   - [users with exec driver & host volumes](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/exec-users-host-volumes)
+  - [task dependencies](https://developer.hashicorp.com/nomad/tutorials/task-deps)
 - plugins
   - [container storage plugin](https://github.com/container-storage-interface/spec)
   - [storage csi plugins](https://kubernetes-csi.github.io/docs/drivers.html)
@@ -25,7 +26,6 @@
   - [cni nomad docs](https://developer.hashicorp.com/nomad/docs/networking/cni)
   - [cni spec](https://www.cni.dev/docs/spec/)
   - [storage plugin docs](https://developer.hashicorp.com/nomad/docs/concepts/plugins/csi)
-  - [csi_plugin docs](https://developer.hashicorp.com/nomad/docs/job-specification/csi_plugin)
 - drivers/integrations
   - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
   - [consul servish mesh](https://developer.hashicorp.com/nomad/tutorials/integrate-consul/consul-service-mesh)
@@ -39,6 +39,7 @@
   - [group config volumes](https://developer.hashicorp.com/nomad/docs/job-specification/volume)
   - [task config volumes](https://developer.hashicorp.com/nomad/docs/job-specification/volume_mount)
 - variables
+  - [interpolation](https://developer.hashicorp.com/nomad/docs/runtime/interpolation)
   - [nomad variables](https://developer.hashicorp.com/nomad/docs/concepts/variables)
   - [runtime vars](https://developer.hashicorp.com/nomad/docs/runtime/environment)
 - security
@@ -66,6 +67,7 @@
   - [client configuration](https://developer.hashicorp.com/nomad/docs/configuration/client#cni_path)
   - network
   - [networking](https://developer.hashicorp.com/nomad/docs/job-specification/network)
+  - [schedulars](https://developer.hashicorp.com/nomad/docs/schedulers)
 - jobs
   - [jobspec](https://developer.hashicorp.com/nomad/docs/job-specification)
   - [accessing logs](https://developer.hashicorp.com/nomad/tutorials/manage-jobs/jobs-accessing-logs)
@@ -86,7 +88,15 @@
   - [check](https://developer.hashicorp.com/nomad/docs/job-specification/check)
   - [connect](https://developer.hashicorp.com/nomad/docs/job-specification/connect)
   - [constraint](https://developer.hashicorp.com/nomad/docs/job-specification/constraint)
+  - [csi_plugin](https://developer.hashicorp.com/nomad/docs/job-specification/csi_plugin)
+  - [device](https://developer.hashicorp.com/nomad/docs/job-specification/device)
   - [env](https://developer.hashicorp.com/nomad/docs/job-specification/env)
+  - [ephemeral_disk](https://developer.hashicorp.com/nomad/docs/job-specification/ephemeral_disk)
+  - [expose](https://developer.hashicorp.com/nomad/docs/job-specification/expose)
+  - [gateway](https://developer.hashicorp.com/nomad/docs/job-specification/gateway)
+  - [group](https://developer.hashicorp.com/nomad/docs/job-specification/group)
+  - [job](https://developer.hashicorp.com/nomad/docs/job-specification/job)
+  - [lifecycle](https://developer.hashicorp.com/nomad/docs/job-specification/lifecycle)
   - [network](https://developer.hashicorp.com/nomad/docs/job-specification/network)
   - [plugin](https://developer.hashicorp.com/nomad/docs/configuration/plugin)
   - [service](https://developer.hashicorp.com/nomad/docs/job-specification/service)
@@ -315,13 +325,30 @@ sudo usermod -G docker -a nomad
 - job: one/more task groups with one/more tasks
 - task group: set of tasks that must run on the same machine
 - task: smallest unit of work in nomad, executed by task drivers
-- system jobs
-  - e.g. node plugins so they can moutn volumes on any client
+
+##### job types
+
 - service jobs
+  - long lived services that should never go down
   - e.g. controller plugins because they create and attach volumes anywhere with a storage providers api
   - service jobs should have more than one instance for high availability
+  - uses the best fit scoring algorithm influenced by googles Borg
 - batch jobs
+  - short lived, e.g. minutes/days that are intended to run until they exit with an error
+    - upon error they are restarted based ont he jobs restart & reschedule stanzas
+  - uses the power of two choices described in Berkeley's Sparrow scheduler
+- system jobs
+  - jobs that should run on all clients that meet the jobs constraints
+    - i.e. system jobs are placed on all clients as soon as clients are registered
+    - system jobs are managed by nomad
+  - are intended to run until explicitly stopped by an operator/preemption
+  - e.g. node plugins so they can moutn volumes on any client
+    - or any task that should be present on every node in the cluster
 - sysbatch jobs
+  - jobs that should be run to completion on all clients that meet the jobs constraints
+  - scheduled like the system scheduler
+  - but runs like batch job: once a task exits successfully sysbatc jobs are not restarted on that client
+  - useful for one off cmds to be run on every node
 - parameterized jobs
   - a job that executes a specific action: e.g. encode a video
   - uses the `paramaterized` stanza
@@ -424,9 +451,13 @@ sudo usermod -G docker -a nomad
 - each job may have multiple groups which multiple tasks that should be colocated on a client machine
 - definitely recommend reviewing the stanza links up top to get the full digest of options
 - attrs
-  - type: type of job, defaults to service
+  - type: type of nomad scheduler; service, system, batch, sysbatch
   - region: determines which servers are able to schedule this job
   - datacenters: determines which clients are able to execute tasks in this job
+  - all_at_once: should only be used in special circumstances, like christmas and birthdays
+  - name: override the name of the job
+  - namespace: this is no longer enterprise only
+  - priority: between 1 and 100
 
 ### update
 
@@ -455,7 +486,38 @@ sudo usermod -G docker -a nomad
 
 - defines a series of tasks that should be co-located on the same nomad client
 - attrs
-  - count: total instances of this group
+  - count: total instances of each task within this group
+  - shutdown_delay: duration to wait when stopping a groups tasks
+  - stop_after_client_disconnect: duration after which a nomad client will stop allocations if it cannot communicate with servers\
+  - max_client_discconect: duration during which a nomad client will attempt to reconnect allocations after it fails to heartbeat
+
+#### ephemeral_disk
+
+- ephemeral disk requires for the group
+- can be marked as sticky and support live data migrations
+- all group tasks share the same disk and referenced under `alloc/data/`
+- attrs
+  - migrate
+  - size
+  - sticky
+
+#### network
+
+- network requirements, (e.g. network mode and ports) to provided to tasks they boot
+- only appropriate for services that want to listen on a port
+  - services that make only outbound coonections do not need port allocations
+- bridge mode: all tasks in the group share the same network namespace (required for consul connect)
+  - requires CNI plugins to be installed at the location specified in teh clients cni_path configuration
+  - tasks running in a network namespace are not visible to applications outside the namespace on the same host
+  - enables connect-enabled apps to bind only to localhost within the shared network stack, and use the proxy for in/out traffic
+- attrs
+  - mode: e.g. bridge
+
+##### port
+
+- port "somename" {} uses a dynamic port
+- attrs
+  - `static = 123` restricts a task to 1 per host, since there is only one 123 port per host
 
 #### restart
 
@@ -488,24 +550,13 @@ sudo usermod -G docker -a nomad
 
 - configuring options for consul connect
 - only valid for group service stanza
+- skipped stanzas
+  - expose
+  - gateway
 
-#### network
+#### volume
 
-- network requirements, (e.g. network mode and ports) to provided to tasks they boot
-- only appropriate for services that want to listen on a port
-  - services that make only outbound coonections do not need port allocations
-- bridge mode: all tasks in the group share the same network namespace (required for consul connect)
-  - requires CNI plugins to be installed at the location specified in teh clients cni_path configuration
-  - tasks running in a network namespace are not visible to applications outside the namespace on the same host
-  - enables connect-enabled apps to bind only to localhost within the shared network stack, and use the proxy for in/out traffic
-- attrs
-  - mode: e.g. bridge
-
-##### port
-
-- port "somename" {} uses a dynamic port
-- attrs
-  - `static = 123` restricts a task to 1 per host, since there is only one 123 port per host
+- specifies which volumes the group requires
 
 #### task
 
@@ -525,8 +576,47 @@ sudo usermod -G docker -a nomad
 - outputs artifacts relative to the task working directory
   - prefix all of your paths with one of the file system vars
 
+##### csi_plugin
+
+- allows the task provide a container storage plugin to the cluster
+- nomad will auto register the plugin so that it can be used by other jobs to claim volumes
+
+##### env
+
+- env vars are populated before the task starts
+- dashes in key names will be converted to underscores
+
+```sh
+# all values are coerced to strings
+env {
+  poop = 1
+  boop = "1"
+  soup = "${bloop.roop}"
+  "key.with.a.dot" = "poop"
+}
+```
+
+##### dispatch_payload
+
+- only used with parameterized jobs that expects a payload
+
+##### lifecycle
+
+- configures task dependencies and execution within the lifecycle of a task group
+- main tasks: do not have a lifecycle stanza
+- prestart tasks: executed before main tasks
+- poststart tasks: executed after main tasks are running
+- poststop: executed after main tasks are dead
+
+##### resources
+
+###### devices
+
+- create a scheduling & runtime requirement for a device; e.g. GPUs, FPGAs, and TPUs
+
 ##### template
 
+- useful for populating dynamic data retrieved from consul/vault
 - template stanza: instantiates an instance of a templare renderer
   - render config files
   - providing environment vars to the workload
@@ -549,6 +639,13 @@ sudo usermod -G docker -a nomad
 - secrets
   - are encrypted and replicated between servers via raft
   - controlled via ACL policies
+- interpolation: are generally available anywhere in a jobspec
+  - ${node.poop}
+  - ${attr.poop}
+  - ${meta.poop}
+  - ${env["poop"]}
+  - ${NOMAD_POOP_SOUP}
+  - ${CONSUL_SOUP_POOP}
 
 #### example task env
 
