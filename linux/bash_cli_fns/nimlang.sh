@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # nim
+alias nim_b='nimble'
 alias nim_b_build='nimble build'
 alias nim_b_i='nimble install'
 alias nim_b_init='nimble init'
