@@ -774,12 +774,28 @@ spread {
 - network mode and allocations for the entire group, and provisioned to tasks when they start
   - only appropriate for services that want to listen on a port
   - services that make only outbound coonections do not need port allocations
-- bridge mode: all tasks in the group share the same network namespace
-  - required for consul connect; enables task with `connect` stanza to only bind to localhost and use the proxy for in/egress
-  - requires CNI plugins to be installed at the location specified in teh clients cni_path configuration
-  - tasks running in a network namespace are not visible to applications outside the namespace on the same host
-- host mode: each task will join the host network namespace
-- none mode: isolated without any network interfaces
+- bridge network & cross-allocation communication
+  - allocation > host netface > virtface > bridge net > ip tables > host netface
+  - scopes
+    - tasks that bind to loopback
+      - accessible within the allocation
+      - perfect for consul connected tasks
+    - tasks that bind to bridge/0.0.0.0 without port forwarding
+      - accessible within the client
+    - tasks that bind to the bridge/0.0.0.0 with port forwarding
+      - accessbile to the world
+- docker gotcha
+  - docker tasks connect to the docker bridge and NOT the nomad bridge
+  - each runs in its own docker managed network namespace as well
+  - nomad will create a placeholder container using jobspec.task.config.infra_image to enable all tasks in the same allocation to chatter
+- network modes
+  - bridge mode: all tasks in the group share the same network namespace
+    - required for consul connect; enables task with `connect` stanza to only bind to localhost and use the proxy for in/egress
+    - requires CNI plugins to be installed at the location specified in teh clients cni_path configuration
+    - tasks running in a network namespace are not visible to applications outside the namespace on the same host
+    - if using group.network.mode=bridge Do not set network_mode in task.config.network_mode
+  - host mode: each task will join the host network namespace
+  - none mode: isolated without any network interfaces
 - attrs
   - mode: bridge|host|none|cni/cni_network_name
   - hostname: only supported with bridge mode using docker driver
