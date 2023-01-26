@@ -154,6 +154,7 @@ sudo usermod -G docker -a nomad
 - you will need to refactor your applications to consume nomad runtime vars to fully realize nomads functionality if your not 12factor compliant
   - else you you can inject new scripts via template stanza / map nomad values to application values via the env stanza
 - when using nomad_ip and nomad_port vars, you also need to ensure nomad clients can communicate with each other to relay task chatter across machines over the bridge network
+  - this is required when task in allocation A needs to chatter with task in allocation B
 
 ## architecture
 
