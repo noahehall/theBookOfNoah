@@ -1,4 +1,5 @@
-- bookmark: https://developer.hashicorp.com/nomad/docs/job-specification/network
+- bookmark: https://developer.hashicorp.com/nomad/docs/drivers/docker#authentication
+  - https://developer.hashicorp.com/nomad/docs/job-specification/network
   - [networking docs](https://developer.hashicorp.com/nomad/docs/networking)
     - fix the ADRs that assumed we would need an overlay network for nomad
     - haha it also explains the fkn issue with the docker bridge network we were experiencing
@@ -172,6 +173,7 @@ sudo usermod -G docker -a nomad
 - first class docker workflow on nomad
 - downloads containers, mapping ports, starting, watching and clean up
 - requires a remote registry unless you use artifact + load
+- container name is not configurable: is set to taskname-locId to enable scheduling more than 1 task port host
 - customize the docker user via task.user
   - su-exec requires task.user to be set to `root` then you can drop privs at runtime
 - config attrs
@@ -225,6 +227,10 @@ sudo usermod -G docker -a nomad
   - readonly_rootfs
   - runtime
   - pids_limit
+
+###### auth
+
+- start here
 
 ##### podman
 
