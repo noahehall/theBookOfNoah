@@ -54,9 +54,9 @@
   - [nomad autoscaler](https://github.com/hashicorp/nomad-autoscaler)
   - [autoscaler docs](https://developer.hashicorp.com/nomad/tools/autoscaling)
   - [community task drivers](https://developer.hashicorp.com/nomad/plugins/drivers/community)
-- storage
+- storage (also check csi plugins links)
   - [stateful workloads with host volumes tutorial](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/stateful-workloads-host-volumes)
-- networking
+- networking (also check cni plugins links)
   - [networking intro](https://developer.hashicorp.com/nomad/docs/networking)
   - [service discovery](https://developer.hashicorp.com/nomad/docs/networking/service-discovery)
   - [service mesh](https://developer.hashicorp.com/nomad/docs/networking/service-mesh)
@@ -452,10 +452,10 @@ sudo usermod -G docker -a nomad
 #### consul integration
 
 - we diverged from nomad docs, and will likely be unable to use service discovery/mesh as prescribed
-- our images have the consul agent baked in and setup to run via bootstrap.sh files
+- our images have the consul agent baked in and setup to run via bootstrap.sh files on cunt start
 - hopefully this is a good thing
-  - we should only need to connect services by pointing them to the allocation ip & port
-  - we do not need to overload nomad with mesh configuration and it can focus on pure orchestration
+  - we should be able to connect services by pointing them to the allocation ip & port
+  - we do not need to overload nomad with mesh/discovery configuration and it can focus on pure orchestration
 - check the links > networking related docs
 
 #### vault integration
