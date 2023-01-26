@@ -4,6 +4,7 @@
     - fix the ADRs that assumed we would need an overlay network for nomad
     - haha it also explains the fkn issue with the docker bridge network we were experiencing
   - [task deps tut](https://developer.hashicorp.com/nomad/tutorials/task-deps)
+  - you should run through the client configuration one more time
 
 # nomad
 
@@ -26,6 +27,9 @@
   - [tips and tricks by daniela](https://danielabaron.me/blog/nomad-tips-and-tricks/)
   - [users with exec driver & host volumes](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/exec-users-host-volumes)
   - [task dependencies](https://developer.hashicorp.com/nomad/tutorials/task-deps)
+- upgrading
+  - [intro](https://developer.hashicorp.com/nomad/docs/upgrade)
+  - [specific versions](https://developer.hashicorp.com/nomad/docs/upgrade/upgrade-specific)
 - plugins
   - [container storage plugin](https://github.com/container-storage-interface/spec)
   - [storage csi plugins](https://kubernetes-csi.github.io/docs/drivers.html)
@@ -177,35 +181,30 @@ sudo usermod -G docker -a nomad
 - customize the docker user via task.user
   - su-exec requires task.user to be set to `root` then you can drop privs at runtime
 - config attrs
-  - image
+  - image: either a remote registry or use artifact + load for tarball
   - image pull timeout
-  - args: for cmd
-  - auth: for registry
-  - auth_Soft_Fail
-  - command
-  - cpuset_cpus
+  - args: for cmd else passed to container
+  - auth_soft_fail: dont fail on auth errs, resorts to to clients conf.auth.helper if exists
+  - command: override img command
+  - cpuset_cpus: set which cpu(s) to run on, 0 indexed
   - dns_search_domains: use network.dns if using group.network.bridge
   - dns_options: use network.dns if using group.network.bridge
   - dns_Servers: use network.dns if using group.network.bridge
-  - entrypoint
-  - extra_hosts
-  - force_pull
-  - healthchecks
-  - hostname
-  - init
-  - interative
-  - sysctl
-  - ulimit
-  - priviledged: also requires nomad agent + docker daemon to permit priviledged cotnainers
-  - ipc_mode: requires nomad agent to permit priviledged containers
-  - ipv4_address
-  - ipv6_address
-  - labels
-  - load: load image from tarfile instead of remote registry (sweet)
-  - logging:
-  - mac_address
-  - memory_hard_limit: if set task.resource.memory becomes a soft limit passed to docker as memory_reservation
-  - network_aliases: requires network_mode = user-network
+  - entrypoint: override img entrypoint
+  - extra_hosts: updates /etc/host; use sidecar_task.config instead when using consul connect + bridge; doesnt work right with more than 1 task in a group
+  - force_pull: whether to force pull; images without tags/latest are always pulled
+  - healthchecks: override img healthchecks
+  - hostname: every instance of this task will use this hostname
+  - init: use docker init system,set false if cunt already uses something like yelps dumbinit
+  - interative: keep stdin open
+  - sysctl: sysctl conf on cunt start
+  - priviledged: also requires nomad agent + docker daemon to permit priviledged cunts
+  - ipc_mode: none|host requires nomad agent to permit priviledged containers
+  - ipv4_address: requires a user defined network
+  - ipv6_address: requires a user defined network
+  - labels: set when cunt starts
+  - mac_address: set a specific mac addr
+  - memory_hard_limit: if set, then task.resource.memory becomes a soft limit passed to docker as memory_reservation
   - network_mode: bridge|nat|host|none|container:name|or-anything-here
     - read this again when setting up networking, there are a bunch of branches
   - pid_mode: host|dont set; host requires nomad agent to permit priviledged containers
@@ -230,7 +229,69 @@ sudo usermod -G docker -a nomad
 
 ###### auth
 
-- start here
+- for registry
+- falls back to the clients auth.helper stanza
+
+###### load
+
+- load image from tarfile instead of remote registry (sweet)
+
+```sh
+artifact {
+  source = "http://path.to/redis.tar"
+  options {
+    archive = false
+  }
+}
+config {
+  # i.e. docker load -i redis.tar
+  load = "redis.tar"
+  image = "redis"
+}
+
+```
+
+###### logging
+
+- defaults to json file, 2 files, 2mb
+
+```sh
+logging {
+  type = "fluentd"
+  config {
+    fluentd-address = "localhost:24224"
+    tag = "your_tag"
+  }
+}
+
+```
+
+###### network_aliases
+
+- requires network_mode = user-network
+
+```sh
+config {
+  network_mode = "user-network"
+  network_aliases = [
+    "${NOMAD_TASK_NAME}",
+    "${NOMAD_TASK_NAME}-${NOMAD_ALLOC_INDEX}"
+  ]
+}
+
+```
+
+###### ulimit
+
+- ulimit conf on cunt start
+
+```sh
+ulimit {
+  nproc = "4242"
+  nofile = "2048:4096"
+}
+
+```
 
 ##### podman
 
