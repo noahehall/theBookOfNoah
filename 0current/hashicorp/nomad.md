@@ -11,7 +11,7 @@
 - Nomad is a flexible workload orchestrator to deploy and manage any containerized or legacy application using a single, unified workflow. It can run diverse workloads including Docker, non-containerized, microservice, and batch applications.
 - this doc is split into 4 main sections (level 2 headings)
   - architecture: shiz you should read first
-  - configuration: client/server/plugins/integrations (vault/consul)/etc configuration stanzas
+  - configuration: client/server/plugins/integrations/etc configuration stanzas
   - jobspec: comprehensive (but brief) dive into jobspec stanzas
   - ui: breakdown of the UI info arch
 - you will generally need to switch between client/server confs with jobspecs as there are side effects on how you configure the three and how they work together
@@ -140,20 +140,19 @@
 
 ## basics
 
-### terms
-
 ### install
 
-- check the install link, you need to install the CNI plugins and update /etc/something/here with a conf file
+- check the install link, you need to install the CNI plugins and add/edit /etc/some-dir/this-file
 
 ```sh
-# running Nomad without root requires adding nomad to the docker group
+# running Nomad (servers, clients require root) without root requires adding nomad to the docker group
 sudo usermod -G docker -a nomad
 ```
 
 ## best practices/gotchas
 
-- you will need to refactor your applications to consume nomad runtime vars to fully realize the nomads functionality
+- you will need to refactor your applications to consume nomad runtime vars to fully realize nomads functionality if your not 12factor compliant
+  - else you you can inject new scripts via template stanza / map nomad values to application values via the env stanza
 - when using nomad_ip and nomad_port vars, you also need to ensure nomad clients can communicate with each other to relay task chatter across machines over the bridge network
 
 ## architecture
@@ -176,141 +175,7 @@ sudo usermod -G docker -a nomad
 - only one instance of a driver will ever be running per datacenter? (or per client)
 - need to be installed and configured on each client
 - remote task drivers: plugin that execute tasks on a different machine than a nomad client
-
-##### docker
-
-- first class docker workflow on nomad
-- downloads containers, mapping ports, starting, watching and clean up
-- requires a remote registry unless you use artifact + load
-- container name is not configurable: is set to taskname-locId to enable scheduling more than 1 task port host
-- customize the docker user via task.user
-  - su-exec requires task.user to be set to `root` then you can drop privs at runtime
-- config attrs
-  - image: either a remote registry or use artifact + load for tarball
-  - image pull timeout
-  - args: for cmd else passed to container
-  - auth_soft_fail: dont fail on auth errs, resorts to to clients conf.auth.helper if exists
-  - command: override img command
-  - cpuset_cpus: set which cpu(s) to run on, 0 indexed
-  - dns_search_domains: use network.dns if using group.network.bridge
-  - dns_options: use network.dns if using group.network.bridge
-  - dns_Servers: use network.dns if using group.network.bridge
-  - entrypoint: override img entrypoint
-  - extra_hosts: updates /etc/host; use sidecar_task.config instead when using consul connect + bridge; doesnt work right with more than 1 task in a group
-  - force_pull: whether to force pull; images without tags/latest are always pulled
-  - healthchecks: override img healthchecks
-  - hostname: every instance of this task will use this hostname
-  - init: use docker init system,set false if cunt already uses something like yelps dumbinit
-  - interative: keep stdin open
-  - sysctl: sysctl conf on cunt start
-  - priviledged: also requires nomad agent + docker daemon to permit priviledged cunts
-  - ipc_mode: none|host requires nomad agent to permit priviledged containers
-  - ipv4_address: requires a user defined network
-  - ipv6_address: requires a user defined network
-  - labels: set when cunt starts
-  - mac_address: set a specific mac addr
-  - memory_hard_limit: if set, then task.resource.memory becomes a soft limit passed to docker as memory_reservation
-  - network_mode: bridge|nat|host|none|container:name|or-anything-here
-    - read this again when setting up networking, there are a bunch of branches
-  - pid_mode: host|dont set; host requires nomad agent to permit priviledged containers
-  - ports:
-  - security_opt
-  - shm_size
-  - storage_opt
-  - tty
-  - uts_mode: host|dont set; host requires docker daemon to have user namespace remapping enabled
-  - volumes: use mount instead
-  - volume_driver: requires volumes to be set
-  - work_dir
-  - mount
-  - devices
-  - cap_add: generally requires setting required add options via client conf
-  - cap_drop: generally requires setting required drop options via client conf
-  - cpu_cfs_period
-  - advertise_ipv6_address
-  - readonly_rootfs
-  - runtime
-  - pids_limit
-
-###### auth
-
-- for registry
-- falls back to the clients auth.helper stanza
-
-###### load
-
-- load image from tarfile instead of remote registry (sweet)
-
-```sh
-artifact {
-  source = "http://path.to/redis.tar"
-  options {
-    archive = false
-  }
-}
-config {
-  # i.e. docker load -i redis.tar
-  load = "redis.tar"
-  image = "redis"
-}
-
-```
-
-###### logging
-
-- defaults to json file, 2 files, 2mb
-
-```sh
-logging {
-  type = "fluentd"
-  config {
-    fluentd-address = "localhost:24224"
-    tag = "your_tag"
-  }
-}
-
-```
-
-###### network_aliases
-
-- requires network_mode = user-network
-
-```sh
-config {
-  network_mode = "user-network"
-  network_aliases = [
-    "${NOMAD_TASK_NAME}",
-    "${NOMAD_TASK_NAME}-${NOMAD_ALLOC_INDEX}"
-  ]
-}
-
-```
-
-###### ulimit
-
-- ulimit conf on cunt start
-
-```sh
-ulimit {
-  nproc = "4242"
-  nofile = "2048:4096"
-}
-
-```
-
-##### podman
-
-##### qemu
-
-##### isolated fork/exec
-
-##### raw fork/exec
-
-##### remote/ecs
-
-##### raw_exec
-
-- disabled by default because it runs as root
+- see the configuration sections for more details & conf for specific plugins
 
 #### device plugins
 
@@ -612,7 +477,8 @@ ulimit {
 
 ## configuration
 
-- stanzas for configuring clients and servers
+- stanzas for configuring nomad, agents, integrations, plugins and etc
+- basically anything thats not in the jobspec
 
 ### acl
 
@@ -639,6 +505,141 @@ ulimit {
 ### ui
 
 ### vault
+
+### docker (task driver plugin)
+
+- first class docker workflow on nomad
+- downloads containers, mapping ports, starting, watching and clean up
+- requires a remote registry unless you use artifact + load
+- container name is not configurable: is set to taskname-locId to enable scheduling more than 1 task port host
+- customize the docker user via task.user
+  - su-exec requires task.user to be set to `root` then you can drop privs at runtime
+- config attrs
+  - image: either a remote registry or use artifact + load for tarball
+  - image pull timeout
+  - args: for cmd else passed to container
+  - auth_soft_fail: dont fail on auth errs, resorts to to clients conf.auth.helper if exists
+  - command: override img command
+  - cpuset_cpus: set which cpu(s) to run on, 0 indexed
+  - dns_search_domains: use network.dns if using group.network.bridge
+  - dns_options: use network.dns if using group.network.bridge
+  - dns_Servers: use network.dns if using group.network.bridge
+  - entrypoint: override img entrypoint
+  - extra_hosts: updates /etc/host; use sidecar_task.config instead when using consul connect + bridge; doesnt work right with more than 1 task in a group
+  - force_pull: whether to force pull; images without tags/latest are always pulled
+  - healthchecks: override img healthchecks
+  - hostname: every instance of this task will use this hostname
+  - init: use docker init system,set false if cunt already uses something like yelps dumbinit
+  - interative: keep stdin open
+  - sysctl: sysctl conf on cunt start
+  - priviledged: also requires nomad agent + docker daemon to permit priviledged cunts
+  - ipc_mode: none|host requires nomad agent to permit priviledged containers
+  - ipv4_address: requires a user defined network
+  - ipv6_address: requires a user defined network
+  - labels: set when cunt starts
+  - mac_address: set a specific mac addr
+  - memory_hard_limit: if set, then task.resource.memory becomes a soft limit passed to docker as memory_reservation
+  - network_mode: bridge|nat|host|none|container:name|or-anything-here
+    - read this again when setting up networking, there are a bunch of branches
+  - pid_mode: host|dont set; host requires nomad agent to permit priviledged containers
+  - ports:
+  - security_opt
+  - shm_size
+  - storage_opt
+  - tty
+  - uts_mode: host|dont set; host requires docker daemon to have user namespace remapping enabled
+  - volumes: use mount instead
+  - volume_driver: requires volumes to be set
+  - work_dir
+  - mount
+  - devices
+  - cap_add: generally requires setting required add options via client conf
+  - cap_drop: generally requires setting required drop options via client conf
+  - cpu_cfs_period
+  - advertise_ipv6_address
+  - readonly_rootfs
+  - runtime
+  - pids_limit
+
+#### auth
+
+- for registry
+- falls back to the clients auth.helper stanza
+
+#### load
+
+- load image from tarfile instead of remote registry (sweet)
+
+```sh
+artifact {
+  source = "http://path.to/redis.tar"
+  options {
+    archive = false
+  }
+}
+config {
+  # i.e. docker load -i redis.tar
+  load = "redis.tar"
+  image = "redis"
+}
+
+```
+
+#### logging
+
+- defaults to json file, 2 files, 2mb
+
+```sh
+logging {
+  type = "fluentd"
+  config {
+    fluentd-address = "localhost:24224"
+    tag = "your_tag"
+  }
+}
+
+```
+
+#### network_aliases
+
+- requires network_mode = user-network
+
+```sh
+config {
+  network_mode = "user-network"
+  network_aliases = [
+    "${NOMAD_TASK_NAME}",
+    "${NOMAD_TASK_NAME}-${NOMAD_ALLOC_INDEX}"
+  ]
+}
+
+```
+
+#### ulimit
+
+- ulimit conf on cunt start
+
+```sh
+ulimit {
+  nproc = "4242"
+  nofile = "2048:4096"
+}
+
+```
+
+### podman (task driver plugin)
+
+### qemu (task driver plugin)
+
+### isolated fork/exec (task driver plugin)
+
+### raw fork/exec (task driver plugin)
+
+### remote/ecs (task driver plugin)
+
+### raw_exec (task driver plugin)
+
+- disabled by default because it runs as root
 
 ## jobspec
 
