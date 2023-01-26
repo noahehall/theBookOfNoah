@@ -11,9 +11,10 @@
 - Nomad is a flexible workload orchestrator to deploy and manage any containerized or legacy application using a single, unified workflow. It can run diverse workloads including Docker, non-containerized, microservice, and batch applications.
 - this doc is split into 4 main sections (level 2 headings)
   - architecture: shiz you should read first
-  - jobspec: shiz you should read next
-  - examples: case you get stuck, but maybe will delete this section
-  - ui: breaking of the UI information arch
+  - configuration: client/server/plugins/integrations (vault/consul)/etc
+  - jobspec: comprehensive (but brief) dive into jobspecs
+  - ui: breakdown of the UI info arch
+- you will generally need to switch between client/server confs with jobspecs as there are side effects on how you configure the three and how they work together
 
 ## links
 
@@ -52,7 +53,6 @@
   - [community task drivers](https://developer.hashicorp.com/nomad/plugins/drivers/community)
 - storage
   - [stateful workloads with host volumes tutorial](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/stateful-workloads-host-volumes)
-  - [client config host volumes](https://developer.hashicorp.com/nomad/docs/configuration/client#host_volume-stanza)
 - variables
   - [interpolation](https://developer.hashicorp.com/nomad/docs/runtime/interpolation)
   - [nomad variables](https://developer.hashicorp.com/nomad/docs/concepts/variables)
@@ -77,9 +77,7 @@
   - [nomad filesystem arch](https://developer.hashicorp.com/nomad/docs/concepts/filesystem)
 - agents
   - [status](https://developer.hashicorp.com/nomad/docs/commands/status)
-  - [server configuration](https://developer.hashicorp.com/nomad/docs/configuration/server)
   - [nomad configuration](https://developer.hashicorp.com/nomad/docs/configuration)
-  - [client configuration](https://developer.hashicorp.com/nomad/docs/configuration/client#cni_path)
   - network
   - [networking](https://developer.hashicorp.com/nomad/docs/job-specification/network)
   - [schedulars](https://developer.hashicorp.com/nomad/docs/schedulers)
@@ -101,6 +99,7 @@
   - [change_script](https://developer.hashicorp.com/nomad/docs/job-specification/change_script)
   - [check_restart](https://developer.hashicorp.com/nomad/docs/job-specification/check_restart)
   - [check](https://developer.hashicorp.com/nomad/docs/job-specification/check)
+  - [client (agent conf)](https://developer.hashicorp.com/nomad/docs/configuration/client)
   - [connect](https://developer.hashicorp.com/nomad/docs/job-specification/connect)
   - [constraint](https://developer.hashicorp.com/nomad/docs/job-specification/constraint)
   - [csi_plugin](https://developer.hashicorp.com/nomad/docs/job-specification/csi_plugin)
@@ -125,6 +124,7 @@
   - [resource](https://developer.hashicorp.com/nomad/docs/job-specification/resources)
   - [restart](https://developer.hashicorp.com/nomad/docs/job-specification/restart)
   - [scaling](https://developer.hashicorp.com/nomad/docs/job-specification/scaling)
+  - [server (agent conf)](https://developer.hashicorp.com/nomad/docs/configuration/server)
   - [service](https://developer.hashicorp.com/nomad/docs/job-specification/service)
   - [sidecar_service](https://developer.hashicorp.com/nomad/docs/job-specification/sidecar_service)
   - [sidecar_task](https://developer.hashicorp.com/nomad/docs/job-specification/sidecar_task)
@@ -150,6 +150,11 @@
 # running Nomad without root requires adding nomad to the docker group
 sudo usermod -G docker -a nomad
 ```
+
+## best practices/gotchas
+
+- you will need to refactor your applications to consume nomad runtime vars to fully realize the nomads functionality
+- when using nomad_ip and nomad_port vars, ensure nomad clients can communicate with each other
 
 ## architecture
 
@@ -502,7 +507,7 @@ ulimit {
     - i.e. system jobs are placed on all clients as soon as clients are registered
     - system jobs are managed by nomad
   - are intended to run until explicitly stopped by an operator/preemption
-  - e.g. node plugins so they can moutn volumes on any client
+  - e.g. node plugins so they can mount volumes on any client
     - or any task that should be present on every node in the cluster
 - sysbatch jobs
   - jobs that should be run to completion on all clients that meet the jobs constraints
@@ -519,8 +524,10 @@ ulimit {
 
 #### allocations
 
-- allocation: mapping between a job's task group and a client node, i.e. groups are allocated to client nodes
-- its all about assigning a task group to a client for evaluation
+- allocation: mapping between a job's group and a client node,all task in a group are allocated to the same client machine and share the same resources
+  - its all about assigning a task group to a client for evaluation
+- at the group level, all stanzas are for enabling allocations to request the resources they need
+  - e.g. the network stanza allocates network conf for task allocations
 
 #### evaluations
 
@@ -590,11 +597,6 @@ ulimit {
     - provide vault server(s) with a periodic service token with assigned token role
   - use the vault stanza in the jobspec task section to secure created infrastructure
 
-##### vault stanza
-
-- valid in job, group and task
-- skipped
-
 ### security
 
 - start with security model link after you have something to play with
@@ -607,6 +609,36 @@ ulimit {
 - each task has an implicit ACL that allows them access to their own data
 
 #### namespaces
+
+## configuration
+
+- stanzas for configuring clients and servers
+
+### acl
+
+### audit
+
+### autopilot
+
+### client
+
+### consul
+
+### plugin
+
+### sentinel
+
+### search
+
+### server
+
+### server_join
+
+### tls
+
+### ui
+
+### vault
 
 ## jobspec
 
@@ -738,33 +770,49 @@ spread {
 #### network
 
 - network mode and allocations for the entire group, and provisioned to tasks when they start
-- only appropriate for services that want to listen on a port
+  - only appropriate for services that want to listen on a port
   - services that make only outbound coonections do not need port allocations
 - bridge mode: all tasks in the group share the same network namespace
   - required for consul connect; enables task with `connect` stanza to only bind to localhost and use the proxy for in/egress
   - requires CNI plugins to be installed at the location specified in teh clients cni_path configuration
   - tasks running in a network namespace are not visible to applications outside the namespace on the same host
-  - enables connect-enabled apps to bind only to localhost within the shared network stack, and use the proxy for in/out traffic
 - host mode: each task will join the host network namespace
 - none mode: isolated without any network interfaces
 - attrs
   - mode: bridge|host|none|cni/cni_network_name
   - hostname: only supported with bridge mode using docker driver
 
+```sh
+
+group "example" {
+  network {
+    port "http" {}
+    port "https" {}
+    port "poop" {
+      to = "123" # maps dynamicport:123
+      to = -1 # maps dynamicport:dynamicport, same as not setting a value
+      static = "123" # doesnt use a dynamic port, only useful for system/things like load balancers, e.g. static 80 + to = 8080
+    }
+  }
+}
+
+# a port labed poop
+NOMAD_IP_poop # the ip to bind for poop
+NOMAD_PORT_poop # the port value for poop
+NOMAD_ADDR_poop # the combined ip:port for poop
+
+```
+
 ##### port
 
 - port "poop" {} uses a dynamic port
 - attrs
+
   - static: restricts a task to 1 per host, since there is only one 123 port per host
   - to: only for bidge mode to configure port mapping, availabe in `NOMAD_PORT_poop` enables your app to listen on a fixed port thats mapped to a dynamic host port
   - host_network: sets the host network name to use, e.g., default|public|private
 
-```sh
-
-NOMAD_IP_poop # the ip to bind for poop
-NOMAD_PORT_poop # the port value for poop
-NOMAD_ADDR_poop # the combined ip:port for poop
-```
+    - you probably want to review this again whenever you need a host_network
 
 ##### dns
 
@@ -1196,64 +1244,6 @@ ${attr.platform.aws.instance-type}	# Instance type of the client (if on AWS EC2)
 ${attr.platform.aws.placement.availability-zone} #	Availability Zone of the client (if on AWS EC2)
 ${attr.os.name} #	Operating system of the client (e.g. ubuntu, windows, darwin)
 ${attr.os.version} # poop ur majesty
-```
-
-## examples
-
-```json
-
-job "poop" {
-  datacenters = [str]
-  type = str
-  update {
-    max_parallel = num
-    min_health_time = str
-    health_deadline = str
-    progress_deadline = str
-    auto_revert = bool
-    canary = num
-  }
-  migrate {
-    max_parallel
-    health_check
-    min_healthy_time
-    healthy_deadline
-  }
-  group "cache" {
-    count
-    network {
-      port "db" {
-        to =
-      }
-      service {
-        name
-        tags
-        port
-        provider
-      }
-      restart {
-        attempts
-        interval
-        delay
-        mode
-      }
-      ephemeral_disk {
-        size
-
-      }
-      task "redis" {
-        driver
-        config {
-          {...driver config...}
-        }
-        resources {
-          cpu
-          memory
-        }
-      }
-    }
-  }
-}
 ```
 
 ## UI
