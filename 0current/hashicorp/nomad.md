@@ -11,8 +11,8 @@
 - Nomad is a flexible workload orchestrator to deploy and manage any containerized or legacy application using a single, unified workflow. It can run diverse workloads including Docker, non-containerized, microservice, and batch applications.
 - this doc is split into 4 main sections (level 2 headings)
   - architecture: shiz you should read first
-  - configuration: client/server/plugins/integrations (vault/consul)/etc
-  - jobspec: comprehensive (but brief) dive into jobspecs
+  - configuration: client/server/plugins/integrations (vault/consul)/etc configuration stanzas
+  - jobspec: comprehensive (but brief) dive into jobspec stanzas
   - ui: breakdown of the UI info arch
 - you will generally need to switch between client/server confs with jobspecs as there are side effects on how you configure the three and how they work together
 
@@ -154,7 +154,7 @@ sudo usermod -G docker -a nomad
 ## best practices/gotchas
 
 - you will need to refactor your applications to consume nomad runtime vars to fully realize the nomads functionality
-- when using nomad_ip and nomad_port vars, ensure nomad clients can communicate with each other
+- when using nomad_ip and nomad_port vars, you also need to ensure nomad clients can communicate with each other to relay task chatter across machines over the bridge network
 
 ## architecture
 
