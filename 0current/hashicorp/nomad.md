@@ -20,7 +20,10 @@
 
 - [nomad homagepage](https://www.nomadproject.io)
 - [pre + post install](https://developer.hashicorp.com/nomad/tutorials/get-started/get-started-install)
-- [nomad scheduling: secret lives of data](http://thesecretlivesofdata.com/raft/)
+- interwebs
+  - [nomad scheduling: secret lives of (raft) data](http://thesecretlivesofdata.com/raft/)
+  - [nomad networking blog](https://mrkaran.dev/posts/nomad-networking-explained/)
+  - [nomad networking video](https://www.youtube.com/watch?v=wTA5HxB_uuk)
 - tuts
   - [nomad ui web interface](https://developer.hashicorp.com/nomad/tutorials/get-started/get-started-ui)
   - [all tuts via nomad portal](https://developer.hashicorp.com/nomad/tutorials)
@@ -53,6 +56,10 @@
   - [community task drivers](https://developer.hashicorp.com/nomad/plugins/drivers/community)
 - storage
   - [stateful workloads with host volumes tutorial](https://developer.hashicorp.com/nomad/tutorials/stateful-workloads/stateful-workloads-host-volumes)
+- networking
+  - [networking intro](https://developer.hashicorp.com/nomad/docs/networking)
+  - [service discovery](https://developer.hashicorp.com/nomad/docs/networking/service-discovery)
+  - [service mesh](https://developer.hashicorp.com/nomad/docs/networking/service-mesh)
 - variables
   - [interpolation](https://developer.hashicorp.com/nomad/docs/runtime/interpolation)
   - [nomad variables](https://developer.hashicorp.com/nomad/docs/concepts/variables)
@@ -442,6 +449,15 @@ sudo usermod -G docker -a nomad
 
 - todo: see links
 
+#### consul integration
+
+- we diverged from nomad docs, and will likely be unable to use service discovery/mesh as prescribed
+- our images have the consul agent baked in and setup to run via bootstrap.sh files
+- hopefully this is a good thing
+  - we should only need to connect services by pointing them to the allocation ip & port
+  - we do not need to overload nomad with mesh configuration and it can focus on pure orchestration
+- check the links > networking related docs
+
 #### vault integration
 
 - nomad servers and clients retrieve vault tokens that enables the nomad tasks to complete their duties
@@ -775,7 +791,7 @@ spread {
   - only appropriate for services that want to listen on a port
   - services that make only outbound coonections do not need port allocations
 - bridge network & cross-allocation communication
-  - allocation > host netface > virtface > bridge net > ip tables > host netface
+  - allocation > host netface > virtface > nomad bridge net > ip tables > host netface
   - scopes
     - tasks that bind to loopback
       - accessible within the allocation
@@ -785,8 +801,8 @@ spread {
     - tasks that bind to the bridge/0.0.0.0 with port forwarding
       - accessbile to the world
 - docker gotcha
-  - docker tasks connect to the docker bridge and NOT the nomad bridge
-  - each runs in its own docker managed network namespace as well
+  - docker tasks connect to the docker bridge NOT the nomad bridge
+  - each task runs in its own docker managed network namespace as well
   - nomad will create a placeholder container using jobspec.task.config.infra_image to enable all tasks in the same allocation to chatter
 - network modes
   - bridge mode: all tasks in the group share the same network namespace
