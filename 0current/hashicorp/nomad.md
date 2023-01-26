@@ -791,9 +791,9 @@ spread {
 - network modes
   - bridge mode: all tasks in the group share the same network namespace
     - required for consul connect; enables task with `connect` stanza to only bind to localhost and use the proxy for in/egress
-    - requires CNI plugins to be installed at the location specified in teh clients cni_path configuration
+    - requires CNI plugins to be installed at the location specified in the client conf cni_path
     - tasks running in a network namespace are not visible to applications outside the namespace on the same host
-    - if using group.network.mode=bridge Do not set network_mode in task.config.network_mode
+    - if using group.network.mode=bridge DO NOT set task.config.network_mode
   - host mode: each task will join the host network namespace
   - none mode: isolated without any network interfaces
 - attrs
@@ -825,11 +825,9 @@ NOMAD_ADDR_poop # the combined ip:port for poop
 
 - port "poop" {} uses a dynamic port
 - attrs
-
   - static: restricts a task to 1 per host, since there is only one 123 port per host
   - to: only for bidge mode to configure port mapping, availabe in `NOMAD_PORT_poop` enables your app to listen on a fixed port thats mapped to a dynamic host port
   - host_network: sets the host network name to use, e.g., default|public|private
-
     - you probably want to review this again whenever you need a host_network
 
 ##### dns
