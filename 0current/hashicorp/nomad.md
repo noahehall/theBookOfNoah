@@ -169,6 +169,73 @@ sudo usermod -G docker -a nomad
 
 ##### docker
 
+- first class docker workflow on nomad
+- downloads containers, mapping ports, starting, watching and clean up
+- requires a remote registry unless you use artifact + load
+- customize the docker user via task.user
+  - su-exec requires task.user to be set to `root` then you can drop privs at runtime
+- config attrs
+  - image
+  - image pull timeout
+  - args: for cmd
+  - auth: for registry
+  - auth_Soft_Fail
+  - command
+  - cpuset_cpus
+  - dns_search_domains: use network.dns if using group.network.bridge
+  - dns_options: use network.dns if using group.network.bridge
+  - dns_Servers: use network.dns if using group.network.bridge
+  - entrypoint
+  - extra_hosts
+  - force_pull
+  - healthchecks
+  - hostname
+  - init
+  - interative
+  - sysctl
+  - ulimit
+  - priviledged: also requires nomad agent + docker daemon to permit priviledged cotnainers
+  - ipc_mode: requires nomad agent to permit priviledged containers
+  - ipv4_address
+  - ipv6_address
+  - labels
+  - load: load image from tarfile instead of remote registry (sweet)
+  - logging:
+  - mac_address
+  - memory_hard_limit: if set task.resource.memory becomes a soft limit passed to docker as memory_reservation
+  - network_aliases: requires network_mode = user-network
+  - network_mode: bridge|nat|host|none|container:name|or-anything-here
+    - read this again when setting up networking, there are a bunch of branches
+  - pid_mode: host|dont set; host requires nomad agent to permit priviledged containers
+  - ports:
+  - security_opt
+  - shm_size
+  - storage_opt
+  - tty
+  - uts_mode: host|dont set; host requires docker daemon to have user namespace remapping enabled
+  - volumes: use mount instead
+  - volume_driver: requires volumes to be set
+  - work_dir
+  - mount
+  - devices
+  - cap_add: generally requires setting required add options via client conf
+  - cap_drop: generally requires setting required drop options via client conf
+  - cpu_cfs_period
+  - advertise_ipv6_address
+  - readonly_rootfs
+  - runtime
+  - pids_limit
+
+##### podman
+
+##### qemu
+
+##### isolated fork/exec
+
+##### raw fork/exec
+
+##### remote/ecs
+
 ##### raw_exec
 
 - disabled by default because it runs as root
