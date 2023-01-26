@@ -45,6 +45,8 @@
   - function: used in functional programming
   - subroutine: used with saltine crackers
 - Unofirm Function Call Syntax: UFCS: allows you to create new procedures on existing objects externally, and allows procedure calls to be chained
+  - basically theres multiple ways to call a function and all can be chained together
+  - add(5) === 5.add === add 5
 - functional programming: avoids the changing of state and the use of mutable data, preferring the use of first-class functions, anonymous functions, and closures
 - foreign function interface: FFI: allows you to use libraries written in other programming languages, nim includes native C,C++ automatically
 - stropping: enable the use of nim keywords in identifiers

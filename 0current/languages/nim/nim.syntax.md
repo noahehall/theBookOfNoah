@@ -1,5 +1,8 @@
 - starting from scratch, its been awhile
-  - containers: https://narimiran.github.io/nim-basics/
+  - Creating our own: https://narimiran.github.io/nim-basics/
+  - https://nim-lang.org/docs/tut1.html
+  - https://nim-by-example.github.io/
+  - https://nim-lang.org/docs/lib.html
 
 # nim
 
@@ -11,6 +14,8 @@
   - [stackblitz webcontainers](https://blog.stackblitz.com/posts/introducing-webcontainers/)
     - [signup](https://stackblitz.com/membership)
     - [me](https://stackblitz.com/@noahehall)
+- examples
+  - [all syntax moved to noahehall/nim](https://github.com/noahehall/nim)
 - [nim language](https://nim-lang.org/)
 - [nim style guide](https://nim-lang.org/docs/nep1.html)]
 - books
@@ -61,9 +66,7 @@
   - [http auth](https://github.com/FedericoCeratto/nim-httpauth)
   - [color and util tools for nim](https://github.com/qqtop/NimCx)
 - specs
-  - [the manual](https://nim-lang.org/docs/manual.html)
-    - `first-class iterators`
-  - [the index](https://nim-lang.org/docs/lib.html)
+  - [manual](https://nim-lang.org/docs/manual.html)
   - [experimental features](https://nim-lang.org/docs/manual_experimental.html)
   - [nim destructors and move semantics](https://nim-lang.org/docs/destructors.html)
   - [standard library](https://nim-lang.org/docs/lib.html)
@@ -71,35 +74,34 @@
   - [cmdline](https://nim-lang.org/docs/nimc.html)
     - switches
     - symbols
-  - native modules
-    - automatically imported into every file
-    - [io](https://nim-lang.org/docs/io.html)
-    - [strutils](https://nim-lang.org/docs/strutils.html)
-    - [system module](https://nim-lang.org/docs/system.html)
-      - imports
-      - types
-        - Natural
-      - vars
-      - lets
-      - consts
-      - procs
-        - `echo` exactly what you think
-        - `debugEcho`
-        - `readLine` exactly what you think
-        - `write`
-        - `toInt`
-        - `toFloat`
-        - `repr` convert any type to string
-      - iterators
-        - `countup`
-      - macros
-      - templates
-        - `^` roof operator: array access e.g. `a[^x] == a[a.len-x]`
-      - exports
-    - [iterators](https://nim-lang.org/docs/iterators.html)
-    - [assertions](https://nim-lang.org/docs/assertions.html)
-    - [dollars](https://nim-lang.org/docs/dollars.html) stringify operator for integers
-    - [widestrs](https://nim-lang.org/docs/widestrs.html)
+- native modules
+  - [io](https://nim-lang.org/docs/io.html)
+  - [strutils](https://nim-lang.org/docs/strutils.html)
+  - [system module](https://nim-lang.org/docs/system.html)
+    - imports
+    - types
+      - Natural
+    - vars
+    - lets
+    - consts
+    - procs
+      - `echo` exactly what you think
+      - `debugEcho`
+      - `readLine` exactly what you think
+      - `write`
+      - `toInt`
+      - `toFloat`
+      - `repr` convert any type to string
+    - iterators
+      - `countup`
+    - macros
+    - templates
+      - `^` roof operator: array access e.g. `a[^x] == a[a.len-x]`
+    - exports
+  - [iterators](https://nim-lang.org/docs/iterators.html)
+  - [assertions](https://nim-lang.org/docs/assertions.html)
+  - [dollars](https://nim-lang.org/docs/dollars.html) stringify operator for integers
+  - [widestrs](https://nim-lang.org/docs/widestrs.html)
 
 ## rules
 
@@ -110,6 +112,7 @@
 - every identifier must be associated with a type, and types are checked at compile time
   - some types can be automatically inferred, e.g. primtives assigned a value when defined
 - the type of a variable cant change
+- reserved words: is, func
 
 ## conventions
 
@@ -319,7 +322,8 @@ instance.someFn()
 ## procedures
 
 - procs with return values, the return value must be used OR discarded
-  - the defualt return value is binary zero (just like a variables default value)
+  - the defualt return value is the default value of the return type
+  - e.g. ints == 0, stings = "", seqs = @[]
   - if the last expression has a non void value, that value is implicitly returned
     - no need to use return keyword, nor is it idiomatic nim
   - every proc with a return value has an implicit `result` variable declared within its body
@@ -330,7 +334,6 @@ instance.someFn()
   - forward declaration: the function signature without a body
 - procs without parameters can omit the paranthesis in the difinition
 - you can overload procedures by assigning the same name to procedures with different parameter signatures
-  e
 
 ```python
 proc someName(paramNam: paramType, p2 = "with a default value"): returnType =
