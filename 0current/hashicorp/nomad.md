@@ -791,7 +791,8 @@ spread {
   - only appropriate for services that want to listen on a port
   - services that make only outbound coonections do not need port allocations
 - bridge network & cross-allocation communication
-  - allocation > host netface > virtface > nomad bridge net > ip tables > host netface
+  - allocationX > virtface > nomad <> docker bridge > ip tables > hostface > allocationY
+    - for docker tasks: allocs use docker bridge
   - scopes
     - tasks that bind to loopback
       - accessible within the allocation
