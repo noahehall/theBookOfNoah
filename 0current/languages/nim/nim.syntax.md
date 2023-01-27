@@ -1,5 +1,5 @@
 - starting from scratch, its been awhile
-  - Creating our own: https://narimiran.github.io/nim-basics/
+  - Reading user input: https://narimiran.github.io/nim-basics/
   - https://nim-lang.org/docs/tut1.html
   - https://nim-by-example.github.io/
   - https://nim-lang.org/docs/lib.html

@@ -530,7 +530,8 @@ sudo usermod -G docker -a nomad
 - requires a remote registry unless you use artifact + load
 - container name is not configurable: is set to taskname-locId to enable scheduling more than 1 task port host
 - customize the docker user via task.user
-  - su-exec requires task.user to be set to `root` then you can drop privs at runtime
+  - cunts using su-exec requires task.user to be set to `root` then you can drop privs at runtime
+  - this is related to su-exec, not nomad/docker
 - config attrs
   - image: either a remote registry or use artifact + load for tarball
   - image pull timeout
@@ -582,6 +583,12 @@ sudo usermod -G docker -a nomad
 
 - for registry
 - falls back to the clients auth.helper stanza
+- attrs
+  - username
+  - password
+  - email
+  - server_address
+  - helper (points to agent conf.helper whatever)
 
 #### load
 
