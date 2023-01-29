@@ -889,9 +889,9 @@ NOMAD_ADDR_poop # the combined ip:port for poop
 
 #### service
 
-- register this server with consul/nomad for discovery & monitoring
 - can be specified at group/task level
   - group level: if provider === consul enables registering services with consul connect support; must include a connect stanza
+- register this service with consul/nomad for discovery & monitoring
 - lifecycle: managed by nomad
   - registration:
     - group services: service registration & checks before starting any tasks
@@ -1294,22 +1294,38 @@ ${attr.os.version} # poop ur majesty
 
 - lists all jobs, click to see status (like `nomad job status`)
 
-### servers
+#### overview
 
-- view of all server agents
+#### definition
 
-#### monitor
+#### versions
 
-- nomad application logs with option to set the log level
+#### deployments
+
+#### allocations
+
+#### evaluations
+
+#### services
+
+### storage
+
+### variables
 
 ### clients
 
 - view of all client agents
 
+### servers
+
+- view of all server agents
+
+#### overview
+
+#### monitor
+
+- nomad application logs with option to set the log level
+
 ### topology
 
 - view of the cluster and running workload, useful for complex nomad environments
-
-```
-
-```
