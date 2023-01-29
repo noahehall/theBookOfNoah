@@ -14,8 +14,9 @@ alias nim_prod_build='nim -d:release c --verbosity:2'
 alias nim_prod_run='nim -d:release c -r --verbosity:0'
 
 nim_compile() {
-  nim c --verbosity:1 ${1:?somefile required}
+  nim c --verbosity:0 ${1:?somefile required}
 }
 nim_dev_run() {
-  nim c -r --verbosity:0 ${1:?somefile required}
+  # 2 gets us errors & line numbers
+  nim c -r --verbosity:2 ${1:?somefile required}
 }

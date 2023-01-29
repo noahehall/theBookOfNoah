@@ -1,11 +1,6 @@
 # nim
 
 - fkn need to finish this thing
-- reading done
-- copying. 40 custom array ranges
-  - also this: https://github.com/nim-lang/Nim/wiki/Nim-for-TypeScript-Programmers#this
-    - ^ likely want to dive through the wiki first the swing back to the book
-    - ^ the book is just hella old
 
 ## links
 
