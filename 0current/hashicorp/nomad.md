@@ -912,7 +912,7 @@ NOMAD_ADDR_poop # the combined ip:port for poop
   - address: override the advertised addr
   - tagged_addresses: consul related
   - address_mode: alloc|auto|driver|host which address to advertise (see port)
-  - task: the name of the nomad task associated with this service definition for group services
+  - task: the name of the nomad task associated with this service; valid only at group.service
   - meta
   - canary_meta
   - on_update: require_healthy|ignore_warnings|ignore how checks should be evaluated when determining deployment health
@@ -1289,6 +1289,8 @@ ${attr.os.version} # poop ur majesty
 ## UI
 
 - by default runs on http://localhost:4646
+- if you added consul/vault UI stanzas they will be available in the top right
+  - super small links, should say `consul | vault | documentatin | etc`
 
 ### jobs
 
