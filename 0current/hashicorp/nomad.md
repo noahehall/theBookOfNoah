@@ -42,6 +42,7 @@
   - [cni spec](https://www.cni.dev/docs/spec/)
   - [cni spec on github](https://github.com/containernetworking/cni/blob/main/SPEC.md)
   - [storage plugin docs](https://developer.hashicorp.com/nomad/docs/concepts/plugins/csi)
+  - [nomad coredns plugin](https://github.com/mr-karan/coredns-nomad/)
 - integrations/drivers
   - [consul](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration)
   - [consul servish mesh](https://developer.hashicorp.com/nomad/tutorials/integrate-consul/consul-service-mesh)

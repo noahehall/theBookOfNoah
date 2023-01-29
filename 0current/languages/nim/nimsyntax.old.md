@@ -1,5 +1,6 @@
-
 ## OLD notes
+
+- TODO: move this into the nim repo
 
 ### types
 
