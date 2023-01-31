@@ -107,6 +107,18 @@
 ### procedural traits
 
 - procedures are standalone entities that operate on data structures
+- using procedures enable compile time static type checking & dead code elimination
+- but does not have dynamic dispatch (see method)
+
+### method (member) functions
+
+- i.e. methods in OOP
+- enable dynamic (virtual) dispatching of function invocation
+  - the runtime type of the object is used to determine which method is actually invoked
+  - its crucial in the context of OOP and object inheritance
+    - e.g. base type specifies function X, and multiple levels of object redefine it
+    - ^ at compile time i think the base type is always used or something
+    - ^ but with dynamic dispatch the correct fn is used based on the runtime (not compile time) type of the object at hand
 
 ### compilation process
 

@@ -1094,6 +1094,24 @@ task "announce" {
   - prefix all of your paths with one of the file system vars
 - attrs
   - change_mode: restart|noop|signal|script
+    - noop: take no action
+    - restart: the task
+    - signal: send change_signal to task
+    - script: run change_script
+  - change_signal: e.g. SIGUSR1/SIGINT
+  - data: the consul-template to execute
+  - destination: where to save the template output relative to the task working directory, unless using raw/exec
+  - env: injects the template into env as well as destination; requires change_mode === restart
+  - error_on_missing_key: task will fail
+  - perms: destination file perm
+  - uid: uid of destination owner
+  - gid: gid of destination owner
+  - source: file path on host/remote
+  - splay: random time to wait between 0 and this before invoking the change
+
+###### wait
+
+- min anmd max time to wait for the consul cluster to reach a consistent state before rendering the template
 
 ###### change_script
 
@@ -1145,6 +1163,7 @@ EOF
 
 ### variables
 
+- TODO: i need to review this section again
 - env vars
   - are injected into the task env before starting
   - are always injected as strings
@@ -1167,34 +1186,98 @@ EOF
 - `env` inside a running consul task
 
 ```sh
-HOSTNAME=ac8d28bcdc1e
-NOMAD_ADDR_consul_ui=192.168.0.16:30501
-NOMAD_ALLOC_DIR=/alloc
-NOMAD_ALLOC_ID=5fa1d4b8-9010-84fb-d829-86bc320bf70e
-NOMAD_ALLOC_INDEX=0
 NOMAD_ALLOC_NAME=core.consul[0]
-NOMAD_ALLOC_PORT_consul_ui=8501
-NOMAD_CPU_LIMIT=100
-NOMAD_DC=us_east
-NOMAD_GROUP_NAME=consul
-NOMAD_HOST_ADDR_consul_ui=192.168.0.16:30501
-NOMAD_HOST_IP_consul_ui=192.168.0.16
-NOMAD_HOST_PORT_consul_ui=30501
-NOMAD_IP_consul_ui=192.168.0.16
-NOMAD_JOB_ID=core
-NOMAD_JOB_NAME=core
-NOMAD_MEMORY_LIMIT=300
-NOMAD_META_run_uuid=0defb583-5f9b-4c9a-a230-1e761bcfb119
-NOMAD_META_RUN_UUID=0defb583-5f9b-4c9a-a230-1e761bcfb119
-NOMAD_NAMESPACE=default
-NOMAD_PARENT_CGROUP=nomad.slice
-NOMAD_PORT_consul_ui=8501
-NOMAD_REGION=global
-NOMAD_SECRETS_DIR=/secrets
-NOMAD_SHORT_ALLOC_ID=5fa1d4b8
-NOMAD_TASK_DIR=/local
-NOMAD_TASK_NAME=core-consul
+NOMAD_HOST_IP_consul_serf_wan=192.168.0.16
+CONSUL_CACERT=/run/secrets/consul_ca.pem
+NOMAD_ALLOC_PORT_consul_dns=8600
+NOMAD_CPU_LIMIT=500
+CONSUL_ADDR_CLIENT=0.0.0.0
+NOMAD_HOST_ADDR_consul_serf_lan=192.168.0.16:24264
+HOSTNAME=00aab141cf81
+CONSUL_DNS_TOKEN=50222ef2-614f-8296-54ec-05778e3f3ad8
+NOMAD_HOST_IP_consul_grpc=192.168.0.16
 SHLVL=1
+NOMAD_HOST_IP_consul_server=192.168.0.16
+NOMAD_HOST_PORT_consul_serf_lan=24264
+NOMAD_IP_consul_serf_lan=192.168.0.16
+HOME=/home/consul
+NOMAD_HOST_ADDR_consul_ui=192.168.0.16:8501
+NOMAD_ALLOC_ID=8d378542-27d1-47ff-5ed7-dd69e2a30121
+NOMAD_ADDR_consul_dns=192.168.0.16:25475
+NOMAD_ALLOC_INDEX=0
+NOMAD_MEMORY_LIMIT=256
+CONSUL_ADDR_BIND_WAN=0.0.0.0
+NOMAD_HOST_PORT_consul_ui=8501
+NOMAD_IP_consul_ui=192.168.0.16
+CONSUL_DIR_CONFIG=config
+CONSUL_DIR_DATA=data
+MESH_HOSTNAME=mesh.nirv.ai
+NOMAD_ALLOC_DIR=/alloc
+NOMAD_ALLOC_PORT_consul_serf_lan=8301
+NOMAD_DC=us-east
+NOMAD_JOB_NAME=core
+NOMAD_PORT_consul_dns=8600
+CONSUL_DIR_BASE=/consul
+CONSUL_GID=994
+NOMAD_HOST_ADDR_consul_serf_wan=192.168.0.16:29658
+CONSUL_PORT_GRPC=8503
+CONSUL_ALT_DOMAIN=search
+CONSUL_PID_FILE=pid.consul
+NOMAD_ALLOC_PORT_consul_ui=8501
+CONSUL_HTTP_TOKEN=c7da780e-bf99-6d3a-0b07-146c4e0da16c
+NOMAD_HOST_PORT_consul_serf_wan=29658
+NOMAD_IP_consul_serf_wan=192.168.0.16
+NOMAD_REGION=global
+TERM=xterm
+NOMAD_HOST_ADDR_consul_grpc=192.168.0.16:23996
+NOMAD_ADDR_consul_serf_lan=192.168.0.16:24264
+NOMAD_HOST_ADDR_consul_server=192.168.0.16:28516
+NOMAD_HOST_IP_consul_dns=192.168.0.16
+NOMAD_JOB_ID=core
+HASHICORP_RELEASES=https://releases.hashicorp.com
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+CONSUL_PORT_SERF_LAN=8301
+NOMAD_HOST_PORT_consul_grpc=23996
+NOMAD_IP_consul_grpc=192.168.0.16
+CONSUL_CLIENT_CERT=/run/secrets/consul_server.pem
+CONSUL_PORT_DNS=8600
+NOMAD_HOST_PORT_consul_server=28516
+NOMAD_IP_consul_server=192.168.0.16
+NOMAD_PORT_consul_serf_lan=8301
+NOMAD_TASK_NAME=core-consul
+NOMAD_ADDR_consul_ui=192.168.0.16:8501
+NOMAD_ALLOC_PORT_consul_serf_wan=8302
+NOMAD_NAMESPACE=default
+DATACENTER=us-east
+NOMAD_PORT_consul_ui=8501
+NOMAD_ALLOC_PORT_consul_grpc=8503
+CONSUL_UID=996
+NOMAD_ALLOC_PORT_consul_server=8300
+CONSUL_NODE_PREFIX=consul
+CONSUL_PORT_CUNT=8501
+NOMAD_HOST_IP_consul_serf_lan=192.168.0.16
+CONSUL_PORT_SERVER=8300
+NOMAD_ADDR_consul_serf_wan=192.168.0.16:29658
+NOMAD_SECRETS_DIR=/secrets
+CONSUL_CLIENT_KEY=/run/secrets/consul_server_privkey.pem
+CONSUL_PORT_SERF_WAN=8302
+MESH_SERVER_HOSTNAME=server.us-east.mesh.nirv.ai
+NOMAD_HOST_ADDR_consul_dns=192.168.0.16:25475
+NOMAD_HOST_IP_consul_ui=192.168.0.16
+NOMAD_PORT_consul_serf_wan=8302
+PWD=/consul
+NOMAD_ADDR_consul_grpc=192.168.0.16:23996
+NOMAD_GROUP_NAME=consul
+NOMAD_TASK_DIR=/local
+NOMAD_ADDR_consul_server=192.168.0.16:28516
+NOMAD_HOST_PORT_consul_dns=25475
+NOMAD_IP_consul_dns=192.168.0.16
+NOMAD_SHORT_ALLOC_ID=8d378542
+CONSUL_ADDR_BIND=0.0.0.0
+NOMAD_PARENT_CGROUP=nomad.slice
+NOMAD_PORT_consul_grpc=8503
+CONSUL_ADDR_BIND_LAN=0.0.0.0
+NOMAD_PORT_consul_server=8300
 ```
 
 #### nomad job vars
@@ -1228,10 +1311,10 @@ VAULT_TOKEN	# The task's Vault token. See Vault Integration for more details
 #### nomad network vars
 
 ```sh
-NOMAD_IP_<label>	# Host IP for the given port label. See here for more information.
-NOMAD_PORT_<label>	# Port for the given port label. Driver-specified port when a port map is used, otherwise the host's static or dynamic port allocation. Services should bind to this port. See here for more information.
+NOMAD_IP_<label>	# Host IP for the given port label.
+NOMAD_PORT_<label>	# Port for the given port label. Driver-specified port when a port map is used, otherwise the host's static or dynamic port allocation. Services should bind to this port.
 NOMAD_ADDR_<label>	# Host IP:Port pair for the given port label.
-NOMAD_HOST_PORT_<label>	# Port on the host for the port label. See here for more information.
+NOMAD_HOST_PORT_<label>	# Port on the host for the port label.
 
 NOMAD_UPSTREAM_IP_<service> #	IP for the given service when defined as a Consul Connect upstream.
 NOMAD_UPSTREAM_PORT_<service> #	Port for the given service when defined as a Consul Connect upstream.

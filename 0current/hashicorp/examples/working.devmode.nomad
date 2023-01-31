@@ -3,7 +3,7 @@
 # @see https://developer.hashicorp.com/nomad/docs/drivers/docker
 
 data_dir   = "/var/lib/nomad"
-datacenter = "us_east"
+datacenter = "us-east"
 log_level  = "INFO"
 name       = "development_nirvai_web_leader"
 region     = "global"

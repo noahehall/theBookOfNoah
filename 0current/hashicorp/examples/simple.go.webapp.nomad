@@ -4,7 +4,7 @@
 ## to this
 ### check the requirements on config > command
 job "docs" {
-  datacenters = ["us_east"]
+  datacenters = ["us-east"]
 
 
   group "example" {
