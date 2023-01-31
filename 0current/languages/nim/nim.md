@@ -18,6 +18,7 @@
 - repos
   - [nimble, the nim package manager](https://github.com/nim-lang/nimble)
   - [offensive nim](https://s3cur3th1ssh1t.github.io/Playing-with-OffensiveNim/)
+  - [nimst e something w something lol](https://github.com/status-im/nim-stew)
 - tuts
   - [nim tutorial](https://nim-lang.org/docs/tut1.html)
   - [nim for typescript programmers tutorial](https://github.com/nim-lang/Nim/wiki/Nim-for-TypeScript-Programmers)
