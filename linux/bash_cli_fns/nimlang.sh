@@ -21,14 +21,13 @@ nim_compile() {
 }
 nim_dev_run() {
   # verbosity:2 gets us errors & line numbers
-  # x: all runtime checks
-  # a: assertions on
   nim r \
+    --assertions:on \
+    --checks:on \
     --lineTrace:on \
+    --showAllMismatches:on \
     --stackTrace:on \
     --threads:on \
     --verbosity:2 \
-    -a \
-    -x \
     ${1:?somefile.nim required}
 }

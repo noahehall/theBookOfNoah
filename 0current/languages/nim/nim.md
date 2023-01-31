@@ -10,6 +10,7 @@
 - interwebs
   - [method vs proc & dynamic dispatching](https://matthiashager.com/proc-method-nim)
   - [importing in nim](https://narimiran.github.io/2019/07/01/nim-import.html)
+  - [OOP in nim](https://matthiashager.com/nim-object-oriented-programming)
 - backends/etc
   - [objective C and iOS](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
   - [C++ and iOS, windows and android development](https://devblogs.microsoft.com/cppblog/android-and-ios-development-with-c-in-visual-studio/)
@@ -19,9 +20,11 @@
   - [nimble, the nim package manager](https://github.com/nim-lang/nimble)
   - [offensive nim](https://s3cur3th1ssh1t.github.io/Playing-with-OffensiveNim/)
   - [nimst e something w something lol](https://github.com/status-im/nim-stew)
+  - [chronos async programming](https://github.com/status-im/nim-chronos/)
 - tuts
   - [nim tutorial](https://nim-lang.org/docs/tut1.html)
   - [nim for typescript programmers tutorial](https://github.com/nim-lang/Nim/wiki/Nim-for-TypeScript-Programmers)
+  - [nim by example](https://nim-by-example.github.io/getting_started/)
 - specs
   - [nim manual](https://nim-lang.org/docs/manual.html)
   - [sugar](https://nim-lang.org/docs/sugar.html)
@@ -114,8 +117,10 @@
 ### procedural traits
 
 - procedures are standalone entities that operate on data structures
-- using procedures enable compile time static type checking, dead code elimination, and perf boost over methods
-- but does not have dynamic dispatch (see method)
+- using procedures enable compile time evaluation & type checking, dead code elimination, and perf boost over methods
+- but uses static dispatch and not have dynamic dispatch (see method)
+  - at compile time i think procs are only attached to the base object,
+  - this causes subtypes to always use the base object implementation (again, i think lol)
 
 ### method (member) functions
 
@@ -125,7 +130,8 @@
   - its crucial in the context of OOP and object inheritance
     - e.g. base type specifies function X, and multiple levels of object redefine it
     - ^ at compile time i think the base type is always used or something
-    - ^ but with dynamic dispatch the correct fn is used based on the runtime (not compile time) type of the object at hand
+    - ^ but with dynamic dispatch the correct fn used is based on the runtime (not compile time) type of the object at hand
+      - nim will create a dispatch tree to see on which object the method was invoked and that objects type
 
 ### compilation process
 
