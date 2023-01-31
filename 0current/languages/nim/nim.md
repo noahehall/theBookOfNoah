@@ -11,7 +11,7 @@
   - [method vs proc & dynamic dispatching](https://matthiashager.com/proc-method-nim)
   - [importing in nim](https://narimiran.github.io/2019/07/01/nim-import.html)
   - [OOP in nim](https://matthiashager.com/nim-object-oriented-programming)
-  - [async nim](https://peterme.net/asynchronous-programming-in-nim.html)
+  - [peter has some great nim posts](https://peterme.net/tags/nim.html)
 - backends/etc
   - [objective C and iOS](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
   - [C++ and iOS, windows and android development](https://devblogs.microsoft.com/cppblog/android-and-ios-development-with-c-in-visual-studio/)
@@ -55,6 +55,11 @@
 - functional programming: avoids the changing of state and the use of mutable data, preferring the use of first-class functions, anonymous functions, and closures
 - foreign function interface: FFI: allows you to use libraries written in other programming languages, nim includes native C,C++ automatically
 - stropping: enable the use of nim keywords in identifiers
+- compiler: take an abstract program and compile it to a more concret program,
+  - e.g. from C to assembly, or typescript to javascript,
+  - usually the two have far different levels of abstraction
+  - nim is a compiler that supports multiple backends (c, c++, objective-c, javascript)
+- transpiler: takes a program in A and outputs the same program in B, usually A and B have the same level of abstraction
 
 ### nim and nims history
 
