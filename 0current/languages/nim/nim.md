@@ -107,7 +107,7 @@
 ### procedural traits
 
 - procedures are standalone entities that operate on data structures
-- using procedures enable compile time static type checking & dead code elimination
+- using procedures enable compile time static type checking, dead code elimination, and perf boost over methods
 - but does not have dynamic dispatch (see method)
 
 ### method (member) functions
