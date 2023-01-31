@@ -4,20 +4,26 @@
 
 ## links
 
-- [importing in nim](https://narimiran.github.io/2019/07/01/nim-import.html)
-- [changes since nimlang book (2017)](https://deepakg.github.io/nim/2019/09/28/nim-in-action-errata.html)
 - [nimlang on github](https://github.com/nim-lang/)
-- [objective C and iOS](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
-- [C++ and iOS, windows and android development](https://devblogs.microsoft.com/cppblog/android-and-ios-development-with-c-in-visual-studio/)
-- [GCC c compiler](https://gcc.gnu.org/)
-- [Clang C compiler](http://clang.org/)
-- [nimble, the nim package manager](https://github.com/nim-lang/nimble)
-- [offensive nim](https://s3cur3th1ssh1t.github.io/Playing-with-OffensiveNim/)
-- [nim tutorial](https://nim-lang.org/docs/tut1.html)
-- [nim manual](https://nim-lang.org/docs/manual.html)
+- [changes since nimlang book (2017)](https://deepakg.github.io/nim/2019/09/28/nim-in-action-errata.html)
 - [nim style guide](https://status-im.github.io/nim-style-guide/)
-- [nim for typescript programmers tutorial](https://github.com/nim-lang/Nim/wiki/Nim-for-TypeScript-Programmers)
-- [sugar](https://nim-lang.org/docs/sugar.html)
+- interwebs
+  - [method vs proc & dynamic dispatching](https://matthiashager.com/proc-method-nim)
+  - [importing in nim](https://narimiran.github.io/2019/07/01/nim-import.html)
+- backends/etc
+  - [objective C and iOS](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
+  - [C++ and iOS, windows and android development](https://devblogs.microsoft.com/cppblog/android-and-ios-development-with-c-in-visual-studio/)
+  - [GCC c compiler](https://gcc.gnu.org/)
+  - [Clang C compiler](http://clang.org/)
+- repos
+  - [nimble, the nim package manager](https://github.com/nim-lang/nimble)
+  - [offensive nim](https://s3cur3th1ssh1t.github.io/Playing-with-OffensiveNim/)
+- tuts
+  - [nim tutorial](https://nim-lang.org/docs/tut1.html)
+  - [nim for typescript programmers tutorial](https://github.com/nim-lang/Nim/wiki/Nim-for-TypeScript-Programmers)
+- specs
+  - [nim manual](https://nim-lang.org/docs/manual.html)
+  - [sugar](https://nim-lang.org/docs/sugar.html)
 
 ## basics
 
