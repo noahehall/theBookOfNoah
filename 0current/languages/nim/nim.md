@@ -23,6 +23,8 @@
   - [nimst e something w something lol](https://github.com/status-im/nim-stew)
   - [chronos async programming](https://github.com/status-im/nim-chronos/)
   - [repos used in nbc](https://nimbus.guide/auditors-book/03.2_build_system_and_dependencies.html)
+  - [test utils](https://github.com/status-im/nim-testutils)
+  - [json](https://github.com/status-im/nim-json-serialization)
 - tuts
   - [bunches of tuts](https://nim-lang.org/documentation.html)
   - [nim tutorial](https://nim-lang.org/docs/tut1.html)
@@ -31,11 +33,17 @@
 - specs
   - [nim manual](https://nim-lang.org/docs/manual.html)
   - [sugar](https://nim-lang.org/docs/sugar.html)
+  - [assertions](https://nim-lang.org/docs/assertions.html)
 
 ## basics
 
+### best practices/gotchas
+
+- side effects: accessing/mutating a global var or interacting with stdout; mutating a proc arg is not considered a side effect if its not a global var
+
 ### terms
 
+- copy elison (result var): Omits copy and move (since C++11) constructors, resulting in zero-copy pass-by-value semantics.
 - IoT: internet of things; physical devices with embedded electornics that are connected to the internet
 - type systems: a spectrum between two extremes
   - static: finds more errors at compile time, but decreases speed at which programs can be written
@@ -62,6 +70,7 @@
   - usually the two have far different levels of abstraction
   - nim is a compiler that supports multiple backends (c, c++, objective-c, javascript)
 - transpiler: takes a program in A and outputs the same program in B, usually A and B have the same level of abstraction
+- module: every file is considered a module
 
 ### nim and nims history
 
