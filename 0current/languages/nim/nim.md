@@ -22,7 +22,9 @@
   - [offensive nim](https://s3cur3th1ssh1t.github.io/Playing-with-OffensiveNim/)
   - [nimst e something w something lol](https://github.com/status-im/nim-stew)
   - [chronos async programming](https://github.com/status-im/nim-chronos/)
+  - [repos used in nbc](https://nimbus.guide/auditors-book/03.2_build_system_and_dependencies.html)
 - tuts
+  - [bunches of tuts](https://nim-lang.org/documentation.html)
   - [nim tutorial](https://nim-lang.org/docs/tut1.html)
   - [nim for typescript programmers tutorial](https://github.com/nim-lang/Nim/wiki/Nim-for-TypeScript-Programmers)
   - [nim by example](https://nim-by-example.github.io/getting_started/)
@@ -141,6 +143,7 @@
 
 ### compilation process
 
+- Nim can target any combination of C compiler, host OS and hardware architecture as long as the C compiler supports it.
 - send the nim code to the nim compiler
 - the nim compiler compiles the nim code into C
   - has a hard dependency on a C compiler, e.g. GCC or Clang
