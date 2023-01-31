@@ -11,6 +11,7 @@
   - [method vs proc & dynamic dispatching](https://matthiashager.com/proc-method-nim)
   - [importing in nim](https://narimiran.github.io/2019/07/01/nim-import.html)
   - [OOP in nim](https://matthiashager.com/nim-object-oriented-programming)
+  - [async nim](https://peterme.net/asynchronous-programming-in-nim.html)
 - backends/etc
   - [objective C and iOS](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
   - [C++ and iOS, windows and android development](https://devblogs.microsoft.com/cppblog/android-and-ios-development-with-c-in-visual-studio/)
