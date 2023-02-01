@@ -1,6 +1,7 @@
 #!/bin/env bash
 
-#@see https://stackoverflow.com/questions/35773299/how-can-you-export-the-visual-studio-code-extension-list
+# @see https://stackoverflow.com/questions/35773299/how-can-you-export-the-visual-studio-code-extension-list
+# setup for code-insiders
 
 echo -e "install these extensions with ./vscode.install.extensions.sh"
 set -ex
