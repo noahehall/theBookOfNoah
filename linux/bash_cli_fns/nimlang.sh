@@ -13,11 +13,11 @@ alias nim_b_pkgs='nimble list'
 alias nim_b_refresh='nimble refresh'
 alias nim_c_current='choosenim show'
 alias nim_c='choosenim'
-alias nim_prod_build='nim -d:release c --verbosity:2'
 alias nim_prod_run='nim -d:release r --verbosity:0'
 
 nim_compile() {
   nim c \
+    -d:release \
     --verbosity:0 \
     --stackTrace:on \
     ${1:?somefile.nim required}
@@ -27,6 +27,7 @@ nim_dev_run() {
   nim r \
     --assertions:on \
     --checks:on \
+    --debugger:native \
     --lineTrace:on \
     --showAllMismatches:on \
     --stackTrace:on \

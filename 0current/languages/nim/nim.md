@@ -25,6 +25,7 @@
   - [repos used in nbc](https://nimbus.guide/auditors-book/03.2_build_system_and_dependencies.html)
   - [test utils](https://github.com/status-im/nim-testutils)
   - [json](https://github.com/status-im/nim-json-serialization)
+  - [fuzz tests](https://github.com/status-im/nim-testutils/tree/master/testutils/fuzzing)
 - tuts
   - [bunches of tuts](https://nim-lang.org/documentation.html)
   - [nim tutorial](https://nim-lang.org/docs/tut1.html)
@@ -43,6 +44,7 @@
 
 ### terms
 
+- fuzz tests: automated software testing technique that involves providing invalid, unexpected, or random data as inputs
 - copy elison (result var): Omits copy and move (since C++11) constructors, resulting in zero-copy pass-by-value semantics.
 - IoT: internet of things; physical devices with embedded electornics that are connected to the internet
 - type systems: a spectrum between two extremes
