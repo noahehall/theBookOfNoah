@@ -221,6 +221,9 @@ sudo apt install \
   - cleaner wayyy better than the one by stacer
 - [drawio desktop](https://github.com/jgraph/drawio-desktop/releases)
   - theres a specific link for linux deb, dont download from the assets list
+- [figma](https://www.figma.com/)
+  - u suck at design, i dont know why you keep trying lol
+  - login with your gmail
 
 #### maybe installs
 
