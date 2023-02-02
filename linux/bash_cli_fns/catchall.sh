@@ -1,5 +1,8 @@
 #!/bin/env bash
 
+x11_or_wayland() {
+    loginctl show-session $(awk '/tty/ {print $1}' <(loginctl)) -p Type | awk -F= '{print $2}'
+}
 # bash
 redirectALL() {
     echo "redirecting stdout & err to ./redirectALL.log"
@@ -43,12 +46,6 @@ alias cdmedia='cd /media/$(whoami)/'
 # grep ---------------------------------
 alias grepfilenames='grep -iRl'
 
-# pkgs ---------------------------------
-alias dpkgi='grep " install " /var/log/dpkg.log'
-alias apti='grep " install " /var/log/apt/history.log'
-alias installed='(dpkgi;apti) | less'
-alias untar='tar -xvf'
-
 # random
 alias xargall='xargs -p -t -n 1'
 alias copyssh='pbcopy < ~/.ssh/id_rsa.pub'
@@ -88,11 +85,6 @@ alias listcpus='lscpu'
 alias listcpusfull='cat /proc/cpuinfo'
 alias listdisks='duf -all'
 alias listfilesystem='df -ha'
-
-# gpg|ssh keys -------------------------
-# @see https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key
-alias gpglistkeys='gpg --list-keys'
-alias gpglistkeyslong='gpg --list-keys --keyid-format=long'
 
 # random stuff -----------------------------------------------------------------
 # general

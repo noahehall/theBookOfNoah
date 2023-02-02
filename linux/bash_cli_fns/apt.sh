@@ -19,3 +19,9 @@ alias apt_search_looks='apt search ^regolith-look-'
 alias apt_upgradable='sudo apt list --upgradable'
 alias apt_keys_list='sudo apt-key list'
 alias apt_key_del='sudo apt-key del'
+
+# pkgs ---------------------------------
+alias dpkgi='grep " install " /var/log/dpkg.log'
+alias apti='grep " install " /var/log/apt/history.log'
+alias apt_installed='(dpkgi;apti) | less'
+alias untar='tar -xvf'

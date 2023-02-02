@@ -15,6 +15,10 @@ alias nim_c_current='choosenim show'
 alias nim_c='choosenim'
 alias nim_prod_run='nim -d:release r --verbosity:0'
 
+nim_b_upgrade() {
+  nimble install nimble
+}
+
 nim_compile() {
   nim c \
     -d:release \

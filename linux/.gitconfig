@@ -4,6 +4,8 @@
 # user.email=noahehall@users.noreply.github.com
 # signingkey = whatever comes from
 # ^ gpg --list-secret-keys --keyid-format=long
+# [include]
+# path = /home/poop/git/foss/theBookOfNoah/linux/.gitconfig
 
 [core]
   editor = nano
@@ -36,8 +38,8 @@
   fsckobjects = true
 
 [diff]
-  tool = icdiff
+  tool = git-icdiff
 [difftool]
   prompt = false
-[difftool "icdiff"]
-  cmd = icdiff --line-numbers $LOCAL $REMOTE
+[difftool "git-icdiff"]
+  cmd = git-icdiff --line-numbers $LOCAL $REMOTE
