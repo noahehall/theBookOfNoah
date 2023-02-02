@@ -1,18 +1,10 @@
 # TLDR
 
 - [many scripts moved to nirvai/scripts](https://github.com/nirv-ai/scripts)
-- todo
-  - need better interoperability between archs; everything works with ubuntu, add uname checks for arm4 especially within the linux dir
-- appication development
-  - my sweet spot/interests: web security, web architecture, virtualization, javascript, ~nimlang~ scala, bash, databases
-    - regrettably i had to drop nimlang for scala
-    - however scala has proven to be butter on toast
-- **HECC-YA** system modeling: **h**ardware **e**nvironment **c**omponent **c**ommunication **y**ielding **a**rchitecture
-  - I want to create (yield) a world (environment) for a set of living things (components) to live holistically (hardware) and socially (communication)
-  - read more in [architectural thinking](/0current/architectural%20thinking/0heccya.md#hecc-ya-system-modeling)
-- **RACEXP** product management paradigm: **R**ealistic **A**gile **C**oncepts for **EX**tream **P**rogramming
-  - ![@noahedwardhall RACE:XP](/0current/architectural%20thinking/images/racexp.png)
-  - read more in [architectural thinking](/0current/architectural%20thinking/0racexp.md)
+- full stack appication development
+  - javascript > web architecture > virtualization > bash > databases > security > nimlang
+  - i spend too much time at the top, and not enough at the bottom of the stack
+  - but thats just how life goes
 
 # When to use
 
