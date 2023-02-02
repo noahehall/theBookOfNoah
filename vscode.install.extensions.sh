@@ -31,10 +31,12 @@ code-insiders --install-extension ms-vscode-remote.remote-containers
 code-insiders --install-extension ms-vscode.azure-account
 code-insiders --install-extension ms-vscode.cmake-tools
 code-insiders --install-extension ms-vscode.cpptools
+code-insiders --install-extension nimsaem.nimvscode
 code-insiders --install-extension oderwat.indent-rainbow
 code-insiders --install-extension rangav.vscode-thunder-client
 code-insiders --install-extension redhat.fabric8-analytics
 code-insiders --install-extension redhat.vscode-commons
 code-insiders --install-extension redhat.vscode-xml
 code-insiders --install-extension redhat.vscode-yaml
+code-insiders --install-extension tomoki1207.pdf
 code-insiders --install-extension twxs.cmake
