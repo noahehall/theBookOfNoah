@@ -14,6 +14,10 @@
 - [common ufw firewall rules](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
 - [upgrading bash on mac](https://itnext.io/upgrading-bash-on-macos-7138bd1066ba)
 - [some cool pkgs](http://packages.azlux.fr/)
+- [ubuntu pro tut](https://ubuntu.com/pro/tutorial)
+- [security stack.exchange](https://security.stackexchange.com)
+- [kali linux tools](https://www.kali.org/tools/)
+  - also check the whitehat usb for other tools and docs
 
 ## fresh install
 
@@ -130,12 +134,15 @@ apt_refresh
 sudo apt install \
   bpytop \
   broot \
+  chkrootkit \
   chromium-browser \
   ctop \
   dconf-editor \
   dive \
   duf \
   gping \
+  gufw \
+  install gnome-boxes \
   jq \
   neofetch \
   net-tools \
@@ -144,10 +151,12 @@ sudo apt install \
   preload \
   rclone \
   resolvconf \
+  rkhunter \
   socat \
   speedtest-cli \
   stacer \
-  tree
+  tree \
+  ubuntu-advantage-tools
 
 # media
 sudo apt install \
@@ -162,6 +171,63 @@ sudo apt install \
   vlc-plugin-svg \
   vlc-plugin-video-output
 
+
+```
+
+#### base security
+
+```sh
+## disable automount related things now that dconf is installed
+## @see https://linuxconfig.org/how-to-disable-gui-desktop-usb-automount-on-linux-system
+
+## setup ufw firewall using the just installed gufw gui
+gufw # then click enable
+
+## add chkrootkit u just installed to your bashrc
+# on refresh you may see reports of kernel files
+# ^ @see https://askubuntu.com/questions/856398/what-exactly-is-lib-modules-4-4-0-xx-generic-vdso-build-id
+echo "sudo chkrootkit" >> ~/.bashrc
+
+## update sshd (server) config
+## dont use assigned ports @see https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
+get_port_status XXXX # find an open port
+edit_sshd_config
+Port ur_ssh_port_here # change server ssh port
+PermitRootLogin No # disable root login
+
+## chmod home dir
+chmod 0700 $HOME # only you can read
+chmod 0750 $HOME # or give group members read
+
+## setup ubuntu advantage you just installed
+## sign into ubuntu then go to https://ubuntu.com/pro/dashboard
+## attach your token
+sudo pro attach ur_token_here
+## update your bashrc
+echo "sudo pro refresh" >> ~/.bashrc
+echo "pro security-status" >> ~/.bashrc
+echo "pro security-status --esm-apps" >> ~/.bashrc
+
+# refresh your shell
+refresh_shell
+
+## any apps reported in bold needs to be fixed
+apt_refresh  # install all updates
+## apt-cache policy some_app_name # install a specific version
+## fix a specific CVE: pro fix CVE-2021-3583
+
+## run just installed rkhunter
+# dont add to bashrc, it takes too long
+rkhunter --check
+# if anything looks suspicious, review the logs
+sudo less /var/log/rkhunter.log
+
+# setup & configure tiger
+sudo apt install tiger
+# dont add tiger to your bashrc, it takes too long
+# but you can run `tiger` to do manual checks
+less the_var/log/file/path
+# its going to report a bunch of stuff you need to do
 ```
 
 #### more involved installation/setup
@@ -183,10 +249,6 @@ sudo apt install \
     - [make sure to get the guest additions iso](https://www.virtualbox.org/manual/ch04.html#mountingadditionsiso)
       - [quick overview if its been awhile](https://www.makeuseof.com/tag/virtualbox-guest-additions-what-they-are-and-how-to-install-them/)
     - [additional help](https://www.virtualbox.org/manual/ch02.html)
-  - [gnome-boxes](https://wiki.gnome.org/Apps/Boxes)
-    - sudo apt install gnome-boxes
-    - [user guide](https://help.gnome.org/users/gnome-boxes/stable/)
-    - [blog post](https://www.debugpoint.com/install-use-gnome-boxes/)
   - you should be able to plugin the whitehat drive and play around
 - setup hashistack
   - if you installed vagrant the hashi repo is already setup
@@ -195,7 +257,7 @@ sudo apt install \
   - refresh_shell
   - nvm install node
   - npm i -g pnpm
-  - npm_install_latest_npm
+  - nvm_install_latest_npm
 - [install nim via choosenim](https://github.com/dom96/choosenim#installation)
   - dont forget to setup your path (read the cmd output)
   - nim_c_current
@@ -224,6 +286,8 @@ sudo apt install \
 - [figma](https://www.figma.com/)
   - u suck at design, i dont know why you keep trying lol
   - login with your gmail
+- [signal](https://signal.org/en/download/)]
+  - has e2e encryption for chats by default, telegram doesnt
 
 #### maybe installs
 
@@ -242,8 +306,6 @@ sudo apt install \
     - user themes
     - workspace indicator
 - [opensnitch](https://github.com/evilsocket/opensnitch)
-- [signal](https://signal.org/en/download/)]
-  - has e2e encryption for chats by default, telegram doesnt
 - if you want docker + k8s # ignore we're on the hashistack
   - [download rancher desktop from github releases](https://github.com/rancher-sandbox/rancher-desktop/releases)
   - unzip and symlink rancher-desktop somehwere in your path
@@ -253,10 +315,13 @@ sudo apt install \
 
 - [github](https://github.com/nirv-ai)
   - drop all the repos in ~/git/private/nirv
+- open chrome and login to teams (never works right on firefox)
+  - make sure the camera works n stuff
 
 ```sh
 # theres bunches of things we need to do
 # list them all here
+# dizzam i forgot to do this again
 ```
 
 ### buntu errors
@@ -321,9 +386,15 @@ sudo tee /etc/modprobe.d/iwlwifi-opt.conf <<< "options iwlwifi bt_coex_active=0"
 reboot
 ```
 
+## blackbuntu
+
+- still not ready to leave regolith
+- [looks sweeet](https://blackbuntu.org/)
+- [checkout the list](https://github.com/neoslab/blackbuntu/blob/main/TOOLS.md)
+
 ## vanilla os
 
-- still not ready to leave regolith and its i3 config
+- still not ready to leave regolith
 - [looks sweeeet](https://vanillaos.org/)
 
 ## remote server setup

@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # use the latest version of curl installed via `brew install curl`
 if [[ -f "/opt/homebrew/opt/curl/bin/curl" ]]; then

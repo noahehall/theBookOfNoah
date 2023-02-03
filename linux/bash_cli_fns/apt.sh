@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # apt ----------------------------------
 alias apt_fix_broken='sudo apt install --fix-broken'
