@@ -68,8 +68,7 @@ regolith-look refresh
 
 - [firefox dev](https://www.mozilla.org/en-US/firefox/developer/)
   - move to /opt and ln -s firefox/firefox to runfirefox
-  - check kitty docs for how to add desktop integration
-  - setup ffdev as default browser then add ubuntu > settings > shortcut key so you dont need to run it from cli
+  - [copy this file to ~/.local/share/applications](./linux/ffdev.desktop)
   - [disable security warning](https://medium.com/volosoft/how-to-disable-firefox-warning-potential-security-risk-ahead-f081fbf81a4f)
   - essential extensions
     - [sideberry](https://addons.mozilla.org/en-US/firefox/addon/sidebery/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=hotness)
@@ -130,7 +129,7 @@ apt_refresh
 
 # quick tools
 # broot is better than tree, but tree is easier for copypasta into readmes
-# nettools provides netstat
+# nettools provides netstat, but prefer to use ss
 sudo apt install \
   bpytop \
   broot \
