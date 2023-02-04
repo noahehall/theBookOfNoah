@@ -151,7 +151,7 @@
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
   "[typescript]": {},
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 2,
   "code-runner.enableAppInsights": false,
   "code-runner.saveFileBeforeRun": true,
   "code-runner.languageIdToFileExtensionMap": {
@@ -188,7 +188,7 @@
     "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
     "lisp": "sbcl --script",
     "lua": "lua",
-    "nim": "nim r --assertions:on --checks:on --debugger:native --lineTrace:on --showAllMismatches:on --stackTrace:on --threads:on  --verbosity:2",
+    "nim": "nim r --assertions:on --checks:on --debugger:native --lineTrace:on --showAllMismatches:on --stackTrace:on --threads:on --multimethods:on --verbosity:2",
     "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "ocaml": "ocaml",
     "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",

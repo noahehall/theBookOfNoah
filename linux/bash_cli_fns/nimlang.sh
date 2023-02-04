@@ -33,6 +33,7 @@ nim_dev_run() {
     --checks:on \
     --debugger:native \
     --lineTrace:on \
+    --multimethods:on \
     --showAllMismatches:on \
     --stackTrace:on \
     --threads:on \
