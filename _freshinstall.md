@@ -22,6 +22,8 @@
 
 ## fresh install
 
+- [bashrc based on these install steps](./linux/.bashrc_example)
+
 ### ubuntu:dev
 
 #### rm snaps and install regolith

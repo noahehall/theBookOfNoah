@@ -4,6 +4,7 @@
 
 ## links
 
+- [gdb debugger](https://sourceware.org/gdb/)
 - [nimlang on github](https://github.com/nim-lang/)
 - [changes since nimlang book (2017)](https://deepakg.github.io/nim/2019/09/28/nim-in-action-errata.html)
 - [nim style guide](https://status-im.github.io/nim-style-guide/)

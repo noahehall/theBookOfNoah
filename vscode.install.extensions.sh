@@ -19,6 +19,7 @@ code-insiders --install-extension hashicorp.hcl
 code-insiders --install-extension hashicorp.terraform
 code-insiders --install-extension IBM.output-colorizer
 code-insiders --install-extension jakebathman.mysql-syntax
+code-insiders --install-extension joaompinto.vscode-graphviz
 code-insiders --install-extension JuanBlanco.solidity
 code-insiders --install-extension mechatroner.rainbow-csv
 code-insiders --install-extension mgmcdermott.vscode-language-babel

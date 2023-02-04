@@ -116,21 +116,23 @@ if ! shopt -oq posix; then
     fi
 fi
 
-###
-# if you worked through root/_freshinstall.md
-# your bashrc should look similar to the below
-#
-# source /home/poop/git/foss/theBookOfNoah/linux/_sourceme_.sh
-# export PATH="/home/poop/git/private/nirv/scripts:$PATH"
-# for operator_script in /home/poop/git/private/nirv/scripts/shell-init/*.sh; do
-#   source $operator_script
-# done;
-# sudo chkrootkit
-# sudo pro refresh
-# pro security-status
-# pro security-status --esm-apps
+## if you've completed the steps in root/_fresh_install.md
+## your bashrc should look something like this
+source /home/poop/git/foss/theBookOfNoah/linux/_sourceme_.sh
+export PATH="/home/poop/git/private/nirv/scripts:$PATH"
+for operator_script in /home/poop/git/private/nirv/scripts/shell-init/*.sh; do
+    source $operator_script
+done
 
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# export PATH=/home/poop/.nimble/bin:/home/poop/.nvm/versions/node/v19.6.0/bin:/home/poop/git/private/nirv/scripts:/opt:/home/poop/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/usr/local/go/bin
+read -p "run security checks?  " -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    sudo chkrootkit
+    sudo pro refresh
+    pro security-status
+    pro security-status --esm-apps
+fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+export PATH=/home/poop/.nimble/bin:/home/poop/.nvm/versions/node/v19.6.0/bin:/home/poop/git/private/nirv/scripts:/opt:/home/poop/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/usr/local/go/bin
