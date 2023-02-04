@@ -18,6 +18,7 @@
 - [security stack.exchange](https://security.stackexchange.com)
 - [kali linux tools](https://www.kali.org/tools/)
   - also check the whitehat usb for other tools and docs
+- [latex](https://www.latex-project.org/about/)
 
 ## fresh install
 
