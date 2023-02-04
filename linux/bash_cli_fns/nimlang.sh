@@ -54,9 +54,10 @@ EOF
 
 # TODO
 # --experimental:$1 think $1 should be a specific feature
-
+# -d:nodejs js backend targets nodejs instead of browser
 read -r -d '' nim_prod_opts <<'EOF'
 --assertions:on
+--debugger:native
 --errorMax:1
 --forceBuild:on
 --hints:on
