@@ -56,15 +56,11 @@ alias numberofcores='cat /proc/cpuinfo | grep processor | wc -l'
 alias pbcopy='xclip -selection clipboard'
 alias seessh='cat ~/.ssh/id_rsa.pub'
 alias groupmembers='getent group'
-alias ufwstatus='sudo ufw status verbose'
 
 # can also add on a path at the end `sizeit ~/some/path`
 alias sizeit='du -ahc'
 # e.g. curl get/some/json | prettyjson
 alias prettyjson='python -m json.tool | less'
-
-# get all ufw firewall config files
-alias ufwconfigs='sudo find / -name "*.rules" -exec ls -l {} \; | grep ufw'
 
 # inspection -------------------------------------------------------------------
 alias listallgroups='cat /etc/group'

@@ -145,6 +145,7 @@ sudo apt install \
   jq \
   neofetch \
   net-tools \
+  nmap \
   oha \
   pass \
   preload \

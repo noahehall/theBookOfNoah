@@ -1,4 +1,4 @@
-#!/bin/bash bash
+#!/usr/bin/bash bash
 
 function sourceifexists() {
     if [[ $# -eq 1 && -f "$1" ]]; then
