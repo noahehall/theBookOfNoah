@@ -23,13 +23,9 @@ code-insiders --install-extension joaompinto.vscode-graphviz
 code-insiders --install-extension JuanBlanco.solidity
 code-insiders --install-extension mechatroner.rainbow-csv
 code-insiders --install-extension mgmcdermott.vscode-language-babel
-code-insiders --install-extension mhutchie.git-graph
 code-insiders --install-extension mikestead.dotenv
 code-insiders --install-extension mindaro-dev.file-downloader
-code-insiders --install-extension ms-azuretools.vscode-docker
 code-insiders --install-extension ms-dotnettools.vscode-dotnet-runtime
-code-insiders --install-extension ms-vscode-remote.remote-containers
-code-insiders --install-extension ms-vscode.azure-account
 code-insiders --install-extension ms-vscode.cmake-tools
 code-insiders --install-extension ms-vscode.cpptools
 code-insiders --install-extension nimsaem.nimvscode

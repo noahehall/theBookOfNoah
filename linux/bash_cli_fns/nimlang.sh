@@ -39,6 +39,8 @@ nim_b_upgrade() {
 ########################## OPTS nim
 # TODO: pretty sure we can have a single nim_c_or_r
 # ^ that way we can reduce the duplication
+# add a nim_proj_run/dev/etc that expects opts to be specified in a cfg
+# ^ should only set baseline opts and allowing for projects to set the rest
 
 # TODO: unsure if this is only for C, or also objcpp
 read -r -d '' c_opts <<'EOF'
@@ -54,10 +56,12 @@ EOF
 
 # TODO
 # --experimental:$1 think $1 should be a specific feature
-# -d:nodejs js backend targets nodejs instead of browser
+# --define:nodejs js backend targets nodejs instead of browser
 read -r -d '' nim_prod_opts <<'EOF'
 --assertions:on
 --debugger:native
+--define:release=production
+--define:ssl
 --errorMax:1
 --forceBuild:on
 --hints:on
@@ -71,8 +75,6 @@ read -r -d '' nim_prod_opts <<'EOF'
 --tlsEmulation:on
 --verbosity:0
 --warnings:on
--d:release
--d:ssl
 EOF
 
 # TODO
@@ -86,6 +88,7 @@ read -r -d '' nim_dev_opts <<'EOF'
 --debugger:native
 --debuginfo:on
 --declaredLocs:on
+--define:ssl
 --errorMax:0
 --excessiveStackTrace:on
 --hints:on
@@ -100,7 +103,6 @@ read -r -d '' nim_dev_opts <<'EOF'
 --tlsEmulation:on
 --verbosity:2
 --warnings:on
--d:ssl
 EOF
 
 ########################## nimscript
@@ -140,6 +142,8 @@ nim_run() {
 ########################## dev nim
 
 nim_dump() {
+  # list search paths for auto imported modules & included files
+  # @see https://nim-lang.org/docs/nimc.html#compiler-usage-search-path-handling
   nim dump
 }
 nim_graph() {
