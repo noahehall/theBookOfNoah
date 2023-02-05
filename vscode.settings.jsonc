@@ -188,7 +188,7 @@
     "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
     "lisp": "sbcl --script",
     "lua": "lua",
-    "nim": "nim r --assertions:on --checks:on --debugger:native --lineTrace:on --showAllMismatches:on --stackTrace:on --threads:on --multimethods:on --verbosity:2",
+    "nim": "nim r --assertions:on --checks:on --debugger:native --declaredLocs:on --errorMax:0 --excessiveStackTrace:on --hints:on --multimethods:on --opt:size --parallelBuild:0 --showAllMismatches:on --stackTraceMsgs:on --styleCheck:hint --threads:on --tlsEmulation:on --verbosity:2 --warnings:on -d:ssl",
     "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "ocaml": "ocaml",
     "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
