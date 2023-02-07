@@ -60,6 +60,7 @@ EOF
 read -r -d '' nim_prod_opts <<'EOF'
 --assertions:on
 --debugger:native
+--define:nimStrictDelete
 --define:release=production
 --define:ssl
 --errorMax:1
@@ -80,6 +81,7 @@ EOF
 # TODO
 # --hotCodeReloading:on throws err
 # --mm:orc throws err
+# be cautious of --incremental:on as it tends to throw randomly on subsequent runs
 
 read -r -d '' nim_dev_opts <<'EOF'
 --assertions:on
@@ -88,11 +90,12 @@ read -r -d '' nim_dev_opts <<'EOF'
 --debugger:native
 --debuginfo:on
 --declaredLocs:on
+--define:nimStrictDelete
 --define:ssl
 --errorMax:0
 --excessiveStackTrace:on
 --hints:on
---incremental:on
+--incremental:off
 --multimethods:on
 --opt:size
 --parallelBuild:0

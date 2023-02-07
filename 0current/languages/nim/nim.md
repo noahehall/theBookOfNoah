@@ -45,6 +45,7 @@
 
 ### terms
 
+- [endianness](https://en.wikipedia.org/wiki/Endianness)
 - fuzz tests: automated software testing technique that involves providing invalid, unexpected, or random data as inputs
 - copy elison (result var): Omits copy and move (since C++11) constructors, resulting in zero-copy pass-by-value semantics.
 - IoT: internet of things; physical devices with embedded electornics that are connected to the internet
