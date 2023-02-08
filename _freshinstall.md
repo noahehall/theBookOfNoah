@@ -73,6 +73,7 @@ regolith-look refresh
   - move to /opt and ln -s firefox/firefox to runfirefox
   - [copy this file to ~/.local/share/applications](./linux/ffdev.desktop)
   - [disable security warning](https://medium.com/volosoft/how-to-disable-firefox-warning-potential-security-risk-ahead-f081fbf81a4f)
+  - be sure to check `delete all cookies from all sites` (except maybe gmail) on browser close somewhere in the settings
   - essential extensions
     - [sideberry](https://addons.mozilla.org/en-US/firefox/addon/sidebery/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=hotness)
     - [ublock](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=recommended_fallback)
@@ -104,6 +105,7 @@ regolith-look refresh
     - install python `sudo apt install python3-pip`
     - install icdiff `pip install icdiff`
     - now you can run `git-icdiff`
+      - theres a alias for `gitd` the standard `git diff` still doesnt use git icdiff, dunno ignoring
 - [usb wifi driver](https://github.com/morrownr/8814au)
   - [aircrack](https://github.com/aircrack-ng/rtl8814au)
     - ^ dont fkn install this one, but read its notes
@@ -356,13 +358,14 @@ less the_var/log/file/path
 - on a fresh ubuntu these werent needed and the mx mechanical 10key works
   - still do it as eventually the stutter returns, dunno
   - see solaar for ubuntu
-- [setup guide for keyboard](https://www.logitech.com/en-us/setup/mxsetup.html)
-- [log+ options app](https://www.logitech.com/en-us/software/logi-options-plus.html)
-- hold for 3 seconds to optimize for OS
-  - mac: fn O
-  - win/linux: fn P
+- only available for mac
+  - [setup guide for keyboard](https://www.logitech.com/en-us/setup/mxsetup.html)
+  - [log+ options app](https://www.logitech.com/en-us/software/logi-options-plus.html)
+  - hold for 3 seconds to optimize for OS
+    - mac: fn O
+    - win/linux: fn P
 
-### pwr solaar
+### pwr solaar & bluetooth fix
 
 - on a fresh ubuntu this wasnt needed
   - haha, and that was a lie, guaranteed to start stuttering after a few days
@@ -379,9 +382,11 @@ pip install --user solaar
 sudo add-apt-repository ppa:solaar-unifying/stable
 apt_refresh
 sudo apt install solaar
+# use stacer to add it to startup programs, or create a desktop file (see one of the links)
 
 
 # @see https://winaero.com/fix-bluetooth-mouse-lag-on-linux-for-device-without-transmitter/
+# these settings dont persist after re{boot,login}
 bluetooth_list_devices
 sudo su
 /var/lib/bluetooth/somedir/your-device-id-here/info
@@ -392,12 +397,29 @@ MaxInterval=6
 
 
 # @see https://askubuntu.com/questions/1320412/bluetooth-mouse-lag-ubuntu-20-04
+# this didnt fkn do anything
 sudo nano /etc/default/grub
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash btusb.enable_autosuspend=0"
 sudo update-grub
 reboot
 # @see https://askubuntu.com/questions/1180242/lag-when-using-bluetooth-mouse
 sudo tee /etc/modprobe.d/iwlwifi-opt.conf <<< "options iwlwifi bt_coex_active=0"
+reboot
+
+# @see https://askubuntu.com/questions/1303731/how-to-change-bluetooth-timeout-settings-for-bluetooth-mouse
+# haha this fkn worked
+lsusb -vt # its gonna list a bunch of stuff, just find the top level blutooth
+# e.g.
+ID POOP:SOOP Linux Foundation 2.0 root hub
+  ...
+  ...
+  ...
+  something something BLUETOOTH BABY
+
+# then create a new udev rule
+sudo nano /etc/udev/rules.d/50-usb_power_save.rules
+# add this line with the idvendor and idproduct from the top level
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="POOP", ATTR{idProduct}=="SOOP", ATTR{power/autosuspend}="-1"
 reboot
 ```
 
