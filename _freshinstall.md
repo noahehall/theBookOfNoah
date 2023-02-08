@@ -354,13 +354,15 @@ less the_var/log/file/path
 ## logi keyboard & mouse
 
 - on a fresh ubuntu these werent needed and the mx mechanical 10key works
+  - still do it as eventually the stutter returns, dunno
+  - see solaar for ubuntu
 - [setup guide for keyboard](https://www.logitech.com/en-us/setup/mxsetup.html)
 - [log+ options app](https://www.logitech.com/en-us/software/logi-options-plus.html)
 - hold for 3 seconds to optimize for OS
   - mac: fn O
   - win/linux: fn P
 
-## pwr solaar
+### pwr solaar
 
 - on a fresh ubuntu this wasnt needed
 - https://github.com/pwr-Solaar/Solaar
