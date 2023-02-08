@@ -370,6 +370,12 @@ less the_var/log/file/path
 - https://github.com/pwr-Solaar/Solaar/blob/master/share/autostart/solaar.desktop
 
 ```sh
+# via solar stable @see https://launchpad.net/~solaar-unifying/+archive/ubuntu/stable
+sudo add-apt-repository ppa:solaar-unifying/stable
+apt_refresh
+sudo apt install solaar
+
+# via python
 pip install --user solaar
 
 # @see https://winaero.com/fix-bluetooth-mouse-lag-on-linux-for-device-without-transmitter/
