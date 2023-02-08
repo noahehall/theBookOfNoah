@@ -49,6 +49,7 @@ EOF
 
 read -r -d '' doc_opts <<'EOF'
 --docInternal
+--index:on
 --project
 EOF
 
@@ -58,6 +59,7 @@ EOF
 read -r -d '' nim_prod_opts <<'EOF'
 --assertions:on
 --debugger:native
+--deepcopy:on
 --define:nimStrictDelete
 --define:release
 --define:ssl
@@ -132,10 +134,7 @@ nim_run() {
   backend=${2:-c}
 
   case $backend in
-  c) nim r -b:$backend $nim_prod_opts $c_opts $filepath ;;
-  cpp) nim r -b:$backend $nim_prod_opts $filepath ;;
-  js) nim r -b:$backend $nim_prod_opts $filepath ;;
-  objc) nim r -b:$backend $nim_prod_opts $filepath ;;
+  c | cpp | js | objc) nim r -b:$backend $nim_prod_opts $c_opts $filepath ;;
   *) echo "invalid backend: @see https://nim-lang.org/docs/nimc.html" ;;
   esac
 }
@@ -160,10 +159,7 @@ nim_dev_run() {
   backend=${2:-c}
 
   case $backend in
-  c) nim r -b:$backend $nim_dev_opts $c_opts $filepath ;;
-  cpp) nim r -b:$backend $nim_dev_opts $filepath ;;
-  js) nim r -b:$backend $nim_dev_opts $filepath ;;
-  objc) nim r -b:$backend $nim_dev_opts $filepath ;;
+  c | cpp | js | objc) nim r -b:$backend $nim_dev_opts $c_opts $filepath ;;
   *) echo "invalid backend: @see https://nim-lang.org/docs/nimc.html" ;;
   esac
 }
@@ -181,15 +177,13 @@ nim_dev_compile() {
 }
 ########################## docs
 nim_docs() {
+  # TODO: docs say to delete any htmldocs/*.idx before regenerating new docs
   filepath=${1:?$nim_file_required}
   backend=${2:-c}
 
   # creates htmldocs/htmlfiles matching nims html manpages
   case $backend in
-  c) nim doc -b:$backend $doc_opts $filepath ;;
-  cpp) nim doc -b:$backend $doc_opts $filepath ;;
-  js) nim doc -b:$backend $doc_opts $filepath ;;
-  objc) nim doc -b:$backend $doc_opts $filepath ;;
+  c | cpp | js | objc) nim doc -b:$backend $doc_opts $filepath ;;
   *) echo "invalid backend: @see https://nim-lang.org/docs/nimc.html" ;;
   esac
 }
@@ -198,8 +192,8 @@ nim_docs_json() {
   nim jsondoc ${1:?$nim_file_required}
 }
 nim_docs_index() {
-  # TODO: this doesnt seem to work
-  nim buildIndex ${1:?$nim_file_required} || echo -e "\n\ndid you run nim_docs first?"
+  # throws, dunno, ignoring
+  nim buildIndex ${1:?htmldocs directory required} || echo -e "\n\ndid you run nim_docs first?"
 }
 nim_docs_ctags() {
   # check/lint doesnt catch the indentation errs causing this to throw
