@@ -316,11 +316,12 @@ less the_var/log/file/path
   - unzip and symlink rancher-desktop somehwere in your path
 - [obs studio](https://obsproject.com/wiki/install-instructions#ubuntumint-installation)
 
-### nirvai: buntu post install
+### nirvai post install
 
 - [github](https://github.com/nirv-ai)
   - drop all the repos in ~/git/private/nirv
-- open chrome and login to teams (never works right on firefox)
+  - theres still some priv packages under your github that havent been moved to nirv, clone those too
+- open chromium and login to teams (never works right on firefox)
   - make sure the camera works n stuff
 
 ```sh
@@ -329,7 +330,7 @@ less the_var/log/file/path
 # dizzam i forgot to do this again
 ```
 
-### buntu errors
+### errors
 
 - [shutter](https://shutter-project.org/)
   - [install steps](https://launchpad.net/~shutter/+archive/ubuntu/ppa)
@@ -340,6 +341,8 @@ less the_var/log/file/path
   - update your bashrc `export XDG_SESSION_TYPE=either x11 or wayland`
 - [dbus-launch no such file or directory](https://trendoceans.com/solved-failed-to-execute-child-process-dbus-launch-no-such-file-or-directory-while-x-forwarding/)
   - sudo apt install dbus-x11
+- libdvd-pkg: `apt-get check` failed
+  - sudo dpkg-reconfigure libdvd-pkg
 
 ### mac:dev
 
@@ -348,7 +351,7 @@ less the_var/log/file/path
 - $ touch ~/.bashrc
 - $ echo ". ~/.bashrc" > ~/.bash_profile
 - upgrade bash (apple refuses to update pass bash v3.2)
-- setup bash as defualt shell (FCK ZSH, just because they force it on me)
+- setup bash as default shell
 - [macports](https://www.scrim.psu.edu/support/userspace-macports.html)
 - [window manager](https://github.com/ianyh/Amethyst)
 - continue with ubuntu setup
@@ -453,17 +456,3 @@ reboot
   - pulseaudio -D
 - sudo apt install jackd qjackctl
   - $ qjackctl
-
-```sh
-# this entire section should be in one of the linux readms
-# list all services
-systemctl list-units --all --type=service --no-pager
-# list all systemd unit files
-systemctl list-unit files --no-pager
-# get services in specific status
-systemctl list-units --all --type=service --no-pager | grep running|dead
-# get enabled/disabled systemd service unit states
-systemctl list-unit-files | grep enabled|disabled
-# set service status
-systemctl start|stop|enable|disable servicename
-```

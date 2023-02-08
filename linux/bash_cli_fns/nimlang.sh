@@ -39,8 +39,6 @@ nim_b_upgrade() {
 ########################## OPTS nim
 # TODO: pretty sure we can have a single nim_c_or_r
 # ^ that way we can reduce the duplication
-# add a nim_proj_run/dev/etc that expects opts to be specified in a cfg
-# ^ should only set baseline opts and allowing for projects to set the rest
 
 # TODO: unsure if this is only for C, or also objcpp
 read -r -d '' c_opts <<'EOF'
@@ -61,7 +59,7 @@ read -r -d '' nim_prod_opts <<'EOF'
 --assertions:on
 --debugger:native
 --define:nimStrictDelete
---define:release=production
+--define:release
 --define:ssl
 --errorMax:1
 --forceBuild:on
