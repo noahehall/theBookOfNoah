@@ -6,10 +6,24 @@ nim_file_required='file.nim required'
 nim_c() {
   choosenim "$@"
 }
+nim_c_stable() {
+  # install then select
+  nim_c stable
+}
+nim_c_latest() {
+  # install then select
+  nim_c devel --latest
+}
 nim_c_current() {
   nim_c show
 }
-
+nim_c_update() {
+  nim_c update stable
+  nim_c update devel --latest
+}
+nim_c_installed() {
+  nim_c versions --installed
+}
 ########################## nimble
 nim_b() {
   nimble "$@"
