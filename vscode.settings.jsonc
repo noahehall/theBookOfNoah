@@ -14,7 +14,6 @@
   "editor.minimap.enabled": false,
   "editor.rulers": [100, 150, 200],
   "editor.tabSize": 2,
-  "editor.wordWrap": "off",
   "editor.wordWrapColumn": 80,
   "editor.wrappingIndent": "deepIndent",
   "editor.fontFamily": "Ubuntu Mono,Input, Consolas, monospace",
@@ -37,7 +36,6 @@
     "*.json": "jsonc",
     "*.jsonc": "jsonc",
     "*.nomad": "hcl",
-    "*.env.development.componse.yaml": "yaml",
     "*.env.development.compose.yaml": "yaml",
     "*.cfg": "haproxy"
   },
@@ -114,13 +112,11 @@
   "scm.countBadge": "off",
   "editor.accessibilitySupport": "off",
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
-  "editor.guides.bracketPairs": false,
   "editor.inlayHints.padding": true,
   "editor.parameterHints.cycle": true,
   "editor.renderLineHighlightOnlyWhenFocus": true,
   "editor.unfoldOnClickAfterEndOfLine": true,
   "editor.cursorSurroundingLines": 2,
-  "diffEditor.codeLens": true,
   "diffEditor.wordWrap": "off",
   "editor.suggest.localityBonus": true,
   "editor.suggest.preview": true,
@@ -132,8 +128,6 @@
     "editor.lineHighlightBackground": "#1073cf2d",
     "editor.lineHighlightBorder": "#9fced11f"
   },
-  "editor.guides.indentation": false,
-  "editor.inlayHints.enabled": "off",
   "editor.formatOnSave": true,
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
@@ -212,5 +206,15 @@
     "v": "v run",
     "vbscript": "cscript //Nologo",
     "zig": "zig run"
-  }
+  },
+  "editor.definitionLinkOpensInPeek": true,
+  "editor.guides.bracketPairs": true,
+  "editor.hover.delay": 100,
+  "editor.mouseWheelZoom": true,
+  "editor.stablePeek": true,
+  "editor.stickyScroll.enabled": true,
+  "diffEditor.codeLens": true,
+  "breadcrumbs.icons": false,
+  "workbench.view.alwaysShowHeaderActions": true,
+  "workbench.settings.enableNaturalLanguageSearch": false
 }
