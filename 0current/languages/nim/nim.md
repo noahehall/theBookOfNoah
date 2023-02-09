@@ -1,6 +1,7 @@
 # nim
 
 - fkn need to finish this thing
+- haha only took 2 years, checkout [noahehall/nim for syntax](https://github.com/noahehall/nim)
 
 ## links
 
