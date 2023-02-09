@@ -147,8 +147,8 @@ nim_dump() {
   nim dump
 }
 nim_graph() {
-  # generates poop.{deps,dot,png}
-  # use vscode graphviz ext > preview to view poop.dot within editor
+  # generates parent/poop.deps && project/poops.{dot,png}
+  # use graphviz ext > preview to view poop.dot within vscode
   nim genDepend $nim_dev_opts ${1:?$nim_file_required}
 }
 nim_lint() {
@@ -177,13 +177,21 @@ nim_dev_compile() {
 }
 ########################## docs
 nim_docs() {
-  # TODO: docs say to delete any htmldocs/*.idx before regenerating new docs
   filepath=${1:?$nim_file_required}
   backend=${2:-c}
 
+  prevHtmlDocs="$(pwd)/$(dirname $filepath)/htmldocs"
+  if test -d "$prevHtmlDocs"; then
+    echo "deleting previous htmldocs dir $prevHtmlDocs"
+    rm -rf "$prevHtmlDocs"
+  fi
+
   # creates htmldocs/htmlfiles matching nims html manpages
   case $backend in
-  c | cpp | js | objc) nim doc -b:$backend $doc_opts $filepath ;;
+  c | cpp | js | objc)
+    nim_graph $filepath
+    nim doc -b:$backend $doc_opts $filepath
+    ;;
   *) echo "invalid backend: @see https://nim-lang.org/docs/nimc.html" ;;
   esac
 }
