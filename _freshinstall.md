@@ -437,6 +437,16 @@ reboot
 - still not ready to leave regolith
 - [looks sweeeet](https://vanillaos.org/)
 
+## peppermint os
+
+- [supposedly one of the most performant distros](https://peppermintos.com/)
+- but the ux is like arch
+
+## kubuntu
+
+- [supposedly the best design/media/video support](https://kubuntu.org/)
+- might have to move to i3 so we can keep our regolith flow
+
 ## remote server setup
 
 1. setup non root user with sudo priv
