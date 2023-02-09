@@ -34,8 +34,11 @@ nim_b_init() {
 nim_b_build() {
   nim_b build
 }
-nim_b_install() {
+nim_b_add() {
   nim_b install "$@"
+}
+nim_b_del() {
+  nim_b uninstall "$@"
 }
 nim_b_installed() {
   nim_b list --installed
