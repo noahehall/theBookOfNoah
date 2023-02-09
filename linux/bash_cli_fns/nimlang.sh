@@ -21,7 +21,7 @@ nim_b_build() {
   nim_b build
 }
 nim_b_install() {
-  nim_b install
+  nim_b install "$@"
 }
 nim_b_installed() {
   nim_b list --installed
