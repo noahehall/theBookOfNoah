@@ -156,6 +156,9 @@
 - but uses static dispatch and not have dynamic dispatch (see method)
   - at compile time i think procs are only attached to the base object,
   - this causes subtypes to always use the base object implementation (again, i think lol)
+- while i would consider this a positive, it makes it very difficult to categorize which fns belong to which objects, especially as a beginner
+  - i would say the attempt to categorize (see yolowurl) is almost futile
+  - save your resources for understanding which proc _should_ be able to operate on which data structure based on the data structure's characteristics
 
 ### method (member) functions
 
