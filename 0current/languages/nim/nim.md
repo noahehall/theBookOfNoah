@@ -110,6 +110,8 @@
   - proecure; context of precedural programming
   - function: used in functional programming
   - subroutine: used with saltine crackers
+  - cmd invocation syntax: `echo f1, f2` = `echo(f(1), f(2))`
+  - method call syntax: enables calling procedures like `obj.method(param)`
 - Unofirm Function Call Syntax: UFCS: allows you to create new procedures on existing objects externally, and allows procedure calls to be chained
   - basically theres multiple ways to call a function and all can be chained together
   - add(5) === 5.add === add 5
