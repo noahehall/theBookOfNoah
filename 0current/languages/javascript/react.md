@@ -4,7 +4,6 @@
 - you should review EACH ACCESSIBILITY link in the links section in the link section below
 - on new releases always review the changelog (see link)
 - bookmark: https://reactjs.org/docs/error-boundaries.html
-
 - todos/skipped
   - [react & webcomponents](https://reactjs.org/docs/web-components.html)
   - [programmatically managing focus](https://reactjs.org/docs/accessibility.html#programmatically-managing-focus)
@@ -93,7 +92,6 @@
     - setState with callback works, but is a one-off
     - aggregate all your logic related after update state values into _componentDidUpate_
 - bind event handlers in the constructor or use class fields syntax with an arrow function
-
   - never use arrow functions directly in the callback as
     - the component receives a new fn each time,
     - if passed to child components, will cause axtra rerenders
@@ -113,7 +111,6 @@
 - recompute data when props change
   - prefer any of the memoization options over controlled/uncontrolled with a key over _static getDerivedStateFromProps_
 - catching errors for logging
-
   - _componentDidCatch_ > _static getDerivedStateFromEror_
 
 ### with caution

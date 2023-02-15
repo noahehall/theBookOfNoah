@@ -15,12 +15,9 @@ MUST DO - [aria design patterns](https://w3c.github.io/aria-practices/#aria_ex) 
 
 - its not valid HTML to use a label for on a div
 
--
-
 # quick search
 
 - quickly finding things, search for:
-
 - _failures_ for things **not** to do
 - _advisory techniques_ best things to do
 - _sufficient techniques_ where to start
@@ -33,11 +30,8 @@ MUST DO - [aria design patterns](https://w3c.github.io/aria-practices/#aria_ex) 
 - [search here for anything HTML](https://html.spec.whatwg.org/multipage/indices.html)
 
 - gotchas
-
   - [aria-label|labelledby|describedby expectations](https://www.tpgi.com/short-note-on-aria-label-aria-labelledby-and-aria-describedby/)
-
 - tools
-
   - [comparison of accessibility tools](https://medium.com/pulsar/which-accessibility-testing-tool-should-you-use-e5990e6ef0a)
   - [microsoft silverlight](https://www.microsoft.com/silverlight/)
   - [JAWS screen reader tool](https://freedomscientific.github.io/VFO-standards-support/)
@@ -69,34 +63,26 @@ MUST DO - [aria design patterns](https://w3c.github.io/aria-practices/#aria_ex) 
   - [PEAT: photosensitive epilepsy analysis tool](https://trace.umd.edu/peat/)
   - [lighthouse](https://github.com/GoogleChrome/lighthouse)
   - [axe: accessibility testing engine](https://github.com/dequelabs/axe-core)
-
-  - mac specific
-
-    - [voiceover user guide](https://support.apple.com/guide/voiceover/welcome/10)
-    - [voice control](https://support.apple.com/en-us/HT210539)
-    - [hover text](https://support.apple.com/en-gb/guide/mac-help/mchlb203bc78/mac)
-    - [text-to-speech](https://support.apple.com/en-in/guide/mac-help/mh27448/mac)
-    - [dark mode](https://support.apple.com/en-us/HT208976)
-    - [dictation](https://support.apple.com/en-ie/guide/mac-help/mh40584/mac)
-    - [zoom](https://support.apple.com/en-us/HT210978)
-
-  - windows specific
-
-    - [narrator screen reader](https://support.microsoft.com/en-us/windows/hear-text-read-aloud-with-narrator-040f16c1-4632-b64e-110a-da4a0ac56917)
-    - [magnifier](https://support.microsoft.com/en-us/windows/use-magnifier-to-make-things-on-the-screen-easier-to-see-414948ba-8b1c-d3bd-8615-0e5e32204198)
-    - [curosr & mouse pointer size](https://www.howtogeek.com/427263/how-to-change-the-mouse-pointer-color-and-size-on-windows-10/)
-    - [spech recognition](https://support.microsoft.com/en-us/windows/how-to-use-speech-recognition-in-windows-d7ab205a-1f83-eba1-d199-086e4a69a49a)
-    - [high contrast](https://support.microsoft.com/en-us/windows/turn-high-contrast-mode-on-or-off-in-windows-909e9d89-a0f9-a3a9-b993-7a6dcee85025)
-    - [read in braille](https://support.microsoft.com/en-us/windows/chapter-8-using-narrator-with-braille-3e5f065b-1c9d-6eb2-ec6d-1d07c9e94b20)
-    - [color filters](https://support.microsoft.com/en-us/windows/use-color-filters-in-windows-10-43893e44-b8b3-2e27-1a29-b0c15ef0e5ce)
-
+- mac specific
+  - [voiceover user guide](https://support.apple.com/guide/voiceover/welcome/10)
+  - [voice control](https://support.apple.com/en-us/HT210539)
+  - [hover text](https://support.apple.com/en-gb/guide/mac-help/mchlb203bc78/mac)
+  - [text-to-speech](https://support.apple.com/en-in/guide/mac-help/mh27448/mac)
+  - [dark mode](https://support.apple.com/en-us/HT208976)
+  - [dictation](https://support.apple.com/en-ie/guide/mac-help/mh40584/mac)
+  - [zoom](https://support.apple.com/en-us/HT210978)
+- windows specific
+  - [narrator screen reader](https://support.microsoft.com/en-us/windows/hear-text-read-aloud-with-narrator-040f16c1-4632-b64e-110a-da4a0ac56917)
+  - [magnifier](https://support.microsoft.com/en-us/windows/use-magnifier-to-make-things-on-the-screen-easier-to-see-414948ba-8b1c-d3bd-8615-0e5e32204198)
+  - [curosr & mouse pointer size](https://www.howtogeek.com/427263/how-to-change-the-mouse-pointer-color-and-size-on-windows-10/)
+  - [spech recognition](https://support.microsoft.com/en-us/windows/how-to-use-speech-recognition-in-windows-d7ab205a-1f83-eba1-d199-086e4a69a49a)
+  - [high contrast](https://support.microsoft.com/en-us/windows/turn-high-contrast-mode-on-or-off-in-windows-909e9d89-a0f9-a3a9-b993-7a6dcee85025)
+  - [read in braille](https://support.microsoft.com/en-us/windows/chapter-8-using-narrator-with-braille-3e5f065b-1c9d-6eb2-ec6d-1d07c9e94b20)
+  - [color filters](https://support.microsoft.com/en-us/windows/use-color-filters-in-windows-10-43893e44-b8b3-2e27-1a29-b0c15ef0e5ce)
   - the best OS ever made in the universe
     - [gnome screen reader](https://help.gnome.org/users/orca/stable/)
-
 - accessibility
-
   - html
-
     - [html spec](https://html.spec.whatwg.org/multipage/dom.html#interactive-content-0)
     - [dont use tabindex > 0](https://adrianroselli.com/2014/11/dont-use-tabindex-greater-than-0.html)
     - [using the tabindex atribute](https://www.tpgi.com/using-the-tabindex-attribute/)
@@ -137,19 +123,13 @@ MUST DO - [aria design patterns](https://w3c.github.io/aria-practices/#aria_ex) 
       - [named character references](https://html.spec.whatwg.org/multipage/named-characters.html)
       - [rendering](https://html.spec.whatwg.org/multipage/rendering.html)
       - [iana considerations](https://html.spec.whatwg.org/multipage/iana.html)
-
   - general
-
     - [accessibility definitions and acronyms](https://www.lullabot.com/articles/web-accessibility-definitions-and-acronyms)
-
   - user agents
-
     - [accessibility object model oldie-but-goodie tutorial](https://tink.uk/playing-with-the-accessibility-object-model-aom/)
     - [WICG accessibility object modal explainer](https://github.com/WICG/aom/blob/gh-pages/explainer.md)
     - [WICG aom github](https://github.com/WICG/aom)
-
   - WCAG
-
     - [WCAG 2.1: web content accessibility guidelines](https://www.w3.org/TR/WCAG21/)
     - [WCAG overview](https://www.w3.org/WAI/standards-guidelines/wcag/)
     - [components of web accessibility](https://www.w3.org/WAI/fundamentals/components/)
@@ -162,9 +142,7 @@ MUST DO - [aria design patterns](https://w3c.github.io/aria-practices/#aria_ex) 
       - [WCAG: how to meet WCAG quick reference](https://www.w3.org/WAI/WCAG21/quickref/)
       - [WCAG: techniques for WCAG 2.2](https://www.w3.org/WAI/WCAG21/Techniques/)
       - [WCAG: document relation, explains where to go for what?](https://www.w3.org/WAI/standards-guidelines/wcag/docs/)
-
   - aria
-
     - [how people use the web](https://www.w3.org/WAI/people-use-web/)
     - [ARIA: accessible rich internet applications](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
     - [WAI: web accessibility initiative](https://www.w3.org/WAI/)
@@ -175,8 +153,7 @@ MUST DO - [aria design patterns](https://w3c.github.io/aria-practices/#aria_ex) 
     - [browser and assistive technolgy tests redux](https://www.tpgi.com/browser-assistive-technology-tests-redux/)
     - [html accessibility taskforce](https://www.w3.org/WAI/PF/html-task-force)
     - [wikipedia assistive technology](https://en.wikipedia.org/wiki/Assistive_technology)
-
-    - dope shit
+    - dope stuff
       - [1.2 authoring practices](https://w3c.github.io/aria-practices/)
       - [mdn using roles, states, and properties](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques)
       - [google introduction to aria](https://developers.google.com/web/fundamentals/accessibility/semantics-aria/)
@@ -195,28 +172,20 @@ MUST DO - [aria design patterns](https://w3c.github.io/aria-practices/#aria_ex) 
       - [web apps and aria FAQ](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Web_applications_and_ARIA_FAQ)
       - [power mapper wai-aria](https://www.powermapper.com/tests/screen-readers/aria/)
       - [w3c tools and techniques](https://www.w3.org/WAI/people-use-web/tools-techniques/)
-
   - other
-
     - [mdn learn accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility)
     - [UAAG: user agent accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/uaag/)
     - [ATAG: authoring tool accessibility guidelines overview](https://www.w3.org/WAI/standards-guidelines/atag/)
-
   - catchall for whatever
-
     - [aria has popup](https://labs.levelaccess.com/index.php/ARIA_Haspopup_property)
-
-    -
 
 # accessibility
 
 ## `best practices`
 
 - use a button instead of a link when
-
   - the link is empty/has no `href` attribute
   - the link has an `onclick` handler
-
 - dont add redundant aria `landmark` roles to html5 semantic elements
   - `role='banner'` === `<header>`
   - `role='complementary'` === `<aside>`
@@ -235,29 +204,25 @@ MUST DO - [aria design patterns](https://w3c.github.io/aria-practices/#aria_ex) 
 
 ## the accessibility mindset
 
-    - [apply name, role and value to all user interface components](https://www.w3.org/TR/WCAG21/#name-role-value)
-    - always provide descriptive identifications of content that cannot be made accessible in a meaningful way
-    - think: what purpose is this serving, and how do I serve this purpose in another form
-      - i.e. what is the purpose of this user interface item: how is this purpose fulfilled for people who cant read/see/perceive colors/ hear/ etc.
-    - questions to ask when crafting accessible content
-      - what is the information component or user interface component
-        - is it text-content or non-text content
-      - what is its purpose
-      - what is the situation
-      - what are the alternative techniques for success in this situation
+- [apply name, role and value to all user interface components](https://www.w3.org/TR/WCAG21/#name-role-value)
+- always provide descriptive identifications of content that cannot be made accessible in a meaningful way
+- think: what purpose is this serving, and how do I serve this purpose in another form
+  - i.e. what is the purpose of this user interface item: how is this purpose fulfilled for people who cant read/see/perceive colors/ hear/ etc.
+- questions to ask when crafting accessible content
+  - what is the information component or user interface component
+    - is it text-content or non-text content
+  - what is its purpose
+  - what is the situation
+  - what are the alternative techniques for success in this situation
 
 ## terms
 
 - user interface components:
-
 - information components:
-
 - mainstream user agents: e.g. common web browsers built for people without disabilities, or targeting broad and diverse audiences that usually include people without disabilities
-
   - provide important functionality to support assistive technologies
     - retrieving web content from program objects
     - parsing markup into identifiable bundles
-
 - [assistive technologies](https://www.w3.org/TR/WCAG21/#dfn-assistive-technologies):
 
   - target narrowly defined populations of users with specific disabilities

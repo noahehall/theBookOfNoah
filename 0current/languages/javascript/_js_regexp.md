@@ -20,11 +20,9 @@
   ```
 
 - modifiers
-
   - i Perform case-insensitive matching
   - g Perform a global match (find all matches rather than stopping after the first match)
   - m Perform multiline matching
-
 - quantifiers
   - n+ Matches any string that contains at least one n
   - n\* Matches any string that contains zero or more occurrences of n
@@ -37,7 +35,6 @@
   - ?=n Matches any string that is followed by a specific string n
   - ?!n Matches any string that is not followed by a specific string n
 - expressions: Brackets are used to find a range of characters:
-
   - [abc] Find any character between the brackets
   - [^abc] Find any character NOT between the brackets
   - [0-9] Find any digit between the brackets
@@ -46,19 +43,13 @@
   - (?:YourRegexHere) non capturing group
     - will match YourRegexHere but wont return it as a match
     - i.e. it must PASS the test, but dont include it in the returned results
-
 - groups
-
   - (x) Matches x and remembers the match. These are called capturing groups.
   - (?:x) Matches x but does not remember the match. These are called non-capturing groups.
-
 - assertions
-
   - x(?=y) Matches x only if x is followed by y.
   - x(?!y) Matches x only if x is not followed by y.
-
 - meta-characters: characters withs special meanings
-
   - . Find a single character, except newline or line terminator
   - \w Find a word character
   - \W Find a non-word character
@@ -83,7 +74,6 @@
   - \xxx Find the character specified by an octal number xxx
   - \xdd Find the character specified by a hexadecimal number dd
   - \uxxxx Find the Unicode character specified by a hexadecimal number xxxx
-
 - Methods that use regular expressions
   - exec A RegExp method that executes a search for a match in a string. It returns an array of information.
   - test A RegExp method that tests for a match in a string. It returns true or false.

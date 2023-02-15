@@ -7,57 +7,56 @@
 
 ## try catch
 
-```
+```js
 try {
- /*code*/
-} catch (err){
- /*
+  /*code*/
+} catch (err) {
+  /*
   err.message == message of error
  */
-}finally {
- /*do this regardless of what happens*/
+} finally {
+  /*do this regardless of what happens*/
 }
 ```
 
 ## if statements
 
-```
+```js
 if (condition1) {
-    block of code to be executed if condition1 is true
+  // block of code to be executed if condition1 is true
 } else if (condition2) {
-    block of code to be executed if the condition1 is false and condition2 is true
+  // block of code to be executed if the condition1 is false and condition2 is true
 } else {
-    block of code to be executed if the condition1 is false and condition2 is false
+  // block of code to be executed if the condition1 is false and condition2 is false
 }
 ```
 
 ## switch statements
 
-```
-switch(expression) {
-    case n:
-        code block
-        break;
-    case n:
-        code block
-        break;
-    default:
-        default code block
+```js
+switch (expression) {
+  case n:
+    // code block
+    break;
+  case n:
+    // code block
+    break;
+  default:
+  // default code block
 }
 ```
 
 ## loops
 
 - The break statement breaks the loop and continues executing the code after the loop (if any):
-
 - The continue statement breaks one iteration (in the loop), if a specified condition occurs, and continues with the next iteration in the loop.
 
 ### for
 
-```
+```js
 var fruits = ["Banana", "Orange", "Apple", "Mango"];
 for (index = 0; index < fruits.length; index++) {
-    text += fruits[index];
+  text += fruits[index];
 }
 ```
 
@@ -65,20 +64,20 @@ for (index = 0; index < fruits.length; index++) {
 
 - The for...in statement iterates over the enumerable properties of an object, in original insertion order. For each distinct property, statements can be executed.
 
-  ```
-  var person = {fname:"John", lname:"Doe", age:25};
-  var text = "";
-  var x;
-  for (x in person) {
-      text += person[x];
-  }
-  ```
+```js
+var person = { fname: "John", lname: "Doe", age: 25 };
+var text = "";
+var x;
+for (x in person) {
+  text += person[x];
+}
+```
 
 ### for..of: basic iterable loop
 
 - The for...of syntax is specific to collections, rather than all objects. It will iterate in this manner over the elements of any collection that has a [Symbol.iterator] property.
 
-```s
+```js
   for (const/let variable of iterable) {
     statement
   }
@@ -86,19 +85,18 @@ for (index = 0; index < fruits.length; index++) {
 
 ### while
 
-```
-index =100
-while (index--) {
- //index in here will start at 99, since you used index-- as the condition
-    code block to be executed
+```js
+let index = 100;
+while (--index) {
+  //index in here will start at 99, since you used --index as the condition
+  // code block to be executed
 }
 ```
 
 ### do while
 
-```
+```js
 do {
-    code block to be executed
-}
-while (condition);
+  // code block to be executed
+} while (condition);
 ```

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# todo:
+# ^ add nimgrep: @see https://github.com/nim-lang/Nim/blob/devel/tools/nimgrep.nim
+
 nim_file_required='file.nim required'
 
 ########################## choosenim

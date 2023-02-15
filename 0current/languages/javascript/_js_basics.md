@@ -14,7 +14,6 @@
 ## terms
 
 - versions
-
   - es1: 1997
   - es2: 1998
   - es3: 1999
@@ -23,29 +22,22 @@
   - es6: 2015
   - es7: 2016
     - etc
-
 - process
-
   - stage 0: anything goes
   - stage 1: tc39 expects to devote time to examine the problem space, solutions & cross-cutting concerns
   - stage 2: tc39 expects the feature to be developed and eventually included in the standard
   - stage 3: tc39 expects the solution is complete, but needs feedback from the field
   - stage 4: feature will be included in the next ecmascript version
-
 - prototype: each object has an internal link to another object, its prototype, that provides additional behavior and properties
 - prototype chain: the sequence of linked objects from one object's prototype to another, all the way up until you reach the Null object (which does not have a prototype)
-
 - function parameters are variables that are local to the function
 - functions can return anything, even other functions
 - arguments = an array-like OBJECT containing all of the parameters passed to the function. it is NOT AN Array
 - anonymous enclosures
-
   - wrap the anonymous function in paranthesis
   - then call the function immediately by ending wtih () and send in parameters
   - any variables declared inside this function are local to this function
-
 - function closures: defining a function within a function
-
 - difference with `==`: The == operator applies various coercions to both sides (if they are not the same Type) before testing for equality (resulting in such behavior as "" == false being true), but Object.is doesn't coerce either value.
 - difference with `===`: The === operator (and the == operator as well) treats the number values -0 and +0 as equal and treats Number.NaN as not equal to NaN.
 - Constants are block-scoped, much like variables defined using the let statement. The value of a constant cannot change through re-assignment, and it can't be redeclared.
@@ -212,7 +204,6 @@
 ### generators
 
 - Generators: a function that can be exited, and entered multiple times
-
 - yield: exit the function and send a value to the caller, and optionally receive a value back
 - function.next(): retrieve and send data, executes up to and including the next yield statement
   - for each yield statement you need to call blah.next()
@@ -223,10 +214,8 @@
     - true: if function is done, and should not be re-entered
   - you can access the value directly: `bloop.next().value;``
 - use cases
-
   - asynchornous events
   - timers (e.g. setInterval)
-
 - Generators should not be re-used, even if the for...of loop is terminated early, for example via the break keyword. Upon exiting a loop, the generator is closed and trying to iterate over it again does not yield any further results.
 
   ```js
