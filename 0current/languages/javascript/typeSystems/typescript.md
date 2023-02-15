@@ -255,7 +255,7 @@ export interface Flush { Yes: boolean };
 // will import the matching type/vars, i dont like this syntax
 import { Poop, Flush } from './wherever';
 // import type: can only import types, this is WAY better
-import type { Poop, Flush } './wherver';
+import type { Poop, Flush } './wherver'; // this is actually preferred in our eslint
 import { someFn, type Poop, type Flush } // this is WAY better
 import f = require("single-function-package"); // how to import commonjs
 
@@ -436,7 +436,7 @@ const iTake: BigPoops = {
   when: "mornings",
   flush: true,
 };
-// as class: i know hella duplication
+// as class
 class BigPooper {
   when: string;
   flush: boolean;

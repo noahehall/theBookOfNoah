@@ -343,6 +343,9 @@ less the_var/log/file/path
   - sudo apt install dbus-x11
 - libdvd-pkg: `apt-get check` failed
   - sudo dpkg-reconfigure libdvd-pkg
+- error: `gyp` failed with exit code: 1
+  - occurred when trying to `pnpm i` in nirv/web
+  - sudo apt install node-gyp
 
 ### mac:dev
 
