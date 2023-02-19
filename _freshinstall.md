@@ -429,26 +429,33 @@ ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="POOP", ATTR{idProduct}=="SOOP"
 reboot
 ```
 
-## blackbuntu
+## maybe distros
+
+blackbuntu
 
 - still not ready to leave regolith
 - [looks sweeet](https://blackbuntu.org/)
 - [checkout the list](https://github.com/neoslab/blackbuntu/blob/main/TOOLS.md)
 
-## vanilla os
+vanillaos
 
 - still not ready to leave regolith
 - [looks sweeeet](https://vanillaos.org/)
 
-## peppermint os
+peppermint
 
 - [supposedly one of the most performant distros](https://peppermintos.com/)
 - but the ux is like arch
 
-## kubuntu
+kubuntu
 
 - [supposedly the best design/media/video support](https://kubuntu.org/)
 - might have to move to i3 so we can keep our regolith flow
+
+catchyos
+
+- [looks sweet](https://cachyos.org/)
+- [wiki](https://wiki.cachyos.org/)
 
 ## remote server setup
 
