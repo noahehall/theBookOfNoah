@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # todo:
-# ^ add nimgrep: @see https://github.com/nim-lang/Nim/blob/devel/tools/nimgrep.nim
+# ^ add stuff from tools: @see https://github.com/nim-lang/Nim/blob/devel/tools
 
 nim_file_required='file.nim required'
 
@@ -22,7 +22,7 @@ nim_c_current() {
 }
 nim_c_update() {
   nim_c update stable
-  nim_c update devel --latest
+  nim_c update devel --latest # this is annoyingly slow
 }
 nim_c_installed() {
   nim_c versions --installed
@@ -67,7 +67,12 @@ read -r -d '' c_opts <<'EOF'
 --stackTrace:on
 EOF
 
+# FYI: dont enable these, ambiguous calls fails docgen
+# --warnings:off
+# --hints:off
+# --multimethods:on # has no effect
 read -r -d '' doc_opts <<'EOF'
+--verbosity:0
 --docInternal
 --index:on
 --project
