@@ -9,20 +9,22 @@ nim_file_required='file.nim required'
 nim_c() {
   choosenim "$@"
 }
-nim_c_stable() {
+nim_c_use() {
   # install then select
-  nim_c stable
+  nim_c ${1:-stable}
 }
-nim_c_latest() {
-  # install then select
-  nim_c devel --latest
-}
+
 nim_c_current() {
   nim_c show
 }
+nim_c_remote() {
+  nim_c versions
+}
 nim_c_update() {
+  nim_c update self
   nim_c update stable
-  nim_c update devel --latest # this is annoyingly slow
+  # ahh updating via branches is too slow
+  # nim_c update devel --latest
 }
 nim_c_installed() {
   nim_c versions --installed
