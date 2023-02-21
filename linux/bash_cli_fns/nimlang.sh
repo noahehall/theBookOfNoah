@@ -90,6 +90,7 @@ read -r -d '' nim_prod_opts <<'EOF'
 --define:nimStrictDelete
 --define:release
 --define:ssl
+--define:threadsafe
 --errorMax:1
 --forceBuild:on
 --hints:on
@@ -119,6 +120,7 @@ read -r -d '' nim_dev_opts <<'EOF'
 --declaredLocs:on
 --define:nimStrictDelete
 --define:ssl
+--define:threadsafe
 --errorMax:0
 --excessiveStackTrace:on
 --hints:on
