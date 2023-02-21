@@ -2,6 +2,7 @@
 
 # todo:
 # ^ add stuff from tools: @see https://github.com/nim-lang/Nim/blob/devel/tools
+# rewrite this entire thing in nimscript
 
 nim_file_required='file.nim required'
 
@@ -22,8 +23,8 @@ nim_c_remote() {
 }
 nim_c_update() {
   nim_c update self
-  nim_c update stable
-  # ahh updating via branches is too slow
+  nim_c update ${1:-stable}
+  # updating via branches is know to be slow
   # nim_c update devel --latest
 }
 nim_c_installed() {
@@ -54,7 +55,7 @@ nim_b_pkgs() {
 nim_b_refresh() {
   nim_b refresh
 }
-nim_b_upgrade() {
+nim_b_update() {
   nimble install nimble
 }
 
@@ -69,15 +70,13 @@ read -r -d '' c_opts <<'EOF'
 --stackTrace:on
 EOF
 
-# FYI: dont enable these, ambiguous calls fails docgen
-# --warnings:off
-# --hints:off
-# --multimethods:on # has no effect
+## dont add --multimethods:on -> safe to ignore any ambiguous call errors
 read -r -d '' doc_opts <<'EOF'
---verbosity:0
 --docInternal
+--hints:off
 --index:on
 --project
+--verbosity:0
 EOF
 
 # TODO
@@ -235,4 +234,14 @@ nim_docs_index() {
 nim_docs_ctags() {
   # check/lint doesnt catch the indentation errs causing this to throw
   nim ctags ${1:?$nim_file_required}
+}
+
+########################## catchall
+
+nim_update() {
+  echo -e 'updating choosenim and nim'
+  nim_c_update ${1:-stable}
+
+  echo -e 'updating nimble'
+  nim_b_update
 }
