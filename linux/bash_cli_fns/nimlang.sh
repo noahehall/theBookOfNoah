@@ -214,11 +214,16 @@ nim_docs() {
     rm -rf "$prevHtmlDocs"
   fi
 
+  local giturl=$(git config --get remote.origin.url | sed 's/\(git@github.com:\|\.git\)//g')
+  if test -n "$giturl"; then
+    gitswitch="--git.url:https://github.com/${giturl} --git.commit:$(basename $(git symbolic-ref --short refs/remotes/origin/HEAD))"
+  fi
+
   # creates htmldocs/htmlfiles matching nims html manpages
   case $backend in
   c | cpp | js | objc)
     nim_graph $filepath
-    nim doc -b:$backend $doc_opts $filepath
+    nim doc -b:$backend $doc_opts $gitswitch $filepath
     ;;
   *) echo "invalid backend: @see https://nim-lang.org/docs/nimc.html" ;;
   esac

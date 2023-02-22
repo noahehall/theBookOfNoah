@@ -34,7 +34,6 @@
   - [nim tutorial](https://nim-lang.org/docs/tut1.html)
   - [nim for typescript programmers tutorial](https://github.com/nim-lang/Nim/wiki/Nim-for-TypeScript-Programmers)
   - [nim by example](https://nim-by-example.github.io/getting_started/)
-  - [not as quick intro](https://nim-by-example.github.io/)
   - [nim style guide](https://nim-lang.org/docs/nep1.html)
 - specs
   - [nim manual](https://nim-lang.org/docs/manual.html)
