@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
-# todo:
-# ^ add stuff from tools: @see https://github.com/nim-lang/Nim/blob/devel/tools
+# TODO:
+# add stuff from tools: @see https://github.com/nim-lang/Nim/blob/devel/tools
 # rewrite this entire thing in nimscript
+# nim_docs doesnt set the `edit` link correctly
+# pretty sure we can have a single nim_c_or_r to keep things dry
+# i think the c_opts should work for any c-like backend
+# add support for CC sets compiler when --cc:env is used
 
 nim_file_required='file.nim required'
 
@@ -24,7 +28,7 @@ nim_c_remote() {
 nim_c_update() {
   nim_c update self
   nim_c update ${1:-stable}
-  # updating via branches is know to be slow
+  # updating via branches is known to be slow, pass a version instead
   # nim_c update devel --latest
 }
 nim_c_installed() {
@@ -60,10 +64,6 @@ nim_b_update() {
 }
 
 ########################## OPTS nim
-# TODO: pretty sure we can have a single nim_c_or_r
-# ^ that way we can reduce the duplication
-
-# TODO: unsure if this is only for C, or also objcpp
 read -r -d '' c_opts <<'EOF'
 --lineDir:on
 --lineTrace:on
@@ -204,7 +204,7 @@ nim_dev_compile() {
   esac
 }
 ########################## docs
-nim_docs() {
+nim_docs()
   filepath=${1:?$nim_file_required}
   backend=${2:-c}
 
