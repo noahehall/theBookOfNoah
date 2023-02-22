@@ -204,24 +204,24 @@ nim_dev_compile() {
   esac
 }
 ########################## docs
-nim_docs()
+nim_docs() {
   filepath=${1:?$nim_file_required}
   backend=${2:-c}
-
-  prevHtmlDocs="$(pwd)/$(dirname $filepath)/htmldocs"
-  if test -d "$prevHtmlDocs"; then
-    echo "deleting previous htmldocs dir $prevHtmlDocs"
-    rm -rf "$prevHtmlDocs"
-  fi
-
-  local giturl=$(git config --get remote.origin.url | sed 's/\(git@github.com:\|\.git\)//g')
-  if test -n "$giturl"; then
-    gitswitch="--git.url:https://github.com/${giturl} --git.commit:$(basename $(git symbolic-ref --short refs/remotes/origin/HEAD))"
-  fi
 
   # creates htmldocs/htmlfiles matching nims html manpages
   case $backend in
   c | cpp | js | objc)
+    prevHtmlDocs="$(pwd)/$(dirname $filepath)/htmldocs"
+    if test -d "$prevHtmlDocs"; then
+      echo "deleting previous htmldocs dir $prevHtmlDocs"
+      rm -rf "$prevHtmlDocs"
+    fi
+
+    local giturl=$(git config --get remote.origin.url | sed 's/\(git@github.com:\|\.git\)//g')
+    if test -n "$giturl"; then
+      gitswitch="--git.url:https://github.com/${giturl} --git.commit:$(basename $(git symbolic-ref --short refs/remotes/origin/HEAD))"
+    fi
+
     nim_graph $filepath
     nim doc -b:$backend $doc_opts $gitswitch $filepath
     ;;
