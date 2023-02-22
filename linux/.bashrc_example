@@ -130,6 +130,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     sudo pro refresh
     pro security-status
     pro security-status --esm-apps
+    echo -e "\ncheck stale pkgs via: pro security-status --unavailable"
 fi
 
 export NVM_DIR="$HOME/.nvm"
