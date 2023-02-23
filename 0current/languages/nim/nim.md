@@ -59,6 +59,7 @@
 
 ### terms
 
+- autovivification: creating tree structures on the fly
 - locations: something im memory consisting of some type of component; a variable is a name for a location
   - each variable and location is of a certain type
   - static type: i.e. a variable's type

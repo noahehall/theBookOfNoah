@@ -41,3 +41,19 @@ sys_set() {
     *) echo "status must be (start|stop|enable|disable)" ;;
     esac
 }
+
+whats() {
+    cmd=${1:?cmd required}
+
+    found=$(type $cmd)
+    if test -n "$found"; then
+        echo -e "$(whatis $cmd)"
+
+        cmdpath=$(echo $found | cut -d ' ' -f 3)
+        realname=$(basename $(realpath $cmdpath)) # could be a symlink
+        echo -e "location: $cmdpath"
+        echo -e "type: $(file $cmdpath)"
+        echo -e "$(dpkg -s $realname)"
+        echo -e "$(apt-cache show $realname)"
+    fi
+}
