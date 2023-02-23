@@ -76,6 +76,7 @@ read -r -d '' doc_opts <<'EOF'
 --hints:off
 --index:on
 --project
+--threads:on
 --verbosity:0
 EOF
 
