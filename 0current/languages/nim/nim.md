@@ -15,6 +15,7 @@
   - [OOP in nim](https://matthiashager.com/nim-object-oriented-programming)
   - [peter has some great nim posts](https://peterme.net/tags/nim.html)
   - [endianness](https://en.wikipedia.org/wiki/Endianness)
+  - [PEGs vs CFGs](https://stackoverflow.com/questions/5501074/what-are-the-differences-between-pegs-and-cfgs)
 - backends/etc
   - [objective C and iOS](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html)
   - [C++ and iOS, windows and android development](https://devblogs.microsoft.com/cppblog/android-and-ios-development-with-c-in-visual-studio/)

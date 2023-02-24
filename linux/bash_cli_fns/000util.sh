@@ -45,15 +45,29 @@ sys_set() {
 whats() {
     cmd=${1:?cmd required}
 
-    found=$(type $cmd)
-    if test -n "$found"; then
-        echo -e "$(whatis $cmd)"
-
+    found=$(type $cmd 2>/dev/null | head -n 1)
+    if test -z "$found"; then
+        echo -e "$(dpkg -s $cmd)"
+        echo -e "$(apt-cache search --names-only $cmd)"
+    else
+        itis=$(whatis $cmd)
         cmdpath=$(echo $found | cut -d ' ' -f 3)
-        realname=$(basename $(realpath $cmdpath)) # could be a symlink
-        echo -e "location: $cmdpath"
-        echo -e "type: $(file $cmdpath)"
-        echo -e "$(dpkg -s $realname)"
-        echo -e "$(apt-cache show $realname)"
+
+        case $cmdpath in
+        aliased | a)
+            shopt -s extdebug
+            echo -e $(declare -F $cmd)
+            echo -e "$itis\n$found"
+            ;;
+        *)
+            realname=$(basename $(realpath $cmdpath)) # could be a symlink
+
+            echo -e "$(dpkg -s $realname)"
+            echo -e "$(apt-cache search --names-only $realname)"
+            echo -e "$itis"
+            echo -e "location: $cmdpath"
+            echo -e "type: $(file $cmdpath)"
+            ;;
+        esac
     fi
 }
