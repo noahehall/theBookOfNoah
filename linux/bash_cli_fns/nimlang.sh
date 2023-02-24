@@ -39,30 +39,97 @@ nim_b() {
   nimble "$@"
 }
 nim_b_init() {
+  # create a .nimble package in the curdir
   nim_b init
 }
+nim_b_push() {
+  # publish package in curdir to nim's package repository
+  # requires your github to be associated with an ssh token
+  # nimble will retrieve and store your ssh token in $nimbleDir/github_api_token
+  nim_b publish
+}
 nim_b_build() {
+  # build a .nimble package in debug mode
   nim_b build
 }
+nim_b_compile() {
+  # compile individual modules inside a package
+  backend=${1:-c}
+  case $backend in
+  c | compile | js | cc | cpp) nim_b $backend "${@:2}" ;;
+  *) echo 'invalid backend: @see https://github.com/nim-lang/nimble#nimble-c' ;;
+  esac
+}
+nim_b_run() {
+  # any binary in a packages bin list
+  # nim_b_run somepkg FLAGS_FOR_NIMC thisbinary FLAGS_FOR_THIS_BINARY
+  nim_b --package:${1:?package name required} "${@:2}"
+}
+nim_b_list_tasks() {
+  # list curdir package tasks
+  nim_b tasks
+}
+nim_b_pkg_info() {
+  # info about curdir/specific pkg
+  nim_b dump ${1:-''}
+}
 nim_b_add() {
+  ## a remote package
+  # specify a version via somepkg@x.y.z
+
+  ## a local package
+  # dont pass a package name and it will build the curdir in release mode
+  # install only pkg deps via --depsOnly
+  # nimc flags are forwarded to nimc
   nim_b install "$@"
 }
 nim_b_del() {
-  nim_b uninstall "$@"
+  nim_b uninstall --inclDeps "$@"
 }
 nim_b_installed() {
   nim_b list --installed
 }
-nim_b_pkgs() {
+nim_b_remote() {
   nim_b list
 }
+nim_b_search_remote() {
+  nim_b search ${1:?pkg name or tags required}
+}
+nim_b_search_local() {
+  nim_b path ${1:?pkg name required}
+}
 nim_b_refresh() {
+  ## update package list
   nim_b refresh
 }
-nim_b_update() {
-  nimble install nimble
+nim_b_validate() {
+  # checks curdir .nimble file and dependencies against the lock file
+  nim_b check
 }
+nim_b_update() {
+  nim_b install nimble
+  nim_b_refresh
+}
+nim_b_dev_mode() {
+  # put cur package in development mode and upsert nimble.develop
+  # @see https://github.com/nim-lang/nimble#nimble-develop
+  nim_b develop
+}
+nim_b_lock() {
+  # upsert cur package nimble.lock file
+  nim_b lock
+}
+nim_b_sync() {
+  nim_b_lock
 
+  # syncs dev mode dependencies with lock file
+  nim_b sync
+}
+nim_b_setup_paths() {
+  # creates a nimble.paths with paths to dependencies
+  # adds nimble.{paths,develop} to .gitignore
+  nim_b setup
+}
 ########################## OPTS nim
 read -r -d '' c_opts <<'EOF'
 --lineDir:on
