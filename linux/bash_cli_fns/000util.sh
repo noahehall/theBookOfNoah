@@ -54,7 +54,7 @@ whats() {
         cmdpath=$(echo $found | cut -d ' ' -f 3)
 
         case $cmdpath in
-        aliased | hashed | a)
+        aliased | a)
             shopt -s extdebug
             echo -e $(declare -F $cmd)
             echo -e "$itis\n$found"
@@ -64,6 +64,7 @@ whats() {
 
             echo -e "$(dpkg -s $realname)"
             echo -e "$(apt-cache search --names-only $realname)"
+            echo -e '\n------------------------'
             echo -e "$itis"
             echo -e "location: $cmdpath"
             echo -e "type: $(file $cmdpath)"
