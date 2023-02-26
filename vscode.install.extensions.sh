@@ -1,12 +1,12 @@
 code-insiders --install-extension 42Crunch.vscode-openapi
+code-insiders --install-extension 74th.monokai-charcoal-high-contrast
 code-insiders --install-extension amazonwebservices.aws-toolkit-vscode
+code-insiders --install-extension ankitcode.firefly
 code-insiders --install-extension anseki.vscode-color
 code-insiders --install-extension bbenoist.vagrant
-code-insiders --install-extension bceskavich.theme-dracula-at-night
 code-insiders --install-extension cobaltblu27.rainbow-highlighter
 code-insiders --install-extension codezombiech.gitignore
 code-insiders --install-extension dbaeumer.vscode-eslint
-code-insiders --install-extension dracula-theme.theme-dracula
 code-insiders --install-extension EditorConfig.EditorConfig
 code-insiders --install-extension esbenp.prettier-vscode
 code-insiders --install-extension formulahendry.auto-close-tag
