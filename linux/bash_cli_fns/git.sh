@@ -39,13 +39,19 @@ git_undo_all() {
 }
 # @see https://gist.github.com/chrismccoy/8775224
 ## quick
+gitc() {
+    git commit -a -m "$*"
+}
+gitca() {
+    git commit -a --no-verify --amend -m "$*"
+}
+gitnm() {
+    git commit -a --no-verify -m "$*"
+}
 alias gita='git add -A'
 alias gitb='git branch'
 alias gitba='git branch -a'
 alias gitbr='git branch -v -a'
-alias gitc='git commit -a -m'
-alias gitcna='git commit --no-verify --amend'
-alias gitcnm='git commit --no-verify -m'
 alias gitd='git-icdiff'
 alias gitl='git log --oneline'
 alias gitp='git push'
