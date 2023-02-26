@@ -158,6 +158,7 @@ read -r -d '' nim_prod_opts <<'EOF'
 --assertions:on
 --debugger:native
 --deepcopy:on
+--define:futureLogging
 --define:nimStrictDelete
 --define:release
 --define:ssl
@@ -189,6 +190,7 @@ read -r -d '' nim_dev_opts <<'EOF'
 --debugger:native
 --debuginfo:on
 --declaredLocs:on
+--define:futureLogging
 --define:nimStrictDelete
 --define:ssl
 --define:threadsafe
