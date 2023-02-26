@@ -17,7 +17,7 @@
 - [ubuntu pro tut](https://ubuntu.com/pro/tutorial)
 - [security stack.exchange](https://security.stackexchange.com)
 - [kali linux tools](https://www.kali.org/tools/)
-  - also check the whitehat usb for other tools and docs
+  - also check the usb for other tools and docs
 - [latex](https://www.latex-project.org/about/)
 
 ## fresh install
@@ -36,6 +36,7 @@
     - install a new theme
     - super alt !
       - ^ switch to theme
+  - [wiki search on github](https://github.com/search?q=org%3Aregolith-linux&type=Wikis&in:HowTo)
 
 ```sh
 # see all regolith apps
@@ -254,7 +255,7 @@ less the_var/log/file/path
     - [make sure to get the guest additions iso](https://www.virtualbox.org/manual/ch04.html#mountingadditionsiso)
       - [quick overview if its been awhile](https://www.makeuseof.com/tag/virtualbox-guest-additions-what-they-are-and-how-to-install-them/)
     - [additional help](https://www.virtualbox.org/manual/ch02.html)
-  - you should be able to plugin the whitehat drive and play around
+  - you should be able to plugin the usb and play around
 - setup hashistack
   - if you installed vagrant the hashi repo is already setup
   - `sudo apt install nomad terraform consul`

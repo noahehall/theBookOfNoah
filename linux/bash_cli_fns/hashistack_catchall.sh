@@ -1,9 +1,4 @@
-#!/bin/env bash
-
-regolith_version() {
-  local file=/etc/regolith/version
-  test -f $file && cat $file
-}
+#!/usr/bin/env bash
 
 pack() {
   if ! type nomad-pack 2>/dev/null; then

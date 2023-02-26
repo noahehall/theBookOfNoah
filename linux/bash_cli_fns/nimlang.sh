@@ -65,9 +65,13 @@ nim_b_run() {
   # nim_b_run somepkg FLAGS_FOR_NIMC thisbinary FLAGS_FOR_THIS_BINARY
   nim_b --package:${1:?package name required} "${@:2}"
 }
-nim_b_list_tasks() {
+nim_b_task_list() {
   # list curdir package tasks
   nim_b tasks
+}
+nim_b_task_run() {
+  # nim_b_task_run FLAGS_FOR_NIMC taskname TASK_ARGS
+  nim_b "$@"
 }
 nim_b_pkg_info() {
   # info about curdir/specific pkg
