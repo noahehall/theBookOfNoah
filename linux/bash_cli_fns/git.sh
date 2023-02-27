@@ -43,7 +43,11 @@ gitc() {
     git commit -a -m "$*"
 }
 gitca() {
-    git commit -a --no-verify --amend -m "$*"
+    if test "$#" -eq 0; then
+        git commit -a --no-verify --amend --no-edit
+    else
+        git commit -a --no-verify --amend -m "$*"
+    fi
 }
 gitnm() {
     git commit -a --no-verify -m "$*"
