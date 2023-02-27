@@ -66,6 +66,7 @@ whats() {
             echo -e "$(apt-cache search --names-only $realname)"
             echo -e '\n------------------------'
             echo -e "$itis"
+            echo -e "policy: $(apt-cache policy $cmd)"
             echo -e "location: $cmdpath"
             echo -e "type: $(file $cmdpath)"
             ;;
