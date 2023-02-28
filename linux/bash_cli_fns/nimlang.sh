@@ -6,7 +6,7 @@
 # nim_docs doesnt set the `edit` link correctly
 # pretty sure we can have a single nim_c_or_r to keep things dry
 # i think the c_opts should work for any c-like backend
-# add support for CC sets compiler when --cc:env is used
+# add support for envar CC which sets compiler when --cc:env is used
 
 nim_file_required='file.nim required'
 
@@ -62,7 +62,7 @@ nim_b_compile() {
 }
 nim_b_run() {
   # any binary in a packages bin list
-  # nim_b_run somepkg FLAGS_FOR_NIMC thisbinary FLAGS_FOR_THIS_BINARY
+  # nim_b_run somepkg NIMC_FLAGS thisbinary BIN_FLAGS
   nim_b --package:${1:?package name required} "${@:2}"
 }
 nim_b_task_list() {
@@ -70,7 +70,7 @@ nim_b_task_list() {
   nim_b tasks
 }
 nim_b_task_run() {
-  # nim_b_task_run FLAGS_FOR_NIMC taskname TASK_ARGS
+  # nim_b_task_run NIMC_FLAGS taskname TASK_ARGS
   nim_b "$@"
 }
 nim_b_pkg_info() {
@@ -82,7 +82,7 @@ nim_b_add() {
   # specify a version via somepkg@x.y.z
 
   ## a local package
-  # dont pass a package name and it will build the curdir in release mode
+  # dont pass a package name and it will build the curdir in release mode & install it
   # install only pkg deps via --depsOnly
   # nimc flags are forwarded to nimc
   nim_b install "$@"
@@ -210,13 +210,6 @@ read -r -d '' nim_dev_opts <<'EOF'
 --warnings:on
 EOF
 
-########################## nimscript
-nims() {
-  # TODO: @see https://nim-lang.org/docs/nimc.html#introduction
-  # TODO: @see https://nim-lang.org/docs/nims.html
-  nim e ${1:?file.nims required}
-}
-
 ########################## prod nim
 
 nim_compile() {
@@ -277,7 +270,7 @@ nim_dev_compile() {
   *) echo "invalid backend: @see https://nim-lang.org/docs/nimc.html" ;;
   esac
 }
-########################## docs
+########################## docgen
 nim_docs() {
   filepath=${1:?$nim_file_required}
   backend=${2:-c}
@@ -313,6 +306,39 @@ nim_docs_index() {
 nim_docs_ctags() {
   # check/lint doesnt catch the indentation errs causing this to throw
   nim ctags ${1:?$nim_file_required}
+}
+
+########################## nimscript
+nims() {
+  # TODO: @see https://nim-lang.org/docs/nimc.html#introduction
+  # TODO: @see https://nim-lang.org/docs/nims.html
+  nim e ${1:?file.nims required}
+}
+
+########################## testament
+# @see https://nim-lang.org/docs/testament.html
+# TODO: NIM_TESTAMENT_REMOTE_NETWORKING=1 enables tests with remote network (as in ci)
+
+# put compiler flags in a test/**/**/nim.cfg
+read -r -d '' nim_test_opts <<'EOF'
+--skipFrom:tests/skip.ini
+EOF
+
+nim_test() {
+  local what=${1:-a}
+
+  case $what in
+  all | a) testament $nim_test_opts all "${@:2}" ;;
+  c | cat | category | r | run | p | pattern)
+    testament $nim_test_opts $what ${2:?glob/category/testfile required} "${@:3}"
+    ;;
+  html) testament $what ;;
+  *)
+    testament # echos help
+    echo -e 'docs: https://nim-lang.org/docs/testament.html'
+    echo -e "\n$(type nim_test)"
+    ;;
+  esac
 }
 
 ########################## catchall
