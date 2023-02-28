@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 
-# TODO:
+## FYI
+# ive only tested the c backend for nim compile & run cmds
+
+## TODO:
 # add stuff from tools: @see https://github.com/nim-lang/Nim/blob/devel/tools
 # rewrite this entire thing in nimscript
 # nim_docs doesnt set the `edit` link correctly
-# pretty sure we can have a single nim_c_or_r to keep things dry
 # i think the c_opts should work for any c-like backend
 # add support for envar CC which sets compiler when --cc:env is used
+# likely want different opts for different backends in compile & run
 
 nim_file_required='file.nim required'
 
@@ -135,36 +138,17 @@ nim_b_setup_paths() {
   nim_b setup
 }
 ########################## OPTS nim
-read -r -d '' c_opts <<'EOF'
---lineDir:on
---lineTrace:on
---stackTrace:on
-EOF
-
-## dont add --multimethods:on -> safe to ignore any ambiguous call errors
-read -r -d '' doc_opts <<'EOF'
---docInternal
---hints:off
---index:on
---project
---threads:on
---verbosity:0
-EOF
-
 # TODO
 # --experimental:$1 think $1 should be a specific feature
 # --define:nodejs js backend targets nodejs instead of browser
-read -r -d '' nim_prod_opts <<'EOF'
+# --define:futureLogging # @see https://github.com/nim-lang/Nim/issues/21447
+read -r -d '' nim_base_opts <<'EOF'
 --assertions:on
 --debugger:native
 --deepcopy:on
---define:futureLogging
 --define:nimStrictDelete
---define:release
 --define:ssl
 --define:threadsafe
---errorMax:1
---forceBuild:on
 --hints:on
 --mm:orc
 --multimethods:on
@@ -174,40 +158,38 @@ read -r -d '' nim_prod_opts <<'EOF'
 --styleCheck:hint
 --threads:on
 --tlsEmulation:on
---verbosity:0
 --warnings:on
+EOF
+
+read -r -d '' c_opts <<'EOF'
+--lineDir:on
+--lineTrace:on
+--stackTrace:on
+EOF
+
+# FYI: errorMax = throw after N/more errors, not allow N errors
+read -r -d '' nim_prod_opts <<'EOF'
+--verbosity:0
+--errorMax:1
+--forceBuild:on
+--define:release
 EOF
 
 # TODO
 # --hotCodeReloading:on throws err
-# --mm:orc throws err
 # be cautious of --incremental:on as it tends to throw randomly on subsequent runs
 
+# FYI: errorMax:0 = dont throw on errors
 read -r -d '' nim_dev_opts <<'EOF'
---assertions:on
 --checks:on
 --colors:on
---debugger:native
 --debuginfo:on
 --declaredLocs:on
---define:futureLogging
---define:nimStrictDelete
---define:ssl
---define:threadsafe
 --errorMax:0
 --excessiveStackTrace:on
---hints:on
---incremental:off
---multimethods:on
 --opt:size
---parallelBuild:0
 --showAllMismatches:on
---stackTraceMsgs:on
---styleCheck:hint
---threads:on
---tlsEmulation:on
 --verbosity:2
---warnings:on
 EOF
 
 ########################## prod nim
@@ -217,11 +199,11 @@ nim_compile() {
   backend=${2:-c}
 
   case $backend in
-  c | compileToC) nim c $nim_prod_opts $c_opts $filepath ;;
-  cpp | compileToCpp) nim cpp $nim_prod_opts $filepath ;;
-  js) nim js $nim_prod_opts $filepath ;;
-  objc | compileToOC) nim objc $nim_prod_opts $filepath ;;
-  *) echo "invalid backend: @see https://nim-lang.org/docs/nimc.html" ;;
+  c | cc | compileToC | cpp | compileToCpp | objc | compileToOC)
+    nim $backend $nim_base_opts $nim_prod_opts $c_opts $filepath
+    ;;
+  js) nim $backend $nim_base_opts $nim_prod_opts $filepath ;;
+  *) echo -e "invalid backend: @see https://nim-lang.org/docs/nimc.html\n$(type nim_compile)" ;;
   esac
 }
 nim_run() {
@@ -229,8 +211,9 @@ nim_run() {
   backend=${2:-c}
 
   case $backend in
-  c | cpp | js | objc) nim r -b:$backend $nim_prod_opts $c_opts $filepath ;;
-  *) echo "invalid backend: @see https://nim-lang.org/docs/nimc.html" ;;
+  c | cpp | objc) nim r -b:$backend $nim_base_opts $nim_prod_opts $c_opts $filepath ;;
+  js) nim r -b:$backend $nim_base_opts $nim_prod_opts $filepath ;;
+  *) echo -e "invalid backend: @see https://nim-lang.org/docs/nimc.html\n$(type nim_run)" ;;
   esac
 }
 
@@ -254,8 +237,9 @@ nim_dev_run() {
   backend=${2:-c}
 
   case $backend in
-  c | cpp | js | objc) nim r -b:$backend $nim_dev_opts $c_opts $filepath ;;
-  *) echo "invalid backend: @see https://nim-lang.org/docs/nimc.html" ;;
+  c | cpp | objc) nim r -b:$backend $nim_base_opts $nim_dev_opts $c_opts $filepath ;;
+  js) nim r -b:$backend $nim_base_opts $nim_dev_opts $filepath ;;
+  *) echo -e "invalid backend: @see https://nim-lang.org/docs/nimc.html\n$(type nim_dev_run)" ;;
   esac
 }
 nim_dev_compile() {
@@ -263,14 +247,24 @@ nim_dev_compile() {
   backend=${2:-c}
 
   case $backend in
-  c | compileToC) nim c $nim_dev_opts $c_opts $filepath ;;
-  cpp | compileToCpp) nim cpp $nim_dev_opts $filepath ;;
-  js) nim js $nim_dev_opts $filepath ;;
-  objc | compileToOC) nim objc $nim_dev_opts $filepath ;;
-  *) echo "invalid backend: @see https://nim-lang.org/docs/nimc.html" ;;
+  c | cc | compileToC | cpp | compileToCpp | objc | compileToOC)
+    nim $backend $nim_base_opts $nim_dev_opts $c_opts $filepath
+    ;;
+  js) nim js $nim_base_opts $nim_dev_opts $filepath ;;
+  *) echo -e "invalid backend: @see https://nim-lang.org/docs/nimc.html\n$(type nim_dev_compile)" ;;
   esac
 }
 ########################## docgen
+## dont add --multimethods:on -> its safe to ignore any ambiguous call errors
+read -r -d '' doc_opts <<'EOF'
+--docInternal
+--hints:off
+--index:on
+--project
+--threads:on
+--verbosity:0
+EOF
+
 nim_docs() {
   filepath=${1:?$nim_file_required}
   backend=${2:-c}
@@ -292,7 +286,7 @@ nim_docs() {
     nim_graph $filepath
     nim doc -b:$backend $doc_opts $gitswitch $filepath
     ;;
-  *) echo "invalid backend: @see https://nim-lang.org/docs/nimc.html" ;;
+  *) echo -e "invalid backend: @see https://nim-lang.org/docs/nimc.html\n$(type nim_docs)" ;;
   esac
 }
 nim_docs_json() {
@@ -320,17 +314,22 @@ nims() {
 # TODO: NIM_TESTAMENT_REMOTE_NETWORKING=1 enables tests with remote network (as in ci)
 
 # put compiler flags in a test/**/**/nim.cfg
+# TODO: this causes runner to fail if skip.ini not found
 read -r -d '' nim_test_opts <<'EOF'
---skipFrom:tests/skip.ini
+--skipFrom:tests/skip
 EOF
 
 nim_test() {
   local what=${1:-a}
 
   case $what in
-  all | a) testament $nim_test_opts all "${@:2}" ;;
+  all | a)
+    testament $nim_test_opts all "${@:2}"
+    nim_test html
+    ;;
   c | cat | category | r | run | p | pattern)
     testament $nim_test_opts $what ${2:?glob/category/testfile required} "${@:3}"
+    nim_test html
     ;;
   html) testament $what ;;
   *)
