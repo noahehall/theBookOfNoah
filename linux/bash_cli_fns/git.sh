@@ -7,6 +7,7 @@ git_delete_remove_branch() {
     if [[ $# -eq 1 ]]; then
         git fetch --all
         git push origin --delete $1
+        git branch -D $1
     else
         echo "\$1 === branch_name"
     fi
