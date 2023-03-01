@@ -273,11 +273,18 @@ EOF
 
 nim_docs() {
   filepath=${1:?$nim_file_required}
-  backend=${2:-c}
+  backend=${2:-test}
 
   # creates htmldocs/htmlfiles matching nims html manpages
   case $backend in
-  c | cpp | js | objc)
+  c | cpp | js | objc | test)
+    # e.g. nim_docs somefile
+    # e.g. nim_docs somefile test js
+    if test "$backend" = "test"; then
+      backend=${3:-c}
+      nim_test
+    fi
+
     prevHtmlDocs="$(pwd)/$(dirname $filepath)/htmldocs"
     if test -d "$prevHtmlDocs"; then
       echo "deleting previous htmldocs dir $prevHtmlDocs"
@@ -319,7 +326,7 @@ nims() {
 # @see https://nim-lang.org/docs/testament.html
 # TODO: NIM_TESTAMENT_REMOTE_NETWORKING=1 enables tests with remote network (as in ci)
 
-# FYI: this is no longer use
+# FYI: this is no longer used
 # prefer setting disabled: true in the test specs
 read -r -d '' nim_test_opts <<'EOF'
 --skipFrom:tests/skip
@@ -330,7 +337,9 @@ nim_test() {
 
   case $what in
   all | a)
-    testament all "${@:2}"
+    # TODO: delete cached files without a corrosponding t*.nim file
+    # i.e. if you delete/rename a test, the cached tsomething is not deleted
+    testament all
     nim_test html
     ;;
   c | cat | category | r | run | p | pattern)
