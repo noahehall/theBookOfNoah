@@ -3,6 +3,10 @@
 # git
 
 # git ----------------------------------
+git_pull_develop_rebase() {
+    git pull origin develop
+    git rebase develop
+}
 git_delete_remove_branch() {
     if [[ $# -eq 1 ]]; then
         git fetch --all
@@ -27,7 +31,7 @@ git_delete_all_commits_but_keep_code() {
     git commit -am 'initial commit'
     git branch -D develop
     git branch -m develop
-    # check out the the .gitconfig in this repo so yto auto setup tracking branch
+    # FYI: the .gitconfig in this repo is configured to auto setup tracking branch
     git push -f
 }
 

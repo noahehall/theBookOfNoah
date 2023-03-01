@@ -7,9 +7,7 @@
 # add stuff from tools: @see https://github.com/nim-lang/Nim/blob/devel/tools
 # rewrite this entire thing in nimscript
 # nim_docs doesnt set the `edit` link correctly
-# i think the c_opts should work for any c-like backend
 # add support for envar CC which sets compiler when --cc:env is used
-# likely want different opts for different backends in compile & run
 
 nim_file_required='file.nim required'
 
@@ -138,7 +136,11 @@ nim_b_setup_paths() {
   nim_b setup
 }
 ########################## OPTS nim
-# TODO
+## FYI
+# opts are used with nim_dev_* and nim_doc cmds
+# prod opts are here as an example and should be specified in your config.nims
+
+## TODO
 # --experimental:$1 think $1 should be a specific feature
 # --define:nodejs js backend targets nodejs instead of browser
 # --define:futureLogging # @see https://github.com/nim-lang/Nim/issues/21447
@@ -197,22 +199,22 @@ EOF
 nim_compile() {
   filepath=${1:?$nim_file_required}
   backend=${2:-c}
+  opts="${@:3:-''}"
 
   case $backend in
-  c | cc | compileToC | cpp | compileToCpp | objc | compileToOC)
-    nim $backend $nim_base_opts $nim_prod_opts $c_opts $filepath
+  c | cc | compileToC | cpp | compileToCpp | objc | compileToOC | js)
+    nim $backend $opts $filepath
     ;;
-  js) nim $backend $nim_base_opts $nim_prod_opts $filepath ;;
   *) echo -e "invalid backend: @see https://nim-lang.org/docs/nimc.html\n$(type nim_compile)" ;;
   esac
 }
 nim_run() {
   filepath=${1:?$nim_file_required}
   backend=${2:-c}
+  opts="${@:3:-''}"
 
   case $backend in
-  c | cpp | objc) nim r -b:$backend $nim_base_opts $nim_prod_opts $c_opts $filepath ;;
-  js) nim r -b:$backend $nim_base_opts $nim_prod_opts $filepath ;;
+  c | cpp | objc | js) nim r -b:$backend $opts $filepath ;;
   *) echo -e "invalid backend: @see https://nim-lang.org/docs/nimc.html\n$(type nim_run)" ;;
   esac
 }
@@ -227,11 +229,13 @@ nim_dump() {
 nim_graph() {
   # generates parent/poop.deps && project/poops.{dot,png}
   # use graphviz ext > preview to view poop.dot within vscode
-  nim genDepend $nim_dev_opts ${1:?$nim_file_required}
+  nim genDepend $opts ${1:?$nim_file_required}
 }
 nim_lint() {
-  nim check $nim_dev_opts ${1:?$nim_file_required}
+  opts="${@:2:-''}"
+  nim check $opts ${1:?$nim_file_required}
 }
+
 nim_dev_run() {
   filepath=${1:?$nim_file_required}
   backend=${2:-c}
@@ -255,8 +259,10 @@ nim_dev_compile() {
   esac
 }
 ########################## docgen
-## dont add --multimethods:on -> its safe to ignore any ambiguous call errors
+## be cautious of ambiguous calls: sometimes doc gen fails
+## --multimethods:on has no affect on doc generation
 read -r -d '' doc_opts <<'EOF'
+--multimethods:on
 --docInternal
 --hints:off
 --index:on
@@ -313,8 +319,8 @@ nims() {
 # @see https://nim-lang.org/docs/testament.html
 # TODO: NIM_TESTAMENT_REMOTE_NETWORKING=1 enables tests with remote network (as in ci)
 
-# put compiler flags in a test/**/**/nim.cfg
-# TODO: this causes runner to fail if skip.ini not found
+# FYI: this is no longer use
+# prefer setting disabled: true in the test specs
 read -r -d '' nim_test_opts <<'EOF'
 --skipFrom:tests/skip
 EOF
@@ -324,11 +330,11 @@ nim_test() {
 
   case $what in
   all | a)
-    testament $nim_test_opts all "${@:2}"
+    testament all "${@:2}"
     nim_test html
     ;;
   c | cat | category | r | run | p | pattern)
-    testament $nim_test_opts $what ${2:?glob/category/testfile required} "${@:3}"
+    testament $what ${2:?glob/category/testfile required} "${@:3}"
     nim_test html
     ;;
   html) testament $what ;;
