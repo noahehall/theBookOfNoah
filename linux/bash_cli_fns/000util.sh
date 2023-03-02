@@ -54,7 +54,7 @@ whats() {
         cmdpath=$(echo $found | cut -d ' ' -f 3)
 
         case $cmdpath in
-        aliased | a)
+        aliased | a | hashed)
             shopt -s extdebug
             echo -e $(declare -F $cmd)
             echo -e "$itis\n$found"

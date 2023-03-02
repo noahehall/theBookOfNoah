@@ -26,7 +26,7 @@
 
 ### ubuntu:dev
 
-#### rm snaps and install regolith
+#### rm snaps and install regolith and apt-fast
 
 - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)
 - [switch to regolith & restart](https://regolith-desktop.com/)
@@ -39,10 +39,18 @@
   - [wiki search on github](https://github.com/search?q=org%3Aregolith-linux&type=Wikis&in:HowTo)
 
 ```sh
+## FYI:
+# after you install the bash_cli_fns/setup dir (somehwere after regolith)
+# apt will point to apt-fast, and oldapt will point to apt
+sudo add-apt-repository ppa:apt-fast/stable
+sudo apt update
+# pick apt & 10 connections -> move on with your life
+sudo apt install apt-fast
+
 # see all regolith apps
 apt_search_i3
 # essential regolith apps
-sudo apt install \
+sudo apt-fast install \
   i3xrocks-battery \
   i3xrocks-bluetooth \
   i3xrocks-cpu-usage \
@@ -62,7 +70,7 @@ apt_search_looks
 # install and set blackhole theme
 # you may receive various errors, check the errors section
 # you may need to logout > in case refresh doesnt work right
-sudo apt install regolith-look-blackhole
+sudo apt-fast install regolith-look-blackhole
 regolith-look list
 regolith-look set blackhole
 regolith-look refresh

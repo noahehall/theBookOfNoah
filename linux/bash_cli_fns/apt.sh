@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+# use apt-fast if its installed
+if hash apt-fast 2>/dev/null; then
+  alias oldapt='/usr/bin/apt'
+  alias apt='/usr/bin/apt-fast'
+else
+  echo 'unable to ovelroad apt with apt-fast'
+fi
+
 # apt ----------------------------------
 alias apt_fix_broken='sudo apt install --fix-broken'
 alias apt_fix_configure='sudo dpkg --configure --force-overwrite -a'
