@@ -18,7 +18,7 @@ modeling languages and their syntax
 ### terminology
 
 - model: partial abstract representation of a real-world system
-  - analyze, communiate, test and document your understanding of a system
+  - analyze, communicate, test and document your understanding of a system
 - types
   - computational: computer simulations representing time-varying behavior of a system
     - weather forecasting models: simulating future weather patterns
@@ -55,14 +55,14 @@ modeling languages and their syntax
     - focus on what you are modeling, and not the model itself
 - sometimes
   - model selectively: dont draw all the models to develop a system
-    - its just a means to an end, so do enough to successfuly analyze, document, and test
+    - its just a means to an end, so do enough to successfully analyze, document, and test
   - model collaboratively: use models to think, share, learn and understand together with your team
 - never
 
 ## UML
 
-- unified modeling language: family of grpahical notatins to describe & design software systems
-- based on standards controlled by Object Management Group (OMG)
+- unified modeling language: family of grpahical notations to describe & design software systems
+- based on standards controlled by the Object Management Group (OMG)
 - use case specification: detailed explanation that lists each specific use case and scenarios in which that use case exists
   - identify all nouns: these will be the classifiers (i.e. objects) in your class diagrams
     - becareful, because some nouns can actually be attributes, and not first-class citizens
@@ -70,15 +70,15 @@ modeling languages and their syntax
   - identify all verbs: these are the verbs relations (sometimes methods) of classifiers in your class diagrams
     - the verbs here are like confirms, creates, aproves, refers to, etc
     - sometimes a verb will also indicate a method,
-      - e.g. I poop in toilet and flush
-        - 2 classes: I and toilet
-        - 1 relationship: poop indicates I depend on toilet
-        - 1 methods: poop indicates something I do, and flush indicates something I do
+      - e.g. I woop when player shoots
+        - 2 classes: I and player
+        - 1 relationship: woop indicates I depend on player
+        - 1 methods: woop indicates something I do
   - class diagrams: rely heavily on the nouns attributes & verbs
   - sequence diagrams rely heavily on the nouns and verbs
 - diagram types
   - you generally want to iterate between structural & behavior diagrams
-    - the modeling activities in each informs the other
+    - the modeling activities of each informs the other
   - structure: represents static view of the system and its components
     - class: static view of all classes created to build the system
     - component
@@ -100,6 +100,8 @@ modeling languages and their syntax
 ### notations
 
 - TODO: need to extract all notations and list them here
+  - theres likely more important things to focus on than remembering UML notations
+    - unless your job is remembering UML notations
 - at a high level each represent the same idea across diagrams
   - but depending on the context (i.e. diagram) the specifics could change
   - get creative: diagrams are like visual language, the communication of ideas
@@ -172,7 +174,7 @@ modeling languages and their syntax
 
 #### component diagrams
 
-- model systems in terms of autonomouse reusable units that are rewired togethered to form a system
+- model systems in terms of autonomous, reusable units that are wired togethered to form a system
 - based on CBD
 - key elements
   - Component: self contained unit with a stable interface that can be replaced at design/runtime by a component that offers equivalent functionality
@@ -185,8 +187,8 @@ modeling languages and their syntax
       - indicated by a socket (just a reversed lollipop)
   - Relationship: dependencies between components, or between components & interfaces
     - between components, or between components & interfaces are generally the same thing
-    - ^ because all interfaces are implemented components
-      - so a diagram with nothing but interfaces, can be interpreted by the eventual components that implement them
+    - ^ because all components implement interfaces
+      - i.e. an interface only diagram, can be interpreted by the eventual components that implement them
 
 #### class diagram
 
@@ -239,7 +241,7 @@ modeling languages and their syntax
 
 - aka instance diagrams
 - depicts snapshots of instances of objects in a system at a point in time
-  - i.e. to visual the state of a system at a specific point in time
+  - i.e. to visualize the state of a system at a specific point in time
   - as opposed to modeling classes, interfaces, etc, you are modeling specific manifestations of these objects
 - only represent the structural aspect of instances
   - thus you shouldnt list any methods when detailing the slots/attributes
@@ -255,7 +257,7 @@ modeling languages and their syntax
 #### composite structure diagrams
 
 - model the internal structural elements of a system, e.g. class, component, object
-- to depict how different elements come together to create a unified thing when the systme is running
+- to depict how different elements come together to create a unified whole when the system is running
 - key elements
   - classifier: the entity whose internal structure is being modeled
   - parts: internel elements of the entity
@@ -286,12 +288,16 @@ modeling languages and their syntax
 - precursor to use case specifications
 - use cases are supposed to offer value, so not every workflow is a usecase, some are just prerequisites to use cases
   - e.g. Login functionality, whats its value? its really a burden/cost for some other use case
+    - dont agree with this at all
+    - do you remember what it was like before federated login? long live `login with google`!
+      - pepperidge farm remembers
   - use cases fit this threshold: `users come to the system to do X and receive Y`
     - they never come to your system to ONLY login, they come to do something else, and logging in is a prereq to do that other thing
+    - the important thing to remember is usecases depends on the context, in order to delineate value and costs
 - goals
-  - captures high-level functionality of a system using notations for
-  - developed by biz analysts to depict the summary of all use cases in a system
-  - link to detailed specification docs
+  - captures high-level functionality of a system using notations for describing actors, relations, costs and values
+    - developed by biz analysts to depict the summary of all use cases in a system
+    - link to detailed specification docs
 - key elements
   - use cases
   - systems
