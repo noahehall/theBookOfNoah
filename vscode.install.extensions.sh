@@ -21,11 +21,19 @@ code-insiders --install-extension IBM.output-colorizer
 code-insiders --install-extension jakebathman.mysql-syntax
 code-insiders --install-extension joaompinto.vscode-graphviz
 code-insiders --install-extension JuanBlanco.solidity
+code-insiders --install-extension lextudio.restructuredtext
 code-insiders --install-extension mechatroner.rainbow-csv
 code-insiders --install-extension mgmcdermott.vscode-language-babel
 code-insiders --install-extension mikestead.dotenv
 code-insiders --install-extension mindaro-dev.file-downloader
 code-insiders --install-extension ms-dotnettools.vscode-dotnet-runtime
+code-insiders --install-extension ms-python.python
+code-insiders --install-extension ms-python.vscode-pylance
+code-insiders --install-extension ms-toolsai.jupyter
+code-insiders --install-extension ms-toolsai.jupyter-keymap
+code-insiders --install-extension ms-toolsai.jupyter-renderers
+code-insiders --install-extension ms-toolsai.vscode-jupyter-cell-tags
+code-insiders --install-extension ms-toolsai.vscode-jupyter-slideshow
 code-insiders --install-extension ms-vscode.cmake-tools
 code-insiders --install-extension ms-vscode.cpptools
 code-insiders --install-extension nimsaem.nimvscode
@@ -36,4 +44,5 @@ code-insiders --install-extension redhat.vscode-commons
 code-insiders --install-extension redhat.vscode-xml
 code-insiders --install-extension redhat.vscode-yaml
 code-insiders --install-extension tomoki1207.pdf
+code-insiders --install-extension trond-snekvik.simple-rst
 code-insiders --install-extension twxs.cmake
