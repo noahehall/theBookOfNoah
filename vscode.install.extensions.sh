@@ -13,7 +13,6 @@ code-insiders --install-extension formulahendry.auto-close-tag
 code-insiders --install-extension formulahendry.auto-rename-tag
 code-insiders --install-extension formulahendry.code-runner
 code-insiders --install-extension foxundermoon.shell-format
-code-insiders --install-extension GitHub.copilot
 code-insiders --install-extension Gruntfuggly.todo-tree
 code-insiders --install-extension hashicorp.hcl
 code-insiders --install-extension hashicorp.terraform
@@ -29,11 +28,6 @@ code-insiders --install-extension mindaro-dev.file-downloader
 code-insiders --install-extension ms-dotnettools.vscode-dotnet-runtime
 code-insiders --install-extension ms-python.python
 code-insiders --install-extension ms-python.vscode-pylance
-code-insiders --install-extension ms-toolsai.jupyter
-code-insiders --install-extension ms-toolsai.jupyter-keymap
-code-insiders --install-extension ms-toolsai.jupyter-renderers
-code-insiders --install-extension ms-toolsai.vscode-jupyter-cell-tags
-code-insiders --install-extension ms-toolsai.vscode-jupyter-slideshow
 code-insiders --install-extension ms-vscode.cmake-tools
 code-insiders --install-extension ms-vscode.cpptools
 code-insiders --install-extension nimsaem.nimvscode
