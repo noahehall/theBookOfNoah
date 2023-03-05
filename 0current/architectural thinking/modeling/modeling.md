@@ -103,8 +103,8 @@ modeling languages and their syntax
   - theres likely more important things to focus on than remembering UML notations
     - unless your job is remembering UML notations
 - at a high level each represent the same idea across diagrams
-  - but depending on the context (i.e. diagram) the specifics could change
-  - get creative: diagrams are like visual language, the communication of ideas
+  - but depending on the context the specifics could change
+  - get creative: diagrams are a visual language, the communication of ideas
 - `rectangle` nonhuman thing
 - `<< stereotype >>` stereotyping common things, e.g. a database, used as a title/label for a component
   - `<< nosql DB >>`
