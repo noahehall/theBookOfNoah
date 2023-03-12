@@ -31,6 +31,11 @@ else
     echo 'unable to ovelroad top with bpytop'
 fi
 
+# random users -------------------------
+get_users() {
+    lastlog
+}
+
 # random cli ---------------------------
 alias echopath='echo $PATH | tr -s ":" "\n"'
 alias lessbashrc='less ~/.bashrc'
