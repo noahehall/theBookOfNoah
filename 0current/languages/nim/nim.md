@@ -2,6 +2,7 @@
 
 - fkn need to finish this thing
 - haha only took 2 years, checkout [noahehall/nim for more](https://github.com/noahehall/nim)
+- TODO move this entire thing into bookofnim
 
 ## links
 

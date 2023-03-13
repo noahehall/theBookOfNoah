@@ -19,7 +19,9 @@ nim_c_use() {
   # install then select
   nim_c ${1:-stable}
 }
-
+nim_c_rm_version() {
+  nim_c remove ${1:?specific version required}
+}
 nim_c_current() {
   nim_c show
 }
