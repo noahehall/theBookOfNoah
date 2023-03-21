@@ -7,7 +7,7 @@
 ---
 
 - full stack application development
-  - javascript > web architecture > virtualization > bash > databases > nimlang > security
+  - javascript, web architecture, virtualization, bash, data, databases, nimlang, security
   - i spend too much time at the top, and not enough at the bottom of the stack
   - but thats just how life goes
 

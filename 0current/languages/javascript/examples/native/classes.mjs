@@ -1,16 +1,4 @@
-# js classes
-
-## links
-
-- [classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
-- [Mixins](http://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/)
-
-## basics
-
-- An important difference between function declarations and class declarations is that function declarations are hoisted and class declarations are not.
-- The super keyword is used to call functions on an object's parent.
-- Abstract subclasses or mix-ins are templates for classes. An ECMAScript class can only have a single superclass, so multiple inheritance from tooling classes, for example, is not possible. The functionality must be provided by the superclass.
-- mixin: is really a subclass factory, parameterized by the superclass, which produces mixin applications
+/*
 
 ```js
 // Class declarations
@@ -96,3 +84,27 @@ class MyClass extends Mixin1(Mixin2(MyBaseClass)) {
   /* ... */
 }
 ```
+
+
+- prototypes, dizzam remember these?
+- If you want to inherit from a regular object, you can instead use Object.setPrototypeOf():
+
+```js
+var Animal = {
+  speak() {
+    console.log(this.name + " makes a noise.");
+  },
+};
+
+class Dog {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+Object.setPrototypeOf(Dog.prototype, Animal); // If you do not do this you will get a TypeError when you invoke speak
+
+var d = new Dog("Mitzie");
+d.speak(); // Mitzie makes a noise.
+```
+*/

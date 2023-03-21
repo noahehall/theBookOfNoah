@@ -1,16 +1,5 @@
-# metaprogramming
+/*
 
-## Symbols
-
-- reflection within implementation - you sprinkle them on your existing classes and objects to change the behaviour.
-- use cases:
-  - not iterable over
-  - not fetched using the already existing Reflection tools
-  - guaranteed not to conflict with other properties in the object!
-  - If you create a symbol (var mysym = Symbol()) it creates a completely new value inside the JavaScript engine.
-    - If you don’t have the reference for the Symbol, you just can’t use it.
-    - This also means two symbols will never equal the same value, even if they have the same description.
-  - Symbol.for(). This method creates a Symbol in a “global Symbol registry”. Small aside: this registry is also cross-realm, meaning a Symbol from an iframe or service worker will be the same as one generated from your existing frame:
 - code:
 
   - create a symbol:
@@ -30,13 +19,7 @@
 
   - see an object's symbols: `Object.getOwnPropertySymbols:`
 
-### Reflect
 
-- all about Reflection through introspection - used to discover very low level information about your code.
-
-### Proxy
-
-- Reflection through intercession - wrapping objects and intercepting their behaviours through traps.
 
 ### Proxy
 
@@ -81,3 +64,5 @@
      person.age = "young"; // Throws an exception
      person.age = 300; // Throws an exception
      ```
+
+*/
