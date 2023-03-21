@@ -26,6 +26,8 @@
 
 ### ubuntu:dev
 
+- [add steps for installing element](https://element.io/download#linux-details)
+
 #### rm snaps and install regolith and apt-fast
 
 - [fk snaps, disable that shiz](https://www.simplified.guide/ubuntu/remove-snapd)

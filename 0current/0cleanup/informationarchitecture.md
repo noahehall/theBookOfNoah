@@ -42,6 +42,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
 - prototyping tools
   - web development software that enables you to create ineractive wireframes and clickable prototypes
 - user research
+
   - software that supports user research, including online card sorting and remote usability testing
 
 -
@@ -64,7 +65,8 @@ page 44 (i need to finish extracting notes I wrote in this book )
   - includes but is not limited to efficiency
 - strategy
   - the creation of a unique and valuable position, involing a different set of activities
-- activity system  map
+- activity system map
+
   - tool for examing and strengthening strategic fit
   -
 
@@ -173,7 +175,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
 - journalism
   - trained at organizing inforation but in a setting that places special emphasis on timeliness
   - if your site is geared toward delivering dynamic information (e.g. news), a journalist might have a great sense of how this information could be best organized and delivered
-  - writing experience,  makes them good candidates for architecting sites that will have high levels of edited content
+  - writing experience, makes them good candidates for architecting sites that will have high levels of edited content
 - usability engineering
   - experts at testing and evaluating how people work with systems
   - human-computer interaction professionals measure various criteria
@@ -366,12 +368,14 @@ page 44 (i need to finish extracting notes I wrote in this book )
 - users are essentially looking for ideas and concepts that inform us and help us make decisions
 
 - known-item seeking, i.e. the perfect catch
+
   - you know what youre looking for, what to call it, and wheere youll find it
   - e.g.
     - what is the population of san francisco
   -
 
 - exploratory seeking, i.e. lobster trapping
+
   - is usually open-ended, there is no clear expectation of a 'right' answer,
     - nor do you know how to truly articulate what youre looking for
       - if you did, it would be known-item seeking
@@ -417,16 +421,18 @@ page 44 (i need to finish extracting notes I wrote in this book )
 ## information models
 
 - modeling users needs and behaviors forces us to ask questions about
+
   - what kind of information the user wants,
   - how much information is enough
   - how the user actually interacts with the architecture
 
 - too-simple model
+
   - algorithm
-      1. user asks a question
-      2. something happens (e.g. searching/browsing)
-      3. user receives the answer
-      4. done
+    1. user asks a question
+    2. something happens (e.g. searching/browsing)
+    3. user receives the answer
+    4. done
   - issues
     - users rarely find what there looking for (especially if they are browsing)
     - users often complete their efforts at finding information in a state of partial satisfaction/outright frustration
@@ -440,6 +446,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
     - when users know what there looking for
 
 - berry picking model
+
   - users start with an information need
   - formulate an information request (i.e. query)
   - move iteratively through an information system along potentially complex paths, picking bits of information (i.e. berries) along the way
@@ -450,6 +457,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
     - browse through categires you find by searching
 
 - pearl growing model
+
   - users start with one or a few good documents that are exactly what they need
   - they want to get 'more like this one'
   - supporting users with pearl growing information needs
@@ -505,7 +513,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
       - e.g. content management systems, search engines and portal software
     - embedded navigation systems
       - composed of browsable taxonomies, indexes and the search system
-      - define at  fundamental level how users are aable to serch and browse
+      - define at fundamental level how users are aable to serch and browse
     - faceted classification schemes
   - slow layers
     - provide stability
@@ -548,9 +556,11 @@ page 44 (i need to finish extracting notes I wrote in this book )
     - how flexible is the search engine
     - will the search engine support integration of a thesaurus
     - can we get regular access to search logs and usage statistics
-- undertake a series of studies  to explore the information ecology
+- undertake a series of studies to explore the information ecology
 - research framework
+
   - content
+
     - users need to be able to find content before they can use it
       - findability precedes usability
     - document/data types, content objects, metadata, volume, existing structure
@@ -573,12 +583,13 @@ page 44 (i need to finish extracting notes I wrote in this book )
         - describe the information hierarchy of each object
         - is there a title, discrete sections, etc
       - descriptive
-        - think of all the different ways you  might describe each object
+        - think of all the different ways you might describe each object
         - topi, audience, format ?
       - administrative
         - desscribe how each object relates to the business context
         - who created it, who owns it, when was it created, should it be removed?
     - content analysis
+
       - provides a bottom up understanding of content objects
       - careful review of the documents and objects that actually exist
         - top questions
@@ -643,7 +654,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
         - use cases
           - generates a laundry list of IA features, bring lots of ideas to the table
           - encourages transition from broad genrealizations to specific actional definitions
-          - challenges embedded assumptions  (we should be like amazon)
+          - challenges embedded assumptions (we should be like amazon)
           - avoid copying the wrong features for the wrong reasons
           - establishes current position with respect to competitors and creates a point of reference against which to measuure speed of improvement
       - before and after
@@ -660,6 +671,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
         - number of seconds to perform a task using competing sites
         - interesting features of competing sites
       - qualitative
+
   - context
     - business goals, funding, politics, culture, technology human resources
     - background research
@@ -667,7 +679,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
       - business plan? company politics ?
       - schedule and budget
       - intended audiences
-      - why will people come  to the site, why will they come back
+      - why will people come to the site, why will they come back
       - what tasks should users be able to perform
       - how will content be created and managed, and by whom ?
     - presentations
@@ -716,10 +728,12 @@ page 44 (i need to finish extracting notes I wrote in this book )
 #### strategy
 
 - IA strategy
+
   - high level conceptual framework for structuring and organizing a website
   - provides a firm sense of direction and scope necessary to proceed into the design and implementation phases
 
 - IA strategy process
+
   - think - convert research data to creative ideas
   - articulate - conceptual diagrams, metaphors, stories, blueprints, wireframes, etc
   - communicate - present, react, brainstorm
@@ -728,14 +742,14 @@ page 44 (i need to finish extracting notes I wrote in this book )
 - IA strategy deliverables
   - IA strategy report
     - the most detailed and comprehensive articulation of IA
-    - big  and vague ideas must be broken down into components and eplained so that all involved can understand their intention and implications
+    - big and vague ideas must be broken down into components and eplained so that all involved can understand their intention and implications
     - components
       - executive summary
       - audiences, mission and vision for the site
       - lessons learned
         - what did you see, what did you learn, how does it impact the site
       - architectural strategies and approaches
-        - e.g. local hub strategy  and distributed content
+        - e.g. local hub strategy and distributed content
         - conceptual blueprint of the strategy
       - wireframes
       - content management
@@ -833,6 +847,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
 - shape the high level strategy into an information architecture
 - the very act of shaping ideas into the more formal structure of a blueprint to become realistic and practical
 - blue prints
+
   - show the relationship between pages and other content components
   - can be used to portray organization, navigation and labeling systems
   - often referred to as site maps
@@ -852,6 +867,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
         - all organization and labeing, and navigation systems
 
 - wireframes
+
   - depict how an individual page or template should look from an architectural perspective
   - describe the content and IA to be included, however, confined to a 2d space
   - stand at the intersection of the sites IA and its visual and information design
@@ -882,6 +898,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
     - establish procedures for developing , sharing and maintaining common templates and stenciles
 
 - diagrams
+
   - useful for communicating the two basic aspects of an informatioon systems structural elements
     - content components
       - what constitutes a unit of content and how those components should be grouped and sequenced
@@ -960,10 +977,12 @@ page 44 (i need to finish extracting notes I wrote in this book )
     - by chronology
 - the first step in transforming data into information is exploring its organization
 - all information retrieval systems work best when applied to narrow domains of homogeneous content
+
   - decomposing the content into narrow domains you can identify opportunities for highly effective organization systems
   -
 
 - components
+
   - organization schemes
     - defines the shared characteristics of content items and influences the logical grouping of those items
     - exact/objective organization schemes
@@ -1138,7 +1157,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
       - fonts, sizes, colors, whitespace, grouping
     - syntax
       - verb-based - 'grooming your dog'
-      - noun-based  - 'diets for dogs'
+      - noun-based - 'diets for dogs'
     - granularity
       - labels must represent the same specificity
     - comprehensiveness
@@ -1202,7 +1221,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
     - provde both context and flexibility
     - helps users understand where they are and where they can go
   - personalization
-    - serving up tailored pages to the user based upon a model of the behavior, needs or preferences of  that individual
+    - serving up tailored pages to the user based upon a model of the behavior, needs or preferences of that individual
   - social navigation
     - build on the premise that value for the individual user can be derived from observing the actions of other users
     - e.g. links to popular resources
@@ -1215,7 +1234,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
   - you have to discern what content to index to make it available for searching
 - to display certain kinds of information in each search result
   - page title, extract, date, etc.
-  - to handle searc  - controlled vocabulariesh queries in certain ways
+  - to handle searc - controlled vocabulariesh queries in certain ways
     - removing 'stop words'
       - e.g. a, the, and, of
   - 'best link' and other types of manually data that are attached to automated search results
@@ -1225,6 +1244,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
   - are there better alternatives
   - will your sites users bother to search
 - use cases
+
   - when you hav etoo much ifnormation to browse
   - if you have a fragmented site
   - can be used as a learning tool
@@ -1232,9 +1252,11 @@ page 44 (i need to finish extracting notes I wrote in this book )
   - can t ame dynamism
 
 - components
+
   - user query
 
   - search interface
+
     - the means of entering and revising a search query
     - all aspects of application searching come together in the interface
       - what to search
@@ -1281,7 +1303,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
               - show other current settings, e.g. sort order
               - mention the number of results retrieved
         - integrate searching with browsing
-          - look for opportunities to connect your search and browse systems  to allow users to easily jump back and forth
+          - look for opportunities to connect your search and browse systems to allow users to easily jump back and forth
           -
     - typically with
       - information on how to improve your query
@@ -1289,6 +1311,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
     -
 
     - query language
+
       - the grammar of a search query
       - typically includes
         - boolean operators (AND/OR/NOT)
@@ -1296,6 +1319,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
         - ways of specifying which field to search (AUTHOR,NAME)
 
     - query builders
+
       - ways of enhancing a querys performance often invisible to users
       - spell checkers
         - allow users to misspell terms and still retrieve the right results by automatically correcting search terms
@@ -1330,6 +1354,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
         - department/business unitng just the tech support area
 
   - search engine
+
     - search algorithms
       - the part of a search engine that determines which content matches a users query
       - e.g. google pagerank
@@ -1354,11 +1379,13 @@ page 44 (i need to finish extracting notes I wrote in this book )
         - leads to higher recall in search results
 
   - content
+
     - metadata
+
       - definitional data that provides information about/documentation of other data managed within an application
         - a lens through which you can view the network of relationships between IA components
       - used to describe documents, pages, images, software, and other content objects for the purposes of improved navigation and retrieval
-      - each search result can be broken down into smaller atoms, e.g. authors name, which may be leveraged by a search engine, e.g. for  filtering
+      - each search result can be broken down into smaller atoms, e.g. authors name, which may be leveraged by a search engine, e.g. for filtering
       - representational metadata
         - quickly distinguish result types
         - e.g. title/author
@@ -1367,6 +1394,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
         - get a sense of what the content is about
 
     - controlled vocabulary
+
       - any defined subset of natural language,
         - a list of equivalent terms in the form of a synonym ring
         - a list of preferred terms in the form of an authority file
@@ -1384,7 +1412,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
                 - select a specific dictionary/glossary/use your inhouse style
                 - consider the most common spelling employed by your users
               - singular/plural form?
-                - use the plural form  of 'countable nounse', e.g. cars, roads maps
+                - use the plural form of 'countable nounse', e.g. cars, roads maps
                 - use the singular form for conceptual nouns, e.g. math, biology
               - abbreviations and acronyms
                 - use whatever is popular
@@ -1423,7 +1451,9 @@ page 44 (i need to finish extracting notes I wrote in this book )
             - provide a way to manage homographs
           - can be used in searching/results dispplayed to assist users
       - types (Simple to complex)
+
         - synonym rings
+
           - equivalent type relatioonship between terms
           - connects a set of words that are defined as equivalent for the purposes of retrieval
           - useful in situations where different people will use different queries in search of the same thing
@@ -1511,13 +1541,13 @@ page 44 (i need to finish extracting notes I wrote in this book )
             - associative relationships
               - provides for meaningful connections that arent handled by the hierarchical or equivalence relationships
               - usually developed after youve made progress on the other two types of semantic relationships
-              - defined as strongly implied semantic connections  that arent captured within the equivalence or hierarchical relationships
+              - defined as strongly implied semantic connections that arent captured within the equivalence or hierarchical relationships
               - e.g. hammer RT nail
               -
           - types
             - classic
               - used at the point of indexing and at the point of searching
-              - indexers use the thesaurus to map  v ariant terms to preferred terms when performing document level indexing
+              - indexers use the thesaurus to map v ariant terms to preferred terms when performing document level indexing
               - searchers use the thesaurus for retrieval, whether or not there awre of the role it plays in their search experience
               - query terms are matched against the rich vocabulary of the thesaurus, enabling synonym management, hierarchical browsering and associative linking
               - this is the full bodied, fully integrated thesaurus your usee to
@@ -1533,15 +1563,16 @@ page 44 (i need to finish extracting notes I wrote in this book )
             - searching
               - leverages a controlled vocabulary at the poiint of searching
                 - but not at the point of indexing
-              - maps users search query terms to the controlled vocabulary before executing the query against  the full text index
+              - maps users search query terms to the controlled vocabulary before executing the query against the full text index
               - perform equivalence term explosion
               - posting down
                 - explode down the hierarchy to include all narrower terms
               -
 
       -
+
     - thesaurus
-        -
+      -
       -
     -
 
@@ -1626,7 +1657,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
 - lists
   - groups of chunks or links to chunks
   - are important because
-    - theyve been grouped together (share  some trait in common)
+    - theyve been grouped together (share some trait in common)
     - have been presented in a particular order (e.g. chronologically)
 - sequential aids
   - clues that suggest
@@ -1643,9 +1674,11 @@ page 44 (i need to finish extracting notes I wrote in this book )
 - certain key architectural components are manifest completely in the background
 - users rarely (if ever) interact with them
 - often 'feed' other components
+
   - e.g. a thesaurus used to enhance a search query
 
 - controlled vocabularies
+
   - predetermined vocabularies of preferred terms that describe a specific domain
     - e.g. auto racing/orthopedic surgery
   - supporting tools
@@ -1661,6 +1694,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
   - used to rank search results by relevance
   - reflect their pgrogrammers judgments on how to determine relevance
 - best bets
+
   - preferred search results that are manually coupled with a search query
   - editors and subject matter experts determine
     - queries should retrieve best bets
@@ -1673,13 +1707,14 @@ page 44 (i need to finish extracting notes I wrote in this book )
 - wireframes
   - inform visual design
 - blueprints
+
   - modularizing the blueprints
     - top level blueprint should link to subsidiary blueprints and so on
     -
 
 - metadata schema
 
-    -
+  -
   -
 
 ### IA definition of 'done'
@@ -1732,6 +1767,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
 
 - describes a temporal view of an information system by showing how information should flow into, around and out of that same system over time
 - deal with issues of
+
   - content ownership
   - integration of policies, processes and technologies to support a dynamic publishing environment
 
@@ -1755,6 +1791,7 @@ page 44 (i need to finish extracting notes I wrote in this book )
 # design
 
 - the more often that answers are located in the places you look for them
+
   - the easier the design will feel to users
   - the more successful the project
   - more sales for ecommerce sites

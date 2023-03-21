@@ -1,5 +1,6 @@
-page 45
-stateful vs stateless interfaces
+- stateful vs stateless interfaces pg 45
+  - lol i think i photocopied the remainder of this book somewhere
+  - check the books repo
 
 # books
 
@@ -76,8 +77,9 @@ stateful vs stateless interfaces
 - interfaces and class-inheritance are often two different ways to do the same thing
   - method perspective
     - this - a base class provides a set of methods, and derived classes inherit implementations of some methods and contain their own implementations of other methods
-    - that - mutiple classes each  implement all the methods in an interface
+    - that - mutiple classes each implement all the methods in an interface
 - dont duplicate code across interfaces
+
   - this - create a helper class and delegate operations to it
   - or that -
     - create a class that implemented the interface and provided code for many, if not all of the methods
@@ -91,7 +93,7 @@ stateful vs stateless interfaces
   - minimal/sufficient interface has just the methods that a caller needs to perform their work case
     - easier to implement and test with fewer methods
     - however user must code their particuar functionality and may wind up with duplicated code for same functionality
-  - complete interface has more methods  than required to perform  their work
+  - complete interface has more methods than required to perform their work
     - user has all needed methods
     - may be harder to understand an interface with numerous methods
 - simplicity vs complexity
@@ -210,11 +212,14 @@ stateful vs stateless interfaces
 - an interface can be more than one type
 - each type lies on a spectrum
 - all interface types should consider the following
+
   - having many methods vs not-many methods
+
     - less methods are easier for the implementer but require more error checking
     - more methods are safer/more specific functionality but require more implementation
 
   - stateful interfaces
+
     - methods operate differently based on the current state
     - current state is changed by the sequence of method invocations
     - advantages
@@ -222,6 +227,7 @@ stateful vs stateless interfaces
       - the order of the method calls does not matter (can check state)
 
   - stateless interfaces
+
     - the behavior is not dependent on the history of method invocations
       - there may be internal state to improve performance but the callers of the interface do not reply upon that fact or even know it
     - advantages
@@ -257,7 +263,7 @@ stateful vs stateless interfaces
 - the methods in the interface typically set/retrieve values of the attributes
 - implementations of data interfaces have state which consists of the set of values of all attributes in the class
 - e.g.
-    - data transfer object (DTO)
+  - data transfer object (DTO)
   - methods refer only to attributes of the object
 
 ## service interfaces
@@ -265,6 +271,7 @@ stateful vs stateless interfaces
 - a module whoose methods that act on the parameters pased to it rather than the attributes of the implementation
 - typically consist of mostly methods and little if any attributes outside of those associated with providing the service,
 - e.g.
+
   - command interface
     - usually contain only service mmethods
 
