@@ -1,13 +1,12 @@
-# CSS + HTML (and accesibility)
+# CSS, HTML and accesibility
 
-- always start with high quality markup, you need text, copy and structure before you can style anything
-- not everything is captured, dont depend on this file as a full reference
-  - e.g. some tricks arent listed based on my opinions
-  - check MDN, then w3.org as your use case becomes more complex
-- mainly for keeping me up to date whenever I return to a predominately frontend role
-  - where expert level css knowledge is required to remain efficient
+> always start with high quality markup, you need text, copy and structure before you can style anything
+
+- its best to use an outline (e.g. in vscode) when viewing this document
+  - unfortunately the accessibility section is at the very bottom
+    - i wouldnt skip reading the best practices section, lots of goodies
 - note about anything design related: im not a designer, not interested in being a designer, but all frontend devs needs to have some basic knowledge in case we need to push back against something crazy that doesnt make sense
-  - designers are special people, like a good musician/basketball player, your born with a 6th sense
+  - designers are special people, like a good musician/writer/sports player, your born with a 6th sense
 - todos
   - the entire accessibility section should be reworked
 
@@ -15,11 +14,15 @@
 
 ### css / design
 
+- [image src-set for responsiveness](https://css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/)
+- [flip principle](https://aerotwist.com/blog/flip-your-animations/)
+- [style invalidation in blink](https://docs.google.com/document/d/1vEW86DaeVs4uQzNFI5R-_xS9TcS1Cs_EUsHRSgCHGu8/edit)
 - layouts
   - [css layout introduction](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Introduction)
   - [responsive design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
   - [layout comprehension assessment](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Fundamental_Layout_Comprehension)
 - css
+  - [BEM: Block Element Modifier](https://en.bem.info/)
   - [w3 css validator](https://jigsaw.w3.org/css-validator/)
   - [w3 css](https://www.w3.org/Style/CSS/Overview.en.html)
   - [w3 css release phases](https://www.w3.org/Style/CSS/current-work)
@@ -125,6 +128,9 @@
 
 ### html
 
+- [font face observer](https://github.com/bramstein/fontfaceobserver)
+- [web font loader](https://github.com/typekit/webfontloader)
+- [font optimization](https://www.zachleat.com/web/web-font-data-uris/)
 - [html entity reference](https://html.spec.whatwg.org/multipage/indices.html)
 - [html reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference)
 - [xml/html character entity reference](https://en.m.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references)
@@ -151,6 +157,9 @@
 - good reads
   - [aria design patterns](https://w3c.github.io/aria-practices/#aria_ex)
   - [aria-label|labelledby|describedby expectations](https://www.tpgi.com/short-note-on-aria-label-aria-labelledby-and-aria-describedby/)
+  - [webaim articles](https://webaim.org/articles/)
+  - [w3 wai-aria v1.1](https://www.w3.org/TR/wai-aria-1.1/)
+  - [common UI accessibility patterns](https://www.a11yproject.com/patterns/)
 - [html accessibility index](https://html.spec.whatwg.org/multipage/indices.html)
   - [html spec](https://html.spec.whatwg.org/multipage/dom.html#interactive-content-0)
   - [dont use tabindex > 0](https://adrianroselli.com/2014/11/dont-use-tabindex-greater-than-0.html)
@@ -227,7 +236,6 @@
       - [mdn using roles, states, and properties](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques)
       - [google introduction to aria](https://developers.google.com/web/fundamentals/accessibility/semantics-aria/)
       - [aria in html](https://www.w3.org/TR/html-aria/)
-      - [aria in html](https://www.tpgi.com/aria-in-html-there-goes-the-neighborhood/)
       - [wai-aria 1.3](https://w3c.github.io/aria/)
         - make sure you scroll down to mid-screen for the full list
       - [lullabot fundamentals](https://www.lullabot.com/articles/what-heck-aria-beginners-guide-aria-accessibility)
@@ -251,10 +259,12 @@
 
 ### tools
 
-- webaim contrast checker
+- [webaim contrast checker](https://webaim.org/resources/contrastchecker/)
 - accessibilityinsights.io (might not be the correct url)
 - eslint a11y
 - axe chrome plugin
+- [webaim wave: accessibility evaluation tool](https://wave.webaim.org/)
+- [wcag checklist](http://webaim.org/standards/wcag/checklist)
 - [comparison of accessibility tools](https://medium.com/pulsar/which-accessibility-testing-tool-should-you-use-e5990e6ef0a)
 - [microsoft silverlight](https://www.microsoft.com/silverlight/)
 - [JAWS screen reader tool](https://freedomscientific.github.io/VFO-standards-support/)
@@ -305,43 +315,7 @@
   - the best OS ever made in the universe
     - [gnome screen reader](https://help.gnome.org/users/orca/stable/)
 
-## basics
-
-### best practices / gotchas
-
-- putting inline elements on different lines in source code creates a space between them
-
-  - set fontsize 0 to the containing element
-
-- always validate your CSS, e.g. with <http://jigsaw.w3.org/css-validator/#validate_by_input>
-- always size things from the inside out
-- use `background-clip` to adjust how background-color|image fill its element
-- set the opacity of selected elements and their children via `opacity`
-- `@import` statements must precede all other types of rules except charset and cannot be ussed inside conditional group at-rule
-  - in general, review the `import` link above as there are many gotchas
-- review `@font-face` syntax before using them, too many gotchas
-- set the page font size on the body element, and size everything relative to that via rem, or is em?
-- always declar a `:root {}` selector set your variables, 9 times out of 8 you should be using variables mutherfucker
-- GRID vs FLEXBOX vs WTF
-  - ROW | COLUMN - flexbox
-  - ROW & COLUMN - grid
-  - CONTENT-OUT (content forces layout) - flexbox
-    - e.g. when placing items evenly in a container, let the size of the content decide how much individual space each item takes
-      - you can still use grid, but then the grid items will change the entire track
-  - LAYOUT-IN (layout forces content) - grid
-    - e.g. when placing items evenly in a container, you let the available space of the layout determine how the items are placed
-  - BOX ALIGNMENT - flexbox
-    - aligning items within a box,
-- use the picture element to offer alternative versions of an image for different displays/devices
-  - combine with at-rules
-- the `content:` rule is powerful, use it whenver you need to insert dynamic content via css and not js
-  - is generally used with
-    - selector::before|after to target the anchor element for the content to be inserted
-    - attr(data-prop) to retrieve the value of the HTML DATA property and insert it as content
-- think creatively when using `calc` and custom properties
-  - e.g. read [this link](https://oky.dk/blog/1kb-grid)
-
-### terms
+## terms
 
 - CSS Preprocessor: scripting language that extends CSS and then compiltes it into regular CSS
 - w3 explanation of colors & status codes
@@ -859,6 +833,35 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
     - autocorrect when you can
     - show validation errors in real time
 
+#### validation
+
+- [constraint validation](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation)
+- types of form constraints:
+  1. intrinsic: basic validation provided by setting the `type=blah` attribute, e.g. email
+  2. basic: setting validation related attributes
+  - `pattern|min|max|required|step|maxlength`
+- triggering constraint validation process: happens either at the form level, or the input level
+  1. invoke checkValidity() method on an input/select element
+  2. invoke checkValidity() method on the form element ( statically validating the constraints.)
+  3. submitting the form ( interactively validating the constraints.)
+  4. trigger JavaScript on some form field event (like onchange) to calculate whether the constraint is violated
+  - use the method `field.setCustomValidity()` to set the result of the validation:
+    - empty string: constraint is satisfied
+    - non empty string: there is an error and this string is the error message to display to the user.
+
+#### validity states
+
+- https://developer.mozilla.org/en-US/docs/Web/API/ValidityState)
+- The ValidityState interface represents the validity states that an element can be in, with respect to constraint validation. Together, they help explain why an element's value fails to validate, if it's not valid.
+- used like this: `someInput.validity.someProperty`
+- validity properties:
+
+#### validation styling via css pseudo classes
+
+- `:required`
+- `:valid`
+- `:invalid`
+
 ```js
 // labels
   label.for='someInputId'
@@ -911,6 +914,36 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
 ```
 
 ## CSS
+
+- putting inline elements on different lines in source code creates a space between them
+  - set fontsize 0 to the containing element
+- always validate your CSS, e.g. with <http://jigsaw.w3.org/css-validator/#validate_by_input>
+- always size things from the inside out
+- use `background-clip` to adjust how background-color|image fill its element
+- set the opacity of selected elements and their children via `opacity`
+- `@import` statements must precede all other types of rules except charset and cannot be ussed inside conditional group at-rule
+  - in general, review the `import` link above as there are many gotchas
+- review `@font-face` syntax before using them, too many gotchas
+- set the page font size on the body element, and size everything relative to that via rem, or is em?
+- always declar a `:root {}` selector set your variables, 9 times out of 8 you should be using variables mutherfucker
+- GRID vs FLEXBOX vs WTF
+  - ROW | COLUMN - flexbox
+  - ROW & COLUMN - grid
+  - CONTENT-OUT (content forces layout) - flexbox
+    - e.g. when placing items evenly in a container, let the size of the content decide how much individual space each item takes
+      - you can still use grid, but then the grid items will change the entire track
+  - LAYOUT-IN (layout forces content) - grid
+    - e.g. when placing items evenly in a container, you let the available space of the layout determine how the items are placed
+  - BOX ALIGNMENT - flexbox
+    - aligning items within a box,
+- use the picture element to offer alternative versions of an image for different displays/devices
+  - combine with at-rules
+- the `content:` rule is powerful, use it whenver you need to insert dynamic content via css and not js
+  - is generally used with
+    - selector::before|after to target the anchor element for the content to be inserted
+    - attr(data-prop) to retrieve the value of the HTML DATA property and insert it as content
+- think creatively when using `calc` and custom properties
+  - e.g. read [this link](https://oky.dk/blog/1kb-grid)
 
 ### units
 
@@ -1697,39 +1730,9 @@ background-size: contain|no-repeat|cover|%|% %;
 
 ## accessibility
 
-- [apply name, role and value to all user interface components](https://www.w3.org/TR/WCAG21/#name-role-value)
-- always provide descriptive identifications of content that cannot be made accessible in a meaningful way
-- think: what purpose is this serving, and how do I serve this purpose in another form
-  - i.e. what is the purpose of this user interface item: how is this purpose fulfilled for people who cant read/see/perceive colors/ hear/ etc.
-- questions to ask when crafting accessible content
-  - what is the information component or user interface component
-    - is it text-content or non-text content
-  - what is its purpose
-  - what is the situation
-  - what are the alternative techniques for success in this situation
+- assistive technologies: umbrella term that helps users complete some task
 
-### best practices
-
-- use a button instead of a link when
-  - the link is empty/has no `href` attribute
-  - the link has an `onclick` handler
-- dont add redundant aria `landmark` roles to html5 semantic elements
-  - `role='banner'` === `<header>`
-  - `role='complementary'` === `<aside>`
-  - `role='contentinfo'` === `<footer>`
-  - `role='form'` === `<form>`
-  - `role='main`' === `<main>`
-  - `role='navigation'` === `<nav>`
-  - `role='region'` === `<section>`
-
-### gotchas
-
-- dont confuse `button` with `a.role='button'`
-  - links activated via `enter` and `return`
-  - buttons activated via `spacebar`
-  - `role='button'` do not add `spacebar` listeners to its element
-
-### terms
+  - browser zoom, braile display, voice control, screen readers, etc
 
 - user interface components:
 - information components:
@@ -1796,6 +1799,214 @@ background-size: contain|no-repeat|cover|%|% %;
   - visual location
   - orientation
   - sound
+
+### best practices
+
+- [apply name, role and value to all user interface components](https://www.w3.org/TR/WCAG21/#name-role-value)
+- always provide descriptive identifications of content that cannot be made accessible in a meaningful way
+- think: what purpose is this serving, and how do I serve this purpose in another form
+  - i.e. what is the purpose of this user interface item: how is this purpose fulfilled for people who cant read/see/perceive colors/ hear/ etc.
+- questions to ask when crafting accessible content
+  - what is the information component or user interface component
+    - is it text-content or non-text content
+  - what is its purpose
+  - what is the situation
+  - what are the alternative techniques for success in this situation
+- use a button instead of a link when
+  - the link is empty/has no `href` attribute
+  - the link has an `onclick` handler
+- dont add redundant aria `landmark` roles to html5 semantic elements
+  - `role='banner'` === `<header>`
+  - `role='complementary'` === `<aside>`
+  - `role='contentinfo'` === `<footer>`
+  - `role='form'` === `<form>`
+  - `role='main`' === `<main>`
+  - `role='navigation'` === `<nav>`
+  - `role='region'` === `<section>`
+- everyone can access the site's content and use it's functionality
+  - for users who are experiencing some time of impairment
+  - the sites' content should be available to everyone
+  - the sites' functionality can be operated by anyone
+- think about users
+  - visually impaired (color, near sited, far sited, braile)
+    - use braile readers, text to speach, magnification (zoomed in), keyboard navigation, color contrast plugins
+  - hearing impaired
+  - motor
+    - use hand/eye tracking software, voice dictation
+  - cognitive (understanding, memory, etc) issues
+  - Impairments can be:
+    1. permanent
+    2. temporary
+    3. situational
+- think through end-user user environments
+  - desktop
+  - mobile
+  - screen readers
+  - tablets
+- (WCAG): [Web Content Accessibility Guidelines](https://www.w3.org/TR/WCAG20/)
+  - [AIM Checklist](http://webaim.org/standards/wcag/checklist)
+  - POUR Guidelines
+    1. Perceivable: users can perceive content
+    2. Operable: users can navigate
+    3. Understandable: users can understand the content and interface and avoid confusion
+    4. Robust: can a wide variety of agents consume the data
+- functionality
+  - keyboard navigation
+  - shortcut keys
+- Style and visual design:
+  - text color should be high contrast with background color for readability (sight)
+  - should be minimal to help with understanding the page
+  - check your design patterns against aria: https://www.w3.org/TR/wai-aria-practices/
+- Forms:
+  - Inputs and labels should be close enough together for understanding the relation between the two
+    - if they are two far apart, you cant zoom in and see the relation (site)
+  - labels should activate inputs
+- Audio
+  - audio should be accompanied with visual actions
+- [Managing focus](https://www.w3.org/TR/html5/editing.html#focus-management)
+  - focus: the control on the screen that receives input from the keyboard and clipboard when you paste/type
+    - determines where keyboard events go
+    - not all elements are focusble by default, and will not be included in the tab order
+- Managing shortcuts:
+  - implement the following:
+    - some environemnts enforce all keyboard commands to also use command (e.g. on mac)
+    - tab order: move through focusable (i.e. interactive elements, e.g. input, select, button) and not content elements (e.g. div )
+      - elements are inserted into the tab order based on their position in the DOM
+      - using css tabIndex to control the tab order
+        - try to always use the natural tab order
+      - an exception to adding tab order to non-interactive elements is when you're managing focus:
+        1. reloading parts of a page without a full page refresh, and need to indicate to user what has changed
+        2. in page navigation, e.g. through #anchor links and need to inform user
+    1. tab: move forward
+    2. shift tab: move backward
+    3. arrow keys: move within a component
+    4. spacebar: select/deselect
+  - skip links: allows keyboard users to skip to main content
+    - `<a href='#your-main-content-id' class='skip-link'> skip to main content </a>`
+      - this element should be position off screen when not focused (e.g. left: -40px;), and positioned on screen (E.g. top left corner) when focused
+    - your main content should have a parent elementwith the corrosponding id
+      - make sure to add tabindex='-1'
+  - roving focus: perfect for radio buttons, so that keyboarding through items in the radio will loop through from beginning to end
+    - set the currently checked item to tabindex=0, and all other buttons inthe group to tabindex='-1' via an event listener
+  - manage offscreen / hidden content that receives focus but does not appear on screen
+    - you can log window.activeElement to get the exact element that is currently focused
+    - check the chrome dev tools accessibilty audit chrome plugins
+    - best practices:
+      1. set visibility: hidden, display: none for offscreen/hidden items so they cannot receive focus, then do the opposite when they are to be visible/on screen
+  - manage keyboard/modal traps
+    - when you click into a (e.g a select element) in a modal, you may be unable to tab out of it, as the tab shortcut is trying to finish your autocomplete info
+    - or when you are on a modal, and the modal is open but the user tabs out of the modal and returns to the main page but the modal is still open so the page looks disabled
+      - keep track of the element that had focus before the modal was opened
+      - trap the focus inside the modal until closes
+        - this is done by listening for tab & shit.tab events and programmatically calling focus() to elements you allow
+      - return focus to the previous element
+- Touch points:
+  1. DOM order
+  2. Managing focus
+  3. Managing navigation via tabindex
+  4. Keyboard shortcuts
+  5. Semantics
+  6. Labeling inputs
+  7. Headings in sections
+  8. Landmarks (html structural elements)
+  9. Links
+  10. ARIA roles and design patterns
+  - https://www.w3.org/TR/wai-aria-1.1/#role_definitions
+  - https://www.w3.org/TR/wai-aria-practices-1.1/
+  - https://www.w3.org/TR/html-aria/
+  11. Ensuring only appropriate sections of a document are exposed to assistive technologies, or hidden from non-assistive technologies
+  12. ensuring LIVE regions (i.e. updates) are communicated to users
+  13. managing the styles and using aria-attributes instead of classes
+  14. ensuring you have a responsive design for multiple devices
+  15. breakdown existing acciessibility issues based on:
+  16. is this a critical piece of the app functinoality?
+  17. how frequently is this piece of UI/UX used?
+  18. do we need to fix this?
+  19. all of the above should ensure the ACCESSIBILITY TREE is as it should be
+- Focus
+  - Styles: :focus, :hover, :before,
+  - properties: outline, box-shadow
+    radio:focus::before { some styles }
+- Design
+  - always use <meta name=viewport
+  - always use responsive grid
+- Fonts:
+  - use relative units as much as possible (e.g. em, rem)
+- Touches:
+  - at least 48dp minimum touch size per touch target (average size of a finger)
+  - at least 32dp minimum margin around touch targets (so you dont accidently touch another thing)
+- color and contrast:
+  - contrast ratio: body text and images have a high contrast with background color
+    - http://webaim.org/resources/contrastchecker/
+  - dont convey info with color and contrast alone, always provide additional help text
+- forms: HTML Forms are one of the main points of interaction between a user and a web site or application.
+  1. should have progress meter
+  2. should be quick to finish
+  3. validation messages should be clear and located next to their errors
+  4. inputs should have placeholders
+  5. inputs should autocomplete based on users known data
+  6. always realtime validation
+  - links
+    - [creating amazing forms](https://developers.google.com/web/fundamentals/design-and-ui/input/?hl=en)
+    - [Location Example](http://www.html5rocks.com/en/tutorials/geolocation/trip_meter/)
+    - [mdn forms guide](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms)
+    - [mdn sending form data](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Forms/Sending_and_retrieving_form_data)
+
+### gotchas
+
+- dont confuse `button` with `a.role='button'`
+  - links activated via `enter` and `return`
+  - buttons activated via `spacebar`
+  - `role='button'` do not add `spacebar` listeners to its element
+
+### Accessbility Semantics
+
+#### Programmatically Expressed Semantics
+
+- Semantics: the elements, and its attributes, is used in a way facitilitates its meanings programmaticaly to describe its functionality
+  - for all user interface components:
+    - the name and role can be programmatically determined
+    - states, properties, and values can be programmatically set
+  - screen readers convert a visual page into auditory sounds that users can enter information into
+- Attributes:
+  - Role: what type of element it is
+    - e.g. 'Edit Text'
+  - Name (i.e. label text or text alternative): if it has one
+    - Text Alternatives: for elements that do not have labels, e.g. images, buttons, etc.
+      - the text associated with these (e.g. in the alt= or as a text node) because its name/label
+      - imagine all your images are broken, and think of what you would need in the alt= to understand what the image should be
+  - Value: if it has one
+  - State: if it has any
+- The Accessibility tree: screen readers take the DOM and strip away its visible elements, to create an accessibility tree based on the programmatic semantics of the html elements
+  - its all based on role, name, value, and state
+- Navigating Content: links, form controls, headings, and landmarks
+  - Link Text: should be descriptive, not just 'click here', but the text should tell you exactly where it go
+    - all links should have an href
+    - the href= should never be href=#
+    - anchors with child images: the image must have an alt text
+  - Landmarks: describe areas of a page, versus a single element
+    - main: only one per page
+    - header: page banner or grouping element for introductory content for a section
+    - footer: a page footer or grouping element for a section of a page
+    - nav: a section of a page that links to other pages, or parts within a page
+    - article: self contained sections of content, e.g. blog entry, forum posts, etc.
+      - will the ocntent make sense in a another context?
+    - section: generic section of a document or application
+      - should contain a heading
+    - aside: tangentialy related to the content around it
+  - Headings: are the best thing to implement for screen readers
+    - HEading order: follows the DOM Order and not the visual order of the page
+      - get dom order of headings:
+        ```
+          for (var i = 0, headings = $$('h1,h2,h3,h4,h5,h6');
+               i < headings.length; i++) {
+             console.log(headings[i].textContent.trim() + " " +
+                         headings[i].tagName,
+                         headings[i]);
+          }
+        ```
+      - you can include headings off screen to help with screen readers, but do not go overboard
+        - i.e. headings absolutely positioned off screen
 
 ### ARIA
 
@@ -1903,6 +2114,56 @@ background-size: contain|no-repeat|cover|%|% %;
   - html5 vs aria
     - remove duplicate tags
     - remove null tags
+
+#### ARIA Semantics
+
+- ARIA is used to express semantics that native html elements cannot express on its own
+
+* https://www.w3.org/TR/wai-aria-1.1/
+* modifies how elements are translated into the accessibility tree via custom attributes
+  - great when you need to use a div (instead of a checkbox) but still need that div to show up as a checkbox to assistive technologies
+* ARIAs only purpose is to modify the accessibility tree, it does not:
+  - modify element appearance
+  - modify element behavior
+  - add focusability
+  - add keyboard handling
+    - all of the above must be handled by javascript ;)
+* ARIA breakdown:
+  - role: the semantic meaning of the element
+    - includes superclass, subclass, and related concepts (roles) that have similar, but not identical semantics
+  - inherited states/properties: attributes that can be used with the given role, some are requied, others are optional
+  - Name from: where the name (label) will be retrieved from, e.g.
+    - the text content
+    - or the html author
+  - important attributes:
+    - name:
+      - aria-label: screen reader only name
+      - aria-labelledby=id: specify another element that provides the name for this element
+      - aria-describedby=id: additional text describing this element is provided by some other element
+    - ARIA landmark roles: banner, navigation, main, complementary, search, dialog, contentinfo
+    - relationships:
+      - aria-owns="id1 id2 id3 idX" specify this element owns the other element(S), and should be listed as the parent of them all in the accessibility tree
+        - this modifies the hierarchy of the accessibility tree
+      - aria-activedescendant='idX': when the parent has focus, this element should actually be the one given focus
+        - this way the parent can keep actual focus and receive keyboard events, while the idX is updated to the element that should be visually given focus
+      - aria-describedby: extra explanatary text that a user may need
+      - aria-posinset: 1-based position in set, e.g. x out of y. used with aria-setsize
+      - aria-setsize: relationship between sibling elements in a set, used with aria-posinset
+        - perfect for lazy loading, to specify the total number of items in a set, even when some of the items have not been loaded yet
+      - aria-hidden: hide elements from assistive technologies
+      - aria-live=off|polite|assertive: specify that updates should be communicated to users as soon as it hits the DOM
+        - e.g. status updates
+        - polite: alert when no other alerts are happening
+        - assertive: interrupt and alert immediately
+        - aria-live region should be in the initial page load
+        - set it on the parent most element
+        - related attributes:
+          - aria-atomic: whether the entire region should be communicated to the user
+          - aria-relevant=additions|removals|text|all: what should be communicated to the user
+    - states
+      - aria-pressed: indicated if the state of this button/interactive element is pressed|clicked
+      - aria-hidden: element is hidden
+      - aria-expanded: element is open
 
 ### WCAG
 

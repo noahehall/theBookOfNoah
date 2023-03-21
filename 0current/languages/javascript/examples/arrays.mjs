@@ -1,4 +1,4 @@
-import { logIt } from "../logit.mjs";
+import { logIt } from "./logit.mjs";
 
 logIt(
   "array.from",
@@ -104,4 +104,77 @@ Array.of(1, 2, 3); // Similar to new Array(...), but without special one-arg beh
     console.log(sparseKeys); // ['0', '2']
     console.log(denseKeys);  // [0, 1, 2]
   ```
+
+
+
+
+- creation
+  ```
+  	var blah = [];
+  	var blah = [1,2,3];
+  	var blah = new Array();
+  	var blah = Array();
+  	var blah = Array(5);
+  	var cars = new Array("Saab", "Volvo", "BMW");
+  	var name = cars[0];
+  	cars[0] = "Opel";
+  ```
+  - ADT
+  ```
+    blah.length //how many items
+  	concat()	Joins two or more arrays, and returns a copy of the joined arrays
+  	indexOf()	Search the array for an element and returns its position
+  	join()	Joins all elements of an array into a string
+  	lastIndexOf()	Search the array for an element, starting at the end, and returns its position
+  	pop()	Removes the last element of an array, and returns that element
+  	push()	Adds new elements to the end of an array, and returns the new length
+  	reverse()	Reverses the order of the elements in an array
+  	shift()	Removes the first element of an array, and returns that element
+  	slice()	Selects a part of an array, and returns the new array
+  	sort([compareFunction])	Sorts the elements of an array
+  	splice(start, deleteCount[, item1[, item2[, ...]]])	Adds/Removes elements from an array, item1,itemX will be added
+  		If you specify a different number of elements to insert than the number youre removing, the array will have a different length at the end of the call.
+  	toString()	Converts an array to a string, and returns the result
+  	unshift()	Adds new elements to the beginning of an array, and returns the new length
+  	valueOf()	Returns the primitive value of an array
+  	map(callback) apply the function to each item in the array
+  	filter(callback[, thisArg]) The filter() method creates a new array with all elements that pass the test implemented by the provided function.
+  	some(functionName) The some() method tests whether some element in the array passes the test implemented by the provided function. if any element returns true, it returns true
+  	reduce(callback[, initialValue]) method applies a function against an accumulator and each value of the array (from left-to-right) to reduce it to a single value.
+  	every(callback[, thisArg]) tests whether all elements in the array pass the test implemented by the provided function.
+  ```
+
+
+```
+
+Array.from(document.querySelectorAll('\*')) // Returns a real Array
+Array.of(1, 2, 3) // Similar to new Array(...), but without special one-arg behavior
+[0, 0, 0].fill(7, 1) // [0,7,7]
+[1, 2, 3].find(x => x == 3) // 3
+[1, 2, 3].findIndex(x => x == 2) // 1
+[1, 2, 3, 4, 5].copyWithin(3, 0) // [1, 2, 3, 1, 2]
+["a", "b", "c"].entries() // iterator [0, "a"], [1,"b"], [2,"c"]
+["a", "b", "c"].keys() // iterator 0, 1, 2
+["a", "b", "c"].values() // iterator "a", "b", "c"
+
+````
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   */

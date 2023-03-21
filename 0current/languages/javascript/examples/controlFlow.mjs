@@ -83,6 +83,40 @@ if (condition1) {
 
 
 
+    - try catch
+    ```
+
+try {
+/_code_/
+} catch (err){
+/_
+err.message == message of error
+_/
+}finally {
+/_do this regardless of what happens_/
+}
+`	- if statements
+   `
+if (condition1) {
+block of code to be executed if condition1 is true
+} else if (condition2) {
+block of code to be executed if the condition1 is false and condition2 is true
+} else {
+block of code to be executed if the condition1 is false and condition2 is false
+}
+`	- switch statements
+   `
+switch(expression) {
+case n:
+code block
+break;
+case n:
+code block
+break;
+default:
+default code block
+}
+
 
 
 

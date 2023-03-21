@@ -18,6 +18,7 @@
 
 ## links
 
+- [create react app scripts](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment)
 - react
   - [version changelog](https://reactjs.org/versions)
   - [react docs](https://reactjs.org/docs/getting-started.html)

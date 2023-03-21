@@ -1,7 +1,7 @@
 # vue
 
-- todo: find my old vue notes
 - vue 3
+- not a vue fan
 
 ## links
 
