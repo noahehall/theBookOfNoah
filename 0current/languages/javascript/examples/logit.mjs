@@ -1,4 +1,3 @@
-export function logIt(msg, value) {
-  console.info(msg);
-  console.table({ value });
+export function log(msg, value) {
+  console.table({ msg, value });
 }

@@ -1,18 +1,14 @@
-/*
-## try catch
+import { log } from "./logit.mjs";
 
-```js
 try {
-  /*code*/
-} catch (err) {
-  /*
-  err.message == message of error
- */
+  throw new Error("oops");
+} catch ({ message: msg, ...err }) {
+  log(msg, err);
 } finally {
-  /*do this regardless of what happens*/
+  // usually cleanup block
 }
-```
 
+/*
 
 ## switch statements
 
@@ -60,6 +56,15 @@ let index = 100;
 while (--index) {
   //index in here will start at 99, since you used --index as the condition
   // code block to be executed
+}
+
+while (true) {
+  console.info(true)
+  break;
+}
+for (; ;) {
+  console.info("same as above")
+  break;
 }
 ```
 

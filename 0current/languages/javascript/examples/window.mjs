@@ -4,8 +4,19 @@ someVar.nodeType
 1 = element
 2 = attribute
 3 = text
-`	- grabbing elements
-`
+
+- native dom methods and properties
+  - node: parentNode, childNodes, firstChild, previousSibling, nextSibling, lastChild, children
+  - queries: getElementsByTagName, querySelector[all], byId, byClassName
+  - mutation: appendChild, insertBefore, replaceChild,
+  - constructors: createTExtNode, createElement,
+  - inspection: get/setAttribute, clientWidth, clientHeight, getBoudningClientRect, pageX/YOffset, offsetHEightWidth
+  - css stuff should og in css/html/accessibility
+- event handling
+  - event propagation strategy:
+    - inward vs outward propagation
+  - addEventListener, removeEventListener, stopPragation vs preventDefault (action)
+  - event groups: mouse, key (board), pointer, touch, scroll, focus, page/node load,
 var myelement = document.GetElementById('idname');
 getElementById can be used at any level, not just the document level
 e.g. if you grab a UL, you can use getElementsByTagName to grab its child li tags

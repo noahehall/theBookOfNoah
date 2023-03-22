@@ -2,6 +2,10 @@
 
 # links
 
+## todos
+
+- [architectural styles and design of network based software architecutres](https://www.ics.uci.edu/~fielding/pubs/dissertation/fielding_dissertation_2up.pdf)
+
 ## quickies
 
 - [component-based software engineer / development](https://en.wikipedia.org/wiki/Component-based_software_engineering)
@@ -39,12 +43,12 @@
 - [copy and paste programming](https://en.wikipedia.org/wiki/Copy-and-paste_programming)
 - [code refactoring](https://en.wikipedia.org/wiki/Code_refactoring)
 - [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns)
-- [abstraction principle](https://en.wikipedia.org/wiki/Abstraction_principle_(computer_programming))
+- [abstraction principle](<https://en.wikipedia.org/wiki/Abstraction_principle_(computer_programming)>)
 - [aspect oriented programming](https://en.wikipedia.org/wiki/Aspect-oriented_programming)
-- [encapsulation](https://en.wikipedia.org/wiki/Encapsulation_(computer_programming))
+- [encapsulation](<https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)>)
 - [facade pattern](https://en.wikipedia.org/wiki/Facade_pattern)
-- [coupling](https://en.wikipedia.org/wiki/Coupling_(computer_programming))
-- [cohesion](https://en.wikipedia.org/wiki/Cohesion_(computer_science))
+- [coupling](<https://en.wikipedia.org/wiki/Coupling_(computer_programming)>)
+- [cohesion](<https://en.wikipedia.org/wiki/Cohesion_(computer_science)>)
 - [cross cutting concern](https://en.wikipedia.org/wiki/Cross-cutting_concern)
 - [modular design](https://en.wikipedia.org/wiki/Modular_design)
 - [single responsibility principle](https://en.wikipedia.org/wiki/Single-responsibility_principle)
@@ -60,7 +64,7 @@
   - interface segregation
   - dependency inversion
 - [liskov substitution principle](https://en.wikipedia.org/wiki/Liskov_substitution_principle)
-- [grasp: object oriented design](https://en.wikipedia.org/wiki/GRASP_(object-oriented_design))
+- [grasp: object oriented design](<https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)>)
 - [yagni](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it)
 - [worse is better](https://en.wikipedia.org/wiki/Worse_is_better)
 - [theres more than one way to do it](https://en.wikipedia.org/wiki/There%27s_more_than_one_way_to_do_it)
@@ -68,7 +72,7 @@
 - [list of software development philosophies](https://en.wikipedia.org/wiki/List_of_software_development_philosophies)
 - [chartjunk](https://en.wikipedia.org/wiki/Chartjunk)
 - [unix philosophy](https://en.wikipedia.org/wiki/Unix_philosophy)
-- [minimalism (computing)](https://en.wikipedia.org/wiki/Minimalism_(computing))
+- [minimalism (computing)](<https://en.wikipedia.org/wiki/Minimalism_(computing)>)
 - [single source of truth](https://en.wikipedia.org/wiki/Single_source_of_truth)
 - [enterprise architecture](https://en.wikipedia.org/wiki/Enterprise_architecture)
 - [pareto principle](https://www.investopedia.com/terms/p/paretoprinciple.asp)

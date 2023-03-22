@@ -1,6 +1,13 @@
 /*
 
 ```js
+
+class MyError extends Error {}
+try {
+  if (1 < 2) throw new MyError("oops")
+} catch e {
+  if (e instanceof MyError) "its okay!"
+}
 // Class declarations
 class Rectangle {
   constructor(height, width) {
@@ -9,10 +16,15 @@ class Rectangle {
     this.height = height;
     this.width = width;
   }
-  // getters
+  // getters, abstract away fn calls
   get area() {
     // instance.area
     return this.calcArea();
+  }
+
+  // setters, abstract away assignments
+  set height(x) {
+    this.height = x + 1 + 2 + 3
   }
 
   speak() {
@@ -21,6 +33,7 @@ class Rectangle {
   }
 
   // available via Class.staticPropOrMethod
+  // are bound to the constructor and not the prototype/instance
   static distance(a, b) {}
 }
 
@@ -42,9 +55,9 @@ var Rectangle = class Rectangle {
 
 // Subclasses: Extends
 class Dog extends Animal {
-  speak() {
-    console.log(this.name + " barks.");
-    // name is set in parent class constructor
+  constructor() {
+    // must be called to invoke Animals constructor
+    super()
   }
 }
 
@@ -106,26 +119,19 @@ Object.setPrototypeOf(Dog.prototype, Animal); // If you do not do this you will 
 
 var d = new Dog("Mitzie");
 d.speak(); // Mitzie makes a noise.
-```
 
 
 
 
-```
-	function ClassConstructor(n) {
+	function fnAsClass(n) {
 		this.name = n;
 	}
-  var instance = new ClassConstructor('fred');
+var instance = new fnAsClass('fred');
+
+var instance = new class { blah () { return "me" }}
 ```
 
-    ``` use prototype to attach new methods/vars to the constructor
-    	ClassConstructor.prototype.blah = function(){
-    		console.log('this.name', 'is my name.');
-    	}
 
-````
-	- get the original prototype function
-		`Object.getPrototypeOf(someFunctionHere);`
 	```create a class that uses another classes methods (this example uses arrays)
 			var Queue = function() {
 			  this._array = [];

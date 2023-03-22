@@ -2,8 +2,22 @@
 
 - updated: 2023
 - [web security in security dir](https://github.com/noahehall/theBookOfNoah/tree/master/0current/appdev/security)
+- the goal is to capture high level information in general and the Abstract Data Type for native objects specifically
 
 ## links
+
+### best in class
+
+- MFE architecture
+  - [webpack module federation](https://webpack.js.org/concepts/module-federation/)
+  - [bit.dev](https://bit.dev/docs/quick-start)
+  - [single spa](https://single-spa.js.org/)
+  - [piral](https://github.com/smapiot/piral)
+- frameworks
+  - [react](https://react.dev/)
+  - [svelte](https://svelte.dev/)
+- micro frameworks
+  - [mithril](https://mithril.js.org/)
 
 ### interwebs
 
@@ -25,6 +39,7 @@
 - [remote debugging](https://jakearchibald.github.io/isserviceworkerready/index.html)
 - [service workers](https://jakearchibald.github.io/isserviceworkerready/index.html)
 - [streams](https://jakearchibald.com/2016/streams-ftw/#streams-the-fetch-api)
+- [common network protocols](https://www.techtarget.com/searchnetworking/feature/12-common-network-protocols-and-their-functions-explained)
 
 ### google web dev
 
@@ -39,6 +54,12 @@
 - [web app manifest](https://web.dev/add-manifest/)
 - [web dev explore](https://web.dev/explore/)
 - [web dev patterns](https://web.dev/patterns/)
+
+### js info
+
+- [intro](https://javascript.info/)
+- [generators](https://javascript.info/generators)
+- [async iterators & generators](https://javascript.info/async-iterators-generators)
 
 ### js specification
 
@@ -58,6 +79,15 @@
   - [promises](- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
   - [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/)
   - [object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
+  - [template strings](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
+  - [Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+  - [Import dynamic](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)
+  - [Import statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)
+  - [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout)
+  - [clearTimeout](https://developer.mozilla.org/en-US/docs/Web/API/clearTimeout)
+  - [setInterval](https://developer.mozilla.org/en-US/docs/Web/API/setinterval)
+  - [clearInterval](https://developer.mozilla.org/en-US/docs/Web/API/clearInterval)
+  - [setImmediate](https://developer.mozilla.org/en-US/docs/Web/API/Window/setImmediate)
 
 ### browser / server / apis
 
@@ -79,8 +109,9 @@
   - [cache control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
   - [web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
   - [cache](https://developer.mozilla.org/en-US/docs/Web/API/cache)
+  - [worklets](https://developer.mozilla.org/en-US/docs/Web/API/Worklet)
 
-### tools
+### toolss
 
 - [regex tester](https://regex101.com/)
 - [yslow](http://yslow.org/)
@@ -106,6 +137,11 @@
 - js is single threaded: two things cannot run at the same time
   - Javascript is in the same queue as painting, updating styles, and handling user actions (e.g. highliting text/interacting with form controls)
   - thus concurrency is key to efficient js applications
+- was introduced in 1995 for Netscape Navigator browser
+  - after adoption by the community, a standard document was written called ECMAscript
+- IMO javascript may be the most flexible and usable language, outside of nimlang
+  - this flexibility comes with its disadvantages (especially for the purist, but fk those guys)
+  - embrace polyphormism, duck typing and coding to interfaces and you'll be successful in javascript
 
 ### tc39 and web standards
 
@@ -183,9 +219,30 @@
 
 ## syntax
 
+- type conversion & coercion is a tricky subject
+  - err on the side of `truthy` vs `falsy` and you should be safe
+  - refrain from using `null` and you should be even safer
+  - use strict equality checks in all other situations
+- expressions: anything that produces value
+- statement: expressions that stand on their own, historically ended with a semicolon
+  - always end with semicolons to stay on [the safe side](https://www.codingem.com/javascript-semicolon-usage/)
+- bindings: expressions / statements assigned to a variable\
+  - not to be confused with functino.bind: the object a functions `this` refers to
+
+### callstack
+
+- determines the sequence of invocations, lexically from the inner most scope to the outer most scope
+  - the `lexical` part is important, especially when considering hoisted vs nonhoisted bindings
+  - a fn must jumb back to the place when it returns, thus the interpreter must remember the callstack
+- the context of the callstack must be remembered
+  - hence why in some circles using/overusing `try..catch` is frowned upon, ignore those guys who think microoptimizations are important, spend your time elseware
+    - if you're not embedding your entire program in a try, catch, your safe
+- when a new context is created, its pushed to the top of the stack, when it returns, it is removed
+
 ### scope
 
 - determines the life, death and visibility of a variable
+  - its intrinsically linked to the callstack, where each block context creates a new closure
 - block scope: lives within {}
 - function scope: lives within function definitions/expressions/closures
 - scope chain:
@@ -195,12 +252,31 @@
 
 ### operators
 
-- difference with `==`: The == operator applies various coercions to both sides (if they are not the same Type) before testing for equality (resulting in such behavior as "" == false being true), but Object.is doesn't coerce either value.
-- difference with `===`: The === operator (and the == operator as well) treats the number values -0 and +0 as equal and treats Number.NaN as not equal to NaN.
+- equality `==`: The == operator applies various coercions to both sides (if they are not the same Type) before testing for equality (resulting in such behavior as "" == false being true), but Object.is doesn't coerce either value.
+  - treats the number values -0 and +0 as equal and treats Number.NaN as not equal to NaN.
+- strict equality `===`: same as ==, but also checks the type of each operand
 - Spread Operator: expands an array/object into elements, i.e. flatten arrays and objects in function calls, array literals, destructuring assignment
+- typeof
+- boolean > >= != || &&
+  - both || and && short-circuit their operands
+    - || returns the first truthy value or false
+    - && returns false or the last truthy value
+- Number.isNaN: NaN is the only value not equal to itself
+- compute: + - / \*
+- comma operator
+  - enables multiple expressions on a single line, returns the last one
+    - the uninitiated may not like this, but i do
+  - multiple assignments
+- assignment = -= \*= +=
+- in/postfix --X X++
+- new = the constructor operator, creates a new instance of an object
 
-### statements
+### keywords
 
+- `"use strict"` module / function scoped
+  - variable type must be declared and dont default to var
+  - `this` is undefined in the global scope and functions not assigned to objects
+    - i.e. `this` is not bound to the global object
 - `break` Exits a 'switch' or a loop
 - `continue` Breaks one iteration (in the loop) if a specified condition occurs, and continues with the next iteration in the loop
 - `debugger` Stops the execution of JavaScript, and calls (if available) the debugging function
@@ -223,6 +299,15 @@
   - you can type in a function name and review it
   - you can click through the sources panel and view different things
 
+```js
+break case catch class const continue debugger default
+delete do else enum export extends false finally for
+function if implements import interface in instanceof let
+new package private protected public return static super
+switch this throw true try typeof var void while with yield
+
+```
+
 ### data conversion
 
 - `String(x)` returns a string from a number variable x
@@ -238,23 +323,68 @@
 - let: block scoped vars
 - var: global variable
 - const: are block-scoped, much like variables defined using the let statement. The value of a constant cannot change through re-assignment, and it can't be redeclared.
+- naming things
+  - err on the side of relating identifers to distinct concepts, vs explicit self-documentation
+    - e.g. `addNumbers` >>>>> `addTwoOrThreeOrFourNumbersAndReturnValueToCaller`
 
 #### destructuring
 
-- Destructuring: pull values out of arrays/objects and assign them to variables
+- Destructuring: pull values out/skip values in arrays/objects
+  - `[first, , last] = ["first", "second", "last"]`
+  - `{first, last} = {a: 1, b: 2, c:3}`
 
 ### Number
 
-### Date
+- number: 64bit number
+- bigint: BigInt(1) === 1n
+  - for numbers too large for number primitive
+  - cant be used with the Math object nor operated on with number primitives
+- Infinity / -Infinity
+- NaN: not a number
 
 ### String
 
-### arrays
+- strings can be created with backticks, single or double quotes
+- are utf-16 chars
+- non utf-16 may cause some string functions to produce nonsensical results
+- see metaprogramming section for symbols, which are like unique strings
+
+#### template strings
+
+- strings created with backticks
+  - multiline strings without escaping
+  - interpolate expressions with `${blah}`
+  - tagged templates with tagFunction`...`
 
 ### objects
 
-- obj.prototype.**proto**: The **proto** property of Object.prototype is an accessor property (a getter function and a setter function) that exposes the internal [[Prototype]] (either an object or null) of the object through which it is accessed.
-- Object.setPrototypeOf(obj, prototype); sets the prototype (i.e., the internal [[Prototype]] property) of a specified object to another object or null.
+- everything in JS is an object, this section should generally apply to everything
+- immutable: strings, numbers, booleans
+  - thus you cant do `var name = "noah"; x.last = "hall"`, even tho an err isnt thrown
+- mutable: everything else
+  - thus you can do `var name = () => "noah"; name.last = "hall"`
+- methods: function values bound to object properties
+  - `this` refers to the containing object,
+    - unless call/apply intercept or its an arrow fn
+- properties: identifers bound to objects
+- x.constructor
+
+#### prototypes
+
+- each object has an internal link to another object, its prototype, that provides additional/fallback behavior and properties
+  - if property X isnt owned by object A, object A's prototype is searched, recursively up the prototype chain to the super `Object.prototype`
+    - functions derive from `Function.prototype > Object.prototype`
+    - arrays derive from `Array.prototype > Object.prototype`
+- prototypes allows you to extend functionality after an object has been created
+- FYI: classes are just syntactic sugar for function prototypes
+  - you can assign a custom prototype with `blah = Object.create(someFnAsPrototype)`
+    - blah will inherit (fallback) to `someObjectAsPrototype` during property lookup
+    - `Function someFnAsPrototype() {}; someFnAsPrototype.bleep = "bloop"`
+- prototype chain: the sequence of linked objects from one object's prototype to another, all the way up until you reach the Null object (which does not have a prototype)
+- escapes
+  - `hasOwnProperty` type fns and `keys` dont search an objects prototype
+
+### arrays
 
 ### Maps
 
@@ -288,78 +418,30 @@
 
 ### functions
 
-- anonymous enclosures
-  - wrap the anonymous function in paranthesis
-  - then call the function immediately by ending wtih () and send in parameters
-  - any variables declared inside this function are local to this function
+- anonymous enclosures `(function(){})()`
 - function closures: defining a function within a function
 - function parameters are variables that are local to the function
   - functions can return anything, even other functions
   - arguments = an array-like OBJECT containing all of the parameters passed to the function. it is NOT AN Array
-- Rest Parameters: used in function arguments to capture a list of variables from arrays
+- function declarations: when using `function blah() {}`
+- function values: when using `let blah = function(){}`
+- Rest Parameters: used in function arguments to collect a list of arguments from the last paramater as an array e.g. ` (a, b, ...c) => ...`
 - Default Arguments are assigned in the function signature
+- side effects: a fn that does something opaque to the caller or beyond the scope of its arguments
+  - e.g. printing, anything network related, modifying out-of-scope variables, etc
+  - prefer pure functions in JS and accept the increased overhead in exchange for reduced complexity
 
 #### arrow functions
 
+- `() => returnImmediately` and `() => { ... }`
 - do not create a new scope
 
-### Control Flow
+#### higher order functions
 
-#### loops
-
-- The break statement breaks the loop and continues executing the code after the loop (if any):
-- The continue statement breaks one iteration (in the loop), if a specified condition occurs, and continues with the next iteration in the loop.
-
-##### while
-
-##### do while
-
-##### for
-
-##### for of
-
-- The for...of syntax is specific to collections, rather than all objects. It will iterate in this manner over the elements of any collection that has a [Symbol.iterator] property.
-
-##### for in
-
-- The for...in statement iterates over the enumerable properties of an object, in original insertion order. For each distinct property, statements can be executed.
-
-##### iterators
-
-#### try catch
-
-#### if
-
-#### switch
-
-#### generators
-
-- Generators: a function that can be exited, and entered multiple times
-- yield: exit the function and send a value to the caller, and optionally receive a value back
-- function.next(): retrieve and send data, executes up to and including the next yield statement
-  - for each yield statement you need to call blah.next()
-  - returns `{value: 'dataInAndOut', done: true|false}`
-    - value: data sent out from yield, or data sent in through next(someData);
-    - done:
-    - false if function is not done, and can be entered again
-    - true: if function is done, and should not be re-entered
-  - you can access the value directly: `bloop.next().value;``
-- use cases
-  - asynchornous events
-  - timers (e.g. setInterval)
-- Generators should not be re-used, even if the for...of loop is terminated early, for example via the break keyword. Upon exiting a loop, the generator is closed and trying to iterate over it again does not yield any further results.
+- functions that operate on or return functions that return nothing or values (which may be functions that operate on or return functions that return nothing or values (which may be...))
+- its all about coding to abstractions, which may be more appropriate in certain contexts if the implementation details are not the concern of the caller or some processing is assumed/expected
 
 ### classes
-
-#### prototypes
-
-- prototype: each object has an internal link to another object, its prototype, that provides additional behavior and properties
-  - classes are just syntactic sugar for prototypes
-- prototype chain: the sequence of linked objects from one object's prototype to another, all the way up until you reach the Null object (which does not have a prototype)
-- helps you create formalized objects (i.e. classes)
-  - its simply a function that creates an object
-  - new = the constructor operator, creates a new instance of an object
-  - prototype object allows you to extend functions functionality after its created
 
 #### class
 
@@ -387,6 +469,65 @@
   - mixins donot require library support and can be writtin in a universal style
   - subclasses correctly override mixin methods which override superclass methods.
 
+### Date
+
+### Math
+
+### console
+
+- see examples
+
+### Control Flow
+
+#### loops
+
+- The break statement breaks the loop and continues executing the code after the loop (if any):
+- The continue statement breaks one iteration (in the loop), if a specified condition occurs, and continues with the next iteration in the loop.
+
+##### while
+
+##### do while
+
+##### for
+
+##### for of
+
+- The for...of syntax is specific to collections, rather than all objects. It will iterate in this manner over the elements of any collection that has a [Symbol.iterator] property.
+
+##### for in
+
+- The for...in statement iterates over the enumerable properties of an object, in original insertion order. For each distinct property, statements can be executed.
+
+##### iterators
+
+- [Symbol.iterator]() {...} defined on an object
+- the next() fn often returns a generator for readability
+- see the examples
+
+#### try catch
+
+#### if
+
+#### switch
+
+#### generators
+
+- Generators: a function that can be exited, and entered multiple times
+  - always return an iterator
+- yield: exit the function and send a value to the caller, and optionally receive a value back
+- function.next(): retrieve and send data, executes up to and including the next yield statement
+  - for each yield statement you need to call blah.next()
+  - returns `{value: 'dataInAndOut', done: true|false}`
+    - value: data sent out from yield, or data sent in through next(someData);
+    - done:
+    - false if function is not done, and can be entered again
+    - true: if function is done, and should not be re-entered
+  - you can access the value directly: `bloop.next().value;``
+- use cases
+  - asynchornous events
+  - timers (e.g. setInterval)
+- Generators should not be re-used, even if the for...of loop is terminated early, for example via the break keyword. Upon exiting a loop, the generator is closed and trying to iterate over it again does not yield any further results.
+
 ### metaprogramming
 
 - metaprogrammaning: all about the underlying mechanics of the language, rather than “high level” data modeling or business logic. If programming can be described as “making programs”, meta-programming could be described as “making programs making programs”
@@ -405,13 +546,13 @@
 
 - reflection within implementation - you sprinkle them on your existing classes and objects to change the behaviour.
 - use cases:
+  - unique strings as object properties, to provide alternative/shadow behavior under the same identifier for callers with access to the symbol instance
   - not iterable over
   - not fetched using the already existing Reflection tools
   - guaranteed not to conflict with other properties in the object!
   - If you create a symbol (var mysym = Symbol()) it creates a completely new value inside the JavaScript engine.
     - If you don’t have the reference for the Symbol, you just can’t use it.
     - This also means two symbols will never equal the same value, even if they have the same description.
-  - Symbol.for(). This method creates a Symbol in a “global Symbol registry”. Small aside: this registry is also cross-realm, meaning a Symbol from an iframe or service worker will be the same as one generated from your existing frame:
 
 #### Reflect
 
@@ -436,6 +577,9 @@
   - problems:
     - how do you handle errors ? do all type of errors get handled the same way ?
     - Pyramid of doom / callback hell:
+- async await vs promises
+  - generally async await is preferred unless
+    - you need to execute multiple futures in parallel and fail fast with Promise.all
 
 #### promises
 
@@ -472,6 +616,8 @@
 - basics
   - allow you to write promise-based code as if it were syncrhonous, but without blocking the main thread
   - Note that `await` may only be used in functions prepended with the `async` keyword
+  - await suspends execution of the local scope, not the global scope (unless your env has top-level await enabled)
+    - enables try catch for errors that may occur
   - suspends execution in your context until the promise settles
   - `async` Function always returns a Promise
   - anything prepended with `await` is passed through Promise.resolve() so you can safely await non-native promises
@@ -485,11 +631,55 @@
 
 #### timers
 
+- setTimeout
+- clearTimeout
+- setInterval
+- setImmediate: should only be used in nodejs;
+  - chrome, firefox & safari are resisting adding this to spec
+  - however shouldnt be an issue if using a transpiler
+- setInterval
+
+#### asyncIterators
+
+- Symbol.asyncIterator that expects a `async next` to be defined
+
 ### math
 
-### module loaders
+### modules
+
+- define the requirements (imported depencies), internal (non-exported) logic and interface (exported) to consumers for an isolated piece of code
+- the distinction betwene modules and files is straight forward, all modules contain a scope and dont inherit from the global namespace
+  - historically this was not the case, hence the evolution of various flavors of module types in js
+- distinct from packages: which are reusable, distributed pieces of code, which may contain many many modules
+- only the two most popular are presented
+
+#### commonjs
+
+- prefer ESM when possible, even in nodejs
+  - commonjs is NOT part of the ecmascript spec, just another module loader
+- synchronously `require()` a dependency's `module.export`ed interface value
+- module.exports simply provides a value to the caller, and not the internal bindings
+  - i.e. at runtime if module X changes exported Y, module Z wont be updated
+  - FYI you can reassign `module.exports = abc` to export a single value instead of an object
+  - FYI things assigned directly to exports arent hoisted in the local scope,
+    - generaly you should first define the abc before exporting it; if its used internally
+- require wraps the module code to provide isolation
+
+#### esm
+
+- all modern apps should use ESM; its part of the ecmascript spec
+  - theres ways to provide both to support legacy apps, read the nodejs docs i think
+- `import ...` synchronously or `import()` asynchronously bindings that are `export`ed from other modules
+- export creates a set of readonly named bindings, and not values
+  - thus consumers import the bindings, and not values
+  - i.e. at runtime if module X changes exported Y, module Z WILL be updated
+  - modern browsers support this
+- default export: provided to users by default
+- named exports: must be requested specifically
 
 ## Web Fundamentals
+
+- [web security](https://github.com/noahehall/theBookOfNoah/blob/master/0current/appdev/security/websecurity.md) continues this discussion in depth
 
 ### CORS
 
@@ -733,15 +923,7 @@
 
 ### window
 
-#### document
-
-##### document important properties
-
-- readyState: has 3 States; everytime readState changes, a ready state change event fires
-  - loading: document still loading
-  - interactive: document has loaded and has been parsed, but sub resources (images, css, frames, etc) hasnt loaded
-    - loaded === dom.contentLoaded event; useful for running code after all of the initial DOM content has been loaded
-  - complete: everything has loaded
+#### fetch
 
 #### Request
 
@@ -776,10 +958,6 @@
   - formData() - Returns a promise that resolves with a FormData object.
   - json() - Returns a promise that resolves with a JSON object.
   - text() - Returns a promise that resolves with a USVString (text).
-
-#### Headers
-
-- Allows you to perform various actions on HTTP request and response headers. These actions include retrieving, setting, adding to, and removing.
 
 #### localStorage
 
@@ -817,10 +995,24 @@
 
 - The Navigator interface represents the state and the identity of the user agent. It allows scripts to query it and to register themselves to carry on some activities.
 
-#### Worker
+#### Workers
 
-- Web worker: runs separately from the page, isnt visible to the user, cant access the DOM,
-  .it intercepts and controls requests made by the browser
+- workers work on a separate thread when you need work to be worked by a worker.. you wanker
+- isnt visible to the user, generally cant access the DOM
+
+##### web workers
+
+- catchall for any compute intensive task that shouldnt reduce perf of the main thread
+
+##### service workers
+
+- general proxy for client side requests & caching
+- intercepts requests made and potentially modifies responses to the browser
+
+##### worklets
+
+- lightweight web workers aimed at high performance graphics/audio processing
+- can execute js / webassembly
 
 #### caches
 
@@ -854,3 +1046,22 @@
   - retrieve response from cache for all matching requests
 - caches.delete('cacheName|cacheObject') //always clean your cache
 - caches.keys() //get names of all your caches
+
+#### Headers
+
+- Allows you to perform various actions on HTTP request and response headers. These actions include retrieving, setting, adding to, and removing.
+
+#### document
+
+- DOM: a tree of dom nodes with document.documentElement (i.e html) at root
+- prefer a framework/library vs working with the DOM directly if you're app requires cross-browser compatability
+  - not to be confused with [micro frontend architecture](https://microfrontends.com/)
+- reading & mutating the DOM directly impacts perf
+
+##### document important properties
+
+- readyState: has 3 States; everytime readState changes, a ready state change event fires
+  - loading: document still loading
+  - interactive: document has loaded and has been parsed, but sub resources (images, css, frames, etc) hasnt loaded
+    - loaded === dom.contentLoaded event; useful for running code after all of the initial DOM content has been loaded
+  - complete: everything has loaded

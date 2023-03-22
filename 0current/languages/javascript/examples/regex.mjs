@@ -1,10 +1,14 @@
+import { log } from "./logit.mjs";
+
+// both are the treated the same
+let re1 = new RegExp("find/this/pattern", "i");
+let re2 = /find\/this\/pattern/i;
+const input = "find/this/pattern";
+
+log("re1.test(input)", re1.test(input));
+log("re2.test(input)", re2.test(input));
 /*
 
-  ```js
-  var patt = /w3schools/i;
-  var patt = new RegExp("w3schools", "i");
-  var matches = textVar.match(/[8wtyuioahxvm]/gi); //returns an array of matches
-  ```
 
 
   - modifiers
@@ -28,6 +32,7 @@
   - [0-9] Find any digit between the brackets
   - [^0-9] Find any digit NOT between the brackets
   - (x|y) Find any of the alternatives specified
+    - (abc) becomes a group, where abc are treated as a single element
   - (?:YourRegexHere) non capturing group
     - will match YourRegexHere but wont return it as a match
     - i.e. it must PASS the test, but dont include it in the returned results

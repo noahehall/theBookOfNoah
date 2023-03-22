@@ -2,6 +2,13 @@
 - using call and apply to control 'this' and 'arguments' inside a function
 
 ```js
+
+function myFn (myParam) {
+	console.log("myParam, myParam = "default value")
+	console.log("this.x", this.x)
+}
+myFn.x = "me"
+
 functionName.call(someOBject, someParameter);
 // someObject becomes the value of 'this' inside of the function
 // someParameter becomes the parameter passed to the function
@@ -10,7 +17,12 @@ functionName.apply(someObject, ["someArrayElement"]);
 // same as the above, only the function parameter is passed as an array
 ```
 
-
+// ```js
+//     function () {
+//         https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments
+//           var args = Array.prototype.slice.call(arguments);
+//     }
+// ```
 
     ```
     		function blah(){

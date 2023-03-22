@@ -6,6 +6,7 @@
 
 ## links
 
+- [aws messaging services](https://aws.amazon.com/messaging/)
 - [kinesis](https://aws.amazon.com/kinesis/)
 - [amazon states language](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html)
 - [amazon ecr public gallery](https://gallery.ecr.aws/)

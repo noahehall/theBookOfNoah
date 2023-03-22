@@ -1,5 +1,28 @@
+import { log } from "./logit.mjs";
+
+const sym = Symbol("mysym");
+log("sym", sym);
+log("sym == Symbol('mysym')", sym == Symbol("mysymb"));
+
+const myobj = { sym: "sym string value", [sym]: "sym symbol value" };
+
+log("myobj.sym", myobj.sym);
+log("myobj[symb]", myobj[sym]);
+
+const iterateAnything = "abc"[Symbol.iterator]();
+log("iteratorAnything.next", iterateAnything.next());
+log("iteratorAnything.next", iterateAnything.next());
+log("iteratorAnything.next", iterateAnything.next());
+log("iteratorAnything.next", iterateAnything.next());
 /*
 
+- Symbol.for(). This method creates a Symbol in a “global Symbol registry”. Small aside: this registry is also cross-realm, meaning a Symbol from an iframe or service worker will be the same as one generated from your existing frame:
+- Symbol.Iterator(): define a fn thats called when an object is subject ofa  for/of loop
+  - it should return an object with
+    - next() fn that returns { value: nextValue , done: bool }
+      - next is usually implemented by mutating this to track value across next() calls
+    - value: current value
+    - done: false if there are no more value
 - code:
 
   - create a symbol:
@@ -15,6 +38,7 @@
         object.blah === 'undefined' // doesnt work
         object[blah] === 'Something else'; // only works if you have reference to the symbol
 
+    let someObject
     ```
 
   - see an object's symbols: `Object.getOwnPropertySymbols:`

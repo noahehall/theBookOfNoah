@@ -6,9 +6,9 @@
 
 ---
 
-- full stack application development
-  - javascript, web architecture, virtualization, bash, data, databases, nimlang, security
-  - i spend too much time at the top, and not enough at the bottom of the stack
+- full stack application development: i try to maintain proficiency in the following
+  - javascript, web architecture, new product development, virtualization, bash, project management, databases, nimlang, security, web3, messaging
+  - i spend too much time at the top, and not enough at the bottom
   - but thats just how life goes
 
 # When to use

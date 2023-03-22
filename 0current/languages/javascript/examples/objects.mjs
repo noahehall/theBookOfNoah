@@ -1,8 +1,10 @@
-import { logIt } from "../logit.mjs";
+import { log } from "./logit.mjs";
 
-var dict = Object.setPrototypeOf({}, null);
-
-logIt("dict", dict);
+const dict = Object.setPrototypeOf({}, null);
+log("dict", dict);
+// same as above
+const dict2 = Object.create(null);
+log("dict2", dict2);
 
 /*
 - sort an object by value
@@ -88,12 +90,51 @@ logIt("dict", dict);
       }
 
 
+log: [Function: log],
+  warn: [Function: warn],
+  dir: [Function: dir],
+  time: [Function: time],
+  timeEnd: [Function: timeEnd],
+  timeLog: [Function: timeLog],
+  trace: [Function: trace],
+  assert: [Function: assert],
+  clear: [Function: clear],
+  count: [Function: count],
+  countReset: [Function: countReset],
+  group: [Function: group],
+  groupEnd: [Function: groupEnd],
+  table: [Function: table],
+  debug: [Function: debug],
+  info: [Function: info],
+  dirxml: [Function: dirxml],
+  error: [Function: error],
+  groupCollapsed: [Function: groupCollapsed],
+  Console: [Function: Console],
+  profile: [Function: profile],
+  profileEnd: [Function: profileEnd],
+  timeStamp: [Function: timeStamp],
+  context: [Function: context],
+  createTask: [Function: createTask]
 
 
 
 
 
+// - check if properties exists and is owned by object
+//   `	if (thisObject.hasOwnProperty('thisPropertyName'));`
+// - check if property exist and is owned by object or the objects prototype
+//   `(if 'thisPropertyName' in thisObject) return true;`
 
+    ``` use prototype to attach new methods/vars to the constructor
+    	Something.prototype.blah = function(){
+    		console.log('this.name', 'is my name.');
+    	}
 
+````
+	- get the original prototype function
+		`Object.getPrototypeOf(someFunctionHere);`
+
+- obj.prototype.**proto**: The **proto** property of Object.prototype is an accessor property (a getter function and a setter function) that exposes the internal [[Prototype]] (either an object or null) of the object through which it is accessed.
+- Object.setPrototypeOf(obj, prototype); sets the prototype (i.e., the internal [[Prototype]] property) of a specified object to another object or null.
 
 */
