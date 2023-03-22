@@ -11,19 +11,34 @@
 - [eloquent javascript 3rd 2018](https://eloquentjavascript.net/)
 - [web font performance](https://www.igvita.com/2014/01/31/optimizing-web-font-rendering-performance/)
 - [es6 in depth articles](https://hacks.mozilla.org/2015/06/es6-in-depth-collections/)
-- [progressive enhancement](https://jakearchibald.com/2013/progressive-enhancement-is-faster/)
 - [web components in polymer](https://www.polymer-project.org/1.0/blog/es6)
 - [real user monitoring: RUM](https://en.wikipedia.org/wiki/Real_user_monitoring)
 - [latency vs bandwidth](https://www.igvita.com/2012/07/19/latency-the-new-web-performance-bottleneck/)
 - [es6](https://ponyfoo.com/articles/es6)
+- [Mixins](http://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/)
+
+### jakearchibald
+
+- [the goat](https://jakearchibald.com/)
+- [offline cookbook](https://jakearchibald.com/2014/offline-cookbook/)
+- [progressive enhancement](https://jakearchibald.com/2013/progressive-enhancement-is-faster/)
+- [remote debugging](https://jakearchibald.github.io/isserviceworkerready/index.html)
+- [service workers](https://jakearchibald.github.io/isserviceworkerready/index.html)
+- [streams](https://jakearchibald.com/2016/streams-ftw/#streams-the-fetch-api)
 
 ### google web dev
 
-- [google webdev](https://web.dev/)
+- [chrome timeline tool](https://developer.chrome.com/docs/devtools/)
 - [Google Developer](https://developers.google.com/)
-- [web dev patterns](https://web.dev/patterns/)
+- [google webdev](https://web.dev/)
 - [learn web dev](https://web.dev/learn/)
+- [push notifications](https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web)
+- [PWA: progressive web apps](https://web.dev/progressive-web-apps/)
+- [SEO](https://developers.google.com/webmasters/googleforwebmasters/)
+- [serverice worker recipes](https://serviceworke.rs/)
+- [web app manifest](https://web.dev/add-manifest/)
 - [web dev explore](https://web.dev/explore/)
+- [web dev patterns](https://web.dev/patterns/)
 
 ### js specification
 
@@ -37,7 +52,6 @@
   - [prototypical inheritance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
   - [destructuring](https://hacks.mozilla.org/2015/05/es6-in-depth-destructuring/)
   - [classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
-  - [Mixins](http://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/)
   - [for in](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in)
   - [for of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of)
   - [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
@@ -49,27 +63,22 @@
 
 - [mdn browser API index](https://developer.mozilla.org/en-US/docs/Web/API)
   - [service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
-  - [the DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document)
+  - [Document](https://developer.mozilla.org/en-US/docs/Web/API/Document)
   - [events](https://developer.mozilla.org/en-US/docs/Web/Events)
   - [add event listener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)
   - [remove event listener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener)
   - [touch events](https://developer.mozilla.org/en-US/docs/Web/API/Touch_events)
   - [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
   - [request](https://developer.mozilla.org/en-US/docs/Web/API/Request)
-- [serverice worker recipes](https://serviceworke.rs/)
-- [cross origin resource sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS)
-- [cache control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
-- [chrome timeline tool](https://developer.chrome.com/docs/devtools/)
+  - [response](https://developer.mozilla.org/en-US/docs/Web/API/Response)
+  - [headers](https://developer.mozilla.org/en-US/docs/Web/API/Headers)
+  - [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage)
+  - [indexedDb](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+  - [cross origin resource sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS)
+  - [cache control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
+  - [web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+  - [cache](https://developer.mozilla.org/en-US/docs/Web/API/cache)
 - [how browsers work](http://taligarsiel.com/Projects/howbrowserswork1.htm)
-- [push notifications](https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web)
-- [remote debugging](https://jakearchibald.github.io/isserviceworkerready/index.html)
-- [SEO](https://developers.google.com/webmasters/googleforwebmasters/)
-- [service workers](https://jakearchibald.github.io/isserviceworkerready/index.html)
-- [streams](https://jakearchibald.com/2016/streams-ftw/#streams-the-fetch-api)
-- [web app manifest](https://web.dev/add-manifest/)
-- [web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
-- [offline cookbook](https://jakearchibald.com/2014/offline-cookbook/)
-- [PWA: progressive web apps](https://web.dev/progressive-web-apps/)
 
 ### tools
 
@@ -820,11 +829,126 @@
   - ms-user-select: none;
   - user-select: none;
 
-### browser DOM
+### window
 
-- setting CSS
-  ```
-  	someelement.style.property = value
-  		any property wtih hyphens (e.g. background-color) becomes camel case (e.g. backgroundColor)
-  		to access the elements class, you have to use somelement.style.className
-  ```
+#### document
+
+##### document important properties
+
+- readyState: has 3 States; everytime readState changes, a ready state change event fires
+  - loading: document still loading
+  - interactive: document has loaded and has been parsed, but sub resources (images, css, frames, etc) hasnt loaded
+    - loaded === dom.contentLoaded event; useful for running code after all of the initial DOM content has been loaded
+  - complete: everything has loaded
+
+#### Request
+
+- A Request instance represents the request piece of a fetch call.
+  - important properties
+    1. method - GET, POST, PUT, DELETE, HEAD
+    2. url - URL of the request
+    3. headers - associated Headers object
+    4. referrer - referrer of the request
+    5. mode - cors, no-cors, same-origin
+    6. credentials - should cookies go with the request? omit, same-origin
+    7. redirect - follow, error, manual
+    8. integrity - subresource integrity value
+    9. cache - cache mode (default, reload, no-cache)
+
+#### Response
+
+- properties
+  1. type - basic, cors
+  2. url
+  3. useFinalURL - Boolean for if url is the final URL
+  4. status - status code (ex: 200, 404, etc.)
+  5. ok - Boolean for successful response (status in the range 200-299)
+  6. statusText - status code (ex: OK)
+  7. headers - Headers object associated with the response.
+- methods
+  1. clone() - Creates a clone of a Response object. VERY USFUL! as you can only read a response body once, so clone it to read it multipel tiems (e.g. to send to multiple places)
+  2. error() - Returns a new Response object associated with a network error.
+  3. redirect() - Creates a new response with a different URL.
+  4. arrayBuffer() - Returns a promise that resolves with an ArrayBuffer.
+  5. blob() - Returns a promise that resolves with a Blob.
+  6. formData() - Returns a promise that resolves with a FormData object.
+  7. json() - Returns a promise that resolves with a JSON object.
+  8. text() - Returns a promise that resolves with a USVString (text).
+
+#### Headers
+
+- Allows you to perform various actions on HTTP request and response headers. These actions include retrieving, setting, adding to, and removing.
+
+#### localStorage
+
+- localStorage is the same as sessionStorage with the same same-origin rules applied but it is persistent.
+
+#### indexedDB
+
+- IndexedDB is a low-level API for client-side storage of significant amounts of structured data, including files/blobs. This API uses indexes to enable high performance searches of this data.
+- background:
+  - positives:
+    - every major browser supports indexeddb
+  - negatives:
+    - is async but predates promsies, so its eventbased system is horrid.
+      1. use [IndexedDB Promised library instead](https://github.com/jakearchibald/idb)
+- location: resources > indexedDB
+- structure:
+  - db: can be multiple per website
+    - object store: each db can have multiple object stores (i.e. tables) to store data
+      - object stores can only be created via the upgrade funcion when creating the DB
+        - you have to bump up the version to modify the object store (e.g. add object stores / create indexes)
+        - upgrade version only gets called with the upgradeDb() function
+      - values: any data type, each item can have a primary key/one of its values can be set as the primary key
+      - transactions: (i.e. CRUD), all CRUD operations must be part of a transaction
+        1. if a transaction fails for a series of steps/actions, none of the steps/actions are applied and the whole transaction is reverted
+        2. create a transaction object > use it to return an objectStore > operate CRUD on object store
+      - indexes: you can create multiple indexes per object store, which orders (i.e. sorts) the values by a specific property making it faster to look up
+- API
+  - indexedDb: found on window object
+    1. .deleteDatabase('dbName')
+  - IDBObjectStore: interface for an object store
+    - methods: add, clear, delete, get, getAll, getAllKeys, etc.
+    - properties: indexNames, keyPath, name, transaction, autoIncrement
+
+#### navigator
+
+- The Navigator interface represents the state and the identity of the user agent. It allows scripts to query it and to register themselves to carry on some activities.
+
+#### Worker
+
+- Web worker: runs separately from the page, isnt visible to the user, cant access the DOM,
+  .it intercepts and controls requests made by the browser
+
+#### caches
+
+- updating static cache:
+  - create new SW
+  - remove old SW
+  - when #1 is actived, deleted old cache
+  - create new cache
+- see cache: dev tools > resources/application > cache storage
+- cache names in prod should be auto generated and cache times set to a year a more, when the file changes, you can just upload the new file (with a different name) and that will force an update since the url to the file changes
+- be sure the cache names are versioned or auto-generated, e.g. somecache-v1 | somecache-!@#s
+- opening a cache returns a response objects
+- a response object can only be used once, you will need to call response.clone() to use it more than once
+
+##### methods
+
+- caches.open('createOrOpenACache').then(function(cache){...})
+  - create or open a cache-box by name
+  - returns a promise of request and response pairs from any secure origin
+  - can store fonts, scripts, images, etc. from your origin, and any origin on the web
+- cache.put(request, response);
+  - store a request response in
+- cache.addAll([request1, request2, 'url3', 'url4'])
+  - accepts request objects / urls, makes the requests, and stores the results
+    - are atomic requests, if any fail, none are added
+- cache.match(requestObjectOrUrlString)
+  - retrieve something from the cache
+  - returns matching response or null
+- caches.match(requestObjectOrUrlString)
+  - same as cache.match, only searches ALL CACHES starting with the oldest first
+  - retrieve response from cache for all matching requests
+- caches.delete('cacheName|cacheObject') //always clean your cache
+- caches.keys() //get names of all your caches

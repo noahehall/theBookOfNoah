@@ -5,7 +5,7 @@
 - its best to use an outline (e.g. in vscode) when viewing this document
   - unfortunately the accessibility section is at the very bottom
     - i wouldnt skip reading the best practices section, lots of goodies
-- note about anything design related: im not a designer, not interested in being a designer, but all frontend devs needs to have some basic knowledge in case we need to push back against something crazy that doesnt make sense
+- note about anything design related: im not a designer, not interested in being a designer, but all frontend devs needs to have some basic knowledge
   - designers are special people, like a good musician/writer/sports player, your born with a 6th sense
 - todos
   - the entire accessibility section should be reworked
@@ -21,6 +21,12 @@
   - [css layout introduction](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Introduction)
   - [responsive design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
   - [layout comprehension assessment](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Fundamental_Layout_Comprehension)
+  - [css layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout)
+  - [gotchas for grid](https://css-tricks.com/things-ive-learned-css-grid-layout/)
+  - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
+  - [multi column layouts via fragmentation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Columns)
+  - [dynamic css grid](https://oky.dk/blog/1kb-grid)
+  - [complete guide to grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
 - css
   - [BEM: Block Element Modifier](https://en.bem.info/)
   - [w3 css validator](https://jigsaw.w3.org/css-validator/)
@@ -128,29 +134,26 @@
 
 ### html
 
+- specs
+  - [living standard](https://html.spec.whatwg.org)
+    - [workers](https://html.spec.whatwg.org/multipage/workers.html)
+    - [html entity reference](https://html.spec.whatwg.org/multipage/indices.html)
+  - [mdn html reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference)
+  - [html intro](https://developer.mozilla.org/en-US/docs/Web/HTML)
+  - [sections of a document](https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure)
+  - [using data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes)
+  - [data attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)
+  - [meta](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta)
+  - [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link)
+  - [link type reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types)
+  - [content categories](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories)
 - [font face observer](https://github.com/bramstein/fontfaceobserver)
 - [web font loader](https://github.com/typekit/webfontloader)
 - [font optimization](https://www.zachleat.com/web/web-font-data-uris/)
-- [html entity reference](https://html.spec.whatwg.org/multipage/indices.html)
-- [html reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference)
 - [xml/html character entity reference](https://en.m.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references)
-- [html on mdn](https://developer.mozilla.org/en-US/docs/Web/HTML)
 - [semantics](https://developer.mozilla.org/en-US/docs/Glossary/semantics)
-- [sections of a document](https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure)
-- [html markup validation service by w3c](https://validator.w3.org/)
-- [using data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes)
-- [data attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)
-- [meta](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta)
-- [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link)
-- [link type reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types)
-- [content categories](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories)
-- layout
-  - [css layout](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout)
-  - [gotchas for grid](https://css-tricks.com/things-ive-learned-css-grid-layout/)
-  - [css containment](https://developers.google.com/web/updates/2016/06/css-containment)
-  - [multi column layouts via fragmentation](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Columns)
-  - [dynamic css grid](https://oky.dk/blog/1kb-grid)
-  - [complete guide to grid](https://css-tricks.com/snippets/css/complete-guide-grid/)
+- tools
+  - [html markup validation service by w3c](https://validator.w3.org/)
 
 #### accessibility
 
