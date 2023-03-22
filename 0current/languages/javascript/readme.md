@@ -61,6 +61,7 @@
 
 ### browser / server / apis
 
+- [how browsers work](http://taligarsiel.com/Projects/howbrowserswork1.htm)
 - [mdn browser API index](https://developer.mozilla.org/en-US/docs/Web/API)
   - [service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers)
   - [Document](https://developer.mozilla.org/en-US/docs/Web/API/Document)
@@ -78,7 +79,6 @@
   - [cache control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
   - [web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
   - [cache](https://developer.mozilla.org/en-US/docs/Web/API/cache)
-- [how browsers work](http://taligarsiel.com/Projects/howbrowserswork1.htm)
 
 ### tools
 
@@ -103,8 +103,9 @@
 
 ## basics
 
-- is single threaded: two things cannot run at the same time
-  1. Javascript is in the same queue as painting, updating styles, and handling user actions (e.g. highliting text/interacting with form controls)
+- js is single threaded: two things cannot run at the same time
+  - Javascript is in the same queue as painting, updating styles, and handling user actions (e.g. highliting text/interacting with form controls)
+  - thus concurrency is key to efficient js applications
 
 ### tc39 and web standards
 
@@ -132,50 +133,43 @@
 
 ### terms
 
-- prototype: each object has an internal link to another object, its prototype, that provides additional behavior and properties
-- prototype chain: the sequence of linked objects from one object's prototype to another, all the way up until you reach the Null object (which does not have a prototype)
-- function parameters are variables that are local to the function
-- functions can return anything, even other functions
-- arguments = an array-like OBJECT containing all of the parameters passed to the function. it is NOT AN Array
-- anonymous enclosures
-  - wrap the anonymous function in paranthesis
-  - then call the function immediately by ending wtih () and send in parameters
-  - any variables declared inside this function are local to this function
-- function closures: defining a function within a function
-- difference with `==`: The == operator applies various coercions to both sides (if they are not the same Type) before testing for equality (resulting in such behavior as "" == false being true), but Object.is doesn't coerce either value.
-- difference with `===`: The === operator (and the == operator as well) treats the number values -0 and +0 as equal and treats Number.NaN as not equal to NaN.
-- Constants are block-scoped, much like variables defined using the let statement. The value of a constant cannot change through re-assignment, and it can't be redeclared.
-- The function.name property returns the name of the function.
-- proxies: Proxies enable creation of objects with the full range of behaviors available to host objects. Can be used 'for' interception, object virtualization, logging/profiling, etc.
 - web sockets: a persistent connection to a server
 - sourcemaps: tell the browser to convert line and column offsets 'for' exceptions thrown in the bundle file back into the offsets and filenames of the original sources.
-- transpilation: ESx > Babel > ESx
+- transpilers vs compilers: distinction is more fluid than binary and best throught of a spectrum from annotations > transpilers > compilers
+  - annotations: e.g. jsdocs / flowtype
+    - no transpilation / compilation required; simply remove the annotations
+    - usually the best performance however feature limited based on context
+  - transpilation: converting X to another version of X:
+    - ESx > Babel > ESx
+    - typescript > js
+  - compilation: converting X to Y or a signficantly different version of X
+    - nimlang > C > to js
+    - coffeescript > to js
 
 ### Best Practices
 
 - generally a good practice to have some throttling when testing sites. It'll help you see your sites performance from your users perspectives.
-- OFFLINE FIRST
-  - online first: we try the network first, if it doesnt, we show some fallback content (or 404 page)
-  - offline first:
-    1. full content: deliver page header + content from cache, then update via network request
-       .update cache on SW install
-       .strategy for unobtrusive app updates
-       .get the user onto latest version
-       .continually update cache of posts
-       .selectively cache everything you want available offline (e.g. images, posts, etc.)
-    2. header first: deliver page header from cache, attempt to retrieve content via network request, then fall back to cached content on device
-  - cache photos/media instead of storing them in db.
-    - db: read data > convert to blob > store it. loses streaming capabilities
-    - cache: request data > streams back > and can display it as it arrives (i.e. piece by piece)
+- online first: we try the network first, if it doesnt, we show some fallback content (or 404 page)
+- offline first:
+  - full content: deliver page header + content from cache, then update via network request
+    - update cache on SW install
+    - strategy for unobtrusive app updates
+    - get the user onto latest version
+    - continually update cache of posts
+    - selectively cache everything you want available offline (e.g. images, posts, etc.)
+  - header first: deliver page header from cache, attempt to retrieve content via network request, then fall back to cached content on device
+- cache photos/media instead of storing them in db.
+  - db: read data > convert to blob > store it. loses streaming capabilities
+  - cache: request data > streams back > and can display it as it arrives (i.e. piece by piece)
 - browser requests
-  1. request > http cache (found?) return page
-  2. else > go to internet > retrieve html>
-  3. other stuff needed ? > request css & javascript
+  - request > http cache (found?) return page
+  - else > go to internet > retrieve html>
+  - other stuff needed ? > request css & javascript
 - Search Fields
-  1. auto-completing queries, correct misspellings, suggest related queries
-  2. place filters above search results and always display # of results
+  - auto-completing queries, correct misspellings, suggest related queries
+  - place filters above search results and always display # of results
 - Ecommerce
-  1. allow users to purchase as guests
+  - allow users to purchase as guests
 - mobile sites
   - Make calls to action front end center
   - Make secondary tasks available through menus/below the fold
@@ -191,28 +185,19 @@
 
 ### scope
 
-- determines the life and death of a variable
+- determines the life, death and visibility of a variable
 - block scope: lives within {}
 - function scope: lives within function definitions/expressions/closures
 - scope chain:
-  1. if the variable is not available in the current scope:
-  2. look for it in the parent function, if its not available there
-  3. go up one level, and continue all the way to the window (global) scope
+  - if the variable is not available in the current scope:
+  - look for it in the parent function, if its not available there
+  - go up one level, and continue all the way to the window (global) scope
 
 ### operators
 
+- difference with `==`: The == operator applies various coercions to both sides (if they are not the same Type) before testing for equality (resulting in such behavior as "" == false being true), but Object.is doesn't coerce either value.
+- difference with `===`: The === operator (and the == operator as well) treats the number values -0 and +0 as equal and treats Number.NaN as not equal to NaN.
 - Spread Operator: expands an array/object into elements, i.e. flatten arrays and objects in function calls, array literals, destructuring assignment
-  ```
-  	+	Addition	x = y + 2	y = 5	x = 7	Try it »
-  	-	Subtraction	x = y - 2	y = 5	x = 3	Try it »
-  	*	Multiplication	x = y * 2	y = 5	x = 10	Try it »
-  	/	Division	x = y / 2	y = 5	x = 2.5	Try it »
-  	%	Modulus (division remainder)	x = y % 2	y = 5	x = 1	Try it »
-  	++	Increment	x = ++y	y = 6	x = 6	Try it »
-  	x = y++	y = 6	x = 5	Try it »
-  	--	Decrement	x = --y	y = 4	x = 4	Try it »
-  	x = y--	y = 4	x = 5
-  ```
 
 ### statements
 
@@ -232,11 +217,11 @@
 - `var` Declares a variable
 - `while` Marks a block of stat
 - `object instanceof constructor `//tests whether an object has in its prototype chain the prototype property of a constructor.
-  `constructos === String, Number, Object, Date etc.`
+  `constructors === String, Number, Object, Date etc.`
 - `debugger` pauses app run time at this point in the app.
-  1. you can open up console and type in any of the variables in the app, and it will print to the console
-  2. you can type in a function name and review it
-  3. you can click through the sources panel and view different things
+  - you can open up console and type in any of the variables in the app, and it will print to the console
+  - you can type in a function name and review it
+  - you can click through the sources panel and view different things
 
 ### data conversion
 
@@ -244,29 +229,27 @@
 - `toExponential()` Returns a string, with a number rounded and written using exponential notation.
 - `toFixed()` Returns a string, with a number rounded and written with a specified number of decimals.
 - `toPrecision()` Returns a string, with a number written with a specified length
-- `Number("3.14") ` returns 3.14
+- `Number("1.14") ` returns 1.14
 - `parseFloat()` Parses a string and returns a floating point number
 - `parseInt()` Parses a string and returns an integer
 
-### destructuring
+### variables
+
+- let: block scoped vars
+- var: global variable
+- const: are block-scoped, much like variables defined using the let statement. The value of a constant cannot change through re-assignment, and it can't be redeclared.
+
+#### destructuring
 
 - Destructuring: pull values out of arrays/objects and assign them to variables
 
 ### Number
 
-- todo
-
 ### Date
-
-- todo
 
 ### String
 
-- todo
-
 ### arrays
-
-- todo
 
 ### objects
 
@@ -275,11 +258,6 @@
 
 ### Maps
 
-- when to use which: ...
-
-#### Map
-
-- new Map([iterable]): The Map object holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value.
 - answer yes to any of the below, and you can justify using a map
   - Are keys usually unknown until run time? Do you need to look them up dynamically?
   - Do all values have the same type? Can they be used interchangeably?
@@ -287,6 +265,10 @@
   - Are key-value pairs frequently added or removed?
   - Do you have an arbitrary (easily changing) number of key-value pairs?
   - Is the collection iterated?
+
+#### Map
+
+- new Map([iterable]): The Map object holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value.
 - properties
   - Map.prototype.size
 
@@ -306,13 +288,20 @@
 
 ### functions
 
+- anonymous enclosures
+  - wrap the anonymous function in paranthesis
+  - then call the function immediately by ending wtih () and send in parameters
+  - any variables declared inside this function are local to this function
+- function closures: defining a function within a function
 - function parameters are variables that are local to the function
   - functions can return anything, even other functions
   - arguments = an array-like OBJECT containing all of the parameters passed to the function. it is NOT AN Array
 - Rest Parameters: used in function arguments to capture a list of variables from arrays
-- Default Arguments
+- Default Arguments are assigned in the function signature
 
 #### arrow functions
+
+- do not create a new scope
 
 ### Control Flow
 
@@ -350,8 +339,8 @@
 - function.next(): retrieve and send data, executes up to and including the next yield statement
   - for each yield statement you need to call blah.next()
   - returns `{value: 'dataInAndOut', done: true|false}`
-    1. value: data sent out from yield, or data sent in through next(someData);
-    2. done:
+    - value: data sent out from yield, or data sent in through next(someData);
+    - done:
     - false if function is not done, and can be entered again
     - true: if function is done, and should not be re-entered
   - you can access the value directly: `bloop.next().value;``
@@ -360,18 +349,13 @@
   - timers (e.g. setInterval)
 - Generators should not be re-used, even if the for...of loop is terminated early, for example via the break keyword. Upon exiting a loop, the generator is closed and trying to iterate over it again does not yield any further results.
 
-### variables
-
-- let: block scoped vars
-- const: constants that shouldnt be reassigned
-- var
-
-#### destructuring
-
 ### classes
 
 #### prototypes
 
+- prototype: each object has an internal link to another object, its prototype, that provides additional behavior and properties
+  - classes are just syntactic sugar for prototypes
+- prototype chain: the sequence of linked objects from one object's prototype to another, all the way up until you reach the Null object (which does not have a prototype)
 - helps you create formalized objects (i.e. classes)
   - its simply a function that creates an object
   - new = the constructor operator, creates a new instance of an object
@@ -383,29 +367,29 @@
 - The super keyword is used to call functions on an object's parent.
 - Abstract subclasses or mix-ins are templates for classes. An ECMAScript class can only have a single superclass, so multiple inheritance from tooling classes, for example, is not possible. The functionality must be provided by the superclass.
 - classes can be used as an expression as well as a statement
-  1. as an expression it returns a new class each time its evaluated (sort of like a factory)
+  - as an expression it returns a new class each time its evaluated (sort of like a factory)
 - the extends clause accepts arbitrary expressions that return classes or constructors
 
 #### Mixins
 
 - mixin: is really a subclass factory, parameterized by the superclass, which produces mixin applications
 - benefits of approach below: 0. the only difference between a mixin and a normal subclass is that a normal class has a fixed superclass, while a mixin definition doesnt (the mixin application does)
-  1. the definition of a class that may be applieed to different super classes.
-  2. mixin application: the application of a mixin definition to a specific superclass, producing a new subclass
+  - the definition of a class that may be applieed to different super classes.
+  - mixin application: the application of a mixin definition to a specific superclass, producing a new subclass
 - implementation features based on es6 classes
-  1. mixins are added to the prototype chain
-  2. mixins are applied without modifying existing objects
-  3. mixins do no magic, and dont define new semantics on top of the core language
-  4. superfoo property access works within mixins and subclasses
-  5. super() calls work in constructors
-  6. mixins are able to extend other mixins
-  7. instanceof works
-  8. mixins donot require library support and can be writtin in a universal style
-  9. subclasses correctly override mixin methods which override superclass methods.
+  - mixins are added to the prototype chain
+  - mixins are applied without modifying existing objects
+  - mixins do no magic, and dont define new semantics on top of the core language
+  - superfoo property access works within mixins and subclasses
+  - super() calls work in constructors
+  - mixins are able to extend other mixins
+  - instanceof works
+  - mixins donot require library support and can be writtin in a universal style
+  - subclasses correctly override mixin methods which override superclass methods.
 
 ### metaprogramming
 
-- metaprogrammaning: all about the underlying mechanics of the language, rather than “high level” data modelling or business logic. If programming can be described as “making programs”, meta-programming could be described as “making programs making programs”
+- metaprogrammaning: all about the underlying mechanics of the language, rather than “high level” data modeling or business logic. If programming can be described as “making programs”, meta-programming could be described as “making programs making programs”
   - Code Generation, aka eval & friends -
   - Reflection - finding out about and adjusting the structure and semantics of your application
     - Functions:
@@ -435,75 +419,13 @@
 
 #### Proxy
 
+- proxies: Proxies enable creation of objects with the full range of behaviors available to host objects. Can be used 'for' interception, object virtualization, logging/profiling, etc.
 - Reflection through intercession - wrapping objects and intercepting their behaviours through traps.
 - proxy types
   - no-op forwarding proxy
   - validation proxy
 
 ### regexp
-
-- modifiers
-  - i Perform case-insensitive matching
-  - g Perform a global match (find all matches rather than stopping after the first match)
-  - m Perform multiline matching
-- quantifiers
-  - n+ Matches any string that contains at least one n
-  - n\* Matches any string that contains zero or more occurrences of n
-  - n? Matches any string that contains zero or one occurrences of n
-  - n{X} Matches any string that contains a sequence of X ns
-  - n{X,Y} Matches any string that contains a sequence of X to Y ns
-  - n{X,} Matches any string that contains a sequence of at least X ns
-  - n$ Matches any string with n at the end of it
-  - ^n Matches any string with n at the beginning of it
-  - ?=n Matches any string that is followed by a specific string n
-  - ?!n Matches any string that is not followed by a specific string n
-- expressions: Brackets are used to find a range of characters:
-  - [abc] Find any character between the brackets
-  - [^abc] Find any character NOT between the brackets
-  - [0-9] Find any digit between the brackets
-  - [^0-9] Find any digit NOT between the brackets
-  - (x|y) Find any of the alternatives specified
-  - (?:YourRegexHere) non capturing group
-    - will match YourRegexHere but wont return it as a match
-    - i.e. it must PASS the test, but dont include it in the returned results
-- groups
-  - (x) Matches x and remembers the match. These are called capturing groups.
-  - (?:x) Matches x but does not remember the match. These are called non-capturing groups.
-- assertions
-  - x(?=y) Matches x only if x is followed by y.
-  - x(?!y) Matches x only if x is not followed by y.
-- meta-characters: characters withs special meanings
-  - . Find a single character, except newline or line terminator
-  - \w Find a word character
-  - \W Find a non-word character
-  - \d Find a digit
-  - \D Find a non-digit character
-  - \s Find a whitespace character
-  - \S Find a non-whitespace character
-  - \b Find a match at the beginning/end of a word \bword\b
-    - Before the first character in the string, if the first character is a word character.
-    - After the last character in the string, if the last character is a word character.
-    - Between two characters in the string, where one is a word
-  - \B Find a match not at the beginning/end of a word
-    - opposte of \b
-  - \0 Find a NUL character
-  - \n Find a new line character
-  - \f Find a form feed character
-  - \r Find a carriage return character
-  - \t Find a tab character
-  - \v Find a vertical tab character
-  - \b match a word boundary \bword\b.
-    - character and the other is not a word character.
-  - \xxx Find the character specified by an octal number xxx
-  - \xdd Find the character specified by a hexadecimal number dd
-  - \uxxxx Find the Unicode character specified by a hexadecimal number xxxx
-- Methods that use regular expressions
-  - exec A RegExp method that executes a search for a match in a string. It returns an array of information.
-  - test A RegExp method that tests for a match in a string. It returns true or false.
-  - match A String method that executes a search for a match in a string. It returns an array of information or null on a mismatch.
-  - search A String method that tests for a match in a string. It returns the index of the match, or -1 if the search fails.
-  - replace A String method that executes a search for a match in a string, and replaces the matched substring with a replacement substring.
-  - split A String method that uses a regular expression or a fixed string to break a string into an array of substrings.
 
 ### concurrency
 
@@ -512,70 +434,60 @@
 - synchronous: statements happen in order as defined, in a single timeline
 - callbacks: pass one function (cb) to another function, and the cb is invoked when certain conditions are met
   - problems:
-    1. how do you handle errors ? do all type of errors get handled the same way ?
-    2. Pyramid of doom / callback hell:
+    - how do you handle errors ? do all type of errors get handled the same way ?
+    - Pyramid of doom / callback hell:
 
 #### promises
 
 - try catch wrapper around code that will finish at an unpredictable time
-  1. can only succeed/fail once
-  2. cannot switch from success to failure/vice versa
-  3. if a promise has succeeded/failed, and you later add a success/failure callback, the correct callback will be invoked, even though the event took place earlier
-  4. any object with a then method can be used as and integrated with native promises
+  - can only succeed/fail once
+  - cannot switch from success to failure/vice versa
+  - if a promise has succeeded/failed, and you later add a success/failure callback, the correct callback will be invoked, even though the event took place earlier
+  - any object with a then method can be used as and integrated with native promises
 - Promise States
-  1. fulfilled (resolved): action related to the promise has succeeded
-  2. rejected (failure): action related to the promise has failed
-  3. pending: not yet fulfilled / rejected
-  4. settled: promise has either fulfilled / rejected.
+  - fulfilled (resolved): action related to the promise has succeeded
+  - rejected (failure): action related to the promise has failed
+  - pending: not yet fulfilled / rejected
+  - settled: promise has either fulfilled / rejected.
   - a promise can only be settled once, whereas events can fire multiple times
   - promises are potentially blocking since they are created and settled on the main thread
 - Promise stages:
-  1. wrapping: (value promise creation)
+  - wrapping: (value promise creation)
   - create a promise that wrapps an async action
-  2. thening (value -> action):
+  - thening (value -> action):
   - any object that returns a .then is thenable
   - any thenable can become part of a chain of thens/asynchronous work
-  3. catching (value -> recovery):
+  - catching (value -> recovery):
   - javascript calls the NEXT CATCH in the chain when an error occurs or a promise is rejected
 - FYI
-  1. each Then is also asynchronous, so you can return a promise from a then, and the next then will only execute when the new promise is settled
-  2. the `.catch()` chain is just sugar for `then(successFunction, errorFunction)`
-  3. promise rejections skip forward to the next then() with a rejection callback or catch chain
-  4. rejections happen when a promise is explicitly rejected, or implicetly if an error is thrown in the constructor callback
+  - each Then is also asynchronous, so you can return a promise from a then, and the next then will only execute when the new promise is settled
+  - the `.catch()` chain is just sugar for `then(successFunction, errorFunction)`
+  - promise rejections skip forward to the next then() with a rejection callback or catch chain
+  - rejections happen when a promise is explicitly rejected, or implicetly if an error is thrown in the constructor callback
   - thus, its best to do all your promise-related work inside the promise constructor callback, so errors are automatically caught and become rejections
-  5. you can combine generators and promises to write async code that looks like and easy to follow like sync code
+  - you can combine generators and promises to write async code that looks like and easy to follow like sync code
 
 #### async await
 
 - basics
-  1. allow you to write promise-based code as if it were syncrhonous, but without blocking the main thread
-  2. Note that `await` may only be used in functions prepended with the `async` keyword
-  3. suspends execution in your context until the promise settles
-  4. `async` Function always returns a Promise
-  5. anything prepended with `await` is passed through Promise.resolve() so you can safely await non-native promises
+  - allow you to write promise-based code as if it were syncrhonous, but without blocking the main thread
+  - Note that `await` may only be used in functions prepended with the `async` keyword
+  - suspends execution in your context until the promise settles
+  - `async` Function always returns a Promise
+  - anything prepended with `await` is passed through Promise.resolve() so you can safely await non-native promises
 - use cases
-  1. reduce complex promise logic
-  2. convert object/class methods to promises
+  - reduce complex promise logic
+  - convert object/class methods to promises
   - Class constructors and getters/settings cannot be async.
-  3. easily run multiple async logic in serial/parallel
-  4. easily make requests in parallel but take action in order they were called
-  5. use them on every promise-returning function! Not only do they make your code tider, but it makes sure that function will always return a promise.
+  - easily run multiple async logic in serial/parallel
+  - easily make requests in parallel but take action in order they were called
+  - use them on every promise-returning function! Not only do they make your code tider, but it makes sure that function will always return a promise.
 
 #### timers
-
-- timers
-  ```
-  	setTimeout(someFunctionName, milliseconds); //runs someFunctionName ONCE after X milliseconds
-  	setInterval(someFunctionName, milliseconds); //runs someFunctionName EVERY X milliseconds
-  	clearInterval(intervalHandle) //you must assign setInterval to a variable
-  	clearTimeout(timeoutHandle) //you must assign setTimeout to a variable
-  ```
 
 ### math
 
 ### module loaders
-
-- todo
 
 ## Web Fundamentals
 
@@ -585,18 +497,18 @@
 - A resource makes a cross-origin HTTP request when it requests a resource from a different domain, or port than the one which the first resource itself serves.
 - the CORS mechanism gves web servers cross-domain access controls, which enable secure cross-domain transfers
   - the [CORS protocol](https://fetch.spec.whatwg.org/#http-cors-protocol) can enable cross-site HTTP requests for:
-    1. invocations of XMLHttpRequest/Fetch api
-    2. web fonts
-    3. images/video frames drawn to canvas using drawImage
-    4. stylesheets
-    5. scripts
+    - invocations of XMLHttpRequest/Fetch api
+    - web fonts
+    - images/video frames drawn to canvas using drawImage
+    - stylesheets
+    - scripts
   - add HTTP headers that allow web servers to describe the set of origins that are permitted to read
   - for HTTP methods with server side-effects (e.g. `POST`), the spec mandates that browsers _preflight_ the request to retrieve supported methods with an `HTTP OPTIONS` request method, and then upon _approval_ from the server, sending the actual request
   - servers can notify clients whether crednetials (e.g. cookies) should be sent with requests
 - TERMINOLOGY
-  1. Simple requests: requests types that don't trigger a `CORS preflight`, i.e. GET, HEAD, POST
+  - Simple requests: requests types that don't trigger a `CORS preflight`, i.e. GET, HEAD, POST
 - server perspective
-  1. set _response.header_ `Access-Control-Allow-Origin:` to the domains that can access the server's resources
+  - set _response.header_ `Access-Control-Allow-Origin:` to the domains that can access the server's resources
   - allow all: `Access-Control-Allow-Origin: *`
   - allow specific: `Access-Control-Allow-Origin: http://foo.example`
     - you can programmatically update this permit multiple domains access without using the `*` flag
@@ -611,84 +523,77 @@
 - service worker: a script your browser runs in the background and listens for and reacts to arbitrary events
   - each page the service worker controls, it hijacks all events and allows you to operate on them.
   - are limited to HTTPS, since intercepting network requests can be super dangerous in the wrong hands
-  1. cant access the DOM directly, but communicates with the pages it controls by responding to messages via the [postMessage](https://www.html5rocks.com/en/tutorials/workers/basics/) interface
-  2. is a programmable network proxy, allowing you to control how network requests from your page are handled
-  3. is terminated when not in use, and restarted when its nexted needed, so never rely on global state within a SW onfetch and onmessage handlers
-  4. has full access to the indexedDB api
-  5. make extensive use of promises
+  - cant access the DOM directly, but communicates with the pages it controls by responding to messages via the [postMessage](https://www.html5rocks.com/en/tutorials/workers/basics/) interface
+  - is a programmable network proxy, allowing you to control how network requests from your page are handled
+  - is terminated when not in use, and restarted when its nexted needed, so never rely on global state within a SW onfetch and onmessage handlers
+  - has full access to the indexedDB api
+  - make extensive use of promises
 - use cases
-  1. adding offline support
-  2. control the cache
-  3. sending push notifications
+  - adding offline support
+  - control the cache
+  - sending push notifications
   - You could send push notifications from the browser to your users about new posts, even if the client has closed your page, since service workers are in constant communication with your server in background.
-  4. doing background sync with service workers
-  5. Capability reporting
-  6. Client-side Load Balancer
-  7. Differential update of text files
-  8. Support a previous unsupported image format in your browser!
-  9. Save forms information even if theres no internet at the moment: Your application could have a huge form to send information for and, in case the user lost connection, the information could be saved in a Service Worker, even when the user is offline, and be sent to your server when the connection is back.
-  10. Faster page loads: You could cache scripts, images, stylesheets, static pages, etc on a Service Worker on a first page-load and run a faster page loading on subsequent requests. The approach is almost the same if you relate it with browser caching but differs with when talking about requests: browser caching requests are always made and stops only if you already have the information needed and with Service Workers caching, no requests are made to the server.
-  11. for some changes (e.g. minor, or security fixes) you may want to force changes to users
-  12. [push notifications](https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web)
-  13. [background sync](https://developers.google.com/web/updates/2015/12/background-sync)
+  - doing background sync with service workers
+  - Capability reporting
+  - Client-side Load Balancer
+  - Differential update of text files
+  - Support a previous unsupported image format in your browser!
+  - Save forms information even if theres no internet at the moment: Your application could have a huge form to send information for and, in case the user lost connection, the information could be saved in a Service Worker, even when the user is offline, and be sent to your server when the connection is back.
+  - Faster page loads: You could cache scripts, images, stylesheets, static pages, etc on a Service Worker on a first page-load and run a faster page loading on subsequent requests. The approach is almost the same if you relate it with browser caching but differs with when talking about requests: browser caching requests are always made and stops only if you already have the information needed and with Service Workers caching, no requests are made to the server.
+  - for some changes (e.g. minor, or security fixes) you may want to force changes to users
+  - [push notifications](https://developers.google.com/web/updates/2015/03/push-notifications-on-the-open-web)
+  - [background sync](https://developers.google.com/web/updates/2015/12/background-sync)
 - life CYCLE
-  1. registration step: register a SW in your page's javascript: the browser will then install the SWin the background
-  2. SW Install step: you specify which static assets to cache. if all assets are successfully downloaded and cached, the SW becomes activated
+  - registration step: register a SW in your page's javascript: the browser will then install the SWin the background
+  - SW Install step: you specify which static assets to cache. if all assets are successfully downloaded and cached, the SW becomes activated
   - create/open a cache
   - cache static assets
-  3. SW Activated step: handle management of old caches
+  - SW Activated step: handle management of old caches
   - for all pages within the SW scope, the SW will act as a Proxy or be terminated (to save memory),
   - clear current cache / delete old caches if upgrading to a new version
   - have the activated service worker take control immediately
     - this is the 'idle' phase
 - process:
-
-  1. service workers are instantiated via javascript in the window, and can only take control of pages that are LOADED after they are instantiated.
-
+  - service workers are instantiated via javascript in the window, and can only take control of pages that are LOADED after they are instantiated.
   - page 1 loads > instantiates sw registration file > makes requests (none are intercepted)
   - user refreshes (causes new load) > sw still in browser > requests are intercepted
-
-  2. service worker intercepts all requests and triggers a 'fetch' event for each
-  3. instantiating a new SW can only occur if all pages controlled by the current SW are gone. this ensures only one version of your site exists at any given time
-
+  - service worker intercepts all requests and triggers a 'fetch' event for each
+  - instantiating a new SW can only occur if all pages controlled by the current SW are gone. this ensures only one version of your site exists at any given time
   - the new SW is in 'waiting' mode until the current SW is gone
   - only occurs if the page closes, or the user navigates to a page not controlled by the current SW
-
-  4. users are notified that a new SW is ready by changing the browser hamburger button in the top right (at least on chrome)
-
+  - users are notified that a new SW is ready by changing the browser hamburger button in the top right (at least on chrome)
   - when the browser refetches a service worker, it goes through the browser cache for all requests
   - it is good to set your SW CACHE TIME TO ZERO!!!! this way they are updated as soon as possible
     -updates to will bypass the browser cache if the SW it has is > than the cache time
-
 - service worker hijaking workflow:
-  1. client loads
-  2. service workers interact with caches
-  3. service workers interact with http caches
-  4. service workers interact with network/internet
+  - client loads
+  - service workers interact with caches
+  - service workers interact with http caches
+  - service workers interact with network/internet
 - network flow: browser requests > service worker > http cache > internet
 - gotchas
   - browsers only update service workers on page reload, or if there is a change to the SW (e.g. change cache name)
     - the new SW will have its only install event so you can use this time to get an updated cache
 - DEV TOOLS:
-  1. click the down arrow next to 'top' and select your SW file
-  2. now you can interact with your SW
-     self.registration
-  3. you can debug SW same as anything else:
-     sources > click SW file > set breakpoints, etc.
-  4. click the application/resources tab and select the SW option
+  - click the down arrow next to 'top' and select your SW file
+  - now you can interact with your SW
+    self.registration
+  - you can debug SW same as anything else:
+    sources > click SW file > set breakpoints, etc.
+  - click the application/resources tab and select the SW option
 - Basic steps:
   - registration
-    1. in a script on the page, register a service worker
-    2. the service worker is registered on an origin, and controls a subset of paths (or root, for all paths)
-       navigator.serviceWorker.register....
+    - in a script on the page, register a service worker
+    - the service worker is registered on an origin, and controls a subset of paths (or root, for all paths)
+      navigator.serviceWorker.register....
   - do stuff!
-    1. intercept network requests/events and do something with them (e.g. store the response in cache)
-       self.addEventListener....
-       caches.open...
-    2. events: install, fetch,
-       event.someMethod()
-    3. caches.open(...)
-       cache.someMethod()
+    - intercept network requests/events and do something with them (e.g. store the response in cache)
+      self.addEventListener....
+      caches.open...
+    - events: install, fetch,
+      event.someMethod()
+    - caches.open(...)
+      cache.someMethod()
 - methods
   - postMessage(): send messages to/from SW
   - skipWaiting()
@@ -715,19 +620,19 @@
 - servers: store information and sends (response)
 - REST: Representational State transfer
   - state transition: going from one state (page) to another (page)
-  1. separate client from server
-  2. should not hold state between requests (all information is sent with each response)
-  3. use HTTP and HTTP methods
+  - separate client from server
+  - should not hold state between requests (all information is sent with each response)
+  - use HTTP and HTTP methods
 - HTTP Requests:
-  1. Request: tells the server what kind of request (method) is being sent
-     // POST /codecademy/learn-http HTTP/1.1
-  2. Header: sends the server additional information, e.g. which client is making the request
-     // Host: www.codecademy.com
-     // Content-Type: text/html; charset=UTF-8
-  3. body: contains the data being sent
-     GET: body = empty
-     POST/UPDATE/DELETE: body should not be empty
-     // Name=Eric&Age=26
+  - Request: tells the server what kind of request (method) is being sent
+    // POST /codecademy/learn-http HTTP/1.1
+  - Header: sends the server additional information, e.g. which client is making the request
+    // Host: www.codecademy.com
+    // Content-Type: text/html; charset=UTF-8
+  - body: contains the data being sent
+    GET: body = empty
+    POST/UPDATE/DELETE: body should not be empty
+    // Name=Eric&Age=26
 - [HTTP Responses](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
   - Status Codes: three digits, the starting number defines the type
   ```
@@ -737,29 +642,26 @@
     4xx: client error
     5xx: server error
     6xx: unofficial Codes
-      6.1: internet information services
-      6.2: nginx
-      6.3: cloudfare
   ```
 - [HTTP Request Methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
-  1. GET: retrieve data
-  2. HEAD: asks for a response identical to a GET request but without the response body
-  3. POST: submit data
-  4. PUT: replaces data
-  5. DELETE: delete data
-  6. CONNECT: establishes a tunnel to the server
-  7. OPTIONS: describe the communication options
-  8. TRACE: performs a message loop-back test along the path to the server
-  9. PATCH: used to apply partial modifications
+  - GET: retrieve data
+  - HEAD: asks for a response identical to a GET request but without the response body
+  - POST: submit data
+  - PUT: replaces data
+  - DELETE: delete data
+  - CONNECT: establishes a tunnel to the server
+  - OPTIONS: describe the communication options
+  - TRACE: performs a message loop-back test along the path to the server
+  - PATCH: used to apply partial modifications
 
 ### browser events
 
 - Event Registration: telling javascript you want to react to specific events when they happen via an event handler
-  1. using tag attributes
-     `onclick="alert('show this message on click')"`
-  2. using dot notation
-     `document.getElementById('blah').onclick=function(){alert('show this message on click');}`
-  3. using addEventListener()
+  - using tag attributes
+    `onclick="alert('show this message on click')"`
+  - using dot notation
+    `document.getElementById('blah').onclick=function(){alert('show this message on click');}`
+  - using addEventListener()
   - it allows us to check for multiple events in a single call (aka event propagation)
   - and events can be triggered via non DOM objects (i.e. write your own events)
   - it is not supported by IE 8 or lower (you have to use an if statement to check for the other one)
@@ -769,27 +671,27 @@
   - capturing an event returns an event object
   - event objects will be different in each browser, console log it to see:
   - event info
-    1. type = e.g. click
-    2. timestamp = the time it happened
-    3. defaultPrevented = if you are preventing the default behavior
+    - type = e.g. click
+    - timestamp = the time it happened
+    - defaultPrevented = if you are preventing the default behavior
   - event targeting info
-    1. currentTarget = the element the event was assigned to
-    2. target = the element the event originated from
-    3. srcElement = the actuall element that fired the event
-    4. fromElement = mouse over and mouse out events
-    5. toElement = mouse over and mouse event events
+    - currentTarget = the element the event was assigned to
+    - target = the element the event originated from
+    - srcElement = the actuall element that fired the event
+    - fromElement = mouse over and mouse out events
+    - toElement = mouse over and mouse event events
   - coordinate info:
-    1. screen X,Y: position relative to the users screen
-    2. layer x, y: position relative to the another positioned event
-    3. client x,y: position relative to the window
-    4. page x,y: position relative to the document
-    5. offset x,y: position relative to the element that fired the event
+    - screen X,Y: position relative to the users screen
+    - layer x, y: position relative to the another positioned event
+    - client x,y: position relative to the window
+    - page x,y: position relative to the document
+    - offset x,y: position relative to the element that fired the event
   - key/mouse info
-    1. charCode/Keycode: which character was pressed
-    2. altKey:
-    3. shiftKey:
-    4. ctrlKey:
-    5. button:
+    - charCode/Keycode: which character was pressed
+    - altKey:
+    - shiftKey:
+    - ctrlKey:
+    - button:
   - Event propagation
     - a parent event can capture events from is child elements
     - only available when using addEventListener
@@ -815,14 +717,14 @@
   - instead only call preventDefault() on touchmove, or fire touch events as mouse events
 - Use the event object to tailor actions to events.
   - Each touch event includes three lists of touches.
-    1. touches: a list of all fingers currently on the screen.
-    2. targetTouches: a list of fingers on the current DOM element.
-    3. changedTouches: a list of fingers involved in the current event. For example, in a touchend event, this will be the finger that was removed.
+    - touches: a list of all fingers currently on the screen.
+    - targetTouches: a list of fingers on the current DOM element.
+    - changedTouches: a list of fingers involved in the current event. For example, in a touchend event, this will be the finger that was removed.
   - These lists consist of objects that contain touch information:
-    1. identifier: a number that uniquely identifies the current finger in the touch session.
-    2. target: the DOM element that was the target of the action.
-    3. client/page/screen coordinates: where on the screen the action happened.
-    4. radius coordinates and rotationAngle: describe the ellipse that approximates finger shape.
+    - identifier: a number that uniquely identifies the current finger in the touch session.
+    - target: the DOM element that was the target of the action.
+    - client/page/screen coordinates: where on the screen the action happened.
+    - radius coordinates and rotationAngle: describe the ellipse that approximates finger shape.
 - some mobile browsers will select text if a user long touches on the screen, which can be super annoying, disable by:
   - moz-user-select: none;
   - webkit-user-select: none;
@@ -845,35 +747,35 @@
 
 - A Request instance represents the request piece of a fetch call.
   - important properties
-    1. method - GET, POST, PUT, DELETE, HEAD
-    2. url - URL of the request
-    3. headers - associated Headers object
-    4. referrer - referrer of the request
-    5. mode - cors, no-cors, same-origin
-    6. credentials - should cookies go with the request? omit, same-origin
-    7. redirect - follow, error, manual
-    8. integrity - subresource integrity value
-    9. cache - cache mode (default, reload, no-cache)
+    - method - GET, POST, PUT, DELETE, HEAD
+    - url - URL of the request
+    - headers - associated Headers object
+    - referrer - referrer of the request
+    - mode - cors, no-cors, same-origin
+    - credentials - should cookies go with the request? omit, same-origin
+    - redirect - follow, error, manual
+    - integrity - subresource integrity value
+    - cache - cache mode (default, reload, no-cache)
 
 #### Response
 
 - properties
-  1. type - basic, cors
-  2. url
-  3. useFinalURL - Boolean for if url is the final URL
-  4. status - status code (ex: 200, 404, etc.)
-  5. ok - Boolean for successful response (status in the range 200-299)
-  6. statusText - status code (ex: OK)
-  7. headers - Headers object associated with the response.
+  - type - basic, cors
+  - url
+  - useFinalURL - Boolean for if url is the final URL
+  - status - status code (ex: 200, 404, etc.)
+  - ok - Boolean for successful response (status in the range 200-299)
+  - statusText - status code (ex: OK)
+  - headers - Headers object associated with the response.
 - methods
-  1. clone() - Creates a clone of a Response object. VERY USFUL! as you can only read a response body once, so clone it to read it multipel tiems (e.g. to send to multiple places)
-  2. error() - Returns a new Response object associated with a network error.
-  3. redirect() - Creates a new response with a different URL.
-  4. arrayBuffer() - Returns a promise that resolves with an ArrayBuffer.
-  5. blob() - Returns a promise that resolves with a Blob.
-  6. formData() - Returns a promise that resolves with a FormData object.
-  7. json() - Returns a promise that resolves with a JSON object.
-  8. text() - Returns a promise that resolves with a USVString (text).
+  - clone() - Creates a clone of a Response object. VERY USFUL! as you can only read a response body once, so clone it to read it multipel tiems (e.g. to send to multiple places)
+  - error() - Returns a new Response object associated with a network error.
+  - redirect() - Creates a new response with a different URL.
+  - arrayBuffer() - Returns a promise that resolves with an ArrayBuffer.
+  - blob() - Returns a promise that resolves with a Blob.
+  - formData() - Returns a promise that resolves with a FormData object.
+  - json() - Returns a promise that resolves with a JSON object.
+  - text() - Returns a promise that resolves with a USVString (text).
 
 #### Headers
 
@@ -891,7 +793,7 @@
     - every major browser supports indexeddb
   - negatives:
     - is async but predates promsies, so its eventbased system is horrid.
-      1. use [IndexedDB Promised library instead](https://github.com/jakearchibald/idb)
+      - use [IndexedDB Promised library instead](https://github.com/jakearchibald/idb)
 - location: resources > indexedDB
 - structure:
   - db: can be multiple per website
@@ -901,12 +803,12 @@
         - upgrade version only gets called with the upgradeDb() function
       - values: any data type, each item can have a primary key/one of its values can be set as the primary key
       - transactions: (i.e. CRUD), all CRUD operations must be part of a transaction
-        1. if a transaction fails for a series of steps/actions, none of the steps/actions are applied and the whole transaction is reverted
-        2. create a transaction object > use it to return an objectStore > operate CRUD on object store
+        - if a transaction fails for a series of steps/actions, none of the steps/actions are applied and the whole transaction is reverted
+        - create a transaction object > use it to return an objectStore > operate CRUD on object store
       - indexes: you can create multiple indexes per object store, which orders (i.e. sorts) the values by a specific property making it faster to look up
 - API
   - indexedDb: found on window object
-    1. .deleteDatabase('dbName')
+    - .deleteDatabase('dbName')
   - IDBObjectStore: interface for an object store
     - methods: add, clear, delete, get, getAll, getAllKeys, etc.
     - properties: indexNames, keyPath, name, transaction, autoIncrement

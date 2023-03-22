@@ -180,7 +180,13 @@
 
 
 
-
+- timers
+  ```
+  	setTimeout(someFunctionName, milliseconds); //runs someFunctionName ONCE after X milliseconds
+  	setInterval(someFunctionName, milliseconds); //runs someFunctionName EVERY X milliseconds
+  	clearInterval(intervalHandle) //you must assign setInterval to a variable
+  	clearTimeout(timeoutHandle) //you must assign setTimeout to a variable
+  ```
 
 
 
