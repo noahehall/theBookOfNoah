@@ -1,5 +1,32 @@
 import { log } from "./logit.mjs";
 
+// FYI: objects and classes use the same method syntax
+const myObj = {
+  m1() {
+    return "m1";
+  },
+  *m2() {
+    yield "m2";
+  },
+  m3: function* () {
+    yield "m3";
+  },
+  async ["m" + 4]() {
+    return Promise.resolve("m4");
+  },
+  get mOne() {
+    return this.m1();
+  },
+};
+/*
+ADT
+
+prototype
+  toLocalString
+  constructor
+  toString
+
+*/
 const dict = Object.setPrototypeOf({}, null);
 log("dict", dict);
 // same as above

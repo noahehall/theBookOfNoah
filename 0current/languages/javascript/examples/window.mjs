@@ -1,4 +1,6 @@
 /*
+Array.from(document.querySelectorAll("*")); // Returns a real Array
+
 
 someVar.nodeType
 1 = element

@@ -6,18 +6,36 @@
 
 ## links
 
-### best in class
+### best in class (IMO)
 
-- MFE architecture
+- [run some code](https://github.com/nirv-ai/fullstackapps)
+- runtimes
+  - [bun](https://bun.sh/)
+  - [nodejs](https://nodejs.org/en)
+  - [deno](https://deno.land/)
+- typesystems
+  - [typescript](https://www.typescriptlang.org/)
+  - [flow](https://flow.org/)
+- UI MFE architecture
   - [webpack module federation](https://webpack.js.org/concepts/module-federation/)
   - [bit.dev](https://bit.dev/docs/quick-start)
   - [single spa](https://single-spa.js.org/)
   - [piral](https://github.com/smapiot/piral)
-- frameworks
+- UI frameworks
   - [react](https://react.dev/)
   - [svelte](https://svelte.dev/)
-- micro frameworks
+- UI micro frameworks
   - [mithril](https://mithril.js.org/)
+- UI design systems
+  - [material](https://mui.com/core/)
+- backend servers
+  - [express](https://expressjs.com/)
+  - [koa](https://koajs.com/)
+- bundlers / etc
+  - [turbo repo](https://turbo.build/)
+  - [webpack](https://webpack.js.org/)
+- package managers
+  - [pnpm](https://pnpm.io/)
 
 ### interwebs
 
@@ -70,9 +88,12 @@
   - [ecmascript spec](https://tc39.es/ecma262/)
   - [current proposals - all stages](https://github.com/tc39/proposals)
 - [mdn: reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
+  - [builtin objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects)
   - [prototypical inheritance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
   - [destructuring](https://hacks.mozilla.org/2015/05/es6-in-depth-destructuring/)
-  - [classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
+  - [class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
+  - [class: indepth](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_Classes)
+  - [class: static initialization blocks](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks)
   - [for in](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in)
   - [for of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of)
   - [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
@@ -88,6 +109,11 @@
   - [setInterval](https://developer.mozilla.org/en-US/docs/Web/API/setinterval)
   - [clearInterval](https://developer.mozilla.org/en-US/docs/Web/API/clearInterval)
   - [setImmediate](https://developer.mozilla.org/en-US/docs/Web/API/Window/setImmediate)
+  - [structuredClone](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone)
+  - [json](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)
+- tips n tricks
+  - [lazy getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#smart_self-overwriting_lazy_getters)
+  - [get vs defineProperty](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#get_vs._defineproperty)
 
 ### browser / server / apis
 
@@ -111,7 +137,7 @@
   - [cache](https://developer.mozilla.org/en-US/docs/Web/API/cache)
   - [worklets](https://developer.mozilla.org/en-US/docs/Web/API/Worklet)
 
-### toolss
+### tools
 
 - [regex tester](https://regex101.com/)
 - [yslow](http://yslow.org/)
@@ -356,6 +382,8 @@ switch this throw true try typeof var void while with yield
   - interpolate expressions with `${blah}`
   - tagged templates with tagFunction`...`
 
+### booleans
+
 ### objects
 
 - everything in JS is an object, this section should generally apply to everything
@@ -368,6 +396,10 @@ switch this throw true try typeof var void while with yield
     - unless call/apply intercept or its an arrow fn
 - properties: identifers bound to objects
 - x.constructor
+- shallow vs deep copies
+  - all builtin copy operations on any js object type create shallow copies
+    - e.g. spread, concat, slice, arr.from, obj.assign/create, etc
+  - for deep copies, use structuredClone / stringify -> parse
 
 #### prototypes
 
@@ -384,9 +416,16 @@ switch this throw true try typeof var void while with yield
 - escapes
   - `hasOwnProperty` type fns and `keys` dont search an objects prototype
 
-### arrays
+#### arrays
 
-### Maps
+- 0 index elements accessed via ints/strings
+- the are array subclasses: [Big/U/Int/Float][8,16,32,64]Array
+- in general when using inbuilt methods you should check for undefined on array elements if called on sparse arrays
+  - depending on the method,s ome will skip empty slots, others will return undefined
+- generally any array like object can utilize array methods via call/apply
+  - many DOM objects, and function arugments
+
+#### Maps
 
 - answer yes to any of the below, and you can justify using a map
   - Are keys usually unknown until run time? Do you need to look them up dynamically?
@@ -396,27 +435,27 @@ switch this throw true try typeof var void while with yield
   - Do you have an arbitrary (easily changing) number of key-value pairs?
   - Is the collection iterated?
 
-#### Map
+##### Map
 
 - new Map([iterable]): The Map object holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value.
 - properties
   - Map.prototype.size
 
-#### WeakMap
+##### WeakMap
 
 - new WeakMap([iterable]): The WeakMap object is a collection of key/value pairs in which the keys are weakly referenced. The keys must be objects and the values can be arbitrary values.
 
-### sets
+#### sets
 
-#### Set
+##### Set
 
 - new Set([iterable]): The Set object lets you store unique values of any type, whether primitive values or object references.
 
-#### WeakSet
+##### WeakSet
 
 - new WeakSet([iterable]); If an iterable object is passed, all of its elements will be added to the new WeakSet. null is treated as undefined.
 
-### functions
+#### functions
 
 - anonymous enclosures `(function(){})()`
 - function closures: defining a function within a function
@@ -431,28 +470,71 @@ switch this throw true try typeof var void while with yield
   - e.g. printing, anything network related, modifying out-of-scope variables, etc
   - prefer pure functions in JS and accept the increased overhead in exchange for reduced complexity
 
-#### arrow functions
+##### arrow functions
 
 - `() => returnImmediately` and `() => { ... }`
-- do not create a new scope
+- do not create a new scope nor instantiate this
+  - remember that when using arrow fns as callbacks
 
-#### higher order functions
+##### higher order functions
 
 - functions that operate on or return functions that return nothing or values (which may be functions that operate on or return functions that return nothing or values (which may be...))
 - its all about coding to abstractions, which may be more appropriate in certain contexts if the implementation details are not the concern of the caller or some processing is assumed/expected
 
-### classes
+##### generators
 
-#### class
+- Generators: a function that can be exited, and entered multiple times
+  - always return an iterator
+  - can be sync (GeneratorFunction) or async (AsyncGenreatorFunction)
+- yield: exit the function and send a value to the caller, and optionally receive a value back
+- function.next(): retrieve and send data, executes up to and including the next yield statement
+  - for each yield statement you need to call blah.next()
+  - returns `{value: 'dataInAndOut', done: true|false}`
+    - value: data sent out from yield, or data sent in through next(someData);
+    - done:
+    - false if function is not done, and can be entered again
+    - true: if function is done, and should not be re-entered
+  - you can access the value directly: `bloop.next().value;``
+- use cases
+  - asynchornous events
+  - timers (e.g. setInterval)
+- Generators should not be re-used, even if the for...of loop is terminated early, for example via the break keyword. Upon exiting a loop, the generator is closed and trying to iterate over it again does not yield any further results.
+  - to consume a generator in its entirey, use `[...someGen()]`
 
-- An important difference between function declarations and class declarations is that function declarations are hoisted and class declarations are not.
+#### classes
+
+- static fields: class level caches, configuration, etc
+- static methods: generally for providing utility fns to all instances
+- prefer declaring public class fields upfront (before the constructor) to help with self-documentation and supporting optimizations (since the fields always exist)
+  - this is a requirement for `#private` class fields
+- public instance methods are defined on the prototype of the class
+- to define an method/field on a specific instance of a class, use `object.defineProperty()`
+- base instance fields are defined before the base constructor executes, thus you can access instance fields within the super constructor
+  - however you cant access the derived/subclass fields in the base constructor
+- field declarations in derived classes do not invoke setters in the base class
+  - this limitation doesnt exist if using `this.field = ...` assignment
+
+##### class
+
+- An important difference between function declarations and class declarations is:
+  - that function declarations are hoisted and class declarations are not.
+  - class body is always in strict mode
 - The super keyword is used to call functions on an object's parent.
 - Abstract subclasses or mix-ins are templates for classes. An ECMAScript class can only have a single superclass, so multiple inheritance from tooling classes, for example, is not possible. The functionality must be provided by the superclass.
 - classes can be used as an expression as well as a statement
   - as an expression it returns a new class each time its evaluated (sort of like a factory)
 - the extends clause accepts arbitrary expressions that return classes or constructors
+- class ADT
+  - kind: getter, setter, method or field
+    - getter
+      - cannot have any params in its signature
+      - can use property expressions
+      - can be lazy (see tips n tricks links)
+  - location: static, instance
+  - visibility: public, private
+    - private fields cannot be overloaded like public fields
 
-#### Mixins
+##### Mixins
 
 - mixin: is really a subclass factory, parameterized by the superclass, which produces mixin applications
 - benefits of approach below: 0. the only difference between a mixin and a normal subclass is that a normal class has a fixed superclass, while a mixin definition doesnt (the mixin application does)
@@ -469,13 +551,31 @@ switch this throw true try typeof var void while with yield
   - mixins donot require library support and can be writtin in a universal style
   - subclasses correctly override mixin methods which override superclass methods.
 
-### Date
+#### Date
 
-### Math
+#### Math
 
-### console
+#### console
 
 - see examples
+
+#### Data
+
+##### json
+
+- methods for dealing with JSON
+
+##### buffers
+
+- arraybuffer, sharedarraybuffer, dataview, atomics
+
+#### managing memory
+
+- weakref, finalizationregistry
+
+#### Internationalization
+
+- all stem from the Int object
 
 ### Control Flow
 
@@ -509,24 +609,6 @@ switch this throw true try typeof var void while with yield
 #### if
 
 #### switch
-
-#### generators
-
-- Generators: a function that can be exited, and entered multiple times
-  - always return an iterator
-- yield: exit the function and send a value to the caller, and optionally receive a value back
-- function.next(): retrieve and send data, executes up to and including the next yield statement
-  - for each yield statement you need to call blah.next()
-  - returns `{value: 'dataInAndOut', done: true|false}`
-    - value: data sent out from yield, or data sent in through next(someData);
-    - done:
-    - false if function is not done, and can be entered again
-    - true: if function is done, and should not be re-entered
-  - you can access the value directly: `bloop.next().value;``
-- use cases
-  - asynchornous events
-  - timers (e.g. setInterval)
-- Generators should not be re-used, even if the for...of loop is terminated early, for example via the break keyword. Upon exiting a loop, the generator is closed and trying to iterate over it again does not yield any further results.
 
 ### metaprogramming
 

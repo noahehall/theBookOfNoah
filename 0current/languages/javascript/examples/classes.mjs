@@ -1,4 +1,46 @@
+import { log } from "./logit.mjs";
+
+class Apps {
+  static name = "unknown";
+  static {
+    console.info(`new app initialized: ${this.name}`);
+  }
+
+  // @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks#access_to_private_fields
+  #secret;
+
+  ["notSecret" + 123] = "just between us";
+
+  name = "unknown";
+  layer;
+  constructor({ appName, layer, secret = "" }) {
+    if (appName) this.name = appName;
+    this.layer = layer;
+    this.#secret = secret + this.name.split("").reverse().join("");
+  }
+
+  get leakSecret() {
+    return `${this.#secret}-${this.notSecret}`;
+  }
+
+  *superGen() {
+    yield this.layer;
+    yield this.appName;
+  }
+}
+
+class FeApp extends Apps {
+  constructor({ appName, layer }) {
+    super({ appName, layer });
+  }
+}
+
+const reactApp = new FeApp({ appName: "react app", layer: "fe" });
+
+log("reactApp", reactApp);
+log("secret", reactApp.leakSecret);
 /*
+
 
 ```js
 
@@ -81,7 +123,7 @@ let MyMixin = (superclass) =>
 // advanced mixin inheritance definition
 let Mixin2 = (superclass) =>
   class extends Mixin1(superclass) {
-    /* Add or override methods here */
+    /* Add or override methods here
   };
 
 // function composition mixin inheritance
@@ -89,12 +131,12 @@ let CompoundMixin = (superclass) => Mixin2(Mixin3(superclass));
 
 // single subclass definition
 class MyClass extends MyMixin(MyBaseClass) {
-  /* ... */
+  /* ...
 }
 
 // multiple subclass definition
 class MyClass extends Mixin1(Mixin2(MyBaseClass)) {
-  /* ... */
+  /* ...
 }
 ```
 

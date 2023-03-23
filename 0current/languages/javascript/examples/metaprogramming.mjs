@@ -16,6 +16,7 @@ log("iteratorAnything.next", iterateAnything.next());
 log("iteratorAnything.next", iterateAnything.next());
 /*
 
+- Symbol.species
 - Symbol.for(). This method creates a Symbol in a “global Symbol registry”. Small aside: this registry is also cross-realm, meaning a Symbol from an iframe or service worker will be the same as one generated from your existing frame:
 - Symbol.Iterator(): define a fn thats called when an object is subject ofa  for/of loop
   - it should return an object with
