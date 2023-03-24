@@ -94,5 +94,7 @@ ADT: console
   context: [Function: context],
   createTask: [Function: createTask]
 
+ADT: json
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
 
 */

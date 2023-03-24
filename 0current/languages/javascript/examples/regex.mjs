@@ -11,7 +11,7 @@ log("re2.test(input)", re2.test(input));
 
 
 
-  - modifiers
+- modifiers
   - i Perform case-insensitive matching
   - g Perform a global match (find all matches rather than stopping after the first match)
   - m Perform multiline matching
@@ -75,4 +75,7 @@ log("re2.test(input)", re2.test(input));
   - replace A String method that executes a search for a match in a string, and replaces the matched substring with a replacement substring.
   - split A String method that uses a regular expression or a fixed string to break a string into an array of substrings.
 
+
+ADT: RegExp
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#constructor
 */

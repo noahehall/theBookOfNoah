@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # TODO
 # @see https://bashrcgenerator.com/

@@ -3,6 +3,7 @@
 - updated: 2023
 - [web security in security dir](https://github.com/noahehall/theBookOfNoah/tree/master/0current/appdev/security)
 - the goal is to capture high level information in general and the Abstract Data Type for native objects specifically
+- [bun readme](./backend/bun.md)
 
 ## links
 
@@ -11,8 +12,6 @@
 - [run some code](https://github.com/nirv-ai/fullstackapps)
 - runtimes
   - [bun](https://bun.sh/)
-  - [nodejs](https://nodejs.org/en)
-  - [deno](https://deno.land/)
 - typesystems
   - [typescript](https://www.typescriptlang.org/)
   - [flow](https://flow.org/)
@@ -28,14 +27,12 @@
   - [mithril](https://mithril.js.org/)
 - UI design systems
   - [material](https://mui.com/core/)
-- backend servers
-  - [express](https://expressjs.com/)
-  - [koa](https://koajs.com/)
+- frameworks
+  - [elysia](https://elysiajs.com/)
+  - [hono](https://github.com/honojs/hono)
+  - [butcha](https://bun.sh/docs/ecosystem/buchta)
 - bundlers / etc
   - [turbo repo](https://turbo.build/)
-  - [webpack](https://webpack.js.org/)
-- package managers
-  - [pnpm](https://pnpm.io/)
 
 ### interwebs
 
@@ -90,6 +87,7 @@
 - [mdn: reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
   - [builtin objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects)
   - [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/)
+  - [bigint](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
   - [class: extends](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends)
   - [class: indepth](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_Classes)
   - [class: private class fields](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields)
@@ -98,28 +96,37 @@
   - [classes: mixins](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends#mix-ins)
   - [clearInterval](https://developer.mozilla.org/en-US/docs/Web/API/clearInterval)
   - [clearTimeout](https://developer.mozilla.org/en-US/docs/Web/API/clearTimeout)
+  - [date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
   - [destructuring](https://hacks.mozilla.org/2015/05/es6-in-depth-destructuring/)
   - [for in](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in)
   - [for of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of)
   - [Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
+  - [generators: async](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AsyncGenerator)
+  - [generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
   - [Import dynamic](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)
   - [Import statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)
+  - [int](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)
   - [json](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)
+  - [maps](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+  - [math](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)
+  - [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)
   - [object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
   - [promises](- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
   - [prototypical inheritance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
+  - [proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
+  - [reflect](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)
   - [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+  - [regexp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)
   - [setImmediate](https://developer.mozilla.org/en-US/docs/Web/API/Window/setImmediate)
   - [setInterval](https://developer.mozilla.org/en-US/docs/Web/API/setinterval)
+  - [sets](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
   - [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout)
-  - [structuredClone](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone)
-  - [template strings](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
-  - [symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)
-  - [bigint](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
-  - [math](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)
-  - [date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
-  - [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)
   - [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+  - [structuredClone](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone)
+  - [symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)
+  - [template strings](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
+  - [weakmap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
+  - [weakset](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet)
 
 ### browser / server / apis
 
@@ -681,6 +688,8 @@ switch this throw true try typeof var void while with yield
   - validation proxy
 
 ### regexp
+
+- should probably reread this section on mdn
 
 ### concurrency
 

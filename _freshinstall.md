@@ -326,6 +326,8 @@ less the_var/log/file/path
   - [download rancher desktop from github releases](https://github.com/rancher-sandbox/rancher-desktop/releases)
   - unzip and symlink rancher-desktop somehwere in your path
 - [obs studio](https://obsproject.com/wiki/install-instructions#ubuntumint-installation)
+- [bun](https://bun.sh/)
+  - `curl -fsSL https://bun.sh/install | bash`
 
 ### nirvai post install
 

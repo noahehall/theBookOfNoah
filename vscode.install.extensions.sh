@@ -37,6 +37,7 @@ code-insiders --install-extension redhat.fabric8-analytics
 code-insiders --install-extension redhat.vscode-commons
 code-insiders --install-extension redhat.vscode-xml
 code-insiders --install-extension redhat.vscode-yaml
+code-insiders --install-extension tamasfe.even-better-toml
 code-insiders --install-extension tomoki1207.pdf
 code-insiders --install-extension trond-snekvik.simple-rst
 code-insiders --install-extension twxs.cmake
