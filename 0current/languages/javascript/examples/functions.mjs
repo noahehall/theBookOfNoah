@@ -79,7 +79,17 @@ same as the above, only the function parameter is passed as an array
 
 
 
-
+ADT: functions
+	arguments
+	caller: refrain from using, throws in strict, arrow, async and gen fns
+	displayName
+	length: # of exptected arguments
+	name
+	prototype
+	apply
+	bind(thisValue) returns a new fn with thisValue set to this
+	call
+	toString returns the source code of the fn
 
 
 

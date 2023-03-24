@@ -1,5 +1,6 @@
 import { log } from "./logit.mjs";
 
+/*
 try {
   throw new Error("oops");
 } catch ({ message: msg, ...err }) {
@@ -7,9 +8,6 @@ try {
 } finally {
   // usually cleanup block
 }
-
-/*
-
 ## switch statements
 
 ```js

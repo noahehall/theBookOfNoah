@@ -89,31 +89,37 @@
   - [current proposals - all stages](https://github.com/tc39/proposals)
 - [mdn: reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
   - [builtin objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects)
-  - [prototypical inheritance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
-  - [destructuring](https://hacks.mozilla.org/2015/05/es6-in-depth-destructuring/)
-  - [class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
+  - [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/)
+  - [class: extends](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends)
   - [class: indepth](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_Classes)
+  - [class: private class fields](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields)
   - [class: static initialization blocks](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks)
+  - [class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
+  - [classes: mixins](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends#mix-ins)
+  - [clearInterval](https://developer.mozilla.org/en-US/docs/Web/API/clearInterval)
+  - [clearTimeout](https://developer.mozilla.org/en-US/docs/Web/API/clearTimeout)
+  - [destructuring](https://hacks.mozilla.org/2015/05/es6-in-depth-destructuring/)
   - [for in](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in)
   - [for of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of)
-  - [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
-  - [promises](- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-  - [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/)
-  - [object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
-  - [template strings](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
   - [Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
   - [Import dynamic](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)
   - [Import statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)
-  - [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout)
-  - [clearTimeout](https://developer.mozilla.org/en-US/docs/Web/API/clearTimeout)
-  - [setInterval](https://developer.mozilla.org/en-US/docs/Web/API/setinterval)
-  - [clearInterval](https://developer.mozilla.org/en-US/docs/Web/API/clearInterval)
-  - [setImmediate](https://developer.mozilla.org/en-US/docs/Web/API/Window/setImmediate)
-  - [structuredClone](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone)
   - [json](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)
-- tips n tricks
-  - [lazy getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#smart_self-overwriting_lazy_getters)
-  - [get vs defineProperty](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#get_vs._defineproperty)
+  - [object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
+  - [promises](- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+  - [prototypical inheritance](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
+  - [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+  - [setImmediate](https://developer.mozilla.org/en-US/docs/Web/API/Window/setImmediate)
+  - [setInterval](https://developer.mozilla.org/en-US/docs/Web/API/setinterval)
+  - [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout)
+  - [structuredClone](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone)
+  - [template strings](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
+  - [symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)
+  - [bigint](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
+  - [math](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)
+  - [date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+  - [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)
+  - [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
 
 ### browser / server / apis
 
@@ -136,6 +142,7 @@
   - [web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
   - [cache](https://developer.mozilla.org/en-US/docs/Web/API/cache)
   - [worklets](https://developer.mozilla.org/en-US/docs/Web/API/Worklet)
+  - [mutation observer](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
 
 ### tools
 
@@ -157,6 +164,15 @@
 - [augmented traffic control](http://facebook.github.io/augmented-traffic-control/)
 - [javascript AST visualizer](http://resources.jointjs.com/demos/javascript-ast)
 - [jank free](http://jankfree.org/)
+
+### tips n tricks
+
+- [lazy getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#smart_self-overwriting_lazy_getters)
+- [get vs defineProperty](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get#get_vs._defineproperty)
+- [null prototypes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object#null-prototype_objects)
+- [extending null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends#extending_null)
+- [classes using Symbol.species()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends#species)
+- [avoiding inheritance through composition](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends#avoiding_inheritance)
 
 ## basics
 
@@ -271,6 +287,7 @@
   - its intrinsically linked to the callstack, where each block context creates a new closure
 - block scope: lives within {}
 - function scope: lives within function definitions/expressions/closures
+  - fns created with new / arrow do not create closures
 - scope chain:
   - if the variable is not available in the current scope:
   - look for it in the parent function, if its not available there
@@ -408,11 +425,15 @@ switch this throw true try typeof var void while with yield
     - functions derive from `Function.prototype > Object.prototype`
     - arrays derive from `Array.prototype > Object.prototype`
 - prototypes allows you to extend functionality after an object has been created
+  - changes to the prototype are seen by all instances
 - FYI: classes are just syntactic sugar for function prototypes
   - you can assign a custom prototype with `blah = Object.create(someFnAsPrototype)`
     - blah will inherit (fallback) to `someObjectAsPrototype` during property lookup
     - `Function someFnAsPrototype() {}; someFnAsPrototype.bleep = "bloop"`
 - prototype chain: the sequence of linked objects from one object's prototype to another, all the way up until you reach the Null object (which does not have a prototype)
+- objects with null prototypes:
+  - are cheap substitutes for maps
+  - prevents prototype pollution attacks whereby malicious scripts adds a properties to `object.prototype` that now exists on all your objects
 - escapes
   - `hasOwnProperty` type fns and `keys` dont search an objects prototype
 
@@ -469,6 +490,7 @@ switch this throw true try typeof var void while with yield
 - side effects: a fn that does something opaque to the caller or beyond the scope of its arguments
   - e.g. printing, anything network related, modifying out-of-scope variables, etc
   - prefer pure functions in JS and accept the increased overhead in exchange for reduced complexity
+- fns created with new do not create closures
 
 ##### arrow functions
 
@@ -513,6 +535,15 @@ switch this throw true try typeof var void while with yield
   - however you cant access the derived/subclass fields in the base constructor
 - field declarations in derived classes do not invoke setters in the base class
   - this limitation doesnt exist if using `this.field = ...` assignment
+- private properties are prefixed with shebang
+  - are local to the current class and arent inherited nor part of prototypical lookups
+    - to emulate in prototypes, use weakmaps/closures
+  - for private static fields: only the class which defines the field can access it
+  - any class feature can be made private
+- subclass via extends
+  - any constructor that can be called with `new` and has the `prototype` property can be extended from
+  - extending builtin objects are frowned up by the standard committee
+    - use composition instead
 
 ##### class
 
@@ -626,6 +657,7 @@ switch this throw true try typeof var void while with yield
 
 #### symbols
 
+- should probably re-read this section on mdn again
 - reflection within implementation - you sprinkle them on your existing classes and objects to change the behaviour.
 - use cases:
   - unique strings as object properties, to provide alternative/shadow behavior under the same identifier for callers with access to the symbol instance

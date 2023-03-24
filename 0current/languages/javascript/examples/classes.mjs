@@ -3,6 +3,7 @@ import { log } from "./logit.mjs";
 class Apps {
   static name = "unknown";
   static {
+    // this refers to the class, not the instance because its static
     console.info(`new app initialized: ${this.name}`);
   }
 
@@ -17,6 +18,8 @@ class Apps {
     if (appName) this.name = appName;
     this.layer = layer;
     this.#secret = secret + this.name.split("").reverse().join("");
+    // return an object to override `this` in subclasses
+    // enables
   }
 
   get leakSecret() {
@@ -36,47 +39,14 @@ class FeApp extends Apps {
 }
 
 const reactApp = new FeApp({ appName: "react app", layer: "fe" });
-
 log("reactApp", reactApp);
 log("secret", reactApp.leakSecret);
-/*
-
-
-```js
 
 class MyError extends Error {}
 try {
-  if (1 < 2) throw new MyError("oops")
-} catch e {
-  if (e instanceof MyError) "its okay!"
-}
-// Class declarations
-class Rectangle {
-  constructor(height, width) {
-    // If there is a constructor present in sub-class, it needs to first call super() before using "this".
-    super();
-    this.height = height;
-    this.width = width;
-  }
-  // getters, abstract away fn calls
-  get area() {
-    // instance.area
-    return this.calcArea();
-  }
-
-  // setters, abstract away assignments
-  set height(x) {
-    this.height = x + 1 + 2 + 3
-  }
-
-  speak() {
-    super.speak(); // calls the parent class speak method
-    console.log(this.name + " roars.");
-  }
-
-  // available via Class.staticPropOrMethod
-  // are bound to the constructor and not the prototype/instance
-  static distance(a, b) {}
+  if (1 < 2) throw new MyError("oops");
+} catch (e) {
+  if (e instanceof MyError) log("MyError", e.message);
 }
 
 // Class expressions
@@ -96,12 +66,56 @@ var Rectangle = class Rectangle {
 };
 
 // Subclasses: Extends
-class Dog extends Animal {
-  constructor() {
-    // must be called to invoke Animals constructor
-    super()
+class Dog extends Apps {}
+
+// mdn: docs
+class Stamper extends class {
+  // A base class whose constructor returns the object it's given
+  constructor(obj) {
+    return obj;
+  }
+} {
+  // This declaration will "stamp" the private field onto the object
+  // returned by the base class constructor
+  #stamp = 42;
+  static getStamp(obj) {
+    return obj.#stamp;
   }
 }
+const obj = {};
+new Stamper(obj);
+log("Stamper.getSTamp", Stamper.getStamp(obj));
+
+class SaferClass extends null {
+  // safe from prototype pollution
+  constructor() {
+    // must return object to have correct prototype chain
+    return Object.create(new.target.prototype);
+  }
+}
+
+// extending plain objects
+const Animal = {
+  speak() {
+    console.log(`${this.name} makes a noise.`);
+  },
+};
+// cannot directly extend Animal
+class Dog {
+  constructor(name) {
+    this.name = name;
+  }
+}
+// must use setPrototypeOf
+Object.setPrototypeOf(Dog.prototype, Animal);
+
+/*
+
+
+```js
+
+
+
 
 // A function with a superclass as input and a subclass extending that superclass as output can be used to implement mix-ins in ECMAScript:
 

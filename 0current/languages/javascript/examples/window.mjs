@@ -1,6 +1,7 @@
 /*
 Array.from(document.querySelectorAll("*")); // Returns a real Array
 
+mutationObserver
 
 someVar.nodeType
 1 = element

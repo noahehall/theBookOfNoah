@@ -19,3 +19,29 @@ var varA = "a var";
 let letB = "b let";
 const constC = "c const";
 log("var types", { varA, letB, constC });
+
+/*
+global fns
+  eval()
+  isFinite()
+  isNaN()
+  parseFloat()
+  parseInt()
+  decodeURI()
+  decodeURIComponent()
+  encodeURI()
+  encodeURIComponent()
+  escape() Deprecated
+  unescape()
+
+error constructors
+  Error
+  AggregateError
+  EvalError
+  RangeError
+  ReferenceError
+  SyntaxError
+  TypeError
+  URIError
+  InternalError
+*/
