@@ -3,13 +3,16 @@
 # @see https://sw.kovidgoyal.net/kitty/overview/
 
 kitty_shortcuts() {
+  # you probably want a new window, and not a tab
+  # window === split current tab
   cat <<-'KEEP_FORGETTING'
 		tab new: ctrl shift t
-    tab close ask: ctrl shift q
-    tab close force: ctr shift w
+    tab close: ctrl shift q
     tab layout cycle: ctrl shift l
-    tab move backward: ctrl shift b
-    tab move forward: ctrl shift f
-    tab split: ctrl shift enter
+    window close: ctr shift w
+    window move backward: ctrl shift b
+    window move forward: ctrl shift f
+    window new: ctrl shift enter
+    window resize: ctrl shift r
 	KEEP_FORGETTING
 }
