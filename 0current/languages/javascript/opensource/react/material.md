@@ -51,7 +51,8 @@
 
 ### theme
 
-- ..
+- color of components, surface darkness, shadow, opacity, etc
+- apply consistent and customized design aspects to all components
 
 ### core components
 
