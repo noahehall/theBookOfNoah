@@ -6,6 +6,7 @@ regolith_version() {
 }
 
 regolith_shortcuts() {
+	# all shortcuts require super key
 	cat <<-'KEEP_FORGETTING'
 		**** see all ****: shift ?
 		browser: shift enter

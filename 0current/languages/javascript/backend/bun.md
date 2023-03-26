@@ -6,28 +6,33 @@
 
 ### bun docs
 
+- [AAA docs](https://bun.sh/docs)
 - [bun create](https://bun.sh/docs/cli/create)
 - [bun test](https://bun.sh/docs/cli/test)
-- [docs](https://bun.sh/docs)
-- [module resolution](https://bun.sh/docs/runtime/modules)
-- [module resolution: path remapping](https://bun.sh/docs/runtime/modules#path-re-mapping)
+- [configuration](https://bun.sh/docs/project/configuration)
+- [console](https://bun.sh/docs/api/console)
+- [dns](https://bun.sh/docs/api/dns)
+- [ffi](https://bun.sh/docs/api/ffi)
+- [files](https://bun.sh/docs/api/file-io)
+- [filesystemrouter](https://bun.sh/docs/api/file-system-router)
+- [globals](https://bun.sh/docs/api/globals)
+- [hot reloading](https://bun.sh/docs/runtime/hot)
+- [htmlrewriter](https://bun.sh/docs/api/html-rewriter)
+- [http server](https://bun.sh/docs/api/http)
 - [module resolution: bun resolution](https://bun.sh/docs/runtime/modules#bun-style-resolution)
+- [module resolution: path remapping](https://bun.sh/docs/runtime/modules#path-re-mapping)
+- [module resolution](https://bun.sh/docs/runtime/modules)
+- [node-api](https://bun.sh/docs/api/node-api)
 - [nodejs](https://bun.sh/docs/ecosystem/nodejs)
 - [plugins](https://bun.sh/docs/runtime/plugins)
 - [react](https://bun.sh/docs/ecosystem/react)
-- [typescript](https://bun.sh/docs/ecosystem/typescript)
-- [hot reloading](https://bun.sh/docs/runtime/hot)
-- [http server](https://bun.sh/docs/api/http)
-- [web sockets](https://bun.sh/docs/api/websockets)
-- [tcp sockets](https://bun.sh/docs/api/tcp)
-- [files](https://bun.sh/docs/api/file-io)
-- [sqlite](https://bun.sh/docs/api/sqlite)
-- [filesystemrouter](https://bun.sh/docs/api/file-system-router)
-- [globals](https://bun.sh/docs/api/globals)
 - [spawn](https://bun.sh/docs/api/spawn)
+- [sqlite](https://bun.sh/docs/api/sqlite)
+- [tcp sockets](https://bun.sh/docs/api/tcp)
 - [transpiler](https://bun.sh/docs/api/transpiler)
-- [console](https://bun.sh/docs/api/console)
-- [ffi](https://bun.sh/docs/api/ffi)
+- [typescript](https://bun.sh/docs/ecosystem/typescript)
+- [utils](https://bun.sh/docs/api/utils)
+- [web sockets](https://bun.sh/docs/api/websockets)
 
 ### ecosystem
 
@@ -91,7 +96,7 @@
   - use `bun run` to explicitly call package.json scripts
 - utilizes script pre/post lifecycle hooks
 
-### bun.toml
+### bunfig.toml
 
 - configure bun, similar to npmrc
 
@@ -119,14 +124,24 @@
 - plugins intercept imports & perform custom loading logic
   - e.g. reading files, trnapsiling, etc
 - you load plugins via:
-  - the `preload = [blah.ts]` in bun.toml configuration
+  - the `preload = [blah.ts]` in bunfig.toml configuration
   - or importing directly in your apps entrypoint file
 
 ### bun configuration
 
-- configure bun via `package/bun.toml`
+- configure bun via `package/bunfig.toml`
 
-## bun cli
+## cli
+
+### bun
+
+- `bun filex filey`
+- bundle dependencies into `.bun` files
+
+### dev
+
+- `bun dev somefil`
+- start a frontend dev server
 
 ### run
 
@@ -227,3 +242,23 @@
 - see docs
 
 ### console
+
+- see docs
+
+### ffi
+
+- see docs
+
+### htmlrewriter
+
+- see docs
+
+### utils
+
+- see docs
+
+### dns
+
+- see docs
+
+### node-api
