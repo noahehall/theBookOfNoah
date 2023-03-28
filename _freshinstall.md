@@ -367,11 +367,11 @@ less the_var/log/file/path
 - $ touch ~/.bashrc
 - $ echo ". ~/.bashrc" > ~/.bash_profile
 - upgrade bash (apple refuses to update pass bash v3.2)
-- setup bash as default shell
+- [setup bash as default shell](https://www.howtogeek.com/444596/how-to-change-the-default-shell-to-bash-in-macos-catalina/)
 - [macports](https://www.scrim.psu.edu/support/userspace-macports.html)
 - [window manager](https://github.com/ianyh/Amethyst)
+- [install python](https://www.pythoncentral.io/installing-python-on-mac-using-homebrew/)
 - continue with ubuntu setup
-
 ## logi keyboard & mouse
 
 - on a fresh ubuntu these werent needed and the mx mechanical 10key works
