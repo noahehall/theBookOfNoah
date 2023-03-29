@@ -370,7 +370,12 @@ less the_var/log/file/path
 - [setup bash as default shell](https://www.howtogeek.com/444596/how-to-change-the-default-shell-to-bash-in-macos-catalina/)
 - [macports](https://www.scrim.psu.edu/support/userspace-macports.html)
 - [window manager](https://github.com/ianyh/Amethyst)
-- [install python](https://www.pythoncentral.io/installing-python-on-mac-using-homebrew/)
+- [install python](https://docs.brew.sh/Homebrew-and-Python)
+  - `brew uninstall --force python && brew install python`
+  - `pip3 install icdiff`
+- brew
+  - `brew install jq`
+  - `brew install wget`
 - continue with ubuntu setup
 ## logi keyboard & mouse
 

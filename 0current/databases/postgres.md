@@ -211,7 +211,7 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
   - A table can have one and only one primary key.
   - good practice to add a primary key to every table.
 - foreign key: field(s) in one table record that uniquely identify the primary key of a record in another table
-  - default name is tablename\_\_colname_fk
+  - default name is tablename_colname_fk
   - referencing/child table: the table that contains the foreign key
   - referenced/parent table: the table whose primary key is referenced by the child table
   - a foreign key constraint maintains referential integrity between child and parent tables
@@ -220,7 +220,6 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
     - can be one/more columns
   - not null
 - data types: serial, numeric, int,
-
   - character
     - char(n) - fixed length blank padded
     - varchar(n) variable length
@@ -230,7 +229,6 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
     - integers
       - smallint int serial
         - int4 | int8
-          - research this
         - serial is auto generated & incremented
     - floating point
       - float(n) real float8 numeric numeric(p,s)
@@ -434,7 +432,6 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
 ### roles/users
 
 - roles: handle authentication and authorization
-
   - similar to unix-style accounts
   - roles do not distinguish between users and groups
     - roles: users that cannot login
@@ -595,7 +592,7 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
       col1 is null;
       col1 is not null
       col1 NOT BETWEEN low AND high;
-      col1 < low OR value > high; -- same as above
+      col1 < low OR col1 > high; -- same as above
       col1 between lowvalue and highvalue;
       col1 >= lowvalue and col1 <= highvalue; --same as above
       col <= 1 or col >= 0;
