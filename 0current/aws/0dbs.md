@@ -11,18 +11,14 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
 - [amazon redshift](https://aws.amazon.com/redshift/)
 - [amazon documentdb](https://aws.amazon.com/documentdb/)
 - [amazon timestream](https://aws.amazon.com/timestream/)
-
 - ref
-
   - [db instance classes](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html)
   - [aws-cli for rds](https://docs.aws.amazon.com/cli/latest/reference/rds/index.html)
   - [db instance billing](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/User_DBInstanceBilling.html)
   - [rds billing](https://aws.amazon.com/rds/pricing)
   - [supported postgres versions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts.General.DBVersions)
   - [dynamodb local docker setup](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html#docker)
-
 - tuts
-
   - [running dbs on AWS](http://aws.amazon.com/running_databases/)
   - [rds & vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.html)
   - [security on rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html)
@@ -96,7 +92,7 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
     - software patching
     - automatic failure detection
     - recovery
-    - high availability with a primary instance and a sync seocndary instance: failover to secondary when problems occur
+    - high availability with a primary instance and a sync secondary instance: failover to secondary when problems occur
     - scalability: use read replicas to increase read scaling
     - security: via IAM (create users access) and provision behind a VPC
   - use commoon db products: mysql, mariadb, postgres, oracle & microsoft sql server
@@ -112,11 +108,11 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
   - create/modify db instances using the cli, rds api, console
 - db engines: the specific database product software that runs on the db instance
   - mysql, mariadb, postgresql, oracle, microsfot sql server
-- db instance class: determines the ocmputation and memory capacity of a db instance oferring different compute, memory and torage capabilities
+- db instance class: determines the computation and memory capacity of a db instance oferring different compute, memory and storage capabilities
 - NTP: network time protocol is used to sync time on db instances
-  - you also use this ubuntu to sync time (e.g. when fkn slack fks up the time you run this)
+  - you also use this on ubuntu to sync time 
   - security group: controls access to the db instance by permitting access to IP ranges/ec2 instances you specify
-- database preview environment: try out new postrel versions & extensions before they are fully supported by creating a db instance in the database preview environment
+- database preview environment: try out new postgres versions & extensions before they are fully supported by creating a db instance in the database preview environment
   - endpoint for api/cli: `rds-preview.us-east-2.amazonaws.com`
 - modules: i.e. postgres extensions
   - see modules available for your current version after logging into psql `SHOW rds.extensions;`

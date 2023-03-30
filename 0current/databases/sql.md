@@ -5,7 +5,7 @@ random notes
 
 definitions;
  database: structure that contains different categories of
- >information and the relatioships between these categories
+ >information and the relationships between these categories
 
  database design: the process of determining the particular
  >tables and columns that will comprise a database

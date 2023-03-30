@@ -519,7 +519,6 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
 ### Authentication
 
 - types of authentication
-
   - ident: associates postgres roles with a matching unix/linux system account
     - if a role exists within postgress, a unix/linux username with the same name is able to sign in as that role
     - Another assumption that the Postgres authentication system makes by default is that for any role used to log in, that role will have a database with the same name which it can access.
@@ -562,7 +561,7 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
 
 - Select distinct rows by using `DISTINCT` operator.
 - Filter rows by using `WHERE` clause.
-- Sort rows by using `ORDER` BY clause.
+- Sort rows by using `ORDER BY` clause.
 - Select rows based on various operators such as `BETWEEN`, `IN` and `LIKE`.
 - Group rows into groups using `GROUP BY` clause
 - Apply conditions for groups using `HAVING` clause.
@@ -592,7 +591,7 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
       col1 is null;
       col1 is not null
       col1 NOT BETWEEN low AND high;
-      col1 < low OR col1 > high; -- same as above
+      col1 < low OR value > high; -- same as above
       col1 between lowvalue and highvalue;
       col1 >= lowvalue and col1 <= highvalue; --same as above
       col <= 1 or col >= 0;
