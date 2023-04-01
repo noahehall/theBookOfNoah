@@ -329,21 +329,8 @@ less the_var/log/file/path
 - [bun](https://bun.sh/)
   - `curl -fsSL https://bun.sh/install | bash`
 
-### nirvai post install
 
-- [github](https://github.com/nirv-ai)
-  - drop all the repos in ~/git/private/nirv
-  - theres still some priv packages under your github that havent been moved to nirv, clone those too
-- open chromium and login to teams (never works right on firefox)
-  - make sure the camera works n stuff
-
-```sh
-# theres bunches of things we need to do
-# list them all here
-# dizzam i forgot to do this again
-```
-
-### errors
+#### errors
 
 - [shutter](https://shutter-project.org/)
   - [install steps](https://launchpad.net/~shutter/+archive/ubuntu/ppa)
@@ -360,36 +347,8 @@ less the_var/log/file/path
   - occurred when trying to `pnpm i` in nirv/web
   - sudo apt install node-gyp
 
-### mac:dev
 
-- be careful these are hella old
-- xcode install <-- this isnt the right command, google `how to install xcode on command line` else youll have to sign into app store
-- $ touch ~/.bashrc
-- $ echo ". ~/.bashrc" > ~/.bash_profile
-- upgrade bash (apple refuses to update pass bash v3.2)
-- [setup bash as default shell](https://www.howtogeek.com/444596/how-to-change-the-default-shell-to-bash-in-macos-catalina/)
-- [macports](https://www.scrim.psu.edu/support/userspace-macports.html)
-- [window manager](https://github.com/ianyh/Amethyst)
-- [install python](https://docs.brew.sh/Homebrew-and-Python)
-  - `brew uninstall --force python && brew install python`
-  - `pip3 install icdiff`
-- brew
-  - `brew install jq`
-  - `brew install wget`
-- continue with ubuntu setup
-## logi keyboard & mouse
-
-- on a fresh ubuntu these werent needed and the mx mechanical 10key works
-  - still do it as eventually the stutter returns, dunno
-  - see solaar for ubuntu
-- only available for mac
-  - [setup guide for keyboard](https://www.logitech.com/en-us/setup/mxsetup.html)
-  - [log+ options app](https://www.logitech.com/en-us/software/logi-options-plus.html)
-  - hold for 3 seconds to optimize for OS
-    - mac: fn O
-    - win/linux: fn P
-
-### pwr solaar & bluetooth fix
+#### pwr solaar & bluetooth fix
 
 - on a fresh ubuntu this wasnt needed
   - haha, and that was a lie, guaranteed to start stuttering after a few days
@@ -446,6 +405,85 @@ sudo nano /etc/udev/rules.d/50-usb_power_save.rules
 ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="POOP", ATTR{idProduct}=="SOOP", ATTR{power/autosuspend}="-1"
 reboot
 ```
+
+
+### mac:dev
+
+
+- [macports](https://www.macports.org/install.php)
+- [window manager](https://github.com/ianyh/Amethyst)
+  -  dont waste your time on this; only seems to work on windows of the same application
+  - switch layouts via `start shift space`
+
+```sh
+# get the git_prompt file
+## will be sourced via the bashrc_mac later on
+curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.bash_git
+
+# setup bash
+
+brew install bash
+chsh -s /opt/homebrew/bin/bash
+sudo bash -c 'echo "/opt/homebrew/bin/bash" >> /etc/shells'
+cp ~/git/foss/theBookOfNoah/linux/.bashrc_mac ~/.bashrc
+echo ". ~/.bashrc" > ~/.bash_profile
+## open iterm and do this: https://www.howtogeek.com/444596/how-to-change-the-default-shell-to-bash-in-macos-catalina/
+## use /opt/homebrew/bin/bash
+
+
+## other brew apps
+brew uninstall --force python && brew install python
+pip3 install icdiff
+brew install jq
+brew install wget
+brew install coreutils
+brew install bash-completion@2
+brew install docker-completion
+brew install tree
+brew install bpytop
+brew install neofetch
+brew install broot
+brew install ctop
+brew install dive
+brew install speedtest-cli
+
+# chromium
+# doesnt work brew install chromium
+# use this: https://www.chromium.org/getting-involved/download-chromium/
+## ^ haha that didnt work either
+
+## get bun
+curl -fsSL https://bun.sh/install | bash
+
+```
+
+- get nirvai/{scripts,fullstackapps}
+
+### nirvai post install
+
+- [github](https://github.com/nirv-ai)
+  - drop all the repos in ~/git/private/nirv
+  - theres still some priv packages under your github that havent been moved to nirv, clone those too
+- open chromium and login to teams (never works right on firefox)
+  - make sure the camera works n stuff
+
+```sh
+# theres bunches of things we need to do
+# list them all here
+# dizzam i forgot to do this again
+```
+
+## logi keyboard & mouse
+
+- on a fresh ubuntu these werent needed and the mx mechanical 10key works
+  - still do it as eventually the stutter returns, dunno
+  - see solaar for ubuntu
+- only available for mac
+  - [setup guide for keyboard](https://www.logitech.com/en-us/setup/mxsetup.html)
+  - [log+ options app](https://www.logitech.com/en-us/software/logi-options-plus.html)
+  - hold for 3 seconds to optimize for OS
+    - mac: fn O
+    - win/linux: fn P
 
 ## maybe distros
 
