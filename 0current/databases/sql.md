@@ -1,7 +1,8 @@
 PAGE 44
 
 random notes
- DATE(a.lastlogin) = DATE(NOW())
+    DATE(a.lastlogin) = DATE(NOW())
+    - [mysql MUL keys](https://stackoverflow.com/questions/5317889/sql-keys-mul-vs-pri-vs-uni)
 
 definitions;
  database: structure that contains different categories of
@@ -275,9 +276,9 @@ methods:
              -delete the data in a table, but not the table itself
          ALTER TABLE table_name
              ADD column_name datatype
-         ALTER TABLE table_name
+         ALTER TABLE table_name 
              MODIFY column_name datatype
-             -change a columns data type
+             -change a columns data type or add constraint
          ALTER TABLE Persons
              ALTER City SET DEFAULT 'SANDNES'
              -set a default on an existing table

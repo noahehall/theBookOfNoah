@@ -346,9 +346,12 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
   -- update all by not using where clause
     update tablename set col1 = val1;
   -- update one table with values from another table
-    update tablename set col1 = othertablename.col1
-      from othertablename
-      where tablename.id = othertablename.id
+    -- postgres
+      update tablename set col1 = othertablename.col1
+        from othertablename
+        where tablename.id = othertablename.id
+    
+
 
   -- upserting
     insert into tablename(col1, colX)

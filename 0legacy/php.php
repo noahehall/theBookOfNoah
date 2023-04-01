@@ -79,5 +79,18 @@ function noitcnuf() {
     echo "\ninside fn";
     echo $somevar;  // doesnt throw cuz global $somevar
 }
-noitcnuf()
+noitcnuf();
+
+
+// loops
+$myArr = array("one", "two");
+
+foreach($myArr as $idx => $val) {
+    echo "\n";
+    echo $idx . " is " . $val;
+}
+
+echo "\n\nwwwwtf" . $myArr[1];
+echo "\n\nisset - " . isset($myArr[0]) && "worked";
+// echo "\n\nwtf is my arr {$myArr[0]}";
 ?>
