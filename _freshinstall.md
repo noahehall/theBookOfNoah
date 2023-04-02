@@ -412,7 +412,7 @@ reboot
   - run ./vscode.install.extensions.sh
   - copypasta vscode settings into vscode user settings
 - [macports](https://www.macports.org/install.php)
-  - i think last time we switched to macports
+  - i think last time we switched to macports as it aligns with nix way of doing things
   - but this time we did everything in homebrew
 - [window manager](https://github.com/ianyh/Amethyst)
   - dont waste your time on this; only seems to work on windows of the same application
@@ -435,20 +435,22 @@ echo ". ~/.bashrc" > ~/.bash_profile
 
 
 ## other brew apps
-brew uninstall --force python && brew install python
-pip3 install icdiff
-brew install jq
-brew install wget
-brew install coreutils
 brew install bash-completion@2
-brew install docker-completion
-brew install tree
 brew install bpytop
-brew install neofetch
 brew install broot
+brew install coreutils
 brew install ctop
 brew install dive
+brew install docker-completion
+brew install jq
+brew install neofetch
 brew install speedtest-cli
+brew install tree
+brew install wget
+brew uninstall --force python && brew install python
+
+## setup icdiff
+pip3 install icdiff
 
 # chromium
 # doesnt work brew install chromium
@@ -515,6 +517,12 @@ catchyos
 
 - [looks sweet](https://cachyos.org/)
 - [wiki](https://wiki.cachyos.org/)
+
+clear linux
+
+- [from intel](https://clearlinux.org/)
+- we tried to switch to this but didnt support our workflow at the time
+- try again, interwebs say things have gotten better
 
 ## remote server setup
 

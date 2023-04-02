@@ -2,16 +2,13 @@
 
 ## TLDR
 
-- searching
-  - # header keyword
-    - # table option
-    - # table engine
-    - # important files
-  - `some cmd`
+- todo: not sure in which decade this file was created
 
-..
+## link
 
-# needs categorization
+- [mysql MUL keys](https://stackoverflow.com/questions/5317889/sql-keys-mul-vs-pri-vs-uni)
+
+## needs categorization
 
 - best practices
   - reserved words should be UPPERCASE
@@ -62,7 +59,9 @@
   - set other factors concerning
     - column, index
   - set table-wide options
-- ## FLAGS
+
+## FLAGS
+
 - KEYWORDS
   - `first` prepend new column
   - `after` insert new column after some other column
