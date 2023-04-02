@@ -1,11 +1,16 @@
-PAGE 44
+# SQL
 
-random notes
-    DATE(a.lastlogin) = DATE(NOW())
-    - [mysql MUL keys](https://stackoverflow.com/questions/5317889/sql-keys-mul-vs-pri-vs-uni)
+- the ultimate cheatsheet
 
-definitions;
- database: structure that contains different categories of
+
+## basics
+
+### links
+
+- [mysql MUL keys](https://stackoverflow.com/questions/5317889/sql-keys-mul-vs-pri-vs-uni)
+
+### terms
+- database: structure that contains different categories of
  >information and the relationships between these categories
 
  database design: the process of determining the particular
@@ -102,6 +107,14 @@ definitions;
 
  candidate key: a column/collection of columns on which all the columns
  >in the table are functionally dependent
+
+
+### standard fns
+random notes
+    DATE(a.lastlogin) = DATE(NOW())
+    
+
+definitions;
 
 best practices:
  table names: TABLE_NAME

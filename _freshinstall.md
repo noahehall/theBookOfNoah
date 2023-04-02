@@ -329,7 +329,6 @@ less the_var/log/file/path
 - [bun](https://bun.sh/)
   - `curl -fsSL https://bun.sh/install | bash`
 
-
 #### errors
 
 - [shutter](https://shutter-project.org/)
@@ -346,7 +345,6 @@ less the_var/log/file/path
 - error: `gyp` failed with exit code: 1
   - occurred when trying to `pnpm i` in nirv/web
   - sudo apt install node-gyp
-
 
 #### pwr solaar & bluetooth fix
 
@@ -406,13 +404,18 @@ ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="POOP", ATTR{idProduct}=="SOOP"
 reboot
 ```
 
-
 ### mac:dev
 
-
+- general
+  - check .bashrc_mac
+  - check .gitconfig_mac
+  - run ./vscode.install.extensions.sh
+  - copypasta vscode settings into vscode user settings
 - [macports](https://www.macports.org/install.php)
+  - i think last time we switched to macports
+  - but this time we did everything in homebrew
 - [window manager](https://github.com/ianyh/Amethyst)
-  -  dont waste your time on this; only seems to work on windows of the same application
+  - dont waste your time on this; only seems to work on windows of the same application
   - switch layouts via `start shift space`
 
 ```sh
@@ -421,7 +424,6 @@ reboot
 curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.bash_git
 
 # setup bash
-
 brew install bash
 chsh -s /opt/homebrew/bin/bash
 sudo bash -c 'echo "/opt/homebrew/bin/bash" >> /etc/shells'
@@ -455,9 +457,9 @@ brew install speedtest-cli
 ## get bun
 curl -fsSL https://bun.sh/install | bash
 
+## drop through the ubuntu dev for other apps
+## get nirvai/{scripts,fullstackapps}
 ```
-
-- get nirvai/{scripts,fullstackapps}
 
 ### nirvai post install
 
