@@ -145,7 +145,6 @@
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
   "[typescript]": {},
-  "window.zoomLevel": 2,
   "code-runner.enableAppInsights": false,
   "code-runner.saveFileBeforeRun": true,
   "code-runner.languageIdToFileExtensionMap": {
@@ -202,7 +201,7 @@
     "shellscript": "bash",
     "sml": "cd $dir && sml $fileName",
     "swift": "swift",
-    "typescript": "ts-node",
+    "typescript": "bun",
     "v": "v run",
     "vbscript": "cscript //Nologo",
     "zig": "zig run"
