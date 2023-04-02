@@ -99,6 +99,7 @@
   - [current proposals - all stages](https://github.com/tc39/proposals)
 - [mdn: reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
   - [builtin objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects)
+  - [labeled statements](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/label)
   - [blocks and block statements](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
   - [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/)
   - [bigint](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)

@@ -1,4 +1,4 @@
-import { log } from "./logit.mjs";
+import { log } from "./logit";
 
 // convert any non negative value to a natural number
 // often used to convert external input to true/false
@@ -34,14 +34,5 @@ global fns
   escape() Deprecated
   unescape()
 
-error constructors
-  Error
-  AggregateError
-  EvalError
-  RangeError
-  ReferenceError
-  SyntaxError
-  TypeError
-  URIError
-  InternalError
+
 */

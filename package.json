@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "bun-types": "^0.5.8",
     "eslint": "^8.37.0",
     "typescript": "^5.0.3"
   }

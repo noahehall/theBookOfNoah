@@ -39,7 +39,7 @@
     "incremental": true,
     "isolatedModules": false,
     "jsx": "react-jsx",
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "module": "esnext",
     "moduleResolution": "bundler",
     "noEmit": false,

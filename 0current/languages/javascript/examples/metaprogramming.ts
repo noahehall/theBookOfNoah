@@ -1,4 +1,4 @@
-import { log } from "./logit.mjs";
+import { log } from "./logit";
 
 const sym = Symbol("mysym");
 log("sym", sym);
