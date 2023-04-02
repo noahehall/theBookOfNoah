@@ -1,6 +1,7 @@
 # Javascript
 
 - updated: 2023
+  - when you get back up to speed: u promised the nimlang devs you would redo the `for tyepscript dev` docs
 - [web security in security dir](https://github.com/noahehall/theBookOfNoah/tree/master/0current/appdev/security)
 - the goal is to capture high level information in general and the Abstract Data Type for native objects specifically
 - [bun readme](./backend/bun.md)
