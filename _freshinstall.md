@@ -427,6 +427,7 @@ curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh >
 brew install bash
 chsh -s /opt/homebrew/bin/bash
 sudo bash -c 'echo "/opt/homebrew/bin/bash" >> /etc/shells'
+## theres a mac_cp_bashrc and sourcebashrc
 cp ~/git/foss/theBookOfNoah/linux/.bashrc_mac ~/.bashrc
 echo ". ~/.bashrc" > ~/.bash_profile
 ## open iterm and do this: https://www.howtogeek.com/444596/how-to-change-the-default-shell-to-bash-in-macos-catalina/
