@@ -1,0 +1,46 @@
+# see https://gist.github.com/scottnonnenberg/fefa3f65fdb3715d25882f3023b31c29
+# [user]
+# name=noah edward
+# user.email=noahehall@users.noreply.github.com
+# signingkey = whatever comes from
+# ^ gpg --list-secret-keys --keyid-format=long
+# add the following to ~/.gitconfig
+# [include]
+# path = /home/poop/git/foss/theBookOfNoah/linux/.gitconfig or .gitconfig_mac
+
+[core]
+  editor = nano
+  autocrlf = input
+
+[color]
+  ui = true
+
+[merge]
+  ff = only
+  conflictstyle = diff3
+
+
+[commit]
+  gpgSign = false
+
+[push]
+  default = current
+  autoSetupRemote = true
+  followTags = true
+
+
+[pull]
+  rebase = true
+
+[status]
+  showUntrackedFiles = all
+
+[transfer]
+  fsckobjects = true
+
+[diff]
+  tool = git-icdiff
+[difftool]
+  prompt = false
+[difftool "git-icdiff"]
+  cmd = git-icdiff --line-numbers $LOCAL $REMOTE

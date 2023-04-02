@@ -211,7 +211,7 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
   - A table can have one and only one primary key.
   - good practice to add a primary key to every table.
 - foreign key: field(s) in one table record that uniquely identify the primary key of a record in another table
-  - default name is tablename\_\_colname_fk
+  - default name is tablename_colname_fk
   - referencing/child table: the table that contains the foreign key
   - referenced/parent table: the table whose primary key is referenced by the child table
   - a foreign key constraint maintains referential integrity between child and parent tables
@@ -220,7 +220,6 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
     - can be one/more columns
   - not null
 - data types: serial, numeric, int,
-
   - character
     - char(n) - fixed length blank padded
     - varchar(n) variable length
@@ -230,7 +229,6 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
     - integers
       - smallint int serial
         - int4 | int8
-          - research this
         - serial is auto generated & incremented
     - floating point
       - float(n) real float8 numeric numeric(p,s)
@@ -348,9 +346,12 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
   -- update all by not using where clause
     update tablename set col1 = val1;
   -- update one table with values from another table
-    update tablename set col1 = othertablename.col1
-      from othertablename
-      where tablename.id = othertablename.id
+    -- postgres
+      update tablename set col1 = othertablename.col1
+        from othertablename
+        where tablename.id = othertablename.id
+    
+
 
   -- upserting
     insert into tablename(col1, colX)
@@ -434,7 +435,6 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
 ### roles/users
 
 - roles: handle authentication and authorization
-
   - similar to unix-style accounts
   - roles do not distinguish between users and groups
     - roles: users that cannot login
@@ -522,7 +522,6 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
 ### Authentication
 
 - types of authentication
-
   - ident: associates postgres roles with a matching unix/linux system account
     - if a role exists within postgress, a unix/linux username with the same name is able to sign in as that role
     - Another assumption that the Postgres authentication system makes by default is that for any role used to log in, that role will have a database with the same name which it can access.
@@ -565,7 +564,7 @@ copy schemaName.TableName (colX, colY) from '/tmp/someFile.csv' with (format csv
 
 - Select distinct rows by using `DISTINCT` operator.
 - Filter rows by using `WHERE` clause.
-- Sort rows by using `ORDER` BY clause.
+- Sort rows by using `ORDER BY` clause.
 - Select rows based on various operators such as `BETWEEN`, `IN` and `LIKE`.
 - Group rows into groups using `GROUP BY` clause
 - Apply conditions for groups using `HAVING` clause.

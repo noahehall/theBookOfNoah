@@ -1,4 +1,4 @@
-#!/usr/bin/bash bash
+#!/usr/bin/env bash
 
 function sourceifexists() {
     if [[ $# -eq 1 && -f "$1" ]]; then
@@ -43,6 +43,7 @@ sys_set() {
 }
 
 whats() {
+    # TODO: update this for mac compatibility
     cmd=${1:?cmd required}
 
     found=$(type $cmd 2>/dev/null | head -n 1)

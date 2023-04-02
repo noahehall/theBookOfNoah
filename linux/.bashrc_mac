@@ -1,0 +1,64 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+if [ -f /etc/bashrc ]; then
+    source /etc/bashrc
+fi
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+
+if [ -f ~/.bash_aliases ]; then
+    source ~/.bash_aliases
+fi
+
+if [ -f ~/.bash_git ]; then
+    source ~/.bash_git
+fi
+
+## brew
+export BASH_SILENCE_DEPRECATION_WARNING=1
+eval "$(/opt/homebrew/bin/brew shellenv)"
+export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d"
+[[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]] && . "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+
+
+source /Users/$USER/git/foss/theBookOfNoah/linux/_sourceme_.sh
+export PATH="/Users/$USER/git/private/nirv/scripts:$PATH"
+for operator_script in /Users/$USER/git/private/nirv/scripts/shell-init/*.sh; do
+  source $operator_script
+done
+
+
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
+
+NIMBLE="/Users/$USER/.nimble/bin"
+export PATH="$NIMBLE:$PATH"
+
+# code insiders
+if ! hash code-insiders 2>/dev/null; then
+  # dunno: on mac code-insiders is just code
+  # but we need it to be called code-insiders for the shell extension script
+  echo -e "\nsymlinking code-insiders; sudo required"
+  CODE_INSIDERS="/Applications/Visual Studio Code - Insiders.app/Contents/Resources/app/bin/code"
+  sudo ln -s "$CODE_INSIDERS" /opt/code-insiders
+  chmod +x /opt/code-insiders
+fi
