@@ -15,7 +15,6 @@ log("myArr.length=10", myArr);
 myArr.length = 0;
 log("myArr.length=0", myArr);
 
-// cheatsheet
 log(Array.from(new Set([1, 2]), (x) => (!(x % 2) ? "even" : "odd")));
 log(Array.of(..."this"));
 

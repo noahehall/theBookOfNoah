@@ -1,7 +1,6 @@
-export function log(value: any): void;
-export function log(msg: string, value: any): void;
-export function log(value: any, msg: string = ""): void {
+export function log(a: any, b?: any): void {
+  if (arguments.length == 1 || typeof b == "undefined") console.info(a);
   // dunno, bun doesnt log a table :(
   // nope @see https://github.com/oven-sh/bun/issues/802
-  console.table(!!msg ? { msg, value } : value);
+  else console.table({ msg: a, value: b });
 }
