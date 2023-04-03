@@ -6,11 +6,42 @@ https://stackoverflow.com/questions/38831301/how-to-un-fork-the-github-repositor
 
 long list of git
 
+## TODO
+
+- categorize all below
+- anything under this line i wouldnt trust
+- find which file has the git flow strategies and put in here
+  - https://www.atlassian.com/git/tutorials/comparing-workflows
+
+```sh
+sparse clone an existing repo from git to local
+git clone --filter=blob:none --no-checkout git/url/to/clone
+setup empty dir to later sparse checkout only certain dirs
+
+    git sparse-checkout init --cone
+        cd into the ABOVE dir to init it
+
+    git sparse-checkout set paths/to/download
+
+check paths included in sparse-checkout
+git sparse-checkout list
+
+only checkout files in root dir
+$ git clone --filter=blob:none --sparse <https://github.com/derrickstolee/sparse-checkout-example>
+
+force checking out paths ignoring sparse checkout
+e.g. to force checking out a path not matching sparse settings
+git checkout --ignore-skip-worktree-bits -- PATHS
+
+<https://stackoverflow.com/questions/6127328/how-can-i-delete-all-git-branches-which-have-been-merged>
+git branch --merged | egrep -v "(^\*|dev)" | xargs git branch -d
+git remote prune origin
+```
+
 ## LINKS
 
-- github actions/workflows: see actions section below
+- [managing merge conflicts](https://docs.gitlab.com/ee/user/project/merge_requests/conflicts.html)
 - refrence
-
   - [environment vars](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables)
   - [git flight rules](https://github.com/k88hudson/git-flight-rules/blob/master/README.md)
   - [git town cli plugin](https://www.git-town.com/)
@@ -23,13 +54,10 @@ long list of git
   - [git book](https://git-scm.com/book/en/v2)
   - [installing git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
   - [first time setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)
-
 - copypasta
-
   - [gitignore files](https://github.com/github/gitignore)
   - [rebasing](https://stackoverflow.com/questions/41464752/git-rebase-interactive-the-last-n-commits)
   - [deleting branches](https://www.freecodecamp.org/news/how-to-delete-a-git-branch-both-locally-and-remotely/)
-
 - repo related cmds
   - [getting a git repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
 
@@ -91,7 +119,7 @@ long list of git
     git reset HEAD^ # undo commits & staged, but leave work tree
     git reset --hard HEAD^ # undo everthing
 
-# other shit
+# other stuff
   git config --list
   git config --list --show-origin
   git config --global -e # edit global config in default editor
@@ -227,37 +255,32 @@ git config user.name # see what your username is
  git config --global merge.tool nano
 ```
 
-## TODO
+## merge conflicts
 
-- categorize all below
-- anything under this line i wouldnt trust
+- HEAD: the tip of the source/base branch (e.g. feature)
+- theres: the target/base branch, e.g. develop
+- strategies
+  - merge commit strategy:
+    - merge commit created in source branch, but not target branch
+    - you can then test the source branch
+      - revert merge commit if necessary
+      - push to target branch if valid
 
 ```sh
-sparse clone an existing repo from git to local
-git clone --filter=blob:none --no-checkout git/url/to/clone
-setup empty dir to later sparse checkout only certain dirs
+git checkout intoThisBranch
+git rebase changesInThisBranch
 
-    git sparse-checkout init --cone
-        cd into the ABOVE dir to init it
+<<<<<<< HEAD
+  head/base/source changes
+=======
+  target/other changes
+>>>>>>>
 
-    git sparse-checkout set paths/to/download
-
-check paths included in sparse-checkout
-git sparse-checkout list
-
-only checkout files in root dir
-$ git clone --filter=blob:none --sparse <https://github.com/derrickstolee/sparse-checkout-example>
-
-force checking out paths ignoring sparse checkout
-e.g. to force checking out a path not matching sparse settings
-git checkout --ignore-skip-worktree-bits -- PATHS
-
-<https://stackoverflow.com/questions/6127328/how-can-i-delete-all-git-branches-which-have-been-merged>
-git branch --merged | egrep -v "(^\*|dev)" | xargs git branch -d
-git remote prune origin
 ```
 
-## github actions
+## github
+
+### actions
 
 - continue:
   - https://docs.github.com/en/actions/using-workflows/advanced-workflow-features
@@ -407,3 +430,9 @@ jobs:
         run: | # inline, multiline script
           normalbashfn "$super_secret"
 ```
+
+## gitlab
+
+### pipelines
+
+- ...
