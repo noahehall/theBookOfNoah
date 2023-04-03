@@ -102,6 +102,7 @@
   - [labeled statements](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/label)
   - [blocks and block statements](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
   - [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/)
+  - [events](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
   - [bigint](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
   - [class: extends](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends)
   - [class: indepth](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_Classes)

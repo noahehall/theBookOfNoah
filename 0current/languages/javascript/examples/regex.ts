@@ -1,4 +1,4 @@
-import { log } from "./logit.mjs";
+import { log } from "./logit";
 
 // both are the treated the same
 let re1 = new RegExp("find/this/pattern", "i");
@@ -76,6 +76,28 @@ log("re2.test(input)", re2.test(input));
   - split A String method that uses a regular expression or a fixed string to break a string into an array of substrings.
 
 
-ADT: RegExp
-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#constructor
+regexp props
+  get RegExp[@@species]
+  RegExp.prototype.dotAll
+  RegExp.prototype.flags
+  RegExp.prototype.global
+  RegExp.prototype.hasIndices
+  RegExp.prototype.ignoreCase
+  RegExp: lastIndex
+  RegExp.prototype.multiline
+  RegExp.prototype.source
+  RegExp.prototype.sticky
+  RegExp.prototype.unicode
+
+regexp methods
+  RegExp.prototype[@@match]()
+  RegExp.prototype[@@matchAll]()
+  RegExp.prototype[@@replace]()
+  RegExp.prototype[@@search]()
+  RegExp.prototype[@@split]()
+  RegExp.prototype.compile()
+  Deprecated
+  RegExp.prototype.exec()
+  RegExp.prototype.test()
+  RegExp.prototype.toString()
 */

@@ -9,6 +9,7 @@
   - designers are special people, like a good musician/writer/sports player, your born with a 6th sense
 - todos
   - the entire accessibility section should be reworked
+    - probably should start with the MDN accessbility intro
   - canvas vs SVG for scalable graphics
 
 ## links
