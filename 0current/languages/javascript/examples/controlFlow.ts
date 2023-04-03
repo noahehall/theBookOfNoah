@@ -42,6 +42,7 @@ for (x in person) {
 }
 ```
 ```js
+  for await (same as below)
   for (const/let variable of iterable) {
     statement
   }

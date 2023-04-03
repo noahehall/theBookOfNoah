@@ -44,11 +44,8 @@ ADT
     Array.prototype.forEach()
     Array.from()
     Array.fromAsync()
-    Experimental
     Array.prototype.group()
-    Experimental
     Array.prototype.groupToMap()
-    Experimental
     Array.prototype.includes()
     Array.prototype.indexOf()
     Array.isArray()

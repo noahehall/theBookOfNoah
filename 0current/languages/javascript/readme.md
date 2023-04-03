@@ -725,6 +725,7 @@ switch this throw true try typeof var void while with yield
   - cannot switch from success to failure/vice versa
   - if a promise has succeeded/failed, and you later add a success/failure callback, the correct callback will be invoked, even though the event took place earlier
   - any object with a then method can be used as and integrated with native promises
+  - you always want a `.catch`
 - Promise States
   - fulfilled (resolved): action related to the promise has succeeded
   - rejected (failure): action related to the promise has failed
