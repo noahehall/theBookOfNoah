@@ -4,8 +4,8 @@
 
 ## TLDR
 
-- broad strategies & architectures that encompass AWS resources and architecture decisions
-- things that generally apply to all services or should be `top of mind` when working with AWS
+- features that encompass AWS resources and architecture decisions
+- generally apply to all services or should be `top of mind` when working with AWS
 
 ## todo
 
@@ -25,17 +25,22 @@
 
 ## links
 
-- [aws developer tools](https://aws.amazon.com/products/developer-tools/)
-- [aws toolkit for vscode](https://aws.amazon.com/visualstudiocode/)
+### docs
+
+- [aws ref: guide ands APIs](https://docs.aws.amazon.com/index.html)
+- [AWS ref: everything else](https://docs.aws.amazon.com/general/latest/gr/Welcome.html)
+- [reosurce names](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
+- [IAM json policy elements](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_resource.html)
+
+### tools
+
+- [developer tools](https://aws.amazon.com/products/developer-tools/)
+- [toolkit for vscode](https://aws.amazon.com/visualstudiocode/)
 - [sam cli](https://github.com/aws/aws-sam-cli)
 - [all cli cmds](https://docs.aws.amazon.com/cli/latest/reference/)
 - [aws ci install & update directions](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-- [aws docs index](https://docs.aws.amazon.com/index.html)
   - also probably the best overview of all services
-- [AWS glossary](https://docs.aws.amazon.com/general/latest/gr/glos-chap.html)
   - the ultimate in ctrl+f
-- [amazon reosurce names](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
-- [IAM json policy elements](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_resource.html)
 - [available AWS condition keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html)
 - [enabling access anlyzer](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html#access-analyzer-enabling)
   - [access analyzer APIs](https://docs.aws.amazon.com/access-analyzer/latest/APIReference/Welcome.html)
