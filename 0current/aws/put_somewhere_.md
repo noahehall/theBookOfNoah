@@ -1,0 +1,5 @@
+- [AWS product (e.g. s3, rds) cmd reference](https://awscli.amazonaws.com/v2/documentation/api/latest/index.html)
+- [s3 cmd reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3/index.html)
+- [s3control plane actions reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3control/index.html)
+- [s3api reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3api/index.html)
+- [s3 glacier reference](https://docs.aws.amazon.com/cli/latest/reference/glacier/index.html)

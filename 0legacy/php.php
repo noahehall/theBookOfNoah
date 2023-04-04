@@ -6,6 +6,12 @@ https://www.php.net/manual/en/language.variables.superglobals.php
 https://www.w3schools.com/php/default.asp
 https://www.w3schools.com/php/php_ref_array.asp
 
+useful fns
+----------
+like array_map: https://www.php.net/manual/en/function.array-column.php
+array_map
+
+
 quickies
 --------
 variables start with $
@@ -68,14 +74,14 @@ echo $_SERVER;  // not what you think
 print $_SERVER;  // not what you think
 var_dump($_SERVER); // what you want for objects and etc
 define("whatev",  "vetahw");
-echo whatev;    
+echo whatev;
 
 // fns
 function noitcnuf() {
     static $whatev = "preserve me; i.e. internal cache for this fn";
     // echo $somevar; // throws
     echo $GLOBALS['somevar']; // doesnt throw
-    global $somevar; 
+    global $somevar;
     echo "\ninside fn";
     echo $somevar;  // doesnt throw cuz global $somevar
 }

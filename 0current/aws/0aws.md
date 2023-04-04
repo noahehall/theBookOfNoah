@@ -1,6 +1,4 @@
-# AWS Global Architecture & Security
-
-- regions, azs, service quotas, security groups, key pairs, IAM, STS, Access Analyzer, certifact manager, cognito
+# AWS Global Architecture, Security and AuthNZ
 
 ## TLDR
 
@@ -9,8 +7,6 @@
 
 ## todo
 
-- the link section should be reworked
-- <https://aws.amazon.com/tools/>
 - supported compliance standards: <http://aws.amazon.com/compliance/>
 - lot of things about IAM in here, move it into the 0security file
   - scratch that, put it under `# global architecture`
@@ -25,65 +21,59 @@
 
 ## links
 
-### docs
+- [all 250+ aws services](https://aws.amazon.com/products/)
+
+### reference
 
 - [aws ref: guide ands APIs](https://docs.aws.amazon.com/index.html)
 - [AWS ref: everything else](https://docs.aws.amazon.com/general/latest/gr/Welcome.html)
-- [reosurce names](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
+- [available AWS condition keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html)
+  - [aws ec2 ref](https://docs.aws.amazon.com/cli/latest/reference/ec2/)
+
+### docs
+
+- [resource names](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
 - [IAM json policy elements](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_resource.html)
+- [access anlyzer](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html#access-analyzer-enabling)
+- [access analyzer APIs](https://docs.aws.amazon.com/access-analyzer/latest/APIReference/Welcome.html)
+- [getting setup on th AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)
+- [configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
+- [creds & config spec](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
+- [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+- [test permissions on the command line](https://docs.aws.amazon.com/AmazonS3/latest/userguide/policy-eval-walkthrough-download-awscli.html)
+- [configuring credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html)
+- [IAM docs](https://docs.aws.amazon.com/iam/?id=docs_gateway)
+- [IAM best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
+- [IAM user guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
+- [aws managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies)
+- [aws managed policies for job functions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html)
+- [global condition context keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html)
 
 ### tools
 
+- [all tools](https://aws.amazon.com/tools/)
+- [cli cmds](https://docs.aws.amazon.com/cli/latest/reference/)
+- [command completion](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html)
 - [developer tools](https://aws.amazon.com/products/developer-tools/)
-- [toolkit for vscode](https://aws.amazon.com/visualstudiocode/)
+- [get your public IP](https://checkip.amazonaws.com/)
 - [sam cli](https://github.com/aws/aws-sam-cli)
-- [all cli cmds](https://docs.aws.amazon.com/cli/latest/reference/)
-- [aws ci install & update directions](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-  - also probably the best overview of all services
-  - the ultimate in ctrl+f
-- [available AWS condition keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html)
-- [enabling access anlyzer](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html#access-analyzer-enabling)
-  - [access analyzer APIs](https://docs.aws.amazon.com/access-analyzer/latest/APIReference/Welcome.html)
-- tools
-  - [get your public IP](https://checkip.amazonaws.com/)
-- cli
-  - [creds & config spec](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
-  - [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
-  - [command completion](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html)
-  - [test permissions on the command line](https://docs.aws.amazon.com/AmazonS3/latest/userguide/policy-eval-walkthrough-download-awscli.html)
-  - [configuring credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html)
-  - [getting setup on th AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)
-    - [configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
-  - [AWS product (e.g. s3, rds) cmd reference](https://awscli.amazonaws.com/v2/documentation/api/latest/index.html)
-  - [s3 cmd reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3/index.html)
-    - [s3control plane actions reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3control/index.html)
-    - [s3api reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3api/index.html)
-  - [s3 glacier reference](https://docs.aws.amazon.com/cli/latest/reference/glacier/index.html)
-- references
-  - [aws ec2 ref](https://docs.aws.amazon.com/cli/latest/reference/ec2/)
-  - tuts
-    - [aws-cli basics](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
-    - [aws-cli & s3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/setup-aws-cli.html)
-    - [aws-cli & ec2](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2.html)
-      - [manage private keys (pem)](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-keypairs.html)
-      - [import an existing key pair into aws](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-key-pair.html#examples)
-- iam
-  - [all IAM docs](https://docs.aws.amazon.com/iam/?id=docs_gateway)
-  - [best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
-  - [user guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
-  - tuts
-    - [create an IAM user](https://docs.aws.amazon.com/AmazonS3/latest/userguide/setting-up-s3.html#create-an-iam-user-gsg)
-    - [sign in as an IAM user](https://docs.aws.amazon.com/AmazonS3/latest/userguide/setting-up-s3.html#signing-in-iam-user-gsg)
-    - [writing IAM policies](https://aws.amazon.com/blogs/security/writing-iam-policies-how-to-grant-access-to-an-amazon-s3-bucket/)
-    - [preview access when creating policies](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-policies.html)
-    - [managing IAM policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage.html)
-    - [IAM customer managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create-console.html)
-    - [permission sets](https://aws.amazon.com/premiumsupport/knowledge-center/create-sso-permission-set/)
-    - [permission boundary for create role action](https://stackoverflow.com/questions/62029972/trying-to-give-iam-user-rights-to-create-and-assign-roles-but-limit-the-type-of)
-  - reference
-    - [aws managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies)
-      - [aws managed policies for job functions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html)
-    - [global ocndition context keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html)
+- [toolkit for vscode](https://aws.amazon.com/visualstudiocode/)
+
+### tuts
+
+- [aws-cli basics](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+- [aws-cli & s3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/setup-aws-cli.html)
+- [aws-cli & ec2](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2.html)
+- [manage private keys (pem)](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-keypairs.html)
+- [import an existing key pair into aws](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-key-pair.html#examples)
+- [create an IAM user](https://docs.aws.amazon.com/AmazonS3/latest/userguide/setting-up-s3.html#create-an-iam-user-gsg)
+- [sign in as an IAM user](https://docs.aws.amazon.com/AmazonS3/latest/userguide/setting-up-s3.html#signing-in-iam-user-gsg)
+- [writing IAM policies](https://aws.amazon.com/blogs/security/writing-iam-policies-how-to-grant-access-to-an-amazon-s3-bucket/)
+- [preview access when creating policies](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-policies.html)
+- [managing IAM policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage.html)
+- [IAM customer managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create-console.html)
+- [permission sets](https://aws.amazon.com/premiumsupport/knowledge-center/create-sso-permission-set/)
+- [permission boundary for create role action](https://stackoverflow.com/questions/62029972/trying-to-give-iam-user-rights-to-create-and-assign-roles-but-limit-the-type-of)
 
 ## best practices/gotchas
 
@@ -118,7 +108,7 @@
 - CORS: JSON configuration defines a way for servers from domain X to interact with resources on domain Y
 - encryption
 
-## key goal & design concepts
+### key goal & design concepts
 
 - high availablity
   - The term "number of nines" stems from the decrease of downtime per year as the number and costs increase. high availability = more 9s
@@ -141,6 +131,14 @@
 - fault tolerance
   - appropriate storage & backup (s3, ebs elastic block storage)
   - autoscaling: scale ec2 capacity up/down based on triggers
+
+### file locations
+
+```sh
+
+~/.aws/{credentials, config}
+
+```
 
 ## global architecture
 
@@ -235,15 +233,7 @@
         - grants the permission, if conditionKey === value
         - usually the conditionKey & value are specified in the header of the request
 
-## file locations
-
-```sh
-
-~/.aws/{credentials, config}
-
-```
-
-## service quotas
+### service quotas
 
 - [main page](https://console.aws.amazon.com/servicequotas/home?region=us-east-1#)
 - see all quotas related to every AWS service
@@ -254,7 +244,7 @@
   - create cloud watch alarms for certain quotas
 - can have a max of 9 cards on the dashboard for important services
 
-## keypairs
+### keypairs
 
 - public key cryptography: asymmetric cryptography
   - public key
@@ -296,7 +286,6 @@
     - validated as being compliant with Payment Card Industry (PCI) data securty standard (DSS)
   - eventually consistent: achieves high availability by replicating data across multiple servers within amazons datacenters
 - key components
-
   - IAM provides the infrastructure necessary to control authentication and authorization
   - resources: user, group, role, policy and identity provider objects that are stored in IAM
   - identities: resource objects used for users, groups and roles
@@ -316,7 +305,6 @@
     - IAM user: account ID/alias, then username + password
     - API/CLI: access key + secret key
       - any o the above could require MFA
-
 - common roles you should create
   - cloud watch roles
     - cloudWatchAgentServerRole
@@ -329,10 +317,127 @@
 - for ec2
   - what is the ec2 doing? create a role that enables the ec2 to connect with other resources at the necessary permission levels
 
+## IAM Identity Center
+
+- [main page](https://aws.amazon.com/iam/identity-center/)
+- successor to aws sso
+- Centrally manage workforce access to multiple AWS accounts and applications
+
 ## STS
 
 - STS: Security Token Service
 
 ## cognito
 
-- authnz
+- authnz: application identity management
+
+## KMS
+
+- [main page](https://aws.amazon.com/kms/?did=ap_card&trk=ap_card)
+- Create and control keys used to encrypt or digitally sign your data
+
+## Secrets Manager
+
+- [main page](https://aws.amazon.com/secrets-manager/?did=ap_card&trk=ap_card)
+- Centrally manage the lifecycle of secrets
+
+## aws cli
+
+- files
+  - default config & credentials
+  - ~/.aws/config: setup the default output and region per profile
+  - ~/.aws/credentials: setup access key ID and secret for each profile
+
+```sh
+  # configure help
+    aws configure # set your creds one by one
+      list # see current profile
+      list-profiles # see available profiles
+      get KEY # get the current value of the current profiles config, (anything from list)
+  # global options
+    --profile SOMENAME # configure/use creds + config of a profile, specify this LAST
+
+    # so you dont have to use the --profile on each cmd
+    export AWS_DEFAULT_PROFILE=AccountAadmin
+
+    # to override the selected profile, e.g. in a script
+    export AWS_ACCESS_KEY_ID=woop
+    export AWS_SECRET_ACCESS_KEY=woop
+    export AWS_DEFAULT_REGION=us-woop-1
+
+    --region us-east-1 # specify the region
+
+  # basics
+
+  aws SERVICENAME COMMAND OPTIONS
+    # most used
+    s3,ec2,rds,iam, elasticbeanstalk
+    # not really
+    ebs, elb
+      dfadfa # use that to get a list of servicenames
+```
+
+#### S3
+
+- [docs home](https://docs.aws.amazon.com/s3/?id=docs_gateway)
+
+```sh
+  # global options
+    --recursive # e.g. aws s3 cp,mv,rm --recursive # take action on all child things too
+    # both can use *,?,[sequence],[!sequence]
+      --include "value" # e.g. --include "*.txt"
+      --exclude "value" # e.g. --exclude "*.git"
+        # --include "*.txt" --exclude "*" # only txt files
+
+  # cmd reference
+  aws s3
+    # file actions
+    cp
+    mv
+    rm
+    # directory actions
+    sync
+    mb
+    rb
+    ls # list buckets
+
+  aws s3api
+
+```
+
+#### ec2
+
+```sh
+  # create a key pair
+  # ^ key type can be rsa | ed25519
+  # ^ KeyMaterial prints the key material to output
+    aws ec2 create-key-pair \
+      --key-name KEY_NAME \
+      --key-type ed25519 \
+      --query 'KeyMaterial' \
+      --output text > KEY_NAME.pem
+    chmod 400 KEY_NAME.pem
+
+  # verify a priv key on your local machine matches the public key stored in AWS
+    aws ec2 describe-key-pairs --key-names KEY_NAME
+
+  # delete a key-pair
+    aws ec2 delete-key-pair --key-name KEY_NAME
+
+  # get the instance fingerprint (to later verify when you connect to ensure your not victim to a man-in-the-middle attack)
+    aws ec2 get-console-output --instance-id EC2_INSTANCE_ID --output text
+
+```
+
+## sam cli
+
+- AWS Serverless Application Model (SAM) CLI is an open-source CLI tool that helps you develop serverless applications containing Lambda functions, Step Functions, API Gateway, EventBridge, SQS, SNS and more. Some of the features it provides are:
+
+- docker is prereq for testing applications locally and building deployment packages using the `--use-container` option
+  - the sam cli uses the `DOCKER_HOST` env var to communcate with the docker daeon
+
+```sh
+
+sam --version
+
+```
