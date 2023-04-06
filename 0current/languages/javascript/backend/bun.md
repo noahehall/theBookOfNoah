@@ -34,6 +34,11 @@
 - [utils](https://bun.sh/docs/api/utils)
 - [web sockets](https://bun.sh/docs/api/websockets)
 
+### issues
+
+- [typescript document not found issue](https://github.com/oven-sh/bun/issues/463)
+  - remove `bun-types` from tsconfig and add it to a declaration file
+
 ### ecosystem
 
 - [elysia: webframework optimized for bun](https://elysiajs.com/quick-start.html)

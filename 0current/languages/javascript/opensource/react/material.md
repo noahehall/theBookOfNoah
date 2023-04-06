@@ -54,6 +54,38 @@
 - color of components, surface darkness, shadow, opacity, etc
 - apply consistent and customized design aspects to all components
 
+#### variables
+
+- add new key: vals to `createTheme({...})` to provide custom variables to a theme
+
+#### palette
+
+- ...
+
+#### typography
+
+- ...
+
+#### spacing
+
+- ....
+
+#### breakpoints
+
+- ....
+
+#### zindex
+
+- ....
+
+#### transitions
+
+- ....
+
+#### components
+
+- ....
+
 ### core components
 
 #### CssBaseline
