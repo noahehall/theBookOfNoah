@@ -9,7 +9,7 @@
    */
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": false // override for mac
+    "editor.formatOnSave": true // override for mac
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -25,6 +25,17 @@
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
   "[typescript]": {},
+
+  /**
+   * git
+   */
+  "diffEditor.codeLens": true,
+  "diffEditor.wordWrap": "off",
+  "git.confirmSync": false,
+  "git.enableStatusBarSync": false,
+  "scm.autoReveal": false,
+  "scm.countBadge": "off",
+
   /**
    * editor
    * controls useability
@@ -68,6 +79,7 @@
   "editor.wordWrapColumn": 80,
   "editor.wrappingIndent": "deepIndent",
   "explorer.sortOrder": "default",
+
   /**
    * files
    */
@@ -85,7 +97,7 @@
     "*.jsonc": "jsonc",
     "*.nomad": "hcl",
     "*.env.development.compose.yaml": "yaml",
-    "*.cfg": "haproxy"
+    "*.cfg": "haproxy" // TODO: haproxy isnt the only cfg
   },
   "files.watcherExclude": {
     "**/.ammonite": true,
@@ -129,6 +141,7 @@
   "terminal.integrated.fontSize": 18,
   "terminal.integrated.sendKeybindingsToShell": true,
   "terminal.integrated.tabs.location": "left",
+
   /**
    * outline
    */
@@ -141,7 +154,6 @@
    * other settings
    */
   "breadcrumbs.icons": false,
-  "window.zoomLevel": -1,
 
   /**
    * other extensions
@@ -185,16 +197,6 @@
     "!Split",
     "!Split sequence"
   ],
-
-  /**
-   * git
-   */
-  "diffEditor.codeLens": true,
-  "diffEditor.wordWrap": "off",
-  "git.confirmSync": false,
-  "git.enableStatusBarSync": false,
-  "scm.autoReveal": false,
-  "scm.countBadge": "off",
 
   /**
    * code runner extension
@@ -259,5 +261,6 @@
     "v": "v run",
     "vbscript": "cscript //Nologo",
     "zig": "zig run"
-  }
+  },
+  "window.zoomLevel": 1
 }
