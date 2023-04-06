@@ -4,18 +4,27 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
 ## links
 
+- [vpn](https://aws.amazon.com/vpn/?did=ap_card&trk=ap_card)
+- [elastic load balancer](https://aws.amazon.com/elasticloadbalancing/?did=ap_card&trk=ap_card)
+- [transit gateway](https://aws.amazon.com/transit-gateway/?did=ap_card&trk=ap_card)
+- [global accelerator](https://aws.amazon.com/global-accelerator/?did=ap_card&trk=ap_card)
+- [cloud map](https://aws.amazon.com/cloud-map/?did=ap_card&trk=ap_card)
+- [app mesh](https://aws.amazon.com/app-mesh/?did=ap_card&trk=ap_card)
+- [cloudfront](https://aws.amazon.com/cloudfront/?did=ap_card&trk=ap_card)
 - [ingress vs egress](https://www.dictionary.com/e/ingress-vs-egress/)
-- route53
-  - [making amazon route53 the DNS service for an existing domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/MigratingDNS.html)
-  - [making route53 the dns for a domain thats in use](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/migrate-dns-domain-in-use.html)
-  - [making route53 the dns for an inactive domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/migrate-dns-domain-inactive.html)
-  - [create a new subdomain](https://aws.amazon.com/premiumsupport/knowledge-center/create-subdomain-route-53/)
-- vpc
-  - [working with VPCs](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html)
-  - [reachability analyzer](https://docs.aws.amazon.com/vpc/latest/reachability/what-is-reachability-analyzer.html)
-  - [vpc costs](https://aws.amazon.com/vpc/pricing/)
-  - tuts
-    - [deleting a VPC](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html#VPC_Deleting)
+- [vpc](https://aws.amazon.com/vpc/?did=ap_card&trk=ap_card)
+- [route53](https://aws.amazon.com/route53/?did=ap_card&trk=ap_card)
+- [route53 making amazon route53 the DNS service for an existing domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/MigratingDNS.html)
+- [route53 the dns for a domain thats in use](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/migrate-dns-domain-in-use.html)
+- [route53 the dns for an inactive domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/migrate-dns-domain-inactive.html)
+- [route53 create a new subdomain](https://aws.amazon.com/premiumsupport/knowledge-center/create-subdomain-route-53/)
+- [vpc working with VPCs](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html)
+- [vpc reachability analyzer](https://docs.aws.amazon.com/vpc/latest/reachability/what-is-reachability-analyzer.html)
+- [vpc costs](https://aws.amazon.com/vpc/pricing/)
+
+### tuts
+
+- [deleting a VPC](https://docs.aws.amazon.com/vpc/latest/userguide/working-with-vpcs.html#VPC_Deleting)
 - internet gatway
   - [connect to the net](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html)
 - route table
@@ -142,14 +151,20 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
     - the vpc cidr/block is called the `super net`, as it contains all IPs for all subnets, and thus all resources
     - ^ e.g the `10.0` super net, or the `198.0` super net
     - ^ `192.0.1` would be a specific subnet, and `192.0.1.0` would be a specific host
-- subnet: a range (subset) of ips within a vpc
-  - the larger the /cidr, the smaller the number of ips just like a fraction
-  - can contain public/private resources
-    - private: for private resources
-      - should point to the NAT GATEWAY in the public subnet for translating a resources private IP into a public one
-    - public: for public resources
-      - should point to the internet gateway to enable inbound/outbound traffic on the public net
-- route tables: specify how vpc traffic flows in/out of subnets
+
+### subnet
+
+- a range (subset) of ips within a vpc
+- the larger the /cidr, the smaller the number of ips just like a fraction
+- can contain public/private resources
+  - private: for private resources
+    - should point to the NAT GATEWAY in the public subnet for translating a resources private IP into a public one
+  - public: for public resources
+    - should point to the internet gateway to enable inbound/outbound traffic on the public net
+
+### route tables
+
+- specify how vpc traffic flows in/out of subnets
   - controls subnet routing & directs traffic between subnets
     - e.g. specify how a resource in a private subnet can connect to something in a public subnet
   - default route table: can be modified but not deleted
@@ -158,7 +173,10 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - highly available (i.e. you only need 1 per vpc)
   - configure subnet route tables to use the internet gateway
   - provides NAT for instances with a public IP
-- NAT gateway (managed): network address translation; enable resources in a private subnet to initiate & connect to the public internet
+
+### NAT gateway (managed):
+
+- network address translation; enable resources in a private subnet to initiate & connect to the public internet
   - requires an EIP
     - useful for providing a consistent resource for apps & end users
     - if an ec2/resource fails, you can reassign the IP to another resource
@@ -181,27 +199,36 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
       - does not support port forwarding
       - inbound SSH via nat isnt supported
       - more expensive (but think about the time saved too)
-- egress-only internet gateway: allows VPC ipv6 outbound (but denies inbound)
-- VPC endpoints: enable resources within a VPC to privately access other AWS services without traversing the public internet
-  - PrivateLink: uses the internal aws network instead of the public internet
-    - per hourly charges
-    - per GB charges
-  - use cases
-    - private access: if one vpc service needs to talk to another service, just use privatelink
-    - simplifies network configuration (dont need an internet gateway)
-    - improved secuirty posture (less configuration, no public internet)
-  - types
-    - interface:
-      - powered by AWS PrivateLink
-      - use an elastic interface (ENI) as an entry point for traffice destined to the service
-      - typically accessed using public/private dns name associated with the service
-    - gateway load balancer
-      - powered by AWS PrivateLink
-      - use an elastic interface (ENI) as an entry point for traffic destined to the service
-      - serve as a target for a route in a route table for traffic destined for the service
-    - gateway
-      - serve as a target for a route in a route table for traffic destined for the service
-- transit gateway: simplify network management across multiple VPCs &/ on premise data centers
+
+### egress-only internet gateway:
+
+- allows VPC ipv6 outbound (but denies inbound)
+
+### VPC endpoints
+
+- enable resources within a VPC to privately access other AWS services without traversing the public internet
+- PrivateLink: uses the internal aws network instead of the public internet
+  - per hourly charges
+  - per GB charges
+- use cases
+  - private access: if one vpc service needs to talk to another service, just use privatelink
+  - simplifies network configuration (dont need an internet gateway)
+  - improved secuirty posture (less configuration, no public internet)
+- types
+  - interface:
+    - powered by AWS PrivateLink
+    - use an elastic interface (ENI) as an entry point for traffice destined to the service
+    - typically accessed using public/private dns name associated with the service
+  - gateway load balancer
+    - powered by AWS PrivateLink
+    - use an elastic interface (ENI) as an entry point for traffic destined to the service
+    - serve as a target for a route in a route table for traffic destined for the service
+  - gateway
+    - serve as a target for a route in a route table for traffic destined for the service
+
+### transit gateway
+
+- simplify network management across multiple VPCs &/ on premise data centers
   - Transit Gateway connects on-premises resources to VPCs using a centralized hub. VPC Peering connects VPCs with each other, DirectConnect provides dedicated bandwidth, and a site-to-site VPN is a software approach for securing traffic.
   - use cases
     - centralizes & simplifies regional network management for a given region in single hub
@@ -217,33 +244,57 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
       - highly available
     - billed per hour, & per gb
       - only use for complex setups
-- customer gateway: CG: on premise; physical networking appliance, to which all aws bound network traffic is anchored
+
+### customer gateway: CG
+
+- on premise; physical networking appliance, to which all aws bound network traffic is anchored
   - you buy it from like cisco
   - it creates the IPsec tunnel
-- virtual private gateway: VPG; enable external resources to connect privately to resources within a vpc
+
+### virtual private gateway: VPG
+
+- enable external resources to connect privately to resources within a vpc
   - the virtual counterpart to a customer gateway; resides in aws; the anchor point for all customer gateway network traffic
-- site-to-site vpn: enables machines in a local data center (e.g. within a customer gateway) to connect to aws resources (e.g. via a virtual private gateway)
+
+### site-to-site vpn
+
+- enables machines in a local data center (e.g. within a customer gateway) to connect to aws resources (e.g. via a virtual private gateway)
   - network traffic flows securely over a vpn tunnel
-- IPsec tunnel: internet protocol security vpn tunnel
-  - needs an anchor configured on both sides to work
-    - within aws: use a VPG and attach it to resources within AWS
-    - on premise: use a CG:
-    - the traffice is routed over the public internet
-- direct connect: alternative to the IPsec tunnel architecture
+
+### IPsec tunnel:
+
+- internet protocol security vpn tunnel
+- needs an anchor configured on both sides to work
+  - within aws: use a VPG and attach it to resources within AWS
+  - on premise: use a CG:
+  - the traffice is routed over the public internet
+
+### direct connect:
+
+- alternative to the IPsec tunnel architecture
   - purchased from AWS
   - dedicated network connection to AWS
   - establishes a physical link from the router you own, and an AWS direct connect router
     - the traffic is routed over AWS network (not the public)
-- vpc peering: connect privately between AWS VPCs (within same/diff accounts/organizations)
-  - doesnt need a gateway/vpn connection
-  - makes use of internal AWS routing infrastructure
-  - connections can span regions, accounts, organizations
-- DHCP option set: dynamic host configuration protocol
+
+### vpc peering
+
+- connect privately between AWS VPCs (within same/diff accounts/organizations)
+- doesnt need a gateway/vpn connection
+- makes use of internal AWS routing infrastructure
+- connections can span regions, accounts, organizations
+
+### DHCP option set
+
+- dynamic host configuration protocol
   - pass config info to hosts on a TCP/IP network
     - e.g. domain name, domain name server, etc
   - e.g. specify your own DNS servers
   - a VPC can only have 1 DHCP option set
-- network ACL: access control lists (pronounced NACL) (are real firewalls unlike security groups)
+
+### network ACL
+
+- access control lists (pronounced NACL) (are real firewalls unlike security groups)
   - are specific to a single VPC
   - have 1:M relationship with subnets, 1 nacl has many subnets
   - are stateless: rules to allow network traffic must be explicitly configured
@@ -257,6 +308,7 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 
 ### default VPC
 
+- NEVER use or modify the default vpc
 - components
   - vpc cidr block: `172.31.0.0/16` 65k ips
     - for all default vpcs in all regions
@@ -322,6 +374,10 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
   - route propagation
     - routes dynamically propagated to route tables
     - ^ but vpcs require static routes with transit gateways
+
+### route tables
+
+- should have their own section here
 
 ## route53
 
@@ -726,4 +782,32 @@ vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront
 - route to a group of ec2 instances/IP/lambda fns based on host, path, http header, http method, query param, source IP cidr
 - perform health checks on the targets
 
-# route tables
+## app mesh
+
+- application-level networking
+
+## cloud map
+
+- service discovery
+
+## elastic load balancing ELB
+
+- automatically distributes incoming application traffic across multiple targets and virtual appliances
+
+### application load balancer
+
+- http 1/2, grpc, websocket load balancer
+- for general internet
+
+### gateway load balancer
+
+- layer 4 tcp/upd load balancer
+
+### network load balancer
+
+- layer 4 tcp/udp load balancer
+- EIP/static ip routing to EC2 autoscaling groups, eks, farget, ecs, or application load balancer
+
+## vpn
+
+- connect onpremise networks and remote workers to AWS resources

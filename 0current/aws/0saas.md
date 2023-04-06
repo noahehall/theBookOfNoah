@@ -1,3 +1,5 @@
+delete this file
+
 # software as a server
 
 - various SaaS offerrings by aws, no matter their particular domain

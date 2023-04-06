@@ -1,5 +1,16 @@
 # AWS Global Architecture, Security and AuthNZ
 
+- IAM, STS, cognito, KMS, secrets manager, cli, sam cli
+- this cheatsheet should be used in conjunction with:
+  - [micrservices](./0microservices.md)
+  - [analytics (and billing)](./0analytics.md)
+  - [security](./security.md)
+- before going all in on AWS: consider [everything hashicorp](../hashicorp/README.md) for a truly modern multi-cloud-enabled devops architecture
+- todos
+  - theres bunches of stuff in the oldnotes and oldnotesbooks directories
+    - move them all into the new files
+    - you should start with this todo
+
 ## TLDR
 
 - features that encompass AWS resources and architecture decisions
@@ -22,6 +33,12 @@
 ## links
 
 - [all 250+ aws services](https://aws.amazon.com/products/)
+- [all aws managed services](https://aws.amazon.com/products/management-and-governance/)
+
+### interwebs
+
+- [IBM on ITSM](https://www.ibm.com/topics/it-service-management)
+- [IBM on ITIL](https://www.ibm.com/topics/it-infrastructure-library)
 
 ### reference
 
@@ -32,6 +49,10 @@
 
 ### docs
 
+- [proton](https://aws.amazon.com/proton/)
+- [service management connector](https://aws.amazon.com/service-management-connector)
+- [control tower](https://aws.amazon.com/controltower/)
+- [organizations](https://aws.amazon.com/organizations/?c=mg&sec=srv)
 - [resource names](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
 - [IAM json policy elements](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_resource.html)
 - [access anlyzer](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html#access-analyzer-enabling)
@@ -52,12 +73,14 @@
 ### tools
 
 - [all tools](https://aws.amazon.com/tools/)
+- [aws simple monthly calculator](http://calculator.s3.amazonaws.com/index.html)
 - [cli cmds](https://docs.aws.amazon.com/cli/latest/reference/)
 - [command completion](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html)
 - [developer tools](https://aws.amazon.com/products/developer-tools/)
 - [get your public IP](https://checkip.amazonaws.com/)
 - [sam cli](https://github.com/aws/aws-sam-cli)
 - [toolkit for vscode](https://aws.amazon.com/visualstudiocode/)
+- [well-archtiected tool](https://aws.amazon.com/well-architected-tool/)
 
 ### tuts
 
@@ -102,6 +125,8 @@
 
 ### terminology
 
+- ITIL: IT infrastructure library; best practices for IT services and improving IT support and service levels
+- ITSM: IT service management; set of policies and practices for implementing, delivering and managing IT services for end users
 - canonical ID: identifies a specific user/account/resource across all of AWS
   - anonymouse user: 65a011a29cdf8ec533ec3d1ccaae921c
 - groups
@@ -336,17 +361,13 @@
 - [main page](https://aws.amazon.com/kms/?did=ap_card&trk=ap_card)
 - Create and control keys used to encrypt or digitally sign your data
 
-## Secrets Manager
-
-- [main page](https://aws.amazon.com/secrets-manager/?did=ap_card&trk=ap_card)
-- Centrally manage the lifecycle of secrets
-
 ## aws cli
 
 - files
   - default config & credentials
   - ~/.aws/config: setup the default output and region per profile
   - ~/.aws/credentials: setup access key ID and secret for each profile
+- TODO: put resource specific cli stuff in their related files
 
 ```sh
   # configure help
@@ -441,3 +462,24 @@
 sam --version
 
 ```
+
+## organizations
+
+- centrally manage multiple AWS accounts
+- allocate resources, group accoutns and apply policies to accounts/groups
+
+## license manager
+
+- manage software licenses and fine-tune licensing costs
+
+## control tower
+
+- setup and govern multi accounts
+
+## service management connector
+
+- provision, manage and operate AWS resources within ITSM
+
+## proton
+
+- self-service infrastructure templates and provisioning automation

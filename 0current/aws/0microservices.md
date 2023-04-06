@@ -1,18 +1,33 @@
-# AWS Microservices
+# AWS Microservice and Distributed Systems
+
+- lambda, step functions, ses, sqs, sns, kinesis, eks, ecs, fargate, ecr, mq, lightsail, app runner
 
 ## TLDR
 
-- catchall for microservice architectures
+- catchall for resources supporting microservices and distributed systems
+- this cheatsheet goes with:
+  - [provisioning](./0provisioning.md)
+  - [analytics](./0analytics.md)
 
 ## links
 
+- [aws microservice introduction](https://aws.amazon.com/microservices/)
 - [aws messaging services](https://aws.amazon.com/messaging/)
+- [ecr public gallery](https://gallery.ecr.aws/)
+- [ecs container definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definitions%3Ficmpid=docs_ecs_hp-task-definition)
 - [kinesis](https://aws.amazon.com/kinesis/)
-- [amazon states language](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html)
-- [amazon ecr public gallery](https://gallery.ecr.aws/)
-- [container definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definitions%3Ficmpid=docs_ecs_hp-task-definition)
-- [aws serverless compute](https://aws.amazon.com/serverless/)
-- [coldstarts in aws lambda](https://mikhail.io/serverless/coldstarts/aws/)
+- [lambda coldstarts in aws lambda](https://mikhail.io/serverless/coldstarts/aws/)
+- [serverless compute](https://aws.amazon.com/serverless/)
+- [step functions: amazon states language](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html)
+- [lightsail](https://aws.amazon.com/lightsail/?did=ap_card&trk=ap_card)
+- [fargate](https://aws.amazon.com/fargate/?did=ap_card&trk=ap_card)
+- [api gateway](https://aws.amazon.com/api-gateway/?did=ap_card&trk=ap_card)
+- [cloudsearch](https://aws.amazon.com/cloudsearch/?did=ap_card&trk=ap_card)
+- [opensearch](https://aws.amazon.com/opensearch-service/?did=ap_card&trk=ap_card)
+- [msk apache kafka](https://aws.amazon.com/msk/?did=ap_card&trk=ap_card)
+- [data exchange](https://aws.amazon.com/data-exchange/?did=ap_card&trk=ap_card)
+- [glue](https://aws.amazon.com/glue/?did=ap_card&trk=ap_card)
+- [datapipeline](https://aws.amazon.com/datapipeline/?did=ap_card&trk=ap_card)
 
 ## basics
 
@@ -113,8 +128,8 @@
 
 ## lambda
 
-- the most basic on-demand compute, almost anything you would need an EC2 instance for, you can implement as an AWS Lambda fn
-- event drivent, stateless (serverless) business logic
+- the most basic on-demand compute, run functions instead of EC2 servers
+- event drivent, stateless (serverless) business logic that can be triggered from 200+ aws services
 - compute service to run code without managing servers
 - costs
   - number of requests
@@ -432,15 +447,11 @@ exports.handler = function (event, context, callback) {
   - can have multiple shards within a stream, and consumers can be assigned to specific shards
   - full replay is possible by resetting a stream to a point in time
 
-## SageMaker
-
-- ML in the cloud
-
-## EKS
+## EKS elastic kubernetes service
 
 - elastic kubernetes service
 
-## ECS
+## ECS elastic container service
 
 - no cost for ec2 launch type, farget has costs for vcpu and memory resources
 - amazon container service
@@ -475,3 +486,138 @@ exports.handler = function (event, context, callback) {
 - docker registry on aws
 - create registry from the web console then click `view push cmds`
   - you generally need to do this once, so that you can connect to the registry and push your images
+
+## MQ
+
+- managed message broker for apache activeMQ
+
+## systems manager
+
+- view operatoinal data from multiple services & automate operation tasks
+  - formerly known as Simple Systems Manager
+- use cases
+  - centrally define the configuration options & policies for managed instances
+  - identify resources that are out of compliance and take corrective action
+  - automate variety of maintence tasks (e.g. ec2 patching)
+  - create runbook style docs that define the actions to perform on managed instances
+  - group AWS resources together using various attributes
+  - automatically collect inventory information about amazon EC2 and on-premise managed instances
+- systems manager agent: required to be installed on ec2 instances, on-premise servers, or avirtual machine
+  - some AMIs have the agent preinstalled
+- management types
+  - operations managemnet
+  - application management
+  - change management
+  - node management
+  - shared resources
+- fleet manager: all nodes that include the Systems manager agent
+  - click into an instance
+    - view file system, performance counters, users and gorups
+    - can even log into the instance from the web console (click actions button)
+- inventory: basic inventory information about all your instances
+- patch manager: auto patch instances
+- run command: run a command on an instance via the web console
+  - pick one from the list of command documents
+- hybrid activations: for installing the systems manager agent in on-premise servers
+  - you only need to do this once for each account
+  - make sure you have keep the activation code & ID as you only can view it once while creating it
+- documents: create your own runbook document
+  - in JSON/yaml format
+- distributor: enable you to install software on your managed instances
+  - software provided by aws
+  - software you provide
+    - create a package and upload it
+    - systems manager will push it to your instance
+- state mangaer: manage the state of ec2 & hybrid infrastructure
+  - create an association
+    - defines the desired state of your targets
+    - includes a rundoc that contains
+      - the state definition
+      - target information
+      - schedule
+
+### systems management configuration
+
+- configuration type
+  - host management
+    - update systems manager agent every two weeks
+    - collect inventory from your instances every 30 ins
+    - scan instances for missing patches daily
+    - install & configure the cloudwatch agent
+    - update the agent every 30 days
+  - config recording
+  - distributor
+- targets
+  - region
+  - all/specific instances
+  - resource group/manually select
+
+### operations management
+
+- explorer: customizable dashbaord
+  - compliance: aggregates and display s ops data for each resource group
+  - inventory: collects instance-level (installed software, files, services, etc) specific data
+- ops center: view investigate and resolve resource issues
+- incident manager: prepare for and resolve availability and perf issues
+
+### application management
+
+- application manager: application-level runtime issue management
+- appconfig: deploy app configs
+- parameter store: centralized config data (strings and secrets)
+
+### change management
+
+- automation: automate repetitive tasks across regions and accounts
+- change manager: request, approve, implmeent and report on ops (config/infra) changes
+- maintenance windows: schedule time windows for running instance-level tasks
+- state manager: configuration management for EC2 or on-premis servers
+
+### node management
+
+- fleet manager: manage remote servers & edge devices
+- session manager: browser-based interactive shell, cli and remote desktop access
+- patch manager: select and deploy operating system and software patches
+- run command: secure remote access without the ned for bastion hosts, ssh or remote powershell
+
+## lightsail
+
+- easy-to-use virtual private server instances, containers storage adn databases for simple web applications and test environments
+
+## app runner
+
+- deploy containerized web apps and APIs at scale
+
+## pinpoint
+
+- customer engagement platform for managing targeted and transaction multi-channel engagement via email, push, SMS and lambda
+
+## api gateway
+
+- create, maintain and secure restful/websocket APIs via containerized/services fns and web applications
+
+## cloudsearch
+
+- setup, manage and scale application text search
+
+## opensearch
+
+- real-time search, monitoring and analysis based on elasticsearch
+
+## msk: managed streaming for apache kafka
+
+- securely stream data via managed apacha kafka
+
+## data exchange
+
+- pub/sub for third-party data sources
+- seems like AWS has partnered with big-data tech to sell you their data
+
+## glue
+
+- integrate with and build data pipelines across services
+- supports various ETL, ELT, batch and streaming pipelines and workloads
+
+## data pipeline
+
+- process and move data between compute/storage onpremise and aws resources

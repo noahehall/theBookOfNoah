@@ -1,6 +1,12 @@
+# Servers
+
+- ec2, AMI (amazon machine images), ec2 launch templates, ec2 instanct connect
+- for EC2 storage see [storage](./0storage.md)
+- for EC2 networking see [networking](./0networking.md)
+
 # TLDR
 
-- ec2, AMI (amazon machine images), aws compute optimizer, ec2 launch templates, ec2 instanct connect
+- everything EC2
 
 ## links
 
@@ -15,8 +21,6 @@
 - ami
   - [getting started](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html#finding-quick-start-ami)
   - [create ami from instance](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/tkv-create-ami-from-instance.html)
-- compute optimizer
-  - [landing page](https://us-east-1.console.aws.amazon.com/compute-optimizer/home?#/)
 
 ## basics
 
@@ -119,12 +123,6 @@
 - templates from which AMIs can be launched
 - all about configuring AWS details, security groups, network settings, instance types, storage, etc
 
-## compute optimizer
-
-- identify optimal aws compute resources for workloads
-- AWS Compute Optimizer analyzes your resources and utilization data
-- opt in: must have [iam:CreateServiceLinkedRole](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html) permission
-
 ## instant connect
 
 - secure way to connect to your Linux instances using Secure Shell (SSH)
@@ -133,3 +131,11 @@
   - setup a fkn jump box with instant connect
   - and enable the jump box access to other resources
   - dont assign public ips to fkn resources in private subnets
+
+## auto scaling
+
+- scale compute capacity
+
+## spot instances
+
+- run workloads for up to 90% off

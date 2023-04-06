@@ -4,38 +4,41 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
 
 ## links
 
-- [user guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
-- [database preview environment](https://us-east-2.console.aws.amazon.com/rds-preview/home?region=us-east-2#)
-- [aws simple monthly calculator](http://calculator.s3.amazonaws.com/index.html)
-- [amazon aurora serverless](https://aws.amazon.com/rds/aurora/serverless/)
-- [amazon redshift](https://aws.amazon.com/redshift/)
-- [amazon documentdb](https://aws.amazon.com/documentdb/)
-- [amazon timestream](https://aws.amazon.com/timestream/)
-- ref
-  - [db instance classes](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html)
-  - [aws-cli for rds](https://docs.aws.amazon.com/cli/latest/reference/rds/index.html)
-  - [db instance billing](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/User_DBInstanceBilling.html)
-  - [rds billing](https://aws.amazon.com/rds/pricing)
-  - [supported postgres versions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts.General.DBVersions)
-  - [dynamodb local docker setup](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html#docker)
-- tuts
-  - [running dbs on AWS](http://aws.amazon.com/running_databases/)
-  - [rds & vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.html)
-  - [security on rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html)
-  - [high availability multi-az for rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html)
-  - [monitoring RDS db instances](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html)
-  - [postgres on rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html)
-  - [setting up for RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SettingUp.html)
-  - [working with a DB instance in a vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html)
-  - [IAM for rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAM.html)
-  - [regions, AZ and local zones for RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html)
-  - [importing data into postgres on rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL.Procedural.Importing.html)
-  - [upgrading postgres major/minor versions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.PostgreSQL.html)
-  - [create a db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateDBInstance.html)
-  - [create a VPC for use with a db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateVPC.html)
-  - [scenarios for accessing a DB instance in a vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.Scenarios.html)
-  - [create an ec2 instance to connect to a db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateWebServer.html)
-  - [local pgadmin connect to rds](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToPostgreSQLInstance.html)
+### dbs
+
+- [lake formation](https://aws.amazon.com/lake-formation/?did=ap_card&trk=ap_card)
+- [aurora serverless](https://aws.amazon.com/rds/aurora/serverless/)
+- [documentdb](https://aws.amazon.com/documentdb/)
+- [dynamodb local docker setup](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html#docker)
+- [rds aws-cli](https://docs.aws.amazon.com/cli/latest/reference/rds/index.html)
+- [rds billing](https://aws.amazon.com/rds/pricing)
+- [rds database preview environment](https://us-east-2.console.aws.amazon.com/rds-preview/home?region=us-east-2#)
+- [rds db instance billing](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/User_DBInstanceBilling.html)
+- [rds db instance classes](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html)
+- [rds supported postgres versions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts.General.DBVersions)
+- [rds user guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html)
+- [redshift](https://aws.amazon.com/redshift/)
+- [timestream](https://aws.amazon.com/timestream/)
+
+### tuts
+
+- [running dbs on AWS](http://aws.amazon.com/running_databases/)
+- [rds & vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.html)
+- [rds security](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html)
+- [rds high availability multi-az](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html)
+- [rds monitoring db instances](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Monitoring.html)
+- [rds postgres](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html)
+- [rds setting up](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SettingUp.html)
+- [rds working with a DB instance in a vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html)
+- [rds IAM](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAM.html)
+- [rds regions, AZ and local zones](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html)
+- [rds importing data into postgres](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL.Procedural.Importing.html)
+- [rds upgrading postgres major/minor versions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.PostgreSQL.html)
+- [rds create a db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateDBInstance.html)
+- [rds create a VPC for use with a db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateVPC.html)
+- [rds scenarios for accessing a DB instance in a vpc](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.Scenarios.html)
+- [rds create an ec2 instance to connect to a db instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateWebServer.html)
+- [rds local pgadmin connect](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToPostgreSQLInstance.html)
 
 ## best practices
 
@@ -110,7 +113,7 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
   - mysql, mariadb, postgresql, oracle, microsfot sql server
 - db instance class: determines the computation and memory capacity of a db instance oferring different compute, memory and storage capabilities
 - NTP: network time protocol is used to sync time on db instances
-  - you also use this on ubuntu to sync time 
+  - you also use this on ubuntu to sync time
   - security group: controls access to the db instance by permitting access to IP ranges/ec2 instances you specify
 - database preview environment: try out new postgres versions & extensions before they are fully supported by creating a db instance in the database preview environment
   - endpoint for api/cli: `rds-preview.us-east-2.amazonaws.com`
@@ -377,6 +380,7 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
 ## redshift
 
 - fully serverless data warehouse solution
+- use sql to analyze structued and semi-structued data across data warehouses, data lakes and dbs
 
 ## documentdb
 
@@ -393,3 +397,11 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
 
 - quantum ledger DB
 - immutable and verifiable transaction log without the need to manage a blockchain network
+
+## memorydb
+
+- redis compatible in-memory db service
+
+## lake formation
+
+- build, manage and secre data lakes

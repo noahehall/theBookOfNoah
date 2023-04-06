@@ -1,11 +1,25 @@
-# TLDR
+# analytics
 
-cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log insights, log groups, xray
+- cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log insights, log groups, xray, budgets
+- everyting analytics & cost management
+
+## TLDR
+
+- abc
 
 ## links
 
+- [emr](https://aws.amazon.com/emr/)
+- [athena](https://aws.amazon.com/athena/?did=ap_card&trk=ap_card)
+- [aws cost management tools](https://aws.amazon.com/aws-cost-management/)
 - [all billing reports](https://console.aws.amazon.com/cost-management/home?#/reports/overview)
 - [aws xray](https://aws.amazon.com/xray/)
+- [cost and usage reports](https://aws.amazon.com/aws-cost-management/aws-cost-and-usage-reporting/)
+- [cost explorer](https://aws.amazon.com/aws-cost-management/aws-cost-explorer/)
+- [distro for opentelemtry](https://aws.amazon.com/otel/?c=mg&sec=srv)
+- [aws observability introduction](https://catalog.workshops.aws/observability/en-US/intro)
+- [compute optimizer](https://aws.amazon.com/compute-optimizer/?did=ap_card&trk=ap_card)
+- [quicksight](https://aws.amazon.com/quicksight/?did=ap_card&trk=ap_card)
 
 ## basics
 
@@ -353,7 +367,35 @@ cloudtrail, cloudwatch, amazon eventbridge (cludwatch events) VPC flow logs, log
       - e.g. service issues
   - target: e.g. lambda fn, sns topic, sqs queue
 
-# xray
+## xray
 
 - Analyze and debug production, distributed applications
 - service that collects data about requests that your application serves, and provides tools that you can use to view, filter, and gain insights into that data to identify issues and opportunities for optimization.
+
+## budgets
+
+- planning and cost control with budgeting & forecasting
+
+## distro for opentelemetry
+
+- instruction applications and send metrics and traces to multiple AWS monitoring tools
+
+## compute optimizer
+
+- identify optimal aws compute resources for EC2, EBS, ECS and lambda
+- AWS Compute Optimizer analyzes your resources and utilization data
+- opt in: must have [iam:CreateServiceLinkedRole](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html) permission
+
+## athena
+
+- query data in s3/other storage services using sql/python
+- analyze petabyte-scale data where it lives
+
+## quicksite
+
+- unified business intelligence
+
+## emr
+
+- run apache spark, hive, presto etc data workloads
+- big data pipelines and processing

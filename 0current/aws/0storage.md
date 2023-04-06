@@ -144,7 +144,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
   - policy schedule: uses cron (ouch, need to find those notes or just google cron syntax), also configure show many snapshots are retained and the interval in which they're created
   - copy tags: this is how you identify which snapshots are from which resource, by copying the source tags to the snapshot
 
-## AWS Backup
+## Backup
 
 - 0 cost (except the storage fees & cross-region transfer) managed backup capabilities across many AWS resources (DLM only supports EBS/AMIs)
 - components
@@ -376,6 +376,10 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
   - AWS IAM: provide access to specific users in your account
   - bucket policies
 
+## S3 glacier
+
+- low cost archive storage
+
 ## ebs elastic block storage
 
 - when you need to store data on a server; an EBS can be attached (i.e. mounted) to any ec2 instance; i.e. like hard drive
@@ -463,3 +467,7 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
 - burstable + dedicated throughput for intense I/O needs
 - available for windows and Lustre (linux)
 - backups are stored in s3
+
+## EFS elastic file system
+
+- fully managed file system for EC2

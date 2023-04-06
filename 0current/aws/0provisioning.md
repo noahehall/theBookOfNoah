@@ -1,6 +1,22 @@
-# TLDR
+# Provisioning
 
-cloudformation, config, systems manager, autoscaling, codecommit, codepipeline, codedeploy
+- cloudformation, config, autoscaling, codecommit, codepipeline, codedeploy, service catalog, elastic beanstalk
+
+## TLDR
+
+- using many of these services directly restrains multi-cloud architectures
+- however knowing they exist and how they work is required for consuming these resources in third-party provisioning tools
+
+## links
+
+- [aws provisioning introduction](https://aws.amazon.com/products/management-and-governance/use-cases/provisioning-and-orchestration/)
+- [service catalog](https://aws.amazon.com/servicecatalog/)
+- [cloud formation](https://aws.amazon.com/cloudformation/)
+- [opsworks](https://aws.amazon.com/opsworks/)
+- [config](https://aws.amazon.com/config/)
+- [elastic beanstalk](https://aws.amazon.com/elasticbeanstalk/?did=ap_card&trk=ap_card)
+- [local zones](https://aws.amazon.com/about-aws/global-infrastructure/localzones/?did=ap_card&trk=ap_card)
+- [cdk](https://aws.amazon.com/cdk/)
 
 ## best practices
 
@@ -22,24 +38,18 @@ cloudformation, config, systems manager, autoscaling, codecommit, codepipeline, 
 - scale out/in (up/down) elastic capacity in response to changes in demand for compute resources
 - even without scaling, can ensure failed instances are replaced (e.g. in the event of a failed health check)
 - cooldown period: a protect time in which a scaling event is occuring so that a threshold being crossed doesnt trigger a scaling action
-
 - launch configuration: similar considerations as starting an EC2; you should use launch templates instead to get the latest/advanced features and better workflow/wizard
-
   - AMI template
   - EC2 instance type (e.g. a spot instance)
   - user data scripts: actions to perform on boot
   - security group(s) to attach
-
 - launch templates: modern way to specify EC2 instances for an auto scale group; same considerations as setting up a launch configuration
-
   - recommended over launch configurations
   - main difference being you can
     - have multiple version of a launch template, but only one version of a launch configuration; a dedefault one that starts small instances, and another that starts large instances
     - better workflow/wizard
     - more advanced features and configuration options
-
 - auto scaling group: ASG: uses the launch template (i.e. ec2 template) for creating ec2 instances across subnets & AZs in a VPCs
-
   - target groups: a group of ec2 resources
   - launch configuration/template
   - number of initial, desired, and maximum instances to have running
@@ -49,7 +59,6 @@ cloudformation, config, systems manager, autoscaling, codecommit, codepipeline, 
   - VPC
   - subnets
   - load balancing: will monitor load balancer utilization and scale in/out ec2 resources
-
     - you need to have previously created an application or classic load balancer
     - for an existing/new auto scaling group click edit and go to the load balancing section
     - gotchas:
@@ -60,13 +69,10 @@ cloudformation, config, systems manager, autoscaling, codecommit, codepipeline, 
     - you want to insert a new rule (or modify an existing one) that matches those instances (e.g. path based rule) then sticky (i.e always) forwards to the target group you created in the previous step
     - now your load balancer forwards to the target group that contains the ec2 instances
     - you should return to the auto scaling group, and ensure `ELB` health checks is selected under the health checks section in addition to the EC2 health checks
-
   - health checks: how long to wait before checking if newly launched instances are healthy
   - cloudwatch: collect group metrics to track changes to the autoscaling group over time
   - sns topics: add notifications when scaling events occur
-
 - scaling polices: define which [cloud watch alarm] metric event thresholds trigger scaling actions; a tool to dynamically control the number of running instances in an autoscaling group
-
   - autoscaling group > automatic scaling tab
   - scale out: increase capacity
   - scale in: decrease capacity
@@ -84,7 +90,6 @@ cloudformation, config, systems manager, autoscaling, codecommit, codepipeline, 
       - allows for fine-grained scale adjustments
     - simple scaling: not re-evaluated during cooldown periods; if you experience a huge and sudden change in demand, you may not scale out appropriately
     - Simple Queue Service
-
 - considerations
   - how many subnets & AZs are you using? different AZs have distinct number of subnets
   - scaling policies: should increment servers evenly across AZs and subnets, it will automatically distribute servers to each subnet in each AZ
@@ -111,7 +116,6 @@ cloudformation, config, systems manager, autoscaling, codecommit, codepipeline, 
 - A summarized view of AWS and non-AWS resources and the compliance status of the rules and the resources in each AWS Region.
 - managed service providing an inventory of AWS resources, config history, and change notifcations to
 - use cases
-
   - enable security & governance
   - discover existing aws resources
   - CRUD notifications
@@ -121,7 +125,6 @@ cloudformation, config, systems manager, autoscaling, codecommit, codepipeline, 
     - deviations automatically trigger SNS notifications & cloudwatch events
   - view relationships between resources
   - export complete inventory of AWS resources with all config details
-
 - config items: a point in time view of the various attributes of an aws resource
   - metadata, attributes, relatinships, current config, related events
   - items are created whenever AWS config detects a change to a resource type its recording
@@ -134,7 +137,6 @@ cloudformation, config, systems manager, autoscaling, codecommit, codepipeline, 
 - config recorder: stores configuration of supported resources as configuration items
   - you must create & start the recorder
 - config rules: the desired config settings for AWS resources
-
   - if a resource violates a rule, aws config flags the resource and the rule as noncompliant
   - rule evaluations occur when:
     - a configuration change occurs
@@ -142,7 +144,6 @@ cloudformation, config, systems manager, autoscaling, codecommit, codepipeline, 
   - rule types:
     - managed rules: predefined rules you can customize
     - custom: rules you create
-
 - supported resource types
   - ec2, s3, vpc, iam, lambda, cloudformation, cloudwatch, cloudtrail
 
@@ -179,95 +180,39 @@ cloudformation, config, systems manager, autoscaling, codecommit, codepipeline, 
   - resource ID
   - parameter: the desired value for non compliance resources
 
-## systems manager
-
-- view operatoinal data from multiple services & automate operation tasks
-
-  - formerly known as Simple Systems Manager
-
-- use cases
-
-  - centrally define the configuration options & policies for managed instances
-  - identify resources that are out of compliance and take corrective action
-  - automate variety of maintence tasks (e.g. ec2 patching)
-  - create runbook style docs that define the actions to perform on managed instances
-  - group AWS resources together using various attributes
-  - automatically collect inventory information about amazon EC2 and on-premise managed instances
-
-- systems manager agent: required to be installed on ec2 instances, on-premise servers, or avirtual machine
-
-  - some AMIs have the agent preinstalled
-
-- management types
-
-  - operations managemnet
-  - application management
-  - change management
-  - node management
-  - shared resources
-
-- fleet manager: all nodes that include the Systems manager agent
-
-  - click into an instance
-    - view file system, performance counters, users and gorups
-    - can even log into the instance from the web console (click actions button)
-
-- inventory: basic inventory information about all your instances
-
-- patch manager: auto patch instances
-
-- run command: run a command on an instance via the web console
-
-  - pick one from the list of command documents
-
-- hybrid activations: for installing the systems manager agent in on-premise servers
-
-  - you only need to do this once for each account
-  - make sure you have keep the activation code & ID as you only can view it once while creating it
-
-- documents: create your own runbook document
-
-  - in JSON/yaml format
-
-- distributor: enable you to install software on your managed instances
-
-  - software provided by aws
-  - software you provide
-    - create a package and upload it
-    - systems manager will push it to your instance
-
-- state mangaer: manage the state of ec2 & hybrid infrastructure
-  - create an association
-    - defines the desired state of your targets
-    - includes a rundoc that contains
-      - the state definition
-      - target information
-      - schedule
-
-### systems management configuration
-
-- configuration type
-  - host management
-    - update systems manager agent every two weeks
-    - collect inventory from your instances every 30 ins
-    - scan instances for missing patches daily
-    - install & configure the cloudwatch agent
-    - update the agent every 30 days
-  - config recording
-  - distributor
-- targets
-  - region
-  - all/specific instances
-  - resource group/manually select
-
-# codecommit
+## codecommit
 
 - secure, highly scalable, managed source control service that hosts private Git repositories
 
-# Codepipeline
+## Codepipeline
 
 - fully managed continuous delivery service that helps you automate your release pipelines for fast and reliable application and infrastructure updates. CodePipeline automates the build, test, and deploy phases of your release process every time there is a code change, based on the release model you define.
 
-# codedeploy
+## codedeploy
 
--
+- ..
+
+## cloudformation
+
+- aws IaC tool
+
+## service catalog
+
+- create, share, organize and govern currated IaC templates
+
+## opswork
+
+- automate with chef and puppet
+
+## elastic beanstalk
+
+- upload, deploy and scale web apps and services
+- upload your code and EBS handles capcitiy provisinoing, load balancing, auto scalaing and health monitoring
+
+## locale zones
+
+- type of infrastructure deployment htat places compute, storage, db and other AWS services close to large population and industry centers
+
+## cdk cloud development kit
+
+- terraform knockoff
