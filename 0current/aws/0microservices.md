@@ -1,8 +1,8 @@
-# TLDR
+# AWS Microservices
 
-- lambda, fargate, Simple Queue Service SQS, Simple Notification Service SNS, cloudwatch, EKS, Step Functions, SES, ECR, ECS, kms
+## TLDR
 
-- lumping serverless into this file
+- catchall for microservice architectures
 
 ## links
 

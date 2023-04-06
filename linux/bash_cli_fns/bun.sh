@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+bun_repl() {
+  bun x bun-repl
+}
 bun_info() {
   echo $(bun pm bin)
   echo $(bun pm cache)

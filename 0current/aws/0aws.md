@@ -1,67 +1,102 @@
-# TLDR
+# AWS Global Architecture, Security and AuthNZ
 
-- cli, regions, azs, service quotas, etc
+## TLDR
 
-- broad strategies & architectures that encompass multiple AWS resources
-- things that generally apply to all services
+- features that encompass AWS resources and architecture decisions
+- generally apply to all services or should be `top of mind` when working with AWS
 
 ## todo
 
-- <https://aws.amazon.com/tools/>
 - supported compliance standards: <http://aws.amazon.com/compliance/>
-
 - lot of things about IAM in here, move it into the 0security file
+  - scratch that, put it under `# global architecture`
+  - move security in this file
+- iam intro https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html
+- todo: should be in order
+  - <https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#create-iam-users>
+  - <https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html>
+  - <https://wikipedia.org/wiki/Eventual_consistency>
+    - i think all this and related stuff is in one of the database readmes
+  - <https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_general.html#troubleshoot_general_eventual-consistency>
 
 ## links
 
-- [aws developer tools](https://aws.amazon.com/products/developer-tools/)
-- [aws toolkit for vscode](https://aws.amazon.com/visualstudiocode/)
-- [sam cli](https://github.com/aws/aws-sam-cli)
-- [all cli cmds](https://docs.aws.amazon.com/cli/latest/reference/)
-- [aws ci install & update directions](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-- [aws docs index](https://docs.aws.amazon.com/index.html)
-  - also probably the best overview of all services
-- [AWS glossary](https://docs.aws.amazon.com/general/latest/gr/glos-chap.html)
-  - the ultimate in ctrl+f
-- [amazon reosurce names](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
-- [IAM json policy elements](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_resource.html)
+- [all 250+ aws services](https://aws.amazon.com/products/)
+
+### reference
+
+- [aws ref: guide ands APIs](https://docs.aws.amazon.com/index.html)
+- [AWS ref: everything else](https://docs.aws.amazon.com/general/latest/gr/Welcome.html)
 - [available AWS condition keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html)
-- [enabling access anlyzer](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html#access-analyzer-enabling)
-  - [access analyzer APIs](https://docs.aws.amazon.com/access-analyzer/latest/APIReference/Welcome.html)
-- tools
+  - [aws ec2 ref](https://docs.aws.amazon.com/cli/latest/reference/ec2/)
 
-  - [get your public IP](https://checkip.amazonaws.com/)
+### docs
 
-- cli
-  - [creds & config spec](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
-  - [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
-  - [command completion](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html)
-  - [test permissions on the command line](https://docs.aws.amazon.com/AmazonS3/latest/userguide/policy-eval-walkthrough-download-awscli.html)
-  - [configuring credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html)
-  - [getting setup on th AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)
-    - [configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
-  - [AWS product (e.g. s3, rds) cmd reference](https://awscli.amazonaws.com/v2/documentation/api/latest/index.html)
-  - [s3 cmd reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3/index.html)
-    - [s3control plane actions reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3control/index.html)
-    - [s3api reference](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3api/index.html)
-  - [s3 glacier reference](https://docs.aws.amazon.com/cli/latest/reference/glacier/index.html)
-  - references
-    - [aws ec2 ref](https://docs.aws.amazon.com/cli/latest/reference/ec2/)
-  - tuts
-    - [aws-cli basics](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
-    - [aws-cli & s3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/setup-aws-cli.html)
-    - [aws-cli & ec2](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2.html)
-      - [manage private keys (pem)](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-keypairs.html)
-      - [import an existing key pair into aws](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-key-pair.html#examples)
+- [resource names](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
+- [IAM json policy elements](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_resource.html)
+- [access anlyzer](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html#access-analyzer-enabling)
+- [access analyzer APIs](https://docs.aws.amazon.com/access-analyzer/latest/APIReference/Welcome.html)
+- [getting setup on th AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)
+- [configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
+- [creds & config spec](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
+- [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+- [test permissions on the command line](https://docs.aws.amazon.com/AmazonS3/latest/userguide/policy-eval-walkthrough-download-awscli.html)
+- [configuring credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html)
+- [IAM docs](https://docs.aws.amazon.com/iam/?id=docs_gateway)
+- [IAM best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
+- [IAM user guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
+- [aws managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies)
+- [aws managed policies for job functions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html)
+- [global condition context keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html)
 
-### best practices/gotchas
+### tools
 
-- gotchas
-  - using any AWS managed service makes you operationally dependent on AWS
-  - not all services are available in all regions
-  - not all services cost the same in all regions
-- picking a region
-  - service availability, pricing, latency, compliance (law), SLAs
+- [all tools](https://aws.amazon.com/tools/)
+- [cli cmds](https://docs.aws.amazon.com/cli/latest/reference/)
+- [command completion](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html)
+- [developer tools](https://aws.amazon.com/products/developer-tools/)
+- [get your public IP](https://checkip.amazonaws.com/)
+- [sam cli](https://github.com/aws/aws-sam-cli)
+- [toolkit for vscode](https://aws.amazon.com/visualstudiocode/)
+
+### tuts
+
+- [aws-cli basics](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
+- [aws-cli & s3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/setup-aws-cli.html)
+- [aws-cli & ec2](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2.html)
+- [manage private keys (pem)](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-keypairs.html)
+- [import an existing key pair into aws](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-key-pair.html#examples)
+- [create an IAM user](https://docs.aws.amazon.com/AmazonS3/latest/userguide/setting-up-s3.html#create-an-iam-user-gsg)
+- [sign in as an IAM user](https://docs.aws.amazon.com/AmazonS3/latest/userguide/setting-up-s3.html#signing-in-iam-user-gsg)
+- [writing IAM policies](https://aws.amazon.com/blogs/security/writing-iam-policies-how-to-grant-access-to-an-amazon-s3-bucket/)
+- [preview access when creating policies](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-policies.html)
+- [managing IAM policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage.html)
+- [IAM customer managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create-console.html)
+- [permission sets](https://aws.amazon.com/premiumsupport/knowledge-center/create-sso-permission-set/)
+- [permission boundary for create role action](https://stackoverflow.com/questions/62029972/trying-to-give-iam-user-rights-to-create-and-assign-roles-but-limit-the-type-of)
+
+## best practices/gotchas
+
+- using managed services makes you operationally dependent on AWS
+- not all services
+  - are available in all regions
+  - cost the same in all regions
+- picking a region: service availability, pricing, latency, compliance (law), SLAs
+- ALWAYS
+  - create a schema for tagging resources
+  - create an account-level analyzer in IAM Access Analyzer on a per-Region basis.
+  - create users with NO ATTACHED POLICIES to incrementally test policies as youre creating them
+    - once you have verified the policy, you can then force the new user to reset their password
+  - define your security groups broadly, so you dont have to manage hundreds/thousands of them per vpc
+- SOMETIMES
+  - TBD
+- NEVER
+  - user the root account for common tasks
+  - make changes (like the following) in critical, high-avialaibity code paths since IAM is eventually consistent and takes time to replicate across servers
+    - creating updating users, groups or policies
+      - instead:
+        - make IAM changes in a serpate initialization/setup routing that you run less frequently
+        - verify changes have been propagated before production workflows depend on them
 
 ## basics
 
@@ -71,74 +106,11 @@
   - anonymouse user: 65a011a29cdf8ec533ec3d1ccaae921c
 - groups
 - CORS: JSON configuration defines a way for servers from domain X to interact with resources on domain Y
-- ARN: amazon resource name: identifier for a specific resource
-  - can use wildcards as part of the resource ARN
-    - `*` represents any combination of zero/more characers
-    - `?` represents any single character
-  - can use predefined policy variables
-    - at policy evaluation time, the variables are replaced by their corresponding values
-      - e.g. to organize the bucket as a collection of folders, one folder for each of your users `arn:aws:s3:::bucket_name/developers/${aws:username}/`
-  - examples
-    - a specific object in a bucket`arn:aws:s3:::examplebucket/developers/design_info.doc`
-    - any object in the bucket `arn:aws:s3:::examplebucket/*`
-    - any object in any bucket matching exampleXbucket `arn:aws:s3:::example?bucket/*`
-    - all s3 resources `arn:aws:s3:::*`
-  - has the following syntax across all AWS services regoin specific services: `arn:partition:service:region:namespace:relative-id`
-    - partition: `aws` or `aws-cn` for china (Beijing) region
-    - service: e.g. s3
-    - region:
-    - namespace:
-    - relative ID: e.g. `bucket-name` or `bucket-name/object-key`
-  - has the following syntax across all global services
-    - `arn:partition:service:::relative-id`
-      - notice the region & namespace are missing
-- tags
-  - to ensure tags are shown in dashboard columns, they must be case-sensitive
-    - i.e. `Name` !== `name`
 - encryption
-- user policies: use IAM to manage access to resources on AWS,
-  - i.e. create IAM users, groups and roles and attach access policies to them to grant access to resources
-    - everyone is denied by default
-  - cannot grant anonymous permissions to users, as you have to attach policies to a specific user/group/etc
-- resource policies: JSON object defining basic access permissions
-- ACL: access control list: ACLs predates resource-based policies and IAM
-  - list of grants identifying grantee and permission granted
-- resource: an entity that you can work with (e.g. an s3 bucket, or an s3 bucket object)
-- resource > subresource: child of a resource
-- resource owner: by default its the AWS account that creates the resource, but can be changed via resource/user based policies (e.g. to be the IAM user and not hte account owner)
-- policy JSON schema
-  - version: e.g. "2012-10-17"
-  - Statement: array of object permissions
-    - Sid: the statement ID, can be anything?
-    - Effect: Allow|Deny
-      - denied by default, you must specific specify `Allow`
-    - Principal: specifies the user, account, service, or other entity that is allowed/denied access to a resource
-      - anonymouse user `"*"`
-        - or to match the normal syntax `{"AWS":"*"}`
-      - single AWS account `{"AWS":"arn:aws:iam::AccountNumber-WithoutHyphens:root"}`
-        - using canonical ID`{"CanonicalUser":"64-digit-alphanumeric-value"}`
-      - multiple AWS accounts `{"AWS":["arn:aws:iam::AccountNumber1-WithoutHyphens:root","arn:aws:iam::AccountNumber2-WithoutHyphens:root"]}`
-      - a specific user `{"AWS":"arn:aws:iam::account-number-without-hyphens:user/username"}`
-      - anyone accessing via cloudfront URL `{"CanonicalUser":"Amazon S3 Canonical User ID assigned to origin access identity"}`
-    - Action: array of actions related to the affect,
-      - e.g. array of specific actions `["s3:GetObject", "s3:PutObject"]`
-      - e.g. all actions on the `"\*"
-      - for each resource type, amazon supports a set of operations;
-      - each action is a keyword that maps directly to an aws service operation
-    - Resource: array of ARNs to apply the statement to
-      - e.g. buckets, objects, access points, jobs, etc
-    - Condition: to specify conditions for when a policy is in affect
-      - can use predefined AWS‐wide/service specific keys
-      - specified as expressions with boolean operators
-        - i.e. { booleanOperator: { permission: "value"}}
-        - e.g. { StringEquals: { "conditionkey": "id=some-account-or-user"}}
-          - grants the permission, if conditionKey === value
-          - usually the conditionKey & value are specified in the header of the request
 
-## key goal & design concepts
+### key goal & design concepts
 
 - high availablity
-
   - The term "number of nines" stems from the decrease of downtime per year as the number and costs increase. high availability = more 9s
   - route 53 dns config & routing options
   - regional load balancing across AZs
@@ -156,10 +128,17 @@
   - caching
   - s3
   - cloudfront
-
 - fault tolerance
   - appropriate storage & backup (s3, ebs elastic block storage)
   - autoscaling: scale ec2 capacity up/down based on triggers
+
+### file locations
+
+```sh
+
+~/.aws/{credentials, config}
+
+```
 
 ## global architecture
 
@@ -169,31 +148,94 @@
 ### regions & azs
 
 - region: a geographic area
-  - a name set of AWS resources in the same geogrpahical area: contains at least 2 availability zones
-  - each region is isolated from each other
-  - each region has atleast 2 availability zones
+  - a name set of AWS resources in the same geogrpahical area:
+  - are isolated from each other
+  - have atleast 2 availability zones
   - represented by `name-name-number`
 - availability zone: a distinct data center (or set of data centers) in a region
   - distinct location within a region thats insulated from failures in other availability zones
   - each AZ within a region are connected through low-latency links
   - represented by a `letter`
-  - each reach region has at least two AZs
 - edge locations
   - independent of region & azs
   - power cloudfront CDN
 
-## file locations
+### ARN
 
-```sh
+- amazon resource name: identifier for a specific resource
+- can use wildcards as part of the resource ARN
+  - `*` represents any combination of zero/more characers
+  - `?` represents any single character
+- can use predefined policy variables
+  - at policy evaluation time, the variables are replaced by their corresponding values
+    - e.g. to organize the bucket as a collection of folders, one folder for each of your users `arn:aws:s3:::bucket_name/developers/${aws:username}/`
+- examples
+  - a specific object in a bucket`arn:aws:s3:::examplebucket/developers/design_info.doc`
+  - any object in the bucket `arn:aws:s3:::examplebucket/*`
+  - any object in any bucket matching exampleXbucket `arn:aws:s3:::example?bucket/*`
+  - all s3 resources `arn:aws:s3:::*`
+- has the following syntax across all AWS services regoin specific services: `arn:partition:service:region:namespace:relative-id`
+  - partition: `aws` or `aws-cn` for china (Beijing) region
+  - service: e.g. s3
+  - region:
+  - namespace:
+  - relative ID: e.g. `bucket-name` or `bucket-name/object-key`
+- has the following syntax across all global services
+  - `arn:partition:service:::relative-id`
+    - notice the region & namespace are missing
 
-~/.aws/{credentials, config}
+### tags
 
-```
+- to ensure expected tags are automatically displayed in dashboard columns, they must be case-sensitive
+  - i.e. `Name` !== `name`
+  - in the new UI you can now add specific tags
 
-## service quotas
+### policies & ACLs
+
+- user policies: use IAM to manage access to resources on AWS,
+  - i.e. create IAM users, groups and roles and attach access policies to them to grant access to resources
+    - everyone is denied by default
+  - cannot grant anonymous permissions to users, as you have to attach policies to a specific user/group/etc
+- resource policies: JSON object defining basic access permissions
+- ACL: access control list: ACLs predates resource-based policies and IAM
+  - list of grants identifying grantee and permission granted
+- resource: an entity that you can work with (e.g. an s3 bucket, or an s3 bucket object)
+- resource > subresource: child of a resource
+- resource owner: by default its the AWS account that creates the resource, but can be changed via resource/user based policies (e.g. to be the IAM user and not hte account owner)
+
+#### policy schema
+
+- version: e.g. "2012-10-17"
+- Statement: array of object permissions
+  - Sid: the statement ID, can be anything?
+  - Effect: Allow|Deny
+    - denied by default, you must specific specify `Allow`
+  - Principal: specifies the user, account, service, or other entity that is allowed/denied access to a resource
+    - anonymouse user `"*"`
+      - or to match the normal syntax `{"AWS":"*"}`
+    - single AWS account `{"AWS":"arn:aws:iam::AccountNumber-WithoutHyphens:root"}`
+      - using canonical ID`{"CanonicalUser":"64-digit-alphanumeric-value"}`
+    - multiple AWS accounts `{"AWS":["arn:aws:iam::AccountNumber1-WithoutHyphens:root","arn:aws:iam::AccountNumber2-WithoutHyphens:root"]}`
+    - a specific user `{"AWS":"arn:aws:iam::account-number-without-hyphens:user/username"}`
+    - anyone accessing via cloudfront URL `{"CanonicalUser":"Amazon S3 Canonical User ID assigned to origin access identity"}`
+  - Action: array of actions related to the affect,
+    - e.g. array of specific actions `["s3:GetObject", "s3:PutObject"]`
+    - e.g. all actions on the `"\*"
+    - for each resource type, amazon supports a set of operations;
+    - each action is a keyword that maps directly to an aws service operation
+  - Resource: array of ARNs to apply the statement to
+    - e.g. buckets, objects, access points, jobs, etc
+  - Condition: to specify conditions for when a policy is in affect
+    - can use predefined AWS‐wide/service specific keys
+    - specified as expressions with boolean operators
+      - i.e. { booleanOperator: { permission: "value"}}
+      - e.g. { StringEquals: { "conditionkey": "id=some-account-or-user"}}
+        - grants the permission, if conditionKey === value
+        - usually the conditionKey & value are specified in the header of the request
+
+### service quotas
 
 - [main page](https://console.aws.amazon.com/servicequotas/home?region=us-east-1#)
-
 - see all quotas related to every AWS service
   - current limit
   - default limit
@@ -202,12 +244,104 @@
   - create cloud watch alarms for certain quotas
 - can have a max of 9 cards on the dashboard for important services
 
-## CLIs
+### keypairs
 
-- there are many, lets install them all
-- generally all require you to download a zip file, and run the install script
+- public key cryptography: asymmetric cryptography
+  - public key
+    - the key used to encrypt the data, cannot be used to decrypt (thats why you need two)
+    - is also stored on instances (e.g. ec2)
+  - private key:
+    - used to decrypt data
+    - required to access instances (e.g. ec2)
+    - are regional:
 
-### aws cli
+## IAM
+
+- Identity Access Management
+  - webservice for controlling access to AWS resources
+  - authentication: who can sign in
+  - authorization: who can do what (permissions)
+- IAM Users
+  - groups: categorize groups of users
+  - policies: array of permissions for groups/users,
+    - effect: allow/deny
+    - action: array of resource methods in the form `resourceName:ActionName`
+    - resource: the aws resource, in the form `arn:aws:resource:woop:woop:woop
+- free to use
+  - IAM
+  - STS
+  - Access Analyzer
+- costs
+  - cloudtrail (i think)
+- use cases
+  - shared access to your AWS account
+    - grant other people permission to administer/use resources in AWS without sharing your password/access key
+  - granular permissions
+    - grant arbitrary permissions to different people for different resources
+  - secure access to AWS reosurces for applications running on EC2
+    - provide creds for applications to access other AWS reosurces
+  - multi factor authentication: only supports hardware devices
+  - identity federation: via AWS CloudTrail you can receive log records that include info about requests for resources based on IAM identities
+  - PCI DSS copmliance: processing, storage and transmission of credit card data by a merchant/service provider
+    - validated as being compliant with Payment Card Industry (PCI) data securty standard (DSS)
+  - eventually consistent: achieves high availability by replicating data across multiple servers within amazons datacenters
+- key components
+  - IAM provides the infrastructure necessary to control authentication and authorization
+  - resources: user, group, role, policy and identity provider objects that are stored in IAM
+  - identities: resource objects used for users, groups and roles
+    - you attach policies to IAM identities (users, groups roles)
+  - entities: resource objects that AWS uses for authentication (users and roles)
+  - principals: person/application that uses the AWS root user, IAM user, or IAM role to sign in and make requests to AWS (federated users and assumed roles)
+  - principal: can make a request for an action/operation on an AWS resource
+  - request: sends a request to AWS via console, API or cli
+    - actions/operations: something the principal wants to perform
+    - resources: object on which the actions/operations are performed
+    - principal: the person/application that used an entity (user/role) to send the request
+      - includes metadata about the policies associated with the entity the principal used to sign in
+    - environment data: e.g. ip address, user agent, SSL enabled status, time of day
+    - resource data: about the resource that is being requested, e.g. a table name or tag
+  - authentication: principals must be signed in using credentials to send a request
+    - console: email address + password
+    - IAM user: account ID/alias, then username + password
+    - API/CLI: access key + secret key
+      - any o the above could require MFA
+- common roles you should create
+  - cloud watch roles
+    - cloudWatchAgentServerRole
+      - policies
+        - coudWatchAgentServerPolicy: permissions to write logs to cloudwatch
+      - attach to ec2 instance you want to monitor with cloud agent
+
+### IAM considerations
+
+- for ec2
+  - what is the ec2 doing? create a role that enables the ec2 to connect with other resources at the necessary permission levels
+
+## IAM Identity Center
+
+- [main page](https://aws.amazon.com/iam/identity-center/)
+- successor to aws sso
+- Centrally manage workforce access to multiple AWS accounts and applications
+
+## STS
+
+- STS: Security Token Service
+
+## cognito
+
+- authnz: application identity management
+
+## KMS
+
+- [main page](https://aws.amazon.com/kms/?did=ap_card&trk=ap_card)
+- Create and control keys used to encrypt or digitally sign your data
+
+## Secrets Manager
+
+- [main page](https://aws.amazon.com/secrets-manager/?did=ap_card&trk=ap_card)
+- Centrally manage the lifecycle of secrets
+
+## aws cli
 
 - files
   - default config & credentials
@@ -227,9 +361,9 @@
     export AWS_DEFAULT_PROFILE=AccountAadmin
 
     # to override the selected profile, e.g. in a script
-    export AWS_ACCESS_KEY_ID=poop
-    export AWS_SECRET_ACCESS_KEY=poop
-    export AWS_DEFAULT_REGION=us-poop-1
+    export AWS_ACCESS_KEY_ID=woop
+    export AWS_SECRET_ACCESS_KEY=woop
+    export AWS_DEFAULT_REGION=us-woop-1
 
     --region us-east-1 # specify the region
 
@@ -295,7 +429,7 @@
 
 ```
 
-### sam cli
+## sam cli
 
 - AWS Serverless Application Model (SAM) CLI is an open-source CLI tool that helps you develop serverless applications containing Lambda functions, Step Functions, API Gateway, EventBridge, SQS, SNS and more. Some of the features it provides are:
 

@@ -1,72 +1,62 @@
-import { log } from "./logit.mjs";
+import { log } from "./logit";
 
 class Apps {
-  static name = "unknown";
+  static us = "";
   static {
     // this refers to the class, not the instance because its static
-    console.info(`new app initialized: ${this.name}`);
+    // runs once when the Class is parsed, not on each instantiation
+    console.info(`new app initialized: ${this.us.split(".").at[-1]}`);
   }
 
   // @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks#access_to_private_fields
   #secret;
 
+  // @ts-ignore cuz typescript, but this IS valid js, see docs
   ["notSecret" + 123] = "just between us";
 
-  name = "unknown";
+  me = "unknown";
   layer;
-  constructor({ appName, layer, secret = "" }) {
-    if (appName) this.name = appName;
+  constructor({ me = "unknown", layer, secret = me }) {
+    (this.me = me), (Apps.us += `.${me}`);
     this.layer = layer;
-    this.#secret = secret + this.name.split("").reverse().join("");
+    this.#secret = secret + this.me.split("").reverse().join("");
     // return an object to override `this` in subclasses
     // enables
   }
 
   get leakSecret() {
-    return `${this.#secret}-${this.notSecret}`;
+    // @ts-ignore
+    return `${this.#secret}-${this.notSecret123}`;
   }
 
   *superGen() {
     yield this.layer;
-    yield this.appName;
+    yield this.me;
   }
 }
 
 class FeApp extends Apps {
-  constructor({ appName, layer }) {
-    super({ appName, layer });
+  constructor({ me, layer }) {
+    super({ me, layer });
   }
 }
 
-const reactApp = new FeApp({ appName: "react app", layer: "fe" });
+const reactApp = new FeApp({ me: "react app", layer: "fe" });
 log("reactApp", reactApp);
 log("secret", reactApp.leakSecret);
-
-class MyError extends Error {}
-try {
-  if (1 < 2) throw new MyError("oops");
-} catch (e) {
-  if (e instanceof MyError) log("MyError", e.message);
-}
+for (let x = 5; !!x; x--)
+  log(new FeApp({ me: `app #${x}`, layer: x }).leakSecret);
 
 // Class expressions
-// unnamed
-var Rectangle = class {
+const Rec1 = class {
+  height: string;
+  width: string;
   constructor(height, width) {
     this.height = height;
     this.width = width;
   }
 };
-// named
-var Rectangle = class Rectangle {
-  constructor(height, width) {
-    this.height = height;
-    this.width = width;
-  }
-};
-
-// Subclasses: Extends
-class Dog extends Apps {}
+const Rec2 = class Rectangle {};
 
 // mdn: docs
 class Stamper extends class {
@@ -96,25 +86,22 @@ class SaferClass extends null {
 
 // extending plain objects
 const Animal = {
+  me: "",
   speak() {
-    console.log(`${this.name} makes a noise.`);
+    console.log(`${this.me} makes a noise.`);
   },
 };
 // cannot directly extend Animal
 class Dog {
-  constructor(name) {
-    this.name = name;
+  constructor(me) {
+    // @ts-ignore see below
+    this.me = me;
   }
 }
 // must use setPrototypeOf
 Object.setPrototypeOf(Dog.prototype, Animal);
 
 /*
-
-
-```js
-
-
 
 
 // A function with a superclass as input and a subclass extending that superclass as output can be used to implement mix-ins in ECMAScript:
@@ -158,33 +145,12 @@ class MyClass extends Mixin1(Mixin2(MyBaseClass)) {
 - prototypes, dizzam remember these?
 - If you want to inherit from a regular object, you can instead use Object.setPrototypeOf():
 
-```js
-var Animal = {
-  speak() {
-    console.log(this.name + " makes a noise.");
-  },
-};
 
-class Dog {
-  constructor(name) {
-    this.name = name;
-  }
+function fnAsClass(n) {
+  this.me = n;
 }
-
-Object.setPrototypeOf(Dog.prototype, Animal); // If you do not do this you will get a TypeError when you invoke speak
-
-var d = new Dog("Mitzie");
-d.speak(); // Mitzie makes a noise.
-
-
-
-
-	function fnAsClass(n) {
-		this.name = n;
-	}
 var instance = new fnAsClass('fred');
 
-var instance = new class { blah () { return "me" }}
 ```
 
 
@@ -222,30 +188,6 @@ var instance = new class { blah () { return "me" }}
       tail: 'long, skinny'
     });
   ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 */

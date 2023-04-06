@@ -1,35 +1,83 @@
+/**
+ * make sure to install code-insiders NOT vanilla vscode
+ * run the vscode.install.extensions or whatever script
+ */
+
 {
-  "typescript.tsdk": "./node_modules/typescript/lib",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  /**
+   * language specific overrides
+   */
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false // override for mac
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[dotenv]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[dockerfile]": {},
+  "[ignore]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[typescript]": {},
+  /**
+   * editor
+   * controls useability
+   * good read: https://stackoverflow.com/questions/44831313/how-to-exclude-file-extensions-and-languages-from-format-on-save-in-vscode/44831631#44831631
+   *
+   */
   "editor.acceptSuggestionOnEnter": "smart",
+  "editor.accessibilitySupport": "off",
   "editor.autoIndent": "advanced",
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "editor.codeActionsOnSave": { "source.fixAll": false },
   "editor.cursorBlinking": "phase",
   "editor.cursorStyle": "line",
+  "editor.cursorSurroundingLines": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.definitionLinkOpensInPeek": true,
+  "editor.fontFamily": "Ubuntu Mono,Input, Consolas, monospace",
   "editor.fontSize": 18,
   "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.guides.bracketPairs": true,
+  "editor.hover.delay": 100,
+  "editor.inlayHints.padding": true,
   "editor.inlineSuggest.enabled": true,
   "editor.insertSpaces": true,
   "editor.lineHeight": 34,
   "editor.linkedEditing": true,
   "editor.minimap.enabled": false,
+  "editor.mouseWheelZoom": true,
+  "editor.parameterHints.cycle": true,
+  "editor.renderLineHighlightOnlyWhenFocus": true,
   "editor.rulers": [100, 150, 200],
+  "editor.stablePeek": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.suggest.localityBonus": true,
+  "editor.suggest.preview": true,
+  "editor.suggest.showStatusBar": true,
   "editor.tabSize": 2,
+  "editor.unfoldOnClickAfterEndOfLine": true,
   "editor.wordWrapColumn": 80,
   "editor.wrappingIndent": "deepIndent",
-  "editor.fontFamily": "Ubuntu Mono,Input, Consolas, monospace",
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true
-  },
-
-  "terminal.integrated.tabs.location": "left",
-  "terminal.integrated.enableFileLinks": "on",
-  "terminal.integrated.copyOnSelection": true,
-
   "explorer.sortOrder": "default",
+  /**
+   * files
+   */
+  "files.autoGuessEncoding": true,
+  "files.exclude": {},
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "files.associations": {
+    // this maps file types to language IDs
     "*.dockerfile": "dockerfile",
     "*.env.development": "env",
     "*.env.production": "env",
@@ -39,7 +87,21 @@
     "*.env.development.compose.yaml": "yaml",
     "*.cfg": "haproxy"
   },
+  "files.watcherExclude": {
+    "**/.ammonite": true,
+    "**/.bloop": true,
+    "**/.git": true,
+    "**/.metals": true,
+    "**/build/**": true,
+    "**/dist/**": true,
+    "**/node_modules/**": true
+  },
 
+  /**
+   * workbench
+   * controls vscode
+   */
+  "workbench.colorTheme": "monokai-charcoal",
   "workbench.editor.closeEmptyGroups": true,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.showTabs": true,
@@ -47,28 +109,53 @@
   "workbench.editor.tabSizing": "shrink",
   "workbench.panel.defaultLocation": "right",
   "workbench.settings.editor": "json",
+  "workbench.settings.enableNaturalLanguageSearch": false,
+  "workbench.sideBar.location": "right",
+  "workbench.view.alwaysShowHeaderActions": true,
+  "workbench.colorCustomizations": {
+    "editor.lineHighlightBackground": "#1073cf2d",
+    "editor.lineHighlightBorder": "#9fced11f"
+  },
 
+  /**
+   * terminal
+   */
+  "terminal.explorerKind": "external",
+  "terminal.integrated.allowChords": false,
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.enableFileLinks": "on",
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "terminal.integrated.fontSize": 18,
+  "terminal.integrated.sendKeybindingsToShell": true,
+  "terminal.integrated.tabs.location": "left",
+  /**
+   * outline
+   */
   "outline.icons": true,
   "outline.problems.enabled": true,
   "outline.problems.badges": true,
   "outline.problems.colors": true,
 
-  "terminal.integrated.allowChords": false,
-  "terminal.integrated.defaultProfile.linux": "bash",
-  "terminal.integrated.fontSize": 18,
-  "terminal.integrated.sendKeybindingsToShell": true,
-  "terminal.explorerKind": "external",
+  /**
+   * other settings
+   */
+  "breadcrumbs.icons": false,
+  "window.zoomLevel": -1,
 
+  /**
+   * other extensions
+   */
   "redhat.telemetry.enabled": false,
-  "editor.formatOnType": true,
-  "workbench.sideBar.location": "right",
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+
+  /**
+   * language specific
+   */
+  "shellformat.effectLanguages": ["shellscript"],
   "json.schemas": [],
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.tsdk": "./node_modules/typescript/lib",
   "yaml.customTags": [
     "!And",
     "!And sequence",
@@ -98,54 +185,20 @@
     "!Split",
     "!Split sequence"
   ],
-  "workbench.colorTheme": "Default High Contrast",
-  "files.watcherExclude": {
-    "**/node_modules/**": true,
-    "**/.git": true,
-    "**/.bloop": true,
-    "**/.metals": true,
-    "**/.ammonite": true
-  },
-  "files.exclude": {},
-  "terminal.integrated.enableMultiLinePasteWarning": false,
+
+  /**
+   * git
+   */
+  "diffEditor.codeLens": true,
+  "diffEditor.wordWrap": "off",
+  "git.confirmSync": false,
+  "git.enableStatusBarSync": false,
   "scm.autoReveal": false,
   "scm.countBadge": "off",
-  "editor.accessibilitySupport": "off",
-  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
-  "editor.inlayHints.padding": true,
-  "editor.parameterHints.cycle": true,
-  "editor.renderLineHighlightOnlyWhenFocus": true,
-  "editor.unfoldOnClickAfterEndOfLine": true,
-  "editor.cursorSurroundingLines": 2,
-  "diffEditor.wordWrap": "off",
-  "editor.suggest.localityBonus": true,
-  "editor.suggest.preview": true,
-  "editor.suggest.showStatusBar": true,
-  "files.autoGuessEncoding": true,
-  "git.enableStatusBarSync": false,
-  "git.confirmSync": false,
-  "workbench.colorCustomizations": {
-    "editor.lineHighlightBackground": "#1073cf2d",
-    "editor.lineHighlightBorder": "#9fced11f"
-  },
-  "editor.formatOnSave": true,
-  "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "[dotenv]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
-  "shellformat.effectLanguages": ["shellscript"],
-  "[dockerfile]": {
-    "editor.formatOnSave": false
-  },
-  "[ignore]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
-  "[typescript]": {},
-  "window.zoomLevel": 2,
+
+  /**
+   * code runner extension
+   */
   "code-runner.enableAppInsights": false,
   "code-runner.saveFileBeforeRun": true,
   "code-runner.languageIdToFileExtensionMap": {
@@ -202,19 +255,9 @@
     "shellscript": "bash",
     "sml": "cd $dir && sml $fileName",
     "swift": "swift",
-    "typescript": "ts-node",
+    "typescript": "bun",
     "v": "v run",
     "vbscript": "cscript //Nologo",
     "zig": "zig run"
-  },
-  "editor.definitionLinkOpensInPeek": true,
-  "editor.guides.bracketPairs": true,
-  "editor.hover.delay": 100,
-  "editor.mouseWheelZoom": true,
-  "editor.stablePeek": true,
-  "editor.stickyScroll.enabled": true,
-  "diffEditor.codeLens": true,
-  "breadcrumbs.icons": false,
-  "workbench.view.alwaysShowHeaderActions": true,
-  "workbench.settings.enableNaturalLanguageSearch": false
+  }
 }

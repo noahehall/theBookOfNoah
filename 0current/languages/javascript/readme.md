@@ -1,9 +1,14 @@
 # Javascript
 
 - updated: 2023
-- [web security in security dir](https://github.com/noahehall/theBookOfNoah/tree/master/0current/appdev/security)
 - the goal is to capture high level information in general and the Abstract Data Type for native objects specifically
-- [bun readme](./backend/bun.md)
+- for other guides
+  - [web security in security dir](../../appdev/security/websecurity.md)
+  - [bun](./backend/bun.md)
+  - [css/html/accessibility](../csshtml/readme.md)
+- todos
+  - web components may finally be ready for primetime
+  - u promised the nimlang devs you would redo the `for tyepscript dev` docs
 
 ## links
 
@@ -12,6 +17,10 @@
 - [run some code](https://github.com/nirv-ai/fullstackapps)
 - runtimes
   - [bun](https://bun.sh/)
+  - nodejs
+  - justjs (linux only)
+  - rescript
+  - deno
 - typesystems
   - [typescript](https://www.typescriptlang.org/)
   - [flow](https://flow.org/)
@@ -56,6 +65,10 @@
 - [streams](https://jakearchibald.com/2016/streams-ftw/#streams-the-fetch-api)
 - [common network protocols](https://www.techtarget.com/searchnetworking/feature/12-common-network-protocols-and-their-functions-explained)
 
+### 2ality
+
+- [the goat](https://2ality.com/)
+
 ### google web dev
 
 - [chrome timeline tool](https://developer.chrome.com/docs/devtools/)
@@ -86,7 +99,10 @@
   - [current proposals - all stages](https://github.com/tc39/proposals)
 - [mdn: reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
   - [builtin objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects)
+  - [labeled statements](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/label)
+  - [blocks and block statements](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
   - [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/)
+  - [events](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
   - [bigint](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
   - [class: extends](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends)
   - [class: indepth](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_Classes)
@@ -220,7 +236,7 @@
 
 - web sockets: a persistent connection to a server
 - sourcemaps: tell the browser to convert line and column offsets 'for' exceptions thrown in the bundle file back into the offsets and filenames of the original sources.
-- transpilers vs compilers: distinction is more fluid than binary and best throught of a spectrum from annotations > transpilers > compilers
+- transpilers vs compilers: distinction is more fluid than binary and best throught of as a spectrum from annotations > transpilers > compilers
   - annotations: e.g. jsdocs / flowtype
     - no transpilation / compilation required; simply remove the annotations
     - usually the best performance however feature limited based on context
@@ -233,7 +249,8 @@
 
 ### Best Practices
 
-- generally a good practice to have some throttling when testing sites. It'll help you see your sites performance from your users perspectives.
+- generally a good practice is to have some throttling when testing sites. It'll help you see your sites performance from your users perspectives.
+- always use strict mode and youll be safe
 - online first: we try the network first, if it doesnt, we show some fallback content (or 404 page)
 - offline first:
   - full content: deliver page header + content from cache, then update via network request
@@ -285,20 +302,22 @@
   - a fn must jumb back to the place when it returns, thus the interpreter must remember the callstack
 - the context of the callstack must be remembered
   - hence why in some circles using/overusing `try..catch` is frowned upon, ignore those guys who think microoptimizations are important, spend your time elseware
-    - if you're not embedding your entire program in a try, catch, your safe
+    - if you're not embedding your entire program in a try-catch, your safe
 - when a new context is created, its pushed to the top of the stack, when it returns, it is removed
 
 ### scope
 
 - determines the life, death and visibility of a variable
   - its intrinsically linked to the callstack, where each block context creates a new closure
-- block scope: lives within {}
+- block scope: lives within {}, see block section
 - function scope: lives within function definitions/expressions/closures
   - fns created with new / arrow do not create closures
+  - also applies to classes
 - scope chain:
   - if the variable is not available in the current scope:
   - look for it in the parent function, if its not available there
   - go up one level, and continue all the way to the window (global) scope
+- temporal dead zone: ...
 
 ### operators
 
@@ -325,8 +344,7 @@
 
 - `"use strict"` module / function scoped
   - variable type must be declared and dont default to var
-  - `this` is undefined in the global scope and functions not assigned to objects
-    - i.e. `this` is not bound to the global object
+  - `this` is undefined in the global scope and functions not assigned to global objects
 - `break` Exits a 'switch' or a loop
 - `continue` Breaks one iteration (in the loop) if a specified condition occurs, and continues with the next iteration in the loop
 - `debugger` Stops the execution of JavaScript, and calls (if available) the debugging function
@@ -379,7 +397,7 @@ switch this throw true try typeof var void while with yield
 
 #### destructuring
 
-- Destructuring: pull values out/skip values in arrays/objects
+- Destructuring: extract and assign all/some values out of arrays/objects
   - `[first, , last] = ["first", "second", "last"]`
   - `{first, last} = {a: 1, b: 2, c:3}`
 
@@ -408,6 +426,8 @@ switch this throw true try typeof var void while with yield
 
 ### booleans
 
+- truthy vs falsy and you'll be safe
+
 ### objects
 
 - everything in JS is an object, this section should generally apply to everything
@@ -417,13 +437,13 @@ switch this throw true try typeof var void while with yield
   - thus you can do `var name = () => "noah"; name.last = "hall"`
 - methods: function values bound to object properties
   - `this` refers to the containing object,
-    - unless call/apply intercept or its an arrow fn
+    - unless call/apply intercepts the context or its an arrow fn
 - properties: identifers bound to objects
 - x.constructor
 - shallow vs deep copies
   - all builtin copy operations on any js object type create shallow copies
     - e.g. spread, concat, slice, arr.from, obj.assign/create, etc
-  - for deep copies, use structuredClone / stringify -> parse
+  - for deep copies, use structuredClone / stringify && parse
 
 #### prototypes
 
@@ -449,7 +469,7 @@ switch this throw true try typeof var void while with yield
 - 0 index elements accessed via ints/strings
 - the are array subclasses: [Big/U/Int/Float][8,16,32,64]Array
 - in general when using inbuilt methods you should check for undefined on array elements if called on sparse arrays
-  - depending on the method,s ome will skip empty slots, others will return undefined
+  - depending on the method, some will skip empty slots, others will return undefined
 - generally any array like object can utilize array methods via call/apply
   - many DOM objects, and function arugments
 
@@ -465,23 +485,13 @@ switch this throw true try typeof var void while with yield
 
 ##### Map
 
-- new Map([iterable]): The Map object holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value.
-- properties
-  - Map.prototype.size
-
 ##### WeakMap
-
-- new WeakMap([iterable]): The WeakMap object is a collection of key/value pairs in which the keys are weakly referenced. The keys must be objects and the values can be arbitrary values.
 
 #### sets
 
 ##### Set
 
-- new Set([iterable]): The Set object lets you store unique values of any type, whether primitive values or object references.
-
 ##### WeakSet
-
-- new WeakSet([iterable]); If an iterable object is passed, all of its elements will be added to the new WeakSet. null is treated as undefined.
 
 #### functions
 
@@ -575,9 +585,9 @@ switch this throw true try typeof var void while with yield
 ##### Mixins
 
 - mixin: is really a subclass factory, parameterized by the superclass, which produces mixin applications
-- benefits of approach below: 0. the only difference between a mixin and a normal subclass is that a normal class has a fixed superclass, while a mixin definition doesnt (the mixin application does)
-  - the definition of a class that may be applieed to different super classes.
-  - mixin application: the application of a mixin definition to a specific superclass, producing a new subclass
+  - the definition of a class that may be applied to different super classes.
+  - the only difference between a mixin and a normal subclass is that a normal class has a fixed superclass, while a mixin definition doesnt (the mixin application does)
+- mixin application: the application of a mixin definition to a specific superclass, producing a new subclass
 - implementation features based on es6 classes
   - mixins are added to the prototype chain
   - mixins are applied without modifying existing objects
@@ -594,8 +604,6 @@ switch this throw true try typeof var void while with yield
 #### Math
 
 #### console
-
-- see examples
 
 #### Data
 
@@ -616,6 +624,12 @@ switch this throw true try typeof var void while with yield
 - all stem from the Int object
 
 ### Control Flow
+
+#### blocks
+
+- creates a scope for a group of statements within curly braces
+  - let, const, class
+- function declarations are hoisted within BUT still scoped to the block
 
 #### loops
 
@@ -638,7 +652,7 @@ switch this throw true try typeof var void while with yield
 
 ##### iterators
 
-- [Symbol.iterator]() {...} defined on an object
+- requires `[Symbol.iterator]() {...}` to be defined on on the calling object
 - the next() fn often returns a generator for readability
 - see the examples
 
@@ -689,7 +703,8 @@ switch this throw true try typeof var void while with yield
 
 ### regexp
 
-- should probably reread this section on mdn
+- should probably reread this section on mdn; theres some differences with perl5 which is generally standard
+- you should be safe with the basic regex stuff
 
 ### concurrency
 
@@ -711,6 +726,7 @@ switch this throw true try typeof var void while with yield
   - cannot switch from success to failure/vice versa
   - if a promise has succeeded/failed, and you later add a success/failure callback, the correct callback will be invoked, even though the event took place earlier
   - any object with a then method can be used as and integrated with native promises
+  - you always want a `.catch`
 - Promise States
   - fulfilled (resolved): action related to the promise has succeeded
   - rejected (failure): action related to the promise has failed
@@ -801,8 +817,6 @@ switch this throw true try typeof var void while with yield
 - named exports: must be requested specifically
 
 ## Web Fundamentals
-
-- [web security](https://github.com/noahehall/theBookOfNoah/blob/master/0current/appdev/security/websecurity.md) continues this discussion in depth
 
 ### CORS
 

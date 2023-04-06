@@ -1,4 +1,7 @@
 /*
+dude im not updating this
+only the uncivilized use javascript Dates
+lol @see https://date-fns.org/
 
 - creation
   ```
