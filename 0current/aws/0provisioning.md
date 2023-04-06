@@ -7,8 +7,15 @@
 - using many of these services directly restrains multi-cloud architectures
 - however knowing they exist and how they work is required for consuming these resources in third-party provisioning tools
 
+### interwebs
+
+- [IBM on ITSM](https://www.ibm.com/topics/it-service-management)
+- [IBM on ITIL](https://www.ibm.com/topics/it-infrastructure-library)
+
 ## links
 
+- [proton](https://aws.amazon.com/proton/)
+- [service management connector](https://aws.amazon.com/service-management-connector)
 - [aws provisioning introduction](https://aws.amazon.com/products/management-and-governance/use-cases/provisioning-and-orchestration/)
 - [service catalog](https://aws.amazon.com/servicecatalog/)
 - [cloud formation](https://aws.amazon.com/cloudformation/)
@@ -17,6 +24,8 @@
 - [elastic beanstalk](https://aws.amazon.com/elasticbeanstalk/?did=ap_card&trk=ap_card)
 - [local zones](https://aws.amazon.com/about-aws/global-infrastructure/localzones/?did=ap_card&trk=ap_card)
 - [cdk](https://aws.amazon.com/cdk/)
+- [codepipeline](https://aws.amazon.com/codepipeline/)
+- [codebuild](https://aws.amazon.com/codebuild/)
 
 ## best practices
 
@@ -184,7 +193,11 @@
 
 - secure, highly scalable, managed source control service that hosts private Git repositories
 
-## Codepipeline
+## codebuild (CI)
+
+- build and test
+
+## Codepipeline (CD)
 
 - fully managed continuous delivery service that helps you automate your release pipelines for fast and reliable application and infrastructure updates. CodePipeline automates the build, test, and deploy phases of your release process every time there is a code change, based on the release model you define.
 
@@ -216,3 +229,11 @@
 ## cdk cloud development kit
 
 - terraform knockoff
+
+## service management connector
+
+- provision, manage and operate AWS resources within ITSM
+
+## proton
+
+- self-service infrastructure templates and provisioning automation

@@ -1,6 +1,6 @@
-# AWS Global Architecture, Security and AuthNZ
+# AWS Global Architecture, accounts and users
 
-- IAM, STS, cognito, KMS, secrets manager, cli, sam cli
+- IAM, STS, cognito, cli, sam cli
 - this cheatsheet should be used in conjunction with:
   - [micrservices](./0microservices.md)
   - [analytics (and billing)](./0analytics.md)
@@ -35,11 +35,6 @@
 - [all 250+ aws services](https://aws.amazon.com/products/)
 - [all aws managed services](https://aws.amazon.com/products/management-and-governance/)
 
-### interwebs
-
-- [IBM on ITSM](https://www.ibm.com/topics/it-service-management)
-- [IBM on ITIL](https://www.ibm.com/topics/it-infrastructure-library)
-
 ### reference
 
 - [aws ref: guide ands APIs](https://docs.aws.amazon.com/index.html)
@@ -49,8 +44,11 @@
 
 ### docs
 
-- [proton](https://aws.amazon.com/proton/)
-- [service management connector](https://aws.amazon.com/service-management-connector)
+- [macie](https://aws.amazon.com/macie/?did=ap_card&trk=ap_card)
+- [inspector](https://aws.amazon.com/inspector/?did=ap_card&trk=ap_card)
+- [guardduty](https://aws.amazon.com/guardduty/?did=ap_card&trk=ap_card)
+- [detective](https://aws.amazon.com/detective/?did=ap_card&trk=ap_card)
+- [cognito](https://aws.amazon.com/cognito/?did=ap_card&trk=ap_card)
 - [control tower](https://aws.amazon.com/controltower/)
 - [organizations](https://aws.amazon.com/organizations/?c=mg&sec=srv)
 - [resource names](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
@@ -356,11 +354,6 @@
 
 - authnz: application identity management
 
-## KMS
-
-- [main page](https://aws.amazon.com/kms/?did=ap_card&trk=ap_card)
-- Create and control keys used to encrypt or digitally sign your data
-
 ## aws cli
 
 - files
@@ -476,10 +469,18 @@ sam --version
 
 - setup and govern multi accounts
 
-## service management connector
+## detective
 
-- provision, manage and operate AWS resources within ITSM
+- manage and investigate possibile security issues
 
-## proton
+## guardduty
 
-- self-service infrastructure templates and provisioning automation
+- threat detection, mitigation and response
+
+## inspector
+
+- automated vulnerability scanning
+
+## macie
+
+- pattern matching for discovering & protecting sensitive data

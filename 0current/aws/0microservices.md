@@ -11,6 +11,11 @@
 
 ## links
 
+- [WAF](https://aws.amazon.com/waf/)
+- [secrets manager](https://aws.amazon.com/secrets-manager/)
+- [firewall manager](https://aws.amazon.com/firewall-manager/?did=ap_card&trk=ap_card)
+- [certificate manager](https://aws.amazon.com/certificate-manager/?did=ap_card&trk=ap_card)
+- [emr](https://aws.amazon.com/emr/)
 - [aws microservice introduction](https://aws.amazon.com/microservices/)
 - [aws messaging services](https://aws.amazon.com/messaging/)
 - [ecr public gallery](https://gallery.ecr.aws/)
@@ -621,3 +626,29 @@ exports.handler = function (event, context, callback) {
 ## data pipeline
 
 - process and move data between compute/storage onpremise and aws resources
+
+## emr
+
+- run apache spark, hive, presto etc data workloads
+- big data pipelines and processing
+
+## certificate manager
+
+- vault knockoff
+
+## firewall manager
+
+- centrally configure and manage firewall rules across accounts
+
+## KMS
+
+- [main page](https://aws.amazon.com/kms/?did=ap_card&trk=ap_card)
+- Create and control keys used to encrypt or digitally sign your data
+
+## secrets manager
+
+- vault knockoff
+
+## WAF web application firewall
+
+- protection against common web exploits and bots

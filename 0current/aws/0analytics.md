@@ -9,7 +9,8 @@
 
 ## links
 
-- [emr](https://aws.amazon.com/emr/)
+- [audit manager](https://aws.amazon.com/audit-manager/?did=ap_card&trk=ap_card)
+- [artifact](https://aws.amazon.com/artifact/?did=ap_card&trk=ap_card)
 - [athena](https://aws.amazon.com/athena/?did=ap_card&trk=ap_card)
 - [aws cost management tools](https://aws.amazon.com/aws-cost-management/)
 - [all billing reports](https://console.aws.amazon.com/cost-management/home?#/reports/overview)
@@ -395,7 +396,10 @@
 
 - unified business intelligence
 
-## emr
+## artifact
 
-- run apache spark, hive, presto etc data workloads
-- big data pipelines and processing
+- access AWS and ISV security and compliance reports
+
+## audit manager
+
+- audit AWS usage for risk and compliance assessment
