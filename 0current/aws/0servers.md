@@ -11,6 +11,8 @@
 ## links
 
 - ec2
+  - [pricing](https://aws.amazon.com/ec2/pricing/)
+  - [aws nitro](https://aws.amazon.com/ec2/nitro/)
   - [ec2 instance IP addressing](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html)
   - [custom primary private ips](https://aws.amazon.com/premiumsupport/knowledge-center/custom-private-primary-address-ec2/)
   - [ec2 instant connect](https://docs.amazonaws.cn/en_us/AWSEC2/latest/UserGuide/ec2-instance-connect-set-up.html)

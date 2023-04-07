@@ -1,6 +1,10 @@
-# TLDR
+# Networking
 
-vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront, global accelerator, security groups, network acls, route53, elastic ip,
+- vpc, gateways, route tables, subnets, load balancers (ELB, ALB, NLB), cloudfront, global accelerator, security groups, network acls, route53, elastic ip,
+
+## TLDR
+
+- you generally want to start with Route53 -> VPCs
 
 ## links
 

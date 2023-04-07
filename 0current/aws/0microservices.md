@@ -9,30 +9,65 @@
   - [provisioning](./0provisioning.md)
   - [analytics](./0analytics.md)
 
+### todos
+
+- ecs:
+  - [networking](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/networking.html)
+  - [auto scaling and capacity management](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/capacity.html)
+  - [persistent storage](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/storage.html)
+  - [EFS volumes](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/storage-efs.html)
+  - [EBS vs Docker volumes](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/storage-dockervolumes.html)
+  - [speeding up task launch](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/task.html)
+  - [task deployment](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/deployment.html)
+  - [scaling ECS apps](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/operating-at-scale.html)
+  - [security](https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/security.html)
+  - [ec2 app-level architecture: ec2 vs fargate](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/application_architecture.html)
+    - must read
+  - [ecs workshop](https://ecsworkshop.com/)
+  - [ecs aws cli docs](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ecs/index.html)
+  - [task iam role](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html)
+- ecr
+  - [ecr with aws cli](https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html)
+
 ## links
 
-- [WAF](https://aws.amazon.com/waf/)
-- [secrets manager](https://aws.amazon.com/secrets-manager/)
-- [firewall manager](https://aws.amazon.com/firewall-manager/?did=ap_card&trk=ap_card)
-- [certificate manager](https://aws.amazon.com/certificate-manager/?did=ap_card&trk=ap_card)
-- [emr](https://aws.amazon.com/emr/)
-- [aws microservice introduction](https://aws.amazon.com/microservices/)
+- [all aws container services](https://aws.amazon.com/containers/?pg=ln&sec=hs)
+
+### interwebs
+
+- [CDelivery vs CDeploy](https://www.cioinsight.com/it-strategy/continuous-delivery-vs-deployment/)
+
+### aws
+
+- [api gateway](https://aws.amazon.com/api-gateway/?did=ap_card&trk=ap_card)
 - [aws messaging services](https://aws.amazon.com/messaging/)
+- [aws microservice introduction](https://aws.amazon.com/microservices/)
+- [certificate manager](https://aws.amazon.com/certificate-manager/?did=ap_card&trk=ap_card)
+- [cloudsearch](https://aws.amazon.com/cloudsearch/?did=ap_card&trk=ap_card)
+- [data exchange](https://aws.amazon.com/data-exchange/?did=ap_card&trk=ap_card)
+- [datapipeline](https://aws.amazon.com/datapipeline/?did=ap_card&trk=ap_card)
+- [ecr aws cli docs](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ecr/index.html)
+- [ecr pricing](https://aws.amazon.com/ecr/pricing/)
 - [ecr public gallery](https://gallery.ecr.aws/)
+- [ecr intro](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html)
+- [ecs best practices on github](https://github.com/awsdocs/amazon-ecs-bestpractices-guide)
 - [ecs container definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definitions%3Ficmpid=docs_ecs_hp-task-definition)
+- [ecs docs home](https://docs.aws.amazon.com/ecs/)
+- [emr](https://aws.amazon.com/emr/)
+- [fargate intro](https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html)
+- [fargate pricing](https://aws.amazon.com/fargate/pricing/)
+- [fargate](https://aws.amazon.com/fargate/?did=ap_card&trk=ap_card)
+- [firewall manager](https://aws.amazon.com/firewall-manager/?did=ap_card&trk=ap_card)
+- [glue](https://aws.amazon.com/glue/?did=ap_card&trk=ap_card)
 - [kinesis](https://aws.amazon.com/kinesis/)
 - [lambda coldstarts in aws lambda](https://mikhail.io/serverless/coldstarts/aws/)
+- [lightsail](https://aws.amazon.com/lightsail/?did=ap_card&trk=ap_card)
+- [msk apache kafka](https://aws.amazon.com/msk/?did=ap_card&trk=ap_card)
+- [opensearch](https://aws.amazon.com/opensearch-service/?did=ap_card&trk=ap_card)
+- [secrets manager](https://aws.amazon.com/secrets-manager/)
 - [serverless compute](https://aws.amazon.com/serverless/)
 - [step functions: amazon states language](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html)
-- [lightsail](https://aws.amazon.com/lightsail/?did=ap_card&trk=ap_card)
-- [fargate](https://aws.amazon.com/fargate/?did=ap_card&trk=ap_card)
-- [api gateway](https://aws.amazon.com/api-gateway/?did=ap_card&trk=ap_card)
-- [cloudsearch](https://aws.amazon.com/cloudsearch/?did=ap_card&trk=ap_card)
-- [opensearch](https://aws.amazon.com/opensearch-service/?did=ap_card&trk=ap_card)
-- [msk apache kafka](https://aws.amazon.com/msk/?did=ap_card&trk=ap_card)
-- [data exchange](https://aws.amazon.com/data-exchange/?did=ap_card&trk=ap_card)
-- [glue](https://aws.amazon.com/glue/?did=ap_card&trk=ap_card)
-- [datapipeline](https://aws.amazon.com/datapipeline/?did=ap_card&trk=ap_card)
+- [WAF](https://aws.amazon.com/waf/)
 
 ## basics
 
@@ -85,7 +120,7 @@
 - compute: business logic without the server; code runs on demand and is trigger by events/periodically;
   - lambda is the primary compute option, but is limited by execution time, ram, and triggering events/messaging support
     - be sure to set a reasonable lambda concurrency limit, e.g. when the lambda is hitting a DB, you dont want 100000 lambdas hitting a DB which would explode your managed DB costs
-  - farget is the fallback option, whenever limitations of lambda is unnacceptable
+  - fargate is the fallback option, whenever limitations of lambda is unnacceptable
 - storage: always S3, but choosing the appropriate S3 storage class is critical
   - keeping the raw data (as close to origin as possible) around is crucial for replaying events
     - for complex/costly data transforms, save the intermediate steps as well
@@ -133,7 +168,7 @@
 
 ## lambda
 
-- the most basic on-demand compute, run functions instead of EC2 servers
+- the most basic on-demand compute, execute fns as APIs/containers instead of EC2 servers / ECS Fargate tasks
 - event drivent, stateless (serverless) business logic that can be triggered from 200+ aws services
 - compute service to run code without managing servers
 - costs
@@ -370,7 +405,7 @@ exports.handler = function (event, context, callback) {
 }
 ```
 
-## SES
+## SES Simple Email Service
 
 - simple email service
 
@@ -443,30 +478,47 @@ exports.handler = function (event, context, callback) {
 - delivery status logging: only for specific protols (lambda, sqs, etc)
 - IAM roles
 
-## Kinesis
+## ECS container service
 
-- manage streaming data in realtime
-- ingest real-time data such as video, audio, application logs, website clickstreams, and IoT telemetry data for machine learning, analytics, and other applications.
-- process and analyze data as it arrives and respond instantly instead of having to wait until all your data is collected before the processing can begin.
-- use cases
-  - can have multiple shards within a stream, and consumers can be assigned to specific shards
-  - full replay is possible by resetting a stream to a point in time
-
-## EKS elastic kubernetes service
-
-- elastic kubernetes service
-
-## ECS elastic container service
-
-- no cost for ec2 launch type, farget has costs for vcpu and memory resources
-- amazon container service
+- run docker containers on EC2 / Fargate instances
+- no cost for ec2 launch type, fargate has costs for vcpu and memory resources
 - cluster: regional grouping of one or more container instances on which you can run task requests; tasks are deployed to clusters
   - template types
     - networking only: use fargate with windows/linux based images
     - ec2 linux + networking: ec2 instead of fargate
     - ec2 windows + networking: ec2 instead of fargate
-- task definitions: provides details and resource requirements for a container that is passed to the Docker daemon. A task definition may contain one or more container definitions.
 - cloudwatch container insights: CloudWatch automatically collects metrics for many resources, such as CPU, memory, disk, and network.Container Insights also provides diagnostic information, such as container restart failures, that you use to isolate issues andresolve them quickly. You can also set CloudWatch alarms on metrics that Container Insights collects.
+- General ECS process
+  - build container: localhost/CI
+  - store container: Continuous delivery to ECS
+  - run: continous deploy to compute services
+
+### key components
+
+#### ECS Agent
+
+#### ECS Control Plan
+
+#### task definitions
+
+- provides details and resource requirements for a container that is passed to the Docker daemon.
+- may contain one or more container definitions
+  - containers within the definition deploy as a group; this is your base unit of scale
+  - dont mix-n-match app-types
+- should point to a specific contaimer image tag, and never to `latest`
+  - i.e. 1 to 1 mapping between app version -> container img tag -> task definition revision
+  - e.g. a git commit -> container:gitCommitHash -> task def revision -> delivery to store / deploy to prod
+- should have a specific IAM Role per task definition
+  - this enforces each task is delineated across business/application usecase
+- Always review the service resource spec
+  - used to group,k monitor replace adn scale identical tasks
+  - determines:
+    - how many units (copies) of the task are deployed
+    - the resources available to the task at runtime
+- use `awsvpc` network mode and ensure each task has its own security group
+  - `awsvpc` ensures each task has its own IP with a service-level security group
+    - as opposed to isntance-level security groups, which would be a fkn nightmare to manage
+- turn on Amazon ECS managed tags and tag propagation
 
 ### ec2 launch type
 
@@ -477,20 +529,70 @@ exports.handler = function (event, context, callback) {
 
 ### ecs on aws outposts
 
-## fargate
+## ECR container registry
 
-- fully managed infrastructure for serverless container based applications
+- create registry from the web console then click `view push cmds`
+  - you generally need to do this once, so that you can connect to the registry and push your images
+- supports pub & priv repos with resource-based perms via IAM
+
+### key components
+
+### registry
+
+- create one/more priv/pub registries
+
+### auth token
+
+- each client must auth to ECR as an AWS user before push/pulling images
+
+### repository
+
+- supports docker, OCI & compatible artifacts
+
+### repository policy
+
+- control access to the repo itself and images withinm
+
+### images
+
+- the stored artifacts
+- can be pulled/pushed via the aws cli, and run as ECS tasks/services or EKS pods
+
+## fargate ecs serverless runtime for containers
+
+- AWS is responsible for provisioning, configuring and scaling compute resources for containers
+- you are responsible for
+  - ecs task/service definition
+  - operating system, cpu and mem requirements
+  - network and IAM policies
+  - launch type
 - use cases
   - preferred over lambda for complex/long running business logic, e.g. listening to FIFO queues for messages
 - costs
   - by container running cpu/memory and time
 
-## ECR
+### key components
 
-- elastic container registry
-- docker registry on aws
-- create registry from the web console then click `view push cmds`
-  - you generally need to do this once, so that you can connect to the registry and push your images
+#### clusters
+
+- logical grouping of tasks/services to isolate applications
+
+#### task definitions
+
+- one/more containers comprising an application
+- the task def is the unit of scale and can contain up to 10 containers
+  - same best practice as normal containers, the other 9 are for sidecars
+- each container shares the underlying kernel, cpu and mem resources, and network interface
+  - however is isolated from other task defs
+
+##### tasks
+
+- the instantiation of a task def, i.e. task def -> image, task -> container
+
+##### services
+
+- tasks instantiated as services are scheduled via the ECs service scheduler
+  - ensures a task def maintains the specified number of task instances at any one time
 
 ## MQ
 
@@ -632,23 +734,15 @@ exports.handler = function (event, context, callback) {
 - run apache spark, hive, presto etc data workloads
 - big data pipelines and processing
 
-## certificate manager
+## Kinesis managed realtime data streaming
 
-- vault knockoff
+- manage streaming data in realtime
+- ingest real-time data such as video, audio, application logs, website clickstreams, and IoT telemetry data for machine learning, analytics, and other applications.
+- process and analyze data as it arrives and respond instantly instead of having to wait until all your data is collected before the processing can begin.
+- use cases
+  - can have multiple shards within a stream, and consumers can be assigned to specific shards
+  - full replay is possible by resetting a stream to a point in time
 
-## firewall manager
+## EKS elastic kubernetes service
 
-- centrally configure and manage firewall rules across accounts
-
-## KMS
-
-- [main page](https://aws.amazon.com/kms/?did=ap_card&trk=ap_card)
-- Create and control keys used to encrypt or digitally sign your data
-
-## secrets manager
-
-- vault knockoff
-
-## WAF web application firewall
-
-- protection against common web exploits and bots
+- elastic kubernetes service

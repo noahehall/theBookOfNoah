@@ -1,23 +1,50 @@
-# AWS Global Architecture, accounts and users
+# AWS Global Architecture, IAM and tools
 
-- IAM, STS, cognito, cli, sam cli
-- this cheatsheet should be used in conjunction with:
-  - [micrservices](./0microservices.md)
-  - [analytics (and billing)](./0analytics.md)
-  - [security](./security.md)
-- before going all in on AWS: consider [everything hashicorp](../hashicorp/README.md) for a truly modern multi-cloud-enabled devops architecture
-- todos
-  - theres bunches of stuff in the oldnotes and oldnotesbooks directories
-    - move them all into the new files
-    - you should start with this todo
+- IAM, STS, cli, sam cli, copilot cli
+- this cheatsheet should be understood before transitioning to any other file
+  - your next stop should be the security file
+  - after that should be networking
+- before going all in on AWS, consider how utilize the following instead of their AWS competitors
+  - [everything hashicorp](../hashicorp/README.md) for a truly modern multi-cloud-enabled devops architecture
+  - [haproxy](../proxy/haproxy.md)
+    - [TODO: envoy](../proxy/envoy.md)
+  - your goal should be creating multi-cloud open & internal source architectures
+    - as opposed to proprietary entrapped enslaved business models
 
 ## TLDR
 
 - features that encompass AWS resources and architecture decisions
 - generally apply to all services or should be `top of mind` when working with AWS
+- using managed services makes you operationally dependent on AWS
+- not all services
+  - are available in all regions
+  - cost the same in all regions
 
-## todo
+### best practices/gotchas
 
+- you're going to use roles for everything: humans, machines, resources... e.v.e.r.y.t.h.i.n.g
+- picking a region: service availability, pricing, latency, compliance (law), SLAs
+- ALWAYS
+  - create a schema for tagging resources
+  - create an account-level analyzer in IAM Access Analyzer on a per-Region basis.
+  - create users with NO ATTACHED POLICIES to incrementally test policies as youre creating them
+    - once you have verified the policy, you can then force the new user to reset their password
+- SOMETIMES
+  - TBD
+- NEVER
+  - user the root account for common tasks
+    - create atleast 1 child account, never use the main account
+  - make changes in critical, high-availability code paths since IAM is eventually consistent and takes time to replicate across servers
+    - i.e. dont create users during your CI/CD process
+    - creating updating users, groups or policies
+      - make IAM changes in a separate initialization/setup routing that you run less frequently
+      - verify changes have been propagated before production workflows depend on them
+
+### todo
+
+- theres bunches of stuff in the oldnotes and oldnotesbooks directories
+  - move them all into the new files
+  - [new AWS billing policies require updating nirv](https://aws.amazon.com/blogs/aws-cloud-financial-management/changes-to-aws-billing-cost-management-and-account-consoles-permissions/)
 - supported compliance standards: <http://aws.amazon.com/compliance/>
 - lot of things about IAM in here, move it into the 0security file
   - scratch that, put it under `# global architecture`
@@ -34,6 +61,7 @@
 
 - [all 250+ aws services](https://aws.amazon.com/products/)
 - [all aws managed services](https://aws.amazon.com/products/management-and-governance/)
+- [all aws docs by resource type](https://docs.aws.amazon.com/index.html)
 
 ### reference
 
@@ -44,39 +72,41 @@
 
 ### docs
 
-- [macie](https://aws.amazon.com/macie/?did=ap_card&trk=ap_card)
-- [inspector](https://aws.amazon.com/inspector/?did=ap_card&trk=ap_card)
-- [guardduty](https://aws.amazon.com/guardduty/?did=ap_card&trk=ap_card)
-- [detective](https://aws.amazon.com/detective/?did=ap_card&trk=ap_card)
+- [access analyzer APIs](https://docs.aws.amazon.com/access-analyzer/latest/APIReference/Welcome.html)
+- [access anlyzer](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html#access-analyzer-enabling)
+- [aws managed policies for job functions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html)
+- [aws managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies)
 - [cognito](https://aws.amazon.com/cognito/?did=ap_card&trk=ap_card)
+- [configuring credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html)
+- [configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
 - [control tower](https://aws.amazon.com/controltower/)
+- [creds & config spec](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
+- [detective](https://aws.amazon.com/detective/?did=ap_card&trk=ap_card)
+- [getting setup on th AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)
+- [global condition context keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html)
+- [guardduty](https://aws.amazon.com/guardduty/?did=ap_card&trk=ap_card)
+- [IAM best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
+- [IAM docs](https://docs.aws.amazon.com/iam/?id=docs_gateway)
+- [IAM json policy elements](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_resource.html)
+- [IAM user guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
+- [inspector](https://aws.amazon.com/inspector/?did=ap_card&trk=ap_card)
+- [macie](https://aws.amazon.com/macie/?did=ap_card&trk=ap_card)
+- [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
 - [organizations](https://aws.amazon.com/organizations/?c=mg&sec=srv)
 - [resource names](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
-- [IAM json policy elements](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_resource.html)
-- [access anlyzer](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html#access-analyzer-enabling)
-- [access analyzer APIs](https://docs.aws.amazon.com/access-analyzer/latest/APIReference/Welcome.html)
-- [getting setup on th AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-set-up.html)
-- [configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
-- [creds & config spec](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html)
-- [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
 - [test permissions on the command line](https://docs.aws.amazon.com/AmazonS3/latest/userguide/policy-eval-walkthrough-download-awscli.html)
-- [configuring credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html)
-- [IAM docs](https://docs.aws.amazon.com/iam/?id=docs_gateway)
-- [IAM best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
-- [IAM user guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html)
-- [aws managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html#aws-managed-policies)
-- [aws managed policies for job functions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html)
-- [global condition context keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html)
+- [IAM: identity center intro](https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html?icmpid=docs_sso_console)
 
 ### tools
 
 - [all tools](https://aws.amazon.com/tools/)
 - [aws simple monthly calculator](http://calculator.s3.amazonaws.com/index.html)
 - [cli cmds](https://docs.aws.amazon.com/cli/latest/reference/)
+- [cli: copilot](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Copilot.html)
+- [cli: sam](https://github.com/aws/aws-sam-cli)
 - [command completion](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-completion.html)
 - [developer tools](https://aws.amazon.com/products/developer-tools/)
 - [get your public IP](https://checkip.amazonaws.com/)
-- [sam cli](https://github.com/aws/aws-sam-cli)
 - [toolkit for vscode](https://aws.amazon.com/visualstudiocode/)
 - [well-archtiected tool](https://aws.amazon.com/well-architected-tool/)
 
@@ -95,29 +125,6 @@
 - [IAM customer managed policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create-console.html)
 - [permission sets](https://aws.amazon.com/premiumsupport/knowledge-center/create-sso-permission-set/)
 - [permission boundary for create role action](https://stackoverflow.com/questions/62029972/trying-to-give-iam-user-rights-to-create-and-assign-roles-but-limit-the-type-of)
-
-## best practices/gotchas
-
-- using managed services makes you operationally dependent on AWS
-- not all services
-  - are available in all regions
-  - cost the same in all regions
-- picking a region: service availability, pricing, latency, compliance (law), SLAs
-- ALWAYS
-  - create a schema for tagging resources
-  - create an account-level analyzer in IAM Access Analyzer on a per-Region basis.
-  - create users with NO ATTACHED POLICIES to incrementally test policies as youre creating them
-    - once you have verified the policy, you can then force the new user to reset their password
-  - define your security groups broadly, so you dont have to manage hundreds/thousands of them per vpc
-- SOMETIMES
-  - TBD
-- NEVER
-  - user the root account for common tasks
-  - make changes (like the following) in critical, high-avialaibity code paths since IAM is eventually consistent and takes time to replicate across servers
-    - creating updating users, groups or policies
-      - instead:
-        - make IAM changes in a serpate initialization/setup routing that you run less frequently
-        - verify changes have been propagated before production workflows depend on them
 
 ## basics
 
@@ -335,26 +342,90 @@
         - coudWatchAgentServerPolicy: permissions to write logs to cloudwatch
       - attach to ec2 instance you want to monitor with cloud agent
 
+### Access Management
+
+- user groups: permissions applied at the group level
+- users: its now preferred to use IAM Identity Center instead of creating users directly through IAM access management
+- roles: identities (with attached policies) for specific use cases that can be assumed by users/entities for short durations
+- policies: the base entity for providing access to AWS resources
+- identity providers: it is now preferred to use IAM Identity center
+- account settings: ensure you set this up in the beginning
+  - password policy
+  - STS: toggle security token service endpoints
+
+### Access Analyzer
+
+- monitor access to resources
+
 ### IAM considerations
 
+- in general
+  - for any nontrivial setup
+    - administering users & permission sets via Identity Center
+    - manage roles & policies via Access Management
+    - rely on AWS MultiAccounts to delineate your organization into groups
 - for ec2
   - what is the ec2 doing? create a role that enables the ec2 to connect with other resources at the necessary permission levels
 
 ## IAM Identity Center
 
-- [main page](https://aws.amazon.com/iam/identity-center/)
+- [start here](https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html?icmpid=docs_sso_console)
 - successor to aws sso
 - Centrally manage workforce access to multiple AWS accounts and applications
+- general workflow
+  - this workflow continues where IAM Access Management ends
+  - define account settings
+    - ALWAYS require signin (fk context aware)
+    - ALWAYS require MFA (fk ur password)
+    - ALWAYS ensure the session settings is <= the default of 8 hours
+  - create permission sets
+    - heuristics
+      - EVERYONE should be responsible for managing their costs, AWS is fkn expensive
+      - instead of granular permission sets, prefer relying on multi-account organization
+    - BillingAdmin: can see & change credit cards
+      - IMO this should be the only group able to modify credit card info
+    - SysAdmin: attach the default SystemAdministrator Policy
+      - this is still too permissive IMO and shouldnt be assigned to 99% of users
+      - SystemAdministrators can see & modify credit cards
+    - DevAdmin: SysAdmin minus creating users
+  - create groups
+    - assign permission sets to groups
+  - create applications
+    - theres some preintegrated accounts
+    - but realistically you'll setup custom SAML 2.0 with third-party apps
+  - create child(ren) AWS accounts
+    - NEVER use the main account for anything
+    - assign groups to accounts
+  - create users
+    - assign users to groups
+  - assign applications to users
+  - assign users to accounts
 
-## STS
+### IAM Identity Center Considerations
 
-- STS: Security Token Service
+- Identity Sources: extend beyond AWS user directory
+- Multi Account permissions:
+  - you generally want to create accounts for broad sets of your organization
 
-## cognito
+## STS: Security Token Service
 
-- authnz: application identity management
+- create and provide trusted users with temporary access to aws resources
+- in IAM > Account Settings you should disable regions your not using
 
-## aws cli
+## organizations
+
+- centrally manage multiple AWS accounts
+- allocate resources, group accoutns and apply policies to accounts/groups
+
+## control tower
+
+- setup and govern multi accounts
+
+## CLIs
+
+- different CLIs for different usecases
+
+### aws cli (default)
 
 - files
   - default config & credentials
@@ -443,7 +514,7 @@
 
 ```
 
-## sam cli
+### sam cli (serverless)
 
 - AWS Serverless Application Model (SAM) CLI is an open-source CLI tool that helps you develop serverless applications containing Lambda functions, Step Functions, API Gateway, EventBridge, SQS, SNS and more. Some of the features it provides are:
 
@@ -456,31 +527,6 @@ sam --version
 
 ```
 
-## organizations
+### copilot cli (containers)
 
-- centrally manage multiple AWS accounts
-- allocate resources, group accoutns and apply policies to accounts/groups
-
-## license manager
-
-- manage software licenses and fine-tune licensing costs
-
-## control tower
-
-- setup and govern multi accounts
-
-## detective
-
-- manage and investigate possibile security issues
-
-## guardduty
-
-- threat detection, mitigation and response
-
-## inspector
-
-- automated vulnerability scanning
-
-## macie
-
-- pattern matching for discovering & protecting sensitive data
+- simplifies building, releasing and runtime ops of container apps on ECS from localhost

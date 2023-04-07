@@ -2,6 +2,27 @@
 
 s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot, Data Life cycle Manager, AWS Backup,
 
+## TLDR
+
+### best practices
+
+- runtime persistent storage: consider the usecase, application type, read/write patterns
+  - EBS: generally best case for EC2 based apps
+  - S3: static, global, shared etc
+  - EFS: containerized apps
+  - FSx: high perf
+  - some DB/keyval store e.g. RDS
+- ALWAYS
+  - understand your availability requirements in the design phase
+  - to minimize data stored on a server always attach an EBS volume to it
+    - an EBS volumes survive ec2 instance failure and can be reattched to a new instance
+    - however youre still vulnerable to an EBS/AZ failure (use recurring EBS snapshots to mitigate)
+- SOMETIMES
+  - prevent objects from being modified by the `anonymouse user`
+    - do not implement bucket policiess that allow anonymouse public writes to buckets
+    - do not use ACLs that allow `anonymouse user` write access
+    - i.e. use the `S3 Block Public Access`
+
 ## links
 
 - [host a static website in under 20 minutes](https://www.youtube.com/watch?v=5qS3DzSn5Z4)
@@ -12,7 +33,6 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
   - [access (i.e. permissions) analyzer for s3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-analyzer.html)
   - [analytics and inisghts to optmize storage usage](https://docs.aws.amazon.com/AmazonS3/latest/userguide/analytics-insights.html)
 - tuts
-
   - [managing storage lifecycle](https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html)
   - [making requests](https://docs.aws.amazon.com/AmazonS3/latest/userguide/MakingRequests.html)
   - [s3 getting started](https://docs.aws.amazon.com/AmazonS3/latest/userguide/GetStartedWithS3.html)
@@ -39,16 +59,11 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
   - [logging and monitoring](https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-incident-response.html)
     - [ogging rquests using server access logging](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerLogs.html)
   - [set the versioning state of an existing bucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketVersioning.html)
-
 - s3 glacier
-
   - [s3 glacier developer guide](https://docs.aws.amazon.com/amazonglacier/latest/dev/introduction.html)
   - [restore an object in glacier back into s3](https://docs.aws.amazon.com/AmazonS3/latest/API/API_RestoreObject.html)
-
 - s3 storage lens
-
   - [using service-linked roles](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-service-linked-roles.html)
-
 - reference
   - [monitor costs overview](https://docs.aws.amazon.com/AmazonS3/latest/userguide/monitoring-overview.html)
   - [pricing](https://aws.amazon.com/s3/pricing/?nc=sn&loc=4)
@@ -72,28 +87,12 @@ s3, ebs elastic block storage, efs elastic file system, amazon FSx, EBS Snapshot
       - [cors ocnfiguration](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ManageCorsUsing.html)
       - [configuring cors](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html)
       - [troubleshooting](https://docs.aws.amazon.com/AmazonS3/latest/userguide/cors-troubleshooting.html)
-- ec2
-  - [pricing](https://aws.amazon.com/ec2/pricing/)
-  - [aws nitro](https://aws.amazon.com/ec2/nitro/)]
 - ebs
   - [multi-attach](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volumes-multi.html)
   - [requires costly azz nitro system](https://aws.amazon.com/marketplace/pp/prodview-37z6ersmwouq2)
   - [ebs pricing](https://aws.amazon.com/ebs/pricing/)
   - [ebs block device names, important for terraform](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/device_naming.html)
-
-## best practices
-
-- ALWAYS
-  - use an IAM user to make authenticated requests (i.e. never the root user)
-  - understand your availability requirements in the design phase
-  - to minimize data stored on a server always attach an EBS volume to it
-    - an EBS volumes survive ec2 instance failure and can be reattched to a new instance
-    - however youre still vulnerable to an EBS/AZ failure (use recurring EBS snapshots to mitigate)
-- SOMETIMES
-  - prevent objects from being modified by the `anonymouse user`
-    - do not implement bucket policiess that allow anonymouse public writes to buckets
-    - do not use ACLs that allow `anonymouse user` write access
-    - i.e. use the `S3 Block Public Access`
+- [FSx](https://aws.amazon.com/fsx/)
 
 ## basics
 
