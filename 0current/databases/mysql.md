@@ -7,6 +7,7 @@
 ## link
 
 - [mysql MUL keys](https://stackoverflow.com/questions/5317889/sql-keys-mul-vs-pri-vs-uni)
+- [quick mysql links](https://www.mysqltutorial.org/)
 
 ## needs categorization
 
