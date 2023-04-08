@@ -53,6 +53,7 @@ sudo apt install apt-fast
 apt_search_i3
 # essential regolith apps
 sudo apt-fast install \
+  i3xrocks-app-launcher \
   i3xrocks-battery \
   i3xrocks-bluetooth \
   i3xrocks-cpu-usage \

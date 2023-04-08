@@ -8,6 +8,9 @@ long list of git
 
 ## TODO
 
+- this needs to be updated
+  - actions to v3
+  - probably redo this entire file
 - categorize all below
 - anything under this line i wouldnt trust
 - find which file has the git flow strategies and put in here
@@ -403,7 +406,7 @@ jobs:
     # services:
       # postgres:
         # image: postgres
-    runs-on: macos-10.15 # has vagrant, everything we do is within vagrant
+    runs-on: macos-10.15 # has vagrant
     # strategy: @see using a build matrix
     #   matrix:
     #   node: [6, 8 ,10]

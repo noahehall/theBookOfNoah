@@ -231,9 +231,9 @@ nim_dump() {
   nim dump
 }
 nim_graph() {
-  # generates parent/poop.deps && project/poops.{dot,png}
-  # use graphviz ext > preview to view poop.dot within vscode
-  nim genDepend $opts ${1:?$nim_file_required}
+  # generates parent/woop.deps && project/woops.{dot,png}
+  # use graphviz ext > preview to view woop.dot within vscode
+  nim genDepend ${1:?$nim_file_required}
 }
 nim_lint() {
   opts="${@:2:-''}"
@@ -307,7 +307,7 @@ nim_docs() {
   esac
 }
 nim_docs_json() {
-  # creates htmldocs/poop.json
+  # creates htmldocs/woop.json
   nim jsondoc ${1:?$nim_file_required}
 }
 nim_docs_index() {

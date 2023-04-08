@@ -10,6 +10,7 @@ regolith_shortcuts() {
 	cat <<-'KEEP_FORGETTING'
 		**** see all ****: shift ?
 		browser: shift enter
+		change look: alt l
 		launcher **/*/bin cmds: shift space
 		launcher apps: space
 		notifications: n
