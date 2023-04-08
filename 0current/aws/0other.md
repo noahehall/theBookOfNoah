@@ -4,7 +4,6 @@
 
 ## links
 
-- [batch](https://aws.amazon.com/batch/?did=ap_card&trk=ap_card)
 - [outposts](https://aws.amazon.com/outposts/?did=ap_card&trk=ap_card)
 - [appflow](https://aws.amazon.com/appflow/?did=ap_card&trk=ap_card)
 
@@ -15,10 +14,6 @@
 ## IoT message broker
 
 - pub/sub to/from IoT core
-
-## batch
-
-- run batch jobs at any scale
 
 ## outposts
 
