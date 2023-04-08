@@ -2,6 +2,7 @@
 
 ## FYI
 # ive only tested the c backend for nim compile & run cmds
+# uses nim 2 by default
 
 ## TODO:
 # add stuff from tools: @see https://github.com/nim-lang/Nim/blob/devel/tools
@@ -9,6 +10,7 @@
 # nim_docs doesnt set the `edit` link correctly
 # add support for envar CC which sets compiler when --cc:env is used
 
+nim_v='#version-2-0'
 nim_file_required='file.nim required'
 
 ########################## choosenim
@@ -17,7 +19,7 @@ nim_c() {
 }
 nim_c_use() {
   # install then select
-  nim_c ${1:-stable}
+  nim_c ${1:-$nim_v}
 }
 nim_c_rm_version() {
   nim_c remove ${1:?specific version required}
@@ -30,7 +32,7 @@ nim_c_remote() {
 }
 nim_c_update() {
   nim_c update self
-  nim_c update ${1:-stable}
+  nim_c update ${1:-$nim_v}
   # updating via branches is known to be slow, pass a version instead
   # nim_c update devel --latest
 }
@@ -361,7 +363,7 @@ nim_test() {
 
 nim_update() {
   echo -e 'updating choosenim and nim'
-  nim_c_update ${1:-stable}
+  nim_c_update "$1"
 
   echo -e 'updating nimble'
   nim_b_update
