@@ -1,5 +1,6 @@
 code-insiders --install-extension 42Crunch.vscode-openapi
 code-insiders --install-extension 74th.monokai-charcoal-high-contrast
+code-insiders --install-extension adpyke.vscode-sql-formatter
 code-insiders --install-extension amazonwebservices.aws-toolkit-vscode
 code-insiders --install-extension ankitcode.firefly
 code-insiders --install-extension anseki.vscode-color
@@ -28,6 +29,11 @@ code-insiders --install-extension mindaro-dev.file-downloader
 code-insiders --install-extension ms-dotnettools.vscode-dotnet-runtime
 code-insiders --install-extension ms-python.python
 code-insiders --install-extension ms-python.vscode-pylance
+code-insiders --install-extension ms-toolsai.jupyter
+code-insiders --install-extension ms-toolsai.jupyter-keymap
+code-insiders --install-extension ms-toolsai.jupyter-renderers
+code-insiders --install-extension ms-toolsai.vscode-jupyter-cell-tags
+code-insiders --install-extension ms-toolsai.vscode-jupyter-slideshow
 code-insiders --install-extension ms-vscode.cmake-tools
 code-insiders --install-extension ms-vscode.cpptools
 code-insiders --install-extension nimsaem.nimvscode
