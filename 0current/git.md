@@ -15,6 +15,7 @@ long list of git
 - anything under this line i wouldnt trust
 - find which file has the git flow strategies and put in here
   - https://www.atlassian.com/git/tutorials/comparing-workflows
+- review the git town plugin, lol forgot this even existed
 
 ```sh
 sparse clone an existing repo from git to local
@@ -43,26 +44,79 @@ git remote prune origin
 
 ## LINKS
 
+### interwebs
+
+- [AAA git cheatsheet](https://github.com/k88hudson/git-flight-rules/blob/master/README.md)
+- [atlassian git tuts](https://www.atlassian.com/git/tutorials)
 - [managing merge conflicts](https://docs.gitlab.com/ee/user/project/merge_requests/conflicts.html)
-- refrence
-  - [environment vars](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables)
-  - [git flight rules](https://github.com/k88hudson/git-flight-rules/blob/master/README.md)
-  - [git town cli plugin](https://www.git-town.com/)
-  - [issues with git flow](https://scottchacon.com/2011/08/31/github-flow.html)
-  - [git feature branch workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow)
-  - [bitbucket git tutorials landing page](https://www.atlassian.com/git/tutorials)
-  - [git workflow comparison](https://www.atlassian.com/git/tutorials/comparing-workflows)
-  - [git getting started](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
-  - [git config](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration)
-  - [git book](https://git-scm.com/book/en/v2)
-  - [installing git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-  - [first time setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)
-- copypasta
-  - [gitignore files](https://github.com/github/gitignore)
-  - [rebasing](https://stackoverflow.com/questions/41464752/git-rebase-interactive-the-last-n-commits)
-  - [deleting branches](https://www.freecodecamp.org/news/how-to-delete-a-git-branch-both-locally-and-remotely/)
-- repo related cmds
-  - [getting a git repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
+- [workflow: comparisons](https://www.atlassian.com/git/tutorials/comparing-workflows)
+- [workflow: feature branch](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow)
+- [semantic release docs](https://semantic-release.gitbook.io/semantic-release/)
+
+### git
+
+- [AAA git book](https://git-scm.com/book/en/v2)
+- [AAA git first time setup](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup)
+- [AAA git intro](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
+- [config](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration)
+- [environment vars](https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables)
+- [version control intro](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
+- [git workflow comparison](https://www.atlassian.com/git/tutorials/comparing-workflows)
+- [installing git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [issues with git flow](https://scottchacon.com/2011/08/31/github-flow.html)
+
+### tools
+
+- [git town cli plugin](https://www.git-town.com/)
+- [git icdiff](https://github.com/jeffkaufman/icdiff)
+
+### copypasta
+
+- [gitignore files](https://github.com/github/gitignore)
+- [rebasing](https://stackoverflow.com/questions/41464752/git-rebase-interactive-the-last-n-commits)
+- [deleting branches](https://www.freecodecamp.org/news/how-to-delete-a-git-branch-both-locally-and-remotely/)
+
+### github actions
+
+- [actions: automated builds and tests](https://docs.github.com/en/actions/automating-builds-and-tests)
+- [actions: basic overview](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
+- [actions: creating actions + syntax](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions)
+- [actions: creating actions with docker](https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action)
+- [actions: features overview](https://docs.github.com/en/actions/learn-github-actions/essential-features-of-github-actions)
+- [actions: finding and customizing github actions](https://docs.github.com/en/actions/learn-github-actions/finding-and-customizing-actions)
+- [actions: intro](https://docs.github.com/en/actions/creating-actions)
+- [actions: nodejs](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs)
+- [actions: security hardening](https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions)
+- [actions: syntax (must read)](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
+- [actions: using dbs and service containers](https://docs.github.com/en/actions/configuring-and-managing-workflows/using-databases-and-service-containers)
+- [artifacts: peristing data](https://docs.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts)
+- [cache: intro](https://docs.github.com/en/actions/guides/caching-dependencies-to-speed-up-workflows)
+- [dependabot](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot)
+- [jobs: intro](https://docs.github.com/en/actions/using-jobs)
+- [jobs: intro](https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow)
+- [jobs: using a build matrix](https://docs.github.com/en/actions/using-jobs/using-a-build-matrix-for-your-jobs)
+- [runners: all hosted runners](https://github.com/actions/virtual-environments)
+- [runners: hardware resources](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners)
+- [runners: self hosted](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners)
+- [runners: self hosting](https://docs.github.com/en/actions/hosting-your-own-runners)
+- [runners: self-hosted labels](https://docs.github.com/en/actions/hosting-your-own-runners/using-labels-with-self-hosted-runners)
+- [secrets: intro](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)
+- [variables: intro](https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables)
+- [variables: must read](https://docs.github.com/en/actions/learn-github-actions/variables)
+- [variables: context vars](https://docs.github.com/en/actions/learn-github-actions/contexts)
+- [workflows: event triggers](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows)
+- [workflows: intro](https://docs.github.com/en/actions/using-workflows)
+- [workflows: reusing](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows)
+- [workflows: starter kits](https://github.com/actions/starter-workflows)
+- cd with github actions
+  - [github starter deployment workflows](https://github.com/actions/starter-workflows/tree/main/deployments)
+  - [about cd with github](https://docs.github.com/en/actions/deployment/about-deployments/about-continuous-deployment)
+  - [run terraform github action](https://github.com/actions/starter-workflows/blob/main/deployments/terraform.yml)
+  - [connect to AWS via github action](https://github.com/actions/starter-workflows/blob/main/deployments/aws.yml)
+  - [security hardening with openid connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
+  - [deploying with github actions](https://docs.github.com/en/actions/deployment/about-deployments/deploying-with-github-actions)
+  - [using environments for deployment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment)
+  - [from aws perspective](https://aws.amazon.com/blogs/devops/integrating-with-github-actions-ci-cd-pipeline-to-deploy-a-web-app-to-amazon-ec2/)
 
 ## Basics
 
@@ -270,8 +324,8 @@ git config user.name # see what your username is
       - push to target branch if valid
 
 ```sh
-git checkout intoThisBranch
-git rebase changesInThisBranch
+git checkout inThisBranch
+git rebase addTheseChanges
 
 <<<<<<< HEAD
   head/base/source changes
@@ -291,51 +345,12 @@ git rebase changesInThisBranch
   - https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
     - https://github.com/actions/cache
 
-### links
-
-- [learn github actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
-- [reusing workflows](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows)
-- [using workflows](https://docs.github.com/en/actions/using-workflows)
-- [events that trigger workflows](https://docs.github.com/en/actions/reference/events-that-trigger-workflows)
-- [using jobs](https://docs.github.com/en/actions/using-jobs)
-- [creating actions](https://docs.github.com/en/actions/creating-actions)
-- [hosting your own runners](https://docs.github.com/en/actions/hosting-your-own-runners)
-- [github actions syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
-- [metadata for custom githu actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions)
-- [finding and customizing github actions](https://docs.github.com/en/actions/learn-github-actions/finding-and-customizing-actions)
-- [keeping actions up to date with dependabot](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/keeping-your-actions-up-to-date-with-dependabot)
-- [essential github action features](https://docs.github.com/en/actions/learn-github-actions/essential-features-of-github-actions)
-- [using env vars](https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables)
-- [perissting data using workflow artifacts](https://docs.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts)
-- [creating and storing enrypted secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)
-- [using jobs in a workflow](https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow)
-- [caching deps to speed up workflows](https://docs.github.com/en/actions/guides/caching-dependencies-to-speed-up-workflows)
-- [using a build matrix](https://docs.github.com/en/actions/using-jobs/using-a-build-matrix-for-your-jobs)
-- [using dbs and service containers](https://docs.github.com/en/actions/configuring-and-managing-workflows/using-databases-and-service-containers)
-- [labels with self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/using-labels-with-self-hosted-runners)
-- [github hosted runners & hardware resources](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners)
-- [all github hosted runners](https://github.com/actions/virtual-environments)
-- [automated builds and tests](https://docs.github.com/en/actions/automating-builds-and-tests)
-- [starter workflows](https://github.com/actions/starter-workflows)
-- [build and testing with nodejs](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs)
-- cd with github actions
-  - [github starter deployment workflows](https://github.com/actions/starter-workflows/tree/main/deployments)
-  - [about cd with github](https://docs.github.com/en/actions/deployment/about-deployments/about-continuous-deployment)
-  - [run terraform github action](https://github.com/actions/starter-workflows/blob/main/deployments/terraform.yml)
-  - [connect to AWS via github action](https://github.com/actions/starter-workflows/blob/main/deployments/aws.yml)
-  - [security hardening with openid connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
-  - [deploying with github actions](https://docs.github.com/en/actions/deployment/about-deployments/deploying-with-github-actions)
-  - [using environments for deployment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment)
-  - [from aws perspective](https://aws.amazon.com/blogs/devops/integrating-with-github-actions-ci-cd-pipeline-to-deploy-a-web-app-to-amazon-ec2/)
-- semantic release
-  - [docs](https://semantic-release.gitbook.io/semantic-release/)
-
 ### terms
 
 - workflow: triggered in response to an event; a configurable automated process that will run one/more jobs
 - jobs: one/more tasks that make up a workflow; each run inside a runner (a VM/container), executed sequentially/parallel
   - a job will execute all its steps on a single runner
-  - by defualt jobs are isolated, but you can force dependencies, e.g. to share a build job with a deploy job
+  - by default jobs are isolated, but you can force dependencies, e.g. to share a build job with a deploy job
 - steps: scripts/actions that make up a job
   - executed in the order they appear
   - are dependent on each other
@@ -382,7 +397,7 @@ git rebase changesInThisBranch
     - even with forks by making a pull request to the base branch
 - cache vs artifacts
   - cache: reuse files that dont change often between jobs
-  - artifacts: save files produced bya job to view after a workflow has ended
+  - artifacts: save files produced by a job to view after a workflow has ended
 - access caches
   - a workflow can access and restore a cache:
     - in the current branch
@@ -398,33 +413,42 @@ git rebase changesInThisBranch
 
 ```yml
 name: some-workflow-name
-on: [list, of, event, triggers]
+run-name: some name for this specific run
+on: # @see https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
+  some_event:
+    types: [this_thing, or_this_thing]
+  some_other_event:
+    when_these_are_true:
+      - this_thing
+      - or_this_thing
+
 jobs:
-  some-job:
+  some-job-name:
     # @see dbs and service containers
     # container: node:10.18-jessie
     # services:
-      # postgres:
-        # image: postgres
-    runs-on: macos-10.15 # has vagrant
+    # postgres:
+    # image: postgres
+    runs-on: [macos-10.15] # has vagrant
     # strategy: @see using a build matrix
     #   matrix:
     #   node: [6, 8 ,10]
-    steps:
-      - uses: actions/checkout@v2 # always use this to checkout the repos code
-      - uses: actions/setup-node@v2 # dont use this, we use vagrant
-        with:
-          node-version: "14"
-      - name: some-file
-        uses actions/upload-artiact@v3
+    steps: # each array item runs in the order defined
+      - name: name this step
+        run: echo "i belong to name^"
+      - uses: actions/checkout@v3 # always use this to checkout the repos code
+      - uses: actions/setup-node@v2 # theres bunches of these for specific tech stacks
+        with: # generally a `uses` needs a `with`
+          node-version: "14" # dizzam its on 19 now
+      - uses: actions/upload-artiact@v3 # upload an artifact: only jobs in the same run can overwrite
         path: wherever/poop.log
-      - uses: actions/download-artifact # download na artifact form a separate worflow
+        name: my-artifact
+      - uses: actions/download-artifact # download a previously uploaded artifact from any workflow
         with:
-          name: some-file
-      - run: npm install -g bats # a cmd, either this or uses (for an action)
-        env:
-          POOP: flush
-          FLUSH: poop
+          name: my-artifact
+      - run: npm install -g bats # a cmd, not reusable
+        env: # are set in the env of run
+          WOOP: true
       - run: "./.github/scripts/poop.sh" # prefer this, so we can reuse them
         shell: bash
       - name: retrieve a secret
@@ -435,6 +459,8 @@ jobs:
 ```
 
 ## gitlab
+
+- lol what happened here? must be in another file
 
 ### pipelines
 
