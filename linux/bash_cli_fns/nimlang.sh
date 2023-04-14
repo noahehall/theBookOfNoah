@@ -2,6 +2,7 @@
 
 ## FYI
 # ive only tested the c backend for nim compile & run cmds
+# uses nim 2 by default
 
 ## TODO:
 # add stuff from tools: @see https://github.com/nim-lang/Nim/blob/devel/tools
@@ -9,6 +10,7 @@
 # nim_docs doesnt set the `edit` link correctly
 # add support for envar CC which sets compiler when --cc:env is used
 
+nim_v='#version-2-0'
 nim_file_required='file.nim required'
 
 ########################## choosenim
@@ -17,7 +19,7 @@ nim_c() {
 }
 nim_c_use() {
   # install then select
-  nim_c ${1:-stable}
+  nim_c ${1:-$nim_v}
 }
 nim_c_rm_version() {
   nim_c remove ${1:?specific version required}
@@ -30,7 +32,7 @@ nim_c_remote() {
 }
 nim_c_update() {
   nim_c update self
-  nim_c update ${1:-stable}
+  nim_c update ${1:-$nim_v}
   # updating via branches is known to be slow, pass a version instead
   # nim_c update devel --latest
 }
@@ -229,9 +231,9 @@ nim_dump() {
   nim dump
 }
 nim_graph() {
-  # generates parent/poop.deps && project/poops.{dot,png}
-  # use graphviz ext > preview to view poop.dot within vscode
-  nim genDepend $opts ${1:?$nim_file_required}
+  # generates parent/woop.deps && project/woops.{dot,png}
+  # use graphviz ext > preview to view woop.dot within vscode
+  nim genDepend ${1:?$nim_file_required}
 }
 nim_lint() {
   opts="${@:2:-''}"
@@ -305,7 +307,7 @@ nim_docs() {
   esac
 }
 nim_docs_json() {
-  # creates htmldocs/poop.json
+  # creates htmldocs/woop.json
   nim jsondoc ${1:?$nim_file_required}
 }
 nim_docs_index() {
@@ -361,7 +363,7 @@ nim_test() {
 
 nim_update() {
   echo -e 'updating choosenim and nim'
-  nim_c_update ${1:-stable}
+  nim_c_update "$1"
 
   echo -e 'updating nimble'
   nim_b_update

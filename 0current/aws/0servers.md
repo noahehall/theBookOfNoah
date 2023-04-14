@@ -1,28 +1,30 @@
 # Servers
 
-- ec2, AMI (amazon machine images), ec2 launch templates, ec2 instanct connect
+- ec2, AMI (amazon machine images), ec2 launch templates, ec2 instanct connect, lightsale
 - for EC2 storage see [storage](./0storage.md)
 - for EC2 networking see [networking](./0networking.md)
 
 # TLDR
 
-- everything EC2
+- everything with bare-metal like access
 
 ## links
 
-- ec2
-  - [pricing](https://aws.amazon.com/ec2/pricing/)
-  - [aws nitro](https://aws.amazon.com/ec2/nitro/)
-  - [ec2 instance IP addressing](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html)
-  - [custom primary private ips](https://aws.amazon.com/premiumsupport/knowledge-center/custom-private-primary-address-ec2/)
-  - [ec2 instant connect](https://docs.amazonaws.cn/en_us/AWSEC2/latest/UserGuide/ec2-instance-connect-set-up.html)
-- tuts
-  - [3 ways to connect to ec2 instances from linux](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html)
-  - [ec2 key pairs & linux instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
-  - [prereqs for connecting to an e2 instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connection-prereqs.html)
-- ami
-  - [getting started](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html#finding-quick-start-ami)
-  - [create ami from instance](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/tkv-create-ami-from-instance.html)
+- [ec2 custom primary private ips](https://aws.amazon.com/premiumsupport/knowledge-center/custom-private-primary-address-ec2/)
+- [ec2 instance IP addressing](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html)
+- [ec2 instant connect](https://docs.amazonaws.cn/en_us/AWSEC2/latest/UserGuide/ec2-instance-connect-set-up.html)
+- [ec2 pricing](https://aws.amazon.com/ec2/pricing/)
+- [lightsail](https://aws.amazon.com/lightsail/?did=ap_card&trk=ap_card)
+- [lightsail docs](https://lightsail.aws.amazon.com/ls/docs/en_us/search?s=What%20is%20Amazon%20Lightsail%3F)
+- [nitro](https://aws.amazon.com/ec2/nitro/)
+
+### tuts
+
+- [ami create ami from instance](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/tkv-create-ami-from-instance.html)
+- [ami getting started](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html#finding-quick-start-ami)
+- [ec2 3 ways to connect to ec2 instances from linux](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html)
+- [ec2 key pairs & linux instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
+- [ec2 prereqs for connecting to an e2 instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connection-prereqs.html)
 
 ## basics
 
@@ -125,7 +127,7 @@
 - templates from which AMIs can be launched
 - all about configuring AWS details, security groups, network settings, instance types, storage, etc
 
-## instant connect
+### instant connect
 
 - secure way to connect to your Linux instances using Secure Shell (SSH)
 - you use Amazon Identity and Access Management (IAM) policies and principals to control SSH access to your instances, removing the need to share and manage SSH keys
@@ -134,10 +136,19 @@
   - and enable the jump box access to other resources
   - dont assign public ips to fkn resources in private subnets
 
-## auto scaling
+### auto scaling
 
 - scale compute capacity
 
-## spot instances
+### spot instances
 
 - run workloads for up to 90% off
+
+## lightsail
+
+- easy-to-use virtual private server instances, containers storage and databases for simple web applications and test environments
+- this is their `quick, easy and dirty on AWS` offerring
+
+### lightsale for reasearch
+
+- focused on academics & researchers

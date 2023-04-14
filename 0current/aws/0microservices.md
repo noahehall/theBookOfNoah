@@ -1,6 +1,6 @@
 # AWS Microservice and Distributed Systems
 
-- lambda, step functions, ses, sqs, sns, kinesis, eks, ecs, fargate, ecr, mq, lightsail, app runner
+- serverless, containers, messaging/queues, fully managed apps
 
 ## TLDR
 
@@ -40,20 +40,24 @@
 ### aws
 
 - [api gateway](https://aws.amazon.com/api-gateway/?did=ap_card&trk=ap_card)
+- [appsync](https://docs.aws.amazon.com/appsync/?icmpid=docs_homepage_serverless)
 - [aws messaging services](https://aws.amazon.com/messaging/)
 - [aws microservice introduction](https://aws.amazon.com/microservices/)
+- [batch](https://aws.amazon.com/batch/?did=ap_card&trk=ap_card)
+- [beanstalk supported platforms](https://docs.aws.amazon.com/elasticbeanstalk/latest/platforms/platforms-supported.html)
 - [certificate manager](https://aws.amazon.com/certificate-manager/?did=ap_card&trk=ap_card)
 - [cloudsearch](https://aws.amazon.com/cloudsearch/?did=ap_card&trk=ap_card)
 - [data exchange](https://aws.amazon.com/data-exchange/?did=ap_card&trk=ap_card)
 - [datapipeline](https://aws.amazon.com/datapipeline/?did=ap_card&trk=ap_card)
 - [ecr aws cli docs](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ecr/index.html)
+- [ecr intro](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html)
 - [ecr pricing](https://aws.amazon.com/ecr/pricing/)
 - [ecr public gallery](https://gallery.ecr.aws/)
-- [ecr intro](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html)
 - [ecs best practices on github](https://github.com/awsdocs/amazon-ecs-bestpractices-guide)
 - [ecs container definitions](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#container_definitions%3Ficmpid=docs_ecs_hp-task-definition)
 - [ecs docs home](https://docs.aws.amazon.com/ecs/)
 - [emr](https://aws.amazon.com/emr/)
+- [eventbridge](https://docs.aws.amazon.com/eventbridge/?icmpid=docs_homepage_serverless)
 - [fargate intro](https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html)
 - [fargate pricing](https://aws.amazon.com/fargate/pricing/)
 - [fargate](https://aws.amazon.com/fargate/?did=ap_card&trk=ap_card)
@@ -61,13 +65,15 @@
 - [glue](https://aws.amazon.com/glue/?did=ap_card&trk=ap_card)
 - [kinesis](https://aws.amazon.com/kinesis/)
 - [lambda coldstarts in aws lambda](https://mikhail.io/serverless/coldstarts/aws/)
-- [lightsail](https://aws.amazon.com/lightsail/?did=ap_card&trk=ap_card)
 - [msk apache kafka](https://aws.amazon.com/msk/?did=ap_card&trk=ap_card)
 - [opensearch](https://aws.amazon.com/opensearch-service/?did=ap_card&trk=ap_card)
+- [sam guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html)
+- [sam template spec](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification.html)
+- [sam](https://docs.aws.amazon.com/serverless-application-model/?icmpid=docs_homepage_compute)
 - [secrets manager](https://aws.amazon.com/secrets-manager/)
 - [serverless compute](https://aws.amazon.com/serverless/)
 - [step functions: amazon states language](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html)
-- [WAF](https://aws.amazon.com/waf/)
+- [step functions](https://docs.aws.amazon.com/step-functions/?icmpid=docs_homepage_serverless)
 
 ## basics
 
@@ -103,11 +109,7 @@
     - lambda inside a VPC may not have internet access
       - if they do, there must be a NAT gateway setup
 
-### kms
-
-- [$1 per key](https://aws.amazon.com/kms/pricing/)
-
-### serverless
+### architecture: serverless
 
 - fully managed approached to execute business logic in the cloud; storage, compute, and networking without provisioning/managing servers/dbs
 - reduces operational complexity: processes and tasks that require operational skills no longer required; e.g. provisioning, backups, version management, patching, deploying, etc
@@ -115,7 +117,7 @@
 - standardize common tasks: e.g. security, error handling, logging
 - saving objects to s3 (e.g. json objects) is a good way to trigger lambda events to kick start an event driven data pipeline
 
-#### serverless components
+#### components
 
 - compute: business logic without the server; code runs on demand and is trigger by events/periodically;
   - lambda is the primary compute option, but is limited by execution time, ram, and triggering events/messaging support
@@ -149,7 +151,7 @@
     - cloud9
     - codebuild
 
-#### serverless considerations
+#### considerations
 
 - lambda fn (serverless) vs Fargate (containers)
   - lambda is best when logic needs to be run in response to an event, or periodically and can the processing can be complete in ~15 minutes
@@ -166,7 +168,9 @@
     - like SQS, has message delivery gurantees
     - like SNS, multiple consumers for each message
 
-## lambda
+## Serverless APIs
+
+### lambda
 
 - the most basic on-demand compute, execute fns as APIs/containers instead of EC2 servers / ECS Fargate tasks
 - event drivent, stateless (serverless) business logic that can be triggered from 200+ aws services
@@ -273,7 +277,7 @@ exports.handler = function (event, context, callback) {
   - sns topic
   - etc
 
-## Step Functions
+### Step Functions
 
 - workflow automation, e.g. state machines & orchestration between lambda fns
   - are region specific
@@ -291,7 +295,7 @@ exports.handler = function (event, context, callback) {
 - amazon states language: json schema defining states, actions, and transitions
   - there are various `generate code snippets` that you can select & copy/pasta into your stateMachine.stats member
 
-### state machine:
+#### state machine:
 
 - a workflow, defining a series of steps/states, their input, and the workflow/relationships between them
   - you generally want a single start, and a single end point in the workflow
@@ -405,11 +409,25 @@ exports.handler = function (event, context, callback) {
 }
 ```
 
-## SES Simple Email Service
+### SAM serverless apps
+
+- extends cloudFormation and uses sam CLI
+
+### api gateway rest/websocket APIs
+
+- create, maintain and secure restful/websocket APIs via containerized/services fns and web applications
+
+## appsync graphql
+
+- fully managed graphql service with realtime data sync
+
+## Messaging
+
+### SES Simple Email Service
 
 - simple email service
 
-## SQS simple queue service
+### SQS simple queue service
 
 - a polling based queueing service
 - fully managed queuing service; both generanl queues and FIFO queues to pass info between services
@@ -424,7 +442,7 @@ exports.handler = function (event, context, callback) {
   -
   - FIFO queues: guarantee delivery of messages within defined message groups
 
-### SQS considerations
+#### SQS considerations
 
 - default visibility timeout
 - message rentention period: how long an unprocessed message will remain in the queue
@@ -436,7 +454,7 @@ exports.handler = function (event, context, callback) {
   - maximum receives
 - server side encryption settings
 
-## SNS simple notification service
+### SNS simple notification service
 
 - a pub-sub based messaging service
   - use whenever there are multiple consumers for a single message
@@ -463,7 +481,7 @@ exports.handler = function (event, context, callback) {
     - breaching a limit will always increase costs or cause components to fail
   - monitor and manage quotas for any AWS service
 
-### sns considerations
+#### sns considerations
 
 - type
   - standard: when msg order & duplication isnt important
@@ -478,11 +496,38 @@ exports.handler = function (event, context, callback) {
 - delivery status logging: only for specific protols (lambda, sqs, etc)
 - IAM roles
 
-## ECS container service
+### MQ: apache activeMQ
+
+- managed message broker for apache activeMQ
+
+### msk: managed streaming for apache kafka
+
+- securely stream data via managed apacha kafka
+
+### Kinesis managed realtime data streaming
+
+- manage streaming data in realtime
+- ingest real-time data such as video, audio, application logs, website clickstreams, and IoT telemetry data for machine learning, analytics, and other applications.
+- process and analyze data as it arrives and respond instantly instead of having to wait until all your data is collected before the processing can begin.
+- use cases
+  - can have multiple shards within a stream, and consumers can be assigned to specific shards
+  - full replay is possible by resetting a stream to a point in time
+
+### eventbridge message broker
+
+- serverless message broker
+
+### pinpoint
+
+- customer engagement platform for managing targeted and transaction multi-channel engagement via email, push, SMS and lambda
+
+## Containers
+
+### ECS container service
 
 - run docker containers on EC2 / Fargate instances
 - no cost for ec2 launch type, fargate has costs for vcpu and memory resources
-- cluster: regional grouping of one or more container instances on which you can run task requests; tasks are deployed to clusters
+- cluster: regional grouping of one or more container instances; tasks are deployed to clusters
   - template types
     - networking only: use fargate with windows/linux based images
     - ec2 linux + networking: ec2 instead of fargate
@@ -493,13 +538,13 @@ exports.handler = function (event, context, callback) {
   - store container: Continuous delivery to ECS
   - run: continous deploy to compute services
 
-### key components
+#### key components
 
-#### ECS Agent
+##### ECS Agent
 
-#### ECS Control Plan
+##### ECS Control Plan
 
-#### task definitions
+##### task definitions
 
 - provides details and resource requirements for a container that is passed to the Docker daemon.
 - may contain one or more container definitions
@@ -520,45 +565,45 @@ exports.handler = function (event, context, callback) {
     - as opposed to isntance-level security groups, which would be a fkn nightmare to manage
 - turn on Amazon ECS managed tags and tag propagation
 
-### ec2 launch type
+#### ec2 launch type
 
 - [creating a container for use on ecs](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-container-image.html)
 - [deploying docker containers on ecs](https://docs.docker.com/cloud/ecs-integration/)
 
-### fargate launch type
+#### fargate launch type
 
-### ecs on aws outposts
+#### ecs on aws outposts
 
-## ECR container registry
+### ECR container registry
 
 - create registry from the web console then click `view push cmds`
   - you generally need to do this once, so that you can connect to the registry and push your images
 - supports pub & priv repos with resource-based perms via IAM
 
-### key components
+#### key components
 
-### registry
+##### registry
 
 - create one/more priv/pub registries
 
-### auth token
+##### auth token
 
 - each client must auth to ECR as an AWS user before push/pulling images
 
-### repository
+##### repository
 
 - supports docker, OCI & compatible artifacts
 
-### repository policy
+##### repository policy
 
 - control access to the repo itself and images withinm
 
-### images
+##### images
 
 - the stored artifacts
 - can be pulled/pushed via the aws cli, and run as ECS tasks/services or EKS pods
 
-## fargate ecs serverless runtime for containers
+### fargate ecs serverless runtime for containers
 
 - AWS is responsible for provisioning, configuring and scaling compute resources for containers
 - you are responsible for
@@ -571,13 +616,13 @@ exports.handler = function (event, context, callback) {
 - costs
   - by container running cpu/memory and time
 
-### key components
+#### key components
 
-#### clusters
+##### clusters
 
 - logical grouping of tasks/services to isolate applications
 
-#### task definitions
+##### task definitions
 
 - one/more containers comprising an application
 - the task def is the unit of scale and can contain up to 10 containers
@@ -585,164 +630,61 @@ exports.handler = function (event, context, callback) {
 - each container shares the underlying kernel, cpu and mem resources, and network interface
   - however is isolated from other task defs
 
-##### tasks
+###### tasks
 
 - the instantiation of a task def, i.e. task def -> image, task -> container
 
-##### services
+###### services
 
 - tasks instantiated as services are scheduled via the ECs service scheduler
   - ensures a task def maintains the specified number of task instances at any one time
 
-## MQ
+### EKS elastic kubernetes service
 
-- managed message broker for apache activeMQ
+- elastic kubernetes service
 
-## systems manager
+## Applications
 
-- view operatoinal data from multiple services & automate operation tasks
-  - formerly known as Simple Systems Manager
-- use cases
-  - centrally define the configuration options & policies for managed instances
-  - identify resources that are out of compliance and take corrective action
-  - automate variety of maintence tasks (e.g. ec2 patching)
-  - create runbook style docs that define the actions to perform on managed instances
-  - group AWS resources together using various attributes
-  - automatically collect inventory information about amazon EC2 and on-premise managed instances
-- systems manager agent: required to be installed on ec2 instances, on-premise servers, or avirtual machine
-  - some AMIs have the agent preinstalled
-- management types
-  - operations managemnet
-  - application management
-  - change management
-  - node management
-  - shared resources
-- fleet manager: all nodes that include the Systems manager agent
-  - click into an instance
-    - view file system, performance counters, users and gorups
-    - can even log into the instance from the web console (click actions button)
-- inventory: basic inventory information about all your instances
-- patch manager: auto patch instances
-- run command: run a command on an instance via the web console
-  - pick one from the list of command documents
-- hybrid activations: for installing the systems manager agent in on-premise servers
-  - you only need to do this once for each account
-  - make sure you have keep the activation code & ID as you only can view it once while creating it
-- documents: create your own runbook document
-  - in JSON/yaml format
-- distributor: enable you to install software on your managed instances
-  - software provided by aws
-  - software you provide
-    - create a package and upload it
-    - systems manager will push it to your instance
-- state mangaer: manage the state of ec2 & hybrid infrastructure
-  - create an association
-    - defines the desired state of your targets
-    - includes a rundoc that contains
-      - the state definition
-      - target information
-      - schedule
-
-### systems management configuration
-
-- configuration type
-  - host management
-    - update systems manager agent every two weeks
-    - collect inventory from your instances every 30 ins
-    - scan instances for missing patches daily
-    - install & configure the cloudwatch agent
-    - update the agent every 30 days
-  - config recording
-  - distributor
-- targets
-  - region
-  - all/specific instances
-  - resource group/manually select
-
-### operations management
-
-- explorer: customizable dashbaord
-  - compliance: aggregates and display s ops data for each resource group
-  - inventory: collects instance-level (installed software, files, services, etc) specific data
-- ops center: view investigate and resolve resource issues
-- incident manager: prepare for and resolve availability and perf issues
-
-### application management
-
-- application manager: application-level runtime issue management
-- appconfig: deploy app configs
-- parameter store: centralized config data (strings and secrets)
-
-### change management
-
-- automation: automate repetitive tasks across regions and accounts
-- change manager: request, approve, implmeent and report on ops (config/infra) changes
-- maintenance windows: schedule time windows for running instance-level tasks
-- state manager: configuration management for EC2 or on-premis servers
-
-### node management
-
-- fleet manager: manage remote servers & edge devices
-- session manager: browser-based interactive shell, cli and remote desktop access
-- patch manager: select and deploy operating system and software patches
-- run command: secure remote access without the ned for bastion hosts, ssh or remote powershell
-
-## lightsail
-
-- easy-to-use virtual private server instances, containers storage adn databases for simple web applications and test environments
-
-## app runner
+### app runner: containerized apps and APIs
 
 - deploy containerized web apps and APIs at scale
 
-## pinpoint
+### elastic beanstalk: heroku knockoff
 
-- customer engagement platform for managing targeted and transaction multi-channel engagement via email, push, SMS and lambda
+- while containerized app isnt required, why wouldnt you?
+- beanstalk is AWS managed service for applications
 
-## api gateway
+## Search
 
-- create, maintain and secure restful/websocket APIs via containerized/services fns and web applications
-
-## cloudsearch
+### cloudsearch
 
 - setup, manage and scale application text search
 
-## opensearch
+### opensearch
 
 - real-time search, monitoring and analysis based on elasticsearch
 
-## msk: managed streaming for apache kafka
+## Data Pipelines
 
-- securely stream data via managed apacha kafka
-
-## data exchange
+### data exchange
 
 - pub/sub for third-party data sources
 - seems like AWS has partnered with big-data tech to sell you their data
 
-## glue
+### glue
 
 - integrate with and build data pipelines across services
 - supports various ETL, ELT, batch and streaming pipelines and workloads
 
-## data pipeline
+### data pipeline
 
 - process and move data between compute/storage onpremise and aws resources
 
-## emr
+### emr: apache spark, hive and presto data pipelines
 
 - run apache spark, hive, presto etc data workloads
 - big data pipelines and processing
 
-## Kinesis managed realtime data streaming
+### batch
 
-- manage streaming data in realtime
-- ingest real-time data such as video, audio, application logs, website clickstreams, and IoT telemetry data for machine learning, analytics, and other applications.
-- process and analyze data as it arrives and respond instantly instead of having to wait until all your data is collected before the processing can begin.
-- use cases
-  - can have multiple shards within a stream, and consumers can be assigned to specific shards
-  - full replay is possible by resetting a stream to a point in time
-
-## EKS elastic kubernetes service
-
-- elastic kubernetes service
+- run batch jobs at any scale

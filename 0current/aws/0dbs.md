@@ -4,12 +4,10 @@ dynamodb, rds, aurora, elasticache, keyspaces, neptune (graph db), redshift (dat
 
 ## links
 
-### dbs
-
-- [lake formation](https://aws.amazon.com/lake-formation/?did=ap_card&trk=ap_card)
 - [aurora serverless](https://aws.amazon.com/rds/aurora/serverless/)
 - [documentdb](https://aws.amazon.com/documentdb/)
 - [dynamodb local docker setup](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html#docker)
+- [lake formation](https://aws.amazon.com/lake-formation/?did=ap_card&trk=ap_card)
 - [rds aws-cli](https://docs.aws.amazon.com/cli/latest/reference/rds/index.html)
 - [rds billing](https://aws.amazon.com/rds/pricing)
 - [rds database preview environment](https://us-east-2.console.aws.amazon.com/rds-preview/home?region=us-east-2#)
