@@ -52,6 +52,7 @@ git remote prune origin
 - [workflow: comparisons](https://www.atlassian.com/git/tutorials/comparing-workflows)
 - [workflow: feature branch](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow)
 - [semantic release docs](https://semantic-release.gitbook.io/semantic-release/)
+- [conventional commits](https://www.conventionalcommits.org)
 
 ### git
 
@@ -101,22 +102,26 @@ git remote prune origin
 - [runners: self hosting](https://docs.github.com/en/actions/hosting-your-own-runners)
 - [runners: self-hosted labels](https://docs.github.com/en/actions/hosting-your-own-runners/using-labels-with-self-hosted-runners)
 - [secrets: intro](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)
+- [variables: context vars](https://docs.github.com/en/actions/learn-github-actions/contexts)
+- [variables: expressions](https://docs.github.com/en/actions/learn-github-actions/expressions)
 - [variables: intro](https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables)
 - [variables: must read](https://docs.github.com/en/actions/learn-github-actions/variables)
-- [variables: context vars](https://docs.github.com/en/actions/learn-github-actions/contexts)
+- [varaibles: default vars](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables)
 - [workflows: event triggers](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows)
 - [workflows: intro](https://docs.github.com/en/actions/using-workflows)
-- [workflows: reusing](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows)
+- [workflows: reusing](https://docs.github.com/en/actions/using-workflows/reusing-workflows)
 - [workflows: starter kits](https://github.com/actions/starter-workflows)
-- cd with github actions
-  - [github starter deployment workflows](https://github.com/actions/starter-workflows/tree/main/deployments)
-  - [about cd with github](https://docs.github.com/en/actions/deployment/about-deployments/about-continuous-deployment)
-  - [run terraform github action](https://github.com/actions/starter-workflows/blob/main/deployments/terraform.yml)
-  - [connect to AWS via github action](https://github.com/actions/starter-workflows/blob/main/deployments/aws.yml)
-  - [security hardening with openid connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
-  - [deploying with github actions](https://docs.github.com/en/actions/deployment/about-deployments/deploying-with-github-actions)
-  - [using environments for deployment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment)
-  - [from aws perspective](https://aws.amazon.com/blogs/devops/integrating-with-github-actions-ci-cd-pipeline-to-deploy-a-web-app-to-amazon-ec2/)
+
+### github actions & CD
+
+- [github starter deployment workflows](https://github.com/actions/starter-workflows/tree/main/deployments)
+- [about cd with github](https://docs.github.com/en/actions/deployment/about-deployments/about-continuous-deployment)
+- [run terraform github action](https://github.com/actions/starter-workflows/blob/main/deployments/terraform.yml)
+- [connect to AWS via github action](https://github.com/actions/starter-workflows/blob/main/deployments/aws.yml)
+- [security hardening with openid connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
+- [deploying with github actions](https://docs.github.com/en/actions/deployment/about-deployments/deploying-with-github-actions)
+- [using environments for deployment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment)
+- [from aws perspective](https://aws.amazon.com/blogs/devops/integrating-with-github-actions-ci-cd-pipeline-to-deploy-a-web-app-to-amazon-ec2/)
 
 ## Basics
 
@@ -144,11 +149,10 @@ git remote prune origin
 ## quickies
 
 ```sh
-# git commit template
-# @see https://www.conventionalcommits.org/en/v1.0.0/
-## subject(scope): description
-## body...
-  Add
+# @see https://www.conventionalcommits.org
+## type(scope): description \n bodyMsg \n footerMsg
+  Add(whatever): hello world
+    this is an example
   Create
   Refactor
   Fix
@@ -159,6 +163,7 @@ git remote prune origin
   Remove
   Feat
   Delete etc...
+## body...
 
   Feat(api)!: breaking change
   Feat(api): regular feat related to api
@@ -409,11 +414,107 @@ git rebase addTheseChanges
 - caching logic
   - [must read the cache actions docs](https://github.com/actions/cache)
 
+### events
+
+- specified with `on: ...`
+- a single event, any of a list of events, or time schedule
+- if a list of events are provided, your workflow could execute multiple times
+- use `on.event_name.type` to restrict a specific event to a certain type, e.g. issue_comment > created
+  - specifying multiple types could cause multiple workflow runs
+- use filters to further restrict events, e.g. branches event should specify which branch
+- common events: if any are raised, the workflow will run
+  - push, fork, pull_request, pull_request_target
+  - label, issue_comment, issues, milestone
+  - page_build, project, project_card, project_column
+    - use project.create to setup racexp
+  - create, delete (branch/tag)
+  - deployment, deployment_status
+- common types: if any are true the workflow will run
+  - created, edited, deleted, opened, labeled
+- common filters: if all are true, the workflow will run
+  - branches, branches-ignore: match against `refs/heads`
+  - tags, tags-ignore: match against `refs/tags`
+  - paths
+  - all usually accept something like `!dontincludethisbranchorfile**` | `includethis`
+    - `* | ** | + | ? | !`
+- schedule syntax: `schedule: \nt cron: 'your cron here'`
+
+#### reusable workflows
+
+- read the docs on this one
+- workflow_call: define inputs and outputs for reusable workflows
+
+### docker
+
+- from github registry: `uses: docker://gcr.io/cloud-builders/gradle`
+- from docker hub: `uses: docker://alpine:3.8`
+
+### variables
+
+- are unmasked and shouldnt be used for anything sensitive
+- limited to 48kb per var and 25kb per workflow run
+- can have 1000 per org, 500 per repo, 100 per env
+- can be configured (repo/org) or custom (defined with env inside a workflow)
+
+#### secrets
+
+- are masked
+
+#### expressions
+
+- syntax `${{ any bash here }}`
+- literals: null, true/false, number, float, string
+- operators:
+  - grouping ()
+  - array and object axor: [] | .
+  - comparisons: ! < > <== ==> == != && ||
+  - functions:
+    - Null(), Boolean(), Number(), Array(), Object
+    - contains(doesThis, containThis)
+    - startsWith(doesThisStart, withThis)
+    - endsWith()
+    - format('this {0} {1}', 'with', 'this')
+    - join(thisArray, ', ')
+    - toJSON(prettyPrint)
+    - hashFiles(thisPath)
+- conditionals: automatically parsed as expressions, `${{}}` isnt needed
+  - if:
+    - cannot directly reference secrets
+    - instead set secrets as job-level env vars and if the env vars
+    - available status checks
+      - success() true if no previous steps failed/canceled
+      - always() ignores status of previous steps
+      - canceled() if any previous step
+      - failure() if any previous step
+
+#### contexts
+
+- info about workflow runs, vars, runner environments, jobs and steps
+- are referenced using the expression syntax
+- env: reference custom vars defined in the workflow
+- github: workflow run and the event that triggerred the run
+- vars: reference a configured (repo/org) variable
+
 ### very long example
 
 ```yml
+# for the full syntax @see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+
 name: some-workflow-name
 run-name: some name for this specific run
+
+defaults: # can also be scoped to a specific job
+  run:
+    shell: bash
+    working-directory: "."
+
+env: # can also be scoped to a specific job/step
+  myvar: "some val"
+
+concurrency: # ensures only a single job/workflow executes at a time
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on: # @see https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
   some_event:
     types: [this_thing, or_this_thing]
@@ -429,17 +530,24 @@ jobs:
     # services:
     # postgres:
     # image: postgres
-    runs-on: [macos-10.15] # has vagrant
-    # strategy: @see using a build matrix
-    #   matrix:
-    #   node: [6, 8 ,10]
+    runs-on: [macos-10.15] # you should prefer matrix
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+        node: [18, 19]
     steps: # each array item runs in the order defined
       - name: name this step
         run: echo "i belong to name^"
+        if: ${{ github.event_name == 'pull_request' && github.event.action == 'unassigned' }}
+        continue-on-error: true
+        timeout-minutes: 1
       - uses: actions/checkout@v3 # always use this to checkout the repos code
+        if: ${{ failure() }} # if the previous step failed
       - uses: actions/setup-node@v2 # theres bunches of these for specific tech stacks
         with: # generally a `uses` needs a `with`
           node-version: "14" # dizzam its on 19 now
+        if: ${{ always() }} # will always run, even on failures
       - uses: actions/upload-artiact@v3 # upload an artifact: only jobs in the same run can overwrite
         path: wherever/poop.log
         name: my-artifact
