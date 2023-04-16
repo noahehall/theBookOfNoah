@@ -455,6 +455,9 @@ git rebase addTheseChanges
 - limited to 48kb per var and 25kb per workflow run
 - can have 1000 per org, 500 per repo, 100 per env
 - can be configured (repo/org) or custom (defined with env inside a workflow)
+- FYI
+  - you need to check whether `env.blah` or `somecontext.blah` is more appropriate
+    - depends on the event, e.g. push vs pull_request
 
 #### secrets
 
