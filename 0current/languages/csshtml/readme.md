@@ -736,9 +736,9 @@
 ```html
 <!-- RESOLUTION SWITCHING solutions: display density and width descriptors -->
 <!-- this is a suggestion to the user-agent, which is responsible for choosing the appropriate img -->
-<!-- display density: use poop on 1x display desnity, poop2x.jpg on 2x display density -->
+<!-- display density: use woop on 1x display desnity, woop2x.jpg on 2x display density -->
 <!-- only appropriate for FIXED WIDTH images, that dont flex on browser resizes -->
-<img src="poop.jpg" srcset="poop.jpg 1x, poop-2x.jpg 2x" />
+<img src="woop.jpg" srcset="woop.jpg 1x, woop-2x.jpg 2x" />
 
 <!-- width descriptors: display the best image based on the resolution width of the source image -->
 <!-- appropriate for FLEX WIDTH images -->
@@ -748,8 +748,8 @@
 <!-- i.e., if the max-width of hte viewport is X, the image will display at size Y -->
 <!-- the last value should be a defualt if none of the `media-conditions` matches -->
 <img
-  src="poop.jpg"
-  srcset="poop160.jpg 160w, poop320.jpg 320w, etc"
+  src="woop.jpg"
+  srcset="woop160.jpg 160w, woop320.jpg 320w, etc"
   sizes="
     (max-width:480px) 100vw,
     (max-width: 900px) 33vw,
@@ -952,7 +952,6 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
 - numbers e.g. `20`
 - percentage e.g. `20%`
 - absolute units
-
   - cm Centimeters 1cm = 96px/2.54
   - mm Millimeters 1mm = 1/10th of 1cm
   - Q Quarter-millimeters 1Q = 1/40th of 1cm
@@ -960,9 +959,7 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
   - pc Picas 1pc = 1/16th of 1in
   - pt Points 1pt = 1/72th of 1in
   - px Pixels 1px = 1/96th of 1in
-
 - relative units
-
   - em Font size of the nearest parent element with a font-size explicitly set
   - ex x-height of the elements font.
   - ch The advance measure (width) of the glyph "0" of the elements font.
@@ -972,12 +969,10 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
   - vh 1% of the viewports height. (be careful with scrollbars!)
   - vmin 1% of the viewports smaller dimension.
   - vmax 1% of the viewports larger dimension.
-
 - colors
-
   - keywords e.g. red
   - hexadecimal e.g. #ff0000
-    - allows us to specify any of the 256 available values for each (16 x 16 = 256.)
+    - enables setting any of the 256 available values for each (16 x 16 = 256)
   - rgb e.g. rgb(0,0,255)
     - three parameters that represent the red, green and blue channel values of the colors between 0 and 255
   - hsl e.g. hsl(0,100%,50%)
@@ -989,7 +984,6 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
     - allow you to set an additional `transparency` dimension
       - `rgba(255,0,0,0.5);`
       - `hsla(240,100%,50%,0.5);`
-
 - functions e.g. background images / graduates
 
 ### calc
@@ -1005,7 +999,7 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
   - documenting logic right in the CSS (i.e. read the fkn code duuuude)
 
 ```css
-.poop {
+.woop {
   font-size: calc(1rem + 2px);
 }
 ```
@@ -1020,11 +1014,11 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
 
 ```css
 :root {
-  --poop: brown;
+  --woop: brown;
 }
 
 .turd {
-  color: var(--poop);
+  color: var(--woop);
 }
 ```
 
@@ -1075,7 +1069,7 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
   pseudo element for defining custom properties for the html document
   */
 :root {
-  --big-poppa: poop;
+  --big-poppa: woop;
   /* style all font sizes based on this var */
   /* clamps the fontsize set on the html element (usualy 16px) */
   /* but prefers 2% of the viewport width */
@@ -1195,7 +1189,7 @@ li:first-child,
 /** font specific */
 @charset 'UTF-8';
 @import "custom.css";
-@import "noahedwardhall.com/styles/poop.css";
+@import "noahedwardhall.com/styles/woop.css";
 
 @font-face {
   font-display: auto;
@@ -1660,9 +1654,9 @@ background-size: contain|no-repeat|cover|%|% %;
     /* can be applied at any depth, but this illustrates default behavior */
     .immediateChildren {
       /* are flex items */
-      flex-basis: poop; /* initial size of all flex-items, the ideal size */
-      flex-grow: poop; /* how flex-items expand to fill extra space */
-      flex-shrink: poop; /* how flex-items shrink to respect limited space */
+      flex-basis: woop; /* initial size of all flex-items, the ideal size */
+      flex-grow: woop; /* how flex-items expand to fill extra space */
+      flex-shrink: woop; /* how flex-items shrink to respect limited space */
       flex: flexGrow flexShrink flexBasis; /* shorthand */
 
       flex: 1 1 100px; /* expand & shrink all items evenly per axis */
