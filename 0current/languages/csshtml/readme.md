@@ -11,6 +11,7 @@
   - the entire accessibility section should be reworked
     - probably should start with the MDN accessbility intro
   - canvas vs SVG for scalable graphics
+  - move the design section in the information architecture doc
 
 ## links
 
@@ -369,13 +370,13 @@
 
 ### picking a color pallete
 
-- some guys process (Css tricks)
+- from csstricks
   - determine the mood of your site to guide the development of a color pallete
   - find your main color
   - add 2/3 supporting colors
     - add additional supporting colors as needed
     - changing the tint (mixing with white) and shade (mixing with black)
-- some other guy
+- from invisionapp
   - start with greyscale
     - ensures a focus on useability and clear navigation rather than assigning colors to elements
     - focus on
@@ -384,7 +385,7 @@
       - creating a hierarchy of type and elements
   - develop a 60-30-10 % rule
     - comes from interior design when assigning colors to things
-      - a color pallete should have no momre than 5 colors cuz some muthafucka from invionapp wrote a blog post
+      - a color pallete should have no momre than 5 colors
     - 60% to your dominant hue
     - 30% to secondary color
     - 10% for accent color
