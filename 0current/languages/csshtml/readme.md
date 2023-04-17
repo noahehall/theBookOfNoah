@@ -1006,60 +1006,58 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
 
 ### custom properties (css variables)
 
-- can have their values changed in media queries (dizzope)
-- can be overridden via the usuall css cascade
+- can have their values changed in media queries
+- can be overridden via the usual css cascade
 - values cna be accessed & manipulated via js
 - no major hit to performance
-- root selector: makes the everything within root is scoped globally to the entire dom
+- root selector: defines global variables
 
 ```css
 :root {
   --woop: brown;
 }
 
-.turd {
+.someclass {
   color: var(--woop);
 }
 ```
 
 ### selectors
 
-- specificity: in increasing order
-
-  - Type selectors (e.g., h1) and pseudo-elements (e.g., ::before).
-  - Class selectors (e.g., .example), attributes selectors (e.g., [type="radio"]) and pseudo-classes (e.g., :hover).
-  - ID selectors (e.g., #example).
-  - Universal selector (\*), combinators (+, >, ~, ' ', ||) and negation pseudo-class (:not()) have no effect on specificity. (The selectors declared inside :not() do, however.)
+- specificity: in decreasing order
   - !important
     - Always look for a way to use specificity before even considering !important
     - Only use !important on page-specific CSS that overrides foreign CSS (from - - external libraries, like Bootstrap or normalize.css).
     - Never use !important when you're writing a plugin/mashup.
     - Never use !important on site-wide CSS.
-
-- universel selector: selects all elements
-- simple: element type, class, id
-- attirbute: attribute & attribute values; values are case sensitive unless `i` i specified
-- pseudo-classes: based on element state, append keyword to selector
-- pseudo-elements: parts of content in a certain position in relation to an element, e.g. first word of a paragraph or some generated content
-- combinators: ways of combining two/more selectors for a more precise selection
-  - `a,b`: matching a or b
-  - `a b`: b is descendant of a
-  - `a > b`: b is direct child of a
-  - `a + b`: b is direct sibling of a
-  - `a ~ b`: b is one of a's siblings
-- multiple selectors: applying the same rule to multiple selectors that are separated by commas
-
+  - ID selectors (e.g., #example).
+  - Class selectors (e.g., .example), attributes selectors (e.g., [type="radio"]) and pseudo-classes (e.g., :hover).
+  - Type selectors (e.g., h1) and pseudo-elements (e.g., ::before).
+  - Universal selector (\*),
+  - combinators (+, >, ~, ' ', ||) make a selector more specific
+  - :not|is|has() pseudo-classes have no effect on specificity. (The selectors declared inside :not() do, however.)
+- selector categories
+  - universel selector: selects all elements
+  - simple: element type, class, id
+  - attirbute: attribute & attribute values; values are case sensitive unless `i` i specified
+  - pseudo-classes: based on element state, append keyword to selector
+  - pseudo-elements: parts of content in a certain position in relation to an element, e.g. first word of a paragraph or some generated content
+  - combinators: ways of combining two/more selectors for a more precise selection
+    - `a,b`: matching a or b
+    - `a b`: b is descendant of a
+    - `a > b`: b is direct child of a
+    - `a + b`: b is direct sibling of a
+    - `a ~ b`: b is one of a's siblings
+  - multiple selectors: applying the same rule to multiple selectors that are separated by commas
 - at-rules: used to convey metadata & conditional information e.g. `@IDENTIFIER (RULE);`
-
-  - media query: control the layout of an element based on viewport dimensions/features
-    - consits of a media type and zero/more expressions that check for the conditions of particular media features
-  - page: modify margins, orphans, widows, and page breaks when printing a document
-  - font-face: specify a custom font loaded from a remote/server or user's computer
-    - most browsers only download `@font-face` fonts if the font-family is actually used in a CSS declaration
-      - so list as many as needed, but be careful how many you actually use
-    - use `local()` to specify the name of a locally-installed front, useful for offline styling
-  - keyframes: controls the intermediate steps ina CSS animation sequence by defining styles for keyframes/waypoints along the animation sequence
-
+- media query: control the layout of an element based on viewport dimensions/features
+  - consits of a media type and zero/more expressions that check for the conditions of particular media features
+- page: modify margins, orphans, widows, and page breaks when printing a document
+- font-face: specify a custom font loaded from a remote/server or user's computer
+  - most browsers only download `@font-face` fonts if the font-family is actually used in a CSS declaration
+    - so list as many as needed, but be careful how many you actually use
+  - use `local()` to specify the name of a locally-installed front, useful for offline styling
+- keyframes: controls the intermediate steps ina CSS animation sequence by defining styles for keyframes/waypoints along the animation sequence
 - container queries: control the layout of an element based on its parent element
   - create style rules that respond to the size of a container
   - not ready for production; but there are JS solutions on github
