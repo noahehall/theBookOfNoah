@@ -1035,7 +1035,7 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
   - Type selectors (e.g., h1) and pseudo-elements (e.g., ::before).
   - Universal selector (\*),
   - combinators (+, >, ~, ' ', ||) make a selector more specific
-  - :not|is|has() pseudo-classes have no effect on specificity. (The selectors declared inside :not() do, however.)
+  - :not|is|has|where() pseudo-classes have no effect on specificity. (The selectors declared inside :not() do, however.)
 - selector categories
   - universel selector: selects all elements
   - simple: element type, class, id
@@ -1064,7 +1064,7 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
 
 ```css
 /*
-  pseudo element for defining custom properties for the html document
+  pseudo element for defining global properties for the html document
   */
 :root {
   --big-poppa: woop;
@@ -1268,7 +1268,7 @@ object-fit: fill|contain|civer|none|scale-down;
 object-position: % %|top right|center bottom|etc etc;
 
 /*
-  set the size of the elements backgroudn image
+  set the size of the elements background image
   */
 background-size: contain|no-repeat|cover|%|% %;
 ```
@@ -1397,11 +1397,8 @@ background-size: contain|no-repeat|cover|%|% %;
 ### layouts
 
 - organized the content first in a well structured layout in the normal flow
-
   - before applying any CSS
-
 - normal flow
-
   - default display and lyaout of elements when no CSS has been applied
   - elements displayed in HTML order
   - normal flow element types
@@ -1413,45 +1410,32 @@ background-size: contain|no-repeat|cover|%|% %;
     - inline elements:
       - take width of content
   - stacking order: as defined in HTML, all elements in the same zindex (0)
-
 - box model: 5 properties that define how an element takes up space, i.e the total area of an element, plus 4 positioning offsets that are language dependent
-
   - width/inline-size: should be thought of as the length of the line axis (language dependent)
-
     - i.e. the inline dimension: the line that the text flows along
-
   - height/block-size: should be though tof as the length of the perpendicular to line axis (language dependent)
-
     - i.e. the block dimension: i.e. perpendicular to the inline dimension
-
   - padding: within element, expands element itself
   - margin: around element, expands space element consumes
   - border: between padding & margin, expands space consumes
-
   - top/block-start:
   - right/inline-end:
   - bottom/block-end:
   - left/inline-start:
-
   - logical properties: enable the developer to logically apply box model properties to all languages, regardless of the direction in which the text flows
     - can be appended to any box model property (see top,right,bottom,left above)
     - without logical properites
       - left-to-right languages work as expected
       - right-to-left languages cause the 2 of 4 offsets to reverse horizontally
       - top-to-bottom languages cause the 2 of 4 offsets to reverse vertically
-
 - box-sizing property: sets the algorithm for how the box model determines the total area an element consumes
-
   - gotchas
-
     - computedSize = width + height
     - margin still adds additional space to the area the element consumes
-
   - content-box: element size = computedSize + padding + border
     - i.e. increases the total area when adding padding + border
   - border-box: element size = (computedSize - (padding + border)) + padding + border
     - i.e. maintains the computed size of the width + height
-
 - display property
   - block
   - inline
@@ -1474,7 +1458,6 @@ background-size: contain|no-repeat|cover|%|% %;
     - top,left,right,bottom offsets
 - static, sticky, & relative all leave the surrounding content unchanged
 - absolute & fixed affect the surrounding content (because the element is taken out of the normal flow)
-
 - static: by default all elements start with their position set to static: i.e. determined by the normal flow of HTML source
 - relative: element stays in the normal flow but can be offset without affecting surrounding elements
   - great for creating an ancestor for children elements
@@ -1508,12 +1491,12 @@ background-size: contain|no-repeat|cover|%|% %;
         - 1 === distribute evently
         - 2 = give this one 2/totalColsOrRows etc
   - GRID:
-    - layout in layout: the specified layout truly controls the layout, child element content are forced to fit within the specifications
+    - layout-in layout: the specified layout truly controls the layout, child element content are forced to fit within the specifications
     - 2 dimensions at the same time
     - additional groups of items have the same dimensions as previous group by defualt
     - declare dimensions for grid-items in the parent, via a single property
   - FLEXBOX
-    - content out layout: the child elements content truly controls the layout of the box model
+    - content-out layout: the child elements content truly controls the layout of the box model
     - 1 dimension
     - additional groups of items (when wrapping) have their own dimensions
     - declare dimensions for flex-items on the flex item, via multiple properties
@@ -1525,7 +1508,7 @@ background-size: contain|no-repeat|cover|%|% %;
 - gotchas
   - dont use the width property on flex items, use flex-basis (or just flex)
 - 1-dimensional alignment of content, ordering items, and implementing flexible sizing
-  - the ability to make the flex items flexible, altering their width/height to fill the availble space in the main dimension
+  - the ability to make the flex items flexible, altering their width/height to fill the available space in the main dimension
   - while it dictates behavior on a single axis
     - items can wrap to create additional groupings
     - flex containers can be nested to create additional dimensions
@@ -1560,22 +1543,15 @@ background-size: contain|no-repeat|cover|%|% %;
 
 ##### grid
 
-- designed for two dimensional layouts at hte same time
-
+- designed for two dimensional layouts
 - grid lines: based on language direction (i.e. left -> right & top -> bottom)
-
   - divide the grid into cols & rows
-  - top left is 1,1 for eng,
-
+  - top left is 1,1
 - grid-template-row|column
-
   - defines the CSS grid
   - grid items will equal exactly 1 col & 1 row by default
-
 - grid-row|column
-
   - defines how specific items span rows & columns
-
 - grid-auto-flow: how grid items are placed in the grid items
   - row: rows are filled first (e.g. left to right)
   - column: columns are filled first (e.g. top to bottom)
@@ -1639,8 +1615,8 @@ background-size: contain|no-repeat|cover|%|% %;
     */
 
   .parent {
-    display: flex; /* width of parent i.e. block */
-    display: inline-flex; /* width of flex-items i.e. inline */
+    display: flex; /* width of parent i.e. */
+    display: inline-flex; /* width of flex-items */
     gap: rowGap columnGap; /* see grid */
 
     flex-direction: row|column;
@@ -1725,9 +1701,7 @@ background-size: contain|no-repeat|cover|%|% %;
 ## accessibility
 
 - assistive technologies: umbrella term that helps users complete some task
-
   - browser zoom, braile display, voice control, screen readers, etc
-
 - user interface components:
 - information components:
 - mainstream user agents: e.g. common web browsers built for people without disabilities, or targeting broad and diverse audiences that usually include people without disabilities
