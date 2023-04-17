@@ -5,12 +5,13 @@
 - its best to use an outline (e.g. in vscode) when viewing this document
   - unfortunately the accessibility section is at the very bottom
     - i wouldnt skip reading the best practices section, lots of goodies
-- note about anything design related: im not a designer, not interested in being a designer, but all frontend devs needs to have some basic knowledge
+- note about anything design related: im not a designer, not interested in being a designer, however, developing for the frontend requires some basic knowledge which i attempted to capture
   - designers are special people, like a good musician/writer/sports player, your born with a 6th sense
 - todos
   - the entire accessibility section should be reworked
     - probably should start with the MDN accessbility intro
   - canvas vs SVG for scalable graphics
+  - move the design section in the information architecture doc
 
 ## links
 
@@ -365,19 +366,17 @@
     - developing the visual brand
     - tools
       - style tyles, moodboards, element collages
-      -
   - testing
-    - fuck your tests bitch
 
 ### picking a color pallete
 
-- some guys process (Css tricks)
+- from csstricks
   - determine the mood of your site to guide the development of a color pallete
   - find your main color
   - add 2/3 supporting colors
     - add additional supporting colors as needed
     - changing the tint (mixing with white) and shade (mixing with black)
-- some other guy
+- from invisionapp
   - start with greyscale
     - ensures a focus on useability and clear navigation rather than assigning colors to elements
     - focus on
@@ -386,7 +385,7 @@
       - creating a hierarchy of type and elements
   - develop a 60-30-10 % rule
     - comes from interior design when assigning colors to things
-      - a color pallete should have no momre than 5 colors cuz some muthafucka from invionapp wrote a blog post
+      - a color pallete should have no momre than 5 colors
     - 60% to your dominant hue
     - 30% to secondary color
     - 10% for accent color
@@ -397,10 +396,8 @@
 ### typography
 
 - todo
-
   - [css COLR pallete for multi colored fonts](https://css-tricks.com/colrv1-and-css-font-palette-web-typography/)
   - [better logic for fluid scaling type and spacing](https://css-tricks.com/consistent-fluidly-scaling-type-and-spacing/)
-
 - typeface: (general) the design of a collection of glyphs (letters numbers symbols)
   - have to be considered within the context their used (heading, paragraph, cta, logo, etc)
   - using different typefaces (vs different fonts of a typeface) takes some care, like choosing colors in palette
@@ -455,7 +452,7 @@
 
 - layout movement:
   - how the content flows and your eyes move through the flow of the page
-  - direct a users eye in order to tell a sotry, CTAs, or encourage scrolling/navigation
+  - direct a users eye in order to tell a story, CTAs, or encourage scrolling/navigation
 - layout proximity:
   - establishes relationships between objects
   - use repetition (Based on fontsize) to establish a spacing-schema
@@ -739,9 +736,9 @@
 ```html
 <!-- RESOLUTION SWITCHING solutions: display density and width descriptors -->
 <!-- this is a suggestion to the user-agent, which is responsible for choosing the appropriate img -->
-<!-- display density: use poop on 1x display desnity, poop2x.jpg on 2x display density -->
+<!-- display density: use woop on 1x display desnity, woop2x.jpg on 2x display density -->
 <!-- only appropriate for FIXED WIDTH images, that dont flex on browser resizes -->
-<img src="poop.jpg" srcset="poop.jpg 1x, poop-2x.jpg 2x" />
+<img src="woop.jpg" srcset="woop.jpg 1x, woop-2x.jpg 2x" />
 
 <!-- width descriptors: display the best image based on the resolution width of the source image -->
 <!-- appropriate for FLEX WIDTH images -->
@@ -751,8 +748,8 @@
 <!-- i.e., if the max-width of hte viewport is X, the image will display at size Y -->
 <!-- the last value should be a defualt if none of the `media-conditions` matches -->
 <img
-  src="poop.jpg"
-  srcset="poop160.jpg 160w, poop320.jpg 320w, etc"
+  src="woop.jpg"
+  srcset="woop160.jpg 160w, woop320.jpg 320w, etc"
   sizes="
     (max-width:480px) 100vw,
     (max-width: 900px) 33vw,
@@ -955,7 +952,6 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
 - numbers e.g. `20`
 - percentage e.g. `20%`
 - absolute units
-
   - cm Centimeters 1cm = 96px/2.54
   - mm Millimeters 1mm = 1/10th of 1cm
   - Q Quarter-millimeters 1Q = 1/40th of 1cm
@@ -963,9 +959,7 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
   - pc Picas 1pc = 1/16th of 1in
   - pt Points 1pt = 1/72th of 1in
   - px Pixels 1px = 1/96th of 1in
-
 - relative units
-
   - em Font size of the nearest parent element with a font-size explicitly set
   - ex x-height of the elements font.
   - ch The advance measure (width) of the glyph "0" of the elements font.
@@ -975,12 +969,10 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
   - vh 1% of the viewports height. (be careful with scrollbars!)
   - vmin 1% of the viewports smaller dimension.
   - vmax 1% of the viewports larger dimension.
-
 - colors
-
   - keywords e.g. red
   - hexadecimal e.g. #ff0000
-    - allows us to specify any of the 256 available values for each (16 x 16 = 256.)
+    - enables setting any of the 256 available values for each (16 x 16 = 256)
   - rgb e.g. rgb(0,0,255)
     - three parameters that represent the red, green and blue channel values of the colors between 0 and 255
   - hsl e.g. hsl(0,100%,50%)
@@ -992,7 +984,6 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
     - allow you to set an additional `transparency` dimension
       - `rgba(255,0,0,0.5);`
       - `hsla(240,100%,50%,0.5);`
-
 - functions e.g. background images / graduates
 
 ### calc
@@ -1008,77 +999,75 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
   - documenting logic right in the CSS (i.e. read the fkn code duuuude)
 
 ```css
-.poop {
+.woop {
   font-size: calc(1rem + 2px);
 }
 ```
 
 ### custom properties (css variables)
 
-- can have their values changed in media queries (dizzope)
-- can be overridden via the usuall css cascade
+- can have their values changed in media queries
+- can be overridden via the usual css cascade
 - values cna be accessed & manipulated via js
 - no major hit to performance
-- root selector: makes the everything within root is scoped globally to the entire dom
+- root selector: defines global variables
 
 ```css
 :root {
-  --poop: brown;
+  --woop: brown;
 }
 
-.turd {
-  color: var(--poop);
+.someclass {
+  color: var(--woop);
 }
 ```
 
 ### selectors
 
-- specificity: in increasing order
-
-  - Type selectors (e.g., h1) and pseudo-elements (e.g., ::before).
-  - Class selectors (e.g., .example), attributes selectors (e.g., [type="radio"]) and pseudo-classes (e.g., :hover).
-  - ID selectors (e.g., #example).
-  - Universal selector (\*), combinators (+, >, ~, ' ', ||) and negation pseudo-class (:not()) have no effect on specificity. (The selectors declared inside :not() do, however.)
+- specificity: in decreasing order
   - !important
     - Always look for a way to use specificity before even considering !important
     - Only use !important on page-specific CSS that overrides foreign CSS (from - - external libraries, like Bootstrap or normalize.css).
     - Never use !important when you're writing a plugin/mashup.
     - Never use !important on site-wide CSS.
-
-- universel selector: selects all elements
-- simple: element type, class, id
-- attirbute: attribute & attribute values; values are case sensitive unless `i` i specified
-- pseudo-classes: based on element state, append keyword to selector
-- pseudo-elements: parts of content in a certain position in relation to an element, e.g. first word of a paragraph or some generated content
-- combinators: ways of combining two/more selectors for a more precise selection
-  - `a,b`: matching a or b
-  - `a b`: b is descendant of a
-  - `a > b`: b is direct child of a
-  - `a + b`: b is direct sibling of a
-  - `a ~ b`: b is one of a's siblings
-- multiple selectors: applying the same rule to multiple selectors that are separated by commas
-
+  - ID selectors (e.g., #example).
+  - Class selectors (e.g., .example), attributes selectors (e.g., [type="radio"]) and pseudo-classes (e.g., :hover).
+  - Type selectors (e.g., h1) and pseudo-elements (e.g., ::before).
+  - Universal selector (\*),
+  - combinators (+, >, ~, ' ', ||) make a selector more specific
+  - :not|is|has|where() pseudo-classes have no effect on specificity. (The selectors declared inside :not() do, however.)
+- selector categories
+  - universel selector: selects all elements
+  - simple: element type, class, id
+  - attirbute: attribute & attribute values; values are case sensitive unless `i` i specified
+  - pseudo-classes: based on element state, append keyword to selector
+  - pseudo-elements: parts of content in a certain position in relation to an element, e.g. first word of a paragraph or some generated content
+  - combinators: ways of combining two/more selectors for a more precise selection
+    - `a,b`: matching a or b
+    - `a b`: b is descendant of a
+    - `a > b`: b is direct child of a
+    - `a + b`: b is direct sibling of a
+    - `a ~ b`: b is one of a's siblings
+  - multiple selectors: applying the same rule to multiple selectors that are separated by commas
 - at-rules: used to convey metadata & conditional information e.g. `@IDENTIFIER (RULE);`
-
-  - media query: control the layout of an element based on viewport dimensions/features
-    - consits of a media type and zero/more expressions that check for the conditions of particular media features
-  - page: modify margins, orphans, widows, and page breaks when printing a document
-  - font-face: specify a custom font loaded from a remote/server or user's computer
-    - most browsers only download `@font-face` fonts if the font-family is actually used in a CSS declaration
-      - so list as many as needed, but be careful how many you actually use
-    - use `local()` to specify the name of a locally-installed front, useful for offline styling
-  - keyframes: controls the intermediate steps ina CSS animation sequence by defining styles for keyframes/waypoints along the animation sequence
-
+- media query: control the layout of an element based on viewport dimensions/features
+  - consits of a media type and zero/more expressions that check for the conditions of particular media features
+- page: modify margins, orphans, widows, and page breaks when printing a document
+- font-face: specify a custom font loaded from a remote/server or user's computer
+  - most browsers only download `@font-face` fonts if the font-family is actually used in a CSS declaration
+    - so list as many as needed, but be careful how many you actually use
+  - use `local()` to specify the name of a locally-installed front, useful for offline styling
+- keyframes: controls the intermediate steps ina CSS animation sequence by defining styles for keyframes/waypoints along the animation sequence
 - container queries: control the layout of an element based on its parent element
   - create style rules that respond to the size of a container
   - not ready for production; but there are JS solutions on github
 
 ```css
 /*
-  pseudo element for defining custom properties for the html document
+  pseudo element for defining global properties for the html document
   */
 :root {
-  --big-poppa: poop;
+  --big-poppa: woop;
   /* style all font sizes based on this var */
   /* clamps the fontsize set on the html element (usualy 16px) */
   /* but prefers 2% of the viewport width */
@@ -1198,7 +1187,7 @@ li:first-child,
 /** font specific */
 @charset 'UTF-8';
 @import "custom.css";
-@import "noahedwardhall.com/styles/poop.css";
+@import "noahedwardhall.com/styles/woop.css";
 
 @font-face {
   font-display: auto;
@@ -1279,7 +1268,7 @@ object-fit: fill|contain|civer|none|scale-down;
 object-position: % %|top right|center bottom|etc etc;
 
 /*
-  set the size of the elements backgroudn image
+  set the size of the elements background image
   */
 background-size: contain|no-repeat|cover|%|% %;
 ```
@@ -1408,11 +1397,8 @@ background-size: contain|no-repeat|cover|%|% %;
 ### layouts
 
 - organized the content first in a well structured layout in the normal flow
-
   - before applying any CSS
-
 - normal flow
-
   - default display and lyaout of elements when no CSS has been applied
   - elements displayed in HTML order
   - normal flow element types
@@ -1424,45 +1410,32 @@ background-size: contain|no-repeat|cover|%|% %;
     - inline elements:
       - take width of content
   - stacking order: as defined in HTML, all elements in the same zindex (0)
-
 - box model: 5 properties that define how an element takes up space, i.e the total area of an element, plus 4 positioning offsets that are language dependent
-
   - width/inline-size: should be thought of as the length of the line axis (language dependent)
-
     - i.e. the inline dimension: the line that the text flows along
-
   - height/block-size: should be though tof as the length of the perpendicular to line axis (language dependent)
-
     - i.e. the block dimension: i.e. perpendicular to the inline dimension
-
   - padding: within element, expands element itself
   - margin: around element, expands space element consumes
   - border: between padding & margin, expands space consumes
-
   - top/block-start:
   - right/inline-end:
   - bottom/block-end:
   - left/inline-start:
-
   - logical properties: enable the developer to logically apply box model properties to all languages, regardless of the direction in which the text flows
     - can be appended to any box model property (see top,right,bottom,left above)
     - without logical properites
       - left-to-right languages work as expected
       - right-to-left languages cause the 2 of 4 offsets to reverse horizontally
       - top-to-bottom languages cause the 2 of 4 offsets to reverse vertically
-
 - box-sizing property: sets the algorithm for how the box model determines the total area an element consumes
-
   - gotchas
-
     - computedSize = width + height
     - margin still adds additional space to the area the element consumes
-
   - content-box: element size = computedSize + padding + border
     - i.e. increases the total area when adding padding + border
   - border-box: element size = (computedSize - (padding + border)) + padding + border
     - i.e. maintains the computed size of the width + height
-
 - display property
   - block
   - inline
@@ -1485,7 +1458,6 @@ background-size: contain|no-repeat|cover|%|% %;
     - top,left,right,bottom offsets
 - static, sticky, & relative all leave the surrounding content unchanged
 - absolute & fixed affect the surrounding content (because the element is taken out of the normal flow)
-
 - static: by default all elements start with their position set to static: i.e. determined by the normal flow of HTML source
 - relative: element stays in the normal flow but can be offset without affecting surrounding elements
   - great for creating an ancestor for children elements
@@ -1519,12 +1491,12 @@ background-size: contain|no-repeat|cover|%|% %;
         - 1 === distribute evently
         - 2 = give this one 2/totalColsOrRows etc
   - GRID:
-    - layout in layout: the specified layout truly controls the layout, child element content are forced to fit within the specifications
+    - layout-in layout: the specified layout truly controls the layout, child element content are forced to fit within the specifications
     - 2 dimensions at the same time
     - additional groups of items have the same dimensions as previous group by defualt
     - declare dimensions for grid-items in the parent, via a single property
   - FLEXBOX
-    - content out layout: the child elements content truly controls the layout of the box model
+    - content-out layout: the child elements content truly controls the layout of the box model
     - 1 dimension
     - additional groups of items (when wrapping) have their own dimensions
     - declare dimensions for flex-items on the flex item, via multiple properties
@@ -1536,7 +1508,7 @@ background-size: contain|no-repeat|cover|%|% %;
 - gotchas
   - dont use the width property on flex items, use flex-basis (or just flex)
 - 1-dimensional alignment of content, ordering items, and implementing flexible sizing
-  - the ability to make the flex items flexible, altering their width/height to fill the availble space in the main dimension
+  - the ability to make the flex items flexible, altering their width/height to fill the available space in the main dimension
   - while it dictates behavior on a single axis
     - items can wrap to create additional groupings
     - flex containers can be nested to create additional dimensions
@@ -1571,22 +1543,15 @@ background-size: contain|no-repeat|cover|%|% %;
 
 ##### grid
 
-- designed for two dimensional layouts at hte same time
-
+- designed for two dimensional layouts
 - grid lines: based on language direction (i.e. left -> right & top -> bottom)
-
   - divide the grid into cols & rows
-  - top left is 1,1 for eng,
-
+  - top left is 1,1
 - grid-template-row|column
-
   - defines the CSS grid
   - grid items will equal exactly 1 col & 1 row by default
-
 - grid-row|column
-
   - defines how specific items span rows & columns
-
 - grid-auto-flow: how grid items are placed in the grid items
   - row: rows are filled first (e.g. left to right)
   - column: columns are filled first (e.g. top to bottom)
@@ -1650,8 +1615,8 @@ background-size: contain|no-repeat|cover|%|% %;
     */
 
   .parent {
-    display: flex; /* width of parent i.e. block */
-    display: inline-flex; /* width of flex-items i.e. inline */
+    display: flex; /* width of parent i.e. */
+    display: inline-flex; /* width of flex-items */
     gap: rowGap columnGap; /* see grid */
 
     flex-direction: row|column;
@@ -1663,9 +1628,9 @@ background-size: contain|no-repeat|cover|%|% %;
     /* can be applied at any depth, but this illustrates default behavior */
     .immediateChildren {
       /* are flex items */
-      flex-basis: poop; /* initial size of all flex-items, the ideal size */
-      flex-grow: poop; /* how flex-items expand to fill extra space */
-      flex-shrink: poop; /* how flex-items shrink to respect limited space */
+      flex-basis: woop; /* initial size of all flex-items, the ideal size */
+      flex-grow: woop; /* how flex-items expand to fill extra space */
+      flex-shrink: woop; /* how flex-items shrink to respect limited space */
       flex: flexGrow flexShrink flexBasis; /* shorthand */
 
       flex: 1 1 100px; /* expand & shrink all items evenly per axis */
@@ -1736,9 +1701,7 @@ background-size: contain|no-repeat|cover|%|% %;
 ## accessibility
 
 - assistive technologies: umbrella term that helps users complete some task
-
   - browser zoom, braile display, voice control, screen readers, etc
-
 - user interface components:
 - information components:
 - mainstream user agents: e.g. common web browsers built for people without disabilities, or targeting broad and diverse audiences that usually include people without disabilities
