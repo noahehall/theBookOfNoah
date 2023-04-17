@@ -5,7 +5,7 @@
 - its best to use an outline (e.g. in vscode) when viewing this document
   - unfortunately the accessibility section is at the very bottom
     - i wouldnt skip reading the best practices section, lots of goodies
-- note about anything design related: im not a designer, not interested in being a designer, but all frontend devs needs to have some basic knowledge
+- note about anything design related: im not a designer, not interested in being a designer, however, developing for the frontend requires some basic knowledge which i attempted to capture
   - designers are special people, like a good musician/writer/sports player, your born with a 6th sense
 - todos
   - the entire accessibility section should be reworked
@@ -365,9 +365,7 @@
     - developing the visual brand
     - tools
       - style tyles, moodboards, element collages
-      -
   - testing
-    - fuck your tests bitch
 
 ### picking a color pallete
 
