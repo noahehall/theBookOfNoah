@@ -31,7 +31,6 @@
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
-
   /**
    * editor
    * controls useability
@@ -75,11 +74,11 @@
   "editor.wordWrapColumn": 80,
   "editor.wrappingIndent": "deepIndent",
   "explorer.sortOrder": "default",
+
   /**
    * files
    */
   "files.autoGuessEncoding": true,
-  "files.exclude": {},
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
@@ -102,6 +101,14 @@
     "**/build/**": true,
     "**/dist/**": true,
     "**/node_modules/**": true
+  },
+  "files.exclude": {
+    "**/.git": false,
+    "**/.svn": false,
+    "**/.hg": false,
+    "**/CVS": false,
+    "**/.DS_Store": false,
+    "**/Thumbs.db": false
   },
 
   /**
