@@ -396,10 +396,8 @@
 ### typography
 
 - todo
-
   - [css COLR pallete for multi colored fonts](https://css-tricks.com/colrv1-and-css-font-palette-web-typography/)
   - [better logic for fluid scaling type and spacing](https://css-tricks.com/consistent-fluidly-scaling-type-and-spacing/)
-
 - typeface: (general) the design of a collection of glyphs (letters numbers symbols)
   - have to be considered within the context their used (heading, paragraph, cta, logo, etc)
   - using different typefaces (vs different fonts of a typeface) takes some care, like choosing colors in palette
@@ -454,7 +452,7 @@
 
 - layout movement:
   - how the content flows and your eyes move through the flow of the page
-  - direct a users eye in order to tell a sotry, CTAs, or encourage scrolling/navigation
+  - direct a users eye in order to tell a story, CTAs, or encourage scrolling/navigation
 - layout proximity:
   - establishes relationships between objects
   - use repetition (Based on fontsize) to establish a spacing-schema
