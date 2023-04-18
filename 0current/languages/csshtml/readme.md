@@ -599,7 +599,7 @@
 #### key techniques
 
 - responsive images: fluid images
-  - setting hte max-width property to 100%; images will scale down smaller if their containers width is smaller, but never grow larger than 100% of the images intrinsic width even when their contianer is larger
+  - setting the max-width property to 100%; images will scale down smaller if their containers width is smaller, but never grow larger than 100% of the images intrinsic width even when their contianer is larger
   - thus images maintain their dimensions as the height scales with the width, which scales smaller but never larger
   - downsides
     - users may download an image thats too big for their device (i.e. image scales down so why not just send a super huge 10000px image)
@@ -682,7 +682,7 @@
   - h#
     - there should only be 1 H1 per page, even tho the HTML spec allows H1 per section element, the HTML outline has never been implemented
     - ^ thus support your screenreaders (and those users) who use H1 to know what the page is about, not a fkn section
-    - Header tags should be visually rendered in order (h1, h2, etc), again this goes to support screen readers (and those users) who use it to navigate hte page in order, and read out a page outline from the screen readers
+    - Header tags should be visually rendered in order (h1, h2, etc), again this goes to support screen readers (and those users) who use it to navigate the page in order, and read out a page outline from the screen readers
       - used by user agents to construct a table of contents for a document automatically
       - thus all H2 should semantically represent the same `aria-level` of a pages outline
       - ^ thus this semantically limits you to 1 page category, and 5 subcategories per page
@@ -690,7 +690,6 @@
 - lists
   - ol / ul
   - dl + dt + dd
-  -
 - inline text
   - em
   - strong
@@ -744,8 +743,8 @@
 <!-- appropriate for FLEX WIDTH images -->
 <!-- ^ fk display density and apple -->
 <!-- sizes attr is required for width descriptors -->
-<!-- tells the browser the rendered display size of the image based on the width of hte viewport -->
-<!-- i.e., if the max-width of hte viewport is X, the image will display at size Y -->
+<!-- tells the browser the rendered display size of the image based on the width of the viewport -->
+<!-- i.e., if the max-width of the viewport is X, the image will display at size Y -->
 <!-- the last value should be a defualt if none of the `media-conditions` matches -->
 <img
   src="woop.jpg"
@@ -795,8 +794,7 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
 
 ### anatomy of an HTML document
 
-- doctype: always include for things to work right
-- ht
+- doctype: should always be included to guard against gotchas
 
   ```html
   <!DOCTYPE html>
@@ -853,7 +851,7 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
 
 #### validity states
 
-- https://developer.mozilla.org/en-US/docs/Web/API/ValidityState)
+- https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
 - The ValidityState interface represents the validity states that an element can be in, with respect to constraint validation. Together, they help explain why an element's value fails to validate, if it's not valid.
 - used like this: `someInput.validity.someProperty`
 - validity properties:
@@ -926,7 +924,7 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
 - `@import` statements must precede all other types of rules except charset and cannot be ussed inside conditional group at-rule
   - in general, review the `import` link above as there are many gotchas
 - review `@font-face` syntax before using them, too many gotchas
-- set the page font size on the body element, and size everything relative to that via rem, or is em?
+- set the page font size on the html element, and size everything relative to that via rem
 - always declar a `:root {}` selector set your variables, 9 times out of 8 you should be using variables mutherfucker
 - GRID vs FLEXBOX vs WTF
   - ROW | COLUMN - flexbox
@@ -963,7 +961,7 @@ background-image: image-set("foo.png" 1x, "foo-2x.png" 2x);
   - em Font size of the nearest parent element with a font-size explicitly set
   - ex x-height of the elements font.
   - ch The advance measure (width) of the glyph "0" of the elements font.
-  - rem Font size of the root element. (html)
+  - rem Font size of the root (html) element
   - lh Line height of the element.
   - vw 1% of the viewports width. (be careful with scrollbars!)
   - vh 1% of the viewports height. (be careful with scrollbars!)
@@ -1148,7 +1146,7 @@ li:first-child,
 }
 
 /**
-  is/where pseudo classes
+  is/where/has/not pseudo classes
   :is works as a class selector (higher specificity)
   :where has 0 specificity, so acts more like a fallback
   target subgset of elements with the same base class
@@ -1411,10 +1409,8 @@ background-size: contain|no-repeat|cover|%|% %;
       - take width of content
   - stacking order: as defined in HTML, all elements in the same zindex (0)
 - box model: 5 properties that define how an element takes up space, i.e the total area of an element, plus 4 positioning offsets that are language dependent
-  - width/inline-size: should be thought of as the length of the line axis (language dependent)
-    - i.e. the inline dimension: the line that the text flows along
-  - height/block-size: should be though tof as the length of the perpendicular to line axis (language dependent)
-    - i.e. the block dimension: i.e. perpendicular to the inline dimension
+  - width/inline-size: length of the line axis (language dependent) that the text flows along
+  - height/block-size: length of the line perpendicular to line axis (language dependent)
   - padding: within element, expands element itself
   - margin: around element, expands space element consumes
   - border: between padding & margin, expands space consumes
@@ -1481,20 +1477,17 @@ background-size: contain|no-repeat|cover|%|% %;
   - CSS grid systems: predefined style rules are tried to grid/column-specific class names
     - e.g. col-1 === 1/12 width, col-4 === 4/12 width, col8 === 8/12 width, etc
   - justify-content
-    - space-around: place half of hte vaiable psace on each side of the box
+    - space-around: place half of the vaiable psace on each side of the box
       - e.g. 4 boxes with flexbasis @ 24%, that means a 0.5% is placed on each side of each box
-- Versus rap battle
-  - both
-    - can use any css length unit, e.g. %, vh, px, rem, etc
-      - but both works best with `fr`
-      - ^ fractional unit: you dont specify the `fr` in flex, but you do in grid
-        - 1 === distribute evently
-        - 2 = give this one 2/totalColsOrRows etc
+- flex vs grid
   - GRID:
     - layout-in layout: the specified layout truly controls the layout, child element content are forced to fit within the specifications
     - 2 dimensions at the same time
     - additional groups of items have the same dimensions as previous group by defualt
     - declare dimensions for grid-items in the parent, via a single property
+    - fractional unit: you dont specify the `fr` in flex, but you do in grid
+      - 1 === distribute evently
+      - 2 = give this one 2/totalColsOrRows etc
   - FLEXBOX
     - content-out layout: the child elements content truly controls the layout of the box model
     - 1 dimension
