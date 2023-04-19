@@ -9,11 +9,7 @@
    */
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": false // override for mac
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": false // override for mac
+    "editor.formatOnSave": true // override for mac
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -25,12 +21,27 @@
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
   "[dockerfile]": {},
-  "[sql]": {
-    "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
-  },
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
+  "[sql]": {
+    "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false // e.g. if in a repo without eslint/prettier setup
+  },
+
+  /**
+   * git
+   */
+  "diffEditor.codeLens": true,
+  "diffEditor.wordWrap": "off",
+  "git.confirmSync": false,
+  "git.enableStatusBarSync": false,
+  "scm.autoReveal": false,
+  "scm.countBadge": "off",
+
   /**
    * editor
    * controls useability
@@ -79,6 +90,14 @@
    * files
    */
   "files.autoGuessEncoding": true,
+  "files.exclude": {
+    "**/.git": false,
+    "**/.svn": false,
+    "**/.hg": false,
+    "**/CVS": false,
+    "**/.DS_Store": false,
+    "**/Thumbs.db": false
+  },
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
@@ -91,7 +110,8 @@
     "*.jsonc": "jsonc",
     "*.nomad": "hcl",
     "*.env.development.compose.yaml": "yaml",
-    "*.cfg": "haproxy"
+    "*.cfg": "haproxy", // TODO: haproxy isnt the only cfg
+    "*.nim.cfg": "nim" // TODO: google a fix for this
   },
   "files.watcherExclude": {
     "**/.ammonite": true,
@@ -101,14 +121,6 @@
     "**/build/**": true,
     "**/dist/**": true,
     "**/node_modules/**": true
-  },
-  "files.exclude": {
-    "**/.git": false,
-    "**/.svn": false,
-    "**/.hg": false,
-    "**/CVS": false,
-    "**/.DS_Store": false,
-    "**/Thumbs.db": false
   },
 
   /**
@@ -143,6 +155,7 @@
   "terminal.integrated.fontSize": 18,
   "terminal.integrated.sendKeybindingsToShell": true,
   "terminal.integrated.tabs.location": "left",
+
   /**
    * outline
    */
@@ -200,16 +213,6 @@
   ],
 
   /**
-   * git
-   */
-  "diffEditor.codeLens": true,
-  "diffEditor.wordWrap": "off",
-  "git.confirmSync": false,
-  "git.enableStatusBarSync": false,
-  "scm.autoReveal": false,
-  "scm.countBadge": "off",
-
-  /**
    * code runner extension
    */
   "code-runner.enableAppInsights": false,
@@ -248,7 +251,7 @@
     "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
     "lisp": "sbcl --script",
     "lua": "lua",
-    "nim": "echo $fileName | grep -e 'nims$' && nim e --putenv:ENV=DEV $dir$fileName || nim r --putenv:ENV=DEV $dir$fileName",
+    "nim": "echo $fileName | grep -e 'nims$' && nim e --putenv:ENV=DEV $dir$fileName || nim r --hints:on --putenv:ENV=DEV $dir$fileName",
     "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "ocaml": "ocaml",
     "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
@@ -273,5 +276,5 @@
     "vbscript": "cscript //Nologo",
     "zig": "zig run"
   },
-  "window.zoomLevel": -1
+  "window.zoomLevel": 1
 }
