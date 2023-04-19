@@ -1,49 +1,48 @@
-code-insiders --install-extension 42Crunch.vscode-openapi
-code-insiders --install-extension 74th.monokai-charcoal-high-contrast
-code-insiders --install-extension adpyke.vscode-sql-formatter
-code-insiders --install-extension amazonwebservices.aws-toolkit-vscode
-code-insiders --install-extension ankitcode.firefly
-code-insiders --install-extension anseki.vscode-color
-code-insiders --install-extension bbenoist.vagrant
-code-insiders --install-extension cobaltblu27.rainbow-highlighter
-code-insiders --install-extension codezombiech.gitignore
-code-insiders --install-extension dbaeumer.vscode-eslint
-code-insiders --install-extension EditorConfig.EditorConfig
-code-insiders --install-extension esbenp.prettier-vscode
-code-insiders --install-extension formulahendry.auto-close-tag
-code-insiders --install-extension formulahendry.auto-rename-tag
-code-insiders --install-extension formulahendry.code-runner
-code-insiders --install-extension foxundermoon.shell-format
-code-insiders --install-extension Gruntfuggly.todo-tree
-code-insiders --install-extension hashicorp.hcl
-code-insiders --install-extension hashicorp.terraform
-code-insiders --install-extension IBM.output-colorizer
-code-insiders --install-extension jakebathman.mysql-syntax
-code-insiders --install-extension joaompinto.vscode-graphviz
-code-insiders --install-extension JuanBlanco.solidity
-code-insiders --install-extension lextudio.restructuredtext
-code-insiders --install-extension mechatroner.rainbow-csv
-code-insiders --install-extension mgmcdermott.vscode-language-babel
-code-insiders --install-extension mikestead.dotenv
-code-insiders --install-extension mindaro-dev.file-downloader
-code-insiders --install-extension ms-dotnettools.vscode-dotnet-runtime
-code-insiders --install-extension ms-python.python
-code-insiders --install-extension ms-python.vscode-pylance
-code-insiders --install-extension ms-toolsai.jupyter
-code-insiders --install-extension ms-toolsai.jupyter-keymap
-code-insiders --install-extension ms-toolsai.jupyter-renderers
-code-insiders --install-extension ms-toolsai.vscode-jupyter-cell-tags
-code-insiders --install-extension ms-toolsai.vscode-jupyter-slideshow
-code-insiders --install-extension ms-vscode.cmake-tools
-code-insiders --install-extension ms-vscode.cpptools
-code-insiders --install-extension nimsaem.nimvscode
-code-insiders --install-extension oderwat.indent-rainbow
-code-insiders --install-extension rangav.vscode-thunder-client
-code-insiders --install-extension redhat.fabric8-analytics
-code-insiders --install-extension redhat.vscode-commons
-code-insiders --install-extension redhat.vscode-xml
-code-insiders --install-extension redhat.vscode-yaml
-code-insiders --install-extension tamasfe.even-better-toml
-code-insiders --install-extension tomoki1207.pdf
-code-insiders --install-extension trond-snekvik.simple-rst
-code-insiders --install-extension twxs.cmake
+code-insiders --force --install-extension 42Crunch.vscode-openapi
+code-insiders --force --install-extension 74th.monokai-charcoal-high-contrast
+code-insiders --force --install-extension adpyke.vscode-sql-formatter
+code-insiders --force --install-extension amazonwebservices.aws-toolkit-vscode
+code-insiders --force --install-extension ankitcode.firefly
+code-insiders --force --install-extension anseki.vscode-color
+code-insiders --force --install-extension bbenoist.vagrant
+code-insiders --force --install-extension cobaltblu27.rainbow-highlighter
+code-insiders --force --install-extension codezombiech.gitignore
+code-insiders --force --install-extension dbaeumer.vscode-eslint
+code-insiders --force --install-extension EditorConfig.EditorConfig
+code-insiders --force --install-extension esbenp.prettier-vscode
+code-insiders --force --install-extension formulahendry.auto-close-tag
+code-insiders --force --install-extension formulahendry.auto-rename-tag
+code-insiders --force --install-extension formulahendry.code-runner
+code-insiders --force --install-extension foxundermoon.shell-format
+code-insiders --force --install-extension Gruntfuggly.todo-tree
+code-insiders --force --install-extension hashicorp.hcl
+code-insiders --force --install-extension hashicorp.terraform
+code-insiders --force --install-extension IBM.output-colorizer
+code-insiders --force --install-extension jakebathman.mysql-syntax
+code-insiders --force --install-extension joaompinto.vscode-graphviz
+code-insiders --force --install-extension JuanBlanco.solidity
+code-insiders --force --install-extension lextudio.restructuredtext
+code-insiders --force --install-extension mechatroner.rainbow-csv
+code-insiders --force --install-extension mgmcdermott.vscode-language-babel
+code-insiders --force --install-extension mikestead.dotenv
+code-insiders --force --install-extension mindaro-dev.file-downloader
+code-insiders --force --install-extension ms-dotnettools.vscode-dotnet-runtime
+code-insiders --force --install-extension ms-python.python
+code-insiders --force --install-extension ms-python.vscode-pylance
+code-insiders --force --install-extension ms-toolsai.jupyter-keymap
+code-insiders --force --install-extension ms-toolsai.jupyter-renderers
+code-insiders --force --install-extension ms-toolsai.vscode-jupyter-cell-tags
+code-insiders --force --install-extension ms-toolsai.vscode-jupyter-slideshow
+code-insiders --force --install-extension ms-vscode.cmake-tools
+code-insiders --force --install-extension ms-vscode.cpptools
+code-insiders --force --install-extension nimsaem.nimvscode
+code-insiders --force --install-extension oderwat.indent-rainbow
+code-insiders --force --install-extension rangav.vscode-thunder-client
+code-insiders --force --install-extension redhat.fabric8-analytics
+code-insiders --force --install-extension redhat.vscode-commons
+code-insiders --force --install-extension redhat.vscode-xml
+code-insiders --force --install-extension redhat.vscode-yaml
+code-insiders --force --install-extension tamasfe.even-better-toml
+code-insiders --force --install-extension tomoki1207.pdf
+code-insiders --force --install-extension trond-snekvik.simple-rst
+code-insiders --force --install-extension twxs.cmake

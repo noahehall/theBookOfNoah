@@ -6,4 +6,4 @@
 
 echo -e "install these extensions with ./vscode.install.extensions.sh"
 set -ex
-code-insiders --list-extensions | xargs -L 1 echo code-insiders --install-extension >"./vscode.install.extensions.sh"
+code-insiders --list-extensions | xargs -L 1 echo code-insiders --force --install-extension >"./vscode.install.extensions.sh"
