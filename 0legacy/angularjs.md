@@ -48,6 +48,7 @@
 ### prehistoric modules that work with angular js
 
 - [dropzone](https://docs.dropzone.dev)
+- [dropzone ng](https://github.com/thatisuday/ng-dropzone/)
 
 ## basics
 
