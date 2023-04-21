@@ -1,6 +1,7 @@
 # angularjs
 
 - [bookmark](https://docs.angularjs.org/tutorial/step_04)
+- [bookmark2](https://www.w3schools.com/angular/angular_events.asp)
 
 ## links
 
@@ -33,6 +34,7 @@
 - [scopes: $rootScope](https://docs.angularjs.org/api/ng/type/$rootScope.Scope)
 - [scopes: intro](https://docs.angularjs.org/guide/scope)
 - [directives: create custom directives](https://docs.angularjs.org/guide/directive)
+- [directive: if](https://docs.angularjs.org/api/ng/directive/ngIf)
 
 ### testing
 
@@ -46,6 +48,7 @@
 ### prehistoric modules that work with angular js
 
 - [dropzone](https://docs.dropzone.dev)
+- [dropzone ng](https://github.com/thatisuday/ng-dropzone/)
 
 ## basics
 
