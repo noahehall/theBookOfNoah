@@ -3,6 +3,11 @@
 # git
 
 # git ----------------------------------
+git_sync_local_branches() {
+    # @see https://stackoverflow.com/questions/16590160/remove-branches-not-on-remote
+    git fetch -p
+    git branch -vv | grep ': gone]' | grep -v "\*" | awk '{ print $1; }' | xargs -r git branch -d
+}
 git_pull_develop_rebase() {
     git pull origin develop
     git rebase develop
