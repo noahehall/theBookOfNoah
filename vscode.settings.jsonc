@@ -1,6 +1,6 @@
 /**
- * install code-insiders NOT vanilla vscode & run root/vscode.install.extensions or whatever
- * this uses bun.sh to execute typescript files
+ * make sure to install code-insiders NOT vanilla vscode
+ * run the vscode.install.extensions or whatever script
  */
 
 {
@@ -160,7 +160,7 @@
   "redhat.telemetry.enabled": false,
 
   /**
-   * git: disable everything, I prefer the cmdline
+   * git
    */
   "diffEditor.codeLens": true,
   "diffEditor.wordWrap": "off",
@@ -246,7 +246,7 @@
     "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
     "lisp": "sbcl --script",
     "lua": "lua",
-    "nim": "echo $fileName | grep -e 'nims$' && nim e --putenv:ENV=DEV $dir$fileName || nim r --hints:on --putenv:ENV=DEV $dir$fileName",
+    "nim": "echo $fileName | grep -e 'nims$' && nim e --putenv:ENV=DEV $dir$fileName || nim r --hints:on --panics:on --putenv:ENV=DEV $dir$fileName",
     "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "ocaml": "ocaml",
     "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
