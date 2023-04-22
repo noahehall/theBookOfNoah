@@ -1,46 +1,31 @@
 /**
- * make sure to install code-insiders NOT vanilla vscode
- * run the vscode.install.extensions or whatever script
+ * install code-insiders NOT vanilla vscode & run root/vscode.install.extensions or whatever
+ * this uses bun.sh to execute typescript files
  */
 
 {
   /**
    * language specific overrides
    */
-  "[javascript]": {
+  "[typescript][javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true // override for mac
+    "editor.formatOnSave": true // e.g. set false if a repo conflicts with prettier
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
-  "[dotenv]": {
+  "[shellscript][dotenv][ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
   "[dockerfile]": {},
-  "[ignore]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
   "[sql]": {
     "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
   },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": false // e.g. if in a repo without eslint/prettier setup
-  },
 
   /**
-   * git
+   * window settings
    */
-  "diffEditor.codeLens": true,
-  "diffEditor.wordWrap": "off",
-  "git.confirmSync": false,
-  "git.enableStatusBarSync": false,
-  "scm.autoReveal": false,
-  "scm.countBadge": "off",
+  "window.zoomLevel": 1,
 
   /**
    * editor
@@ -175,6 +160,16 @@
   "redhat.telemetry.enabled": false,
 
   /**
+   * git: disable everything, I prefer the cmdline
+   */
+  "diffEditor.codeLens": true,
+  "diffEditor.wordWrap": "off",
+  "git.confirmSync": false,
+  "git.enableStatusBarSync": false,
+  "scm.autoReveal": false,
+  "scm.countBadge": "off",
+
+  /**
    * language specific
    */
   "shellformat.effectLanguages": ["shellscript"],
@@ -275,6 +270,5 @@
     "v": "v run",
     "vbscript": "cscript //Nologo",
     "zig": "zig run"
-  },
-  "window.zoomLevel": 1
+  }
 }
