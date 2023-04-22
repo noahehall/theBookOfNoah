@@ -74,3 +74,7 @@ whats() {
         esac
     fi
 }
+
+kernel_version() {
+    uname -sr
+}
