@@ -29,7 +29,6 @@ alias apt_keys_list='sudo apt-key list'
 alias apt_key_del='sudo apt-key del'
 
 apt_refresh_hard() {
-  set -ex
   sudo apt update
   sudo apt dist-upgrade
   sudo apt autoremove
