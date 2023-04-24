@@ -26,6 +26,7 @@
 - [0000 angular guide: start your search here](https://docs.angularjs.org/guide)
 - [angular: dependency injection](https://docs.angularjs.org/guide/di)
 - [angular: if](https://docs.angularjs.org/api/ng/directive/ngIf)
+- [angular: ng-class](https://docs.angularjs.org/api/ng/directive/ngClass#!)
 - [components: all of em](https://docs.angularjs.org/api/ng/directive)
 - [components: guide](https://docs.angularjs.org/guide/component)
 - [components: router guide](https://docs.angularjs.org/guide/component-router)
