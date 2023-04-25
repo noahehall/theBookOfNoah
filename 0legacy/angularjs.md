@@ -12,6 +12,7 @@
 
 - [access scope in browser](https://stackoverflow.com/questions/13743058/how-do-i-access-the-scope-variable-in-browsers-console-using-angularjs)
 - [set img src](https://stackoverflow.com/questions/56863495/how-to-display-image-in-angular)
+- [custom filter with html parser](https://devdactic.com/angularjs-filters-html-parsing)
 
 ### w3schools
 
@@ -33,6 +34,7 @@
 - [controllers: guide](https://docs.angularjs.org/guide/controller)
 - [directives: all of em](https://docs.angularjs.org/api/ng/directive)
 - [directives: guide](https://docs.angularjs.org/guide/directive)
+- [directives: bindHtml](https://docs.angularjs.org/api/ng/directive/ngBindHtml)
 - [expressions](https://docs.angularjs.org/guide/expression)
 - [filters: all of em](https://docs.angularjs.org/api/ng/filter)
 - [filters: guide](https://docs.angularjs.org/guide/filter)
