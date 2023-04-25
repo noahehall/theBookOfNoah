@@ -7,7 +7,7 @@ git_sync_local_branches() {
     # @see https://stackoverflow.com/questions/16590160/remove-branches-not-on-remote
     # updated to delete branches not pointing to origin
     git fetch -p
-    git branch -vv | grep -v ' \[origin/' | grep -v "\*" | awk '{ print $1; }' | xargs -r git branch -D
+    git branch -vv | grep -v '( \[origin/| :gone\])' | grep -v "\*" | awk '{ print $1; }' | xargs -r git branch -D
 }
 git_pull_develop_rebase() {
     git pull origin develop
