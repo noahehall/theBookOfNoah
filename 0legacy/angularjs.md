@@ -72,6 +72,9 @@
 
 - [dropzone](https://docs.dropzone.dev)
 - [dropzone ng](https://github.com/thatisuday/ng-dropzone/)
+- [ion](https://ionicframework.com/docs/)
+  - [switch to v3](https://ionicframework.com/docs/v3/)
+  - [then you can type in /v1/ in the url](https://ionicframework.com/docs/v1/components/#header)
 
 ## basics
 
