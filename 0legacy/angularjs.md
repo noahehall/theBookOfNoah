@@ -75,6 +75,9 @@
 - [ion](https://ionicframework.com/docs/)
   - [switch to v3](https://ionicframework.com/docs/v3/)
   - [then you can type in /v1/ in the url](https://ionicframework.com/docs/v1/components/#header)
+  - [v1 api](https://ionicframework.com/docs/v1/api/)
+    - dont rely on the docs, rely on the source in case copypasta doesnt work
+- [sort + drag n drop](https://github.com/a5hik/ng-sortable)
 
 ## basics
 
