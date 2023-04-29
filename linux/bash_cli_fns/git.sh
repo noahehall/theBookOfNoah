@@ -10,6 +10,8 @@ git_file_all_commits() {
     git log --full-history -- ${1:?path required}
 }
 git_sync_local_branches() {
+    # TODO(noah): fix the regex for github
+    echo $"FYI: works on gitlab; deletes all local branches on github"
     # @see https://stackoverflow.com/questions/16590160/remove-branches-not-on-remote
     # updated to delete branches not pointing to origin
     git fetch -p
