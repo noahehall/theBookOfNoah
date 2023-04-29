@@ -3,6 +3,12 @@
 # git
 
 # git ----------------------------------
+git_file_last_commit() {
+    git log --full-history -1 -- ${1:?path required}
+}
+git_file_all_commits() {
+    git log --full-history -- ${1:?path required}
+}
 git_sync_local_branches() {
     # @see https://stackoverflow.com/questions/16590160/remove-branches-not-on-remote
     # updated to delete branches not pointing to origin
@@ -60,7 +66,7 @@ gitca() {
         git commit -a --no-verify --amend -m "$*"
     fi
 }
-gitnm() {
+gitnv() {
     git commit -a --no-verify -m "$*"
 }
 alias gita='git add -A'
