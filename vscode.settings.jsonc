@@ -96,7 +96,9 @@
     "*.nomad": "hcl",
     "*.env.development.compose.yaml": "yaml",
     "*.cfg": "haproxy", // TODO: haproxy isnt the only cfg
-    "*.nim.cfg": "nim" // TODO: google a fix for this
+    "*.nim.cfg": "nim",
+    "*.nim.ini": "ini",
+    "*.nimcfg": "nim"
   },
   "files.watcherExclude": {
     "**/.ammonite": true,
@@ -246,7 +248,7 @@
     "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
     "lisp": "sbcl --script",
     "lua": "lua",
-    "nim": "echo $fileName | grep -e 'nims$' && nim e --putenv:ENV=DEV $dir$fileName || nim r --hints:on --panics:on --putenv:ENV=DEV $dir$fileName",
+    "nim": "echo $fileName | grep -e 'nims$' && nim e $dir$fileName || nim r --verbosity:0 $dir$fileName", // --putenv:ENV=DEV
     "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "ocaml": "ocaml",
     "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
