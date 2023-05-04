@@ -6,6 +6,16 @@
 
 - [acid transactions](https://databricks.com/glossary/acid-transactions)
 - [the action pattern](https://ponyfoo.com/articles/action-pattern-clean-obvious-testable-code)
+- [circuit breaker pattern](https://www.martinfowler.com/bliki/CircuitBreaker.html)
+- [Selina Liu: microservices @ airbnb](https://www.youtube.com/watch?v=PIw1WF1UXNc)
+
+## best practices
+
+- focus on reducing a services blast radius
+  - if service A fails, how many other services will be disrupted?
+- whether you describe your architecture in terms of Tiers, there will always be tierrs
+  - lower tiered services generally have a bigger blast radius; require the most stability and resilience
+    - never let lower tiered services call higher tiered services which may have reduce stability
 
 ## basics
 
@@ -36,6 +46,53 @@
   - data collectors: services geared toward retrieving data from a single data source, serializing and storing the raw data (e.g. in s3)
   - data convertors: convert raw serialized data into a common serialization format, with a defined interface and storing the new formatted data (e.g. back into s3)
   - data processors: take the converted data, and process it for storing into the final db (e.g. a knowledge graph)
+
+## infrastructure
+
+- focus early on distinguishing between services requering common vs specific infrastructure
+
+### shared infrastructure examples
+
+- api framework: e.g. using [apache thrift](https://thrift.apache.org/) and
+- messaging framework: e.g. [apache kafka](https://kafka.apache.org/)
+- api explorer: e.g. using swagger aka [openapi](https://openapi.tools/) for finding and testing APIs
+- CI/CD: artifact repositories, deployment tools should be consistent across all services
+- orchestration and service governance
+- observability and metrics
+
+### specific examples
+
+- business logic: implementation details left to the developer
+
+## layers
+
+- depending on the sources of data and clients of your services could involve any / or different layers
+
+### Presentation Services
+
+- render data for frontend clients in a friendly and common format
+  - this layer is prime for a graphql service in a data access layer
+- perform simple data transformations/aggregation
+- permissions checks
+- localization and other external business logic
+- data fetching and hydration
+
+### business services
+
+- shared business logic consumed/sidecarred by many services
+- distinct from presentation as this relates to internal business logic
+
+### data access layer
+
+- in complex situations it may be more appropriate to extract data access from the presentation layer
+
+### Data services
+
+- encsuplate data sources into a uniform data layer
+
+### Messaging services
+
+- queues and etc
 
 ## patterns
 
