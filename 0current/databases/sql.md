@@ -10,6 +10,7 @@
 - [database normalization](https://phoenixnap.com/kb/database-normalization)
 - [database design process](https://support.microsoft.com/en-us/office/database-design-basics-eb2159cf-1e30-401a-8084-bd4f9c9ca1f5)
 - [sql relationships](https://blog.devart.com/types-of-relationships-in-sql-server-database.html)
+- [hierarchical data](https://learnsql.com/blog/how-to-query-hierarchical-data/)
 
 ### best practices / gotchas
 

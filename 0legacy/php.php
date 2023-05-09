@@ -5,6 +5,7 @@ links
 https://www.php.net/manual/en/language.variables.superglobals.php
 https://www.w3schools.com/php/default.asp
 https://www.w3schools.com/php/php_ref_array.asp
+https://www.php.net/manual/en/reserved.variables.php
 
 useful fns
 ----------
