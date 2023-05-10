@@ -12,6 +12,7 @@
   - [important: caching](https://tanstack.com/query/latest/docs/react/guides/caching)
   - [important: default queries](https://tanstack.com/query/latest/docs/react/guides/default-query-function)
   - [important: blog posts with quickies](https://tanstack.com/query/latest/docs/react/community/tkdodos-blog)
+  - [important: queryKey factory](https://tanstack.com/query/latest/docs/react/community/lukemorales-query-key-factory)
   - [queries](https://tanstack.com/query/latest/docs/react/guides/queries)
   - [query keys](https://tanstack.com/query/latest/docs/react/guides/query-keys)
   - [parallel queries](https://tanstack.com/query/latest/docs/react/guides/parallel-queries)
@@ -29,6 +30,7 @@
   - [ssr](https://tanstack.com/query/latest/docs/react/guides/ssr)
   - [react: suspense support](https://tanstack.com/query/latest/docs/react/guides/suspense)
   - [react: testing](https://tanstack.com/query/latest/docs/react/guides/testing)
+  - [batch requests with batshit](https://tanstack.com/query/latest/docs/react/community/batching-requests-using-bathshit)
 
 ## Query
 
