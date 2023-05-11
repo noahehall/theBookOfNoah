@@ -7,6 +7,9 @@
 - [tanstack query](https://tanstack.com/query/latest/docs/react/overview)
 - [tanstack eslint](https://tanstack.com/query/latest/docs/react/eslint/eslint-plugin-query)
 - [tanstack query devtools](https://tanstack.com/query/latest/docs/react/devtools)
+- plugins
+  - [query key factory](https://tanstack.com/query/latest/docs/react/community/lukemorales-query-key-factory)
+  - [react query kit](https://tanstack.com/query/latest/docs/react/community/liaoliao666-react-query-kit)
 - tanstack query docs
   - [important: query client options](https://tanstack.com/query/latest/docs/react/guides/important-defaults)
   - [important: caching](https://tanstack.com/query/latest/docs/react/guides/caching)
@@ -61,6 +64,11 @@
 - useQueryClient: enables access to the QueryClient
 - useMutation: maps up arbitrary keys to POST/PUTS
 - devtools (package): observe queries in development (but not mutations)
+
+#### plugins
+
+- Query key factory: plugin for declaring all query keys in a single file
+- react query kit: makes react query hooks reusable and typesafe
 
 ### terms
 
