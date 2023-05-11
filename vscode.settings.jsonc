@@ -172,6 +172,16 @@
   "scm.countBadge": "off",
 
   /**
+   * aws
+   */
+  "aws.codeWhisperer.shareCodeWhispererContentWithAWS": false,
+  "aws.telemetry": false,
+  "aws.experiments": {
+    "jsonResourceModification": true
+  },
+  "aws.samcli.enableCodeLenses": true,
+
+  /**
    * language specific
    */
   "shellformat.effectLanguages": ["shellscript"],
@@ -242,7 +252,7 @@
     "haskell": "runghc",
     "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
     "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
-    "javascript": "node",
+    "javascript": "bun",
     "julia": "julia",
     "kit": "kitc --run",
     "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
