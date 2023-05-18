@@ -11,7 +11,7 @@ git_sync_local_branches() {
     echo $'deleting branches with no upstream'
     git branch -vv | grep -v ' \[origin/' | grep -v "\*" | awk '{ print $1; }' | xargs -r git branch -D
     echo $'deleting branches gone from upstream'
-    git branch -vv | grep ': gone]' | grep -v "\*" | awk '{ print $1; }' | xargs -r git branch -d
+    git branch -vv | grep ': gone]' | grep -v "\*" | awk '{ print $1; }' | xargs -r git branch -D
 }
 git_pull_develop_rebase() {
     git pull origin develop
