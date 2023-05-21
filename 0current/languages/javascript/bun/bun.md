@@ -8,10 +8,12 @@
 ### bun docs
 
 - [AAA docs](https://bun.sh/docs)
-- [bun create](https://bun.sh/docs/cli/create)
-- [bun test](https://bun.sh/docs/cli/test)
+- [build](https://bun.sh/docs/cli/build)
+- [bundle: esbuild migration](https://bun.sh/docs/bundler/migration)
+- [bundle: loaders](https://bun.sh/docs/bundler/loaders)
 - [configuration](https://bun.sh/docs/project/configuration)
 - [console](https://bun.sh/docs/api/console)
+- [create](https://bun.sh/docs/cli/create)
 - [dns](https://bun.sh/docs/api/dns)
 - [ffi](https://bun.sh/docs/api/ffi)
 - [files](https://bun.sh/docs/api/file-io)
@@ -25,21 +27,25 @@
 - [module resolution](https://bun.sh/docs/runtime/modules)
 - [node-api](https://bun.sh/docs/api/node-api)
 - [nodejs](https://bun.sh/docs/ecosystem/nodejs)
+- [plugins](https://bun.sh/docs/bundler/plugins)
 - [plugins](https://bun.sh/docs/runtime/plugins)
 - [react](https://bun.sh/docs/ecosystem/react)
 - [spawn](https://bun.sh/docs/api/spawn)
 - [sqlite](https://bun.sh/docs/api/sqlite)
 - [tcp sockets](https://bun.sh/docs/api/tcp)
+- [test: intro](https://bun.sh/docs/cli/test)
+- [test: api](https://bun.sh/docs/test/writing)
 - [transpiler](https://bun.sh/docs/api/transpiler)
 - [typescript](https://bun.sh/docs/ecosystem/typescript)
 - [utils](https://bun.sh/docs/api/utils)
 - [web sockets](https://bun.sh/docs/api/websockets)
-- [plugins](https://bun.sh/docs/bundler/plugins)
 
 ### issues
 
 - [typescript document not found issue](https://github.com/oven-sh/bun/issues/463)
   - remove `bun-types` from tsconfig and add it to a declaration file
+- [uncaught syntaxerror: ambiguous indirect export](https://github.com/oven-sh/bun/issues/2878)
+  - delete node_modules.bun (its deprecated)
 
 ### ecosystem
 
@@ -183,6 +189,8 @@
   - --development | -d
   - --optional
   - --global
+- [add packages from git](https://bun.sh/docs/cli/install#git-dependencies)
+  - you basically `bun add theGitCloneUrl`
 
 ### remove
 
@@ -206,6 +214,8 @@
   - describe, expect, test, before/after/EachAll
 - filtering tests with globs not yet supported
   - only file / directory names
+- recursively searches the working dir for supported file extensions prefixed with test/spec
+- create snapshots using `toMatchSnapshopt()` and `--update-snapshots`
 
 ### create
 

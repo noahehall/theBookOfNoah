@@ -5,17 +5,18 @@
 ## links
 
 - [tanstack query](https://tanstack.com/query/latest/docs/react/overview)
-- [tanstack eslint](https://tanstack.com/query/latest/docs/react/eslint/eslint-plugin-query)
 - [tanstack query devtools](https://tanstack.com/query/latest/docs/react/devtools)
 - plugins
   - [query key factory](https://tanstack.com/query/latest/docs/react/community/lukemorales-query-key-factory)
   - [react query kit](https://tanstack.com/query/latest/docs/react/community/liaoliao666-react-query-kit)
+  - [tanstack eslint plugin](https://tanstack.com/query/latest/docs/react/eslint/eslint-plugin-query)
+  - [persist query client](https://tanstack.com/query/latest/docs/react/plugins/persistQueryClient)
 - tanstack query docs
   - [important: query client options](https://tanstack.com/query/latest/docs/react/guides/important-defaults)
   - [important: caching](https://tanstack.com/query/latest/docs/react/guides/caching)
   - [important: default queries](https://tanstack.com/query/latest/docs/react/guides/default-query-function)
   - [important: blog posts with quickies](https://tanstack.com/query/latest/docs/react/community/tkdodos-blog)
-  - [important: queryKey factory](https://tanstack.com/query/latest/docs/react/community/lukemorales-query-key-factory)
+  - [important: various examples](https://tanstack.com/query/latest/docs/react/examples/react/simple)
   - [queries](https://tanstack.com/query/latest/docs/react/guides/queries)
   - [query keys](https://tanstack.com/query/latest/docs/react/guides/query-keys)
   - [parallel queries](https://tanstack.com/query/latest/docs/react/guides/parallel-queries)
@@ -68,7 +69,13 @@
 #### plugins
 
 - Query key factory: plugin for declaring all query keys in a single file
+  - createQueryKeyStore: fn for constructing an object of all your query keys
 - react query kit: makes react query hooks reusable and typesafe
+  - createQuery: constructor fn that strongly types a query, returning a hook for execution
+- persistQueryClient: stores queryClient in storage for later use
+  - requires setting queryClient.cacheTime and persistQueryClient.maxAge to same value
+  - you can bust the cache programmatically by calling one of the fns on the docs
+  -
 
 ### terms
 
