@@ -13,6 +13,7 @@
 - [access scope in browser](https://stackoverflow.com/questions/13743058/how-do-i-access-the-scope-variable-in-browsers-console-using-angularjs)
 - [set img src](https://stackoverflow.com/questions/56863495/how-to-display-image-in-angular)
 - [custom filter with html parser](https://devdactic.com/angularjs-filters-html-parsing)
+- [using ng-repeat to create scoped vars for ng-include templates](https://stackoverflow.com/questions/25565475/pass-parameter-to-angular-ng-include/34019586#34019586)
 
 ### w3schools
 
@@ -35,6 +36,7 @@
 - [directives: all of em](https://docs.angularjs.org/api/ng/directive)
 - [directives: bindHtml](https://docs.angularjs.org/api/ng/directive/ngBindHtml)
 - [directives: guide](https://docs.angularjs.org/guide/directive)
+- [directives: include](https://docs.angularjs.org/api/ng/directive/ngInclude#!)
 - [directives: select html](https://docs.angularjs.org/api/ng/directive/select)
 - [expressions](https://docs.angularjs.org/guide/expression)
 - [filters: all of em](https://docs.angularjs.org/api/ng/filter)
