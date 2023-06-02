@@ -1,6 +1,7 @@
 # Framer motion
 
 - animation library
+- bookmark: https://www.framer.com/motion/layout-animations/
 
 ## links
 
