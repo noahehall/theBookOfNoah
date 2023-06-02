@@ -5,18 +5,44 @@
 
 ## links
 
+- [accessibilty and inclusion](https://www.figma.com/resource-library/creating-accessible-and-inclusive-design/)
+
+### tutorials and stuff
+
 - [community](https://www.figma.com/community)
 - [biginners tutorial](https://help.figma.com/hc/en-us/sections/4405269443991-Figma-for-Beginners-tutorial-4-parts-)
+- [design systems tutorial](https://help.figma.com/hc/en-us/sections/14548397990423-Course-Introduction-to-design-systems)
 
 ### docs
 
 - [components](https://help.figma.com/hc/en-us/articles/360038662654)
+- [design systems: aaaaa index](https://help.figma.com/hc/en-us/sections/360006233714-Design-systems)
+- [design systems: components](https://help.figma.com/hc/en-us/sections/4403935997847-Components)
+- [design systems: libraries](https://help.figma.com/hc/en-us/sections/4403936000407-Libraries-)
+- [design systems: styles](https://help.figma.com/hc/en-us/sections/4403928368535-Styles)
+- [design: aaaaa index](https://help.figma.com/hc/en-us/categories/360002042553-Figma-design)
+- [design: auto layout](https://help.figma.com/hc/en-us/sections/13165750874519-Auto-layout)
+- [design: basics](https://help.figma.com/hc/en-us/sections/13148565160471-Figma-design-basics)
+- [design: canvas](https://help.figma.com/hc/en-us/sections/13148571463703-Explore-the-canvas)
+- [design: color](https://help.figma.com/hc/en-us/sections/360006798733-Color)
+- [design: images](https://help.figma.com/hc/en-us/sections/4403912803607-Images)
+- [design: layers](https://help.figma.com/hc/en-us/sections/13148612411543-Layers)
+- [design: preferences](https://help.figma.com/hc/en-us/sections/4403928548759-Preferences)
+- [design: properties: constraints](https://help.figma.com/hc/en-us/articles/360039957734)
+- [design: properties](https://help.figma.com/hc/en-us/sections/4403936088215-Properties)
+- [design: tools and shapes](https://help.figma.com/hc/en-us/sections/4403912808599-Design-tools-and-shapes)
+- [design: typography](https://help.figma.com/hc/en-us/sections/360006606853-Typography)
 - [figjam](https://help.figma.com/hc/en-us/articles/1500004362321)
 - [libraries](https://help.figma.com/hc/en-us/articles/360041051154-Guide-to-libraries-in-Figma)
-- [properties: constraints](https://help.figma.com/hc/en-us/articles/360039957734)
-- [properties](https://help.figma.com/hc/en-us/sections/4403936088215-Properties)
+- [pages: intro](https://help.figma.com/hc/en-us/articles/360038511293)
 - [team: permissions](https://help.figma.com/hc/en-us/articles/360039970673-Permissions-in-teams)
 - [team: sharing and permissions](https://help.figma.com/hc/en-us/articles/1500007609322)
+- [prototypes: aaaaaa index](https://help.figma.com/hc/en-us/sections/360006534454-Prototypes-and-animations)
+- [prototypes: presets](https://help.figma.com/hc/en-us/sections/4403928630295-Presets)
+- [prototypes: viewing](https://help.figma.com/hc/en-us/sections/4403928648983-View-prototypes)
+- [collaboration: aaaaa index](https://help.figma.com/hc/en-us/sections/360006780134-Collaborative-tools)
+- [branching and merging](https://help.figma.com/hc/en-us/sections/5665686755479-Branching-and-merging)
+- [import and export](https://help.figma.com/hc/en-us/sections/360006537574-Import-and-export)
 
 ## commmunity components and plugins
 
