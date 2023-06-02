@@ -1,7 +1,8 @@
-# FIGMA
+# FIGMA (and figjam)
 
 - vector design tool that runs in the browser
 - from wireframes to prototypes
+- https://help.figma.com/hc/en-us/articles/360040521453-Optimize-design-files-for-developer-handoff
 
 ## links
 
@@ -10,11 +11,17 @@
 ### tutorials and stuff
 
 - [community](https://www.figma.com/community)
+- [community icons](https://www.figma.com/community/category/icons)
 - [biginners tutorial](https://help.figma.com/hc/en-us/sections/4405269443991-Figma-for-Beginners-tutorial-4-parts-)
 - [design systems tutorial](https://help.figma.com/hc/en-us/sections/14548397990423-Course-Introduction-to-design-systems)
 
 ### docs
 
+- [aaaaaa docs home with search bar](https://help.figma.com/hc/en-us)
+- [branching and merging](https://help.figma.com/hc/en-us/sections/5665686755479-Branching-and-merging)
+- [collaboration: aaaaa index](https://help.figma.com/hc/en-us/sections/360006780134-Collaborative-tools)
+- [collaboration: comments](https://help.figma.com/hc/en-us/sections/4403928709911-Comments)
+- [collaboration: developer handoff](https://help.figma.com/hc/en-us/articles/360040521453-Optimize-design-files-for-developer-handoff)
 - [components](https://help.figma.com/hc/en-us/articles/360038662654)
 - [design systems: aaaaa index](https://help.figma.com/hc/en-us/sections/360006233714-Design-systems)
 - [design systems: components](https://help.figma.com/hc/en-us/sections/4403935997847-Components)
@@ -33,16 +40,19 @@
 - [design: tools and shapes](https://help.figma.com/hc/en-us/sections/4403912808599-Design-tools-and-shapes)
 - [design: typography](https://help.figma.com/hc/en-us/sections/360006606853-Typography)
 - [figjam](https://help.figma.com/hc/en-us/articles/1500004362321)
+- [import and export](https://help.figma.com/hc/en-us/sections/360006537574-Import-and-export)
 - [libraries](https://help.figma.com/hc/en-us/articles/360041051154-Guide-to-libraries-in-Figma)
 - [pages: intro](https://help.figma.com/hc/en-us/articles/360038511293)
-- [team: permissions](https://help.figma.com/hc/en-us/articles/360039970673-Permissions-in-teams)
-- [team: sharing and permissions](https://help.figma.com/hc/en-us/articles/1500007609322)
 - [prototypes: aaaaaa index](https://help.figma.com/hc/en-us/sections/360006534454-Prototypes-and-animations)
+- [prototypes: building](https://help.figma.com/hc/en-us/sections/4403936156695-Build-prototypes)
 - [prototypes: presets](https://help.figma.com/hc/en-us/sections/4403928630295-Presets)
 - [prototypes: viewing](https://help.figma.com/hc/en-us/sections/4403928648983-View-prototypes)
-- [collaboration: aaaaa index](https://help.figma.com/hc/en-us/sections/360006780134-Collaborative-tools)
-- [branching and merging](https://help.figma.com/hc/en-us/sections/5665686755479-Branching-and-merging)
-- [import and export](https://help.figma.com/hc/en-us/sections/360006537574-Import-and-export)
+- [team: permissions](https://help.figma.com/hc/en-us/articles/360039970673-Permissions-in-teams)
+- [team: sharing and permissions](https://help.figma.com/hc/en-us/articles/1500007609322)
+
+### figjam
+
+- [figjam: guide](https://help.figma.com/hc/en-us/articles/1500004362321)
 
 ## commmunity components and plugins
 
@@ -144,12 +154,33 @@
 - instances: any changes to the main component are reflected in instances
   - some changes to the instance are specific to the instance
   - select an instance and a `go to main component` icon appears in the big menu
+- components can be part of components
 
 ### libraries
 
 - collections of components and styles that must be enabled per file in the assets panel
 - can be created and shared across files and projects
 - search figma.com/community
+
+### prototypes
+
+- define pathways and explore interactions within a file by creating a page for prototypes
+  - you generally want a page called prototype that contains instances of other frames
+  - you then create connections between frames on this page
+    - hotspot: the thing thats interacted with, e.g. a button
+      - if its nested within a layer, just keep double clicking the frame until its selected
+      - you can drag an arrow to another frame
+      - or click the add connection icon that appears on hover and drag it to a destination
+    - destination: where the user is taken, e.g. a menu
+    - interaction animations: what happens upon clicking a hotspot
+      - smart animate enables you to swipe right e.g. to a reveal a menu
+  - if any connections are created, you have to create all the connections for presentation view
+    - else only the frames with connections will be presentable
+- prototype tab: options for the presentation view, e.g. selecting a device frame
+  - device frames
+  - overflow scrolling behavior
+    - this is relavent when components in a design extend beyond the frame their in
+  - interactions: triggers (tap, click, hover, e.g), actions and destinations
 
 ### pages
 
@@ -172,15 +203,14 @@ the global container that contains everything you see
   - or a single section of an existing frame
 - have their own dimensions and properties, and affect the layers they contain
 - generally represent a specific screen in an app
+- thumbnails: right click on a frame and set it
+  - sets this frame as the thumbnail for the file
 
 ##### frame property menu
 
 - selecting an object/layer/frame etc changes the bit menu that floats to the right
 - design tab: where most of things live
-- prototype tab: options for the presentation view, e.g. selecting a device frame
-  - device frames
-  - scrolling behavior
-  - interactions
+- prototype tab: see prototype section
 - styles
   - 4 dots in a square next to each property name (e.g. fill, text, etc) to see the menu
     - or click the canvas (so nothing is selected) and all your styles will show in the menu
@@ -229,3 +259,19 @@ the global container that contains everything you see
   - a right + left says stretch this to the frame
   - etc
 - set fix position when scrolling, e.g. for a top nav bar frame
+
+###### inspect panel
+
+- generally available in viewer mode when you select a frame
+- shows you everything a developer needs
+
+###### export panel
+
+- for exporting assets, e.g. icons / images
+- supports png, jpg, svg and pdf
+
+## figjam
+
+- collaboration tool for brainstorming, developing and organizing ideas
+- figjam files are different than design files
+  - but you can copy and paste elements between them
