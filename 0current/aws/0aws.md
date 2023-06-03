@@ -4,11 +4,11 @@
 - this cheatsheet should be understood before transitioning to any other file
   - your next stop should be the security file
   - after that should be networking
-- before going all in on AWS, consider how utilize the following instead of their AWS competitors
+- before going all in on AWS, consider how you may utilize the following instead of their AWS competitors
   - [everything hashicorp](../hashicorp/README.md) for a truly modern multi-cloud-enabled devops architecture
   - [haproxy](../proxy/haproxy.md)
     - [TODO: envoy](../proxy/envoy.md)
-  - your goal should be creating multi-cloud open & internal source architectures
+  - your goal should be creating multi-cloud & open source architectures
     - as opposed to proprietary entrapped enslaved business models
 
 ## TLDR
