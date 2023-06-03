@@ -12,6 +12,8 @@
 
 - [access scope in browser](https://stackoverflow.com/questions/13743058/how-do-i-access-the-scope-variable-in-browsers-console-using-angularjs)
 - [set img src](https://stackoverflow.com/questions/56863495/how-to-display-image-in-angular)
+- [custom filter with html parser](https://devdactic.com/angularjs-filters-html-parsing)
+- [using ng-repeat to create scoped vars for ng-include templates](https://stackoverflow.com/questions/25565475/pass-parameter-to-angular-ng-include/34019586#34019586)
 
 ### w3schools
 
@@ -26,12 +28,16 @@
 - [0000 angular guide: start your search here](https://docs.angularjs.org/guide)
 - [angular: dependency injection](https://docs.angularjs.org/guide/di)
 - [angular: if](https://docs.angularjs.org/api/ng/directive/ngIf)
+- [angular: ng-class](https://docs.angularjs.org/api/ng/directive/ngClass#!)
 - [components: all of em](https://docs.angularjs.org/api/ng/directive)
 - [components: guide](https://docs.angularjs.org/guide/component)
 - [components: router guide](https://docs.angularjs.org/guide/component-router)
 - [controllers: guide](https://docs.angularjs.org/guide/controller)
 - [directives: all of em](https://docs.angularjs.org/api/ng/directive)
+- [directives: bindHtml](https://docs.angularjs.org/api/ng/directive/ngBindHtml)
 - [directives: guide](https://docs.angularjs.org/guide/directive)
+- [directives: include](https://docs.angularjs.org/api/ng/directive/ngInclude#!)
+- [directives: select html](https://docs.angularjs.org/api/ng/directive/select)
 - [expressions](https://docs.angularjs.org/guide/expression)
 - [filters: all of em](https://docs.angularjs.org/api/ng/filter)
 - [filters: guide](https://docs.angularjs.org/guide/filter)
@@ -69,6 +75,12 @@
 
 - [dropzone](https://docs.dropzone.dev)
 - [dropzone ng](https://github.com/thatisuday/ng-dropzone/)
+- [ion](https://ionicframework.com/docs/)
+  - [switch to v3](https://ionicframework.com/docs/v3/)
+  - [then you can type in /v1/ in the url](https://ionicframework.com/docs/v1/components/#header)
+  - [v1 api](https://ionicframework.com/docs/v1/api/)
+    - dont rely on the docs, rely on the source in case copypasta doesnt work
+- [sort + drag n drop](https://github.com/a5hik/ng-sortable)
 
 ## basics
 

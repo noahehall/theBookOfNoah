@@ -14,8 +14,12 @@ git_sync_local_branches() {
     echo $"FYI: works on gitlab; deletes all local branches on github"
     # @see https://stackoverflow.com/questions/16590160/remove-branches-not-on-remote
     # updated to delete branches not pointing to origin
+    # TODO this still isnt right nor does it work correctly on both git and gitlab
     git fetch -p
+    echo $'deleting branches with no upstream'
     git branch -vv | grep -v ' \[origin/' | grep -v "\*" | awk '{ print $1; }' | xargs -r git branch -D
+    echo $'deleting branches gone from upstream'
+    git branch -vv | grep ': gone]' | grep -v "\*" | awk '{ print $1; }' | xargs -r git branch -D
 }
 git_pull_develop_rebase() {
     git pull origin develop

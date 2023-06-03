@@ -1,10 +1,14 @@
 
 <?php
 /*
+FYI: theres a whole php file from like 20 years ago in this ../previous
+-
+
 links
 https://www.php.net/manual/en/language.variables.superglobals.php
 https://www.w3schools.com/php/default.asp
 https://www.w3schools.com/php/php_ref_array.asp
+https://www.php.net/manual/en/reserved.variables.php
 
 useful fns
 ----------
@@ -57,11 +61,6 @@ functions
 ---------
 fn scope is deleted after execution
 
-
-
-
-
-
 */
 
 
@@ -90,6 +89,9 @@ noitcnuf();
 
 // loops
 $myArr = array("one", "two");
+echo "\nmyArr[0] is: " . $myArr[0];
+$myAssArr = array("first" => "1st", "second" => "2nd");
+echo "\nmyAsscArr['first'] is: " . $myAssArr["first"];
 
 foreach($myArr as $idx => $val) {
     echo "\n";
@@ -99,4 +101,13 @@ foreach($myArr as $idx => $val) {
 echo "\n\nwwwwtf" . $myArr[1];
 echo "\n\nisset - " . isset($myArr[0]) && "worked";
 // echo "\n\nwtf is my arr {$myArr[0]}";
+
+// objects
+$emptyObj = new stdClass(); // or (object)[]
+var_dump($emptyObj);
+
+$emptyObj->someKey = "some val";
+var_dump($emptyObj);
+echo "the value is: " . $emptyObj->someKey;
+
 ?>

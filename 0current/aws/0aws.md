@@ -4,11 +4,11 @@
 - this cheatsheet should be understood before transitioning to any other file
   - your next stop should be the security file
   - after that should be networking
-- before going all in on AWS, consider how utilize the following instead of their AWS competitors
+- before going all in on AWS, consider how you may utilize the following instead of their AWS competitors
   - [everything hashicorp](../hashicorp/README.md) for a truly modern multi-cloud-enabled devops architecture
   - [haproxy](../proxy/haproxy.md)
     - [TODO: envoy](../proxy/envoy.md)
-  - your goal should be creating multi-cloud open & internal source architectures
+  - your goal should be creating multi-cloud & open source architectures
     - as opposed to proprietary entrapped enslaved business models
 
 ## TLDR
@@ -204,7 +204,7 @@
   - any object in the bucket `arn:aws:s3:::examplebucket/*`
   - any object in any bucket matching exampleXbucket `arn:aws:s3:::example?bucket/*`
   - all s3 resources `arn:aws:s3:::*`
-- has the following syntax across all AWS services regoin specific services: `arn:partition:service:region:namespace:relative-id`
+- has the following syntax across all region specific services: `arn:partition:service:region:namespace:relative-id`
   - partition: `aws` or `aws-cn` for china (Beijing) region
   - service: e.g. s3
   - region:
@@ -216,7 +216,7 @@
 
 ### tags
 
-- to ensure expected tags are automatically displayed in dashboard columns, they must be case-sensitive
+- to ensure expected tags are automatically displayed in dashboard columns, they must match case-sensitive
   - i.e. `Name` !== `name`
   - in the new UI you can now add specific tags
 
