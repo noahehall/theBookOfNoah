@@ -1,16 +1,19 @@
 # bun
 
-- alternative JS runtime based on safari's JavaScriptCore engine developed in zig
+- alternative JS/TS runtime based on safari's JavaScriptCore engine and developed in zig
+- aims to be the #1 runtime outside of browsers focusing on edge computing and low-memory environments
 
 ## links
 
 ### bun docs
 
 - [AAA docs](https://bun.sh/docs)
-- [bun create](https://bun.sh/docs/cli/create)
-- [bun test](https://bun.sh/docs/cli/test)
+- [build](https://bun.sh/docs/cli/build)
+- [bundle: esbuild migration](https://bun.sh/docs/bundler/migration)
+- [bundle: loaders](https://bun.sh/docs/bundler/loaders)
 - [configuration](https://bun.sh/docs/project/configuration)
 - [console](https://bun.sh/docs/api/console)
+- [create](https://bun.sh/docs/cli/create)
 - [dns](https://bun.sh/docs/api/dns)
 - [ffi](https://bun.sh/docs/api/ffi)
 - [files](https://bun.sh/docs/api/file-io)
@@ -24,11 +27,14 @@
 - [module resolution](https://bun.sh/docs/runtime/modules)
 - [node-api](https://bun.sh/docs/api/node-api)
 - [nodejs](https://bun.sh/docs/ecosystem/nodejs)
+- [plugins](https://bun.sh/docs/bundler/plugins)
 - [plugins](https://bun.sh/docs/runtime/plugins)
 - [react](https://bun.sh/docs/ecosystem/react)
 - [spawn](https://bun.sh/docs/api/spawn)
 - [sqlite](https://bun.sh/docs/api/sqlite)
 - [tcp sockets](https://bun.sh/docs/api/tcp)
+- [test: intro](https://bun.sh/docs/cli/test)
+- [test: api](https://bun.sh/docs/test/writing)
 - [transpiler](https://bun.sh/docs/api/transpiler)
 - [typescript](https://bun.sh/docs/ecosystem/typescript)
 - [utils](https://bun.sh/docs/api/utils)
@@ -38,13 +44,12 @@
 
 - [typescript document not found issue](https://github.com/oven-sh/bun/issues/463)
   - remove `bun-types` from tsconfig and add it to a declaration file
+- [uncaught syntaxerror: ambiguous indirect export](https://github.com/oven-sh/bun/issues/2878)
+  - delete node_modules.bun (its deprecated)
 
 ### ecosystem
 
-- [elysia: webframework optimized for bun](https://elysiajs.com/quick-start.html)
-- [hono](https://github.com/honojs/hono)
 - [bun templates](https://github.com/bun-community/create-templates)
-
 
 ## basics
 
@@ -74,13 +79,15 @@
 
 #### typescript && bun
 
-- bun compiles typescript automically: use the same cmd to run js and ts files
-  - transpilation occurs automatically and doesnt require any configuration
+- frontend apps
+  - you still need to transpile to JS to remove the type definitions
+- backend apps
+  - bun executes typescript directly, no need to transpile
 - consumes existing tsconfig.json
 - make sure to `bun add bun-types` and add it to tsconfig.json.compilerOptions.types
+  - TODO: check if this works, was throwing in the react project
 - does not typecheck files, so `tsc --noEmit` is still required
-  - however, typechecking (IMO) should be dev only
-  - hence, typechecking shoud occur in IDEs and tests
+  - typechecking should be offloaded to your IDE/tests
 - supports `compilerOptions.paths` for imports
 
 #### react && bun
@@ -90,6 +97,12 @@
 - supports
   - prop punning (haha see docs)
   - SSR
+
+#### other file types
+
+- `.txt` can be imported as strings
+- .`json/toml` can be imported directly and will be converted to objects
+- additional plugins exist for other filetypes
 
 ## bun basics
 
@@ -150,8 +163,18 @@
 
 ### run
 
-- `bun run CMD`
-- execute system / package.json scripts
+- `bun run SCRIPT/FILE`
+- execute file / package.json scripts
+- examples
+  - `bun run env` see resolved env (in the following order)
+    - .env.local
+    - .env.production/development based on NODE_ENV
+    - .env
+
+### bunx
+
+- `bunx WOOP`
+- auto install and run a local/remote package
 
 ### install
 
@@ -159,23 +182,20 @@
 - npm-compatible installer designed for nodejs compatibility
 - used to install all deps (sans peerDependencies) in a pkg.json and create a bun.lockb
 
-### bun add
+### add
 
 - `bun add PKG` add a specific package
 - flags
   - --development | -d
   - --optional
   - --global
+- [add packages from git](https://bun.sh/docs/cli/install#git-dependencies)
+  - you basically `bun add theGitCloneUrl`
 
-### bun remove
+### remove
 
 - `bun remove PKG`
 - remove a specific package
-
-### bunx
-
-- `bunx WOOP`
-- auto installa nd run a local/remote package
 
 ### link
 
@@ -194,13 +214,21 @@
   - describe, expect, test, before/after/EachAll
 - filtering tests with globs not yet supported
   - only file / directory names
+- recursively searches the working dir for supported file extensions prefixed with test/spec
+- create snapshots using `toMatchSnapshopt()` and `--update-snapshots`
 
 ### create
 
-- `bun create TEMPLATE DEST`
+- `bun create --no-git TEMPLATE DEST`
+  - no git: so it doesnt add the .git directory
   - template: community template, github repo or local path
 - create a new bun app based on a template
 - if adding to an existing monorepo, make sure to delete the .git dir thats added
+
+### init
+
+- `bun init`
+- scaffold a new project by follo0wing the interactive prompts
 
 ### hot reloading
 

@@ -3,6 +3,8 @@
 - pick the simplest, focused and most reliable tool as possible
 - dont use kitchen sinks, you want the best tool for each specific stage of your build pipeline
 
+## links
+
 ## ci systems
 
 - jenkins: most common CI system
@@ -22,7 +24,7 @@
 - capistrano (stay way from this, exposing your source control to prod is an anti pattern)
 - chef/puppet: depends on you packaging your artifacts as OS packages
 - rundeck
-
+- [spinnaker](https://spinnaker.io/)
 - ansible (by redhat)
   - automation tool to setup new and appy changes to existing systems
 

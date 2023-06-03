@@ -7,6 +7,7 @@ code-insiders --force --install-extension anseki.vscode-color
 code-insiders --force --install-extension bbenoist.vagrant
 code-insiders --force --install-extension cobaltblu27.rainbow-highlighter
 code-insiders --force --install-extension codezombiech.gitignore
+code-insiders --force --install-extension Codium.codium
 code-insiders --force --install-extension dbaeumer.vscode-eslint
 code-insiders --force --install-extension EditorConfig.EditorConfig
 code-insiders --force --install-extension esbenp.prettier-vscode
@@ -35,6 +36,7 @@ code-insiders --force --install-extension ms-toolsai.vscode-jupyter-cell-tags
 code-insiders --force --install-extension ms-toolsai.vscode-jupyter-slideshow
 code-insiders --force --install-extension ms-vscode.cmake-tools
 code-insiders --force --install-extension ms-vscode.cpptools
+code-insiders --force --install-extension naumovs.color-highlight
 code-insiders --force --install-extension nimsaem.nimvscode
 code-insiders --force --install-extension oderwat.indent-rainbow
 code-insiders --force --install-extension rangav.vscode-thunder-client

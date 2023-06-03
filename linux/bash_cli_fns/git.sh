@@ -3,7 +3,15 @@
 # git
 
 # git ----------------------------------
+git_file_last_commit() {
+    git log --full-history -1 -- ${1:?path required}
+}
+git_file_all_commits() {
+    git log --full-history -- ${1:?path required}
+}
 git_sync_local_branches() {
+    # TODO(noah): fix the regex for github
+    echo $"FYI: works on gitlab; deletes all local branches on github"
     # @see https://stackoverflow.com/questions/16590160/remove-branches-not-on-remote
     # updated to delete branches not pointing to origin
     # TODO this still isnt right nor does it work correctly on both git and gitlab
@@ -64,7 +72,7 @@ gitca() {
         git commit -a --no-verify --amend -m "$*"
     fi
 }
-gitnm() {
+gitnv() {
     git commit -a --no-verify -m "$*"
 }
 alias gita='git add -A'
