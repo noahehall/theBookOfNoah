@@ -204,7 +204,7 @@
   - any object in the bucket `arn:aws:s3:::examplebucket/*`
   - any object in any bucket matching exampleXbucket `arn:aws:s3:::example?bucket/*`
   - all s3 resources `arn:aws:s3:::*`
-- has the following syntax across all AWS services regoin specific services: `arn:partition:service:region:namespace:relative-id`
+- has the following syntax across all region specific services: `arn:partition:service:region:namespace:relative-id`
   - partition: `aws` or `aws-cn` for china (Beijing) region
   - service: e.g. s3
   - region:
@@ -216,7 +216,7 @@
 
 ### tags
 
-- to ensure expected tags are automatically displayed in dashboard columns, they must be case-sensitive
+- to ensure expected tags are automatically displayed in dashboard columns, they must match case-sensitive
   - i.e. `Name` !== `name`
   - in the new UI you can now add specific tags
 
