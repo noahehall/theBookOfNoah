@@ -6,10 +6,80 @@
 ## links
 
 - [bunch of links and study guides](https://aws.amazon.com/certification/certified-developer-associate/)
+- [official exam guide pdf](https://d1.awsstatic.com/training-and-certification/docs-dev-associate/AWS-Certified-Developer-Associate_Exam-Guide.pdf)
+- [official sample questions pdf](https://d1.awsstatic.com/training-and-certification/docs-dev-associate/AWS-Certified-Developer-Associate_Sample-Questions.pdf)
+- [officla practice question set](https://explore.skillbuilder.aws/learn/course/external/view/elearning/13757/aws-certified-developer-associate-official-question-set-dva-c02-english)
+
+### Recommended Docs
+
+- [api gateway stage variables](https://docs.aws.amazon.com/apigateway/latest/developerguide/amazon-api-gateway-using-stage-variables.html)
+- [cli (sam) deploy](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-deploy.html)
+- [cli environment variables](https://docs.aws.amazon.com/sdkref/latest/guide/environment-variables.html)
+- [cli named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+- [cli programmatic access](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys)
+- [cli shared config & credentials files](https://docs.aws.amazon.com/sdkref/latest/guide/creds-config-files.html)
+- [cloudtrail event history](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/view-cloudtrail-events.html)
+- [cloudtrail intro](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html)
+- [cloudwatch logging intro](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html)
+- [cloudwatch logs export to s3](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/S3Export.html)
+- [cloudwatch using metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/working_with_metrics.html)
+- [code deploy appspec ref](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html#appspec-reference-server)
+- [dynamodb accelerator (DAX)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html)
+- [dynamodb change data capture](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/streamsmain.html)
+- [dynamodb client and server side encryption](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/client-server-side.html)
+- [dynamodb data protection](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/data-protection.html)
+- [dynamodb direct kms materials provider](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/direct-kms-provider.html)
+- [dynamodb encryption client: how it works](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/how-it-works.html)
+- [dynamodb encryption client: intro](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/what-is-ddb-encrypt.html)
+- [dynamodb pagination](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.Pagination.html)
+- [dynamodb query (guide)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html)
+- [dynamodb query (ref)](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html)
+- [dynamodb Scan](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html)
+- [dynamodb streams and lambda triggers](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.html)
+- [dynamodb streams and lambdas (tut)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.Tutorial.html)
+- [elastic beanstalk advanced environment and configuration](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/ebextensions.html)
+- [elastic block store volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html)
+- [elastic load balancer sticky sessions](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/sticky-sessions.html)
+- [elasticache caching strategies](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Strategies.html)
+- [elasticache for redis getting started (tut)](https://aws.amazon.com/getting-started/hands-on/building-fast-session-caching-with-amazon-elasticache-for-redis/)
+- [eventBridge: intro](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html)
+- [iam authorization](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-authorization)
+- [iam roles for ec2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html)
+- [lambda best practices](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)
+- [lambda configuring environment variables](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-config)
+- [lambda creating and sharing layers](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html)
+- [lambda env vars](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html)
+- [lambda execution environment](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-context.html)
+- [lambda function aliases](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html)
+- [lambda function versions](https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html)
+- [lambda integrating with efs](https://docs.aws.amazon.com/lambda/latest/dg/services-efs.html)
+- [lambda logging](https://docs.aws.amazon.com/lambda/latest/dg/python-logging.html)
+- [lambda monitoring and troubleshooting](https://docs.aws.amazon.com/lambda/latest/dg/troubleshooting.html)
+- [lambda permissions](https://docs.aws.amazon.com/lambda/latest/dg/lambda-permissions.html)
+- [lambda s3 event triggers (tut)](https://docs.aws.amazon.com/lambda/latest/dg/with-s3-example.html)
+- [RDS: high avialability multi az](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html)
+- [RDS: working with read replicas](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html)
+- [secrets manager secrets rotation intro](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_how.html)
+- [secrets manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html)
+- [sns: intro](https://docs.aws.amazon.com/sns/latest/dg/welcome.html)
+- [step function activity tasks](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-activities.html#activities-wait)
+- [step function error handling](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html)
+- [step function tasks](https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-task-state.html)
+- [systems manager accessing secrets manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/integration-ps-secretsmanager.html)
+- [systems manager parameter store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html)
+- [systems manager restricting access via iam policies](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-access.html)
+- [systems manager security best practices](https://docs.aws.amazon.com/systems-manager/latest/userguide/security-best-practices.html)
+- [systems manager state manager user guide](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-state.html)
+- [trusted advisor](https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html)
+- [well architected framework in its entirety](https://aws.amazon.com/architecture/well-architected/)
+- [x-ray features](https://aws.amazon.com/xray/features/)
+- [x-ray intro](https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html)
 
 ## basics
 
 ### high level
+
+> The exam validates a candidate’s ability to demonstrate proficiency in developing, testing, deploying, and debugging AWS cloud-based applications.
 
 - Develop and optimize applications on AWS
 - Package and deploy by using continuous integration and continuous delivery (CI/CD) workflows
@@ -23,7 +93,195 @@
 - Domain 3: Deployment 24%
 - Domain 4: Troubleshooting and Optimization 18%
 
-### technologies
+### Focus
+
+> based on the sample questions, these are recurring themes (IMO) to fucus on:
+> (1) service integration not isolation
+> (2) preferred use cases and anti-patterns
+> (3) best practices
+
+- global architecture
+  - ARN: Amazon Resource Names
+  - availability zones
+  - well architected framework
+- SDKs
+  - Python (boto3)
+  - local credentials (~/.aws/credentials)
+    - remember SDKs require key + secret (not name + pass)
+- CLI
+  - aws
+  - SAM
+    - template.yaml
+    - build
+    - deploy
+    - errors
+      - Invalid/missing template file
+- IAM
+  - Policies
+    - Resource
+      - Signature Version 4 (SigV4)
+  - Roles
+    - Lambda Execution Role
+    - Permissions
+      - service to service (east/west) permisions
+  - Users
+    - Credentials
+  - Principals
+  - Types of errors
+    - authorization
+      - AccessDenied
+      - InvalidAccessKeyId
+- Trusted Advisor (resurce provising best practices)
+- Cognito
+- Serverless Application Model (SAM)
+  - also check the SAM CLI section
+- Step Functions
+  - activity workers
+  - tasks
+    - attributes
+  - state machines
+    - configuring max failures
+    - timeouts
+    - error handling
+- Lambda
+  - architecture & patterns
+    - code inside vs outside the fn handler
+    - reusing the execution environment across invocations
+    - supporting local development with aliases
+    - environment variables
+  - Aliases
+  - Triggers
+    - which & how each service triggers lambdas
+    - schedules & polling
+    - event based
+  - CD
+    - all changes require build & deploy
+    - managing deployment with versions
+  - Layers
+  - artifacts (are not encrypted at rest)
+  - Polling aws services with lambdas
+  - versioning
+    - deploying without updating ARNs
+  - event source mapping
+  - ARNs
+    - version
+    - alias
+    - layer
+  - monitoring & observability
+    - logging
+- Elastic Load Balancing
+  - sticky session cookies
+- API Gateway
+  - Rest API
+  - WebSocket API
+  - Stages
+    - Variables
+      - syntax
+  - URI path patterns
+  - lambda proxy integration
+  - optimizing complex API calls & dependencies
+    - db integration
+      - reusing db connections
+- S3
+- KMS
+  - Envelope Encryption
+  - Symmetric Encryption
+  - Asymmetric encryption
+  - KMS Keys vs external generated keys
+- elasticache for redis
+  - storing session state across devices
+- Elasticache for Memcached
+  - Lazy Loading Strategy
+  - write-through strategy
+- elastic file system (EFS)
+- EC2
+  - Auto Scaling Group
+- Elastic Block Store (EBS)
+  - integration with ec2
+- OpenSearch
+- SNS
+- Inspector
+- EventBridge (aka cloudwatch events)
+  - Events (near realtime stream)
+- X-Ray (instrumentation)
+  - observing service-to-service interaction
+  - troubleshooting bottlenecks in service pipelines
+  - service map
+  - trace data
+  - common metrics for common problems
+    - connections between services
+    - average latency
+    - failure rates
+- CloudTrail (api monitor)
+  - event history (governance, compliance and risk auditing)
+- Cloudwatch (log aggregator)
+  - agent
+  - logs
+    - streaming
+    - export to s3
+    - which services support cloudwatch logs
+  - native & custom metrics
+    - filters
+    - common metrics for common problems
+      - slow response times
+      - performance issues (hit or miss with cloudwatch)
+      - relative workload
+      - troubleshooting specific services
+  - alarms
+- Secrets Manager
+  - secrets rotation
+- Systems Manager
+  - state manager
+  - parameter store
+    - SecureStrings (for encryption at rest)
+    - restricting access
+- QuickSight
+- AppSync
+  - GraphQL
+- DynamoDB
+  - table
+    - change triggers
+    - encryption
+  - query
+    - pagination
+    - parameters
+    - filters
+    - expressions
+    - scan
+      - parallel
+      - parameters
+  - streams
+  - Accelerator (DAX)
+  - Encryption Client
+    - Direct KMS Materials Provider
+  - encryption & protecting data
+    - client side
+    - end to end encryption (for in transit and at rest)
+- Managed Streaming for Apache Kafka (MSK)
+- Kinesis
+- Elastic Container Service (ECS)
+  - tasks
+- Application Load Balancer (ALB)
+  - routing to different environments
+  - listener rules
+  - target groups
+- CodeDeploy
+  - appspec.yml
+- elastic beanstalk EB
+  - ebextensions folder
+- RDS
+  - High Availability / Failover Strategies
+    - Multi-AZ
+      - standby replica
+      - read replica
+        - async replication
+  - Heavy reads vs Heavy writes
+    - optimizing one vs the other
+- Cloud9
+
+#### technologies
+
+> These servicies and technologies are recommended by AWS
 
 - Analytics
   - Amazon Athena
