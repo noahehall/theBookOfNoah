@@ -2,6 +2,7 @@
 
 - everything in this doc is taken directly from AWS
 - last updated in 2023 for version 1.0 DVA-C02
+- bookmark: Amazon API Gateway and AWS Lambda Terminology
 
 ## links
 
