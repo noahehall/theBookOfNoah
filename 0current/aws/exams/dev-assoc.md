@@ -17,6 +17,7 @@
 
 ### Recommended Docs
 
+- [api gateway developer guide intro](http://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html)
 - [api gateway stage variables](https://docs.aws.amazon.com/apigateway/latest/developerguide/amazon-api-gateway-using-stage-variables.html)
 - [cli (sam) deploy](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-deploy.html)
 - [cli environment variables](https://docs.aws.amazon.com/sdkref/latest/guide/environment-variables.html)
@@ -50,6 +51,7 @@
 - [eventBridge: intro](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html)
 - [iam authorization](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-authorization)
 - [iam roles for ec2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html)
+- [lambda developer guide intro](http://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
 - [lambda best practices](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)
 - [lambda configuring environment variables](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-config)
 - [lambda creating and sharing layers](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html)

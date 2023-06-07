@@ -2,6 +2,13 @@
 
 - nomenclature and terminology to reuse in book of noah
 
+## links
+
+- [serverless framework](https://github.com/serverless/serverless)
+- [restful api best practices](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
+- [microservice architecture patterns and best practices](http://microservices.io/index.html)
+- [rest](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
+
 ## terms
 
 - API-First strategy: where each service within their stack is first and always released as an API

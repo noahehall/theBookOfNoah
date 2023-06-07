@@ -1,14 +1,4 @@
-# API gateway
-
-## terms
-
-- resource
-- methods: i.e. http methods
-- backend target: e.g. a lambda function, another aws service, or a thirdparty api
-
-## basics
-
-- A microservice using Amazon API Gateway consists of a defined resource and associated methods (GET, POST, PUT, etc.) in API Gateway as well as the backend target
+# API Gateway
 
 ## features
 
@@ -21,3 +11,13 @@
 - Deploy an API to multiple stages, allowing easy differentiation between development, test, production as well as versioning
 - Connect custom domains to an API
 - Define models to help standardize your API request and response transformations
+
+## terms
+
+- resource
+- methods: i.e. http methods
+- backend target: e.g. a lambda function, another aws service, or a thirdparty api
+
+## basics
+
+- A microservice using Amazon API Gateway consists of a defined resource and associated methods (GET, POST, PUT, etc.) in API Gateway as well as the backend target
