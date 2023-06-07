@@ -10,6 +10,10 @@
 - [official sample questions pdf](https://d1.awsstatic.com/training-and-certification/docs-dev-associate/AWS-Certified-Developer-Associate_Sample-Questions.pdf)
 - [officla practice question set](https://explore.skillbuilder.aws/learn/course/external/view/elearning/13757/aws-certified-developer-associate-official-question-set-dva-c02-english)
 
+### interwebs
+
+- [elasticache for redis vs memorydb for redis](https://cloudwellserved.com/amazon-elasticache-for-redis-vs-amazon-memorydb-for-redis/)
+
 ### Recommended Docs
 
 - [api gateway stage variables](https://docs.aws.amazon.com/apigateway/latest/developerguide/amazon-api-gateway-using-stage-variables.html)
@@ -100,6 +104,10 @@
 > (2) preferred use cases and anti-patterns
 > (3) best practices
 
+#### additional sections
+
+> these were mentioned in the exam preps but not in the tech section below
+
 - global architecture
   - ARN: Amazon Resource Names
   - availability zones
@@ -116,168 +124,9 @@
     - deploy
     - errors
       - Invalid/missing template file
-- IAM
-  - Policies
-    - Resource
-      - Signature Version 4 (SigV4)
-  - Roles
-    - Lambda Execution Role
-    - Permissions
-      - service to service (east/west) permisions
-  - Users
-    - Credentials
-  - Principals
-  - Types of errors
-    - authorization
-      - AccessDenied
-      - InvalidAccessKeyId
 - Trusted Advisor (resurce provising best practices)
-- Cognito
-- Serverless Application Model (SAM)
-  - also check the SAM CLI section
-- Step Functions
-  - activity workers
-  - tasks
-    - attributes
-  - state machines
-    - configuring max failures
-    - timeouts
-    - error handling
-- Lambda
-  - architecture & patterns
-    - code inside vs outside the fn handler
-    - reusing the execution environment across invocations
-    - supporting local development with aliases
-    - environment variables
-  - Aliases
-  - Triggers
-    - which & how each service triggers lambdas
-    - schedules & polling
-    - event based
-  - CD
-    - all changes require build & deploy
-    - managing deployment with versions
-  - Layers
-  - artifacts (are not encrypted at rest)
-  - Polling aws services with lambdas
-  - versioning
-    - deploying without updating ARNs
-  - event source mapping
-  - ARNs
-    - version
-    - alias
-    - layer
-  - monitoring & observability
-    - logging
-- Elastic Load Balancing
-  - sticky session cookies
-- API Gateway
-  - Rest API
-  - WebSocket API
-  - Stages
-    - Variables
-      - syntax
-  - URI path patterns
-  - lambda proxy integration
-  - optimizing complex API calls & dependencies
-    - db integration
-      - reusing db connections
-- S3
-- KMS
-  - Envelope Encryption
-  - Symmetric Encryption
-  - Asymmetric encryption
-  - KMS Keys vs external generated keys
-- elasticache for redis
-  - storing session state across devices
-- Elasticache for Memcached
-  - Lazy Loading Strategy
-  - write-through strategy
-- elastic file system (EFS)
-- EC2
-  - Auto Scaling Group
-- Elastic Block Store (EBS)
-  - integration with ec2
-- OpenSearch
-- SNS
 - Inspector
-- EventBridge (aka cloudwatch events)
-  - Events (near realtime stream)
-- X-Ray (instrumentation)
-  - observing service-to-service interaction
-  - troubleshooting bottlenecks in service pipelines
-  - service map
-  - trace data
-  - common metrics for common problems
-    - connections between services
-    - average latency
-    - failure rates
-- CloudTrail (api monitor)
-  - event history (governance, compliance and risk auditing)
-- Cloudwatch (log aggregator)
-  - agent
-  - logs
-    - streaming
-    - export to s3
-    - which services support cloudwatch logs
-  - native & custom metrics
-    - filters
-    - common metrics for common problems
-      - slow response times
-      - performance issues (hit or miss with cloudwatch)
-      - relative workload
-      - troubleshooting specific services
-  - alarms
-- Secrets Manager
-  - secrets rotation
-- Systems Manager
-  - state manager
-  - parameter store
-    - SecureStrings (for encryption at rest)
-    - restricting access
-- QuickSight
-- AppSync
-  - GraphQL
-- DynamoDB
-  - table
-    - change triggers
-    - encryption
-  - query
-    - pagination
-    - parameters
-    - filters
-    - expressions
-    - scan
-      - parallel
-      - parameters
-  - streams
-  - Accelerator (DAX)
-  - Encryption Client
-    - Direct KMS Materials Provider
-  - encryption & protecting data
-    - client side
-    - end to end encryption (for in transit and at rest)
 - Managed Streaming for Apache Kafka (MSK)
-- Kinesis
-- Elastic Container Service (ECS)
-  - tasks
-- Application Load Balancer (ALB)
-  - routing to different environments
-  - listener rules
-  - target groups
-- CodeDeploy
-  - appspec.yml
-- elastic beanstalk EB
-  - ebextensions folder
-- RDS
-  - High Availability / Failover Strategies
-    - Multi-AZ
-      - standby replica
-      - read replica
-        - async replication
-  - Heavy reads vs Heavy writes
-    - optimizing one vs the other
-- Cloud9
 
 #### technologies
 
@@ -289,27 +138,95 @@
   - Amazon OpenSearch Service
 - Application integration
   - AWS AppSync
+    - underlying graphql architecture it uses
   - Amazon EventBridge (Amazon CloudWatch Events)
+    - Events (near realtime stream)
   - Amazon Simple Notification Service (Amazon SNS)
   - Amazon Simple Queue Service (Amazon SQS)
   - AWS Step Functions
+    - activity workers
+    - tasks
+      - attributes
+    - state machines
+      - configuring max failures
+      - timeouts
+      - error handling
 - Compute
   - Amazon EC2
+    - Auto Scaling Group
   - AWS Elastic Beanstalk
+    - ebextensions folder
   - AWS Lambda
+    - architecture & patterns
+      - code inside vs outside the fn handler
+      - reusing the execution environment across invocations
+      - supporting local development with aliases
+      - environment variables
+    - Aliases
+    - Triggers
+      - which & how each service triggers lambdas
+      - schedules & polling
+      - event based
+    - CD
+      - all changes require build & deploy
+      - managing deployment with versions
+    - Layers
+    - artifacts (are not encrypted at rest)
+    - Polling aws services with lambdas
+    - versioning
+      - deploying without updating ARNs
+    - event source mapping
+    - ARNs
+      - version
+      - alias
+      - layer
+    - monitoring & observability
+      - logging
   - AWS Serverless Application Model (AWS SAM)
+    - also check the SAM CLI section
 - Containers
   - AWS Copilot
   - Amazon Elastic Container Registry (Amazon ECR)
   - Amazon Elastic Container Service (Amazon ECS)
+    - tasks
   - Amazon Elastic Kubernetes Services (Amazon EKS)
 - Cost and capacity management
 - Database
   - Amazon Aurora
   - Amazon DynamoDB
+    - table
+      - change triggers
+      - encryption
+    - query
+      - pagination
+      - parameters
+      - filters
+      - expressions
+      - scan
+        - parallel
+        - parameters
+    - streams
+    - Accelerator (DAX)
+    - Encryption Client
+      - Direct KMS Materials Provider
+    - encryption & protecting data
+      - client side
+      - end to end encryption (for in transit and at rest)
   - Amazon ElastiCache
+    - For Redis
+      - storing session state across devices
+    - For Memcached
+      - Lazy Loading Strategy
+      - write-through strategy
   - Amazon MemoryDB for Redis
   - Amazon RDS
+    - High Availability / Failover Strategies
+      - Multi-AZ
+        - standby replica
+        - read replica
+          - async replication
+    - Heavy reads vs Heavy writes
+      - optimizing one vs the other
 - Developer tools
   - AWS Amplify
   - AWS Cloud9
@@ -318,23 +235,64 @@
   - AWS CodeBuild
   - AWS CodeCommit
   - AWS CodeDeploy
+    - appspec.yml
   - Amazon CodeGuru
   - AWS CodePipeline
   - AWS CodeStar
-  - AWS X-Ray
+  - AWS X-Ray (instrumentation)
+    - observing service-to-service interaction
+    - troubleshooting bottlenecks in service pipelines
+    - service map
+    - trace data
+    - common metrics for common problems
+      - connections between services
+      - average latency
+      - failure rates
 - Management and governance
   - AWS AppConfig
   - AWS Cloud Development Kit (AWS CDK)
   - AWS CloudFormation
-  - AWS CloudTrail
+  - AWS CloudTrail (api monitor)
+    - event history (governance, compliance and risk auditing)
   - Amazon CloudWatch
+    - agent
+    - native & custom metrics
+      - filters
+      - common metrics for common problems
+        - slow response times
+        - performance issues (hit or miss with cloudwatch)
+        - relative workload
+        - troubleshooting specific services
+    - alarms
   - Amazon CloudWatch Logs
+    - streaming
+    - export to s3
+    - which services support cloudwatch logs
   - AWS Command Line Interface (AWS CLI)
   - AWS Systems Manager
+    - state manager
+    - parameter store
+      - SecureStrings (for encryption at rest)
+      - restricting access
 - Networking and content delivery
   - Amazon API Gateway
+    - Rest API
+    - WebSocket API
+    - Stages
+      - Variables
+        - syntax
+    - URI path patterns
+    - lambda proxy integration
+    - optimizing complex API calls & dependencies
+      - db integration
+        - reusing db connections
   - Amazon CloudFront
   - Elastic Load Balancing
+    - sticky session cookies
+    - application load balancer
+      - routing to different environments
+      - listener rules
+      - target groups
   - Amazon Route 53
   - Amazon VPC
 - Security, identity, and compliance
@@ -343,11 +301,17 @@
   - Amazon Cognito
   - AWS Identity and Access Management (IAM)
   - AWS Key Management Service (AWS KMS)
+    - Envelope Encryption
+    - Symmetric Encryption
+    - Asymmetric encryption
+    - KMS Keys vs external generated keys
   - AWS Secrets Manager
+    - secrets rotation
   - AWS Security Token Service (AWS STS)
   - AWS WAF
 - Storage
   - Amazon Elastic Block Store (Amazon EBS)
+    - integration with ec2
   - Amazon Elastic File System (Amazon EFS)
   - Amazon S3
   - Amazon S3 Glacier
