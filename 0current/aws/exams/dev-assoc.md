@@ -2,7 +2,7 @@
 
 - everything in this doc is taken directly from AWS
 - last updated in 2023 for version 1.0 DVA-C02
-- bookmark: Amazon API Gateway and AWS Lambda Terminology
+- bookmark: aws lambda foundations > introduction to serverless > what is aws lambda
 
 ## links
 
@@ -10,6 +10,7 @@
 - [official exam guide pdf](https://d1.awsstatic.com/training-and-certification/docs-dev-associate/AWS-Certified-Developer-Associate_Exam-Guide.pdf)
 - [official sample questions pdf](https://d1.awsstatic.com/training-and-certification/docs-dev-associate/AWS-Certified-Developer-Associate_Sample-Questions.pdf)
 - [officla practice question set](https://explore.skillbuilder.aws/learn/course/external/view/elearning/13757/aws-certified-developer-associate-official-question-set-dva-c02-english)
+- [official ramp up guide (pdf)](https://d1.awsstatic.com/training-and-certification/ramp-up_guides/Ramp-Up_Guide_Developer.pdf)
 
 ### interwebs
 
@@ -17,18 +18,12 @@
 
 ### Recommended Docs
 
-- [api gateway developer guide intro](http://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html)
-- [api gateway stage variables](https://docs.aws.amazon.com/apigateway/latest/developerguide/amazon-api-gateway-using-stage-variables.html)
-- [cli (sam) deploy](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-deploy.html)
 - [cli environment variables](https://docs.aws.amazon.com/sdkref/latest/guide/environment-variables.html)
 - [cli named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
 - [cli programmatic access](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys)
 - [cli shared config & credentials files](https://docs.aws.amazon.com/sdkref/latest/guide/creds-config-files.html)
 - [cloudtrail event history](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/view-cloudtrail-events.html)
 - [cloudtrail intro](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html)
-- [cloudwatch logging intro](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html)
-- [cloudwatch logs export to s3](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/S3Export.html)
-- [cloudwatch using metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/working_with_metrics.html)
 - [code deploy appspec ref](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html#appspec-reference-server)
 - [dynamodb accelerator (DAX)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html)
 - [dynamodb change data capture](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/streamsmain.html)
@@ -51,19 +46,6 @@
 - [eventBridge: intro](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html)
 - [iam authorization](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-authorization)
 - [iam roles for ec2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html)
-- [lambda developer guide intro](http://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
-- [lambda best practices](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)
-- [lambda configuring environment variables](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-config)
-- [lambda creating and sharing layers](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html)
-- [lambda env vars](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html)
-- [lambda execution environment](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-context.html)
-- [lambda function aliases](https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html)
-- [lambda function versions](https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html)
-- [lambda integrating with efs](https://docs.aws.amazon.com/lambda/latest/dg/services-efs.html)
-- [lambda logging](https://docs.aws.amazon.com/lambda/latest/dg/python-logging.html)
-- [lambda monitoring and troubleshooting](https://docs.aws.amazon.com/lambda/latest/dg/troubleshooting.html)
-- [lambda permissions](https://docs.aws.amazon.com/lambda/latest/dg/lambda-permissions.html)
-- [lambda s3 event triggers (tut)](https://docs.aws.amazon.com/lambda/latest/dg/with-s3-example.html)
 - [RDS: high avialability multi az](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html)
 - [RDS: working with read replicas](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html)
 - [secrets manager secrets rotation intro](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_how.html)

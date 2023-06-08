@@ -1,6 +1,27 @@
 # Common Architecture
 
-## Microservices
+## Serverless
+
+- includes a number of fully managed services that are tightly integrated
+  - compute
+    - lambda
+  - orchestration
+    - step functions
+  - storage
+    - s3
+  - data stores
+    - dynamodb
+  - event bus
+    - eventbridge
+  - interprocess messaging
+    - sns
+    - sqs
+  - api integration
+    - api gateway
+    - appsync
+  - developer tools
+    - CDK
+    - serverless application model (SAM)
 
 ### Api Gateway + AWS Lambda + Cloudwatch
 

@@ -14,6 +14,8 @@
 - API-First strategy: where each service within their stack is first and always released as an API
 - microservice architectural: an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API. take a large, complex system and break it down into independent, decoupled services that are easy to manage and extend.
 
+- serverless: abstracts away the infrastructure layer so you can focus on developing your core product
+
 ## REST
 
 - Representational state transfer (REST) refers to architectures that follow six constraints:
