@@ -1,6 +1,6 @@
 # Lambda
 
-- AWS Lambda is an event-driven, serverless compute service that lets you run code without provisioning or managing servers
+- AWS Lambda is an event-driven, serverless (& stateless) compute service that lets you run code without provisioning or managing servers
 
 ## links
 
@@ -30,17 +30,25 @@
 - always consider the lambda execution environment
   - logic within `exports.handler` is recreated, but the parent scope is reused
 - utilize the Test tab to create fake events, which will reveal errors that are normally hidden
+- lambda is prime for event-driven architectures, where known events trigger your fns
 
 ### anti patterns
 
 ## features
 
-- can be trigged via upstream activities, e.g. data received by kinesis, updated ina dynamodb table, etc
+- execute functions in response to upstream activities, e.g. other aws resources / via api endpoints
   - triggers can be created/attached from within the lambda console
+- deep integration into other aws services
+- capacitity provisining and auto scaling in response to events, memory settings, network and i/o throughput
+- code monitoring & logging via cloudwatch
+- flexible permissions using IAM to grant/limit access with fine-grained controls as to how your functions can be invoked
+- 0-configuration high availability and fault tolerance
+- pay to play and what you consume, billed in 1ms increments
 
 ## terms
 
 - blueprint: a base lambda fn used to build out new lambda fns; provided for standard lambda triggers
+- event source: a service/endpoint whose change of state creates an event that triggers lambda executions
 
 ## basics
 
@@ -57,6 +65,7 @@
 - runtime: e.g. nodejs
 - architecture: x86/64 vs arm64
 - permissions
+  - what services is this fn allowed to interact with
 - execution role
   - new role
   - existing role
@@ -68,7 +77,9 @@
 - ephemeral storage: 512mb -> 10gb
 - snapstart: reduces startup time by caching the fn definition
 - triggers
+  - which events / event5 sources can initiate exeuction of this fn
 - layers
+  - how will you bundle your dependencies
 - destinations
 - code: this is your handler function
 - timeout:

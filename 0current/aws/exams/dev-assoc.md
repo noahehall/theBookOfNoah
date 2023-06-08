@@ -2,7 +2,7 @@
 
 - everything in this doc is taken directly from AWS
 - last updated in 2023 for version 1.0 DVA-C02
-- bookmark: aws lambda foundations > introduction to serverless > what is aws lambda
+- bookmark: aws lambda foundations > introduction to serverless > how aws lambda works
 
 ## links
 
@@ -43,7 +43,6 @@
 - [elastic load balancer sticky sessions](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/sticky-sessions.html)
 - [elasticache caching strategies](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Strategies.html)
 - [elasticache for redis getting started (tut)](https://aws.amazon.com/getting-started/hands-on/building-fast-session-caching-with-amazon-elasticache-for-redis/)
-- [eventBridge: intro](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html)
 - [iam authorization](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-authorization)
 - [iam roles for ec2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html)
 - [RDS: high avialability multi az](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html)

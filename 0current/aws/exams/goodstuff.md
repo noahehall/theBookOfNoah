@@ -25,3 +25,15 @@
   - There is a uniform interface (in the form of an API) between the server and client.
   - As complexity is added into the system, layers are introduced. There may be multiple layers of RESTful components.
   - Follows a code-on-demand pattern, where code can be downloaded on the fly (in our case implemented in Lambda) and changed without having to update clients.
+
+## other thoughts
+
+### multi-cloud + open source
+
+- to truly leverage any cloud provider, you should seek to retain ownership of the following
+  - configuring an instance
+  - updating operating systems
+  - install application runtime
+  - build and deploy apps
+  - scaling and load balancing
+  - monitor and maintain apps
