@@ -6,7 +6,6 @@
 
 - [AAAAA best practices](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)
 - [cloudwatch logs for lambda](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions-logs.html?icmpid=docs_lambda_help)
-- [configuring environment variables](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-config)
 - [creating and sharing layers](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html)
 - [developer guide intro](http://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
 - [env vars](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html)
@@ -21,10 +20,14 @@
 - [logging](https://docs.aws.amazon.com/lambda/latest/dg/python-logging.html)
 - [monitoring and troubleshooting](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions.html?icmpid=docs_lambda_help)
 - [monitoring and troubleshooting](https://docs.aws.amazon.com/lambda/latest/dg/troubleshooting.html)
+- [object: context](https://docs.aws.amazon.com/whitepapers/latest/serverless-architectures-lambda/the-context-object.html)
+- [object: event](https://docs.aws.amazon.com/whitepapers/latest/serverless-architectures-lambda/the-event-object.html)
 - [permissions](https://docs.aws.amazon.com/lambda/latest/dg/lambda-permissions.html)
+- [runtimes: custom](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-custom.html)
+- [runtimes: provided](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html)
 - [s3 event triggers (tut)](https://docs.aws.amazon.com/lambda/latest/dg/with-s3-example.html)
 - [scaling and (provisioned) concurrency](https://docs.aws.amazon.com/lambda/latest/operatorguide/scaling-concurrency.html)
-- [snapstart compatibility](https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html#snapstart-compatibility)
+- [snapstart](https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html)
 - [testing lambda functions in the console](https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html?icmpid=docs_lambda_help)
 - [using lambda insights](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights.html?icmpid=docs_lambda_help)
 - [x-ray: integration with lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html?icmpid=docs_lambda_help)
@@ -47,6 +50,23 @@
     - add code to check for and reuse existing connections
     - use tmp space as transient cache
     - check that bg processes have completed
+- fn design
+  - separate core business logic from the handler event
+    - you should be able to run unit tests WITHOUT knowing how the fn is configured
+  - create moduler functions with single responsibilities
+    - i.e. decompose your fns into discrete lambdas
+  - ensure your fns are stateless and keep state in a store
+    - dynamodb: state that scales horizontally
+    - elasticache: faster than dynamodb especially if the lambda is within a vpc
+    - s3: the least expensive option, but with lower throughput and for state that doesnt change rapidly
+  - build for low memory & storage space
+    - bundling & treeshaking
+    - minimize dependencies and deployment size
+- code patterns
+  - include logging statements: are automatically written to cloudwatch
+  - always return the appropriate response to indicate success/failure
+  - use env vars for operational params and senstive vars reducing the need for redeployments
+    - lambda encrypts the env with the CMK provided to your account for free, or provide your own
 
 ### anti patterns
 
@@ -71,10 +91,24 @@
 - provisioned concurrency: prepares concurrent execution environments before invocations are required
 - cold starts: when a new execution env is required and lambda must start the init phase from scratch
 - warm starts: when an existing execution env can be reused
+- Customer Master Key: CMK: aws provides one free of charge, or you can provide one (which is charged via KMS)
 
 ## basics
 
-- abc
+### execution environment
+
+- the stuff outside of the handler method
+
+### handler method
+
+- the fn code that processes events and potentially returns a response
+- event object: properties depend on the event source
+  - includes all of the (meta)data required by your fn
+- context object: properties depend on the event source
+  - enables the fn to interact with the execution environment
+  - AWS requestId: track specific invocations
+  - runtime: time iun MS remaining before the fn timeout
+  - logging: which amazon cloudwatch logs stream your log statements will be delivered to
 
 ## considerations
 

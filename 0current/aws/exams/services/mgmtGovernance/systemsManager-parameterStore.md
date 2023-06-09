@@ -1,0 +1,2 @@
+- [systems manager parameter store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html)
+- [systems manager restricting access via iam policies](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-access.html)
