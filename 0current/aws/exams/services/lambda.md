@@ -4,7 +4,8 @@
 
 ## links
 
-- [best practices](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)
+- [AAAAA best practices](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)
+- [cloudwatch logs for lambda](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions-logs.html?icmpid=docs_lambda_help)
 - [configuring environment variables](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-config)
 - [creating and sharing layers](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html)
 - [developer guide intro](http://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
@@ -14,16 +15,19 @@
 - [function urls](https://docs.aws.amazon.com/lambda/latest/dg/lambda-urls.html?icmpid=docs_lambda_help)
 - [function versions](https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html)
 - [integrating with efs](https://docs.aws.amazon.com/lambda/latest/dg/services-efs.html)
+- [invocation: async](https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html)
+- [invocation: event source mapping](https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html)
+- [invocation: sync](https://docs.aws.amazon.com/lambda/latest/dg/invocation-sync.html)
 - [logging](https://docs.aws.amazon.com/lambda/latest/dg/python-logging.html)
+- [monitoring and troubleshooting](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions.html?icmpid=docs_lambda_help)
 - [monitoring and troubleshooting](https://docs.aws.amazon.com/lambda/latest/dg/troubleshooting.html)
 - [permissions](https://docs.aws.amazon.com/lambda/latest/dg/lambda-permissions.html)
 - [s3 event triggers (tut)](https://docs.aws.amazon.com/lambda/latest/dg/with-s3-example.html)
+- [scaling and (provisioned) concurrency](https://docs.aws.amazon.com/lambda/latest/operatorguide/scaling-concurrency.html)
 - [snapstart compatibility](https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html#snapstart-compatibility)
-- [monitoring and troubleshooting](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions.html?icmpid=docs_lambda_help)
-- [cloudwatch logs for lambda](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions-logs.html?icmpid=docs_lambda_help)
-- [x-ray: integration with lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html?icmpid=docs_lambda_help)
-- [using lambda insights](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights.html?icmpid=docs_lambda_help)
 - [testing lambda functions in the console](https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html?icmpid=docs_lambda_help)
+- [using lambda insights](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights.html?icmpid=docs_lambda_help)
+- [x-ray: integration with lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html?icmpid=docs_lambda_help)
 
 ## best practices
 
@@ -31,6 +35,18 @@
   - logic within `exports.handler` is recreated, but the parent scope is reused
 - utilize the Test tab to create fake events, which will reveal errors that are normally hidden
 - lambda is prime for event-driven architectures, where known events trigger your fns
+- optimize performance by reducing latency and increasing throughput
+  - cold starts: reduce cold starts by preventing the following
+    - environment is not already initalized
+    - the fn hasnt been used for some time
+    - more concurrent invocations are required
+    - you pass an update fn
+  - warm starts: promote warms starts by implementing the following
+    - store and reference dependencies locally
+    - limit re-initialized of varibles
+    - add code to check for and reuse existing connections
+    - use tmp space as transient cache
+    - check that bg processes have completed
 
 ### anti patterns
 
@@ -44,17 +60,40 @@
 - flexible permissions using IAM to grant/limit access with fine-grained controls as to how your functions can be invoked
 - 0-configuration high availability and fault tolerance
 - pay to play and what you consume, billed in 1ms increments
+  - billing starts AFTER the runtime has been initialized,
+  - ^ i.e. once lambda is ready to initalialize your packages and dependencies
 
 ## terms
 
 - blueprint: a base lambda fn used to build out new lambda fns; provided for standard lambda triggers
 - event source: a service/endpoint whose change of state creates an event that triggers lambda executions
+- initialization code: the code outside of the lambda fn handler
+- provisioned concurrency: prepares concurrent execution environments before invocations are required
+- cold starts: when a new execution env is required and lambda must start the init phase from scratch
+- warm starts: when an existing execution env can be reused
 
 ## basics
 
 - abc
 
 ## considerations
+
+### invocation models (event sources)
+
+- synchronous invocation: lambda runs the fn and waits for and returns an immediate response
+  - event sources: api gateway; cognito; cloudformation; alexa; lex; cloudfront
+- asynchronous invocation: events are queued and the requestor doesnt wait for a response which is instead sent to some destination
+  - event sources: sns, s3, eventbridge
+  - destinations: can be based on success/failure/alias/fn version/etc
+- polling invocation: designed for streaming/queing based services with no code/server management
+  - lambda polls (watches) sources for specific events, then executes the associated fn
+  - event sources: kinesis, sqs, dynamodb streams
+- event source mapping: the configuration of services as event triggers that are given IAM permissions to access and trigger lambda fns
+  - event sources: dynamodb; kinesis; mq; apache kafka MSK; self maanged apache kafka; sqs
+- invocation model error behavior: how each invocation model handles errors
+  - sync: no retries
+  - async: built in retries twice
+  - polling: depends on event soruce
 
 ### creating lambda functions
 
@@ -106,3 +145,23 @@
   - x ray traces
   - lambda insights
   - codeguru profiles
+
+### managing the execution environment
+
+- execution environment: a secure and isolated environment that
+  - manages the resources required to run a lambda fn
+    - this is entirely based on the configuration settings (e.g. memory, cpu, max time, etc)
+  - provides lifecycle support for the fns runtime and exeternal extensions
+    - processes that run within the execution environment
+    - perms, resources, creds and env vars are shared between the fn and extensions
+- lifecycle
+  - init phase: create/unfreeze the execution env with the configured resources, downloads the fn code and all layers, runs initialize code (outside the handler); happens during the first invocation/before fn invocation if provisioned concurrency is enabled
+    - extension init: start all extensions
+    - runtime init: bootstraps teh runtime
+    - function init: runs the fns static code
+  - invoke phase
+    - invoke the fn handler
+    - prepare for future invocations
+  - shutdown phase: if no new invocation events are received, shutdown initiates and once complete the entire environment is removed
+    - runtime shtudown
+    - extension shutdown

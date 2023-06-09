@@ -1,5 +1,9 @@
 # Common Architecture
 
+## terms
+
+- Dead Letter Queue: DLQ;
+
 ## Serverless
 
 - includes a number of fully managed services that are tightly integrated

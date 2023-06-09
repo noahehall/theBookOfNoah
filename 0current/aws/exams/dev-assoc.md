@@ -2,7 +2,7 @@
 
 - everything in this doc is taken directly from AWS
 - last updated in 2023 for version 1.0 DVA-C02
-- bookmark: aws lambda foundations > introduction to serverless > how aws lambda works
+- bookmark: aws lambda foundations > introduction to serverless > lambda fn permissions
 
 ## links
 
