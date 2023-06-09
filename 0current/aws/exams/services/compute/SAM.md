@@ -12,6 +12,8 @@
 
 ## features
 
+- help manage IAM policies: scopes the permissions of lambda fns to the resources used
+
 ## terms
 
 ## basics

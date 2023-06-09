@@ -1,6 +1,6 @@
 # good stuff
 
-- nomenclature and terminology to reuse in book of noah
+- nomenclature and terminology to reuse elseware
 
 ## links
 
@@ -36,4 +36,5 @@
   - install application runtime
   - build and deploy apps
   - scaling and load balancing
-  - monitor and maintain apps
+  - monitor and observe apps
+  - data storage

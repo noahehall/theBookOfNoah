@@ -165,3 +165,21 @@
   - shutdown phase: if no new invocation events are received, shutdown initiates and once complete the entire environment is removed
     - runtime shtudown
     - extension shutdown
+
+### security and permissions
+
+- permission scopes: bounded to how you integrate lambda with IAM
+  - permission to invoke lambda fns:
+    - IAM resource-based policies: controls who can invoke the lambda
+  - permission for lambda fns to invoke actions
+    - IAM execution role: lambda assumes this role during execution, controls accesss to and behavior with other serivces
+      - the lambda must have a trust policy with `AssumeRole`
+      - the creator must have `iam:PassRole`
+      - must be created/selected when CREATING the fn
+- VPC resources
+  - requires additional VPC configuration info, like the VPC subnet ID and security group IDs
+  - execution role: for modifying VPC resources
+  - private connections: requires an interface VPC endpoint powered by AWS PRivateLink
+    - enables private access to Lambda APIs without an internet gateway, NAT device, VPN connection or Direct Connect connection
+    - instances in the VPC dont require a public ip addr to communicate with lambda apis
+    - traffic between the VPC and lambda does not leave the aws network

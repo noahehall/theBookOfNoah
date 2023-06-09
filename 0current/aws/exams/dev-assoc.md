@@ -2,7 +2,7 @@
 
 - everything in this doc is taken directly from AWS
 - last updated in 2023 for version 1.0 DVA-C02
-- bookmark: aws lambda foundations > introduction to serverless > lambda fn permissions
+- bookmark: aws lambda foundations > introduction to serverless > authoring lambda fns
 
 ## links
 
@@ -15,53 +15,6 @@
 ### interwebs
 
 - [elasticache for redis vs memorydb for redis](https://cloudwellserved.com/amazon-elasticache-for-redis-vs-amazon-memorydb-for-redis/)
-
-### Recommended Docs
-
-- [cli environment variables](https://docs.aws.amazon.com/sdkref/latest/guide/environment-variables.html)
-- [cli named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
-- [cli programmatic access](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys)
-- [cli shared config & credentials files](https://docs.aws.amazon.com/sdkref/latest/guide/creds-config-files.html)
-- [cloudtrail event history](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/view-cloudtrail-events.html)
-- [cloudtrail intro](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html)
-- [code deploy appspec ref](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html#appspec-reference-server)
-- [dynamodb accelerator (DAX)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html)
-- [dynamodb change data capture](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/streamsmain.html)
-- [dynamodb client and server side encryption](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/client-server-side.html)
-- [dynamodb data protection](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/data-protection.html)
-- [dynamodb direct kms materials provider](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/direct-kms-provider.html)
-- [dynamodb encryption client: how it works](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/how-it-works.html)
-- [dynamodb encryption client: intro](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/what-is-ddb-encrypt.html)
-- [dynamodb pagination](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.Pagination.html)
-- [dynamodb query (guide)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html)
-- [dynamodb query (ref)](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html)
-- [dynamodb Scan](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html)
-- [dynamodb streams and lambda triggers](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.html)
-- [dynamodb streams and lambdas (tut)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.Tutorial.html)
-- [elastic beanstalk advanced environment and configuration](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/ebextensions.html)
-- [elastic block store volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html)
-- [elastic load balancer sticky sessions](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/sticky-sessions.html)
-- [elasticache caching strategies](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Strategies.html)
-- [elasticache for redis getting started (tut)](https://aws.amazon.com/getting-started/hands-on/building-fast-session-caching-with-amazon-elasticache-for-redis/)
-- [iam authorization](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-authorization)
-- [iam roles for ec2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html)
-- [RDS: high avialability multi az](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html)
-- [RDS: working with read replicas](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ReadRepl.html)
-- [secrets manager secrets rotation intro](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_how.html)
-- [secrets manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html)
-- [sns: intro](https://docs.aws.amazon.com/sns/latest/dg/welcome.html)
-- [step function activity tasks](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-activities.html#activities-wait)
-- [step function error handling](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html)
-- [step function tasks](https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-task-state.html)
-- [systems manager accessing secrets manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/integration-ps-secretsmanager.html)
-- [systems manager parameter store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html)
-- [systems manager restricting access via iam policies](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-access.html)
-- [systems manager security best practices](https://docs.aws.amazon.com/systems-manager/latest/userguide/security-best-practices.html)
-- [systems manager state manager user guide](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-state.html)
-- [trusted advisor](https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html)
-- [well architected framework in its entirety](https://aws.amazon.com/architecture/well-architected/)
-- [x-ray features](https://aws.amazon.com/xray/features/)
-- [x-ray intro](https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html)
 
 ## basics
 
