@@ -34,8 +34,8 @@
 
 ## best practices
 
-- always consider the lambda execution environment
-  - logic within `exports.handler` is recreated, but the parent scope is reused
+- always consider the lambda execution environment and context
+  - logic within `exports.handler` is recreated, but the context parent scope is reused
 - utilize the Test tab to create fake events, which will reveal errors that are normally hidden
 - lambda is prime for event-driven architectures, where known events trigger your fns
 - optimize performance by reducing latency and increasing throughput
@@ -67,6 +67,13 @@
   - always return the appropriate response to indicate success/failure
   - use env vars for operational params and senstive vars reducing the need for redeployments
     - lambda encrypts the env with the CMK provided to your account for free, or provide your own
+  - integrate with AppConfig, Secrets & Systems Manager for configuration data
+    - ideal for creds, passwords, licence keys
+    - use parameter store to retrieve secrets manager secrets securely
+    - use AppConfig to deploy to parameter/document store, s3, etc and source it in your fn
+  - Avoid recursive invocations at all costs: could lead to uncontrolled invocations
+    - avoid this by also setting a concurrent exeuction limit
+  - reuse the execution context by following the guidelines under `- warm starts:`
 
 ### anti patterns
 
@@ -95,7 +102,7 @@
 
 ## basics
 
-### execution environment
+### execution context
 
 - the stuff outside of the handler method
 
@@ -105,7 +112,7 @@
 - event object: properties depend on the event source
   - includes all of the (meta)data required by your fn
 - context object: properties depend on the event source
-  - enables the fn to interact with the execution environment
+  - enables the fn to interact with the execution context of the environment
   - AWS requestId: track specific invocations
   - runtime: time iun MS remaining before the fn timeout
   - logging: which amazon cloudwatch logs stream your log statements will be delivered to
@@ -217,3 +224,16 @@
     - enables private access to Lambda APIs without an internet gateway, NAT device, VPN connection or Direct Connect connection
     - instances in the VPC dont require a public ip addr to communicate with lambda apis
     - traffic between the VPC and lambda does not leave the aws network
+
+### build and deploy fns
+
+- lambda console editor:
+  - simple one-offs that dont require local development or custom packages
+  - each save auto creates and deployes a deployment package
+    - i.e. always start in TEST account and disable any triggers until ready for prod
+- IDE toolkit
+- CLI
+- SDKs
+- deployment packages
+  - container images: generally pushed to elastic container registry
+  - zip files: generally pushed to an s3 bucket

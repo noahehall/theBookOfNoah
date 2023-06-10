@@ -8,9 +8,20 @@
 ### bun docs
 
 - [AAA docs](https://bun.sh/docs)
-- [build](https://bun.sh/docs/cli/build)
-- [bundle: esbuild migration](https://bun.sh/docs/bundler/migration)
-- [bundle: loaders](https://bun.sh/docs/bundler/loaders)
+- [hot reloading](https://bun.sh/docs/runtime/hot)
+- [build: intro](https://bun.sh/docs/bundler)
+- [build: esbuild migration](https://bun.sh/docs/bundler/migration)
+- [build: loaders](https://bun.sh/docs/bundler/loaders)
+- [build: macros](https://bun.sh/docs/bundler/macros)
+- [build: bun vs esbuild](https://bun.sh/docs/bundler/vs-esbuild)
+- [plugins](https://bun.sh/docs/bundler/plugins)
+
+### bun runtime API
+
+- [http server](https://bun.sh/docs/api/http)
+
+### categorize these
+
 - [configuration](https://bun.sh/docs/project/configuration)
 - [console](https://bun.sh/docs/api/console)
 - [create](https://bun.sh/docs/cli/create)
@@ -19,24 +30,22 @@
 - [files](https://bun.sh/docs/api/file-io)
 - [filesystemrouter](https://bun.sh/docs/api/file-system-router)
 - [globals](https://bun.sh/docs/api/globals)
-- [hot reloading](https://bun.sh/docs/runtime/hot)
 - [htmlrewriter](https://bun.sh/docs/api/html-rewriter)
-- [http server](https://bun.sh/docs/api/http)
 - [module resolution: bun resolution](https://bun.sh/docs/runtime/modules#bun-style-resolution)
 - [module resolution: path remapping](https://bun.sh/docs/runtime/modules#path-re-mapping)
 - [module resolution](https://bun.sh/docs/runtime/modules)
 - [node-api](https://bun.sh/docs/api/node-api)
 - [nodejs](https://bun.sh/docs/ecosystem/nodejs)
-- [plugins](https://bun.sh/docs/bundler/plugins)
 - [plugins](https://bun.sh/docs/runtime/plugins)
 - [react](https://bun.sh/docs/ecosystem/react)
+- [react & jsx](https://bun.sh/docs/runtime/jsx)
 - [spawn](https://bun.sh/docs/api/spawn)
 - [sqlite](https://bun.sh/docs/api/sqlite)
 - [tcp sockets](https://bun.sh/docs/api/tcp)
 - [test: intro](https://bun.sh/docs/cli/test)
 - [test: api](https://bun.sh/docs/test/writing)
 - [transpiler](https://bun.sh/docs/api/transpiler)
-- [typescript](https://bun.sh/docs/ecosystem/typescript)
+- [typescript](https://bun.sh/docs/runtime/typescript)
 - [utils](https://bun.sh/docs/api/utils)
 - [web sockets](https://bun.sh/docs/api/websockets)
 
@@ -84,7 +93,7 @@
 - backend apps
   - bun executes typescript directly, no need to transpile
 - consumes existing tsconfig.json
-- make sure to `bun add bun-types` and add it to tsconfig.json.compilerOptions.types
+- make sure to `bun add bun-types@canary` and add it to tsconfig.json.compilerOptions.types
   - TODO: check if this works, was throwing in the react project
 - does not typecheck files, so `tsc --noEmit` is still required
   - typechecking should be offloaded to your IDE/tests
@@ -97,11 +106,14 @@
 - supports
   - prop punning (haha see docs)
   - SSR
+- supports additional react features, read the docs
+  - you can `console.log(<div>any react element</div>)`
+  - supports prop pruning
 
 #### other file types
 
 - `.txt` can be imported as strings
-- .`json/toml` can be imported directly and will be converted to objects
+- `json/toml` can be imported directly and will be converted to JSON objects
 - additional plugins exist for other filetypes
 
 ## bun basics
@@ -117,6 +129,13 @@
 ### bunfig.toml
 
 - configure bun, similar to npmrc
+
+### env files
+
+- bun automatically loads .env files before running a file, script or executable
+  - `.env.local`
+  - NODE_ENV === production `.env.production` else `.env.development`
+  - `.env`
 
 ### module resolution
 
@@ -232,19 +251,83 @@
 
 ### hot reloading
 
+- --watch vs --hot
+  - watch is intended for use with running tests, typescript, jsx and javascriptfiles
+    - bun tracks all imported files and watches them for changes
+  - hot is for executing code with bun, e.g. a server
+    - all files are re-evalated, but all global state is persisted
 - `bun --hot somefile`
 - bun builds a registry of all impoirted source files (including node_module) and watches for changes
 - all files are reevaluated, however global state is peristed
   - this idfferes from watchers like nodemon which restart the entire process
 - for typescript & http servers, be sure to review the hot reloading docs (see link)
 
-## bun api
+### building
+
+- entrypoint: []
+  - bun generates a new bundle for each file
+  - unknown filetypes are treated as external files as copied to the outdir
+    - the import is resolved to the output path of the outfile based on `naming` and `publicPath`
+- outdir: ./build
+  - dont include an outdir and the bundled files will be returned to you
+- targets:
+  - browser
+  - bun: intended for bun runtime
+  - node: intended for node
+- format: only `esm` is supported
+- splitting: `true` enable code splitting for multiple entrypoints
+- plugins: [] see docs
+- sourcemap:
+  - none:
+  - inline: generated and appended to the end of the file as a base64 payload
+  - external: a `*.js.map` is generated for each bundle
+- minify: true || {}
+  - whitespace: true
+  - identifiers: true
+  - syntax: true
+- external: [] import paths to consider external and not to include in the final bundle
+  - e.g. `react`, `react-dom`
+  - this should help get around the peerDependency issue
+- naming: customize the names of generated bundles based on teh associated entrypoint
+  - `[dir]/[name].[ext]` can also include `[hash]`
+  - or with an object
+    - entry: for the entrypoint
+    - chunk: for chunks
+    - asset: for unknown file types
+- root: e.g. `.` else the first common ancestor of all entyrpoint files
+  - determines the folder hierarchy of the output directory
+- publicPath: prefix to append to any import paths in bundled code
+  - asset imports: i.e. unrecognized file types. copies file into the outdir as is
+  - external modules: i.e. anything in `external: []`
+  - chunking: when `splitting` is enabled
+- define: {} maps KEYS in code to the VALUES in bundled output
+
+#### plugins
+
+- buns plugin system is based on esbuild and many esbuild plugins should work
+
+#### macros
+
+- running javascript functions at bundle-time
+
+## bun runtime api
+
+- `Bun` is a global object you do not need to import
+- the goal is to have parity with nodejs api
+- but bun also adds additional Bun specific APIs for server-side tasks
 
 ### http
 
 - i.e. Bun.serve: idiomatic http servers
+  - [all options](https://bun.sh/docs/api/http#reference)
 - see http docs
   - The Bun.serve server can handle roughly 2.5x more requests per second than Node.js on Linux.
+- theres bunches of options, check nirvlife/dev.tsx
+- Bun.serve vs export default with fetch handler
+  - the latter is automatically hot reloadable via `bun run yorufile.tsx --hot` without restarting the process
+  - use `--watch` to restart the process
+- streaming files: return `new Response(Bun.file(./somefile))`
+  - check the docs for stream slices for large files
 
 ### web sockets
 

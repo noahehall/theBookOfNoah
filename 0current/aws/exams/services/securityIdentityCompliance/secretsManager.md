@@ -1,6 +1,6 @@
 # secrets manager
 
-- mission statement
+- organize and management configuration data like credentials, passwords and licence keys
 
 ## links
 
