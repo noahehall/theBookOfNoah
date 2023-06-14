@@ -31,6 +31,11 @@
 - [testing lambda functions in the console](https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html?icmpid=docs_lambda_help)
 - [using lambda insights](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights.html?icmpid=docs_lambda_help)
 - [x-ray: integration with lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html?icmpid=docs_lambda_help)
+- [invocation scaling](https://docs.aws.amazon.com/lambda/latest/dg/invocation-scaling.html)
+
+### tools
+
+- [lambda power tuning tool](https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:451282441545:applications~aws-lambda-power-tuning)
 
 ## best practices
 
@@ -74,6 +79,13 @@
   - Avoid recursive invocations at all costs: could lead to uncontrolled invocations
     - avoid this by also setting a concurrent exeuction limit
   - reuse the execution context by following the guidelines under `- warm starts:`
+- aws lambda power tuning: use this tool to find the best lambda configuration
+  - tool runs in your AWS account, relies on step functions,
+  - supports 3 optimization strategies: cost, speed and balanced
+- test test test!
+  - simulate peak levels of invocations
+  - test integrations: tests should utilize all resources used in production
+  - test error handling: push past peak load expectations to verify error handling
 
 ### anti patterns
 
@@ -153,28 +165,64 @@
 
 ### configuring lambda functions
 
-- memory: 128mb -> 10240mb
-- ephemeral storage: 512mb -> 10gb
-- snapstart: reduces startup time by caching the fn definition
-- triggers
-  - which events / event5 sources can initiate exeuction of this fn
-- layers
-  - how will you bundle your dependencies
-- destinations
-- code: this is your handler function
-- timeout:
-- function urls: dedicated http endpoint for the function, invocable via browser/curl/etc
-  - is always assigned to $LATEST version and cant be reassigned to a different version
-  - but you can assign it to an ALIAS (just not a version)
-- environment variables
-- tags
-- vpc
-- concurrency
-- asynchronous
-- code signing
-- db proxies
-- file systems
-- state machines
+- most important: build and test these main configuration settings in real world scenarios and against peak volumes
+  - memory: 128mb - 10 gb
+    - lambda allocations CPU and other resources lineraly in proprtion to the amoutn of memory configured
+    - any modification of memory triggers and equivalent modification in CPU resources
+  - timeout: up to 900 seconds (15 minutes)
+    - how long a fn can run before lambda terminates it
+    - load test your fn to determine the max/optimum timeout value
+    - always fail fast and never wait for the full timeout value
+  - concurrency: affects fn performance and ability to scale on demand
+    - the number of inflight invocations a fn can run at any given momemt
+    - concurrency limit: the max concurrent requests
+    - reservation: total reserved instances available top run a fn on demand
+    - cuncurrency types
+      - unreserved: total instances not allocated to a specific set of fns
+        - at least 100
+        - can request an increase
+      - reserved: guarantees a set of instances for a specific fn
+        - not charged, subtracts from the unreserved total
+      - provisioned: initializes a specific set of runtime instances for a fn that can respond immediately to requests:
+        - costs! subtracts from teh unreserved total
+      - burst concurrency: quote is not per function, but is applied to all fns in a region
+        - 3000: us west (oregon), us east (virginia), euroope (ireland)
+        - 1000: asia pacific (tokyo), europe (frankfurt), us east (ohio)
+        - 500: all other regions
+    - concurrency strategies
+      - limit concurrency: limit a fns concurrency to achieve:
+        - controlling costs
+        - regulate how long it takes to process a batch of events
+        - match it with a downstream resource that cannot scale as quickly as lambda
+      - reserve concurrency: set a reservation for a fn to achieve:
+        - control performance during peak loads
+        - address invocation errors during bursts
+  - billing: charges are proportional to the memory, duration (GB seconds) and number of invocations
+    - you can offset costs from memory by reducing the duration
+    - duration tracks and is rounded up to the nearest 1 ms
+    - invocations tracks and includes test invocations
+    - total cost is the duration of allocated memory GB per second
+      - not memory used, but ALLOCATED! remember that
+    - free tier: 1 million requests per month and 400,000 gb-seconds of compute time per month
+- other settings
+  - ephemeral storage: 512mb -> 10gb
+  - snapstart: reduces startup time by caching the fn definition
+  - triggers
+    - which events / event5 sources can initiate exeuction of this fn
+  - layers
+    - how will you bundle your dependencies
+  - destinations
+  - code: this is your handler functio
+  - function urls: dedicated http endpoint for the function, invocable via browser/curl/etc
+    - is always assigned to $LATEST version and cant be reassigned to a different version
+    - but you can assign it to an ALIAS (just not a version)
+  - environment variables
+  - tags
+  - vpc
+  - code signing
+  - db proxies
+  - file systems
+  - state machines
 
 ### monitoring lambda functions
 

@@ -21,3 +21,13 @@
 ## basics
 
 ## considerations
+
+## integration
+
+### lambda
+
+- lambda sends metrics about invocation to cloudwatch
+- build graphs and dashboards, set alarams to respond to changes in use, perf or error rates
+- metrics
+  - ConcurrentExecutions: fns with custom cuncurrency limits: total concurrent invocations for a given fn at a given point in time
+  - UnreservedConcurrentExecutions: fns without a custom cuncurrency limit: total concurrent invocations for a given fn at a given point in time

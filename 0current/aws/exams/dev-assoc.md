@@ -2,7 +2,7 @@
 
 - everything in this doc is taken directly from AWS
 - last updated in 2023 for version 1.0 DVA-C02
-- bookmark: aws lambda foundations > introduction to serverless > authoring lambda fns > example aws sam template
+- bookmark: aws lambda foundations > introduction to serverless > deploying and testing serverless applications
 
 ## links
 
