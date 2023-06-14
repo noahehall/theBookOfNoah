@@ -1,8 +1,14 @@
 # Common Architecture
 
+- [localstack](https://github.com/localstack/localstack)
+
 ## terms
 
 - Dead Letter Queue: DLQ;
+
+## localstack
+
+- pretty sure we have a localstack.md somewhere in this repo
 
 ## Serverless
 
@@ -26,6 +32,8 @@
   - developer tools
     - CDK
     - serverless application model (SAM)
+- testing: you generally need a test account that mirrors the production account
+  - but you should also invest time in setting up localstack
 
 ### Api Gateway + AWS Lambda + Cloudwatch
 

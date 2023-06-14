@@ -20,6 +20,24 @@
 
 ## basics
 
+### dashboards
+
+### logs
+
+#### log groups
+
+#### log insights
+
+### alarms
+
+### metrics
+
+### events
+
+### application monitoring
+
+### insights
+
 ## considerations
 
 ## integration

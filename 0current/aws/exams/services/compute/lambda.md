@@ -162,6 +162,11 @@
   - new role
   - existing role
   - new role from aws policy templates
+- events
+  - understanding events that trigger your lambda are critical
+  - usually contain everything required for your fn, e.g. s3 bucket names and dynamodb tables for persisting information
+- dependencies
+  - e.g. the `aws-sdk` can be imported into your fn
 
 ### configuring lambda functions
 
@@ -204,6 +209,22 @@
     - total cost is the duration of allocated memory GB per second
       - not memory used, but ALLOCATED! remember that
     - free tier: 1 million requests per month and 400,000 gb-seconds of compute time per month
+- versions and aliases
+  - once a lambda is deployed, it is live immediately, be sure you're versioning and aliasing correctly
+  - versions: management function deployments
+    - a new version is created each time a fn is publishes
+      - publishing makes a snapshot copy of the $LATEST version
+        - the latest: `arn:Aws:Llambda:aws-region:acct-id:function:some_name:$LATEST`
+        - a specific version: `arn:Aws:Llambda:aws-region:acct-id:function:some_name:123`
+  - aliases: a pointer to a specific function version
+    - each alias has a specific arn
+      - a test alias`arn:Aws:Llambda:aws-region:acct-id:function:some_name:test`
+    - you can update an alias to point to a specific version number
+    - alias routing: you can point an alias to a a maximum of 2 fn versions, e.g. 10% to v1, and 90% to v2
+      - both version must:
+        - have the same runtime role
+        - have the same dead-letter queue configuration, or no dead-letter queue configuration
+        - must be published, and the alias cannot be $LATEST
 - other settings
   - ephemeral storage: 512mb -> 10gb
   - snapstart: reduces startup time by caching the fn definition

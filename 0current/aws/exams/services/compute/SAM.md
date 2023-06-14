@@ -8,6 +8,7 @@
 - [cli (sam) deploy](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-deploy.html)
 - [deployment serverless applications](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-deploying.html)
 - [policy templates](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html)
+- [sam github with policy templates and other stuff](https://github.com/aws/serverless-application-model/tree/develop)
 
 ### sam CLI
 
@@ -67,13 +68,35 @@
 
 ## examples
 
-```py
+### sam cli
+
+```sh
+# generate a sample s3 put event
+# put it in launch.json.lambda.payload.json.{ ...copypasta}
+sam local generate-event s3 put
+
+# validate the template.yaml in the curdir
+sam validate
+
+```
+
+### sam templates
+
+- usually called `template.yaml` and defines the entire stack for a specific service
+  - you generally want to start with a sample template provided by AWS (check the docs)
+- resources.someName.type
+  - AWS::S3::Bucket (s3)
+  - AWS::Serverless::Function (lambda)
+  - AWS::Serverless::SimpleTable (dynamodb)
+
+```yaml
 # Example cloudformation template for use by SAM
 
 # indicates this is a SAM template
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Server;ess-2021-07-11
 Resources:
+  # could be anything, this is an arbitray name for a lambda fn
   GetHtmlFunction:
     # this creates a lambda function
     Type: AWS::Serverless:Function
@@ -82,9 +105,24 @@ Resources:
       CodeUri: ./src/todo_list
       Handler: index.gethtml
       Runtime: nodejs14.x
+      AutoPublishAlias: live # detect new deployments and publish updated versions and aliases
+      DeploymentPReference:
+        Type: Canary10Percent10Minutes # implement canary traffic shifting
+        Alarms: # specify auto rollbacks of deployments based on cloudwatch alarms
+          - !Ref SomeCloudWatchAlarm
+          - !Ref SomeClouodWatcAlarm
+        Hooks: # run pre and post traffic shifting lambda fns
+          PreTraffic: !Ref SomeLambdaFn
+          PostTraffic: !Ref SomeLambdaFn
       # IAM policy
       Policies: AmazonDynamoDBReadOnlyAccess
       Events:
+        S3Event: # s3 event source for triggering lambda fns
+          Type: S3
+          Properties:
+            Bucket:
+              Ref: SomeBucketName
+            Events: s3:ObjectCreated:* # any object created in SomeBucketName
         # create an API gateway endpoint
         # takes care of all necessary mapping/permissions
         GetHtml:
