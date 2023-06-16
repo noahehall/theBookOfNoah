@@ -154,7 +154,7 @@
   - event sources: kinesis, sqs, dynamodb streams
 - invocation model error behavior: how each invocation model handles errors
   - sync: no retries
-  - async: built in retries twice
+  - async: built in retries thrice or twice
   - polling: depends on event soruce
 
 #### event source mapping
