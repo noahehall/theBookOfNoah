@@ -38,3 +38,44 @@
   - scaling and load balancing
   - monitor and observe apps
   - data storage
+
+## databases
+
+### best practices
+
+- sharding use cases: all about scaling horizontally
+  - distribute your data volume across multiple db instances for storage flexibility
+  - serve increased request rates
+- consistency patterns: all about ensuring previous writes are reflected in future reads
+  - strongly consistent: i.e. read after write; all writes are always reflected
+  - eventually consistent: previous writes may NOT be reflected
+  - always design around eventually consistency
+    - strongly consistency means you received the latest, but subsequent writes it may be stale whenever based on previous reads
+
+### terms
+
+- OLTP workloads: online transactional processing
+- OLAP workloads: online analytical processing
+
+### basics
+
+- relational vs noSQL vs graph vs vector vs in memory
+  - relational is all about minimizing data storage via normalization
+    - this strict requirement on deduplication causes some queries to be cumbersome/cpu intensive
+  - sql: is all about minimizing CPU time relative to data storage and i/o
+    - data storage is now much cheaper than cpu time, hence the popularity of nosql dbs
+    - does have higher i/o costs as generally you have to retrieve duplicated data at each trip
+    - provides greater flexibilty in structuring your data, since your not concerned with normalization
+  - graph: for traversing multi-layered relationships
+  - in memory:
+- relational vs nosql workloads
+  - relational: either OLTP or OLAP, anything with unknown query patterns
+  - nosql OLTP with known request patterns
+    - live/interactive applications
+    - hot/active data
+    - smaller documents
+    - known query patterns
+- relational vs nosql scaling
+  - sharding: enables horizontal scaling for both relational and nosql dbs
+    - the entire dataset is partitioned amongst multiple db instances
+    - items stored in a particular partition is based on a hash of a partition key

@@ -2,7 +2,14 @@
 
 - everything in this doc is taken directly from AWS
 - last updated in 2023 for version 1.0 DVA-C02
-- bookmark: aws lambda foundations > introduction to serverless > monitoring and trouble shooting
+- bookmark: dynamodb for serverless architectures > how dynamodb works > 7:33 (9:20 remaining)
+- todos
+  - tackle these AFTER you complete the recommended skillbuilder rampup; these may/not be part of the schedule
+    - [designing event driven architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12715/designing-event-driven-architectures)
+    - [architecting serverless applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12716/architecting-serverless-applications)
+    - [scaling serverless architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12713/scaling-serverless-architectures)
+    - [security and obervability for serverless applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12714/security-and-observability-for-serverless-applications)\
+    - [deploying serverlesss applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12836/deploying-serverless-applications)
 
 ## links
 
@@ -130,7 +137,7 @@
 - Cost and capacity management
 - Database
   - Amazon Aurora
-  - Amazon DynamoDB
+  - Amazon DynamoDB (NoSQL)
     - table
       - change triggers
       - encryption
@@ -149,7 +156,7 @@
     - encryption & protecting data
       - client side
       - end to end encryption (for in transit and at rest)
-  - Amazon ElastiCache
+  - Amazon ElastiCache (NoSQL)
     - For Redis
       - storing session state across devices
     - For Memcached

@@ -32,6 +32,9 @@
 - [using lambda insights](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights.html?icmpid=docs_lambda_help)
 - [x-ray: integration with lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html?icmpid=docs_lambda_help)
 - [invocation scaling](https://docs.aws.amazon.com/lambda/latest/dg/invocation-scaling.html)
+- [operator guide](https://docs.aws.amazon.com/lambda/latest/operatorguide/intro.html)
+- [developer guide](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
+- [security overview (PDF)](https://docs.aws.amazon.com/whitepapers/latest/security-overview-aws-lambda/security-overview-aws-lambda.pdf)
 
 ### tools
 
@@ -40,7 +43,7 @@
 ## best practices
 
 - always consider the lambda execution environment and context
-  - logic within `exports.handler` is recreated, but the context parent scope is reused
+  - `exports.handler`fn is recreated, but the context parent scope is reused on warm starts
 - utilize the Test tab to create fake events, which will reveal errors that are normally hidden
 - lambda is prime for event-driven architectures, where known events trigger your fns
 - optimize performance by reducing latency and increasing throughput
@@ -86,6 +89,13 @@
   - simulate peak levels of invocations
   - test integrations: tests should utilize all resources used in production
   - test error handling: push past peak load expectations to verify error handling
+- setup dead-letter queues in the lambda console
+  - capture application errors that MUST receive a response, e.g. processing a shopping cart
+  - see the monitoring section below
+- setup concurrency limits (reservations) on appropraite functions
+  - manage costs
+  - matching lambda speed with the performance of downstream resouces
+  - regulating how long it takes to process events
 
 ### anti patterns
 
@@ -99,7 +109,7 @@
 - flexible permissions using IAM to grant/limit access with fine-grained controls as to how your functions can be invoked
 - 0-configuration high availability and fault tolerance
 - pay to play and what you consume, billed in 1ms increments
-  - billing starts AFTER the runtime has been initialized,
+  - billing starts AFTER the runtime (not the function) has been initialized,
   - ^ i.e. once lambda is ready to initalialize your packages and dependencies
 
 ## terms
@@ -110,13 +120,13 @@
 - provisioned concurrency: prepares concurrent execution environments before invocations are required
 - cold starts: when a new execution env is required and lambda must start the init phase from scratch
 - warm starts: when an existing execution env can be reused
-- Customer Master Key: CMK: aws provides one free of charge, or you can provide one (which is charged via KMS)
+- Customer Master Key: CMK: aws provides one free of charge, or you can provide one (which is charged at the KMS rate)
 
 ## basics
 
 ### execution context
 
-- the stuff outside of the handler method
+- the stuff outside of the handler fn
 
 ### handler method
 
@@ -131,22 +141,27 @@
 
 ## considerations
 
-### invocation models (event sources)
+### invocation models
 
 - synchronous invocation: lambda runs the fn and waits for and returns an immediate response
   - event sources: api gateway; cognito; cloudformation; alexa; lex; cloudfront
 - asynchronous invocation: events are queued and the requestor doesnt wait for a response which is instead sent to some destination
   - event sources: sns, s3, eventbridge
   - destinations: can be based on success/failure/alias/fn version/etc
+  - lambda will try up to 3 times to invocation the fn before throwing an error
 - polling invocation: designed for streaming/queing based services with no code/server management
   - lambda polls (watches) sources for specific events, then executes the associated fn
   - event sources: kinesis, sqs, dynamodb streams
-- event source mapping: the configuration of services as event triggers that are given IAM permissions to access and trigger lambda fns
-  - event sources: dynamodb; kinesis; mq; apache kafka MSK; self maanged apache kafka; sqs
 - invocation model error behavior: how each invocation model handles errors
   - sync: no retries
   - async: built in retries twice
   - polling: depends on event soruce
+
+#### event source mapping
+
+- event sources invoke a lambda fn using one of the above invocation models
+- event source mapping: the configuration of services as event triggers that are given IAM permissions to access and trigger lambda fns
+  - event sources: dynamodb; kinesis; mq; apache kafka MSK; self maanged apache kafka; sqs
 
 ### creating lambda functions
 
@@ -211,7 +226,7 @@
     - free tier: 1 million requests per month and 400,000 gb-seconds of compute time per month
 - versions and aliases
   - once a lambda is deployed, it is live immediately, be sure you're versioning and aliasing correctly
-  - versions: management function deployments
+  - versions: management function deployments e.g a new version for beta testing
     - a new version is created each time a fn is publishes
       - publishing makes a snapshot copy of the $LATEST version
         - the latest: `arn:Aws:Llambda:aws-region:acct-id:function:some_name:$LATEST`
@@ -247,14 +262,37 @@
 
 ### monitoring lambda functions
 
-- metrics:
-- logs
-- traces
+- ensuring you can monitor, trace, debug and troubleshoot lambda fns and applications
 - integrations
+  - cloudwatch metrics
+    - invocations: total function executions that were not throttled/failed to start, success & errors
+      - errors: invocations that result in a fn error whether by your fn handler or the lambda runtime (timeouts, configuration issues, etc)
+      - throttled: failed invocations becaue of concurrency limits; not counted in invocation totals; lambda rejected executed requests because no concurrency was available
+    - duration: total time spent processing events; to calculate billing round up to the nearest millisecond
+      - iteratorAge: age of the last record in the event releative to event source mappings that read from streams;
+        - the agent is the total duration from when the stream receives the record until the event source mapping sends the event to the fn
+    - DeadLetterErrors: for async invocation; number of times lambda attempts to send an event to a dead-letter-queue but fails
+    - ConcurrentExecutions: number of function instances that are processing events
+      - UnreservedConcurrentExecutions: total events being processed by fns that dont have reservede concurrency
+      - ProvisionedConcurrentExecutions: number of fn isntances that are processing events on provisioned concurrency
   - cloudwatch logs
-  - x ray traces
-  - lambda insights
+  - x ray traces: lambda fns send trace data to xray for processing
+    - see [the markdown file](../devtools/xray.md)
+  - lambda insights: cloudwatch extension tailored for system-level monitoring of lambda fns
+    - see [the markdown file](../mgmtGovernance/cloudwatch-lambda-insights.md)
+  - cloudtrail: tracking deployments
+    - see [the markdown file](../mgmtGovernance/cloudtrail.md)
   - codeguru profiles
+
+#### dead-letter queues
+
+- configured in the lambda console
+- you move important events that throw errors into the dead letter queue
+- you manually have to fix these, e.g. ensuring all shopping cart events are processed
+- use cases
+  - analyze failures for follow-up or code corrections
+  - available for async and non-stream polling events
+  - integrate with SNS topic or SQS queue
 
 ### managing the execution environment
 

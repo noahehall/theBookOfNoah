@@ -1,6 +1,8 @@
 # API Gateway
 
 - A microservice using Amazon API Gateway consists of a defined resource and associated methods (GET, POST, PUT, etc.) in API Gateway as well as the backend target (e.g. lambda fn, another service, 3rd party, etc)
+- todos
+  - [apigateway for serverless applications](https://explore.skillbuilder.aws/learn/course/52/Amazon%2520API%2520Gateway%2520for%2520Serverless%2520Applications)
 
 ## links
 

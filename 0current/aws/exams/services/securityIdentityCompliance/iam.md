@@ -18,7 +18,9 @@
 ## features
 
 - resource policy: permissions related to specific actions on specific resources, e.g. Execute Lambda
-- execution role: enables a service to assume some role with some predefined behavior
+  - determines who is allowed into a service boundary, i.e. grant service A access to service B
+- execution role: enables a service to assume some role with some predefined behavior for interacting with other services
+  - determines what service A can do within a service boundary
 - trust policy: enables a service to `AssumeRole` for taking action on behalf of another serviced
 - principle of least privilege: start with the most restrictive set of permissions possible
 - security in depth: multiple layers of redundant security

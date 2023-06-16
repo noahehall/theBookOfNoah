@@ -1,6 +1,8 @@
-# Common Architecture
+# Common AWS Architecture
 
 - [localstack](https://github.com/localstack/localstack)
+- [aws serverless land](https://aws.amazon.com/serverless/)
+- [serverless multi-tier architectures (PDF)](https://d1.awsstatic.com/whitepapers/AWS_Serverless_Multi-Tier_Architectures.pdf)
 
 ## terms
 

@@ -1,6 +1,7 @@
 # elasticache
 
-- mission statement
+- fully managed in memory data cache for redis/memcached
+- designed for in-memory data store and cache with known query patterns
 
 ## links
 
