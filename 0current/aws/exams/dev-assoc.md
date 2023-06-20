@@ -2,14 +2,32 @@
 
 - everything in this doc is taken directly from AWS
 - last updated in 2023 for version 1.0 DVA-C02
+- bookmark: dynamodb for serverless architectures > how dynamodb works > 2nd video introduction
+- todos
+  - tackle these AFTER you complete the recommended skillbuilder rampup; these may/not be part of the schedule
+    - [designing event driven architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12715/designing-event-driven-architectures)
+    - [architecting serverless applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12716/architecting-serverless-applications)
+    - [scaling serverless architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12713/scaling-serverless-architectures)
+    - [security and obervability for serverless applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12714/security-and-observability-for-serverless-applications)\
+    - [deploying serverlesss applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12836/deploying-serverless-applications)
 
 ## links
 
 - [bunch of links and study guides](https://aws.amazon.com/certification/certified-developer-associate/)
+- [official exam guide pdf](https://d1.awsstatic.com/training-and-certification/docs-dev-associate/AWS-Certified-Developer-Associate_Exam-Guide.pdf)
+- [official sample questions pdf](https://d1.awsstatic.com/training-and-certification/docs-dev-associate/AWS-Certified-Developer-Associate_Sample-Questions.pdf)
+- [officla practice question set](https://explore.skillbuilder.aws/learn/course/external/view/elearning/13757/aws-certified-developer-associate-official-question-set-dva-c02-english)
+- [official ramp up guide (pdf)](https://d1.awsstatic.com/training-and-certification/ramp-up_guides/Ramp-Up_Guide_Developer.pdf)
+
+### interwebs
+
+- [elasticache for redis vs memorydb for redis](https://cloudwellserved.com/amazon-elasticache-for-redis-vs-amazon-memorydb-for-redis/)
 
 ## basics
 
 ### high level
+
+> The exam validates a candidate’s ability to demonstrate proficiency in developing, testing, deploying, and debugging AWS cloud-based applications.
 
 - Develop and optimize applications on AWS
 - Package and deploy by using continuous integration and continuous delivery (CI/CD) workflows
@@ -23,7 +41,40 @@
 - Domain 3: Deployment 24%
 - Domain 4: Troubleshooting and Optimization 18%
 
-### technologies
+### Focus
+
+> based on the sample questions, these are recurring themes (IMO) to fucus on:
+> (1) service integration not isolation
+> (2) preferred use cases and anti-patterns
+> (3) best practices
+
+#### additional sections
+
+> these were mentioned in the exam preps but not in the tech section below
+
+- global architecture
+  - ARN: Amazon Resource Names
+  - availability zones
+  - well architected framework
+- SDKs
+  - Python (boto3)
+  - local credentials (~/.aws/credentials)
+    - remember SDKs require key + secret (not name + pass)
+- CLI
+  - aws
+  - SAM
+    - template.yaml
+    - build
+    - deploy
+    - errors
+      - Invalid/missing template file
+- Trusted Advisor (resurce provising best practices)
+- Inspector
+- Managed Streaming for Apache Kafka (MSK)
+
+#### technologies
+
+> These servicies and technologies are recommended by AWS
 
 - Analytics
   - Amazon Athena
@@ -31,27 +82,95 @@
   - Amazon OpenSearch Service
 - Application integration
   - AWS AppSync
+    - underlying graphql architecture it uses
   - Amazon EventBridge (Amazon CloudWatch Events)
+    - Events (near realtime stream)
   - Amazon Simple Notification Service (Amazon SNS)
   - Amazon Simple Queue Service (Amazon SQS)
   - AWS Step Functions
+    - activity workers
+    - tasks
+      - attributes
+    - state machines
+      - configuring max failures
+      - timeouts
+      - error handling
 - Compute
   - Amazon EC2
+    - Auto Scaling Group
   - AWS Elastic Beanstalk
+    - ebextensions folder
   - AWS Lambda
+    - architecture & patterns
+      - code inside vs outside the fn handler
+      - reusing the execution environment across invocations
+      - supporting local development with aliases
+      - environment variables
+    - Aliases
+    - Triggers
+      - which & how each service triggers lambdas
+      - schedules & polling
+      - event based
+    - CD
+      - all changes require build & deploy
+      - managing deployment with versions
+    - Layers
+    - artifacts (are not encrypted at rest)
+    - Polling aws services with lambdas
+    - versioning
+      - deploying without updating ARNs
+    - event source mapping
+    - ARNs
+      - version
+      - alias
+      - layer
+    - monitoring & observability
+      - logging
   - AWS Serverless Application Model (AWS SAM)
+    - also check the SAM CLI section
 - Containers
   - AWS Copilot
   - Amazon Elastic Container Registry (Amazon ECR)
   - Amazon Elastic Container Service (Amazon ECS)
+    - tasks
   - Amazon Elastic Kubernetes Services (Amazon EKS)
 - Cost and capacity management
 - Database
   - Amazon Aurora
-  - Amazon DynamoDB
-  - Amazon ElastiCache
+  - Amazon DynamoDB (NoSQL)
+    - table
+      - change triggers
+      - encryption
+    - query
+      - pagination
+      - parameters
+      - filters
+      - expressions
+      - scan
+        - parallel
+        - parameters
+    - streams
+    - Accelerator (DAX)
+    - Encryption Client
+      - Direct KMS Materials Provider
+    - encryption & protecting data
+      - client side
+      - end to end encryption (for in transit and at rest)
+  - Amazon ElastiCache (NoSQL)
+    - For Redis
+      - storing session state across devices
+    - For Memcached
+      - Lazy Loading Strategy
+      - write-through strategy
   - Amazon MemoryDB for Redis
   - Amazon RDS
+    - High Availability / Failover Strategies
+      - Multi-AZ
+        - standby replica
+        - read replica
+          - async replication
+    - Heavy reads vs Heavy writes
+      - optimizing one vs the other
 - Developer tools
   - AWS Amplify
   - AWS Cloud9
@@ -60,23 +179,64 @@
   - AWS CodeBuild
   - AWS CodeCommit
   - AWS CodeDeploy
+    - appspec.yml
   - Amazon CodeGuru
   - AWS CodePipeline
   - AWS CodeStar
-  - AWS X-Ray
+  - AWS X-Ray (instrumentation)
+    - observing service-to-service interaction
+    - troubleshooting bottlenecks in service pipelines
+    - service map
+    - trace data
+    - common metrics for common problems
+      - connections between services
+      - average latency
+      - failure rates
 - Management and governance
   - AWS AppConfig
   - AWS Cloud Development Kit (AWS CDK)
   - AWS CloudFormation
-  - AWS CloudTrail
+  - AWS CloudTrail (api monitor)
+    - event history (governance, compliance and risk auditing)
   - Amazon CloudWatch
+    - agent
+    - native & custom metrics
+      - filters
+      - common metrics for common problems
+        - slow response times
+        - performance issues (hit or miss with cloudwatch)
+        - relative workload
+        - troubleshooting specific services
+    - alarms
   - Amazon CloudWatch Logs
+    - streaming
+    - export to s3
+    - which services support cloudwatch logs
   - AWS Command Line Interface (AWS CLI)
   - AWS Systems Manager
+    - state manager
+    - parameter store
+      - SecureStrings (for encryption at rest)
+      - restricting access
 - Networking and content delivery
   - Amazon API Gateway
+    - Rest API
+    - WebSocket API
+    - Stages
+      - Variables
+        - syntax
+    - URI path patterns
+    - lambda proxy integration
+    - optimizing complex API calls & dependencies
+      - db integration
+        - reusing db connections
   - Amazon CloudFront
   - Elastic Load Balancing
+    - sticky session cookies
+    - application load balancer
+      - routing to different environments
+      - listener rules
+      - target groups
   - Amazon Route 53
   - Amazon VPC
 - Security, identity, and compliance
@@ -85,11 +245,17 @@
   - Amazon Cognito
   - AWS Identity and Access Management (IAM)
   - AWS Key Management Service (AWS KMS)
+    - Envelope Encryption
+    - Symmetric Encryption
+    - Asymmetric encryption
+    - KMS Keys vs external generated keys
   - AWS Secrets Manager
+    - secrets rotation
   - AWS Security Token Service (AWS STS)
   - AWS WAF
 - Storage
   - Amazon Elastic Block Store (Amazon EBS)
+    - integration with ec2
   - Amazon Elastic File System (Amazon EFS)
   - Amazon S3
   - Amazon S3 Glacier

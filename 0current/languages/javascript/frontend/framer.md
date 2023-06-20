@@ -9,6 +9,7 @@
 - [framer motion github package](https://github.com/framer/motion/tree/main/packages/framer-motion)
 - [examples: they have really good examples](https://www.framer.com/motion/examples/)
 - [examples: specific component/techniques/etc examples](https://www.framer.com/motion/examples/#more)
+- [blog: maxim: joy with framer](https://blog.maximeheckel.com/posts/guide-animations-spark-joy-framer-motion/)
 
 ### ecosystem
 

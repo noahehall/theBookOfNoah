@@ -1,0 +1,1 @@
+- [elastic load balancer sticky sessions](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/sticky-sessions.html)

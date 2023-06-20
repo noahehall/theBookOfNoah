@@ -1,0 +1,1 @@
+- [sns: intro](https://docs.aws.amazon.com/sns/latest/dg/welcome.html)
