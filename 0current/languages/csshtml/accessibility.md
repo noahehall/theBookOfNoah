@@ -260,7 +260,7 @@
   - `role='navigation'` === `<nav>`
   - `role='region'` === `<section>`
 - everyone can access the site's content and use it's functionality
-  - for users who are experiencing some time of impairment
+  - for users who are experiencing some type of impairment
   - the sites' content should be available to everyone
   - the sites' functionality can be operated by anyone
 - think about users

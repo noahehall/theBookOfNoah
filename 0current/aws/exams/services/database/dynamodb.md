@@ -42,8 +42,7 @@
 
 ## terms
 
-- RCU: read capacity unit; 1 RCU = 1 item (4kb/less) per second
-- WCU: write capacity unit; 1 WCU = 1 (1kb/less) write per second
+- consistency: ability to read data understanding that all prior writes will be reflected in the results returned
 
 ## basics
 
@@ -60,6 +59,7 @@
   - a single item cannot be read greater than 3k RCU, or written at more than 1k WCU
   - eventually consistent reads are levied at half the cost of strongly consistent reads
 - streams: similar to kensis streams and compatible with the kinesis client library
+  - an ordered flow of information about changes to a table
   - all writes are recorded in the stream like a changelog
     - you can specify the level of detail recorded
   - streams are durable and kept for up to 24 hours
@@ -71,40 +71,41 @@
 - items: i.e. records in a table
 - attributes: i.e. columns in an item
   - for all items
-    - primary key: must be unique across all items
+    - primary key: must be unique across all items; either partition key or partition + sort
       - partition key: is always required
-      - sort key: if provided, its required in all items and makes the primary key a compose key
+      - sort key: if provided, its required in all items and makes the primary key a composite key (partition + sort)
       - FYI:
         - the partition and the sort key (if provided) must be string, number or binary
         - to use maps/lists as part of a primary key, you must expose a copy of the entry directly as an attribute
   - all other attributes are item-specific
-- secondary indexes
-  - can only be defined when the base table is created, and cannot be deleted
-  - have a max size of 10gb
-  - allow you to query data based on attributes other than the tables primary key
-  - consumption of throughput is based on secondary index for scanning
-  - sparse indexes: subset of base table items that contain a particular attribute
-  - indexes can contain
-    - alternate key attributes
-    - primary key attributes
-    - projected attributes: optional subset of other attributes form the base table
-  - secondary indexes can be of two types
-    - local secondary index: LSI; index that is local to a partiion key;
-      - i.e. queriy items with the same partition key that is specified with the query
-        - e.g. base table (pkey = name, sortkey = id, attr = date)
-        - e.g. LSI (pkey = name, sortkey = date, attr = id)
-      - i.e. the LSI must live in the same partition, it cannot be part of another patition
-      - often used for sorting on a different attribute of the base table
-    - global secondary index: GSI;
-      - not local to a partition key and can query over the entire table across all partitions
+- secondary indexes: either local or global; enable queries on attributes other than the tables primary key
+  - in general
+    - can have 5 local + 5 globals per table
+    - allow you to query data based on attributes other than the tables primary key
+    - consumption of throughput is based on secondary index for scanning
+    - sparse indexes: subset of base table items that contain a particular attribute
+  - local secondary index: LSI; index must be local to a partiion key;
+    - e.g. base table (pkey = name, sortkey = id, attr = date)
+    - e.g. LSI (pkey = name, sortkey = date, attr = id)
+    - often used for sorting on a different attribute of the base table
+    - requirements
+      - have a max size of 10gb
+      - can only be defined when the base table is created, and cannot be deleted
+      - must use the same partition key defined in the base table
+      - cannot have its own provisioned throughput
+  - global secondary index: GSI;
+    - temporary indexes that can use totally different partition & sort keys
+    - logically its a replication of the base table with an entirely different primary key (partition and/or sort)
+    - e.g. take a base table, and define a completely different primary key over the same data
+      - then when your done with the GSI, delete it
+    - requirements
       - do not provide strong consistency like LSIs
       - are not subject to the size limitation of LSIs
       - can be created and deleted dynamically unlike LSIs
       - do not require unique primary keys
       - have their own provisioned throughput managed separately from the table
-      - logically its a replication of the base table with an entirely different primary key (partition and/or sort)
-      - e.g. take a base table, and define a completely different primary key over the same data
-        - then when your done with the GSI, delete it
+      - only supports eventual consistency
+      - only return attributes that are projected into the index
 
 ### api
 
@@ -113,8 +114,11 @@
   - deleteBLAH costs the same WCU as creation
   - scan should be avoided unless required, and then effectively filtered as to not read the entire table
     - even when filtered, you are stilled charged for the total amount retrieved before filtering
+    - it always scans every item in the table inorder to build the resultset
+    - less efficient than scan
   - query can only be used on tables with partitioned composite keys
-  - remember by default reads are eventually consistent, unless strongly is requested on each READ request
+    - fully indexed and very fast (relative to scan)
+  - remember by default reads are eventually consistent, unless strong consistency is requested on each READ request
 - writes
   - putItem: upsert single item
   - updateItem: upsert item attributes
@@ -128,8 +132,10 @@
 
 ### data types
 
-- key value model: string, number, boolean, binary, null, and unordered sets of the aforementioned
-- json model: unordered maps (i.e. object) and unordered lists (i.e. array) of any JSON data type
+- key value model:
+  - string, number, boolean, binary (base64 encoded), null, and unordered sets of the aforementioned
+- json model:
+  - unordered maps (i.e. object) and unordered lists (i.e. array) of any JSON data type
   - a single item can be a json document
   - or each item in a JSON can be attributes of a json document
 
@@ -137,5 +143,7 @@
 
 ### configuration
 
-- consistency: eventually or strongly per request
 - request throughput: read and write capacity per second
+  - must be specified when you create a table; AWS provisions resources to ensure your settings can be met
+  - RCU: read capacity unit; 1 RCU = 1 item (4kb/less) per second
+  - WCU: write capacity unit; 1 WCU = 1 (1kb/less) write per second
