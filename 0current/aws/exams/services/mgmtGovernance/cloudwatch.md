@@ -50,3 +50,12 @@
 - metrics
   - ConcurrentExecutions: fns with custom cuncurrency limits: total concurrent invocations for a given fn at a given point in time
   - UnreservedConcurrentExecutions: fns without a custom cuncurrency limit: total concurrent invocations for a given fn at a given point in time
+
+### dynamodb
+
+- common metrics/alarms
+  - SuccessfulRequestLatency
+  - Throttling Events
+  - Capacity Consumption
+  - User Errors
+  - System Errors

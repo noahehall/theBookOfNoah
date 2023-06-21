@@ -13,6 +13,7 @@
 - [direct kms materials provider](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/direct-kms-provider.html)
 - [encryption client: how it works](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/how-it-works.html)
 - [encryption client: intro](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/what-is-ddb-encrypt.html)
+- [error handling](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html)
 - [pagination](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.Pagination.html)
 - [query (guide)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html)
 - [query (ref)](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html)
@@ -21,6 +22,17 @@
 - [streams and lambdas (tut)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.Tutorial.html)
 - [streams](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
 - [tables](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html)
+- [iam](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/UsingIAMWithDDB.html)
+
+### blogs
+
+- [adaptive capacity for uneven data access patterns](https://aws.amazon.com/blogs/database/how-amazon-dynamodb-adaptive-capacity-accommodates-uneven-data-access-patterns-or-why-what-you-know-about-dynamodb-might-be-outdated/)
+
+### api ref
+
+- [api retries](http://docs.aws.amazon.com/general/latest/gr/api-retries.html)
+- [batch get item](http://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchGetItem.html)
+- [batch read writem](http://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchWriteItem.html)
 
 ## best practices
 
@@ -30,6 +42,31 @@
 - design your data model for requests that are evenly distributed across partitions
   - updating a single attribute in an item requires rewriting the entire item
 - read through the architecture section below, then read through it again
+- monitoring and troubleshooting: watch your metrics
+  - autoscaling takes time to get right, ensure your target utilization matches the spikes in your request patterns
+  - always include aws error codes in your cloudwatch logs
+  - enable cloudtrail so that control-plane operations (table create/update/etc) are tracked for later analysis
+  - cloudwatch is required to monitor table performance
+    - set alarms for tracking when specified metrics fall outside acceptable ranges
+- global tables
+  - provide extremely low latency to globa clients
+- Managing item expiration with TTL
+  - expire old items to keep your storage cost and RCU consumption low (and its free)
+    - this is often more cost effective than paying for the WCU to delete an item
+  - if implementing this feature ensure your reads check each item's timestamp
+- Using streams
+  - if implementing item TTL, you can watch the stream data and copy items into cold storage (e.g. s3)
+- IAM
+  - always follow principle of least privilege for users and roles
+  - for east/west in the same VPC always use a VPC endpoint for the dynamodb table
+    - this prevents traffic from ahving to treverse the publically routed internet using public addressing
+- Using DAX
+  - decreases the amount of RCUs required for a table, and smooths out spikey/inbalanced read loads
+  - reduces dynamodb's response time from single-digit millisecond to sub-millisecond
+  - use cases
+    - reduce response times of eventually-consistent read workloads
+    - reduce orpational and application complexity througha managed service with the same dynamdob API
+    - increase throughput for read-heavy/bursty workloads
 
 ### anti patterns
 
@@ -39,6 +76,9 @@
 - event driven programming
 - fully managing sharding enables horizontal scaling
 - bursts: an adaptive capacity to borrow read throughput from less active keys to more demanding keys
+- global tables for fully managed multi-region & multi-master deployments
+- auto scaling based on target read/write utilization
+- DAX: the dynamodb accelerator: integrated cache with dynamodb compatible api
 
 ## terms
 
@@ -129,6 +169,16 @@
   - batchGetItem: multiple items
   - query: retrieve items matching sort key expression for specific partition
   - scan: retrieve items across all partitions in table
+- client behavior and configuration
+  - error handling:
+    - 500 errors can be retried, e.g. Provisioned THroughput exceeded (throttling)
+    - 400 errors need to be resolved on the client: e.g. required params missing
+    - batch operations
+      - operate as loops around get/put/delete items
+      - individual requests in the loop which do not complete are returned as such
+        - you can implement your own retry loop with exponential-backoff
+  - tuning retries
+    - set a max number of retries, times and strategies for exponential back-off & jitter
 
 ### data types
 
@@ -145,5 +195,51 @@
 
 - request throughput: read and write capacity per second
   - must be specified when you create a table; AWS provisions resources to ensure your settings can be met
+    - you set a min, max and a target utilization (in percent)
   - RCU: read capacity unit; 1 RCU = 1 item (4kb/less) per second
   - WCU: write capacity unit; 1 WCU = 1 (1kb/less) write per second
+- autoscaling: adjusts provisioned throughput in response to actual traffic patterns
+  - is enabled by default and can be configured separately for the table and GSI
+  - the target utilization setting is what drives a smooth reaction in autoscaling to match your target request throughput
+- Global tables
+  - tables can be spread across multiple regions
+  - has a higher costs but if enables the SLA becomes 5 nines
+  - multi master, and conflicts are resolved by a last-write-wins mechanism
+  - doesnt support cross-region strong consistency
+  - generally require autoscaling or big enough write capacity to carry all global writes and accommodate the replicated traffic
+  - routing mechanisms
+    - geo-routing: send global clients to whichever global endpoint is closest
+- item TTL
+  - expire items after some time
+
+### IAM
+
+- authnz at the table, item, or attribute level
+
+### Dynamodb Accelerator (DAX)
+
+- api-compatible cache for dynamodb tables via a separate endpoint
+- highly-available cluster accessbile only in a VPC
+- write-through cache: items and updates written to cache are eventually consistent on the next read
+  - strongly consistent reads are not cached
+
+### backup / restore
+
+- backups: neither type consumes any read/write capacity
+  - on demand: created when you request it
+  - PITR: point in time recovery
+    - 35-day rolling window of recoverable table data down to the second
+- restore
+  - always made to a new table, after which you can delete the previous one
+  - most restores complete in less than 10 hrs
+  - partitioned data is restored in parallel
+
+### table design
+
+- partition key
+  - should result in an event distribution of item data and traffic across the hash space
+    - i.e. pick a partition key and that strongly unique (high cardinality) across all items
+      - i.e. pick a key that is unique across the most items, dont pick US.STATE when you can pick US.CITY
+  - should reduce the amount of `hot` keys
+    - i.e. dont use US.STATE if 90% of your users are in California
+    - read the adaptive capacity blog post
