@@ -1,8 +1,11 @@
 # Common AWS Architecture
 
+## links
+
 - [localstack](https://github.com/localstack/localstack)
 - [aws serverless land](https://aws.amazon.com/serverless/)
 - [serverless multi-tier architectures (PDF)](https://d1.awsstatic.com/whitepapers/AWS_Serverless_Multi-Tier_Architectures.pdf)
+- [aws service search](https://aws.amazon.com/products/)
 
 ## terms
 
@@ -62,3 +65,9 @@
   - enter SQS: add an sqs queue at the application level
     - application writes to an sqs queue which triggers a lambda to write to dynamodb
       - this will smooth out and buffer spikes in write load
+
+### dynamodb + S3
+
+- index s3 items in dynamodb
+  - store large json docs in s3 and keep a reference to that item in a dynamodb
+    - this keep yours dynamodb items at the recommended size (under 4kb) which reduces costs (s3 < dynamodb)

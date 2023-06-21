@@ -5,6 +5,7 @@
 
 ## links
 
+- [AAA best practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
 - [accelerator (DAX)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html)
 - [change data capture](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/streamsmain.html)
 - [client and server side encryption](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/client-server-side.html)
@@ -36,11 +37,12 @@
 
 ## best practices
 
-- determine your consistent pattern for each request
+- determine your consistency pattern for each request
   - the default is eventually consistent, but you can choose strongly consistency
   - strongly consistency costs more than eventually
 - design your data model for requests that are evenly distributed across partitions
   - updating a single attribute in an item requires rewriting the entire item
+  - the recommended item size is under 4kb
 - read through the architecture section below, then read through it again
 - monitoring and troubleshooting: watch your metrics
   - autoscaling takes time to get right, ensure your target utilization matches the spikes in your request patterns
@@ -49,7 +51,7 @@
   - cloudwatch is required to monitor table performance
     - set alarms for tracking when specified metrics fall outside acceptable ranges
 - global tables
-  - provide extremely low latency to globa clients
+  - provide extremely low latency to global clients
 - Managing item expiration with TTL
   - expire old items to keep your storage cost and RCU consumption low (and its free)
     - this is often more cost effective than paying for the WCU to delete an item
@@ -67,6 +69,10 @@
     - reduce response times of eventually-consistent read workloads
     - reduce orpational and application complexity througha managed service with the same dynamdob API
     - increase throughput for read-heavy/bursty workloads
+- table, item and item attributes
+  - focus on matching your data model to dynamodb best practices
+    - small item size may mean many tables to help control throughput costs
+    - in general avoid large items, and large item attributes at all costs, no matter how much decomposition is required
 
 ### anti patterns
 
@@ -83,6 +89,16 @@
 ## terms
 
 - consistency: ability to read data understanding that all prior writes will be reflected in the results returned
+- scatter gather technique: funny name for a regular-ole thread-safe data chunking algorithm
+  - the base thread determines the number of chunks primary key for each chunk
+  - threads are created to read/write chunks to/from dynamodb
+- read-modify-write: aka optimistic concurrency control; application-level design pattern;
+  - whenever you want to update an item but ONLY if it hasnt changed in a particular way since you last read it
+    - requires that all processes knows to increment the version number for specific items
+  - read: an application retrieves the item and store its version number in memory
+  - modify: then immediately increment the version number (this will be the new version you'll check against in the future write)
+  - write: prepare the update and execute it with a conditional expression that fails if the version number has changed since you last modified it
+    - indicates some other process has changed the data your interested in
 
 ## basics
 
@@ -110,34 +126,38 @@
 - tables: the core data structure
 - items: i.e. records in a table
 - attributes: i.e. columns in an item
-  - for all items
-    - primary key: must be unique across all items; either partition key or partition + sort
-      - partition key: is always required
-      - sort key: if provided, its required in all items and makes the primary key a composite key (partition + sort)
-      - FYI:
-        - the partition and the sort key (if provided) must be string, number or binary
-        - to use maps/lists as part of a primary key, you must expose a copy of the entry directly as an attribute
-  - all other attributes are item-specific
+  - primary key: must be unique across all items; either partition key or partition + sort
+    - partition key: is always required
+    - sort key: if provided, its required in all items and makes the primary key a composite key (partition + sort)
+    - FYI:
+      - the partition and the sort key (if provided) must be string, number or binary
+      - to use maps/lists as part of a primary key, you must expose a copy of the entry directly as an attribute
+  - each item can be up to 400kb; the larger the item the higher probability of `hot` activity
 - secondary indexes: either local or global; enable queries on attributes other than the tables primary key
   - in general
     - can have 5 local + 5 globals per table
     - allow you to query data based on attributes other than the tables primary key
     - consumption of throughput is based on secondary index for scanning
-    - sparse indexes: subset of base table items that contain a particular attribute
+    - sparse indexes: an attribute used as an secondary index but is only contained in a subset of base table items
+      - thus sparsely indexing the base table and optimizes the througput consumption
+    - each index requires an additional write, thus incuring additional WCU costs
   - local secondary index: LSI; index must be local to a partiion key;
     - e.g. base table (pkey = name, sortkey = id, attr = date)
     - e.g. LSI (pkey = name, sortkey = date, attr = id)
     - often used for sorting on a different attribute of the base table
     - requirements
-      - have a max size of 10gb
+      - have a max partition size of 10gb
       - can only be defined when the base table is created, and cannot be deleted
       - must use the same partition key defined in the base table
       - cannot have its own provisioned throughput
   - global secondary index: GSI;
+    - generally recommended > LSI unless you need strong consistency
     - temporary indexes that can use totally different partition & sort keys
     - logically its a replication of the base table with an entirely different primary key (partition and/or sort)
     - e.g. take a base table, and define a completely different primary key over the same data
       - then when your done with the GSI, delete it
+    - GSI back pressure: when the GSI write throughput is too low and causes throttling to your base table during writes
+      - Reads are independent to the base table; this fact can be used to isolate heavy reads to GSI (e.g. for scanning)
     - requirements
       - do not provide strong consistency like LSIs
       - are not subject to the size limitation of LSIs
@@ -146,6 +166,15 @@
       - have their own provisioned throughput managed separately from the table
       - only supports eventual consistency
       - only return attributes that are projected into the index
+
+##### data types
+
+- key value model
+  - string, number, boolean, binary (base64 encoded), null, and unordered sets of the aforementioned
+- json model
+  - unordered maps (i.e. object) and unordered lists (i.e. array) of any JSON data type
+  - a single item can be a json document
+  - or each item in a JSON can be attributes of a json document
 
 ### api
 
@@ -179,15 +208,6 @@
         - you can implement your own retry loop with exponential-backoff
   - tuning retries
     - set a max number of retries, times and strategies for exponential back-off & jitter
-
-### data types
-
-- key value model:
-  - string, number, boolean, binary (base64 encoded), null, and unordered sets of the aforementioned
-- json model:
-  - unordered maps (i.e. object) and unordered lists (i.e. array) of any JSON data type
-  - a single item can be a json document
-  - or each item in a JSON can be attributes of a json document
 
 ## considerations
 
@@ -243,3 +263,23 @@
   - should reduce the amount of `hot` keys
     - i.e. dont use US.STATE if 90% of your users are in California
     - read the adaptive capacity blog post
+- rolling tables: where a new table is created for the current period, e.g. monthly/quarterly/etc
+  - older tables will only see traffic when the application specifically requests them
+  - enables setting a lower provisioned capacities as tables age and eventualy moved to cold storage/dropped
+- attribute size
+  - reading/writing large objec ts results in hot activity localized toa single partition
+  - prefer to keep item size between 1 and 4kb
+    - storing large json blobs in s3 and indexing their location in dynamodb
+    - storing large json objects as binary attributes, and keeping the smaller metadata attributes separately
+    - decompose json objects into smaller pieces that can be stored as separate items
+      - this occurs at the application level using the `scatter-gather` technique
+- manage concurrency with teh read-modify-write pattern
+- one-to-many tables: e.g.
+  - avoid large string/number sets as item attributes, and prefer storing each set element in a separate table as items
+  - helps reduce throughput because you wont need to fetch the entire set every time you fetch the item
+    - now your base table can contain a reference to the many table
+- varied access patterns
+  - generally each item in a table should have attributes that are read with similar access patterns
+    - if each item has large attributes that dont meet this requirment, split those attributers into a new table
+      - e.g. instead of one large USER table, have user.preferenes, and user.blah, and user.bloop
+    - its all about controlling item throughput
