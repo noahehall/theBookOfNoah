@@ -1,6 +1,10 @@
-# Kinesis Data Firehose
+# Kinesis
 
-- capture, transform and load streaming data
+- service for dealing with streaming data
+- Data Firehose: capture, `transform` and load streaming data into lakes, stores, and analytics services
+- Data Streams: serverless streaming service; capture, `process` and store data streams
+- Data Analytics: transform and analyze streaming data in real time using apache flink
+- Video Streams: stream video from connected devices into aws for analytics, ML, playback and other processing
 
 ## links
 

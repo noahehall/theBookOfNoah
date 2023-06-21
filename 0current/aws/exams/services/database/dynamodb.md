@@ -3,6 +3,13 @@
 - fully managed nosql (document/key-value) db providing durability high availability and autoscaling
 - designed for OLTP with known query patterns
 
+## my thoughts
+
+- getting dynamodb right is all about the designing the data model to lower costs
+  - you'll end up with more tables than you would prefer, smaller items than you prefer, and longer partition keys than you prefer
+  - colocate hot data to a table thats equally distributed across partitions
+  - read the best practices articles, it takes considerable effort to beat the AWS cost structure
+
 ## links
 
 - [AAA best practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
@@ -24,6 +31,8 @@
 - [streams](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
 - [tables](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html)
 - [iam](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/UsingIAMWithDDB.html)
+- [limits](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html)
+- [working with large attributes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-use-s3-too.html)
 
 ### blogs
 
@@ -52,6 +61,13 @@
     - set alarms for tracking when specified metrics fall outside acceptable ranges
 - global tables
   - provide extremely low latency to global clients
+- indexes
+  - sparse indexes are key
+  - global secondary indexes
+    - useful for quick lookups and temporary tables
+  - local seoncary indexes
+    - use them sparingly
+    - choose projections carefully and only those atributes you request frequently
 - Managing item expiration with TTL
   - expire old items to keep your storage cost and RCU consumption low (and its free)
     - this is often more cost effective than paying for the WCU to delete an item
@@ -73,6 +89,13 @@
   - focus on matching your data model to dynamodb best practices
     - small item size may mean many tables to help control throughput costs
     - in general avoid large items, and large item attributes at all costs, no matter how much decomposition is required
+- design for uniform workloads
+  - its all about choosing the correct partition key, which controls how data is distributed across partitions
+  - the total throughput provisioned for a table is dividied equally across partitions
+    - thus if your only R/W to a single partition, the throughput allocated to remaining partitions are unused
+    - to accomodate the weird constraints applied to your data model by dynamodb
+      - add a random number / calculated value to each partition key when writing data
+  - hot and cold data
 
 ### anti patterns
 
@@ -96,9 +119,10 @@
   - whenever you want to update an item but ONLY if it hasnt changed in a particular way since you last read it
     - requires that all processes knows to increment the version number for specific items
   - read: an application retrieves the item and store its version number in memory
-  - modify: then immediately increment the version number (this will be the new version you'll check against in the future write)
-  - write: prepare the update and execute it with a conditional expression that fails if the version number has changed since you last modified it
+    - prepare the update and increment the version number (this will be the new version you'll check against in the future write)
+  - write: execute the update with a conditional expression that fails if the version number has changed since you last read it
     - indicates some other process has changed the data your interested in
+- back-fill: porting data from one place to another, often used in db migrations to port data between two timestamps
 
 ## basics
 

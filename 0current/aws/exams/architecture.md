@@ -40,6 +40,18 @@
 - testing: you generally need a test account that mirrors the production account
   - but you should also invest time in setting up localstack
 
+### core stack
+
+- api gateway: micrservice interfaces
+- lambda: compute
+- s3: object storage
+- dynamodb: operational data
+- sns: messaging
+- sqs: queueing/decoupling
+- step functions: workflow management
+- kinesis: streaming
+- athena: analytics
+
 ### Api Gateway + Lambda + Cloudwatch
 
 - Endpoints are created in API Gateway as resources, whose backend targets are various AWS lambda fns

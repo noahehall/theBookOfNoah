@@ -2,6 +2,8 @@
 
 - mission statement
 
+## my thoughts
+
 ## links
 
 ## best practices

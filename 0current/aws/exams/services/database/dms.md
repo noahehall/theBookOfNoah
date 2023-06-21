@@ -10,6 +10,8 @@
 
 ## features
 
+- migrate non aws databases dynamodb
+
 ## terms
 
 ## basics

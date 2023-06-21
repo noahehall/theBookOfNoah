@@ -2,6 +2,10 @@
 
 - AWS Lambda is an event-driven, serverless (& stateless) compute service that lets you run code without provisioning or managing servers
 
+## my thoughts
+
+- TODO(noah): ensure you add this to every section
+
 ## links
 
 - [AAAAA best practices](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)
