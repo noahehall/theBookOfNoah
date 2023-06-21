@@ -1,8 +1,7 @@
 # API Gateway
 
-- A microservice using Amazon API Gateway consists of a defined resource and associated methods (GET, POST, PUT, etc.) in API Gateway as well as the backend target (e.g. lambda fn, another service, 3rd party, etc)
-- todos
-  - [apigateway for serverless applications](https://explore.skillbuilder.aws/learn/course/52/Amazon%2520API%2520Gateway%2520for%2520Serverless%2520Applications)
+- frontdoor to lambda, aws services and backend apis
+- define resources and associated methods (GET, POST, PUT, etc.) in API Gateway as well as the backend target (e.g. lambda fn, another service, 3rd party, etc)
 
 ## links
 
@@ -19,15 +18,25 @@
 
 ## features
 
-- Transform the body and headers of incoming API requests to match backend systems
-- Transform the body and headers of the outgoing API responses to match API requirements
-- Control API access via AWS Identity and Access Management
-- Create and apply API keys for third-party development
+- run mulitple api versions/deploy to distinct stages at the same time
+- sdk generation via aws cli for java, javascript, objective-c or swift and ruby
+- transform and validate incoming and outgoing requests
+  - Transform the body and headers of incoming API requests to match backend systems
+  - Transform the body and headers of the outgoing API responses to match API requirements
+  - Define models to help standardize your API request and response transformations
+- integrate with cloudfront edge locations
+  - reduce latency and throttle traffic
+  - cache responses
+- several authnz mechanisms
+  - Control API access via IAM / cognito
+  - oauth2 and openid connect
+  - create API keys + usage plans for third-party access
+  - use lambda fn for custom authnz
+
+### specifics
+
 - Enable Amazon CloudWatch integration for API monitoring
-- Cache API responses via Amazon CloudFront for faster response times
-- Deploy an API to multiple stages, allowing easy differentiation between development, test, production as well as versioning
 - Connect custom domains to an API
-- Define models to help standardize your API request and response transformations
 - api endpoint: the hostname of the API; can be edge-optimized or regional, depending on where traffic originates from
 
 ## terms
@@ -63,3 +72,7 @@
 ### rest api
 
 - rest api with complete control over the req and resp
+
+### websocket API
+
+- bidirectional communication

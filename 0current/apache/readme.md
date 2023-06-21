@@ -1,6 +1,6 @@
 # APACHE
 
-- [landing page](https://apache.org/)
+- [project list](https://apache.org/index.html#projects-list)
 
 ## TODOS
 

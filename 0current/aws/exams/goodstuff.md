@@ -56,6 +56,8 @@
 
 - OLTP workloads: online transactional processing
 - OLAP workloads: online analytical processing
+- command query respnsibility segregation: aka polyglot persistence
+  - having a single big db instance thats queried by analytics services to provide `views` into the data for specific microservices/consumers
 
 ### basics
 

@@ -1,5 +1,8 @@
 # Common AWS Architecture
 
+- TODO: sections are very service specific
+  - you should flip the sections to be generic in form and explicit in detail
+
 ## links
 
 - [localstack](https://github.com/localstack/localstack)
@@ -42,7 +45,7 @@
 
 ### core stack
 
-- api gateway: micrservice interfaces
+- api gateway: micrservice APIs
 - lambda: compute
 - s3: object storage
 - dynamodb: operational data
@@ -51,6 +54,8 @@
 - step functions: workflow management
 - kinesis: streaming
 - athena: analytics
+- cloudwatch: monitoring & logs
+- cloudfront: cache for static resources and api gateway
 
 ### Api Gateway + Lambda + Cloudwatch
 
@@ -66,6 +71,16 @@
 - event producers: entities that create and publish events, e.g. websites, apps, etc to unknown consumers usually through an event-bus like EventBridge
 - event router: ingests, filters, and pushes events to known consumers through some other mechanism like SNS
 - event consumers: subscribe to receive specific or monitor all events in a stream and act on those they are interested in
+
+### dynamodb + lambda
+
+- its all about dynamodb streams triggering lambdas for a reliable `at leat once` event delivery
+  - any write db write can become a lambda trigger, which can then filter and take actions based on the underlying change
+
+### dynamodb + analytic services
+
+- you can have one big dynamodb instance used by all microservices
+- then employ other aws analytics services (kinesis, athena) to query db instance for data specific to a microservice
 
 ### dynamodb + lambda + kinesis
 
@@ -83,3 +98,9 @@
 - index s3 items in dynamodb
   - store large json docs in s3 and keep a reference to that item in a dynamodb
     - this keep yours dynamodb items at the recommended size (under 4kb) which reduces costs (s3 < dynamodb)
+
+### dynamodb + SNS
+
+- all about queue-based load leveling
+- dynamodb costs a FK ton based on provisioned throughput
+- you can save on that dramatically by pushing writes to a queue and batch writing from SNS into dynamodb

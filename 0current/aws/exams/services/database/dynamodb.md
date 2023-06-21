@@ -8,6 +8,7 @@
 - getting dynamodb right is all about the designing the data model to lower costs
   - you'll end up with more tables than you would prefer, smaller items than you prefer, and longer partition keys than you prefer
   - colocate hot data to a table thats equally distributed across partitions
+    - cold data should be deleted via TTL or moved to s3
   - read the best practices articles, it takes considerable effort to beat the AWS cost structure
 
 ## links
@@ -46,7 +47,7 @@
 
 ## best practices
 
-- determine your consistency pattern for each request
+- determine your consistency pattern for each READ request
   - the default is eventually consistent, but you can choose strongly consistency
   - strongly consistency costs more than eventually
 - design your data model for requests that are evenly distributed across partitions
