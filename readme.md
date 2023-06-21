@@ -6,3 +6,10 @@
 - [books moved to books](https://github.com/noahehall/books)
 
 ---
+
+- focusing on fullstack, multicloud application development and architecture
+  - javascript + nim + bash
+  - hashistack + docker
+  - postgres, arango
+  - apache opensource
+  - primarily AWS, plans for IBM + GCP
