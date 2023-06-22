@@ -67,3 +67,6 @@
 ### api gateway
 
 - monitor and log deployed apis
+- common metrics/alarms
+  - CacheHitCount: for rest api cache
+  - CacheMissCount: for rest api cache

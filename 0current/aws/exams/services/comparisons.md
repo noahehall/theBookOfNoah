@@ -10,8 +10,8 @@
 
 ## api gateway
 
-| api type  |                              purpose                              |      workloads      |
-| :-------: | :---------------------------------------------------------------: | :-----------------: |
-|   rest    | api mgmt, private proxies, backend auth, WAF & resource policies  | edge / private apis |
-|   http    | native oidc/oauth2, serverless proxies, cheaper & faster, no mgmt |     low latency     |
-| websocket |                      realtime + server push                       |      real time      |
+| api type  |                              purpose                              |            workloads             |
+| :-------: | :---------------------------------------------------------------: | :------------------------------: |
+|   rest    |         api mgmt, private proxies, backend auth, WAF, iam         | sync edge, private apis, caching |
+|   http    | native oidc/oauth2, serverless proxies, cheaper & faster, no mgmt |           low latency            |
+| websocket |                      realtime + server push                       |            real time             |

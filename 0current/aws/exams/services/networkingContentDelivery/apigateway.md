@@ -8,10 +8,17 @@
 - [api gateway developer guide intro](http://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html)
 - [api gateway stage variables](https://docs.aws.amazon.com/apigateway/latest/developerguide/amazon-api-gateway-using-stage-variables.html)
 - [http vs rest](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html)
+- [costs](https://aws.amazon.com/api-gateway/pricing/)
+- [websocket selection expressions](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-selection-expressions.html)
+- [websocket connections api](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-how-to-call-websocket-api-connections.html)
+- [rest api caching](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html)
 
 ## best practices
 
-- abc
+- know your api type
+  - rest/http vs websocket is an easy one
+  - but REST has 3 different types
+    - you can change between the third after deployment, but never from private to edge optimized
 
 ### anti patterns
 
@@ -59,8 +66,12 @@
 
 #### rest api
 
-- rest api with complete control over the req and resp
+- synchronous rest api with complete control over the req and resp
 - has various api proxy functionality and management features like usage plans, api keys, publishing and monetization
+- collection of resources and methods that integrate with http endpoints, lambda fns and other aws services
+- only option with the native api gateway cache
+- costs
+  - cache: charged at an hourly rate based on total cache size,
 
 #### http api
 
@@ -70,10 +81,15 @@
 
 #### websocket API
 
-- maintains a persistent connection between connected clients enabled bidirectional communication designed for realtime applications
+- stateful & persistent connection between connected clients enabled bidirectional communication designed for realtime applications
 - integrates with lambda fns, kinesis, or any http endpoint designed to receive messages
-
-### API Gateway cache
+- cost
+  - 32kb increments, up to 128kb per message,
+  - total connection in minutes
+- pipeline
+  - connect: the client sends a websocket upgrade request; until the `$connect` comletes successfully the upgrade request is pending
+  - established: `$connect` was successful and the websocket api routes the request.body to the appropriate route based on the determiend route key
+  - discconect: `$disconnect` is invoked after the connection is closed, anything after this is a best effort
 
 ## considertaions
 
@@ -87,6 +103,44 @@
   - cloudwatch: record latency & error metrics in
   - cloudwatch logs: log errors
 
-### API type
+### all api types
 
-- abc
+- route
+- integration: e.g. lambda, an http endpoint, or any aws service action
+  - integration reqest: for one-way communication with a backend endpoint
+  - integration response: configure transformations on the returned message payload
+- stage
+- public/private access
+- transformations: both incoming and outgoing requests can be transformed to match the targets expectations
+
+#### websocket api
+
+- json messages routed to your configured routes, non json to a `$default` route
+  - routes are mapped by the properties in the incoming json message, e.g. `request.body.blah` mapps to lambda fn X
+- routes
+  - `$connect`: a persistent connection between client & api is being initiated
+  - `$disconnect`: after client/server disconnects, not guaranteed to be delivered
+  - `$default`: useful as a fallbackroute, mock integrations, proxy delegation to another catchall, handle non json payloads
+  - custom routes: define routes based on the properties of incoming json request.body
+- selection expressions: evaluate the request and response context to determine a mappable key
+  - route response: modeling responses from backend to the client
+  - api key: validate request api keys
+  - api mapping: map requests from custom api domains to specific api stages
+
+#### http api
+
+#### rest api
+
+- endpoint types
+  - regional: low latency for clients in the same AWS region as the api
+    - no cloudfront distro is needed, but can be manually (+cost) added for custom scenarios
+  - edge-optimized: low latency for clients anywhere on the internet
+    - cloudfront distro automatically created (no cost)
+  - private: only accepts requests from clients inside your VPC for super secure communication
+    - no data transfer-out chargers, but costs for AWS PrivateLink
+- api caching: minimize requests to backend targets per stage
+  - TTL up to 300 seconds
+  - between 0.5 and 237gb, optionally encrypted
+  - GET requests by default, but can be configured
+  - per method override of all stage level settings
+  - use request params for cache keys

@@ -8,8 +8,11 @@
 ---
 
 - focusing on fullstack, multicloud application development and architecture
-  - javascript + nim + bash
-  - hashistack + docker
-  - postgres, arango
-  - apache opensource
-  - primarily AWS, plans for IBM + GCP
+  - current focus
+    - nim
+    - bun.sh
+    - aws
+    - hashistack
+  - in general: hardcore web application development
+    - javascript + nim + bash
+    - bizdevops+sec
