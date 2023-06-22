@@ -123,6 +123,23 @@ git remote prune origin
 - [using environments for deployment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment)
 - [from aws perspective](https://aws.amazon.com/blogs/devops/integrating-with-github-actions-ci-cd-pipeline-to-deploy-a-web-app-to-amazon-ec2/)
 
+### github projects
+
+- [press release](https://github.blog/changelog/2023-05-25-github-issues-projects-may-25th-update/)
+- [copying an existing project](https://docs.github.com/en/issues/planning-and-tracking-with-projects/creating-projects/copying-an-existing-project)
+- [providing feedback](https://github.com/orgs/community/discussions/54576)
+- [planning and tracking with projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects)
+- [managing project templates](https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-your-project/managing-project-templates-in-your-organization)
+- [automation: builtin](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-built-in-automations)
+- [automation: api](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects)
+- [automation: via github actions](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/automating-projects-using-actions)
+- [tasklists: intro](https://docs.github.com/en/issues/tracking-your-work-with-issues/about-tasklists)
+- [view: layouts](https://docs.github.com/en/issues/planning-and-tracking-with-projects/customizing-views-in-your-project/changing-the-layout-of-a-view)
+- [fields: intro](https://docs.github.com/en/issues/planning-and-tracking-with-projects/understanding-fields)
+- [fields: milestones](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/about-milestones)
+- [fields: labels](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/managing-labels)
+- [fields: iteration](https://docs.github.com/en/issues/planning-and-tracking-with-projects/understanding-fields/about-iteration-fields)
+
 ## Basics
 
 ### terminology
@@ -342,7 +359,101 @@ git rebase addTheseChanges
 
 ## github
 
-### actions
+### github projects
+
+- organizations have project templates
+  - else you can copy and existing project
+
+#### gotchas / best practices
+
+- tickets
+  - add existing issues/PR to a project by adding an item and pasting in the URL instead of a name
+- views
+  - the view type (board, table, roadmap) will determine what options are available in the view title dropdown
+    - table: fields, group by, sort by
+    - board: fields, column by, sort by, field sum
+      - the columns are determined by issue status field
+    - roadmap: group by, markers, sort by, dates, zoom level
+  - change settings dynamically, and click `discard` to go back to the saved display configuration
+
+#### basics
+
+- an adaptable spreadsheet, task-board, and road map that integrates with your issues and pull requests on GitHub to help you plan and track your work effectively
+- customize multiple views by filtering, sorting, grouping your issues and pull requests, visualize work with configurable charts, and add custom fields to track metadata specific to your team
+- built from the issues and pull requests you add, creating direct references between your project and your work
+
+#### expression syntax
+
+- in various places you can use expressions, e.g. filters
+
+```sh
+## can use operators
+# >, >=, <, <=, and ..
+# filters without a `fieldName:` apply to text fields and item titles
+# number filters can use all the operators, `someNumField:10..20` between 10 and 20
+# select fields use `fieldName:optX,optY`
+# notice there is no = just use fieldName:fieldValue
+
+# thing is an issue, and the associate PR is labeled bug
+is:issue,pr label:bug
+
+# status === deployed
+status:deployed
+
+# status !== deployed
+-status:deployed
+
+# iterations after this one
+iteration:>"my iteration label"
+
+# can use @current, @previous, or @next
+iteration:@current
+
+```
+
+#### issues
+
+- abc
+
+#### PRs
+
+- abc
+
+#### fields
+
+- add metadata to your issues, pull requests, and draft issues and build a richer view of item attributes
+- iteration: plan upcoming work and group items
+  - labeled, repeating blocks of times
+  - when you create an iteration field, 3 iterations are automatically created
+    - edit the field to add/delete/rename labels
+    - each labeled iteration can have different lengths
+    - breaks are automatically inserted between sparse labels
+- milestones: prioritize and track progress on groups of tickets, provides an overview of all child tickets
+  - A user-provided description of the milestone, which can include information like a project overview, relevant teams, and projected due dates
+  - The milestone's due date
+  - The milestone's completion percentage
+  - The number of open and closed issues and pull requests associated with the milestone
+  - A list of the open and closed issues and pull requests associated with the milestone
+  - create tickets directly in the milestone
+- while these are available on the issue, these are per repository
+  - labels: classify tickets per repository
+    - organizations can manage teh default labels for repos within the organization
+    - default labels
+      - good first issue: are automatically included n the repos contribution page
+
+#### workflows (automation)
+
+- builtin automation: changes to ticket (issue/pr) state automates ticket status
+  - item added to project
+  - item reopened
+  - item closed
+  - code changes requested
+  - code review approved
+  - pull request merged
+  - auto-archive items: filter runs every 12 hours against your project to archive matching tickets
+  - auto-add to project: create a filter that matches issues/prs across repos to auto-add to a project
+
+### github actions
 
 - continue:
   - https://docs.github.com/en/actions/using-workflows/advanced-workflow-features
@@ -350,7 +461,7 @@ git rebase addTheseChanges
   - https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
     - https://github.com/actions/cache
 
-### terms
+#### terms
 
 - workflow: triggered in response to an event; a configurable automated process that will run one/more jobs
 - jobs: one/more tasks that make up a workflow; each run inside a runner (a VM/container), executed sequentially/parallel
@@ -368,7 +479,7 @@ git rebase addTheseChanges
   - all run/uses cmds have write access to that workflows artifacts
 - secrets: stored in Github as secrets, then referrenced in your ci yml file
 
-### actions
+#### actions
 
 - see finding and customizing actions link
 - action sources
@@ -376,24 +487,24 @@ git rebase addTheseChanges
   - in any public repo
   - a published docker container image on docker hub (w00p w00p)
 
-### jobs
+#### jobs
 
 - use `needs` to create a dependency between jobs, dependent jobs run sequentially
   - all dependent jobs are skipped if the `needs` job(s) fails
 
-### environment vars
+#### environment vars
 
 - by defualt, env vars are scoped to the run/uses block that define them
 
-### artifacts
+#### artifacts
 
 - enable you to share generated files with other jobs in the same workflow
 
-### secrets
+#### secrets
 
 - see yml below
 
-### caches
+#### caches
 
 - once the cache is created, it is available to all workflows in the same repository
 - dont store any sensitive info in the cache of public repos
@@ -414,7 +525,7 @@ git rebase addTheseChanges
 - caching logic
   - [must read the cache actions docs](https://github.com/actions/cache)
 
-### events
+#### events
 
 - specified with `on: ...`
 - a single event, any of a list of events, or time schedule
@@ -439,17 +550,17 @@ git rebase addTheseChanges
     - `* | ** | + | ? | !`
 - schedule syntax: `schedule: \nt cron: 'your cron here'`
 
-#### reusable workflows
+##### reusable workflows
 
 - read the docs on this one
 - workflow_call: define inputs and outputs for reusable workflows
 
-### docker
+#### docker
 
 - from github registry: `uses: docker://gcr.io/cloud-builders/gradle`
 - from docker hub: `uses: docker://alpine:3.8`
 
-### variables
+#### variables
 
 - are unmasked and shouldnt be used for anything sensitive
 - limited to 48kb per var and 25kb per workflow run
@@ -459,11 +570,11 @@ git rebase addTheseChanges
   - you need to check whether `env.blah` or `somecontext.blah` is more appropriate
     - depends on the event, e.g. push vs pull_request
 
-#### secrets
+##### secrets
 
 - are masked
 
-#### expressions
+##### expressions
 
 - syntax `${{ any bash here }}`
 - literals: null, true/false, number, float, string
@@ -490,7 +601,7 @@ git rebase addTheseChanges
       - canceled() if any previous step
       - failure() if any previous step
 
-#### contexts
+##### contexts
 
 - info about workflow runs, vars, runner environments, jobs and steps
 - are referenced using the expression syntax
@@ -498,7 +609,7 @@ git rebase addTheseChanges
 - github: workflow run and the event that triggerred the run
 - vars: reference a configured (repo/org) variable
 
-### very long example
+#### very long example
 
 ```yml
 # for the full syntax @see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
@@ -572,7 +683,3 @@ jobs:
 ## gitlab
 
 - lol what happened here? must be in another file
-
-### pipelines
-
-- ...

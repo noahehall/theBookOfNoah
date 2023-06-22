@@ -13,6 +13,7 @@
     - bun.sh
     - aws
     - hashistack
+    - racexp: agile + extreme programming
   - in general: hardcore web application development
     - javascript + nim + bash
     - bizdevops+sec
