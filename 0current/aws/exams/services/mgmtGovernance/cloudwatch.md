@@ -8,6 +8,10 @@
 - [embedded metric format: specification](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Specification.html)
 - [embeddced metric format: intro](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format.html)
 
+## my thoughts
+
+- everything starts and ends with cloudwatch
+
 ## best practices
 
 - structure logs following the EMF standard
@@ -62,4 +66,4 @@
 
 ### api gateway
 
-- monitor invocations
+- monitor and log deployed apis

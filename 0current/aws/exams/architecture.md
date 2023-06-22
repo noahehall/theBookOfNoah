@@ -61,6 +61,10 @@
 
 - Endpoints are created in API Gateway as resources, whose backend targets are various AWS lambda fns
 
+### Api gateway + cloudfront
+
+- front your api gateway cloudfront, then add an API gateway cache behind that for frequently accessed content
+
 #### use case
 
 #### anti pattern

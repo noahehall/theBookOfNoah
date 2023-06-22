@@ -10,6 +10,8 @@
     - [scaling serverless architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12713/scaling-serverless-architectures)
     - [security and obervability for serverless applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12714/security-and-observability-for-serverless-applications)\
     - [deploying serverlesss applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12836/deploying-serverless-applications)
+  - merge the 10000s of other aws files into this new format
+    - do this after we run through skillbuilder, likely some of our notes are outdated
 
 ## links
 

@@ -1,12 +1,13 @@
 # API Gateway
 
-- frontdoor to lambda, aws services and backend apis
+- application frontdoor to your lambda, aws services and backend apis
 - define resources and associated methods (GET, POST, PUT, etc.) in API Gateway as well as the backend target (e.g. lambda fn, another service, 3rd party, etc)
 
 ## links
 
 - [api gateway developer guide intro](http://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html)
 - [api gateway stage variables](https://docs.aws.amazon.com/apigateway/latest/developerguide/amazon-api-gateway-using-stage-variables.html)
+- [http vs rest](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html)
 
 ## best practices
 
@@ -32,6 +33,7 @@
   - oauth2 and openid connect
   - create API keys + usage plans for third-party access
   - use lambda fn for custom authnz
+- full https support for encryption in transit
 
 ### specifics
 
@@ -53,6 +55,26 @@
 
 ## basics
 
+### architecture
+
+#### rest api
+
+- rest api with complete control over the req and resp
+- has various api proxy functionality and management features like usage plans, api keys, publishing and monetization
+
+#### http api
+
+- low latency rest apis with odic, oauth2, native cors support
+- lowest latency & cost relative to the REST api but dont offer api management features
+- ideal for serverless workloads; send requests to lambda fns or any routable http endpoint
+
+#### websocket API
+
+- maintains a persistent connection between connected clients enabled bidirectional communication designed for realtime applications
+- integrates with lambda fns, kinesis, or any http endpoint designed to receive messages
+
+### API Gateway cache
+
 ## considertaions
 
 - security:
@@ -65,14 +87,6 @@
   - cloudwatch: record latency & error metrics in
   - cloudwatch logs: log errors
 
-### http api
+### API type
 
-- low latency rest apis with odic, oauth2, native cors support
-
-### rest api
-
-- rest api with complete control over the req and resp
-
-### websocket API
-
-- bidirectional communication
+- abc
