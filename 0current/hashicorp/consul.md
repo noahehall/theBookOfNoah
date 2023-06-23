@@ -108,7 +108,25 @@
 
 - tokens do not expire (unless -expires-ttl=<duration>), it is up to the operator to delete tokens that are not in use.
 
-## vocab
+## basics
+
+- consul maintains a central registry to track services and their respective ips; a distributed system than runs on clusters of nodes
+- each host in a consul cluster runs the consul agent in server mode
+- each service runs the consul agent in client mode (a proxy that knows how to communicate with the consul server) and registers with the consul server
+- configuration: consul provides a kv store for service configuration
+- connect: each services proxy sidecar gets a TLS cert for identification, enables management of service-to-service comms at a logical level vs IP addrs
+- service graph: after services are identified, the service graph provides logical rules specifying communication rules
+
+### install
+
+```sh
+# @see https://developer.hashicorp.com/consul/tutorials/production-deploy/deployment-guide#install-consul
+consul -autocomplete-install
+complete -C /usr/bin/consul consul
+
+```
+
+### terms
 
 - consult cluster:
 - consul client agents:
@@ -129,24 +147,6 @@
 - client-side discovery: consumers are responsible for determining the access information of service instances and load balancing requests between them: query catelog > select a service > make request to service
 - server-side discovery: consumers use an intermediary to query the catalog and make requests: query consul > consul queries the catelog > consul load balances requests to service instances
   - dont be fooled: consul + something like haproxy (it uses envoy) is still the best in class architecture
-
-## basics
-
-- consul maintains a central registry to track services and their respective ips; a distributed system than runs on clusters of nodes
-- each host in a consul cluster runs the consul agent in server mode
-- each service runs the consul agent in client mode (a proxy that knows how to communicate with the consul server) and registers with the consul server
-- configuration: consul provides a kv store for service configuration
-- connect: each services proxy sidecar gets a TLS cert for identification, enables management of service-to-service comms at a logical level vs IP addrs
-- service graph: after services are identified, the service graph provides logical rules specifying communication rules
-
-### install
-
-```sh
-# @see https://developer.hashicorp.com/consul/tutorials/production-deploy/deployment-guide#install-consul
-consul -autocomplete-install
-complete -C /usr/bin/consul consul
-
-```
 
 ### locations
 

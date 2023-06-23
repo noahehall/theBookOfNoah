@@ -5,10 +5,11 @@
 
 ## links
 
-- [cli (sam) deploy](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-deploy.html)
-- [deployment serverless applications](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-deploying.html)
+- [deploy](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-deploy.html)
+- [deploying serverless applications](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-deploying.html)
 - [policy templates](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html)
-- [sam github with policy templates and other stuff](https://github.com/aws/serverless-application-model/tree/develop)
+- [github with policy templates and other stuff](https://github.com/aws/serverless-application-model/tree/develop)
+- [template anatomy](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy.html)
 
 ### sam CLI
 
@@ -20,6 +21,7 @@
   - instructions to build an environment and during deployment SAM transforms and expands it into AWS CloudFormation templates
   - all cloud formation optiosn are available
 - start with prebuilt SAM policies to bootstrap commonly used templates to build for least privilege security access
+- SAM supports swagger/openAPI for defining API gateway apis
 
 ### anti patterns
 

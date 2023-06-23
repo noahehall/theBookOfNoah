@@ -1,8 +1,6 @@
-# service name here
+# EMR
 
-- mission statement
-
-## my thoughts
+- hosted apache spark, hive, presto and other big data workloads
 
 ## links
 
@@ -12,12 +10,8 @@
 
 ## features
 
-### pricing
-
 ## terms
 
 ## basics
-
-## integrations
 
 ## considerations

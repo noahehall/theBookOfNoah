@@ -11,8 +11,7 @@
 
 ## links
 
-- [wikipedia http3](https://en.wikipedia.org/wikiclear/HTTP/3)
-- [wikipedia http2](https://en.wikipedia.org/wiki/HTTP/2)
+- [AAA web perf w3 working group](https://www.w3.org/webperf/)
 - [web technology surveys](https://w3techs.com/)
 - [web vs service workers](https://web.dev/workers-overview/)
 - [performance related http headers](https://www.keycdn.com/blog/http-headers)
@@ -94,6 +93,9 @@
 - re-render triggers: occurs when the user interacts with the page that forces a re-render
 
 ## protocols
+
+- [wikipedia http3](https://en.wikipedia.org/wikiclear/HTTP/3)
+- [wikipedia http2](https://en.wikipedia.org/wiki/HTTP/2)
 
 ### HTTP/1
 

@@ -1,6 +1,7 @@
 # rancher
 
 - provides docker + k8s environment
+- we dropped rancher when we dropped kubernetes in favor of nomad
 
 ## links
 

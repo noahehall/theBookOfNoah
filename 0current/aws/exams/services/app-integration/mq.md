@@ -1,6 +1,6 @@
-# service name here
+# MQ
 
-- mission statement
+- managed service for apache activeMQ and rabbgitMQ
 
 ## my thoughts
 
@@ -12,12 +12,8 @@
 
 ## features
 
-### pricing
-
 ## terms
 
 ## basics
-
-## integrations
 
 ## considerations

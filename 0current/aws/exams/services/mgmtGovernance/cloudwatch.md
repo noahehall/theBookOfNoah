@@ -8,6 +8,10 @@
 - [embedded metric format: specification](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format_Specification.html)
 - [embeddced metric format: intro](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Embedded_Metric_Format.html)
 
+## my thoughts
+
+- everything starts and ends with cloudwatch
+
 ## best practices
 
 - structure logs following the EMF standard
@@ -16,6 +20,8 @@
 ### anti patterns
 
 ## features
+
+### pricing
 
 ## terms
 
@@ -50,3 +56,19 @@
 - metrics
   - ConcurrentExecutions: fns with custom cuncurrency limits: total concurrent invocations for a given fn at a given point in time
   - UnreservedConcurrentExecutions: fns without a custom cuncurrency limit: total concurrent invocations for a given fn at a given point in time
+
+### dynamodb
+
+- common metrics/alarms
+  - SuccessfulRequestLatency
+  - Throttling Events
+  - Capacity Consumption
+  - User Errors
+  - System Errors
+
+### api gateway
+
+- monitor and log deployed apis
+- common metrics/alarms
+  - CacheHitCount: for rest api cache
+  - CacheMissCount: for rest api cache

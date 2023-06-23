@@ -10,6 +10,7 @@
 
 ## links
 
+- [docker engine install](https://docs.docker.com/engine/install/ubuntu/)
 - [docker docs](https://docs.docker.com/)
 - [docker ref](https://docs.docker.com/reference/)
 - [docker guides: overview](https://docs.docker.com/get-started/overview/)
@@ -99,8 +100,8 @@
     - however things like an edge/vault could have oom-score-adj to prefer killing other processes first
 - public images should be atleast `linux/amd64` and `linux/arm64`
 - pushing built services to registry
-  - lol alot of the shiz we did in script.registry.sh is still useful
-  - but you can just prefix the fkn `image: poop` directly in compose ;)
+  - dynamically: by setting the image name during push
+  - statically: e.g. in docker compose setting `image: use-this-name`
 - only build upstream
   - downstream envs should use an image built and targeted for that environment
 - never hardcode runtime values
@@ -135,6 +136,19 @@
 
 ## basics
 
+### setup
+
+- docker engine provides the daemon (dockerd) and cli (docker)
+
+```sh
+## install
+# drop through this page: https://docs.docker.com/engine/install/ubuntu/#uninstall-old-versions
+# you should use the apt method and move on with your life
+
+## upgrade
+# follow the install steps
+```
+
 ### general
 
 - lifecycle statuses (as reported by docker ps)
@@ -158,19 +172,8 @@
 
 ## docker desktop for linux
 
-- breaks hashicorp, dont use it
-
-### docker ecs context
-
-```sh
-# see all your contexts
-docker context ls
-
-# create aws context
-## requires fkn docker desktop
-docker context create ecs POOP
-
-```
+- breaks hashicorp, dont use it; which means you wont be able to use docker ecs context
+  - atleast at the time of this writing (somewhere in 2023)
 
 ## files and locations
 

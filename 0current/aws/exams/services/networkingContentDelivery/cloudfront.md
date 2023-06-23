@@ -1,4 +1,4 @@
-# service name here
+# cloudfront
 
 - mission statement
 
@@ -12,12 +12,10 @@
 
 ## features
 
-### pricing
+- low latency access to your aws resources
 
 ## terms
 
 ## basics
-
-## integrations
 
 ## considerations
