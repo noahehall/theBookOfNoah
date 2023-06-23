@@ -174,6 +174,7 @@
 - Function Type:
   - author from scratch:
   - use a blueprint
+    - authorizer: for api gateway requests
   - container image
 - runtime: e.g. nodejs
 - architecture: x86/64 vs arm64

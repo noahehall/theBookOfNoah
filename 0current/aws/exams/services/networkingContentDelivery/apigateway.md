@@ -74,6 +74,7 @@
 - api endpoint: the hostname of the API; can be edge-optimized or regional, depending on where traffic originates from
 - invoke url: `https://${api-id}.execute-api.${region}.amazon.com/${stage}/${resource}`
 - stage: a deployed snapshot of the API with a unique versioned identifier
+- OIDC: openid connect token, usually part of a json web token
 
 ## basics
 
@@ -108,15 +109,59 @@
 
 ## considertaions
 
-- security:
-  - iam
-  - open
-  - api key
 - deployment stage: aka just stage, e.g. dev, prod, etc
 - binary media types: map api responses to content-type
 - metrics and logging: standard cloudwatch + cloudwatch log pricing
   - cloudwatch: record latency & error metrics in
   - cloudwatch logs: log errors
+- general workflow
+  - choose an api type
+  - create, clone or import an API as a starting point
+  - select an endpoint type
+  - add addressable resources in parent-child relationships
+    - proxy resources use a speciall ANY http method
+    - lambda proxy invokes a specific lambda fn
+  - add http methods to resources, timeouts and integration types
+  - edit method details: e.g. query strings, custom header params, data transformations, etc
+  - test the api
+  - deploy to a stage
+
+### api authnz
+
+- authnz + additional options
+  - IAM: signature v4
+  - lambda authorizer token: cognito user pools, third-party auth
+  - lambda authorizer request: lambda authorizer token options, multiple header support
+  - cognito: cognito user pools
+- authnz options
+  - for consumers using IAM, then you should use IAM
+  - for external users, generally lambda authorizers / cognito
+- iam authnz process
+  - consumer signs request using aws v4 signing process
+  - IAM uses the aws access key and secret to compute an HMAC signature using sha256
+  - the signature is added to the auth header, api gateway parses it and determines if the IAM permissions match the request
+- lambda authorizers: preferred for oauth strategies
+  - a custom lambda fn that handles authnz
+    - token: when only a token is required for authnz
+      - api gateway passes the source token to the lambda fn as JSON input and expects an IAM policy into be returned (with execute-API:invoke for accepted)
+    - request: when more than a token is required for authnz
+      - additional metadata is provided in the JSON input passed to the lambda fn
+        - e.g. info found in the request header, query string params, request body, etc
+      - only return the lalow if all off the required param values match the preconfigured ones in the lambda fn
+  - apigateway invokes the lambda authorizer configured for the api method
+    - if a previous token is supplied with the request, a cache TTL can be checked instead of invoking the lambda
+  - lambda fn returns a policy that allows/denies the request
+- cognito authorizers + cognito user pools: intended for mobile/web apps that handle authnz within the application
+  - user pools must be integrated into your consuemr application for authnz
+    - can also include custom oauth2 resource servers + custom scopes
+  - create an authorizer of type COGNITO_USER_POOLS and configure an api method to use it
+  - users are authenticated against the user pool and receive an OIDC token formatted in a json web token within your app
+  - your app then makes requests to api gateway and provide the users token in the request header
+  - apigateway validates the token
+- security:
+  - iam: requires all requests to be signed with aws version 4 signing process
+  - open
+  - api key
 
 ### all api types
 
@@ -133,7 +178,6 @@
   - canary:
     - enable canary deployments to keep a base stage, and a latest version of the same stage
     - you can then promote the canary to be the base after validation
-- public/private access
 - transformations: both incoming and outgoing requests can be transformed to match the targets expectations
 - API monitoring: generally through cloudwatch integration
 - integration types
@@ -149,17 +193,6 @@
     - return a response without sending the request to any backend, e.g. for a healthcheck or any hardcoded response
   - vpc link
     - connect to a network load balancer for interacting with services within a private vpc
-- general workflow
-  - choose an api type
-  - create, clone or import an API as a starting point
-  - select an endpoint type
-  - add addressable resources in parent-child relationships
-    - proxy resources use a speciall ANY http method
-    - lambda proxy invokes a specific lambda fn
-  - add http methods to resources, timeouts and integration types
-  - edit method details: e.g. query strings, custom header params, data transformations, etc
-  - test the api
-  - deploy to a stage
 
 #### websocket api
 
