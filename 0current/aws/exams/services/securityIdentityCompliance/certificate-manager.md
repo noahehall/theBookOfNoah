@@ -1,4 +1,4 @@
-# service name here
+# AWS certificate manager ACM
 
 - mission statement
 
@@ -19,5 +19,9 @@
 ## basics
 
 ## integrations
+
+### api gateway
+
+- import your own certs or generate an SSL
 
 ## considerations

@@ -5,8 +5,6 @@
 - [racexp moved to nirvai](https://github.com/nirv-ai/racexp)
 - [books moved to books](https://github.com/noahehall/books)
 
----
-
 - focusing on fullstack, multicloud application development and architecture
   - current focus
     - nim

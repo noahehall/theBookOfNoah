@@ -116,6 +116,8 @@
   - billing starts AFTER the runtime (not the function) has been initialized,
   - ^ i.e. once lambda is ready to initalialize your packages and dependencies
 
+### pricing
+
 ## terms
 
 - blueprint: a base lambda fn used to build out new lambda fns; provided for standard lambda triggers
@@ -208,7 +210,7 @@
       - reserved: guarantees a set of instances for a specific fn
         - not charged, subtracts from the unreserved total
       - provisioned: initializes a specific set of runtime instances for a fn that can respond immediately to requests:
-        - costs! subtracts from teh unreserved total
+        - costs! subtracts from the unreserved total
       - burst concurrency: quote is not per function, but is applied to all fns in a region
         - 3000: us west (oregon), us east (virginia), euroope (ireland)
         - 1000: asia pacific (tokyo), europe (frankfurt), us east (ohio)

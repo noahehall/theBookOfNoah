@@ -110,6 +110,8 @@
 - auto scaling based on target read/write utilization
 - DAX: the dynamodb accelerator: integrated cache with dynamodb compatible api
 
+### pricing
+
 ## terms
 
 - consistency: ability to read data understanding that all prior writes will be reflected in the results returned

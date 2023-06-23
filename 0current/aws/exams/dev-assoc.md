@@ -2,7 +2,7 @@
 
 - everything in this doc is taken directly from AWS
 - last updated in 2023 for version 1.0 DVA-C02
-- bookmark: api gateway for serverless applications > designing rest apis> pricing considerations for rest
+- bookmark: api gateway for serverless applications > building and deploying apis > managing access to apis
 - todos
   - tackle these AFTER you complete the recommended skillbuilder rampup; these may/not be part of the schedule
     - [designing event driven architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12715/designing-event-driven-architectures)
@@ -12,6 +12,8 @@
     - [deploying serverlesss applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12836/deploying-serverless-applications)
   - merge the 10000s of other aws files into this new format
     - do this after we run through skillbuilder, likely some of our notes are outdated
+  - ensure theres a pricing section under features for each service
+    - its generally `https://aws.amazon.com/service-name/pricing/`
 
 ## links
 

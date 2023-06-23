@@ -8,10 +8,12 @@
 - [api gateway developer guide intro](http://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html)
 - [api gateway stage variables](https://docs.aws.amazon.com/apigateway/latest/developerguide/amazon-api-gateway-using-stage-variables.html)
 - [http vs rest](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html)
-- [costs](https://aws.amazon.com/api-gateway/pricing/)
+- [pricing](https://aws.amazon.com/api-gateway/pricing/)
 - [websocket selection expressions](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-selection-expressions.html)
 - [websocket connections api](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-how-to-call-websocket-api-connections.html)
 - [rest api caching](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html)
+- [api proxies](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-set-up-simple-proxy.html)
+- [api proxies (lambda)](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html)
 
 ## best practices
 
@@ -19,6 +21,13 @@
   - rest/http vs websocket is an easy one
   - but REST has 3 different types
     - you can change between the third after deployment, but never from private to edge optimized
+- use custom domains for the invoke url and choose a base path map to map it to this url
+- think through your API stage strategy
+  - for versioning and rollbacks
+  - use different stages by environment/customer
+  - stage variables increase deployment flexibility
+  - enable canary deployments to test new versions
+  - variables can be injected at runtime to dynamnically invoke lambda fns, endpoints, etc
 
 ### anti patterns
 
@@ -42,11 +51,14 @@
   - use lambda fn for custom authnz
 - full https support for encryption in transit
 
-### specifics
+### pricing
 
-- Enable Amazon CloudWatch integration for API monitoring
-- Connect custom domains to an API
-- api endpoint: the hostname of the API; can be edge-optimized or regional, depending on where traffic originates from
+- rest apis
+  - flat charge: flat rate per million requests
+  - data transfer out
+    - private endpoints: check privatelink pricing
+    - public endpoints: standard aws prices
+  - optional cache: per hour per stage depending on cache size
 
 ## terms
 
@@ -59,6 +71,9 @@
 - model: define the format/schema of some data; create and use models for mapping templates
 - stage: the path through which an api deployment is accessible, e.g. prod vs dev endpoints
 - backend target: e.g. a lambda function, another aws service, or a thirdparty api
+- api endpoint: the hostname of the API; can be edge-optimized or regional, depending on where traffic originates from
+- invoke url: `https://${api-id}.execute-api.${region}.amazon.com/${stage}/${resource}`
+- stage: a deployed snapshot of the API with a unique versioned identifier
 
 ## basics
 
@@ -110,8 +125,41 @@
   - integration reqest: for one-way communication with a backend endpoint
   - integration response: configure transformations on the returned message payload
 - stage
+  - caching
+  - throttling
+  - usage plans
+  - export language specific SDKs, swagger definitions and postman extensions
+  - variables: create then reference them via `${stageVariables.varName}`
+  - canary:
+    - enable canary deployments to keep a base stage, and a latest version of the same stage
+    - you can then promote the canary to be the base after validation
 - public/private access
 - transformations: both incoming and outgoing requests can be transformed to match the targets expectations
+- API monitoring: generally through cloudwatch integration
+- integration types
+  - lambda function:
+    - requests are proxies to a lambda fn with the request details passed in the event param
+    - requires an IAM role with perms for API gateway to invoke lambda on your behalf
+  - http endpoint
+    - for public endpoints
+    - requires either a proxy (which does the following) or manually configure integration request-response & data mappings to the method request-response
+  - aws service
+    - expose AWS service actions, e.g. passing messages directly into an SQS queue
+  - mock
+    - return a response without sending the request to any backend, e.g. for a healthcheck or any hardcoded response
+  - vpc link
+    - connect to a network load balancer for interacting with services within a private vpc
+- general workflow
+  - choose an api type
+  - create, clone or import an API as a starting point
+  - select an endpoint type
+  - add addressable resources in parent-child relationships
+    - proxy resources use a speciall ANY http method
+    - lambda proxy invokes a specific lambda fn
+  - add http methods to resources, timeouts and integration types
+  - edit method details: e.g. query strings, custom header params, data transformations, etc
+  - test the api
+  - deploy to a stage
 
 #### websocket api
 

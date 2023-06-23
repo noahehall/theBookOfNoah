@@ -57,9 +57,21 @@
 - cloudwatch: monitoring & logs
 - cloudfront: cache for static resources and api gateway
 
+### elastic load balancing
+
+- use a network load balancer to enable access to resources in a private vpc
+
+### api gateway
+
+- you can generally use api gateway as a frontdoor to any aws service action
+
 ### Api Gateway + Lambda + Cloudwatch
 
 - Endpoints are created in API Gateway as resources, whose backend targets are various AWS lambda fns
+- use api gateway stages, stage variables and lambda fns so you dont have to hard-code any components
+  - lambda: enable versioning and use aliases to reference
+  - gateway: use stages for environments
+  - point api gateway stage variables at lambda aliases
 
 ### Api gateway + cloudfront
 

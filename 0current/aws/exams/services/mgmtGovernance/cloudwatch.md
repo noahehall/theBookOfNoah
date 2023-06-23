@@ -21,6 +21,8 @@
 
 ## features
 
+### pricing
+
 ## terms
 
 ## basics
