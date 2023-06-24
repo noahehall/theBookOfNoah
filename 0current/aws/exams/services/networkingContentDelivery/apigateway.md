@@ -28,6 +28,10 @@
   - stage variables increase deployment flexibility
   - enable canary deployments to test new versions
   - variables can be injected at runtime to dynamnically invoke lambda fns, endpoints, etc
+- set throttling and usage plans
+  - prevent minority of customers from using all of your systems capacity
+  - ensure downstream systems can amange the # of requests
+  - provide api keys to customers for identification and application of usage and throttle limits to their requests
 
 ### anti patterns
 
@@ -160,8 +164,41 @@
   - apigateway validates the token
 - security:
   - iam: requires all requests to be signed with aws version 4 signing process
-  - open
+  - open/public
   - api key
+
+#### resource policies + authnz
+
+- resource policy only: explicit allow required on inbound criteria of the caller, else deny the caller
+- lambda auth + resource policy: if policy explicitly denies, the caller is denied, else evaluate lambda auth
+- IAM auth + resource policy:
+  - if caller & api owner are from separate accounts: both iam user policy & resource policy must explicitly allow
+  - if caller & api owner are same account: either user policy / resource policy must explicitly allow
+- cognito auth + resource policy:
+  - if api gateway authenticates the caller from cognito, evaluate the resource policy
+  - the resource policy must explicitly allow
+
+### throttling, quotas & usage plans
+
+- each require providing api keys to clients
+- consumers set their key in the `x-API-key` header
+- throttling based on rate and burst per key, applied in the following order
+  - per client, per method: throttle limits set for an api stage in a usage plan
+  - per client: throttle limits set in a usage plan
+  - defualt per-method limits & individual per-method limits set in an api stage
+  - the asccoutn level limit
+- usage plan types
+  - api key throttling per second and burst
+  - api key quota by day, week or month
+  - api key usage by daily usage requests
+- token bucket algorithm: limits are measured and throttled by confirming network traffik conforms to set limits
+  - a token counts as a request
+  - the burst is the maximum bucket size
+  - requests (tokens) that come into the bucket are filled at at a steady rate
+    - if the rate at which requests fill the bucket exceed the burst value, a `429 Too Many Requests` are returned
+  - defaults: per account per region; use usage plans for more granular control
+    - steady-state request rate: 10k requests per second
+    - burst: 5k requests across all apis
 
 ### all api types
 
