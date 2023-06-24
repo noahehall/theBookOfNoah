@@ -18,6 +18,13 @@
 
 - pretty sure we have a localstack.md somewhere in this repo
 
+## event-driven architectures
+
+- events: an observable (change in state) that contains all the information required to take subsequent action
+- event producers: entities that create and publish events, e.g. websites, apps, etc to unknown consumers usually through an event-bus like EventBridge
+- event router: ingests, filters, and pushes events to known consumers through some other mechanism like SNS
+- event consumers: subscribe to receive specific or monitor all events in a stream and act on those they are interested in
+
 ## Serverless
 
 - includes a number of fully managed services that are tightly integrated
@@ -57,6 +64,15 @@
 - cloudwatch: monitoring & logs
 - cloudfront: cache for static resources and api gateway
 
+## common
+
+### core
+
+- cloudwatch: logging and monitoring
+- xray: tracing & observability
+- cloudtrail
+- iam: permissions and policies
+
 ### elastic load balancing
 
 - use a network load balancer to enable access to resources in a private vpc
@@ -76,17 +92,6 @@
 ### Api gateway + cloudfront
 
 - front your api gateway cloudfront, then add an API gateway cache behind that for frequently accessed content
-
-#### use case
-
-#### anti pattern
-
-## event-driven architectures
-
-- events: an observable (change in state) that contains all the information required to take subsequent action
-- event producers: entities that create and publish events, e.g. websites, apps, etc to unknown consumers usually through an event-bus like EventBridge
-- event router: ingests, filters, and pushes events to known consumers through some other mechanism like SNS
-- event consumers: subscribe to receive specific or monitor all events in a stream and act on those they are interested in
 
 ### dynamodb + lambda
 

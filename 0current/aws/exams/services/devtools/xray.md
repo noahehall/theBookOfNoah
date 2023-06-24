@@ -2,6 +2,8 @@
 
 - visualize the components of an application and flow of api calls, identify performance bottlenecks, and trouble requests that result in errors
 
+## my thoughts
+
 ## links
 
 - [x-ray features](https://aws.amazon.com/xray/features/)
@@ -18,6 +20,8 @@
 - identifying the callflow of lambda fns and API calls
 - tracing path and timing of an invocation to locate bottlenecks and failures
 
+### pricing
+
 ## terms
 
 - dwell time: duration for which an invocation was queued
@@ -26,6 +30,20 @@
   - fn: all the code thats part of the fn but outside the handler is initialized and loaded into memory
 
 ## basics
+
+### traces
+
+- you generally want to group by a trace attribute, e.g. ClientIP
+
+### service map
+
+### sampling
+
+### encryption
+
+## considerations
+
+## integrations
 
 ### lambda
 
@@ -39,4 +57,8 @@
     - lambda needs to `thaw` the execution environment and fetch the fn from memory
   - the handler method is invoked and your fn executes
 
-## considerations
+### api gateway
+
+- trace an analyze user requests as they travel through apigateway to underlying services
+- observe how your application is performing to identify, troobleshoot and rootcause analysis of per issues and errors
+- configure sampling rules specifying: which requests to record & at what sampling rates

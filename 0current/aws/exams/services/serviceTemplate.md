@@ -18,6 +18,6 @@
 
 ## basics
 
-## integrations
-
 ## considerations
+
+## integrations

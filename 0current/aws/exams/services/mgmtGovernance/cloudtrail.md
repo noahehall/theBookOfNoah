@@ -16,13 +16,23 @@
 
 ## features
 
+- create a trail for captured events and store in s3
+
+### pricing
+
 ## terms
 
 ## basics
+
+## considerations
+
+## integrations
 
 ### lambda
 
 - the default logging: is for control plane (mgmt) events
 - optional logging: can turn on data event logging for tracking every time lambda fns are invoked
 
-## considerations
+### api gateway
+
+- captures all api calls as events whether originating from console / code

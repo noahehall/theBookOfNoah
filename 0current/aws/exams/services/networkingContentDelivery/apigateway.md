@@ -163,9 +163,11 @@
   - your app then makes requests to api gateway and provide the users token in the request header
   - apigateway validates the token
 - security:
-  - iam: requires all requests to be signed with aws version 4 signing process
-  - open/public
-  - api key
+  - method authorization settings:
+    - none / iam
+    - request validator
+    - api key
+  - resource policies
 
 #### resource policies + authnz
 
@@ -182,11 +184,16 @@
 
 - each require providing api keys to clients
 - consumers set their key in the `x-API-key` header
+- configuration
+  - api key throttling
+  - stage > method throttling
+  - stage throttling
+  - account limits
 - throttling based on rate and burst per key, applied in the following order
   - per client, per method: throttle limits set for an api stage in a usage plan
   - per client: throttle limits set in a usage plan
   - defualt per-method limits & individual per-method limits set in an api stage
-  - the asccoutn level limit
+  - the account level limit
 - usage plan types
   - api key throttling per second and burst
   - api key quota by day, week or month

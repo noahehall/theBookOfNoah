@@ -1,5 +1,8 @@
 # cloudwatch
 
+- CloudWatch Metrics: monitoring & billing, but not observability
+- CloudWatch Logs: aggregator
+
 ## links
 
 - [cloudwatch logging intro](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html)
@@ -16,12 +19,15 @@
 
 - structure logs following the EMF standard
   - cloudwatch logs w2ill autoamtically extract these metric values
+- ## be careful about enabling logging full requests in production and leaking sensitive data
 
 ### anti patterns
 
 ## features
 
 ### pricing
+
+- execution logs cost
 
 ## terms
 
@@ -31,7 +37,14 @@
 
 ### logs
 
+- execution logging: what occurs during a service action; useful for troubleshooting services
+- access logging: whos invoking a service action; fully customizable
+
 #### log groups
+
+- logs are categorized by log groups
+- a log group is generally associated with a specific service
+  - but a single service can utilize mutiple log groups
 
 #### log insights
 
@@ -41,9 +54,16 @@
 
 ### events
 
+- rules
+- event buses
+
 ### application monitoring
 
 ### insights
+
+### billing
+
+### filters
 
 ## considerations
 
@@ -68,7 +88,20 @@
 
 ### api gateway
 
+- turn on detailed metrics in stage settings
 - monitor and log deployed apis
+- common questions
+  - how often apis are called
+  - number of api invocations
+  - latency of api responses
+  - 4 vs 5xx errors
+  - cache to hit:miss ratio
 - common metrics/alarms
-  - CacheHitCount: for rest api cache
-  - CacheMissCount: for rest api cache
+  - CacheHitCount: for rest api cache in given period
+  - CacheMissCount: for rest api cache in a given period
+  - count: total api requests in a period
+  - latency: full roundtrip time between api gateway receiving a request and when it returns a response; includes IntegrationLatency + gateway overhead
+  - integrationLatency: time between gateway invoking a target and receiving a response
+    - latency - integrationLatency = api gateway overhead
+  - 4xxError: total client-side errors _captured_ in a specific period
+  - 5xxError: total server-side errors _captured_ in a specific period

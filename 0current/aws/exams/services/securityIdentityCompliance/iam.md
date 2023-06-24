@@ -2,6 +2,10 @@
 
 - mission statement
 
+## my thoughts
+
+- everything starts and ends with IAM
+
 ## links
 
 - [intro to IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html)
@@ -29,6 +33,8 @@
 - principle of least privilege: start with the most restrictive set of permissions possible
 - security in depth: multiple layers of redundant security
 - principal: a user, role, another aws service / account
+
+## pricing
 
 ## terms
 
