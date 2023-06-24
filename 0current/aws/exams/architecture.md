@@ -6,9 +6,13 @@
 ## links
 
 - [localstack](https://github.com/localstack/localstack)
-- [aws serverless land](https://aws.amazon.com/serverless/)
+- [aws serverless](https://aws.amazon.com/serverless/)
+- [serverless land]
 - [serverless multi-tier architectures (PDF)](https://d1.awsstatic.com/whitepapers/AWS_Serverless_Multi-Tier_Architectures.pdf)
 - [aws service search](https://aws.amazon.com/products/)
+- [well architected framework: serverless application lens](https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/wellarchitected-serverless-applications-lens.pdf?810a2056-c993-4832-af32-11286cad694c)
+- [10 things serverless architects should know](https://aws.amazon.com/blogs/architecture/ten-things-serverless-architects-should-know/)
+- [aws blog: api gateway category](https://aws.amazon.com/blogs/compute/category/application-services/amazon-api-gateway-application-services/)
 
 ## terms
 

@@ -14,14 +14,16 @@
 - [rest api caching](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html)
 - [api proxies](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-set-up-simple-proxy.html)
 - [api proxies (lambda)](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html)
+- [mapping template variable reference](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html)
+- [request validation](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-method-request-validation.html)
 
 ## best practices
 
 - know your api type
   - rest/http vs websocket is an easy one
   - but REST has 3 different types
-    - you can change between the third after deployment, but never from private to edge optimized
-- use custom domains for the invoke url and choose a base path map to map it to this url
+    - you can change between the them after deployment, but never from private to edge optimized
+- use custom domains for the invoke url and choose a base path map to route it to the aws invoke url
 - think through your API stage strategy
   - for versioning and rollbacks
   - use different stages by environment/customer
@@ -54,6 +56,7 @@
   - create API keys + usage plans for third-party access
   - use lambda fn for custom authnz
 - full https support for encryption in transit
+- simple request validation against a type definition at the method level
 
 ### pricing
 
@@ -222,7 +225,13 @@
   - canary:
     - enable canary deployments to keep a base stage, and a latest version of the same stage
     - you can then promote the canary to be the base after validation
-- transformations: both incoming and outgoing requests can be transformed to match the targets expectations
+- mapping template transformations: both incoming and outgoing requests can be transformed to match the target/client expectations
+  - map request to integration request payload
+  - map target response to the method response
+  - key transformation variables
+    - $input: body, json, params path
+    - $stageVAriables: any stage variable name
+    - $util: `escapeJAvascript(), parseJson(), urlEncode/DecodE(), base64Encode/Decode()`
 - API monitoring: generally through cloudwatch integration
 - integration types
   - lambda function:
@@ -237,6 +246,25 @@
     - return a response without sending the request to any backend, e.g. for a healthcheck or any hardcoded response
   - vpc link
     - connect to a network load balancer for interacting with services within a private vpc
+- custom error responses:
+  - change http status code
+  - modify body content
+  - add headers
+- request validation: specify an object describing the acceptable request type definition
+  - required request params in the url, query string and headers are included and non blank
+  - application request paylaod adheres to the configured json request model of the method
+
+```jsonc
+// example request validation
+{
+  "type": "object",
+  "title": "some description",
+  "required": ["somePropX", "somePropY"],
+  "properties": {
+    "somePropX": { "type": "string", "enum": ["this", "or", "that"] }
+  }
+}
+```
 
 #### websocket api
 
