@@ -47,7 +47,9 @@
 ## best practices
 
 - always consider the lambda execution environment and context
-  - `exports.handler`fn is recreated, but the context parent scope is reused on warm starts
+  - `exports.handler `fn is recreated, but the parent scope is reused on warm starts
+    - this fn should only contain lambda specific code, no business logic
+  - reduce the size of the execution context as much as possible to optimize for cold starts
 - utilize the Test tab to create fake events, which will reveal errors that are normally hidden
 - lambda is prime for event-driven architectures, where known events trigger your fns
 - optimize performance by reducing latency and increasing throughput
@@ -178,9 +180,8 @@
   - container image
 - runtime: e.g. nodejs
 - architecture: x86/64 vs arm64
-- permissions
-  - what services is this fn allowed to interact with
-- execution role
+- permissions/resource policies: which event sources are permitted to trigger this fn
+- execution role: what services is this fn allowed to interact with
   - new role
   - existing role
   - new role from aws policy templates
