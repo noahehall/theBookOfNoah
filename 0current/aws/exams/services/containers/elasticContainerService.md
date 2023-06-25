@@ -154,6 +154,11 @@
     - spread: evenly across instances based on some value, e.g. availability zone
     - binpack: consolidate into a small number of instances to improve utilization based on the least available amount of cpu/memory
       - seeks to minimize the number of isntances
+  - scheduling strategies
+    - replica scheduling strategy: maintain the optimal level of running tasks across instances per the task placement strategy
+    - daemon scheduling strategy: deploys exactly one task to each instance per the task placement strategy
+      - only for the ec2 launch type
+      - common for sidecars, e.g. logging / monitoring where only one service is required for all tasks in the instance
 
 ### fargate
 

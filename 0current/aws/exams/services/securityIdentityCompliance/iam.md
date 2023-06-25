@@ -15,11 +15,13 @@
 - [apigateway: identity-based policy examples](https://docs.aws.amazon.com/apigateway/latest/developerguide/security_iam_id-based-policy-examples.html)
 - [apigateway: resource policies](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies.html)
 - [apigateway: authnz workflow](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-authorization-flow.html)
+- [dynamodb: intro](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/UsingIAMWithDDB.html)
 
 ## best practices
 
 - resource policies are easier to grant/deny access across services/accounts, but have size limits
   - iam roles are a bit more verbose but dont have limits
+- always follow principle of least privilege for users and roles
 
 ### anti patterns
 
@@ -166,3 +168,19 @@
   ]
 }
 ```
+
+### dynamodb
+
+- authnz at the table, item, or attribute level
+- for east/west in the same VPC always use a VPC endpoint for the dynamodb table
+  - this prevents traffic from having to treverse the publically routed internet using public addressing
+
+### ecs
+
+- apply roles down to the task level for granular positions
+  - assign resourced policies with appropriate permissions to each role
+
+### secrets manager
+
+- apply resource policies directly to individual secrets defining who can access and what they can do
+- alternatively apply roles to resources giving them access to specific secrets

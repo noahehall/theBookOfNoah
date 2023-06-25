@@ -14,6 +14,8 @@
 
 ## features
 
+- build images and push to ECR
+
 ### pricing
 
 ## terms
