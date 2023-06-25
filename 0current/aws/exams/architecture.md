@@ -60,7 +60,7 @@
 - lambda: compute
 - s3: object storage
 - dynamodb: operational data
-- sns: messaging
+- sns: messaging/decoupling
 - sqs: queueing/decoupling
 - step functions: workflow management
 - kinesis: streaming
@@ -68,14 +68,17 @@
 - cloudwatch: monitoring & logs
 - cloudfront: cache for static resources and api gateway
 
-## common
+## common architectures
 
 ### core
 
-- cloudwatch: logging and monitoring
+- iam: authnz
+- route53: anything dns related
+- cloudwatch: logging and monitoring and alerts
 - xray: tracing & observability
 - cloudtrail
 - iam: permissions and policies
+- secrets manager: encrypted passwords, credentials and tokens
 
 ### elastic load balancing
 
@@ -129,3 +132,15 @@
 - all about queue-based load leveling
 - dynamodb costs a FK ton based on provisioned throughput
 - you can save on that dramatically by pushing writes to a queue and batch writing from SNS into dynamodb
+
+### ECS + SQS/SNS
+
+- useful for decoupling tasks and services
+
+### ECS + elastic load balancing
+
+- can use classic, application or network load balancers
+
+### ECS + route53
+
+- dns service discovery

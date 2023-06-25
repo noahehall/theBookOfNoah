@@ -1,12 +1,12 @@
-# service name
+# codecommit
 
-- mission statement
+- private git repositories
 
 ## my thoughts
 
 ## links
 
-- [landing page](some url)
+- [landing page](https://aws.amazon.com/codecommit/?did=ap_card&trk=ap_card)
 
 ## best practices
 

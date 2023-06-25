@@ -41,6 +41,17 @@
   - customize the image and setup configuration in ECS
   - select launch type: ec2 vs fargate
 
+### architecture
+
+#### tasks
+
+- an instance of a task definition
+- the atomic unit of deployments
+  - limited to a single ec2 host
+- one/more tightly coupled containers
+- managed by ecs task scheduler
+- run once/intervals, optimal for batch jobs
+
 ```jsonc
 // list of hella options
 {
@@ -88,17 +99,6 @@
 }
 ```
 
-### architecture
-
-#### tasks
-
-- an instance of a task definition
-- the atomic unit of deployments
-  - limited to a single ec2 host
-- one/more tightly coupled containers
-- managed by ecs task scheduler
-- run once/intervals, optimal for batch jobs
-
 #### services
 
 - multiple tasks with potentially an application load balancer to route traffic between task instances
@@ -106,15 +106,54 @@
 - managed by ecs service scheduler
 - can scale in/out and are avability zone-aware
 - optimal for long-running applications
+- service discovery: integrated into ecs
+  - services can automatically be registered with predictable service names in route53
+
+```jsonc
+// list of hella options
+{
+  "cluster": "my-cluster",
+  "serviceName": "my-service",
+  "taskDefinition": "my-app",
+  "desiredCount": 10,
+  "placementConstraints": [
+    {
+      "type": "memberOf",
+      "expression": "attribute:ecs.instance-type matches t2.*"
+    }
+  ],
+  "placementStrategy": [
+    {
+      "type": "spread",
+      "field": "attribute:ecs.availability-zone"
+    }
+  ]
+}
+// placement constraint types
+// memberOf, distinctInstance
+
+// placement strategy examples
+// type: sprad, field: memory
+
+// expression examples
+// (attribute:ecs.instance-type == t2.small or attribute:ecs.availability-zone != us-east-1d) and some-other-thing
+// not=(task:group == somelabel)
+// task:group == somelabel
+```
 
 ## considerations
 
 - task placement: based on the following, ECS will identify the hosts that meet the requirements
-  - cluster constraints: CPU, memory, network requirements
-  - custom constraints: location, instance type, AMI, etc
-  - placement strategies:
-    - spread: multiple instances to maximize availability
-    - binpack: consolidate into a small number of instances to improve utilization
+  - placement constraints: are binding and can prevent task placement
+    - cluster constraints: CPU, memory, network requirements
+    - custom constraints: location, instance type, AMI, etc
+    - distinctInstance: each task must be on a different container instance
+    - memberOf: places tasks based on some expression
+  - placement strategies: best effort (not guaranteed)
+    - random:
+    - spread: evenly across instances based on some value, e.g. availability zone
+    - binpack: consolidate into a small number of instances to improve utilization based on the least available amount of cpu/memory
+      - seeks to minimize the number of isntances
 
 ### fargate
 

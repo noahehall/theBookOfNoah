@@ -1,6 +1,10 @@
 # Elastic Container Registry ECR
 
-- mission statement
+- store share and deploy constainers
+
+## my thoughts
+
+- docker hub for aws
 
 ## links
 
@@ -11,6 +15,11 @@
 ### anti patterns
 
 ## features
+
+- fully integrated with ECS and the docker CLI
+- push/pull immutable images without managing/provisioning storage/servers
+- manage image lifecycle policies, preserve latest archive the stale ones
+- images are encrypted at rest with IAM based access controls
 
 ## terms
 
