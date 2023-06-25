@@ -4,7 +4,7 @@
 
 ## my thoughts
 
-- think short quick i/o; else prefer containerization ECS/fargate or straight up ec2
+- think short quick i/o; else prefer fargate or straight up ecs/ec2
 
 ## links
 

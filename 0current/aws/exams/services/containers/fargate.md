@@ -1,4 +1,4 @@
-# elastic container service
+# fargate
 
 - mission statement
 
@@ -6,7 +6,7 @@
 
 ## links
 
-- [landing page](some url)
+- [landing page](https://aws.amazon.com/fargate/?did=ap_card&trk=ap_card)
 
 ## best practices
 
