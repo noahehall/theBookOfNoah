@@ -33,6 +33,7 @@
 - [tables](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html)
 - [limits](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html)
 - [working with large attributes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-use-s3-too.html)
+- [setting up dynamodb local](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html)
 
 ### blogs
 

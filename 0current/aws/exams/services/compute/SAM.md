@@ -1,7 +1,11 @@
 # serverless application model (SAM)
 
-- opensource framework that simplifies creation and deployment of serverless applications
+- AWS framework that simplifies creation and deployment of serverless applications
 - an extension of AWS CloudFormation + a CLI for testing & deployments
+
+## mythoughts
+
+- if you're using AWS, its worth the investment in learning
 
 ## links
 
@@ -27,6 +31,7 @@
 
 ## features
 
+- single framework to define all components required to test and deploy serverless applications
 - help manage IAM policies: scopes the permissions of lambda fns to the resources used
 
 ## terms
@@ -73,13 +78,17 @@
 ### sam cli
 
 ```sh
-# generate a sample s3 put event
-# put it in launch.json.lambda.payload.json.{ ...copypasta}
-sam local generate-event s3 put
+sam
+  # generate a sample s3 put event
+  # put it in launch.json.lambda.payload.json.{ ...copypasta}
+  local generate-event s3 put
 
-# validate the template.yaml in the curdir
-sam validate
+  # validate the template.yaml in the curdir
+  validate
 
+  # creates a zip archive ready for uploading to s3 and deployed to lambda
+  # sets the code uri from local system path to the s3 path in the template definition
+  package
 ```
 
 ### sam templates
@@ -92,11 +101,10 @@ sam validate
   - AWS::Serverless::SimpleTable (dynamodb)
 
 ```yaml
-# Example cloudformation template for use by SAM
+# sample of hella options
 
-# indicates this is a SAM template
 AWSTemplateFormatVersion: "2010-09-09"
-Transform: AWS::Server;ess-2021-07-11
+Transform: AWS::Serverless-2021-07-11
 Resources:
   # could be anything, this is an arbitray name for a lambda fn
   GetHtmlFunction:
@@ -133,3 +141,10 @@ Resources:
             Path: /(proxy+)
             Method: ANY
 ```
+
+## integrations
+
+### lambda
+
+- enables launching a local version of lambda fns that runs in a docker container
+  - you can then connect to it and debug in an interactive session throught an IDE

@@ -14,6 +14,19 @@
 - [10 things serverless architects should know](https://aws.amazon.com/blogs/architecture/ten-things-serverless-architects-should-know/)
 - [aws blog: api gateway category](https://aws.amazon.com/blogs/compute/category/application-services/amazon-api-gateway-application-services/)
 
+### best practices
+
+- code/repo organization
+  - instead of focusing on organizing functions, focus on organizing services
+  - perhaps a repo per service, with the service broken down into multiple fns and their resource dependencies
+- prod vs developer cloud environments
+  - ci/cd should be in place whichever route you take
+  - prod should always be isolated
+  - most flexible: separate accounts for each developer
+    - requires technical maturity to handle the security and cost implications
+  - least flexible: single shared account for all develoeprs
+    - as long as everyone is using immutable and isolated stacks, you should be fine
+
 ## terms
 
 - Dead Letter Queue: DLQ;
@@ -21,6 +34,10 @@
 ## localstack
 
 - pretty sure we have a localstack.md somewhere in this repo
+
+### dynamodb local
+
+- [get the docker image](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html)
 
 ## event-driven architectures
 
@@ -32,27 +49,6 @@
 ## Serverless
 
 - includes a number of fully managed services that are tightly integrated
-  - compute
-    - lambda
-  - orchestration
-    - step functions
-  - storage
-    - s3
-  - data stores
-    - dynamodb
-  - event bus
-    - eventbridge
-  - interprocess messaging
-    - sns
-    - sqs
-  - api integration
-    - api gateway
-    - appsync
-  - developer tools
-    - CDK
-    - serverless application model (SAM)
-- testing: you generally need a test account that mirrors the production account
-  - but you should also invest time in setting up localstack
 
 ### core stack
 
@@ -62,11 +58,39 @@
 - dynamodb: operational data
 - sns: messaging/decoupling
 - sqs: queueing/decoupling
-- step functions: workflow management
 - kinesis: streaming
-- athena: analytics
 - cloudwatch: monitoring & logs
 - cloudfront: cache for static resources and api gateway
+- sam cli: test, build and deploy
+
+#### other tools
+
+- appsync
+- athena: analytics
+- step functions: orchestration/workflow management
+- eventbridge: event bus
+
+### testing
+
+- testing: you generally need a test account that mirrors the production account
+  - but you should also invest time in setting up localstack
+- local tests within the dev environment
+  - unit tests focusing on business logic
+  - cloud native code is generally more difficult to test locally (see localstack)
+- integration tests: targeting remote test accounts with prod parity
+- automated integration and accepted tests against other envornments providing gates for production deployments
+
+### cd
+
+- tools
+  - cloudformation
+  - sam
+- general process
+  - build the code
+  - package and deploy to s3
+  - iam execution roles and resource policies
+  - creating lambda functions and integrating with backend resources
+  - update lambda functions and backend integrations
 
 ## common architectures
 
