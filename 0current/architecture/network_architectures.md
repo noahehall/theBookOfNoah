@@ -1,11 +1,10 @@
 # network architectures
 
-- figure out where to put WAN and LAN gossip pools used in hashicorp consul
-
 ## links
 
 - [grpc](https://grpc.io/)
 - [protobuf](https://protobuf.dev/)
+- [http decision diagram](https://github.com/for-GET/http-decision-diagram)
 
 ## data serialization
 

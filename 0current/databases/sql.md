@@ -15,6 +15,7 @@
 - mysql quickies
   - [data types](https://dev.mysql.com/doc/refman/8.0/en/data-types.html)
   - [create procedure and create function](https://dev.mysql.com/doc/refman/8.0/en/create-procedure.html)
+  - [copy table with examples](https://www.mysqltutorial.org/mysql-copy-table-data.aspx)
 
 ### best practices / gotchas
 
@@ -247,7 +248,10 @@ select * from TABLE where COLUMN LIKE "pattern"
 -- FULL JOIN: Return all rows when there is a match in ONE of the tables
 -- UNION
 
-
+-- INFORMATION_SCHEMA has a bunch of stuff
+SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'STUDENT_INFO';
 ```
 
 ### insert
@@ -286,11 +290,11 @@ WHERE some_column=some_value;
 
 ### create
 
-- creates a new database or table
-
 ```sql
+-- creates a new database
 CREATE DATABASE my_db;
 
+-- create a table
 CREATE TABLE table_name (
   column_name1 data_type(size) constraint_name,
   ID int NOT NULL AUTO_INCREMENT,
@@ -301,6 +305,11 @@ CREATE TABLE table_name (
   City varchar(255) DEFAULT 'Sandnes' #set a default value for a column
   CHECK (P_Id>0) #specify that P_id in this table must be greater than 0
 );
+
+-- copy existing table + constraints into potentially new table
+CREATE TABLE IF NOT EXISTS new_table LIKE existing_table;
+INSERT new_table SELECT * FROM existing_table
+WHERE conditions; -- add for copying partial table
 
 ```
 
@@ -317,7 +326,7 @@ ADD CONSTRAINT UC_Person UNIQUE (ID,LastName);
 -- drop a unique constraint from a table
 ALTER TABLE Persons DROP INDEX UC_Person
 
--- drop the existing primary key from table
+-- drop the existing primary key from table (also for columns)
 ALTER TABLE Persons DROP PRIMARY KEY
 
 -- add a foreign key after the table has already been created
