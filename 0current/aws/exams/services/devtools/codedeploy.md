@@ -1,6 +1,6 @@
 # CodeDeploy
 
-- automate the process of packaging code & running tests before code is deployed
+- automated deployments
 
 ## links
 

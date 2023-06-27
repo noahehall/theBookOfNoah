@@ -13,6 +13,7 @@
 - [well architected framework: serverless application lens](https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/wellarchitected-serverless-applications-lens.pdf?810a2056-c993-4832-af32-11286cad694c)
 - [10 things serverless architects should know](https://aws.amazon.com/blogs/architecture/ten-things-serverless-architects-should-know/)
 - [aws blog: api gateway category](https://aws.amazon.com/blogs/compute/category/application-services/amazon-api-gateway-application-services/)
+- [aws serverless express (check examples dir)](https://github.com/vendia/serverless-express)
 
 ### best practices
 
@@ -26,6 +27,22 @@
     - requires technical maturity to handle the security and cost implications
   - least flexible: single shared account for all develoeprs
     - as long as everyone is using immutable and isolated stacks, you should be fine
+- serverless
+  - 12 factor app (say this twice)
+  - dont assume local storage exists, but code for ephemeral storage & stateless services
+  - instantiate expensive objects outside event handler
+  - ensure you can test locally
+  - end-to-end integration testing as early as possible in the dev cycle
+  - profile your app for bottle necks
+- serverless architecture
+  - dont `architect` for serverless, but bring your best practices with you
+    - if you abstract away your business logic to a single entrypoint
+      - you should be able to repurpose it for deployment to a lambda OR a container
+  - refrain from putting app/biz logic in the api GW layer
+  - dont implement workflows in lambdas, use stepfunctions
+  - dont implement long running processes in lambdas, use containers
+- integration
+  - understand your component timeouts, e.g. api gateway and lambda have different hard limits
 
 ## terms
 
@@ -80,11 +97,15 @@
 - integration tests: targeting remote test accounts with prod parity
 - automated integration and accepted tests against other envornments providing gates for production deployments
 
-### cd
+### ci/cd
 
 - tools
   - cloudformation
   - sam
+  - codecommit
+  - codebuild
+  - codedeploy
+  - codepipeline
 - general process
   - build the code
   - package and deploy to s3

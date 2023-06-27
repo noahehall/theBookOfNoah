@@ -1,7 +1,8 @@
-# service name here
+# Elastic Container Service (ECS)
 
 - highly scalable container orchestration service
-- its a cluster management platform
+- a shared state, optimistic concurrency system providing flexible scheduling for tasks and containers
+- its a cluster management platform for long running stateless services and applications
 
 ## my thoughts
 
@@ -43,6 +44,13 @@
 
 ### architecture
 
+- container instance: ec2 instance running the ECS agent has registered with a cluster
+- container: created as part of a task
+- cluster: logical grouping of container instances that you can place tasks on
+- task definition: a service containing one/more container definitions
+- task: a single instance of a task definition
+- service: run and maintain one/more tasks simultaneously
+
 #### tasks
 
 - an instance of a task definition
@@ -53,8 +61,9 @@
 - run once/intervals, optimal for batch jobs
 
 ```jsonc
-// list of hella options
+// list of options, google the rest, theres too many
 {
+  "family": "cowboy-bebop",
   // add these to make this for FARGATE launch type
   "requiredCompatibilities": ["FARGATE"],
   // fargate resources are controlled at the task level
@@ -140,6 +149,13 @@
 // not=(task:group == somelabel)
 // task:group == somelabel
 ```
+
+#### scheduler
+
+- leverages cluster state informationed retrieved from teh ECS API to make placement decisions
+- ensures the requested number of tasks are constantly running
+- reschedules tasks on failure
+- optionally registers tasks with an ELB load balancer
 
 ## considerations
 

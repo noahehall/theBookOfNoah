@@ -2,7 +2,7 @@
 
 - everything in this doc is taken directly from AWS
 - last updated in 2023 for version 1.0 DVA-C02
-- bookmark: serverless development > building and deploying APIS with serverless ci/cd > 2:38
+- bookmark: Working with Amazon Elastic Container Service
 - todos
   - tackle these AFTER you complete the recommended skillbuilder rampup; these may/not be part of the schedule
     - [designing event driven architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12715/designing-event-driven-architectures)

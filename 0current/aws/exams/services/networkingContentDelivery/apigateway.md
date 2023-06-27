@@ -43,10 +43,14 @@
 
 - run mulitple api versions/deploy to distinct stages at the same time
 - sdk generation via aws cli for java, javascript, objective-c or swift and ruby
-- transform and validate incoming and outgoing requests
-  - Transform the body and headers of incoming API requests to match backend systems
-  - Transform the body and headers of the outgoing API responses to match API requirements
-  - Define models to help standardize your API request and response transformations
+- proxy integration: more straight forward
+  - mapping templates require putting logic at the API gateway layer, which can become complex
+  - prefer using a proxy integration that handles this translation for you
+- mapping templates: more complex
+  - transform and validate incoming and outgoing requests if require
+    - Transform the body and headers of incoming API requests to match backend systems
+    - Transform the body and headers of the outgoing API responses to match API requirement
+    - Define models to help standardize your API request and response transformations
 - integrate with cloudfront edge locations
   - reduce latency and throttle traffic
   - cache responses

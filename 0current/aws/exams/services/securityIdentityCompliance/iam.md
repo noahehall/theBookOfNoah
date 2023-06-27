@@ -179,6 +179,8 @@
 
 - apply roles down to the task level for granular positions
   - assign resourced policies with appropriate permissions to each role
+- common roles
+  - ecsServiceRole: enables ECS to (de)register container instances from a load balancer whenever tasks are placed on them
 
 ### secrets manager
 

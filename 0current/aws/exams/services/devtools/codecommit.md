@@ -16,6 +16,9 @@
 
 ### pricing
 
+- available for free for up to 5 active users
+- does not expire at the end of 12 months
+
 ## terms
 
 ## basics
