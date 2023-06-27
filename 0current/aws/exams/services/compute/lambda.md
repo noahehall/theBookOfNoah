@@ -1,10 +1,10 @@
 # Lambda
 
-- AWS Lambda is an event-driven, serverless (& stateless) compute service that lets you run code without provisioning or managing servers
+- AWS Lambda is an event-driven, serverless (& stateless) compute service that lets you run code in response to events without provisioning or managing servers
 
 ## my thoughts
 
-- TODO(noah): ensure you add this to every section
+- think short quick i/o; else prefer fargate or straight up ecs/ec2
 
 ## links
 
@@ -47,7 +47,9 @@
 ## best practices
 
 - always consider the lambda execution environment and context
-  - `exports.handler`fn is recreated, but the context parent scope is reused on warm starts
+  - `exports.handler `fn is recreated, but the parent scope is reused on warm starts
+    - this fn should only contain lambda specific code, no business logic
+  - reduce the size of the execution context as much as possible to optimize for cold starts
 - utilize the Test tab to create fake events, which will reveal errors that are normally hidden
 - lambda is prime for event-driven architectures, where known events trigger your fns
 - optimize performance by reducing latency and increasing throughput
@@ -178,9 +180,8 @@
   - container image
 - runtime: e.g. nodejs
 - architecture: x86/64 vs arm64
-- permissions
-  - what services is this fn allowed to interact with
-- execution role
+- permissions/resource policies: which event sources are permitted to trigger this fn
+- execution role: what services is this fn allowed to interact with
   - new role
   - existing role
   - new role from aws policy templates
@@ -251,7 +252,8 @@
   - ephemeral storage: 512mb -> 10gb
   - snapstart: reduces startup time by caching the fn definition
   - triggers
-    - which events / event5 sources can initiate exeuction of this fn
+    - which sources and their events
+      initiate exeuction of this fn
   - layers
     - how will you bundle your dependencies
   - destinations
@@ -270,18 +272,8 @@
 ### monitoring lambda functions
 
 - ensuring you can monitor, trace, debug and troubleshoot lambda fns and applications
-- integrations
   - cloudwatch metrics
-    - invocations: total function executions that were not throttled/failed to start, success & errors
-      - errors: invocations that result in a fn error whether by your fn handler or the lambda runtime (timeouts, configuration issues, etc)
-      - throttled: failed invocations becaue of concurrency limits; not counted in invocation totals; lambda rejected executed requests because no concurrency was available
-    - duration: total time spent processing events; to calculate billing round up to the nearest millisecond
-      - iteratorAge: age of the last record in the event releative to event source mappings that read from streams;
-        - the agent is the total duration from when the stream receives the record until the event source mapping sends the event to the fn
-    - DeadLetterErrors: for async invocation; number of times lambda attempts to send an event to a dead-letter-queue but fails
-    - ConcurrentExecutions: number of function instances that are processing events
-      - UnreservedConcurrentExecutions: total events being processed by fns that dont have reservede concurrency
-      - ProvisionedConcurrentExecutions: number of fn isntances that are processing events on provisioned concurrency
+    - see [the markdown file](../mgmtGovernance/cloudwatch.md)
   - cloudwatch logs
   - x ray traces: lambda fns send trace data to xray for processing
     - see [the markdown file](../devtools/xray.md)
@@ -351,3 +343,10 @@
 - deployment packages
   - container images: generally pushed to elastic container registry
   - zip files: generally pushed to an s3 bucket
+
+## integrations (event sources)
+
+### s3
+
+- event types
+  - all object create events

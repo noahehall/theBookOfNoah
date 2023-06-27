@@ -1,6 +1,8 @@
-# athena
+# s3 glacier
 
-- query data in s3 using sql
+- low-cost archive storage
+
+## my thoughts
 
 ## links
 
@@ -10,10 +12,12 @@
 
 ## features
 
-- make SQL queries against structured data stored in s3 buckets
+### pricing
 
 ## terms
 
 ## basics
 
 ## considerations
+
+## integrations

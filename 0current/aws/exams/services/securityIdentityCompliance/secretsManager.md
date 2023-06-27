@@ -1,6 +1,11 @@
 # secrets manager
 
 - organize and management configuration data like credentials, passwords and licence keys
+- encryptions its data via KMS
+
+## my thoughts
+
+- prefer vault unless someones paying you to use this
 
 ## links
 
@@ -18,3 +23,5 @@
 ## basics
 
 ## considerations
+
+## integrations

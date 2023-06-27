@@ -31,9 +31,9 @@
 - [streams and lambdas (tut)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.Tutorial.html)
 - [streams](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
 - [tables](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html)
-- [iam](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/UsingIAMWithDDB.html)
 - [limits](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html)
 - [working with large attributes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-use-s3-too.html)
+- [setting up dynamodb local](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html)
 
 ### blogs
 
@@ -75,10 +75,6 @@
   - if implementing this feature ensure your reads check each item's timestamp
 - Using streams
   - if implementing item TTL, you can watch the stream data and copy items into cold storage (e.g. s3)
-- IAM
-  - always follow principle of least privilege for users and roles
-  - for east/west in the same VPC always use a VPC endpoint for the dynamodb table
-    - this prevents traffic from ahving to treverse the publically routed internet using public addressing
 - Using DAX
   - decreases the amount of RCUs required for a table, and smooths out spikey/inbalanced read loads
   - reduces dynamodb's response time from single-digit millisecond to sub-millisecond
@@ -261,7 +257,7 @@
 
 ### IAM
 
-- authnz at the table, item, or attribute level
+- see [the markdown file](../securityIdentityCompliance/iam.md)
 
 ### Dynamodb Accelerator (DAX)
 

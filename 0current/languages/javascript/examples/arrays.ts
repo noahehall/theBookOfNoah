@@ -24,6 +24,8 @@ log([0, 1].copyWithin(0, 1));
 log([[0], [1]].flat());
 log([[0], [1]].flatMap((x) => x));
 log([1, 2, 3, 4].reduce((p, n) => p + n, 0));
+log(Object.entries({ 1: 2 }));
+log(Object.fromEntries([[1, 2]]));
 
 /*
 ADT

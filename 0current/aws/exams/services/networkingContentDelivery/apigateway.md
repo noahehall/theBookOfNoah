@@ -14,20 +14,26 @@
 - [rest api caching](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html)
 - [api proxies](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-set-up-simple-proxy.html)
 - [api proxies (lambda)](https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html)
+- [mapping template variable reference](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html)
+- [request validation](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-method-request-validation.html)
 
 ## best practices
 
 - know your api type
   - rest/http vs websocket is an easy one
   - but REST has 3 different types
-    - you can change between the third after deployment, but never from private to edge optimized
-- use custom domains for the invoke url and choose a base path map to map it to this url
+    - you can change between the them after deployment, but never from private to edge optimized
+- use custom domains for the invoke url and choose a base path map to route it to the aws invoke url
 - think through your API stage strategy
   - for versioning and rollbacks
   - use different stages by environment/customer
   - stage variables increase deployment flexibility
   - enable canary deployments to test new versions
   - variables can be injected at runtime to dynamnically invoke lambda fns, endpoints, etc
+- set throttling and usage plans
+  - prevent minority of customers from using all of your systems capacity
+  - ensure downstream systems can amange the # of requests
+  - provide api keys to customers for identification and application of usage and throttle limits to their requests
 
 ### anti patterns
 
@@ -37,10 +43,14 @@
 
 - run mulitple api versions/deploy to distinct stages at the same time
 - sdk generation via aws cli for java, javascript, objective-c or swift and ruby
-- transform and validate incoming and outgoing requests
-  - Transform the body and headers of incoming API requests to match backend systems
-  - Transform the body and headers of the outgoing API responses to match API requirements
-  - Define models to help standardize your API request and response transformations
+- proxy integration: more straight forward
+  - mapping templates require putting logic at the API gateway layer, which can become complex
+  - prefer using a proxy integration that handles this translation for you
+- mapping templates: more complex
+  - transform and validate incoming and outgoing requests if require
+    - Transform the body and headers of incoming API requests to match backend systems
+    - Transform the body and headers of the outgoing API responses to match API requirement
+    - Define models to help standardize your API request and response transformations
 - integrate with cloudfront edge locations
   - reduce latency and throttle traffic
   - cache responses
@@ -50,6 +60,7 @@
   - create API keys + usage plans for third-party access
   - use lambda fn for custom authnz
 - full https support for encryption in transit
+- simple request validation against a type definition at the method level
 
 ### pricing
 
@@ -159,9 +170,49 @@
   - your app then makes requests to api gateway and provide the users token in the request header
   - apigateway validates the token
 - security:
-  - iam: requires all requests to be signed with aws version 4 signing process
-  - open
-  - api key
+  - method authorization settings:
+    - none / iam
+    - request validator
+    - api key
+  - resource policies
+
+#### resource policies + authnz
+
+- resource policy only: explicit allow required on inbound criteria of the caller, else deny the caller
+- lambda auth + resource policy: if policy explicitly denies, the caller is denied, else evaluate lambda auth
+- IAM auth + resource policy:
+  - if caller & api owner are from separate accounts: both iam user policy & resource policy must explicitly allow
+  - if caller & api owner are same account: either user policy / resource policy must explicitly allow
+- cognito auth + resource policy:
+  - if api gateway authenticates the caller from cognito, evaluate the resource policy
+  - the resource policy must explicitly allow
+
+### throttling, quotas & usage plans
+
+- each require providing api keys to clients
+- consumers set their key in the `x-API-key` header
+- configuration
+  - api key throttling
+  - stage > method throttling
+  - stage throttling
+  - account limits
+- throttling based on rate and burst per key, applied in the following order
+  - per client, per method: throttle limits set for an api stage in a usage plan
+  - per client: throttle limits set in a usage plan
+  - defualt per-method limits & individual per-method limits set in an api stage
+  - the account level limit
+- usage plan types
+  - api key throttling per second and burst
+  - api key quota by day, week or month
+  - api key usage by daily usage requests
+- token bucket algorithm: limits are measured and throttled by confirming network traffik conforms to set limits
+  - a token counts as a request
+  - the burst is the maximum bucket size
+  - requests (tokens) that come into the bucket are filled at at a steady rate
+    - if the rate at which requests fill the bucket exceed the burst value, a `429 Too Many Requests` are returned
+  - defaults: per account per region; use usage plans for more granular control
+    - steady-state request rate: 10k requests per second
+    - burst: 5k requests across all apis
 
 ### all api types
 
@@ -178,7 +229,13 @@
   - canary:
     - enable canary deployments to keep a base stage, and a latest version of the same stage
     - you can then promote the canary to be the base after validation
-- transformations: both incoming and outgoing requests can be transformed to match the targets expectations
+- mapping template transformations: both incoming and outgoing requests can be transformed to match the target/client expectations
+  - map request to integration request payload
+  - map target response to the method response
+  - key transformation variables
+    - $input: body, json, params path
+    - $stageVAriables: any stage variable name
+    - $util: `escapeJAvascript(), parseJson(), urlEncode/DecodE(), base64Encode/Decode()`
 - API monitoring: generally through cloudwatch integration
 - integration types
   - lambda function:
@@ -193,6 +250,25 @@
     - return a response without sending the request to any backend, e.g. for a healthcheck or any hardcoded response
   - vpc link
     - connect to a network load balancer for interacting with services within a private vpc
+- custom error responses:
+  - change http status code
+  - modify body content
+  - add headers
+- request validation: specify an object describing the acceptable request type definition
+  - required request params in the url, query string and headers are included and non blank
+  - application request paylaod adheres to the configured json request model of the method
+
+```jsonc
+// example request validation
+{
+  "type": "object",
+  "title": "some description",
+  "required": ["somePropX", "somePropY"],
+  "properties": {
+    "somePropX": { "type": "string", "enum": ["this", "or", "that"] }
+  }
+}
+```
 
 #### websocket api
 

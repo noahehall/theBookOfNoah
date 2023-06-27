@@ -1,7 +1,14 @@
 # serverless application model (SAM)
 
-- opensource framework that simplifies creation and deployment of serverless applications
+- AWS framework that simplifies creation and deployment of serverless applications
 - an extension of AWS CloudFormation + a CLI for testing & deployments
+
+## mythoughts
+
+- if you're using AWS, its worth the investment in learning
+- if you know terraform, alot of best practices will transfer over
+  - the thing is, if you're good at terraform , why use SAM?
+    - maybe because of SAM local, but if you're also good at localstack...
 
 ## links
 
@@ -27,6 +34,7 @@
 
 ## features
 
+- single framework to define all components required to test and deploy serverless applications
 - help manage IAM policies: scopes the permissions of lambda fns to the resources used
 
 ## terms
@@ -70,15 +78,32 @@
 
 ## examples
 
+### service folder hierarchy
+
+- root
+  - infrastructure: swagger.yaml, sam cloudformation template(s), etc
+  - blah-service
+    - deploy.sh script for deploying with sam
+    - package.sh script for packaging with sam
+    - rest of your normal app stuff
+
 ### sam cli
 
 ```sh
-# generate a sample s3 put event
-# put it in launch.json.lambda.payload.json.{ ...copypasta}
-sam local generate-event s3 put
+sam
+  # generate a sample s3 put event
+  # put it in launch.json.lambda.payload.json.{ ...copypasta}
+  local generate-event s3 put
 
-# validate the template.yaml in the curdir
-sam validate
+  # validate the template.yaml in the curdir
+  validate
+
+  # creates a zip archive ready for uploading to s3 and deployed to lambda
+  # sets the code uri from local system path to the s3 path in the template definition
+  package
+    --template-file some-service.input.yaml
+    --output-template-file some-service.output.yaml
+    --s3-bucket some-bucket-to-deploy-to
 
 ```
 
@@ -92,11 +117,21 @@ sam validate
   - AWS::Serverless::SimpleTable (dynamodb)
 
 ```yaml
-# Example cloudformation template for use by SAM
+# functions
+!GetAtt SomeThing.someProp # pull a value from another resource
+!Ref SomeThing # ref to a resource
 
-# indicates this is a SAM template
+# sample of hella options
 AWSTemplateFormatVersion: "2010-09-09"
-Transform: AWS::Server;ess-2021-07-11
+Transform: AWS::Serverless-2021-07-11 # indicates SAM and not merely cloudformation
+Description: Fear me CopyPasta Service
+
+Parameters:
+  ServiceName:
+    Description: Name of Service
+    Type: String
+    Default: FearMeCopyPastaService
+
 Resources:
   # could be anything, this is an arbitray name for a lambda fn
   GetHtmlFunction:
@@ -104,10 +139,13 @@ Resources:
     Type: AWS::Serverless:Function
     Properties:
       # zipfile, handler, and runtime
-      CodeUri: ./src/todo_list
+      CodeUri: ../../src/todo_list # this gets built and deployed
       Handler: index.gethtml
+      MemorySize: 512
+      Timeout: 30
       Runtime: nodejs14.x
       AutoPublishAlias: live # detect new deployments and publish updated versions and aliases
+
       DeploymentPReference:
         Type: Canary10Percent10Minutes # implement canary traffic shifting
         Alarms: # specify auto rollbacks of deployments based on cloudwatch alarms
@@ -118,6 +156,13 @@ Resources:
           PostTraffic: !Ref SomeLambdaFn
       # IAM policy
       Policies: AmazonDynamoDBReadOnlyAccess
+
+      # environment configuration
+      Evironment:
+        Variables:
+          NODE_CONFIG_DIR: './config'
+
+      # lam da event sources
       Events:
         S3Event: # s3 event source for triggering lambda fns
           Type: S3
@@ -132,4 +177,17 @@ Resources:
           Properties:
             Path: /(proxy+)
             Method: ANY
+Outputs:
+  ApiUrl:
+    Description: URL of your API Endpoint
+    value: !Join
+      - ""
+      - - https://abcdefg
 ```
+
+## integrations
+
+### lambda
+
+- enables launching a local version of lambda fns that runs in a docker container
+  - you can then connect to it and debug in an interactive session throught an IDE
