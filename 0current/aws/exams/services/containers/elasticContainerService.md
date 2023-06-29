@@ -1,6 +1,6 @@
 # Elastic Container Service (ECS)
 
-- highly scalable container orchestration service
+- highly scalable container orchestration service; run docker containers on a cluster of ec2 instances
 - a shared state, optimistic concurrency system providing flexible scheduling for tasks and containers
 - its a cluster management platform for long running stateless services and applications
 
@@ -11,6 +11,9 @@
 ## links
 
 - [landing page](https://aws.amazon.com/ecs/?did=ap_card&trk=ap_card)
+- [task definitions](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_defintions.html)
+- [task scheduling](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html)
+- [services](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs_services.html)
 
 ## best practices
 
@@ -27,8 +30,15 @@
 
 - highly scalable and integrates with third party schedulers and aws services
 - schedules placement across managed clusters
+- (re)start containers with simple api calls
+- fetch cluster state from a centralized service
+- schedule the placement of containers across ec2 clusters based on resource needs, isolation policies and availability requirements
 
 ### pricing
+
+- pay for what you provision
+- billed for task level CPU and memory
+- per-second billing, one minute minimum
 
 ## terms
 
@@ -37,19 +47,29 @@
 
 ## basics
 
-- general workflow
+- general process
   - ecs pulls images from a registry
   - customize the image and setup configuration in ECS
   - select launch type: ec2 vs fargate
+  - launch tasks into subnets
+    - create an elastic network interface (ENI)
+    - ENI is allocated to a private IP in the subnet
+    - ENI is attached to the task and uses its private IP
+    - optionally assign a public IP for non-vpc comms
+- general workflow
+  - register task definition
+  - create cluster
+  - run tasks / create service
 
 ### architecture
 
 - container instance: ec2 instance running the ECS agent has registered with a cluster
 - container: created as part of a task
-- cluster: logical grouping of container instances that you can place tasks on
-- task definition: a service containing one/more container definitions
+- cluster: logical grouping of container instances on which you can place tasks
+- task definition: a description of an application containing one/more container definitions
 - task: a single instance of a task definition
 - service: run and maintain one/more tasks simultaneously
+- service scheduler: the method used for placing tasks on container instances; ensures the specified number of tasks are constantly running and optionally registered with elastic load balancer
 
 #### tasks
 
@@ -61,28 +81,38 @@
 - run once/intervals, optimal for batch jobs
 
 ```jsonc
-// list of options, google the rest, theres too many
+// list of options, google the rest, theres too many, most of the docker options are verbatim
 {
   "family": "cowboy-bebop",
+  "networkMode": "awsvpc", // enables ENI cration & attachment to task
   // add these to make this for FARGATE launch type
   "requiredCompatibilities": ["FARGATE"],
   // fargate resources are controlled at the task level
-  "cpu": "256",
-  "memory": "512",
+  // all containerDefinitions share these resources
+  "cpu": "256", // 256, 1 vCpu, etc
+  "memory": "512", // 512, 2 gb , etc
   // END FARGATE
   // options for both ec2 & fargate
   "volumes": [
     {
       "name": "some-vol"
+    },
+    {
+      "host": {
+        "sourcePath": null
+      },
+      "name": "another-vol"
     }
   ],
   "containerDefinitions": [
+    // up to 10; all allocated on the same host
     {
-      "name": "my-app",
-      "image": "nimv2",
+      "name": "my-app", // required
+      "image": "nimv2", // image url required
       // ec2 resources are controlled at the container level
       "cpu": 10, // 1024 === 1 full vCPU
       "memory": 300, // in MB
+      "memoryReservation": 200,
       "essential": true,
       "command": ["/bin/sh -c \"same as docker\""],
       "portMappings": [
@@ -159,6 +189,10 @@
 
 ## considerations
 
+- task definition
+  - application containers
+  - image url
+  - resource (cpu/memory/etc) requirements
 - task placement: based on the following, ECS will identify the hosts that meet the requirements
   - placement constraints: are binding and can prevent task placement
     - cluster constraints: CPU, memory, network requirements
@@ -175,11 +209,31 @@
     - daemon scheduling strategy: deploys exactly one task to each instance per the task placement strategy
       - only for the ec2 launch type
       - common for sidecars, e.g. logging / monitoring where only one service is required for all tasks in the instance
+- targets
+  - load balancer (for services)
+  - abc
+- cluster
+  - infrastructure isolation boundary
+  - IAM permissions boundary
+- launch type
+  - ec2
+  - fargate
+- storage (EBS)
+  - writable layer storage: 10gb per task across all containers, including image layers, data private to each container
+  - volume storage: 4gb per task, assign via volume mounts (without sourcePath), data shared across all containers
+- IAM permission tiers
+  - see [markdown file](../securityIdentityCompliance/iam.md)
 
 ### fargate
 
 - nearly serverless: 99% of the infrastructure required for the container is managed by ecs
 - preferred with unpredictable scaling requirements
+- task cpu:memory configurations
+  - 256(.25 vCPU): 512mb/1gb/2gb
+  - 512(.5 vCPU): 1/2/3/4gb
+  - 1024 (1 vCPU): 2/3/4/5/6/7/8gb
+  - 2048 (2 vCPU): 4 -> 16gb in 1 gb increments
+  - 4096 (4 vCPU): 8 -> 30gb in 1gb increments
 
 ### ec2
 

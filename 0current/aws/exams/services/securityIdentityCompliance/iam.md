@@ -181,6 +181,13 @@
   - assign resourced policies with appropriate permissions to each role
 - common roles
   - ecsServiceRole: enables ECS to (de)register container instances from a load balancer whenever tasks are placed on them
+- permission tiers
+  - fargate
+    - cluster permissions: control who can launch/describe tasks in a cluster
+    - application permissions: enable containers to access AWS resources
+    - task housekeeping permissions: ecr image pull, cloudwatch logs push, eni creation, (de)register targets into elastic load balancing, etc
+      - execution role: ECR image pull, pushing cloudwatch logs
+      - ecs service linked role: ENI management, ELB target (de)registration
 
 ### secrets manager
 
