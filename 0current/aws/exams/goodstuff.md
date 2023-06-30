@@ -8,6 +8,12 @@
 - [restful api best practices](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
 - [microservice architecture patterns and best practices](http://microservices.io/index.html)
 - [rest](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
+- [noisy neighbor antipattern](https://learn.microsoft.com/en-us/azure/architecture/antipatterns/noisy-neighbor/noisy-neighbor)
+
+### ISO standards
+
+- [popular ISO standards](https://www.iso.org/popular-standards.html)
+- [iso 31000 risk management framework](https://www.iso.org/iso-31000-risk-management.html/)
 
 ## terms
 
@@ -104,6 +110,26 @@
   - you create isolation via file system layers
   - provides the best utilization of the underlying hardware
     - you can share OS libraries and software, or isolate them
+
+### container security
+
+- risk process frameworks
+  - ISO 31000: risk management
+- risk mitigation
+- risk assessment
+  - confidentiality: its all about segregation of communication
+    - container to container
+    - process to process
+    - container to outside
+  - access
+    - Who/When/Where
+    - Logging
+    - Start/Stop
+    - Content of the container image
+  - integrity
+  - availability
+    - Resource Usage
+    - Noisy Neighbor effect: in multitenant systems with shared resources, the activity of one tenant can negatively impact another tenant's share of resources
 
 ## microservices
 
