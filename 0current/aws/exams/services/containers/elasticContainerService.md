@@ -20,9 +20,17 @@
 - pick the right task type
   - tasks: for ondemand workloads that are triggered/run in intervals
   - services: long running applications
+  - start here if:
+    - special instance type needs
+    - ec2 dedicated instances
+    - utilizing ec2 reserved instances
+    - GPUs
+    - windows workloads
 - pick the right launch type
   - ec2: you manage the cluster and placement of containers on instances
   - fargate: near serverless experience
+    - you should start here, then move to ec2 launch type if you need more control
+    - its faster to launch & fully managed, i think its the same costs as well
 
 ### anti patterns
 
@@ -86,6 +94,8 @@
 {
   "family": "cowboy-bebop",
   "networkMode": "awsvpc", // enables ENI cration & attachment to task
+  "taskRoleArn": "arn:aws:iam::abcdefg:role/ECS-TaskRole",
+  "executionRoleArn": "arn:aws:iam::abcefg:role/ecsTaskEXecutionRole",
   // add these to make this for FARGATE launch type
   "requiredCompatibilities": ["FARGATE"],
   // fargate resources are controlled at the task level
@@ -119,9 +129,9 @@
       "logConfiguration": {
         "logDriver": "awslogs", // stdout -> cloudwatch logs
         "options": {
-          "awslogs-group": "my-app-name",
+          "awslogs-group": "/ecs/my-app-name", // you should prefix it with /ecs/ for clarity while searching
           "aws-logs-region": "some-aws-region",
-          "awslogs-stream-prefix": "my-app-name/container-name"
+          "awslogs-stream-prefix": "my-app-name/container-name" // could also be prefixed with ecs for clarity
         }
       },
       "portMappings": [
@@ -162,8 +172,26 @@
 {
   "cluster": "my-cluster",
   "serviceName": "my-service",
-  "taskDefinition": "my-app",
+  "taskDefinition": "my-app:10", // you should postfix the desiredCount for clarity
   "desiredCount": 10,
+  "launchType": "FARGATE", // or ec2
+  "platformVersion": "LATEST", // use the latest fargate version
+  "loadBalancers": [
+    // should already exist? dunno
+    {
+      "targetGroupArn": "arn:aws:elasticloadbalancing:SOME_REGION:abcdefg:targetgroup/abcdefg",
+      "containerName": "my-service",
+      "containerPort": 80
+    }
+  ],
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      // should already exist? each subnet is in a different AZ
+      "subnets": ["subnet-abcdefg", "subnet-hijklmnop", "subnet-qrstuvwxyz"],
+      "securityGroups": ["sg-abcdefg"],
+      "assignPublicIp": "ENABLED"
+    }
+  },
   "placementConstraints": [
     {
       "type": "memberOf",
@@ -233,11 +261,12 @@
 - IAM permission tiers
   - see [markdown file](../securityIdentityCompliance/iam.md)
 - service discovery
-  - registration via route53 auto naming
+  - registration via route53 auto naming: see [markdown file](../networkingContentDelivery/route53.md)
 
 ### fargate
 
 - nearly serverless: 99% of the infrastructure required for the container is managed by ecs
+  - its the ec2 launch type + ec2 management automation + additional services
 - preferred with unpredictable scaling requirements
 - task cpu:memory configurations
   - 256(.25 vCPU): 512mb/1gb/2gb
