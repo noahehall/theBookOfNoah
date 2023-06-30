@@ -15,12 +15,17 @@
 - [popular ISO standards](https://www.iso.org/popular-standards.html)
 - [iso 31000 risk management framework](https://www.iso.org/iso-31000-risk-management.html/)
 
+### tools
+
+- [bpftrace: inspect syscalls](https://github.com/iovisor/bpftrace)
+
 ## terms
 
 - API-First strategy: where each service within their stack is first and always released as an API
 - microservice architectural: an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API. take a large, complex system and break it down into independent, decoupled services that are easy to manage and extend.
 - serverless: abstracts away the infrastructure layer so you can focus on developing your core product
 - technical maturity: often associated with increased levels of abstractions; a first principle of devops
+- syscall: inspect api calls made at the namespace level
 
 ## REST
 
@@ -116,7 +121,7 @@
 - risk process frameworks
   - ISO 31000: risk management
 - risk mitigation
-- risk assessment
+- risk assessment: isolation, segmentation and management of apps in containers, the containers themselves, and the system (kernel) and platform (hardware)
   - confidentiality: its all about segregation of communication
     - container to container
     - process to process
@@ -127,9 +132,28 @@
     - Start/Stop
     - Content of the container image
   - integrity
+    - kernel 2: cgroups & namespaces
+    - kernel 3 and 4: namespaces v2 (you should focus here)
   - availability
-    - Resource Usage
+    - Resource Usage: cpu, memory, data compression
     - Noisy Neighbor effect: in multitenant systems with shared resources, the activity of one tenant can negatively impact another tenant's share of resources
+- namespaces: you need to use the clone systemcall to create a namespace for a container
+  - types
+    - PID-namespace: isolated process namespaces per PID
+      - each process has a global and local PID
+      - the root namespace can see a child processes global and local pid
+      - inside a container only the processes local PID is visible
+      - the first process in a namespace has local id PID0, and its incremented by 1 and linked
+        - killing a process kills its process tree
+    - CPU/MEmory-namespace (cgroup)
+    - Network-namespace: can be shared across PID-namespaces for communication across processes
+    - User-namespace
+    - FS/Mount-namespace
+    - IPC-namespace: system file/inter-process communication; two containers shouldnt use IPC for comms, theres always a better way
+    - UTS-namespace: allows a container to have its own hostname
+  - organization: a tree structure; processes of different namespace-tree-branches cant see other branches
+    - root > child x..y > a child can create a child
+      - but a child does not have visibility into a cousin, e.g. cousin X cant kill cousin Y
 
 ## microservices
 

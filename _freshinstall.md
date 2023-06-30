@@ -148,6 +148,7 @@ apt_refresh
 # broot is better than tree, but tree is easier for copypasta into readmes
 # nettools provides netstat, but prefer to use ss
 sudo apt install \
+  bpftrace \
   bpytop \
   broot \
   chkrootkit \
