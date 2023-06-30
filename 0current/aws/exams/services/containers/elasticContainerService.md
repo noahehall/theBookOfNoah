@@ -33,6 +33,7 @@
 - (re)start containers with simple api calls
 - fetch cluster state from a centralized service
 - schedule the placement of containers across ec2 clusters based on resource needs, isolation policies and availability requirements
+- managed service discovery: extensible auto service registration with predictable service names, auto updated with healthy ip & port
 
 ### pricing
 
@@ -115,6 +116,14 @@
       "memoryReservation": 200,
       "essential": true,
       "command": ["/bin/sh -c \"same as docker\""],
+      "logConfiguration": {
+        "logDriver": "awslogs", // stdout -> cloudwatch logs
+        "options": {
+          "awslogs-group": "my-app-name",
+          "aws-logs-region": "some-aws-region",
+          "awslogs-stream-prefix": "my-app-name/container-name"
+        }
+      },
       "portMappings": [
         {
           "hostPort": 80,
@@ -223,6 +232,8 @@
   - volume storage: 4gb per task, assign via volume mounts (without sourcePath), data shared across all containers
 - IAM permission tiers
   - see [markdown file](../securityIdentityCompliance/iam.md)
+- service discovery
+  - registration via route53 auto naming
 
 ### fargate
 
@@ -234,6 +245,15 @@
   - 1024 (1 vCPU): 2/3/4/5/6/7/8gb
   - 2048 (2 vCPU): 4 -> 16gb in 1 gb increments
   - 4096 (4 vCPU): 8 -> 30gb in 1gb increments
+- some features may only be available for fargate
+  - logConfiguration.driver === awslogs
+  - task metadata queries for integration with monitoring tools like datadog
+    - task level queries
+      - some.instance.ip/v2/metadata: JSON metadata for task
+      - some.instance.ip/v2/stats: JSON docker states for all containers in task
+    - container level queries
+      - some.instance.ip/v2/metadata/container-id
+      - some.instance.ip/v2/stats/container-id
 
 ### ec2
 
