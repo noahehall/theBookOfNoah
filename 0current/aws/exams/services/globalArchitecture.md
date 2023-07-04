@@ -22,19 +22,17 @@
 
 ### anti patterns
 
-## features
-
-### pricing
-
 ## terms
 
 ## basics
 
-## considerations
+### shared responsibility model
 
 ### Console, CLIs and SDKs
 
 - every action taken against an AWS resource is an API call
+- SDKs are programming language specific
+- in the console there is a new button to launch a cloud shell for using the cli
 
 ### global edge networks via cloudfront
 

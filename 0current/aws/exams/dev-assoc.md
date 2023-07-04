@@ -3,7 +3,7 @@
 - everything in this doc is taken directly from AWS
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark: exam prep
-  - AWS technical essentials
+  - AWS technical essentials: shared responsibility
   - AWS EKS primer
   - Exam Prep (With practice material)
   - review the aws service overview link in the global architecture file
