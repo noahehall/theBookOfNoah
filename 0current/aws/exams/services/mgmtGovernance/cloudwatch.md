@@ -2,6 +2,7 @@
 
 - CloudWatch Metrics: monitoring & billing, but not observability
 - CloudWatch Logs: aggregator
+- monitor aws resources in realtime: collect and track metrics
 
 ## links
 
@@ -119,3 +120,8 @@
 - cloudwatch logs: make sure specify `awslogs` as the logConfiguration.driver
 - cloudwatchEvents: captures task state changes
 - service cpu/memory utilization metrics: enables you to scale in/out
+
+### MQ
+
+- broker utilization, queue and topic metrics
+- alarms and autoscaling based on metrics

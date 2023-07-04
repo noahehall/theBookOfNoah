@@ -1,6 +1,7 @@
 # x-ray
 
 - visualize the components of an application and flow of api calls, identify performance bottlenecks, and trouble requests that result in errors
+- trace requests into your app and passed through to downstream AWS resources
 
 ## my thoughts
 

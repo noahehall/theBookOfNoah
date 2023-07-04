@@ -9,6 +9,7 @@
 - [microservice architecture patterns and best practices](http://microservices.io/index.html)
 - [rest](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
 - [noisy neighbor antipattern](https://learn.microsoft.com/en-us/azure/architecture/antipatterns/noisy-neighbor/noisy-neighbor)
+- [state of devops 2021 (PDF)](https://services.google.com/fh/files/misc/state-of-devops-2021.pdf)
 
 ### ISO standards
 
@@ -19,17 +20,6 @@
 
 - [bpftrace: inspect syscalls](https://github.com/iovisor/bpftrace)
 
-## terms
-
-- API-First strategy: where each service within their stack is first and always released as an API
-- microservice architectural: an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API. take a large, complex system and break it down into independent, decoupled services that are easy to manage and extend.
-- serverless: abstracts away the infrastructure layer so you can focus on developing your core product
-- technical maturity: often associated with increased levels of abstractions; a first principle of devops
-- syscall: inspect api calls made at the namespace level
-- OOM killer: out of memory killer: algorithm for finding the oldest & largest process in the system, and kills it to freeup memory for the other processes
-  - its difficult to find out which process has been killed by the OOM killer algorithm
-  - stopping a process doesnt freeup the memory allocated to it, you have to kill it
-
 ## REST
 
 - Representational state transfer (REST) refers to architectures that follow six constraints:
@@ -39,8 +29,9 @@
   - There is a uniform interface (in the form of an API) between the server and client.
   - As complexity is added into the system, layers are introduced. There may be multiple layers of RESTful components.
   - Follows a code-on-demand pattern, where code can be downloaded on the fly (in our case implemented in Lambda) and changed without having to update clients.
+- API-First strategy: where each service within their stack is first and always released as an API
 
-## multi-cloud + open source
+## cloud native, multi-cloud and open source
 
 - to truly leverage any cloud provider, you should seek to retain ownership of the following
   - configuring an instance
@@ -51,7 +42,21 @@
   - monitor and observe apps
   - data storage
 
+### cloudnative migration patterns
+
+- refactor/migration: service by service is moved to the cloud into a new architecture
+- lift and shift: aka rehost; copy pasta legacy into cloud services to save on hosting costs
+  - the idea is you take the entire legacy set of applications and move it into the cloud
+- replatform: lift and shift, then replacement/refactor
+  - this is more incremental then a pure lift and shift
+  - you will need to connect the remaining legacy services with the new cloud services until everything is fully migrated
+
 ## databases
+
+- OLTP workloads: online transactional processing
+- OLAP workloads: online analytical processing
+- command query respnsibility segregation: aka polyglot persistence
+  - having a single big db instance thats queried by analytics services to provide `views` into the data for specific microservices/consumers
 
 ### best practices
 
@@ -63,14 +68,6 @@
   - eventually consistent: previous writes may NOT be reflected
   - always design around eventually consistency
     - strongly consistency means you received the latest, but subsequent writes it may be stale whenever based on previous reads
-
-### terms
-
-- OLTP workloads: online transactional processing
-- OLAP workloads: online analytical processing
-- command query respnsibility segregation: aka polyglot persistence
-  - having a single big db instance thats queried by analytics services to provide `views` into the data for specific microservices/consumers
-- cgroup: control groups; deals with CPU and Memory
 
 ### basics
 
@@ -119,6 +116,11 @@
   - you create isolation via file system layers
   - provides the best utilization of the underlying hardware
     - you can share OS libraries and software, or isolate them
+- syscall: inspect api calls made at the namespace level
+- OOM killer: out of memory killer: algorithm for finding the oldest & largest process in the system, and kills it to freeup memory for the other processes
+  - its difficult to find out which process has been killed by the OOM killer algorithm
+  - stopping a process doesnt freeup the memory allocated to it, you have to kill it
+- cgroup: control groups; deals with CPU and Memory
 
 ### best practices
 
@@ -221,3 +223,73 @@
   - immutable services and infrastructure with graceful shutdowns
   - start fast, and fail fast and release all file handles
 - development and production parity
+- microservice architecture: an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API. take a large, complex system and break it down into independent, decoupled services that are easy to manage and extend.
+- serverless: abstracts away the infrastructure layer so you can focus on developing your core product
+
+## devops
+
+- combination of cultural philosophies, practices anbd tools that increases an orgs ability to deliver applications and services at high velocity
+  - evoling and improving products at a faster pace than organizations using trfaditional software dev and infrastructure mgmt processes
+  - cultural philosophies: removng barriers and sharing end-to-end responsibility
+  - processes: developed for speed and quality
+  - tools: align with processes and automate repeatable tasks and focusing on efficiency and reliability
+- technical maturity: often associated with increased levels of abstractions; a first principle of devops
+- devops infinity loop
+  - dev: the people and processes that create software; code, build, test
+    - change quick, release often, measure success by rate of delivery
+  - ops: teams and processes that deliver & monitor software: deploy, operate, monitor
+    - driven by maintaining stability of the application
+    - hence dev & ops have competing goals of releasing fast, and keep stability
+  - test & security: plan, release
+
+### practices
+
+- communication & collaboration:
+  - transparency of information
+  - cross-functional teams own and eveluate their work
+- monitor and observability
+  - assess the effectiveness of changes
+  - monitor performance
+  - short feedback loops help teams react, learn, plan and improve
+  - observable systems genreates enough data from all resources, apps and services in the form of logs, metrics and traces
+    - gain system-wide opreational visibility
+    - logs report on discrete events
+    - metrics capture health and performance
+    - traces report on transactrions and the flow of data across a distributed system
+- continuous integration: regularly merging code changes into a central repo, which trigger automated builds and tests
+- continous
+  - delivery: every code change is built, tested and deployed to a non production testing/staging environment
+    - requires manual deployment to prod
+  - deployment: delivery + automatic deployment to a production environment
+    - deploy to prod is automated
+- microservices architecture: build an application as a set of loosely coupled services
+- infrastructure as code: IaC: infrastructure is provisioned and managed using code and softwaqre dev techniques like CI and git
+
+### pipeline
+
+- a set f stages that mov es code from source to production
+- code > build > test > release > deploy > monitor
+  - code: develop and PRs
+  - build: compile, lint & units, static analysis, dependency management, build images
+  - test: functional, integration, regression, acceptance, load, security
+  - release: prepare and package with a specific verison number
+  - deploy: release to target environments e.g. test, staging, prod, etc
+  - monitor
+
+### tools
+
+- cloud: on demand environments using AWS, GCP, IBM, cloudflare, etc
+- development: IDEs, SDKs, code repositories
+- CI/CD
+  - build: jenkins, travis, codebuild, etc
+  - deploy:
+  - pipeline automation
+- infrastructure
+  - automation: terraform, cloudformation
+  - configuration mgmt: chef, puppet
+- containers and serverless
+- monitoring and observability
+
+## messaging
+
+- allows components of distributed systems to communicate with each other

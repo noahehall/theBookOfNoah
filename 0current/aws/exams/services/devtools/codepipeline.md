@@ -1,6 +1,6 @@
 # elastic container service
 
-- automate CD pipelines (best, test, deploy) via cloudwatch events
+- continuous delivery service that enables you to model, visualize and automate the steps required to release software
 - go from a commit in codecommit to a new images in ECR, updates to cloudformation and deployments to ECS
 
 ## my thoughts
@@ -8,6 +8,7 @@
 ## links
 
 - [landing page](https://aws.amazon.com/codepipeline/?did=ap_card&trk=ap_card)
+- [security](https://docs.aws.amazon.com/codepipeline/latest/userguide/security.html)
 
 ## best practices
 
@@ -28,12 +29,26 @@
 ## features
 
 - trigger builds in codebuild and update cloudformation templates with the buildoutput
+- capture and visualize a dlivery pipeline, run it and view real-time status, and retry failed actions
+- automate the release process
+- incorporate source, build and deploy tools
+- integrate with 3rd party and AWS build, test and deploy tools
 
 ### pricing
 
 ## terms
 
 ## basics
+
+- model the release process with stages and actions
+- each stage can have a number of actions that need to be performed successfully
+- actions can run in sequence/parallel and are associated witha service provide that executes the action or require user intervention
+  - source: where code is stored
+  - build
+  - test
+  - deploy
+  - approval: manual / notifications
+  - invoke: custom fn
 
 ## considerations
 
