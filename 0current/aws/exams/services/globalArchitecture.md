@@ -1,9 +1,58 @@
 # Global Architecture
 
-- stuff that applies to all AWS services
+- fundamental AWS architecture
+
+## my thoughts
+
+- become one with the aws CLI and components of IAM and VPC
+- protect the king (aws root user) at all costs
 
 ## links
 
-- [well architected framework in its entirety](https://aws.amazon.com/architecture/well-architected/)
+- [global infrastructure intro](https://aws.amazon.com/about-aws/global-infrastructure/)
+- [well architected framework](https://aws.amazon.com/architecture/well-architected/)
 - [pricing calculator](https://calculator.aws/#/)
-- [pricing: lambda](https://aws.amazon.com/lambda/pricing/)
+- [aws service overview (PDF)](https://docs.aws.amazon.com/pdfs/whitepapers/latest/aws-overview/aws-overview.pdf)
+- [EU GDPR](https://gdpr.eu/what-is-gdpr/)
+
+## best practices
+
+- resiliancy & availability
+  - use region-scoped services in a minimum of two availability zones
+
+### anti patterns
+
+## features
+
+### pricing
+
+## terms
+
+## basics
+
+## considerations
+
+### Console, CLIs and SDKs
+
+- every action taken against an AWS resource is an API call
+
+### global edge networks via cloudfront
+
+- caching data closer to users to reduce latency
+  - enables you to store data in a regions but cache them closer to users
+- edge locations: copies of content are stored
+- regional edge caching
+
+### region & availbility zones
+
+- region: a cluster of AZs
+  - e.g. us-east-1
+- availability zone: one/more data centers with redundant power & availability
+  - e.g. us-east-1a and us-east-1b
+- selecting a region
+  - compliance: laws/company regulations requiring you to keep data in a specific geography
+  - latency: relative to users and other services
+  - pricing: AWS isnt for the little guy and varies from region to region
+  - service availability: not all aws services are available in all regions
+
+## integrations

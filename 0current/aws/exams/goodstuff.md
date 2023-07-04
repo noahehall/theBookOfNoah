@@ -4,11 +4,12 @@
 
 ## links
 
-- [serverless framework](https://github.com/serverless/serverless)
-- [restful api best practices](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
+- [api: fan out/in integration pattern](https://dzone.com/articles/understanding-the-fan-out-fan-in-api-integration-p)
+- [api: rest](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
+- [api: restful api best practices](http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
 - [microservice architecture patterns and best practices](http://microservices.io/index.html)
-- [rest](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
 - [noisy neighbor antipattern](https://learn.microsoft.com/en-us/azure/architecture/antipatterns/noisy-neighbor/noisy-neighbor)
+- [serverless framework](https://github.com/serverless/serverless)
 - [state of devops 2021 (PDF)](https://services.google.com/fh/files/misc/state-of-devops-2021.pdf)
 
 ### ISO standards
@@ -47,7 +48,8 @@
 - refactor/migration: service by service is moved to the cloud into a new architecture
 - lift and shift: aka rehost; copy pasta legacy into cloud services to save on hosting costs
   - the idea is you take the entire legacy set of applications and move it into the cloud
-- replatform: lift and shift, then replacement/refactor
+  - the core benefit is reducing infrastructure costs (no more on premise) while taking advantage of cloud compute reliability & availability
+- replatform: lift and shift then replacement/refactor
   - this is more incremental then a pure lift and shift
   - you will need to connect the remaining legacy services with the new cloud services until everything is fully migrated
 

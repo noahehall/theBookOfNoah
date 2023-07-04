@@ -4,6 +4,8 @@
 
 ## my thoughts
 
+- use vault instead
+
 ## links
 
 - [landing page](https://aws.amazon.com/kms/?did=ap_card&trk=ap_card)
@@ -21,10 +23,19 @@
 
 ### pricing
 
+- each key costs $1/month
+
 ## terms
 
 ## basics
 
 ## considerations
+
+- key types
+  - symmetric
+  - assymetric
+  - HMAC
+  - multi-region (primary and replica)
+  - keys with imported key material
 
 ## integrations
