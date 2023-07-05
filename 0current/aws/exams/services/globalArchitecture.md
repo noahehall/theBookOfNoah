@@ -14,6 +14,7 @@
 - [pricing calculator](https://calculator.aws/#/)
 - [aws service overview (PDF)](https://docs.aws.amazon.com/pdfs/whitepapers/latest/aws-overview/aws-overview.pdf)
 - [EU GDPR](https://gdpr.eu/what-is-gdpr/)
+- [shared responsibility model](https://aws.amazon.com/compliance/shared-responsibility-model/)
 
 ## best practices
 
@@ -26,7 +27,22 @@
 
 ## basics
 
-### shared responsibility model
+### shared (security) responsibility model
+
+- a good metaphor is an partment building
+  - they are responsibile for the building, you are responsible for everything inside your apartment
+- you: security **IN** the cloud
+  - customer data
+  - platform, applications, IAM
+  - operating system, network and firewall configuration: e.g. patching and upgrades
+  - customer-side data encryption and data integrity authnz
+  - server-side encryption: file sytem/data
+  - networking trafic protection: encryption, integrity identity
+- aws: security **OF** the cloud
+  - software: up to the virtualization layer
+    - compute, storage, database, networking
+  - hardware / aws global infrastructure: the physical stuff, buildings, servers, private fiber cables, etc
+    - regions, avaialbility zones, edge locations
 
 ### Console, CLIs and SDKs
 
