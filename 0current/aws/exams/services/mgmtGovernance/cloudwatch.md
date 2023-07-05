@@ -2,6 +2,7 @@
 
 - CloudWatch Metrics: monitoring & billing, but not observability
 - CloudWatch Logs: aggregator
+- monitor aws resources in realtime: collect and track metrics
 
 ## links
 
@@ -113,3 +114,14 @@
     - latency - integrationLatency = api gateway overhead
   - 4xxError: total client-side errors _captured_ in a specific period
   - 5xxError: total server-side errors _captured_ in a specific period
+
+### ecs
+
+- cloudwatch logs: make sure specify `awslogs` as the logConfiguration.driver
+- cloudwatchEvents: captures task state changes
+- service cpu/memory utilization metrics: enables you to scale in/out
+
+### MQ
+
+- broker utilization, queue and topic metrics
+- alarms and autoscaling based on metrics

@@ -17,6 +17,10 @@
 ## features
 
 - create a trail for captured events and store in s3
+- enables governance, compliance, operational auditing and risk auditing of an aws account
+- log, monitor and retain account activity related to actions across aws infrastructure
+- event history of actions taking through the management console / sdks / clis / etc
+- simplify security analysis, resource change tracking and troubleshooting
 
 ### pricing
 

@@ -1,6 +1,6 @@
 # cloud9
 
-- mission statement
+- online IDE to write, run and debug code
 
 ## links
 

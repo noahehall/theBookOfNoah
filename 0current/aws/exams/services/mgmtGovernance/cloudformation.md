@@ -2,6 +2,10 @@
 
 - IaaC tool for specifying every detail of aws resources required to deploy distinct set of services
 
+## my thoughts
+
+- use terraform instead
+
 ## links
 
 ## best practices

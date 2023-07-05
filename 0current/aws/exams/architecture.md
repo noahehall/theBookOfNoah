@@ -7,13 +7,16 @@
 
 - [localstack](https://github.com/localstack/localstack)
 - [aws serverless](https://aws.amazon.com/serverless/)
-- [serverless land]
 - [serverless multi-tier architectures (PDF)](https://d1.awsstatic.com/whitepapers/AWS_Serverless_Multi-Tier_Architectures.pdf)
 - [aws service search](https://aws.amazon.com/products/)
 - [well architected framework: serverless application lens](https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/wellarchitected-serverless-applications-lens.pdf?810a2056-c993-4832-af32-11286cad694c)
 - [10 things serverless architects should know](https://aws.amazon.com/blogs/architecture/ten-things-serverless-architects-should-know/)
 - [aws blog: api gateway category](https://aws.amazon.com/blogs/compute/category/application-services/amazon-api-gateway-application-services/)
 - [aws serverless express (check examples dir)](https://github.com/vendia/serverless-express)
+- [aws builders library](https://aws.amazon.com/builders-library/?cards-body.sort-by=item.additionalFields.sortDate&cards-body.sort-order=desc&awsf.filter-content-category=*all&awsf.filter-content-type=*all&awsf.filter-content-level=*all)
+- [well architected framework](https://aws.amazon.com/architecture/well-architected/)
+- [aws service overview (PDF)](https://docs.aws.amazon.com/pdfs/whitepapers/latest/aws-overview/aws-overview.pdf)
+- [aws whitepapers](https://docs.aws.amazon.com/whitepapers/latest/aws-overview/compute-services.html)
 
 ### best practices
 
@@ -51,6 +54,12 @@
 ## localstack
 
 - pretty sure we have a localstack.md somewhere in this repo
+
+## compute
+
+- VMs: ec2s
+- containers: ECS (ec2 launch type) + ECR
+- serverless: lambda or ECS (fargate launchtype) + ECR
 
 ### dynamodb local
 

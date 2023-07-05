@@ -1,1 +1,0 @@
-- [trusted advisor](https://docs.aws.amazon.com/awssupport/latest/user/trusted-advisor.html)

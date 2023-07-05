@@ -1,10 +1,11 @@
 # CodeDeploy
 
-- automated deployments
+- automated deployments to a compute services like ec2, fargate, lambda, or on premise
 
 ## links
 
-- [code deploy appspec ref](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html#appspec-reference-server)
+- [appspec ref](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html#appspec-reference-server)
+- [security](https://docs.aws.amazon.com/codedeploy/latest/userguide/security.html)
 
 ## best practices
 
@@ -12,11 +13,24 @@
 
 ## features
 
+- deploy server, serverless or container applications
+- deploy to any AWS compute platforms
+- concurrent deploy to one/more instances
+- each deploy can update existing, or provision new environments
+- configure traffic-shifts from older to newer versions
+- automatic/manual rollbacks for unsuccessful deployments
+
 ### pricing
 
 ## terms
 
 ## basics
+
+- setup an application: specifies which files to copy, scripts to run and where to deploy
+  - code: configuration specified in an appspec file in the root of the repo
+  - deployment group: specifies the deployment target environment
+    - a single application can have one/more deployment groups
+  - deployment configuration: set of deployment rules and success/failure conditions
 
 ## considerations
 

@@ -1,6 +1,6 @@
 # CLI
 
-- mission statement
+- check the other cli-BLAH files for specifics
 
 ## links
 
@@ -19,4 +19,8 @@
 
 ## basics
 
-## considerations
+```sh
+## general API
+# aws SERVICE_NAME CMD PARAMS
+
+```

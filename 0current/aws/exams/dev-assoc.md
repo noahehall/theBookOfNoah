@@ -2,7 +2,14 @@
 
 - everything in this doc is taken directly from AWS
 - last updated in 2023 for version 1.0 DVA-C02
-- bookmark: Working with Amazon Elastic Container Service
+- bookmark:
+  - AWS technical essentials: aws compute > ec2 instance lifecycle
+  - AWS EKS primer
+  - Exam Prep (With practice material)
+  - before the test review these
+    - the offical ramp up guide pdf
+    - AWS Builders library
+    - aws whitepapers
 - todos
   - tackle these AFTER you complete the recommended skillbuilder rampup; these may/not be part of the schedule
     - [designing event driven architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12715/designing-event-driven-architectures)
@@ -10,7 +17,6 @@
     - [scaling serverless architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12713/scaling-serverless-architectures)
     - [security and obervability for serverless applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12714/security-and-observability-for-serverless-applications)\
     - [deploying serverlesss applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12836/deploying-serverless-applications)
-    - then review the offical ramp up guide pdf
   - merge the 10000s of other aws files into this new format
     - do this after we run through skillbuilder, likely some of our notes are outdated
   - ensure theres a pricing section under features for each service
@@ -23,6 +29,7 @@
 - [official sample questions pdf](https://d1.awsstatic.com/training-and-certification/docs-dev-associate/AWS-Certified-Developer-Associate_Sample-Questions.pdf)
 - [officla practice question set](https://explore.skillbuilder.aws/learn/course/external/view/elearning/13757/aws-certified-developer-associate-official-question-set-dva-c02-english)
 - [official ramp up guide (pdf)](https://d1.awsstatic.com/training-and-certification/ramp-up_guides/Ramp-Up_Guide_Developer.pdf)
+- [worshop labs](https://catalog.us-east-1.prod.workshops.aws/)
 
 ### interwebs
 
