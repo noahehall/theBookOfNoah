@@ -10,9 +10,7 @@
 ## links
 
 - [global infrastructure intro](https://aws.amazon.com/about-aws/global-infrastructure/)
-- [well architected framework](https://aws.amazon.com/architecture/well-architected/)
 - [pricing calculator](https://calculator.aws/#/)
-- [aws service overview (PDF)](https://docs.aws.amazon.com/pdfs/whitepapers/latest/aws-overview/aws-overview.pdf)
 - [EU GDPR](https://gdpr.eu/what-is-gdpr/)
 - [shared responsibility model](https://aws.amazon.com/compliance/shared-responsibility-model/)
 

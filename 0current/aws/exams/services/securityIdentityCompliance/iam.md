@@ -32,14 +32,15 @@
 
 - resource policies are easier to grant/deny access across services/accounts, but have size limits
   - iam roles are a bit more verbose but dont have limits
-- always follow principle of least privilege for users and roles
-- protect the root user at all costs
-  - create an admin user instead
-- always enable multi factor auth
-- always assign users to groups, and attach policies to groups
-  - as opposed to attaching policies to specific users
+- users
+  - protect the root user at all costs
+    - create an admin user instead
+  - always enable multi factor auth
+- groups
+  - always assign users to groups, and attach policies to groups (and not directly to users)
 - policies
-  - generally the default policies are always too lenient
+  - always follow principle of least privilege for users and roles
+  - generally the managed policies are always too lenient
 
 ### anti patterns
 
@@ -74,8 +75,11 @@
 
 - endow an entity with temporary credentials to perform some function
   - users and groups
-  - federated users: external identity providers
   - machines: for service-to-service authnz
+  - federated users: external identity providers
+    - SAML 2.0 federation
+    - web identity
+  - custom trust policy
 - characteristics
   - no static credentials: must be progrogrammatical requested
   - credentials are always temporary for the requested amount of time
@@ -99,6 +103,11 @@
 
 - uname & pword: for accessing the console
 - access keys: for programmatic access; consists of an access key and a secret key
+  - cli access
+  - local code in a dev env to access AWS account
+  - apps running on compute services
+  - third-party services to access the aws account
+  - apps run outside of AWS
 - mfa: via soft/hardware; requires an additional input to validate a login attempt
   - something you know: e.g. a pin number
   - something you have: e.g. a onetime code from an app/device
@@ -175,17 +184,17 @@
 
 #### Trust policy
 
-- defines what actions a role can assume
+- defines what actions a role can take
 
 ```jsonc
 {
   "Version": "2012-10-17",
   "Statement": [
     "Sid": "Some Description",
-    "Effect": "Allow", // or deny
-    "Action": "sts:AssumeRole", // google each service for available actions
+    "Effect": "Allow",
+    "Action": "sts:AssumeRole", // bam
     "Principal": {
-      "Service": "lambda.amazonaws.com"
+      "Service": ["lambda.amazonaws.com"] // this service can assume this role
     }
   ]
 }

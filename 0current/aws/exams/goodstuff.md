@@ -97,6 +97,8 @@
 ## virtualization
 
 - container: a standard unit of software
+- hypervisor: soft/firmware that enables sharing physical hardware resources across one/more virtual machines
+- virtual machine: emulates a physical server
 - from baremetal, vms to containers in increasing levels of abstractions
   - baremetal
     - server hardware
