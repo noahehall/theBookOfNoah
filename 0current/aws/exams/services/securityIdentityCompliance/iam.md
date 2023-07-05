@@ -1,8 +1,8 @@
 # Identity and Access Management (IAM)
 
-- authnz for logging into an account and signing API calls
-  - IAM is not for app-level access, only for humans
-  - use role-based access for machines
+- authnz for:
+  - IAM users and groups: humans logging into an account and signing API calls
+  - IAM roles: assumed by an entity (humans/machines) for temporary access to AWS credentials
 
 ## my thoughts
 
@@ -15,6 +15,9 @@
 - [signing aws api requests (sig v4)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html)
 - [root user only tasks](https://docs.aws.amazon.com/accounts/latest/reference/root-user-tasks.html)
 - [enabling mfa](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html)
+- [identities: users groups and roles](https://docs.aws.amazon.com/en_us/IAM/latest/UserGuide/id.html)
+- [authnz for resources](https://docs.aws.amazon.com/en_us/IAM/latest/UserGuide/access.html)
+- [security best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
 
 ### integrations
 
@@ -35,6 +38,8 @@
 - always enable multi factor auth
 - always assign users to groups, and attach policies to groups
   - as opposed to attaching policies to specific users
+- policies
+  - generally the default policies are always too lenient
 
 ### anti patterns
 
@@ -57,9 +62,23 @@
 
 ## basics
 
-### users
+### users & groups
 
 - root user: the initial user on the aws account
+- groups are collections of users
+- characteristics
+  - static credentials
+  - dont expire by default but you should definitely set requiremnets for periodic rotation
+
+### roles
+
+- endow an entity with temporary credentials to perform some function
+  - users and groups
+  - federated users: external identity providers
+  - machines: for service-to-service authnz
+- characteristics
+  - no static credentials: must be progrogrammatical requested
+  - credentials are always temporary for the requested amount of time
 
 ### access control
 
@@ -70,7 +89,13 @@
 - north south: app-level; into and out of your application boundary
 - east west: app to app; within your app boundary
 
-#### authentication schemes
+#### request signatures
+
+- signing a request enables AWS to authenticate your identity
+- users and groups use the credentials associated with their acounts
+- machines (e.g. any of your aws services) must assume a predefined role and sign requests with temporary credentials
+
+##### authentication schemes
 
 - uname & pword: for accessing the console
 - access keys: for programmatic access; consists of an access key and a secret key
@@ -84,18 +109,13 @@
 
 ### policies
 
-- grant/deny permission to take actions
+- set of permissions that grant/deny users, groups and roles to invoke resource actions
 - actions: aws API calls
-- attach policies to AWS identities
 
 #### resource policy
 
 - apply policies to an aws resource to grant/deny access to an account, ip address rangew, vpc or vpc endpoint, etc
 - generally used in addition to IAM policies applied to users, groups and roles
-
-#### IAM policy
-
-- grant permissions to a user, group of users, or role
 
 #### policy syntax
 
