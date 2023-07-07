@@ -11,6 +11,8 @@
 - [noisy neighbor antipattern](https://learn.microsoft.com/en-us/azure/architecture/antipatterns/noisy-neighbor/noisy-neighbor)
 - [serverless framework](https://github.com/serverless/serverless)
 - [state of devops 2021 (PDF)](https://services.google.com/fh/files/misc/state-of-devops-2021.pdf)
+- [networking: intro](https://web.stanford.edu/class/cs101/network-1-introduction.html)
+- [networking: ip address & cidr range visualizer](https://cidr.xyz/)
 
 ### ISO standards
 
@@ -296,3 +298,37 @@
 ## messaging
 
 - allows components of distributed systems to communicate with each other
+
+## networking
+
+- ip address: a 32bit address denoting a specific computer on the internet
+- ipv4: an ip address converted to decimal format: 4 octets, each representing 8 bits (0-255)
+
+### CIDR notation
+
+- CIDR: classless inter-domain routing; enables expressing a rangte of ip addresses
+
+```sh
+# a single ip
+192.168.1.0
+
+# a range of ips in which the first 24 are fixed, and the last 8 are flexible
+# 32 - 24 = 8; the remaining 8 bits can be assigned to the 0 in 0/24
+# the flexible bits can be either a 0 or 1, 2 choices for each of the 8 bits
+## 32 - 24 = 8; 2^8 = 256 total ip addresses
+## netmask: 255.255.255.0
+## cidr base ip: 192.168.0.0
+## broadcast ip: 192.168.0.255
+## first useable: 192.168.0.1
+## last usable: 192.168.0.254
+192.168.0.0/24
+# same as above, except
+## 32 - 16 = 16; 2^16 = 65526 total ip addresses
+## netmask: 255.255.0.0
+## broadcast ip: 192.168.255.255
+## last usable: 192.168.255.254
+192.168.0.0/16
+
+# 1024 ip addresses
+192.168.0.0/22
+```

@@ -6,7 +6,11 @@
 
 ## links
 
+- [landing page](https://aws.amazon.com/privatelink/)
+
 ## best practices
+
+- cheaper for aws to aws (east west) traffic compared to going over the public internet
 
 ### anti patterns
 
@@ -21,10 +25,10 @@
 
 ## basics
 
+## considerations
+
 ## integartions
 
 ### api gateway
 
 - use with the REST API private endpoint
-
-## considerations
