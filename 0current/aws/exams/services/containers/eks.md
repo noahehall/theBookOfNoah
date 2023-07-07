@@ -7,6 +7,7 @@
 ## links
 
 - [landing page](https://aws.amazon.com/eks/?did=ap_card&trk=ap_card)
+- [user guide](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html)
 
 ## best practices
 

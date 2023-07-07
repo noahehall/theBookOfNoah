@@ -132,6 +132,16 @@
 
 ## basics
 
+### high level
+
+- function: lambda runs instances of your function to process events
+- trigger: an event that triggers execution of your function
+- event: JSON document that contains data for a lambda function to process
+- application environment: a secure and isolated runtime env for a lambda function
+- deployment package: a function is deployed to lambda as a zip file or container image
+- runtime: language-specific environment inside the application environment
+- function handler: the method within a function that specifically processes events
+
 ### execution context
 
 - the stuff outside of the handler fn
