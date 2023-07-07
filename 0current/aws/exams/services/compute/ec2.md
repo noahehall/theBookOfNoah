@@ -48,7 +48,7 @@
 
 ### pricing
 
-- billed for running instances
+- billed for running instances & any data stored on EBS volumes
 
 #### on demand
 
@@ -147,7 +147,14 @@
 
 - determines the capacity and blend of hardware capabilities
 
+### security groups
+
+- enable one/more port & ip range per security group
+
 ## considerations
+
+- key pair: if you dont plan on sshing into a server a keypair isnt required
+  - you can always use the cloud shell via the console
 
 ### configuration
 

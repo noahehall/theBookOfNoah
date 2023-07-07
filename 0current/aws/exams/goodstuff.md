@@ -96,9 +96,19 @@
 
 ## virtualization
 
-- container: a standard unit of software
+- container: a standard unit of software; the highest level of abstraction
+  - the container runtime shares the hardware OS kernel
+  - you create isolation via file system layers
+  - provides the best utilization of the underlying hardware
+    - you can share OS libraries and software, or isolate them
 - hypervisor: soft/firmware that enables sharing physical hardware resources across one/more virtual machines
-- virtual machine: emulates a physical server
+- virtual machine: emulates a physical server; virtualize the operating system and better utilize resources
+  - each application can now be isolated from other applications at the VM level
+  - the virtualization layer is still heavy as it requires a complete operating system
+    - which is potentially redundant as isolation requires redundant copies of OS, and OS libraries
+- baremetal: the most inefficient; hardware costs are the same regardless of resource utilization
+  - applications fight for the same set of resources
+  - libraries are generally shared across applications and require synchronization
 - from baremetal, vms to containers in increasing levels of abstractions
   - baremetal
     - server hardware
@@ -108,23 +118,12 @@
     - containerization platform
     - libraries
     - applications
-- baremetal: the most inefficient; hardware costs are the same regardless of resource utilization
-  - applications fight for the same set of resources
-  - libraries are generally shared across applications and require synchronization
-- virtual machines: virtualize the operating system and better utilize resources
-  - each application can now be isolated from other applications at the VM level
-  - the virtualization layer is still heavy as it requires a complete operating system
-    - which is potentially redundant as isolation requires redundant copies of OS, and OS libraries
-- containers: the highest level of abstraction
-  - the container runtime shares the hardware OS kernel
-  - you create isolation via file system layers
-  - provides the best utilization of the underlying hardware
-    - you can share OS libraries and software, or isolate them
 - syscall: inspect api calls made at the namespace level
 - OOM killer: out of memory killer: algorithm for finding the oldest & largest process in the system, and kills it to freeup memory for the other processes
   - its difficult to find out which process has been killed by the OOM killer algorithm
   - stopping a process doesnt freeup the memory allocated to it, you have to kill it
 - cgroup: control groups; deals with CPU and Memory
+- orchestration: service that coordinates container deployment, placement strategy, failure, and resource utilization
 
 ### best practices
 

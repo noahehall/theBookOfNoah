@@ -80,19 +80,15 @@
 - private blockchain:
   - permission: required, and are typically under centralized control
 - cross-chain functionality: connecting data across blockchains
-
   - allows a series of protocols that work in harmony to delivery decentralized applications
   - e.g. a private blockchain can store public blockchain data, like to log bitcoin transactions via their transaction id hash
   - e.g. a public blockchain can store private blockchain by embedding data, e.g. bitcoin core OP_RETURN can store up to 40bytes
     In the Blockchain class we are going to implement the method: validateChain()
-
-        This method will return a Promise that will resolve with the list of errors when validating the chain.
-        Steps to validate:
-            You should validate each block using validate() method from each of the blocks in the chain.
-            Each Block should check the with the previousBlockHash to make sure the chain isn't broken.
-
+    This method will return a Promise that will resolve with the list of errors when validating the chain.
+    Steps to validate:
+    You should validate each block using validate() method from each of the blocks in the chain.
+    Each Block should check the with the previousBlockHash to make sure the chain isn't broken.
     vs 2
-
   - both
     - depend on a wallet address for identity for transactions and services
     - both keep a public record of transactions that have taken place
@@ -182,7 +178,7 @@
 
 ### blockchain
 
-- a shared digital ledger that contains the entire histoyr of transactions made on the network
+- a shared digital ledger that contains the entire history of transactions made on the network
   - i.e. the transaction history of the network
 - a connection of linked blocks joined together by hash values; hash values + blocks are the core components
   - if the hash value of a block is changed, the hash for the next block is also changed, and next block, etc. and all those blocks become invalid

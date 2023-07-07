@@ -4,8 +4,6 @@
 
 ## my thoughts
 
-- i'ma nomad fan, so any k8s abstraction gets a thumbs up
-
 ## links
 
 - [landing page](https://aws.amazon.com/eks/?did=ap_card&trk=ap_card)
@@ -22,7 +20,12 @@
 
 ### pricing
 
+- 0.10 per hour for each EKS cluster and any resources used
+
 ## terms
+
+- worker node: the machine that hosts your pod
+- pod: a container instanced
 
 ## basics
 
