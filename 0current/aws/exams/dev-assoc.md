@@ -3,7 +3,7 @@
 - everything in this doc is taken directly from AWS
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
-  - AWS technical essentials: aws compute > ec2 instance lifecycle
+  - AWS technical essentials: aws compute > demonstration
   - AWS EKS primer
   - Exam Prep (With practice material)
   - before the test review these
