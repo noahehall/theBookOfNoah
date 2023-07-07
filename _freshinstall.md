@@ -157,6 +157,7 @@ sudo apt install \
   dconf-editor \
   dive \
   duf \
+  gcc \
   gping \
   gufw \
   install gnome-boxes \
@@ -250,6 +251,7 @@ less the_var/log/file/path
 
 #### more involved installation/setup
 
+- [homebrew on linux](https://docs.brew.sh/Homebrew-on-Linux)
 - [read this doc to setup pass](./0current/linux/passwords.md)
 - [brightness controller](https://linuxmasterclub.com/brightness-controller/)
 - [increase inotify watchers](https://dev.to/rubiin/ubuntu-increase-inotify-watcher-file-watch-limit-kf4)

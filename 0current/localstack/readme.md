@@ -1,0 +1,2 @@
+- check the [localstack file for docs](./localstack.md)
+- check the examples dir for examples
