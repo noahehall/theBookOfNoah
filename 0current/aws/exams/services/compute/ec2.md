@@ -149,7 +149,7 @@
 
 ### security groups
 
-- enable one/more port & ip range per security group
+- [see markdown file](../networkingContentDelivery/securitygroups.md)
 
 ## considerations
 

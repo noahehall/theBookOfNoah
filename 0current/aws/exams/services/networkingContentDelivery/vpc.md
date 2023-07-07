@@ -61,6 +61,30 @@
       - attach it to a VPC
     - nat gateway for private subnets
     - virtual private gateway for private access
+  - create/adjust route table routes
+    - only subnets with the appropriate route table connection & routes can access the internet/other vpc-local resources
+    - if a subnet is public/private it doesnt matter, its all about how the route table is configured
+  - VPC firewalls
+    - create/adjust NACLs
+    - create/adjust security groups
+
+### route tables
+
+- routes internet gateway traffic to specific subnets
+  - thus a route table is always connected to a VPC, some type of gateway, and one/more subnets via its route destination configuration
+- route: can be applied at the VPC or subnet level
+- main route table: created with a VPC; allows all traffic between subnets in a vpc
+  - cannot be deleted from the route table
+  - implicitly used by all subnets without an explicit route table association
+    - once theirs an explicit association, the subnet will no longer use the main route table
+- destination: where traffic thinks its going
+  - CIDR range: generally this means it should match a subnet, and the target should be local
+  - 0.0.0.0/0: means this is outbound traffic to the internet, and the target should be some type of gateway
+- target: where the traffic is actually routed to
+  - local: within the VPC
+  - some gateway id
+  - etc
+- subnet association: this enables the routes of a routetable to be associated with resources in a subnet
 
 ### subnets
 
@@ -96,6 +120,16 @@
     - can reach out to the internet via an internet gateway
   - private
     - can be attached to an internet gateway, but it will drop outbound internet traffic
+
+### NACLs
+
+- network access control lists: control what kind of traffic can enter and leave the subnet
+- stateless firewall at the subnet level: you must edit both ingress & egress traffic
+  - by default allows all in/egress traffic: you can then restrict access
+
+### security groups
+
+- see [markdown file](./securitygroups.md)
 
 ## considerations
 
