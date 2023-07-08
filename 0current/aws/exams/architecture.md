@@ -17,6 +17,7 @@
 - [well architected framework](https://aws.amazon.com/architecture/well-architected/)
 - [aws service overview (PDF)](https://docs.aws.amazon.com/pdfs/whitepapers/latest/aws-overview/aws-overview.pdf)
 - [aws whitepapers](https://docs.aws.amazon.com/whitepapers/latest/aws-overview/compute-services.html)
+- [cloud computing concepts](https://aws.amazon.com/what-is)
 
 ### best practices
 

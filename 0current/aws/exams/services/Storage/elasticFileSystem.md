@@ -34,4 +34,12 @@
 
 ## considerations
 
+- storage class
+  - multi-az; highest levels of durability and availabilityt
+    - standard:
+    - standard IA: infrequent access
+  - single AZ; cheapest
+    - one zone:
+    - one zone IA: infrequent access
+
 ## integrations

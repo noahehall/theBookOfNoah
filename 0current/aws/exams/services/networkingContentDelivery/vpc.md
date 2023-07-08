@@ -58,15 +58,21 @@
 
 - general workflow
   - create a vpc
+    - enter CIDR range with enough IPs for available resources across subnets
   - create subnets
+    - attach to VPC & pick an AZ
+    - pick a CIDR range thats a subset of the VPC cidr range and doesnt overlap with other subnets
+      - check the goodstuff file for notes and this [cidr visualizer](https://cidr.xyz/)
   - create gateways
     - internet gateway for public subnets
       - attach it to a VPC
     - nat gateway for private subnets
     - virtual private gateway for private access
   - create/adjust route table routes
-    - only subnets with the appropriate route table connection & routes can access the internet/other vpc-local resources
-    - if a subnet is public/private it doesnt matter, its all about how the route table is configured
+    - attach to VPC
+    - generally you want distinct route tables for public vs private subnets
+      - only subnets with the appropriate route table connection & routes can access the internet/other vpc-local resources
+      - if a subnet is public/private doesnt technically matter, its all about how the route table routes are configured
   - VPC firewalls
     - create/adjust NACLs
     - create/adjust security groups
@@ -82,9 +88,9 @@
     - once theirs an explicit association, the subnet will no longer use the main route table
 - destination: where traffic thinks its going
   - CIDR range: generally this means it should match a subnet, and the target should be local
-  - 0.0.0.0/0: means this is outbound traffic to the internet, and the target should be some type of gateway
+  - 0.0.0.0/0: means this is traffic to/from the internet, and the target should be some type of gateway
 - target: where the traffic is actually routed to
-  - local: within the VPC
+  - local: within the VPC, and will automatically route to associated subnets
   - some gateway id
   - etc
 - subnet association: this enables the routes of a routetable to be associated with resources in a subnet
@@ -148,3 +154,11 @@
       - use the visualizer link in the goodstuff doc
 
 ## integrations
+
+### EC2
+
+- on ec2 creation, you can select an existing VPC and subnet to launch an instance into under network settings
+
+### Security Groups
+
+- you cant use a security group attached to VPC X with VPC Y
