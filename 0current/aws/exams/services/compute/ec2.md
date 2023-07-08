@@ -16,6 +16,7 @@
 - [pricing: savings plans](https://aws.amazon.com/savingsplans/)
 - [pricing: spot instances](https://aws.amazon.com/ec2/spot/?did=ap_card&trk=ap_card)
 - [hibernation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html)
+- [instance store](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html)
 
 ## best practices
 
@@ -41,6 +42,9 @@
     - but you can also reserve a dedicated host for cost saving
 - dont forget about the user data script
 - high availability requires at least 2 ecs across distinct availability zones
+- pick the right block storage type
+  - ephemeral storage: use instance store
+  - persistent storage: use ebs
 
 ### anti patterns
 
@@ -154,9 +158,12 @@
 
 ### Instance Store
 
-- storage used as an internal, directly attached data volume; e.g. a laptops internal harddrive
+- storage used as an internal, directly attached ephemeral data volume; e.g. a laptops internal harddrive
 - positives
   - i/o is faster than attaching an ebs volume due to the close proximity of the physical storage to the physical ec2 server
+  - applications that replicate data across ec2 instances, e.g. anything in a cluster
+    - you need the fastest i/o for replication
+  - temporary storage for frequently changed data: buffers, caches, scratch data, etc
 - negatives
   - its lifecycle is tied to the lifecycle of the ec2 instance; once the ec2 is down, the data on the instance store is lost
 
@@ -195,6 +202,6 @@
 
 ## integrations
 
-### block storage
+### elastic block storage
 
 - [see markdown file](../Storage/elasticblockstore.md)

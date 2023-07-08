@@ -340,10 +340,10 @@
 - block storage: splits data into chunks (aka blocks; each with distinct addresses) and stores them on disk, subject to fragmentation over time
   - its more efficient when changing a piece of the data, as only the chunk needs to be updated
   - R/W pattern: WORM
-  - use cases: transactional workloads, containers, virtual machines, i/o intensive apps
+  - use cases: transactional workloads, containers, virtual machines, i/o intensive apps, operating systems, databases, big data analytics engines
 - object storage: treats data as atomic units (e.g. a file) and stores it on disk in a flat hierarchy, not subject to fragmentation over time
   - if changing a piece of the data, you need to replace the entire object
-  - uses cases: data archiving, backup and recovery, rich media
+  - uses cases: data archiving, backup and recovery, rich media;
 - file storage: treats data as atomic units (e.g. a file) but also organized in a tree structure, like your filesystem
   - ideal when you require centralized access that must be easily shared and managed by multiple host computers
   - if changing a piece of data, you need to replace the entire file
