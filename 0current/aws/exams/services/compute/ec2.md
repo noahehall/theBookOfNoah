@@ -97,19 +97,20 @@
 - running: you start incurring charges
 - reboot
   - the instance keeps its public DNS name and private & public ipv4 & ipv6 addresses as well as any data stored in volumes
-- stop request:
-  - you can restart a stopped instance if it has an EBS volume as its root device
-  - it retains its private ipv4 and v6 addresses
-  - phases
-    - stopping phase
-    - stopped: like powering down a laptop; starting up again requires initiating the boot phase
-      - data in RAM is lost
-- stop hibernate request
-  - phases
-    - stopping phase: you are still being charged here
-    - stopped: the VM goes into hibernation (suspend to disk)
-      - the state of the machine is saved in memory
-      - only instances with hibernation turned on can use this type
+- stop
+  - regular stop request:
+    - you can restart a stopped instance if it has an EBS volume as its root device
+    - it retains its private ipv4 and v6 addresses
+    - phases
+      - stopping phase
+      - stopped: like powering down a laptop; starting up again requires initiating the boot phase
+        - data in RAM is lost
+  - hibernate stop request
+    - phases
+      - stopping phase: you are still being charged here
+      - stopped: the VM goes into hibernation (suspend to disk)
+        - the state of the machine is saved in memory
+        - only instances with hibernation turned on can use this type
 - terminate request
   - phases
     - shutting down phase
@@ -151,10 +152,22 @@
 
 - [see markdown file](../networkingContentDelivery/securitygroups.md)
 
+### Instance Store
+
+- storage used as an internal, directly attached data volume; e.g. a laptops internal harddrive
+- positives
+  - i/o is faster than attaching an ebs volume due to the close proximity of the physical storage to the physical ec2 server
+- negatives
+  - its lifecycle is tied to the lifecycle of the ec2 instance; once the ec2 is down, the data on the instance store is lost
+
 ## considerations
 
 - key pair: if you dont plan on sshing into a server a keypair isnt required
   - you can always use the cloud shell via the console
+- storage: every EC2 needs block storage
+  - use cases: bootvolume for the operating system, attachable data volume
+  - internal storage: ec2 Instance Store
+  - external storage: ebs volume
 
 ### configuration
 
@@ -181,3 +194,7 @@
 - instance level firewall
 
 ## integrations
+
+### block storage
+
+- [see markdown file](../Storage/elasticblockstore.md)
