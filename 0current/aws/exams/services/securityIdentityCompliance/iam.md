@@ -60,6 +60,7 @@
 ## terms
 
 - iam role: can be assumed by a user, an ec2 instance (e.g.) or an application
+- resource policies: policies attached to resources as opposed to users/groups/roles
 
 ## basics
 
@@ -264,3 +265,7 @@
 
 - apply resource policies directly to individual secrets defining who can access and what they can do
 - alternatively apply roles to resources giving them access to specific secrets
+
+### s3
+
+- IAM policies attached to users/groups/roles for authnz of s3 resources

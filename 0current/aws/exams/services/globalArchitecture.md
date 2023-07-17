@@ -59,6 +59,7 @@
 
 - region: a cluster of AZs
   - e.g. us-east-1
+  - currently 3 region classifications: standard region,s china regions, and AWS GovCloud (US)
 - availability zone: one/more data centers with redundant power & availability
   - e.g. us-east-1a and us-east-1b
 - selecting a region

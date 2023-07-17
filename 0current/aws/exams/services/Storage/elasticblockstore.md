@@ -5,7 +5,9 @@
 
 ## my thoughts
 
-- like attaching a USB drive to a laptop
+- perfect for persistent application data that requires block storage
+- determine up front if you need multi-attach to share data across EC2s as it depends on volume type
+- remember there is a size limit for ebs, unlike S3
 
 ## links
 
@@ -16,7 +18,7 @@
 ## best practices
 
 - required for immutable infrastructure with EC2s
-  - you can keep app state on the EBS and immutable server state on the EC2 instance store
+  - you can keep app state on the EBS and server state on the EC2 instance store
   - the EBS life cycle isnt related to the EC2/instance store lifecycle
 - ensure your taking regular snapshots, and removing old snapshots
 - use cases
@@ -30,10 +32,12 @@
 ## features
 
 - designed for scaling high performance workloads
-- high availability, replication in/across AZs, 5 9s durability
+- high availability, replication in/across AZs, 5 9s durability: automatically replicated in its availability zone
 - build SAN in the cloud for i/o intensive apps
 - run relational/nosql database
-- resize clusters for big data analytics engines
+- runtime flexible: modify volume type/size, IOPS configuration, resize clusters for big data analytics engines
+- data persists and is not attached to EC2 lifecycle
+- opt-in data encryption for all volume types
 
 ### pricing
 
@@ -56,6 +60,7 @@
 ## terms
 
 - SAN: storage area networks
+- IOPS: input/output operations per second
 
 ## basics
 
@@ -70,17 +75,32 @@
 
 ### snapshots
 
-- redundantly stored incremental backups
+- redundantly stored incremental backups:
+  - new snapshots only track the blocks on the volume that have changed since the previous snapshot
+  - backups are stored redundantly in multiple AZs using S3
+- snapshots can be used to create new volumes in any AZ
 
 ### volume types
 
-### SSD backed
+#### SSD backed
 
-### HDD backed
+- designed for transactional workloads
+- general purpose: balance of price and performance
+  - types: gp3, gp2
+- provisioned IOPS: high performance, low latency
+  - types: io2 block express, io2, io1
+  - supports multi attach
+
+#### HDD backed
+
+- throughput optimized: frequently accessed, throughput-intensive workloads
+  - type: st1
+- cold: low cost, less frequently accessed workloads
+  - types: sc1
 
 ### scaling volume size
 
-- you can scale an ebs volume up to the max size of 64 tebibytes (TiB)
+- you can scale an ebs volume up to a max size of 64 tebibytes (TiB)
 - increase volume size: a provisioned EBS volume size can be increased via settings
 - attach multiple volumes: during/after EC2 instance creation you can attach multiple EBS volumes
 
