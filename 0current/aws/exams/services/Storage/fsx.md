@@ -1,6 +1,7 @@
 # FSx
 
-- fully managed high performant file systems
+- native compatibility with third party file systems
+- NetApp ONTAP, OpenZFS, Windows File Server and Lustre
 
 ## my thoughts
 

@@ -81,7 +81,6 @@
 
 - api gateway: micrservice APIs
 - lambda: compute
-- s3: object storage
 - dynamodb: operational data
 - sns: messaging/decoupling
 - sqs: queueing/decoupling
@@ -89,6 +88,8 @@
 - cloudwatch: monitoring & logs
 - cloudfront: cache for static resources and api gateway
 - sam cli: test, build and deploy
+- sqs & sns
+- s3 (objects), ebs (compute-persistence), ec2 instance store (compute-ephemeral), efs (file system), fsx (third party file systems)
 
 #### other tools
 
@@ -124,16 +125,6 @@
   - update lambda functions and backend integrations
 
 ## common architectures
-
-### core
-
-- iam: authnz
-- route53: anything dns related
-- cloudwatch: logging and monitoring and alerts
-- xray: tracing & observability
-- cloudtrail
-- iam: permissions and policies
-- secrets manager: encrypted passwords, credentials and tokens
 
 ### elastic load balancing
 
