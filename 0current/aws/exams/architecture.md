@@ -80,8 +80,8 @@
 ### core stack
 
 - api gateway: micrservice APIs
-- lambda: compute
-- dynamodb: operational data
+- compute: lambda, ecs, ecs, eks
+- storage: dynamodb, documentdb
 - sns: messaging/decoupling
 - sqs: queueing/decoupling
 - kinesis: streaming
@@ -89,7 +89,7 @@
 - cloudfront: cache for static resources and api gateway
 - sam cli: test, build and deploy
 - sqs & sns
-- s3 (objects), ebs (compute-persistence), ec2 instance store (compute-ephemeral), efs (file system), fsx (third party file systems)
+- s3 (objects), ebs (compute-persistence), ec2 instance store (compute-ephemeral), efs (file system)
 
 #### other tools
 
@@ -123,6 +123,14 @@
   - iam execution roles and resource policies
   - creating lambda functions and integrating with backend resources
   - update lambda functions and backend integrations
+
+## databases
+
+- relational: aurora, rds, redshift
+- key-value: dynamodb
+- in-memory: elasticache, memorydb for redis
+- document: documentdb
+- nosql: dynamodb
 
 ## common architectures
 
