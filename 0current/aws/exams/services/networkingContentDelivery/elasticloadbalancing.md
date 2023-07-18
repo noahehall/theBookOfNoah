@@ -10,8 +10,22 @@
 - [landing page](https://aws.amazon.com/elasticloadbalancing/?did=ap_card&trk=ap_card)
 - [user guide](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/what-is-load-balancing.html)
 - [sticky sessions](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/sticky-sessions.html)
+- [elb type comparisons](https://aws.amazon.com/elasticloadbalancing/features/#Product_comparisons)
+- [alb: authnz](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/listener-authenticate-users.html)
+- [glb: intro](https://aws.amazon.com/blogs/aws/introducing-aws-gateway-load-balancer-easy-deployment-scalability-and-high-availability-for-partner-appliances/)
 
 ## best practices
+
+- ELB basic comparison: check the comparison link for indepth
+  - ALB: layer 7; ip, instance and lambdas
+    - preverse source ip addr
+    - fixed response
+    - user authnz
+  - NLB: layer 4; ip, instance and ALBs
+    - preserve source ip addr
+    - static ip and elastic ip addr
+  - GLB: ip and instances
+    - preserve source ip addr
 
 ### anti patterns
 
@@ -57,27 +71,35 @@
   - TLS offloading/termination
   - user authnz: uses OpenID Connect (OIDC) and supports SAML, LDAP, microsoft active directory, etc
   - rich metrics and logging
-  - supports sticky sessions to send subsueqent requests to the save backend target
+  - sticky sessions with http cookies to send subsueqent requests to the save backend target
 - schemes
   - internet facing: routes public requests
   - internal: routes private ip requests to targets with private ips
+- target types: ip, instance, lambda
 
 ### network load balancer
 
 - layer 4 tcp/udp/tls
+  - enable access to resources within a private vpc
 - features
   - tcp & UDP connections
   - source IP preservation
   - low latency
-- enable access to resources within a private vpc
+  - sticky sessions
+  - automatically receives a static IP addr per availability zone subnet
+  - can assign a custom fixed elastic ip addr per availability zone subnet
+  - dns failover via route 53 to direct traffic to load balancer nodes in other zones
 
 ### gateway laod balancer
 
-- layer 3+4 ip
+- layer 3 gateway and layer 4 loadbalancer
+  - deploy scale and manage thirdparty appliances like firewalls, intrusion detection adn prevension systems, and deep packet inspection systems
 - features
-  - health checks
+  - high availabilty routing to backends via health checks
   - gateway load balancer endpoints
-  - higher availability for third-party virtual appliances
+  - integrated with cloudwatch metrics for monitoring
+  - deploy new appliances by selecting them from the aws marketplace
+  - private connectivity to itnernet gateways, VPCs and other resources over a private network
 - mainly used to load balance requests to third party applications
 
 ## considerations

@@ -7,6 +7,7 @@
 ## links
 
 - [landing page](https://aws.amazon.com/waf/?did=ap_card&trk=ap_card)
+- [intro](https://docs.aws.amazon.com/waf/latest/developerguide/how-aws-waf-works.html)
 
 ## best practices
 

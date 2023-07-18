@@ -215,3 +215,7 @@
 
 - common metrics
   - DatabaseConnections
+
+### ACM
+
+- automate and response to ACM events, e.g. change in certificate state or renewal
