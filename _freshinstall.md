@@ -254,6 +254,7 @@ less the_var/log/file/path
 - [homebrew on linux](https://docs.brew.sh/Homebrew-on-Linux)
   - [localstack: follow the alternative steps](https://docs.localstack.cloud/getting-started/installation/)
   - [also add terraform local](https://docs.localstack.cloud/user-guide/integrations/terraform/)
+  - [also add sam local](https://docs.localstack.cloud/user-guide/integrations/aws-sam/)
 - [read this doc to setup pass](./0current/linux/passwords.md)
 - [brightness controller](https://linuxmasterclub.com/brightness-controller/)
 - [increase inotify watchers](https://dev.to/rubiin/ubuntu-increase-inotify-watcher-file-watch-limit-kf4)

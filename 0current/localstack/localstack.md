@@ -6,11 +6,11 @@
 
 ## links
 
-- [terraform docs](https://docs.localstack.cloud/user-guide/integrations/terraform/)
 - [installation](https://docs.localstack.cloud/getting-started/)
 - [available AWS apis](https://docs.localstack.cloud/user-guide/aws/feature-coverage/)
 - [installation: use homebrew for linux](https://docs.brew.sh/Homebrew-on-Linux)
-- [awslocal: wrapper for awscli](https://github.com/localstack/awscli-local)
+- [awslocal: wrapper for aws cli](https://github.com/localstack/awscli-local)
+- [samlocal: wrapper for sam cli](https://github.com/localstack/aws-sam-cli-local)
 - [dockerhub](https://hub.docker.com/r/localstack/localstack/#!)
 - [tutorials](https://docs.localstack.cloud/tutorials/)
 - [user guide](https://docs.localstack.cloud/user-guide/)
@@ -20,6 +20,11 @@
 ### services
 
 - [dynamodb local with localstack issue](https://github.com/localstack/localstack/issues/3390)
+
+### terraform
+
+- [terraform docs](https://docs.localstack.cloud/user-guide/integrations/terraform/)
+- [terraform with localstack tut](https://dev.to/mrwormhole/localstack-with-terraform-and-docker-for-running-aws-locally-3a6d)
 
 ## quickies
 
