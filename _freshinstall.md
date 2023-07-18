@@ -253,7 +253,7 @@ less the_var/log/file/path
 
 - [homebrew on linux](https://docs.brew.sh/Homebrew-on-Linux)
   - [localstack: follow the alternative steps](https://docs.localstack.cloud/getting-started/installation/)
-    - you can instead use docker-compose, but the cli works great
+  - [also add terraform local](https://docs.localstack.cloud/user-guide/integrations/terraform/)
 - [read this doc to setup pass](./0current/linux/passwords.md)
 - [brightness controller](https://linuxmasterclub.com/brightness-controller/)
 - [increase inotify watchers](https://dev.to/rubiin/ubuntu-increase-inotify-watcher-file-watch-limit-kf4)

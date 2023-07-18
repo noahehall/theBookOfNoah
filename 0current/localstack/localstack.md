@@ -12,6 +12,10 @@
 - [installation: use homebrew for linux](https://docs.brew.sh/Homebrew-on-Linux)
 - [awslocal: wrapper for awscli](https://github.com/localstack/awscli-local)
 - [dockerhub](https://hub.docker.com/r/localstack/localstack/#!)
+- [tutorials](https://docs.localstack.cloud/tutorials/)
+- [user guide](https://docs.localstack.cloud/user-guide/)
+- [references](https://docs.localstack.cloud/references/)
+- [blog](https://localstack.cloud/blog)
 
 ### services
 
@@ -29,6 +33,7 @@ brew install localstack/tap/localstack-cli
 localstack --version
 
 # alternative: use docer-compose
+## i find having localstack cli installed highly useful
 ## read this: https://docs.localstack.cloud/getting-started/installation/#docker-compose
 ## ^ make sure to check the Notes section for gotchas
 ## ^ make sure to pin the image to a specific version
@@ -41,6 +46,9 @@ pip install awscli-local
 ## or source this file: https://github.com/nirv-ai/scripts/blob/develop/shell-init/localstack.sh
 alias awslocal="AWS_ACCESS_KEY_ID=test AWS_SECRET_ACCESS_KEY=test AWS_DEFAULT_REGION=${DEFAULT_REGION:-$AWS_DEFAULT_REGION} aws --endpoint-url=http://${LOCALSTACK_HOST:-localhost}:4566"
 
+# setup terraform local
+pip install terraform-local
+## you can also manually configure the local endpoints in the provider section
 ```
 
 ## quickies
@@ -50,11 +58,13 @@ localstack
   --version
   logs
   start
-    -d # start localstack in docker mode
+    -d # daemon
   status
     services # see running services
+  stop # destroy created resources and stop the running container
 ```
 
 ## basics
 
 - works with both CDK and terraform
+- all resources are ephemeral: once you stop the localstack container all resources are lost
