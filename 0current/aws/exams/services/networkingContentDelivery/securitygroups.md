@@ -20,8 +20,13 @@
 
 ### vpc
 
-- abcd
+- every VPC has a default security group
 
 ### RDS
 
 - control which IP ranges or EC2 instances can connect to a db instance
+
+### ELB
+
+- every application load balancer requiests at least one security group
+  - else the VPCs default security group will be used
