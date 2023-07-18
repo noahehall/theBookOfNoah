@@ -1,2 +1,3 @@
-- check the [localstack file for docs](./localstack.md)
-- check the examples dir for examples
+- check the
+  - [localstack file for docs](./localstack.md)
+  - [this repo for running examples](https://github.com/noahehall/localstack)
