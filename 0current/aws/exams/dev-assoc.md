@@ -2,8 +2,7 @@
 
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
-  - AWS technical essentials: traffic routing with ELB > network load balancer
-  - AWS EKS primer
+  - AWS technical essentials: ec2 auto scaling > top of page
   - Exam Prep (With practice material)
   - before the test review these
     - the offical ramp up guide pdf
