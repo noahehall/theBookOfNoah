@@ -2,6 +2,9 @@
 
 - TODO: bunches of things
   - sections are very service specific: you should flip the sections to be generic in form and explicit in detail
+  - delete all of the files in oldnotes and oldnotesbooks directories
+- TLDR!
+  - provides a 10k foot view of AWS without having to traverse the millions of services and files in this directory of notes
 
 ## links
 
@@ -60,6 +63,7 @@
   - dont implement long running processes in lambdas, use containers
 - integration
   - understand your component timeouts, e.g. api gateway and lambda have different hard limits
+- amazon has a database engine for every occasion, choose wisely
 
 ## terms
 
@@ -69,22 +73,41 @@
 
 - pretty sure we have a localstack.md somewhere in this repo
 
-## compute
+## service & product categories
+
+### compute
 
 - VMs: ec2s
 - containers: ECS (ec2 launch type) + ECR
 - serverless: lambda or ECS (fargate launchtype) + ECR
 
-### dynamodb local
+### security
 
-- [get the docker image](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html)
+- flow of traffic: VPC, NACLs, route tables, security groups
+- authnz: IAM policies, resource policies
 
-## event-driven architectures
+### storage
 
-- events: an observable (change in state) that contains all the information required to take subsequent action
-- event producers: entities that create and publish events, e.g. websites, apps, etc to unknown consumers usually through an event-bus like EventBridge
-- event router: ingests, filters, and pushes events to known consumers through some other mechanism like SNS
-- event consumers: subscribe to receive specific or monitor all events in a stream and act on those they are interested in
+- objects: s3
+- compute-persistence: ebs
+- compute-ephemeral: ec2 instance store
+- file system: EFS, FSx
+- cache: file cache
+- data migration: datasync, snow family
+- hybrid cloud storage and edge computing: storage gateway, snow family
+- file transfer: transfoer family
+- disaster recovery and backup: Elastic Disaster Recover, Backup
+
+### databases
+
+- relational: aurora, rds, redshift
+- key-value: dynamodb
+- in-memory: elasticache, memorydb for redis
+- document: documentdb with mongodb compatibility
+- wide column: keyspaces
+- graph: neptune
+- time series: timestream
+- ledger: ledger database services (QLBD)
 
 ## Serverless
 
@@ -94,15 +117,14 @@
 
 - api gateway: micrservice APIs
 - compute: lambda, ecs, ecs, eks
-- storage: dynamodb, documentdb
+- storage: dynamodb
 - sns: messaging/decoupling
 - sqs: queueing/decoupling
 - kinesis: streaming
 - cloudwatch: monitoring & logs
 - cloudfront: cache for static resources and api gateway
 - sam cli: test, build and deploy
-- sqs & sns
-- s3 (objects), ebs (compute-persistence), ec2 instance store (compute-ephemeral), efs (file system)
+- storage: s3
 
 #### other tools
 

@@ -269,3 +269,8 @@
 ### s3
 
 - IAM policies attached to users/groups/roles for authnz of s3 resources
+
+### RDS
+
+- assign permissions to determine who can manage RDS resources
+  - e.g. create, describe, modify and delete db instances, tag resources, modify security groups

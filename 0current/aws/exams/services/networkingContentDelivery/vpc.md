@@ -98,6 +98,7 @@
 ### subnets
 
 - provide granular control over access to resources; e.g. public vs private resources
+- each subnet is bound to a specific AZ within a VPC
 
 ### internet gateway
 
@@ -162,3 +163,8 @@
 ### Security Groups
 
 - you cant use a security group attached to VPC X with VPC Y
+
+### rds
+
+- db instances require a VPC with two private subnets not connected to an internet gateway
+  - you can further protect your db by using NACLs and security groups

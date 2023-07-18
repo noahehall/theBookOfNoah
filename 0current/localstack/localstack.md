@@ -10,6 +10,7 @@
 - [installation](https://docs.localstack.cloud/getting-started/)
 - [available AWS apis](https://docs.localstack.cloud/user-guide/aws/feature-coverage/)
 - [installation: use homebrew for linux](https://docs.brew.sh/Homebrew-on-Linux)
+- [dynamodb local with localstack issue](https://github.com/localstack/localstack/issues/3390)
 
 ## quickies
 
