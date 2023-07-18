@@ -21,7 +21,7 @@
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ## then install localstack
 brew install localstack/tap/localstack-cli
-localstack --version # verify
+localstack --version
 ```
 
 ## basics

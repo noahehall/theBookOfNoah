@@ -28,6 +28,8 @@
 
 ## basics
 
+- you create a trail that delivers log files to an s3 bucket
+
 ## considerations
 
 ## integrations
@@ -40,3 +42,8 @@
 ### api gateway
 
 - captures all api calls as events whether originating from console / code
+
+### Key Management Service (KMS)
+
+- usage of managed keys are recorded in cloudtrail
+- inspect whos making teh request, services used, actions performed, parameters for the action and response elements returned

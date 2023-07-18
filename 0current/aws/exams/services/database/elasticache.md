@@ -1,12 +1,15 @@
-# elasticache
+# service name
 
 - fully managed in memory data cache for redis/memcached
 - designed for in-memory data store and cache with known query patterns
 
+## my thoughts
+
 ## links
 
-- [elasticache caching strategies](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Strategies.html)
-- [elasticache for redis getting started (tut)](https://aws.amazon.com/getting-started/hands-on/building-fast-session-caching-with-amazon-elasticache-for-redis/)
+- [landingpage](https://aws.amazon.com/elasticache/?did=ap_card&trk=ap_card)
+- [caching strategies](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Strategies.html)
+- [redis getting started (tut)](https://aws.amazon.com/getting-started/hands-on/building-fast-session-caching-with-amazon-elasticache-for-redis/)
 
 ## best practices
 
@@ -14,8 +17,12 @@
 
 ## features
 
+### pricing
+
 ## terms
 
 ## basics
 
 ## considerations
+
+## integrations

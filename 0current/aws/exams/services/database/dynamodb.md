@@ -1,6 +1,6 @@
 # dynamodb
 
-- fully managed nosql (document/key-value) db providing durability high availability and autoscaling
+- fully managed nosql db providing durability high availability and autoscaling
 - designed for OLTP with known query patterns
 
 ## my thoughts
@@ -14,6 +14,7 @@
 ## links
 
 - [AAA best practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
+- [landing page](https://aws.amazon.com/dynamodb/?did=ap_card&trk=ap_card)
 - [accelerator (DAX)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html)
 - [change data capture](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/streamsmain.html)
 - [client and server side encryption](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/client-server-side.html)
@@ -52,7 +53,7 @@
 ## best practices
 
 - determine your consistency pattern for each READ request
-  - the default is eventually consistent, but you can choose strongly consistency
+  - the default is eventually consistent, but you can choose strongly consistency when invoking the api
   - strongly consistency costs more than eventually
 - design your data model for requests that are evenly distributed across partitions
   - updating a single attribute in an item requires rewriting the entire item
@@ -100,6 +101,8 @@
 
 ### anti patterns
 
+- dynamodb is often used as the holygrail of document stores, but DocumentDB may be more appropriate if migrating from mongodb
+
 ## features
 
 - JSON document / key-value data structures
@@ -111,6 +114,8 @@
 - DAX: the dynamodb accelerator: integrated cache with dynamodb compatible api
 
 ### pricing
+
+- charged for data stored and R/W throughput
 
 ## terms
 

@@ -204,6 +204,8 @@
 
 ## integrations
 
+- basically every other AWS service can use IAM for authN
+
 ### lambda
 
 - execution roles

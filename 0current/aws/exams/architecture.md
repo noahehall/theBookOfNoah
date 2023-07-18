@@ -103,7 +103,7 @@
 - relational: aurora, rds, redshift
 - key-value: dynamodb
 - in-memory: elasticache, memorydb for redis
-- document: documentdb with mongodb compatibility
+- document: documentdb with mongodb compatibility, dynamodb
 - wide column: keyspaces
 - graph: neptune
 - time series: timestream
@@ -117,7 +117,7 @@
 
 - api gateway: micrservice APIs
 - compute: lambda, ecs, ecs, eks
-- storage: dynamodb
+- storage: dynamodb, neptune, timestream
 - sns: messaging/decoupling
 - sqs: queueing/decoupling
 - kinesis: streaming
@@ -126,12 +126,13 @@
 - sam cli: test, build and deploy
 - storage: s3
 
-#### other tools
+#### other services
 
 - appsync
 - athena: analytics
 - step functions: orchestration/workflow management
 - eventbridge: event bus
+- qldb: ledger
 
 ### testing
 

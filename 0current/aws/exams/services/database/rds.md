@@ -16,12 +16,11 @@
 
 ## best practices
 
-- high availability
-  - requires replication across atleast two AZs
-
 ### anti patterns
 
 ## features
+
+- scale DB instance components: modify memory, processor size, allocated storage or IOPS individually individually
 
 ### pricing
 
