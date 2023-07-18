@@ -34,16 +34,20 @@
   - Follows a code-on-demand pattern, where code can be downloaded on the fly (in our case implemented in Lambda) and changed without having to update clients.
 - API-First strategy: where each service within their stack is first and always released as an API
 
-## cloud native, multi-cloud and open source
+## multi-cloud with cloudnative and open source
 
-- to truly leverage any cloud provider, you should seek to retain ownership of the following
-  - configuring an instance
+- cloudnative: seek managed services offered by your cloud provider
+  - 12factor is always a good approach, but even more so with cloudnative apps
+  - its difficult to implement a multicloud architecture if using proprietary managed services
+- opensource: you'll retain ownership of:
+  - configuring VMS
   - updating operating systems
   - install application runtime
   - build and deploy apps
   - scaling and load balancing
   - monitor and observe apps
   - data storage
+- multicloud: depending on how open vs cloudnative/propertiary you are, this could be an uphill battle
 
 ### cloudnative migration patterns
 
@@ -54,6 +58,32 @@
 - replatform: lift and shift then replacement/refactor
   - this is more incremental then a pure lift and shift
   - you will need to connect the remaining legacy services with the new cloud services until everything is fully migrated
+
+## high availability
+
+- availability is expressed as a percentage of uptime in a given year or as a number of nines
+  - one nine: 90% uptime, 36.53 downtime
+  - two nines: 99% uptime, 3.65 days downtime
+  - three nines: 99.9% uptime, 8.77 hours downtime
+  - 3 1/2 nines: 99.95% uptime, 4.38 hours downtime
+  - 4 nines: 99.99% uptime, 52.60 minutes downtime
+  - 4 1/2 nines: 99.995% uptime, 26.30 minutes downtime
+  - 5 nines: 99.999% uptime, 5.26 minutes downtime
+- availbility types
+  - active-passive: one out of many resources are considered the primary, the rest are secondary
+    - challenges:
+      - scalability: since only one resource is considered primary, it will bear the brunt of the load
+  - active-active: more than one of many resources are considered primary
+    - challenges
+      - statefulness: managing state across resources can be difficult
+- redundancy: strategy for increasing availability
+  - its all about duplicating data & servers across infrastructure in isolated geographic locations
+  - challenges
+    - replication process: keeping data, configuration, etc in sync across primary and secondary resources
+    - failover: redirecting traffic from primary to secondary on failure
+      - DNS strategy: updating an IP addr to point to a different DNS record
+        - be careful of DNS caching and the time it takes to propagate DNS changes
+      - Load balancing strategy: the IP points to a load balancer that routes requests to health checked resources
 
 ## databases
 

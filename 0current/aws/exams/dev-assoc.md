@@ -9,6 +9,8 @@
     - the offical ramp up guide pdf
     - AWS Builders library
     - aws whitepapers
+    - the well architected framework
+      - pretty sure our old notes are still valid
 - todos
   - tackle these AFTER you complete the recommended skillbuilder rampup; these may/not be part of the schedule
     - [designing event driven architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12715/designing-event-driven-architectures)

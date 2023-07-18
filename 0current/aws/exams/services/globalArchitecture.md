@@ -13,6 +13,7 @@
 - [pricing calculator](https://calculator.aws/#/)
 - [EU GDPR](https://gdpr.eu/what-is-gdpr/)
 - [shared responsibility model](https://aws.amazon.com/compliance/shared-responsibility-model/)
+- [reliability pillar](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html)
 
 ## best practices
 
