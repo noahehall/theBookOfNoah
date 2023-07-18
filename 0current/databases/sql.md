@@ -11,6 +11,11 @@
 - [database design process](https://support.microsoft.com/en-us/office/database-design-basics-eb2159cf-1e30-401a-8084-bd4f9c9ca1f5)
 - [sql relationships](https://blog.devart.com/types-of-relationships-in-sql-server-database.html)
 - [hierarchical data](https://learnsql.com/blog/how-to-query-hierarchical-data/)
+- [oracle has a pretty sql intro](https://docs.oracle.com/en/database/oracle/oracle-database/12.2/sqlrf/JSON_ARRAY.html)
+- mysql quickies
+  - [data types](https://dev.mysql.com/doc/refman/8.0/en/data-types.html)
+  - [create procedure and create function](https://dev.mysql.com/doc/refman/8.0/en/create-procedure.html)
+  - [copy table with examples](https://www.mysqltutorial.org/mysql-copy-table-data.aspx)
 
 ### best practices / gotchas
 
@@ -111,6 +116,25 @@
 ## standard API
 
 ### datatypes
+
+- numberic data types
+  - INTEGER INT SMALLINT TINYINT MEDIUMINT BIGINT
+  - DECIMAL NUMERIC
+  - FLOAT DOUBLE
+  - BIT
+- date and time
+  - DATE DATETIME TIMESTAMP
+  - TIME
+  - YEAR
+  - TIMESTAMP DATETIME
+- string
+  - CHAR VARCHAR
+  - BINARY VARBINARY
+  - BLOB TEXT
+  - ENUM
+  - SET
+- json
+  - JSON
 
 #### TEXT DATATYPES
 
@@ -224,7 +248,10 @@ select * from TABLE where COLUMN LIKE "pattern"
 -- FULL JOIN: Return all rows when there is a match in ONE of the tables
 -- UNION
 
-
+-- INFORMATION_SCHEMA has a bunch of stuff
+SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE
+FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'STUDENT_INFO';
 ```
 
 ### insert
@@ -263,15 +290,15 @@ WHERE some_column=some_value;
 
 ### create
 
-- creates a new database or table
-
 ```sql
+-- creates a new database
 CREATE DATABASE my_db;
 
+-- create a table
 CREATE TABLE table_name (
   column_name1 data_type(size) constraint_name,
   ID int NOT NULL AUTO_INCREMENT,
-  CONSTRAINT col_name UNIQUE (col1,col2) #specify two columns together must be unique
+  CONSTRAINT someNAme UNIQUE (col1,col2) #specify two columns together must be unique
   PRIMARY KEY (ID)
   CONSTRAINT pk_PersonID PRIMARY KEY (P_Id,LastName) #specify multiple columns as the primary key, there can be 1 primary key per table
   FOREIGN KEY (this_col_name) REFERENCES other_table_name(other_col_name) #specify a foreign key that references a table and column from another table
@@ -279,18 +306,27 @@ CREATE TABLE table_name (
   CHECK (P_Id>0) #specify that P_id in this table must be greater than 0
 );
 
+-- copy existing table + constraints into potentially new table
+CREATE TABLE IF NOT EXISTS new_table LIKE existing_table;
+INSERT new_table SELECT * FROM existing_table
+WHERE conditions; -- add for copying partial table
+
 ```
 
 ### alter
 
 - modifies a database or table
+- you need the FULL column definition for every type of alter statement
 
 ```sql
+-- add unique contraint
+ALTER TABLE Persons
+ADD CONSTRAINT UC_Person UNIQUE (ID,LastName);
 
 -- drop a unique constraint from a table
-ALTER TABLE Persons DROP INDEX uc_PersonID
+ALTER TABLE Persons DROP INDEX UC_Person
 
--- drop the existing primary key from table
+-- drop the existing primary key from table (also for columns)
 ALTER TABLE Persons DROP PRIMARY KEY
 
 -- add a foreign key after the table has already been created
@@ -315,6 +351,7 @@ ALTER City SET DEFAULT 'SANDNES'
 -- add a check constraint to an existing table
 ALTER TABLE Persons
 ADD CHECK (P_Id>0)
+ADD CHECK (some_col <> '')
 ```
 
 ### drop / truncate
@@ -426,4 +463,37 @@ FORMAT(Now(),'YYYY-MM-DD')
 ```sql
 IFNULL(UnitsOnOrder,0)
 COALESCE(UnitsOnOrder,0)
+```
+
+## Routines
+
+- functions should always return values after operating on stuff
+  - iunvoked with an expression
+- procedures operate on stuff and generally should not return values
+  - invoked with call and cannot be embedded in sql statements
+  - parameters are input only, output only, or both
+    - output parameters allow you to return values
+- stored routines (fns and procedures) are associated with a specific db, just like tables or views
+  - fns and procecures do not share namespaces, i.e. they can have the same name
+
+### functions
+
+```sql
+
+
+CREATE FUNCTION func_name ([parameters])
+ RETURNS data_type       // diffrent
+ [characteristics]
+ routine_body
+```
+
+### procedure
+
+```sql
+
+CREATE PROCEDURE proc_name ([parameters])
+ [characteristics]
+ routine_body
+
+
 ```
