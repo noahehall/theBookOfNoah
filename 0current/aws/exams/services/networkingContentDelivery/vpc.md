@@ -17,6 +17,7 @@
 - [route tables: examples](https://docs.aws.amazon.com/vpc/latest/userguide/route-table-options.html)
 - [route tables: walkthrough](https://docs.aws.amazon.com/vpc/latest/userguide/WorkWithRouteTables.html)
 - [nacl: intro](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html)
+- [monitoring](https://docs.aws.amazon.com/vpc/latest/userguide/monitoring.html)
 
 ### integrations
 
@@ -140,6 +141,10 @@
 ### security groups
 
 - see [markdown file](./securitygroups.md)
+
+### flow logs
+
+- catpure info about ip traffic and publish to cloudwatch logs, s3 or kinesis
 
 ## considerations
 

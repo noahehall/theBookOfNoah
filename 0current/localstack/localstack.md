@@ -16,6 +16,7 @@
 - [user guide](https://docs.localstack.cloud/user-guide/)
 - [references](https://docs.localstack.cloud/references/)
 - [blog](https://localstack.cloud/blog)
+- [sample applications](https://github.com/localstack-samples)
 
 ### services
 
