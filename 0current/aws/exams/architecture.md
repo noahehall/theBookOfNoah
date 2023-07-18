@@ -1,7 +1,7 @@
 # Common AWS Architecture
 
-- TODO: sections are very service specific
-  - you should flip the sections to be generic in form and explicit in detail
+- TODO: bunches of things
+  - sections are very service specific: you should flip the sections to be generic in form and explicit in detail
 
 ## links
 
@@ -18,6 +18,19 @@
 - [aws service overview (PDF)](https://docs.aws.amazon.com/pdfs/whitepapers/latest/aws-overview/aws-overview.pdf)
 - [aws whitepapers](https://docs.aws.amazon.com/whitepapers/latest/aws-overview/compute-services.html)
 - [cloud computing concepts](https://aws.amazon.com/what-is)
+
+### service categories
+
+- [databases](https://aws.amazon.com/products/databases/)
+- [data lakes and analytics](https://aws.amazon.com/big-data/datalakes-and-analytics/)
+- [application integration](https://aws.amazon.com/products/application-integration/)
+- [compute](https://aws.amazon.com/products/compute/)
+- [migration & transfer](https://aws.amazon.com/products/migration-and-transfer/)
+- [security, identity and compliance](https://aws.amazon.com/products/security/)
+- [storage](https://aws.amazon.com/products/storage/)
+- [networking and content delivery](https://aws.amazon.com/products/networking/)
+- [management and governance](https://aws.amazon.com/products/management-and-governance/)
+- [frontend and mobile](https://aws.amazon.com/products/frontend-web-mobile/)
 
 ### best practices
 
@@ -123,14 +136,6 @@
   - iam execution roles and resource policies
   - creating lambda functions and integrating with backend resources
   - update lambda functions and backend integrations
-
-## databases
-
-- relational: aurora, rds, redshift
-- key-value: dynamodb
-- in-memory: elasticache, memorydb for redis
-- document: documentdb
-- nosql: dynamodb
 
 ## common architectures
 
