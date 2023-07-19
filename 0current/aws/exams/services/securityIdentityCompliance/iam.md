@@ -276,3 +276,17 @@
 
 - assign permissions to determine who can manage RDS resources
   - e.g. create, describe, modify and delete db instances, tag resources, modify security groups
+
+### eks
+
+- deploying new eks clusters requires at least 3 permissions
+  - cluster iam role: eks permissions to make calls to AWS apis on your behalf for cluster management
+    - e.g. managing ec2 auto scaling for worker nodes
+    - aws provides an IAM policy with the recommended permissions for this role
+  - node iam role: the kubelete daemon on eks worker nodes makes calls to aws apis on your behalf
+    - e.g. pulling container images from ECR
+  - rbac user: humans that manage the k8s cluster need permission to make calls to the k8s api
+    - you map an IAM role to a k8s RBAC user
+      - create additional principal sin IAM that map to restrict roles in rbac for specific mgmt tasks
+    - the role used to create the clsuter will always have sudo access
+      - you should instead create a specific role just for deploying clusters

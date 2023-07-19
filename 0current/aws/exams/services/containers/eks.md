@@ -44,6 +44,24 @@
 - data plane: use kubectl to interact with the k8s api (unless using managed node groups)
   - [check this file](../../../../../linux/bash_cli_fns/k8s.sh)
 
+#### authnz
+
+- authN: every service/user accessing eks/k8s resources must be identified
+  - if authN failes all further connection & communication is denied
+- authZ: after authN is validated, check if the principal is authZ for the requested action
+- aws api: IAM handles authNZ and behaves like all other aws services
+- k8s api:
+  - authN: eks uses IAM users to authN to a k8s cluster
+    - both IAM and EKS are integrated services managed by AWs
+    - addresses issue of k8s not providing end-user authN
+  - authZ: uses native k8s RBAC for all permissions for interacting with the eks clusters k8s api
+- general workflow
+  - kubectl: all cmds sends an API request to k8s api and attaches your IAM identity with the request
+  - k8s: verifies your identity with IAM
+  - IAM: responds with a token to the k8s api server
+  - k8s: api server checks its internal RBAC mapping and confirms if the user related to the token has authZ for the request
+  - k8s: the api server processes the requests and responds to the kubectl client with success/failure data
+
 ### control plane
 
 - consists of atleast two api server nodes and three etcd nodes across three availability zones
@@ -59,6 +77,24 @@
 #### self managed nodes
 
 - you are in complete control and responsible for managing worker nodes
+- shared responsibility model
+  - your responsibility
+    - VPC configuration and network policies
+    - IAM and RBAC configuration
+    - security: pod, runtime, network and code in containers
+    - Data plane:
+      - os,kubelete and AMI configuration
+      - worker node scaling
+      - eks cluster configuration and addon-ons
+      - container images and source code
+      - customer data
+    - aws responsibility
+      - aws resource infrastructure necessary for security and reliability
+      - control plane nodes and services
+        - api server
+        - etcd
+        - scheduler
+        - controller manager
 
 #### managed node groups
 
@@ -74,10 +110,22 @@
   - updating: eks handles the termination of nodes for rolling updates and keeps AMI & k8s version in sync
   - scaling: eks handles scaling of nodes, but you can still specifing the skaling parameters like k8s labels, aws tags, etc
   - tooling: use `eksctl` to provision managed node groups and NOT `kubectl`
+- shared responsibility model
+  - same as self managed except
+    - AWS responsbility
+      - os, kubelete, and AMI Configuration
+      - common vulnerabilities and exposures (CVEs) and security patches on managed node groups
+    - your responsibility
+      - building and deploying patched versions of custom AMIs
 
 #### Fargate
 
 - requires a fargate profile to use integrate with eks
+- shared responsbility model
+  - same as managed node groups except
+    - aws responsibility
+      - worker node scaling
+      - security of the underlying container runtime for pods
 
 ##### profiles
 
@@ -110,6 +158,9 @@
   - create the EKS cluster
 
 ## considerations
+
+- permissions: see [markdown for rbac, cluster and node iam roles](../securityIdentityCompliance/iam.md)
+- networking: see [markdown for vpc](../networkingContentDelivery/vpc.md)
 
 ## integrations
 

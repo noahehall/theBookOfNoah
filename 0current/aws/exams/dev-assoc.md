@@ -2,7 +2,7 @@
 
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
-  - amazon eks primer > configuring eks > preparing aws env
+  - amazon eks primer > configuring eks > creating a cluster
     - lol its fkn part of the exam; long live noamd!
   - Exam Prep (With practice material) > intro to certification
   - before the test review these

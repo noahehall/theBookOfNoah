@@ -42,6 +42,7 @@
   - server-side encryption: file sytem/data
   - networking trafic protection: encryption, integrity identity
 - aws: security **OF** the cloud
+  - aws operates, manage and controls the components from the host operating system and virtualization layer down to the physical security of facilities inw hich services operate
   - software: up to the virtualization layer
     - compute, storage, database, networking
   - hardware / aws global infrastructure: the physical stuff, buildings, servers, private fiber cables, etc

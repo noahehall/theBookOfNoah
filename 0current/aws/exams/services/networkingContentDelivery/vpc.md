@@ -13,11 +13,14 @@
 - [intro](https://docs.aws.amazon.com/vpc/latest/userguide/how-it-works.html)
 - [nat gateways](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html)
 - [subnets: intro](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html)
+- [subnets: pub & priv scenario](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html)
 - [route tables: intro](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html)
 - [route tables: examples](https://docs.aws.amazon.com/vpc/latest/userguide/route-table-options.html)
 - [route tables: walkthrough](https://docs.aws.amazon.com/vpc/latest/userguide/WorkWithRouteTables.html)
 - [nacl: intro](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html)
 - [monitoring](https://docs.aws.amazon.com/vpc/latest/userguide/monitoring.html)
+- [eks: vpc considerations](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html)
+- [eks: subnet tagging](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html#vpc-subnet-tagging)
 
 ### integrations
 
@@ -173,3 +176,25 @@
 
 - db instances require a VPC with two private subnets not connected to an internet gateway
   - you can further protect your db by using NACLs and security groups
+
+### eks
+
+- you either create a new VPC or use an existing one
+- generally follow one of three patterns
+  - only public subnets: at most 3 public subnets in distinct AZs
+    - all worker nodes automatically receive public IPs and can send/receive internet traffic through an internet gateway
+    - a security group is deployed that denies all inbound traffic, but allows outbound traffic
+  - only private subnets: at most 3 private subnets in distinct AZs
+    - all nodes can optionally send/receive internet taffic through a NAT instance or NAT gateway
+      - a NAT instance/gateway must be deployed to each AZ
+    - a security group is deployed that denies all inbound traffic, but allows outbound traffic
+  - public and private subnets: 2 AZs, each with a private and public subnet
+    - recommended for all production deployments
+    - private subnet: deploy worker nodes
+      - dont receive public IPs
+        - worker nodes can still communicate with the cluster and other aws services
+        - pods can communicate outbound to the internet througha NAT gateway deployed in each AZ
+      - a security group is deployed that denies all inbound traffic, but allows outbound traffic
+    - public subnet: deploy load balancers for balancing traffic in private subnets
+      - all resources automatically receives public IP addrs
+      - you must ensure all subnets are tags so k8s knows which are public and private
