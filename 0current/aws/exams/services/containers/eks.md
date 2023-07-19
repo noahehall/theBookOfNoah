@@ -10,6 +10,8 @@
 - [landing page](https://aws.amazon.com/eks/?did=ap_card&trk=ap_card)
 - [user guide](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html)
 - [gettings tarted](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html)
+- [horizontal pod scaler](https://docs.aws.amazon.com/eks/latest/userguide/horizontal-pod-autoscaler.html)
+- [autoscaling](https://docs.aws.amazon.com/eks/latest/userguide/autoscaling.html)
 
 ## best practices
 
@@ -79,8 +81,10 @@
       - accomplished by adding your worker nodes to ec2 auto scaling groups
         - e.g. using eksctl to deploy a cluster with managed node groups
   - HPA: horizontal pod autoscaler: pod-level in/out
-    - scales services in/out based on CPU utilization/other metrics defined via the k8s metrics server
+    - scales services in/out based on CPU utilization/other metrics defined via the k8s metrics server or amazon cloudwatch
   - VPA: vertical pod autoscaler: pod-level up/down
+    - scales pod resources up/down (cpu/mem reservations) satisfy application requirements
+    - improves cluster resource utilization and free up CPU and memory for other pods
 
 ### control plane
 
