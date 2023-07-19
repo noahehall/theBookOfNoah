@@ -9,6 +9,7 @@
 
 - [landing page](https://aws.amazon.com/eks/?did=ap_card&trk=ap_card)
 - [user guide](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html)
+- [gettings tarted](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html)
 
 ## best practices
 
@@ -35,6 +36,13 @@
 ## terms
 
 ## basics
+
+### api
+
+- control plane: use the eksctl tool to interact with the eks api
+  - [see the markdown file](../devtools/cli-elb.md)
+- data plane: use kubectl to interact with the k8s api
+  - [check this file](../../../../../linux/bash_cli_fns/k8s.sh)
 
 ### control plane
 

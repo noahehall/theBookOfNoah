@@ -1,8 +1,7 @@
 # localstack
 
 - for gcp, check out the [gcloud beta emulators](https://cloud.google.com/sdk/gcloud/reference/beta/emulators)
-- todos
-  - verify the examples dir is still valid, copypastad from the docker dir
+- [grab your api key with a gmail alias](https://app.localstack.cloud/account/apikeys)
 
 ## links
 
@@ -11,6 +10,7 @@
 - [installation: use homebrew for linux](https://docs.brew.sh/Homebrew-on-Linux)
 - [awslocal: wrapper for aws cli](https://github.com/localstack/awscli-local)
 - [samlocal: wrapper for sam cli](https://github.com/localstack/aws-sam-cli-local)
+- [awslocal: for eks](https://docs.localstack.cloud/user-guide/aws/elastic-kubernetes-service/)
 - [dockerhub](https://hub.docker.com/r/localstack/localstack/#!)
 - [tutorials](https://docs.localstack.cloud/tutorials/)
 - [user guide](https://docs.localstack.cloud/user-guide/)

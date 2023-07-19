@@ -3,7 +3,9 @@
 ## k8s: kubectl
 ## for eksctl/eks cli see github/nirv-ai/scripts
 
-## TODO: we can do better than this, switch the ugly reads to a case statement
+# TODO:
+## switch the ugly reads to a case statement
+## move this file into nirv-ai/scripts
 
 k8s() {
   # kubectl CMD RESOURCE-TYPE RESOURCE-NAME FLAGS
