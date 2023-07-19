@@ -29,7 +29,8 @@
 
 ### docs
 
-- [k8s docs home](https://kubernetes.io/docs/home/)
+- [docs home](https://kubernetes.io/docs/home/)
+- [components](https://kubernetes.io/docs/concepts/overview/components/)
 
 ## basics
 
@@ -71,66 +72,10 @@ sudo install -o root -g root -m 0755 kubectl ../kubectl
 
 - create and management k8s clusters in a user friendly way
 
-## control plane
-
-- each cluster has a control plane that runs services that manage the cluster
-  - control plane nodes
-  - etcd
-- determines when tasks are schedule and where they should be routed to
-
-### etcd
-
-- the core persistence layer for k8s
-- this is where the critical cluster data and state are stored
-
-### controle plane nodes
-
-- manage the worker nodes in the data plane and the pods in the cluster
-- a node can be a virtual or physical machine, depending on the cluster
-  - every node has a container runtime (e.g. docker/containerd) to run pods
-- each node is managed by the control plane and contains services necessary to run pods
-
-#### Scheduler
-
-- mechanism for selecting nodes for newly created containers to run on
-- runs a series of filters to exclude ineligible nodes for pod placement
-  - volume filters: volume requirements and constraints
-  - resource filters: e.g. cpu, memory and networking
-  - topology filters: scheduling constraints set at the node/pod level
-  - prioritization: selection of container instances for placement
-
-##### deployments
-
-- owns and manages replicasets or individual pods
-- you describge a desired state in the deployment, and the the deployment changes the actual state of the cluster
-
-###### ReplicaSet
-
-- ensures that a specific number of pod replicas are running at any given time
-
-#### controller manager
-
-- runs bg threads that detect and respond to cluster events
-
-#### cloud controller
-
-- interacts with the underlying cloud provider
-
-#### api server
-
-- exposes the k8s api and is the frontend for k8s control plane
-- handles all communication from the cluster to the control plane
-  - through the API server to kubelete
-- none of the other control plan components expose remote services
-- scales horizontally
-
-## data plane
-
-- k8s runs workloads by grouping containers into pods and assigning those pods to run on nodes
-
-### cluster
+## cluster
 
 - a bunch of servers, which run containers, joined into a group
+  - a cluster consists of a control and data plane
 - a single logical unit composed of many server nodes
 - state
   - virtual network: all pods in a cluster can communicate with each other, even if deployed to different nodes within the cluster
@@ -146,21 +91,54 @@ sudo install -o root -g root -m 0755 kubectl ../kubectl
     - supports high availabliilty for stateful apps
 - every cluster manages inbound traffic (via the k8s api) and sends it to the right containers for processing
 
-#### namespaces
+## control plane
 
-- a virtual cluster that is backed by the same physical cluster
-- physical clusters can have resources with the same name as long as they are in different namespaces
-  - useful when you have multiple teams/proejcts using the same clsuter
+- each cluster has a control plane that runs services that manage the cluster
+  - control plane nodes
+  - etcd
+- determines when tasks are schedule and where they should be routed to
+- make global dicisions for the cluster, as well as deteting and responding to cluster events
 
-#### ConfigMap
+### etcd
 
-- an api object that stores nonconfidential data as key-value pairs used by other k8s objects, like pods
-- enables you to separate configuration data from application code
+- the core persistence layer for k8s
+- this is where the critical cluster data and state are stored
 
-#### secrets
+### control plane nodes
 
-- storage for all confidential/secret data
-- make sure they are encrypted
+- manage the worker nodes in the data plane and the pods in the cluster
+- a node can be a virtual or physical machine, depending on the cluster
+  - every node has a container runtime (e.g. docker/containerd) to run pods
+- each node is managed by the control plane and contains services necessary to run pods
+
+#### kube-scheduler
+
+- mechanism for selecting nodes for newly created containers to run on
+- runs a series of filters to exclude ineligible nodes for pod placement
+  - volume filters: volume requirements and constraints
+  - resource filters: e.g. cpu, memory and networking
+  - topology filters: scheduling constraints set at the node/pod level
+  - prioritization: selection of container instances for placement
+
+#### kube-controller-manager
+
+- runs bg threads that detect and respond to cluster events
+
+#### kube-cloud-controller
+
+- interacts with the underlying cloud provider
+
+#### kube-apiserver
+
+- exposes the k8s api and is the frontend for k8s control plane
+- handles all communication from the cluster to the control plane
+  - through the API server to kubelete
+- none of the other control plan components expose remote services
+- scales horizontally
+
+## data plane
+
+- k8s runs workloads by grouping containers into pods and assigning those pods to run on nodes
 
 ### worker nodes
 
@@ -187,7 +165,7 @@ sudo install -o root -g root -m 0755 kubectl ../kubectl
 - the primarty agent that runs on worker nodes
 - ensures that the right containers are running a pod and performs health checks
 
-#### pods
+### pods
 
 - the basic building block within k8s for deployment, scaling and replication
 - manages 1/more groups of colocated containers
@@ -202,16 +180,16 @@ sudo install -o root -g root -m 0755 kubectl ../kubectl
 - state
   - virtual ip: managed by k8s
 
-##### containers
+#### containers
 
 - everything you know about docker goes here, so we'll keep it k8s specific
 - containers are distributed to nodes in the cluster and communicate using standard network (UDP & TCP, ICMP not supported)
 
-##### PodSpec file
+#### PodSpec file
 
 - specification for how to run containers
 
-##### volumes
+#### volumes
 
 - applications in a pod have access to shared volumes
 - facilitates data sharing within the pod and persistence of data across container restarts
@@ -219,6 +197,31 @@ sudo install -o root -g root -m 0755 kubectl ../kubectl
   - ephemeral: when a pod ceases to exist, k8ds destroys the volume
   - peristent: lifecycle is independent of any individual pod that uses it
     - backed by storage subsystems independent of cluster nodes
+
+#### deployments
+
+- owns and manages replicasets or individual pods
+- you describge a desired state in the deployment, and the the deployment changes the actual state of the cluster
+
+##### ReplicaSet
+
+- ensures that a specific number of pod replicas are running at any given time
+
+### namespaces
+
+- a virtual cluster that is backed by the same physical cluster
+- physical clusters can have resources with the same name as long as they are in different namespaces
+  - useful when you have multiple teams/proejcts using the same clsuter
+
+### ConfigMap
+
+- an api object that stores nonconfidential data as key-value pairs used by other k8s objects, like pods
+- enables you to separate configuration data from application code
+
+### secrets
+
+- storage for all confidential/secret data
+- make sure they are encrypted
 
 ### services
 
