@@ -23,22 +23,12 @@
 
 - [bpftrace: inspect syscalls](https://github.com/iovisor/bpftrace)
 
-## REST
-
-- Representational state transfer (REST) refers to architectures that follow six constraints:
-  - Separation of concerns via a client-server model.
-  - State is stored entirely on the client and the communication between the client and server is stateless.
-  - The client will cache data to improve network efficiency.
-  - There is a uniform interface (in the form of an API) between the server and client.
-  - As complexity is added into the system, layers are introduced. There may be multiple layers of RESTful components.
-  - Follows a code-on-demand pattern, where code can be downloaded on the fly (in our case implemented in Lambda) and changed without having to update clients.
-- API-First strategy: where each service within their stack is first and always released as an API
-
 ## multi-cloud with cloudnative and open source
 
 - cloudnative: seek managed services offered by your cloud provider
   - 12factor is always a good approach, but even more so with cloudnative apps
   - its difficult to implement a multicloud architecture if using proprietary managed services
+    - architecture your apps to be infrastructure agnostic is very important in the event you need to pivot to different cloud providers
 - opensource: you'll retain ownership of:
   - configuring VMS
   - updating operating systems
@@ -58,6 +48,19 @@
 - replatform: lift and shift then replacement/refactor
   - this is more incremental then a pure lift and shift
   - you will need to connect the remaining legacy services with the new cloud services until everything is fully migrated
+
+## APIs
+
+### REST
+
+- Representational state transfer (REST) refers to architectures that follow six constraints:
+  - Separation of concerns via a client-server model.
+  - State is stored entirely on the client and the communication between the client and server is stateless.
+  - The client will cache data to improve network efficiency.
+  - There is a uniform interface (in the form of an API) between the server and client.
+  - As complexity is added into the system, layers are introduced. There may be multiple layers of RESTful components.
+  - Follows a code-on-demand pattern, where code can be downloaded on the fly (in our case implemented in Lambda) and changed without having to update clients.
+- API-First strategy: where each service within their stack is first and always released as an API
 
 ## high availability
 

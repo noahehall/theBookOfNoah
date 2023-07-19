@@ -113,6 +113,7 @@
 ## Serverless
 
 - includes a number of fully managed services that are tightly integrated
+- whenever you hear cost savings, remember the the cloud providers marketing team is always factoring dev/ops employee time related costs
 
 ### core stack
 

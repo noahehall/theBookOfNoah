@@ -52,6 +52,12 @@
 ### target groups
 
 - server side mechanism
+- health checks
+  - healthy threshold: consecutive successful health checks before considering an unhealthy target to be healthy
+  - unhealthy threshold: consecutive unhealhthy health checks before considering a healthy target to be unhealthy
+  - timeout: amount of time to wait to receive a response before determining a health check has failed
+  - interval: amount of time between health checks
+  - success codes: generally something like 200, or 200-299
 - the type of backend your directing traffic to, e.g. lambdas, ip addrs, ec2 intance, other load balancers, etc
   - each specific backend resource within a target group requires a health check
 

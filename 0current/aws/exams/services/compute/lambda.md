@@ -102,6 +102,8 @@
   - manage costs
   - matching lambda speed with the performance of downstream resouces
   - regulating how long it takes to process events
+- ensure you know when to use lambas
+  - you can move all of your server side business logic to lambdas, but watch out for costs!
 
 ### anti patterns
 

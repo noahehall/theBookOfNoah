@@ -93,6 +93,20 @@
 
 ## basics
 
+### ec2 console
+
+- a bunch of services are actually located in the ec2 web console
+  - instances: of course
+  - AMIs
+  - elastic block store
+  - security groups
+  - elastic ips
+  - key pairs
+  - placement groups
+  - network interfaces
+  - elastic load balancers
+  - auto scaling groups
+
 ### instance lifecycle
 
 - launch

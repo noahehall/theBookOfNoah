@@ -14,11 +14,15 @@
 - [EU GDPR](https://gdpr.eu/what-is-gdpr/)
 - [shared responsibility model](https://aws.amazon.com/compliance/shared-responsibility-model/)
 - [reliability pillar](https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html)
+- [aws repost: user community forum](https://repost.aws/)
 
 ## best practices
 
 - resiliancy & availability
   - use region-scoped services in a minimum of two availability zones
+- naming/tagging things
+  - you generally always want to pre/postfix the resource type to the name of the resource, e.g. ec2-my-silver-server
+  - you always want to have a tagging scheme predefined so you can query resources across service boundaries and for billing
 
 ### anti patterns
 
