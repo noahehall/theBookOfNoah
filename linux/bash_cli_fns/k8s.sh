@@ -80,3 +80,6 @@ eks() {
 
 # create a cluster
 ## eks create cluster -f cluster.config.yaml
+
+# horzontal pod autoscaler
+## kubectl autoscale deployment myapp --cpu-percent=50 --min=1 --max=10

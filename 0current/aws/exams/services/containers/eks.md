@@ -37,7 +37,15 @@
 
 ## basics
 
-### api
+### clusters
+
+- consist of a control and data plane
+- general workflow
+  - ensure your AWS account is secured and follows best practices
+  - configure a VPC for the cluster
+  - create the EKS cluster
+
+#### api
 
 - control plane: use the eksctl tool to interact with the eks api
   - [see the markdown file](../devtools/cli-eksctl.md)
@@ -62,17 +70,22 @@
   - k8s: api server checks its internal RBAC mapping and confirms if the user related to the token has authZ for the request
   - k8s: the api server processes the requests and responds to the kubectl client with success/failure data
 
+#### high availability
+
+- k8s automatic scaling based on k8s metrics
+  - CA: cluster Autoscaler; node-level in/out
+    - adjusts the number of nodes in a cluister when pods fail to launch
+      - e.g. due to lack of resources, underutilization, or rescheduling onto other nodes
+      - accomplished by adding your worker nodes to ec2 auto scaling groups
+        - e.g. using eksctl to deploy a cluster with managed node groups
+  - HPA: horizontal pod autoscaler: pod-level in/out
+    - scales services in/out based on CPU utilization/other metrics defined via the k8s metrics server
+  - VPA: vertical pod autoscaler: pod-level up/down
+
 ### control plane
 
 - consists of atleast two api server nodes and three etcd nodes across three availability zones
 - eks automatically detects and replaces unhealhty control plane nodes
-
-#### clusters
-
-- general workflow
-  - ensure your AWS account is secured and follows best practices
-  - configure a VPC for the cluster
-  - create the EKS cluster
 
 ### data plane
 
@@ -190,6 +203,8 @@
   - stateful set
   - daemon set
   - job
+- scaling
+  - cluster autoscaler: setting max, min and desired instances within an ec2 auto scaling group
 
 ## integrations
 

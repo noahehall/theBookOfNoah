@@ -15,7 +15,11 @@
 ## links
 
 - [kubectl cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
-- [tools](https://kubernetes.io/docs/tasks/tools/)
+
+### tools
+
+- [from k8s](https://kubernetes.io/docs/tasks/tools/)
+- [aws: karpenter](https://karpenter.sh/)
 
 ### learn
 

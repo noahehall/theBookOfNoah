@@ -64,6 +64,8 @@
 
 ## high availability
 
+- horizontal scaling: in/out; increasing the total number of load balanced resources
+- vertical scaling: up/down; increasing perf characteristics of existing resources
 - availability is expressed as a percentage of uptime in a given year or as a number of nines
   - one nine: 90% uptime, 36.53 downtime
   - two nines: 99% uptime, 3.65 days downtime
