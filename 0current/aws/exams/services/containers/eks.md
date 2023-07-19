@@ -40,14 +40,74 @@
 ### api
 
 - control plane: use the eksctl tool to interact with the eks api
-  - [see the markdown file](../devtools/cli-elb.md)
-- data plane: use kubectl to interact with the k8s api
+  - [see the markdown file](../devtools/cli-eksctl.md)
+- data plane: use kubectl to interact with the k8s api (unless using managed node groups)
   - [check this file](../../../../../linux/bash_cli_fns/k8s.sh)
 
 ### control plane
 
 - consists of atleast two api server nodes and three etcd nodes across three availability zones
 - eks automatically detects and replaces unhealhty control plane nodes
+
+### data plane
+
+- your normal worker nodes, but EKS gives you three options
+  - self managed nodes: pod & ec2, ec2 prices, 1:many host:pods, you have full access to the host
+  - managed node groups: pod & ec2, ec2 prices, 1:many host:pods, ssh is allowed
+  - fargate: pod, pod prices, 1:1 host:pods, no visible host
+
+#### self managed nodes
+
+- you are in complete control and responsible for managing worker nodes
+
+#### managed node groups
+
+- fully managed by aws: uses the api to start and managed ec2 instances that run containers for an eks cluster
+- you can still inspect/modify all resources used in your aws account; generally with simple cmds
+  - provisioning: deploy a managed node group using eks optimized AMIs
+    - deploys into multiple AZs and backs them with an auto scaling group
+    - you can change teh scaling parameters
+  - managing: eks handles health checks for the managed node groups
+    - notifies you of all issues: resources deleted, unreachable unavailable
+    - you can retrieve logs from node-level SSH access, open source log routes, or cloudwatch
+    - all node group events are recorded in cloudtrail
+  - updating: eks handles the termination of nodes for rolling updates and keeps AMI & k8s version in sync
+  - scaling: eks handles scaling of nodes, but you can still specifing the skaling parameters like k8s labels, aws tags, etc
+  - tooling: use `eksctl` to provision managed node groups and NOT `kubectl`
+
+#### Fargate
+
+- requires a fargate profile to use integrate with eks
+
+##### profiles
+
+- determine how pods should be scheduled on fargate
+- selectors: specify a namespace and labels for filtering matching pods
+
+```jsonc
+{
+  "name": "fargate-myapprpfoile",
+  "clusterName": "myapp",
+  "podExecutionRole": "iam-role-xyz", // assigned to matchign pods AND the k8ds RBAC for authZ
+  "subnets": "subnet-abcdefg", // pods will be launched into this subnet
+  "selectors": [
+    // only matching pods will be deployed to fargate
+    {
+      "namespace": "prod",
+      "labels": {
+        "stack": "nim-stack-of-course"
+      }
+    }
+  ]
+}
+```
+
+### clusters
+
+- general workflow
+  - ensure your AWS account is secured and follows best practices
+  - configure a VPC for the cluster
+  - create the EKS cluster
 
 ## considerations
 

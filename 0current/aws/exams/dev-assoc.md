@@ -2,7 +2,7 @@
 
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
-  - amazon eks primer > k8s review
+  - amazon eks primer > configuring eks > preparing aws env
     - lol its fkn part of the exam; long live noamd!
   - Exam Prep (With practice material) > intro to certification
   - before the test review these

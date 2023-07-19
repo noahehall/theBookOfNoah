@@ -31,6 +31,7 @@
 
 - [docs home](https://kubernetes.io/docs/home/)
 - [components](https://kubernetes.io/docs/concepts/overview/components/)
+- [kubectl](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
 
 ## basics
 
