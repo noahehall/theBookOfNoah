@@ -1,6 +1,6 @@
 # Virtual Private Cloud (VPC)
 
-- logically isolated virtual network
+- logically isolated virtual network where you can launch AWS resources
 
 ## my thoughts
 
@@ -21,6 +21,7 @@
 - [monitoring](https://docs.aws.amazon.com/vpc/latest/userguide/monitoring.html)
 - [eks: vpc considerations](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html)
 - [eks: subnet tagging](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html#vpc-subnet-tagging)
+- [eks: vpc cni k8s plugin](https://github.com/aws/amazon-vpc-cni-k8s)
 
 ### integrations
 
@@ -29,7 +30,7 @@
 
 ## best practices
 
-- never use the default VPC for anything; its public
+- never use the default VPC for anything; its public by default and misconfiguration and be detrimental to various other things
   - a custom pc is private by default, and access is limited to resources within the VPC
 - redundancy and fault tolerance requirews at least 2 distinct subnets across two availability zones
 - saving $ on data transfer charges for NAT gateways
@@ -61,11 +62,11 @@
 ## basics
 
 - general workflow
-  - create a vpc
+  - create a vpc in a specific region but spans all the AZs
     - enter CIDR range with enough IPs for available resources across subnets
   - create subnets
-    - attach to VPC & pick an AZ
-    - pick a CIDR range thats a subset of the VPC cidr range and doesnt overlap with other subnets
+    - attach to VPC & pick an AZ:
+    - pick a CIDR range thats a subset of the VPC cidr range and doesnt overlap with other subnets or AZs
       - check the goodstuff file for notes and this [cidr visualizer](https://cidr.xyz/)
   - create gateways
     - internet gateway for public subnets
@@ -198,3 +199,17 @@
     - public subnet: deploy load balancers for balancing traffic in private subnets
       - all resources automatically receives public IP addrs
       - you must ensure all subnets are tags so k8s knows which are public and private
+
+#### vpc cni plugin
+
+- allows k8s pods to have the same IP addr inside the pod as they do on the VPC network
+  - enables interhost communication and allows k8s pods to have the same ip addr inside the pod as they do on the VPC network
+- provisions multiple network interfaces to a host instance
+  - each network interface has multple secondary ip addrs that get asigned IP addrs from the VPC pool
+  - the ip addrs are assigned to pods on the host and connects the network interfac eto the veth port created on the pod
+- every pod has a real, routable ip addr from the VPC and can easily communication with other pods, nodes or aws services
+- on the host ec2 instance
+  - cni modifies both the default routing table and the network interface routing table
+    - default routing table: routes traffic to pods
+    - network interface: has its own routing table for routing outgoing pod traffic
+  - each pod is assigned one of the network interfaces secondary ip addr

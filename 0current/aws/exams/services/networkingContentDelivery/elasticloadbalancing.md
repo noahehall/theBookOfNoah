@@ -118,4 +118,8 @@
 
 ## integrations
 
-- since ELB is fronting your resources, you'll generally want them in private subnets
+- since ELB is fronting your resources, you'll generally want them ELB public and the targets in private subnets
+
+### EKS
+
+- abcd

@@ -174,7 +174,7 @@ sudo install -o root -g root -m 0755 kubectl ../kubectl
 ### pods
 
 - the basic building block within k8s for deployment, scaling and replication
-- manages 1/more groups of colocated containers
+- manages 1/more groups of colocated ephemeral containers
   - every container belongs to a pod, typically one-to-one,
     - you can deploy many containers to a single pod and they will all share the same virtual env, network address, and can communicate over localhost
     - you cannot split containers ina pod across nodes
@@ -213,6 +213,39 @@ sudo install -o root -g root -m 0755 kubectl ../kubectl
 
 - ensures that a specific number of pod replicas are running at any given time
 
+### services
+
+- a logical collection of pods and a means to access (north-south, east-west) them
+  - provides a constant IP addr and comms port as an entry point to the pods it fronts
+    - its futile to integrate with an ephemeral pod as they scale in/out
+- the service is always updated with its associated pods
+  - theres no need for pods to track other pods
+
+#### ClusterIP
+
+- creates a static ip addr that maps to its pods
+- only available internall within a cluster
+
+#### NodePort
+
+- exposed on each node using a static port
+- can be accessed via the service by requesting nodeip:nodeport
+- internally it connects to the clusterip service
+
+#### LoadBalancer
+
+- exposed externally with the cloud providers load balancer
+- balances the load between nodes
+- connects to the both the ClusterIP and NodePort service
+
+#### ExternalName
+
+- maps an internal ip addr (clusterip) to an external DNS name
+  - makes it looks like a resource is internal to your cluster, but its really external
+- useful when your planning to migrate a service into a cluster at a later point in time
+  - but dont want to have your routing change
+  - e.g. an external database
+
 ### namespaces
 
 - a virtual cluster that is backed by the same physical cluster
@@ -228,12 +261,6 @@ sudo install -o root -g root -m 0755 kubectl ../kubectl
 
 - storage for all confidential/secret data
 - make sure they are encrypted
-
-### services
-
-- a logical collection of pods and a means to access (north-south, east-west) them
-- the service is always updated with its associated pods
-  - theres no need for pods to track other pods
 
 ## custom resources
 

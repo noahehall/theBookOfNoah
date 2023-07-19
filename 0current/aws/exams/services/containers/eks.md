@@ -86,6 +86,28 @@
     - scales pod resources up/down (cpu/mem reservations) satisfy application requirements
     - improves cluster resource utilization and free up CPU and memory for other pods
 
+#### networking
+
+- communication generally falls within one of these domains
+  - interpod communication between containers
+    - via ingress methods specific to EKS
+    - containers in a pod share a linux namespace and comms over localhost and do not require a NAT
+    - within k8s networking, a single ip addr is shared across all containers within the network
+  - east-west between pods on the same node, north-south across pods on different nodes
+    - intrahost communication: the host node has a distinct namespace from its pods
+      - each host namespace has its own routing table
+      - the podnamespace and the hostnamespace are connected via a Linux virtual Ethernet (veth) device
+        - a pair of veths creates a tunnel between the default host namespace and the pod namespace
+          - pod-to-pod comms in the host happens throught his veth tunnel
+      - each node is allocated a network range for containers and each pod gets an IP addr in that range
+        - this allows containers on the same host to comms
+    - interhost communication: EKS integrates amazon VPC networking into k8s through amazon VPIC CNI plugin for k8s
+      - see the [vpc markdown file](../networkingContentDelivery/vpc.md)
+  - ingress connections from outside the cluster
+- k8s services: the native service objects solves the issue of ephemeral ip addrs as pods scale in/out
+  - isntead of interacting with an ephemeral pods IP addr, use the persistent service ip addr
+  - services are updated in near realtime with the pod status and can load balance traffic
+
 ### control plane
 
 - consists of atleast two api server nodes and three etcd nodes across three availability zones
@@ -209,25 +231,31 @@
   - job
 - scaling
   - cluster autoscaler: setting max, min and desired instances within an ec2 auto scaling group
+- networking: interpod communication handled via VPC integration
 
 ## integrations
 
 ### ELB
 
 - for load distribution
+- [see markdown](../networkingContentDelivery/elasticloadbalancing.md)
 
 ### IAM
 
 - for role-based access control
+- [see markdown](../securityIdentityCompliance/iam.md)
 
 ### VPC
 
 - for pod networking
+- [see markdown](../networkingContentDelivery/vpc.md)
 
 ### ECS
 
 - for clusters and task definitions
+- [see markdown](../containers/ecs.md)
 
 ### ECR
 
 - image repository
+- [see markdown](../containers/ecr.md)

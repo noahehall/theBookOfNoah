@@ -291,3 +291,7 @@
 - clusters: are region specific but can span availability zones for increased resilience
 
 ## integrations
+
+### EKS
+
+- abcd
