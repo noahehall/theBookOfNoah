@@ -70,12 +70,20 @@
   - 4 1/2 nines: 99.995% uptime, 26.30 minutes downtime
   - 5 nines: 99.999% uptime, 5.26 minutes downtime
 - availbility types
-  - active-passive: one out of many resources are considered the primary, the rest are secondary
+  - active-passive: one of two resources are considered the primary, the other secondary and becomes primary if the current one fails
     - challenges:
+      - statefulness: acceptable since theres only one primary
+      - availability: if failover fails, your resources wil be unreachable
       - scalability: since only one resource is considered primary, it will bear the brunt of the load
+        - since the passive resource doesnt share the load; you need _vertical scaling_ to accomodate increased demand
+        - stop the passive resource > resize and restart > make primary and shift traffic> stop, resize and restart the new secondary
+          - you repeat this process when demand decreases
   - active-active: more than one of many resources are considered primary
     - challenges
-      - statefulness: managing state across resources can be difficult
+      - statefulness: managing state across resources can be difficult and should generally be stateless
+        - push state into a load balancer that fronts the fleet of resources
+      - scalability: since multiple resources share load you need _horizontal scaling_
+        - automation is key; adding and removing resources should match demand in near real-time
 - redundancy: strategy for increasing availability
   - its all about duplicating data & servers across infrastructure in isolated geographic locations
   - challenges
