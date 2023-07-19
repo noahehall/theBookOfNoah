@@ -124,6 +124,10 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 - none of the other control plan components expose remote services
 - scales horizontally
 
+## data plane
+
+- k8s runs workloads by grouping containers into pods and assigning those pods to run on nodes
+
 ### cluster
 
 - a bunch of servers, which run containers, joined into a group
@@ -157,10 +161,6 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 - storage for all confidential/secret data
 - make sure they are encrypted
-
-## data plane
-
-- k8s runs workloads by grouping containers into pods and assigning those pods to run on nodes
 
 ### worker nodes
 

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+## k8s: kubectl
+## for eksctl/eks cli see github/nirv-ai/scripts
+
 ## TODO: we can do better than this, switch the ugly reads to a case statement
 
 k8s() {

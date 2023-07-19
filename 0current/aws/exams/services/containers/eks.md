@@ -16,10 +16,12 @@
 
 ## features
 
+- creates and manages the k8s control plane across multiple AZs to avoid a single point of failure
+  - availability and scalability of the api services
+  - etcd persistence layer for each cluster
 - reduce costs with efficient compute resource provisioning and uatomatic k8s application scaling
 - more secure k8s environment autoamtically applied to each clusters control plane
 - automate tasks like patching, node provisioning and updates
-- creates and manages the k8s control plane across multiple AZs to avoid a single point of failure
 - opt-in managegement of elements of the data plane
 - tightly integrates with other aws services and features: ELB, IAM, VPC
 - runs native, upstream k8s and is certified k8s conformant: so all existing k8s tools works with the eks api
@@ -32,10 +34,12 @@
 
 ## terms
 
-- worker node: the machine that hosts your pod
-- pod: a container instanced
-
 ## basics
+
+### control plane
+
+- consists of atleast two api server nodes and three etcd nodes across three availability zones
+- eks automatically detects and replaces unhealhty control plane nodes
 
 ## considerations
 
