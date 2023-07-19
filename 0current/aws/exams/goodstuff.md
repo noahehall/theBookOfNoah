@@ -360,6 +360,7 @@
 ### CIDR notation
 
 - CIDR: classless inter-domain routing; enables expressing a rangte of ip addresses
+  - eksctl uses `192.168.0.0/16` for the VPC
 
 ```sh
 # a single ip

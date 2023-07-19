@@ -39,6 +39,7 @@
   - infrastructure-level concerns like load balancing, networking, storage and compute into app configuration
   - platform for running containers: instantiation, updates, maintenance, scaling, security, etc
   - all k8s objects/resources/etc are abstractions around lowerlevel things, same way docker containers/images/etc are abstractions
+- coredns: provides name resolution and service discovery; can be integrated with consul
 
 ### terms
 

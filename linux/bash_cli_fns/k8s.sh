@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+## TODO: move this into nirv-ai/scripts
 ## k8s: kubectl
-## for eksctl/eks cli see github/nirv-ai/scripts
+## eks: eksctl
+## aws_eks: aws eks
 
 # TODO:
 ## switch the ugly reads to a case statement
@@ -71,3 +73,10 @@ EOF
     echo "$HELP" ||
     k8s run "$1" --image="$2" --restart=Never
 }
+
+eks() {
+  eksctl "$@"
+}
+
+# create a cluster
+## eks create cluster -f cluster.config.yaml

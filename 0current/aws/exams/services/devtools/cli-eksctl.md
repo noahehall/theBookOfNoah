@@ -1,8 +1,9 @@
 # eksctl
 
-- eksctl: official cli by weaveworks
+- eksctl: official cli by weaveworks, simpler than using the aws cli
 - aws cli eks: doesnt seem to be promoted as much as eksctl
   - but you should still be familiar with it for localstacks awslocal wrapper
+  - it also provides the most flexibilty but is not as user friendly
 
 ### links
 
@@ -11,6 +12,8 @@
 - [install](https://eksctl.io/introduction/#installation)
 - [aws cli eks docs](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/eks/index.html)
 - [with localstacks awslocal](../../../../localstack/localstack.md)
+- [getting started](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html)
+- [github](https://github.com/weaveworks/eksctl)
 
 ## quickies
 
@@ -30,3 +33,40 @@ sudo install -o root -g root -m 0755 eksctl ../eksctl
 - use eksctl whenever your interacting with the control plane
   - you need to have your aws creds setup
 - use kubectl for the data plane
+
+### eksctl
+
+- creating new cluster and worker nodes
+  - creates IAM roles for the cluster and worker nodes
+  - creates a dedicated VPC with CIDR range 192.168.0.0/16
+  - creates a cluster and a nodegroup
+  - configures access to API endpoints
+  - installs CoreDNS
+    - check the consul docs for integrating with consul
+  - writes a kubeconfig file for the cluster
+
+```sh
+eksctl
+  create
+    cluster # accepts a variety of --blah options, or can pass in a yaml file
+```
+
+```yml
+# example eksctl configuration file
+## should be stored in source
+apiVersion: eksctl.io/vg1alpha5
+kind: ClusterConfig
+metadata:
+  name: SomeClusterName
+  region: us-east-1
+vpc:
+  subnets:
+    private:
+      us-east-1b: { id: subnet-abcdefg }
+      us-east-1c: { id: subnet-gfedcba }
+nodeGroups:
+  - name: ClusterOneNodes
+    instanceType: m5.xlarge
+    desiredCapacity: 3
+    privateNetworking: true
+```

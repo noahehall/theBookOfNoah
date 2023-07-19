@@ -31,6 +31,7 @@
   - [list of consul tools](https://developer.hashicorp.com/consul/docs/integrate/download-tools)
   - [ns1](https://help.ns1.com/hc/en-us/articles/360039417093-NS1-Consul-Integration-Overview)
   - [dnsimple](https://blog.dnsimple.com/2022/05/consul-integration/)
+  - [coredns integration for k8s](https://github.com/hashicorp/consul/issues/5108)
 - nomad
   - [nomad integration](https://developer.hashicorp.com/nomad/docs/integrations/consul-integration#service-discovery)
 - vault

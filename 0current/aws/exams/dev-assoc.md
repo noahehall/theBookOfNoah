@@ -2,8 +2,8 @@
 
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
-  - amazon eks primer > configuring eks > creating a cluster
-    - lol its fkn part of the exam; long live noamd!
+  - amazon eks primer > configuring eks > horizontal and vertical scaling
+    - lol its fkn part of the exam; long live nomad!
   - Exam Prep (With practice material) > intro to certification
   - before the test review these
     - the offical ramp up guide pdf

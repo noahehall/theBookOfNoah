@@ -20,8 +20,8 @@
 - creates and manages the k8s control plane across multiple AZs to avoid a single point of failure
   - availability and scalability of the api services
   - etcd persistence layer for each cluster
-- reduce costs with efficient compute resource provisioning and uatomatic k8s application scaling
-- more secure k8s environment autoamtically applied to each clusters control plane
+- reduce costs with efficient compute resource provisioning and automatic k8s application scaling
+- more secure k8s environment automatically applied to each clusters control plane
 - automate tasks like patching, node provisioning and updates
 - opt-in managegement of elements of the data plane
 - tightly integrates with other aws services and features: ELB, IAM, VPC
@@ -66,6 +66,13 @@
 
 - consists of atleast two api server nodes and three etcd nodes across three availability zones
 - eks automatically detects and replaces unhealhty control plane nodes
+
+#### clusters
+
+- general workflow
+  - ensure your AWS account is secured and follows best practices
+  - configure a VPC for the cluster
+  - create the EKS cluster
 
 ### data plane
 
@@ -150,17 +157,39 @@
 }
 ```
 
-### clusters
-
-- general workflow
-  - ensure your AWS account is secured and follows best practices
-  - configure a VPC for the cluster
-  - create the EKS cluster
-
 ## considerations
 
 - permissions: see [markdown for rbac, cluster and node iam roles](../securityIdentityCompliance/iam.md)
 - networking: see [markdown for vpc](../networkingContentDelivery/vpc.md)
+- creating clusters
+  - eksctl: create a cluster with 1 cmd, check [the markdown file](../devtools/cli-eksctl.md)
+  - management console: you still need the cli to complete some steps
+  - aws cli: offers the most potential for customization, but has the most complexity as well
+- cluster configuration:
+  - compute: for self managed, managed and fargate data plane node groups
+    - details like nodes, k8s labels and taints, AMIs, instance types, disk size, etc
+  - networking: vpc, subnets, security groups, etc
+    - by default the k8s api server is public, but secured via IAM and native k8s RBAC
+      - you can disable this via configuration
+  - addons: operational software for k8s
+    - e.g. coredns, kub-proxy, vpc-cni, etc
+    - you can add, remove and modify
+  - authentication: how user acces is managed
+    - you can associate OIDC identity providers for each cluster
+  - logging: cluster monitoring
+    - by default control plane logging is disabled, but you can enable specifc log types
+      - api server
+      - audit
+      - authenticator
+      - controller manager
+      - scheduler
+  - tags
+  - secrets encryption: you have to enable it and a KMS key will be provisioned for the cluster
+- workload types
+  - deployment
+  - stateful set
+  - daemon set
+  - job
 
 ## integrations
 
@@ -175,3 +204,11 @@
 ### VPC
 
 - for pod networking
+
+### ECS
+
+- for clusters and task definitions
+
+### ECR
+
+- image repository
