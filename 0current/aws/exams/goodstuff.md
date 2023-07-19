@@ -166,7 +166,12 @@
   - its difficult to find out which process has been killed by the OOM killer algorithm
   - stopping a process doesnt freeup the memory allocated to it, you have to kill it
 - cgroup: control groups; deals with CPU and Memory
-- orchestration: service that coordinates container deployment, placement strategy, failure, and resource utilization
+- orchestration: service that coordinates container deployment, placement strategy, failure, and resource utilization across mutiple hosts
+  - scheduling and placement of containers
+  - automatic scaling in/out based on some strategy
+  - self-healing services by autoamtically removing unhealthy containers and deploying new ones
+  - integration with cloud and other services, e.g. networking and persistence
+  - security, monitoring and logging for the fleet
 
 ### best practices
 

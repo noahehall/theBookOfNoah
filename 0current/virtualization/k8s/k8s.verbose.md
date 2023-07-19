@@ -5,8 +5,6 @@
   - copying:
     - verbose: pg 18 try it now
     - examples: page 18 try it now
-- todos
-  - all the labs
 - largely taken from learn k8s in a month of lunches by elton stoneman
 - recommendations
   - k8s in action by Marko Luksa: more focused on administration
@@ -33,8 +31,10 @@
   - platform for running containers: instantiation, updates, maintenance, scaling, security, etc
   - all k8s objects/resources/etc are abstractions around lowerlevel things, same way docker containers/images/etc are abstractions
 
-
 ### terms
+
+- control plane: the underlying infrastructure
+- data plane: the worker nodes
 
 ## components
 
