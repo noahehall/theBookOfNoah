@@ -15,14 +15,21 @@
 ## links
 
 - [kubectl cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
-- learn
-  - [elton stonemans blogs](https://blog.sixeyed.com/)
-  - [pdf: k8s with buildkit](https://static.sched.com/hosted_files/kccnceu19/12/Building%20images%20%20efficiently%20and%20securely%20on%20Kubernetes%20with%20BuildKit.pdf)
-- examples
-  - [buildkits k8s examples](https://github.com/moby/buildkit/tree/master/examples/kubernetes)
-  - [forked: k8s in a month lab](https://github.com/nohallcaesars/kiamol)
-- docs
-  - [k8s docs home](https://kubernetes.io/docs/home/)
+- [tools](https://kubernetes.io/docs/tasks/tools/)
+
+### learn
+
+- [elton stonemans blogs](https://blog.sixeyed.com/)
+- [pdf: k8s with buildkit](https://static.sched.com/hosted_files/kccnceu19/12/Building%20images%20%20efficiently%20and%20securely%20on%20Kubernetes%20with%20BuildKit.pdf)
+
+### examples
+
+- [buildkits k8s examples](https://github.com/moby/buildkit/tree/master/examples/kubernetes)
+- [forked: k8s in a month lab](https://github.com/nohallcaesars/kiamol)
+
+### docs
+
+- [k8s docs home](https://kubernetes.io/docs/home/)
 
 ## basics
 
@@ -33,49 +40,89 @@
 
 ### terms
 
-- control plane: the underlying infrastructure
-- data plane: the worker nodes
+## tools
 
-## components
+### kubectl
 
-### API
+- cli for communication with control plane nodes via the API server
+  - create resources
+  - inspect cluster and resource state
+  - access troubgle shooting tools
+  - deploy and scale resources
+- kubectl version must be within one minor version of the control plane cluster
 
-- how you define your applications; generally in yaml and send the specification state to the k8s API, which is responsible for ensuring the runtime state matches the specification state (like terraform)
+```sh
+# install latest
+## can also replace the inner curl with a version, e.g. 1.27.3
+mkdir -p /opt/k8s && cd /opt/k8s
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+```
 
-#### application manifests
+### kind
 
-- IaaC adhering to the k8s api; defines one of the kubernetes object
-- yaml definition
-- json definition?
+- run k8s on your local computer, requires eitehr docker/podman
 
-##### services
+### minikube
 
-- objects for managing network access: from the outside into the cluster and between containers in the cluster
+- like kind, but runs an all-in-one or multi-node local k8s cluster for daily development work
 
-##### Pods
+### kubeadm
 
-- k8s object for managing 1/more containers
-  - every container belongs to a pod, typically one-to-one,
-    - you can deploy many containers to a single pod and they will all share the same virtual env, network address, and can communicate over localhost
-  - pods inturn are generally managed by other k8s objects (e.g. deployments)
-- a unit of compute; basic building block of k8s;
-  - runs on a single node in a cluster
-  - k8s manages the pod, but not the container
-    - instead it passes the responsibilty container management to the container runtime installed on the node, e.g. docker/containerd/etc
-- state
-  - virtual ip: managed by k8s
+- create and management k8s clusters in a user friendly way
 
-##### Deployments
+## control plane
 
-- k8s object for managing pods
+- each cluster has a control plane that runs services that manage the cluster
+  - control plane nodes
+  - etcd
+- determines when tasks are schedule and where they should be routed to
 
-##### ReplicaSets
+### etcd
 
-##### Volumes
+- the core persistence layer for k8s
+- this is where the critical cluster data and state are stored
 
-##### Secret
+### controle plane nodes
 
-##### ConfigMap
+- manage the worker nodes in the data plane and the pods in the cluster
+- a node can be a virtual or physical machine, depending on the cluster
+  - every node has a container runtime (e.g. docker/containerd) to run pods
+- each node is managed by the control plane and contains services necessary to run pods
+
+#### Scheduler
+
+- mechanism for selecting nodes for newly created containers to run on
+- runs a series of filters to exclude ineligible nodes for pod placement
+  - volume filters: volume requirements and constraints
+  - resource filters: e.g. cpu, memory and networking
+  - topology filters: scheduling constraints set at the node/pod level
+  - prioritization: selection of container instances for placement
+
+##### deployments
+
+- owns and manages replicasets or individual pods
+- you describge a desired state in the deployment, and the the deployment changes the actual state of the cluster
+
+###### ReplicaSet
+
+- ensures that a specific number of pod replicas are running at any given time
+
+#### controller manager
+
+- runs bg threads that detect and respond to cluster events
+
+#### cloud controller
+
+- interacts with the underlying cloud provider
+
+#### api server
+
+- exposes the k8s api and is the frontend for k8s control plane
+- handles all communication from the cluster to the control plane
+  - through the API server to kubelete
+- none of the other control plan components expose remote services
+- scales horizontally
 
 ### cluster
 
@@ -83,48 +130,117 @@
 - a single logical unit composed of many server nodes
 - state
   - virtual network: all pods in a cluster can communicate with each other, even if deployed to different nodes within the cluster
-
-#### distributed db
-
 - every cluster has a distributed db
-- use cases
-  - store application configuration files
-  - store secrets
-
-#### storage
-
+  - use cases
+    - store application configuration files
+    - store secrets
 - every cluster has storage (think docker volumes)
   - physically stored on disks in the cluster nodes
   - or a shared storage system
-- use cases
-  - maintain data outside of containers
-  - supports high availabliilty for stateful apps
-
-#### networking
-
+  - use cases
+    - maintain data outside of containers
+    - supports high availabliilty for stateful apps
 - every cluster manages inbound traffic (via the k8s api) and sends it to the right containers for processing
 
-### nodes
+#### namespaces
 
-- every node has a container runtime (e.g. docker/containerd)
+- a virtual cluster that is backed by the same physical cluster
+- physical clusters can have resources with the same name as long as they are in different namespaces
+  - useful when you have multiple teams/proejcts using the same clsuter
 
-#### application nodes
+#### ConfigMap
 
-- this is your normal container, and can be arbitrarily configured as long as it abides by the k8s api
-  - cloud-native architecture across microservices in multiple containers
-  - legacy monoliths in one big containers
-  - linux, (fk) windows OS
+- an api object that stores nonconfidential data as key-value pairs used by other k8s objects, like pods
+- enables you to separate configuration data from application code
 
-#### API nodes
+#### secrets
 
-- the k8s API always runs on linux nodes, regardless of how you configure the application nodes
+- storage for all confidential/secret data
+- make sure they are encrypted
 
-#### containers
+## data plane
+
+- k8s runs workloads by grouping containers into pods and assigning those pods to run on nodes
+
+### worker nodes
+
+- worker nodes host pods that are the components of the application workload
+- this is where your tasks are run
+- application nodes
+  - this is your normal container, and can be arbitrarily configured as long as it abides by the k8s api
+    - cloud-native architecture across microservices in multiple containers
+    - legacy monoliths in one big containers
+    - linux, (fk) windows OS
+- api nodes
+  - the k8s API always runs on linux nodes, regardless of how you configure the application nodes
+
+#### kube-proxy
+
+- networking mechanism: maintains network rules on the host and performs connection forwarding if required
+
+#### container runtime
+
+- e.g. docker/containerd
+
+#### kubelet
+
+- the primarty agent that runs on worker nodes
+- ensures that the right containers are running a pod and performs health checks
+
+#### pods
+
+- the basic building block within k8s for deployment, scaling and replication
+- manages 1/more groups of colocated containers
+  - every container belongs to a pod, typically one-to-one,
+    - you can deploy many containers to a single pod and they will all share the same virtual env, network address, and can communicate over localhost
+    - you cannot split containers ina pod across nodes
+  - pods inturn are generally managed by other k8s objects (e.g. deployments)
+- a unit of compute; basic building block of k8s;
+  - runs on a single node in a cluster
+  - k8s manages the pod, but not the container
+    - instead it passes the responsibilty of container management to the container runtime installed on the node, e.g. docker/containerd/etc
+- state
+  - virtual ip: managed by k8s
+
+##### containers
 
 - everything you know about docker goes here, so we'll keep it k8s specific
 - containers are distributed to nodes in the cluster and communicate using standard network (UDP & TCP, ICMP not supported)
 
-## tools
+##### PodSpec file
 
-- kubectl: manages kubernetes on the cli; pronounced `cube-cuttle`
-  - connects to & manages a k8s cluster via the API
+- specification for how to run containers
+
+##### volumes
+
+- applications in a pod have access to shared volumes
+- facilitates data sharing within the pod and persistence of data across container restarts
+- types
+  - ephemeral: when a pod ceases to exist, k8ds destroys the volume
+  - peristent: lifecycle is independent of any individual pod that uses it
+    - backed by storage subsystems independent of cluster nodes
+
+### services
+
+- a logical collection of pods and a means to access (north-south, east-west) them
+- the service is always updated with its associated pods
+  - theres no need for pods to track other pods
+
+## custom resources
+
+- created by extending the k8s api
+- coudl be a new object like a service mesh, or a combination of native k8s resources
+
+### Custom Resource Definition
+
+- how you define new objects
+
+### custom controllers
+
+- controls custom resources
+- operators: custom controllers used to automate the management of custom resources in a cluster
+  - always use custom controls isntead of manually updating objects
+
+## application manifests
+
+- IaaC adhering to the k8s api; defines one of the kubernetes objects
