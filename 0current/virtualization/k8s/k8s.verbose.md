@@ -11,6 +11,7 @@
     - both books should prepare you for certification
       - CKA: certified kubernetes administrator
       - CKAD: certified kubernetes application developer
+- the most over engineered kitchen sink in the world, long live hashistack!
 
 ## links
 
@@ -36,6 +37,7 @@
 - [docs home](https://kubernetes.io/docs/home/)
 - [components](https://kubernetes.io/docs/concepts/overview/components/)
 - [kubectl](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
+- [statefulsets](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
 
 ## basics
 
@@ -204,6 +206,24 @@ sudo install -o root -g root -m 0755 kubectl ../kubectl
   - peristent: lifecycle is independent of any individual pod that uses it
     - backed by storage subsystems independent of cluster nodes
 
+##### storage class
+
+- automates persistent volume management within a k8s cluster
+  - used by admins to present persistent storage options to cluster users
+- Container Storage Interface: CSI: api standard for exposing arbitrary block and file storage systems to containerized workloads on container orchastration systems like k8s
+  - e.g. EBS and EFS have CSI drivers to interacting with the each aws service
+
+##### persistent volumes PV
+
+- similar to ephemeral volumes but has a lifecycle independent of any individual pod
+
+##### persistent volume claim PVC
+
+- a request for storage by a cluster user
+  - total storage
+  - kind of storage: the storage class
+  - performance
+
 #### deployments
 
 - owns and manages replicasets or individual pods
@@ -228,15 +248,21 @@ sudo install -o root -g root -m 0755 kubectl ../kubectl
 
 #### NodePort
 
-- exposed on each node using a static port
+- exposed on each node using a static port accessible outside the cluster
 - can be accessed via the service by requesting nodeip:nodeport
 - internally it connects to the clusterip service
 
 #### LoadBalancer
 
 - exposed externally with the cloud providers load balancer
-- balances the load between nodes
+- extends the nodeport service by adding a load balancer in front of all nodes
+  - is also accessible outside the cluster
 - connects to the both the ClusterIP and NodePort service
+
+#### ingress objects
+
+- exposes HTTP/S routes from outside the cluster to your services and defines traffic rules
+- helps reduce the number of load balancers you use
 
 #### ExternalName
 

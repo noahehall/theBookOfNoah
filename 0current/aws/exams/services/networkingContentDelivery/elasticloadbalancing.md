@@ -118,8 +118,9 @@
 
 ## integrations
 
-- since ELB is fronting your resources, you'll generally want them ELB public and the targets in private subnets
-
 ### EKS
 
-- abcd
+- ALB: managed by Ingress objects
+  - used with pods that are deployed to nodes or fargate
+- NLB: managed by LoadBalancer services
+  - used with pods deployed to EC2 IP and instance targets or farget IP targets

@@ -1,6 +1,3 @@
-- TODO(noah):
-  - convert all of these type of files to nimscript, lol fk bash its 2023
-
 ```sh
 # setup your vars
 SOME_REGION=ap-southeast-2

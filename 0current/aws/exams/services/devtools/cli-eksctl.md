@@ -46,9 +46,11 @@ sudo install -o root -g root -m 0755 eksctl ../eksctl
   - writes a kubeconfig file for the cluster
 
 ```sh
+# each cmd accepts a variety of --blah options, or you can pass in a yaml file
 eksctl
   create
-    cluster # accepts a variety of --blah options, or can pass in a yaml file
+    cluster
+    iamserviceaccount
 ```
 
 ```yml

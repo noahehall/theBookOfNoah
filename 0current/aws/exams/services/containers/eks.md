@@ -12,6 +12,7 @@
 - [gettings tarted](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html)
 - [horizontal pod scaler](https://docs.aws.amazon.com/eks/latest/userguide/horizontal-pod-autoscaler.html)
 - [autoscaling](https://docs.aws.amazon.com/eks/latest/userguide/autoscaling.html)
+- [storage](https://docs.aws.amazon.com/eks/latest/userguide/storage.html)
 
 ## best practices
 
@@ -108,6 +109,11 @@
   - isntead of interacting with an ephemeral pods IP addr, use the persistent service ip addr
   - services are updated in near realtime with the pod status and can load balance traffic
 
+##### AWS Load Balancer Controller
+
+- a controller that manages ELB for a k8s cluster
+  - see [markdown file](../networkingContentDelivery/elasticloadbalancing.md)
+
 ### control plane
 
 - consists of atleast two api server nodes and three etcd nodes across three availability zones
@@ -196,6 +202,13 @@
 }
 ```
 
+#### storage
+
+- EKS uses persistent volumes (PV), persistent volume claims (PVC) and storage classes to provide persistent storage for k8s clusters
+- a Container Storage Interface (CSI) driver is required to allow k8s cluster access to a desired storage provider
+  - both EBS and EFS have CSI drivers which run as containerized apps in EKS clsuter nodes
+  - the driver makes the necessary aws apy calls to their respective AWS stoage service on behalf of a storage class object
+
 ## considerations
 
 - permissions: see [markdown for rbac, cluster and node iam roles](../securityIdentityCompliance/iam.md)
@@ -232,6 +245,7 @@
 - scaling
   - cluster autoscaler: setting max, min and desired instances within an ec2 auto scaling group
 - networking: interpod communication handled via VPC integration
+- storage: generally EBS or EFS, but other options are available
 
 ## integrations
 
@@ -259,3 +273,11 @@
 
 - image repository
 - [see markdown](../containers/ecr.md)
+
+### storage
+
+- [EBS](../Storage/elasticblockstore.md)
+  - application workloads deployed into a k8s statefulset object
+- [EFS](../Storage/efs.md)
+  - for sharing application data across worker nodes
+  - pods running on fargate automatically mounts an EFS file system without the need for a CSI driver install/config

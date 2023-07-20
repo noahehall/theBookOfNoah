@@ -14,6 +14,9 @@
 - [landing page](https://aws.amazon.com/ebs/?did=ap_card&trk=ap_card)
 - [intro](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html)
 - [faw](https://aws.amazon.com/ebs/faqs/)
+- [eks: EBS CSI driver](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html)
+- [eks: managing EBS CSI Addon](https://docs.aws.amazon.com/eks/latest/userguide/managing-ebs-csi-self-managed-add-on.html)
+- [eks: EBS CSI driver github](https://github.com/kubernetes-sigs/aws-ebs-csi-driver)
 
 ## best practices
 
@@ -112,6 +115,27 @@
 
 - EBS can only be attached to EC2, so integrations will be limited
 
-### AMIs
+### AMI
 
 - EBS-backed AMIs: the root instance launched from an AMI is typically an EBS volume
+
+### EKS
+
+- integrates with k8s via an EBS CSI driver
+- use cases
+  - application workloads deployed into a k8s statefulset object
+- general workflow
+  - cluster user submits a peristent volume claim (PVC)
+  - the EBS storage class calls the EBS CSI driver to allocate storage matching the PVC request
+  - the EBS CSI driver makes aws api calls to create an EBS volume and attach it to the requested cluster node
+  - on success: the persistent volume (PV) is allocated to the PVC
+- EBS CSI Driver
+  - must be deployed to AWS: e.g. via a helm chart or yaml manifest file
+    - this shiz is hella involved, google how to do it when you need it
+  - can be configured to use various EBS functionality
+    - volume resizing
+    - snapshots
+    - etc
+  - requires explicit permissions to access the AWS apis
+    - you need to attach an IAM policy with the correct role attached to the CSI driver service account
+      - you can do this via `eksctl`

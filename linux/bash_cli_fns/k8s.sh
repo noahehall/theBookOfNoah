@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-## TODO: move this into nirv-ai/scripts
+## TODO: move this and eksctl file into nirv-ai/scripts
+## switch the ugly reads to a case statement
+
+########################################## FYI
 ## k8s: kubectl
 ## eks: eksctl
 ## aws_eks: aws eks
 
-# TODO:
-## switch the ugly reads to a case statement
-## move this file into nirv-ai/scripts
-
+########################################## KUBECTL
 k8s() {
   # kubectl CMD RESOURCE-TYPE RESOURCE-NAME FLAGS
   kubectl "$@"
@@ -40,6 +40,10 @@ EOF
     k8s get pods $@
 }
 
+k8s_get_persistent_volume_claims() {
+  k8s get pvc
+}
+
 k8s_cat_pod() {
   read -r -d '' HELP <<"EOF"
 prints the state of a pod
@@ -49,6 +53,10 @@ EOF
   [[ $1 == "-h" ]] &&
     echo "$HELP" ||
     k8s describe pod "$1"
+}
+
+k8s_cat_storage_class() {
+  k8s describe sc "$@"
 }
 
 k8s_pod_ready() {
@@ -74,6 +82,13 @@ EOF
     k8s run "$1" --image="$2" --restart=Never
 }
 
+k8s_exec() {
+  # $1 name
+  # $2 cmd
+  k8s exec -it "$1" -- "${@:2}"
+}
+
+########################################## EKSCTL
 eks() {
   eksctl "$@"
 }
@@ -83,3 +98,9 @@ eks() {
 
 # horzontal pod autoscaler
 ## kubectl autoscale deployment myapp --cpu-percent=50 --min=1 --max=10
+
+# get cluster state
+## kubectl get pv,all -A
+
+# apply some application manifest to a cluster
+## kubectl apply -f somefile.yaml -f someotherfile.yaml
