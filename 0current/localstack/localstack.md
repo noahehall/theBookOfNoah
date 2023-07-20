@@ -6,6 +6,7 @@
 ## links
 
 - [installation](https://docs.localstack.cloud/getting-started/)
+- [quickstart](https://docs.localstack.cloud/getting-started/quickstart/)
 - [available AWS apis](https://docs.localstack.cloud/user-guide/aws/feature-coverage/)
 - [installation: use homebrew for linux](https://docs.brew.sh/Homebrew-on-Linux)
 - [awslocal: wrapper for aws cli](https://github.com/localstack/awscli-local)

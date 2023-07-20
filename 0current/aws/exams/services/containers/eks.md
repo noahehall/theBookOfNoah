@@ -209,6 +209,37 @@
   - both EBS and EFS have CSI drivers which run as containerized apps in EKS clsuter nodes
   - the driver makes the necessary aws apy calls to their respective AWS stoage service on behalf of a storage class object
 
+### deployments
+
+- for dev/test you can use kubectl
+
+#### cicd with aws services
+
+- general workflow
+  - commit code to a codecommit repo
+  - codepipline automatically detcts changes and kicks off your pipeline
+  - codebuild
+    - run tests
+    - builds packages as a docker image with updated image tag
+  - docker image is pushed to ECR
+  - codepipeline invokes a lambda fn to prepare the built and tested artifacts for deployment to a k8s cluster
+    - lambda will pull the appropriate image based on the image tag
+    - lambda invokes the k8s api to deploy/update the app in the cluster once the deployment manifest update is completed
+
+#### cicd with opensource tools
+
+- general workflow
+  - commit code to github
+  - github action triggers (or e.g. jenkins)
+    - test code
+    - build container image with new tag
+  - push new image to nexus (or e.g. harbor)
+    - run vulnerability and security scans
+  - spinnaker pipeline activates when images are ready for deployment
+    - spinnaker stages manage the deployment process
+      - one stage includes using help to create the k8s manifest for deploying to the eks cluster
+    - spinnaker tests each deployment in each env (dev, stage, prod) and on success auto deploys to eks cluster
+
 ## considerations
 
 - permissions: see [markdown for rbac, cluster and node iam roles](../securityIdentityCompliance/iam.md)
@@ -246,6 +277,10 @@
   - cluster autoscaler: setting max, min and desired instances within an ec2 auto scaling group
 - networking: interpod communication handled via VPC integration
 - storage: generally EBS or EFS, but other options are available
+- deploying applications
+  - kubectl: suitable for testing/dev; high administration overhead
+  - cicd with aws services: codecommit > codepipeline > codebuild > ECR, lambda > k8s
+  - cicd with opensource: the world is yours
 
 ## integrations
 

@@ -18,6 +18,7 @@
 - apache archiva
 - docker registry
 - terraform registry
+- [harbor](https://goharbor.io/)
 
 ## deployment tools
 
