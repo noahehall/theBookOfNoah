@@ -115,6 +115,37 @@
 - a controller that manages ELB for a k8s cluster
   - see [markdown file](../networkingContentDelivery/elasticloadbalancing.md)
 
+#### add-ons
+
+- extend the operational capabgilities of an EKS cluster
+- are not specific to any one application
+  - observability agents
+  - k8s drivers: enable the cluster to interact with underlying AWS resources for networking, compute and storage
+
+##### default addons
+
+- amazon VPC CNI
+- kube-proxy
+- coredns
+- maintainence and upgrades: depends on they were implemented
+  - cluster created using console, eksctl + configuration file
+    - default eks addons are automatically installed and are managed by aws
+    - you can still use the same tools to maintain and upgrade
+  - cluster created using eksctl without a config file or any other tool
+    - the default addons are self managed and dont appear in the aws console
+      - you can convert them to managed by manually reinstalling using the appropriate methods
+    - use the kubectl cli to main and upgrade them directly in the cluster
+
+##### third party addons
+
+- e.g. ingress controllers, ci/cd, monitoring, etc
+- installed and configured by you
+- maintenance and upgrades
+  - you must identify all the agents, operatings and services that are compatible with the cluster version
+    - validate you're upgrading components in the correct order
+  - generally you should test upgraded versions with the cluster version
+  - k8s minor releases often make chagnes to built-in APIs, thus any third party addons must be reviewed
+
 ### control plane
 
 - consists of atleast two api server nodes and three etcd nodes across three availability zones
@@ -283,6 +314,7 @@
   - cicd with aws services: codecommit > codepipeline > codebuild > ECR, lambda > k8s
   - cicd with opensource: the world is yours
 - monitoring: a combination of cloudwatch + opensource tools
+- add-ons maintainence depends on how they were implemented
 
 ## integrations
 
