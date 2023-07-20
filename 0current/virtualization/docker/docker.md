@@ -185,8 +185,14 @@
 
 ```jsonc
 {
-  features: {
-    buildkit: true; // enable buildkit
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "3"
+  },
+  "experimental": true,
+  "features": {
+    "buildkit": true
   }
 }
 ```
@@ -279,8 +285,8 @@ docker -H tcp://HOST_IP:2375 SOME_CMD
 #### vars, vars and vars (sans config, secrets)
 
 - .env: env file available for use in the compose file
-- env_file: addds/unsets vars available for use in the container
-  - if relative, its to the compose.fil parent dir
+- env_file: adds/unsets vars available for use in the container
+  - if relative, its to the compose file parent dir
   - all values are raw strings and not interpolated by docker (so quotes are included)
 - environment: override values set in an .env/env_file
   - bool values must be quoted so their not interpolated by the yaml parser

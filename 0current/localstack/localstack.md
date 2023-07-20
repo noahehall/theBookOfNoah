@@ -1,5 +1,6 @@
 # localstack
 
+- AWS emulator that runs in a single container on your laptop/CI env
 - for gcp, check out the [gcloud beta emulators](https://cloud.google.com/sdk/gcloud/reference/beta/emulators)
 - [grab your api key with a gmail alias](https://app.localstack.cloud/account/apikeys)
 
