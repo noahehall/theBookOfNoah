@@ -269,9 +269,9 @@
   - tags
   - secrets encryption: you have to enable it and a KMS key will be provisioned for the cluster
 - workload types
-  - deployment
-  - stateful set
-  - daemon set
+  - deployments
+  - statefulset
+  - daemonset
   - job
 - scaling
   - cluster autoscaler: setting max, min and desired instances within an ec2 auto scaling group
@@ -281,6 +281,7 @@
   - kubectl: suitable for testing/dev; high administration overhead
   - cicd with aws services: codecommit > codepipeline > codebuild > ECR, lambda > k8s
   - cicd with opensource: the world is yours
+- monitoring: a combination of cloudwatch + opensource tools
 
 ## integrations
 
@@ -316,3 +317,11 @@
 - [EFS](../Storage/efs.md)
   - for sharing application data across worker nodes
   - pods running on fargate automatically mounts an EFS file system without the need for a CSI driver install/config
+
+### analytics
+
+- [cloudwatch: log insights & container insights](../mgmtGovernance/cloudwatch.md)
+  - you can turn on control plane logging for the cluster as well
+- [grafana: dashboards](../mgmtGovernance/grafana.md)
+- [prometheus: monitoring](../mgmtGovernance/prometheus.md)
+- [opensearch: log analysis](../analytics/opensearch.md)

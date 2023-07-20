@@ -29,6 +29,14 @@
 - ansible (by redhat)
   - automation tool to setup new and appy changes to existing systems
 
+## analytics: monitoring & observability
+
+- [fluentd: unified logging layer](https://www.fluentd.org/)
+- [fluentbit: lightweight fluentd](https://fluentbit.io/)
+- [grafana: dashboards](https://grafana.com/)
+- [prometheus: monitoring and alerts for containers](https://prometheus.io/)
+- [opensearch: search, analytics and monitoring](https://opensearch.org/)
+
 ## need to list by (primary) type
 
 - apache bench
@@ -48,7 +56,7 @@
 - graphite
 - habitat (by chef)
 - icinga
-- influxdb
+- influxdb (stay away from this, google the reviews)
 - jmeter
 - k8s
 - kibana

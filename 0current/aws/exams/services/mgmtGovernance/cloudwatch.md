@@ -53,7 +53,7 @@
   - basic monitoring: visibility into aws resources without any extra costs
     - resources automatically send metrics to cloudwatch for free at a rate of 1 data point per metric per 5-minute interval
 - the paid tier: your best bet is to use the aws calculator
-  - depends on the region and is split out by featour
+  - depends on the region and is split out by feature
     - logs
     - metrics
     - dashboards
@@ -106,6 +106,8 @@
 
 #### log insights
 
+- interactively search and query and analyze log data in Cloudwatch Logs
+
 ### alarms
 
 - automatically initiate actions based on sustained state changes of metrics
@@ -125,9 +127,17 @@
 
 ### application monitoring
 
-### billing
+### insights
 
-### filters
+#### container insights
+
+- creates automatic dashboards, and are also viewable in the cloudwatch console
+
+#### lambda insights
+
+#### contributor insights
+
+#### application insights
 
 ### actions
 
@@ -219,3 +229,20 @@
 ### ACM
 
 - automate and response to ACM events, e.g. change in certificate state or renewal
+
+### EKS
+
+- container insights can be configured to collect, aggregate and visualize metrics and logs
+- also provides diagnostic information, e.g. container restart failures
+- general workflow
+
+  - a log collector with a cloudwatch plugin (e.g. fluentd/fluentbit) runs as a DaemonSet on every node
+  - the cloudwatch agent runs as a daemonset on each worker node
+    - collects and ships metrics data to cloudwatch for processing
+  - collect EKS control plane metrics by turning on control plane logging for an EKS cluster
+    - cloudwatch collects metrics info from this logs that can be viewed in Log Insights
+  - metrics are viewable in Container Insights and Log Insights
+
+- common metrics
+  - standard: CPU, memory, disk and network
+  - diagnostic metrics: container restart failures

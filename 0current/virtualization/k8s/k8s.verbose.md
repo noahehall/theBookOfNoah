@@ -1,17 +1,12 @@
 # kubernetes
 
-- bookmark
-  - reading: 73 start after figure 4.6
-  - copying:
-    - verbose: pg 18 try it now
-    - examples: page 18 try it now
-- largely taken from learn k8s in a month of lunches by elton stoneman
 - recommendations
+  - aws EKS skillboard courses are great
+  - learn k8s in a month of lunches by elton stoneman
   - k8s in action by Marko Luksa: more focused on administration
     - both books should prepare you for certification
       - CKA: certified kubernetes administrator
       - CKAD: certified kubernetes application developer
-- the most over engineered kitchen sink in the world, long live hashistack!
 
 ## links
 
@@ -38,6 +33,7 @@
 - [components](https://kubernetes.io/docs/concepts/overview/components/)
 - [kubectl](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
 - [statefulsets](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
+- [daemonset](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)
 
 ## basics
 
@@ -224,15 +220,6 @@ sudo install -o root -g root -m 0755 kubectl ../kubectl
   - kind of storage: the storage class
   - performance
 
-#### deployments
-
-- owns and manages replicasets or individual pods
-- you describge a desired state in the deployment, and the the deployment changes the actual state of the cluster
-
-##### ReplicaSet
-
-- ensures that a specific number of pod replicas are running at any given time
-
 ### services
 
 - a logical collection of pods and a means to access (north-south, east-west) them
@@ -271,6 +258,27 @@ sudo install -o root -g root -m 0755 kubectl ../kubectl
 - useful when your planning to migrate a service into a cluster at a later point in time
   - but dont want to have your routing change
   - e.g. an external database
+
+### workloads
+
+- built-in apis for declarative management of pods as workloads
+
+#### deployments
+
+- owns and manages replicasets or individual pods
+- you describge a desired state in the deployment, and the the deployment changes the actual state of the cluster
+
+#### ReplicaSet
+
+- ensures that a specific number of pod replicas are running at any given time
+
+#### StatefulSets
+
+#### DaemonSet
+
+#### Jobs
+
+#### ReplicationController
 
 ### namespaces
 
