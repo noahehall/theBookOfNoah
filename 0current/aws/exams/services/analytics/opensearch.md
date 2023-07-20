@@ -1,6 +1,6 @@
 # OpenSearch Service
 
-- realtime search, monitoring and analysis
+- log analytics tool for realtime search, monitoring and analysis
 
 ## my thoughts
 
@@ -20,6 +20,16 @@
 
 ## basics
 
+- opensearch server: derived from elasticsearch 7.10.2
+- opensearch dashboard: derived from kibana 7.10.2
+
 ## considerations
 
 ## integrations
+
+### eks
+
+- general workflow
+  - something like fluentbit/fluentd agents run on each worker collecting and shipping log data to an opensearch server
+  - logging data is ingested by opensearch for log analytics
+  - opensearch provides dashboards to vizualize and query log data

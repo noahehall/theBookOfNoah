@@ -290,6 +290,20 @@
 - microservice architecture: an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API. take a large, complex system and break it down into independent, decoupled services that are easy to manage and extend.
 - serverless: abstracts away the infrastructure layer so you can focus on developing your core product
 
+#### service mesh
+
+- networking boundary for communication between services
+  - dedicated infrastructure layer using an array of lightweight network proxies deployed as sidecars into containers
+  - its all about abstracting away the network configuration from the application code
+- service to service communication: east-west
+  - dynamically configuring how services are connected
+- observability
+  - determining how services are performing end-to-end
+  - as a request falls through multiple service boundaries, are there bottle necks?
+- security & traffic management: authNZ
+  - securing comms between services
+  - controlling how packets are routed through the nextwork in terms of policies, prioritization and resilience
+
 ## devops
 
 - combination of cultural philosophies, practices anbd tools that increases an orgs ability to deliver applications and services at high velocity

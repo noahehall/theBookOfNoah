@@ -2,7 +2,7 @@
 
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
-  - amazon eks primer > integrating with other services > observability
+  - amazon eks primer > deploying a service mesh > app mesh
     - lol its fkn part of the exam; long live nomad!
   - Exam Prep (With practice material) > intro to certification
   - before the test review these

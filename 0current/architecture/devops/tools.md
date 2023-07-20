@@ -34,7 +34,7 @@
 - [fluentd: unified logging layer](https://www.fluentd.org/)
 - [fluentbit: lightweight fluentd](https://fluentbit.io/)
 - [grafana: dashboards](https://grafana.com/)
-- [prometheus: monitoring and alerts for containers](https://prometheus.io/)
+- [prometheus: time series db for monitoring and alerts for containers](https://prometheus.io/)
 - [opensearch: search, analytics and monitoring](https://opensearch.org/)
 
 ## need to list by (primary) type
@@ -72,7 +72,6 @@
 - packer
 - pagerduty
 - pingdom
-- prometheus
 - rerun (bash framework)
 - ruxit
 - saltstack

@@ -1,6 +1,7 @@
 # Managed Service for Prometheus
 
 - monitoring for containerized systems
+- time series db used to collect and store metrics from different sources
 
 ## my thoughts
 
@@ -23,3 +24,10 @@
 ## considerations
 
 ## integrations
+
+### eks
+
+- general workflow
+  - prometheus agents run in a DaemonSet: one agent per worker node
+  - agents collect and ship metric data to a prometheus server
+  -

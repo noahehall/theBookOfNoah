@@ -1,6 +1,6 @@
 # Managed Grafana
 
-- data visualization for metrics, logs and traces
+- query and data visualization for metrics, logs and traces
 
 ## my thoughts
 
@@ -23,3 +23,7 @@
 ## considerations
 
 ## integrations
+
+### eks
+
+- provides dashboards to vgisualize and query metrics collected by prometheus

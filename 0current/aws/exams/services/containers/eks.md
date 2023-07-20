@@ -13,6 +13,7 @@
 - [horizontal pod scaler](https://docs.aws.amazon.com/eks/latest/userguide/horizontal-pod-autoscaler.html)
 - [autoscaling](https://docs.aws.amazon.com/eks/latest/userguide/autoscaling.html)
 - [storage](https://docs.aws.amazon.com/eks/latest/userguide/storage.html)
+- [control plane logging](https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html)
 
 ## best practices
 
