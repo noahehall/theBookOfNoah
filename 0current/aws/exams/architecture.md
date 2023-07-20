@@ -22,6 +22,7 @@
 - [aws whitepapers](https://docs.aws.amazon.com/whitepapers/latest/aws-overview/compute-services.html)
 - [cloud computing concepts](https://aws.amazon.com/what-is)
 - [high availability whitepaper](https://docs.aws.amazon.com/whitepapers/latest/real-time-communication-on-aws/high-availability-and-scalability-on-aws.html)
+- [elasticache for redis vs memorydb for redis](https://cloudwellserved.com/amazon-elasticache-for-redis-vs-amazon-memorydb-for-redis/)
 
 ### service categories
 

@@ -2,7 +2,7 @@
 
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
-  - Exam Prep (With practice material) > intro to certification
+  - Exam Prep (With practice material) > module 1 > Amazon RDS Tutorials and Sample Code
 - todos
   - before the test review these
     - the offical ramp up guide pdf
@@ -14,9 +14,19 @@
     - [scaling serverless architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12713/scaling-serverless-architectures)
     - [security and obervability for serverless applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12714/security-and-observability-for-serverless-applications)\
     - [deploying serverlesss applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12836/deploying-serverless-applications)
-    - [well architected framework](https://aws.amazon.com/architecture/well-architected/)
+    - white papers
+      - [well architected framework](https://aws.amazon.com/architecture/well-architected/)
+      - [CICD on aws](https://docs.aws.amazon.com/whitepapers/latest/practicing-continuous-integration-continuous-delivery/welcome.html)
+      - [microservices on aws](https://docs.aws.amazon.com/pdfs/whitepapers/latest/microservices-on-aws/microservices-on-aws.pdf)
+      - [serverless apps Lens](https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/welcome.html)
+      - [optimizing enterprise economics with serverless architectures](https://docs.aws.amazon.com/pdfs/whitepapers/latest/optimizing-enterprise-economics-with-serverless/optimizing-enterprise-economics-with-serverless.pdf)
+      - [running containerized microservices](https://d1.awsstatic.com/whitepapers/DevOps/running-containerized-microservices-on-aws.pdf)
+      - [overview of deployment options on aws](https://docs.aws.amazon.com/whitepapers/latest/overview-deployment-options/aws-deployment-services.html)
   - merge the 10000s of other aws files into this new format
     - do this after we run through skillbuilder, likely some of our notes are outdated
+  - take the exam
+    - [offical online practice exam](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/14196/aws-certified-developer-associate-official-practice-exam-dva-c02-english)
+    - [schedule the exam](https://aws.amazon.com/certification/certified-developer-associate/)
 
 ## links
 
@@ -27,9 +37,78 @@
 - [official ramp up guide (pdf)](https://d1.awsstatic.com/training-and-certification/ramp-up_guides/Ramp-Up_Guide_Developer.pdf)
 - [worshop labs](https://catalog.us-east-1.prod.workshops.aws/)
 
-### interwebs
+## best practices
 
-- [elasticache for redis vs memorydb for redis](https://cloudwellserved.com/amazon-elasticache-for-redis-vs-amazon-memorydb-for-redis/)
+- make sure you know the focus
+  - developers with experience developing and maintaining AWS based appilcations
+  - validates you can
+    - develop and optimize apps on AWS
+    - package and deploy using CI/CD
+    - secure application code and data
+    - identify and resolve application issues
+- make sure you know the topics covered
+  - domain 1: development with aws: 32%
+    - architectural and fault-tolerent design patterns
+      - stateful vs stateless concepts
+      - tightly coupled vs loosely coupled components
+      - sync vs async patterns
+    - apps hosted on aws
+    - aws lambdas
+      - configuring and intergating lambas fns
+      - handling event lifecycle and errors
+      - writing and running test code
+      - performance
+    - data stores
+      - managing and maintaining data stores
+      - adding persistence with serializing and deserializing data
+      - managing data lifecycles
+      - integrating data caching services
+  - domain 2: security: 26%
+    - implementing authnz
+    - encryption
+      - across account boundaries
+      - enabling and disabling key rotations
+      - generating certificates
+      - environment variables
+      - secret management services
+    - managing sensitive data in application code
+    - understanding and securing applications
+      - bearer tokens
+      - federated access with identity providers
+      - configuring programmatic access
+      - making authn calls and assuming IAM roles
+  - domain 3: deployment: 24%
+    - preparing and deploying application artifacts
+      - code, code repsositories, files and directories
+      - resolving integration dependencies
+    - testing apps in dev environments
+      - mock integrations for APIs
+      - endpoints for testing applications
+      - deploying application stack updates
+    - automating deployment testing
+      - creating application test events
+      - deploying api resources
+      - implementing IaC
+    - deploying using AWS ci/cd services
+      - application updates, version control, commits, rollbacks, release management and runtime configurations
+    - management and optimization of requirements
+  - domain 4: troubleshooting and optimization: 18%
+    - root cause analysis
+      - identifying bugs and codes by interpreting metrics logs and traces
+    - observability
+      - querying logs and implementing custom metrics
+      - implementing logging strategies with notification alerts for specific actions
+      - implementing tracing
+      - adding annotations for tracing services
+    - application optimization using aws services and features
+      - determining the needed memory and compute power
+      - profiling app performance
+      - caching content based on request headers
+      - using subscription filter policies for optimizing messaging
+- know the exam format
+  - 65 questions
+  - 130 minutes (2 minutes per question)
+  - $150
 
 ## basics
 
