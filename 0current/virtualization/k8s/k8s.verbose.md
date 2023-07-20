@@ -16,6 +16,7 @@
 
 - [from k8s](https://kubernetes.io/docs/tasks/tools/)
 - [aws: karpenter](https://karpenter.sh/)
+- [flagger: automated deployments](https://www.weave.works/oss/flagger/)
 
 ### learn
 

@@ -5,6 +5,8 @@
 
 ## my thoughts
 
+- using fargate is by far the most user friendly approach, especially when considering upgrades
+
 ## links
 
 - [landing page](https://aws.amazon.com/eks/?did=ap_card&trk=ap_card)
@@ -14,6 +16,11 @@
 - [autoscaling](https://docs.aws.amazon.com/eks/latest/userguide/autoscaling.html)
 - [storage](https://docs.aws.amazon.com/eks/latest/userguide/storage.html)
 - [control plane logging](https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html)
+- [managed nodes update behavior](https://docs.aws.amazon.com/eks/latest/userguide/managed-node-update-behavior.html)
+- [updating clusters](https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html)
+- [updating managed node groups](https://docs.aws.amazon.com/eks/latest/userguide/update-managed-node-group.html)
+- [managing coredns addons](https://docs.aws.amazon.com/eks/latest/userguide/managing-coredns.html)
+- [eks workshop](https://www.eksworkshop.com/)
 
 ## best practices
 
@@ -33,9 +40,20 @@
 
 ### pricing
 
-- 0.10 per hour for each EKS cluster and any resources used
-  - fargate: pricing based on vCPU and memory resources used rounded up to the nearest second with minimum of 1 minute
 - use the pricing calculator
+- cost structure
+  - compute resources: make up the majority of the cost
+    - depends on
+      - which compute resurces are running in the cluster (EC2 vs fargate)
+        - you should choose the appropriate instance categories:
+          - on-demand
+          - savings plan/reserved instances
+          - spot/fargate spot
+      - rightsizing and reducing the waste of underutilized compute capacity
+  - networking services: requires a variety of networking and CDN services
+  - eks cluster control plane: the smallest portion of the overall EKS cost
+    - 0.10 per hour for each EKS cluster and any resources used
+      - fargate: pricing based on vCPU and memory resources used rounded up to the nearest second with minimum of 1 minute
 
 ## terms
 
@@ -145,6 +163,68 @@
     - validate you're upgrading components in the correct order
   - generally you should test upgraded versions with the cluster version
   - k8s minor releases often make chagnes to built-in APIs, thus any third party addons must be reviewed
+
+#### upgrades
+
+- kew k8s versions can introduce signicant changes, even for minor versions
+- upgrading an EKS cluster is a nontrivial task requiring careful planning
+  - what is the specific benefit to upgrading to from this to that version?
+  - who is responsibile for completing the upgrade?
+  - what downstream components (e.g. nodes, addons) will also need to be upgraded?
+  - in what order will downstream dependences need to be upgraded?
+  - what impact will there be to application SLAs during the upgrade?
+  - impact analysis: do any applications in the ecosystem use k8s apis?
+
+##### upgrade process: control plane
+
+- api server nodes
+  - eks launches new api server nodes with the upgrade k8ds version to replace existing ones
+  - eks peforms standard infrastructure and readiness health c hecks for network traffic on new nodes to verify they are working as expected
+- automatic rollback
+  - if any checks fail, EKS reverts the infrastructure deployment
+  - running applications are not affects and the original cluster is not left in an unrecoverable state
+  - EKS regularly backs up all managed clusters and mechnisms exist to recover clusters if necessary
+- possible service interruptions
+  - EKS requires two to three free IP addrs from teh subnets provided when you created the cluster
+  - the upgrade may fail if
+    - required IPs are not available
+    - subnets/security groups provided during cluster created have been deleted
+
+##### upgrade process: data plane
+
+- upgrade nodes and k8s add-ons
+  - EKS does not modify any running applications, cluster worker nodes, EKS addons or k8s addons when you upgrade the clusters control plan
+  - YOU must complete the necessary tasks to complete the cluster upgrade
+- self managed nodes: upgrade via AWS cloudformation templates, eksctl and kubectl
+  - update strategies
+    - migrate to a new node group: create a new node group and migrate pods to it
+      - the recommended strategy because its more graceful
+      - the migration process drains the old nodes after a new stack is ready to accept the existing pod workload
+        - suspect scheduling on old node groups
+        - start application migration:
+          - using flagger for caanary deployments with a fallback mechanism in place
+          - reduce risk by pushing one app a time to the new nodes and verify
+    - update existing node group: update the cloudformation stack to use the new AMI
+- managed node groups: upgrade via console or eksctl; eks automatically does this for you
+  - eks creates a new EC2 launch template version for the ec2 auto scaling group associated with the node group
+    - the new template uses the target AMI for the upgrade
+  - ec2 auto scaling group
+    - is upgraded to use the latest launch template with the new AMI
+    - max & desired size are incremented to ensure that new ec2 instances are created along with the existing ones
+    - launches a new instance with the new AMI to satisfy the increased size of the node group
+  - EKS checks the nodes in the node group for the `eks.amazonaws.com/nodegroup-image` label
+    - cordons all nodes in the node group that are not labeled with the latest AMI id
+      - this prevents already upgraded nodes from a previous upgrade failure from being cordoned
+  - EKS randomly selects a node in the node group and sends a termination signal to the EC2 auto scaling group
+  - EKS sends a signal to drain the pods from teh node
+    - once drained, the node is terminated
+    - this step is repeated until all nodes are using the new AMI version
+  - EC2 auto scaling group max & desired size are decremented to their pre-upgrade values
+  - update strategies
+    - rolling update: respects the clusters `PodDisruptionBudgets` setting
+      - the update fails if EKS is unable to gracefully drain the pods that use this setting
+    - force update: does not respect the clusters `PodDisruptionBudgets` and forces node restarts
+- fargate: no upgrades are required; the underlying infra is upgraded automatically
 
 ### control plane
 
@@ -315,6 +395,10 @@
   - cicd with opensource: the world is yours
 - monitoring: a combination of cloudwatch + opensource tools
 - add-ons maintainence depends on how they were implemented
+- upgrades
+  - control plane: is managed for you, but careful planning is still required
+  - data plane: depends if you're using self managed or managed worker nodes
+    - still a heavily involved process
 
 ## integrations
 
