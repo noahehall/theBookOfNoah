@@ -1,11 +1,11 @@
 # CloudFormation
 
-- IaaC provisioning tool for specifying every detail of aws resources required to deploy distinct set of services
+- IaaC provisioning tool for modeling aws resources and automating provisioning and upgrades
 - [bookmark](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
 
 ## my thoughts
 
-- use terraform instead, unless you need to pass the aws certs ;)~
+- terraform for AWS, but you need cloudformation to pass the aws certs
 
 ## links
 
@@ -15,12 +15,17 @@
 - [getting started: step by step guides](https://aws.amazon.com/cloudformation/getting-started/)
 - [sample templates for common uses cases](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-sample-templates.html)
 - [user guide](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/index.html)
+- [cloudformation designer](https://console.aws.amazon.com/cloudformation/designer)
 
 ### api
 
 - [AAA: reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/index.html)
+- [template anatomy](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html)
+- [resource & property types](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html)
 
 ## best practices
+
+- cloudformation designer is a killer tool
 
 ### anti patterns
 
@@ -44,10 +49,33 @@
 
 ## terms
 
-- template: the file that contains service stack; single source of truth for deploying identical stacks to any AWS account
-- stack: collection of AWS resources that you can managed as a single unit
-
 ## basics
+
+### templates
+
+- model aws resources using json/yaml/template/txt
+- single source of truth for deploying identical stacks to any AWS account
+
+```yaml
+AWSTemplateFormatVersion: 2010-09-09
+Description: Some Template
+Resources:
+  MyEC2:
+    Type: 'AWS::EC2::Instance' # all service namespaces follow this pattern
+    Properties: # you'll mainly be in here
+      ImageId: ami-abcdefg
+      InstanceType: t2.micro
+      ...
+  MyEIP:
+    Type: 'AWS::EC2::EIP'
+    Properties:
+      InstanceId: !Ref MyEC2 # link resources with Ref
+```
+
+### stacks
+
+- provision aws resources from a template
+- collection of AWS resources that you can managed as a single unit
 
 ## considerations
 
