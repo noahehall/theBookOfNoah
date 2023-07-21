@@ -16,6 +16,11 @@
 - [aws repost: user community forum](https://repost.aws/)
 - [six pillar well architected framework](https://aws.amazon.com/architecture/well-architected/)
 
+### guide
+
+- [service endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html#cfn_region)
+- [service quotas](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html)
+
 ## best practices
 
 - resiliancy & availability
@@ -23,6 +28,8 @@
 - naming/tagging things
   - you generally always want to pre/postfix the resource type to the name of the resource, e.g. ec2-my-silver-server
   - you always want to have a tagging scheme predefined so you can query resources across service boundaries and for billing
+- services and regions
+  - you should specify a regional endpoint if the service supports it to reduce latency
 
 ### anti patterns
 

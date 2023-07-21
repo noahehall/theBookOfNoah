@@ -11,22 +11,27 @@
 
 ## links
 
-- [intro to IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html)
-- [signing aws api requests (sig v4)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html)
-- [root user only tasks](https://docs.aws.amazon.com/accounts/latest/reference/root-user-tasks.html)
+- [security credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/security-creds.html)
+
+### user guide
+
+- [AAA: getting started](https://docs.aws.amazon.com/singlesignon/latest/userguide/getting-started.html)
+- [authnz for resources](https://docs.aws.amazon.com/en_us/IAM/latest/UserGuide/access.html)
+- [ec2: iam roles](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html)
 - [enabling mfa](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html)
 - [identities: users groups and roles](https://docs.aws.amazon.com/en_us/IAM/latest/UserGuide/id.html)
-- [authnz for resources](https://docs.aws.amazon.com/en_us/IAM/latest/UserGuide/access.html)
+- [intro to IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html)
 - [security best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
-
-### integrations
-
-- [ec2: iam roles](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html)
-- [lambda: resource based policies](https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html)
+- [signing aws api requests (sig v4)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html)
 - [apigateway: identity-based policy examples](https://docs.aws.amazon.com/apigateway/latest/developerguide/security_iam_id-based-policy-examples.html)
 - [apigateway: resource policies](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies.html)
 - [apigateway: authnz workflow](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-authorization-flow.html)
 - [dynamodb: intro](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/UsingIAMWithDDB.html)
+
+### API
+
+- [root user only tasks](https://docs.aws.amazon.com/accounts/latest/reference/root-user-tasks.html)
+- [lambda: resource based policies](https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html)
 
 ## best practices
 
@@ -205,6 +210,11 @@
 ## integrations
 
 - basically every other AWS service can use IAM for authN
+
+### cli
+
+- [see markdown](../devtools/cli.md)
+  - everything from named profiles, sso, etc
 
 ### lambda
 
