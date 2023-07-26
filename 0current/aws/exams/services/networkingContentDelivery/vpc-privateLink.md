@@ -7,10 +7,13 @@
 ## links
 
 - [landing page](https://aws.amazon.com/privatelink/)
+- [accessing services through privatelink](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Introduction.html#what-is-privatelink)
+- [cloudformation: setting up vpc endpoints](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-vpce-bucketnames.html)
 
 ## best practices
 
 - cheaper for aws to aws (east west) traffic compared to going over the public internet
+- best practice to always use privatelink when possible for improved VPC security posture
 
 ### anti patterns
 
@@ -28,6 +31,10 @@
 ## considerations
 
 ## integartions
+
+### cloudformation
+
+- configure cloudformatio to use an interface VPC endpoint
 
 ### api gateway
 

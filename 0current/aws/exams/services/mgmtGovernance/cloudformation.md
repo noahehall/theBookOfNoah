@@ -1,7 +1,7 @@
 # CloudFormation
 
 - IaaC provisioning tool for modeling aws resources and automating provisioning and upgrades
-- [bookmark](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)
+- [bookmark](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/GettingStarted.html)
 
 ## my thoughts
 
@@ -16,6 +16,7 @@
 - [docs](https://docs.aws.amazon.com/cloudformation/)
 - [getting started: step by step guides](https://aws.amazon.com/cloudformation/getting-started/)
 - [cloudformation designer](https://console.aws.amazon.com/cloudformation/designer)
+- [available sdks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sdk-general-information-section.html)
 
 ### user guide
 
@@ -129,3 +130,8 @@ Resources:
 ### SAM
 
 - [see markdown](../devtools/cli-sam.md)
+
+### vpc privatelink
+
+- [see markdown](../networkingContentDelivery/vpc-privateLink.md)
+  - creating a VPC endpoint for cloudformation to use
