@@ -12,6 +12,7 @@
 ## links
 
 - [security credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/security-creds.html)
+- [faqs](https://aws.amazon.com/iam/faqs/?da=sec&sec=prep)
 
 ### user guide
 

@@ -9,6 +9,7 @@
 ## links
 
 - [landing page](https://aws.amazon.com/kinesis/data-firehose/)
+- [faqs](https://aws.amazon.com/kinesis/data-streams/faqs/?da=sec&sec=prep)
 
 ## best practices
 

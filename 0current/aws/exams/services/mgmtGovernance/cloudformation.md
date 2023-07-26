@@ -17,6 +17,7 @@
 - [getting started: step by step guides](https://aws.amazon.com/cloudformation/getting-started/)
 - [cloudformation designer](https://console.aws.amazon.com/cloudformation/designer)
 - [available sdks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/sdk-general-information-section.html)
+- [resources](https://aws.amazon.com/cloudformation/resources/)
 
 ### user guide
 

@@ -8,6 +8,7 @@
 
 ## links
 
+- [faqs](https://aws.amazon.com/lambda/faqs/?da=sec&sec=prep)
 - [AAAAA best practices](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)
 - [cloudwatch logs for lambda](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions-logs.html?icmpid=docs_lambda_help)
 - [creating and sharing layers](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html)

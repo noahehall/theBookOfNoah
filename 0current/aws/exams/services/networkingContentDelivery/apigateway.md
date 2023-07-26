@@ -5,6 +5,7 @@
 
 ## links
 
+- [faqs](https://aws.amazon.com/api-gateway/faqs/?da=sec&sec=prep)
 - [api gateway developer guide intro](http://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html)
 - [api gateway stage variables](https://docs.aws.amazon.com/apigateway/latest/developerguide/amazon-api-gateway-using-stage-variables.html)
 - [http vs rest](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html)

@@ -7,6 +7,7 @@
 ## links
 
 - [landing page](https://aws.amazon.com/sqs/?did=ap_card&trk=ap_card)
+- [faqs](https://aws.amazon.com/sqs/faqs/?da=sec&sec=prep)
 
 ## best practices
 

@@ -1,14 +1,15 @@
 # developer associate
 
 - last updated in 2023 for version 1.0 DVA-C02
-- bookmark: Exam Prep (With practice material) > module 4
+- bookmark:
+  - Exam Prep (With practice material) > module 4
+  - designing event driven architectures >
 - todos
   - before the test review these
     - the offical ramp up guide pdf
     - AWS Builders library
     - aws whitepapers
   - additional courses
-    - [designing event driven architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12715/designing-event-driven-architectures)
     - [architecting serverless applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12716/architecting-serverless-applications)
     - [scaling serverless architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12713/scaling-serverless-architectures)
     - [security and obervability for serverless applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12714/security-and-observability-for-serverless-applications)\

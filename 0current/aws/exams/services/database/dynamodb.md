@@ -13,6 +13,7 @@
 
 ## links
 
+- [faqs](https://aws.amazon.com/dynamodb/faqs/?da=sec&sec=prep)
 - [AAA best practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
 - [landing page](https://aws.amazon.com/dynamodb/?did=ap_card&trk=ap_card)
 - [accelerator (DAX)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html)

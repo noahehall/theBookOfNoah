@@ -10,6 +10,7 @@
 
 - [advanced environment and configuration](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/ebextensions.html)
 - [supported platforms](https://docs.aws.amazon.com/elasticbeanstalk/latest/platforms/platforms-supported.html)
+- [faqs](https://aws.amazon.com/elasticbeanstalk/faqs/?da=sec&sec=prep)
 
 ## best practices
 
