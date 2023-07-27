@@ -3,7 +3,7 @@
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
   - Exam Prep (With practice material) > module 4
-  - designing event driven architectures > Serverless Event Submission Patterns
+  - designing event driven architectures > Workflow orchestration with AWS Step Functions
 - todos
   - before the test review these
     - the offical ramp up guide pdf

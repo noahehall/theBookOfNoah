@@ -40,6 +40,7 @@
 - [operator guide](https://docs.aws.amazon.com/lambda/latest/operatorguide/intro.html)
 - [developer guide](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
 - [security overview (PDF)](https://docs.aws.amazon.com/whitepapers/latest/security-overview-aws-lambda/security-overview-aws-lambda.pdf)
+- [sqs: integration](https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html)
 
 ### tools
 
@@ -137,6 +138,10 @@
 
 ### high level
 
+- lambda service: polls event services, grabs events in batches, and invokes lambda functions for each event in the batch
+  - default batch size of 3; events in the batch become hidden for a default visibility timeout of 30 seconds; on successful processing of the batch the service deletes the batched events
+  - if any events in the batch fail, the entire batch becomes visible again; thus a single event could be processed more than once
+    - you need to handle this in your function logic, e.g. deleting successful events at the function level
 - function: lambda runs instances of your function to process events
 - trigger: an event that triggers execution of your function
 - event: JSON document that contains data for a lambda function to process
@@ -363,3 +368,7 @@
 
 - event types
   - all object create events
+
+### SQS
+
+- as an event source
