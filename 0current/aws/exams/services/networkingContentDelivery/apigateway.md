@@ -1,6 +1,6 @@
 # API Gateway
 
-- application frontdoor to your lambda, aws services and backend apis
+- synchronous application frontdoor to your lambda, aws services and backend apis
 - define resources and associated methods (GET, POST, PUT, etc.) in API Gateway as well as the backend target (e.g. lambda fn, another service, 3rd party, etc)
 
 ## links

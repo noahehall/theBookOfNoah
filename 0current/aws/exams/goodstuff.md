@@ -261,8 +261,11 @@
     - root > child x..y > a child can create a child
       - but a child does not have visibility into a cousin, e.g. cousin X cant kill cousin Y
 
-## event-driven architectures
+## event driven architectures
 
+- uses events to communicate between and evoke decoupled services
+  - state and code are decoupled
+  - integration through a messaging layer enabling asynchronous connections
 - events: an observable (change in state) that contains all the information required to take subsequent action
 - event producers: entities that create and publish events, e.g. websites, apps, etc to unknown consumers usually through an event-bus like EventBridge
 - event router: ingests, filters, and pushes events to known consumers through some other mechanism like SNS
