@@ -3,7 +3,7 @@
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
   - Exam Prep (With practice material) > module 4
-  - designing event driven architectures > Patterns for Communicating Status Updates
+  - designing event driven architectures > failure managemnet > Error handling for stream-based events
 - todos
   - before the test review these
     - the offical ramp up guide pdf

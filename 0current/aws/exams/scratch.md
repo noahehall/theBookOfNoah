@@ -69,3 +69,8 @@
 ### ECS + route53
 
 - dns service discovery
+
+### kinesis + dynamodb + lambda
+
+- integrate with dynamodb streams and lambda triggers
+  - when change data occurs, use kinesis firehose + lambda to write the data to s3

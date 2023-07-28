@@ -270,6 +270,17 @@
 - event producers: entities that create and publish events, e.g. websites, apps, etc to unknown consumers usually through an event-bus like EventBridge
 - event router: ingests, filters, and pushes events to known consumers through some other mechanism like SNS
 - event consumers: subscribe to receive specific or monitor all events in a stream and act on those they are interested in
+- messages vs streaming
+  - streaming
+    - core entity is the stream: a collection of messages for a specific period of time
+    - data remains in the stream for a period of time; each consumer must maintain a pointer
+    - messages in streams are reprocessed until success/timeout; you need to build logic into the consumer to skip corrupted messages
+  - messaging
+    - core entity is the message which varies
+    - messages are deleted once consumed
+    - configure retries and dead letter queues
+
+### streaming
 
 ### messaging
 
@@ -306,6 +317,16 @@
 - security & traffic management: authNZ
   - securing comms between services
   - controlling how packets are routed through the nextwork in terms of policies, prioritization and resilience
+
+#### Communication
+
+- client polling: provide a message ID on the initial request, and a status and getResults to check the status/get results of the request
+  - perhaps the most wasteful pattern
+- webhooks: user defined http callbacks; the client is responsibile for providing the endpoint to be notified when work is complete instead of having to poll
+  - trusted: when you own both sides of the integration and can create a secure connection
+  - untrusted: when you only own one side of the integration
+- websockets: create persistent connections between client and server
+  - ideal for streaming/requests that require more than one response
 
 ## devops
 

@@ -133,6 +133,8 @@
 - cold starts: when a new execution env is required and lambda must start the init phase from scratch
 - warm starts: when an existing execution env can be reused
 - Customer Master Key: CMK: aws provides one free of charge, or you can provide one (which is charged at the KMS rate)
+- function errors: lambda invokes your function successfuly, but the function timesout/errors
+- invocation errors: requests to lambda are rejected before your function receives it; e.g. invalid permissions/throttling
 
 ## basics
 
@@ -180,7 +182,8 @@
   - event sources: kinesis, sqs, dynamodb streams
 - invocation model error behavior: how each invocation model handles errors
   - sync: no retries
-  - async: built in retries thrice or twice
+  - async: built in retries configurable 0-2 times
+    - up to 6 hours, configurable by the maximum age of event setting
   - polling: depends on event soruce
 
 #### event source mapping
