@@ -10,6 +10,8 @@
 - [developer guide](https://docs.aws.amazon.com/sns/latest/dg/welcome.html)
 - [fanout pattern](https://aws.amazon.com/blogs/compute/messaging-fanout-pattern-for-serverless-architectures-using-amazon-sns/)
 - [filtering policies](https://docs.aws.amazon.com/sns/latest/dg/sns-subscription-filter-policies.html)
+- [message delivery retry policy](https://docs.aws.amazon.com/sns/latest/dg/sns-message-delivery-retries.html)
+- [dead letter queues](https://docs.aws.amazon.com/sns/latest/dg/sns-dead-letter-queues.html)
 
 ## best practices
 
@@ -46,6 +48,10 @@
 ### publishers
 
 - sends messages to topics
+
+### error handling
+
+- 3 immediate tries, 2 at 1 second apart, 10 backing off from 1 second to 20 seconds, and 100,000 at 20 seconds apart.
 
 ## considerations
 

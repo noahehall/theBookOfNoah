@@ -41,6 +41,8 @@
 - [developer guide](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
 - [security overview (PDF)](https://docs.aws.amazon.com/whitepapers/latest/security-overview-aws-lambda/security-overview-aws-lambda.pdf)
 - [sqs: integration](https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html)
+- [retry on errors](https://docs.aws.amazon.com/lambda/latest/dg/retries-on-errors.html)
+-
 
 ### tools
 
@@ -166,6 +168,13 @@
   - AWS requestId: track specific invocations
   - runtime: time iun MS remaining before the fn timeout
   - logging: which amazon cloudwatch logs stream your log statements will be delivered to
+
+### error handling
+
+- depends on whether the event source is sync (immediate response) or async
+- generally you're either using the:
+  - onFailure destination logic to persist the message for processing
+  - dead letter queue for human intervention
 
 ## considerations
 
@@ -374,4 +383,38 @@
 
 ### SQS
 
-- as an event source
+- error handling (polling a queue as an event source)
+  - timeouts: messages become visible to other consumers after the visibility timeout expires.
+    - Set your visibility timeout to 6 times the timeout you configure for your function.
+  - retries: Use the maxReceiveCount on the queue's policy to limit the number of times Lambda will retry to process a failed execution.
+  - error handling: functions should delete each message as it is successfully processed.
+    - Move failed messages to a dead-letter queue configured on the source SQS queue.
+- Queue batch size must allow all the messages in a batch to process within the Lambda timeout.
+- e.g. 3 minutes processing time per message > means (batch size \* 3 minutes) < 15 minutes max lambda timeout
+
+### apigateway
+
+- error handling
+  - timeouts: 30 seconds
+  - retries: no builtin retries
+  - error handling: Generate the SDK from the API stage, and use the backoff and retry mechanisms it provides.
+
+### SNS
+
+- error handling
+  - timeouts: can be ignored on the SNS side, as async event sources dont wait for responses
+  - retries: lambda will automatically retry on if a function execution fails
+    - max retry attempts: 0-3
+    - maximum event age: up to 6 hours
+
+### kinesis
+
+- error handling (polling a stream as an event source)
+  - timeouts: When the retention period for a record expires, the record is no longer available to any consumer.
+    - 24 hours by default. You can increase the retention period at a cost.
+    - set lambdas Maximum Record Age to skip processing data records
+  - retries: Lambda retries a failing batch until the retention period for a record expires
+    - configure Maximum Retry Attempts to skip retrying a batch of records upon breaching Maximum Retry Attempts (or it has reached the Maximum Record Age
+  - error handling:
+    - use onFailure destination to pass additional metadata (shard id, the stream ARN, etc)
+    - Use BisectBatchOnFunctionError to split a failed batch into two batches.

@@ -15,6 +15,12 @@
 - [logs: intro](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html)
 - [eks: pushing logs to container insights](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-EKS-logs.html)
 - [container insights](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ContainerInsights.html)
+- [metrics: lambda](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions-metrics.html)
+- [metrics: api gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-metrics-and-dimensions.html)
+- [metrics: sns](https://docs.aws.amazon.com/sns/latest/dg/sns-monitoring-using-cloudwatch.html)
+- [metrics: kinesis](https://docs.aws.amazon.com/streams/latest/dev/monitoring-with-cloudwatch.html)
+- [metrics: sqs](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-available-cloudwatch-metrics.html)
+- [metrics: step functions](https://docs.aws.amazon.com/step-functions/latest/dg/procedure-cw-metrics.html)
 
 ### api
 

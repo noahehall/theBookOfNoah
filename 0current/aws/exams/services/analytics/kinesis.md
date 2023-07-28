@@ -13,6 +13,8 @@
 - [data firehose data transformation](https://docs.aws.amazon.com/firehose/latest/dev/data-transformation.html)
 - [data analytics for sql apps](https://docs.aws.amazon.com/kinesisanalytics/latest/dev/what-is.html)
 - [data anlaytics + lambda](https://docs.aws.amazon.com/en_pv/kinesisanalytics/latest/dev/lambda-preprocessing.html)
+- [lambda integration](https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html)
+- [data streams data retention period](https://docs.aws.amazon.com/streams/latest/dev/kinesis-extended-retention.html)
 
 ## best practices
 
@@ -27,6 +29,13 @@
     - failing messages block the shard until success/expires
     - write custom consumers with multiple targets
     - you set the number of shards
+- on failure destination vs dead letter queue
+  - OFD:
+    - provide additional data than just the event object
+    - change/modify the on failure behavior
+  - DLQ:
+    - can only send the event object
+    - is part of a functions version configuration; you need to update the function to change the behavior
 
 ### anti patterns
 
@@ -75,6 +84,16 @@
 - Data Analytics: transform and analyze streaming data in real time using sql/apache flink before persisting it to storage
 - you perform analysis across a sliding window of the data stream
 - optionally you can use lambda to pre-process the stream before it hits the anlaytics stream
+
+### error handling
+
+- can be used in conjuction to create an error workflow: make sure to handle duplicate records being retried that are part of a failed batch in your function logic
+  - bisect batch on funciton error: split a batch in two and retry each batch separately
+  - maximum retry attempts
+  - maximum record age in seconds: the max duration a record can be in a failed state
+  - on failure destination: send failed records to
+    - async event sources: SNS/SQS/EventBridge/Lambda
+    - streaming event sources: SNS/SQS
 
 ## considerations
 

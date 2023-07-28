@@ -9,8 +9,13 @@
 - [landing page](https://aws.amazon.com/sqs/?did=ap_card&trk=ap_card)
 - [faqs](https://aws.amazon.com/sqs/faqs/?da=sec&sec=prep)
 - [deverloper guide](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html)
+- [visibility timeout](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html)
 
 ## best practices
+
+- setup a dead letter queue on the source queue to process failed messages
+  - as opposed to handling it downstream
+- setup performance testing and adjust retries and timeouts that allows consumers to process messages without creating bottlenecks that cascade through the system
 
 ### anti patterns
 
@@ -55,3 +60,10 @@
 ### lambda
 
 - push as much SQS configuration into SQS, lambda should only be responsible for polling and processing messages
+- be sure to validate configuration settings across SQS queues and lambdas
+  - timeouts: queue visibility timeout must have capacity for the lambda function to consume all messages in the batch
+    - but remember a lambda function only has 15 minutes max, including retries and throttling
+  - retry logic
+  - batch size: larger batch sizes require less polling;
+    - but you need to ensure you're consuming all messages are being consumed before the queuue timeout
+    -

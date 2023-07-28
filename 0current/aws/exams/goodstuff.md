@@ -51,6 +51,10 @@
 
 ## APIs
 
+### best practices
+
+- in any API-based application is to capture and retry a call whenever possible and to handle errors gracefully when a call fails
+
 ### REST
 
 - Representational state transfer (REST) refers to architectures that follow six constraints:
