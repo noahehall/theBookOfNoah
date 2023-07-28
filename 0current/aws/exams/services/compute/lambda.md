@@ -19,7 +19,7 @@
 - [function urls](https://docs.aws.amazon.com/lambda/latest/dg/lambda-urls.html?icmpid=docs_lambda_help)
 - [function versions](https://docs.aws.amazon.com/lambda/latest/dg/configuration-versions.html)
 - [integrating with efs](https://docs.aws.amazon.com/lambda/latest/dg/services-efs.html)
-- [invocation: async](https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html)
+- [invocation: async + dead letter queues](https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html)
 - [invocation: event source mapping](https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html)
 - [invocation: sync](https://docs.aws.amazon.com/lambda/latest/dg/invocation-sync.html)
 - [logging](https://docs.aws.amazon.com/lambda/latest/dg/python-logging.html)
