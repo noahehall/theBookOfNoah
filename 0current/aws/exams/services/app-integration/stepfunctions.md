@@ -12,6 +12,8 @@
 - [standard vs express workflows](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-standard-vs-express.html)
 - [dev guide intro](https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html)
 - [integrations](https://docs.aws.amazon.com/step-functions/latest/dg/connect-supported-services.html)
+- [handling error conditions](https://docs.aws.amazon.com/step-functions/latest/dg/tutorial-handling-error-conditions.html)
+- [lambda service exceptions](https://docs.aws.amazon.com/step-functions/latest/dg/bp-lambda-serviceexception.html)
 
 ## best practices
 
@@ -46,6 +48,41 @@
 - activities: your application
 - activity workers: execute application code and report success/failure
 
+### states
+
+- The States Language defines a set of built-in strings that name well-known errors, all beginning with the States. prefix.
+- ALL: catchall state
+- Retry:
+- Catch:
+
+```jsonc
+{
+  "startAt": "thisThing",
+  "States": {
+    "ThisThing": {
+      "Type": "Task",
+      "Resource": "arn:aws:SERVICE:us-east-1-abcd:etc:etc",
+      "End": false,
+      "Catch": [
+        {
+          "ErrorEquals": ["abc", "defg"],
+          "Next": "SomeState"
+        }
+      ],
+      "Retry": [
+        {
+          "ErrorEquals": ["This", "or", "that"],
+          "IntervalSeconds": 1,
+          "MaxAttempts": 2,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Fallback": {...}
+    }
+  }
+}
+```
+
 ### integration patterns
 
 - sequential: Iterates through each state in your state machine in sequential order
@@ -53,6 +90,19 @@
 - conditional: Adds branching logic to your state machine
 - loops: retry logic; Iterates on your state machine task a specific number of times
 - try catch finally: for un/known errors; Deals with errors and exceptions automatically based on your defined business logic
+- sagas: manage failures where each step in a distributed workflow includes compensating transactions that undo changes made by its predessor
+  - its all about faking ACID across datastores: e.g. in a purchase workflow, if any step fails, there needs to be logic to rollback changes made by previous steps
+
+### failure management
+
+- its often preferred to
+  - handle retry and backoff logic via step functions (looping) vs in application logic
+  - use try/catch/finally for unknown errors
+  - ensure you're handling AWS resource, service invocation and SDK errors at a minimum
+    - depending on the downstream service (e.g. lambda) will determine the type of errors you need to handle
+- tasks and parallel states can use fields name Catch and Retry for handling
+  - when a step reports an error, it will look through the catchers for a matching error and transitions to the state named in Next field
+  - each catcher can specify multiple errors to handle
 
 ## considerations
 
@@ -69,3 +119,5 @@
 ### batch
 
 - for batch jobs
+
+### dynamodb

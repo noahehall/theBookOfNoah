@@ -1,7 +1,7 @@
 # cloudwatch
 
 - centralized solution to monitor resources and applications on AWS, on premise and other clouds with dataviz, alarms and automation actions
-- CloudWatch Metrics: monitoring & billing, aws resource (not application) observability
+- CloudWatch Metrics: monitoring & billing, observability
 - CloudWatch Logs: aggregator
 
 ## links
@@ -87,6 +87,16 @@
     - define an alarm
     - define an action
 
+### architecture
+
+#### failure management
+
+- its all about monitoring and alarms
+- ensure your services are persisting logs to cloudwatch logs
+  - managed services: stdout is automatically posted to cloudwatch
+- exponential backoff and retry logic needs to be included in your application logic
+  - utilize the aws sdk for defaults
+
 ### metrics
 
 - custom metrics enable you to post application-level metrics to cloudwatch
@@ -149,6 +159,7 @@
 
 ### actions
 
+- abcd
 - getMetricData: retrieve cloudwatch metric values
 
 ## considerations

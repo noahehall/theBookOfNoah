@@ -418,3 +418,8 @@
   - error handling:
     - use onFailure destination to pass additional metadata (shard id, the stream ARN, etc)
     - Use BisectBatchOnFunctionError to split a failed batch into two batches.
+
+### step functions
+
+- error handling
+  - use step functions to handle retry and backoff logic
