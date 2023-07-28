@@ -7,8 +7,12 @@
 
 ## links
 
-- [x-ray features](https://aws.amazon.com/xray/features/)
-- [x-ray intro](https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html)
+- [landing page](https://aws.amazon.com/xray/features/)
+- [dev guide intro](https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html)
+- [lambda + xray](https://docs.aws.amazon.com/lambda/latest/dg/using-x-ray.html)
+- [using xray in the console](https://docs.aws.amazon.com/xray/latest/devguide/xray-console.html)
+- [deep dive into xray use cases](https://aws.amazon.com/blogs/developer/deep-dive-into-aws-x-ray-groups-and-use-cases/)
+- [analyze and debug apps using xray](https://aws.amazon.com/blogs/developer/new-analyze-and-debug-distributed-applications-interactively-using-aws-x-ray-analytics/)
 
 ## best practices
 
@@ -55,7 +59,7 @@
 - key value pairs with string/number/bool values that are automatically indexed by xray for fast searches within traces
 - enables you to group traces across application operations and compare performance
 
-### service map
+### service map/graph
 
 - visualize integration points across services and provides details about success, errors, faults and throttles
 - view/filter details about each integration point on the map

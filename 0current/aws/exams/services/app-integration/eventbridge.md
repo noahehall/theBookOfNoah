@@ -7,6 +7,7 @@
 - [landing page](https://aws.amazon.com/eventbridge/?did=ap_card&trk=ap_card)
 - [user guide](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html)
 - [content filtering with event patterns](https://docs.aws.amazon.com/eventbridge/latest/userguide/content-filtering-with-event-patterns.html)
+- [architectural patterns with eventbridge pipes](https://aws.amazon.com/blogs/compute/implementing-architectural-patterns-with-amazon-eventbridge-pipes/)
 
 ## best practices
 

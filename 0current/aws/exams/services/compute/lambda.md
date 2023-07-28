@@ -172,6 +172,7 @@
 ### error handling
 
 - depends on whether the event source is sync (immediate response) or async
+  - synchronous event sources that invoke functions, have no built-in retries for a failed or throttled request.
 - generally you're either using the:
   - onFailure destination logic to persist the message for processing
   - dead letter queue for human intervention
@@ -187,10 +188,8 @@
 #### dead-letter queues
 
 - queues for failed events that require human intervention
-
   - turn on and create dedicated dead-letter queue resources using SNS/SQS for individual Lambda functions that are invoked by asynchronous event sources.
   - create them separately then reference in the function configuration
-
 - use cases
   - analyze failures for follow-up or code corrections
   - available for async and non-stream polling events
@@ -403,6 +402,11 @@
     - ensure the queue is created on the source queue and not the lambda function
 - Queue batch size must allow all the messages in a batch to process within the Lambda timeout.
 - e.g. 3 minutes processing time per message > means (batch size \* 3 minutes) < 15 minutes max lambda timeout
+- Lambda has a default of five parallel processes to get things off of a queue.
+- If the visibility timeout expires before the Lambda function processes the messages, messages will be deleted by the queue.
+- If a Lambda function returns errors when processing messages, Lambda decreases the number of processes polling the queue
+- If the Lambda service detects an increase in queue size, it will automatically increase how many batches it gets from the queue, each time
+  - it will increase the number of concurrent Lambda functions it invokes
 
 ### apigateway
 

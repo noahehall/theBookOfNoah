@@ -56,3 +56,7 @@
 ## considerations
 
 ## integrations
+
+### sqs
+
+- use a fan-out pattern and a FIFO SQS queue to ensure you can perform actions simultaneously and offload events to a queue until lambdas can process them
