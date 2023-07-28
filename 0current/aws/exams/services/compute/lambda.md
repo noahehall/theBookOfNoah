@@ -175,6 +175,26 @@
 - generally you're either using the:
   - onFailure destination logic to persist the message for processing
   - dead letter queue for human intervention
+- function DLQ vs event source DLQ
+  - both
+    - require logic to redrive messages back to the source for processing
+  - function
+    - is part of the function and messages that error out after the max retries are moved to the DLQ
+  - source:
+    - is part of the source policy and specifies the max retries before moving to the DLQ
+    - provides insight in the message regardless of the target
+
+#### dead-letter queues
+
+- queues for failed events that require human intervention
+
+  - turn on and create dedicated dead-letter queue resources using SNS/SQS for individual Lambda functions that are invoked by asynchronous event sources.
+  - create them separately then reference in the function configuration
+
+- use cases
+  - analyze failures for follow-up or code corrections
+  - available for async and non-stream polling events
+  - integrate with SNS topic or SQS queue
 
 ## considerations
 
@@ -313,16 +333,6 @@
     - see [the markdown file](../mgmtGovernance/cloudtrail.md)
   - codeguru profiles
 
-#### dead-letter queues
-
-- configured in the lambda console
-- you move important events that throw errors into the dead letter queue
-- you manually have to fix these, e.g. ensuring all shopping cart events are processed
-- use cases
-  - analyze failures for follow-up or code corrections
-  - available for async and non-stream polling events
-  - integrate with SNS topic or SQS queue
-
 ### managing the execution environment
 
 - execution environment: a secure and isolated environment that
@@ -389,6 +399,8 @@
   - retries: Use the maxReceiveCount on the queue's policy to limit the number of times Lambda will retry to process a failed execution.
   - error handling: functions should delete each message as it is successfully processed.
     - Move failed messages to a dead-letter queue configured on the source SQS queue.
+  - dead letter queues
+    - ensure the queue is created on the source queue and not the lambda function
 - Queue batch size must allow all the messages in a batch to process within the Lambda timeout.
 - e.g. 3 minutes processing time per message > means (batch size \* 3 minutes) < 15 minutes max lambda timeout
 
@@ -406,6 +418,7 @@
   - retries: lambda will automatically retry on if a function execution fails
     - max retry attempts: 0-3
     - maximum event age: up to 6 hours
+  - dead letter queues
 
 ### kinesis
 

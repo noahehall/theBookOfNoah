@@ -17,6 +17,7 @@
 - [policy templates](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html)
 - [github with policy templates and other stuff](https://github.com/aws/serverless-application-model/tree/develop)
 - [template anatomy](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy.html)
+- [SAM application repository](https://serverlessrepo.aws.amazon.com/applications)
 
 ### sam CLI
 
@@ -43,6 +44,10 @@
 - SAM CLI: cli tool for testing, debugging and deploying serverless applications
 
 ## basics
+
+### application repository
+
+- prebuilt applications you can fork for common use cases
 
 ## considerations
 
