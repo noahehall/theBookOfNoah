@@ -132,7 +132,7 @@
 ### core stack
 
 - APIs: API Gateway, appsync
-- compute: lambda, ecs, ecs, eks
+- compute: lambda, ecs, eks
 - dbs: dynamodb, neptune, timestream, qldb
 - messaging: sns, sqs, kinesis, eventbridge
 - analytics: cloudwatch, cloudtrail, xray
@@ -186,3 +186,20 @@
 ### ci/cd
 
 - tools: cloudformation, sam, codecommit, codebuild, codedeploy, codepipeline
+
+### compute
+
+- a combination of lambda, ECS/fargate, with step functions for orchestration
+
+### data
+
+- match the data store to the business need and the type of transactions it needs to support
+- refrain from having a single, shared general purpose db
+- model your data stores into transactional vs query needs using concepts from CQRS to design for the type of work the db needs to do
+- using multiple dbs requires
+  - managing distributed transactions/partial execution failures with business logic/step functinos
+  - source of truth is scatterred across data stores and must be shared with other domains
+  - embrace eventual consistency
+  - choose the right ETL pattern
+    - real time analysis: kinesis data streams/dynamodb streams
+    - historical trends: batch, AWS glue + s3 > athena/redshift spectrum

@@ -1,12 +1,15 @@
 # Elastic Container Service (ECS)
 
-- highly scalable container orchestration service; run docker containers on a cluster of ec2 instances
-- a shared state, optimistic concurrency system providing flexible scheduling for tasks and containers
+- highly scalable container orchestration service; shared state, optimistic concurrency system providing flexible scheduling for tasks and containers
 - its a cluster management platform for long running stateless services and applications
+- use cases
+  - lift and shift with minimal work
+  - longer running processes/larger deployment packages/memory requirements
+  - applications with non http/s listeners
+  - run side cars with your service
+  - predictable/consistent workloads
 
 ## my thoughts
-
-- [prefer nomad unless someones paying you to use ecs](https://developer.hashicorp.com/nomad/intro/vs/ecs)
 
 ## links
 

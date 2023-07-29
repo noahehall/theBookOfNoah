@@ -3,7 +3,7 @@
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
   - Exam Prep (With practice material) > module 4
-  - designing event driven architectures > architecting serverless applications > Choosing Compute Services and Data Stores
+  - designing event driven architectures > architecting serverless applications > Application Architecture Patterns
 - todos
   - before the test review these
     - the offical ramp up guide pdf
@@ -22,6 +22,7 @@
       - [running containerized microservices](https://d1.awsstatic.com/whitepapers/DevOps/running-containerized-microservices-on-aws.pdf)
       - [blue/green dpeloyments on aws](https://d1.awsstatic.com/whitepapers/AWS_Blue_Green_Deployments.pdf)
       - [overview of deployment options on aws](https://docs.aws.amazon.com/whitepapers/latest/overview-deployment-options/aws-deployment-services.html)
+      - [youtube: databases on aws](https://www.youtube.com/watch?v=WE8N5BU5MeI&t=9s)
   - merge the 10000s of other aws files into this new format
     - do this after we run through skillbuilder, likely some of our notes are outdated
   - take the exam

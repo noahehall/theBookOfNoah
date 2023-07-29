@@ -2,6 +2,10 @@
 
 - Visual workflows for distributed applications
 
+## my thoughts
+
+- the serverless workload worhorse
+
 ## links
 
 - [landing page](https://aws.amazon.com/step-functions/?did=ap_card&trk=ap_card)

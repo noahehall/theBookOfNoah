@@ -1,7 +1,6 @@
 # redshift
 
 - fully managed data warehouse
-- designed for OLAP with known query patterns
 
 ## links
 
@@ -14,5 +13,7 @@
 ## terms
 
 ## basics
+
+### spectrum
 
 ## considerations

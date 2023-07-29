@@ -1,7 +1,8 @@
 # RDS
 
 - relational database supporting 7 different RDBMDS's like postgres, mysql, oracle, mariadb and sql server
-  - see the aurora file for aurora with postgres/mysql
+- use cases
+  - pg/mysql with less administration
 
 ## my thoughts
 

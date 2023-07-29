@@ -1,15 +1,18 @@
 # dynamodb
 
 - fully managed nosql db providing durability high availability and autoscaling
-- designed for OLTP with known query patterns
+- use cases
+  - super scalable key/value/document store
+  - ms response time for transactional data
+  -
 
 ## my thoughts
 
-- getting dynamodb right is all about the designing the data model to lower costs
+- getting dynamodb right is all about the designing the data model
   - you'll end up with more tables than you would prefer, smaller items than you prefer, and longer partition keys than you prefer
   - colocate hot data to a table thats equally distributed across partitions
     - cold data should be deleted via TTL or moved to s3
-  - read the best practices articles, it takes considerable effort to beat the AWS cost structure
+  - read the best practices articles, then read it again
 
 ## links
 
@@ -96,8 +99,7 @@
   - its all about choosing the correct partition key, which controls how data is distributed across partitions
   - the total throughput provisioned for a table is dividied equally across partitions
     - thus if your only R/W to a single partition, the throughput allocated to remaining partitions are unused
-    - to accomodate the weird constraints applied to your data model by dynamodb
-      - add a random number / calculated value to each partition key when writing data
+    - can add a random number / calculated value to each partition key when writing data
   - hot and cold data
 
 ### anti patterns
@@ -113,6 +115,7 @@
 - global tables for fully managed multi-region & multi-master deployments
 - auto scaling based on target read/write utilization
 - DAX: the dynamodb accelerator: integrated cache with dynamodb compatible api
+- capture changes with dynamodb streams and index to other data stores
 
 ### pricing
 

@@ -1,7 +1,9 @@
-# service name
+# ElastiCache for Redis/Memcached
 
 - fully managed in memory data cache for redis/memcached
 - designed for in-memory data store and cache with known query patterns
+- use cases
+  - sub ms/microsecond response times for realtime leaderboards
 
 ## my thoughts
 

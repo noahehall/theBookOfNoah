@@ -1,7 +1,9 @@
 # Quantum Ledger Database (QLDB)
 
 - immutable, cryptographically verifiable log of data changes
-- ledger
+- use cases
+  - Model state changes in a cryptographically provable manner
+  - distributed ledger
 
 ## my thoughts
 

@@ -1,10 +1,14 @@
 # Lambda
 
 - AWS Lambda is an event-driven, serverless (& stateless) compute service that lets you run code in response to events without provisioning or managing servers
+- use cases
+  - tasks that run < 15 minutes
+  - spike/unpredictable worklods
+  - real-time data processing
 
 ## my thoughts
 
-- think short quick i/o; else prefer fargate or straight up ecs/ec2
+- think short quick i/o; else prefer ecs or straight up ec2
 
 ## links
 

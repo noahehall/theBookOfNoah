@@ -1,6 +1,9 @@
 # Aurora
 
 - cloudnative managed mysql/postgresql special built by AWS to take advantage of aws cloud scalability and durability
+- use cases
+  - high volume & throughput, highly parallized transactional data
+  - variable/seasonal workloads with aurora serverless
 
 ## my thoughts
 
@@ -19,6 +22,7 @@
 ## features
 
 - high perf and multi-az availability
+- msql/pg compatible relational db built for faster perf at lower cost
 - distributed storage for durability, perfromance and fast recovery
 - flexible and auto scaling compute: up to 128 tbibytes (TiB) per instance
 - low latency, cross region replication
@@ -36,6 +40,10 @@
   - data is stored in cluster volumes: single, virtual volumes that use SSDs
     - data is replicated across 3 availability zones in a single region
   - for non persistent, temporary files local storage is used instead
+
+### serverless
+
+- aurora serverless automatically starts up, scales, and shuts down based on traffic
 
 ## considerations
 
