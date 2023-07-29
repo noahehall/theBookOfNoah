@@ -37,6 +37,8 @@
 
 ### pricing
 
+- charged by the hour based on load balancer capacity units
+
 ## terms
 
 ## basics

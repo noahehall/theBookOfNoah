@@ -111,27 +111,67 @@
 ## Serverless
 
 - abstracting away the compute infrastructure to the point you have no responsibilties for servers on which your code runs
-  - represents a specific set of AWS services that are tightly integrated
+- serverless architecture: thinking in terms of patterns and applications, rather than in terms of individual functions or resources
+  - migration strategies
+  - types of compute and data stores you can select
+  - application architecture patterns you can use
+- application design: choose services and patterns that suit your workloads based on characteristics such as
+  - expected throughput
+  - service limits
+  - cost
+  - SLO, SLAs
+- cost comparisons with other architecture models
+  - infrastructure cost to run workloads: e.g. server provisioning vs invocation costs
+  - upfront development cost: dev effort to plan, architect and provision resources
+  - maintainence cost:
+- value comparisons with other architecture models
+  - increased speed and agility: of course this comes after the initial learning curve
+  - cost allocation: much easier to allocate costs to customers and events vs to servers
+    - i.e. the costs occur when events occur
 
 ### core stack
 
-- APIs: API Gateway
+- APIs: API Gateway, appsync
 - compute: lambda, ecs, ecs, eks
-- dbs: dynamodb, neptune, timestream
-- messaging: sns, sqs, kinesis
+- dbs: dynamodb, neptune, timestream, qldb
+- messaging: sns, sqs, kinesis, eventbridge
 - analytics: cloudwatch, cloudtrail, xray
-- networking: cloudfront, rout53
+- networking: cloudfront, route53
 - dev tools: SAM cli,
 - storage: s3
-- orchetration: step functions
-
-#### other services
-
-- appsync
+- orchestration: step functions
 - athena: analytics
-- step functions: orchestration/workflow management
-- eventbridge: event bus
-- qldb: ledger
+
+### migration strategies
+
+- two broad domains: how do you
+  - implement compute infrastructure:
+    - capacity processes and cost models: reflects the three general ways of operating infrastructure
+      - server based
+      - containerized
+      - APIs and microservices
+  - approach application dev and deployment: operational processes and development models
+    - simple move to the cloud: but lacks flexible build and deploy processes
+    - api driven microservice-based applications with the most flexibility but requires the most rewrite of legacy tech stac
+- migration patterns
+  - leap frog: from legacy on-premise monoliths straight to serverless cloud architecture
+  - organic: migration with a lift-and-shift approach
+    - e.g. servers to EC2s, perhaps some ECS/lambdas thrown in, but limited rewrites
+    - the goal is to get things into the cloud, and experiment with serverless & microservices
+  - strangler: incrementally and systematically decomposes monolithic applications by creating APIs and building event-driven components that gradually replace components of the legacy application.
+    - Distinct API endpoints point to old and to new components and safe deployment options (such as canary deployments) let you point back to the legacy version with very little risk.
+- considerations: its all about documentatoin, planning and strategy
+  - what does each application do and how are the components organized
+  - how can you break up data based on CQRS? you have to strangle the database along with the microservices
+    - what belongs to the control plane?
+    - what belongs to the data plane?
+    - once the data is distributed, which set of db engines match the throughput, consistency, access patterns, etc reqirements
+  - how does the application scale, and which components drive the capacity you need?
+    - should you migrate leaf components first? or those with the most demanding capacity requirements
+  - do you have scheduled based tasks?
+  - do you have workers listening to a queue?
+  - where can you refactor/enhance functionality without impacting the current implementing
+    - perfect for load balancers and API gateway
 
 ### testing
 
@@ -145,16 +185,4 @@
 
 ### ci/cd
 
-- tools
-  - cloudformation
-  - sam
-  - codecommit
-  - codebuild
-  - codedeploy
-  - codepipeline
-- general process
-  - build the code
-  - package and deploy to s3
-  - iam execution roles and resource policies
-  - creating lambda functions and integrating with backend resources
-  - update lambda functions and backend integrations
+- tools: cloudformation, sam, codecommit, codebuild, codedeploy, codepipeline

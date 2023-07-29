@@ -13,6 +13,8 @@
 - [state of devops 2021 (PDF)](https://services.google.com/fh/files/misc/state-of-devops-2021.pdf)
 - [networking: intro](https://web.stanford.edu/class/cs101/network-1-introduction.html)
 - [networking: ip address & cidr range visualizer](https://cidr.xyz/)
+- [learning domain driven design](https://dddcommunity.org/learning-ddd/)
+- [TCO: serverless vs traditional clouds](https://pages.awscloud.com/NAMER-field-GC-Deloitte-TCO-whitepaper-2019-learn.html)
 
 ### ISO standards
 

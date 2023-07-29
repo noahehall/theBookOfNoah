@@ -66,6 +66,7 @@
 
 ### pricing
 
+- charged based on requests served
 - rest apis
   - flat charge: flat rate per million requests
   - data transfer out
