@@ -18,6 +18,8 @@
 - [SAM application repository](https://serverlessrepo.aws.amazon.com/applications)
 - [serverless patterns collection](https://serverlessland.com/patterns)
 - [serverless repo](https://aws.amazon.com/serverless/serverlessrepo/)
+- [rate limiting for serverless applications](https://aws.amazon.com/blogs/architecture/rate-limiting-strategies-for-serverless-applications/)
+-
 
 ### sam CLI
 

@@ -73,7 +73,9 @@
     - limit re-initialized of varibles
     - add code to check for and reuse existing connections
     - use tmp space as transient cache
-    - check that bg processes have completed
+    - check that bg processes/callbacks have completed before the code exits
+      - else they resume on the next invocation if its a warm start
+    - basically everything you want to reuse should be outside the fn handler
 - fn design
   - separate core business logic from the handler event
     - you should be able to run unit tests WITHOUT knowing how the fn is configured
@@ -203,7 +205,9 @@
 ### concurrency
 
 - number of lambda fns that can be executing at the same time before throttling
-  - account & service limits
+  - account, service and function limits
+    - you may need to implement a multi-account strategy to get around account/service limits
+    - function limits pertain to reserved concurrency
   - invocation model
 - affects fn performance and ability to scale on demand
   - the number of inflight invocations a fn can run at any given momemt
@@ -243,6 +247,9 @@
 - reserve concurrency: set a reservation for a fn to achieve:
   - control performance during peak loads
   - address invocation errors during bursts
+- burst concurrency: how your app responds to a suddent burst of requests
+  - even if you havent hit concurrency capacity, it still takes a bit for lambda to scale drastically to a sudden burst
+  - immediate concurrency increase: limited by region, then adds 500 requests per minute until it reaches the account limit
 
 #### invocation models
 
@@ -263,11 +270,17 @@
     - up to 6 hours, configurable by the maximum age of event setting
   - polling: depends on event soruce
 
-#### event source mapping
+### event source mapping
 
 - event sources invoke a lambda fn using one of the above invocation models
 - event source mapping: the configuration of services as event triggers that are given IAM permissions to access and trigger lambda fns
   - event sources: dynamodb; kinesis; mq; apache kafka MSK; self maanged apache kafka; sqs
+
+### power tuning tool
+
+- optimize on cost, performance or a balance of the two
+- it invokes your function with different memory settings, from 128mb to 3gb
+  - captures duration + cost
 
 ## considerations
 
@@ -294,7 +307,9 @@
 ### configuring lambda functions
 
 - most important: build and test these main configuration settings in real world scenarios and against peak volumes
-  - memory: 128mb - 10 gb
+  - memory: 128mb - 10 gb; this is the primary way to configure function performance
+    - both CPU and I/O scale linearly with the memory settings
+      - you reduce fn duration by increasing memory config (because that will also increase CPU and I/O)
     - lambda allocations CPU and other resources lineraly in proprtion to the amoutn of memory configured
     - any modification of memory triggers and equivalent modification in CPU resources
   - timeout: up to 900 seconds (15 minutes)

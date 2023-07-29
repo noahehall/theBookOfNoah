@@ -5,5 +5,6 @@ code_shortcuts() {
   # window === split current tab
   cat <<-'KEEP_FORGETTING'
 		open tab search: ctrl k > ctrl p
+    recent tab search: ctrl p
 	KEEP_FORGETTING
 }
