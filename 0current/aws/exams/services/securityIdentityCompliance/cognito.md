@@ -2,6 +2,8 @@
 
 - identity platform for web/mobile apps
 - a user directory, authnz server and service for oauth2 access tokens and aws credentials
+- use cases
+  - sign up/in + federated identities
 
 ## my thoughts
 

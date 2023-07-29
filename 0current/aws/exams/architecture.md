@@ -135,6 +135,7 @@
 - compute: lambda, ecs, eks
 - dbs: dynamodb, neptune, timestream, qldb
 - messaging: sns, sqs, kinesis, eventbridge
+- events: cloudwatch
 - analytics: cloudwatch, cloudtrail, xray
 - networking: cloudfront, route53
 - dev tools: SAM cli,
@@ -172,6 +173,15 @@
   - do you have workers listening to a queue?
   - where can you refactor/enhance functionality without impacting the current implementing
     - perfect for load balancers and API gateway
+
+### application architecture patterns
+
+- think through how to observe and react to events in your distributed services
+- become familiar with
+  - the multitude of cloudwatch events
+  - optimizing lambda and integration with SNS, SQS and eventbridge
+  - consuming streams (kinesis/dynamodb) effectively
+  - orchestration (happy path + rollbacks) with step functions
 
 ### testing
 

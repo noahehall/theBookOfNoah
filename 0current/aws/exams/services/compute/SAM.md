@@ -7,8 +7,6 @@
 
 - if you're using AWS, its worth the investment in learning
 - if you know terraform, alot of best practices will transfer over
-  - the thing is, if you're good at terraform , why use SAM?
-    - maybe because of SAM local, but if you're also good at localstack...
 
 ## links
 
@@ -18,6 +16,8 @@
 - [github with policy templates and other stuff](https://github.com/aws/serverless-application-model/tree/develop)
 - [template anatomy](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy.html)
 - [SAM application repository](https://serverlessrepo.aws.amazon.com/applications)
+- [serverless patterns collection](https://serverlessland.com/patterns)
+- [serverless repo](https://aws.amazon.com/serverless/serverlessrepo/)
 
 ### sam CLI
 

@@ -3,14 +3,13 @@
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
   - Exam Prep (With practice material) > module 4
-  - designing event driven architectures > architecting serverless applications > Application Architecture Patterns
+  - scaling serverless architectures
 - todos
   - before the test review these
     - the offical ramp up guide pdf
     - AWS Builders library
     - aws whitepapers
   - additional courses
-    - [scaling serverless architectures](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12713/scaling-serverless-architectures)
     - [security and obervability for serverless applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12714/security-and-observability-for-serverless-applications)\
     - [deploying serverlesss applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12836/deploying-serverless-applications)
     - white papers
