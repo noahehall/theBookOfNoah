@@ -3,7 +3,7 @@
 - AWS Lambda is an event-driven, serverless (& stateless) compute service that lets you run code in response to events without provisioning or managing servers
 - use cases
   - tasks that run < 15 minutes
-  - spike/unpredictable worklods
+  - spike/unpredictable workloads
   - real-time data processing
 
 ## my thoughts
@@ -46,7 +46,8 @@
 - [security overview (PDF)](https://docs.aws.amazon.com/whitepapers/latest/security-overview-aws-lambda/security-overview-aws-lambda.pdf)
 - [sqs: integration](https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html)
 - [retry on errors](https://docs.aws.amazon.com/lambda/latest/dg/retries-on-errors.html)
--
+- [managing lambda reserved concurrency](https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html)
+- [scaling kinesis & dynamodb streams](https://aws.amazon.com/blogs/compute/new-aws-lambda-scaling-controls-for-kinesis-and-dynamodb-event-sources/)
 
 ### tools
 
@@ -135,7 +136,6 @@
 - blueprint: a base lambda fn used to build out new lambda fns; provided for standard lambda triggers
 - event source: a service/endpoint whose change of state creates an event that triggers lambda executions
 - initialization code: the code outside of the lambda fn handler
-- provisioned concurrency: prepares concurrent execution environments before invocations are required
 - cold starts: when a new execution env is required and lambda must start the init phase from scratch
 - warm starts: when an existing execution env can be reused
 - Customer Master Key: CMK: aws provides one free of charge, or you can provide one (which is charged at the KMS rate)
@@ -199,20 +199,64 @@
   - available for async and non-stream polling events
   - integrate with SNS topic or SQS queue
 
-## considerations
+### concurrency
 
-### invocation models
+- number of lambda fns that can be executing at the same time before throttling
+  - account & service limits
+  - invocation model
+- affects fn performance and ability to scale on demand
+  - the number of inflight invocations a fn can run at any given momemt
+  - concurrency limit: the max concurrent requests
+  - reservation: total reserved instances available top run a fn on demand
+- calculation: based on the event source that triggered the lambda
+  - a/sync concurrency: request rate X average function duration
+    - e.g. 25 reqs/sec X 10s/fn = 250 concurrent invocations
+    - sync: no retries
+    - async: defualt 2 retries
+  - streaming concurrency: limit of 1 lambda invocation per shard/parallized to support more than 1
+    - lambda will continue to retry until success/retention period for the record expires
+      - carfeful! if one record in a batch fails, the whole batch and therefore the shard fails/held up
+        - you need to factor this into your fn design to handle partial failures & poison message scenarios
+  - polling event sources: adjust concurrency dependent ont he depth of messages in the queue up to the account/service limit
+
+#### cuncurrency types
+
+- unreserved concurrency: total instances not allocated to a specific set of fns
+  - at least 100
+  - can request an increase
+- reserved concurrency: guarantees a set of instances for a specific fn
+  - not charged, subtracts from the unreserved total
+- provisioned concurrency: initializes a specific set of runtime instances for a fn that can respond immediately to requests:
+  - costs! subtracts from the unreserved total
+- burst concurrency: quote is not per function, but is applied to all fns in a region
+  - 3000: us west (oregon), us east (virginia), euroope (ireland)
+  - 1000: asia pacific (tokyo), europe (frankfurt), us east (ohio)
+  - 500: all other regions
+
+#### concurrency strategies
+
+- limit concurrency: limit a fns concurrency to achieve:
+  - controlling costs
+  - regulate how long it takes to process a batch of events
+  - match it with a downstream resource that cannot scale as quickly as lambda
+- reserve concurrency: set a reservation for a fn to achieve:
+  - control performance during peak loads
+  - address invocation errors during bursts
+
+#### invocation models
 
 - synchronous invocation: lambda runs the fn and waits for and returns an immediate response
   - event sources: api gateway; cognito; cloudformation; alexa; lex; cloudfront
+  - no builtin retry logic
 - asynchronous invocation: events are queued and the requestor doesnt wait for a response which is instead sent to some destination
+  - 2 default retries
   - event sources: sns, s3, eventbridge
   - destinations: can be based on success/failure/alias/fn version/etc
   - lambda will try up to 3 times to invocation the fn before throwing an error
 - polling invocation: designed for streaming/queing based services with no code/server management
   - lambda polls (watches) sources for specific events, then executes the associated fn
   - event sources: kinesis, sqs, dynamodb streams
-- invocation model error behavior: how each invocation model handles errors
+- error behavior: how each invocation model handles errors
   - sync: no retries
   - async: built in retries configurable 0-2 times
     - up to 6 hours, configurable by the maximum age of event setting
@@ -223,6 +267,8 @@
 - event sources invoke a lambda fn using one of the above invocation models
 - event source mapping: the configuration of services as event triggers that are given IAM permissions to access and trigger lambda fns
   - event sources: dynamodb; kinesis; mq; apache kafka MSK; self maanged apache kafka; sqs
+
+## considerations
 
 ### creating lambda functions
 
@@ -254,30 +300,7 @@
     - how long a fn can run before lambda terminates it
     - load test your fn to determine the max/optimum timeout value
     - always fail fast and never wait for the full timeout value
-  - concurrency: affects fn performance and ability to scale on demand
-    - the number of inflight invocations a fn can run at any given momemt
-    - concurrency limit: the max concurrent requests
-    - reservation: total reserved instances available top run a fn on demand
-    - cuncurrency types
-      - unreserved: total instances not allocated to a specific set of fns
-        - at least 100
-        - can request an increase
-      - reserved: guarantees a set of instances for a specific fn
-        - not charged, subtracts from the unreserved total
-      - provisioned: initializes a specific set of runtime instances for a fn that can respond immediately to requests:
-        - costs! subtracts from the unreserved total
-      - burst concurrency: quote is not per function, but is applied to all fns in a region
-        - 3000: us west (oregon), us east (virginia), euroope (ireland)
-        - 1000: asia pacific (tokyo), europe (frankfurt), us east (ohio)
-        - 500: all other regions
-    - concurrency strategies
-      - limit concurrency: limit a fns concurrency to achieve:
-        - controlling costs
-        - regulate how long it takes to process a batch of events
-        - match it with a downstream resource that cannot scale as quickly as lambda
-      - reserve concurrency: set a reservation for a fn to achieve:
-        - control performance during peak loads
-        - address invocation errors during bursts
+  - concurrency
   - billing: charges are proportional to the memory, duration (GB seconds) and number of invocations
     - you can offset costs from memory by reducing the duration
     - duration tracks and is rounded up to the nearest 1 ms
