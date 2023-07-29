@@ -132,7 +132,7 @@
 ### core stack
 
 - APIs: API Gateway, appsync
-- compute: lambda, ecs, eks
+- compute: lambda, ecs, eks,
 - dbs: dynamodb, neptune, timestream, qldb
 - messaging: sns, sqs, kinesis, eventbridge
 - events: cloudwatch
@@ -177,6 +177,8 @@
 ### application architecture patterns
 
 - think through how to observe and react to events in your distributed services
+  - each component should scale independently
+  - implement circuit breakers to restrict the blast radius of failed services
 - become familiar with
   - the multitude of cloudwatch events
   - optimizing lambda and integration with SNS, SQS and eventbridge
@@ -200,6 +202,7 @@
   - load tests
 - scale in observability: components should output appropriate signals
   - monitor by percentile, and not just avg
+  - log efficiently and effectively
 
 ### testing
 
