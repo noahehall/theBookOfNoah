@@ -45,6 +45,7 @@
 - [developer guide](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html)
 - [security overview (PDF)](https://docs.aws.amazon.com/whitepapers/latest/security-overview-aws-lambda/security-overview-aws-lambda.pdf)
 - [sqs: integration](https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html)
+- [sqs: tutorial](https://aws.amazon.com/serverless/use-sqs-as-an-event-source-for-lambda-tutorial/)
 - [retry on errors](https://docs.aws.amazon.com/lambda/latest/dg/retries-on-errors.html)
 - [managing lambda reserved concurrency](https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html)
 - [scaling kinesis & dynamodb streams](https://aws.amazon.com/blogs/compute/new-aws-lambda-scaling-controls-for-kinesis-and-dynamodb-event-sources/)
@@ -419,6 +420,20 @@
 
 ### SQS
 
+- lambda manages polling the queue on your behalf, but you stil control other configuration settings
+  - lambda
+    - batch size:
+    - concurrency limit
+      - default 5 parallel processes to retrieve messages from the queue: which requires a matching 5 concurrent lambda invocations
+        - you need to ensure the lambda reserve concurrency for the fn is atleast 5
+        - if the queue size increases, it will automatically increase the number of invocations, but not the reserved concurrency setting
+        - if a fn errors, it will decrease the number of processes polling the queue
+    - timeouts
+  - SQS queue
+    - visibility timeout
+    - max receive count
+    - redrive policy: determines when to send messages to the DLQ
+    - dead letter queue
 - error handling (polling a queue as an event source)
   - timeouts: messages become visible to other consumers after the visibility timeout expires.
     - Set your visibility timeout to 6 times the timeout you configure for your function.
@@ -428,7 +443,7 @@
   - dead letter queues
     - ensure the queue is created on the source queue and not the lambda function
 - Queue batch size must allow all the messages in a batch to process within the Lambda timeout.
-- e.g. 3 minutes processing time per message > means (batch size \* 3 minutes) < 15 minutes max lambda timeout
+  - e.g. 3 minutes processing time per message > means (batch size X 3 minutes) < 15 minutes max lambda timeout
 - Lambda has a default of five parallel processes to get things off of a queue.
 - If the visibility timeout expires before the Lambda function processes the messages, messages will be deleted by the queue.
 - If a Lambda function returns errors when processing messages, Lambda decreases the number of processes polling the queue

@@ -25,6 +25,10 @@
   - rest/http vs websocket is an easy one
   - but REST has 3 different types
     - you can change between the them after deployment, but never from private to edge optimized
+- know your access patterns and select ther ight endpoint type
+  - edge optimized has builtin CDN
+  - optional cache to reduce latency
+  - api keys + usage plans to throttle client requests
 - use custom domains for the invoke url and choose a base path map to route it to the aws invoke url
 - think through your API stage strategy
   - for versioning and rollbacks
@@ -160,7 +164,7 @@
   - consumer signs request using aws v4 signing process
   - IAM uses the aws access key and secret to compute an HMAC signature using sha256
   - the signature is added to the auth header, api gateway parses it and determines if the IAM permissions match the request
-- lambda authorizers: preferred for oauth strategies
+- lambda authorizers: preferred for oauth/saml/custom authnz strategies
   - a custom lambda fn that handles authnz
     - token: when only a token is required for authnz
       - api gateway passes the source token to the lambda fn as JSON input and expects an IAM policy into be returned (with execute-API:invoke for accepted)
@@ -310,3 +314,19 @@
   - GET requests by default, but can be configured
   - per method override of all stage level settings
   - use request params for cache keys
+
+## integrations
+
+- since API gateway is sync and expects a sync response
+  - integrate with an async backend that can immediately return a request ID but asynchronously process the request, e.g. with api gateway -> SQS -> lambda
+
+### lambda
+
+- authorizors: enable custom oauth/saml/etc authnz
+  - from lambdas perspective its just another fn, so all the best practices still apply
+- use auth caching to reduce repeat API calls for returning users
+  - cachable between 5min -> 1 hour
+
+### step functions
+
+- ensure the expected request throughput with the step function start execution api can handle
