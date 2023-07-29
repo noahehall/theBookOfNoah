@@ -139,7 +139,7 @@
 - analytics: cloudwatch, cloudtrail, xray
 - networking: cloudfront, route53
 - dev tools: SAM cli,
-- storage: s3
+- storage: s3, efs
 - orchestration: step functions
 - athena: analytics
 
@@ -182,6 +182,24 @@
   - optimizing lambda and integration with SNS, SQS and eventbridge
   - consuming streams (kinesis/dynamodb) effectively
   - orchestration (happy path + rollbacks) with step functions
+
+### scaling
+
+- strategize for thes current scale requirements in addition to the anticipated growth
+- scale in demand
+  - organic
+  - merger and acquitision: increased dramatically within a short period
+- scale in complexity
+  - management
+  - performance
+  - security
+- scale in testing: increased need for more effective tests
+  - integration testing
+  - e2e tests
+  - smoke tests
+  - load tests
+- scale in observability: components should output appropriate signals
+  - monitor by percentile, and not just avg
 
 ### testing
 
