@@ -233,6 +233,11 @@
 - standardization and optimation
 - auditing and reactingv to changes
 - halt/rollback mechanisms
+- managing configuration changes
+  - similar in terraform how you can consume deployed artifacts (e.g. ARN, ips, etc)
+    - bake it into the deployment package: refrain from this as much as possible
+    - 12factor it: the easiest, but should atleast be encrypted; however its difficult to share/update across nodes
+    - load at runtime from some secrets manager: the most robust (and complex) option
 
 ### testing
 

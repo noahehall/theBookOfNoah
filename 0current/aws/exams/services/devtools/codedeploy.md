@@ -6,6 +6,8 @@
 
 - [appspec ref](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html#appspec-reference-server)
 - [security](https://docs.aws.amazon.com/codedeploy/latest/userguide/security.html)
+- [deployment configurations](https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configurations.html)
+- [lambda: safe deployments](https://aws.amazon.com/blogs/compute/implementing-safe-aws-lambda-deployments-with-aws-codedeploy/)
 
 ## best practices
 

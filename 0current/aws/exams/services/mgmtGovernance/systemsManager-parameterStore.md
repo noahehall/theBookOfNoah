@@ -9,8 +9,10 @@
 
 ## links
 
-- [systems manager parameter store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html)
-- [systems manager restricting access via iam policies](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-access.html)
+- [parameter store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html)
+- [restricting access via iam policies](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-access.html)
+- [lambda: sharing secrets](https://aws.amazon.com/blogs/compute/sharing-secrets-with-aws-lambda-using-aws-systems-manager-parameter-store/)
+- [walkthroughs](https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-walk.html)
 
 ## best practices
 
@@ -20,6 +22,12 @@
 
 ## features
 
+- centralized system for configuration and secrets management
+- plain text / encrypted with kms
+- granular access via IAM
+- tracks all parameter changes via versioning to support rollbacks
+- hierarchical key value storage, e.g. to segment key/values by environment
+
 ## terms
 
 ## basics
@@ -27,3 +35,8 @@
 ## considerations
 
 ## integrations
+
+### lambda
+
+- cold starts will incur a latency penalty as lambda needs to request & decrypt values
+  - always store outside the function handler, and check for existence within

@@ -51,6 +51,7 @@
 - [scaling kinesis & dynamodb streams](https://aws.amazon.com/blogs/compute/new-aws-lambda-scaling-controls-for-kinesis-and-dynamodb-event-sources/)
 - [lambda error handling for kinesis and dynamodb](https://aws.amazon.com/about-aws/whats-new/2019/11/aws-lambda-supports-failure-handling-features-for-kinesis-and-dynamodb-event-sources/)
 - [parallelizing kinesis & dynamodb](https://aws.amazon.com/about-aws/whats-new/2019/11/aws-lambda-supports-parallelization-factor-for-kinesis-and-dynamodb-event-sources/)
+- [env vars](https://docs.aws.amazon.com/lambda/latest/dg/env_variables.html)
 
 ### tools
 

@@ -10,6 +10,8 @@
 
 ## links
 
+- [serverless reference guide](https://github.com/awslabs/serverless-application-model)
+- [automated deployments](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/automating-updates-to-serverless-apps.html)
 - [deploy](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-deploy.html)
 - [deploying serverless applications](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-deploying.html)
 - [policy templates](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html)
@@ -114,6 +116,8 @@ sam
     --output-template-file some-service.output.yaml
     --s3-bucket some-bucket-to-deploy-to
 
+  # deploy a packaged template into a cloudformation stack
+  deploy
 ```
 
 ### sam templates
@@ -152,6 +156,11 @@ Resources:
   GetHtmlFunction:
     # this creates a lambda function
     Type: AWS::Serverless:Function
+      CodeUri: somePath/to/source
+      Handler: app.ifThisIsALambdaFunction
+      runtime: nim # haha u wish
+      Architectures:
+        - x86_64
     Properties:
       # zipfile, handler, and runtime
       CodeUri: ../../src/todo_list # this gets built and deployed
@@ -206,3 +215,5 @@ Outputs:
 
 - enables launching a local version of lambda fns that runs in a docker container
   - you can then connect to it and debug in an interactive session throught an IDE
+  - good for unit tests, debugging/troubleshooting issues
+  - you can also generate sample payloads

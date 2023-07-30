@@ -5,18 +5,28 @@
 
 ## my thoughts
 
-- prefer vault unless someones paying you to use this
+- AWS vault
 
 ## links
 
-- [secrets manager secrets rotation intro](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_how.html)
-- [secrets manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html)
+- [landing page](https://aws.amazon.com/secrets-manager/?did=ap_card&trk=ap_card)
+- [secrets rotation intro](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_how.html)
+- [user guide](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html)
 
 ## best practices
 
 ### anti patterns
 
 ## features
+
+- Securely encrypt and centrally audit secrets such as database credentials and API keys
+- Manage access to secrets using fine-grained AWS Identity and Access Management (IAM) and resource-based policies.
+- Rotate secrets automatically to meet your security and compliance requirements.
+- Replicate secrets to support disaster recovery scenarios and multi-region applications.
+
+### pricing
+
+- pay based on the number of secrets stored and API calls made
 
 ## terms
 
