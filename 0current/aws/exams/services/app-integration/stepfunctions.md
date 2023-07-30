@@ -18,6 +18,7 @@
 - [integrations](https://docs.aws.amazon.com/step-functions/latest/dg/connect-supported-services.html)
 - [handling error conditions](https://docs.aws.amazon.com/step-functions/latest/dg/tutorial-handling-error-conditions.html)
 - [lambda service exceptions](https://docs.aws.amazon.com/step-functions/latest/dg/bp-lambda-serviceexception.html)
+- [limits overview](https://docs.aws.amazon.com/step-functions/latest/dg/limits-overview.html)
 
 ## best practices
 

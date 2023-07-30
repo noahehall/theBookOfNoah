@@ -15,6 +15,10 @@
 - [data anlaytics + lambda](https://docs.aws.amazon.com/en_pv/kinesisanalytics/latest/dev/lambda-preprocessing.html)
 - [lambda integration](https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html)
 - [data streams data retention period](https://docs.aws.amazon.com/streams/latest/dev/kinesis-extended-retention.html)
+- [building consumers & reading data from streams](https://docs.aws.amazon.com/streams/latest/dev/building-consumers.html)
+- [resharding strategies](https://docs.aws.amazon.com/streams/latest/dev/kinesis-using-sdk-java-resharding-strategies.html)
+- [lambda: enhanced fanout](https://aws.amazon.com/blogs/compute/increasing-real-time-stream-processing-performance-with-amazon-kinesis-data-streams-enhanced-fan-out-and-aws-lambda/)
+-
 
 ## best practices
 
@@ -36,6 +40,19 @@
   - DLQ:
     - can only send the event object
     - is part of a functions version configuration; you need to update the function to change the behavior
+  - in general: utilize the following configuration
+    - bisect on function error
+    - maximum record age in seconds
+    - maximum retry attempts
+    - destination on failure
+- stream processing throughput is all about:
+  - the number of shards on the stream
+    - more shards, more batches, increases throughput and lowers error blast radius
+    - less streams, less costs, but higher likelihood of hitting rentetion timeout
+  - batch size
+  - type of stream
+  - retention period timeout
+    - increasing this incurs a cost
 
 ### anti patterns
 
@@ -52,6 +69,7 @@
 - kpl: kinesis producer library
 - kal: kinesis aggregation library (for use with lambda)
 - producers: Producers add data records to the stream.
+  - kinesis can ingest up to 1 mb/s or 1000 records per second per shard
 - consumers: retrieve and process records from streams
 
 ### Shards
@@ -67,6 +85,9 @@
   - increase throughput by increasing the number of shards or by aggregating/batching the data sent per API call
 - aggregation: store multiple records in a stream
   - consumers must de-aggregate the data before processing
+- resharding: increase the number of shards in a stream to adapt to changes in the rate of data flow
+  - new data records are rerouted to new streams based on key values
+  - any existing records in existing shards remain in those shards
 
 ### Data Firehose
 
@@ -108,7 +129,23 @@
 ### lambda
 
 - kinesis stream consumer; proces data and persist to s3/dynamodb/redshift/etc
-- preprocesser for data analytics
+  - preprocesser for data analytics
+- standard consumers: automatically polls the stream
+  - uses the getRecords API:
+    - polling capacity: 5 transactions per second per shard
+    - data capacity: each request can consume p to 2MB of data
+    - you can have up to 5 consumres per stream, but they all share the getRecords api polling & data capacity limits
+- enhanced fanout consumers: subscribe to the stream
+  - data is pushed using http/2 requests
+  - each consumers get their own pipe
+    - they dont share data capacity limits like standard consumers
+- ensure you're managing failed messages in a batch within a shard
+  - kinesis invokes 1 lambda instance per shard
+  - lambda retrieves messages in batches
+    - if any message within a batch fails, the whole shard is blocked
+    - you have to force the processing of the message to complete, or wait until the retention period expires
+      - catch exceptions and move the failed message to a DLQ + cloudwatch logs
+      - then return success so the shard doesnt fail
 
 ### athena
 

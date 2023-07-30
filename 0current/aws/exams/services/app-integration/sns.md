@@ -12,10 +12,9 @@
 - [filtering policies](https://docs.aws.amazon.com/sns/latest/dg/sns-subscription-filter-policies.html)
 - [message delivery retry policy](https://docs.aws.amazon.com/sns/latest/dg/sns-message-delivery-retries.html)
 - [dead letter queues](https://docs.aws.amazon.com/sns/latest/dg/sns-dead-letter-queues.html)
+- [message delivery retries](https://docs.aws.amazon.com/sns/latest/dg/sns-message-delivery-retries.html)
 
 ## best practices
-
-- useful for integrating with external webhooks
 
 ### anti patterns
 
@@ -25,6 +24,9 @@
 - distribute application-to-person notification to your customers with SMS texts, push notificaitons and email
 - reduce costs with message filtering, batching, ordering and deduplication
 - increase message durability with archiving, dleivery rates, and dead-letter queues
+- use cases
+  - useful for integrating with external webhooks
+  - initiate parallel tasks and nested applications
 
 ### pricing
 
@@ -60,3 +62,8 @@
 ### sqs
 
 - use a fan-out pattern and a FIFO SQS queue to ensure you can perform actions simultaneously and offload events to a queue until lambdas can process them
+
+### lambda
+
+- review the retry policy with lambda subscribers
+- max 250 filter policies per region per topic

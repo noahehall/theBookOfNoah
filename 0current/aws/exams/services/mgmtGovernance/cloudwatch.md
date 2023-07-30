@@ -254,14 +254,17 @@
 - container insights can be configured to collect, aggregate and visualize metrics and logs
 - also provides diagnostic information, e.g. container restart failures
 - general workflow
-
   - a log collector with a cloudwatch plugin (e.g. fluentd/fluentbit) runs as a DaemonSet on every node
   - the cloudwatch agent runs as a daemonset on each worker node
     - collects and ships metrics data to cloudwatch for processing
   - collect EKS control plane metrics by turning on control plane logging for an EKS cluster
     - cloudwatch collects metrics info from this logs that can be viewed in Log Insights
   - metrics are viewable in Container Insights and Log Insights
-
 - common metrics
   - standard: CPU, memory, disk and network
   - diagnostic metrics: container restart failures
+
+### kinesis
+
+- common metrics
+  - iteratorAge: when it increases likely means you need to reshard
