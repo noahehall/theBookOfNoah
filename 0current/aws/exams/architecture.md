@@ -205,7 +205,7 @@
 - performance
 - security
 
-#### scale in testing
+#### scaling reliably with testss
 
 - increased need for more effective load tests since you can scale/tweak the perf of individual components
   - you need to have a solid understanding of peak load capacity
@@ -220,11 +220,19 @@
   - dont mock services you cant control
     - when you're load testing, you need the real beef
 
-#### scale in observability
+#### managing scale through monitoring
 
 - components should output appropriate signals
 - monitor by percentile, and not just avg/raw numbers
 - log efficiently and effectively
+
+### deploying
+
+- strategy for deploying new application versions and infrastructure are equally important
+- QA, qa, Qa, qA ;)~
+- standardization and optimation
+- auditing and reactingv to changes
+- halt/rollback mechanisms
 
 ### testing
 

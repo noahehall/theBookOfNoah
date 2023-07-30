@@ -19,7 +19,7 @@
 - [serverless patterns collection](https://serverlessland.com/patterns)
 - [serverless repo](https://aws.amazon.com/serverless/serverlessrepo/)
 - [rate limiting for serverless applications](https://aws.amazon.com/blogs/architecture/rate-limiting-strategies-for-serverless-applications/)
--
+- [reference](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-reference.html)
 
 ### sam CLI
 
@@ -96,6 +96,8 @@
 
 ### sam cli
 
+- allows you to test your code locally and emulate some aws resource environments
+
 ```sh
 sam
   # generate a sample s3 put event
@@ -118,10 +120,16 @@ sam
 
 - usually called `template.yaml` and defines the entire stack for a specific service
   - you generally want to start with a sample template provided by AWS (check the docs)
+- aws will transform the condensed SAM template into a verbose Cloudformation template
+
+#### common attributes
+
+- check the docs
 - resources.someName.type
   - AWS::S3::Bucket (s3)
   - AWS::Serverless::Function (lambda)
   - AWS::Serverless::SimpleTable (dynamodb)
+  - AWS::Serverless:Api (gateway)
 
 ```yaml
 # functions
