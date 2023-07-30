@@ -267,4 +267,4 @@
 ### kinesis
 
 - common metrics
-  - iteratorAge: when it increases likely means you need to reshard
+  - iteratorAge: when it increases (lambda consumer) likely means you need to reshard

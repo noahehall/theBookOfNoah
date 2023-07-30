@@ -207,11 +207,18 @@
 
 #### scale in testing
 
-- increased need for more effective tests, especially integration + e2e in production like environments
-- integration testing
-- e2e tests
-- smoke tests
-- load tests
+- increased need for more effective load tests since you can scale/tweak the perf of individual components
+  - you need to have a solid understanding of peak load capacity
+- best practices
+  - load test with authentic data with appropriate volumes that exercise each integration point with production access patterns
+  - spin a production like environment, never load test locally
+  - identify the bottlenecks/failure points, modify perf characteristcs and iterate
+    - this may move the bottleneck to other integration points
+      - you need to know where the bottleneck is most appropriate, based on your workload and business requirements
+  - choose a percentile that reflects the business need when monitoring
+    - build in error handling logic to handle failures that are outliers
+  - dont mock services you cant control
+    - when you're load testing, you need the real beef
 
 #### scale in observability
 

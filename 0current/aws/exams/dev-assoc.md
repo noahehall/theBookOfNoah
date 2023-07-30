@@ -3,7 +3,7 @@
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
   - Exam Prep (With practice material) > module 4
-  - scaling serverless architectures > Testing for Peak Load
+  - deploying serverlesss applications > Understanding Serverless Deployments
 - todos
   - before the test review these
     - the offical ramp up guide pdf
@@ -11,7 +11,6 @@
     - aws whitepapers
   - additional courses
     - [security and obervability for serverless applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12714/security-and-observability-for-serverless-applications)\
-    - [deploying serverlesss applications](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/12836/deploying-serverless-applications)
     - white papers
       - [well architected framework](https://aws.amazon.com/architecture/well-architected/)
       - [CICD on aws](https://docs.aws.amazon.com/whitepapers/latest/practicing-continuous-integration-continuous-delivery/welcome.html)
