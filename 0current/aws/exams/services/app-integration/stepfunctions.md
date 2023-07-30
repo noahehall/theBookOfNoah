@@ -22,6 +22,12 @@
 ## best practices
 
 - A common use case for Step Functions is tasks that requires human intervention, such as a manual approval process in a workflow
+- orchestrate long running tasks and reduce costs with wait states and callbacks
+- use timeouts to avoid stuck executions
+  - theres no default timeout, a tasks could be stuck forever
+- be aware of step functions API limits!
+  - payload size passed across steps
+    - for larger payloads use S3 to store the data, instead of passing it around
 
 ### anti patterns
 

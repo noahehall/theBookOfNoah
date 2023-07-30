@@ -428,6 +428,18 @@
 
 ## integrations (event sources)
 
+- FYI on database connections
+  - you dont control when environments are created/destroyed
+    - initialize the connection outside the fn handler, and check for existence within
+  - you cant close connections because theres no hook to indicate destruction of a lambda environment
+    - use database TTL as a fallback to clean up connections
+  - session leakage, idle connections, cant share connections across concurrent function invocations
+    - you have to manage these types of issues by setting concurrency limits to prohibit the amount of potential db connections
+    - the above still sucks
+      - you have to find some external mechanism (e.g. a db proxy) that can handle the db connection
+      - thus you remove the need to make the connection within the lambda fn
+      - e.g. implementing `Dynamic Content Management` pattern
+
 ### s3
 
 - event types

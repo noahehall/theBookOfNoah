@@ -4,7 +4,6 @@
 - use cases
   - super scalable key/value/document store
   - ms response time for transactional data
-  -
 
 ## my thoughts
 
@@ -39,6 +38,7 @@
 - [limits](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html)
 - [working with large attributes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-use-s3-too.html)
 - [setting up dynamodb local](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html)
+- [lambda: dynamic content management](https://github.com/aws-samples/aws-lambda-manage-rds-connections)
 
 ### development
 
@@ -245,6 +245,41 @@
   - tuning retries
     - set a max number of retries, times and strategies for exponential back-off & jitter
 
+### modes
+
+- ondemand: tables automatically scale r/w throughput
+  - capacity settings: none, its managed for you
+  - scaling behavior: instantly handles up to double the previous traffic peak
+  - throttling behavior: requests throttled if new peak is double the previous within 30 minutes
+  - cost considerations: set amount for each read and write; able to evaluate cost per transaction
+  - use cases
+    - default serverless workloads
+- provisioned
+  - capacity settings: set R/W capacity units
+  - scaling behavior: all provisioned capacity is available
+  - throttling behavior: requests throttled upon breaching provisioned capacity settings
+    - causes error, however the aws sdk has builtin retries + backoff
+  - cost considerations: set rate for the amount of provisioned capacity
+  - use cases
+    - predictable/consistent workloads
+- provisioned + autoscaling
+  - capacity settings: define lower + upper capacity limits and target utilization percentage (20-90%)
+  - scaling behavior: auto scales to meet target utilizatoin
+  - throttling behavior: very short bursts may be throttled but only for a few minutes
+  - cost considerations: same as provisioned without autoscaling
+
+#### DAX: dynamodb accelerator
+
+- api-compatible in memory cache for dynamodb tables via a separate endpoint
+  - for even faster R/W throughput
+- highly-available cluster accessbile only in a VPC
+- you put the cache infront of your dynamodb tables and point your integrations (e.g. lambda) to it
+- write-through cache: items and updates written to cache are eventually consistent on the next read
+  - strongly consistent reads are not cached
+- use cases: any realtime ready-heavy workloads
+  - trading
+  - real time bidding
+
 ## considerations
 
 ### configuration
@@ -274,10 +309,7 @@
 
 ### Dynamodb Accelerator (DAX)
 
-- api-compatible cache for dynamodb tables via a separate endpoint
-- highly-available cluster accessbile only in a VPC
-- write-through cache: items and updates written to cache are eventually consistent on the next read
-  - strongly consistent reads are not cached
+- abcd
 
 ### backup / restore
 

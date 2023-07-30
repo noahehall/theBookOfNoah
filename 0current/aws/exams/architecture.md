@@ -192,21 +192,32 @@
     - especially the service limits, e.g. api gateay 10mb vs SQS 256kb
   - select patterns that optimize your application for the scale you need to support
     - timeouts, retry behavior, throughput, payload size
-- scale in demand: both compute + data
-  - organic
-  - merger and acquitision: increased dramatically within a short period
-- scale in complexity
-  - management
-  - performance
-  - security
-- scale in testing: increased need for more effective tests, especially integration + e2e in production like environments
-  - integration testing
-  - e2e tests
-  - smoke tests
-  - load tests
-- scale in observability: components should output appropriate signals
-  - monitor by percentile, and not just avg/raw numbers
-  - log efficiently and effectively
+
+#### scale in demand
+
+- both compute + data
+- organic
+- merger and acquitision: increased dramatically within a short period
+
+#### scale in complexity
+
+- management
+- performance
+- security
+
+#### scale in testing
+
+- increased need for more effective tests, especially integration + e2e in production like environments
+- integration testing
+- e2e tests
+- smoke tests
+- load tests
+
+#### scale in observability
+
+- components should output appropriate signals
+- monitor by percentile, and not just avg/raw numbers
+- log efficiently and effectively
 
 ### testing
 
