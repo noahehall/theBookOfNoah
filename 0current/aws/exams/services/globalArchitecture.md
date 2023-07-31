@@ -15,6 +15,7 @@
 - [shared responsibility model](https://aws.amazon.com/compliance/shared-responsibility-model/)
 - [aws repost: user community forum](https://repost.aws/)
 - [well architected framework](https://aws.amazon.com/architecture/well-architected/)
+- [top 10 security items](https://aws.amazon.com/blogs/security/top-10-security-items-to-improve-in-your-aws-account/)
 
 ### guide
 
@@ -33,9 +34,9 @@
 
 ### anti patterns
 
-## terms
-
 ## basics
+
+- Security: the practice of protecting your intellectual property from unauthorized access, use, or modification
 
 ### shared (security) responsibility model
 
@@ -81,4 +82,78 @@
   - pricing: AWS isnt for the little guy and varies from region to region
   - service availability: not all aws services are available in all regions
 
-## integrations
+## well architected framework
+
+- helps you understand the pros and cons of decisions you make while building systems on AWS
+- best practices for designing and operating reliable, secure, efficient, and cost-effective systems in the cloud
+
+### Operational Excellence
+
+- running and monitoring systems to deliver business value and continually improving processes and procedures
+-
+
+### security
+
+- the ability to protect data, systems, and assets while delivering business value through risk assessments and mitigation strategies
+- dimensions: All AWS security services can be categorized by these five domains
+  - identity and access management: ensure only authorized and authenticated users can access resources and do so as intended
+  - detective controls: identify a potential security threat or incident
+  - infrastructure protection: ensures systems and services within your workload are protected against unauthorized/unintended access and vulnerabilities
+  - data protection: at rest and in transit via ecryption methods and access control and classifying data based on levels of sensitivity
+  - incident response: processes in place to respond to and mitigate the impact of security incidents
+- key goals
+  - prevention: Define user permissions and identities, infrastructure protection, and data protection measures
+  - detection: visibility into your organization’s security posture with logging and monitoring services
+    - who has access
+    - who executed
+    - when and from where
+    - evidence of
+  - respond: Automate incident response and recovery to help shift the primary focus of security teams from responding to analyzing the root cause
+  - remediate: event-driven automation to quickly remediate and secure your AWS environment in near-real time
+    - ensure high availability
+    - deploy apps with security and compliance-related configuration
+    - apply security checks in a reproducible manner
+- design principles
+  - strong identity foundation built on the principles of least privilege
+    - grant access only to those who need it
+    - deny everything by default, and slowly open up based on roles, not specific users
+  - enable tracability: monitor, alert and audit actions and changes in real time
+  - apply security at all layers via defense in depth
+    - network
+    - application
+    - data store
+  - automate security best practices via APIs
+    - identity management
+    - network and data security
+    - monitoring/observability capabilities
+  - protect data in transit and at rest
+    - creating and controlling the encryption keys used to encrypt your data
+    - selecting appropriate encryption methods
+    - validating integrity
+  - minimize your attack surface
+  - prepare for security events
+    - processes to respond to and mitigate the potential impact of security incidents
+    - tools and access in place ahead of a security incident
+    - practice incident response through game days
+
+#### CIA Triad
+
+- Confidentiality: limiting information access and disclosure to authorized users (the right people) and preventing access by unauthorized people.
+- Integrity: maintaining the consistency, accuracy, and trustworthiness of data over its entire life cycle
+- Availability: the readiness of information resources. a system that is not available when you need it is almost as useless as not having a system in the first place
+
+### reliability
+
+- ability to prevent and quickly recover from failures to meet demand
+
+### performance efficiency
+
+- using IT and compute resources efficiently
+
+### Cost Optimization
+
+- avoiding uneeded costs
+
+### sustainability
+
+- recommendations and strategies to use when designing cloud architectures that maximize efficiency and reduce waste

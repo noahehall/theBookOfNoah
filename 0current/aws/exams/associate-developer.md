@@ -3,6 +3,7 @@
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
   - Exam Prep (With practice material) > module 4
+  - Getting Started with AWS Security, Identity, and Compliance > Authentication vs. Authorization
   - take the exam
     - [offical online practice exam](https://explore.skillbuilder.aws/learn/course/internal/view/elearning/14196/aws-certified-developer-associate-official-practice-exam-dva-c02-english)
     - [schedule the exam](https://aws.amazon.com/certification/certified-developer-associate/)
