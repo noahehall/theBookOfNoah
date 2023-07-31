@@ -1,7 +1,7 @@
 # Inspector
 
-- Automated and continual vulnerability management at scale
 - automated and continual vulnerability scanning service that assesses Amazon Elastic Compute Cloud (EC2) instances, AWS Lambda functions, and container images to improve the security and compliance of infrastructure workloads
+- helps you test the network accessibility of your Amazon Elastic Compute Cloud (Amazon EC2) instances and the security state of your applications running on the instances.
 
 ## my thoughts
 

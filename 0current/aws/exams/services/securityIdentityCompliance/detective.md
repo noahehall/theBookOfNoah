@@ -1,6 +1,7 @@
 # Detective
 
-- Analyze and visualize security data to investigate potential security issues
+- analyze, investigate, and quickly identify the root cause of potential security issues or suspicious activities
+- automatically collects log data from your AWS resources and uses machine learning, statistical analysis, and graph theory to build a linked set of data that enables you to easily conduct faster and more efficient security investigations.
 
 ## my thoughts
 

@@ -1,7 +1,7 @@
 # Macie
 
-- Discover and protect your sensitive data at scale
-- a data security service that uses machine learning (ML) and pattern matching to discover and help protect your sensitive data.
+- uses machine learning to automatically discover, classify, and protect sensitive data in AWS
+- such as personally identifiable information (PII) or intellectual property and provides you with dashboards and alerts that give visibility into how this data is being accessed or moved
 
 ## my thoughts
 

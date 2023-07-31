@@ -1,6 +1,8 @@
 # Guard Duty
 
 - Protect your AWS accounts with intelligent threat detection
+- analyzes continuous streams of metadata generated from your account and network activity found in CloudTrail events, Amazon Virtual Private Cloud (Amazon VPC) flow logs, and Domain Name System (DNS) logs
+- uses integrated threat intelligence such as known malicious IP addresses, anomaly detection, and machine learning to identify threats more accurately.
 
 ## my thoughts
 
@@ -17,7 +19,7 @@
 - monitor your AWS accounts, instances, serverless and container workloads, users, databases, and storage for potential threats
 - anomaly detection, ML, behavioral modeling, and threat intelligence feeds from AWS and leading third parties.
 - Scan Amazon Elastic Block Store (EBS) for files that might have malware creating suspicious
-- dentify and profile possible malicious or suspicious behavior in container workloads by analyzing Amazon EKS audit logs and container runtime activity.
+- identify and profile possible malicious or suspicious behavior in container workloads by analyzing Amazon EKS audit logs and container runtime activity.
 - Receive findings with context, metadata, and impacted resource details
 
 ### pricing
