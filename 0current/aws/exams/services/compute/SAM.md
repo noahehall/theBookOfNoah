@@ -22,6 +22,7 @@
 - [serverless repo](https://aws.amazon.com/serverless/serverlessrepo/)
 - [rate limiting for serverless applications](https://aws.amazon.com/blogs/architecture/rate-limiting-strategies-for-serverless-applications/)
 - [reference](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-reference.html)
+- [serverless authnz](https://www.slideshare.net/AmazonWebServices/srv403serverless-authentication-and-authorization?qid=493b1472-6d48-4bd7-9c2c-7d1b391263d9&v=&b=&from_search=2)
 
 ### sam CLI
 

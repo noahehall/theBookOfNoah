@@ -3,4 +3,4 @@
 - last updated in 2023 for version SSA-C03
 - bookmark:
   - Exam Prep (With practice material) > module 1
-  - Getting Started with AWS Security, Identity, and Compliance > Amazon Cognito for Mobile Authentication
+  - Getting Started with AWS Security, Identity, and Compliance > AWS Directory Service for User Federation
