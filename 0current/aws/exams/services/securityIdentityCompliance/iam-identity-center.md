@@ -1,7 +1,7 @@
 # Identity Center
 
 - successor to single sign-on
-- centrally managed workforce access to multiple aws accounts and applications
+- central management of SSO access to multiple AWS accounts and business applications
 - includes federated users
 
 ## my thoughts

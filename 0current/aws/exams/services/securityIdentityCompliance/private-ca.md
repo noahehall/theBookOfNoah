@@ -4,8 +4,6 @@
 
 ## my thoughts
 
-- hashicorp vault is king
-
 ## links
 
 - [landing page](https://aws.amazon.com/private-ca/?nc=sn&loc=0&refid=ap_card)

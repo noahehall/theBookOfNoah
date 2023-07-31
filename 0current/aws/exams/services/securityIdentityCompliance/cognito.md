@@ -1,9 +1,7 @@
 # cognito
 
-- identity platform for web/mobile apps
+- identity platform for web/mobile apps: sign up/in + federated identities
 - a user directory, authnz server and service for oauth2 access tokens and aws credentials
-- use cases
-  - sign up/in + federated identities
 
 ## my thoughts
 
@@ -18,7 +16,15 @@
 
 ## features
 
+- security features such as adaptive authentication, support compliance, and data residency requirements
+- Scale to millions of users with a fully managed, high-performant, and reliable identity store.
+- Federate sign-in using OIDC or SAML 2.0
+
 ### pricing
+
+- charges for identity management and data synchronization
+  - user pools based on monthly active users
+- check the docs, the free tier doesnt expire
 
 ## terms
 

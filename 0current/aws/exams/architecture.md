@@ -287,3 +287,7 @@
   - choose the right ETL pattern
     - real time analysis: kinesis data streams/dynamodb streams
     - historical trends: batch, AWS glue + s3 > athena/redshift spectrum
+
+## AuthNZ
+
+- Cognito, Directory Service, IAM, Identity Center
