@@ -1,6 +1,7 @@
 # Directory Service
 
 - fully managed Microsoft Active Directory service
+- provides directories that contain information about your organization, including users, groups, computers, and other resources
 
 ## my thoughts
 

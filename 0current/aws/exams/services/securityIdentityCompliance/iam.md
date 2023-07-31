@@ -7,7 +7,6 @@
 ## my thoughts
 
 - everything starts and ends with IAM
-  - i would also add VPC and cloudwatch
 
 ## links
 
@@ -17,17 +16,18 @@
 ### user guide
 
 - [AAA: getting started](https://docs.aws.amazon.com/singlesignon/latest/userguide/getting-started.html)
+- [AAAA policy reference](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements.html)
+- [AAAA security best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
+- [apigateway: authnz workflow](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-authorization-flow.html)
+- [apigateway: identity-based policy examples](https://docs.aws.amazon.com/apigateway/latest/developerguide/security_iam_id-based-policy-examples.html)
+- [apigateway: resource policies](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies.html)
 - [authnz for resources](https://docs.aws.amazon.com/en_us/IAM/latest/UserGuide/access.html)
+- [dynamodb: intro](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/UsingIAMWithDDB.html)
 - [ec2: iam roles](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html)
 - [enabling mfa](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html)
 - [identities: users groups and roles](https://docs.aws.amazon.com/en_us/IAM/latest/UserGuide/id.html)
 - [intro to IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html)
-- [security best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
 - [signing aws api requests (sig v4)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html)
-- [apigateway: identity-based policy examples](https://docs.aws.amazon.com/apigateway/latest/developerguide/security_iam_id-based-policy-examples.html)
-- [apigateway: resource policies](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies.html)
-- [apigateway: authnz workflow](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-authorization-flow.html)
-- [dynamodb: intro](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/UsingIAMWithDDB.html)
 
 ### API
 
@@ -52,23 +52,24 @@
 
 ## features
 
+- Set and manage guardrails and fine-grained access controls for your workforce and workloads.
+- Manage identities across single AWS accounts or centrally connect identities to multiple AWS accounts.
+- Grant temporary security credentials for workloads that access your AWS resources.
+- analyze access to right-size permissions on the journey to least privilege.
+
+## pricing
+
+## basics
+
 - resource policy: permissions related to specific actions on specific resources, e.g. Execute Lambda
   - determines who is allowed into a service boundary, i.e. grant service A access to service B
+  - policies attached to resources as opposed to users/groups/roles
 - execution role: enables a service to assume some role with some predefined behavior for interacting with other services
   - determines what service A can do within a service boundary
 - trust policy: enables a service to `AssumeRole` for taking action on behalf of another serviced
 - principle of least privilege: start with the most restrictive set of permissions possible
 - security in depth: multiple layers of redundant security
 - principal: a user, role, another aws service / account
-
-## pricing
-
-## terms
-
-- iam role: can be assumed by a user, an ec2 instance (e.g.) or an application
-- resource policies: policies attached to resources as opposed to users/groups/roles
-
-## basics
 
 ### users & groups
 
@@ -126,6 +127,7 @@
 ### policies
 
 - set of permissions that grant/deny users, groups and roles to invoke resource actions
+  - anything not explicitly granted is denied by default
 - actions: aws API calls
 
 #### resource policy
@@ -138,7 +140,7 @@
 - a policy contains at least one permission
   - the policy is then associated with resources and/or assigned to users/groups/roles depending on the type
 - its all about the statement array
-  - each element object contains atleast the following
+  - each element contains atleast the following
     - effect: allow/deny
     - action: the aws service and a potentially a filtered set of api calls
       - `serviceName:*` this specifies all actions (api calls) for this service
@@ -157,7 +159,7 @@
   "Id": "default",
   "Statement": [
     {
-      "Sid": "Some Description",
+      "Sid": "optional unique identifier for this policy",
       "Effect": "Allow", // or deny
       // Principle: "*" for everyone, and can then be used with other policies
       // Principle: "AWS" applies to all resources, and no other policies are taken into account
@@ -167,8 +169,8 @@
           "arn:aws:iam:account-id:user/MyName" // or this specific user in account-id
         ]
       },
-      "Action": "dynamodb:PutItem", // can do this action
-      "Resource": "arn:aws:dynamodb:us-west-2:###:table/test", // on this resource
+      "Action": ["dynamodb:PutItem"], // can do these actions
+      "Resource": ["arn:aws:dynamodb:us-west-2:###:table/test"], // on these resources
       "Condition": {
         // if these conditions are met
         "StringEquals": {
