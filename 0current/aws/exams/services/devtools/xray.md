@@ -8,11 +8,11 @@
 ## links
 
 - [landing page](https://aws.amazon.com/xray/features/)
-- [dev guide intro](https://docs.aws.amazon.com/xray/latest/devguide/aws-xray.html)
 - [lambda + xray](https://docs.aws.amazon.com/lambda/latest/dg/using-x-ray.html)
 - [using xray in the console](https://docs.aws.amazon.com/xray/latest/devguide/xray-console.html)
 - [deep dive into xray use cases](https://aws.amazon.com/blogs/developer/deep-dive-into-aws-x-ray-groups-and-use-cases/)
 - [analyze and debug apps using xray](https://aws.amazon.com/blogs/developer/new-analyze-and-debug-distributed-applications-interactively-using-aws-x-ray-analytics/)
+- [dev guide getting started](https://docs.aws.amazon.com/xray/latest/devguide/xray-gettingstarted.html)
 
 ## best practices
 
@@ -42,6 +42,13 @@
   - it records i/o and relays it to the xray daemon in batches
 - it gets data from services as segments and groups them by request into traces.
 - X-Ray then creates a service graph that gives you a visual representation of what’s happening at each service integration point, highlighting successful and failed service calls
+
+#### instrumentation
+
+- active: samples and instruments incoming requests
+  - write traces to xray
+- passive: instruments requests that have been samples by other services
+  - add information to existing traces
 
 ### traces
 
@@ -73,8 +80,13 @@
 
 ## integrations
 
+- 1 click integration for lambda, api gateway SNS, and SQS queues that are not lambda event sources
+- else you have to instrument your code
+
 ### lambda
 
+- supports active + passive instrumentation
+- both the lambda service and the fn handler are instrumented
 - general flow
   - a trace starts when lambda is invoked
   - for async events the requests is queued, else lambda fetches the requests immediately and invokes the fn
@@ -87,8 +99,15 @@
 
 ### api gateway
 
+- supports active + passive instrumentation
 - trace an analyze user requests as they travel through apigateway to underlying services
 - observe how your application is performing to identify, troobleshoot and rootcause analysis of per issues and errors
 - configure sampling rules specifying: which requests to record & at what sampling rates
 
 ### sns
+
+- only supports passive instrumentation
+
+### sqs
+
+- only supports passive instrumentation
