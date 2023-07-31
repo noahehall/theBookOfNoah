@@ -14,7 +14,7 @@
 - [EU GDPR](https://gdpr.eu/what-is-gdpr/)
 - [shared responsibility model](https://aws.amazon.com/compliance/shared-responsibility-model/)
 - [aws repost: user community forum](https://repost.aws/)
-- [six pillar well architected framework](https://aws.amazon.com/architecture/well-architected/)
+- [well architected framework](https://aws.amazon.com/architecture/well-architected/)
 
 ### guide
 
