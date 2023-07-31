@@ -1,15 +1,15 @@
 # key management service (KMS)
 
 - managed creation and control of encryption keys
+- tightly integrated with managed services for encryption at rest and inflight
 
 ## my thoughts
-
-- use vault instead
 
 ## links
 
 - [landing page](https://aws.amazon.com/kms/?did=ap_card&trk=ap_card)
 - [faqs](https://aws.amazon.com/kms/faqs/?da=sec&sec=prep)
+- [protecting SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-server-side-encryption.html)
 
 ## best practices
 
@@ -40,3 +40,5 @@
   - keys with imported key material
 
 ## integrations
+
+- generally all AWS services can utilize KMS and encrypt traffi in flict

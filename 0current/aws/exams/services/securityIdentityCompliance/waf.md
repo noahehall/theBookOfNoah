@@ -8,6 +8,7 @@
 
 - [landing page](https://aws.amazon.com/waf/?did=ap_card&trk=ap_card)
 - [intro](https://docs.aws.amazon.com/waf/latest/developerguide/how-aws-waf-works.html)
+- [mitigate OWASPs 10 web app vulnerabilities](https://docs.aws.amazon.com/whitepapers/latest/guidelines-for-implementing-aws-waf/guidelines-for-implementing-aws-waf.html)
 
 ## best practices
 

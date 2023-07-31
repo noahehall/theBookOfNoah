@@ -3,7 +3,7 @@
 - last updated in 2023 for version 1.0 DVA-C02
 - bookmark:
   - Exam Prep (With practice material) > module 4
-  - security and obervability for serverless applications
+  - security and obervability for serverless applications >Tracing serverless applications
 - todos
   - before the test review these
     - the offical ramp up guide pdf

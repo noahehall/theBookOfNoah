@@ -54,6 +54,8 @@
 - [env vars](https://docs.aws.amazon.com/lambda/latest/dg/env_variables.html)
 - [versioning intro](https://docs.aws.amazon.com/lambda/latest/dg/versioning-intro.html)
 - [traffing shifting using aliaes](https://docs.aws.amazon.com/lambda/latest/dg/lambda-traffic-shifting-using-aliases.html)
+- [security overview whitepaper](https://docs.aws.amazon.com/whitepapers/latest/security-overview-aws-lambda/security-overview-aws-lambda.html)
+- [extensions](https://aws.amazon.com/blogs/aws/getting-started-with-using-your-favorite-operational-tools-on-aws-lambda-extensions-are-now-generally-available/)
 
 ### tools
 
@@ -305,6 +307,10 @@
 - it invokes your function with different memory settings, from 128mb to 3gb
   - captures duration + cost
 
+### extensions
+
+- integrate Lambda functions with your favorite tools for monitoring, observability, security, and governance.
+
 ## considerations
 
 ### creating lambda functions
@@ -516,3 +522,15 @@
 
 - error handling
   - use step functions to handle retry and backoff logic
+
+### systems manager
+
+- secret stuff
+
+### secrets manager
+
+- secret stuff that requires rotation/cross account access
+
+### cloudwatch
+
+- all stdout is automatically sent to cloudwatch logs

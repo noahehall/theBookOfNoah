@@ -26,6 +26,11 @@
 
 ## basics
 
+### encryption
+
+- at rest
+  - Apply optional encryption using either service-managed encryption at rest or customer-managed AWS KMS keys using AWS KMS.
+
 ## considerations
 
 ## integrations

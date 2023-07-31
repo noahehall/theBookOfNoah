@@ -280,6 +280,12 @@
   - trading
   - real time bidding
 
+### encryption
+
+- at rest
+  - All data is fully encrypted at rest using encryption keys stored in AWS KMS.
+  - Choose AWS service keys or customer managed keys when you create a table.
+
 ## considerations
 
 ### configuration

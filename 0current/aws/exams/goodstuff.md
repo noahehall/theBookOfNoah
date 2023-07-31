@@ -15,6 +15,7 @@
 - [networking: ip address & cidr range visualizer](https://cidr.xyz/)
 - [learning domain driven design](https://dddcommunity.org/learning-ddd/)
 - [TCO: serverless vs traditional clouds](https://pages.awscloud.com/NAMER-field-GC-Deloitte-TCO-whitepaper-2019-learn.html)
+- [OWASP quick reference](https://www.owasp.org/images/0/08/OWASP_SCP_Quick_Reference_Guide_v2.pdf)
 
 ### ISO standards
 
@@ -477,3 +478,21 @@
 ### observability
 
 - the extent to which a system can be monitored
+- you observe a system through metrics, logs and traces (see monitoring)
+- considerations
+  - storage costs
+  - data overload
+  - ensuring your system is outputting the correct data
+
+## security
+
+- principle of least privilege
+- end-to-end encryption
+  - protect data at rest and in transit
+  - encrypt data before processing
+  - be careful not to leak secrets, e.g. via logging
+- ensure defense in depth
+- audit system for changes, unusual access and errors
+- protect API endpoints
+  - validate request bodies
+  - throttle/rate limits

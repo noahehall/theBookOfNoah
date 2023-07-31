@@ -21,6 +21,10 @@
 - [metrics: kinesis](https://docs.aws.amazon.com/streams/latest/dev/monitoring-with-cloudwatch.html)
 - [metrics: sqs](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-available-cloudwatch-metrics.html)
 - [metrics: step functions](https://docs.aws.amazon.com/step-functions/latest/dg/procedure-cw-metrics.html)
+- [metrics: by service](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/aws-services-cloudwatch-metrics.html)
+- [using metric math](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/using-metric-math.html)
+- [log insights](https://aws.amazon.com/blogs/aws/new-amazon-cloudwatch-logs-insights-fast-interactive-log-analytics/)
+- [lambda: analyzing behavior](https://aws.amazon.com/blogs/mt/understanding-aws-lambda-behavior-using-amazon-cloudwatch-logs-insights/)
 
 ### api
 
@@ -40,7 +44,7 @@
 ## best practices
 
 - structure application-level logs following the EMF standard
-  - cloudwatch logs will autoamtically extract these metric values
+  - instruct CloudWatch Logs to automatically extract metric values that are embedded in structured log events.
 - be careful about enabling logging of full requests in production and leaking sensitive data
 - alarms
   - the time period should be for a sustaind amount of time, and not short bursts/temporary spikes in metrics
@@ -100,6 +104,7 @@
 ### metrics
 
 - custom metrics enable you to post application-level metrics to cloudwatch
+- you can run `math metrics` across metrics, e.g. errors/invocations
 
 ### dashboards
 
@@ -125,6 +130,8 @@
 #### log insights
 
 - interactively search and query and analyze log data in Cloudwatch Logs
+- will automatically extract fields from structured logs
+- use prebuilt or custom queries on your logs to provide aggregated views and reporting
 
 ### alarms
 
@@ -153,6 +160,9 @@
 
 #### lambda insights
 
+- a special monitoring and troubleshooting solution for serverless applications running on Lambda
+- uses a CloudWatch Lambda extension, which is provided directly at the Lambda layer. When you install this extension on your Lambda function, it collects system-level metrics and emits a single performance log event for every invocation of that Lambda function.
+
 #### contributor insights
 
 #### application insights
@@ -166,6 +176,8 @@
 
 ## integration
 
+- all AWS services automatically report some information to cloudwatch
+- there are 3rd party tools to help analyze this information
 - common goals across all integrations
   - operational issues: overutilization, application flaws, misconfiguration or security-related events
   - cost optimization: underutilization
@@ -179,6 +191,7 @@
 ### lambda
 
 - lambda sends metrics about invocation to cloudwatch
+  - including anything sent to stdout
 - build graphs and dashboards, set alarams to respond to changes in use, perf or error rates
 - metrics
   - invocations: total function executions that were not throttled/failed to start, success & errors
@@ -203,8 +216,8 @@
 
 ### api gateway
 
-- turn on detailed metrics in stage settings
-- monitor and log deployed apis
+- turn on detailed metrics in stage settings fora extract cost
+- monitor and log deployed apis, enabled per stage
 - common questions
   - how often apis are called
   - number of api invocations

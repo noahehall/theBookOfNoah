@@ -104,6 +104,11 @@
 
 ### architecture
 
+- three options for authnz
+  - IAM: best for authn users within your AWS env or can use IAM creds
+  - lambda: best for integratin with external oauth services and need to run additional logic within a lambda fn or centralize authnz across AWS accounts
+  - cognito: best when starting fresh and want a managed service, or mobile apps
+
 #### rest api
 
 - synchronous rest api with complete control over the req and resp
@@ -191,6 +196,7 @@
 
 #### resource policies + authnz
 
+- its all about limiting access by account, IP range, VPC endpoint, etc
 - resource policy only: explicit allow required on inbound criteria of the caller, else deny the caller
 - lambda auth + resource policy: if policy explicitly denies, the caller is denied, else evaluate lambda auth
 - IAM auth + resource policy:
@@ -330,3 +336,12 @@
 ### step functions
 
 - ensure the expected request throughput with the step function start execution api can handle
+
+### WAF
+
+- put infront of API gateway for public APIs
+
+### cloudfront
+
+- helps prevent DDoS attacks
+- automatically provided with edge optimized endpoints, or cna add manually for regional endpoints
