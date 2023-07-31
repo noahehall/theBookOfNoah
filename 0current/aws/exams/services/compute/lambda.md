@@ -52,6 +52,8 @@
 - [lambda error handling for kinesis and dynamodb](https://aws.amazon.com/about-aws/whats-new/2019/11/aws-lambda-supports-failure-handling-features-for-kinesis-and-dynamodb-event-sources/)
 - [parallelizing kinesis & dynamodb](https://aws.amazon.com/about-aws/whats-new/2019/11/aws-lambda-supports-parallelization-factor-for-kinesis-and-dynamodb-event-sources/)
 - [env vars](https://docs.aws.amazon.com/lambda/latest/dg/env_variables.html)
+- [versioning intro](https://docs.aws.amazon.com/lambda/latest/dg/versioning-intro.html)
+- [traffing shifting using aliaes](https://docs.aws.amazon.com/lambda/latest/dg/lambda-traffic-shifting-using-aliases.html)
 
 ### tools
 
@@ -163,6 +165,24 @@
 - deployment package: a function is deployed to lambda as a zip file or container image
 - runtime: language-specific environment inside the application environment
 - function handler: the method within a function that specifically processes events
+
+### versions and aliases
+
+- once a lambda is deployed, it is live immediately!
+- versions: a new version is created each time a fn is published
+  - the current $LATEST becomes the next incremented immutable version;
+    - the latest: `arn:Aws:Llambda:aws-region:acct-id:function:some_name:$LATEST`
+    - a specific version: `arn:Aws:Llambda:aws-region:acct-id:function:some_name:123`
+- aliases: a pointer to a specific function version
+  - each alias has a specific arn
+    - a test alias`arn:Aws:Llambda:aws-region:acct-id:function:some_name:test`
+  - you can update an alias to point to a specific version number
+  - alias routing: you can point an alias to a a maximum of 2 fn versions, e.g. 10% to v1, and 90% to v2
+    - aka traffic shifting
+    - both version must:
+      - have the same runtime role
+      - have the same dead-letter queue configuration, or no dead-letter queue configuration
+      - must be published, and the alias cannot be $LATEST
 
 ### execution context
 
@@ -327,22 +347,6 @@
     - total cost is the duration of allocated memory GB per second
       - not memory used, but ALLOCATED! remember that
     - free tier: 1 million requests per month and 400,000 gb-seconds of compute time per month
-- versions and aliases
-  - once a lambda is deployed, it is live immediately, be sure you're versioning and aliasing correctly
-  - versions: management function deployments e.g a new version for beta testing
-    - a new version is created each time a fn is publishes
-      - publishing makes a snapshot copy of the $LATEST version
-        - the latest: `arn:Aws:Llambda:aws-region:acct-id:function:some_name:$LATEST`
-        - a specific version: `arn:Aws:Llambda:aws-region:acct-id:function:some_name:123`
-  - aliases: a pointer to a specific function version
-    - each alias has a specific arn
-      - a test alias`arn:Aws:Llambda:aws-region:acct-id:function:some_name:test`
-    - you can update an alias to point to a specific version number
-    - alias routing: you can point an alias to a a maximum of 2 fn versions, e.g. 10% to v1, and 90% to v2
-      - both version must:
-        - have the same runtime role
-        - have the same dead-letter queue configuration, or no dead-letter queue configuration
-        - must be published, and the alias cannot be $LATEST
 - other settings
   - ephemeral storage: 512mb -> 10gb
   - snapstart: reduces startup time by caching the fn definition

@@ -118,6 +118,15 @@ sam
 
   # deploy a packaged template into a cloudformation stack
   deploy
+
+  pipeline
+    # creates aws resources and permissions required to deploy application artifacts
+    # from a code repo into an aws account
+    bootstrap
+    # generate a pipeline conf file for deploying with SAM
+    init
+      --bootstrap # runs init + bootstrap in a guided process
+
 ```
 
 ### sam templates
@@ -176,8 +185,8 @@ Resources:
           - !Ref SomeCloudWatchAlarm
           - !Ref SomeClouodWatcAlarm
         Hooks: # run pre and post traffic shifting lambda fns
-          PreTraffic: !Ref SomeLambdaFn
-          PostTraffic: !Ref SomeLambdaFn
+          PreTraffic: !Ref SomeLambdaFn # after deployment, before traffic shifts
+          PostTraffic: !Ref SomeLambdaFn # after traffic shift
       # IAM policy
       Policies: AmazonDynamoDBReadOnlyAccess
 
@@ -217,3 +226,8 @@ Outputs:
   - you can then connect to it and debug in an interactive session throught an IDE
   - good for unit tests, debugging/troubleshooting issues
   - you can also generate sample payloads
+- deployments: traffic shifting (all at once, linear, canary) can be configured in the deployment section of the template.yaml
+
+### code deploy
+
+- utilizes the dpeloyment section of the template yaml

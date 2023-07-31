@@ -20,6 +20,7 @@
 - [aws blog: apis at scale](https://aws.amazon.com/blogs/architecture/how-to-architect-apis-for-scale-and-security/)
 - [distributed data management](https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/distributed-data-management.html)
 - [implementing microservices on AWS](https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/microservices-on-aws.pdf)
+- [CICD on AWS](https://docs.aws.amazon.com/whitepapers/latest/cicd_for_5g_networks_on_aws/cicd-on-aws.html)
 
 ### service categories
 
@@ -231,13 +232,20 @@
 - strategy for deploying new application versions and infrastructure are equally important
 - QA, qa, Qa, qA ;)~
 - standardization and optimation
-- auditing and reactingv to changes
+- auditing and reacting to changes
 - halt/rollback mechanisms
 - managing configuration changes
   - similar in terraform how you can consume deployed artifacts (e.g. ARN, ips, etc)
     - bake it into the deployment package: refrain from this as much as possible
     - 12factor it: the easiest, but should atleast be encrypted; however its difficult to share/update across nodes
     - load at runtime from some secrets manager: the most robust (and complex) option
+
+#### strategies
+
+- all at once: 100% of traffic goes to the new version
+- traffic shifting strategies
+  - canary deployment: e.g. 20% goes to new versio for 20 mins, and then once validated 100% goes to new version
+  - linear deployment: e.g. 10% of traffic goes to new version every 20 minutes until 100% is shifted
 
 ### testing
 

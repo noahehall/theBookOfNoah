@@ -8,6 +8,7 @@
 - [security](https://docs.aws.amazon.com/codedeploy/latest/userguide/security.html)
 - [deployment configurations](https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-configurations.html)
 - [lambda: safe deployments](https://aws.amazon.com/blogs/compute/implementing-safe-aws-lambda-deployments-with-aws-codedeploy/)
+- [rollback and redeploy](https://docs.aws.amazon.com/codedeploy/latest/userguide/deployments-rollback-and-redeploy.html)
 
 ## best practices
 

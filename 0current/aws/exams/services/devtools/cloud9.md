@@ -4,6 +4,8 @@
 
 ## links
 
+- [setting up cloud9](https://docs.aws.amazon.com/cloud9/latest/user-guide/setting-up.html)
+
 ## best practices
 
 ### anti patterns
