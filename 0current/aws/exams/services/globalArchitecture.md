@@ -42,7 +42,7 @@
 
 - a good metaphor is an partment building
   - they are responsibile for the building, you are responsible for everything inside your apartment
-- you: security **IN** the cloud
+- you: security **IN** the cloud: requires you to monitor and manage the env at the operating system and higher layers
   - customer data
   - platform, applications, IAM
   - operating system, network and firewall configuration: e.g. patching and upgrades

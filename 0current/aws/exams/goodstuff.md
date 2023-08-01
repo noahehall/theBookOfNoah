@@ -496,3 +496,11 @@
 - protect API endpoints
   - validate request bodies
   - throttle/rate limits
+
+### Security Monitoring
+
+- starts by answering the following questions
+  - what are the KPIs?
+  - how should you measure them?
+  - what are the thresholds for these metrics?
+  - what is the escalation process
