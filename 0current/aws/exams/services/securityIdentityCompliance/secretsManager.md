@@ -2,10 +2,11 @@
 
 - organize and management configuration data like credentials, passwords and licence keys
 - encryptions its data via KMS
+- protect access to your applications, services, and IT resources. rotate, manage, and retrieve database credentials, API keys, and other secrets throughout their life cycle.
 
 ## my thoughts
 
-- AWS vault
+- hashi vault
 
 ## links
 

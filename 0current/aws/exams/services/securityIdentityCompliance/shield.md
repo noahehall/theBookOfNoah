@@ -7,6 +7,7 @@
 ## links
 
 - [landing page](https://aws.amazon.com/shield/?did=ap_card&trk=ap_card)
+- [best practices pdf](https://d0.awsstatic.com/whitepapers/Security/DDoS_White_Paper.pdf)
 
 ## best practices
 
@@ -33,10 +34,18 @@
 ### standard
 
 - automatically enabled to all AWS customers
+- provides
+  - always-on detection: network flow monitoring inspects incoming traffic to AWS; uses a combination of traffic signatures, anomaly algorithms, and other analysis techniques to detect malicious traffic in real time.
+  - automatic inline mitigation and protection of layer 3 and 4 so there is no latency to your applications
 
 ### advanced
 
 - additional protections for internet-facing applications running on Amazon Elastic Compute Cloud (EC2), Elastic Load Balancing (ELB), Amazon CloudFront, AWS Global Accelerator, and Amazon Route 53
+- provides everything in standard plus
+  - expanded DDoS protection
+  - 24/7 DDoS response team
+  - cost protection for DDoS spikes in Amazon Elastic Compute Cloud (Amazon EC2), ELB, CloudFront, or Route 53 charges
+  - access to real time reports
 
 ## considerations
 

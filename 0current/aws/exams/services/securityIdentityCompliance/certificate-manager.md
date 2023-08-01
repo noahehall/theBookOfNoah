@@ -1,6 +1,6 @@
 # AWS certificate manager ACM
 
-- provision and manage SSL/TLS certificates with aws services and connected resources
+- provision, manage, and deploy public and private SSL/TLS certificates for use with AWS services and your internal connected resources.
 
 ## my thoughts
 
@@ -22,8 +22,6 @@
 ### pricing
 
 - provisioning SSL/TLS certs are free
-
-## terms
 
 ## basics
 

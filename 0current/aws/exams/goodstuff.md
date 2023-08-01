@@ -504,3 +504,12 @@
   - how should you measure them?
   - what are the thresholds for these metrics?
   - what is the escalation process
+
+### encryption
+
+- at rest: any data you persist/store for any duration
+  - client side: encrypt before you send it
+  - server side: encrypt after you receive it
+- in transit: any data that gets transmitted from one system to another
+  - TLS
+  - public/private certificates

@@ -319,6 +319,13 @@
 - WAF: configure rules to protect against web based attacks
 - Firewall Manager: configure WAF across AWS accounts
 
+### data at rest & in transit
+
+- key management service
+- CloudHSM
+- Certificate Manager
+- Secrets Manager
+
 ### AuthNZ
 
 - Cognito, Directory Service, IAM, Identity Center
