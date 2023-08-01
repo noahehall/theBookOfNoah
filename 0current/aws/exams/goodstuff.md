@@ -111,6 +111,9 @@
 - OLAP workloads: online analytical processing
 - command query respnsibility segregation: aka polyglot persistence
   - having a single big db instance thats queried by analytics services to provide `views` into the data for specific microservices/consumers
+- sharding: enables horizontal scaling
+  - the entire dataset is partitioned amongst multiple db instances
+  - items stored in a particular partition is based on a hash of a partition key
 
 ### best practices
 
@@ -123,28 +126,29 @@
   - always design around eventually consistency
     - strongly consistency means you received the latest, but subsequent writes it may be stale whenever based on previous reads
 
-### basics
+### relational
 
-- relational vs noSQL vs graph vs vector vs in memory
-  - relational is all about minimizing data storage via normalization
-    - this strict requirement on deduplication causes some queries to be cumbersome/cpu intensive
-  - sql: is all about minimizing CPU time relative to data storage and i/o
-    - data storage is now much cheaper than cpu time, hence the popularity of nosql dbs
-    - does have higher i/o costs as generally you have to retrieve duplicated data at each trip
-    - provides greater flexibilty in structuring your data, since your not concerned with normalization
-  - graph: for traversing multi-layered relationships
-  - in memory:
-- relational vs nosql workloads
-  - relational: either OLTP or OLAP, anything with unknown query patterns
-  - nosql OLTP with known request patterns
-    - live/interactive applications
-    - hot/active data
-    - smaller documents
-    - known query patterns
-- relational vs nosql scaling
-  - sharding: enables horizontal scaling for both relational and nosql dbs
-    - the entire dataset is partitioned amongst multiple db instances
-    - items stored in a particular partition is based on a hash of a partition key
+- all about minimizing data storage via normalization
+- this strict requirement on deduplication causes some queries to be cumbersome/cpu intensive
+- either OLTP or OLAP, anything with unknown query patterns
+
+### no/newsql
+
+- all about minimizing CPU time relative to data storage and i/o
+- data storage is now much cheaper than cpu time, hence the popularity of nosql dbs
+- does have higher i/o costs as generally you have to retrieve duplicated data at each trip
+- provides greater flexibilty in structuring your data, since your not concerned with normalization
+- OLTP with known request patterns
+  - live/interactive applications
+  - hot/active data
+  - smaller documents
+  - known query patterns
+
+### graph
+
+- for traversing multi-layered relationships
+
+### in memory
 
 ## virtualization
 
