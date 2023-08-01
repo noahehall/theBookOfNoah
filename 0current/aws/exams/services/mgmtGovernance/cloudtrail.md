@@ -4,6 +4,8 @@
 
 ## my thoughts
 
+- all api actions are recorded in cloudtrail, become one with cloudtrail
+
 ## links
 
 - [event history](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/view-cloudtrail-events.html)

@@ -39,7 +39,7 @@
 ## my thoughts
 
 - everything starts and ends with cloudwatch
-- but its so pricey your probably want an opensource solution
+- cloudwatch is the gateway integration to SNS, SQS and lambda (etc) for automated response and remediation patterns
 
 ## best practices
 
@@ -183,6 +183,10 @@
   - cost optimization: underutilization
   - scaling, alarms, status checks
   - resource optimization: network utilization, response times, traffic i/o, storage/diskspace consumption/data throughput
+
+### SNS
+
+- integration SNS with alarms that trigger notifications is a foundational pattern in AWS
 
 ### vpc
 
