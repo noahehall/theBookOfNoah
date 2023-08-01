@@ -13,7 +13,11 @@
 - [aws repost: user community forum](https://repost.aws/)
 - [well architected framework](https://aws.amazon.com/architecture/well-architected/)
 - [top 10 security items](https://aws.amazon.com/blogs/security/top-10-security-items-to-improve-in-your-aws-account/)
+
+### well architected tool
+
 - [well architected tool](https://aws.amazon.com/well-architected-tool/)
+- [user guide](https://docs.aws.amazon.com/wellarchitected/latest/userguide/wellarchitected-ug.pdf)
 
 ### guide
 
@@ -157,3 +161,12 @@
 - recommendations and strategies to use when designing cloud architectures that maximize efficiency and reduce waste
 
 ## Well architected tool
+
+- free self-service tool to review AWS workloads anderstand potential risks in your architectures, and identify steps for improvement.
+- general process
+  - define your workload by answering a series of architectural questions
+  - the tool evaluates your responses against the 6 pillars of the well architected framework
+  - provides a
+    - prioritized list of issues/recommendations
+    - links to videos and documentation concerning best practices
+    - generated report that summarizes your workload review

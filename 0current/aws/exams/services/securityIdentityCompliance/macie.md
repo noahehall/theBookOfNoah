@@ -1,6 +1,6 @@
 # Macie
 
-- uses machine learning to automatically discover, classify, and protect sensitive data in AWS
+- uses machine learning to automatically discover, classify, and protect sensitive data like PII/IP
 - such as personally identifiable information (PII) or intellectual property and provides you with dashboards and alerts that give visibility into how this data is being accessed or moved
 
 ## my thoughts
