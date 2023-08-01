@@ -16,8 +16,6 @@
 
 ### pricing
 
-## terms
-
 ## basics
 
 ## considerations

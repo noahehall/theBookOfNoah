@@ -290,6 +290,18 @@
 
 ## Security
 
+- security value chain
+  - Identify resources: config, systems manager
+  - protect your resourceS: shield, vpc, firewall manager, secreets manager, IAM, IoT device defender, key managment service, WAF
+  - detect & monitor: macie, inspector, guard duty
+  - automate responses: lambda
+  - investigate incidents: cloudwatch, cloud trail
+  - recover: ebs snapshots, glacier archives
+- maintaining a proper security and compliance posture: security hub
+  - collecting findings, aggregate and format into a structure format for processing
+  - prioritizing: organize and categorize
+  - visualization: across the entire stack
+
 ### AuthNZ
 
 - Cognito, Directory Service, IAM, Identity Center
