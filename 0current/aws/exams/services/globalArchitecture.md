@@ -4,9 +4,6 @@
 
 ## my thoughts
 
-- become one with the aws CLI and components of IAM and VPC
-- protect the king (aws root user) at all costs
-
 ## links
 
 - [global infrastructure intro](https://aws.amazon.com/about-aws/global-infrastructure/)
@@ -16,6 +13,7 @@
 - [aws repost: user community forum](https://repost.aws/)
 - [well architected framework](https://aws.amazon.com/architecture/well-architected/)
 - [top 10 security items](https://aws.amazon.com/blogs/security/top-10-security-items-to-improve-in-your-aws-account/)
+- [well architected tool](https://aws.amazon.com/well-architected-tool/)
 
 ### guide
 
@@ -157,3 +155,5 @@
 ### sustainability
 
 - recommendations and strategies to use when designing cloud architectures that maximize efficiency and reduce waste
+
+## Well architected tool
