@@ -114,6 +114,16 @@
 - sharding: enables horizontal scaling
   - the entire dataset is partitioned amongst multiple db instances
   - items stored in a particular partition is based on a hash of a partition key
+- no/newsql
+  - all about minimizing CPU time relative to data storage and i/o
+  - data storage is now much cheaper than cpu time, hence the popularity of nosql dbs
+  - does have higher i/o costs as generally you have to retrieve duplicated data at each trip
+  - provides greater flexibilty in structuring your data, since your not concerned with normalization
+  - OLTP with known request patterns
+    - live/interactive applications
+    - hot/active data
+    - smaller documents
+    - known query patterns
 
 ### best practices
 
@@ -126,37 +136,33 @@
   - always design around eventually consistency
     - strongly consistency means you received the latest, but subsequent writes it may be stale whenever based on previous reads
 
-### relational
+### data sources
+
+- structured: stored as a series of data values in related tables for complex queries and analysis
+- unstructured: stored as files (e.g. media, video, etc), thus querying requires specialized tools to catalog and query
+- semistructured: stored in json files that are loaded at runtime; the structure is highly flexible enabling some querying and analysis but not at the level of structured data
+
+### db architectures
+
+#### relational
 
 - all about minimizing data storage via normalization
 - this strict requirement on deduplication causes some queries to be cumbersome/cpu intensive
 - either OLTP or OLAP, anything with unknown query patterns
 
-### no/newsql
-
-- all about minimizing CPU time relative to data storage and i/o
-- data storage is now much cheaper than cpu time, hence the popularity of nosql dbs
-- does have higher i/o costs as generally you have to retrieve duplicated data at each trip
-- provides greater flexibilty in structuring your data, since your not concerned with normalization
-- OLTP with known request patterns
-  - live/interactive applications
-  - hot/active data
-  - smaller documents
-  - known query patterns
-
-#### document
+##### document
 
 - store data as some type of document structure, e.g. JSON
 
-### graph
+#### graph
 
 - for traversing multi-layered relationships and highly connected datasets
 
-### key value
+#### key value
 
-- optimized to store and retrieve key-value pairs in large volumes and in milliseconds
+- optimized to store and retrieve unstructured data in key-value pairs in large volumes and in milliseconds
 
-### in memory
+#### in memory
 
 - used for read-heavy and compute intensive applications that require low latency access to data
 
