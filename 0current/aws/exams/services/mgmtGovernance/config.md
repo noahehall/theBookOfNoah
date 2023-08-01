@@ -20,8 +20,12 @@
 
 - assess, monitor and record resource configuration changes
 - audit and evaluate compliance resource configurations against your organizations policies
-- correlate configuration changes with account events
+- Evaluate resource configurations for potential vulnerabilities, and review your configuration history after potential incidents to examine your security posture.
+- operational troubleshooting and change management
 - get a snapshot view of how resources are configured and create rules to enforce a compliant state
+- Discover resources that exist in your account or publish the configuration data of third-party resources into AWS Config, record their configurations, and capture any changes to quickly troubleshoot operational issues.
+- Codify your compliance requirements as AWS Config rules and author remediation actions, automating the assessment of your resource configurations across your organization.
+- correlate configuration changes with account events
 
 ### pricing
 

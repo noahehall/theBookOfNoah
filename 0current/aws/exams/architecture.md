@@ -30,6 +30,8 @@
 - [well architected framework](https://aws.amazon.com/architecture/well-architected/)
 - [whitepapers](https://docs.aws.amazon.com/whitepapers/latest/aws-overview/compute-services.html)
 - [youtube: databases on aws](https://www.youtube.com/watch?v=WE8N5BU5MeI&t=9s)
+- [incident response plans](https://aws.amazon.com/blogs/publicsector/building-a-cloud-specific-incident-response-plan/)
+- [incident response plan guide pdf](https://d1.awsstatic.com/whitepapers/aws_security_incident_response.pdf)
 
 ### service categories
 
@@ -329,3 +331,11 @@
 ### AuthNZ
 
 - Cognito, Directory Service, IAM, Identity Center
+
+### Incident Response
+
+- broad strategies
+  - use APIs for automation: automate routine tasks that need to be performed, e.g. isolating resources
+  - forensic data analysis: create snapshots of data/configuration to capture the current state for later investigation and before remediation
+  - immutable infrastructure: after capturing snapshots, recreate resources with a clean slate and replace all keys, credentials, etc
+  - coordination and orchestration: utilize step functions to stitch together workflows with adaptability
