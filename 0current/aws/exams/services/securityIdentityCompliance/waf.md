@@ -1,6 +1,7 @@
 # Web Application Firewall (WAF)
 
-- protect web applications from common exploits
+- protect web applications from common exploits and malicious web traffic
+- configure rules that allow, block, or monitor (count) web requests based on conditions that you define. These conditions include IP addresses, HTTP headers, HTTP body, uniform resource identifier (URI) strings, structured query language (SQL) injection, and cross-site scripting.
 
 ## my thoughts
 
@@ -9,6 +10,7 @@
 - [landing page](https://aws.amazon.com/waf/?did=ap_card&trk=ap_card)
 - [intro](https://docs.aws.amazon.com/waf/latest/developerguide/how-aws-waf-works.html)
 - [mitigate OWASPs 10 web app vulnerabilities](https://docs.aws.amazon.com/whitepapers/latest/guidelines-for-implementing-aws-waf/guidelines-for-implementing-aws-waf.html)
+- [guildelines for implementing WAF pdf](https://d1.awsstatic.com/whitepapers/guidelines-implementing-aws-waf.pdf?did=wp_card&trk=wp_card)
 
 ## best practices
 
@@ -39,6 +41,42 @@
 
 ## basics
 
+- front CDNs and application load balancers
+
+### rules
+
+- can filter (block/allow)
+  - ip addrs/ranges
+  - patterns in http headers & body
+  - url string patterns
+  - sql injection
+  - cross-site scripting
+- configurations can be logically combined
+  - filters ANDed to form conditions
+  - conditions ANDed to form rules
+  - rules ORed to form web ACLs
+  - web ACLs attached to cloudfront or applicatoin load balancer endpoints
+- rules execute at specific layers
+  - cloudfront: edge locations
+  - ALBs: in the region of the ALB
+
+#### rule types
+
+- regular: checking for specific conditions and either allow/deny
+- rate-based: allow traffic if its below a certain rate calculated over a 5 minute window
+
 ## considerations
 
 ## integrations
+
+### cloudfront
+
+- not only can it protect cdn edge locations, but can also be used to create events and trigger alarms
+
+### elastic load balancer (ALB)
+
+- application load balancer endpoints
+
+### Api Gateway
+
+- should be able to apply it to gateay too?
