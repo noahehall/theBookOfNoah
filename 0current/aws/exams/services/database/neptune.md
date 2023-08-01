@@ -15,6 +15,9 @@
 
 ## features
 
+- read replicas for highly availability
+- create point-in-time copies, configure continuous backup to Amazon Simple Storage Service (Amazon S3) with replication across Availability Zones
+
 ### pricing
 
 ## terms

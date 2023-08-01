@@ -144,11 +144,21 @@
   - smaller documents
   - known query patterns
 
+#### document
+
+- store data as some type of document structure, e.g. JSON
+
 ### graph
 
-- for traversing multi-layered relationships
+- for traversing multi-layered relationships and highly connected datasets
+
+### key value
+
+- optimized to store and retrieve key-value pairs in large volumes and in milliseconds
 
 ### in memory
+
+- used for read-heavy and compute intensive applications that require low latency access to data
 
 ## virtualization
 

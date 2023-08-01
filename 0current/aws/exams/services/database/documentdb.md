@@ -1,6 +1,6 @@
 # DocumentDB (with mongodb compatibility)
 
-- fully managed document db for mongodb workloads
+- fully managed document db for mongodb workloads where the storage and compute are decoupled, allowing each to scale independently.
 - targets content management systems, user profiles, etc
 
 ## my thoughts
