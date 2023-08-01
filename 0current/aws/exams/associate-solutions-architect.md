@@ -3,4 +3,4 @@
 - last updated in 2023 for version SSA-C03
 - bookmark:
   - Exam Prep (With practice material) > module 1
-  - Getting Started with AWS Security, Identity, and Compliance > Amazon Macie for Data Monitoring
+  - Getting Started with AWS Security, Identity, and Compliance > Securing Your Compute Resources > AWS services for infrastructure protection

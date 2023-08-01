@@ -302,6 +302,23 @@
   - prioritizing: organize and categorize
   - visualization: across the entire stack
 
+### securing infrastructure
+
+- VPC: network and host level boundaries
+  - isolates your compute resources
+  - provides multiple layers of defense
+  - offers a secure VPN connection AWS
+- Inspector: Managing system security configuration and maintenance of running components
+  - identify application security issues
+  - enforce security best practices
+  - generates assessment reports
+- IAM/Resource Policies: enforcing service-level protection
+  - service endpoint security configuration
+  - principle of least privelege
+- Shield: protection against DDoS attacks
+- WAF: configure rules to protect against web based attacks
+- Firewall Manager: configure WAF across AWS accounts
+
 ### AuthNZ
 
 - Cognito, Directory Service, IAM, Identity Center
