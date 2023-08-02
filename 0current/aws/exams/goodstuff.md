@@ -210,6 +210,9 @@
 ##### graph
 
 - for traversing multi-layered relationships and highly connected datasets purposely built for semi/un/structured data
+- In a graph data model, relationships are first-class citizens, and the data is modeled as nodes (vertices) and links (edges)
+- Nodes: are usually a person, place, or thing
+- links: how nodes are all connected
 
 ##### key value
 

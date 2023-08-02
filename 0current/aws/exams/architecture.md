@@ -47,6 +47,7 @@
 - [management and governance](https://aws.amazon.com/products/management-and-governance/)
 - [frontend and mobile](https://aws.amazon.com/products/frontend-web-mobile/)
 - [securing enterprise grade serverless apps video](https://www.youtube.com/watch?v=tYhUWbDZ4-8)
+- [machine learning](https://aws.amazon.com/machine-learning/)
 
 ### best practices
 
