@@ -222,6 +222,13 @@
 
 - used for read-heavy and compute intensive applications that require low latency access to semi/structured data
 - performance is improved because data is retrieved from in-memory data stores instead of waiting on databases and disk I/O.
+- cache types
+  - built in:
+  - application
+  - centralized: stores data externally from the database in a remote non-relational key-value database
+- cache strategies
+  - lazy: reactive. Data is put into the cache the first time it is requested
+  - write through: proactive. Data is put into the cache at the same time it is put into the database.
 
 ##### Vector
 

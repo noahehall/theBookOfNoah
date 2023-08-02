@@ -12,6 +12,12 @@
 - [redis getting started (tut)](https://aws.amazon.com/getting-started/hands-on/building-fast-session-caching-with-amazon-elasticache-for-redis/)
 - [faqs](https://aws.amazon.com/elasticache/faqs/?da=sec&sec=prep)
 - [redis vs memcached](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SelectEngine.html)
+- [user guide](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/WhatIs.html)
+- [amazon linux: redis cli](https://aws.amazon.com/amazon-linux-2/faqs/#Amazon_Linux_Extras)
+- [common use cases](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/elasticache-use-cases.html)
+- [security](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Security.html)
+- [IAM: authnz](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/IAM.html)
+- [redis: auth](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/auth.html)
 
 ## best practices
 
@@ -57,12 +63,17 @@
 
 - supports complex data types, data replication, and high availability
 - ideal for session caching, full-page caching, message queue applications, leaderboards, etc
+- Using the Redis AUTH feature, ElastiCache can also authenticate clients
 
 #### memcached
 
 - for data that is relatively small and static, e.g. html/css/js
 
-### encryption
+### security
+
+- authnz: IAM
+
+#### encryption
 
 - at rest
   - Apply optional encryption using either service-managed encryption at rest or customer-managed AWS KMS keys using AWS KMS.
@@ -70,3 +81,9 @@
 ## considerations
 
 ## integrations
+
+### IAM
+
+### VPC
+
+- On-premises servers can use ElastiCache provided that there is connectivity between your VPC and data center through either a VPN or AWS Direct Connect.
