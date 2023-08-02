@@ -1,6 +1,6 @@
 # elastic beanstalk
 
-- platfgorm for deploying and managing applications without managing/provisioning infrastructure
+- platform for deploying and managing applications developed with common web languages
 
 ## my thoughts
 
