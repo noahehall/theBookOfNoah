@@ -9,6 +9,9 @@
 - [spectrum: getting started](https://docs.aws.amazon.com/redshift/latest/dg/c-getting-started-using-spectrum.html)
 - [redshift: docs](https://docs.aws.amazon.com/redshift/index.html)
 - [resources](https://aws.amazon.com/redshift/resources/)
+- [clusters](https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html)
+- [queries](https://docs.aws.amazon.com/redshift/latest/mgmt/query-databases.html)
+- [iam: user management](https://docs.aws.amazon.com/redshift/latest/mgmt/iam-redshift-user-mgmt.html)
 
 ## best practices
 
@@ -70,7 +73,24 @@
 - ssl/tls for data in transit
 - kms data at rest
 
+### query editor
+
+- requires a specific cluster node type, vpc routing and specific IAM permissions
+
 ## considerations
+
+- either quick/normal launch
+- cluster id
+- db name, port (e.g. 5439), master name/pass,
+- node type
+- cluster type: single/multi node
+- number of compute nodes
+- cluster parameter group
+- encryption type: KMS/HSM
+- vpc: subnets, security groups, public access, vpc routing, AZ,
+- cloudwatch integration for disk usage
+- maintanence
+- IAM role for transferring data from s3 into redshift
 
 ## integrations
 
@@ -96,3 +116,5 @@
 ### QuickSight
 
 - data viz
+
+### cloudwatch
