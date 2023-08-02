@@ -1,8 +1,6 @@
 # RDS
 
 - relational database supporting 7 different RDBMDS's like postgres, mysql, oracle, mariadb and sql server
-- use cases
-  - pg/mysql with less administration
 
 ## my thoughts
 
@@ -17,13 +15,40 @@
 
 ## best practices
 
+- restrict access to your database by placing it inside of a VPC
+  - create an internet gateway for access outside the VPC
+
 ### anti patterns
 
 ## features
 
 - scale DB instance components: modify memory, processor size, allocated storage or IOPS individually individually
+- enhanced availability and durability through the use of Multi-AZ deployments
+- high availability, throughput, and storage scalability
 
 ### pricing
+
+- complex pricing just use the pricing calculator and check the docs, but primarily its 3 domains
+  - compute cost: ondemand/reserve
+  - storage and i/o:
+- by instance type
+  - on demand: pay by hour
+  - reserved: one or three year term
+- by db engine
+  - mysql
+  - pg
+  - mariadb
+  - oracle
+  - sqlserver
+  - aurora: see the [markdown file](./rds-aurora.md)
+- by storage options: Storage billed per gigabyte per month, and I/O is billed per million requests.
+  - general purpose SSD
+  - provisioned IOPS SSD
+- by deployments
+  - Outposts
+  - Custom
+  - Proxy
+- data transfer costs is also determined by engine type: amount of data transferred to or from the internet and other AWS Regions
 
 ## terms
 
@@ -31,9 +56,10 @@
 
 ### db instance
 
+- determines the resources available to your instance
 - the compute portion of RDS, the EC2 that runs the selected db engine
   - even tho the underlying service is EC2, you manage it via the RDS console
-- instance class
+- instance class: how much memory, CPU, and I/O capabilities, in terms of network and storage throughput, will be available to the database engine
   - standard: m; balance of copmute, memory and network resources
   - memory optimized: r and x; for workloads that process large datasets in memory
   - burstable: t; ability to burst beyond the baseline performance
@@ -51,9 +77,9 @@
 
 ### high availability with Multi-AZ
 
-- multi-az deployments: automates data replication & failover across AZs
-- a redundant instance is placed within the same vpc but different subnet and AZ
-  - you technically can use the same two subnets in the same AZ, but that defeats the purpose
+- creates redundant instances of the databases in the same AZ different Availability Zones.
+  - In the case of an infrastructure failure, performs an automatic failover to the standby in another Availability Zone
+  - automates data replication & failover across AZs
 - your apps connect to a single endpoint, and DNS handles routing to the secondary incase the primary fails
   - you need to ensure your app reconnects on failure with exponential backoff
     - if issues connecting to the secondary: update any cached DNS lookups
@@ -72,6 +98,7 @@
 - it boils down to application security, vpc, NACL, security groups, and IAM
 - encryption at rest: can be enabled in configuration
 - encryption in transit: enable SSL or TLS
+- check the [security groups file](../networkingContentDelivery/securitygroups.md)
 
 ## considerations
 

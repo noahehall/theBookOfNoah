@@ -108,7 +108,10 @@
 ## databases
 
 - OLTP workloads: online transactional processing
-- OLAP workloads: online analytical processing
+  - focus on recording Update, Insertion, and Deletion data transactions
+- OLAP workloads: online analytical processing focusing on read operations, e.g. a data warehouse
+  - store historical data that has been input by OLTP
+  - can extract information from a large database and analyze it for decision-making
 - command query respnsibility segregation: aka polyglot persistence
   - having a single big db instance thats queried by analytics services to provide `views` into the data for specific microservices/consumers
 - sharding: enables horizontal scaling
@@ -135,12 +138,16 @@
   - eventually consistent: previous writes may NOT be reflected
   - always design around eventually consistency
     - strongly consistency means you received the latest, but subsequent writes it may be stale whenever based on previous reads
+- use purpose built dbs instead of one general purpose
+  - write heavy OLTP
+  - ready heavy OLAP
+  - key-value, document, graph, etc
 
 ### data sources
 
 - structured: stored as a series of data values in related tables for complex queries and analysis
-- unstructured: stored as files (e.g. media, video, etc), thus querying requires specialized tools to catalog and query
-- semistructured: stored in json files that are loaded at runtime; the structure is highly flexible enabling some querying and analysis but not at the level of structured data
+- unstructured: stored as files (e.g. media, video, documents, etc), thus querying requires specialized tools to catalog and query
+- semistructured: stored in json/xml files that are loaded at runtime; the structure is highly flexible enabling some querying and analysis but not at the level of structured data
 
 ### db architectures
 
@@ -152,19 +159,19 @@
 
 ##### document
 
-- store data as some type of document structure, e.g. JSON
+- store semi/unstructured data as some type of file
 
 #### graph
 
-- for traversing multi-layered relationships and highly connected datasets
+- for traversing multi-layered relationships and highly connected datasets purposely built for semi/un/structured data
 
 #### key value
 
-- optimized to store and retrieve unstructured data in key-value pairs in large volumes and in milliseconds
+- optimized to store and retrieve unstructured non-relational data in key-value pairs in large volumes and in milliseconds
 
 #### in memory
 
-- used for read-heavy and compute intensive applications that require low latency access to data
+- used for read-heavy and compute intensive applications that require low latency access to semi/structured data
 
 ## virtualization
 
