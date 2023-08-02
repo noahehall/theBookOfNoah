@@ -172,7 +172,6 @@
   - scalability, faol-tolerence, availability
   - ACID, CAP-thereom
   - data structure
--
 
 ### data sources
 
@@ -233,6 +232,13 @@
 ##### ledger
 
 - complete, immutable and verifiable history of data changes
+
+##### data warehouses
+
+- designed and used as repositories for analytical data
+- store and maintain aggregate values generated from relational databases.
+- data is stored in columns instead of rows
+  - and is indexed in a way that matches the way analytical queries are written.
 
 ### migration planning
 
