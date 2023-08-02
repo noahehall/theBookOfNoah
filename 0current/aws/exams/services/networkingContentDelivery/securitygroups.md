@@ -24,7 +24,11 @@
 
 ### RDS
 
-- control which IP ranges or EC2 instances can connect to a db instance
+- control which IP ranges or EC2 instances can connect to a db and ec2 instances
+- uses 3 types of security groups
+  - VPC
+  - database
+  - EC2
 
 ### ELB
 

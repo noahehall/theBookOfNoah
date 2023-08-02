@@ -1,6 +1,6 @@
 # dynamodb
 
-- fully managed nosql db providing durability high availability and autoscaling
+- fully managed key-value/document db providing durability high availability and autoscaling
 - use cases
   - super scalable key/value/document store
   - ms response time for transactional data

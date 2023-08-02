@@ -10,7 +10,7 @@
 
 ## features
 
-- migrate non aws databases dynamodb
+- migrate non aws databases to dynamodb, rds, aurora, etc
 
 ## terms
 

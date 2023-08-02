@@ -12,6 +12,8 @@
 - [configuration](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_RDS_Configuring.html)
 - [snapshots and restoring](https://docs.aws.amazon.com//AmazonRDS/latest/UserGuide/CHAP_CommonTasks.BackupRestore.html)
 - [security](https://docs.aws.amazon.com//AmazonRDS/latest/UserGuide/UsingWithRDS.html)
+- [dev resources](https://aws.amazon.com/rds/resources/)
+- [vpc: rds user guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html)
 
 ## best practices
 
@@ -53,6 +55,21 @@
 ## terms
 
 ## basics
+
+- general workflow
+  - pick db engine and configuration details (instance class, storage, master pass/name, etc)
+  - create a VPC for the EC2 instance and the db engine
+    - setup subnets
+      - private: at least 2 private subnets in two distinct AZs
+      - public: adds an EC2 instance in a third public subnet for connecting to the db in the private subnets
+    - setup VPC security groups
+  - IAM authnz
+  - encryption
+  - backup snapshots windows
+  - monitoring
+  - log exports to cloudwatch
+  - version maintainence and time frames
+  - deletion protection
 
 ### db instance
 
@@ -96,9 +113,10 @@
 ### security
 
 - it boils down to application security, vpc, NACL, security groups, and IAM
-- encryption at rest: can be enabled in configuration
-- encryption in transit: enable SSL or TLS
-- check the [security groups file](../networkingContentDelivery/securitygroups.md)
+- encryption at rest: can be enabled in configuration; uses the industry-standard AES-256 bit encryption
+- encryption in transit: enable SSL or TLS for securing communicatoin
+- restrict access with security groups
+- manage credentials with IAM
 
 ## considerations
 
@@ -110,3 +128,17 @@
 - backups: automated vs manual snapshopts
 
 ## integrations
+
+### vpc
+
+### security groups
+
+- restrict access
+- check the [markdown file](../networkingContentDelivery/securitygroups.md)
+
+### IAM
+
+- managing credentials: requires authNZ for access and table level permissions
+- check the [markdown file](../securityIdentityCompliance/iam.md)
+
+### ec2

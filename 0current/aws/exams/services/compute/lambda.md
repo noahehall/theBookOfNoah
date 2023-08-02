@@ -9,6 +9,10 @@
 ## my thoughts
 
 - think short quick i/o; else prefer ecs or straight up ec2
+- is the primary mechanism for integrating AWS services usually paired with:
+  - cloudwatch for events/triggers
+  - SNS/SQS for messaging
+  - step functions for orchestration
 
 ## links
 
