@@ -32,6 +32,7 @@
 - [youtube: databases on aws](https://www.youtube.com/watch?v=WE8N5BU5MeI&t=9s)
 - [incident response plans](https://aws.amazon.com/blogs/publicsector/building-a-cloud-specific-incident-response-plan/)
 - [incident response plan guide pdf](https://d1.awsstatic.com/whitepapers/aws_security_incident_response.pdf)
+- [aws samples repo](https://github.com/aws-samples)
 
 ### service categories
 

@@ -1,6 +1,6 @@
 # RDS
 
-- relational database supporting 7 different RDBMDS's like postgres, mysql, oracle, mariadb and sql server
+- server-based relational database supporting 7 different RDBMDS's like postgres, mysql, oracle, mariadb and sql server
 
 ## my thoughts
 

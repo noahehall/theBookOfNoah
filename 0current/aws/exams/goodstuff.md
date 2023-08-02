@@ -52,6 +52,28 @@
   - this is more incremental then a pure lift and shift
   - you will need to connect the remaining legacy services with the new cloud services until everything is fully migrated
 
+### server-based vs serverless architectures
+
+- cost aside, its all about
+  - where you want to spend your time
+  - level of server/host/application customization/control required to fulfill business needs
+  - technical maturity of team and access to subject matter experts
+
+#### server based
+
+- you manage all aspects of scalability, availablility, fault-tolerance, softare maintenance and host configuration
+- use cases/considerations
+  - predictable, consistent workloads with long-running/intensive computations
+  - custom host configurations or software implementations
+  - ability to manage, configure and maintain the underlying software
+
+#### serverless
+
+- serverless: opposite of server based
+- use cases/considerations
+  - purpose driven architectures and application flexibility
+  - quick to market
+
 ## APIs
 
 ### best practices
@@ -138,10 +160,19 @@
   - eventually consistent: previous writes may NOT be reflected
   - always design around eventually consistency
     - strongly consistency means you received the latest, but subsequent writes it may be stale whenever based on previous reads
-- use purpose built dbs instead of one general purpose
-  - write heavy OLTP
-  - ready heavy OLAP
-  - key-value, document, graph, etc
+- use purpose built dbs instead of general purpose
+  - purpose built DBS excel in as peicfic domain with unmatched performance relative to general purpose dbs
+  - deploy mulitple DB engines for specific needs and run analytics across a data warehouse
+
+### purpose built databases
+
+- data stores that solve specific data needs
+  - READ heavy
+  - WRITE heavy
+  - scalability, faol-tolerence, availability
+  - ACID, CAP-thereom
+  - data structure
+-
 
 ### data sources
 
@@ -161,6 +192,7 @@
 - Normalized relational or dimensional data warehouse
 - Optimized for storage
 - best scaled vertically
+- referential integrity, ACID transactions, schema-on-write
 
 #### Non Relational
 
@@ -182,17 +214,27 @@
 ##### key value
 
 - optimized to store and retrieve unstructured non-relational data in key-value pairs in large volumes and in milliseconds
+- high throughput, low latency reads/writes, endless scale
 
 ##### in memory
 
 - used for read-heavy and compute intensive applications that require low latency access to semi/structured data
+- query by key with microsecond latency
+
+##### Vector
+
+##### time series
+
+- collect, store and process data by sequences by time
+
+##### ledger
+
+- complete, immutable and verifiable history of data changes
 
 ### migration planning
 
 - homogenous migrations: migrating from/to the same db engine
 - heterogeneous migrations: migration from/to different db engines
-
-##### Vector
 
 ## virtualization
 

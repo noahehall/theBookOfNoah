@@ -1,6 +1,6 @@
 # Aurora
 
-- cloudnative managed mysql/postgresql special built by AWS to take advantage of aws cloud scalability and durability
+- serverless managed mysql/postgresql special built by AWS to take advantage of aws cloud scalability and durability
 
 ## my thoughts
 
