@@ -153,25 +153,46 @@
 
 #### relational
 
+- structured, normalized schemas
 - all about minimizing data storage via normalization
 - this strict requirement on deduplication causes some queries to be cumbersome/cpu intensive
 - either OLTP or OLAP, anything with unknown query patterns
+  - only normalized data can efficiently respond to unknown queries
+- Normalized relational or dimensional data warehouse
+- Optimized for storage
+- best scaled vertically
+
+#### Non Relational
+
+- NoSQL: un/semistructured, lacking the ACID mechanisms of relational dbs
+- NewSQL: un/semistructured, gaining traction on the ACID mechanisms of relational DBs
+- Denormalized document, wide column, or key-value
+- Optimized for compute
+- best scaled horizontally
+- OLTP web/mobile apps
 
 ##### document
 
 - store semi/unstructured data as some type of file
 
-#### graph
+##### graph
 
 - for traversing multi-layered relationships and highly connected datasets purposely built for semi/un/structured data
 
-#### key value
+##### key value
 
 - optimized to store and retrieve unstructured non-relational data in key-value pairs in large volumes and in milliseconds
 
-#### in memory
+##### in memory
 
 - used for read-heavy and compute intensive applications that require low latency access to semi/structured data
+
+### migration planning
+
+- homogenous migrations: migrating from/to the same db engine
+- heterogeneous migrations: migration from/to different db engines
+
+##### Vector
 
 ## virtualization
 

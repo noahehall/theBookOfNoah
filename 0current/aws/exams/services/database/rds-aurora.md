@@ -8,6 +8,7 @@
 
 - [landing page](https://aws.amazon.com/rds/aurora/?did=ap_card&trk=ap_card)
 - [dev resources](https://aws.amazon.com/rds/aurora/resources/)
+- [security overview](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.Security.html)
 
 ## best practices
 
@@ -28,7 +29,12 @@
 
 ### pricing
 
-- check the docs
+- i/o
+  - charged for data transfers out to the internet and to other AWS Regions.
+- instance types
+  - on demand
+  - serverless
+  - reserved
 
 ## terms
 

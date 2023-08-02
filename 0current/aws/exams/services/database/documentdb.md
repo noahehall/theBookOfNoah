@@ -1,7 +1,6 @@
 # DocumentDB (with mongodb compatibility)
 
 - fully managed document db for mongodb workloads where the storage and compute are decoupled, allowing each to scale independently.
-- targets content management systems, user profiles, etc
 
 ## my thoughts
 
@@ -15,6 +14,8 @@
 
 ## features
 
+- run the same application code and use the same drivers and tools that you use with MongoDB.
+
 ### pricing
 
 - based on 4 dimensions
@@ -26,6 +27,13 @@
 ## terms
 
 ## basics
+
+- entities
+  - table: collection
+  - row: document
+  - column: field
+  - primary key: object id
+  - nested table/object: embedded document
 
 ## considerations
 

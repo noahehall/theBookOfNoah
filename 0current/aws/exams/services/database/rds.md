@@ -14,6 +14,8 @@
 - [security](https://docs.aws.amazon.com//AmazonRDS/latest/UserGuide/UsingWithRDS.html)
 - [dev resources](https://aws.amazon.com/rds/resources/)
 - [vpc: rds user guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html)
+- [controlling access with security groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.RDSSecurityGroups.html)
+- [instance types](https://aws.amazon.com/rds/instance-types/)
 
 ## best practices
 
@@ -30,9 +32,6 @@
 
 ### pricing
 
-- complex pricing just use the pricing calculator and check the docs, but primarily its 3 domains
-  - compute cost: ondemand/reserve
-  - storage and i/o:
 - by instance type
   - on demand: pay by hour
   - reserved: one or three year term

@@ -3,4 +3,4 @@
 - last updated in 2023 for version SSA-C03
 - bookmark:
   - Exam Prep (With practice material) > module 1
-  - AWS Database Offerings > cloud based databases > Non-Relational Databases
+  - AWS Database Offerings > database architectures > architectures overview

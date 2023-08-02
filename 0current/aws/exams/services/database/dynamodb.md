@@ -1,23 +1,18 @@
 # dynamodb
 
-- fully managed key-value/document db providing durability high availability and autoscaling
-- use cases
-  - super scalable key/value/document store
-  - ms response time for transactional data
+- fully managed key-value/document db providing multi-Region, multi-master deployments, durability, high availability and autoscaling, ACID-compliant transactions.
 
 ## my thoughts
 
 - getting dynamodb right is all about the designing the data model
   - you'll end up with more tables than you would prefer, smaller items than you prefer, and longer partition keys than you prefer
-  - colocate hot data to a table thats equally distributed across partitions
-    - cold data should be deleted via TTL or moved to s3
-  - read the best practices articles, then read it again
+  - the time spent planning will bear fruit at runtime
+  - read the best practices articles, then read it again and recite it before bedtime
 
 ## links
 
-- [faqs](https://aws.amazon.com/dynamodb/faqs/?da=sec&sec=prep)
+- [core components](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.CoreComponents.html)
 - [AAA best practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
-- [landing page](https://aws.amazon.com/dynamodb/?did=ap_card&trk=ap_card)
 - [accelerator (DAX)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.html)
 - [change data capture](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/streamsmain.html)
 - [client and server side encryption](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/client-server-side.html)
@@ -27,18 +22,22 @@
 - [encryption client: how it works](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/how-it-works.html)
 - [encryption client: intro](https://docs.aws.amazon.com/dynamodb-encryption-client/latest/devguide/what-is-ddb-encrypt.html)
 - [error handling](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html)
+- [faqs](https://aws.amazon.com/dynamodb/faqs/?da=sec&sec=prep)
+- [IAM: authnz](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/authentication-and-access-control.html)
+- [lambda: dynamic content management](https://github.com/aws-samples/aws-lambda-manage-rds-connections)
+- [landing page](https://aws.amazon.com/dynamodb/?did=ap_card&trk=ap_card)
+- [limits](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html)
 - [pagination](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.Pagination.html)
 - [query (guide)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html)
 - [query (ref)](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html)
 - [Scan](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html)
+- [setting up dynamodb local](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html)
 - [streams and lambda triggers](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.html)
 - [streams and lambdas (tut)](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.Tutorial.html)
 - [streams](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
 - [tables](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html)
-- [limits](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html)
 - [working with large attributes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-use-s3-too.html)
-- [setting up dynamodb local](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html)
-- [lambda: dynamic content management](https://github.com/aws-samples/aws-lambda-manage-rds-connections)
+- [encryption at rest](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/EncryptionAtRest.html)
 
 ### development
 
@@ -62,6 +61,8 @@
 - design your data model for requests that are evenly distributed across partitions
   - updating a single attribute in an item requires rewriting the entire item
   - the recommended item size is under 4kb
+  - colocate hot data to a table thats equally distributed across partitions
+    - cold data should be deleted via TTL or moved to s3
 - read through the architecture section below, then read through it again
 - monitoring and troubleshooting: watch your metrics
   - autoscaling takes time to get right, ensure your target utilization matches the spikes in your request patterns
@@ -119,11 +120,19 @@
 
 ### pricing
 
-- charged for data stored and R/W throughput
+- read/write throughput depending on capacity modes
+  - on demand: billed for each read and write
+    - you dont need to specify expected throughput
+    - best if you create new tables with unknown workloads or have unpredictable application traffic.
+  - provisioned: billed for read and write capacity & use auto scaling to automatically adjust your table’s capacity within those limits
+    - not for each specific read/write
+    - best if you have predictable application traffic or run applications whose traffic is consistent or ramps up and down gradually.
+- data storage
+- optional features
 
 ## terms
 
-- consistency: ability to read data understanding that all prior writes will be reflected in the results returned
+- consistency: the probability that previous writes will be reflected in future reads
 - scatter gather technique: funny name for a regular-ole thread-safe data chunking algorithm
   - the base thread determines the number of chunks primary key for each chunk
   - threads are created to read/write chunks to/from dynamodb
@@ -163,45 +172,55 @@
 - items: i.e. records in a table
 - attributes: i.e. columns in an item
   - primary key: must be unique across all items; either partition key or partition + sort
-    - partition key: is always required
+    - partition key: unique ID determines which node stores an item
     - sort key: if provided, its required in all items and makes the primary key a composite key (partition + sort)
+      - allows multiple items to be queried as a collection, which simplifies access patterns.
     - FYI:
       - the partition and the sort key (if provided) must be string, number or binary
       - to use maps/lists as part of a primary key, you must expose a copy of the entry directly as an attribute
   - each item can be up to 400kb; the larger the item the higher probability of `hot` activity
-- secondary indexes: either local or global; enable queries on attributes other than the tables primary key
-  - in general
-    - can have 5 local + 5 globals per table
-    - allow you to query data based on attributes other than the tables primary key
-    - consumption of throughput is based on secondary index for scanning
-    - sparse indexes: an attribute used as an secondary index but is only contained in a subset of base table items
-      - thus sparsely indexing the base table and optimizes the througput consumption
-    - each index requires an additional write, thus incuring additional WCU costs
-  - local secondary index: LSI; index must be local to a partiion key;
-    - e.g. base table (pkey = name, sortkey = id, attr = date)
-    - e.g. LSI (pkey = name, sortkey = date, attr = id)
-    - often used for sorting on a different attribute of the base table
-    - requirements
-      - have a max partition size of 10gb
-      - can only be defined when the base table is created, and cannot be deleted
-      - must use the same partition key defined in the base table
-      - cannot have its own provisioned throughput
-  - global secondary index: GSI;
-    - generally recommended > LSI unless you need strong consistency
-    - temporary indexes that can use totally different partition & sort keys
-    - logically its a replication of the base table with an entirely different primary key (partition and/or sort)
-    - e.g. take a base table, and define a completely different primary key over the same data
-      - then when your done with the GSI, delete it
-    - GSI back pressure: when the GSI write throughput is too low and causes throttling to your base table during writes
-      - Reads are independent to the base table; this fact can be used to isolate heavy reads to GSI (e.g. for scanning)
-    - requirements
-      - do not provide strong consistency like LSIs
-      - are not subject to the size limitation of LSIs
-      - can be created and deleted dynamically unlike LSIs
-      - do not require unique primary keys
-      - have their own provisioned throughput managed separately from the table
-      - only supports eventual consistency
-      - only return attributes that are projected into the index
+
+##### secondary indexes
+
+- either local or global; enable queries on attributes other than the tables primary key and improve the application's ability to access data quickly and efficiently.
+- in general
+  - consumption of throughput is based on secondary index for scanning
+  - sparse indexes: an attribute used as an secondary index but is only contained in a subset of base table items
+    - thus sparsely indexing the base table and optimizes the througput consumption
+  - each index requires an additional write, thus incuring additional WCU costs
+
+###### local secondary index (LSI)
+
+- uses the table’s partition key with a unique sort key
+- each index must be local to a partiion key;
+  - e.g. base table (pkey = name, sortkey = id, attr = date)
+  - e.g. LSI (pkey = name, sortkey = date, attr = id)
+- often used for sorting on a different attribute of the base table
+- requirements
+  - max 5 per table, defined on table creation and cannot be deleted
+  - have a max partition size of 10gb
+  - must use the same partition key defined in the base table
+  - cannot have its own provisioned throughput
+
+###### global secondary index (GSI)
+
+- generally recommended > LSI unless you need strong consistency
+- temporary indexes that can use totally different partition & sort keys
+- allows you to model very complex data access patterns that differ from the original table
+- logically its a replication of the base table with an entirely different primary key (partition and/or sort)
+- e.g. take a base table, and define a completely different primary key over the same data
+  - then when your done with the GSI, delete it
+- GSI back pressure: when the GSI write throughput is too low and causes throttling to your base table during writes
+  - Reads are independent to the base table; this fact can be used to isolate heavy reads to GSI (e.g. for scanning)
+- requirements
+  - up to 20 per table, created/deleted at any time
+  - do not provide strong consistency like LSIs
+  - are not subject to the size limitation of LSIs
+  - can be created and deleted dynamically unlike LSIs
+  - do not require unique primary keys
+  - have their own provisioned throughput managed separately from the table
+  - only supports eventual consistency
+  - only return attributes that are projected into the index
 
 ##### data types
 
@@ -309,14 +328,6 @@
 - item TTL
   - expire items after some time
 
-### IAM
-
-- see [the markdown file](../securityIdentityCompliance/iam.md)
-
-### Dynamodb Accelerator (DAX)
-
-- abcd
-
 ### backup / restore
 
 - backups: neither type consumes any read/write capacity
@@ -347,7 +358,7 @@
     - storing large json objects as binary attributes, and keeping the smaller metadata attributes separately
     - decompose json objects into smaller pieces that can be stored as separate items
       - this occurs at the application level using the `scatter-gather` technique
-- manage concurrency with teh read-modify-write pattern
+- manage concurrency with the read-modify-write pattern
 - one-to-many tables: e.g.
   - avoid large string/number sets as item attributes, and prefer storing each set element in a separate table as items
   - helps reduce throughput because you wont need to fetch the entire set every time you fetch the item
@@ -357,3 +368,16 @@
     - if each item has large attributes that dont meet this requirment, split those attributers into a new table
       - e.g. instead of one large USER table, have user.preferenes, and user.blah, and user.bloop
     - its all about controlling item throughput
+
+## integrations
+
+- with dynamodb streams you can easily integrate with SNS/SQS/Lambda etc for complex patterns
+
+### IAM
+
+- see [the markdown file](../securityIdentityCompliance/iam.md)
+- allows you to control access at the table and item levels.
+
+### KMS
+
+- end-to-end enterprise-grade encryption for data that is both in transit and at rest

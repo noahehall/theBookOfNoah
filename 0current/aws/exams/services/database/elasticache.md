@@ -13,6 +13,7 @@
 - [caching strategies](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Strategies.html)
 - [redis getting started (tut)](https://aws.amazon.com/getting-started/hands-on/building-fast-session-caching-with-amazon-elasticache-for-redis/)
 - [faqs](https://aws.amazon.com/elasticache/faqs/?da=sec&sec=prep)
+- [redis vs memcached](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SelectEngine.html)
 
 ## best practices
 
@@ -25,6 +26,12 @@
 ## terms
 
 ## basics
+
+- redis vs memcached: compliance, backup and replication, and automatic failover dictate which engine you should implement
+
+### redis
+
+### memcached
 
 ### encryption
 
