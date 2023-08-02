@@ -221,7 +221,7 @@
 ##### in memory
 
 - used for read-heavy and compute intensive applications that require low latency access to semi/structured data
-- query by key with microsecond latency
+- performance is improved because data is retrieved from in-memory data stores instead of waiting on databases and disk I/O.
 
 ##### Vector
 
