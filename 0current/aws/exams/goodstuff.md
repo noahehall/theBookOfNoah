@@ -1,6 +1,6 @@
 # good stuff
 
-- swagger jackin AWS nomenclature and terminology to reuse elseware in bookofnoah as I speedrun my aws certification
+- swagger jackin AWS nomenclature and terminology to reuse elseware in bookofnoah as I speedrun my aws certifications
 
 ## links
 
