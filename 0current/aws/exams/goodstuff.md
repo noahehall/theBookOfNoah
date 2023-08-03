@@ -595,6 +595,14 @@
 - the practice of protecting your intellectual property from unauthorized access, use, or modification
 - Confidentiality: limiting information access and disclosure to authorized users (the right people) and preventing access by unauthorized people
 
+### access control
+
+- authnz
+  - authentication: who you are
+  - authorization: what you can do, e.g. via policies or roles
+- north south: into and out of your service boundary
+- east west: within your service boundary
+
 ### end-to-end encryption
 
 - be careful not to leak secrets, e.g. via logging
@@ -618,7 +626,7 @@
 
 ### stuff
 
-- ensure defense in depth
+- defense in depth: multiple layers of redundant security
 - audit system for changes, unusual access and errors
 - protect API endpoints
   - validate request bodies

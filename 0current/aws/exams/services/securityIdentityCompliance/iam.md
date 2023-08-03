@@ -29,6 +29,8 @@
 - [identities: users groups and roles](https://docs.aws.amazon.com/en_us/IAM/latest/UserGuide/id.html)
 - [intro to IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html)
 - [signing aws api requests (sig v4)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html)
+- [mfa](https://aws.amazon.com/iam/details/mfa/)
+- [groups and jobs functions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html)
 
 ### API
 
@@ -45,6 +47,7 @@
   - always enable multi factor auth
 - groups
   - always assign users to groups, and attach policies to groups (and not directly to users)
+  - should reflect organizational role, not technical commonality
 - policies
   - always follow principle of least privilege for users and roles
   - generally the managed policies are always too lenient
@@ -62,26 +65,23 @@
 
 ## basics
 
-- resource policy: permissions related to specific actions on specific resources, e.g. Execute Lambda
-  - determines who is allowed into a service boundary, i.e. grant service A access to service B
-  - policies attached to resources as opposed to users/groups/roles
-- execution role: enables a service to assume some role with some predefined behavior for interacting with other services
-  - determines what service A can do within a service boundary
-- trust policy: enables a service to `AssumeRole` for taking action on behalf of another serviced
-- principle of least privilege: start with the most restrictive set of permissions possible
-- security in depth: multiple layers of redundant security
-- principal: a user, role, another aws service / account
-
 ### users & groups
 
+- for managing access to resources within your account
 - root user: the initial user on the aws account
-- groups are collections of users
+- groups are collections of users; specify permissions for similar types of users
 - characteristics
   - static credentials
   - dont expire by default but you should definitely set requiremnets for periodic rotation
 
+#### Federated Identities
+
+- organizations that spans multiple AWS accounts;
+  - manage access to all the AWS accounts centrally via identity federation because users and groups are not scalable.
+
 ### roles
 
+- delegate access to users, applications, or services that normally don't have access to your organization's AWS resources
 - endow an entity with temporary credentials to perform some function
   - users and groups
   - machines: for service-to-service authnz
@@ -92,30 +92,19 @@
 - characteristics
   - no static credentials: must be progrogrammatical requested
   - credentials are always temporary for the requested amount of time
+- execution role: enables a service to assume some role with some predefined behavior for interacting with other services
+  - determines what service A can do within a service boundary
 
-### access control
-
-- authnz
-  - authentication: who you are
-  - authorization: what you can do
-    - permissions are via policies
-- north south: app-level; into and out of your application boundary
-- east west: app to app; within your app boundary
-
-#### request signatures
-
-- signing a request enables AWS to authenticate your identity
-- users and groups use the credentials associated with their acounts
-- machines (e.g. any of your aws services) must assume a predefined role and sign requests with temporary credentials
-
-##### authentication schemes
+### authentication schemes
 
 - uname & pword: for accessing the console
-- access keys: for programmatic access; consists of an access key and a secret key
+  - define a password policy to enforce strong passwords and to require password rotation
+- access keys: for programmatic access; caccess key ID and a secret key; Each user can have two active access keys
   - cli access
   - local code in a dev env to access AWS account
   - apps running on compute services
   - third-party services to access the aws account
+  - direct http calls using APIs for individual services
   - apps run outside of AWS
 - mfa: via soft/hardware; requires an additional input to validate a login attempt
   - something you know: e.g. a pin number
@@ -125,95 +114,75 @@
     - FIDO security keys
   - something you are: e.g. fingerprint or piece of your soul
 
+#### request signatures
+
+- signing a request enables AWS to authenticate your identity
+- users and groups use the credentials associated with their acounts
+- machines (e.g. any of your aws services) must assume a predefined role and sign requests with temporary credentials
+
 ### policies
 
 - set of permissions that grant/deny users, groups and roles to invoke resource actions
   - anything not explicitly granted is denied by default
-- actions: aws API calls
+- request context: what is being authenticated and authorized by IAM
+  - principal: subject; User, role, external user, or application that sends the request and the policies associated with that principal
+  - actions: verb; What the principal is attempting to do
+  - resource: object; AWS resource object upon which the actions or operations are performed
+- policy evaluation process
+  - IAM authenticates the principal
+  - IAM validates the principal is authorized to perform the action by checking all attached identity-based permissions
+    - validates the requested actions are allowed
+  - IAM validates resource-based policies attached to the resource
+    - trumps identity based policies
+  - IAM evaluates allow/deny rules
+    - deny by default if no explicit allow/deny
+    - allow if explicitly allowed and no explicit denial
+    - deny if explicitly denied
 
-#### resource policy
+#### Identity-Based Policy
+
+- policies attached to an IAM identity and defines their permissions
+- IAM evaluates these policies when a principal makes a request
+- permissions boundary: sets the maximum permissions that an identity-based policy can grant to an IAM identity
+
+##### AWS Managed Policies
+
+- default policies created and managed by AWS
+- recommended for new users
+
+##### Customer Managed Policies
+
+- user created and enables precise control over permissions applied to entities
+- should be preferred over Managed policies
+
+##### Inline Policies
+
+- strict one-to-one relationship between a service and principal
+- embedded directly into a single user, group or role
+- not recommended
+
+###### Session Policies
+
+- inline permissions that users which users pass when they assume a role
+
+#### Service Control Policies
+
+- restricts permissions for entities in an account, including the root user
+
+#### resource policies
 
 - apply policies to an aws resource to grant/deny access to an account, ip address rangew, vpc or vpc endpoint, etc
+  - determines who is allowed into a service boundary, i.e. grant service A access to service B
 - generally used in addition to IAM policies applied to users, groups and roles
 
-#### policy syntax
-
-- a policy contains at least one permission
-  - the policy is then associated with resources and/or assigned to users/groups/roles depending on the type
-- its all about the statement array
-  - each element contains atleast the following
-    - effect: allow/deny
-    - action: the aws service and a potentially a filtered set of api calls
-      - `serviceName:*` this specifies all actions (api calls) for this service
-    - resource: ARN denoting resource(s) to match against
-      - `resource: "*"` indicates all resources for this service
-  - and potentially contains these elements
-    - Principal: makes this a resource policy
-    - conditions: apply the permission if all are met
-    - sid: description of the permission
-- version: seems to always be `2012-10-17`
-
-```jsonc
-// conglomerate of options from different examples
-{
-  "Version": "2012-10-17",
-  "Id": "default",
-  "Statement": [
-    {
-      "Sid": "optional unique identifier for this policy",
-      "Effect": "Allow", // or deny
-      // Principle: "*" for everyone, and can then be used with other policies
-      // Principle: "AWS" applies to all resources, and no other policies are taken into account
-      "Principal": {
-        "Service": "s3.amazonaws.com", // this service
-        "AWS": [
-          "arn:aws:iam:account-id:user/MyName" // or this specific user in account-id
-        ]
-      },
-      "Action": ["dynamodb:PutItem"], // can do these actions
-      "Resource": ["arn:aws:dynamodb:us-west-2:###:table/test"], // on these resources
-      "Condition": {
-        // if these conditions are met
-        "StringEquals": {
-          "AWS:SourceAccount": "abcd"
-        },
-        "StringNotEquals": {
-          "aws:SourceVpc": "vpc-abcdefg" //
-        },
-        "ArnLike": {
-          "AWS:SourceArn": "arn:aws:S3:::lambda-lambda-2"
-        },
-        "IpAddress": {
-          "aws:SourceIp": ["192.0.2.0/24", "198.51.100.0/24"] // 2 ip ranges
-        }
-      }
-    }
-  ]
-}
-```
-
-#### Trust policy
+#### Trust policies
 
 - defines what actions a role can take
-
-```jsonc
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    "Sid": "Some Description",
-    "Effect": "Allow",
-    "Action": "sts:AssumeRole", // bam
-    "Principal": {
-      "Service": ["lambda.amazonaws.com"] // this service can assume this role
-    }
-  ]
-}
-
-```
+- controls which principals in other accounts can access resources
 
 ## integrations
 
-- basically every other AWS service can use IAM for authN
+- basically every other AWS service uses IAM for authNZ
 
 ### cli
 
@@ -231,31 +200,6 @@
   - execute-api: who can invoke the api/refresh the api cache
   - apigateway: who can manage/create/deploy the api
 - resource syntax: `arn:aws:PERM-NAME:REGION:ACCOUNT-ID:API-ID/STAGE-NAME/HTTP-METHOD/API-RESOURCE`
-
-```jsonc
-// associate this policy with IAM user, iam group with multiple users, iam role
-{
-  "Version": "2012-1017",
-  "Statement": [
-    // example invoke permission
-    {
-      // allow the the action
-      "Effect": "Allow",
-      // INVOKE the http method POST on the api demoresource
-      "Action": ["execute-api:Invoke"],
-      "Resource": [
-        "arn:aws:execute-api:us-east-1:*:account-id/stage/POST/mydemoresource/*"
-      ]
-    },
-    // example manage permission
-    {
-      "Effect": "Allow",
-      "Action": ["apigateway:*"], // careful! this is sudo access, can replace * with GET,POST,etc
-      "Resource": ["arn:aws:apigateway:us-east-1::/restapis/abcdefg"]
-    }
-  ]
-}
-```
 
 ### dynamodb
 
