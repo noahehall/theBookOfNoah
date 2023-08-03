@@ -138,47 +138,46 @@
     - deny by default if no explicit allow/deny
     - allow if explicitly allowed and no explicit denial
     - deny if explicitly denied
+- the six policy categories can have the following flavors
+  - IAM role trust policy
+  - defines what actions a role can take
+  - controls which principals in other accounts can access resources
+  - inline policy
+    - strict one-to-one relationship between a service and principal
+    - embedded directly into a single user, group or role
+    - not recommended
+  - AWS Managed Policies
+    - default policies created and managed by AWS
+    - recommended for new users
+  - Customer Managed Policies
+    - user created and enables precise control over permissions applied to entities
+    - should be preferred over Managed policies
 
 #### Identity-Based Policy
 
 - policies attached to an IAM identity and defines their permissions
 - IAM evaluates these policies when a principal makes a request
-- permissions boundary: sets the maximum permissions that an identity-based policy can grant to an IAM identity
 
-##### AWS Managed Policies
+#### resource-based policies
 
-- default policies created and managed by AWS
-- recommended for new users
+- inline policies that are attached to AWS resources to grant/deny access to a user/account
+- determines who is allowed into a service boundary, i.e. grant service A access to service B
+- trump identity based policies
+- grant permissions to the principal that is specified in the policy; hence, the principal policy element is required.
 
-##### Customer Managed Policies
+#### IAM Permissions Boundaries
 
-- user created and enables precise control over permissions applied to entities
-- should be preferred over Managed policies
+- sets the maximum permissions that an identity-based policy can grant to an IAM identity
 
-##### Inline Policies
-
-- strict one-to-one relationship between a service and principal
-- embedded directly into a single user, group or role
-- not recommended
-
-###### Session Policies
-
-- inline permissions that users which users pass when they assume a role
-
-#### Service Control Policies
+#### AWS Organizations Service Control Policies (SCPs)
 
 - restricts permissions for entities in an account, including the root user
 
-#### resource policies
+#### Access Control Lists (ACLs)
 
-- apply policies to an aws resource to grant/deny access to an account, ip address rangew, vpc or vpc endpoint, etc
-  - determines who is allowed into a service boundary, i.e. grant service A access to service B
-- generally used in addition to IAM policies applied to users, groups and roles
+#### Session Policies
 
-#### Trust policies
-
-- defines what actions a role can take
-- controls which principals in other accounts can access resources
+- inline permissions that users which users pass when they assume a role
 
 ## integrations
 
