@@ -44,14 +44,18 @@
 
 - a good metaphor is an partment building
   - they are responsibile for the building, you are responsible for everything inside your apartment
-- you: security **IN** the cloud: requires you to monitor and manage the env at the operating system and higher layers
+- you: security **IN** the cloud:
+  - securing your data, operating systems, networks, platforms, and other resources that you create
+    - protecting the confidentiality, integrity, and availability of your data and for meeting any specific business or compliance requirements for your workloads.
+  - requires you to monitor and manage the env at the operating system and higher layers
   - customer data
   - platform, applications, IAM
   - operating system, network and firewall configuration: e.g. patching and upgrades
   - customer-side data encryption and data integrity authnz
   - server-side encryption: file sytem/data
   - networking trafic protection: encryption, integrity identity
-- aws: security **OF** the cloud
+- aws: security **OF** the cloud:
+  - protecting the global infrastructure that runs all of the services offered in the AWS Cloud. This infrastructure comprises the hardware, software, networking, and facilities that run AWS services.
   - aws operates, manage and controls the components from the host operating system and virtualization layer down to the physical security of facilities inw hich services operate
   - software: up to the virtualization layer
     - compute, storage, database, networking

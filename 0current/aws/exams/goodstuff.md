@@ -592,11 +592,32 @@
 
 ## security
 
-- principle of least privilege
-- end-to-end encryption
-  - protect data at rest and in transit
-  - encrypt data before processing
-  - be careful not to leak secrets, e.g. via logging
+- the practice of protecting your intellectual property from unauthorized access, use, or modification
+- Confidentiality: limiting information access and disclosure to authorized users (the right people) and preventing access by unauthorized people
+
+### end-to-end encryption
+
+- be careful not to leak secrets, e.g. via logging
+- encrypt data before processing
+- protect data
+  - at rest: any data you persist/store for any duration
+    - client side: encrypt before you send it
+    - server side: encrypt after you receive it
+  - in transit: any data that gets transmitted from one system to another
+    - SSL/TLS
+    - public/private certificates
+
+### principle of least privilege
+
+- giving a user or system only those privileges that are essential to perform its intended function
+- grant access as needed, and for no longer
+- centralizing privilege management
+  - Set expectations on how authority will be delegated down from admins to front line users
+  - avoid long term credentials and prefer temporary creds with expiration
+- enforce separation of duties: with appropriate authorization for each interaction with resources
+
+### stuff
+
 - ensure defense in depth
 - audit system for changes, unusual access and errors
 - protect API endpoints
@@ -610,12 +631,3 @@
   - how should you measure them?
   - what are the thresholds for these metrics?
   - what is the escalation process
-
-### encryption
-
-- at rest: any data you persist/store for any duration
-  - client side: encrypt before you send it
-  - server side: encrypt after you receive it
-- in transit: any data that gets transmitted from one system to another
-  - TLS
-  - public/private certificates

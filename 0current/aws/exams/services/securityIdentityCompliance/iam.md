@@ -1,5 +1,6 @@
 # Identity and Access Management (IAM)
 
+- centralize privilege management using the principle of least privilege, separation of duties and temporary credentials
 - authnz for:
   - IAM users and groups: humans logging into an account and signing API calls
   - IAM roles: assumed by an entity (humans/machines) for temporary access to AWS credentials
