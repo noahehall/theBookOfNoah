@@ -594,6 +594,12 @@
 
 - the practice of protecting your intellectual property from unauthorized access, use, or modification
 - Confidentiality: limiting information access and disclosure to authorized users (the right people) and preventing access by unauthorized people
+- practices
+  - audit system for changes, unusual access and errors
+  - protect API endpoints
+    - validate request bodies
+    - throttle/rate limits
+  - defense in depth: multiple layers of redundant security
 
 ### access control
 
@@ -602,6 +608,15 @@
   - authorization: what you can do, e.g. via policies or roles
 - north south: into and out of your service boundary
 - east west: within your service boundary
+
+#### ABAC
+
+- attribute-based access control
+- authorization strategy that defines permissions based on attributes
+
+#### RBAC
+
+- role based access control
 
 ### end-to-end encryption
 
@@ -623,14 +638,6 @@
   - Set expectations on how authority will be delegated down from admins to front line users
   - avoid long term credentials and prefer temporary creds with expiration
 - enforce separation of duties: with appropriate authorization for each interaction with resources
-
-### stuff
-
-- defense in depth: multiple layers of redundant security
-- audit system for changes, unusual access and errors
-- protect API endpoints
-  - validate request bodies
-  - throttle/rate limits
 
 ### Security Monitoring
 

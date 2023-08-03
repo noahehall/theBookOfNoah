@@ -90,10 +90,13 @@
     - web identity
   - custom trust policy
 - characteristics
+  - the entity that assumes the role will lose its original privileges and gain the access associated with the role
   - no static credentials: must be progrogrammatical requested
   - credentials are always temporary for the requested amount of time
 - execution role: enables a service to assume some role with some predefined behavior for interacting with other services
   - determines what service A can do within a service boundary
+- service roles: iam roles that can be assumed by an AWS service
+  - must include a trust policy
 
 ### authentication schemes
 
@@ -125,11 +128,18 @@
 - set of permissions that grant/deny users, groups and roles to invoke resource actions
   - anything not explicitly granted is denied by default
 - request context: what is being authenticated and authorized by IAM
-  - principal: subject; User, role, external user, or application that sends the request and the policies associated with that principal
+  - principal: subject that sends the request and the policies associated with that principal
+    - aws accounts: delegate authority to the account; the permission policies can be scoped to specific account identities
+    - iam users:
+    - federated users:
+    - iam roles:
+    - aws services:
   - actions: verb; What the principal is attempting to do
     - via console its known as an ACTION
     - via cli/sdk its known as an OPERATION
   - resource: object; AWS resource object upon which the actions or operations are performed
+  - authorization context: an array of key values that scope principal, actions and resources
+    - this is environment in which the request is being made, contains bunches of things
 - policy evaluation order
   - IAM authenticates the principal
   - IAM validates the principal is authorized to perform the action by checking all attached identity-based permissions
@@ -144,6 +154,7 @@
 - the six policy categories can have the following flavors
   - IAM role trust policy
     - controls which principals in other accounts can access resources
+    - resource-based policies that are attached to a role that define which principals can assume the role
   - inline policy
     - strict one-to-one relationship between a service and principal
     - embedded directly into a single user, group or role

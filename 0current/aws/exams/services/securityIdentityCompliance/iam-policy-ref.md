@@ -61,22 +61,30 @@
 
 ## actions: SERVICE_ID:SERVICE_ACTION
 ### useful examples: check the resource docs for actions as its too long to capture here
-sts:AssumeRole
+sts:AssumeRole # allows the stated principals to assume the rule
 dynamodb:PutItem
 execute-api:Invoke
 apigateway:*
 logs:Create* # cloudwatch logs: any action starting with Create
+iam:GetUser
 
 ## principals: generally its an ARN, can also use the following values
-Principle: "*"  # for everyone, and can then be used with other policies
-Principle: "AWS" # applies to all resources, and no other policies are taken into account
+*  # for everyone, and can then be used with other policies
+AWS # applies to all resources, and no other policies are taken into account
+AWS: 12345 # specific account
+AWS: arn:aws:iam:1234 # same as above, but uses an ARN
+AWS: [arn:aws:iam:1234:/user/someName] # a specific case-sensitive user(s) in an account
+AWS: arn:aws:iam::1234:role/roleName
+Federated: www.amazon.com # federated web identities
+Federated: arn:aws:iam::12345:saml-provider/provider-name # federated saml providers
+Service: [elasticmapreduce.amazonaws.com] # i.e. longServiceName.amazonaws.com
 
 ### Services: SERVICE_ID.amazonaws.com
 lambda.amazonaws.com
 s3.amazonaws.com
 
-## resources:
-### arn:aws:RESOURCE_KEY:REGION:ACCOUNT_ID:SOMETHING_HERE
+## resources: an object that exists within a service
+### arn:aws:SERVICE_KEY:REGION:ACCOUNT_ID:RESOURCE_SCOPE
 
 arn:aws:dynamodb:us-west-2::table/test
 arn:aws:execute-api:us-east-1:*:account-id/stage/POST/mydemoresource/*
@@ -91,16 +99,17 @@ ArnLike
 IpAddress
 
 ### Condition Keys
-AWS:SourceAccount
-AWS:SourceArn
-aws:SourceIp
-aws:SourceVpc
+aws:Principal{Account,Arn}
+aws:Source{Account,Arn,Ip,Vpc}
+aws:UserID
 Bool
-DateGreaterThan
+Date{Greater,Less}Than
 iam:PermissionsBoundary # in the value, point it to the arn of a specific policy
-DateLessThen
 
 ### Condition values: any acceptable JSON value
 aws:currentTime: YYYY-MM-DDTHH:MM:SSz # an object
 aws:MultiFactorAuthPresent: true/false
+
+#### variables, can be used to match against values in the request context
+${aws:SomeKeyFromContext}
 ```
