@@ -81,7 +81,7 @@
 
 ### roles
 
-- delegate access to users, applications, or services that normally don't have access to your organization's AWS resources
+- delegate access to users, applications, or services
 - endow an entity with temporary credentials to perform some function
   - users and groups
   - machines: for service-to-service authnz
@@ -127,8 +127,10 @@
 - request context: what is being authenticated and authorized by IAM
   - principal: subject; User, role, external user, or application that sends the request and the policies associated with that principal
   - actions: verb; What the principal is attempting to do
+    - via console its known as an ACTION
+    - via cli/sdk its known as an OPERATION
   - resource: object; AWS resource object upon which the actions or operations are performed
-- policy evaluation process
+- policy evaluation order
   - IAM authenticates the principal
   - IAM validates the principal is authorized to perform the action by checking all attached identity-based permissions
     - validates the requested actions are allowed
@@ -137,11 +139,11 @@
   - IAM evaluates allow/deny rules
     - deny by default if no explicit allow/deny
     - allow if explicitly allowed and no explicit denial
+      - a permissions boundary, AWS Organizations SCP, or session policy can implicitly deny any explicit allows
     - deny if explicitly denied
 - the six policy categories can have the following flavors
   - IAM role trust policy
-  - defines what actions a role can take
-  - controls which principals in other accounts can access resources
+    - controls which principals in other accounts can access resources
   - inline policy
     - strict one-to-one relationship between a service and principal
     - embedded directly into a single user, group or role
@@ -152,32 +154,62 @@
   - Customer Managed Policies
     - user created and enables precise control over permissions applied to entities
     - should be preferred over Managed policies
+- internal vs external accounts
+  - within an account: you need a service control policy AND an IAM policy OR a resource-based policy
+  - Across accounts: you need a service control policy AND an IAM policy AND a resource-based policy.
 
-#### Identity-Based Policy
+#### Grants
 
-- policies attached to an IAM identity and defines their permissions
-- IAM evaluates these policies when a principal makes a request
+- primarily used to grant access
 
-#### resource-based policies
+##### Identity-Based Policy
 
-- inline policies that are attached to AWS resources to grant/deny access to a user/account
-- determines who is allowed into a service boundary, i.e. grant service A access to service B
+- policies attached to an Identiy
+- identity: user, group or role
+
+##### resource-based policies
+
+- inline policies that are attached to AWS resources to grant/deny access to an Identity/account
+- determines who is allowed into a service boundary
 - trump identity based policies
-- grant permissions to the principal that is specified in the policy; hence, the principal policy element is required.
+- the principal policy element is required
 
-#### IAM Permissions Boundaries
+##### Access Control Lists (ACLs)
+
+- control which principals in other accounts can access the S3 bucket/objects to which the ACL is attached
+  - cross-account permissions policies that grant permissions to the specified principal
+  - ACLs cannot grant permissions to entities within the same account.
+- similar to resource-based policies although they are the only policy type that does not use the JSON policy document structure
+
+#### Guardrails
+
+- primarily used to restrict access
+
+##### IAM Permissions Boundaries
 
 - sets the maximum permissions that an identity-based policy can grant to an IAM identity
 
-#### AWS Organizations Service Control Policies (SCPs)
+##### AWS Organizations Service Control Policies (SCPs)
 
-- restricts permissions for entities in an account, including the root user
+- specify the maximum permissions for an account, or a group of accounts, called an organizational unit (OU).
+- restricts permissions for entities the an account, including the root user
+- If you enable all features in an organization, then you can apply SCPs to any or all of your accounts
 
-#### Access Control Lists (ACLs)
+##### Session Policies
 
-#### Session Policies
+- inline permissions policy that users pass in the session when they assume the role
+  - Restricts/limits permissions for assumed roles and federated users
+- the intersection of the identity-based policies for the IAM entity (user or role) used to create the session and the session policies
+  - can also come from a resource-based policy
 
-- inline permissions that users which users pass when they assume a role
+### Access Points
+
+- every action taken against an AWS account occurs through an API endpoint
+- this allows for comprehensive monitoring and control of in/outbound network traffic
+- No matter the means used to access AWS
+  - each API request is authenticated and authorized via IAM
+  - recorded by AWS CloudTrail as it crosses the AWS API interface
+  - All of the API endpoints support HTTPS and use TLS encryption
 
 ## integrations
 

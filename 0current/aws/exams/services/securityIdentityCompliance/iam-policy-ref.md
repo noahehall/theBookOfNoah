@@ -60,12 +60,14 @@
 ```sh
 
 ## actions: SERVICE_ID:SERVICE_ACTION
+### useful examples: check the resource docs for actions as its too long to capture here
 sts:AssumeRole
 dynamodb:PutItem
 execute-api:Invoke
 apigateway:*
+logs:Create* # cloudwatch logs: any action starting with Create
 
-## principals
+## principals: generally its an ARN, can also use the following values
 Principle: "*"  # for everyone, and can then be used with other policies
 Principle: "AWS" # applies to all resources, and no other policies are taken into account
 
@@ -73,12 +75,16 @@ Principle: "AWS" # applies to all resources, and no other policies are taken int
 lambda.amazonaws.com
 s3.amazonaws.com
 
-## resources
+## resources:
+### arn:aws:RESOURCE_KEY:REGION:ACCOUNT_ID:SOMETHING_HERE
 
-arn:aws:dynamodb:us-west-2:###:table/test
+arn:aws:dynamodb:us-west-2::table/test
 arn:aws:execute-api:us-east-1:*:account-id/stage/POST/mydemoresource/*
-## Conditions
+arn:aws:iam:::policy/someName
+arn:aws:ec2:::instance/abcdefg
+arn:aws:logs
 
+## Conditions
 StringNotEquals
 StringEquals
 ArnLike
@@ -86,8 +92,15 @@ IpAddress
 
 ### Condition Keys
 AWS:SourceAccount
-aws:SourceVpc
 AWS:SourceArn
 aws:SourceIp
+aws:SourceVpc
+Bool
+DateGreaterThan
+iam:PermissionsBoundary # in the value, point it to the arn of a specific policy
+DateLessThen
 
+### Condition values: any acceptable JSON value
+aws:currentTime: YYYY-MM-DDTHH:MM:SSz # an object
+aws:MultiFactorAuthPresent: true/false
 ```
