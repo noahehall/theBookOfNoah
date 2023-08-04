@@ -40,18 +40,26 @@
 - components
   - access key id: identifies the temporary credentials
   - secret: signs api calls
-  - session token: passed to the destination service for it to valdate the request
+  - session/security token: passed to the destination service for it to valdate the request
 
-### cross-account delegation
+### IAM AssumeRole
+
+- AssumeRole API provides a user the ability to switch their IAM role such that they have different or increased access only provided by another role
+  - This enables you to practice the principle of least privilege.
+- can be used within/across accounts
+- assumeRole request: check the docs for the parameters available when making the request, its highly configurable
+- assumeRole response: contains the creds
+  - assumedRoleUser: the ARN of the issued temp creds and the unique identifer of the role ID
+  - credentials: contains the access key id, secret, and security/session token
+  - packedPolicySize: if this value is greater than 100% the request is rejected
+
+#### cross-account delegation
 
 - a trust policy must first exist between the two accounts
   - trusting account owns the resource to be accessed
   - trusted account contains the users who need access to the resource
-
-### IAM AssumeRole action
-
-- AssumeRole API provides a user the ability to switch their IAM role such that they have different or increased access only provided by another role
-  - This enables you to practice the principle of least privilege.
+- create one set of long-term credentials in one account.
+  - Then, you use temporary security credentials to access all the other accounts by assuming roles in those accounts.
 
 ## considerations
 
