@@ -1,12 +1,18 @@
 # IAM Security Token Service (STS)
 
-- generate temporary security credentials for trusted IAM users/roles that can use the assumeRole
+- generate temporary security credentials for trusted IAM users/roles
+- users need the assumeRole permission
 
 ## my thoughts
 
 ## links
 
 - [landing page](some url)
+- [saml: intro](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_saml.html)
+- [saml: relying party and claims](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_saml_relying-party.html)
+- [saml: roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-idp_saml.html)
+- [IdP: creating identity proviers](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create.html)
+- [saml: federated access with ABAC](https://aws.amazon.com/blogs/aws/new-for-identity-federation-use-employee-attributes-for-access-control-in-aws/)
 
 ## best practices
 
@@ -42,7 +48,7 @@
   - secret: signs api calls
   - session/security token: passed to the destination service for it to valdate the request
 
-### IAM AssumeRole
+### AssumeRole
 
 - AssumeRole API provides a user the ability to switch their IAM role such that they have different or increased access only provided by another role
   - This enables you to practice the principle of least privilege.
@@ -69,6 +75,57 @@
   - trusted account contains the users who need access to the resource
 - create one set of long-term credentials in one account.
   - Then, you use temporary security credentials to access all the other accounts by assuming roles in those accounts.
+
+#### Session Tags
+
+- attributes passed in an IAM role session when you assume a role or federate a user using the AWS CLI or AWS API
+  - Session tags are principal tags that you specify while requesting a session.
+- use cases
+  - access control in IAM policies
+  - use SAML attributes for access control in AWS (e.g. for federated users)
+  - monitoring: view the principal tags for your session, including its session tags, in the AWS CloudTrail logs.
+  - control the tags that can be passed into a subsequent session.
+  - define unique permissions based on user attributes without having to create and manage multiple roles and policies
+- requirements
+  - you must have the sts:TagSession action allowed in your IAM policy
+  - must follow the rules for naming tags in IAM and AWS STS
+  - New session tags override existing assumed role or federated user tags with the same tag key, regardless of case.
+  - cannot pass session tags using the AWS Management Console.
+  - valid for only the current session and are not stored in AWS (only in the session)
+  - pass a maximum of 50 session tags.
+
+##### Transitive Tags
+
+- tags that persist through multiple sessions
+- role chaining: occurs when you use a role to assume a second role through the AWS CLI or API
+  - assume one role and then use the temporary credentials to assume another role and continue from session to session
+  - tags marked as transitive persist across sessions for each role jump
+- use cases
+  - impose guardrails against yourself or an administrator in order to prevent something accidental
+    - e.g. require an admin role to assume a lesser privileged role; instead of creating a totally new admin role
+
+### AssumeRoleWithSAML
+
+- enable
+  - federated access to AWS accounts
+  - a separate SAML 2.0-based IdP for each AWS account and use federated user attributes for access control
+  - pass user attributes, such as cost center or job role, from your IdPs to AWS, and implement fine-grained access permissions based on these attributes.
+- everything from `# AssumeRole` still applies here
+- setup process
+  - use IAM to create a SAML provider entity in your AWS account that represents your identity provider.
+  - create an IAM role that specifies this SAML provider in its trust policy.
+  - configure your SAML IdP to issue the claims that AWS requires
+  - you/apps can now call AssumeRoleWithSAML
+- saml request: check the docs for how to make the API call and which params are required/optional
+- saml response:
+  - assumedRoleUser
+  - credentials: access key id, secret, and session token
+  - audience
+  - subject type
+  - packed policy size
+  - name qualifier
+
+### AssumeRoleWithWebIdentity
 
 ## considerations
 

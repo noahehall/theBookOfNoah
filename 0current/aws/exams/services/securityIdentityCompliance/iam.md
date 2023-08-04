@@ -83,9 +83,30 @@
 
 #### Federated Identities
 
+- a system of trust between two parties for the purpose of authenticating users and conveying information needed to authorize their access to resources
+- identity provider: (IdP) is responsible for user authentication
+- service provider: such as a service or an application, controls access to resources
+- logical workflow
+  - a trust relationship is configured between an IdP and a service provider
+    - the service provider relies on the IdP for authentication and user information for authorization
+  - after authenticating a user, the IdP returns an `assertion` containing the users data
+  - the service provider uses the assertion data for creating a session and determining the scope of authorization within its service boundary
+    - the service provider provides the user with credentials
+- federation protocols
+  - SAML 2.0: Security Assertion Markup Language
+  - OIDC: OpenID Connect
+  - OAuth 2.0:
+
 ##### corporate identity federation
 
+- workforce federation: employees, contractors and partners
+- generally relies on SAML and STS AssumeRoleWithSAML
+
 ##### web identity federation
+
+- end user federation: customer facing web/mobile applications
+- generally relies on OIDC/OAuth and STS AssumeRoleWithWebIdentity
+- web identity providers supported by AWS include Amazon Cognito, Login with Amazon, Facebook, Google, or any OpenID Connect-compatible identity provider.
 
 ### roles
 

@@ -13,6 +13,7 @@
 - [aws repost: user community forum](https://repost.aws/)
 - [well architected framework](https://aws.amazon.com/architecture/well-architected/)
 - [top 10 security items](https://aws.amazon.com/blogs/security/top-10-security-items-to-improve-in-your-aws-account/)
+- [tags: conventions and rules](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html)
 
 ### well architected tool
 
@@ -88,6 +89,15 @@
   - pricing: AWS isnt for the little guy and varies from region to region
   - service availability: not all aws services are available in all regions
 
+### Tags
+
+- the best practice is to tag everything, then you can use those tags for various other things, e.g. access control
+- think about
+  - job function/project attributes
+  - cost center
+  - account/team/organization/etc
+  - ABAC/RBAC
+
 ## well architected framework
 
 - helps you understand the pros and cons of decisions you make while building systems on AWS
@@ -96,7 +106,6 @@
 ### Operational Excellence
 
 - running and monitoring systems to deliver business value and continually improving processes and procedures
--
 
 ### security
 
