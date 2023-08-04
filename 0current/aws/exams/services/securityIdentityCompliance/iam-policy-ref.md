@@ -6,7 +6,8 @@
 ## links
 
 - [policy reference](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements.html)
-- [condition operators](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition_operators.html)
+- [condition: operators](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition_operators.html)
+- [condition: global keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html)
 
 ## policy syntax
 
@@ -22,7 +23,7 @@
   - conditions: conditions that control when a policy is in effect
     - compare keys in the request context to the key-values in the policy
     - service specific: prefixed with the service id, e.g. `ec2:InstanceType`
-    - global: are not prefixed ;)~ and apply generally across all services
+    - global: prefixed with `aws:`
   - sid: description of the permission
 
 ## examples
@@ -46,8 +47,8 @@
       },
       "Resource": ["arn:aws:dynamodb:us-west-2:###:table/test"], // on these resources
       "Condition": {
-        // if tthese conditions are met apply the Effect
-        "SomeCondition": {
+        // if these conditions are met apply the Effect
+        "someOperator": {
           "SomeKey": "Somevalue"
         }
       }
@@ -70,6 +71,7 @@ logs:Create* # cloudwatch logs: any action starting with Create
 sts:AssumeRole # allows the stated principals to assume the rule
 iam:PassRole # can pass role to a service
 organizations:{describe*,list*}
+kms:{En,De}crypt
 
 ## principals: generally its an ARN, can also use the following values
 *  # for everyone, and can then be used with other policies
@@ -83,7 +85,7 @@ Federated: arn:aws:iam::12345:saml-provider/provider-name # federated saml provi
 Service: [elasticmapreduce.amazonaws.com] # i.e. longServiceName.amazonaws.com
 
 ### Services: SERVICE_NAME.amazonaws.com
-lambda, s3, cloudwatch
+lambda, s3, cloudwatch, cloudformation, dynamodb
 
 ## resources: use `aws` for account_id for a resource created/managed by aws
 ### arn:aws:SERVICE_KEY:REGION:ACCOUNT_ID:RESOURCE_SCOPE
@@ -94,25 +96,41 @@ arn:aws:iam:::{policy,role}/abcd
 arn:aws:ec2:::instance/abcdefg
 arn:aws:logs
 
-## Conditions
-String{NotEquals,Equals,Like}
+## Condition operators: append IfExists to any operator
 Arn{Like,Equals}
-IpAddress
-
-### Condition Keys
-aws:Principal{Account,Arn}
-aws:Source{Account,Arn,Ip,Vpc}
-aws:UserID
 Bool
 Date{Greater,Less}Than
+For{Any,All}Value:OTHER_OPERATOR
+String{NotEquals,Equals,Like}
+NumericLessThan
+
+### Condition Keys
+#### global condition keys
+# date format: YYYY-MM-DDTHH:MM:SSz
+aws:{Current,Epoch,TokenIssue}Time
+aws:CalledVia ordered list of services that made requests on behalf of a user
+aws:CalledVia{First,Last}
+aws:MultiFactorAuth{Present,Age}
+aws:Principal{Account,Arn,OrgId,OrgPaths,Type,Tag}
+aws:Request{Tag}
+aws:Requested{Region}
+aws:Resource{Tag}
+aws:SecureTransport # ensure the request was made via SSL/TLS
+aws:Source{Account,Arn,Ip,Vpc,Vpce}
+aws:TagKeys # keys without any values
+aws:user{id,name}
+aws:User{Agent}
+aws:ViaAWSService #  control access during a service-to-service call.
+aws:VpcSourceIp
+IpAddress
+
+#### iam condition keys
 iam:PermissionsBoundary # value should be the arn of a specific policy
 iam:{AWSServiceName,PolicyARN}
 iam:ResourceTag/tagName: someValue
 iam:PassedToService # the service to which a role can be passed
 iam:AssociatedResourceArn # the ARN of the destination service resource that a role can be associated with
-### Condition values: any acceptable JSON value
-aws:currentTime: YYYY-MM-DDTHH:MM:SSz # an object
-aws:MultiFactorAuthPresent: true/false
+
 
 #### variables, can be used to match against values in the request context
 ${aws:SomeKeyFromContext}
