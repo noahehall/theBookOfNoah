@@ -54,6 +54,10 @@
   - generally the managed policies are always too lenient
 - roles
   - use both RBAC and ABAC at the same time if using IAM roles for access control.
+- organizations that spans multiple AWS accounts;
+  - manage access to all the AWS accounts centrally via identity federation because users and groups are not scalable.
+  - Using roles and cross-account access
+    - define user identities in one account and use those identities to access AWS resources in other accounts that belong to your organization.
 
 ### anti patterns
 
@@ -79,8 +83,9 @@
 
 #### Federated Identities
 
-- organizations that spans multiple AWS accounts;
-  - manage access to all the AWS accounts centrally via identity federation because users and groups are not scalable.
+##### corporate identity federation
+
+##### web identity federation
 
 ### roles
 
