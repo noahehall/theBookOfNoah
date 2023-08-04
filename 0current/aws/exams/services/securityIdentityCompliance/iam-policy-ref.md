@@ -76,6 +76,8 @@ execute-api:Invoke
 iam:GetUser
 logs:Create* # cloudwatch logs: any action starting with Create
 sts:AssumeRole # allows the stated principals to assume the rule
+sts:AssumeRolewithSAML
+sts:AssumeRoleWithWebIdentity
 iam:PassRole # can pass role to a service
 organizations:{describe*,list*}
 kms:{En,De}crypt
@@ -138,6 +140,8 @@ iam:ResourceTag/tagName: someValue
 iam:PassedToService # the service to which a role can be passed
 iam:AssociatedResourceArn # the ARN of the destination service resource that a role can be associated with
 
+#### sts condition keys
+sts:RoleSessionName
 
 #### variables, can be used to match against values in the request context
 ${aws:SomeKeyFromContext}

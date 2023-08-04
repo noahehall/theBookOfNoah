@@ -53,6 +53,15 @@
   - credentials: contains the access key id, secret, and security/session token
   - packedPolicySize: if this value is greater than 100% the request is rejected
 
+#### naming sessions
+
+- Each IAM role session is uniquely identified by a role session name
+- Administrators can rely on the role session name to track user actions when viewing AWS CloudTrail logs
+- applying a name to a session depends on the method used to assume a role
+  - aws service: AWS sets the role session name on your behalf, generally its the ID of the resource
+  - saml-based: when using AssumeRolewithSAML; AWS sets the role session name value to the attribute provided by the identity provider
+  - user-defined: the role session name is a required input parameter that you set when making the API request.
+
 #### cross-account delegation
 
 - a trust policy must first exist between the two accounts
