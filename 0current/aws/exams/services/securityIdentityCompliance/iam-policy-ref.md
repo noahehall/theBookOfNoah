@@ -9,20 +9,20 @@
 
 ## policy syntax
 
-- its all about the statement array
-  - each element contains atleast the following
-    - effect: allow/deny
-    - action: the aws service and a potentially a filtered set of api calls that are allowed/denied
-      - `serviceName:*` this specifies all actions (api calls) for this service
-      - `serviceName:*blah` anything ending in blah
-    - resource: ARN denoting resource(s) this policy covers
-      - `resource: "*"` indicates all resources for this service
-  - and potentially contains these elements
-    - Principal
-    - conditions: conditions that control when a policy is in effect
-      - apply the permission if all are met
-    - sid: description of the permission
 - version: seems to always be `2012-10-17`
+- statement
+  - effect: allow/deny
+  - action: the aws service and a potentially a filtered set of api calls that are allowed/denied
+    - `serviceName:*` this specifies all actions (api calls) for this service
+    - `serviceName:*blah` anything ending in blah
+  - resource: ARN denoting resource(s) this policy covers
+    - `resource: "*"` indicates all resources for this service
+  - Principal
+  - conditions: conditions that control when a policy is in effect
+    - compare keys in the request context to the key-values in the policy
+    - service specific: prefixed with the service id, e.g. `ec2:InstanceType`
+    - global: are not prefixed ;)~ and apply generally across all services
+  - sid: description of the permission
 
 ## examples
 

@@ -31,6 +31,7 @@
 - [signing aws api requests (sig v4)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html)
 - [mfa](https://aws.amazon.com/iam/details/mfa/)
 - [groups and jobs functions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html)
+- [ABAC via tags tutorial](https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_attribute-based-access-control.html)
 
 ### API
 
@@ -51,6 +52,8 @@
 - policies
   - always follow principle of least privilege for users and roles
   - generally the managed policies are always too lenient
+- roles
+  - use both RBAC and ABAC at the same time if using IAM roles for access control.
 
 ### anti patterns
 
@@ -221,6 +224,22 @@
   - each API request is authenticated and authorized via IAM
   - recorded by AWS CloudTrail as it crosses the AWS API interface
   - All of the API endpoints support HTTPS and use TLS encryption
+
+### Access Control
+
+#### Tags
+
+- Tags enable customizable key-value pairs, such as a project name or an environment type, to identify IAM principals and AWS resources.
+
+#### RBAC
+
+- implemented by creating policies for each job function.
+- Identities such as IAM users, groups of users, or an application can assume these policies via roles
+
+#### ABAC
+
+- implemented via tags attached to users, roles and resources
+- policies can be designed to allow operations when the principal's tag matches the resource tag
 
 ## integrations
 

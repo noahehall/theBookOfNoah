@@ -613,10 +613,12 @@
 
 - attribute-based access control
 - authorization strategy that defines permissions based on attributes
+- helpful in environments that are growing rapidly and helps with situations where policy management becomes cumbersome
 
 #### RBAC
 
 - role based access control
+- permissions are defined based on a person's job function
 
 ### end-to-end encryption
 
