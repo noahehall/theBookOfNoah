@@ -89,6 +89,7 @@
 
 ### roles
 
+- check the [iam STS file](./iam-sts.md)
 - delegate access to users, applications, or services
 - endow an entity with temporary credentials to perform some function
   - users and groups
@@ -216,10 +217,19 @@
 
 ##### Session Policies
 
-- inline permissions policy that users pass in the session when they assume the role
-  - Restricts/limits permissions for assumed roles and federated users
-- the intersection of the identity-based policies for the IAM entity (user or role) used to create the session and the session policies
-  - can also come from a resource-based policy
+- inline permissions policy that creates a session policy when assuming a role
+  - by default: all users assuming the same role get the same permissions for their role session
+  - this allows you to create distinctive role session permissions or to further restrict overall permissions
+    - Restricts/limits permissions for assumed roles and federated users
+    - Reduce the number of roles they need to create because multiple users can assume the same role yet have unique session permissions.
+    - Set permissions for users to perform only those specific actions for that session
+- any of the three AssumeRole APIs can be used to pass the session policies.
+- with identity-based policies
+  - the effective permissions are the intersection of the IAM entity's identity-based policy and the session policies
+- with resource-based policies:
+  - specify the ARN of the user or role as a principal
+  - The session policy limits the total permissions granted by the resource-based policy and the identity-based policy
+  - The effective permissions are the intersection of the session policies and either the resource-based policy or the identity-based policy.
 
 ### Access Points
 
