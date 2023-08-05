@@ -42,8 +42,24 @@
     - access can also be granted to AWS/SAML Applications
   - enable directory users access to the Identity Center User Portal
     - they will see the AWS account icons' they've been given access to and the roles for each account they can use to sign in
-    -
+
+### Permission Sets
+
+- a collection of administrator-defined policies that IAM Identity Center uses to determine a user's effective permissions to access a given AWS account
+  - used for only AWS accounts & not used to manage access to cloud applications.
+  - ultimately get created as IAM roles in a given AWS account, and trust policies allow users to assume the role through IAM Identity Center.
+- can contain either AWS-managed policies or custom policies.
+- are provisioned to the AWS account as IAM roles and are presented to users as such
+  - can assign more than one permission set to a user
+  - Users who have multiple permission sets must choose one of the roles when they sign in to the AWS access portal.
 
 ## considerations
 
 ## integrations
+
+- docs exist to integrate with
+  - microsoft azure AD
+  - okta universal directory
+  - onelogin identities
+  - g suite
+  - etc etc, all providing user & group synchronization

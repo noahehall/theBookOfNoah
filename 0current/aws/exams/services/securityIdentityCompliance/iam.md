@@ -32,14 +32,20 @@
 - [mfa](https://aws.amazon.com/iam/details/mfa/)
 - [groups and jobs functions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html)
 - [ABAC via tags tutorial](https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_attribute-based-access-control.html)
+- [testing iam policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html)
 
 ### API
 
 - [root user only tasks](https://docs.aws.amazon.com/accounts/latest/reference/root-user-tasks.html)
 - [lambda: resource based policies](https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html)
 
+### tools
+
+- [iam policy simulator](https://policysim.aws.amazon.com/)
+
 ## best practices
 
+- use the fkn policy simulator, it should be your best friend
 - resource policies are easier to grant/deny access across services/accounts, but have size limits
   - iam roles are a bit more verbose but dont have limits
 - users
@@ -251,6 +257,21 @@
   - specify the ARN of the user or role as a principal
   - The session policy limits the total permissions granted by the resource-based policy and the identity-based policy
   - The effective permissions are the intersection of the session policies and either the resource-based policy or the identity-based policy.
+
+#### policy simulator
+
+- test and troubleshoot identity-based policies, IAM permissions boundaries, AWS Organizations service control policies, and resource-based policies
+- does not make an actual AWS service request, so no charges are occurred
+  - merely tests if the request would be accepted/rejected
+- use cases
+  - Test policies that are attached to IAM users, groups, or roles in your AWS account
+    - test which actions are allowed or denied by the selected policies for specific resources.
+  - Test and troubleshoot the effect of permissions boundaries on IAM entities one permissions boundary at a time.
+  - Test policies that are attached to AWS resources, such as Amazon S3 buckets, Amazon Simple Queue Service (Amazon SQS) queues, Amazon Simple Notification Service (Amazon SNS) topics, or Amazon S3 Glacier vaults.
+  - Test the impact of SCPs on your IAM policies and resource policies if your AWS account is a member of an organization in AWS Organizations.
+  - Simulate real-world scenarios by providing context keys, such as an IP address or date, that are included in Condition elements in the policies being tested.
+  - Identify which specific statement in a policy results in allowing or denying access to a particular resource or action.
+- ## permissions required per use case
 
 ### Access Points
 
