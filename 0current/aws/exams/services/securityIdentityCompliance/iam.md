@@ -33,6 +33,8 @@
 - [groups and jobs functions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html)
 - [ABAC via tags tutorial](https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_attribute-based-access-control.html)
 - [testing iam policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html)
+- [access history: tightenting s3 permissions](https://aws.amazon.com/blogs/security/tighten-s3-permissions-iam-users-and-roles-using-access-history-s3-actions/)
+- [access history: finding unused credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_finding-unused.html)
 
 ### API
 
@@ -271,7 +273,6 @@
   - Test the impact of SCPs on your IAM policies and resource policies if your AWS account is a member of an organization in AWS Organizations.
   - Simulate real-world scenarios by providing context keys, such as an IP address or date, that are included in Condition elements in the policies being tested.
   - Identify which specific statement in a policy results in allowing or denying access to a particular resource or action.
-- ## permissions required per use case
 
 ### Access Points
 
@@ -297,6 +298,48 @@
 
 - implemented via tags attached to users, roles and resources
 - policies can be designed to allow operations when the principal's tag matches the resource tag
+
+### Access History
+
+- view last accessed information for entities or policies that exist in IAM or AWS Organizations.
+- IAM provides last accessed information to help you:
+  - identify unused permissions
+  - refine your policies
+  - allow access to only the services and actions that your IAM entities use
+- last access information types
+  - allowed AWS service information
+  - allowed action information
+- last access information by resource
+  - user: last time that the user tried to access each allowed service.
+  - group: last time that a group member attempted to access each allowed service.
+    - This report also includes the total number of members that attempted access.
+  - Role: last time that someone used the role in an attempt to access each allowed service.
+  - Policy: last time that a user or role attempted to access each allowed service.
+    - This report also includes the total number of entities that attempted access.
+
+#### Access Advisor tab
+
+- in console: IAM dashboard > iam resource > resource > Access Advisor
+  - can also be access via cli/sdk
+- considerations
+  - tracking period: data appears within 4 hours, and kept for 400 days
+  - PassRole: iam:PassRole action is not tracked and is not included in IAM service last accessed information.
+  - report owner: Only the principal that generates a report can view the report details
+    - when using the cli/sdk, you must use the report principals' creds
+    - If you use temporary credentials for a role or federated user, you must generate and retrieve the report during the same session.
+  - Entities:
+    - IAM: includes IAM entities users or roles in your account
+    - organizations: includes IAM users, IAM roles, or the AWS account root user in the specified Organizations entity
+    - does not include unauthenticated attempts.
+  - IAM Policy types: includes services that are allowed by an IAM entity's policies
+    - policies either attached to a role or attached to a user directly or through a group
+      - Access allowed by other policy types is not included in your report
+      - not included: resource-based policies, access control lists, AWS Organizations SCPs, IAM permissions boundaries, and session policies.
+  - required permissions: are different when accessed via cli & console
+- use cases
+  - reducing permissions for user/groups: see what they've accessed, and restrict their actions
+  - deleting IAM resources: ensuring a time has passed since the last access before deleting
+  - editing/detaching policies: see which users are using which policies before modifying
 
 ## integrations
 
