@@ -15,6 +15,10 @@
 - [top 10 security items](https://aws.amazon.com/blogs/security/top-10-security-items-to-improve-in-your-aws-account/)
 - [tags: conventions and rules](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html)
 - [tags: best practices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html)
+- [tags: resource tagging strategy](https://aws.amazon.com/blogs/mt/implement-aws-resource-tagging-strategy-using-aws-tag-policies-and-service-control-policies-scps/)
+- [billing and cost management](https://docs.aws.amazon.com/account-billing/index.html)
+- [billing: user guide](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-what-is.html)
+- [billing: consolidated](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/consolidated-billing.html)
 
 ### tools
 
@@ -106,6 +110,7 @@
 ### Operational Excellence
 
 - running and monitoring systems to deliver business value and continually improving processes and procedures
+- Define your metrics, set target goals, define and enforce your tagging strategy
 
 ### security
 
@@ -167,7 +172,11 @@
 
 ### Cost Optimization
 
-- avoiding uneeded costs
+- measure and monitor your infrastructure and ensure cost-allocations are accurate
+  - tagging is critical: use cost allocation tags
+- data transfer charges are often overlooked
+  - no charge for inbound data transfer across all services in all Regions
+  - data transfer from AWS to the internet is charged per service, with rates specific to the originating Region.
 
 ### sustainability
 

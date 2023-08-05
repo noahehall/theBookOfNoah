@@ -1,6 +1,6 @@
 # Control Tower
 
-- mission statement
+- Set up and govern a secure, multi-account AWS environment
 
 ## my thoughts
 

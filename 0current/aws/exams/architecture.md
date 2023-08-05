@@ -37,18 +37,19 @@
 
 ### service categories
 
-- [databases](https://aws.amazon.com/products/databases/)
-- [data lakes and analytics](https://aws.amazon.com/big-data/datalakes-and-analytics/)
 - [application integration](https://aws.amazon.com/products/application-integration/)
 - [compute](https://aws.amazon.com/products/compute/)
+- [cost management](https://aws.amazon.com/aws-cost-management/)
+- [data lakes and analytics](https://aws.amazon.com/big-data/datalakes-and-analytics/)
+- [databases](https://aws.amazon.com/products/databases/)
+- [frontend and mobile](https://aws.amazon.com/products/frontend-web-mobile/)
+- [machine learning](https://aws.amazon.com/machine-learning/)
+- [management and governance](https://aws.amazon.com/products/management-and-governance/)
 - [migration & transfer](https://aws.amazon.com/products/migration-and-transfer/)
+- [networking and content delivery](https://aws.amazon.com/products/networking/)
+- [securing enterprise grade serverless apps video](https://www.youtube.com/watch?v=tYhUWbDZ4-8)
 - [security, identity and compliance](https://aws.amazon.com/products/security/)
 - [storage](https://aws.amazon.com/products/storage/)
-- [networking and content delivery](https://aws.amazon.com/products/networking/)
-- [management and governance](https://aws.amazon.com/products/management-and-governance/)
-- [frontend and mobile](https://aws.amazon.com/products/frontend-web-mobile/)
-- [securing enterprise grade serverless apps video](https://www.youtube.com/watch?v=tYhUWbDZ4-8)
-- [machine learning](https://aws.amazon.com/machine-learning/)
 
 ### best practices
 
@@ -123,6 +124,8 @@
 - graph: neptune
 - time series: timestream
 - ledger: ledger database services (QLBD)
+
+### cost management
 
 ## Serverless
 
