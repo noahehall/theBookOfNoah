@@ -3,6 +3,6 @@
 - last updated in 2023 for version SSA-C03
 - bookmark:
   - Exam Prep (With practice material) > module 1
-  - AWS Networking Basics > aws networking services > Planning your network design and adding cost optimization
+  - AWS Networking Basics > aws networking services > Services Deep Dive > Network foundations
 - todos
   - FYI: just by opening a lab marks it as completed, check the completed list and figure out which ones you still need to do

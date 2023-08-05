@@ -355,34 +355,27 @@
 
 ## Networking
 
-### Foundational Services
+### services
 
-- VPC
-- Transit Gateway
-- PrivateLink
-
-### Edge Networking
-
-- CloudFront
-- Route53
-- Global Accelerator
-
-### Network Security
-
-- Shield
-- WAF
-- Network Firewall
-- Firewall Manager
-
-### Application Networking
-
-- App Mesh
-- Api Gateway
-- Cloud Map
-
-### Hybrid Connectivity
-
-- Direct Connect
-- Site-to-Site VPN
-- Client VPN
-- Cloud WAN
+- Foundational Services
+  - VPC
+  - Transit Gateway
+  - PrivateLink
+- Edge Networking
+  - CloudFront
+  - Route53
+  - Global Accelerator
+- Network Security
+  - Shield
+  - WAF
+  - Network Firewall
+  - Firewall Manager
+- Application Networking
+  - App Mesh
+  - Api Gateway
+  - Cloud Map
+- Hybrid Connectivity
+  - Direct Connect
+  - Site-to-Site VPN
+  - Client VPN
+  - Cloud WAN
