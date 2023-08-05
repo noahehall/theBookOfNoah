@@ -651,14 +651,37 @@
   - TCP
     - TCP/IP: internet protocol suite
   - UDP
+- stateless firewalls: do not understand the state of a connection
+  - outbound traffic: leaving the client
+  - inbound/response traffic: leaving the server
 
 ##### Session (layer 5)
 
 - manages communiation sessions between two nodes
+- stateful firewalls: understand the state of a connection & tcp segments
+  - outbound traffic: leaving the client, if accepted, automatically accepts the response from the server
+  - inbound/response traffic
+  - can create bidirectional communication between client & sever or any two devices
 
 ##### Presentation (layer 6)
 
+- adds features for the delivery and formatting of the information and further processing/display to layer 7
+  - separation of different data representation
+  - encryption
+  - transforms the data to & from an application format and a network format
+- sometimes presentation features can be performed in the application layer
+  - hence the presentation layer can sometimes be skipped
+
 ##### Application (layer 7)
+
+- supports communications for end-user processes and applications
+- handles the presentation of data for user-facing software applications
+- generally all application-specific functionality
+  - identifying communication partners and the quality of service between them
+  - determining resource availability, privacy and user authentication
+  - synchronizing communication
+  - connects this layer to lower layers in the OSI model
+- common protocols: http, smtp, ftp, web browsing, top level API calls (e.g. REST)
 
 ## Storage
 
