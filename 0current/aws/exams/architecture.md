@@ -6,34 +6,38 @@
 - [aws samples repo](https://github.com/aws-samples)
 - [blog: api gateway category](https://aws.amazon.com/blogs/compute/category/application-services/amazon-api-gateway-application-services/)
 - [blog: apis at scale](https://aws.amazon.com/blogs/architecture/how-to-architect-apis-for-scale-and-security/)
-- [blue/green dpeloyments on aws](https://d1.awsstatic.com/whitepapers/AWS_Blue_Green_Deployments.pdf)
 - [builders library](https://aws.amazon.com/builders-library/?cards-body.sort-by=item.additionalFields.sortDate&cards-body.sort-order=desc&awsf.filter-content-category=*all&awsf.filter-content-type=*all&awsf.filter-content-level=*all)
+- [cloud computing concepts](https://aws.amazon.com/what-is)
+- [elasticache for redis vs memorydb for redis](https://cloudwellserved.com/amazon-elasticache-for-redis-vs-amazon-memorydb-for-redis/)
+- [incident response plans](https://aws.amazon.com/blogs/publicsector/building-a-cloud-specific-incident-response-plan/)
+- [localstack](https://github.com/localstack/localstack)
+- [serverless express (check examples dir)](https://github.com/vendia/serverless-express)
+- [serverless](https://aws.amazon.com/serverless/)
+- [service search](https://aws.amazon.com/products/)
+- [youtube: databases on aws](https://www.youtube.com/watch?v=WE8N5BU5MeI&t=9s)
+
+### well architected
+
+- [blue/green dpeloyments on aws](https://d1.awsstatic.com/whitepapers/AWS_Blue_Green_Deployments.pdf)
 - [CICD on AWS](https://docs.aws.amazon.com/whitepapers/latest/cicd_for_5g_networks_on_aws/cicd-on-aws.html)
 - [CICD: best practices on aws](https://docs.aws.amazon.com/whitepapers/latest/practicing-continuous-integration-continuous-delivery/welcome.html)
-- [cloud computing concepts](https://aws.amazon.com/what-is)
 - [distributed data management](https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/distributed-data-management.html)
-- [elasticache for redis vs memorydb for redis](https://cloudwellserved.com/amazon-elasticache-for-redis-vs-amazon-memorydb-for-redis/)
 - [high availability whitepaper](https://docs.aws.amazon.com/whitepapers/latest/real-time-communication-on-aws/high-availability-and-scalability-on-aws.html)
 - [implementing microservices on AWS](https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/microservices-on-aws.pdf)
 - [incident response plan guide pdf](https://d1.awsstatic.com/whitepapers/aws_security_incident_response.pdf)
-- [incident response plans](https://aws.amazon.com/blogs/publicsector/building-a-cloud-specific-incident-response-plan/)
-- [localstack](https://github.com/localstack/localstack)
 - [microservices on aws](https://docs.aws.amazon.com/pdfs/whitepapers/latest/microservices-on-aws/microservices-on-aws.pdf)
 - [optimizing enterprise economics with serverless architectures](https://docs.aws.amazon.com/pdfs/whitepapers/latest/optimizing-enterprise-economics-with-serverless/optimizing-enterprise-economics-with-serverless.pdf)
 - [overview of deployment options on aws](https://docs.aws.amazon.com/whitepapers/latest/overview-deployment-options/aws-deployment-services.html)
 - [running containerized microservices](https://d1.awsstatic.com/whitepapers/DevOps/running-containerized-microservices-on-aws.pdf)
 - [security, identity & compliance best practices](https://aws.amazon.com/architecture/security-identity-compliance/?cards-all.sort-by=item.additionalFields.sortDate&cards-all.sort-order=desc&awsf.content-type=*all&awsf.methodology=*all)
 - [serverless apps Lens](https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/welcome.html)
-- [serverless express (check examples dir)](https://github.com/vendia/serverless-express)
 - [serverless multi-tier architectures (PDF)](https://d1.awsstatic.com/whitepapers/AWS_Serverless_Multi-Tier_Architectures.pdf)
-- [serverless](https://aws.amazon.com/serverless/)
 - [service overview (PDF)](https://docs.aws.amazon.com/pdfs/whitepapers/latest/aws-overview/aws-overview.pdf)
-- [service search](https://aws.amazon.com/products/)
 - [well architected framework: serverless application lens](https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/wellarchitected-serverless-applications-lens.pdf?810a2056-c993-4832-af32-11286cad694c)
-- [well architected framework](https://aws.amazon.com/architecture/well-architected/)
+- [well architected: landing page](https://aws.amazon.com/architecture/well-architected/)
 - [whitepaper: aws vpc connectivity options](https://docs.aws.amazon.com/whitepapers/latest/aws-vpc-connectivity-options/welcome.html)
+- [whitepaper: hybrid networking](https://docs.aws.amazon.com/wellarchitected/latest/hybrid-networking-lens/hybrid-networking-lens.html)
 - [whitepapers](https://docs.aws.amazon.com/whitepapers/latest/aws-overview/compute-services.html)
-- [youtube: databases on aws](https://www.youtube.com/watch?v=WE8N5BU5MeI&t=9s)
 
 ### service categories
 
@@ -50,6 +54,7 @@
 - [securing enterprise grade serverless apps video](https://www.youtube.com/watch?v=tYhUWbDZ4-8)
 - [security, identity and compliance](https://aws.amazon.com/products/security/)
 - [storage](https://aws.amazon.com/products/storage/)
+- [premium support programs](https://aws.amazon.com/premiumsupport/technology-and-programs/)
 
 ### best practices
 
@@ -126,6 +131,8 @@
 - ledger: ledger database services (QLBD)
 
 ### cost management
+
+- expenses and usage: AWS Cost Explorer, the AWS Billing and Management Console, AWS Budgets, AWS Trusted Advisor(opens in a new tab)
 
 ## Serverless
 
