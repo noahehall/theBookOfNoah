@@ -507,6 +507,8 @@
 
 ## networking
 
+- CSMA: carrier-sense multiple access
+
 ### Protocols
 
 - IP: address denoting a specific computer on the internet
@@ -588,6 +590,75 @@
 # 1024 ip addresses
 192.168.0.0/22
 ```
+
+### routing
+
+- Routing is how your data moves:
+  - across your network from device to device and provides the path to deliver network packets from the source to the destination
+  - across the internet from your local network
+- Global networking: moves your data across the internet through many interconnected networks
+- Local networking: takes that data that is broken up into multiple pieces for reliable transport.
+
+### OSI Model
+
+- Open Systems Interconnect Model
+
+#### Media Layers
+
+- define how our data moves between point A and point B
+  - Point A could be in your local network, and point B too, or maybe point B is across the internet.
+
+##### Physical (layer 1)
+
+- helps the devices on the network communicate and provides transmission and reception of raw bit streams over a physical medium
+- eventually physical cables are used to transmit unstructured data
+
+##### Data Link (layer 2)
+
+- provides reliable transmission of data frames between two nodes connected by a physical layer
+- adds more function and intelligence and to provide device-to-device communication
+  - frames: format for sending information and data over a layer 2 network
+  - mac addresses: unique hardware addresses for identifying devices on the network
+  - controlled access to the layer 1 physical medium
+  - collision detection: CD; reduces collisions along with improvements CSMA
+
+##### Network (layer 3)
+
+- responsible for moving the data from the source to the destination
+- has no reliable method for ensuring packet delivery
+- adds
+  - IP: assigns cross network address to devices on the network
+    - once addresses are assigned, it uses routing to communicate across networks
+    - packets: containers that encapsulate the raw data being sent
+    - routes: move packets of data through networks by reviewing and checking route tables
+    - route tables: help the transmission for the routesrs to forward packets
+
+#### Host Layers
+
+- where your data is broken up for transport and then reassembled when it reaches the destination
+
+##### Transport (layer 4)
+
+- adds the functionality to support the networking used on the internet
+- structuring and managing of the network: addressing, routing, and traffic control
+  - ports:
+  - segments:
+  - error correction: sequence number to ensure the order of segments are maintained
+  - retransmmission: if a packet is lost in transit, it can be resubmitted
+  - flow control and a connection oriented architecture:
+    - ensures you can create a connection between a client and sever using a three-way handshake
+- adds protocols
+  - TCP
+    - TCP/IP: internet protocol suite
+  - UDP
+
+##### Session (layer 5)
+
+- manages communiation sessions between two nodes
+
+##### Presentation (layer 6)
+
+##### Application (layer 7)
 
 ## Storage
 
