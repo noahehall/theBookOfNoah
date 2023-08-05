@@ -13,6 +13,8 @@
 
 ## best practices
 
+- The preferred way to use web identity federation for mobile applications
+
 ### anti patterns
 
 ## features
@@ -20,7 +22,8 @@
 - security features such as adaptive authentication, support compliance, and data residency requirements
 - Scale to millions of users with a fully managed, high-performant, and reliable identity store.
 - Federate sign-in using OIDC or SAML 2.0
-- easy sign in/ups for mobile/web apps
+- add user sign-up, sign-in, and access controls to your web and mobile apps
+- define roles and map users to different roles so that your app can access only the resources that are authorized for each user.
 
 ### pricing
 
@@ -45,6 +48,13 @@
   - cognito determines IDP and redirects user to auth
   - if user auth is successful its POST back to cognito as a SAML assertion
     - profile is upserted in cognito
+- OIDC workflow
+  - app asks users to sign in: validation occurs at each transaction
+  - app uses login with amazon resources to accept user credentials
+  - app uses cognito API to exchange the login with amazon id token for a cognito token
+  - app requests temporary creds from STS, passing in the cognito token
+  - app receives STS creds, which includes the AssumeRoleWithWebIdentity permission
+    - the temp creds + assumed role permissions determines the users access
 
 #### user pools
 
@@ -61,10 +71,12 @@
 - provides AWS creds for accessing resources on behalf of un/authenticated users
 - rules to map users to IAM roles
 
+## considerations
+
 ## integrations
+
+- highly integrated with STS, check that file for more
 
 ### api gateway
 
 - create an authorizer of type COGNITO_USER_POOLS and configure an api method to use that for authnz
-
-## considerations

@@ -13,6 +13,9 @@
 - [saml: roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-idp_saml.html)
 - [IdP: creating identity proviers](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create.html)
 - [saml: federated access with ABAC](https://aws.amazon.com/blogs/aws/new-for-identity-federation-use-employee-attributes-for-access-control-in-aws/)
+- [web identity federation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html)
+- [Temporary security credentials in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_request.htmly)
+- [web identity playground](https://aws.amazon.com/blogs/aws/the-aws-web-identity-federation-playground/)
 
 ## best practices
 
@@ -126,6 +129,20 @@
   - name qualifier
 
 ### AssumeRoleWithWebIdentity
+
+- logical workflow (e.g. with Cognito as identity provider)
+  - user starts the app on their mobile device, the app asks the user to sign in and authenticate with Amazon
+  - The app uses Amazon Cognito API operations to exchange the Amazon ID token for an Amazon Cognito token.
+    - Amazon Cognito makes the exchange and requests temporary security credentials from AWS STS with the AssumeRoleWithWebIdentity API, passing the Amazon Cognito token for the temporary credentials
+    - The role associated with the temporary security credentials and its assigned policy determine what can be accessed.
+- setup proces
+  - you must have an identity token from a supported identity provider and create a role that the application can assume
+  - the identity provider must be specified in the role's trust policy.
+  - your application can now call AssumeRoleWithWebIdentity
+    - does not require the use of AWS security credentials.
+    - you can distribute an application that requests temporary security credentials without including long-term AWS credentials in the application
+- web identity request: check the doc for the optional & required params
+- web identity response: pretty much identitial to SAML respons
 
 ## considerations
 

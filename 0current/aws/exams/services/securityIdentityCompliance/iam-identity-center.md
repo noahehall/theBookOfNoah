@@ -1,7 +1,6 @@
 # Identity Center
 
 - central management of SSO access to multiple AWS accounts and business applications
-  - i.e. federated access
 - successor to single sign-on
 
 ## my thoughts
@@ -9,6 +8,8 @@
 ## links
 
 - [landing page](https://aws.amazon.com/iam/identity-center/)
+- [getting started](https://docs.aws.amazon.com/singlesignon/latest/userguide/getting-started.html)
+- [service linked roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_terms-and-concepts.html#iam-term-service-linked-role)
 
 ## best practices
 
@@ -16,16 +17,32 @@
 
 ## features
 
-- create/connect workforce identities (federated users) for use across aws
-- cenmtrally manage workforce access to multiple aws accounts
 - assign user perms based on common job functions/user attributes
-- provide workforce single-signon access to cloud apps
+  - define federated access permissions for your users based on their group memberships
+- use IAM Identity Center for identities in the Identity Center directory, your existing Microsoft Active Directory, or external IdP.
+  - provide workforce single-signon access to cloud apps
+  - Built-in integrations with business cloud applications, such as Salesforce, Box, GitHub, and Office 365.
+  - Built-in directory for user and group management to serve as an IdP to authenticate users to IAM Identity Center enabled applications, the AWS Management Console, and SAML 2.0 compatible cloud-based applications.
+- Log in CloudTrail of all sign-in and administrative activities for auditing. You can send these logs to SIEM solutions such as Splunk and Sumo Logic to analyze them.
+- AWS Access portal for users to sign in with their existing corporate credentials and access all of their assigned accounts and applications from one place.
 
 ### pricing
 
 ## terms
 
 ## basics
+
+- logical workflow
+  - enable identity center: open the identity center console and follow the prompts
+    - it requires permissions to create service-linked roles with all accounts in your aws organization
+  - choose a directory: determines where identity center looks for users and groups that require aws access
+    - by default its the AWS Identity Center directory
+    - you can connect microsoft active directory, or any other SAML 2.0 IdP
+  - grant users in your connected directories access to one/more aws web consoles in specific AWS accounts within your organization
+    - access can also be granted to AWS/SAML Applications
+  - enable directory users access to the Identity Center User Portal
+    - they will see the AWS account icons' they've been given access to and the roles for each account they can use to sign in
+    -
 
 ## considerations
 
