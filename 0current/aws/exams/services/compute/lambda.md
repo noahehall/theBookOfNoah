@@ -60,6 +60,7 @@
 - [traffing shifting using aliaes](https://docs.aws.amazon.com/lambda/latest/dg/lambda-traffic-shifting-using-aliases.html)
 - [security overview whitepaper](https://docs.aws.amazon.com/whitepapers/latest/security-overview-aws-lambda/security-overview-aws-lambda.html)
 - [extensions](https://aws.amazon.com/blogs/aws/getting-started-with-using-your-favorite-operational-tools-on-aws-lambda-extensions-are-now-generally-available/)
+- [iam: Lambda resource access permissions](https://docs.aws.amazon.com/lambda/latest/dg/intro-permission-model.html)
 
 ### tools
 

@@ -1,10 +1,10 @@
 # cloudtrail
 
-- helps audit applications by recording all API actions made against the application
+- captures all AWS service API calls as events, including calls from the console, AWS CLI, and API tools
 
 ## my thoughts
 
-- all api actions are recorded in cloudtrail, become one with cloudtrail
+- become one with cloudtrail
 
 ## links
 
@@ -34,6 +34,35 @@
 ## basics
 
 - you create a trail that delivers log files to an s3 bucket/cloudwatch logs
+- since all actions against your account can be recorded: the primary goal is the effectively analysis of and reaction to those trails
+  - who made the request
+  - when and from where
+  - what happened
+
+### important log fields
+
+- eventTime
+- eventType
+  - AwsConsolSignin: A user in your account (root, IAM, federated, SAML, or SwitchRole) signed in to the AWS Management Console.
+  - AwsServiceEvent: The called service generated an event related to your trail
+  - AwsApiCall: A public API for an AWS resource was called
+- eventSource: The service that the request was made to; generally the service endpoint
+  - e.g. CloudWatch is monitoring.amazonaws.com
+- eventName: The requested action, which is one of the actions in the API for that service.
+- sourceIPAddress: IP address or DNS name of the calling service is used
+- userAgent: The tool or application through which the request was made
+  - signin.amazonaws.com – The request was made by an IAM user with the AWS Management Console.
+  - console.amazonaws.com – The request was made by a root user with the AWS Management Console.
+- errorMessage: Any error message returned by the requested service.
+- requestParameters: The parameters that were sent with the API call
+- resources: List of AWS resources accessed in the event. This can be the resource's ARN, an AWS account number, or the resource type.
+- userIdentity: A collection of fields that describe the user or service that made the call.
+  - Root: If the userIdentity type is Root and you set an alias for your account, the userName field contains your account alias.
+  - IAMUser
+  - AssumedRole: The request was made with temporary security credentials that were obtained with a role via a call to the AWS STS AssumeRole API call.
+  - FederatedUser: The request was made with temporary security credentials that were obtained via a call to the AWS STS GetFederationToken API
+  - AWSAccount:
+  - AWSService: The request was made by an AWS service.
 
 ### events
 
@@ -53,6 +82,11 @@
 
 ## integrations
 
+### IAM
+
+- particularly useful in seeing why an api called failed
+  - which service, action and policy was used
+
 ### cloudwatch
 
 - its all about setting alarms when changes are made against production resources
@@ -63,18 +97,15 @@
 
 ### lambda
 
-- the default logging: is for control plane (mgmt) events
+- default logging is for control plane (mgmt) events
 - optional logging: can turn on data event logging for tracking every time lambda fns are invoked
-- You can invoke a Lambda function based on CloudTrail events emitted to CloudWatch Logs and have the function take desired actions.
 
 ### api gateway
-
-- captures all api calls as events whether originating from console / code
 
 ### Key Management Service (KMS)
 
 - usage of managed keys are recorded in cloudtrail
-- inspect whos making teh request, services used, actions performed, parameters for the action and response elements returned
+- inspect whos making the request, services used, actions performed, parameters for the action and response elements returned
 
 ### s3
 

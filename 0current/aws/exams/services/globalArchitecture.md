@@ -14,11 +14,12 @@
 - [well architected framework](https://aws.amazon.com/architecture/well-architected/)
 - [top 10 security items](https://aws.amazon.com/blogs/security/top-10-security-items-to-improve-in-your-aws-account/)
 - [tags: conventions and rules](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html)
+- [tags: best practices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html)
 
-### well architected tool
+### tools
 
-- [well architected tool](https://aws.amazon.com/well-architected-tool/)
-- [user guide](https://docs.aws.amazon.com/wellarchitected/latest/userguide/wellarchitected-ug.pdf)
+- [WAT: well architected tool](https://aws.amazon.com/well-architected-tool/)
+- [WAT: user guide](https://docs.aws.amazon.com/wellarchitected/latest/userguide/wellarchitected-ug.pdf)
 
 ### guide
 
@@ -93,8 +94,7 @@
 
 - the best practice is to tag everything, then you can use those tags for various other things, e.g. access control
 - think about
-  - job function/project attributes
-  - cost center
+  - job function/project attributes/cost allocation
   - account/team/organization/etc
   - ABAC/RBAC
 
@@ -173,13 +173,13 @@
 
 - recommendations and strategies to use when designing cloud architectures that maximize efficiency and reduce waste
 
-## Well architected tool
+### Well architected tool
 
-- free self-service tool to review AWS workloads anderstand potential risks in your architectures, and identify steps for improvement.
+- free self-service tool to review AWS workloads, potential risks in your architectures and identify steps for improvement.
 - general process
   - define your workload by answering a series of architectural questions
   - the tool evaluates your responses against the 6 pillars of the well architected framework
-  - provides a
+  - provides an improvement plan with:
     - prioritized list of issues/recommendations
     - links to videos and documentation concerning best practices
     - generated report that summarizes your workload review

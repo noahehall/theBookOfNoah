@@ -16,6 +16,7 @@
 - [web identity federation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html)
 - [Temporary security credentials in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_request.htmly)
 - [web identity playground](https://aws.amazon.com/blogs/aws/the-aws-web-identity-federation-playground/)
+- [assumeRoleWithSAML api](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRoleWithSAML.html)
 
 ## best practices
 

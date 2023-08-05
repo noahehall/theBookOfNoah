@@ -17,13 +17,13 @@
 
 ## features
 
-- assign user perms based on common job functions/user attributes
-  - define federated access permissions for your users based on their group memberships
 - use IAM Identity Center for identities in the Identity Center directory, your existing Microsoft Active Directory, or external IdP.
   - provide workforce single-signon access to cloud apps
   - Built-in integrations with business cloud applications, such as Salesforce, Box, GitHub, and Office 365.
   - Built-in directory for user and group management to serve as an IdP to authenticate users to IAM Identity Center enabled applications, the AWS Management Console, and SAML 2.0 compatible cloud-based applications.
-- Log in CloudTrail of all sign-in and administrative activities for auditing. You can send these logs to SIEM solutions such as Splunk and Sumo Logic to analyze them.
+  - assign user perms based on common job functions/user attributes
+    - define federated access permissions for your users based on their group memberships
+- CloudTrail logs of all sign-in and administrative activities for auditing.
 - AWS Access portal for users to sign in with their existing corporate credentials and access all of their assigned accounts and applications from one place.
 
 ### pricing

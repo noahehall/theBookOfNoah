@@ -35,6 +35,9 @@
 - [testing iam policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html)
 - [access history: tightenting s3 permissions](https://aws.amazon.com/blogs/security/tighten-s3-permissions-iam-users-and-roles-using-access-history-s3-actions/)
 - [access history: finding unused credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_finding-unused.html)
+- [ecs: task roles](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html)
+- [identities: roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)
+- [identities](https://docs.aws.amazon.com/IAM/latest/UserGuide/id.html)
 
 ### API
 
@@ -263,6 +266,7 @@
 #### policy simulator
 
 - test and troubleshoot identity-based policies, IAM permissions boundaries, AWS Organizations service control policies, and resource-based policies
+  - evaluates the policies that you choose and determines the effective permissions for each of the actions that you specify
 - does not make an actual AWS service request, so no charges are occurred
   - merely tests if the request would be accepted/rejected
 - use cases
@@ -372,6 +376,7 @@
 
 - apply roles down to the task level for granular positions
   - assign resourced policies with appropriate permissions to each role
+  - Applications are required to sign their AWS API requests with AWS credentials, and this feature provides a strategy to manage credentials for your application’s use
 - common roles
   - ecsServiceRole: enables ECS to (de)register container instances from a load balancer whenever tasks are placed on them
 - permission tiers
@@ -409,3 +414,8 @@
       - create additional principal sin IAM that map to restrict roles in rbac for specific mgmt tasks
     - the role used to create the clsuter will always have sudo access
       - you should instead create a specific role just for deploying clusters
+
+### Ec2
+
+- Amazon EC2 instance profiles provide credentials to EC2 instances.
+  - works similarly to IAM roles for ECS tasks
