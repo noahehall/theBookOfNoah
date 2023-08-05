@@ -601,7 +601,7 @@
 
 ### OSI Model
 
-- Open Systems Interconnect Model
+- Open Systems Interconnect Model: a logical model and it was designed to describe the functions of the communication system by dividing the communication procedure into smaller and simpler components
 
 #### Media Layers
 
@@ -649,7 +649,6 @@
     - ensures you can create a connection between a client and sever using a three-way handshake
 - adds protocols
   - TCP
-    - TCP/IP: internet protocol suite
   - UDP
 - stateless firewalls: do not understand the state of a connection
   - outbound traffic: leaving the client
@@ -682,6 +681,66 @@
   - synchronizing communication
   - connects this layer to lower layers in the OSI model
 - common protocols: http, smtp, ftp, web browsing, top level API calls (e.g. REST)
+
+### TCP/IP
+
+- Transmission Control Protocol/Internet Protocol: designed for standard protocols and is a subsection of the OSI model
+  - aka the internet protocol suite.
+  - set of rules and procedures that function as an abstraction layer between internet applications and the routing and switching.
+    - specifies how data is exchanged over the internet: how data should be broken into packets, addressed, transmitted, routed, and received at the destination
+- It combines the seven layers of the OSI model into four layers
+
+#### Link (Layer 1)
+
+- Defines the networking methods within the scope of the local network link on which hosts communicate without intervening routers.
+- a combination of the data link and physical layer of the OSI model
+- features
+  - Hardware Addressing: MAC Addresses
+  - Protocols present to allow the physical transmission of data
+- Protocols: that only operate on a link
+  - Ethernet
+  - ARP: Address Resolution Protocol
+
+#### Internet (Layer 2)
+
+- responsibility for sending packets across network boundaries.
+- covers the functions of the network layer in the OSI model
+- Establishes basic data channels that applications use for task-specific data exchange.
+- defines protocols responsible for the logical transmission of data over the entire network
+- connectins independent network and transports packets across network boundaries
+- protocols
+  - IPv4/6
+  - ICMP
+  - ARP
+
+#### Transport (Layer 3)
+
+- Establishes basic data channels that applications use for task-specific data exchange.
+- covers the functions of the transport layer of the OSI model
+- features
+  - handles to end-to-end communication
+  - provides flow control
+  - ensures reliability with error-free delivery of data
+- protocols
+  - TCP
+  - UDP
+
+#### Application (Layer 4)
+
+- Provides end user service, like exchanging application data over the network connections established by the lower level protocols.
+- covers layer 5, 6 and 7 of the OSI model
+- features
+  - provides standardized data exchange
+  - handles node-to-node communications
+  - controls user-interface specifications
+- protocols
+  - HTTP
+  - ssh
+  - NTP
+  - ftp
+  - POP: post office protocol
+  - SMTP
+  - SNMP
 
 ## Storage
 
