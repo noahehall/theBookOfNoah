@@ -6,7 +6,7 @@
 
 ## links
 
-- [landing page](https://aws.amazon.com/privatelink/)
+- [landing page](https://aws.amazon.com/privatelink/?did=ap_card&trk=ap_card)
 - [accessing services through privatelink](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Introduction.html#what-is-privatelink)
 - [cloudformation: setting up vpc endpoints](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-vpce-bucketnames.html)
 

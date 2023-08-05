@@ -22,6 +22,7 @@
 - [eks: vpc considerations](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html)
 - [eks: subnet tagging](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html#vpc-subnet-tagging)
 - [eks: vpc cni k8s plugin](https://github.com/aws/amazon-vpc-cni-k8s)
+- [ec2: elastic network interfaces](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_ElasticNetworkInterfaces.html)
 
 ### integrations
 
@@ -51,6 +52,7 @@
 
 ### pricing
 
+- check the docs
 - gateways: each hour that a NAT gateway is avialable and total GB of data it processes
 
 ## terms
@@ -168,6 +170,7 @@
 ### EC2
 
 - on ec2 creation, you can select an existing VPC and subnet to launch an instance into under network settings
+- instances are connected to the network with elastic network interfaces(opens in a new tab).
 
 ### Security Groups
 

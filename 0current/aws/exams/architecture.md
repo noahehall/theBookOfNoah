@@ -3,6 +3,7 @@
 ## links
 
 - [10 things serverless architects should know](https://aws.amazon.com/blogs/architecture/ten-things-serverless-architects-should-know/)
+- [aws samples repo](https://github.com/aws-samples)
 - [blog: api gateway category](https://aws.amazon.com/blogs/compute/category/application-services/amazon-api-gateway-application-services/)
 - [blog: apis at scale](https://aws.amazon.com/blogs/architecture/how-to-architect-apis-for-scale-and-security/)
 - [blue/green dpeloyments on aws](https://d1.awsstatic.com/whitepapers/AWS_Blue_Green_Deployments.pdf)
@@ -14,6 +15,8 @@
 - [elasticache for redis vs memorydb for redis](https://cloudwellserved.com/amazon-elasticache-for-redis-vs-amazon-memorydb-for-redis/)
 - [high availability whitepaper](https://docs.aws.amazon.com/whitepapers/latest/real-time-communication-on-aws/high-availability-and-scalability-on-aws.html)
 - [implementing microservices on AWS](https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/microservices-on-aws.pdf)
+- [incident response plan guide pdf](https://d1.awsstatic.com/whitepapers/aws_security_incident_response.pdf)
+- [incident response plans](https://aws.amazon.com/blogs/publicsector/building-a-cloud-specific-incident-response-plan/)
 - [localstack](https://github.com/localstack/localstack)
 - [microservices on aws](https://docs.aws.amazon.com/pdfs/whitepapers/latest/microservices-on-aws/microservices-on-aws.pdf)
 - [optimizing enterprise economics with serverless architectures](https://docs.aws.amazon.com/pdfs/whitepapers/latest/optimizing-enterprise-economics-with-serverless/optimizing-enterprise-economics-with-serverless.pdf)
@@ -28,11 +31,9 @@
 - [service search](https://aws.amazon.com/products/)
 - [well architected framework: serverless application lens](https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/wellarchitected-serverless-applications-lens.pdf?810a2056-c993-4832-af32-11286cad694c)
 - [well architected framework](https://aws.amazon.com/architecture/well-architected/)
+- [whitepaper: aws vpc connectivity options](https://docs.aws.amazon.com/whitepapers/latest/aws-vpc-connectivity-options/welcome.html)
 - [whitepapers](https://docs.aws.amazon.com/whitepapers/latest/aws-overview/compute-services.html)
 - [youtube: databases on aws](https://www.youtube.com/watch?v=WE8N5BU5MeI&t=9s)
-- [incident response plans](https://aws.amazon.com/blogs/publicsector/building-a-cloud-specific-incident-response-plan/)
-- [incident response plan guide pdf](https://d1.awsstatic.com/whitepapers/aws_security_incident_response.pdf)
-- [aws samples repo](https://github.com/aws-samples)
 
 ### service categories
 
@@ -341,3 +342,37 @@
   - forensic data analysis: create snapshots of data/configuration to capture the current state for later investigation and before remediation
   - immutable infrastructure: after capturing snapshots, recreate resources with a clean slate and replace all keys, credentials, etc
   - coordination and orchestration: utilize step functions to stitch together workflows with adaptability
+
+## Networking
+
+### Foundational Services
+
+- VPC
+- Transit Gateway
+- PrivateLink
+
+### Edge Networking
+
+- CloudFront
+- Route53
+- Global Accelerator
+
+### Network Security
+
+- Shield
+- WAF
+- Network Firewall
+- Firewall Manager
+
+### Application Networking
+
+- App Mesh
+- Api Gateway
+- Cloud Map
+
+### Hybrid Connectivity
+
+- Direct Connect
+- Site-to-Site VPN
+- Client VPN
+- Cloud WAN
