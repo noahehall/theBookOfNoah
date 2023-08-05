@@ -1,6 +1,6 @@
 # route53
 
-- route end users to internet applications
+- DNS for AWS
 
 ## my thoughts
 

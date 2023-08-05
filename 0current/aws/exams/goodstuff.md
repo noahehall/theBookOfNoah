@@ -507,13 +507,62 @@
 
 ## networking
 
-- ip address: a 32bit address denoting a specific computer on the internet
-- ipv4: an ip address converted to decimal format: 4 octets, each representing 8 bits (0-255)
+### Protocols
+
+- IP: address denoting a specific computer on the internet
+  - first part: network; used to identify the network part within the network
+  - last part: host; used to specify a specific host within that network.
+- IPv4: a 32bit ip address converted to decimal format: 4 octets, each representing 8 bits (0-255)
+  - public:
+    - Class A starts at 0.0.0.0 and ends at 127.255.255.255
+    - Class B starts at 128.0.0.0 and ends at 191.255.255.255
+    - Class C, starts at 192.0.0.0 and ends at 223.255.255.255
+    - there are also Class D and Class E IP ranges
+  - private: The default Amazon VPC in AWS is configured using a Class B range.
+    - Class A is 10.0.0.0 - 10.255.255.255 providing one single Class A IP addresses.
+    - Class B is 172.16.0.0 - 172.31.255.255 providing 16 Class B IP addresses.
+    - Class C is 192.168.0.0 - 192.168.255.255 providing 256 Class C IP addresses.
+    - for private IPs to connect with the public internet, they have to use Network Address Translation
+- IPv6: 128bit ip address represented in hexadecimal rather than the dotted decimal like IPv4 addresses
+
+#### Network Communication
+
+- HTTP
+- TCP
+- UDP
+- IRC
+
+#### Network Management
+
+- SNMP: monitor and manage network devices
+- ICMP: used for diagnostic purposes, send error messages and inspect connectivity issues between devices
+
+#### Network Security
+
+- SSL
+- SFTP
+- HTTPS
 
 ### CIDR notation
 
-- CIDR: classless inter-domain routing; enables expressing a rangte of ip addresses
-  - eksctl uses `192.168.0.0/16` for the VPC
+- classless inter-domain routing; enables expressing a rangte of ip addresses
+- provides a numerical representation of a network that describes its characteristics and mask length which determines the usable addresses, including the start and end addresses
+- addresses are represented by the starting IP address of the network, called the network address, and the prefix, which is a forward slash and a number that represents the size of the network.
+
+#### Subnetting
+
+- the process of dividing a network into smaller network sections
+  - helps to isolate groups of hosts together, which can improve routing efficiency, network management control, and network security
+  - creates multiple logical networks that exist within a single Class A, B, or C network
+- subnet: i.e. sub-network; a logical organization of connected network devices
+  - is a network inside a network.
+  - make networks more efficient because network traffic can travel a shorter distance without passing through unnecessary routers to reach its destination
+- subnet mask: important for IPv4 addresses because the IP address doesn't give any information on the network size
+  - for internal usage within a network to determine if a host is on the local or remote subnet
+    - e.g. 205.0.125.100
+    - class A: network 205, host 0.125.100
+    - class B: network 205.0, host 125.100
+    - class C: network 205.0.125, host 100
 
 ```sh
 # a single ip

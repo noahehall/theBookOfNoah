@@ -1,7 +1,6 @@
 # Direct Connect
 
-- Create a dedicated network connection to AWS
-- links your network directly to AWS to deliver consistent, low-latency performance
+- Create a private and dedicated network connection from on-premise to AWS
 
 ## my thoughts
 

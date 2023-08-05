@@ -1,6 +1,6 @@
 # App Mesh
 
-- application level networking for services to communicate across different types of compute infrastructure
+- connects containers and microservices with application level networkin
 
 ## my thoughts
 

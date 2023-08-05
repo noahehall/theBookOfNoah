@@ -1,5 +1,9 @@
 # Common AWS Architecture
 
+- TODOs
+  - theres bunches of stuff in here that should be in goodstuff.md
+    - which should then go into some other NON aws specific file
+
 ## links
 
 - [10 things serverless architects should know](https://aws.amazon.com/blogs/architecture/ten-things-serverless-architects-should-know/)
@@ -55,6 +59,7 @@
 - [security, identity and compliance](https://aws.amazon.com/products/security/)
 - [storage](https://aws.amazon.com/products/storage/)
 - [premium support programs](https://aws.amazon.com/premiumsupport/technology-and-programs/)
+- [networking](https://aws.amazon.com/products/networking/)
 
 ### best practices
 
@@ -133,6 +138,8 @@
 ### cost management
 
 - expenses and usage: AWS Cost Explorer, the AWS Billing and Management Console, AWS Budgets, AWS Trusted Advisor(opens in a new tab)
+
+### networking
 
 ## Serverless
 
@@ -379,3 +386,64 @@
   - Site-to-Site VPN
   - Client VPN
   - Cloud WAN
+
+### topologies
+
+#### point to point
+
+- private data connection securely connecting two/more locations for private data services
+- does not traverse the public internet
+
+#### bus
+
+- in early networks, a single physical cable was used to create connections between locations
+
+#### tree
+
+- share information across a network with many servers
+- the network signals transmitted by root nodes hit all computers at the same time
+
+#### hub and spoke
+
+- the network hub is in the middle, and spokes are all the connected devices on the outside
+- used in small and large networks
+- in AWS
+  - VPN connections
+  - Direct Connect Gateways
+  - VPC Peering
+  - transit gateways
+
+#### mesh
+
+- a simultaneous fully connected and partially connected design
+- adds fault-tolerance and redundancy for load balancing/WAN requirmeents
+- in AWS
+  - transit gateway
+  - VPC peering connections
+
+#### ring
+
+- will usually have multiple rings for redundancy
+- used in Metro Area Networks (MANs)
+
+#### hybrid
+
+- abcd
+
+### Storage
+
+- Data used by applications on AWS are stored using AWS storage services
+
+#### Network Attached Storage
+
+- connects to a shared storage device across the entire network
+- usually kept in a data center and provides file-level access
+- in AWS
+  - EFS
+  - FSx
+
+#### Storage Area Network
+
+- adds block-level access
+- in AWS
+  - Elastic Block Store

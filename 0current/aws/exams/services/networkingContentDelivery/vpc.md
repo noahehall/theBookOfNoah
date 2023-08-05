@@ -23,6 +23,8 @@
 - [eks: subnet tagging](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html#vpc-subnet-tagging)
 - [eks: vpc cni k8s plugin](https://github.com/aws/amazon-vpc-cni-k8s)
 - [ec2: elastic network interfaces](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_ElasticNetworkInterfaces.html)
+- [fow logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html)
+- [traffi mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html)
 
 ### integrations
 

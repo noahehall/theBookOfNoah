@@ -5,6 +5,9 @@
 - [grpc](https://grpc.io/)
 - [protobuf](https://protobuf.dev/)
 - [http decision diagram](https://github.com/for-GET/http-decision-diagram)
+- [network protocols](https://en.wikipedia.org/wiki/Lists_of_network_protocols)
+- [network topoligies](https://en.wikipedia.org/wiki/Network_topology)
+- [Network Address Translation](https://en.wikipedia.org/wiki/Network_address_translation)
 
 ## data serialization
 

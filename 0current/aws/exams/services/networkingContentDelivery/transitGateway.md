@@ -1,7 +1,6 @@
 # Transit Gateway
 
-- connect to multiple Amazon Virtual Private Clouds (Amazon VPCs), Direct Connect, VPNs and Software-Defined Wide Area Network (SD-WAN) appliances
-- works across accounts
+- connect to multiple VPCs, Direct Connect, VPNs and Software-Defined Wide Area Network (SD-WAN) appliances
 
 ## my thoughts
 

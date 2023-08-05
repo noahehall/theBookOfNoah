@@ -29,7 +29,11 @@
 
 ### Client VPN
 
+- connect your remote team to onpremise and AWS resources
+
 ### Site-to-Site VPN
+
+- connect remote offices to AWS
 
 ## considerations
 
