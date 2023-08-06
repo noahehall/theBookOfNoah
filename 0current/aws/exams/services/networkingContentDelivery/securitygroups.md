@@ -17,11 +17,25 @@
 - operates at layer 3 and 4
 - traffic is filtered based on ip addrs, transport protocols and ports
 
+### inbound rules
+
+- type: the protocol
+- source: can grant access to
+  - a specific CIDR range,
+  - another security group in your VPC or in a peer VPC (requires a VPC peering connection)
+    - traffic is allowed from the network interfaces that are associated with the source security group for the specified protocol and port
+    - Incoming traffic is allowed based on the private IP addresses of the network interfaces that are associated with the source security group
+      - not the public IP or Elastic IP addresses
+  - etc
+
 ## integrations
 
 ### ec2
 
+- acts as a virtual firewall for your instance to control inbound and outbound traffic
 - security groups are required for EC2 instances
+  - can assign up to 5
+-
 
 ### vpc
 

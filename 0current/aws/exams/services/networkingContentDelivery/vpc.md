@@ -1,6 +1,6 @@
 # Virtual Private Cloud (VPC)
 
-- logically isolated virtual network where you can launch AWS resources
+- regionally isolated software defined virtual private network
 
 ## my thoughts
 
@@ -98,34 +98,23 @@
 - layer 3
   - routes and route tables
 
-### route tables
+### Default vs Non-Default VPCs
 
-- the mechanism used for controlling VPC traffic based on its target, destination and local route
-- routes internet gateway traffic to specific subnets
-  - thus a route table is always connected to a VPC, some type of gateway, and one/more subnets via its route destination configuration
-- route: can be applied at the VPC or subnet level
-- main route table: created with a VPC; allows all traffic between subnets in a vpc
-  - cannot be deleted from the route table
-  - implicitly used by all subnets without an explicit route table association
-    - once theirs an explicit association, the subnet will no longer use the main route table
-- destination: where traffic thinks its going
-  - CIDR range: generally this means it should match a subnet, and the target should be local
-  - 0.0.0.0/0: means this is traffic to/from the internet, and the target should be some type of gateway
-- target: where the traffic is actually routed to
-  - local: within the VPC, and will automatically route to associated subnets
-  - some gateway id
-  - etc
-- subnet association: this enables the routes of a routetable to be associated with resources in a subnet
-  - each subnet must be associated with exaclty one route table
-  - but one route table can have multiple subnets
+- Default: created by AWS and are all configured in the same way
+  - only one per region
+  - one CIDR range that handles all i/o comms
+  - one class B subnet per AZ per region
+  - A default internet gateway attached to the VPC
+  - default security group for instances launched within the VPC
 
 ### subnets
 
 - provide granular control over access to resources; e.g. public vs private resources
 - each subnet is bound to a specific AZ within a VPC and must be associated with a single route table
 - a subnet is made public by:
-  - adding a default route where the destination is 0.0.0.0/0
-  - the target is an internet gateway
+  - associating the subnet with a route table with a route to an internet gateway
+    - the destination is the public internet, e.g 0.0.0.0/0
+    - the target is an internet gateway
 - a private subnet can reach out to the internet by:
   - associated with a NAT gateway where the destination will be 0.0.0.0/0
   - the target will be the NAT gateway
@@ -135,15 +124,26 @@
   - you can add a VPC endpoint for private connection between your VPC and other AWS services
   - you can have a route for VPC peering connection between your databases and other VPCs so that the traffic just communicates over private IPv4 address.
 
-### internet gateway
+### Gateways
 
-- connects a VPC to the internet enabling public access
+#### internet gateway (IGW)
 
-### virtual private gateway
+- a horizontally scaled, redundant, and highly available VPC component that allows communication between resources in a VPC and the internet.
+- does not impose availability risks or bandwidth constraints on network traffic
+- features
+  - Provide a target in route tables to connect to the internet
+  - Perform network address translation (NAT) for resources that have been assigned public IPv4 addresses
+- setup
+  - a subnet's route table must contain a route that directs Internet-bound traffic to the Internet gateway
+    - can scope the route to all destinations not explicitly known to the route table (0.0.0.0/0 for IPv4)
+    - can scope the route to a narrower range of IP addresses; e.g. only specific public IPv4 addresses instead 0.0.0.0/0
+    - can scope the route to specific IPs of other aws resources outside your VPC
+
+#### virtual private gateway
 
 - create a VPC connection to a private network (e.g your office corporate network) enabling access to vpc resources
 
-### nat gateways
+#### nat gateways
 
 - for private subnet resources to initiate contact with services outside a VPC (but not the other way around)
 - public nat gateway: can reach out to the internet, but cant be reached from the internet
@@ -165,6 +165,27 @@
     - can reach out to the internet via an internet gateway
   - private
     - can be attached to an internet gateway, but it will drop outbound internet traffic
+
+### route tables
+
+- the mechanism used for controlling VPC traffic based on its target, destination, remote and local routes
+  - routes internet gateway traffic to specific subnets
+  - is always connected to a VPC, some type of gateway, and one/more subnets via its route destination configuration
+- route: can be applied at the VPC or subnet level
+- main route table: created with a VPC; allows all traffic between subnets in a vpc
+  - cannot be deleted from the route table
+  - implicitly used by all subnets without an explicit route table association
+    - once theirs an explicit association, the subnet will no longer use the main route table
+- destination: where traffic thinks its going
+  - CIDR range: generally this means it should match a subnet, and the target should be local
+  - 0.0.0.0/0: means this is traffic to/from the internet, and the target should be some type of gateway
+- target: where the traffic is actually routed to
+  - local: within the VPC, and will automatically route to associated subnets
+  - some gateway id
+  - etc
+- subnet association: this enables the routes of a routetable to be associated with resources in a subnet
+  - each subnet must be associated with exaclty one route table
+  - but one route table can have multiple subnets
 
 ### NACLs
 
