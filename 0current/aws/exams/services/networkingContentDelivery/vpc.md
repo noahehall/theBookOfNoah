@@ -35,13 +35,20 @@
 
 - never use the default VPC for anything; its public by default and misconfiguration and be detrimental to various other things
   - a custom pc is private by default, and access is limited to resources within the VPC
-- redundancy and fault tolerance requirews at least 2 distinct subnets across two availability zones
+- redundancy and fault tolerance requires at least 2 subnets across two availability zones
 - saving $ on data transfer charges for NAT gateways
   - high volume GB of traffic:
     - ensure resources are in the same AZ as the nat gateway
     - or create a NAT gateway in each AZ
   - service to service comms
     - use aws resources that support interface/gateway endpoints and use AWS privateLink
+- plan for multiple VPCs
+  - you cannot create a VPN/Direct Connect/VPC peering connection between two VPCs that have matching or overlapping CIDR range
+- you can now resize a VPC using a secondary CIDR range
+  - you cannot associate a secondary CIDR from other ranges
+  - You can only associate any other CIDR from the same primary CIDR range
+- plan for load balancers in your CIDR range
+  - make sure that each Availability Zone subnet for your load balancer nodes, has atleast a slash 27 bit mask
 
 ### anti patterns
 
@@ -93,6 +100,7 @@
 
 ### route tables
 
+- the mechanism used for controlling VPC traffic based on its target, destination and local route
 - routes internet gateway traffic to specific subnets
   - thus a route table is always connected to a VPC, some type of gateway, and one/more subnets via its route destination configuration
 - route: can be applied at the VPC or subnet level
@@ -108,11 +116,24 @@
   - some gateway id
   - etc
 - subnet association: this enables the routes of a routetable to be associated with resources in a subnet
+  - each subnet must be associated with exaclty one route table
+  - but one route table can have multiple subnets
 
 ### subnets
 
 - provide granular control over access to resources; e.g. public vs private resources
-- each subnet is bound to a specific AZ within a VPC
+- each subnet is bound to a specific AZ within a VPC and must be associated with a single route table
+- a subnet is made public by:
+  - adding a default route where the destination is 0.0.0.0/0
+  - the target is an internet gateway
+- a private subnet can reach out to the internet by:
+  - associated with a NAT gateway where the destination will be 0.0.0.0/0
+  - the target will be the NAT gateway
+- a private subnet that cant reach out to the internet by:
+  - a route table with just the default route which will be the local route
+    - allows connectivity between the subnets in the same VPC
+  - you can add a VPC endpoint for private connection between your VPC and other AWS services
+  - you can have a route for VPC peering connection between your databases and other VPCs so that the traffic just communicates over private IPv4 address.
 
 ### internet gateway
 
@@ -148,11 +169,13 @@
 ### NACLs
 
 - network access control lists: control what kind of traffic can enter and leave the subnet
+  - control access at the subnet level.
 - stateless firewall at the subnet level: you must edit both ingress & egress traffic
   - by default allows all in/egress traffic: you can then restrict access
 
 ### security groups
 
+- control access at the resource level
 - see [markdown file](./securitygroups.md)
 
 ### flow logs

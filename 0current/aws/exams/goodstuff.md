@@ -742,6 +742,11 @@
   - SMTP
   - SNMP
 
+### Software Defined Networks (SDN)
+
+- an approach to networking that uses software based controllers/APIs to communicate with underlying infrastructure and direct traffic
+- a group of software services working together to create a network construct
+
 ## Storage
 
 - R/W patterns

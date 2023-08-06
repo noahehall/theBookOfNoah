@@ -31,6 +31,10 @@
 - establishes private access to services across VPC boundaries
   - other accounts and VPCs can create VPC endpoints to access your endpoint service
   - endpoint services can be either network or gateway load balancers
+- i.e. if you have a VPC with a private subnet and resources in that subnet
+  - you no longer need a NAT Gateway/public IP to reach out of the VPC
+  - PrivateLink: enables this application to reach out to other services
+  - VPC endpoint: enables other applications to reach into this private resource
 
 ### OSI Model
 
