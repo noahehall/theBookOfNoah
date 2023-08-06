@@ -25,6 +25,9 @@
 - [ec2: elastic network interfaces](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_ElasticNetworkInterfaces.html)
 - [fow logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html)
 - [traffi mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html)
+- [DHCP: dns server for VPC](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html)
+- [route tables](https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html)
+- [internet gateways](https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Internet_Gateway.html)
 
 ### integrations
 
@@ -49,6 +52,7 @@
   - You can only associate any other CIDR from the same primary CIDR range
 - plan for load balancers in your CIDR range
   - make sure that each Availability Zone subnet for your load balancer nodes, has atleast a slash 27 bit mask
+- There are tools available on the internet to help you calculate and create IPv4 subnet CIDR blocks
 
 ### anti patterns
 
@@ -106,6 +110,26 @@
   - one class B subnet per AZ per region
   - A default internet gateway attached to the VPC
   - default security group for instances launched within the VPC
+- non default: created by you; do not allow anything in or out without explicit configuration
+  - have a choice for default or dedicated tenancy
+    - default: resources provisioned inside your Amazon VPC that are provisioned on shared hardware with others
+    - dedicated: hardware is dedicated to you and is much more expensive.
+  - have fully provisioned Domain Name Systems (DNS), which uses the Network +2 IP address
+    - enableDNSHostnames: resources will be given public DNS names
+    - enableDNSSupport: enable DNS resolution in your Amazon VPC.
+  - VPC CIDR: between a /16 netmask (65,536 IP addresses) and /28 netmask (16 IP addresses).
+    - 10.0.0.0 - 10.255.255.255 (10/8 prefix) e.g. 10.0.0.0/16 or smaller
+    - 172.16.0.0 - 172.31.255.255 (172.16/12 prefix) e.g. 172.31.0.0/16 or smaller
+    - 192.168.0.0 - 192.168.255.255 (192.168/16 prefix) e.g. 192.168.0.0/20 or smaller
+  - subnet CIDR: same as VPC for single subnet, or smaller for multiple subnets
+    - allowed blocksize is between a /28 netmask and /16 netmask.
+    - CIDR blocks of the subnets cannot overlap.
+    - first four & last IP addresses in each subnet CIDR block are reserved for AWS, cant be used
+      - first: network address
+      - second: VPC router
+      - third: something to do with DHCP DNS server for VPC, check the docs
+      - fourth: reserved for future use
+      - last: network broadcast address (even tho its not supported in VPC)
 
 ### subnets
 

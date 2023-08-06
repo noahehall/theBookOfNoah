@@ -3,7 +3,6 @@
 - last updated in 2023 for version SSA-C03
 - bookmark:
   - Exam Prep (With practice material) > module 1
-  - AWS Networking Basics > aws networking services > Amazon VPC Basics > Amazon VPC
-  - LAB > VPC and subnet sizing for IPv4
+  - AWS Networking Basics > aws networking services > Amazon VPC Basics > Amazon VPC components
 - todos
   - FYI: just by opening a lab marks it as completed, check the completed list and figure out which ones you still need to do

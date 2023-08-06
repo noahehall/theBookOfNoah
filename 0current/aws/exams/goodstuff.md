@@ -16,6 +16,7 @@
 - [learning domain driven design](https://dddcommunity.org/learning-ddd/)
 - [TCO: serverless vs traditional clouds](https://pages.awscloud.com/NAMER-field-GC-Deloitte-TCO-whitepaper-2019-learn.html)
 - [OWASP quick reference](https://www.owasp.org/images/0/08/OWASP_SCP_Quick_Reference_Guide_v2.pdf)
+- [networking: Address Allocation for Private Internets](http://www.faqs.org/rfcs/rfc1918.html)
 
 ### ISO standards
 
@@ -553,12 +554,13 @@
 
 #### Subnetting
 
-- the process of dividing a network into smaller network sections
-  - helps to isolate groups of hosts together, which can improve routing efficiency, network management control, and network security
-  - creates multiple logical networks that exist within a single Class A, B, or C network
+- the process of dividing a network into smaller logical networks that exist within a single Class A, B, or C network to isolate groups of hosts together
+  - each data link on a network must have a unique sub/network ID.
+    - with every node on that data link being a member of the same network (or subnet)
+    - Any device, or gateway, that connects N sub/networks has N distinct IP addresses, one for each sub/network that it interconnects.
+  - improve routing efficiency, network management control, and network security
+    - network traffic can travel a shorter distance without passing through unnecessary routers to reach its destination
 - subnet: i.e. sub-network; a logical organization of connected network devices
-  - is a network inside a network.
-  - make networks more efficient because network traffic can travel a shorter distance without passing through unnecessary routers to reach its destination
 - subnet mask: important for IPv4 addresses because the IP address doesn't give any information on the network size
   - for internal usage within a network to determine if a host is on the local or remote subnet
     - e.g. 205.0.125.100
