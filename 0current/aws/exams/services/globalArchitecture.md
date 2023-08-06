@@ -78,21 +78,33 @@
 
 - caching data closer to users to reduce latency
   - enables you to store data in a regions but cache them closer to users
-- edge locations: copies of content are stored
+- edge location: an endpoint for AWS that is used for caching content
 - regional edge caching
 
 ### region & availbility zones
 
-- region: a cluster of AZs
+- region: geographical area that consists of two or more Availability Zones.
   - e.g. us-east-1
   - currently 3 region classifications: standard region,s china regions, and AWS GovCloud (US)
-- availability zone: one/more data centers with redundant power & availability
+- availability zone: one or more interconnected data centers with redundant power, networking, connectivity, and so on.
   - e.g. us-east-1a and us-east-1b
 - selecting a region
   - compliance: laws/company regulations requiring you to keep data in a specific geography
   - latency: relative to users and other services
   - pricing: AWS isnt for the little guy and varies from region to region
   - service availability: not all aws services are available in all regions
+
+### Service Resiliency
+
+- Globally-resilient services: operates globally with a single database
+  - data is then replicated across AWS Regions
+  - on failure, the service continues to operate because its replicated to other regions
+- Regional-resilient services: operate in one Region with one set of that data in that Region
+  - data is then replicated to multiple Availability Zones in that Region
+  - if a single AZ fails, the other one picks up
+  - if the region fails, your SOOL
+- zone-resilient services: run in a single Availability Zone
+  - if that AZ fails, your SOOL
 
 ### Tags
 
