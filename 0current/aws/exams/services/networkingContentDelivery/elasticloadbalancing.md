@@ -1,6 +1,6 @@
 # elastic load balancing ELB
 
-- distribute network traffic across EC@, containers, ip address and lambda functions
+- distribute network traffic across EC2, containers, ip address and lambda functions
 - its in the ec2 console
 
 ## my thoughts
@@ -44,6 +44,12 @@
 ## basics
 
 - its a regional service, AWS manages provisioning and scaling across regions to meet demand
+
+### OSI Model
+
+- manages layer 4 and layer 7, but works at layer 7
+  - layer 4: network load balancer; does not understand/read the network packets
+  - layer 7: application load balancer; inspects packets, has access to http/s headers, and can intelligently load balance traffic
 
 ### listeners
 

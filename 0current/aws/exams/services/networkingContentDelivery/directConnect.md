@@ -43,7 +43,7 @@
 
 ### OSI Model
 
-- operates at the physical layer
+- operates through layer 1 to layer 4
 - provides virtual access to physical, data link, network and transport
 
 ## considerations

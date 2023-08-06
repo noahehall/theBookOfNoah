@@ -29,9 +29,14 @@
   - each hour their VPC is attached to a transit gateway
 - read the pricing page, shiz is a microtransition
 
-## terms
-
 ## basics
+
+- acts as a regional virtual router for traffic flowing between a VPC and on premise networks
+
+### OSI Model
+
+- operates at layer 3
+  - packets are sent to a specific next-hop attachments, based on their destinate ip addrs
 
 ## considerations
 

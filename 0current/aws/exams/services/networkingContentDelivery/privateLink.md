@@ -28,6 +28,15 @@
 
 ## basics
 
+- establishes private access to services across VPC boundaries
+  - other accounts and VPCs can create VPC endpoints to access your endpoint service
+  - endpoint services can be either network or gateway load balancers
+
+### OSI Model
+
+- layer 4: network load balancer
+- layer 3: gateway load balancer
+
 ## considerations
 
 ## integartions

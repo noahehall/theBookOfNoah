@@ -86,6 +86,11 @@
     - create/adjust NACLs
     - create/adjust security groups
 
+### OSI Model
+
+- layer 3
+  - routes and route tables
+
 ### route tables
 
 - routes internet gateway traffic to specific subnets

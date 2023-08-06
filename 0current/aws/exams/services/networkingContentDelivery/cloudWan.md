@@ -37,6 +37,10 @@
 
 ## basics
 
+### OSI Model
+
+- operates at layer 3
+
 ## considerations
 
 ## integrations

@@ -12,6 +12,11 @@
 - enable one/more port & ip range per security group
 - by default denies all ingress
 
+### OSI Model
+
+- operates at layer 3 and 4
+- traffic is filtered based on ip addrs, transport protocols and ports
+
 ## integrations
 
 ### ec2
