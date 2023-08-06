@@ -139,8 +139,6 @@
 
 - expenses and usage: AWS Cost Explorer, the AWS Billing and Management Console, AWS Budgets, AWS Trusted Advisor(opens in a new tab)
 
-### networking
-
 ## Serverless
 
 - abstracting away the compute infrastructure to the point you have no responsibilties for servers on which your code runs
@@ -362,8 +360,6 @@
 
 ## Networking
 
-### services
-
 - Foundational Services
   - VPC
   - Transit Gateway
@@ -386,6 +382,15 @@
   - Site-to-Site VPN
   - Client VPN
   - Cloud WAN
+
+### OSI Model in AWS
+
+- Layer 1: physical layer: Direct Connect
+- Layer 2: the hypervisor; software that allows the hardware to be consumed
+  - you dont have access to the physical hardware, but can use the AWS cli that is layered on top for some layer 2 access
+- Layer 3: the management layer; aka software defined networking
+  - where you create accounts and start building using the console, cli and APIs
+- Layer 4: service layer; s3, lambda, RDS, EC2, VPC, security groups, IAM, etc
 
 ### topologies
 

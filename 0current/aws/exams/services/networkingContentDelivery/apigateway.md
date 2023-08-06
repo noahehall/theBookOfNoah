@@ -102,6 +102,10 @@
 |   http    | native oidc/oauth2, serverless proxies, cheaper & faster, no mgmt |           low latency            |
 | websocket |                      realtime + server push                       |            real time             |
 
+### OSI model
+
+- operates at layer 7
+
 ### architecture
 
 - three options for authnz

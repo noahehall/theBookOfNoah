@@ -34,6 +34,10 @@
 
 ## basics
 
+### OSI Model
+
+- operates at layer 7
+
 ## considerations
 
 ## integrations

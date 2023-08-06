@@ -43,6 +43,16 @@
 
 - front CDNs and application load balancers
 
+### osi model
+
+- manages layer 4 and layer 7, but works at layer 7
+  - filters traffic based on ip addrs, transport protcols and ports
+  - network security controls at the application layer
+    - application protocol detection
+    - filtering based on application protocol properties e.g. http headers/TLS version
+    - filtering and monitoring http/s traffic
+- can integrate with security groups (layer 4) and NACLs (layer 3) for controlling network traffic
+
 ### rules
 
 - can filter (block/allow)

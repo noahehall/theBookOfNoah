@@ -28,9 +28,14 @@
 - managed domain names: charged annually
 - there are too many costs to list, check the costs tab on the landing page
 
-## terms
-
 ## basics
+
+### OSI Model
+
+- operates at layer 7: an application built on top of the TCP/IP stack toconvert hostnames to an ip addr
+  - transports to query DNS servers for name resolution using TCP/UDP
+  - it sends back the correct ip addr
+  - uses the TCP/IP stack to pass the destination IP addr found by DNS to the transport layer > network layer > and so forth
 
 ## considerations
 

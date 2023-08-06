@@ -41,6 +41,11 @@
 
 ## basics
 
+### OSI Model
+
+- operates at the physical layer
+- provides virtual access to physical, data link, network and transport
+
 ## considerations
 
 ## integrations
