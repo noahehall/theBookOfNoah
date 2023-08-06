@@ -51,15 +51,16 @@
 - [data lakes and analytics](https://aws.amazon.com/big-data/datalakes-and-analytics/)
 - [databases](https://aws.amazon.com/products/databases/)
 - [frontend and mobile](https://aws.amazon.com/products/frontend-web-mobile/)
+- [hpc: high performance computing](https://aws.amazon.com/hpc/)
 - [machine learning](https://aws.amazon.com/machine-learning/)
 - [management and governance](https://aws.amazon.com/products/management-and-governance/)
 - [migration & transfer](https://aws.amazon.com/products/migration-and-transfer/)
 - [networking and content delivery](https://aws.amazon.com/products/networking/)
+- [networking](https://aws.amazon.com/products/networking/)
+- [premium support programs](https://aws.amazon.com/premiumsupport/technology-and-programs/)
 - [securing enterprise grade serverless apps video](https://www.youtube.com/watch?v=tYhUWbDZ4-8)
 - [security, identity and compliance](https://aws.amazon.com/products/security/)
 - [storage](https://aws.amazon.com/products/storage/)
-- [premium support programs](https://aws.amazon.com/premiumsupport/technology-and-programs/)
-- [networking](https://aws.amazon.com/products/networking/)
 
 ### best practices
 

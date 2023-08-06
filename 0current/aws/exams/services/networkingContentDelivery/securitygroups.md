@@ -1,7 +1,6 @@
 # Security groups
 
 - stateful firewall at the resource level: you enable ingress traffic and egress is autoamatically allowed
-- catchall for wherever they might be used (ec2, vpcs, etc)
 
 ## links
 
@@ -10,14 +9,22 @@
 ## basics
 
 - enable one/more port & ip range per security group
-- by default denies all ingress
+- cannot explicit deny IP address, all ingress is denied by default
+  - This means that anything that is not explicitly allowed is denied.
+- attached to the elastic network interface of resources in a subnet.
+- rules are processed all at once, there is no order
 
 ### OSI Model
 
 - operates at layer 3 and 4
 - traffic is filtered based on ip addrs, transport protocols and ports
 
-### inbound rules
+### Statefulness
+
+- Stateful firewalls view traffic as one stream. If traffic is allowed in, then that traffic is automatically allowed back out.
+- security groups recognize AWS resources. So you can add rules for these.
+
+#### inbound rules
 
 - type: the protocol
 - source: can grant access to
@@ -27,6 +34,10 @@
     - Incoming traffic is allowed based on the private IP addresses of the network interfaces that are associated with the source security group
       - not the public IP or Elastic IP addresses
   - etc
+
+#### outbound rules
+
+- abcd
 
 ## integrations
 

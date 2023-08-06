@@ -749,6 +749,15 @@
 - an approach to networking that uses software based controllers/APIs to communicate with underlying infrastructure and direct traffic
 - a group of software services working together to create a network construct
 
+#### network gateways
+
+- network gateway: device or node that connects networks with different transmission protocols and performs protocol conversions to translate communications
+- has a network interface card with inputs, outputs, and software for this translation of network protocols.
+- serve as an entry and exit point for a network
+- gateways vs routers: are usually separate devices, but modern routers can function as gateways
+  - gateways connect networkers
+  - router deliver data within a network
+
 ## Storage
 
 - R/W patterns

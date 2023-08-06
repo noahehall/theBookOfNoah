@@ -17,6 +17,8 @@
 - [pricing: spot instances](https://aws.amazon.com/ec2/spot/?did=ap_card&trk=ap_card)
 - [hibernation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html)
 - [instance store](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html)
+- [networking: elastic ips](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)
+- [networking](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-networking.html)
 
 ## best practices
 
@@ -87,11 +89,9 @@
 - you need the entire server for yourself
 - can save up to 70% if you reserve for a commitment
 
-## terms
+## basics
 
 - termination protection: protects against accidental termination
-
-## basics
 
 ### ec2 console
 
@@ -187,6 +187,19 @@
 - standardizes instance configuration in a template to quickly launch ec2 instances
 - can be used with ec2 autoscaling
 - uses an AMI as the base configuiration
+
+### Networking
+
+- configured with a primary network interface: a logical virtual network card
+- primary private ip addr from the ipv4 addr of the subnet
+  - the ip addr is assigned to the primary network interface
+
+#### Elastic IPs
+
+- associated with an instance or a network interface.
+- can move it from one instance to another as needed
+- For cost optimization, ensure that your elastic IP addresses are attached to your EC2 instances.
+- You can get significantly higher packet per second (PPS) performance using enhanced networking.
 
 ## considerations
 

@@ -8,26 +8,28 @@
 
 ## links
 
-- [landing page](https://aws.amazon.com/vpc/?did=ap_card&trk=ap_card)
+- [cidr: prefix lists](https://docs.aws.amazon.com/vpc/latest/userguide/managed-prefix-lists.html)
 - [default vpc](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html)
-- [intro](https://docs.aws.amazon.com/vpc/latest/userguide/how-it-works.html)
-- [nat gateways](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html)
-- [subnets: intro](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html)
-- [subnets: pub & priv scenario](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html)
-- [route tables: intro](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html)
-- [route tables: examples](https://docs.aws.amazon.com/vpc/latest/userguide/route-table-options.html)
-- [route tables: walkthrough](https://docs.aws.amazon.com/vpc/latest/userguide/WorkWithRouteTables.html)
-- [nacl: intro](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html)
-- [monitoring](https://docs.aws.amazon.com/vpc/latest/userguide/monitoring.html)
-- [eks: vpc considerations](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html)
+- [DHCP: dns server for VPC](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html)
+- [ec2: elastic network interfaces](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_ElasticNetworkInterfaces.html)
 - [eks: subnet tagging](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html#vpc-subnet-tagging)
 - [eks: vpc cni k8s plugin](https://github.com/aws/amazon-vpc-cni-k8s)
-- [ec2: elastic network interfaces](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_ElasticNetworkInterfaces.html)
+- [eks: vpc considerations](https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html)
 - [fow logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html)
-- [traffi mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html)
-- [DHCP: dns server for VPC](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html)
-- [route tables](https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html)
 - [internet gateways](https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Internet_Gateway.html)
+- [intro](https://docs.aws.amazon.com/vpc/latest/userguide/how-it-works.html)
+- [landing page](https://aws.amazon.com/vpc/?did=ap_card&trk=ap_card)
+- [monitoring](https://docs.aws.amazon.com/vpc/latest/userguide/monitoring.html)
+- [nacl: intro](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html)
+- [nat gateways](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html)
+- [peering: intro](https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html)
+- [route tables: examples](https://docs.aws.amazon.com/vpc/latest/userguide/route-table-options.html)
+- [route tables: intro](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html)
+- [route tables: walkthrough](https://docs.aws.amazon.com/vpc/latest/userguide/WorkWithRouteTables.html)
+- [route tables](https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html)
+- [subnets: intro](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html)
+- [subnets: pub & priv scenario](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html)
+- [traffi mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html)
 
 ### integrations
 
@@ -66,13 +68,10 @@
 ### pricing
 
 - check the docs
-- gateways: each hour that a NAT gateway is avialable and total GB of data it processes
-
-## terms
-
-- customer gateway: a physical device/software app on the customer side that can connect to a virtual private gateway on the AWS side
-- aws direct connect: customer internet network is linked to AWS direct connect location over a standard ethernet fiber-opti9c capble
-  - allows you to create virtual interfaces directly to public aws service or a VPC
+- gateways: each hour that a NAT gateway is available and total GB of data it processes
+- peering
+  - data transfer that crosses AZs charged at the standard in-Region data transfer rates.
+    - data within a single AZ is free
 
 ## basics
 
@@ -109,6 +108,7 @@
   - one CIDR range that handles all i/o comms
   - one class B subnet per AZ per region
   - A default internet gateway attached to the VPC
+  - a default network ACL is created for your default Amazon VPC and is associated with all subnets.
   - default security group for instances launched within the VPC
 - non default: created by you; do not allow anything in or out without explicit configuration
   - have a choice for default or dedicated tenancy
@@ -133,7 +133,6 @@
 
 ### subnets
 
-- provide granular control over access to resources; e.g. public vs private resources
 - each subnet is bound to a specific AZ within a VPC and must be associated with a single route table
 - a subnet is made public by:
   - associating the subnet with a route table with a route to an internet gateway
@@ -150,24 +149,36 @@
 
 ### Gateways
 
+- horizontally scaled, redundant, and highly available VPC component
+
 #### internet gateway (IGW)
 
-- a horizontally scaled, redundant, and highly available VPC component that allows communication between resources in a VPC and the internet.
-- does not impose availability risks or bandwidth constraints on network traffic
+- allows communication between resources in a VPC and the internet.
 - features
   - Provide a target in route tables to connect to the internet
   - Perform network address translation (NAT) for resources that have been assigned public IPv4 addresses
 - setup
+  - each VPC can have a single internet gateway that works across ALL availability zones
+    - sits on the edge of your Amazon VPC, the AWS Public Zone, and the internet to manage the traffic between your Amazon VPC, the AWS Public Zone, and the internet
+    - makes a subnet public by performing a type of Network Address Translation (NAT) called static NAT
   - a subnet's route table must contain a route that directs Internet-bound traffic to the Internet gateway
     - can scope the route to all destinations not explicitly known to the route table (0.0.0.0/0 for IPv4)
     - can scope the route to a narrower range of IP addresses; e.g. only specific public IPv4 addresses instead 0.0.0.0/0
     - can scope the route to specific IPs of other aws resources outside your VPC
 
-#### virtual private gateway
+#### Customer Gateway (CG)
 
-- create a VPC connection to a private network (e.g your office corporate network) enabling access to vpc resources
+- physical/software appliance you own/manage in your onpremise network
 
-#### nat gateways
+#### VPN Gateway (VPNG)
+
+- gateway on the AWS side of a site-to-site VPN connection
+
+#### Direct Connect Gateway (DCG)
+
+- establishes connections that spans VPCs across multiple regions
+
+#### nat gateways (NG)
 
 - for private subnet resources to initiate contact with services outside a VPC (but not the other way around)
 - public nat gateway: can reach out to the internet, but cant be reached from the internet
@@ -190,6 +201,19 @@
   - private
     - can be attached to an internet gateway, but it will drop outbound internet traffic
 
+#### Transit Gateway (TG)
+
+- connects VPCs, accounts, and on premise networks into a single gateway
+- integrates with VPCs, VPNs and DirectConnect connections
+
+#### virtual private gateway (VPG)
+
+- logical edge routing device that sits at the edge of a VPC
+- allows resources outside of your mesh network to communicate with resources inside the mesh network
+- can be used with DirectConnect and VPNs
+  - act as a VPN concentrator on the AWS side of a site-to-site VPN connection
+  - create a VPC connection to a private network (e.g your office corporate network) enabling access to vpc resources
+
 ### route tables
 
 - the mechanism used for controlling VPC traffic based on its target, destination, remote and local routes
@@ -199,7 +223,7 @@
 - main route table: created with a VPC; allows all traffic between subnets in a vpc
   - cannot be deleted from the route table
   - implicitly used by all subnets without an explicit route table association
-    - once theirs an explicit association, the subnet will no longer use the main route table
+    - once there is an explicit association, the subnet will no longer use the main route table
 - destination: where traffic thinks its going
   - CIDR range: generally this means it should match a subnet, and the target should be local
   - 0.0.0.0/0: means this is traffic to/from the internet, and the target should be some type of gateway
@@ -211,17 +235,33 @@
   - each subnet must be associated with exaclty one route table
   - but one route table can have multiple subnets
 
-### NACLs
+### NACLs: network access control lists:
 
-- network access control lists: control what kind of traffic can enter and leave the subnet
-  - control access at the subnet level.
-- stateless firewall at the subnet level: you must edit both ingress & egress traffic
+- stateless firewall that can filter traffic as it enters and leaves a subnet.
+  - only manage traffic that is crossing the subnet boundary.
+    - i.e. has no impact on resources within the same subnet
+  - do not recognize AWS resources like security groups do
+    - only support ip, networks and protocols
+- rules
+  - traffic between nodes are two different streams, so you must edit both ingress & egress traffic
   - by default allows all in/egress traffic: you can then restrict access
+  - rules are processed in order from lowest rule number to the highest rule number (ending in `*`)
+    - When a rule is matched, an action is taken, and processing stops
 
 ### security groups
 
 - control access at the resource level
 - see [markdown file](./securitygroups.md)
+
+### Peering
+
+- enables encrypted communication between TWO isolated VPCs using their private IP address without traversing the public internet
+- peers can span accounts and regions
+- use cases
+  - sharing resources across VPCs
+  - enabling private access to partners/vendors
+  - workflows requiring secured access: e.g. system security audits
+  - apps requireing enhanced fault-tolerance and high availability can now span regions
 
 ### flow logs
 
@@ -245,7 +285,12 @@
 ### EC2
 
 - on ec2 creation, you can select an existing VPC and subnet to launch an instance into under network settings
-- instances are connected to the network with elastic network interfaces(opens in a new tab).
+- Each instance is configured with a primary network interface; which is a logical virtual network card.
+  - receives a primary private IP address from the IPv4 address of the subnet
+    - that private IP address is assigned to the primary network interface.
+  - can add a public IP address.
+    - ephemeral: associated with your instance until it is stopped, rebooted, or terminated
+    - static: allocate an elastic IP address for your AWS account and associate that elastic IP address with an instance or a network interface
 
 ### Security Groups
 
