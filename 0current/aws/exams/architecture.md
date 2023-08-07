@@ -453,3 +453,16 @@
 - adds block-level access
 - in AWS
   - Elastic Block Store
+
+## Storage
+
+### Aws Storage Capacity calculations
+
+- AWS absorbs and manages the extra capacity requirements but you still need to account for them
+  - formatting
+  - file system
+  - hardware failure protection
+  - data protection
+  - operating system overhead
+- allocated: billed for the capacity you reserve
+- consumed: billed for the actual capacity used

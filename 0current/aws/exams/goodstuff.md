@@ -787,17 +787,50 @@
 
 - R/W patterns
   - Worm: write once, read many: for data with heavy reads
-- block storage: splits data into chunks (aka blocks; each with distinct addresses) and stores them on disk, subject to fragmentation over time
-  - its more efficient when changing a piece of the data, as only the chunk needs to be updated
-  - R/W pattern: WORM
-  - use cases: transactional workloads, containers, virtual machines, i/o intensive apps, operating systems, databases, big data analytics engines
-- object storage: treats data as atomic units (e.g. a file) and stores it on disk in a flat hierarchy, not subject to fragmentation over time
-  - if changing a piece of the data, you need to replace the entire object
-  - uses cases: data archiving, backup and recovery, rich media;
-- file storage: treats data as atomic units (e.g. a file) but also organized in a tree structure, like your filesystem
+
+### storage types
+
+#### block storage
+
+- raw storage in which the hardware storage device or drive is a disk or volume that is formatted and attached to the compute system for use
+- splits data into chunks (aka blocks; each with distinct addresses) and stores them on disk, subject to fragmentation over time
+- its more efficient when changing a piece of the data, as only the chunk needs to be updated
+- R/W pattern: WORM
+- examples: HDDs, SSDs, NVMe, SAN systems
+- use cases: transactional workloads, containers, virtual machines, i/o intensive apps, operating systems, databases, big data analytics engines
+  - used by the operating system or an application that has the capabilities to manage block storage directly
+
+#### file storage
+
+- built on top of block storage, typically serving as a file share or file server.
+- treats data as atomic units (e.g. a file) but also organized in a tree structure, like your filesystem
   - ideal when you require centralized access that must be easily shared and managed by multiple host computers
   - if changing a piece of data, you need to replace the entire file
-  - use cases: web servers, analytics, media, file systems
+- examples:
+  - Server Message Block: SMB;
+  - Network File System: NFS;
+- use cases: web servers, analytics, media, file systems
+
+#### object storage
+
+- built on top of block storage: created using an operating system that formats and manages the reading and writing of data to the block storage devices
+- treats data as atomic units (e.g. a file) and stores it on disk in a flat hierarchy, not subject to fragmentation over time
+  - if changing a piece of the data, you need to replace the entire object
+- uses cases: data archiving, backup and recovery, rich media; systems requiring file versioning, file tracking, and file retention.
+
+### Onpremise capacity calculations
+
+- raw: what you pay for and used calculate the operating costs and data center requirements.
+  - The net usable capacity will vary by manufacturer and by individual system.
+- formatted: raw capacity - hardware failure protection overhead, drive formatting, and operating system overhead.
+  - Hardware failure protection overhead: aka hardware or software redundant array of independent disks (RAID)
+    - protects the data if hardware or a drive fails by creating checksum protection for the data
+    - Depending on the protection level, this can amount 15%–50% overhead
+  - Formatting and operating system overhead: The operating system is then added to the system, which further reduces the available capacity 1%–5%
+- allocated: formatted capacity - data protection services, such as snapshots, and add space for performance overhead
+  - Snapshots can consume more space than your actual data
+  - systems require additional space for operation overhead, especially for write operations.
+- actual: business requirements + allocated:
 
 ## analytics
 
