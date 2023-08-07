@@ -1,3 +1,0 @@
-- check the
-  - [localstack file for docs](./localstack.md)
-  - [this repo for running examples](https://github.com/noahehall/localstack)

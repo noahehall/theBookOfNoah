@@ -11,7 +11,7 @@
   - current focus
     - nim
     - javascript: react, bun.sh
-    - multicloud: aws, hashistack
+    - multicloud: aws, hashistack, gcp, ibm
     - racexp: agile + extreme programming
     - blockchain: solidity
   - in general: hardcore web application development
