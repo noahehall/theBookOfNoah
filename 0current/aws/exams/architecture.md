@@ -92,14 +92,6 @@
   - understand your component timeouts, e.g. api gateway and lambda have different hard limits
 - amazon has a database engine for every occasion, choose wisely
 
-## terms
-
-- Dead Letter Queue: DLQ;
-
-## localstack
-
-- pretty sure we have a localstack.md somewhere in this repo
-
 ## service & product categories
 
 ### compute
@@ -436,24 +428,6 @@
 
 - abcd
 
-### Storage
-
-- Data used by applications on AWS are stored using AWS storage services
-
-#### Network Attached Storage (NAS)
-
-- connects to a shared storage device across the entire network
-- usually kept in a data center and provides file-level access
-- in AWS
-  - EFS
-  - FSx
-
-#### Storage Area Network (SAN)
-
-- adds block-level access
-- in AWS
-  - Elastic Block Store
-
 ## Storage
 
 - AWS absorbs and manages the extra capacity requirements but you still need to account for them
@@ -491,6 +465,20 @@
 - in AWS
   - S3: different storage classes or tiers to match your price, access, and availability requirements
   - s3 glacier
+
+### Network Attached Storage (NAS)
+
+- connects to a shared storage device across the entire network
+- usually kept in a data center and provides file-level access
+- in AWS
+  - EFS
+  - FSx
+
+### Storage Area Network (SAN)
+
+- adds block-level access
+- in AWS
+  - Elastic Block Store
 
 ### Edge and hybrid cloud storage
 

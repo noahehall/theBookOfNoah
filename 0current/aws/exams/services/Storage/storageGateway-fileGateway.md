@@ -1,6 +1,7 @@
 # service name
 
 - mission statement
+- both S3 and FSx file gateways
 
 ## my thoughts
 

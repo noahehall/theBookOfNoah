@@ -4,7 +4,7 @@
 - bookmark:
   - Exam Prep (With practice material) > module 1
   - Solutions Architect - Knowledge Badge Readiness Path
-    - Core AWS Storage Services > Introduction to the AWS Storage Portfolio > Data protection services
+    - Getting Started with AWS Storage > Core AWS Storage Services > Introduction to the AWS Storage Portfolio > Data protection services
     - AWS Systems Manager: skip this course and just read the fkn docs
       - no video transcript, nor playback speed on the video
   - LAB: Deep dive: VPC peering > deep dive 2.pdf
