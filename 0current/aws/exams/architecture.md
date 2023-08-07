@@ -440,7 +440,7 @@
 
 - Data used by applications on AWS are stored using AWS storage services
 
-#### Network Attached Storage
+#### Network Attached Storage (NAS)
 
 - connects to a shared storage device across the entire network
 - usually kept in a data center and provides file-level access
@@ -448,7 +448,7 @@
   - EFS
   - FSx
 
-#### Storage Area Network
+#### Storage Area Network (SAN)
 
 - adds block-level access
 - in AWS
@@ -556,3 +556,16 @@
   - CloudEndure Migration: is a highly automated lift-and-shift (rehost) solution
 
 ### Data protection
+
+- optional services to meet your data redundancy and disaster requirement needs
+
+#### Backup & Archive
+
+- in AWS
+  - AWS Backup: centralize and automate data protection across AWS services
+
+#### Snapshots
+
+#### Replication
+
+#### Disaster Recovery Services
