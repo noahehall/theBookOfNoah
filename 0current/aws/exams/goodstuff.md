@@ -17,6 +17,7 @@
 - [TCO: serverless vs traditional clouds](https://pages.awscloud.com/NAMER-field-GC-Deloitte-TCO-whitepaper-2019-learn.html)
 - [OWASP quick reference](https://www.owasp.org/images/0/08/OWASP_SCP_Quick_Reference_Guide_v2.pdf)
 - [networking: Address Allocation for Private Internets](http://www.faqs.org/rfcs/rfc1918.html)
+- [networking: understanding ip addressing](https://www.ripe.net/about-us/press-centre/understanding-ip-addressing)
 
 ### ISO standards
 
@@ -530,21 +531,38 @@
 
 #### Network Communication
 
-- HTTP
-- TCP
-- UDP
-- IRC
+- determine the formats and rules used to transfer data over the network
+- handle authentication and error detection, syntax, synchronization, and semantics for both hardware and software
+- examples
+  - HTTP
+  - TCP: defines how to establish and maintain a network conversation by which applications can exchange data
+  - UDP: primarily used to establish low-latency and loss-tolerating connections between applications on the internet
+  - IRC
 
 #### Network Management
 
-- SNMP: monitor and manage network devices
-- ICMP: used for diagnostic purposes, send error messages and inspect connectivity issues between devices
+- define the policies and procedures used to monitor, manage, and maintain your network
+  - Troubleshoot connections between host and client devices.
+  - connection's status, availability, packet or data loss, and so on related to the health of your network connection.
+  - ensures stable communication and optimal performance of the network
+- can be applied to all devices on your network (computers, switches, routers, and servers).
+- examples
+  - SNMP: monitor and manage network devices
+  - ICMP: used for diagnostic purposes, send error messages and inspect connectivity issues between devices
 
 #### Network Security
 
-- SSL
-- SFTP
-- HTTPS
+- define how the network secures data from malicious attacks
+  - protects the data from unauthorized users, services, or devices that access your network data
+  - rely on encryption and cryptography to secure data.
+- examples
+  - SSL
+  - SFTP
+  - HTTPS
+
+#### Network design and configuration
+
+- a combination of network management, communication, and security protocols.
 
 ### CIDR notation
 
@@ -630,6 +648,7 @@
 - has no reliable method for ensuring packet delivery
 - adds
   - IP: assigns cross network address to devices on the network
+    - defines how computers send packets of data to each other
     - once addresses are assigned, it uses routing to communicate across networks
     - packets: containers that encapsulate the raw data being sent
     - routes: move packets of data through networks by reviewing and checking route tables
@@ -651,7 +670,7 @@
     - ensures you can create a connection between a client and sever using a three-way handshake
 - adds protocols
   - TCP
-  - UDP
+  - UDP: primarily used to establish low-latency and loss-tolerating connections between applications on the internet
 - stateless firewalls: do not understand the state of a connection
   - outbound traffic: leaving the client
   - inbound/response traffic: leaving the server
@@ -737,7 +756,7 @@
   - controls user-interface specifications
 - protocols
   - HTTP
-  - ssh
+  - ssh: cryptographic network protocol for operating network services securely over an unsecured network.
   - NTP
   - ftp
   - POP: post office protocol
@@ -748,6 +767,12 @@
 
 - an approach to networking that uses software based controllers/APIs to communicate with underlying infrastructure and direct traffic
 - a group of software services working together to create a network construct
+
+### Network design documents
+
+- documents and diagrams visualize the components of a network, including routers, firewalls, and devices
+- show how those components interaca
+-
 
 #### network gateways
 

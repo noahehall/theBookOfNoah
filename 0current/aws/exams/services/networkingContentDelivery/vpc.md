@@ -29,7 +29,7 @@
 - [route tables](https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html)
 - [subnets: intro](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html)
 - [subnets: pub & priv scenario](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html)
-- [traffi mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html)
+- [traffic mirroring](https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html)
 
 ### integrations
 
@@ -68,7 +68,8 @@
 ### pricing
 
 - check the docs
-- gateways: each hour that a NAT gateway is available and total GB of data it processes
+- gateways:
+  - nat: each hour that a NAT gateway is available and total GB of data it processes
 - peering
   - data transfer that crosses AZs charged at the standard in-Region data transfer rates.
     - data within a single AZ is free
@@ -203,8 +204,7 @@
 
 #### Transit Gateway (TG)
 
-- connects VPCs, accounts, and on premise networks into a single gateway
-- integrates with VPCs, VPNs and DirectConnect connections
+- see [markdown file](./transitGateway.md)
 
 #### virtual private gateway (VPG)
 
@@ -255,10 +255,10 @@
 
 ### Peering
 
-- enables encrypted communication between TWO isolated VPCs using their private IP address without traversing the public internet
+- enables 1:1 encrypted communication between TWO isolated VPCs using their private IP address without traversing the public internet
 - peers can span accounts and regions
 - use cases
-  - sharing resources across VPCs
+  - sharing resources across two VPCs
   - enabling private access to partners/vendors
   - workflows requiring secured access: e.g. system security audits
   - apps requireing enhanced fault-tolerance and high availability can now span regions

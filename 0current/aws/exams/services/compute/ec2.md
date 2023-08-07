@@ -19,6 +19,7 @@
 - [instance store](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html)
 - [networking: elastic ips](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)
 - [networking](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-networking.html)
+- [networking: network interface best practices](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/best-practices-for-configuring-network-interfaces.html)
 
 ## best practices
 

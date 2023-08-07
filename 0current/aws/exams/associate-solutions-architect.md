@@ -3,7 +3,7 @@
 - last updated in 2023 for version SSA-C03
 - bookmark:
   - Exam Prep (With practice material) > module 1
-  - AWS Networking Basics > aws networking services > Amazon VPC Basics > AWS Transit Gateway
-    - LAB: Deep dive: VPC peering
+  - AWS Systems Manager > what is
+  - LAB: Deep dive: VPC peering > deep dive 2.pdf
 - todos
   - FYI: just by opening a lab marks it as completed, check the completed list and figure out which ones you still need to do

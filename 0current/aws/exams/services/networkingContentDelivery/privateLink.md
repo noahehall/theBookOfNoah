@@ -1,6 +1,6 @@
 # PrivateLInk
 
-- private connections between VPCs and services without traversing the public net
+- private connectivity between Amazon VPCs, AWS services, and onpremise networks without traversing the public net
 
 ## my thoughts
 
@@ -17,12 +17,20 @@
 
 ### anti patterns
 
+- alternatives
+  - Make the application public, but then you are using the internet.
+  - set up VPC peering, but that may be more management overhead than necessary
+    - VPC Peering connections are only a one-to-one connection.
+
 ## features
 
 - secure traffic via private IP addresses
 - simplified network & firewall management rules
 - HIPAA, EU-US privacy shield, PCI and other governmental compliancy regulations
 - deliver SaaS services via prebuilt third-party integrations
+- connect services across different accounts and Amazon VPCs to significantly simplify your network architecture
+- use private IP connectivity: services function as though they were hosted directly on your private network.
+- associate security groups and attach an endpoint policy to interface endpoints, control who access to a specified service
 
 ## terms
 
@@ -35,11 +43,22 @@
   - you no longer need a NAT Gateway/public IP to reach out of the VPC
   - PrivateLink: enables this application to reach out to other services
   - VPC endpoint: enables other applications to reach into this private resource
+-
 
 ### OSI Model
 
 - layer 4: network load balancer
 - layer 3: gateway load balancer
+
+### Endpoint types
+
+#### VPC
+
+- interface VPC endpoints: connect you to services hosted by AWS Partners and supported solutions available in AWS Marketplace.
+
+#### Gateway Load Balancer
+
+- Gateway Load Balancer endpoints: security and performance for virtual network appliances or custom traffic inspection logic.
 
 ## considerations
 

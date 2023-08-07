@@ -1,6 +1,6 @@
 # systems manager
 
-- mission statement
+- Manage your resources on AWS and in multicloud and hybrid environments
 
 ## links
 
