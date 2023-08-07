@@ -28,7 +28,7 @@
 - tracks all parameter changes via versioning to support rollbacks
 - hierarchical key value storage, e.g. to segment key/values by environment
 
-## terms
+## pricing
 
 ## basics
 
