@@ -456,8 +456,6 @@
 
 ## Storage
 
-### Aws Storage Capacity calculations
-
 - AWS absorbs and manages the extra capacity requirements but you still need to account for them
   - formatting
   - file system
@@ -466,3 +464,95 @@
   - operating system overhead
 - allocated: billed for the capacity you reserve
 - consumed: billed for the actual capacity used
+
+### Core Storage Services
+
+#### block storage
+
+- dedicated, low-latency storage for each host; analogous to direct-attached storage (DAS) or a Storage Area Network (SAN)
+- provisioned with each virtual server and offer the ultra low latency required for high-performance workloads.
+- in AWS
+  - EBS
+
+#### file storage
+
+- access shared files and require a file system;often supported with a Network Attached Storage (NAS) server
+- in AWS
+  - EFS: cloud native file storage; multi-Availability Zone file storage service that uses NFS access protocol.
+  - FSx: implement managed files storage using the commonly available file systems for on-premises solutions.
+    - FSx for Lustre: high performance computing (HPC) and machine learning (ML) workload
+    - FSx for Windows File Server: Microsoft applications and Windows workloads.
+    - FSx for NetApp ONTAP: provide both NetApp block and file storage
+    - FSx for OpenZFS:
+  - create self-managed files shares using EC2 instances with attached EBS volumes.
+
+#### object storage
+
+- in AWS
+  - S3: different storage classes or tiers to match your price, access, and availability requirements
+  - s3 glacier
+
+### Edge and hybrid cloud storage
+
+- Edge compute and storage solutions
+  - remote or disconnected locations
+  - hybrid solutions to connect on-premises to storage services in the AWS.
+
+#### Edge: Local compute and storage
+
+- use compute resources and storage services even when disconnected from AWS
+- provide a data transfer platform to copy your data in to and out from the AWS
+- in AWS
+  - Snowball Edge devices: edge computing, data migration, and edge storage device for data collection, ML and processing; Storage for envs with intermittent connectivity or in remote disconnected locations
+    - Storage Optimized: highest storage capacity
+    - Compute Optimized: more available vCPUs with a lower storage capacity.
+  - Snowcone devices: smallest member of the Snow family purpose-built for use outside of a traditional data center.
+  - Snowmobile service: exabyte-scale data transfer service used to move large amounts of data to AWS
+    - transfer up to 100 PB per Snowmobile, a 45-foot long ruggedized shipping container, pulled by a semitrailer truck
+
+#### Hybrid: onpremise cloud
+
+- in AWS
+  - AWS Outposts: offers the same AWS infrastructure, services, APIs, and tools to virtually any data center, colocation space, or on-premises facility
+    - built on top of EBS and S3: compute, storage, database, and other services run locally on Outposts
+
+#### Hybrid: onpremise gateway
+
+- connects on-premises users and applications using a software appliance with cloud-based storage
+- provides integration between an organization’s on-premises IT environment and the AWS storage infrastructure
+- use cases
+  - moving backups to the cloud
+  - using onpremise file shares backed by cloud storage
+  - low-latency access to data in AWS for on-premises applications; Local caching reduces network latency for both read and write activities.
+- in AWS
+  - S3 file gateway: store application data files and backup images as durable objects in Amazon S3
+  - FSx file gateway: optimizes on-premises access to fully managed, highly reliable file shares in Amazon FSx for Windows File Server
+  - Volume gateway: cloud-backed iSCSI block storage volumes to your on-premises applications
+  - Tape gateway: replace physical tapes on premises with virtual tapes in AWS without changing existing backup workflows
+
+### Data transfer and migration
+
+- copy or transfer on-premises data to/from Storage services in AWS.
+
+#### file transfer
+
+- in AWS
+  - AWS Transfer: file transfers in/out of S3/EFS using SFTP, FTPS, FTP
+
+#### data synchronization & online transfer
+
+- in AWS
+  - AWS DataSync: online data transfer service moving data between on-premises storage systems and AWS and between AWS services
+
+#### offline data transfer & migration
+
+- in AWS
+  - AWS Snow: offers several physical devices and capacity points, most with built-in computing capabilities
+
+#### migration
+
+- in AWS
+  - Application Migration Service: MGN; migrating applications to the AWS Cloud, AWS GovCloud (US), and AWS Outposts.
+  - CloudEndure Migration: is a highly automated lift-and-shift (rehost) solution
+
+### Data protection
