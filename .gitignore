@@ -2,3 +2,4 @@
 node_modules
 web_apps/node/build
 workspace.json
+bun.lockb

@@ -7,6 +7,7 @@ code-insiders --force --install-extension anseki.vscode-color
 code-insiders --force --install-extension bbenoist.vagrant
 code-insiders --force --install-extension cobaltblu27.rainbow-highlighter
 code-insiders --force --install-extension codezombiech.gitignore
+code-insiders --force --install-extension Codium.codium
 code-insiders --force --install-extension dbaeumer.vscode-eslint
 code-insiders --force --install-extension EditorConfig.EditorConfig
 code-insiders --force --install-extension esbenp.prettier-vscode
@@ -29,13 +30,13 @@ code-insiders --force --install-extension mindaro-dev.file-downloader
 code-insiders --force --install-extension ms-dotnettools.vscode-dotnet-runtime
 code-insiders --force --install-extension ms-python.python
 code-insiders --force --install-extension ms-python.vscode-pylance
-code-insiders --force --install-extension ms-toolsai.jupyter
 code-insiders --force --install-extension ms-toolsai.jupyter-keymap
 code-insiders --force --install-extension ms-toolsai.jupyter-renderers
 code-insiders --force --install-extension ms-toolsai.vscode-jupyter-cell-tags
 code-insiders --force --install-extension ms-toolsai.vscode-jupyter-slideshow
 code-insiders --force --install-extension ms-vscode.cmake-tools
 code-insiders --force --install-extension ms-vscode.cpptools
+code-insiders --force --install-extension naumovs.color-highlight
 code-insiders --force --install-extension nimsaem.nimvscode
 code-insiders --force --install-extension oderwat.indent-rainbow
 code-insiders --force --install-extension rangav.vscode-thunder-client
@@ -43,7 +44,7 @@ code-insiders --force --install-extension redhat.fabric8-analytics
 code-insiders --force --install-extension redhat.vscode-commons
 code-insiders --force --install-extension redhat.vscode-xml
 code-insiders --force --install-extension redhat.vscode-yaml
-code-insiders --force --install-extension SonarSource.sonarlint-vscode
+code-insiders --force --install-extension SimonSiefke.svg-preview
 code-insiders --force --install-extension tamasfe.even-better-toml
 code-insiders --force --install-extension tomoki1207.pdf
 code-insiders --force --install-extension trond-snekvik.simple-rst

@@ -1,4 +1,4 @@
-# CSS, HTML and accesibility
+# CSS, HTML
 
 > always start with high quality markup, you need text, copy and structure before you can style anything
 
