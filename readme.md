@@ -1,5 +1,6 @@
 # TLDR
 
+- focusing on fullstack application development and design patterns
 - new locations
   - [blockchain](https://github.com/noahehall/blockchain)
   - [bookofnim](https://github.com/noahehall/nim)
