@@ -87,6 +87,7 @@ regolith-look refresh
   - [disable security warning](https://medium.com/volosoft/how-to-disable-firefox-warning-potential-security-risk-ahead-f081fbf81a4f)
   - be sure to check `delete all cookies from all sites` (except maybe gmail) on browser close somewhere in the settings
   - essential extensions
+    - [ipfs companion](https://addons.mozilla.org/en-US/firefox/addon/ipfs-companion/)
     - [sideberry](https://addons.mozilla.org/en-US/firefox/addon/sidebery/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=hotness)
     - [ublock](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=recommended_fallback)
     - [privacy badger](https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=recommended)
@@ -108,6 +109,8 @@ regolith-look refresh
     - cmd t: new tab
     - cmd enter: new window in current tab
     - cmd shift d: close active window in current tab
+- [brave browser](https://brave.com/linux/#beta-channel-installation)
+- [protonvpn](https://protonvpn.com/support/linux-ubuntu-vpn-setup/)
 - git
   - [officla (gh) github cli](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
   - [setup ssh key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
