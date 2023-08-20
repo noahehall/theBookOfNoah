@@ -111,6 +111,8 @@ regolith-look refresh
     - cmd shift d: close active window in current tab
 - [brave browser](https://brave.com/linux/#beta-channel-installation)
 - [protonvpn](https://protonvpn.com/support/linux-ubuntu-vpn-setup/)
+  - [when it fks up your wifi](https://askubuntu.com/questions/1357119/cannot-connect-via-wifi-dhcp-after-using-protonvpn)
+    - `$ nmcli, nmcli connection delete whateverThatFknVpnConnectionNameIs`
 - git
   - [officla (gh) github cli](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
   - [setup ssh key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
