@@ -23,16 +23,12 @@
   },
 
   /**
-   * window settings
-   */
-  "window.zoomLevel": 1,
-
-  /**
    * editor
    * controls useability
    * good read: https://stackoverflow.com/questions/44831313/how-to-exclude-file-extensions-and-languages-from-format-on-save-in-vscode/44831631#44831631
    *
    */
+
   "editor.acceptSuggestionOnEnter": "smart",
   "editor.accessibilitySupport": "off",
   "editor.autoIndent": "advanced",
@@ -114,7 +110,7 @@
    * workbench
    * controls vscode
    */
-  "workbench.colorTheme": "monokai-charcoal",
+  "workbench.colorTheme": "Default High Contrast Light",
   "workbench.editor.closeEmptyGroups": true,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.showTabs": true,
@@ -123,7 +119,6 @@
   "workbench.panel.defaultLocation": "right",
   "workbench.settings.editor": "json",
   "workbench.settings.enableNaturalLanguageSearch": false,
-  "workbench.sideBar.location": "right",
   "workbench.view.alwaysShowHeaderActions": true,
   "workbench.colorCustomizations": {
     "editor.lineHighlightBackground": "#1073cf2d",
@@ -155,6 +150,7 @@
    * other settings
    */
   "breadcrumbs.icons": false,
+  "markdown.editor.pasteUrlAsFormattedLink.enabled": "always",
 
   /**
    * other extensions
@@ -282,5 +278,8 @@
     "v": "v run",
     "vbscript": "cscript //Nologo",
     "zig": "zig run"
-  }
+  },
+  "window.zoomLevel": 1,
+  "workbench.statusBar.visible": false,
+  "workbench.sideBar.location": "right"
 }
