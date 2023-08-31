@@ -26,3 +26,8 @@
   - `ctrl b` toggle explorer
   - `ctrl shift e` open workspace explorer
   - `ctrl backtick` toggle terminal
+- cli
+  - code-insiders --user-data-dir /tmp/test-vscode-panel
+- directories
+  - default data dir: ~/.config/Code Insiders
+    - wipe it if you experience UI issues
