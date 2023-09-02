@@ -1,4 +1,4 @@
-import { log } from "./logit.mjs";
+import { log } from "./logit";
 
 // FYI: objects and classes use the same method syntax
 const myObj = {

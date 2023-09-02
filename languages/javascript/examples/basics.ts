@@ -7,7 +7,7 @@ log("~~1", ~~1);
 log("~~{}", ~~{});
 
 const a = [1, 2, 3];
-log("Array == a.constructor", a && Array == a.constructor);
+log("Array == a.constructor", Array == a.constructor);
 log("Array.isArray(a)", Array.isArray(a));
 
 const o: Record<string, any> = {};

@@ -1,20 +1,18 @@
 # Javascript
 
 - updated: 2023
-- the goal is to capture high level information in general and the Abstract Data Type for native objects specifically
 - for other guides
-  - [web security in security dir](../../appdev/security/websecurity.md)
   - [bun](./backend/bun.md)
   - [css/html/accessibility](../csshtml/readme.md)
-- todos
-  - web components may finally be ready for primetime
-  - u promised the nimlang devs you would redo the `for tyepscript dev` docs
 
-## links
+## IMO
 
-### best in class (IMO)
+- javascript may be the most flexible and usable language, outside of nimlang
+  - this flexibility comes with its disadvantages (especially for the purist, but fk those guys)
+  - embrace polyphormism, duck typing and coding to interfaces and you'll be successful in javascript
 
-- [run some code](https://github.com/nirv-ai/fullstackapps)
+### best in class
+
 - runtimes
   - [bun](https://bun.sh/)
   - nodejs
@@ -23,6 +21,7 @@
   - deno
 - typesystems
   - [typescript](https://www.typescriptlang.org/)
+    - [effect](https://effect.website/)
   - [flow](https://flow.org/)
 - UI MFE architecture
   - [webpack module federation](https://webpack.js.org/concepts/module-federation/)
@@ -42,6 +41,8 @@
   - [butcha](https://bun.sh/docs/ecosystem/buchta)
 - bundlers / etc
   - [turbo repo](https://turbo.build/)
+
+## links
 
 ### interwebs
 
@@ -204,9 +205,6 @@
   - thus concurrency is key to efficient js applications
 - was introduced in 1995 for Netscape Navigator browser
   - after adoption by the community, a standard document was written called ECMAscript
-- IMO javascript may be the most flexible and usable language, outside of nimlang
-  - this flexibility comes with its disadvantages (especially for the purist, but fk those guys)
-  - embrace polyphormism, duck typing and coding to interfaces and you'll be successful in javascript
 
 ### tc39 and web standards
 
@@ -234,9 +232,8 @@
 
 ### terms
 
-- web sockets: a persistent connection to a server
 - sourcemaps: tell the browser to convert line and column offsets 'for' exceptions thrown in the bundle file back into the offsets and filenames of the original sources.
-- transpilers vs compilers: distinction is more fluid than binary and best throught of as a spectrum from annotations > transpilers > compilers
+- transpilers vs compilers: distinction is more fluid than binary and best thought of as a spectrum from annotations > transpilers > compilers
   - annotations: e.g. jsdocs / flowtype
     - no transpilation / compilation required; simply remove the annotations
     - usually the best performance however feature limited based on context
@@ -249,7 +246,7 @@
 
 ### Best Practices
 
-- generally a good practice is to have some throttling when testing sites. It'll help you see your sites performance from your users perspectives.
+- have some throttling when testing sites. It'll help you see your sites performance from your users perspectives.
 - always use strict mode and youll be safe
 - online first: we try the network first, if it doesnt, we show some fallback content (or 404 page)
 - offline first:
@@ -347,7 +344,6 @@
   - `this` is undefined in the global scope and functions not assigned to global objects
 - `break` Exits a 'switch' or a loop
 - `continue` Breaks one iteration (in the loop) if a specified condition occurs, and continues with the next iteration in the loop
-- `debugger` Stops the execution of JavaScript, and calls (if available) the debugging function
 - `do ... while` Executes a block of statements and repeats the block while a condition is true
 - `for` Marks a block of statements to be executed as long as a condition is true
 - `for ... in` Marks a block of statements to be executed for each element of an object (or array)
@@ -362,19 +358,10 @@
 - `while` Marks a block of stat
 - `object instanceof constructor `//tests whether an object has in its prototype chain the prototype property of a constructor.
   `constructors === String, Number, Object, Date etc.`
-- `debugger` pauses app run time at this point in the app.
+- `debugger` Stops the execution of JavaScript, and calls (if available) the debugging function
   - you can open up console and type in any of the variables in the app, and it will print to the console
   - you can type in a function name and review it
   - you can click through the sources panel and view different things
-
-```js
-break case catch class const continue debugger default
-delete do else enum export extends false finally for
-function if implements import interface in instanceof let
-new package private protected public return static super
-switch this throw true try typeof var void while with yield
-
-```
 
 ### data conversion
 
@@ -432,7 +419,7 @@ switch this throw true try typeof var void while with yield
 
 - everything in JS is an object, this section should generally apply to everything
 - immutable: strings, numbers, booleans
-  - thus you cant do `var name = "noah"; x.last = "hall"`, even tho an err isnt thrown
+  - thus you cant do `var name = "noah"; name.last = "hall"`, even tho an err isnt thrown
 - mutable: everything else
   - thus you can do `var name = () => "noah"; name.last = "hall"`
 - methods: function values bound to object properties
@@ -459,7 +446,7 @@ switch this throw true try typeof var void while with yield
     - `Function someFnAsPrototype() {}; someFnAsPrototype.bleep = "bloop"`
 - prototype chain: the sequence of linked objects from one object's prototype to another, all the way up until you reach the Null object (which does not have a prototype)
 - objects with null prototypes:
-  - are cheap substitutes for maps
+  - cheap substitutes for maps
   - prevents prototype pollution attacks whereby malicious scripts adds a properties to `object.prototype` that now exists on all your objects
 - escapes
   - `hasOwnProperty` type fns and `keys` dont search an objects prototype
@@ -467,7 +454,7 @@ switch this throw true try typeof var void while with yield
 #### arrays
 
 - 0 index elements accessed via ints/strings
-- the are array subclasses: [Big/U/Int/Float][8,16,32,64]Array
+- array subclasses: [Big/U/Int/Float][8,16,32,64]Array
 - in general when using inbuilt methods you should check for undefined on array elements if called on sparse arrays
   - depending on the method, some will skip empty slots, others will return undefined
 - generally any array like object can utilize array methods via call/apply
@@ -495,13 +482,12 @@ switch this throw true try typeof var void while with yield
 
 #### functions
 
-- anonymous enclosures `(function(){})()`
-- function closures: defining a function within a function
-- function parameters are variables that are local to the function
-  - functions can return anything, even other functions
-  - arguments = an array-like OBJECT containing all of the parameters passed to the function. it is NOT AN Array
-- function declarations: when using `function blah() {}`
-- function values: when using `let blah = function(){}`
+- fn types
+  - anonymous enclosures `(function(x){ x === 10 })(10)`
+  - function closures: defining a function within a function
+  - function declarations: `function blah() {}`
+  - function values: `let blah = function(){}`
+- arguments: an array-like object containing all of the parameters passed to the function.
 - Rest Parameters: used in function arguments to collect a list of arguments from the last paramater as an array e.g. ` (a, b, ...c) => ...`
 - Default Arguments are assigned in the function signature
 - side effects: a fn that does something opaque to the caller or beyond the scope of its arguments
@@ -644,19 +630,18 @@ switch this throw true try typeof var void while with yield
 
 ##### for of
 
-- The for...of syntax is specific to collections, rather than all objects. It will iterate in this manner over the elements of any collection that has a [Symbol.iterator] property.
+- specific to collections, rather than all objects. It will iterate in this manner over the elements of any collection that has a [Symbol.iterator] property.
 
 ##### for in
 
-- The for...in statement iterates over the enumerable properties of an object, in original insertion order. For each distinct property, statements can be executed.
+- iterates over the enumerable properties of an object, in original insertion order. For each distinct property, statements can be executed.
 
 ##### iterators
 
 - requires `[Symbol.iterator]() {...}` to be defined on on the calling object
-- the next() fn often returns a generator for readability
-- see the examples
+- the next() fn often returns a generator
 
-#### try catch
+#### try catch finally
 
 #### if
 
@@ -678,7 +663,6 @@ switch this throw true try typeof var void while with yield
 
 #### symbols
 
-- should probably re-read this section on mdn again
 - reflection within implementation - you sprinkle them on your existing classes and objects to change the behaviour.
 - use cases:
   - unique strings as object properties, to provide alternative/shadow behavior under the same identifier for callers with access to the symbol instance
@@ -703,8 +687,8 @@ switch this throw true try typeof var void while with yield
 
 ### regexp
 
-- should probably reread this section on mdn; theres some differences with perl5 which is generally standard
-- you should be safe with the basic regex stuff
+- theres some differences with perl5 which is generally standard
+  - shouldnt be an issue with basic regex
 
 ### concurrency
 
@@ -722,18 +706,17 @@ switch this throw true try typeof var void while with yield
 #### promises
 
 - try catch wrapper around code that will finish at an unpredictable time
-  - can only succeed/fail once
+  - can only succeed/fail once; whereas events can fire multiple times
   - cannot switch from success to failure/vice versa
   - if a promise has succeeded/failed, and you later add a success/failure callback, the correct callback will be invoked, even though the event took place earlier
   - any object with a then method can be used as and integrated with native promises
   - you always want a `.catch`
+  - promises are potentially blocking since they are created and settled on the main thread
 - Promise States
   - fulfilled (resolved): action related to the promise has succeeded
   - rejected (failure): action related to the promise has failed
   - pending: not yet fulfilled / rejected
   - settled: promise has either fulfilled / rejected.
-  - a promise can only be settled once, whereas events can fire multiple times
-  - promises are potentially blocking since they are created and settled on the main thread
 - Promise stages:
   - wrapping: (value promise creation)
   - create a promise that wrapps an async action
@@ -746,15 +729,18 @@ switch this throw true try typeof var void while with yield
   - each Then is also asynchronous, so you can return a promise from a then, and the next then will only execute when the new promise is settled
   - the `.catch()` chain is just sugar for `then(successFunction, errorFunction)`
   - promise rejections skip forward to the next then() with a rejection callback or catch chain
-  - rejections happen when a promise is explicitly rejected, or implicetly if an error is thrown in the constructor callback
-  - thus, its best to do all your promise-related work inside the promise constructor callback, so errors are automatically caught and become rejections
-  - you can combine generators and promises to write async code that looks like and easy to follow like sync code
+  - rejections happen when a promise is
+    - explicitly rejected
+    - implicetly if an error is thrown in the constructor callback
+    - thus, its best to do all your promise-related work inside the promise constructor callback, so errors are automatically caught and become rejections
+  - combine generators and promises to write async code that looks like sync code
 
 #### async await
 
 - basics
-  - allow you to write promise-based code as if it were syncrhonous, but without blocking the main thread
+  - allow you to write promise-based code as if it were synchronous, but without blocking the main thread
   - Note that `await` may only be used in functions prepended with the `async` keyword
+    - or in newer js runtimes with top level await
   - await suspends execution of the local scope, not the global scope (unless your env has top-level await enabled)
     - enables try catch for errors that may occur
   - suspends execution in your context until the promise settles

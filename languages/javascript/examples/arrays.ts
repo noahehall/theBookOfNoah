@@ -1,4 +1,5 @@
 import { log } from "./logit";
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
 
 // gotchas
 const myArr: any[] = ["a"];
@@ -36,7 +37,7 @@ ADT
     Array.prototype.entries()
     Array.prototype.every()
     Array.prototype.fill()
-    Array.prototype.filter() 
+    Array.prototype.filter()
     Array.prototype.find()
     Array.prototype.findIndex()
     Array.prototype.findLast()
@@ -46,8 +47,6 @@ ADT
     Array.prototype.forEach()
     Array.from()
     Array.fromAsync()
-    Array.prototype.group()
-    Array.prototype.groupToMap()
     Array.prototype.includes()
     Array.prototype.indexOf()
     Array.isArray()
@@ -67,7 +66,11 @@ ADT
     Array.prototype.sort()
     Array.prototype.splice()
     Array.prototype.toLocaleString()
+    Array.prototype.toReversed()
+    Array.prototype.toSorted()
+    Array.prototype.toSpliced()
     Array.prototype.toString()
     Array.prototype.unshift()
     Array.prototype.values()
+    Array.prototype.with()
 */
