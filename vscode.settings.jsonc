@@ -113,7 +113,7 @@
   "workbench.colorTheme": "Default High Contrast Light",
   "workbench.editor.closeEmptyGroups": true,
   "workbench.editor.highlightModifiedTabs": true,
-  "workbench.editor.showTabs": true,
+  "workbench.editor.showTabs": true, // dont set this false ;)
   "workbench.editor.tabCloseButton": "right",
   "workbench.editor.tabSizing": "shrink",
   "workbench.panel.defaultLocation": "right",
