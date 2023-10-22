@@ -26,14 +26,16 @@
    * editor
    * controls useability
    * good read: https://stackoverflow.com/questions/44831313/how-to-exclude-file-extensions-and-languages-from-format-on-save-in-vscode/44831631#44831631
-   *
+   * set peek type: https://stackoverflow.com/questions/61412688/how-to-view-full-type-definition-on-hover-in-vscode-typescript
    */
 
   "editor.acceptSuggestionOnEnter": "smart",
   "editor.accessibilitySupport": "off",
   "editor.autoIndent": "advanced",
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
-  "editor.codeActionsOnSave": { "source.fixAll": false },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "never"
+  },
   "editor.cursorBlinking": "phase",
   "editor.cursorStyle": "line",
   "editor.cursorSurroundingLines": 2,
@@ -113,7 +115,7 @@
   "workbench.colorTheme": "Default High Contrast Light",
   "workbench.editor.closeEmptyGroups": true,
   "workbench.editor.highlightModifiedTabs": true,
-  "workbench.editor.showTabs": true, // dont set this false ;)
+  "workbench.editor.showTabs": "multiple", // dont set this false ;)
   "workbench.editor.tabCloseButton": "right",
   "workbench.editor.tabSizing": "shrink",
   "workbench.panel.defaultLocation": "right",
@@ -279,7 +281,24 @@
     "vbscript": "cscript //Nologo",
     "zig": "zig run"
   },
-  "window.zoomLevel": 1,
   "workbench.statusBar.visible": false,
-  "workbench.sideBar.location": "right"
+  "workbench.sideBar.location": "right",
+  "xml.server.vmargs": "-Xmx128M",
+  "window.zoomLevel": 1,
+  "openapi.platformUrl": "https://platform.42crunch.com",
+  "openapi.platformServices": "",
+  "openapi.platformScandManager": {
+    "url": "",
+    "auth": "none",
+    "header": {
+      "name": "",
+      "value": ""
+    }
+  },
+  "openapi.docker": {
+    "replaceLocalhost": true,
+    "useHostNetwork": true
+  },
+  "openapi.platformConformanceScanRuntime": "docker",
+  "openapi.platformConformanceScanImage": "42crunch/scand-agent:v2.0.0"
 }

@@ -26,6 +26,9 @@
   - `ctrl b` toggle explorer
   - `ctrl shift e` open workspace explorer
   - `ctrl backtick` toggle terminal
+  - `ctrl k ctrl s` see all shortcuts
+  - `ctrl k trl p` open file search
+  - `ctrl p` any file search
 - cli
   - code-insiders --user-data-dir /tmp/test-vscode-panel
 - directories

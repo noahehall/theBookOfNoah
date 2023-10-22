@@ -1,5 +1,6 @@
 # typescript
 
+- [almost 1 to 1 with jsdoc](https://tsdoc.org/)
 - bookmark: https://www.typescriptlang.org/docs/handbook/declaration-files/library-structures.html#global-libraries
   - [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
     - this is the beginning of the reference
