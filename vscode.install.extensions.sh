@@ -36,6 +36,7 @@ code-insiders --force --install-extension ms-toolsai.vscode-jupyter-cell-tags
 code-insiders --force --install-extension ms-toolsai.vscode-jupyter-slideshow
 code-insiders --force --install-extension ms-vscode.cmake-tools
 code-insiders --force --install-extension ms-vscode.cpptools
+code-insiders --force --install-extension mxsdev.typescript-explorer
 code-insiders --force --install-extension naumovs.color-highlight
 code-insiders --force --install-extension nimsaem.nimvscode
 code-insiders --force --install-extension oderwat.indent-rainbow
