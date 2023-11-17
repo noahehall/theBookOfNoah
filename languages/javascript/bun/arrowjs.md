@@ -1,6 +1,6 @@
 ## arrowjs
 
-- ~2kb libary for building reactiv e interfaces in native javascript
+- ~2kb libary for building reactive interfaces in native javascript
 
 ## links
 
