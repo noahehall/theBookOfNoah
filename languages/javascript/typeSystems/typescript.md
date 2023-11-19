@@ -1,10 +1,12 @@
 # typescript
 
 - [almost 1 to 1 with jsdoc](https://tsdoc.org/)
-- bookmark: https://www.typescriptlang.org/docs/handbook/declaration-files/library-structures.html#global-libraries
-  - [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
-    - this is the beginning of the reference
-    - eventually you want to get through this shiz
+- bookmark:
+  - https://www.typescriptlang.org/docs/handbook/declaration-files/library-structures.html#global-libraries
+    - [utility types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+      - this is the beginning of the reference
+      - eventually you want to get through this shiz
+  - [publishing](https://www.typescriptlang.org/docs/handbook/declaration-files/publishing.html)
 - todos
   - [ambient modules](https://www.typescriptlang.org/docs/handbook/modules.html#ambient-modules)
   - [namespaces](https://www.typescriptlang.org/docs/handbook/namespaces.html)

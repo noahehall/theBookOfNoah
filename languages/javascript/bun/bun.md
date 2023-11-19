@@ -8,12 +8,14 @@
 ### bun docs
 
 - [AAA docs](https://bun.sh/docs)
-- [hot reloading](https://bun.sh/docs/runtime/hot)
-- [build: intro](https://bun.sh/docs/bundler)
+- [build: bun vs esbuild](https://bun.sh/docs/bundler/vs-esbuild)
 - [build: esbuild migration](https://bun.sh/docs/bundler/migration)
+- [build: intro](https://bun.sh/docs/bundler)
 - [build: loaders](https://bun.sh/docs/bundler/loaders)
 - [build: macros](https://bun.sh/docs/bundler/macros)
-- [build: bun vs esbuild](https://bun.sh/docs/bundler/vs-esbuild)
+- [bun add](https://bun.sh/docs/cli/add)
+- [hot reloading](https://bun.sh/docs/runtime/hot)
+- [module resolution](https://bun.sh/docs/runtime/modules)
 - [plugins](https://bun.sh/docs/bundler/plugins)
 
 ### bun runtime API
@@ -33,7 +35,6 @@
 - [htmlrewriter](https://bun.sh/docs/api/html-rewriter)
 - [module resolution: bun resolution](https://bun.sh/docs/runtime/modules#bun-style-resolution)
 - [module resolution: path remapping](https://bun.sh/docs/runtime/modules#path-re-mapping)
-- [module resolution](https://bun.sh/docs/runtime/modules)
 - [node-api](https://bun.sh/docs/api/node-api)
 - [nodejs](https://bun.sh/docs/ecosystem/nodejs)
 - [plugins](https://bun.sh/docs/runtime/plugins)
@@ -125,6 +126,8 @@
 - if package.json.script conflicts with a bun internal cmd, the internal cmd takes precedence
   - use `bun run` to explicitly call package.json scripts
 - utilizes script pre/post lifecycle hooks
+- make sure you to set package.json.exports.bun: somefile.ts
+  - Bun will directly import and execute your TypeScript source files.
 
 ### bunfig.toml
 
