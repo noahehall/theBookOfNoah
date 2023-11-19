@@ -11,6 +11,8 @@
 
 ## TLDR
 
+### typescript example
+
 ```ts
 import {
   Encoder,
@@ -61,4 +63,72 @@ extensionCodec.register({
     return new Map(array);
   },
 });
+```
+
+### web example
+
+```html
+<!DOCTYPE html>
+<head>
+  <script crossorigin src="https://unpkg.com/@msgpack/msgpack"></script>
+</head>
+<body>
+  <script>
+    (async function () {
+      const response = await fetch("http://localhost:3000/v1/players");
+      console.info("\n\n wtf is response", response);
+
+      const decoder = {
+        decode: MessagePack.decode,
+        decodeAsync: MessagePack.decodeAsync,
+      };
+      const extensionCodec = new MessagePack.ExtensionCodec();
+
+      // Map<T>
+      const MAP_EXT_TYPE = 1; // Any in 0-127
+      extensionCodec.register({
+        type: MAP_EXT_TYPE,
+        encode: (object) => {
+          if (object instanceof Map) {
+            return encoder.encode([...object], { extensionCodec });
+          } else {
+            return null;
+          }
+        },
+        decode: (data) => {
+          const array = decoder.decode(data, { extensionCodec });
+          return new Map(array);
+        },
+        decodeAsync: async (data) => {
+          const array = await decoder.decodeAsync(data, { extensionCodec });
+          return new Map(array);
+        },
+      });
+
+      function selfIterator(arr) {
+        // @ts-ignore
+        return arr.reduce((acc, [key, value]) => {
+          if (
+            value?.type === MAP_EXT_TYPE &&
+            value?.data instanceof Uint8Array
+          ) {
+            // @ts-ignore
+            acc[key] = selfIterator(decoder.decode(value.data));
+          } else {
+            // @ts-ignore
+            acc[key] = value;
+          }
+
+          return acc;
+        }, {});
+      }
+
+      console.info("\n\n response body", response.body);
+      const decoded = await decoder.decodeAsync(response.body);
+
+      const data = selfIterator(decoder.decode(decoded.data));
+      console.info("decodedddd", decoded, data);
+    })();
+  </script>
+</body>
 ```
