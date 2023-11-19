@@ -21,6 +21,7 @@ import {
 } from "@msgpack/msgpack";
 
 // Encoder && Decoder doesnt work with extensioncodec
+// @see https://github.com/msgpack/msgpack-javascript/issues/236
 const encoder = { encode }; //new Encoder();
 const decoder = { decode }; //new Decoder();
 const extensionCodec = new ExtensionCodec();
