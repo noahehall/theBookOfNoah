@@ -506,6 +506,8 @@ it("test", async () => {
 
 #### context
 
+- [discussion for serialization via setrenderer](https://github.com/honojs/hono/issues/1706)
+
 ```ts
 /////////////// context is the world
 // if app.get('/about/me', ...)
